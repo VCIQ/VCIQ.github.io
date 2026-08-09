@@ -1,20 +1,56 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import rawTrackingConfig from "../config/user_tracking.json";
 import {
   HISTORICAL_COMPOUND_ENTITY_REPAIR_RULES,
   repairHistoricalCompoundTrackingEntities,
 } from "../lib/tracking-entity-history-repair";
 import { findCompoundTrackingEntities } from "../lib/tracking-entity-integrity";
-import type { UserTrackingConfig } from "../lib/user-tracking";
+import type { TrackingTrack, UserTrackingConfig } from "../lib/user-tracking";
 
-function currentConfig(): UserTrackingConfig {
-  return structuredClone(rawTrackingConfig) as UserTrackingConfig;
+const PERSON_PAIR = "王慧文、陈天桥、";
+const PERSON_GOOGLE = "Quoc Le、Jeff Dean、Sanjay Ghemawat、Quoc Le、Oriol Vinyals";
+const PERSON_RESEARCH = "Jeff Dean、陶哲轩、李飞飞、Dawn Song、Oriol Vinyals";
+const INVESTOR_LIST =
+  "Aliya Capital Partners、Atreides Management、Artisan Partners、Battery Ventures、Diagonal Capital、Intel Capital、Key1 Capital";
+
+function track(
+  slug: string,
+  people: string[] = [],
+  sampleCompanies: string[] = [],
+): TrackingTrack {
+  return {
+    slug,
+    name: slug,
+    enabled: true,
+    custom: false,
+    keywords: [],
+    people,
+    sampleCompanies,
+  };
 }
 
-test("historical compound inventory is frozen to the reviewed repair plan", () => {
-  const issues = findCompoundTrackingEntities(currentConfig());
+function historicalFixture(): UserTrackingConfig {
+  return {
+    schemaVersion: 1,
+    tracks: [
+      track(
+        "ai",
+        [PERSON_PAIR, PERSON_GOOGLE, PERSON_RESEARCH],
+        ["腾讯 / 元宝", "阿里云 / Qwen"],
+      ),
+      track("robotics", [PERSON_GOOGLE, PERSON_RESEARCH]),
+      track("semiconductor", [], [INVESTOR_LIST]),
+      track("track-1ccjq49", [PERSON_PAIR], [INVESTOR_LIST]),
+      track("ai-2", [PERSON_GOOGLE, PERSON_RESEARCH]),
+    ],
+    listedCompanies: [],
+    sources: [],
+  };
+}
+
+test("historical compound fixture is frozen to the reviewed repair plan", () => {
+  const issues = findCompoundTrackingEntities(historicalFixture());
   assert.equal(issues.length, 12);
   assert.equal(issues.filter((issue) => issue.entityType === "person").length, 8);
   assert.equal(issues.filter((issue) => issue.entityType === "company").length, 4);
@@ -26,7 +62,7 @@ test("historical compound inventory is frozen to the reviewed repair plan", () =
 });
 
 test("historical repair removes every reviewed compound occurrence", () => {
-  const result = repairHistoricalCompoundTrackingEntities(currentConfig());
+  const result = repairHistoricalCompoundTrackingEntities(historicalFixture());
   assert.deepEqual(result.audit, {
     detectedOccurrences: 12,
     appliedRules: 6,
@@ -48,7 +84,7 @@ test("historical repair removes every reviewed compound occurrence", () => {
   });
   assert.deepEqual(findCompoundTrackingEntities(result.config), []);
 
-  const ai = result.config.tracks.find((track) => track.slug === "ai");
+  const ai = result.config.tracks.find((item) => item.slug === "ai");
   assert.ok(ai);
   for (const person of [
     "王慧文",
@@ -63,6 +99,7 @@ test("historical repair removes every reviewed compound occurrence", () => {
   ]) {
     assert.ok(ai.people.includes(person), `missing repaired person ${person}`);
   }
+  assert.equal(ai.people.filter((person) => person === "Quoc Le").length, 1);
   assert.ok(ai.sampleCompanies.includes("腾讯"));
   assert.ok(ai.sampleCompanies.includes("阿里云"));
   assert.ok(!ai.sampleCompanies.includes("元宝"));
@@ -70,7 +107,7 @@ test("historical repair removes every reviewed compound occurrence", () => {
 });
 
 test("historical repair is idempotent after the reviewed migration is clean", () => {
-  const first = repairHistoricalCompoundTrackingEntities(currentConfig());
+  const first = repairHistoricalCompoundTrackingEntities(historicalFixture());
   const second = repairHistoricalCompoundTrackingEntities(first.config);
   assert.deepEqual(second.config, first.config);
   assert.deepEqual(second.audit, {
@@ -82,7 +119,7 @@ test("historical repair is idempotent after the reviewed migration is clean", ()
 });
 
 test("historical repair refuses an unreviewed compound value", () => {
-  const config = currentConfig();
+  const config = historicalFixture();
   config.tracks[0].people.push("Alice、Bob");
   assert.throws(
     () => repairHistoricalCompoundTrackingEntities(config),
@@ -91,10 +128,10 @@ test("historical repair refuses an unreviewed compound value", () => {
 });
 
 test("historical repair refuses reviewed values whose track distribution drifted", () => {
-  const config = currentConfig();
-  const ai = config.tracks.find((track) => track.slug === "ai");
+  const config = historicalFixture();
+  const ai = config.tracks.find((item) => item.slug === "ai");
   assert.ok(ai);
-  ai.people = ai.people.filter((value) => value !== "王慧文、陈天桥、");
+  ai.people = ai.people.filter((value) => value !== PERSON_PAIR);
   assert.throws(
     () => repairHistoricalCompoundTrackingEntities(config),
     /历史复合实体分布已漂移/u,
