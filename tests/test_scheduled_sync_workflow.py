@@ -28,6 +28,25 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("      - config/user_tracking.json", text)
 
+    def test_source_portfolio_runtime_changes_start_one_full_refresh(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        for path in (
+            "tools/article_publication_gate.py",
+            "tools/core_official_adapters.py",
+            "tools/source_portfolio.py",
+        ):
+            with self.subTest(path=path):
+                self.assertIn(f"      - {path}", text)
+                self.assertIn(f"            {path}", text)
+
+        for test_module in (
+            "tests.test_article_publication_gate",
+            "tests.test_core_official_adapters",
+            "tests.test_source_portfolio",
+        ):
+            with self.subTest(test_module=test_module):
+                self.assertIn(test_module, text)
+
     def test_test_only_changes_do_not_start_a_production_full_refresh(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertNotIn("      - tests/**/*.py", text)
@@ -63,6 +82,11 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("REFRESH_INPUT_PATHS=(", text)
         for path in (
+            ".github/workflows/scheduled-sync.yml",
+            "tools/crawl_with_wechat_registry.py",
+            "tools/article_publication_gate.py",
+            "tools/core_official_adapters.py",
+            "tools/source_portfolio.py",
             "config/company_registry.json",
             "config/intelligence_sources.json",
             "config/user_tracking.json",
@@ -71,6 +95,7 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
         ):
             with self.subTest(path=path):
                 self.assertIn(path, text)
+        self.assertIn("Runtime code is a live refresh input too", text)
         self.assertIn("supersede_if_refresh_inputs_changed()", text)
         self.assertIn('git diff --quiet "$GITHUB_SHA" "$target_ref" -- "${REFRESH_INPUT_PATHS[@]}"', text)
         self.assertIn("git fetch origin main", text)
