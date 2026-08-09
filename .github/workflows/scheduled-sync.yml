@@ -22,6 +22,7 @@ on:
       - tools/article_publication_gate.py
       - tools/core_official_adapters.py
       - tools/source_portfolio.py
+      - tools/full_refresh_input_guard.py
       - tools/http_request_policy.py
       - tools/http_policy_bridge.py
       - tools/semantic_data_diff.py
@@ -108,7 +109,35 @@ concurrency:
   queue: max
 
 jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    outputs:
+      current: ${{ steps.input-currentness.outputs.current }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fetch current main
+        run: git fetch origin main
+      - name: Check queued refresh input currentness
+        id: input-currentness
+        run: |
+          python tools/full_refresh_input_guard.py \
+            --base "$GITHUB_SHA" \
+            --target origin/main \
+            --github-output "$GITHUB_OUTPUT"
+      - name: Explain stale refresh skip
+        if: steps.input-currentness.outputs.current != 'true'
+        run: |
+          echo "This queued refresh is stale because newer live crawler/source inputs exist on main."
+          echo "Skip the expensive network crawl; the newer input change already has its own queued refresh."
+
   crawl:
+    needs: preflight
+    if: needs.preflight.outputs.current == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 65
     steps:
@@ -149,6 +178,7 @@ jobs:
             tools/article_publication_gate.py \
             tools/core_official_adapters.py \
             tools/source_portfolio.py \
+            tools/full_refresh_input_guard.py \
             tools/run_pipeline.py \
             tools/build_pipeline_health.py
           python -m unittest \
@@ -170,6 +200,7 @@ jobs:
             tests.test_article_publication_gate \
             tests.test_core_official_adapters \
             tests.test_source_portfolio \
+            tests.test_full_refresh_input_guard \
             tests.test_listed_company_disclosures \
             tests.test_cninfo_structured_disclosures \
             tests.test_sec_structured_disclosures \
@@ -261,36 +292,19 @@ jobs:
             public/data/data_lineage.json
             public/data/pipeline_health.json
           )
-          REFRESH_INPUT_PATHS=(
-            # Runtime code is a live refresh input too. If it changes while a
-            # long crawl is running, the current process used the old behavior
-            # and must not publish its snapshot against the new main branch.
-            .github/workflows/scheduled-sync.yml
-            tools/crawl_with_wechat_registry.py
-            tools/article_publication_gate.py
-            tools/core_official_adapters.py
-            tools/source_portfolio.py
-            config/automation_jobs.json
-            config/company_registry.json
-            config/intelligence_sources.json
-            config/user_tracking.json
-            config/listed_company_disclosure_sources.json
-            config/professional_technology_media_sources.json
-            config/wechat_sources.json
-            config/wechat_public_indexes.json
-            config/official_company_sources.json
-            config/person_profile_overrides.json
-            config/source_health_policy.json
-            config/source_quality_reviews.json
-          )
 
           supersede_if_refresh_inputs_changed() {
             local target_ref="$1"
-            if git diff --quiet "$GITHUB_SHA" "$target_ref" -- "${REFRESH_INPUT_PATHS[@]}"; then
+            local guard_json current
+            guard_json=$(python tools/full_refresh_input_guard.py \
+              --base "$GITHUB_SHA" \
+              --target "$target_ref")
+            echo "$guard_json"
+            current=$(printf '%s' "$guard_json" | python -c 'import json,sys; print(str(json.load(sys.stdin)["current"]).lower())')
+            if [ "$current" = "true" ]; then
               return 1
             fi
-            echo "A newer commit changed live full-refresh inputs while this crawl was running:"
-            git diff --name-only "$GITHUB_SHA" "$target_ref" -- "${REFRESH_INPUT_PATHS[@]}"
+            echo "A newer commit changed live full-refresh inputs while this crawl was running."
             echo "::notice title=Full refresh superseded::Discarding this unpushed snapshot and scheduling a fresh refresh from current main."
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "superseded=true" >> "$GITHUB_OUTPUT"
@@ -298,7 +312,7 @@ jobs:
           }
 
           # A long network crawl must never publish a hybrid snapshot against
-          # newer source/tracking inputs it did not actually execute.
+          # newer source/tracking/runtime inputs it did not actually execute.
           git fetch origin main
           if supersede_if_refresh_inputs_changed origin/main; then
             exit 0
@@ -330,7 +344,7 @@ jobs:
             # generated snapshot when main changed the same data file.
             git pull --rebase -X theirs origin main
 
-            # Rebase may introduce source/tracking inputs that this run never
+            # Rebase may introduce source/tracking/runtime inputs that this run never
             # crawled. Supersede instead of fabricating coverage or publishing a
             # hybrid snapshot; a fresh run will execute those inputs end-to-end.
             if supersede_if_refresh_inputs_changed HEAD; then
