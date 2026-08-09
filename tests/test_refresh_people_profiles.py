@@ -23,14 +23,32 @@ class PeopleProfilePipelineTest(unittest.TestCase):
         self.assertEqual(MODULE.parse_tracking_label("Sam Altman"), ("Sam Altman", ""))
 
     def test_organization_accounts_are_not_people(self):
-        people, excluded = MODULE.collect_candidates(self.tracking, self.overrides)
+        # Organization filtering is a parser contract, not a requirement that
+        # production tracking remain polluted with known-bad organization seeds.
+        # Inject representative organization accounts directly so governance may
+        # remove them from user_tracking.json without weakening this regression.
+        tracking = {
+            "tracks": [
+                {
+                    "name": "AI / AGI",
+                    "enabled": True,
+                    "people": [
+                        "Sam Altman",
+                        "OpenAI @OpenAI",
+                        "Anthropic @AnthropicAI",
+                        "The Washington Post @washingtonpost",
+                    ],
+                }
+            ]
+        }
+        people, excluded = MODULE.collect_candidates(tracking, self.overrides)
         names = {item["name"] for item in people}
-        self.assertIn("Sam Altman", names)
-        self.assertIn("王兴兴", names)
-        self.assertIn("Michl Binderbauer", names)
+        self.assertEqual(names, {"Sam Altman"})
         self.assertNotIn("OpenAI", names)
         self.assertNotIn("Anthropic", names)
+        self.assertNotIn("The Washington Post", names)
         self.assertTrue(any("OpenAI" in item for item in excluded))
+        self.assertTrue(any("Anthropic" in item for item in excluded))
         self.assertTrue(any("Washington Post" in item for item in excluded))
 
     def test_same_person_merges_multiple_sectors(self):
