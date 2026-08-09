@@ -46,7 +46,7 @@ except ImportError:
     )
 
 ROOT = Path(__file__).resolve().parents[1]
-CANDIDATES_PATH = ROOT / "public" / "data" / "company_candidates.json"
+CANDIDATES_PATH = ROOT / "config" / "company_candidate_review_queue.json"
 COMPANY_DECISIONS_PATH = ROOT / "config" / "company_candidate_decisions.json"
 CAPTURE_INBOX_PATH = ROOT / "config" / "tracking_capture_inbox.json"
 

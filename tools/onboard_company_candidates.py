@@ -54,10 +54,10 @@ except ImportError:
     from resolve_company_entities import normalize_identity
 
 ROOT = Path(__file__).resolve().parents[1]
-CANDIDATES_PATH = ROOT / "public" / "data" / "company_candidates.json"
+CANDIDATES_PATH = ROOT / "config" / "company_candidate_review_queue.json"
 DECISIONS_PATH = ROOT / "config" / "company_candidate_decisions.json"
 OFFICIAL_SOURCES_PATH = ROOT / "config" / "official_company_sources.json"
-REPORT_PATH = ROOT / "public" / "data" / "company_candidate_onboarding.json"
+REPORT_PATH = ROOT / "config" / "company_candidate_onboarding_state.json"
 VALID_REVIEW_STATUSES = {"pending", "accepted", "rejected", "merged", "published"}
 VALID_ONBOARDING_STATUSES = {
     "awaiting_profile",

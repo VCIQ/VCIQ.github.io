@@ -44,7 +44,7 @@ except ImportError:  # pragma: no cover - direct execution
     from research_agent import call_siliconflow  # type: ignore
 
 ROOT = Path(__file__).resolve().parents[1]
-CANDIDATES_PATH = ROOT / "public" / "data" / "company_candidates.json"
+CANDIDATES_PATH = ROOT / "config" / "company_candidate_review_queue.json"
 DECISIONS_PATH = ROOT / "config" / "company_candidate_decisions.json"
 OFFICIAL_SOURCES_PATH = ROOT / "config" / "official_company_sources.json"
 REGISTRY_PATH = onboarding.REGISTRY_PATH
