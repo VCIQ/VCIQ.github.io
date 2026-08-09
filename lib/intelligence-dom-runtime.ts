@@ -1,4 +1,4 @@
-export type IntelligenceDomScope = "favorite" | "capture" | "hotness";
+export type IntelligenceDomScope = "favorite" | "hotness";
 
 type IntelligenceDomListener = {
   id: number;
@@ -33,17 +33,6 @@ const FAVORITE_ROW_SELECTOR = [
   ".analysis-grid > a[target='_blank'][href]",
 ].join(",");
 
-const CAPTURE_ROW_SELECTOR = [
-  ".event-row",
-  "[data-intelligence-item]",
-  ".headlines-column a[class*='feedRow']",
-  ".side-column a[class*='feedRow']",
-  ".material-list > a",
-  "a.source-card[href]",
-  "a[class*='eventCard'][href]",
-  ".market-news-item[href]",
-].join(",");
-
 const HOTNESS_ROW_SELECTOR = [
   FAVORITE_ROW_SELECTOR,
   ".favorite-intelligence-card",
@@ -56,7 +45,6 @@ const TIMELINE_ROW_SELECTOR = ".timeline > div";
 export const INTELLIGENCE_CONTROL_MOUNT_SELECTOR = [
   "[data-intelligence-favorite-mount]",
   "[data-intelligence-hotness-mount]",
-  "[data-intelligence-capture-mount]",
 ].join(",");
 
 const listeners = new Map<number, IntelligenceDomListener>();
@@ -228,8 +216,7 @@ export function subscribeIntelligenceDom(
 }
 
 export function isIntelligenceDomRow(row: HTMLElement, scope: IntelligenceDomScope): boolean {
-  if (row.matches(TIMELINE_ROW_SELECTOR)) return scope !== "capture";
+  if (row.matches(TIMELINE_ROW_SELECTOR)) return true;
   if (scope === "favorite") return row.matches(FAVORITE_ROW_SELECTOR);
-  if (scope === "capture") return row.matches(CAPTURE_ROW_SELECTOR);
   return row.matches(HOTNESS_ROW_SELECTOR);
 }
