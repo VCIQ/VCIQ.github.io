@@ -2,6 +2,10 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
+  applyTrackingCapture,
+  normalizeTrackingCaptureInbox,
+} from "../lib/tracking-capture";
+import {
   assertNoNewCompoundTrackingEntities,
   findNewCompoundTrackingEntities,
   splitCompoundTrackingEntityName,
@@ -51,6 +55,33 @@ test("single legal-looking names are not split", () => {
   assert.deepEqual(splitCompoundTrackingEntityName("Procter & Gamble"), []);
   assert.deepEqual(splitCompoundTrackingEntityName("Pony.ai, Inc."), []);
   assert.deepEqual(splitCompoundTrackingEntityName("A/B Test Labs"), []);
+});
+
+test("capture rejects a compound draft before entity resolution", () => {
+  const previous = config();
+  assert.throws(
+    () =>
+      applyTrackingCapture({
+        config: previous,
+        inbox: normalizeTrackingCaptureInbox({}),
+        entities: [{ entityType: "person", name: "Sam Altman、Demis Hassabis" }],
+        selectedTrackSlugs: ["ai"],
+        source: {
+          articleId: "compound-guard",
+          title: "Compound capture guard fixture",
+          url: "https://example.com/compound-guard",
+          summary: "",
+          sourceName: "fixture",
+          channel: "technology",
+          channelLabel: "新兴科技",
+          eventType: "测试",
+        },
+        capturedAt: "2026-08-09T08:00:00Z",
+        capturedBy: "test",
+      }),
+    /人物追踪对象疑似包含多个实体.*请拆分为独立实体/,
+  );
+  assert.deepEqual(previous.tracks[0].people, ["Quoc Le、Jeff Dean"]);
 });
 
 test("historical compound entities are grandfathered and do not block unrelated saves", () => {
