@@ -29,6 +29,18 @@ export function splitCompoundTrackingEntityName(value: string): string[] {
   return parts.length > 1 ? parts : [];
 }
 
+export function assertSingleTrackingEntityName(
+  entityType: "company" | "person",
+  value: string,
+): void {
+  const parts = splitCompoundTrackingEntityName(value);
+  if (parts.length < 2) return;
+  const label = entityType === "person" ? "人物" : "公司";
+  throw new Error(
+    `${label}追踪对象疑似包含多个实体：“${value.trim()}” → ${parts.join("、")}。请拆分为独立实体后再采集。`,
+  );
+}
+
 export function findNewCompoundTrackingEntities(
   previous: UserTrackingConfig,
   next: UserTrackingConfig,
