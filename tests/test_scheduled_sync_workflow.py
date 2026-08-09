@@ -28,6 +28,25 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("      - config/user_tracking.json", text)
 
+    def test_source_portfolio_runtime_changes_start_one_full_refresh(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        for path in (
+            "tools/article_publication_gate.py",
+            "tools/core_official_adapters.py",
+            "tools/source_portfolio.py",
+        ):
+            with self.subTest(path=path):
+                self.assertIn(f"      - {path}", text)
+                self.assertIn(f"            {path}", text)
+
+        for test_module in (
+            "tests.test_article_publication_gate",
+            "tests.test_core_official_adapters",
+            "tests.test_source_portfolio",
+        ):
+            with self.subTest(test_module=test_module):
+                self.assertIn(test_module, text)
+
     def test_test_only_changes_do_not_start_a_production_full_refresh(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertNotIn("      - tests/**/*.py", text)
