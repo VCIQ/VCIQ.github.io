@@ -103,10 +103,10 @@ permissions:
   issues: write
 
 concurrency:
-  group: vciq-repository-writer-${{ github.ref }}
-  # A full refresh must not evict candidate onboarding or reconciliation that was
-  # queued first. Writer correctness takes precedence over cross-workflow compaction.
-  queue: max
+  group: vciq-public-refresh-${{ github.ref }}
+  # Keep only the newest pending refresh request. The crawl still takes the
+  # shared writer lease before it can mutate repository state.
+  queue: single
 
 jobs:
   preflight:
@@ -138,6 +138,9 @@ jobs:
   crawl:
     needs: preflight
     if: needs.preflight.outputs.current == 'true'
+    concurrency:
+      group: vciq-repository-writer-${{ github.ref }}
+      queue: max
     runs-on: ubuntu-latest
     timeout-minutes: 65
     steps:

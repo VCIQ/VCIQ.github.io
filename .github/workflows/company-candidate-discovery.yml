@@ -38,11 +38,14 @@ permissions:
   actions: write
 
 concurrency:
-  group: vciq-repository-writer-${{ github.ref }}
-  queue: max
+  group: vciq-candidate-discovery-${{ github.ref }}-${{ inputs.publish_after_reconciliation || 'false' }}
+  queue: single
 
 jobs:
   discover:
+    concurrency:
+      group: vciq-repository-writer-${{ github.ref }}
+      queue: max
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:

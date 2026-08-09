@@ -9,13 +9,15 @@ WORKFLOW = ROOT / ".github" / "workflows" / "scheduled-sync.yml"
 
 
 class ScheduledSyncWorkflowTest(unittest.TestCase):
-    def test_complete_refresh_preserves_pending_repository_writers(self) -> None:
+    def test_complete_refresh_compacts_duplicate_requests_but_keeps_shared_writer_job_queue(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
-        self.assertIn("group: vciq-repository-writer-", text)
-        self.assertIn("github.ref", text)
-        self.assertIn("queue: max", text)
-        self.assertNotIn("queue: single", text)
-        self.assertIn("must not evict candidate onboarding or reconciliation", text)
+        top = text.split("jobs:", 1)[0]
+        self.assertIn("group: vciq-public-refresh-${{ github.ref }}", top)
+        self.assertIn("queue: single", top)
+        self.assertNotIn("vciq-repository-writer-", top)
+        crawl = text.split("  crawl:\n", 1)[1]
+        self.assertIn("group: vciq-repository-writer-${{ github.ref }}", crawl)
+        self.assertIn("queue: max", crawl)
         self.assertNotIn("cancel-in-progress:", text)
 
     def test_full_refresh_runs_once_daily_after_the_us_close(self) -> None:
