@@ -66,15 +66,27 @@ test("company review queue is repository-only and not statically bundled", () =>
   assert.doesNotMatch(dataBoundary, /public\/data\/company_candidates\.json/u);
   assert.match(dataBoundary, /candidates:\s*\[\]/u);
 
-  const adminOnboarding = read("components/tracking-company-onboarding.tsx");
-  assert.match(
-    adminOnboarding,
-    /config\/company_candidate_review_queue\.json/u,
+  assert.equal(
+    fs.existsSync(path.join(root, "components/tracking-company-onboarding.tsx")),
+    false,
   );
-  assert.doesNotMatch(
-    adminOnboarding,
-    /public\/data\/company_candidates\.json/u,
+});
+
+test("public update directories contain no browser-side repository writer", () => {
+  assert.equal(
+    fs.existsSync(path.join(root, "components/channel-document-import.tsx")),
+    false,
   );
+  assert.equal(
+    fs.existsSync(path.join(root, "components/channel-document-import.module.css")),
+    false,
+  );
+
+  const directoryClient = read("components/channel-update-directory-client.tsx");
+  assert.doesNotMatch(directoryClient, /ChannelDocumentImport/u);
+  assert.doesNotMatch(directoryClient, /tracking-admin-token/u);
+  assert.doesNotMatch(directoryClient, /onDrop=/u);
+  assert.doesNotMatch(directoryClient, /导入文档信源/u);
 });
 
 test("tracking snapshot coverage has no environment bypass", () => {
