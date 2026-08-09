@@ -1,0 +1,223 @@
+name: Apply tracking writer queue compaction
+
+on:
+  push:
+    branches:
+      - fix/tracking-writer-queue-compaction
+    paths:
+      - .github/workflows/apply-tracking-writer-queue-compaction.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout queue-compaction branch
+        uses: actions/checkout@v4
+        with:
+          ref: fix/tracking-writer-queue-compaction
+          fetch-depth: 0
+
+      - name: Patch workflow concurrency without rewriting unrelated content
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          ref_expr = "$" + "{{ github.ref }}"
+          discovery_mode_expr = "$" + "{{ inputs.publish_after_reconciliation || 'false' }}"
+          onboarding_mode_expr = "$" + "{{ inputs.post_onboarding_handoff || 'none' }}"
+
+          def replace_once(path: str, old: str, new: str) -> None:
+              target = Path(path)
+              text = target.read_text(encoding="utf-8")
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f"{path}: expected one replacement target, found {count}")
+              target.write_text(text.replace(old, new, 1), encoding="utf-8")
+
+          discovery = ".github/workflows/company-candidate-discovery.yml"
+          replace_once(
+              discovery,
+              "concurrency:\n"
+              f"  group: vciq-repository-writer-{ref_expr}\n"
+              "  queue: max\n\n"
+              "jobs:\n"
+              "  discover:\n"
+              "    runs-on: ubuntu-latest\n",
+              "concurrency:\n"
+              f"  group: vciq-candidate-discovery-{ref_expr}-{discovery_mode_expr}\n"
+              "  queue: single\n\n"
+              "jobs:\n"
+              "  discover:\n"
+              "    concurrency:\n"
+              f"      group: vciq-repository-writer-{ref_expr}\n"
+              "      queue: max\n"
+              "    runs-on: ubuntu-latest\n",
+          )
+
+          onboarding = ".github/workflows/company-candidate-onboarding.yml"
+          replace_once(
+              onboarding,
+              "concurrency:\n"
+              f"  group: vciq-repository-writer-{ref_expr}\n"
+              "  queue: max\n\n"
+              "jobs:\n"
+              "  onboard:\n"
+              "    runs-on: ubuntu-latest\n",
+              "concurrency:\n"
+              f"  group: vciq-candidate-onboarding-{ref_expr}-{onboarding_mode_expr}\n"
+              "  queue: single\n\n"
+              "jobs:\n"
+              "  onboard:\n"
+              "    concurrency:\n"
+              f"      group: vciq-repository-writer-{ref_expr}\n"
+              "      queue: max\n"
+              "    runs-on: ubuntu-latest\n",
+          )
+
+          refresh = ".github/workflows/scheduled-sync.yml"
+          replace_once(
+              refresh,
+              "concurrency:\n"
+              f"  group: vciq-repository-writer-{ref_expr}\n"
+              "  # A full refresh must not evict candidate onboarding or reconciliation that was\n"
+              "  # queued first. Writer correctness takes precedence over cross-workflow compaction.\n"
+              "  queue: max\n\n"
+              "jobs:\n"
+              "  preflight:\n",
+              "concurrency:\n"
+              f"  group: vciq-public-refresh-{ref_expr}\n"
+              "  # Keep only the newest pending refresh request. The crawl still takes the\n"
+              "  # shared writer lease before it can mutate repository state.\n"
+              "  queue: single\n\n"
+              "jobs:\n"
+              "  preflight:\n",
+          )
+          replace_once(
+              refresh,
+              "  crawl:\n"
+              "    needs: preflight\n"
+              "    if: needs.preflight.outputs.current == 'true'\n"
+              "    runs-on: ubuntu-latest\n",
+              "  crawl:\n"
+              "    needs: preflight\n"
+              "    if: needs.preflight.outputs.current == 'true'\n"
+              "    concurrency:\n"
+              f"      group: vciq-repository-writer-{ref_expr}\n"
+              "      queue: max\n"
+              "    runs-on: ubuntu-latest\n",
+          )
+
+          discovery_test = "tests/test_tracking_discovery_workflow.py"
+          replace_once(
+              discovery_test,
+              "    def test_workflow_keeps_the_shared_writer_queue(self) -> None:\n"
+              "        text = WORKFLOW.read_text(encoding=\"utf-8\")\n"
+              f"        self.assertIn(\"group: vciq-repository-writer-{ref_expr}\", text)\n"
+              "        self.assertIn(\"queue: max\", text)\n",
+              "    def test_workflow_compacts_duplicate_discovery_but_keeps_shared_writer_job_queue(self) -> None:\n"
+              "        text = WORKFLOW.read_text(encoding=\"utf-8\")\n"
+              "        top = text.split(\"jobs:\", 1)[0]\n"
+              f"        self.assertIn(\"group: vciq-candidate-discovery-{ref_expr}-{discovery_mode_expr}\", top)\n"
+              "        self.assertIn(\"queue: single\", top)\n"
+              "        discover = text.split(\"  discover:\\n\", 1)[1]\n"
+              f"        self.assertIn(\"group: vciq-repository-writer-{ref_expr}\", discover)\n"
+              "        self.assertIn(\"queue: max\", discover)\n",
+          )
+
+          scheduled_test = "tests/test_scheduled_sync_workflow.py"
+          replace_once(
+              scheduled_test,
+              "    def test_complete_refresh_preserves_pending_repository_writers(self) -> None:\n"
+              "        text = WORKFLOW.read_text(encoding=\"utf-8\")\n"
+              "        self.assertIn(\"group: vciq-repository-writer-\", text)\n"
+              "        self.assertIn(\"github.ref\", text)\n"
+              "        self.assertIn(\"queue: max\", text)\n"
+              "        self.assertNotIn(\"queue: single\", text)\n"
+              "        self.assertIn(\"must not evict candidate onboarding or reconciliation\", text)\n"
+              "        self.assertNotIn(\"cancel-in-progress:\", text)\n",
+              "    def test_complete_refresh_compacts_duplicate_requests_but_keeps_shared_writer_job_queue(self) -> None:\n"
+              "        text = WORKFLOW.read_text(encoding=\"utf-8\")\n"
+              "        top = text.split(\"jobs:\", 1)[0]\n"
+              f"        self.assertIn(\"group: vciq-public-refresh-{ref_expr}\", top)\n"
+              "        self.assertIn(\"queue: single\", top)\n"
+              "        self.assertNotIn(\"vciq-repository-writer-\", top)\n"
+              "        crawl = text.split(\"  crawl:\\n\", 1)[1]\n"
+              f"        self.assertIn(\"group: vciq-repository-writer-{ref_expr}\", crawl)\n"
+              "        self.assertIn(\"queue: max\", crawl)\n"
+              "        self.assertNotIn(\"cancel-in-progress:\", text)\n",
+          )
+
+          onboarding_test = Path("tests/test_company_candidate_onboarding_workflow.py")
+          onboarding_test.write_text(
+              "from pathlib import Path\n"
+              "import unittest\n\n\n"
+              "ROOT = Path(__file__).resolve().parents[1]\n"
+              "WORKFLOW = ROOT / '.github' / 'workflows' / 'company-candidate-onboarding.yml'\n\n\n"
+              "class CompanyCandidateOnboardingWorkflowTests(unittest.TestCase):\n"
+              "    def test_handoff_modes_compact_independently_and_writer_job_stays_serialized(self) -> None:\n"
+              "        text = WORKFLOW.read_text(encoding='utf-8')\n"
+              "        top = text.split('jobs:', 1)[0]\n"
+              f"        self.assertIn(\"group: vciq-candidate-onboarding-{ref_expr}-{onboarding_mode_expr}\", top)\n"
+              "        self.assertIn('queue: single', top)\n"
+              "        onboard = text.split('  onboard:\\n', 1)[1]\n"
+              f"        self.assertIn(\"group: vciq-repository-writer-{ref_expr}\", onboard)\n"
+              "        self.assertIn('queue: max', onboard)\n"
+              "        self.assertNotIn('cancel-in-progress:', text)\n\n"
+              "    def test_refresh_and_terminal_publication_handoffs_remain_distinct(self) -> None:\n"
+              "        text = WORKFLOW.read_text(encoding='utf-8')\n"
+              "        self.assertIn('post_onboarding_handoff:', text)\n"
+              "        self.assertIn('refresh)', text)\n"
+              "        self.assertIn('publish-with-research)', text)\n"
+              "        self.assertIn('gh workflow run scheduled-sync.yml --ref main', text)\n"
+              "        self.assertIn('run_research_after_deploy=true', text)\n\n\n"
+              "if __name__ == '__main__':\n"
+              "    unittest.main()\n",
+              encoding="utf-8",
+          )
+          PY
+
+      - name: Verify queue-compaction tests and diff scope
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest \
+            tests.test_scheduled_sync_workflow \
+            tests.test_tracking_discovery_workflow \
+            tests.test_company_candidate_onboarding_workflow
+          git diff --check
+          mapfile -t changed < <(git diff --name-only)
+          printf 'Queue compaction changed files:\n'
+          printf '  %s\n' "${changed[@]}"
+          expected=(
+            .github/workflows/company-candidate-discovery.yml
+            .github/workflows/company-candidate-onboarding.yml
+            .github/workflows/scheduled-sync.yml
+            tests/test_company_candidate_onboarding_workflow.py
+            tests/test_scheduled_sync_workflow.py
+            tests/test_tracking_discovery_workflow.py
+          )
+          if [[ "${changed[*]}" != "${expected[*]}" ]]; then
+            echo "Unexpected queue-compaction diff" >&2
+            exit 1
+          fi
+
+      - name: Commit queue compaction
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            .github/workflows/company-candidate-discovery.yml \
+            .github/workflows/company-candidate-onboarding.yml \
+            .github/workflows/scheduled-sync.yml \
+            tests/test_company_candidate_onboarding_workflow.py \
+            tests/test_scheduled_sync_workflow.py \
+            tests/test_tracking_discovery_workflow.py
+          git commit -m "ci: compact tracking writer queues without losing handoffs"
+          git push origin HEAD:fix/tracking-writer-queue-compaction
