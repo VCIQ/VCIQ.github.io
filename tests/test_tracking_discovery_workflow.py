@@ -68,6 +68,28 @@ class TrackingDiscoveryWorkflowTests(unittest.TestCase):
         self.assertIn("npm run validate:taxonomy", text)
         self.assertNotIn("git pull --rebase origin main", text)
 
+    def test_compound_entity_integrity_guards_initial_commit_and_replay(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertEqual(text.count("npm run validate:tracking-entities"), 2)
+
+        initial = text.split("- name: Validate the expanded config before committing", 1)[1].split(
+            "- name: Commit expanded tracking config", 1
+        )[0]
+        self.assertIn("npm run validate:tracking-entities", initial)
+        self.assertLess(
+            initial.index("npm run validate:tracking-entities"),
+            initial.index("npm run validate:taxonomy"),
+        )
+
+        replay = text.split("regenerate_from_latest_main()", 1)[1].split(
+            "if ! commit_current_config", 1
+        )[0]
+        self.assertIn("npm run validate:tracking-entities", replay)
+        self.assertLess(
+            replay.index("npm run validate:tracking-entities"),
+            replay.index("npm run validate:taxonomy"),
+        )
+
     def test_successful_push_relies_on_the_full_refresh_push_trigger(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("if git push origin HEAD:main; then", text)
