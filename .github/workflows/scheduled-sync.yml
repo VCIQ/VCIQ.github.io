@@ -19,6 +19,9 @@ on:
       - tools/crawl_tracked_articles.py
       - tools/crawl_with_source_categories.py
       - tools/crawl_with_wechat_registry.py
+      - tools/article_publication_gate.py
+      - tools/core_official_adapters.py
+      - tools/source_portfolio.py
       - tools/http_request_policy.py
       - tools/http_policy_bridge.py
       - tools/semantic_data_diff.py
@@ -143,6 +146,9 @@ jobs:
             tools/snapshot_retention.py \
             tools/refresh_article_quality_gate.py \
             tools/crawl_with_wechat_registry.py \
+            tools/article_publication_gate.py \
+            tools/core_official_adapters.py \
+            tools/source_portfolio.py \
             tools/run_pipeline.py \
             tools/build_pipeline_health.py
           python -m unittest \
@@ -161,6 +167,9 @@ jobs:
             tests.test_source_performance_review_cli \
             tests.test_professional_media_progress \
             tests.test_professional_media_sources \
+            tests.test_article_publication_gate \
+            tests.test_core_official_adapters \
+            tests.test_source_portfolio \
             tests.test_listed_company_disclosures \
             tests.test_cninfo_structured_disclosures \
             tests.test_sec_structured_disclosures \
