@@ -17,11 +17,37 @@ test("public tracking landing is build-based and contains no admin loader", () =
   assert.doesNotMatch(source, /tracking-capture-inbox-github/u);
 });
 
-test("public source tree has no tracking capture route", () => {
-  assert.equal(
-    fs.existsSync(path.join(root, "app/tracking/capture/page.tsx")),
-    false,
-  );
+test("public source tree has no tracking capture route or browser admin stack", () => {
+  const retired = [
+    "app/tracking/capture/page.tsx",
+    "components/user-tracking-loader.tsx",
+    "components/user-tracking-panel.tsx",
+    "components/tracking-admin-session-guard.tsx",
+    "components/tracking-admin-conflict-guard.tsx",
+    "components/tracking-company-candidate-review.tsx",
+    "components/tracking-entity-resolution-review.tsx",
+    "components/tracking-capture-inbox.tsx",
+    "components/tracking-recommendations-bridge.tsx",
+    "components/intelligence-tracking-capture-controls.tsx",
+    "components/external-tracking-capture-page.tsx",
+  ];
+  for (const relativePath of retired) {
+    assert.equal(
+      fs.existsSync(path.join(root, relativePath)),
+      false,
+      `${relativePath} must stay outside the public source tree`,
+    );
+  }
+});
+
+test("global public client controls remain read only", () => {
+  const source = read("components/site-client-controls.tsx");
+  assert.match(source, /IntelligenceFavoriteControls/u);
+  assert.match(source, /IntelligenceHotnessControls/u);
+  assert.match(source, /WechatShareCompat/u);
+  assert.doesNotMatch(source, /IntelligenceTrackingCaptureControls/u);
+  assert.doesNotMatch(source, /tracking-capture-github/u);
+  assert.doesNotMatch(source, /tracking-admin-token/u);
 });
 
 test("public research detail compatibility component contains no write client", () => {
