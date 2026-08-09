@@ -7,10 +7,14 @@ import {
 } from "../lib/tracking-capture";
 import {
   assertNoNewCompoundTrackingEntities,
+  findCompoundTrackingEntities,
   findNewCompoundTrackingEntities,
   splitCompoundTrackingEntityName,
 } from "../lib/tracking-entity-integrity";
-import type { UserTrackingConfig } from "../lib/user-tracking";
+import {
+  userTrackingConfig,
+  type UserTrackingConfig,
+} from "../lib/user-tracking";
 
 function config(): UserTrackingConfig {
   return {
@@ -132,4 +136,8 @@ test("moving a historical compound value into another track is treated as new po
   assert.equal(issues.length, 1);
   assert.equal(issues[0].trackSlug, "robotics");
   assert.equal(issues[0].entityType, "person");
+});
+
+test("production tracking config has zero compound person and company values", () => {
+  assert.deepEqual(findCompoundTrackingEntities(userTrackingConfig), []);
 });
