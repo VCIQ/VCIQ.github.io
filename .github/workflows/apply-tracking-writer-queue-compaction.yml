@@ -112,23 +112,6 @@ jobs:
               "    runs-on: ubuntu-latest\n",
           )
 
-          discovery_test = "tests/test_tracking_discovery_workflow.py"
-          replace_once(
-              discovery_test,
-              "    def test_workflow_keeps_the_shared_writer_queue(self) -> None:\n"
-              "        text = WORKFLOW.read_text(encoding=\"utf-8\")\n"
-              f"        self.assertIn(\"group: vciq-repository-writer-{ref_expr}\", text)\n"
-              "        self.assertIn(\"queue: max\", text)\n",
-              "    def test_workflow_compacts_duplicate_discovery_but_keeps_shared_writer_job_queue(self) -> None:\n"
-              "        text = WORKFLOW.read_text(encoding=\"utf-8\")\n"
-              "        top = text.split(\"jobs:\", 1)[0]\n"
-              f"        self.assertIn(\"group: vciq-candidate-discovery-{ref_expr}-{discovery_mode_expr}\", top)\n"
-              "        self.assertIn(\"queue: single\", top)\n"
-              "        discover = text.split(\"  discover:\\n\", 1)[1]\n"
-              f"        self.assertIn(\"group: vciq-repository-writer-{ref_expr}\", discover)\n"
-              "        self.assertIn(\"queue: max\", discover)\n",
-          )
-
           scheduled_test = "tests/test_scheduled_sync_workflow.py"
           replace_once(
               scheduled_test,
@@ -150,6 +133,33 @@ jobs:
               f"        self.assertIn(\"group: vciq-repository-writer-{ref_expr}\", crawl)\n"
               "        self.assertIn(\"queue: max\", crawl)\n"
               "        self.assertNotIn(\"cancel-in-progress:\", text)\n",
+          )
+
+          candidate_discovery_test = Path("tests/test_company_candidate_discovery_workflow.py")
+          candidate_discovery_test.write_text(
+              "from pathlib import Path\n"
+              "import unittest\n\n\n"
+              "ROOT = Path(__file__).resolve().parents[1]\n"
+              "WORKFLOW = ROOT / '.github' / 'workflows' / 'company-candidate-discovery.yml'\n\n\n"
+              "class CompanyCandidateDiscoveryWorkflowTests(unittest.TestCase):\n"
+              "    def test_semantic_modes_compact_independently_and_writer_job_stays_serialized(self) -> None:\n"
+              "        text = WORKFLOW.read_text(encoding='utf-8')\n"
+              "        top = text.split('jobs:', 1)[0]\n"
+              f"        self.assertIn(\"group: vciq-candidate-discovery-{ref_expr}-{discovery_mode_expr}\", top)\n"
+              "        self.assertIn('queue: single', top)\n"
+              "        discover = text.split('  discover:\\n', 1)[1]\n"
+              f"        self.assertIn(\"group: vciq-repository-writer-{ref_expr}\", discover)\n"
+              "        self.assertIn('queue: max', discover)\n"
+              "        self.assertNotIn('cancel-in-progress:', text)\n\n"
+              "    def test_refresh_and_terminal_publication_handoffs_remain_distinct(self) -> None:\n"
+              "        text = WORKFLOW.read_text(encoding='utf-8')\n"
+              "        self.assertIn('publish_after_reconciliation:', text)\n"
+              "        self.assertIn('post_onboarding_handoff=refresh', text)\n"
+              "        self.assertIn('post_onboarding_handoff=publish-with-research', text)\n"
+              "        self.assertIn('gh workflow run scheduled-sync.yml --ref main', text)\n\n\n"
+              "if __name__ == '__main__':\n"
+              "    unittest.main()\n",
+              encoding="utf-8",
           )
 
           onboarding_test = Path("tests/test_company_candidate_onboarding_workflow.py")
@@ -187,7 +197,7 @@ jobs:
           set -euo pipefail
           python -m unittest \
             tests.test_scheduled_sync_workflow \
-            tests.test_tracking_discovery_workflow \
+            tests.test_company_candidate_discovery_workflow \
             tests.test_company_candidate_onboarding_workflow
           git diff --check
           mapfile -t changed < <(git diff --name-only)
@@ -197,9 +207,9 @@ jobs:
             .github/workflows/company-candidate-discovery.yml
             .github/workflows/company-candidate-onboarding.yml
             .github/workflows/scheduled-sync.yml
+            tests/test_company_candidate_discovery_workflow.py
             tests/test_company_candidate_onboarding_workflow.py
             tests/test_scheduled_sync_workflow.py
-            tests/test_tracking_discovery_workflow.py
           )
           if [[ "${changed[*]}" != "${expected[*]}" ]]; then
             echo "Unexpected queue-compaction diff" >&2
@@ -216,8 +226,8 @@ jobs:
             .github/workflows/company-candidate-discovery.yml \
             .github/workflows/company-candidate-onboarding.yml \
             .github/workflows/scheduled-sync.yml \
+            tests/test_company_candidate_discovery_workflow.py \
             tests/test_company_candidate_onboarding_workflow.py \
-            tests/test_scheduled_sync_workflow.py \
-            tests/test_tracking_discovery_workflow.py
+            tests/test_scheduled_sync_workflow.py
           git commit -m "ci: compact tracking writer queues without losing handoffs"
           git push origin HEAD:fix/tracking-writer-queue-compaction
