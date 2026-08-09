@@ -7,8 +7,9 @@ import type { UserTrackingConfig } from "../lib/user-tracking";
 const DEFAULT_PATH = "config/user_tracking.json";
 
 async function main(): Promise<void> {
-  const write = process.argv.includes("--write");
-  const pathArg = process.argv.find((arg) => !arg.startsWith("--") && arg !== process.argv[1]);
+  const args = process.argv.slice(2);
+  const write = args.includes("--write");
+  const pathArg = args.find((arg) => !arg.startsWith("--"));
   const targetPath = resolve(process.cwd(), pathArg || DEFAULT_PATH);
   const raw = await readFile(targetPath, "utf8");
   const config = JSON.parse(raw) as UserTrackingConfig;
