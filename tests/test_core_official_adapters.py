@@ -123,6 +123,99 @@ class CoreOfficialAdaptersTests(unittest.TestCase):
         self.assertEqual(entries[1]["publishedAt"], "2026-05-31")
         self.assertEqual(entries[1]["url"], "https://www.unitree.com/news/38")
 
+    def test_spacex_release_allowlist_rejects_non_first_party_urls(self) -> None:
+        allowed = (
+            "https://ir.spacex.com/updates/releases-details/2026/SpaceX-Results/default.aspx",
+            "https://ir.spacex.com/updates/releases/details/2026/SpaceX-Results/default.aspx",
+        )
+        for url in allowed:
+            with self.subTest(url=url):
+                self.assertTrue(core_official_adapters._spacex_release_url_allowed(url))
+
+        rejected = (
+            "https://example.com/updates/releases-details/2026/SpaceX-Results/default.aspx",
+            "http://ir.spacex.com/updates/releases-details/2026/SpaceX-Results/default.aspx",
+            "https://ir.spacex.com/updates/",
+            "https://ir.spacex.com/financials/sec-filings-details/default.aspx",
+        )
+        for url in rejected:
+            with self.subTest(url=url):
+                self.assertFalse(core_official_adapters._spacex_release_url_allowed(url))
+
+    def test_spacex_search_fallback_publishes_only_after_first_party_fetch(self) -> None:
+        first_party = (
+            "https://ir.spacex.com/updates/releases-details/2026/"
+            "SpaceX-to-Post-Second-Quarter-2026-Results/default.aspx"
+        )
+        evil = (
+            "https://example.com/updates/releases-details/2026/"
+            "Fake-SpaceX-Release/default.aspx"
+        )
+        rss = f"""
+        <rss><channel>
+          <item><link>{first_party}</link></item>
+          <item><link>{evil}</link></item>
+        </channel></rss>
+        """
+        fetches: list[str] = []
+        parsed: list[str] = []
+
+        class Source:
+            id = "spacex"
+            name = "SpaceX"
+            index_url = "https://ir.spacex.com/updates/"
+            company = "SpaceX"
+            company_slug = "spacex"
+            region = "美国"
+            sector = "商业航天"
+
+        class FakeCrawler:
+            MAX_NEWS_PER_SOURCE = 10
+
+            @staticmethod
+            def normalize_url(url):
+                return url
+
+            @staticmethod
+            def crawl_news_source(_source, _user_agent):
+                raise RuntimeError("no dated articles parsed from 0 discovered links")
+
+            @staticmethod
+            def fetch_text(url, _user_agent):
+                fetches.append(url)
+                if url.startswith("https://www.bing.com/search?"):
+                    return rss
+                if url == first_party:
+                    return "<html>first-party SpaceX release</html>"
+                raise AssertionError(f"unexpected fetch: {url}")
+
+            @staticmethod
+            def parse_news_article(_source, url, body):
+                parsed.append(url)
+                if url != first_party or "first-party" not in body:
+                    return None
+                return {"sourceId": "spacex", "source": {"url": url}}
+
+            @staticmethod
+            def _status(source_id, name, status, scanned, accepted, **kwargs):
+                return {
+                    "id": source_id,
+                    "name": name,
+                    "status": status,
+                    "scanned": scanned,
+                    "accepted": accepted,
+                    **kwargs,
+                }
+
+        core_official_adapters._install_spacex_search_adapter(FakeCrawler)
+        articles, status = FakeCrawler.crawl_news_source(Source(), "test-agent")
+        self.assertEqual(len(articles), 1)
+        self.assertEqual(parsed, [first_party])
+        self.assertNotIn(evil, fetches)
+        self.assertEqual(status["urlDiscovery"], "bing-site-filter")
+        self.assertTrue(status["firstPartyFetched"])
+        self.assertEqual(status["accepted"], 1)
+
 
 if __name__ == "__main__":
     unittest.main()
