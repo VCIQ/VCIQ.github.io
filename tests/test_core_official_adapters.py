@@ -99,6 +99,13 @@ class CoreOfficialAdaptersTests(unittest.TestCase):
             "/updates/releases/details/",
             sources["spacex"]["path_prefixes"],
         )
+        self.assertTrue(core_official_adapters._SPACEX_BOOTSTRAP_RELEASE_URLS)
+        self.assertTrue(
+            all(
+                core_official_adapters._spacex_release_url_allowed(url)
+                for url in core_official_adapters._SPACEX_BOOTSTRAP_RELEASE_URLS
+            )
+        )
 
     def test_unitree_listing_parser_uses_first_party_index_metadata(self) -> None:
         body = """
@@ -142,21 +149,34 @@ class CoreOfficialAdaptersTests(unittest.TestCase):
             with self.subTest(url=url):
                 self.assertFalse(core_official_adapters._spacex_release_url_allowed(url))
 
-    def test_spacex_search_fallback_publishes_only_after_first_party_fetch(self) -> None:
-        first_party = (
+    def test_spacex_release_link_expansion_keeps_only_strict_first_party_paths(self) -> None:
+        current = core_official_adapters._SPACEX_BOOTSTRAP_RELEASE_URLS[0]
+        newer = (
             "https://ir.spacex.com/updates/releases-details/2026/"
-            "SpaceX-to-Post-Second-Quarter-2026-Results/default.aspx"
+            "SpaceX-Posts-Second-Quarter-2026-Results/default.aspx"
+        )
+        body = f"""
+        <html><body>
+          <a href="{newer}">New result</a>
+          <a href="https://example.com/updates/releases-details/2026/Fake/default.aspx">Fake</a>
+          <a href="/financials/sec-filings-details/default.aspx?FilingId=1">SEC</a>
+        </body></html>
+        """
+        self.assertEqual(
+            core_official_adapters._spacex_release_links(body, current),
+            [newer],
+        )
+
+    def test_spacex_bootstrap_publishes_only_after_first_party_fetch(self) -> None:
+        seeds = list(core_official_adapters._SPACEX_BOOTSTRAP_RELEASE_URLS)
+        newer = (
+            "https://ir.spacex.com/updates/releases-details/2026/"
+            "SpaceX-Posts-Second-Quarter-2026-Results/default.aspx"
         )
         evil = (
             "https://example.com/updates/releases-details/2026/"
             "Fake-SpaceX-Release/default.aspx"
         )
-        rss = f"""
-        <rss><channel>
-          <item><link>{first_party}</link></item>
-          <item><link>{evil}</link></item>
-        </channel></rss>
-        """
         fetches: list[str] = []
         parsed: list[str] = []
 
@@ -183,16 +203,16 @@ class CoreOfficialAdaptersTests(unittest.TestCase):
             @staticmethod
             def fetch_text(url, _user_agent):
                 fetches.append(url)
-                if url.startswith("https://www.bing.com/search?"):
-                    return rss
-                if url == first_party:
+                if url == seeds[0]:
+                    return f'<html><a href="{newer}">new</a><a href="{evil}">evil</a></html>'
+                if url in seeds[1:] or url == newer:
                     return "<html>first-party SpaceX release</html>"
                 raise AssertionError(f"unexpected fetch: {url}")
 
             @staticmethod
             def parse_news_article(_source, url, body):
                 parsed.append(url)
-                if url != first_party or "first-party" not in body:
+                if "first-party" not in body and url != seeds[0]:
                     return None
                 return {"sourceId": "spacex", "source": {"url": url}}
 
@@ -207,14 +227,17 @@ class CoreOfficialAdaptersTests(unittest.TestCase):
                     **kwargs,
                 }
 
-        core_official_adapters._install_spacex_search_adapter(FakeCrawler)
+        core_official_adapters._install_spacex_bootstrap_adapter(FakeCrawler)
         articles, status = FakeCrawler.crawl_news_source(Source(), "test-agent")
-        self.assertEqual(len(articles), 1)
-        self.assertEqual(parsed, [first_party])
+        self.assertGreaterEqual(len(articles), 2)
+        self.assertTrue(all(item["sourceId"] == "spacex" for item in articles))
+        self.assertIn(seeds[0], fetches)
+        self.assertIn(newer, fetches)
         self.assertNotIn(evil, fetches)
-        self.assertEqual(status["urlDiscovery"], "bing-site-filter")
+        self.assertIn(newer, parsed)
+        self.assertEqual(status["urlDiscovery"], "verified-first-party-bootstrap")
         self.assertTrue(status["firstPartyFetched"])
-        self.assertEqual(status["accepted"], 1)
+        self.assertGreaterEqual(status["expandedReleaseLinks"], 1)
 
 
 if __name__ == "__main__":
