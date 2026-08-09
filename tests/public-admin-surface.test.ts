@@ -8,6 +8,8 @@ const PUBLIC_SOURCE_ROOTS = ["app", "components"].map((segment) => path.join(ROO
 const LEGACY_ADMIN_FILES = [
   "components/tracking-company-onboarding.tsx",
   "components/tracking-company-onboarding.module.css",
+  "components/channel-document-import.tsx",
+  "components/channel-document-import.module.css",
 ];
 
 function sourceFiles(root: string): string[] {
@@ -20,7 +22,7 @@ function sourceFiles(root: string): string[] {
   });
 }
 
-test("legacy browser-based company onboarding admin client stays removed", () => {
+test("legacy browser-based repository admin clients stay removed", () => {
   for (const relativePath of LEGACY_ADMIN_FILES) {
     assert.equal(
       existsSync(path.join(ROOT, relativePath)),
