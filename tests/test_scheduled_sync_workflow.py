@@ -82,6 +82,11 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("REFRESH_INPUT_PATHS=(", text)
         for path in (
+            ".github/workflows/scheduled-sync.yml",
+            "tools/crawl_with_wechat_registry.py",
+            "tools/article_publication_gate.py",
+            "tools/core_official_adapters.py",
+            "tools/source_portfolio.py",
             "config/company_registry.json",
             "config/intelligence_sources.json",
             "config/user_tracking.json",
@@ -90,6 +95,7 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
         ):
             with self.subTest(path=path):
                 self.assertIn(path, text)
+        self.assertIn("Runtime code is a live refresh input too", text)
         self.assertIn("supersede_if_refresh_inputs_changed()", text)
         self.assertIn('git diff --quiet "$GITHUB_SHA" "$target_ref" -- "${REFRESH_INPUT_PATHS[@]}"', text)
         self.assertIn("git fetch origin main", text)
