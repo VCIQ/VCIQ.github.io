@@ -196,6 +196,7 @@ jobs:
           python tools/tracking_seed_governance.py --check
           python tools/tracking_source_governance.py --check
           npm run validate:tracking
+          npm run validate:tracking-entities
           npm run validate:taxonomy
 
       - name: Commit expanded tracking config
@@ -264,6 +265,7 @@ jobs:
             python tools/tracking_seed_governance.py --check
             python tools/tracking_source_governance.py --check
             npm run validate:tracking
+            npm run validate:tracking-entities
             npm run validate:taxonomy
           }
 
