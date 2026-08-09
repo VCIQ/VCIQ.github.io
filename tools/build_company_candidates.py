@@ -28,7 +28,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ARTICLES_PATH = ROOT / "public" / "data" / "articles.json"
 DECISIONS_PATH = ROOT / "config" / "company_candidate_decisions.json"
 CAPTURE_INBOX_PATH = ROOT / "config" / "tracking_capture_inbox.json"
-OUTPUT_PATH = ROOT / "public" / "data" / "company_candidates.json"
+OUTPUT_PATH = ROOT / "config" / "company_candidate_review_queue.json"
 MINIMUM_SCORE = 35
 GENERIC_NAMES = {
     "",
