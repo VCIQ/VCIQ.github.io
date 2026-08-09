@@ -199,6 +199,9 @@ jobs:
             tests.test_scheduled_sync_workflow \
             tests.test_company_candidate_discovery_workflow \
             tests.test_company_candidate_onboarding_workflow
+          git add -N \
+            tests/test_company_candidate_discovery_workflow.py \
+            tests/test_company_candidate_onboarding_workflow.py
           git diff --check
           mapfile -t changed < <(git diff --name-only)
           printf 'Queue compaction changed files:\n'
