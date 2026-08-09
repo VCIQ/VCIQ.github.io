@@ -20,11 +20,11 @@ function normalizeEntityKey(value: string): string {
 }
 
 export function splitCompoundTrackingEntityName(value: string): string[] {
-  const normalized = value.normalize("NFKC").trim();
-  if (!normalized) return [];
-  const parts = normalized
+  const raw = value.trim();
+  if (!raw) return [];
+  const parts = raw
     .split(COMPOUND_ENTITY_SEPARATOR)
-    .map((part) => part.replace(/\s+/gu, " ").trim())
+    .map((part) => part.normalize("NFKC").replace(/\s+/gu, " ").trim())
     .filter((part) => ENTITY_CONTENT_PATTERN.test(part));
   return parts.length > 1 ? parts : [];
 }
