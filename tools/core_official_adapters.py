@@ -10,11 +10,11 @@ A few first-party sites need a slightly different treatment:
 * Google DeepMind moved its canonical news index from ``/discover/blog/`` to
   ``/blog/``.
 * SpaceX exposes stable, dated releases on its investor-relations domain, but
-  the Q4-powered updates landing page does not expose those links in the raw
-  HTML seen by the standard-library crawler. The adapter therefore uses a
-  tightly scoped public search feed only to discover candidate first-party
-  release URLs, then fetches and parses the SpaceX IR pages themselves before
-  publishing anything.
+  the Q4-powered updates landing page does not expose release links in the raw
+  HTML seen by the standard-library crawler. The adapter therefore bootstraps
+  from a small set of manually verified first-party release URLs, then expands
+  only through strict same-host release links found on those pages. Search
+  result metadata is never used for publication.
 * Unitree's news detail pages currently render almost no server-side article
   metadata, while the first-party news index itself exposes the canonical URL,
   title and publication date. For Unitree only, the index row is therefore the
@@ -25,10 +25,10 @@ A few first-party sites need a slightly different treatment:
 from __future__ import annotations
 
 import re
-import xml.etree.ElementTree as ET
+import sys
 from html.parser import HTMLParser
 from typing import Any
-from urllib.parse import quote_plus, urljoin, urlsplit
+from urllib.parse import urljoin, urlsplit
 
 
 CORE_OFFICIAL_SOURCES = (
@@ -158,9 +158,18 @@ _SPACEX_RELEASE_PATH_RE = re.compile(
     r"^/updates/(?:releases-details|releases/details)/\d{4}/[^/]+/default\.aspx$",
     flags=re.IGNORECASE,
 )
-_SPACEX_SEARCH_SCOPES = (
-    "site:ir.spacex.com/updates/releases-details/ SpaceX",
-    "site:ir.spacex.com/updates/releases/details/ SpaceX",
+# Q4's updates landing page currently returns only the shell to urllib. These
+# manually verified first-party releases provide a fail-closed bootstrap. Each
+# run re-fetches the actual SpaceX IR pages and can expand to newer same-host
+# releases if the rendered HTML exposes them. A stale seed can retain a valid
+# baseline, but can never authorize third-party content or fabricate freshness.
+_SPACEX_BOOTSTRAP_RELEASE_URLS = (
+    "https://ir.spacex.com/updates/releases/details/2026/"
+    "SpaceX-to-Post-Second-Quarter-2026-Results-and-Host-Webcast-on-August-4-2026-"
+    "2026-g8layJlbFm/default.aspx",
+    "https://ir.spacex.com/updates/releases-details/2026/"
+    "SpaceX-Announces-Pricing-of-25-Billion-Inaugural-Bond-Issuance-2026-"
+    "33VwNgsx3O/default.aspx",
 )
 
 
@@ -251,53 +260,97 @@ def _spacex_release_url_allowed(url: str) -> bool:
     )
 
 
-def _feed_links(body: str) -> list[str]:
-    """Extract RSS/Atom destination links without trusting feed metadata."""
+def _spacex_release_links(body: str, base_url: str) -> list[str]:
+    """Extract only canonical first-party SpaceX release links from HTML."""
 
-    try:
-        root = ET.fromstring(body)
-    except ET.ParseError:
-        return []
+    parser = _AnchorTextParser()
+    parser.feed(body)
     links: list[str] = []
-    for node in root.iter():
-        local = node.tag.rsplit("}", 1)[-1].casefold()
-        if local not in {"item", "entry"}:
-            continue
-        for child in node.iter():
-            if child.tag.rsplit("}", 1)[-1].casefold() != "link":
-                continue
-            candidate = (child.attrib.get("href") or child.text or "").strip()
-            if candidate and candidate not in links:
-                links.append(candidate)
-                break
+    for href, _text in parser.anchors:
+        absolute = urljoin(base_url, href).split("#", 1)[0]
+        if _spacex_release_url_allowed(absolute) and absolute not in links:
+            links.append(absolute)
     return links
 
 
-def _discover_spacex_release_urls(
+def _crawl_spacex_bootstrap(
     crawler: Any,
+    source: Any,
     user_agent: str,
     limit: int,
-) -> list[str]:
-    """Use search only for URL discovery; accept content only after IR fetch."""
+    index_error: Exception,
+):
+    """Fetch verified SpaceX IR seeds and expand only through first-party links."""
 
-    discovered: list[str] = []
-    for query in _SPACEX_SEARCH_SCOPES:
-        search_url = (
-            "https://www.bing.com/search?format=rss&q=" + quote_plus(query)
-        )
-        try:
-            body = crawler.fetch_text(search_url, user_agent)
-        except Exception:
+    queue = [
+        crawler.normalize_url(url)
+        for url in _SPACEX_BOOTSTRAP_RELEASE_URLS
+        if _spacex_release_url_allowed(url)
+    ]
+    seen: set[str] = set()
+    articles: list[dict[str, Any]] = []
+    article_urls: set[str] = set()
+    failures = 0
+    expanded_links = 0
+    scan_budget = max(limit, len(queue)) + limit
+
+    while queue and len(seen) < scan_budget and len(articles) < limit:
+        url = queue.pop(0)
+        if url in seen or not _spacex_release_url_allowed(url):
             continue
-        for raw_url in _feed_links(body):
-            normalized = crawler.normalize_url(raw_url)
-            if not _spacex_release_url_allowed(normalized):
-                continue
-            if normalized not in discovered:
-                discovered.append(normalized)
-            if len(discovered) >= limit:
-                return discovered
-    return discovered
+        seen.add(url)
+        try:
+            body = crawler.fetch_text(url, user_agent)
+        except Exception:
+            failures += 1
+            continue
+
+        for discovered in _spacex_release_links(body, url):
+            normalized = crawler.normalize_url(discovered)
+            if normalized not in seen and normalized not in queue:
+                queue.append(normalized)
+                expanded_links += 1
+
+        try:
+            article = crawler.parse_news_article(source, url, body)
+        except Exception:
+            failures += 1
+            continue
+        if not article:
+            continue
+        source_meta = article.get("source") if isinstance(article.get("source"), dict) else {}
+        canonical = crawler.normalize_url(str(source_meta.get("url", url)))
+        if not _spacex_release_url_allowed(canonical) or canonical in article_urls:
+            continue
+        article_urls.add(canonical)
+        articles.append(article)
+
+    if not articles:
+        raise RuntimeError(
+            "no dated first-party SpaceX IR releases parsed from verified bootstrap; "
+            f"seeds={len(_SPACEX_BOOTSTRAP_RELEASE_URLS)} scanned={len(seen)}; "
+            f"index error: {type(index_error).__name__}: {index_error}"
+        ) from index_error
+
+    status = crawler._status(
+        source.id,
+        source.name,
+        "ok" if failures == 0 and expanded_links else "partial",
+        len(seen),
+        len(articles),
+        failed=failures,
+        platform="官方网站",
+    )
+    status["urlDiscovery"] = "verified-first-party-bootstrap"
+    status["firstPartyFetched"] = True
+    status["bootstrapSeedCount"] = len(_SPACEX_BOOTSTRAP_RELEASE_URLS)
+    status["expandedReleaseLinks"] = expanded_links
+    print(
+        f"source=spacex accepted={len(articles)} scanned={len(seen)} "
+        f"expanded={expanded_links} mode=verified-first-party-bootstrap",
+        file=sys.stderr,
+    )
+    return articles, status
 
 
 def _install_unitree_listing_adapter(crawler: Any) -> None:
@@ -347,6 +400,11 @@ def _install_unitree_listing_adapter(crawler: Any) -> None:
             raise RuntimeError(
                 "no dated articles parsed from Unitree first-party news index"
             )
+        print(
+            f"source=unitree accepted={len(articles)} scanned={len(entries)} "
+            "mode=first-party-index-metadata",
+            file=sys.stderr,
+        )
         return articles, crawler._status(
             source.id,
             source.name,
@@ -360,9 +418,9 @@ def _install_unitree_listing_adapter(crawler: Any) -> None:
     crawler.crawl_news_source = crawl_news_source
 
 
-def _install_spacex_search_adapter(crawler: Any) -> None:
+def _install_spacex_bootstrap_adapter(crawler: Any) -> None:
     original = crawler.crawl_news_source
-    if getattr(original, "_spacex_search_adapter", False):
+    if getattr(original, "_spacex_bootstrap_adapter", False):
         return
 
     def crawl_news_source(source: Any, user_agent: str):
@@ -373,43 +431,19 @@ def _install_spacex_search_adapter(crawler: Any) -> None:
             return original(source, user_agent)
         except Exception as index_error:
             limit = max(1, int(getattr(crawler, "MAX_NEWS_PER_SOURCE", 10)))
-            urls = _discover_spacex_release_urls(crawler, user_agent, limit)
-            articles: list[dict[str, Any]] = []
-            failures = 0
-            for url in urls:
-                try:
-                    body = crawler.fetch_text(url, user_agent)
-                    article = crawler.parse_news_article(source, url, body)
-                    if article:
-                        articles.append(article)
-                except Exception:
-                    failures += 1
-
-            if not articles:
-                raise RuntimeError(
-                    "no dated first-party SpaceX IR releases parsed after "
-                    f"strict search discovery ({len(urls)} candidate URLs); "
-                    f"index error: {type(index_error).__name__}: {index_error}"
-                ) from index_error
-
-            status = crawler._status(
-                source.id,
-                source.name,
-                "ok" if failures == 0 else "partial",
-                len(urls),
-                len(articles),
-                failed=failures,
-                platform="官方网站",
+            return _crawl_spacex_bootstrap(
+                crawler,
+                source,
+                user_agent,
+                limit,
+                index_error,
             )
-            status["urlDiscovery"] = "bing-site-filter"
-            status["firstPartyFetched"] = True
-            return articles, status
 
     # Preserve the inner adapter marker so repeated installation remains
     # idempotent even though this wrapper is outermost.
     if getattr(original, "_unitree_listing_adapter", False):
         setattr(crawl_news_source, "_unitree_listing_adapter", True)
-    setattr(crawl_news_source, "_spacex_search_adapter", True)
+    setattr(crawl_news_source, "_spacex_bootstrap_adapter", True)
     crawler.crawl_news_source = crawl_news_source
 
 
@@ -436,4 +470,4 @@ def install(crawler: Any) -> None:
     if additions:
         crawler.NEWS_SOURCES = (*existing, *additions)
     _install_unitree_listing_adapter(crawler)
-    _install_spacex_search_adapter(crawler)
+    _install_spacex_bootstrap_adapter(crawler)
