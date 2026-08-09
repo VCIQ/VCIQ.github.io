@@ -41,6 +41,34 @@ export function assertSingleTrackingEntityName(
   );
 }
 
+export function findCompoundTrackingEntities(
+  config: UserTrackingConfig,
+): TrackingCompoundEntityIssue[] {
+  const issues: TrackingCompoundEntityIssue[] = [];
+  const fields = [
+    { field: "people" as const, entityType: "person" as const },
+    { field: "sampleCompanies" as const, entityType: "company" as const },
+  ];
+
+  for (const track of config.tracks) {
+    for (const { field, entityType } of fields) {
+      for (const value of track[field]) {
+        const parts = splitCompoundTrackingEntityName(value);
+        if (parts.length < 2) continue;
+        issues.push({
+          trackSlug: track.slug,
+          trackName: track.name,
+          entityType,
+          value,
+          parts,
+        });
+      }
+    }
+  }
+
+  return issues;
+}
+
 export function findNewCompoundTrackingEntities(
   previous: UserTrackingConfig,
   next: UserTrackingConfig,
