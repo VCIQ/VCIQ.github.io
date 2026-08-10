@@ -80,10 +80,25 @@ class ManualTrackingWorkflowTests(unittest.TestCase):
         apply = self.text.split("  apply:\n", 1)[1]
         validate = self.text.split("  validate:\n", 1)[1].split("\n  apply:\n", 1)[0]
         self.assertNotIn("concurrency:", validate)
-        checkout = apply.split("- uses: actions/checkout@v4", 1)[1].split("- uses:", 1)[0]
+        checkout = apply.split("- uses: actions/checkout@", 1)[1].split("- uses:", 1)[0]
         self.assertIn("ref: main", checkout)
         self.assertIn("fetch-depth: 0", checkout)
         self.assertIn("persist-credentials: false", checkout)
+
+    def test_actions_use_node24_compatible_major_versions(self) -> None:
+        self.assertEqual(self.text.count("uses: actions/checkout@v7"), 3)
+        self.assertEqual(self.text.count("uses: actions/setup-python@v7"), 2)
+        self.assertEqual(self.text.count("uses: actions/setup-node@v6"), 1)
+        for stale_ref in (
+            "actions/checkout@v4",
+            "actions/checkout@v5",
+            "actions/checkout@v6",
+            "actions/setup-python@v5",
+            "actions/setup-python@v6",
+            "actions/setup-node@v4",
+            "actions/setup-node@v5",
+        ):
+            self.assertNotIn(stale_ref, self.text)
 
     def test_apply_stages_only_the_three_approved_config_files(self) -> None:
         commit = self.text.split(
