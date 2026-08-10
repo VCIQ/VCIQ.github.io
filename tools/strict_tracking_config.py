@@ -110,7 +110,8 @@ def parse_tracking_keyword(raw: Any) -> str | None:
     alphanumeric_count = len(re.findall(r"[A-Za-z0-9]", value))
     if cjk_count == 1 and alphanumeric_count == 0:
         return None
-    if cjk_count == 0 and alphanumeric_count < 2:
+    symbolic_language = bool(re.fullmatch(r"(?i)c(?:\+\+|#)?|r", value))
+    if cjk_count == 0 and alphanumeric_count < 2 and not symbolic_language:
         return None
     return value
 

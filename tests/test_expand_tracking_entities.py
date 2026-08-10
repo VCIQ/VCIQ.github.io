@@ -125,17 +125,28 @@ class ExpandTrackingEntitiesTests(unittest.TestCase):
         self.config_path = base / "user_tracking.json"
         self.ledger_path = base / "tracking_auto_discovery.json"
         self.articles_path = base / "articles.json"
+        self.capture_path = base / "tracking_capture_inbox.json"
+        self.intents_path = base / "tracking_intents.json"
         self._original_config = expander.CONFIG_PATH
         self._original_ledger = expander.LEDGER_PATH
         self._original_articles = expander.ARTICLES_PATH
+        self._original_capture = expander.MANUAL_CAPTURE_PATH
+        self._original_intents = expander.MANUAL_INTENTS_PATH
+        self._original_runtime = expander.MANUAL_RUNTIME_PATH
         expander.CONFIG_PATH = self.config_path
         expander.LEDGER_PATH = self.ledger_path
         expander.ARTICLES_PATH = self.articles_path
+        expander.MANUAL_CAPTURE_PATH = self.capture_path
+        expander.MANUAL_INTENTS_PATH = self.intents_path
+        expander.MANUAL_RUNTIME_PATH = self.config_path
 
     def tearDown(self) -> None:
         expander.CONFIG_PATH = self._original_config
         expander.LEDGER_PATH = self._original_ledger
         expander.ARTICLES_PATH = self._original_articles
+        expander.MANUAL_CAPTURE_PATH = self._original_capture
+        expander.MANUAL_INTENTS_PATH = self._original_intents
+        expander.MANUAL_RUNTIME_PATH = self._original_runtime
         self.tmp.cleanup()
 
     def _write_config(self, config: dict) -> None:
@@ -166,6 +177,13 @@ class ExpandTrackingEntitiesTests(unittest.TestCase):
             "listedCompanies": [],
             "sources": [],
         }
+
+    def test_symbolic_technology_validation_preserves_identity(self) -> None:
+        values = ["C", "C++", "C#", ".NET", "NET", "A/B", "AB"]
+        self.assertEqual(
+            [expander.validate_keyword(value) for value in values], values
+        )
+        self.assertEqual(expander.clean_candidate(".NET"), ".NET")
 
     def test_expands_keywords_companies_and_sources_from_public_web(self) -> None:
         # v2: the track NAME is no longer fed to Wikipedia, so cross-seed
@@ -360,6 +378,136 @@ class ExpandTrackingEntitiesTests(unittest.TestCase):
         self.assertEqual(rc, 0)
         track = self._read_config()["tracks"][0]
         self.assertNotIn("宇树科技", track["sampleCompanies"])
+
+    def test_manual_history_has_protected_seed_budget(self) -> None:
+        profile = {
+            "tracks": {
+                "robotics": {
+                    "seedTerms": [
+                        {"value": "人工固定技术", "score": 5},
+                        {"value": "人工固定公司", "score": 4},
+                    ]
+                }
+            }
+        }
+        track = self._base_config(
+            keywords=[f"自动词{index}" for index in range(10)],
+            sampleCompanies=[f"自动公司{index}" for index in range(6)],
+        )["tracks"][0]
+        seeds = expander.track_seed_terms(track, False, profile)
+
+        self.assertEqual(seeds[:4], ["人形机器人", "自动词0", "自动词1", "自动词2"])
+        # Noisy legacy history is capped at one slot; v2 pinned edges can use
+        # two without displacing the protected track/technology core.
+        self.assertIn("人工固定技术", seeds)
+        self.assertNotIn("人工固定公司", seeds)
+        self.assertLessEqual(len(seeds), 8)
+
+    def test_pinned_runtime_duplicates_backfill_the_eight_slot_plan(self) -> None:
+        profile = {
+            "tracks": {
+                "robotics": {
+                    "seedTerms": [
+                        {"value": "K0", "kind": "keywords", "score": 5, "pinned": True},
+                        {"value": "K1", "kind": "keywords", "score": 5, "pinned": True},
+                    ]
+                }
+            }
+        }
+        track = self._base_config(
+            name="Track",
+            keywords=[f"K{index}" for index in range(6)],
+            sampleCompanies=["Co"],
+            people=["Jane Doe"],
+        )["tracks"][0]
+
+        seeds = expander.track_seed_terms(track, False, profile)
+
+        self.assertEqual(len(seeds), 8)
+        self.assertEqual(seeds[-2:], ["Co Track", "Jane Doe Track"])
+        self.assertIn("K3", seeds)
+        self.assertIn("K4", seeds)
+
+    def test_pinned_actor_runtime_duplicates_also_backfill_core_terms(self) -> None:
+        profile = {
+            "tracks": {
+                "robotics": {
+                    "seedTerms": [
+                        {
+                            "value": "Co",
+                            "kind": "sampleCompanies",
+                            "score": 5,
+                            "pinned": True,
+                        },
+                        {
+                            "value": "Jane Doe",
+                            "kind": "people",
+                            "score": 5,
+                            "pinned": True,
+                        },
+                    ]
+                }
+            }
+        }
+        track = self._base_config(
+            name="Track",
+            keywords=[f"K{index}" for index in range(6)],
+            sampleCompanies=["Co"],
+            people=["Jane Doe"],
+        )["tracks"][0]
+
+        seeds = expander.track_seed_terms(track, False, profile)
+
+        self.assertEqual(len(seeds), 8)
+        self.assertEqual(seeds.count("Co Track"), 1)
+        self.assertEqual(seeds.count("Jane Doe Track"), 1)
+        self.assertIn("K4", seeds)
+
+    def test_held_manual_identity_cannot_be_reactivated_by_automation(self) -> None:
+        self._write_config(self._base_config(keywords=["人形机器人整机", "双足机器人"]))
+        self.capture_path.write_text(
+            json.dumps(
+                {
+                    "records": [
+                        {
+                            "entityType": "company",
+                            "canonicalName": "宇树科技",
+                            "status": "queued",
+                            "trackSlugs": ["robotics"],
+                            "capturedAt": "2026-08-09T00:00:00Z",
+                            "reasons": ["市场竞争"],
+                        }
+                    ]
+                },
+                ensure_ascii=False,
+            ),
+            encoding="utf-8",
+        )
+
+        rc = expander.run(["--only-track", "robotics"], fetch_text=_fake_fetch)
+
+        self.assertEqual(rc, 0)
+        self.assertNotIn("宇树科技", self._read_config()["tracks"][0]["sampleCompanies"])
+
+    def test_held_manual_source_blocks_the_entire_canonical_host(self) -> None:
+        track = self._base_config()["tracks"][0]
+        profile = {
+            "tracks": {
+                "robotics": {
+                    "held": {
+                        "keywords": [],
+                        "people": [],
+                        "sampleCompanies": [],
+                        "sources": ["https://www.example.com/news/feed"],
+                    }
+                }
+            }
+        }
+        blocked = expander.blocked_values(
+            expander.empty_ledger(), track, "sources", profile
+        )
+        self.assertTrue(expander.value_is_blocked(blocked, "https://example.com/"))
+        self.assertTrue(expander.value_is_blocked(blocked, "http://www.example.com/rss"))
 
     def test_offline_run_changes_nothing(self) -> None:
         self._write_config(self._base_config())

@@ -1,0 +1,368 @@
+name: Internal manual tracking
+
+# This is the authenticated replacement for the former public tracking button.
+# Repository dispatch inputs and logs are visible in this public repository: never
+# enter secrets, private URLs, personal data, or confidential investment notes.
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: "Validate previews the result; apply writes it to main"
+        required: true
+        default: validate
+        type: choice
+        options: [validate, apply]
+      object_type:
+        description: "Tracking object type"
+        required: true
+        type: choice
+        options: [technology, track, company, person, source]
+      name:
+        description: "One canonical name only (do not paste a list)"
+        required: true
+        type: string
+      target_tracks:
+        description: "Target track slugs/names separated by |; optional only for a new track"
+        required: false
+        type: string
+      keywords:
+        description: "Keywords/aliases separated by |; required for a new track"
+        required: false
+        type: string
+      source_url:
+        description: "Public evidence URL; required for company/source"
+        required: false
+        type: string
+      source_category:
+        description: "Source owner/category (used only for source)"
+        required: true
+        default: media
+        type: choice
+        options: [media, company, person]
+      region:
+        description: "Source region (used only for source)"
+        required: true
+        default: 全球
+        type: choice
+        options: [中国, 美国, 全球]
+      reasons:
+        description: "Required public reason labels separated by | (use the governed seven labels)"
+        required: true
+        type: string
+      note:
+        description: "PUBLIC note: no secrets, private URLs, personal or confidential data"
+        required: false
+        type: string
+
+# Jobs opt into the least privilege they need. The apply job alone can write.
+permissions: {}
+
+env:
+  EXPECTED_REPOSITORY: VCIQ/VCIQ.github.io
+
+jobs:
+  authorize:
+    name: Authorize internal operator
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: Require the canonical repository and main branch
+        env:
+          ACTUAL_REPOSITORY: ${{ github.repository }}
+          ACTUAL_REF: ${{ github.ref }}
+          ACTUAL_EVENT: ${{ github.event_name }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$ACTUAL_REPOSITORY" = "$EXPECTED_REPOSITORY"
+          test "$ACTUAL_REF" = "refs/heads/main"
+          test "$ACTUAL_EVENT" = "workflow_dispatch"
+
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Require both initiator and rerun actor to be allowlisted
+        env:
+          ACTOR: ${{ github.actor }}
+          TRIGGERING_ACTOR: ${{ github.triggering_actor }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          admins = json.loads(
+              Path("config/tracking_admins.json").read_text(encoding="utf-8")
+          )
+          allowed = {
+              str(actor).strip().casefold()
+              for actor in admins.get("actors", [])
+              if str(actor).strip()
+          }
+          checked = {
+              "github.actor": os.environ.get("ACTOR", "").strip(),
+              "github.triggering_actor": os.environ.get("TRIGGERING_ACTOR", "").strip(),
+          }
+          denied = [label for label, actor in checked.items() if actor.casefold() not in allowed]
+          if denied:
+              raise SystemExit("manual tracking actor is not allowlisted: " + ", ".join(denied))
+          print("authorized actors: " + ", ".join(checked.values()))
+          PY
+
+  validate:
+    name: Validate manual tracking request
+    needs: authorize
+    if: inputs.operation == 'validate'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: tracking-admin
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate and preview recommendation links
+        env:
+          OBJECT_TYPE: ${{ inputs.object_type }}
+          NAME: ${{ inputs.name }}
+          TARGET_TRACKS: ${{ inputs.target_tracks }}
+          KEYWORDS: ${{ inputs.keywords }}
+          SOURCE_URL: ${{ inputs.source_url }}
+          SOURCE_CATEGORY: ${{ inputs.source_category }}
+          REGION: ${{ inputs.region }}
+          REASONS: ${{ inputs.reasons }}
+          NOTE: ${{ inputs.note }}
+          ACTOR: ${{ github.actor }}
+          TRIGGERING_ACTOR: ${{ github.triggering_actor }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            tools/manual_tracking.py \
+            tools/tracking_manual_feedback.py \
+            tools/expand_tracking_entities.py \
+            tools/strict_tracking_config.py
+          python tools/manual_tracking.py \
+            --mode validate \
+            --kind "$OBJECT_TYPE" \
+            --name "$NAME" \
+            --tracks "$TARGET_TRACKS" \
+            --keywords "$KEYWORDS" \
+            --source-url "$SOURCE_URL" \
+            --source-category "$SOURCE_CATEGORY" \
+            --region "$REGION" \
+            --reasons "$REASONS" \
+            --note "$NOTE" \
+            --actor "$ACTOR" \
+            --triggering-actor "$TRIGGERING_ACTOR" \
+            | tee /tmp/manual-tracking-preview.json
+          {
+            echo "## Manual tracking validation"
+            echo
+            echo '```json'
+            cat /tmp/manual-tracking-preview.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  apply:
+    name: Apply manual tracking request
+    needs: authorize
+    if: inputs.operation == 'apply'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: tracking-admin
+    concurrency:
+      group: vciq-repository-writer-${{ github.ref }}
+      queue: max
+    permissions:
+      contents: write
+    outputs:
+      changed: ${{ steps.manual.outputs.changed }}
+      config_changed: ${{ steps.manual.outputs.config_changed }}
+      review_queued: ${{ steps.manual.outputs.review_queued }}
+      intents_changed: ${{ steps.manual.outputs.intents_changed }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Capture the exact main revision being edited
+        id: base
+        shell: bash
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Apply the authorized request
+        id: manual
+        env:
+          OBJECT_TYPE: ${{ inputs.object_type }}
+          NAME: ${{ inputs.name }}
+          TARGET_TRACKS: ${{ inputs.target_tracks }}
+          KEYWORDS: ${{ inputs.keywords }}
+          SOURCE_URL: ${{ inputs.source_url }}
+          SOURCE_CATEGORY: ${{ inputs.source_category }}
+          REGION: ${{ inputs.region }}
+          REASONS: ${{ inputs.reasons }}
+          NOTE: ${{ inputs.note }}
+          ACTOR: ${{ github.actor }}
+          TRIGGERING_ACTOR: ${{ github.triggering_actor }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            tools/manual_tracking.py \
+            tools/tracking_manual_feedback.py \
+            tools/expand_tracking_entities.py \
+            tools/strict_tracking_config.py
+          python tools/manual_tracking.py \
+            --mode apply \
+            --kind "$OBJECT_TYPE" \
+            --name "$NAME" \
+            --tracks "$TARGET_TRACKS" \
+            --keywords "$KEYWORDS" \
+            --source-url "$SOURCE_URL" \
+            --source-category "$SOURCE_CATEGORY" \
+            --region "$REGION" \
+            --reasons "$REASONS" \
+            --note "$NOTE" \
+            --actor "$ACTOR" \
+            --triggering-actor "$TRIGGERING_ACTOR" \
+            | tee /tmp/manual-tracking-result.json
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          try:
+              report = json.loads(
+                  Path("/tmp/manual-tracking-result.json").read_text(encoding="utf-8")
+              )
+          except json.JSONDecodeError as exc:
+              raise SystemExit("manual_tracking.py did not emit one JSON report") from exc
+          if not isinstance(report, dict) or "ok" not in report or "changed" not in report:
+              raise SystemExit("manual_tracking.py report is missing top-level status fields")
+          output_names = {
+              "changed": "changed",
+              "config_changed": "configChanged",
+              "inbox_changed": "inboxChanged",
+              "intents_changed": "intentsChanged",
+              "review_queued": "reviewQueued",
+          }
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              for output_name, report_name in output_names.items():
+                  value = str(bool(report.get(report_name, False))).lower()
+                  output.write(f"{output_name}={value}\n")
+          PY
+
+      - name: Validate changed tracking configuration
+        if: steps.manual.outputs.changed == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm ci
+          python -m unittest \
+            tests.test_manual_tracking \
+            tests.test_manual_tracking_workflow \
+            tests.test_tracking_manual_feedback \
+            tests.test_expand_tracking_entities
+          npm run validate:tracking
+          npm run validate:taxonomy
+          python tools/tracking_source_governance.py --check
+
+      - name: Commit and push only approved configuration files
+        if: steps.manual.outputs.changed == 'true'
+        env:
+          BASE_SHA: ${{ steps.base.outputs.sha }}
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "$BASE_SHA" || {
+            echo "main advanced while the request was running; refusing to replay or overwrite it"
+            exit 1
+          }
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- \
+            config/tracking_intents.json \
+            config/user_tracking.json \
+            config/tracking_capture_inbox.json
+          git diff --cached --quiet && {
+            echo "manual_tracking.py reported a change but no approved file changed"
+            exit 1
+          }
+          git commit -m "config: apply authenticated manual tracking request"
+
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "$BASE_SHA" || {
+            echo "main advanced before push; refusing to rebase, force, or overwrite it"
+            exit 1
+          }
+          gh auth setup-git
+          git push origin HEAD:main
+
+      - name: Summarize the public audit record
+        if: always() && steps.manual.outcome != 'skipped'
+        shell: bash
+        run: |
+          {
+            echo "## Manual tracking apply"
+            echo
+            echo "> This repository is public. Inputs, logs, and committed audit records are not confidential."
+            echo
+            echo '```json'
+            cat /tmp/manual-tracking-result.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  handoff:
+    name: Continue tracking reconciliation
+    needs: apply
+    if: needs.apply.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      CONFIG_CHANGED: ${{ needs.apply.outputs.config_changed }}
+      REVIEW_QUEUED: ${{ needs.apply.outputs.review_queued }}
+      INTENTS_CHANGED: ${{ needs.apply.outputs.intents_changed }}
+      OBJECT_TYPE: ${{ inputs.object_type }}
+    steps:
+      - name: Start the explicit downstream workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "$CONFIG_CHANGED" = "true" ]; then
+            gh workflow run scheduled-sync.yml --ref main
+          elif [ "$REVIEW_QUEUED" = "true" ] && [ "$OBJECT_TYPE" = "company" ]; then
+            gh workflow run company-candidate-discovery.yml --ref main
+          elif [ "$REVIEW_QUEUED" = "true" ] || [ "$INTENTS_CHANGED" = "true" ]; then
+            gh workflow run tracking-discovery.yml --ref main -f mode=full
+          fi

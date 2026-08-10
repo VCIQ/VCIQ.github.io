@@ -208,10 +208,11 @@ export function validateTrackingKeyword(value: unknown): TrackingKeywordValidati
 
   const cjkCount = (raw.match(/[\u3400-\u9fff]/g) ?? []).length;
   const alphanumericCount = (raw.match(/[A-Za-z0-9]/g) ?? []).length;
+  const symbolicLanguage = /^(?:c(?:\+\+|#)?|r)$/i.test(raw);
   if (cjkCount === 1 && alphanumericCount === 0) {
     return invalid("单个汉字无法形成稳定搜索条件，请使用更具体的词组。");
   }
-  if (cjkCount === 0 && alphanumericCount < 2) {
+  if (cjkCount === 0 && alphanumericCount < 2 && !symbolicLanguage) {
     return invalid("英文或数字关键词至少需要两个有效字符。");
   }
 
