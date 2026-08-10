@@ -43,12 +43,26 @@ from urllib.parse import quote, quote_plus, urlparse
 from urllib.request import Request, urlopen
 
 try:
+    from .tracking_manual_feedback import (
+        load_manual_feedback,
+        manual_held_source_hosts,
+        manual_held_values,
+        manual_source_affinity,
+        normalize_identity as normalize_manual_identity,
+    )
     from .tracking_source_governance import (
         canonical_source_host,
         looks_like_derived_source_name,
         strip_discovery_source_suffix,
     )
 except ImportError:
+    from tracking_manual_feedback import (
+        load_manual_feedback,
+        manual_held_source_hosts,
+        manual_held_values,
+        manual_source_affinity,
+        normalize_identity as normalize_manual_identity,
+    )
     from tracking_source_governance import (
         canonical_source_host,
         looks_like_derived_source_name,
@@ -62,6 +76,9 @@ LEDGER_PATH = ROOT / "config" / "tracking_auto_discovery.json"
 # entities: whatever recurs in a track's accepted articles is, by
 # construction, industry vocabulary rather than encyclopedia language.
 ARTICLES_PATH = ROOT / "public" / "data" / "articles.json"
+MANUAL_CAPTURE_PATH = ROOT / "config" / "tracking_capture_inbox.json"
+MANUAL_INTENTS_PATH = ROOT / "config" / "tracking_intents.json"
+MANUAL_RUNTIME_PATH = CONFIG_PATH
 
 USER_AGENT = (
     "VCIQResearch/1.0 (+https://github.com/VCIQ/VCIQ.github.io; "
@@ -218,8 +235,10 @@ def normalize_term(value: str) -> str:
 def clean_candidate(value: str) -> str:
     cleaned = unicodedata.normalize("NFKC", str(value or ""))
     cleaned = re.sub(r"[\"'“”‘’`]+", " ", cleaned)
-    cleaned = re.sub(r"\s+", " ", cleaned).strip(" -·:：,，。.;；")
-    return cleaned.strip()
+    # Preserve a meaningful leading dot in technologies such as .NET while
+    # still removing ordinary sentence-final periods from extracted titles.
+    cleaned = re.sub(r"\s+", " ", cleaned).strip(" -·:：,，。;；")
+    return cleaned.rstrip(".").strip()
 
 
 def validate_keyword(value: str) -> str:
@@ -247,9 +266,10 @@ def validate_keyword(value: str) -> str:
         return ""
     cjk = len(re.findall(r"[㐀-鿿]", raw))
     alnum = len(re.findall(r"[A-Za-z0-9]", raw))
+    symbolic_language = bool(re.fullmatch(r"(?i)c(?:\+\+|#)?|r", raw))
     if cjk == 1 and alnum == 0:
         return ""
-    if cjk == 0 and alnum < 2:
+    if cjk == 0 and alnum < 2 and not symbolic_language:
         return ""
     # Short title-cased fragments such as “Don” are typically clipped words
     # from headlines. Keep established all-caps technical acronyms such as RAG.
@@ -760,7 +780,10 @@ def sync_tombstones(ledger: dict[str, Any], config: dict[str, Any]) -> None:
 
 
 def blocked_values(
-    ledger: dict[str, Any], track: dict[str, Any], kind: str
+    ledger: dict[str, Any],
+    track: dict[str, Any],
+    kind: str,
+    manual_profile: dict[str, Any] | None = None,
 ) -> set[str]:
     slug = str(track.get("slug"))
     blocked = {
@@ -777,20 +800,133 @@ def blocked_values(
     }[kind]
     for value in ignored.get(ignored_kind, []) or []:
         blocked.add(normalize_term(str(value)))
+    # A queued/rejected manual identity is a human decision, regardless of
+    # whether a later heuristic tries to classify the same spelling as a
+    # keyword, person, company or source.
+    blocked.update(manual_held_values(manual_profile or {}, slug))
+    if kind == "sources":
+        blocked.update(
+            f"host:{host}"
+            for host in manual_held_source_hosts(manual_profile or {}, slug)
+        )
     return blocked
 
 
-def track_seed_terms(track: dict[str, Any], seeding: bool) -> list[str]:
-    seeds: list[str] = [str(track.get("name") or "")]
+def value_is_blocked(blocked: set[str], value: str) -> bool:
+    host = canonical_source_host(value) if "://" in value else ""
+    return (
+        normalize_term(value) in blocked
+        or normalize_manual_identity(value) in blocked
+        or bool(host and f"host:{host}" in blocked)
+    )
+
+
+def selected_manual_seed_rows(
+    manual_profile: dict[str, Any] | None, slug: str
+) -> list[dict[str, Any]]:
+    profile_track = (
+        (manual_profile or {}).get("tracks", {}).get(slug, {})
+        if isinstance(manual_profile, dict)
+        else {}
+    )
+    rows = profile_track.get("seedTerms", []) if isinstance(profile_track, dict) else []
+    eligible = [
+        row
+        for row in rows
+        if isinstance(row, dict)
+        and clean_candidate(str(row.get("value") or ""))
+        and (row.get("pinned") is True or float(row.get("score") or 0) >= 2.0)
+    ]
+    # Explicit v2 pins get the first two protected slots.  Noisy legacy browser
+    # history may fill at most one remaining slot, never both.
+    manual_rows = [row for row in eligible if row.get("pinned") is True][:2]
+    legacy_rows = [
+        row
+        for row in eligible
+        if row.get("pinned") is not True
+        and normalize_term(str(row.get("value") or ""))
+        not in {normalize_term(str(item.get("value") or "")) for item in manual_rows}
+    ]
+    if len(manual_rows) < 2:
+        manual_rows.extend(legacy_rows[:1])
+    return manual_rows[:2]
+
+
+def track_seed_terms(
+    track: dict[str, Any],
+    seeding: bool,
+    manual_profile: dict[str, Any] | None = None,
+) -> list[str]:
+    slug = str(track.get("slug") or "")
+    track_name = str(track.get("name") or "")
+    manual_rows = selected_manual_seed_rows(manual_profile, slug)
+    manual_candidates: list[str] = []
+    for row in manual_rows:
+        value = str(row.get("value") or "")
+        if row.get("kind") in {"people", "sampleCompanies"} and track_name:
+            value = f"{value} {track_name}"
+        manual_candidates.append(value)
+    actor_candidates: list[str] = []
     if not seeding:
-        seeds.extend(str(value) for value in (track.get("keywords") or [])[:6])
-        seeds.extend(str(value) for value in (track.get("sampleCompanies") or [])[:4])
-        for person in (track.get("people") or [])[:3]:
-            seeds.append(re.sub(r"@\S+", "", str(person)).strip())
+        for company in (track.get("sampleCompanies") or [])[:1]:
+            actor_candidates.append(
+                f"{company} {track_name}" if track_name else str(company)
+            )
+        for person in (track.get("people") or [])[:1]:
+            person_name = re.sub(r"@\S+", "", str(person)).strip()
+            actor_candidates.append(
+                f"{person_name} {track_name}" if track_name else person_name
+            )
+
+    # Eight-query planner.  Reserve one company and one person exploration
+    # query, keep track identity + at least three core technologies, then place
+    # up to two manual signals.  If a pinned signal duplicates a compiled core
+    # keyword, backfill from later core terms rather than wasting the slot.
+    actor_unique: list[str] = []
+    actor_seen: set[str] = set()
+    for candidate in actor_candidates:
+        cleaned = clean_candidate(candidate)
+        key = normalize_term(cleaned)
+        if cleaned and key not in actor_seen:
+            actor_seen.add(key)
+            actor_unique.append(cleaned)
+    actor_unique = actor_unique[:2]
+    non_actor_limit = max(0, 8 - len(actor_unique))
+    core_candidates = [track_name]
+    if not seeding:
+        core_candidates.extend(str(value) for value in (track.get("keywords") or []))
     unique: list[str] = []
     seen: set[str] = set()
-    for seed in seeds:
+
+    def add(seed: str) -> None:
         cleaned = clean_candidate(seed)
+        key = normalize_term(cleaned)
+        if cleaned and key not in seen and len(unique) < non_actor_limit:
+            seen.add(key)
+            unique.append(cleaned)
+
+    core_index = 0
+    while core_index < len(core_candidates) and len(unique) < min(4, non_actor_limit):
+        add(core_candidates[core_index])
+        core_index += 1
+    for seed in manual_candidates:
+        add(seed)
+    while core_index < len(core_candidates) and len(unique) < non_actor_limit:
+        add(core_candidates[core_index])
+        core_index += 1
+    for seed in actor_unique:
+        cleaned = clean_candidate(seed)
+        key = normalize_term(cleaned)
+        if cleaned and key not in seen:
+            seen.add(key)
+            unique.append(cleaned)
+    # A pinned company/person is normally already present in the runtime actor
+    # arrays, so its contextual manual and actor queries can be identical.  If
+    # final cross-bucket deduplication frees a reserved actor slot, backfill it
+    # from the remaining core technologies.
+    while core_index < len(core_candidates) and len(unique) < 8:
+        cleaned = clean_candidate(core_candidates[core_index])
+        core_index += 1
         key = normalize_term(cleaned)
         if cleaned and key not in seen:
             seen.add(key)
@@ -935,12 +1071,19 @@ def expand_track(
     all_track_names: set[str],
     corpus_row: dict[str, Any] | None,
     dry_run: bool,
+    manual_profile: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     seeding = not (track.get("keywords") or [])
-    seeds = track_seed_terms(track, seeding)
+    seeds = track_seed_terms(track, seeding, manual_profile)
     summary = {
         "track": track.get("slug"),
         "mode": "seed" if seeding else "expand",
+        "manualSeeds": [
+            clean_candidate(str(row.get("value") or ""))
+            for row in selected_manual_seed_rows(
+                manual_profile, str(track.get("slug") or "")
+            )
+        ],
         "added": {"keywords": [], "people": [], "sampleCompanies": [], "sources": []},
     }
     if not seeds:
@@ -983,7 +1126,7 @@ def expand_track(
         if cleaned:
             existing_all.add(normalize_term(cleaned))
     blocked = {
-        kind: blocked_values(ledger, track, kind)
+        kind: blocked_values(ledger, track, kind, manual_profile)
         for kind in ("keywords", "people", "sampleCompanies", "sources")
     }
 
@@ -1030,7 +1173,7 @@ def expand_track(
 
         if kind == "person" and caps["people"] > len(added["people"]):
             label = validate_person(candidate.value, str(info.get("handle") or ""))
-            if not label or normalize_term(label) in blocked["people"]:
+            if not label or value_is_blocked(blocked["people"], label):
                 continue
             if normalize_term(label) in existing["people"]:
                 continue
@@ -1041,7 +1184,7 @@ def expand_track(
 
         if kind == "company" and caps["sampleCompanies"] > len(added["sampleCompanies"]):
             company = clean_candidate(candidate.value)[:60]
-            if not company or normalize_term(company) in blocked["sampleCompanies"]:
+            if not company or value_is_blocked(blocked["sampleCompanies"], company):
                 continue
             added["sampleCompanies"].append(company)
             existing["sampleCompanies"].add(normalize_term(company))
@@ -1050,7 +1193,7 @@ def expand_track(
             if (
                 website.startswith("http")
                 and caps["sources"] > len(added["sources"])
-                and normalize_term(website) not in blocked["sources"]
+                and not value_is_blocked(blocked["sources"], website)
                 and normalize_term(website) not in existing["sources"]
             ):
                 added["sources"].append(
@@ -1075,7 +1218,7 @@ def expand_track(
             if not seeding and not candidate_has_professional_evidence(candidate):
                 continue
             keyword = validate_keyword(candidate.value)
-            if not keyword or normalize_term(keyword) in blocked["keywords"]:
+            if not keyword or value_is_blocked(blocked["keywords"], keyword):
                 continue
             if normalize_term(keyword) in existing["keywords"]:
                 continue
@@ -1111,7 +1254,7 @@ def expand_track(
             if value_key in {normalize_term(name) for name in all_track_names}:
                 continue
             keyword = validate_keyword(candidate.value)
-            if not keyword or normalize_term(keyword) in blocked["keywords"]:
+            if not keyword or value_is_blocked(blocked["keywords"], keyword):
                 continue
             if normalize_term(keyword) in existing["keywords"]:
                 continue
@@ -1134,7 +1277,17 @@ def expand_track(
         existing_hosts.discard("")
         ranked_hosts = sorted(
             corpus_row["sources"].items(),
-            key=lambda item: item[1]["count"],
+            key=lambda item: (
+                float(item[1]["count"])
+                + min(
+                    5,
+                    manual_source_affinity(
+                        manual_profile or {}, str(track.get("slug") or ""), item[0]
+                    ),
+                )
+                * 0.5,
+                item[1]["count"],
+            ),
             reverse=True,
         )
         for host, srow in ranked_hosts:
@@ -1144,7 +1297,7 @@ def expand_track(
                 continue
             url = f"https://{host}/"
             if (
-                normalize_term(url) in blocked["sources"]
+                value_is_blocked(blocked["sources"], url)
                 or normalize_term(url) in existing["sources"]
             ):
                 continue
@@ -1292,6 +1445,11 @@ def run(argv: list[str] | None = None, fetch_text: FetchText | None = None) -> i
 
     client = PublicWebClient(args.max_requests, fetch_text=fetch_text)
     corpus = load_track_corpus()
+    manual_profile = load_manual_feedback(
+        capture_path=MANUAL_CAPTURE_PATH,
+        intents_path=MANUAL_INTENTS_PATH,
+        runtime_path=MANUAL_RUNTIME_PATH,
+    )
     summaries = []
     for track in tracks:
         summaries.append(
@@ -1303,6 +1461,7 @@ def run(argv: list[str] | None = None, fetch_text: FetchText | None = None) -> i
                 all_track_names,
                 corpus.get(str(track.get("slug"))),
                 args.dry_run,
+                manual_profile,
             )
         )
 
@@ -1322,6 +1481,14 @@ def run(argv: list[str] | None = None, fetch_text: FetchText | None = None) -> i
                     "requestsFailed": client.failed_requests,
                     "tracks": [],
                     "pruned": [],
+                    "manualFeedback": {
+                        "rawHistoryRecords": manual_profile.get("rawHistoryRecords", 0),
+                        "historyRecords": manual_profile.get("historyRecords", 0),
+                        "ignoredHistoryRecords": manual_profile.get(
+                            "ignoredHistoryRecords", 0
+                        ),
+                        "heldSignals": manual_profile.get("heldSignals", 0),
+                    },
                 },
                 ensure_ascii=False,
             )
@@ -1353,6 +1520,15 @@ def run(argv: list[str] | None = None, fetch_text: FetchText | None = None) -> i
                 "requestsFailed": client.failed_requests,
                 "tracks": summaries,
                 "pruned": pruned,
+                "manualFeedback": {
+                    "rawHistoryRecords": manual_profile.get("rawHistoryRecords", 0),
+                    "historyRecords": manual_profile.get("historyRecords", 0),
+                    "ignoredHistoryRecords": manual_profile.get(
+                        "ignoredHistoryRecords", 0
+                    ),
+                    "appliedSignals": manual_profile.get("appliedSignals", 0),
+                    "heldSignals": manual_profile.get("heldSignals", 0),
+                },
             },
             ensure_ascii=False,
         )
