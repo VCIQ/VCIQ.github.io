@@ -3,6 +3,7 @@
 import {
   ArrowDownUp,
   ArrowUpRight,
+  BookmarkPlus,
   RadioTower,
   Tags,
 } from "lucide-react";
@@ -21,6 +22,7 @@ import type {
   ChannelUpdateDirectory,
   ChannelUpdateKey,
 } from "@/lib/channel-updates";
+import { buildTrackingCaptureLink } from "@/lib/tracking-admin-link";
 import styles from "./channel-update-directory.module.css";
 
 const channelLabels: Record<ChannelUpdateKey, string> = {
@@ -251,59 +253,78 @@ export function ChannelUpdateDirectoryClient({
                   item.dateOriginal && item.dateOriginal !== item.date
                     ? `来源时间标注：${item.dateOriginal}`
                     : undefined;
+                const trackingHref = buildTrackingCaptureLink({
+                  url: item.href,
+                  title: item.title,
+                  summary: item.summary,
+                  keywords: item.keywords,
+                  source: item.source,
+                  channel,
+                });
                 return (
-                  <a
-                    className={styles.item}
-                    href={item.href}
-                    key={item.id}
-                    rel="noreferrer"
-                    target="_blank"
-                    data-intelligence-item="true"
-                    data-intelligence-title={item.title}
-                    data-intelligence-summary={item.summary}
-                    data-intelligence-type={item.label}
-                    data-intelligence-date={
-                      item.datePrecision === "undated" ? undefined : item.sortAt
-                    }
-                    data-intelligence-source={item.source}
-                    data-intelligence-source-level={item.sourceGrade}
-                    data-intelligence-source-grade={item.sourceGrade}
-                    data-intelligence-context={item.context}
-                    data-intelligence-keywords={item.keywords.join("|")}
-                    data-intelligence-channel={channel}
-                    data-intelligence-channel-label={channelLabels[channel]}
-                  >
-                    <span className={styles.index}>
-                      {String(index + 1).padStart(3, "0")}
-                    </span>
-                    <div className={styles.content}>
-                      <div className={styles.meta}>
-                        <span>{item.label}</span>
-                        {item.sourceGrade && (
-                          <em
-                            className={styles.sourceGrade}
-                            data-source-grade={item.sourceGrade}
-                            title={item.sourceVerificationPolicy}
+                  <div className={styles.itemWrap} key={item.id}>
+                    <a
+                      className={styles.item}
+                      href={item.href}
+                      rel="noreferrer"
+                      target="_blank"
+                      data-intelligence-item="true"
+                      data-intelligence-title={item.title}
+                      data-intelligence-summary={item.summary}
+                      data-intelligence-type={item.label}
+                      data-intelligence-date={
+                        item.datePrecision === "undated" ? undefined : item.sortAt
+                      }
+                      data-intelligence-source={item.source}
+                      data-intelligence-source-level={item.sourceGrade}
+                      data-intelligence-source-grade={item.sourceGrade}
+                      data-intelligence-context={item.context}
+                      data-intelligence-keywords={item.keywords.join("|")}
+                      data-intelligence-channel={channel}
+                      data-intelligence-channel-label={channelLabels[channel]}
+                    >
+                      <span className={styles.index}>
+                        {String(index + 1).padStart(3, "0")}
+                      </span>
+                      <div className={styles.content}>
+                        <div className={styles.meta}>
+                          <span>{item.label}</span>
+                          {item.sourceGrade && (
+                            <em
+                              className={styles.sourceGrade}
+                              data-source-grade={item.sourceGrade}
+                              title={item.sourceVerificationPolicy}
+                            >
+                              {item.sourceGrade}级 · {item.sourceGradeLabel}
+                            </em>
+                          )}
+                          <time
+                            dateTime={item.datePrecision === "undated" ? undefined : item.sortAt}
+                            title={sourceDateTitle}
                           >
-                            {item.sourceGrade}级 · {item.sourceGradeLabel}
-                          </em>
-                        )}
-                        <time
-                          dateTime={item.datePrecision === "undated" ? undefined : item.sortAt}
-                          title={sourceDateTitle}
-                        >
-                          {item.date}
-                        </time>
-                        {item.id === latestDatedItemId && <b>时间最新</b>}
+                            {item.date}
+                          </time>
+                          {item.id === latestDatedItemId && <b>时间最新</b>}
+                        </div>
+                        <h3 data-intelligence-title>{item.title}</h3>
+                        <p data-intelligence-summary>{item.summary}</p>
+                        <small data-intelligence-source>
+                          {item.context} · {item.source}
+                        </small>
                       </div>
-                      <h3 data-intelligence-title>{item.title}</h3>
-                      <p data-intelligence-summary>{item.summary}</p>
-                      <small data-intelligence-source>
-                        {item.context} · {item.source}
-                      </small>
-                    </div>
-                    <ArrowUpRight className={styles.arrow} size={18} aria-hidden="true" />
-                  </a>
+                      <ArrowUpRight className={styles.arrow} size={18} aria-hidden="true" />
+                    </a>
+                    <a
+                      className={styles.trackingLink}
+                      href={trackingHref}
+                      rel="noreferrer"
+                      target="_blank"
+                      title="在受保护的 Tracking Admin 中提取并加入研究对象"
+                    >
+                      <BookmarkPlus size={13} aria-hidden="true" />
+                      加入追踪
+                    </a>
+                  </div>
                 );
               })}
             </div>
