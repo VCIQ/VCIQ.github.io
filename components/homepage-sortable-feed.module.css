@@ -9,6 +9,44 @@
   margin: 0;
 }
 
+.feedItem {
+  position: relative;
+  min-width: 0;
+}
+
+.feedRowWithAction {
+  padding-bottom: 40px;
+}
+
+.trackingButton {
+  position: absolute;
+  right: 6px;
+  bottom: 9px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 25px;
+  padding: 0 8px;
+  border: 1px solid color-mix(in srgb, var(--green) 48%, var(--border));
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  color: var(--green-bright);
+  cursor: pointer;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 650;
+  line-height: 1;
+  transition: background .18s ease, border-color .18s ease, color .18s ease;
+}
+
+.trackingButton:hover,
+.trackingButton:focus-visible {
+  border-color: var(--green-bright);
+  background: color-mix(in srgb, var(--green) 12%, var(--surface));
+  color: var(--text);
+  outline: none;
+}
+
 .empty {
   margin: 0;
   padding: 24px 18px;
@@ -43,5 +81,9 @@
   .methodPanel {
     grid-template-columns: 1fr;
     align-items: start;
+  }
+
+  .trackingButton {
+    right: 4px;
   }
 }

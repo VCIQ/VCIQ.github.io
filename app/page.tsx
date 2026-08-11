@@ -4,6 +4,7 @@ import {
   type DashboardBootstrap,
 } from "@/components/dashboard-client";
 import { HomepageChannelUpdates } from "@/components/homepage-channel-updates";
+import { HomepageTrackingActions } from "@/components/homepage-tracking-actions";
 import { coreResearchObjectStats } from "@/lib/core-research-objects";
 import { formatTaipeiDate } from "@/lib/snapshot-freshness";
 import { trackedSectors } from "@/lib/tracked-sectors";
@@ -89,6 +90,7 @@ export default function Home() {
       >
         <HomepageChannelUpdates />
       </DashboardClient>
+      <HomepageTrackingActions />
     </main>
   );
 }
