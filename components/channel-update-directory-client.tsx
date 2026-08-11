@@ -124,6 +124,18 @@ export function ChannelUpdateDirectoryClient({
     }
   }
 
+  function openTrackingCapture(item: ChannelUpdateDirectory["items"][number]) {
+    const trackingHref = buildTrackingCaptureLink({
+      url: item.href,
+      title: item.title,
+      summary: item.summary,
+      keywords: item.keywords,
+      source: item.source,
+      channel,
+    });
+    window.open(trackingHref, "_blank", "noopener,noreferrer");
+  }
+
   return (
     <section
       className={styles.directory}
@@ -253,14 +265,6 @@ export function ChannelUpdateDirectoryClient({
                   item.dateOriginal && item.dateOriginal !== item.date
                     ? `来源时间标注：${item.dateOriginal}`
                     : undefined;
-                const trackingHref = buildTrackingCaptureLink({
-                  url: item.href,
-                  title: item.title,
-                  summary: item.summary,
-                  keywords: item.keywords,
-                  source: item.source,
-                  channel,
-                });
                 return (
                   <div className={styles.itemWrap} key={item.id}>
                     <a
@@ -314,16 +318,15 @@ export function ChannelUpdateDirectoryClient({
                       </div>
                       <ArrowUpRight className={styles.arrow} size={18} aria-hidden="true" />
                     </a>
-                    <a
+                    <button
+                      type="button"
                       className={styles.trackingLink}
-                      href={trackingHref}
-                      rel="noreferrer"
-                      target="_blank"
+                      onClick={() => openTrackingCapture(item)}
                       title="在受保护的 Tracking Admin 中提取并加入研究对象"
                     >
                       <BookmarkPlus size={13} aria-hidden="true" />
                       加入追踪
-                    </a>
+                    </button>
                   </div>
                 );
               })}
