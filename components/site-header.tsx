@@ -12,6 +12,8 @@ const navItems = [
   ["核心公司", "/companies"],
 ];
 
+const TRACKING_ADMIN_URL = "https://vciq-tracking-console.pages.dev/";
+
 export function SiteHeader({ status }: { status: ReactNode }) {
   const [open, setOpen] = useState(false);
 
@@ -43,9 +45,9 @@ export function SiteHeader({ status }: { status: ReactNode }) {
           <Link className="icon-button" href="/favorites" aria-label="收藏" title="收藏">
             <Bookmark size={18} />
           </Link>
-          <Link className="icon-button" href="/tracking" aria-label="公开追踪研究" title="公开追踪研究">
+          <a className="icon-button" href={TRACKING_ADMIN_URL} aria-label="追踪管理台" title="追踪管理台">
             <Settings size={18} />
-          </Link>
+          </a>
           <Link className="icon-button" href="/search" aria-label="全局搜索">
             <Search size={18} />
           </Link>
