@@ -258,9 +258,12 @@ class ManualTrackingBatchTests(unittest.TestCase):
         self.assertEqual(report["acceptedCount"], 1)
         self.assertEqual(report["skippedCount"], 0)
         self.assertEqual(report["repairedCount"], 1)
+        self.assertEqual(
+            report["items"][0]["request"]["keywords"],
+            ["端侧多模态", "视觉语言动作模型"],
+        )
         keywords = self._read("tracking")["tracks"][0]["keywords"]
         self.assertIn("端侧多模态", keywords)
-        self.assertIn("视觉语言动作模型", keywords)
         self.assertNotIn("平台", keywords)
 
     def test_strict_policy_still_rejects_same_low_signal_keyword(self) -> None:
