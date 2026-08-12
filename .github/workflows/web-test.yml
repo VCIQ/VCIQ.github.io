@@ -21,6 +21,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Run manual tracking unit tests
+        run: |
+          python -m unittest \
+            tests.test_manual_tracking \
+            tests.test_manual_tracking_batch \
+            tests.test_manual_tracking_workflow \
+            tests.test_tracking_manual_feedback \
+            tests.test_expand_tracking_entities
       - run: npm ci
       - run: npm run lint
       - name: Run unit tests

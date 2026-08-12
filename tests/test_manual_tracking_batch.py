@@ -229,6 +229,54 @@ class ManualTrackingBatchTests(unittest.TestCase):
         self.assertIn("均未通过验证", report["error"])
         self.assertEqual(before, {key: path.read_bytes() for key, path in self.paths.items()})
 
+    def test_skip_policy_repairs_low_signal_keyword_without_dropping_candidate(self) -> None:
+        row = self.technology("端侧多模态", ["ai"])
+        row["keywords"] = ["端侧多模态", "平台", "视觉语言动作模型"]
+        before = {key: path.read_bytes() for key, path in self.paths.items()}
+
+        report = self._run([row], "validate", invalid_policy="skip")
+
+        self.assertTrue(report["ok"])
+        self.assertEqual(report["acceptedCount"], 1)
+        self.assertEqual(report["skippedCount"], 0)
+        self.assertEqual(report["repairedCount"], 1)
+        self.assertEqual(report["removedKeywordCount"], 1)
+        self.assertEqual(report["repaired"][0]["removedKeywords"][0]["value"], "平台")
+        self.assertEqual(
+            report["items"][0]["request"]["keywords"],
+            ["端侧多模态", "视觉语言动作模型"],
+        )
+        self.assertEqual(before, {key: path.read_bytes() for key, path in self.paths.items()})
+
+    def test_skip_policy_apply_persists_candidate_but_not_low_signal_keyword(self) -> None:
+        row = self.technology("端侧多模态", ["ai"])
+        row["keywords"] = ["端侧多模态", "平台", "视觉语言动作模型"]
+
+        report = self._run([row], "apply", invalid_policy="skip")
+
+        self.assertTrue(report["ok"])
+        self.assertEqual(report["acceptedCount"], 1)
+        self.assertEqual(report["skippedCount"], 0)
+        self.assertEqual(report["repairedCount"], 1)
+        self.assertEqual(
+            report["items"][0]["request"]["keywords"],
+            ["端侧多模态", "视觉语言动作模型"],
+        )
+        keywords = self._read("tracking")["tracks"][0]["keywords"]
+        self.assertIn("端侧多模态", keywords)
+        self.assertNotIn("平台", keywords)
+
+    def test_strict_policy_still_rejects_same_low_signal_keyword(self) -> None:
+        row = self.technology("端侧多模态", ["ai"])
+        row["keywords"] = ["端侧多模态", "平台", "视觉语言动作模型"]
+        before = {key: path.read_bytes() for key, path in self.paths.items()}
+
+        report = self._run([row], "apply", expected=2, invalid_policy="strict")
+
+        self.assertFalse(report["ok"])
+        self.assertIn("平台", report["error"])
+        self.assertEqual(before, {key: path.read_bytes() for key, path in self.paths.items()})
+
 
 if __name__ == "__main__":
     unittest.main()
