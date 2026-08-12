@@ -170,17 +170,23 @@ class ManualTrackingWorkflowTests(unittest.TestCase):
         self.assertIn("不要填写密钥", doc)
         self.assertIn("公开页面继续只保留“收藏”和“分享”", doc)
 
-    def test_admin_and_intent_registries_start_with_explicit_schemas(self) -> None:
+    def test_admin_and_intent_registries_have_explicit_schemas(self) -> None:
         admins = json.loads(ADMINS.read_text(encoding="utf-8"))
         intents = json.loads(INTENTS.read_text(encoding="utf-8"))
+
         self.assertEqual(admins["schemaVersion"], 1)
         self.assertIn("IamVC", admins["actors"])
-        self.assertEqual(intents, {
-            "schemaVersion": 1,
-            "updatedAt": "",
-            "entities": [],
-            "memberships": [],
-        })
+
+        # This test also runs after an authorized apply has populated the intent
+        # registry in the workflow's temporary worktree. Validate the persistent
+        # contract, not the repository's one-time bootstrap emptiness.
+        self.assertEqual(set(intents), {"schemaVersion", "updatedAt", "entities", "memberships"})
+        self.assertEqual(intents["schemaVersion"], 1)
+        self.assertIsInstance(intents["updatedAt"], str)
+        self.assertIsInstance(intents["entities"], list)
+        self.assertIsInstance(intents["memberships"], list)
+        self.assertTrue(all(isinstance(item, dict) for item in intents["entities"]))
+        self.assertTrue(all(isinstance(item, dict) for item in intents["memberships"]))
 
 
 if __name__ == "__main__":
