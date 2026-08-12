@@ -75,11 +75,19 @@ class ManualTrackingBatchTests(unittest.TestCase):
     def _read(self, key: str) -> dict:
         return json.loads(self.paths[key].read_text(encoding="utf-8"))
 
-    def _run(self, rows: list[dict], mode: str, expected: int = 0) -> dict:
+    def _run(
+        self,
+        rows: list[dict],
+        mode: str,
+        expected: int = 0,
+        invalid_policy: str = "strict",
+    ) -> dict:
         output = io.StringIO()
         argv = [
             "--mode",
             mode,
+            "--invalid-policy",
+            invalid_policy,
             "--batch-json",
             json.dumps(rows, ensure_ascii=False),
             "--actor",
@@ -108,6 +116,20 @@ class ManualTrackingBatchTests(unittest.TestCase):
             "note": "batch test",
         }
 
+    @staticmethod
+    def invalid_person(name: str = "stdrc") -> dict:
+        return {
+            "objectType": "person",
+            "name": name,
+            "targetTracks": ["ai"],
+            "keywords": ["Richard Qian"],
+            "sourceUrl": "https://example.com/article",
+            "sourceCategory": "media",
+            "region": "全球",
+            "reasons": ["个人研究兴趣"],
+            "note": "machine candidate",
+        }
+
     def test_validate_is_read_only_and_supports_cross_item_new_track_reference(self) -> None:
         new_track_name = "具身智能基础设施"
         new_track_slug = manual.slugify_track(new_track_name)
@@ -129,6 +151,8 @@ class ManualTrackingBatchTests(unittest.TestCase):
         report = self._run(rows, "validate")
         self.assertTrue(report["ok"])
         self.assertEqual(report["count"], 2)
+        self.assertEqual(report["acceptedCount"], 2)
+        self.assertEqual(report["skippedCount"], 0)
         self.assertFalse(report["changed"])
         self.assertTrue(report["items"][0]["preview"]["changed"])
         self.assertTrue(report["items"][1]["preview"]["changed"])
@@ -143,6 +167,8 @@ class ManualTrackingBatchTests(unittest.TestCase):
         self.assertTrue(report["changed"])
         self.assertTrue(report["configChanged"])
         self.assertTrue(report["intentsChanged"])
+        self.assertEqual(report["acceptedCount"], 2)
+        self.assertEqual(report["skippedCount"], 0)
         keywords = self._read("tracking")["tracks"][0]["keywords"]
         self.assertIn("端侧多模态", keywords)
         self.assertIn("视觉语言动作模型", keywords)
@@ -159,6 +185,48 @@ class ManualTrackingBatchTests(unittest.TestCase):
         report = self._run(rows, "apply", expected=2)
         self.assertFalse(report["ok"])
         self.assertIn("第 2 个对象", report["error"])
+        self.assertEqual(before, {key: path.read_bytes() for key, path in self.paths.items()})
+
+    def test_skip_policy_validate_omits_invalid_machine_candidate(self) -> None:
+        rows = [
+            self.technology("端侧多模态", ["ai"]),
+            self.invalid_person(),
+            self.technology("视觉语言动作模型", ["ai"]),
+        ]
+        before = {key: path.read_bytes() for key, path in self.paths.items()}
+        report = self._run(rows, "validate", invalid_policy="skip")
+        self.assertTrue(report["ok"])
+        self.assertEqual(report["count"], 3)
+        self.assertEqual(report["acceptedCount"], 2)
+        self.assertEqual(report["skippedCount"], 1)
+        self.assertEqual(report["skipped"][0]["index"], 2)
+        self.assertEqual(report["skipped"][0]["name"], "stdrc")
+        self.assertIn("完整姓名", report["skipped"][0]["error"])
+        self.assertEqual(before, {key: path.read_bytes() for key, path in self.paths.items()})
+
+    def test_skip_policy_apply_writes_valid_subset_without_invalid_person(self) -> None:
+        rows = [
+            self.technology("端侧多模态", ["ai"]),
+            self.invalid_person(),
+            self.technology("视觉语言动作模型", ["ai"]),
+        ]
+        report = self._run(rows, "apply", invalid_policy="skip")
+        self.assertTrue(report["ok"])
+        self.assertTrue(report["changed"])
+        self.assertEqual(report["acceptedCount"], 2)
+        self.assertEqual(report["skippedCount"], 1)
+        keywords = self._read("tracking")["tracks"][0]["keywords"]
+        self.assertIn("端侧多模态", keywords)
+        self.assertIn("视觉语言动作模型", keywords)
+        self.assertNotIn("stdrc", self._read("tracking")["tracks"][0]["people"])
+        intent_names = [row.get("name") for row in self._read("intents")["entities"]]
+        self.assertNotIn("stdrc", intent_names)
+
+    def test_skip_policy_fails_when_every_candidate_is_invalid(self) -> None:
+        before = {key: path.read_bytes() for key, path in self.paths.items()}
+        report = self._run([self.invalid_person()], "apply", expected=2, invalid_policy="skip")
+        self.assertFalse(report["ok"])
+        self.assertIn("均未通过验证", report["error"])
         self.assertEqual(before, {key: path.read_bytes() for key, path in self.paths.items()})
 
 

@@ -12,6 +12,12 @@ on:
         default: validate
         type: choice
         options: [validate, apply]
+      invalid_policy:
+        description: "strict rejects the whole batch; skip omits invalid machine-generated candidates"
+        required: true
+        default: strict
+        type: choice
+        options: [strict, skip]
       batch_json:
         description: "JSON array of up to 20 normalized manual tracking requests"
         required: true
@@ -98,6 +104,7 @@ jobs:
       - name: Validate the full batch as one transaction
         env:
           BATCH_JSON: ${{ inputs.batch_json }}
+          INVALID_POLICY: ${{ inputs.invalid_policy }}
           ACTOR: ${{ github.actor }}
           TRIGGERING_ACTOR: ${{ github.triggering_actor }}
         shell: bash
@@ -111,6 +118,7 @@ jobs:
             tools/strict_tracking_config.py
           python tools/manual_tracking_batch.py \
             --mode validate \
+            --invalid-policy "$INVALID_POLICY" \
             --batch-json "$BATCH_JSON" \
             --actor "$ACTOR" \
             --triggering-actor "$TRIGGERING_ACTOR" \
@@ -164,6 +172,7 @@ jobs:
         id: manual
         env:
           BATCH_JSON: ${{ inputs.batch_json }}
+          INVALID_POLICY: ${{ inputs.invalid_policy }}
           ACTOR: ${{ github.actor }}
           TRIGGERING_ACTOR: ${{ github.triggering_actor }}
         shell: bash
@@ -177,6 +186,7 @@ jobs:
             tools/strict_tracking_config.py
           python tools/manual_tracking_batch.py \
             --mode apply \
+            --invalid-policy "$INVALID_POLICY" \
             --batch-json "$BATCH_JSON" \
             --actor "$ACTOR" \
             --triggering-actor "$TRIGGERING_ACTOR" \
