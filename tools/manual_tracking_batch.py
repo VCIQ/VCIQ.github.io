@@ -4,9 +4,9 @@
 The web admin can submit several candidates from one article while this command
 preserves the single-object validation rules. Strict mode keeps the original
 all-or-nothing semantics. ``skip`` mode is intended for machine-generated
-article candidates: invalid rows are rejected individually, while the valid
-subset is still simulated as one transaction and only persisted after the whole
-accepted subset succeeds.
+article candidates: discardable low-signal keyword noise is removed first,
+rows that are still invalid are rejected individually, and the accepted subset
+is still simulated as one transaction before anything is persisted.
 """
 
 from __future__ import annotations
@@ -37,7 +37,7 @@ def string_list(value: Any, limit: int) -> list[str]:
     if not isinstance(value, list):
         return []
     result: list[str] = []
-    seen: set[str] = set()
+    seen = set()
     for raw in value:
         item = clean(raw, 240)
         key = item.casefold()
@@ -100,6 +100,68 @@ def skipped_record(index: int, row: Mapping[str, Any], error: Exception) -> dict
     }
 
 
+def sanitize_machine_keywords(
+    index: int,
+    row: Mapping[str, Any],
+) -> tuple[dict[str, Any], dict[str, Any] | None]:
+    """Remove only keyword-level noise while preserving the candidate itself.
+
+    This helper is used exclusively by ``invalid_policy=skip``. The canonical
+    single-object writer remains strict. Every surviving keyword is still passed
+    through the same technology validator used by the strict path, so this does
+    not create a weaker write boundary; it only discards machine-generated
+    keyword fragments that are safe to omit.
+    """
+
+    prepared = dict(row)
+    raw_keywords = string_list(row.get("keywords"), 30)
+    if not raw_keywords:
+        return prepared, None
+
+    kept: list[str] = []
+    identities: set[str] = set()
+    removed: list[dict[str, str]] = []
+    for keyword in raw_keywords:
+        try:
+            if not manual.is_single_value(keyword):
+                raise manual.ManualTrackingError(
+                    f"关键字必须是一项完整技术，不能包含复合列表或分隔符：{keyword}"
+                )
+            parsed = manual._validate_technology(keyword)
+        except manual.ManualTrackingError as exc:
+            removed.append({"value": keyword, "error": clean(exc, 300)})
+            continue
+
+        identity = manual.signal_identity(parsed, "keywords") or parsed.casefold()
+        if identity in identities:
+            continue
+        identities.add(identity)
+        kept.append(parsed)
+
+    if not removed:
+        return prepared, None
+
+    prepared["keywords"] = kept
+    return prepared, {
+        "index": index,
+        "objectType": clean(row.get("objectType"), 30),
+        "name": clean(row.get("name"), 160),
+        "field": "keywords",
+        "removedKeywords": removed,
+        "keptKeywordCount": len(kept),
+    }
+
+
+def prepared_row(
+    index: int,
+    row: Mapping[str, Any],
+    invalid_policy: str,
+) -> tuple[dict[str, Any], dict[str, Any] | None]:
+    if invalid_policy == "skip":
+        return sanitize_machine_keywords(index, row)
+    return dict(row), None
+
+
 def simulate_batch(
     rows: list[dict[str, Any]],
     tracking: dict[str, Any],
@@ -109,12 +171,13 @@ def simulate_batch(
     now: str,
     *,
     invalid_policy: str = "strict",
-) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
     """Normalize and apply in memory so later rows can reference earlier rows.
 
-    In ``skip`` mode, a row rejected by the canonical single-object validator is
-    recorded and omitted. Every accepted row still mutates only the in-memory
-    simulation, so subsequent rows see the same state they would see on apply.
+    In ``skip`` mode, safe keyword-level noise is removed first. A row rejected
+    by the canonical single-object validator after that repair is recorded and
+    omitted. Every accepted row still mutates only the in-memory simulation, so
+    subsequent rows see the same state they would see on apply.
     """
 
     if invalid_policy not in INVALID_POLICIES:
@@ -122,9 +185,11 @@ def simulate_batch(
 
     results: list[dict[str, Any]] = []
     skipped: list[dict[str, Any]] = []
+    repaired: list[dict[str, Any]] = []
     for index, row in enumerate(rows, start=1):
+        candidate_row, repair = prepared_row(index, row, invalid_policy)
         try:
-            args = namespace_for(row, "validate")
+            args = namespace_for(candidate_row, "validate")
             request = manual._normalized_input(args, tracking)
             manual_profile = manual.build_manual_feedback(inbox, intents, tracking)
             recs = manual.recommendations(tracking, intents, request, manual_profile)
@@ -137,10 +202,12 @@ def simulate_batch(
                     "preview": applied,
                 }
             )
+            if repair:
+                repaired.append(repair)
         except manual.ManualTrackingError as exc:
             if invalid_policy == "strict":
                 raise manual.ManualTrackingError(f"第 {index} 个对象：{exc}") from exc
-            skipped.append(skipped_record(index, row, exc))
+            skipped.append(skipped_record(index, candidate_row, exc))
 
     if invalid_policy == "skip" and not results:
         details = "；".join(
@@ -149,7 +216,7 @@ def simulate_batch(
         )
         suffix = f"（{details}）" if details else ""
         raise manual.ManualTrackingError(f"整批对象均未通过验证，没有可安全写入的对象。{suffix}")
-    return results, skipped
+    return results, skipped, repaired
 
 
 def apply_batch(
@@ -161,11 +228,16 @@ def apply_batch(
     now: str,
     *,
     invalid_policy: str = "strict",
-) -> tuple[list[dict[str, Any]], dict[str, bool], list[dict[str, Any]]]:
+) -> tuple[
+    list[dict[str, Any]],
+    dict[str, bool],
+    list[dict[str, Any]],
+    list[dict[str, Any]],
+]:
     # First validate the accepted transaction on copies. No persistent state is
     # touched until every accepted object passes and all cross-item references
     # resolve. In skip mode, rejected machine candidates never reach persistence.
-    preview_items, skipped = simulate_batch(
+    preview_items, skipped, repaired = simulate_batch(
         rows,
         copy.deepcopy(tracking),
         copy.deepcopy(inbox),
@@ -187,7 +259,8 @@ def apply_batch(
     for index, row in enumerate(rows, start=1):
         if index not in accepted_indices:
             continue
-        args = namespace_for(row, "apply")
+        candidate_row, _ = prepared_row(index, row, invalid_policy)
+        args = namespace_for(candidate_row, "apply")
         request = manual._normalized_input(args, tracking)
         manual_profile = manual.build_manual_feedback(inbox, intents, tracking)
         recs = manual.recommendations(tracking, intents, request, manual_profile)
@@ -202,7 +275,7 @@ def apply_batch(
         )
         for key in flags:
             flags[key] = flags[key] or bool(applied.get(key, False))
-    return item_results, flags, skipped
+    return item_results, flags, skipped, repaired
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -215,7 +288,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--invalid-policy",
         default="strict",
         choices=sorted(INVALID_POLICIES),
-        help="strict rejects the whole batch; skip omits invalid machine candidates",
+        help="strict rejects the whole batch; skip sanitizes keyword noise then omits invalid machine candidates",
     )
     parser.add_argument("--now", default="", help=argparse.SUPPRESS)
     return parser
@@ -236,6 +309,8 @@ def main(argv: list[str] | None = None) -> int:
             "count": len(rows),
             "acceptedCount": 0,
             "skippedCount": 0,
+            "repairedCount": 0,
+            "removedKeywordCount": 0,
             "changed": False,
             "configChanged": False,
             "inboxChanged": False,
@@ -243,9 +318,10 @@ def main(argv: list[str] | None = None) -> int:
             "reviewQueued": False,
             "items": [],
             "skipped": [],
+            "repaired": [],
         }
         if args.mode == "validate":
-            items, skipped = simulate_batch(
+            items, skipped, repaired = simulate_batch(
                 rows,
                 copy.deepcopy(tracking),
                 copy.deepcopy(inbox),
@@ -256,9 +332,10 @@ def main(argv: list[str] | None = None) -> int:
             )
             result["items"] = items
             result["skipped"] = skipped
+            result["repaired"] = repaired
         else:
             now = clean(args.now, 80) or datetime.now(timezone.utc).isoformat(timespec="seconds")
-            item_results, flags, skipped = apply_batch(
+            item_results, flags, skipped, repaired = apply_batch(
                 rows,
                 tracking,
                 inbox,
@@ -269,6 +346,7 @@ def main(argv: list[str] | None = None) -> int:
             )
             result["items"] = item_results
             result["skipped"] = skipped
+            result["repaired"] = repaired
             result.update(flags)
             if flags["configChanged"]:
                 manual.write_json_atomic(manual.TRACKING_PATH, tracking)
@@ -278,6 +356,12 @@ def main(argv: list[str] | None = None) -> int:
                 manual.write_json_atomic(manual.INTENTS_PATH, intents)
         result["acceptedCount"] = len(result["items"])
         result["skippedCount"] = len(result["skipped"])
+        result["repairedCount"] = len(result["repaired"])
+        result["removedKeywordCount"] = sum(
+            len(item.get("removedKeywords", []))
+            for item in result["repaired"]
+            if isinstance(item, dict)
+        )
         print(json.dumps(result, ensure_ascii=False, sort_keys=True))
         return 0
     except manual.ManualTrackingError as exc:
