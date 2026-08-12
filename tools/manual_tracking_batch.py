@@ -2,9 +2,11 @@
 """Atomic batch wrapper around the authenticated manual tracking writer.
 
 The web admin can submit several candidates from one article while this command
-preserves the single-object validation rules.  All objects are normalized and
-simulated first; apply writes the three approved tracking files only after the
-entire batch succeeds, so one invalid item cannot leave a partial transaction.
+preserves the single-object validation rules. Strict mode keeps the original
+all-or-nothing semantics. ``skip`` mode is intended for machine-generated
+article candidates: invalid rows are rejected individually, while the valid
+subset is still simulated as one transaction and only persisted after the whole
+accepted subset succeeds.
 """
 
 from __future__ import annotations
@@ -24,6 +26,7 @@ except ImportError:  # pragma: no cover
 
 MAX_BATCH_SIZE = 20
 MAX_BATCH_JSON_BYTES = 45_000
+INVALID_POLICIES = {"strict", "skip"}
 
 
 def clean(value: Any, limit: int = 1200) -> str:
@@ -88,6 +91,15 @@ def namespace_for(row: Mapping[str, Any], mode: str) -> argparse.Namespace:
     )
 
 
+def skipped_record(index: int, row: Mapping[str, Any], error: Exception) -> dict[str, Any]:
+    return {
+        "index": index,
+        "objectType": clean(row.get("objectType"), 30),
+        "name": clean(row.get("name"), 160),
+        "error": clean(error, 500),
+    }
+
+
 def simulate_batch(
     rows: list[dict[str, Any]],
     tracking: dict[str, Any],
@@ -95,10 +107,21 @@ def simulate_batch(
     intents: dict[str, Any],
     actor: str,
     now: str,
-) -> list[dict[str, Any]]:
-    """Normalize and apply in memory so later rows can reference earlier rows."""
+    *,
+    invalid_policy: str = "strict",
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """Normalize and apply in memory so later rows can reference earlier rows.
+
+    In ``skip`` mode, a row rejected by the canonical single-object validator is
+    recorded and omitted. Every accepted row still mutates only the in-memory
+    simulation, so subsequent rows see the same state they would see on apply.
+    """
+
+    if invalid_policy not in INVALID_POLICIES:
+        raise manual.ManualTrackingError("invalid-policy 必须是 strict 或 skip。")
 
     results: list[dict[str, Any]] = []
+    skipped: list[dict[str, Any]] = []
     for index, row in enumerate(rows, start=1):
         try:
             args = namespace_for(row, "validate")
@@ -115,8 +138,18 @@ def simulate_batch(
                 }
             )
         except manual.ManualTrackingError as exc:
-            raise manual.ManualTrackingError(f"第 {index} 个对象：{exc}") from exc
-    return results
+            if invalid_policy == "strict":
+                raise manual.ManualTrackingError(f"第 {index} 个对象：{exc}") from exc
+            skipped.append(skipped_record(index, row, exc))
+
+    if invalid_policy == "skip" and not results:
+        details = "；".join(
+            f"第 {item['index']} 个对象 {item['name'] or item['objectType']}：{item['error']}"
+            for item in skipped[:3]
+        )
+        suffix = f"（{details}）" if details else ""
+        raise manual.ManualTrackingError(f"整批对象均未通过验证，没有可安全写入的对象。{suffix}")
+    return results, skipped
 
 
 def apply_batch(
@@ -126,17 +159,22 @@ def apply_batch(
     intents: dict[str, Any],
     actor: str,
     now: str,
-) -> tuple[list[dict[str, Any]], dict[str, bool]]:
-    # First validate a full transaction on copies.  No persistent state is
-    # touched until every object passes and all cross-item references resolve.
-    simulate_batch(
+    *,
+    invalid_policy: str = "strict",
+) -> tuple[list[dict[str, Any]], dict[str, bool], list[dict[str, Any]]]:
+    # First validate the accepted transaction on copies. No persistent state is
+    # touched until every accepted object passes and all cross-item references
+    # resolve. In skip mode, rejected machine candidates never reach persistence.
+    preview_items, skipped = simulate_batch(
         rows,
         copy.deepcopy(tracking),
         copy.deepcopy(inbox),
         copy.deepcopy(intents),
         actor,
         "validation-preview",
+        invalid_policy=invalid_policy,
     )
+    accepted_indices = {item["index"] for item in preview_items}
 
     item_results: list[dict[str, Any]] = []
     flags = {
@@ -147,6 +185,8 @@ def apply_batch(
         "reviewQueued": False,
     }
     for index, row in enumerate(rows, start=1):
+        if index not in accepted_indices:
+            continue
         args = namespace_for(row, "apply")
         request = manual._normalized_input(args, tracking)
         manual_profile = manual.build_manual_feedback(inbox, intents, tracking)
@@ -162,7 +202,7 @@ def apply_batch(
         )
         for key in flags:
             flags[key] = flags[key] or bool(applied.get(key, False))
-    return item_results, flags
+    return item_results, flags, skipped
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -171,6 +211,12 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--batch-json", required=True)
     parser.add_argument("--actor", required=True)
     parser.add_argument("--triggering-actor", default="")
+    parser.add_argument(
+        "--invalid-policy",
+        default="strict",
+        choices=sorted(INVALID_POLICIES),
+        help="strict rejects the whole batch; skip omits invalid machine candidates",
+    )
     parser.add_argument("--now", default="", help=argparse.SUPPRESS)
     return parser
 
@@ -184,29 +230,45 @@ def main(argv: list[str] | None = None) -> int:
         result: dict[str, Any] = {
             "ok": True,
             "mode": args.mode,
+            "invalidPolicy": args.invalid_policy,
             "actor": actor,
             "triggeringActor": triggering_actor,
             "count": len(rows),
+            "acceptedCount": 0,
+            "skippedCount": 0,
             "changed": False,
             "configChanged": False,
             "inboxChanged": False,
             "intentsChanged": False,
             "reviewQueued": False,
             "items": [],
+            "skipped": [],
         }
         if args.mode == "validate":
-            result["items"] = simulate_batch(
+            items, skipped = simulate_batch(
                 rows,
                 copy.deepcopy(tracking),
                 copy.deepcopy(inbox),
                 copy.deepcopy(intents),
                 actor,
                 "validation-preview",
+                invalid_policy=args.invalid_policy,
             )
+            result["items"] = items
+            result["skipped"] = skipped
         else:
             now = clean(args.now, 80) or datetime.now(timezone.utc).isoformat(timespec="seconds")
-            item_results, flags = apply_batch(rows, tracking, inbox, intents, actor, now)
+            item_results, flags, skipped = apply_batch(
+                rows,
+                tracking,
+                inbox,
+                intents,
+                actor,
+                now,
+                invalid_policy=args.invalid_policy,
+            )
             result["items"] = item_results
+            result["skipped"] = skipped
             result.update(flags)
             if flags["configChanged"]:
                 manual.write_json_atomic(manual.TRACKING_PATH, tracking)
@@ -214,6 +276,8 @@ def main(argv: list[str] | None = None) -> int:
                 manual.write_json_atomic(manual.INBOX_PATH, inbox)
             if flags["intentsChanged"]:
                 manual.write_json_atomic(manual.INTENTS_PATH, intents)
+        result["acceptedCount"] = len(result["items"])
+        result["skippedCount"] = len(result["skipped"])
         print(json.dumps(result, ensure_ascii=False, sort_keys=True))
         return 0
     except manual.ManualTrackingError as exc:
