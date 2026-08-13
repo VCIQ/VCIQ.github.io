@@ -10,11 +10,19 @@ export const metadata: Metadata = {
   description: "整理一级市场核心技术与赛道中的创始人、科学家、工程负责人和关键决策者。",
 };
 
+const SUMMARY_LIMIT = 88;
+
 const statusLabels = {
   complete: "资料较完整",
   partial: "持续补充",
   pending: "等待抓取",
 } as const;
+
+function compactSummary(summary: string) {
+  const normalized = summary.replace(/\s+/gu, " ").trim();
+  if (normalized.length <= SUMMARY_LIMIT) return normalized;
+  return `${normalized.slice(0, SUMMARY_LIMIT).trimEnd()}…`;
+}
 
 export default function PeoplePage() {
   const trackedCount = researchPeople.filter((person) => person.tracked).length;
@@ -49,10 +57,10 @@ export default function PeoplePage() {
           {researchPeople.map((person) => (
             <Link href={`/people/${person.slug}`} key={person.slug}>
               <div className="person-monogram">{person.name.slice(0, 1)}</div>
-              <p>{person.englishName}</p>
+              {person.englishName ? <p>{person.englishName}</p> : null}
               <h2>{person.name}</h2>
               <span>{person.role}</span>
-              <strong>{person.summary}</strong>
+              <strong>{compactSummary(person.summary)}</strong>
               <div>
                 {person.sectors.map((sector) => <i key={sector}>{sector}</i>)}
                 {person.concepts
