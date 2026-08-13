@@ -100,9 +100,14 @@ class PagesWorkflowTests(unittest.TestCase):
         self.assertIn("actions: write", self.workflow)
         deploy = self.workflow.split("  deploy:", 1)[1]
         deployment = deploy.index("uses: actions/deploy-pages@v4")
-        research = deploy.index("gh workflow run research-agent-v1.yml --ref main")
+        research_command = (
+            'gh workflow run research-agent-v1.yml --ref main --repo "$GITHUB_REPOSITORY"'
+        )
+        research = deploy.index(research_command)
         self.assertLess(deployment, research)
         self.assertIn("inputs.run_research_after_deploy == true", deploy)
+        self.assertIn(research_command, deploy)
+        self.assertNotIn("uses: actions/checkout@", deploy)
 
     def test_tracking_hash_mismatch_exposes_only_safe_short_hashes(self):
         self.assertIn("expected=${expectedHash.slice(0, 12)}", self.tracking_validator)
