@@ -8,6 +8,7 @@ primary/corroborating source confirms the same entity/event in the same window.
 
 from __future__ import annotations
 
+import re
 from datetime import date
 from typing import Any, Iterable
 from urllib.parse import urlsplit
@@ -40,6 +41,40 @@ GENERIC_COMPANIES = {
     "资本动态",
 }
 
+# ``融资`` is also used for debt facilities, margin trading, fund raising and
+# forward-looking plans.  Those topic mentions must not become claims that a
+# company completed an equity/venture financing round.
+_FINANCING_EXCLUSIONS = (
+    r"\b(?:debt financing|debt facility|credit facility|loan financing|bond financing|venture debt|term loan)\b",
+    r"\b(?:financing|funding)\s+(?:plan|plans|proposal|strategy|options?|needs?|costs?|environment|cuts?)\b",
+    r"\b(?:plans?|planning|considers?|considering|seeks?|seeking|aims?|targeting|eyes?|explores?|exploring|may|might|could|expected)\b.{0,32}\b(?:raise|raising|funding|financing|round)\b",
+    r"\b(?:abandons?|cancels?|drops?|shelves?|pauses?)\b.{0,28}\b(?:raise|raising|funding|financing|round)\b",
+    r"\braises?\b.{0,36}\bacross\b.{0,20}\bfunds?\b",
+    r"\b(?:raises?|closes?|launches?)\b.{0,36}\b(?:venture|investment|buyout|growth)\s+funds?\b",
+    r"\b(?:grant funding|research grant|government grant)\b",
+    r"\braises?\s+(?:concerns?|questions?|doubts?)\b",
+    r"\b(?:not|no|never|without|has not|hasn't)\b.{0,24}\b(?:raised|secured|closed|completed)\b.{0,24}\b(?:funding|financing|round)\b",
+    r"(?:债务融资|贷款融资|信贷融资|债券融资|发债融资|融资租赁|银行授信)",
+    r"(?:融资客|融资融券|融资余额|融资买入|融资偿还|保证金交易)",
+    r"(?:融资计划|融资方案|融资安排|融资需求|融资渠道|融资成本|融资环境|融资协议)",
+    r"(?:拟|计划|考虑|寻求|探索|可能|或将|有望|意向|筹备).{0,16}(?:融资|募资|筹资)",
+    r"(?:放弃|取消|终止|搁置|暂停).{0,16}(?:融资|募资|筹资)",
+    r"(?:尚未|未能|没有).{0,16}(?:完成|获得|获).{0,12}(?:融资|募资)",
+    r"(?:基金|创投|资本).{0,16}(?:完成|宣布|启动|计划).{0,12}(?:募资|募集)",
+    r"(?:基金).{0,12}(?:募资|募集).{0,8}(?:完成|计划|目标)",
+)
+_FINANCING_POSITIVE = (
+    r"\b(?:raises?|raised)\b.{0,44}(?:\$|€|£|¥|\busd\b|\beur\b|\brmb\b|\bfunding\b|\bfinancing\b|\bseries\b|\bseed\b|\bround\b|\bmillion\b|\bbillion\b)",
+    r"\b(?:secures?|secured|closes?|closed|lands?|landed|nabs?|nabbed|bags?|bagged|gets?|got|receives?|received|completes?|completed)\b.{0,44}(?:\bfunding\b|\bfinancing\b|\bseries\s+[a-z]|\bpre-?seed\b|\bseed\b|\bround\b)",
+    r"\bannounc(?:e|es|ed)\b.{0,36}(?:\$|€|£|¥|\busd\b|\beur\b|\brmb\b|\bfunding\b|\bfinancing\b|\bseries\s+[a-z]|\bpre-?seed\b|\bseed\b|\bround\b)",
+    r"\bemerges?\s+from\s+stealth\s+with\b.{0,36}(?:\$|€|£|¥|\bfunding\b|\bfinancing\b|\bseries\b|\bseed\b)",
+    r"(?:\$|€|£|¥)\s?\d[\d,.]*\s*(?:m|bn|million|billion)?\b.{0,24}\b(?:series\s+[a-z](?:\+)?|pre-?[a-z]|pre-?seed|seed\s+round)\b",
+    r"(?:完成|获得|获|拿下|宣布|成功完成|募集到|募得|再获).{0,24}(?:融资|天使轮|种子轮|pre-?[a-z]\+?轮|[a-z]\+?轮)",
+    r"(?:融资|天使轮|种子轮|pre-?[a-z]\+?轮|[a-z]\+?轮).{0,12}(?:完成|交割|到账)",
+    r"(?:天使轮|种子轮|pre-?[a-z]\+?轮|[a-z]\+?轮)融资.{0,10}(?:超|达|近|逾|数|亿元|万元|美元|人民币|\d)",
+    r"(?:领投|跟投).{0,12}(?:天使|种子|pre-?[a-z]|[a-z]\+?轮)",
+)
+
 
 def _clean(value: Any) -> str:
     return " ".join(str(value or "").split()).strip()
@@ -47,6 +82,26 @@ def _clean(value: Any) -> str:
 
 def _fold(value: Any) -> str:
     return _clean(value).casefold()
+
+
+def _matches_any(text: str, patterns: Iterable[str]) -> bool:
+    return any(re.search(pattern, text, flags=re.IGNORECASE) for pattern in patterns)
+
+
+def financing_event_supported(title: Any, summary: Any = "") -> bool:
+    """Return whether text states a completed company financing event."""
+
+    title_text = _fold(title)
+    combined = _fold(f"{title} {summary}")
+    if not title_text:
+        return False
+    if _matches_any(title_text, _FINANCING_EXCLUSIONS):
+        return False
+    if _matches_any(title_text, _FINANCING_POSITIVE):
+        return True
+    if _matches_any(combined, _FINANCING_EXCLUSIONS):
+        return False
+    return _matches_any(combined, _FINANCING_POSITIVE)
 
 
 def _source(article: dict[str, Any]) -> dict[str, Any]:
@@ -113,7 +168,14 @@ def _published_day(article: dict[str, Any]) -> int | None:
 
 
 def _explicit_event(article: dict[str, Any]) -> bool:
-    return _clean(article.get("type")) in EXPLICIT_EVENT_TYPES
+    event_type = _clean(article.get("type"))
+    if event_type not in EXPLICIT_EVENT_TYPES:
+        return False
+    if event_type == "融资":
+        return financing_event_supported(
+            article.get("title"), article.get("summary")
+        )
+    return True
 
 
 def _title_mentions_entity(article: dict[str, Any]) -> bool:
@@ -165,6 +227,15 @@ def _independent(
 def _same_event(
     discovery: dict[str, Any], stronger: dict[str, Any]
 ) -> bool:
+    if _clean(discovery.get("type")) == "融资" and not (
+        financing_event_supported(
+            discovery.get("title"), discovery.get("summary")
+        )
+        and financing_event_supported(
+            stronger.get("title"), stronger.get("summary")
+        )
+    ):
+        return False
     left_cluster = _fold(discovery.get("eventClusterId"))
     right_cluster = _fold(stronger.get("eventClusterId"))
     if left_cluster and right_cluster and left_cluster == right_cluster:
