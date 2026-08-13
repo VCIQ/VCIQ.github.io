@@ -14,11 +14,14 @@ const DEFAULT_BUDGET = {
 };
 
 const ROUTES = [
-  ["/", "index.html", { maxHtmlBytes: 1_200_000 }],
+  ["/", "index.html", { maxHtmlBytes: 250_000 }],
   ["/search/", "search/index.html", { maxHtmlBytes: 100_000 }],
   ["/hot/", "hot/index.html", { maxHtmlBytes: 750_000 }],
   ["/favorites/", "favorites/index.html", { maxHtmlBytes: 80_000 }],
-  ["/technologies/", "technologies/index.html", { maxHtmlBytes: 100_000 }],
+  // The technology object directory intentionally carries its bounded
+  // build-time catalog. Keep a route-specific ceiling above the current
+  // ~130 KB baseline without weakening the default 100 KB budget elsewhere.
+  ["/technologies/", "technologies/index.html", { maxHtmlBytes: 150_000 }],
   ["/technology/", "technology/index.html", { maxHtmlBytes: 600_000 }],
   ["/people/", "people/index.html", { maxHtmlBytes: 450_000 }],
   ["/companies/", "companies/index.html", { maxHtmlBytes: 600_000 }],

@@ -196,14 +196,14 @@ function makeEventFavorite(row: HTMLElement): FavoriteInput | null {
   };
 }
 
-function makeFeedFavorite(row: HTMLAnchorElement): FavoriteInput | null {
+function makeFeedFavorite(row: HTMLElement): FavoriteInput | null {
   const title = cleanText(row.querySelector<HTMLElement>("[class*='feedTitle']")?.textContent);
   const context = cleanText(row.querySelector<HTMLElement>("[class*='feedContext']")?.textContent);
   const tag = cleanText(row.querySelector<HTMLElement>("[class*='feedTag']")?.textContent);
   const aside = [...row.querySelectorAll<HTMLElement>("[class*='feedAside'] span")]
     .map((element) => cleanText(element.textContent))
     .filter(Boolean);
-  const href = hrefFrom(row);
+  const href = hrefFromRow(row);
   if (!title || !href) return null;
 
   const channel = inferChannel(tag || aside[1] || "", context);
@@ -323,7 +323,11 @@ function InlineFavoriteButton({ item }: { item: FavoriteInput }) {
 
 function placementFor(row: HTMLElement): FavoritePlacement {
   if (row.matches(".event-row")) return "event";
-  if (row.matches(".headlines-column a[class*='feedRow'], .side-column a[class*='feedRow']")) {
+  if (
+    row.matches(
+      ".headlines-column [data-intelligence-item][class*='feedRow'], .side-column [data-intelligence-item][class*='feedRow']",
+    )
+  ) {
     return "feed";
   }
   return row.querySelector("svg, [class*='arrow']") ? "cornerArrow" : "corner";
@@ -332,8 +336,9 @@ function placementFor(row: HTMLElement): FavoritePlacement {
 function itemFor(row: HTMLElement): FavoriteInput | null {
   if (row.matches(".event-row")) return makeEventFavorite(row);
   if (
-    row instanceof HTMLAnchorElement &&
-    row.matches(".headlines-column a[class*='feedRow'], .side-column a[class*='feedRow']")
+    row.matches(
+      ".headlines-column [data-intelligence-item][class*='feedRow'], .side-column [data-intelligence-item][class*='feedRow']",
+    )
   ) {
     return makeFeedFavorite(row);
   }
@@ -376,8 +381,10 @@ export function IntelligenceFavoriteControls() {
       ].join(" ");
 
       if (placement === "event") {
-        const target = host.querySelector<HTMLElement>(".importance");
-        target?.prepend(element);
+        const actions = host.querySelector<HTMLElement>("[data-intelligence-event-actions]");
+        const target = actions ?? host.querySelector<HTMLElement>(".importance");
+        if (actions) target?.appendChild(element);
+        else target?.prepend(element);
       } else if (placement === "feed") {
         const target = host.querySelector<HTMLElement>("[class*='feedContext']");
         target?.appendChild(element);

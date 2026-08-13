@@ -46,8 +46,12 @@
   margin: 0 0 9px 4px;
 }
 
-:global(.headlines-column a[class*="feedRow"]) .mount,
-:global(.side-column a[class*="feedRow"]) .mount {
+:global([data-intelligence-event-actions]) .mount {
+  margin: 0 0 0 4px;
+}
+
+:global(.headlines-column [data-intelligence-item][class*="feedRow"]) .mount,
+:global(.side-column [data-intelligence-item][class*="feedRow"]) .mount {
   position: static;
   margin-left: 4px;
 }

@@ -1,13 +1,14 @@
 import { HomepageSortableFeed } from "@/components/homepage-sortable-feed";
 import styles from "@/components/homepage-columns.module.css";
 import { coreTechnologyEntities } from "@/lib/core-research-objects";
-import { HOMEPAGE_CHANNEL_UPDATE_LIMIT } from "@/lib/homepage-channel-update-config";
 import {
   getChannelUpdateDirectory,
   type ChannelUpdateItem,
   type ChannelUpdateKey,
 } from "@/lib/channel-updates";
 import rawArticles from "@/public/data/articles.json";
+
+const HOMEPAGE_OBJECT_UPDATE_LIMIT = 10;
 
 const homepageChannels = [
   { key: "technologies", number: "02", label: "核心技术", href: "/technologies" },
@@ -35,9 +36,21 @@ type ArticlePayload = {
 };
 
 function updateKey(href: string, title: string) {
-  return `${href.trim().toLocaleLowerCase("en-US")}|${title
+  return `${canonicalHref(href)}|${title
     .trim()
     .toLocaleLowerCase("zh-CN")}`;
+}
+
+function canonicalHref(value: string) {
+  const raw = value.trim();
+  try {
+    const url = new URL(raw);
+    url.hash = "";
+    if (url.pathname !== "/") url.pathname = url.pathname.replace(/\/+$/u, "");
+    return url.toString().toLocaleLowerCase("en-US");
+  } catch {
+    return raw.split("#", 1)[0].replace(/\/+$/u, "").toLocaleLowerCase("en-US");
+  }
 }
 
 const articleImportance = new Map(
@@ -100,7 +113,7 @@ function getChannelUpdates() {
 
   homepageChannels.forEach((channel) => {
     updatesForChannel(channel).forEach((item) => {
-      const key = updateKey(item.href, item.title);
+      const key = canonicalHref(item.href);
       const existing = updates.get(key);
 
       if (existing) {
@@ -120,8 +133,13 @@ function getChannelUpdates() {
   return [...updates.values()];
 }
 
-export function HomepageChannelUpdates() {
+export function HomepageChannelUpdates({
+  excludeHrefs = [],
+}: {
+  excludeHrefs?: string[];
+}) {
   const updates = getChannelUpdates();
+  const excluded = new Set(excludeHrefs.map(canonicalHref));
   const items = updates
     .map((item) => ({
       id: item.id,
@@ -138,30 +156,33 @@ export function HomepageChannelUpdates() {
       sortAt: item.sortAt,
       importance: articleImportance.get(updateKey(item.href, item.title)) ?? 0,
     }))
+    .filter((item) => !excluded.has(canonicalHref(item.href)))
     .sort(
       (left, right) =>
         right.sortAt.localeCompare(left.sortAt) ||
         right.importance - left.importance ||
         left.title.localeCompare(right.title, "zh-CN"),
     )
-    .slice(0, HOMEPAGE_CHANNEL_UPDATE_LIMIT);
+    .slice(0, HOMEPAGE_OBJECT_UPDATE_LIMIT);
 
   return (
     <aside className={`side-column ${styles.column}`} aria-label="核心研究对象最新更新">
       <div className="section-heading compact">
         <div>
-          <p className="section-index">03 / OBJECT UPDATES</p>
+          <p className="section-index">04 / OBJECT UPDATES</p>
           <h2>研究对象最新更新</h2>
         </div>
-        <span>{items.length} 条</span>
+        <span>辅助线索 · {items.length} 条</span>
       </div>
 
       <HomepageSortableFeed
         items={items}
-        limit={HOMEPAGE_CHANNEL_UPDATE_LIMIT}
+        limit={HOMEPAGE_OBJECT_UPDATE_LIMIT}
         ariaLabel="核心研究对象最新更新目录"
         initialSort="latest"
-        description={`聚合核心技术、核心赛道、核心人物与核心公司，合并跨对象重复条目并保留最新 ${HOMEPAGE_CHANNEL_UPDATE_LIMIT} 条；可在这批候选中切换按最新时间或重要性排序。`}
+        description={`补充首屏关键事件之外的对象时间线变化，合并跨对象重复条目；首页仅展示 ${HOMEPAGE_OBJECT_UPDATE_LIMIT} 条。`}
+        archiveHref="#research-objects"
+        archiveLabel="浏览四类对象完整目录"
       />
     </aside>
   );

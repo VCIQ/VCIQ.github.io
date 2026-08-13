@@ -73,7 +73,7 @@ export function getSnapshotFreshness({
     return {
       processedAt,
       label: "内置快照",
-      description: "正在读取线上公开情报快照",
+      description: "当前展示构建时公开快照；筛选时按需读取完整事件档案",
       stale: false,
     };
   }

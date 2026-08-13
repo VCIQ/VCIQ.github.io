@@ -28,6 +28,7 @@ const favorites = read("lib/favorites.ts");
 const domRuntime = read("lib/intelligence-dom-runtime.ts");
 const channelArchiveBuilder = read("scripts/build-channel-update-archives.ts");
 const searchIndexBuilder = read("scripts/build-article-search-index.mjs");
+const homepageBudget = read("scripts/check-homepage-performance-budget.mjs");
 const routeBudget = read("scripts/check-route-performance-budget.mjs");
 const packageJson = read("package.json");
 
@@ -38,6 +39,7 @@ test("homepage client does not import full build-time research datasets", () => 
   assert.match(page, /DashboardClient/);
   assert.match(page, /initialPayload/);
   assert.match(page, /bootstrap/);
+  assert.doesNotMatch(page, /sourceStatus: snapshot\.sourceStatus/);
 });
 
 test("global header status is build-time and cannot trigger the article archive fetch", () => {
@@ -53,9 +55,10 @@ test("browser article archive is lazy and no longer requires a global react-quer
   assert.doesNotMatch(articles, /from "zod"/);
   assert.doesNotMatch(articles, /@tanstack\/react-query/);
   assert.doesNotMatch(layout, /Providers/);
-  assert.match(articles, /pointerdown/);
-  assert.match(articles, /keydown/);
-  assert.match(articles, /const enabled = options\.enabled \?\? interactionEnabled/);
+  assert.doesNotMatch(articles, /addEventListener\("pointerdown"/);
+  assert.doesNotMatch(articles, /addEventListener\("keydown"/);
+  assert.match(articles, /const enabled = options\.enabled !== false \|\| manuallyEnabled/);
+  assert.match(articles, /setManuallyEnabled\(true\)/);
   assert.match(articles, /cachedPayload/);
   assert.match(articles, /inFlight/);
   assert.match(articles, /cache: "default"/);
@@ -98,11 +101,11 @@ test("channel update directories hydrate only a bounded latest window", () => {
   assert.match(packageJson, /build:channel-update-archives/);
 });
 
-test("homepage update stream keeps 200 candidates but mounts only 60 initially", () => {
-  assert.match(homepageUpdates, /slice\(0, HOMEPAGE_CHANNEL_UPDATE_LIMIT\)/);
-  assert.match(homepageFeed, /INITIAL_FEED_RENDER_LIMIT = 60/);
+test("homepage auxiliary streams mount only a bounded ten-item window", () => {
+  assert.match(homepageUpdates, /slice\(0, HOMEPAGE_OBJECT_UPDATE_LIMIT\)/);
+  assert.match(homepageFeed, /INITIAL_FEED_RENDER_LIMIT = 10/);
   assert.match(homepageFeed, /sortedItems\.slice\(0, renderLimit\)/);
-  assert.match(homepageFeed, /显示更多/);
+  assert.match(homepageFeed, /archiveHref/);
 });
 
 test("hot ranking starts from a bounded build-time pool and only loads the full archive explicitly", () => {
@@ -148,10 +151,16 @@ test("intelligence controls mount progressively after hydration", () => {
 test("Pages build enforces homepage and route-level client asset budgets", () => {
   assert.match(packageJson, /check:homepage-performance/);
   assert.match(packageJson, /scripts\/check-homepage-performance-budget\.mjs/);
+  assert.match(homepageBudget, /HOMEPAGE_MAX_HTML_BYTES/);
+  assert.match(homepageBudget, /HOMEPAGE_MAX_HTML_ELEMENTS/);
+  assert.match(homepageBudget, /HOMEPAGE_MAX_INITIAL_EVENT_ROWS/);
   assert.match(packageJson, /check:route-performance/);
   assert.match(packageJson, /scripts\/check-route-performance-budget\.mjs/);
   assert.match(routeBudget, /\/search\//);
   assert.match(routeBudget, /\/hot\//);
   assert.match(routeBudget, /\/favorites\//);
+  assert.match(routeBudget, /\/technologies\/[\s\S]*150_000/);
   assert.match(routeBudget, /article_search_index\.json/);
+  assert.match(homepageBudget, /HOMEPAGE_MAX_HTML_BYTES \?\? 250_000/);
+  assert.match(routeBudget, /\["\/", "index\.html", \{ maxHtmlBytes: 250_000 \}\]/);
 });

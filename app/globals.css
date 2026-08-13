@@ -28,7 +28,7 @@
   --border-soft: #dfe3dc;
   --text: #15201c;
   --muted: #56635d;
-  --faint: #78827d;
+  --faint: #65716b;
   --green: #47755a;
   --green-bright: #275e3d;
   --blue: #326b96;
@@ -57,6 +57,20 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   outline: 2px solid var(--green-bright);
   outline-offset: 3px;
 }
+
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 100;
+  padding: 8px 12px;
+  border: 1px solid var(--green);
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: 12px;
+  transform: translateY(-160%);
+}
+.skip-link:focus { transform: translateY(0); }
 
 .site-header {
   position: sticky;
@@ -89,8 +103,15 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   border-left: 1px solid transparent; border-right: 1px solid transparent;
 }
 .main-nav a:hover { color: var(--text); background: var(--surface); border-color: var(--border-soft); }
+.main-nav a[aria-current="page"] {
+  color: var(--text);
+  border-color: var(--border-soft);
+  background: var(--surface-3);
+}
 .main-nav a span { font: 9px/1 Inter, sans-serif; color: var(--faint); letter-spacing: .12em; }
 .header-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+.header-optional-status { display: flex; align-items: center; gap: 4px; }
+.mobile-nav-tools { display: none; }
 .updated { display: flex; align-items: center; color: var(--muted); font-size: 12px; white-space: nowrap; margin-right: 4px; }
 .updated i, .status-pill i { width: 6px; height: 6px; background: var(--green-bright); border-radius: 50%; margin-right: 7px; box-shadow: 0 0 0 4px color-mix(in srgb, var(--green) 15%, transparent); }
 .updated i.muted-dot { background: var(--orange); box-shadow: 0 0 0 4px color-mix(in srgb, var(--orange) 15%, transparent); }
@@ -100,6 +121,31 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 }
 .icon-button:hover { background: var(--surface-3); }
 .mobile-menu { display: none; }
+
+@media (max-width: 1280px) {
+  .mobile-menu { display: grid; }
+  .main-nav {
+    display: none;
+    position: absolute;
+    top: 72px;
+    left: 20px;
+    right: 20px;
+    margin: 0;
+    padding: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    box-shadow: var(--shadow);
+  }
+  .main-nav.is-open { display: grid; grid-template-columns: repeat(2, 1fr); }
+  .main-nav a { min-height: 48px; padding: 10px; }
+  .header-optional-status, .header-optional-tool { display: none; }
+  .mobile-nav-tools {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, 1fr);
+    border-top: 1px solid var(--border);
+  }
+}
 
 .page-shell { width: min(1560px, calc(100% - 40px)); margin: auto; padding: 40px 0 72px; }
 .dashboard-intro { display: grid; grid-template-columns: 1fr; gap: 28px; padding: 0 0 34px; border-bottom: 1px solid var(--border); }
@@ -441,6 +487,13 @@ h1 { font: 500 clamp(32px, 4.2vw, 58px)/1.15 "Noto Serif SC", "Songti SC", serif
   .main-nav { display: none; position: absolute; top: 72px; left: 14px; right: 14px; margin: 0; background: var(--surface-2); border: 1px solid var(--border); padding: 10px; box-shadow: var(--shadow); }
   .main-nav.is-open { display: grid; grid-template-columns: repeat(2, 1fr); }
   .main-nav a { padding: 10px; min-height: 48px; }
+  .header-optional-status, .header-optional-tool { display: none; }
+  .mobile-nav-tools {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, 1fr);
+    border-top: 1px solid var(--border);
+  }
   .market-strip { grid-template-columns: 1fr; padding: 14px 0; }
   .market-divider { display: none; }
   .market-summary, .market-summary:last-child { justify-content: space-between; border-bottom: 1px solid var(--border-soft); }

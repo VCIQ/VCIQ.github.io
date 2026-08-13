@@ -1,17 +1,77 @@
-import { DailyHeadlines } from "@/components/daily-headlines";
+import type { Metadata } from "next";
+import {
+  DailyHeadlines,
+  getHomepageHeadlines,
+} from "@/components/daily-headlines";
 import {
   DashboardClient,
   type DashboardBootstrap,
 } from "@/components/dashboard-client";
 import { HomepageChannelUpdates } from "@/components/homepage-channel-updates";
-import { HomepageTrackingActions } from "@/components/homepage-tracking-actions";
 import { coreResearchObjectStats } from "@/lib/core-research-objects";
 import { formatTaipeiDate } from "@/lib/snapshot-freshness";
 import { trackedSectors } from "@/lib/tracked-sectors";
 import type { ArticlePayload, LiveIntelligenceEvent } from "@/lib/use-articles";
 import rawArticles from "@/public/data/articles.json";
 
-const INITIAL_KEY_EVENTS_LIMIT = 80;
+// Keep the public landing page useful before hydrating or downloading the full
+// article archive. The complete archive remains available after an explicit
+// filter, sort, or "load more" action in DashboardClient.
+const INITIAL_KEY_EVENTS_LIMIT = 20;
+const SITE_URL = "https://vciq.github.io";
+const HOME_TITLE = "丽泽路1号｜一级市场科技研究";
+const HOME_DESCRIPTION =
+  "围绕核心技术、核心赛道、核心人物与核心公司的公开、可追溯一级市场科技研究。";
+const HOME_SOCIAL_IMAGE = {
+  url: "/og-image.png",
+  width: 1200,
+  height: 630,
+  type: "image/png",
+  alt: "丽泽路1号：围绕四类核心研究对象的一级市场科技研究",
+};
+
+export const metadata: Metadata = {
+  title: { absolute: HOME_TITLE },
+  description: HOME_DESCRIPTION,
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
+    url: "/",
+    siteName: "丽泽路1号",
+    type: "website",
+    locale: "zh_CN",
+    images: [HOME_SOCIAL_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
+    images: [HOME_SOCIAL_IMAGE],
+  },
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": `${SITE_URL}/#homepage`,
+  url: `${SITE_URL}/`,
+  name: HOME_TITLE,
+  description: HOME_DESCRIPTION,
+  inLanguage: "zh-CN",
+  isPartOf: {
+    "@type": "WebSite",
+    "@id": `${SITE_URL}/#website`,
+    url: `${SITE_URL}/`,
+    name: "丽泽路1号",
+  },
+  about: ["核心技术", "核心赛道", "核心人物", "核心公司"].map((name) => ({
+    "@type": "Thing",
+    name,
+  })),
+};
+
+const structuredDataJson = JSON.stringify(structuredData).replace(/</gu, "\\u003c");
 const snapshot = rawArticles as unknown as ArticlePayload;
 const trackedSectorAliases = [
   ...new Set(trackedSectors.flatMap((sector) => sector.aliases)),
@@ -48,10 +108,22 @@ const initialPayload: ArticlePayload = {
   generatedAt: snapshot.generatedAt,
   articleCount: snapshot.articleCount,
   articles: initialArticles,
-  sourceStatus: snapshot.sourceStatus,
   qualityGate: snapshot.qualityGate,
   refreshAudit: snapshot.refreshAudit,
 };
+
+const initialEventHrefs = initialArticles.map((item) => item.source.url);
+const initialHeadlineHrefs = getHomepageHeadlines(initialEventHrefs).map(
+  (item) => item.href,
+);
+
+const activeSourceIds = new Set(activeArticles.map((item) => item.sourceId).filter(Boolean));
+const healthySourceCount = (snapshot.sourceStatus ?? []).filter(
+  (item) =>
+    activeSourceIds.has(item.id) &&
+    ["ok", "partial"].includes(item.status) &&
+    item.accepted > 0,
+).length;
 
 const taipeiToday = formatTaipeiDate(new Date());
 const bootstrap: DashboardBootstrap = {
@@ -59,7 +131,7 @@ const bootstrap: DashboardBootstrap = {
   todayArticleCount: activeArticles.filter((item) => item.publishedAt === taipeiToday).length,
   sectorCount: trackedSectors.length,
   activeArticleCount: activeArticles.length,
-  sourceCount: new Set(activeArticles.map((item) => item.source.url)).size,
+  healthySourceCount,
   platformCount: new Set(
     activeArticles.map((item) => item.source.platform).filter(Boolean),
   ).size,
@@ -83,14 +155,23 @@ const bootstrap: DashboardBootstrap = {
 export default function Home() {
   return (
     <main className="page-shell">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: structuredDataJson }}
+      />
       <DashboardClient
         bootstrap={bootstrap}
         initialPayload={initialPayload}
-        middle={<DailyHeadlines />}
+        middle={
+          <DailyHeadlines
+            excludeHrefs={initialEventHrefs}
+          />
+        }
       >
-        <HomepageChannelUpdates />
+        <HomepageChannelUpdates
+          excludeHrefs={[...initialEventHrefs, ...initialHeadlineHrefs]}
+        />
       </DashboardClient>
-      <HomepageTrackingActions />
     </main>
   );
 }

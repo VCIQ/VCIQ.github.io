@@ -4,19 +4,40 @@ import { SiteClientControls } from "@/components/site-client-controls";
 import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
 
+const SITE_URL = "https://vciq.github.io";
+const SITE_NAME = "丽泽路1号";
+const SITE_TITLE = "丽泽路1号｜一级市场科技研究";
+const SITE_DESCRIPTION = "围绕核心技术、核心赛道、核心人物与核心公司的可追溯一级市场研究。";
+const SOCIAL_DESCRIPTION = "以四类核心研究对象组织公开、克制、可追溯的一级市场科技研究。";
+const SOCIAL_IMAGE = {
+  url: "/og-image.png",
+  width: 1200,
+  height: 630,
+  type: "image/png",
+  alt: "丽泽路1号：围绕四类核心研究对象的一级市场科技研究",
+};
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://vciq.github.io"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "丽泽路1号｜一级市场科技研究",
-    template: "%s｜丽泽路1号",
+    default: SITE_TITLE,
+    template: `%s｜${SITE_NAME}`,
   },
-  description: "围绕核心技术、核心赛道、核心人物与核心公司的可追溯一级市场研究。",
+  description: SITE_DESCRIPTION,
   icons: { icon: "/favicon.svg" },
   openGraph: {
-    title: "丽泽路1号",
-    description: "以四类核心研究对象组织公开、克制、可追溯的一级市场科技研究。",
+    title: SITE_NAME,
+    description: SOCIAL_DESCRIPTION,
+    siteName: SITE_NAME,
     type: "website",
     locale: "zh_CN",
+    images: [SOCIAL_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_NAME,
+    description: SOCIAL_DESCRIPTION,
+    images: [SOCIAL_IMAGE],
   },
 };
 
@@ -24,8 +45,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="zh-CN" data-theme="light">
       <body>
+        <a className="skip-link" href="#main-content">跳到主要内容</a>
         <SiteHeader status={<LiveStatus />} />
-        {children}
+        <div id="main-content" tabIndex={-1}>{children}</div>
         <SiteClientControls />
         <footer className="site-footer">
           <div>

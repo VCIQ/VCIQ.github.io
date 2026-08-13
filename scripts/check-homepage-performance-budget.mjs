@@ -7,10 +7,19 @@ const OUT = path.join(ROOT, "out");
 const INDEX = path.join(OUT, "index.html");
 
 const MAX_SINGLE_SCRIPT_BYTES = Number(
-  process.env.HOMEPAGE_MAX_SCRIPT_BYTES ?? 260_000,
+  process.env.HOMEPAGE_MAX_SCRIPT_BYTES ?? 250_000,
 );
 const MAX_TOTAL_SCRIPT_BYTES = Number(
-  process.env.HOMEPAGE_MAX_TOTAL_SCRIPT_BYTES ?? 1_000_000,
+  process.env.HOMEPAGE_MAX_TOTAL_SCRIPT_BYTES ?? 800_000,
+);
+const MAX_HTML_BYTES = Number(
+  process.env.HOMEPAGE_MAX_HTML_BYTES ?? 250_000,
+);
+const MAX_HTML_ELEMENTS = Number(
+  process.env.HOMEPAGE_MAX_HTML_ELEMENTS ?? 1_200,
+);
+const MAX_INITIAL_EVENT_ROWS = Number(
+  process.env.HOMEPAGE_MAX_INITIAL_EVENT_ROWS ?? 24,
 );
 
 function fail(message) {
@@ -19,6 +28,9 @@ function fail(message) {
 }
 
 const html = readFileSync(INDEX, "utf8");
+const htmlBytes = statSync(INDEX).size;
+const htmlElements = (html.match(/<[a-z][^>]*>/gi) ?? []).length;
+const initialEventRows = (html.match(/class=["'][^"']*\bevent-row\b/gi) ?? []).length;
 const sources = [
   ...new Set(
     [...html.matchAll(/<script\b[^>]*\bsrc=["']([^"']+)["'][^>]*>/gi)]
@@ -45,9 +57,15 @@ if (!sources.length) {
         totalBytes,
         maxSingleBytes: largest?.bytes ?? 0,
         largestScript: largest?.source ?? "",
+        htmlBytes,
+        htmlElements,
+        initialEventRows,
         budgets: {
           maxSingleBytes: MAX_SINGLE_SCRIPT_BYTES,
           maxTotalBytes: MAX_TOTAL_SCRIPT_BYTES,
+          maxHtmlBytes: MAX_HTML_BYTES,
+          maxHtmlElements: MAX_HTML_ELEMENTS,
+          maxInitialEventRows: MAX_INITIAL_EVENT_ROWS,
         },
       },
       null,
@@ -62,5 +80,16 @@ if (!sources.length) {
   }
   if (totalBytes > MAX_TOTAL_SCRIPT_BYTES) {
     fail(`homepage scripts total ${totalBytes} bytes; budget is ${MAX_TOTAL_SCRIPT_BYTES}`);
+  }
+  if (htmlBytes > MAX_HTML_BYTES) {
+    fail(`homepage HTML is ${htmlBytes} bytes; budget is ${MAX_HTML_BYTES}`);
+  }
+  if (htmlElements > MAX_HTML_ELEMENTS) {
+    fail(`homepage has ${htmlElements} HTML elements; budget is ${MAX_HTML_ELEMENTS}`);
+  }
+  if (initialEventRows > MAX_INITIAL_EVENT_ROWS) {
+    fail(
+      `homepage renders ${initialEventRows} initial event rows; budget is ${MAX_INITIAL_EVENT_ROWS}`,
+    );
   }
 }

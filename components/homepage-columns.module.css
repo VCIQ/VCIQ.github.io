@@ -5,11 +5,7 @@
 }
 
 .feedList {
-  height: 1080px;
-  max-height: 1080px;
-  overflow: auto;
   border-top: 1px solid var(--border);
-  scrollbar-color: var(--border) transparent;
 }
 
 .feedRow {
@@ -141,10 +137,7 @@
 }
 
 :global(.content-grid):has(.column) :global(.event-list) {
-  height: 1080px;
-  max-height: 1080px;
-  overflow: auto;
-  scrollbar-color: var(--border) transparent;
+  overflow: visible;
 }
 
 :global(.content-grid):has(.column) :global(.event-row) {
@@ -198,6 +191,26 @@
   font-size: 16px;
 }
 
+.archiveLink {
+  display: flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--green-bright);
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.archiveLink:hover {
+  border-color: var(--green);
+  background: var(--surface-2);
+  color: var(--text);
+}
+
 @media (max-width: 560px) {
   .feedRow {
     grid-template-columns: 24px minmax(0, 1fr) 22px;
@@ -215,5 +228,9 @@
   :global(.content-grid):has(.column) :global(.filter-bar),
   :global(.content-grid):has(.column) :global(.method-note) {
     min-height: 0;
+  }
+
+  :global(.content-grid):has(.column) :global(.event-row) {
+    grid-template-columns: 52px minmax(0, 1fr);
   }
 }

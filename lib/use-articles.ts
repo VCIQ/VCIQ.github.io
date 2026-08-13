@@ -206,26 +206,15 @@ export function useArticles(
   initialPayload: ArticlePayload = emptyPayload,
   options: { enabled?: boolean } = {},
 ) {
-  // With build-time bootstrap data available, wait until the first real user
-  // interaction before loading the complete multi-megabyte event archive.
-  // Search no longer uses this hook; it consumes a compact event index instead.
-  const [interactionEnabled, setInteractionEnabled] = useState(false);
+  // Pages with build-time bootstrap data opt out of the multi-megabyte archive
+  // until a control actually needs it. A generic pointer or keyboard event is
+  // not a useful signal: opening navigation must not download the full corpus.
+  const [manuallyEnabled, setManuallyEnabled] = useState(false);
   const [payload, setPayload] = useState<ArticlePayload>(() => cachedPayload ?? initialPayload);
   const [error, setError] = useState<Error | null>(null);
   const [isFetching, setIsFetching] = useState(false);
 
-  useEffect(() => {
-    if (options.enabled !== undefined || interactionEnabled) return;
-    const activate = () => setInteractionEnabled(true);
-    window.addEventListener("pointerdown", activate, { once: true, passive: true });
-    window.addEventListener("keydown", activate, { once: true });
-    return () => {
-      window.removeEventListener("pointerdown", activate);
-      window.removeEventListener("keydown", activate);
-    };
-  }, [interactionEnabled, options.enabled]);
-
-  const enabled = options.enabled ?? interactionEnabled;
+  const enabled = options.enabled !== false || manuallyEnabled;
 
   useEffect(() => {
     if (!enabled) return;
@@ -263,6 +252,7 @@ export function useArticles(
   }, [enabled]);
 
   const refetch = useCallback(async () => {
+    setManuallyEnabled(true);
     setIsFetching(true);
     try {
       const nextPayload = await loadArticles(true);

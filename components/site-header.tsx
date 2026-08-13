@@ -2,7 +2,8 @@
 
 import { Bookmark, Bot, Menu, Search, Settings, X } from "lucide-react";
 import Link from "next/link";
-import { useState, type ReactNode } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState, type ReactNode } from "react";
 
 const navItems = [
   ["研究首页", "/"],
@@ -13,9 +14,26 @@ const navItems = [
 ];
 
 const TRACKING_ADMIN_URL = "https://vciq-tracking-console.pages.dev/";
+const BUILD_PROVENANCE_URL = "https://vciq.github.io/build-provenance.json";
+const PRIMARY_NAVIGATION_ID = "primary-navigation";
+
+function isCurrentRoute(pathname: string, href: string) {
+  if (href === "/") return pathname === href;
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 export function SiteHeader({ status }: { status: ReactNode }) {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [open]);
 
   return (
     <header className="site-header">
@@ -28,31 +46,97 @@ export function SiteHeader({ status }: { status: ReactNode }) {
           </span>
         </Link>
 
-        <nav className={open ? "main-nav is-open" : "main-nav"} aria-label="主导航">
-          {navItems.map(([label, href], index) => (
-            <Link href={href} key={href} onClick={() => setOpen(false)}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              {label}
+        <nav
+          id={PRIMARY_NAVIGATION_ID}
+          className={open ? "main-nav is-open" : "main-nav"}
+          aria-label="主导航"
+        >
+          {navItems.map(([label, href], index) => {
+            const current = isCurrentRoute(pathname, href);
+            return (
+              <Link
+                href={href}
+                key={href}
+                onClick={() => setOpen(false)}
+                aria-current={current ? "page" : undefined}
+              >
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                {label}
+              </Link>
+            );
+          })}
+          <div className="mobile-nav-tools" role="group" aria-label="工具入口">
+            <Link
+              href="/research-agent"
+              onClick={() => setOpen(false)}
+              aria-current={isCurrentRoute(pathname, "/research-agent") ? "page" : undefined}
+            >
+              研究助手
             </Link>
-          ))}
+            <Link
+              href="/favorites"
+              onClick={() => setOpen(false)}
+              aria-current={isCurrentRoute(pathname, "/favorites") ? "page" : undefined}
+            >
+              收藏
+            </Link>
+            <a
+              href={TRACKING_ADMIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
+              aria-label="追踪管理台（外部链接，在新标签页打开）"
+            >
+              追踪管理台 ↗
+            </a>
+            <Link
+              href="/search"
+              onClick={() => setOpen(false)}
+              aria-current={isCurrentRoute(pathname, "/search") ? "page" : undefined}
+            >
+              全局搜索
+            </Link>
+            <a href="/data/pipeline_health.json">数据健康</a>
+            <a
+              href={BUILD_PROVENANCE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              构建记录
+            </a>
+          </div>
         </nav>
 
         <div className="header-actions">
-          {status}
-          <Link className="icon-button" href="/research-agent" aria-label="研究助手" title="研究助手">
-            <Bot size={18} />
+          <div className="header-optional-status">{status}</div>
+          <Link className="icon-button header-optional-tool" href="/research-agent" aria-label="研究助手" title="研究助手">
+            <Bot size={18} aria-hidden="true" />
           </Link>
-          <Link className="icon-button" href="/favorites" aria-label="收藏" title="收藏">
-            <Bookmark size={18} />
+          <Link className="icon-button header-optional-tool" href="/favorites" aria-label="收藏" title="收藏">
+            <Bookmark size={18} aria-hidden="true" />
           </Link>
-          <a className="icon-button" href={TRACKING_ADMIN_URL} aria-label="追踪管理台" title="追踪管理台">
-            <Settings size={18} />
+          <a
+            className="icon-button header-optional-tool"
+            href={TRACKING_ADMIN_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="追踪管理台（外部链接，在新标签页打开）"
+            title="追踪管理台（外部链接，在新标签页打开）"
+          >
+            <Settings size={18} aria-hidden="true" />
           </a>
           <Link className="icon-button" href="/search" aria-label="全局搜索">
-            <Search size={18} />
+            <Search size={18} aria-hidden="true" />
           </Link>
-          <button className="icon-button mobile-menu" onClick={() => setOpen(!open)} aria-label="展开导航">
-            {open ? <X size={19} /> : <Menu size={19} />}
+          <button
+            type="button"
+            className="icon-button mobile-menu"
+            onClick={() => setOpen((current) => !current)}
+            aria-controls={PRIMARY_NAVIGATION_ID}
+            aria-expanded={open}
+            aria-label={open ? "收起导航" : "展开导航"}
+          >
+            {open ? <X size={19} aria-hidden="true" /> : <Menu size={19} aria-hidden="true" />}
           </button>
         </div>
       </div>
