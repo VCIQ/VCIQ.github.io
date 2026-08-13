@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "从公开证据和研究记录中整理具体技术、技术系统与关键能力。",
 };
 
-const SUMMARY_LIMIT = 72;
+const SUMMARY_LIMIT = 40;
 
 function compactSummary(summary: string) {
   const normalized = summary.replace(/\s+/gu, " ").trim();
@@ -59,7 +59,7 @@ export default function CoreTechnologiesPage() {
                   <h2>{entity.name}</h2>
                   <p>{compactSummary(entity.summary)}</p>
                   <small>
-                    证据 {evidenceCount} · 关联赛道 {entity.trackNames.length || "待归类"}
+                    证据 {evidenceCount} · 赛道 {entity.trackNames.length || "待归类"}
                   </small>
                 </Link>
               );
