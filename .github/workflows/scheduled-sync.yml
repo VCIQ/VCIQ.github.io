@@ -292,6 +292,10 @@ jobs:
             public/data/data_lineage.json
             public/data/pipeline_health.json
           )
+          GOVERNANCE_PATHS=(
+            config/user_tracking.json
+            config/tracking_auto_discovery.json
+          )
 
           supersede_if_refresh_inputs_changed() {
             local target_ref="$1"
@@ -344,15 +348,26 @@ jobs:
             # generated snapshot when main changed the same data file.
             git pull --rebase -X theirs origin main
 
-            # Rebase may introduce source/tracking/runtime inputs that this run never
-            # crawled. Supersede instead of fabricating coverage or publishing a
-            # hybrid snapshot; a fresh run will execute those inputs end-to-end.
-            if supersede_if_refresh_inputs_changed HEAD; then
+            # Compare the run's original live inputs only with current remote main.
+            # Rebased HEAD may also contain this run's own health-driven governance
+            # cleanup, which is an output of the crawl rather than a superseding input.
+            if supersede_if_refresh_inputs_changed origin/main; then
               exit 0
             fi
 
-            # Re-run deterministic enrichment at the rebased HEAD. Network source
-            # statuses and source-health streaks remain those produced by this run.
+            # Rebase may combine the latest source rows with an older root summary.
+            # Rebuild only aggregate fields; do not run update_source_health.py again
+            # because that would advance failure/recovery streaks twice in one crawl.
+            python tools/source_health_summary.py
+
+            # A source can cross its never-productive quarantine threshold during
+            # this very crawl. Apply that health-driven retirement only after the
+            # remote-input currentness check, then rebuild all tracking-derived data
+            # against the final governed config before publication.
+            python tools/tracking_source_governance.py
+
+            # Re-run deterministic enrichment at the rebased, governed HEAD. Network
+            # source statuses and source-health streaks remain those produced by this run.
             python tools/refresh_market_profiles_enriched.py
             python tools/migrate_article_entities.py
             python tools/refine_eastmoney_snapshot.py
@@ -361,10 +376,6 @@ jobs:
             python tools/snapshot_retention.py
             python tools/refresh_article_quality_gate.py
             python tools/finalize_full_refresh.py
-            # Rebase may combine the latest source rows with an older root summary.
-            # Rebuild only aggregate fields; do not run update_source_health.py again
-            # because that would advance failure/recovery streaks twice in one crawl.
-            python tools/source_health_summary.py
             python tools/source_health_summary.py --check
             python tools/tracking_source_governance.py --check
             python tools/snapshot_retention.py --check
@@ -380,7 +391,7 @@ jobs:
             python tools/run_pipeline.py finalize \
               public-intelligence-full-refresh \
               --quality-gate passed
-            git add "${DATA_PATHS[@]}" "${CONTROL_PATHS[@]}"
+            git add "${DATA_PATHS[@]}" "${CONTROL_PATHS[@]}" "${GOVERNANCE_PATHS[@]}"
             if ! git diff --cached --quiet; then
               git commit --amend --no-edit
             fi
