@@ -16,6 +16,7 @@ on:
       - tools/validate_professional_media_snapshot.py
       - tools/crawl_with_wechat_registry.py
       - tools/snapshot_retention.py
+      - tools/refresh_article_quality_gate.py
       - tools/update_source_health.py
       - tools/source_health_summary.py
       - tools/tracking_source_governance.py
@@ -56,6 +57,7 @@ jobs:
             tools/validate_professional_media_snapshot.py \
             tools/crawl_with_wechat_registry.py \
             tools/validate_full_refresh.py \
+            tools/refresh_article_quality_gate.py \
             tools/update_source_health.py \
             tools/source_health_summary.py \
             tools/tracking_source_governance.py
@@ -92,6 +94,12 @@ jobs:
           python tools/snapshot_retention.py
           python tools/finalize_full_refresh.py
           python tools/update_source_health.py
+          python tools/source_health_summary.py
+          python tools/tracking_source_governance.py
+          python tools/enrich_tracking_snapshot.py
+          python tools/snapshot_retention.py
+          python tools/refresh_article_quality_gate.py
+          python tools/finalize_full_refresh.py
       - name: Validate the complete refresh
         run: |
           python tools/source_health_summary.py --check
