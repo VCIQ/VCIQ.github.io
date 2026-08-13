@@ -169,4 +169,4 @@ jobs:
         if: github.event_name == 'workflow_dispatch' && inputs.run_research_after_deploy == true
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run research-agent-v1.yml --ref main
+        run: gh workflow run research-agent-v1.yml --ref main --repo "$GITHUB_REPOSITORY"
