@@ -117,6 +117,7 @@ def main() -> int:
         "pipelineCompleted": True,
         "completedAt": completed_at,
         "lastNewsCrawlAt": completed_at,
+        "lastFullRefreshAt": completed_at,
         "localDate": local_date,
         "stages": PIPELINE_STAGES,
         "articleCount": len(articles),
