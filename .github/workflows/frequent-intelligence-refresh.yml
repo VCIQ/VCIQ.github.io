@@ -2,8 +2,9 @@ name: Refresh public intelligence every two hours
 
 on:
   schedule:
-  # Lightweight user-visible intelligence checks. The 06:17 run is
-  # intentionally omitted to leave a clean window for the full refresh.
+  # Lightweight user-visible intelligence checks. The 06:17 run is omitted,
+  # and the runtime due check also protects the full-refresh window in case a
+  # scheduled run is delayed by GitHub Actions and arrives near 06:30.
   - cron: "17 0,2,4,8,10,12,14,16,18,20,22 * * *"
     timezone: "Asia/Taipei"
   workflow_dispatch:
@@ -19,7 +20,7 @@ concurrency:
 jobs:
   crawl:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
         with:
@@ -36,6 +37,12 @@ jobs:
         env:
           EVENT_NAME: ${{ github.event_name }}
         run: python tools/frequent_refresh_due.py
+      - name: Explain lightweight refresh skip
+        if: steps.due.outputs.due != 'true'
+        run: |
+          echo "Lightweight refresh skipped: ${{ steps.due.outputs.reason }}"
+          echo "last news crawl: ${{ steps.due.outputs.last_news_crawl_at }}"
+          echo "last full refresh: ${{ steps.due.outputs.last_full_refresh_at }}"
       - name: Validate lightweight crawler entry points
         if: steps.due.outputs.due == 'true'
         run: |
@@ -54,6 +61,7 @@ jobs:
             tests.test_snapshot_retention \
             tests.test_frequent_refresh_workflow \
             tests.test_frequent_refresh_audit \
+            tests.test_frequent_refresh_due \
             tests.test_pipeline_control
       - name: Record the pre-refresh article baseline
         if: steps.due.outputs.due == 'true'
