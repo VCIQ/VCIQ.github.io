@@ -86,10 +86,12 @@ class FullRefreshAuditTest(unittest.TestCase):
                 self.assertEqual(finalize_full_refresh.main(), 0)
 
             finalized = json.loads(path.read_text(encoding="utf-8"))
-            self.assertEqual(finalized["refreshAudit"]["previousArticleCount"], 2)
-            self.assertEqual(finalized["refreshAudit"]["newArticleCount"], 1)
-            self.assertEqual(finalized["refreshAudit"]["articleCount"], 3)
-            self.assertTrue(finalized["refreshAudit"]["pipelineCompleted"])
+            audit = finalized["refreshAudit"]
+            self.assertEqual(audit["previousArticleCount"], 2)
+            self.assertEqual(audit["newArticleCount"], 1)
+            self.assertEqual(audit["articleCount"], 3)
+            self.assertTrue(audit["pipelineCompleted"])
+            self.assertEqual(audit["lastFullRefreshAt"], audit["completedAt"])
 
 
 if __name__ == "__main__":

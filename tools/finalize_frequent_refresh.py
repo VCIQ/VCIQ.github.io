@@ -44,6 +44,18 @@ def load_baseline() -> dict:
         BASELINE_PATH.unlink(missing_ok=True)
 
 
+def previous_full_refresh_at(payload: dict) -> str:
+    audit = payload.get("refreshAudit")
+    if not isinstance(audit, dict):
+        return ""
+    explicit = str(audit.get("lastFullRefreshAt") or "").strip()
+    if explicit:
+        return explicit
+    if audit.get("pipelineCompleted") is True and str(audit.get("mode") or "") == "full":
+        return str(audit.get("completedAt") or "").strip()
+    return ""
+
+
 def main() -> int:
     payload = json.loads(ARTICLES_PATH.read_text(encoding="utf-8"))
     if not isinstance(payload, dict):
@@ -52,6 +64,7 @@ def main() -> int:
     completed_at = datetime.now(UTC).replace(microsecond=0).isoformat()
     local_date = datetime.now(TAIPEI).date().isoformat()
     articles = [item for item in payload.get("articles", []) if isinstance(item, dict)]
+    last_full_refresh_at = previous_full_refresh_at(payload)
     baseline = load_baseline()
     baseline_ids = {
         str(value).strip()
@@ -70,7 +83,7 @@ def main() -> int:
         default="",
     )
 
-    payload["refreshAudit"] = {
+    audit = {
         "mode": "frequent",
         "pipelineCompleted": True,
         "completedAt": completed_at,
@@ -85,6 +98,9 @@ def main() -> int:
         "todaySourceCount": len(today_sources),
         "todaySources": dict(sorted(today_sources.items())),
     }
+    if last_full_refresh_at:
+        audit["lastFullRefreshAt"] = last_full_refresh_at
+    payload["refreshAudit"] = audit
     ARTICLES_PATH.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",

@@ -17,6 +17,7 @@ class FrequentRefreshAuditTests(unittest.TestCase):
             articles_path = root / "articles.json"
             baseline_path = root / "baseline.json"
             local_date = datetime.now(finalize.TAIPEI).date().isoformat()
+            previous_full = "2026-08-14T00:30:00+00:00"
             payload = {
                 "schemaVersion": 3,
                 "generatedAt": "2026-07-29T00:00:00+00:00",
@@ -32,6 +33,12 @@ class FrequentRefreshAuditTests(unittest.TestCase):
                 "sourceStatus": [
                     {"id": "source-a", "status": "ok", "scanned": 1, "accepted": 1}
                 ],
+                "refreshAudit": {
+                    "mode": "full",
+                    "pipelineCompleted": True,
+                    "completedAt": previous_full,
+                    "lastNewsCrawlAt": previous_full,
+                },
             }
             articles_path.write_text(json.dumps(payload), encoding="utf-8")
 
@@ -63,6 +70,7 @@ class FrequentRefreshAuditTests(unittest.TestCase):
                 self.assertEqual(audit["mode"], "frequent")
                 self.assertTrue(audit["pipelineCompleted"])
                 self.assertEqual(audit["lastNewsCrawlAt"], audit["completedAt"])
+                self.assertEqual(audit["lastFullRefreshAt"], previous_full)
                 self.assertEqual(audit["previousArticleCount"], 1)
                 self.assertEqual(audit["newArticleCount"], 1)
                 self.assertEqual(audit["todayArticleCount"], 2)
