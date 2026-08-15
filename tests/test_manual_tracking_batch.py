@@ -103,7 +103,11 @@ class ManualTrackingBatchTests(unittest.TestCase):
         return json.loads(output.getvalue().splitlines()[-1])
 
     @staticmethod
-    def technology(name: str, tracks: list[str]) -> dict:
+    def technology(
+        name: str,
+        tracks: list[str],
+        origin: str = "manual",
+    ) -> dict:
         return {
             "objectType": "technology",
             "name": name,
@@ -114,10 +118,14 @@ class ManualTrackingBatchTests(unittest.TestCase):
             "region": "全球",
             "reasons": ["技术突破"],
             "note": "batch test",
+            "origin": origin,
         }
 
     @staticmethod
-    def invalid_person(name: str = "stdrc") -> dict:
+    def invalid_person(
+        name: str = "stdrc",
+        origin: str = "automatic",
+    ) -> dict:
         return {
             "objectType": "person",
             "name": name,
@@ -128,6 +136,7 @@ class ManualTrackingBatchTests(unittest.TestCase):
             "region": "全球",
             "reasons": ["个人研究兴趣"],
             "note": "machine candidate",
+            "origin": origin,
         }
 
     def test_validate_is_read_only_and_supports_cross_item_new_track_reference(self) -> None:
@@ -144,6 +153,7 @@ class ManualTrackingBatchTests(unittest.TestCase):
                 "region": "全球",
                 "reasons": ["技术突破"],
                 "note": "batch test",
+                "origin": "manual",
             },
             self.technology("视觉语言动作模型", [new_track_slug]),
         ]
@@ -156,6 +166,7 @@ class ManualTrackingBatchTests(unittest.TestCase):
         self.assertFalse(report["changed"])
         self.assertTrue(report["items"][0]["preview"]["changed"])
         self.assertTrue(report["items"][1]["preview"]["changed"])
+        self.assertEqual(report["items"][0]["request"]["origin"], "manual")
         self.assertEqual(before, {key: path.read_bytes() for key, path in self.paths.items()})
 
     def test_apply_writes_multiple_objects_once_as_one_transaction(self) -> None:
@@ -187,11 +198,11 @@ class ManualTrackingBatchTests(unittest.TestCase):
         self.assertIn("第 2 个对象", report["error"])
         self.assertEqual(before, {key: path.read_bytes() for key, path in self.paths.items()})
 
-    def test_skip_policy_validate_omits_invalid_machine_candidate(self) -> None:
+    def test_skip_policy_validate_omits_invalid_automatic_candidate(self) -> None:
         rows = [
-            self.technology("端侧多模态", ["ai"]),
+            self.technology("端侧多模态", ["ai"], origin="automatic"),
             self.invalid_person(),
-            self.technology("视觉语言动作模型", ["ai"]),
+            self.technology("视觉语言动作模型", ["ai"], origin="automatic"),
         ]
         before = {key: path.read_bytes() for key, path in self.paths.items()}
         report = self._run(rows, "validate", invalid_policy="skip")
@@ -201,14 +212,16 @@ class ManualTrackingBatchTests(unittest.TestCase):
         self.assertEqual(report["skippedCount"], 1)
         self.assertEqual(report["skipped"][0]["index"], 2)
         self.assertEqual(report["skipped"][0]["name"], "stdrc")
+        self.assertEqual(report["skipped"][0]["origin"], "automatic")
         self.assertIn("完整姓名", report["skipped"][0]["error"])
+        self.assertEqual(report["items"][0]["request"]["origin"], "automatic")
         self.assertEqual(before, {key: path.read_bytes() for key, path in self.paths.items()})
 
-    def test_skip_policy_apply_writes_valid_subset_without_invalid_person(self) -> None:
+    def test_skip_policy_apply_writes_valid_automatic_subset(self) -> None:
         rows = [
-            self.technology("端侧多模态", ["ai"]),
+            self.technology("端侧多模态", ["ai"], origin="automatic"),
             self.invalid_person(),
-            self.technology("视觉语言动作模型", ["ai"]),
+            self.technology("视觉语言动作模型", ["ai"], origin="automatic"),
         ]
         report = self._run(rows, "apply", invalid_policy="skip")
         self.assertTrue(report["ok"])
@@ -222,15 +235,15 @@ class ManualTrackingBatchTests(unittest.TestCase):
         intent_names = [row.get("name") for row in self._read("intents")["entities"]]
         self.assertNotIn("stdrc", intent_names)
 
-    def test_skip_policy_fails_when_every_candidate_is_invalid(self) -> None:
+    def test_skip_policy_fails_when_every_automatic_candidate_is_invalid(self) -> None:
         before = {key: path.read_bytes() for key, path in self.paths.items()}
         report = self._run([self.invalid_person()], "apply", expected=2, invalid_policy="skip")
         self.assertFalse(report["ok"])
         self.assertIn("均未通过验证", report["error"])
         self.assertEqual(before, {key: path.read_bytes() for key, path in self.paths.items()})
 
-    def test_skip_policy_repairs_low_signal_keyword_without_dropping_candidate(self) -> None:
-        row = self.technology("端侧多模态", ["ai"])
+    def test_skip_policy_repairs_low_signal_automatic_keyword(self) -> None:
+        row = self.technology("端侧多模态", ["ai"], origin="automatic")
         row["keywords"] = ["端侧多模态", "平台", "视觉语言动作模型"]
         before = {key: path.read_bytes() for key, path in self.paths.items()}
 
@@ -241,6 +254,7 @@ class ManualTrackingBatchTests(unittest.TestCase):
         self.assertEqual(report["skippedCount"], 0)
         self.assertEqual(report["repairedCount"], 1)
         self.assertEqual(report["removedKeywordCount"], 1)
+        self.assertEqual(report["repaired"][0]["origin"], "automatic")
         self.assertEqual(report["repaired"][0]["removedKeywords"][0]["value"], "平台")
         self.assertEqual(
             report["items"][0]["request"]["keywords"],
@@ -249,7 +263,7 @@ class ManualTrackingBatchTests(unittest.TestCase):
         self.assertEqual(before, {key: path.read_bytes() for key, path in self.paths.items()})
 
     def test_skip_policy_apply_persists_candidate_but_not_low_signal_keyword(self) -> None:
-        row = self.technology("端侧多模态", ["ai"])
+        row = self.technology("端侧多模态", ["ai"], origin="automatic")
         row["keywords"] = ["端侧多模态", "平台", "视觉语言动作模型"]
 
         report = self._run([row], "apply", invalid_policy="skip")
@@ -265,6 +279,75 @@ class ManualTrackingBatchTests(unittest.TestCase):
         keywords = self._read("tracking")["tracks"][0]["keywords"]
         self.assertIn("端侧多模态", keywords)
         self.assertNotIn("平台", keywords)
+
+    def test_skip_policy_never_rewrites_direct_manual_keywords(self) -> None:
+        row = self.technology("端侧多模态", ["ai"], origin="manual")
+        row["keywords"] = ["端侧多模态", "平台", "视觉语言动作模型"]
+
+        prepared, repair = batch.prepared_row(1, row, "skip")
+
+        self.assertEqual(prepared["keywords"], row["keywords"])
+        self.assertEqual(prepared["origin"], "manual")
+        self.assertIsNone(repair)
+
+    def test_skip_policy_fails_closed_for_invalid_direct_manual_input(self) -> None:
+        rows = [
+            self.technology("端侧多模态", ["ai"], origin="automatic"),
+            self.invalid_person(origin="manual"),
+            self.technology("视觉语言动作模型", ["ai"], origin="automatic"),
+        ]
+        before = {key: path.read_bytes() for key, path in self.paths.items()}
+
+        report = self._run(rows, "apply", expected=2, invalid_policy="skip")
+
+        self.assertFalse(report["ok"])
+        self.assertIn("人工输入", report["error"])
+        self.assertIn("第 2 个对象", report["error"])
+        self.assertEqual(before, {key: path.read_bytes() for key, path in self.paths.items()})
+
+    def test_skip_policy_repairs_manual_confirmed_keywords_but_does_not_skip_entity(self) -> None:
+        row = self.technology("端侧多模态", ["ai"], origin="manual-confirmed")
+        row["keywords"] = ["端侧多模态", "平台", "视觉语言动作模型"]
+
+        report = self._run([row], "validate", invalid_policy="skip")
+
+        self.assertTrue(report["ok"])
+        self.assertEqual(report["repairedCount"], 1)
+        self.assertEqual(report["repaired"][0]["origin"], "manual-confirmed")
+        self.assertEqual(report["items"][0]["request"]["origin"], "manual-confirmed")
+
+        before = {key: path.read_bytes() for key, path in self.paths.items()}
+        invalid = self._run(
+            [self.invalid_person(origin="manual-confirmed")],
+            "apply",
+            expected=2,
+            invalid_policy="skip",
+        )
+        self.assertFalse(invalid["ok"])
+        self.assertIn("人工确认候选", invalid["error"])
+        self.assertNotIn("均未通过验证", invalid["error"])
+        self.assertEqual(before, {key: path.read_bytes() for key, path in self.paths.items()})
+
+    def test_skip_policy_requires_origin_for_every_row(self) -> None:
+        row = self.technology("端侧多模态", ["ai"])
+        row.pop("origin")
+        before = {key: path.read_bytes() for key, path in self.paths.items()}
+
+        report = self._run([row], "validate", expected=2, invalid_policy="skip")
+
+        self.assertFalse(report["ok"])
+        self.assertIn("缺少 origin", report["error"])
+        self.assertIn("刷新追踪管理页面", report["error"])
+        self.assertEqual(before, {key: path.read_bytes() for key, path in self.paths.items()})
+
+    def test_strict_policy_keeps_legacy_missing_origin_fail_closed(self) -> None:
+        row = self.technology("端侧多模态", ["ai"])
+        row.pop("origin")
+
+        report = self._run([row], "validate", invalid_policy="strict")
+
+        self.assertTrue(report["ok"])
+        self.assertEqual(report["items"][0]["request"]["origin"], "manual")
 
     def test_strict_policy_still_rejects_same_low_signal_keyword(self) -> None:
         row = self.technology("端侧多模态", ["ai"])
