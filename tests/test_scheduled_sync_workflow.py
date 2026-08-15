@@ -104,7 +104,7 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
         self.assertIn('--target "$target_ref"', text)
         self.assertIn("git fetch origin main", text)
         self.assertIn("supersede_if_refresh_inputs_changed origin/main", text)
-        self.assertIn("supersede_if_refresh_inputs_changed HEAD", text)
+        self.assertNotIn("supersede_if_refresh_inputs_changed HEAD", text)
         self.assertIn("superseded=true", text)
         self.assertIn("Restart superseded refresh from current main", text)
         self.assertIn("steps.data-update.outputs.superseded == 'true'", text)
@@ -112,9 +112,11 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
         self.assertIn("Full refresh superseded", text)
 
         rebase_block = text.split("git pull --rebase -X theirs origin main", 1)[1]
-        supersede = rebase_block.index("supersede_if_refresh_inputs_changed HEAD")
+        supersede = rebase_block.index("supersede_if_refresh_inputs_changed origin/main")
+        governance = rebase_block.index("python tools/tracking_source_governance.py\n")
         validate = rebase_block.index("python tools/validate_full_refresh.py")
-        self.assertLess(supersede, validate)
+        self.assertLess(supersede, governance)
+        self.assertLess(governance, validate)
 
     def test_superseded_refresh_does_not_publish_source_health_or_reconcile(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
@@ -142,12 +144,27 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
     def test_rebase_recanonicalizes_source_health_without_double_counting_streaks(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
         rebase_block = text.split("git pull --rebase -X theirs origin main", 1)[1]
-        normalize = rebase_block.index("python tools/source_health_summary.py")
-        governance = rebase_block.index("python tools/tracking_source_governance.py --check")
+        normalize = rebase_block.index("python tools/source_health_summary.py\n")
+        governance_apply = rebase_block.index("python tools/tracking_source_governance.py\n")
+        governance_check = rebase_block.index("python tools/tracking_source_governance.py --check")
         validate = rebase_block.index("python tools/validate_full_refresh.py")
-        self.assertLess(normalize, governance)
-        self.assertLess(governance, validate)
+        self.assertLess(normalize, governance_apply)
+        self.assertLess(governance_apply, governance_check)
+        self.assertLess(governance_check, validate)
         self.assertNotIn("python tools/update_source_health.py", rebase_block)
+
+    def test_health_driven_governance_is_persisted_and_tracking_is_rebuilt(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        rebase_block = text.split("git pull --rebase -X theirs origin main", 1)[1]
+        governance = rebase_block.index("python tools/tracking_source_governance.py\n")
+        enrich = rebase_block.index("python tools/enrich_tracking_snapshot.py")
+        validate = rebase_block.index("python tools/validate_full_refresh.py")
+        self.assertLess(governance, enrich)
+        self.assertLess(enrich, validate)
+        self.assertIn("GOVERNANCE_PATHS=(", text)
+        self.assertIn("config/user_tracking.json", text)
+        self.assertIn("config/tracking_auto_discovery.json", text)
+        self.assertIn('git add "${DATA_PATHS[@]}" "${CONTROL_PATHS[@]}" "${GOVERNANCE_PATHS[@]}"', text)
 
     def test_rebase_rebuilds_quality_gate_before_full_refresh_validation(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")

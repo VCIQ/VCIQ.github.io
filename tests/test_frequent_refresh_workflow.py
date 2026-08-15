@@ -13,6 +13,8 @@ class FrequentRefreshWorkflowTests(unittest.TestCase):
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn('cron: "17 0,2,4,8,10,12,14,16,18,20,22 * * *"', text)
         self.assertIn('timezone: "Asia/Taipei"', text)
+        self.assertIn("runtime due check also protects the full-refresh window", text)
+        self.assertIn("Explain lightweight refresh skip", text)
 
     def test_lightweight_refresh_uses_the_repository_writer_queue(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
@@ -23,8 +25,14 @@ class FrequentRefreshWorkflowTests(unittest.TestCase):
     def test_due_check_uses_the_real_news_crawl_clock(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("python tools/frequent_refresh_due.py", text)
+        self.assertIn("tests.test_frequent_refresh_due", text)
         self.assertNotIn('audit.get("completedAt") or payload.get("generatedAt")', text)
         self.assertIn("ref: main", text)
+
+    def test_lightweight_refresh_has_room_to_finish_a_real_crawl(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("timeout-minutes: 60", text)
+        self.assertNotIn("timeout-minutes: 45", text)
 
     def test_lightweight_refresh_only_crawls_news_families(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")

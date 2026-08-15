@@ -8,10 +8,14 @@ import os
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 ARTICLES_PATH = ROOT / "public" / "data" / "articles.json"
 MIN_CRAWL_AGE_MINUTES = 90
+TAIPEI = ZoneInfo("Asia/Taipei")
+FULL_REFRESH_RESERVATION_START_HOUR = 6
+FULL_REFRESH_BOOTSTRAP_RELEASE_HOUR = 9
 
 
 def _parse_timestamp(value: Any) -> datetime | None:
@@ -49,6 +53,38 @@ def last_news_crawl_at(payload: dict[str, Any]) -> str:
     return str(audit.get("completedAt") or "").strip()
 
 
+def last_full_refresh_at(payload: dict[str, Any]) -> str:
+    audit = payload.get("refreshAudit")
+    if not isinstance(audit, dict):
+        return ""
+    explicit = str(audit.get("lastFullRefreshAt") or "").strip()
+    if explicit:
+        return explicit
+
+    # Backward compatibility for a snapshot whose latest audit is itself a
+    # completed full refresh from before lastFullRefreshAt was introduced.
+    if audit.get("pipelineCompleted") is True and str(audit.get("mode") or "") == "full":
+        return str(audit.get("completedAt") or "").strip()
+    return ""
+
+
+def _awaiting_daily_full_refresh(payload: dict[str, Any], current: datetime) -> bool:
+    local_now = current.astimezone(TAIPEI)
+    if local_now.hour < FULL_REFRESH_RESERVATION_START_HOUR:
+        return False
+
+    raw = last_full_refresh_at(payload)
+    last_full = _parse_timestamp(raw)
+    if last_full is not None:
+        return last_full.astimezone(TAIPEI).date() != local_now.date()
+
+    # During rollout there may be no durable full-refresh marker yet because a
+    # frequent refresh replaced the old audit object. Reserve the morning
+    # window anyway, but fail open later in the day so bootstrap cannot freeze
+    # lightweight updates forever if the first post-rollout full refresh fails.
+    return local_now.hour < FULL_REFRESH_BOOTSTRAP_RELEASE_HOUR
+
+
 def evaluate_due(
     payload: dict[str, Any],
     *,
@@ -57,12 +93,25 @@ def evaluate_due(
     min_age_minutes: int = MIN_CRAWL_AGE_MINUTES,
 ) -> dict[str, Any]:
     raw = last_news_crawl_at(payload)
+    full_raw = last_full_refresh_at(payload)
+    current = (now or datetime.now(UTC)).astimezone(UTC)
+
     if event_name == "workflow_dispatch":
         return {
             "due": True,
             "ageMinutes": 0,
             "lastNewsCrawlAt": raw,
+            "lastFullRefreshAt": full_raw,
             "reason": "manual-dispatch",
+        }
+
+    if _awaiting_daily_full_refresh(payload, current):
+        return {
+            "due": False,
+            "ageMinutes": -1,
+            "lastNewsCrawlAt": raw,
+            "lastFullRefreshAt": full_raw,
+            "reason": "awaiting-daily-full-refresh",
         }
 
     last = _parse_timestamp(raw)
@@ -71,15 +120,16 @@ def evaluate_due(
             "due": True,
             "ageMinutes": -1,
             "lastNewsCrawlAt": raw,
+            "lastFullRefreshAt": full_raw,
             "reason": "missing-news-crawl-audit",
         }
 
-    current = (now or datetime.now(UTC)).astimezone(UTC)
     age_minutes = max(0, int((current - last).total_seconds() // 60))
     return {
         "due": age_minutes >= min_age_minutes,
         "ageMinutes": age_minutes,
         "lastNewsCrawlAt": raw,
+        "lastFullRefreshAt": full_raw,
         "reason": "age-threshold",
     }
 
@@ -96,6 +146,8 @@ def main() -> int:
             output.write(f"due={str(result['due']).lower()}\n")
             output.write(f"age_minutes={result['ageMinutes']}\n")
             output.write(f"last_news_crawl_at={result['lastNewsCrawlAt']}\n")
+            output.write(f"last_full_refresh_at={result['lastFullRefreshAt']}\n")
+            output.write(f"reason={result['reason']}\n")
     return 0
 
 

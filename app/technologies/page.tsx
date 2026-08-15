@@ -8,8 +8,12 @@ export const metadata: Metadata = {
   description: "从公开证据和研究记录中整理具体技术、技术系统与关键能力。",
 };
 
-function evidenceScore(captureCount: number, articleCount: number, priority: number) {
-  return Math.min(100, priority * 15 + captureCount * 12 + articleCount * 4);
+const SUMMARY_LIMIT = 28;
+
+function compactSummary(summary: string) {
+  const normalized = summary.replace(/\s+/gu, " ").trim();
+  if (normalized.length <= SUMMARY_LIMIT) return normalized;
+  return `${normalized.slice(0, SUMMARY_LIMIT).trimEnd()}…`;
 }
 
 export default function CoreTechnologiesPage() {
@@ -42,11 +46,6 @@ export default function CoreTechnologiesPage() {
           <div className="sector-card-grid">
             {coreTechnologyEntities.map((entity, index) => {
               const evidenceCount = entity.captureCount + entity.articleCount;
-              const score = evidenceScore(
-                entity.captureCount,
-                entity.articleCount,
-                entity.priority,
-              );
               return (
                 <Link
                   href={`/tracking/entities/topic/${entity.slug}`}
@@ -58,20 +57,7 @@ export default function CoreTechnologiesPage() {
                     <strong>{entity.priority ? `P${entity.priority}` : evidenceCount}</strong>
                   </div>
                   <h2>{entity.name}</h2>
-                  <p>{entity.summary}</p>
-                  <dl>
-                    <div>
-                      <dt>证据记录</dt>
-                      <dd>{evidenceCount}</dd>
-                    </div>
-                    <div>
-                      <dt>关联赛道</dt>
-                      <dd>{entity.trackNames.length || "待归类"}</dd>
-                    </div>
-                  </dl>
-                  <i aria-label={`研究证据强度 ${score}%`}>
-                    <b style={{ width: `${score}%` }} />
-                  </i>
+                  <p>{compactSummary(entity.summary)}</p>
                 </Link>
               );
             })}
