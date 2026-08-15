@@ -8,14 +8,6 @@ export const metadata: Metadata = {
   description: "从公开证据和研究记录中整理具体技术、技术系统与关键能力。",
 };
 
-const SUMMARY_LIMIT = 28;
-
-function compactSummary(summary: string) {
-  const normalized = summary.replace(/\s+/gu, " ").trim();
-  if (normalized.length <= SUMMARY_LIMIT) return normalized;
-  return `${normalized.slice(0, SUMMARY_LIMIT).trimEnd()}…`;
-}
-
 export default function CoreTechnologiesPage() {
   return (
     <main className="page-shell subpage">
@@ -29,7 +21,7 @@ export default function CoreTechnologiesPage() {
         <div className="hero-chips">
           <span><Cpu size={14} />{coreTechnologyEntities.length} 项公开技术</span>
           <span>按关注等级与证据强度排序</span>
-          <span>详情保留可追溯时间线</span>
+          <span>详情保留摘要与可追溯时间线</span>
         </div>
       </header>
 
@@ -39,7 +31,7 @@ export default function CoreTechnologiesPage() {
             <p className="section-index">TECHNOLOGY DIRECTORY</p>
             <h2>技术研究对象</h2>
           </div>
-          <p>技术与赛道分层管理，避免把产业领域、公司名称和技术名词混为同一实体。</p>
+          <p>目录保持紧凑索引；技术摘要、证据和研究时间线进入对象详情页查看。</p>
         </div>
 
         {coreTechnologyEntities.length ? (
@@ -57,7 +49,6 @@ export default function CoreTechnologiesPage() {
                     <strong>{entity.priority ? `P${entity.priority}` : evidenceCount}</strong>
                   </div>
                   <h2>{entity.name}</h2>
-                  <p>{compactSummary(entity.summary)}</p>
                 </Link>
               );
             })}
