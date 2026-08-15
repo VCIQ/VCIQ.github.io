@@ -30,28 +30,87 @@ def _public_article_region(value: Any) -> str:
     return region if region in PUBLIC_ARTICLE_REGIONS else "全球"
 
 
+def _registered_public_regions(official: Any) -> dict[str, str]:
+    """Resolve the public region expected for every active official source."""
+
+    return {
+        spec.source_id: _public_article_region(spec.region)
+        for spec in official.load_registry()
+    }
+
+
+def _normalize_registered_official_regions(
+    articles: list[dict[str, Any]],
+    public_regions: dict[str, str],
+) -> list[dict[str, Any]]:
+    """Repair retained official rows without masking unrelated bad data.
+
+    Only records whose source id is bound to the active official-site registry
+    are rewritten. Unregistered media and discovery records still have to pass
+    the shared quality gate with their own region value.
+    """
+
+    normalized: list[dict[str, Any]] = []
+    for article in articles:
+        expected_region = public_regions.get(str(article.get("sourceId", "")))
+        if expected_region is None or article.get("region") == expected_region:
+            normalized.append(article)
+            continue
+        repaired = dict(article)
+        repaired["region"] = expected_region
+        normalized.append(repaired)
+    return normalized
+
+
 def install_public_region_adapter() -> None:
-    """Normalize official-company articles before the shared quality gate.
+    """Normalize new and retained official-company rows before quality checks.
 
     The company catalog intentionally keeps precise headquarters geographies
     such as ``加拿大``. Public article records use a coarser three-value region
-    contract, so non-China/non-US company regions publish as ``全球`` instead of
-    making an otherwise valid official-source batch fail validation.
+    contract, so non-China/non-US company regions publish as ``全球``.
+
+    Normalizing only newly parsed pages left one recovery gap: when Shopify was
+    temporarily unavailable, the official crawler preserved its previous batch
+    unchanged. A legacy ``加拿大`` row could therefore keep failing the shared
+    quality gate even though the network failure itself was safely retained.
+    The replacement-boundary adapter below repairs both fixed and active
+    user-configured official-site batches from their canonical registry specs.
     """
 
     official = official_tracking.official
+
     original_article_from_page = official._article_from_page
-    if getattr(original_article_from_page, "_public_region_adapter", False):
-        return
+    if not getattr(original_article_from_page, "_public_region_adapter", False):
 
-    def article_from_page(spec, url: str, body: str):
-        article = original_article_from_page(spec, url, body)
-        if article is not None:
-            article["region"] = _public_article_region(article.get("region"))
-        return article
+        def article_from_page(spec, url: str, body: str):
+            article = original_article_from_page(spec, url, body)
+            if article is not None:
+                article["region"] = _public_article_region(article.get("region"))
+            return article
 
-    setattr(article_from_page, "_public_region_adapter", True)
-    official._article_from_page = article_from_page
+        setattr(article_from_page, "_public_region_adapter", True)
+        official._article_from_page = article_from_page
+
+    original_replace_batches = official.replace_official_source_batches
+    if not getattr(
+        original_replace_batches,
+        "_public_region_retained_batch_adapter",
+        False,
+    ):
+
+        def replace_official_source_batches(existing, incoming, statuses):
+            merged = original_replace_batches(existing, incoming, statuses)
+            return _normalize_registered_official_regions(
+                merged,
+                _registered_public_regions(official),
+            )
+
+        setattr(
+            replace_official_source_batches,
+            "_public_region_retained_batch_adapter",
+            True,
+        )
+        official.replace_official_source_batches = replace_official_source_batches
 
 
 def _is_supported_media_source(raw: dict[str, Any]) -> bool:
