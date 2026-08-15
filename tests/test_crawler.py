@@ -91,6 +91,66 @@ class CrawlerTests(unittest.TestCase):
         self.assertEqual(infer_event_type("Company files for IPO")[0], "IPO")
         self.assertEqual(infer_event_type("City adopts new AI regulation")[0], "政策")
 
+    def test_event_inference_requires_completed_company_financing_semantics(self) -> None:
+        false_positives = (
+            "黑石考虑放弃30亿美元债务融资计划",
+            "算力期货即将登场，融资客提前布局多股",
+            "某公司拟开展债务融资",
+            "某某科技拟完成B轮融资",
+            "某某科技与银行签署融资协议",
+            "某某基金完成20亿元募资",
+            "Fresh off its payout, Index Ventures raises $2B across three funds",
+            "Acme receives $20M grant funding",
+            "Acme raises concerns over funding cuts",
+        )
+        for title in false_positives:
+            with self.subTest(title=title):
+                self.assertNotEqual(infer_event_type(title)[0], "融资")
+
+    def test_event_inference_accepts_completed_financing_golden_titles(self) -> None:
+        completed_rounds = (
+            "桥介数物完成新一轮亿级融资",
+            "某某科技宣布数亿元B轮融资",
+            "某某科技完成数亿元B轮融资",
+            "某某科技获亿元战略融资",
+            "某某科技B轮融资完成交割",
+            "某某科技再获数亿元融资",
+            "Acme announces $20M funding",
+            "Acme announces a $20M Series A",
+            "Acme bags $20M in Series A funding",
+            "Acme nabs $20M seed round",
+            "Acme gets $20M in new funding",
+            "Acme emerges from stealth with $20M in funding",
+            "Acme closes €20 million Series G",
+            "Acme secures $20M Series G financing",
+        )
+        for title in completed_rounds:
+            with self.subTest(title=title):
+                self.assertEqual(infer_event_type(title)[0], "融资")
+
+    def test_forced_financing_type_must_be_supported_by_article_text(self) -> None:
+        self.assertNotEqual(
+            infer_event_type(
+                "Google DeepMind debuts Gemini Robotics 2 model series",
+                forced_type="融资",
+            )[0],
+            "融资",
+        )
+        self.assertNotEqual(
+            infer_event_type(
+                "Exclusive: Google Pixel 11 Series Full Specs and Price Tags",
+                forced_type="融资",
+            )[0],
+            "融资",
+        )
+        self.assertEqual(
+            infer_event_type(
+                "Acme secures $20M Series G financing",
+                forced_type="融资",
+            ),
+            ("融资", 81),
+        )
+
     def test_media_company_inference_uses_unambiguous_title_only(self) -> None:
         self.assertEqual(
             infer_company(
@@ -128,6 +188,144 @@ class CrawlerTests(unittest.TestCase):
         repaired = repair_media_company_attribution([wrong])
         self.assertEqual(repaired[0]["company"], "Anthropic")
         self.assertEqual(repaired[0]["companySlug"], "anthropic")
+
+    def test_only_invalid_non_primary_media_financing_is_reclassified(self) -> None:
+        stale_financing = article(
+            "stale-financing",
+            "https://media.example/debt-plan",
+            "sina-finance",
+        )
+        stale_financing.update(
+            {
+                "title": "黑石考虑放弃30亿美元债务融资计划",
+                "summary": "该债务融资计划尚未执行。",
+                "type": "融资",
+                "importance": 91,
+                "company": "科技产业",
+            }
+        )
+        stale_financing.pop("companySlug", None)
+        stale_financing["source"]["level"] = "媒体报道"
+
+        stale_forced_type = article(
+            "stale-forced",
+            "https://media.example/model-release",
+            "professional-media",
+        )
+        stale_forced_type.update(
+            {
+                "title": "Google DeepMind debuts Gemini Robotics 2 model series",
+                "summary": "The lab debuted a family of robotics models.",
+                "type": "融资",
+                "importance": 91,
+                "company": "科技产业",
+            }
+        )
+        stale_forced_type.pop("companySlug", None)
+        stale_forced_type["source"]["level"] = "媒体报道"
+
+        valid_financing = article(
+            "valid-financing",
+            "https://media.example/completed-round",
+            "professional-media",
+        )
+        valid_financing.update(
+            {
+                "title": "Acme raises $20M Series A funding",
+                "type": "融资",
+                "importance": 93,
+            }
+        )
+        valid_financing["source"]["level"] = "媒体报道"
+
+        existing_other_type = article(
+            "existing-other-type",
+            "https://media.example/research",
+            "professional-media",
+        )
+        existing_other_type.update(
+            {
+                "title": "Weekly technology market overview",
+                "type": "技术突破",
+                "importance": 87,
+            }
+        )
+        existing_other_type["source"]["level"] = "媒体报道"
+
+        repaired = repair_media_company_attribution(
+            [
+                stale_financing,
+                stale_forced_type,
+                valid_financing,
+                existing_other_type,
+            ]
+        )
+        self.assertEqual(repaired[0]["type"], "公司动态")
+        self.assertEqual(repaired[0]["importance"], 76)
+        self.assertNotEqual(repaired[1]["type"], "融资")
+        self.assertEqual(repaired[2]["type"], "融资")
+        self.assertEqual(repaired[2]["importance"], 93)
+        self.assertEqual(repaired[3]["type"], "技术突破")
+        self.assertEqual(repaired[3]["importance"], 87)
+
+    def test_curated_media_event_label_is_not_reclassified(self) -> None:
+        curated = article(
+            "curated",
+            "https://media.example/analyst-reviewed",
+            "media",
+        )
+        curated.update(
+            {
+                "curated": True,
+                "title": "黑石考虑放弃30亿美元债务融资计划",
+                "type": "融资",
+                "importance": 88,
+            }
+        )
+        curated["source"]["level"] = "媒体报道"
+        repaired = repair_media_company_attribution([curated])
+        self.assertEqual(repaired[0]["type"], "融资")
+        self.assertEqual(repaired[0]["importance"], 88)
+
+    def test_primary_media_envelope_is_not_reclassified(self) -> None:
+        explicit_primary = article(
+            "structured",
+            "https://company.example/contract",
+            "official-company",
+        )
+        explicit_primary.update(
+            {
+                "title": "Company considers a debt financing plan",
+                "type": "融资",
+                "importance": 87,
+                "sourceRole": "primary",
+            }
+        )
+        explicit_primary["source"].update(
+            {"level": "媒体报道", "sourceRole": "primary"}
+        )
+        evidence_primary = article(
+            "evidence-primary",
+            "https://company.example/evidence-record",
+            "official-company",
+        )
+        evidence_primary.update(
+            {
+                "title": "Company considers a debt financing plan",
+                "type": "融资",
+                "importance": 86,
+            }
+        )
+        evidence_primary["source"].update(
+            {"level": "媒体报道", "evidenceGrade": "B"}
+        )
+        repaired = repair_media_company_attribution(
+            [explicit_primary, evidence_primary]
+        )
+        self.assertEqual(
+            [(item["type"], item["importance"]) for item in repaired],
+            [("融资", 87), ("融资", 86)],
+        )
 
     def test_merge_deduplicates_by_canonical_url(self) -> None:
         old = article("curated-id", "https://example.com/item/?utm_source=old")

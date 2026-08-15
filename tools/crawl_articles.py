@@ -42,12 +42,14 @@ try:
         prepare_existing_articles,
         validate_observation_metadata,
     )
+    from .article_publication_gate import financing_event_supported
 except ImportError:
     from article_observation import (
         apply_incoming_observations,
         prepare_existing_articles,
         validate_observation_metadata,
     )
+    from article_publication_gate import financing_event_supported
 from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qsl, quote_plus, urlencode, urljoin, urlsplit, urlunsplit
 from urllib.request import Request, urlopen
@@ -448,9 +450,14 @@ def normalize_date(value: str | int | float | None) -> str | None:
 def infer_event_type(
     title: str, summary: str = "", *, forced_type: str | None = None
 ) -> tuple[str, int]:
-    if forced_type in VALID_EVENT_TYPES:
+    if forced_type in VALID_EVENT_TYPES and (
+        forced_type != "融资"
+        or financing_event_supported(title, summary)
+    ):
         return forced_type, 84 if forced_type == "论文" else 81
     text = title.casefold()
+    if financing_event_supported(title, summary):
+        return "融资", 91
     rules = (
         (
             (
@@ -576,8 +583,11 @@ def infer_event_type(
         ),
     )
     for keywords, event_type, importance in rules:
-        if any(keyword in text for keyword in keywords):
-            return event_type, importance
+        if not any(keyword in text for keyword in keywords):
+            continue
+        if event_type == "融资" and not financing_event_supported(title, summary):
+            continue
+        return event_type, importance
     return "公司动态", 76
 
 
@@ -1813,11 +1823,23 @@ def merge_articles(
 def repair_media_company_attribution(
     articles: list[dict[str, Any]],
 ) -> list[dict[str, Any]]:
-    """Recompute generated media ownership using the conservative title rule."""
+    """Repair generated media ownership and stale financing labels.
+
+    This function runs over the merged existing+incoming snapshot, so rule
+    fixes can migrate previously published non-primary media rows on the next
+    crawler run rather than protecting stale classifications behind URL
+    deduplication.  Curated and primary rows retain their authored labels.
+    """
 
     repaired: list[dict[str, Any]] = []
     for article in articles:
         source = article.get("source", {})
+        source_role = str(
+            source.get("sourceRole") or article.get("sourceRole") or ""
+        ).casefold()
+        is_primary = source_role == "primary" or str(
+            source.get("evidenceGrade") or ""
+        ).upper() in {"A", "B"}
         if article.get("curated") or source.get("level") != "媒体报道":
             repaired.append(article)
             continue
@@ -1831,6 +1853,19 @@ def repair_media_company_attribution(
             next_article["companySlug"] = company_slug
         else:
             next_article.pop("companySlug", None)
+        if (
+            not is_primary
+            and article.get("type") == "融资"
+            and not financing_event_supported(
+                article.get("title"), article.get("summary")
+            )
+        ):
+            event_type, importance = infer_event_type(
+                str(article.get("title", "")),
+                str(article.get("summary", "")),
+            )
+            next_article["type"] = event_type
+            next_article["importance"] = importance
         repaired.append(next_article)
     return repaired
 
