@@ -54,6 +54,41 @@ class FinancingDetailsTests(unittest.TestCase):
             {"original": "€18 million", "currency": "EUR"},
         )
 
+    def test_amount_must_bind_to_current_round_not_revenue_arr_order_or_history(self) -> None:
+        cases = (
+            (
+                "Acme with $100M revenue closes Series B funding",
+                "",
+            ),
+            (
+                "Acme closes Series C funding",
+                "ARR reached $50M before the financing close.",
+            ),
+            (
+                "公司本轮完成B轮融资",
+                "此前累计融资3亿元。",
+            ),
+            (
+                "公司完成A轮融资",
+                "此前获得2亿元订单。",
+            ),
+        )
+        for title, summary in cases:
+            with self.subTest(title=title, summary=summary):
+                details = extract_financing_details(title, summary)
+                self.assertIsNotNone(details)
+                self.assertNotIn("amount", details)
+
+    def test_current_round_amount_wins_over_prior_round_amount(self) -> None:
+        details = extract_financing_details(
+            "公司完成B轮融资",
+            "上一轮融资1亿元，本轮融资2亿元。",
+        )
+        self.assertEqual(
+            details["amount"],
+            {"original": "2亿元", "currency": "CNY"},
+        )
+
     def test_vague_billion_scale_language_is_not_invented_as_money(self) -> None:
         details = extract_financing_details("桥介数物完成新一轮亿级融资")
         self.assertEqual(details, {"status": "completed"})
@@ -100,6 +135,22 @@ class FinancingDetailsTests(unittest.TestCase):
         errors = validate_financing_details(article)
         self.assertIn("invalid:financing-type", errors)
         self.assertIn("invalid:financing-semantics", errors)
+
+    def test_validation_rejects_money_not_bound_to_current_financing(self) -> None:
+        article = {
+            "title": "Acme with $100M revenue closes Series B funding",
+            "summary": "",
+            "type": "融资",
+            "financing": {
+                "status": "completed",
+                "round": "Series B",
+                "amount": {"original": "$100M", "currency": "USD"},
+            },
+        }
+        self.assertIn(
+            "invalid:financing-amount-evidence",
+            validate_financing_details(article),
+        )
 
     def test_lead_investors_must_be_subset_when_both_lists_exist(self) -> None:
         article = {
