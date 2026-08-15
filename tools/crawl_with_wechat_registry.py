@@ -9,6 +9,7 @@ try:  # Imported by tests as tools.crawl_with_wechat_registry.
     from . import article_publication_gate
     from . import core_official_adapters
     from . import crawl_with_source_categories as base
+    from . import financing_details
     from . import http_policy_bridge
     from . import professional_media_progress
     from . import professional_media_sources
@@ -34,6 +35,7 @@ except ImportError:  # Executed directly with python tools/...
     import article_publication_gate
     import core_official_adapters
     import crawl_with_source_categories as base
+    import financing_details
     import http_policy_bridge
     import professional_media_progress
     import professional_media_sources
@@ -152,9 +154,12 @@ def _install_source_governance() -> None:
 
     def repair_media_company_attribution(articles):
         # Add evidence grade/role before tracking-quality scoring so downstream
-        # ranking can inspect authority, but defer publication filtering until the
-        # runtime wrapper has attached qualityScore and tracking signals.
-        return source_evidence.enrich_article_sources(original_repair(articles))
+        # ranking can inspect authority. Financing envelopes are deterministic
+        # metadata extracted only from the published title/summary and do not
+        # alter publication eligibility.
+        repaired = original_repair(articles)
+        repaired = financing_details.enrich_financing_articles(repaired)
+        return source_evidence.enrich_article_sources(repaired)
 
     def install_runtime(merged, sec_specs, active_ids):
         original_install_runtime(merged, sec_specs, active_ids)
@@ -171,7 +176,10 @@ def _install_source_governance() -> None:
                     "Article publication gate: "
                     + json.dumps(report, ensure_ascii=False)
                 )
-                return publishable
+                # Re-run deterministic enrichment after publication filtering so
+                # the committed batch always carries the envelope contract even
+                # when a runtime scoring wrapper reconstructed article dicts.
+                return financing_details.enrich_financing_articles(publishable)
 
             setattr(repair_with_publication_gate, "_article_publication_gate", True)
             crawler.repair_media_company_attribution = repair_with_publication_gate
