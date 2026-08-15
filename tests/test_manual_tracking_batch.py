@@ -122,6 +122,25 @@ class ManualTrackingBatchTests(unittest.TestCase):
         }
 
     @staticmethod
+    def company(
+        name: str,
+        tracks: list[str] | None = None,
+        origin: str = "manual",
+    ) -> dict:
+        return {
+            "objectType": "company",
+            "name": name,
+            "targetTracks": tracks or ["ai"],
+            "keywords": [name],
+            "sourceUrl": "https://example.com/company-evidence",
+            "sourceCategory": "media",
+            "region": "中国",
+            "reasons": ["个人研究兴趣"],
+            "note": "原文明确描述该公司参与项目。",
+            "origin": origin,
+        }
+
+    @staticmethod
     def invalid_person(
         name: str = "stdrc",
         origin: str = "automatic",
@@ -163,6 +182,11 @@ class ManualTrackingBatchTests(unittest.TestCase):
         self.assertEqual(report["count"], 2)
         self.assertEqual(report["acceptedCount"], 2)
         self.assertEqual(report["skippedCount"], 0)
+        self.assertEqual(report["appliedCount"], 0)
+        self.assertEqual(report["reviewQueuedCount"], 0)
+        self.assertEqual(report["recordedCount"], 0)
+        self.assertEqual(report["unchangedCount"], 0)
+        self.assertEqual(report["outcomes"], [])
         self.assertFalse(report["changed"])
         self.assertTrue(report["items"][0]["preview"]["changed"])
         self.assertTrue(report["items"][1]["preview"]["changed"])
@@ -180,12 +204,55 @@ class ManualTrackingBatchTests(unittest.TestCase):
         self.assertTrue(report["intentsChanged"])
         self.assertEqual(report["acceptedCount"], 2)
         self.assertEqual(report["skippedCount"], 0)
+        self.assertEqual(report["appliedCount"], 2)
+        self.assertEqual(report["reviewQueuedCount"], 0)
+        self.assertEqual(report["recordedCount"], 0)
+        self.assertEqual(report["unchangedCount"], 0)
+        self.assertEqual([item["outcome"] for item in report["outcomes"]], ["applied", "applied"])
+        self.assertEqual([item["name"] for item in report["outcomes"]], ["端侧多模态", "视觉语言动作模型"])
         keywords = self._read("tracking")["tracks"][0]["keywords"]
         self.assertIn("端侧多模态", keywords)
         self.assertIn("视觉语言动作模型", keywords)
         intents = self._read("intents")
         self.assertEqual(len(intents["entities"]), 2)
         self.assertEqual(len(intents["memberships"]), 2)
+
+    def test_apply_reports_review_queue_separately_from_formal_config(self) -> None:
+        report = self._run([self.company("星河智算科技有限公司")], "apply")
+
+        self.assertTrue(report["ok"])
+        self.assertEqual(report["acceptedCount"], 1)
+        self.assertEqual(report["appliedCount"], 0)
+        self.assertEqual(report["reviewQueuedCount"], 1)
+        self.assertEqual(report["recordedCount"], 0)
+        self.assertEqual(report["unchangedCount"], 0)
+        self.assertEqual(report["outcomes"][0]["outcome"], "review")
+        self.assertTrue(report["outcomes"][0]["reviewQueued"])
+        self.assertFalse(report["outcomes"][0]["configChanged"])
+        self.assertIn("审核", report["outcomes"][0]["reason"])
+        self.assertNotIn("星河智算科技有限公司", self._read("tracking")["tracks"][0]["sampleCompanies"])
+
+    def test_apply_distinguishes_recorded_from_unchanged(self) -> None:
+        row = self.technology("端侧多模态", ["ai"])
+        first = self._run([row], "apply")
+        self.assertEqual(first["appliedCount"], 1)
+
+        row["note"] = "补充第二条人工来源说明"
+        recorded = self._run([row], "apply")
+        self.assertEqual(recorded["appliedCount"], 0)
+        self.assertEqual(recorded["recordedCount"], 1)
+        self.assertEqual(recorded["unchangedCount"], 0)
+        self.assertEqual(recorded["outcomes"][0]["outcome"], "recorded")
+        self.assertFalse(recorded["outcomes"][0]["configChanged"])
+        self.assertTrue(recorded["outcomes"][0]["intentsChanged"])
+
+        unchanged = self._run([row], "apply")
+        self.assertEqual(unchanged["appliedCount"], 0)
+        self.assertEqual(unchanged["recordedCount"], 0)
+        self.assertEqual(unchanged["unchangedCount"], 1)
+        self.assertEqual(unchanged["outcomes"][0]["outcome"], "unchanged")
+        self.assertFalse(unchanged["outcomes"][0]["configChanged"])
+        self.assertFalse(unchanged["outcomes"][0]["intentsChanged"])
 
     def test_apply_is_all_or_nothing_when_later_item_is_invalid(self) -> None:
         rows = [
@@ -228,6 +295,15 @@ class ManualTrackingBatchTests(unittest.TestCase):
         self.assertTrue(report["changed"])
         self.assertEqual(report["acceptedCount"], 2)
         self.assertEqual(report["skippedCount"], 1)
+        self.assertEqual(report["appliedCount"], 2)
+        self.assertEqual(report["reviewQueuedCount"], 0)
+        self.assertEqual(report["recordedCount"], 0)
+        self.assertEqual(report["unchangedCount"], 0)
+        self.assertEqual(
+            [item["outcome"] for item in report["outcomes"]],
+            ["applied", "skipped", "applied"],
+        )
+        self.assertIn("完整姓名", report["outcomes"][1]["reason"])
         keywords = self._read("tracking")["tracks"][0]["keywords"]
         self.assertIn("端侧多模态", keywords)
         self.assertIn("视觉语言动作模型", keywords)
@@ -272,6 +348,7 @@ class ManualTrackingBatchTests(unittest.TestCase):
         self.assertEqual(report["acceptedCount"], 1)
         self.assertEqual(report["skippedCount"], 0)
         self.assertEqual(report["repairedCount"], 1)
+        self.assertEqual(report["appliedCount"], 1)
         self.assertEqual(
             report["items"][0]["request"]["keywords"],
             ["端侧多模态", "视觉语言动作模型"],
