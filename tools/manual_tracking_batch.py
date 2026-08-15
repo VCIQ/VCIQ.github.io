@@ -3,10 +3,17 @@
 
 The web admin can submit several candidates from one article while this command
 preserves the single-object validation rules. Strict mode keeps the original
-all-or-nothing semantics. ``skip`` mode is intended for machine-generated
-article candidates: discardable low-signal keyword noise is removed first,
-rows that are still invalid are rejected individually, and the accepted subset
-is still simulated as one transaction before anything is persisted.
+all-or-nothing semantics. ``skip`` mode is origin-aware:
+
+* ``automatic`` rows may have discardable keyword noise removed and may be
+  omitted if the canonical validator still rejects them.
+* ``manual-confirmed`` rows may have machine-generated keyword noise removed,
+  but any remaining validation error fails the whole batch.
+* ``manual`` rows are never rewritten or silently skipped; any validation error
+  fails the whole batch.
+
+Every accepted row is still simulated as one transaction before anything is
+persisted.
 """
 
 from __future__ import annotations
@@ -27,6 +34,14 @@ except ImportError:  # pragma: no cover
 MAX_BATCH_SIZE = 20
 MAX_BATCH_JSON_BYTES = 45_000
 INVALID_POLICIES = {"strict", "skip"}
+TRACKING_ORIGINS = {"automatic", "manual", "manual-confirmed"}
+REPAIRABLE_ORIGINS = {"automatic", "manual-confirmed"}
+SKIPPABLE_ORIGINS = {"automatic"}
+ORIGIN_LABELS = {
+    "automatic": "自动候选",
+    "manual": "人工输入",
+    "manual-confirmed": "人工确认候选",
+}
 
 
 def clean(value: Any, limit: int = 1200) -> str:
@@ -73,6 +88,28 @@ def parse_batch(raw: str) -> list[dict[str, Any]]:
     return rows
 
 
+def tracking_origin(
+    index: int,
+    row: Mapping[str, Any],
+    invalid_policy: str,
+) -> str:
+    origin = clean(row.get("origin"), 40).casefold()
+    if not origin:
+        if invalid_policy == "strict":
+            # The historic strict workflow predates origin tagging and was
+            # already fail-closed. Preserve that safe direct-dispatch path.
+            return "manual"
+        raise manual.ManualTrackingError(
+            f"第 {index} 个对象缺少 origin；请刷新追踪管理页面后重试。"
+        )
+    if origin not in TRACKING_ORIGINS:
+        allowed = "、".join(sorted(TRACKING_ORIGINS))
+        raise manual.ManualTrackingError(
+            f"第 {index} 个对象的 origin 无效，必须是 {allowed} 之一。"
+        )
+    return origin
+
+
 def namespace_for(row: Mapping[str, Any], mode: str) -> argparse.Namespace:
     return argparse.Namespace(
         mode=mode,
@@ -91,11 +128,18 @@ def namespace_for(row: Mapping[str, Any], mode: str) -> argparse.Namespace:
     )
 
 
+def audit_request(request: Mapping[str, Any], origin: str) -> dict[str, Any]:
+    audited = dict(request)
+    audited["origin"] = origin
+    return audited
+
+
 def skipped_record(index: int, row: Mapping[str, Any], error: Exception) -> dict[str, Any]:
     return {
         "index": index,
         "objectType": clean(row.get("objectType"), 30),
         "name": clean(row.get("name"), 160),
+        "origin": clean(row.get("origin"), 40),
         "error": clean(error, 500),
     }
 
@@ -106,11 +150,9 @@ def sanitize_machine_keywords(
 ) -> tuple[dict[str, Any], dict[str, Any] | None]:
     """Remove only keyword-level noise while preserving the candidate itself.
 
-    This helper is used exclusively by ``invalid_policy=skip``. The canonical
-    single-object writer remains strict. Every surviving keyword is still passed
-    through the same technology validator used by the strict path, so this does
-    not create a weaker write boundary; it only discards machine-generated
-    keyword fragments that are safe to omit.
+    This helper is used only for origins that may still contain machine-
+    generated keyword fragments. Every surviving keyword is passed through the
+    same technology validator used by the strict path.
     """
 
     prepared = dict(row)
@@ -146,6 +188,7 @@ def sanitize_machine_keywords(
         "index": index,
         "objectType": clean(row.get("objectType"), 30),
         "name": clean(row.get("name"), 160),
+        "origin": clean(row.get("origin"), 40),
         "field": "keywords",
         "removedKeywords": removed,
         "keptKeywordCount": len(kept),
@@ -157,9 +200,16 @@ def prepared_row(
     row: Mapping[str, Any],
     invalid_policy: str,
 ) -> tuple[dict[str, Any], dict[str, Any] | None]:
-    if invalid_policy == "skip":
-        return sanitize_machine_keywords(index, row)
-    return dict(row), None
+    origin = tracking_origin(index, row, invalid_policy)
+    prepared = dict(row)
+    prepared["origin"] = origin
+    if invalid_policy == "skip" and origin in REPAIRABLE_ORIGINS:
+        prepared, repair = sanitize_machine_keywords(index, prepared)
+        prepared["origin"] = origin
+        if repair is not None:
+            repair["origin"] = origin
+        return prepared, repair
+    return prepared, None
 
 
 def simulate_batch(
@@ -174,10 +224,9 @@ def simulate_batch(
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
     """Normalize and apply in memory so later rows can reference earlier rows.
 
-    In ``skip`` mode, safe keyword-level noise is removed first. A row rejected
-    by the canonical single-object validator after that repair is recorded and
-    omitted. Every accepted row still mutates only the in-memory simulation, so
-    subsequent rows see the same state they would see on apply.
+    ``skip`` never weakens direct human input. Only ``automatic`` rows may be
+    omitted after canonical validation fails. ``manual`` and
+    ``manual-confirmed`` errors fail the whole transaction.
     """
 
     if invalid_policy not in INVALID_POLICIES:
@@ -188,6 +237,7 @@ def simulate_batch(
     repaired: list[dict[str, Any]] = []
     for index, row in enumerate(rows, start=1):
         candidate_row, repair = prepared_row(index, row, invalid_policy)
+        origin = clean(candidate_row.get("origin"), 40)
         try:
             args = namespace_for(candidate_row, "validate")
             request = manual._normalized_input(args, tracking)
@@ -197,7 +247,7 @@ def simulate_batch(
             results.append(
                 {
                     "index": index,
-                    "request": request,
+                    "request": audit_request(request, origin),
                     "recommendations": recs,
                     "preview": applied,
                 }
@@ -205,8 +255,11 @@ def simulate_batch(
             if repair:
                 repaired.append(repair)
         except manual.ManualTrackingError as exc:
-            if invalid_policy == "strict":
-                raise manual.ManualTrackingError(f"第 {index} 个对象：{exc}") from exc
+            if invalid_policy == "strict" or origin not in SKIPPABLE_ORIGINS:
+                label = ORIGIN_LABELS.get(origin, "人工输入")
+                raise manual.ManualTrackingError(
+                    f"第 {index} 个对象（{label}）：{exc}"
+                ) from exc
             skipped.append(skipped_record(index, candidate_row, exc))
 
     if invalid_policy == "skip" and not results:
@@ -236,7 +289,7 @@ def apply_batch(
 ]:
     # First validate the accepted transaction on copies. No persistent state is
     # touched until every accepted object passes and all cross-item references
-    # resolve. In skip mode, rejected machine candidates never reach persistence.
+    # resolve. Only rejected automatic candidates can be absent from persistence.
     preview_items, skipped, repaired = simulate_batch(
         rows,
         copy.deepcopy(tracking),
@@ -260,6 +313,7 @@ def apply_batch(
         if index not in accepted_indices:
             continue
         candidate_row, _ = prepared_row(index, row, invalid_policy)
+        origin = clean(candidate_row.get("origin"), 40)
         args = namespace_for(candidate_row, "apply")
         request = manual._normalized_input(args, tracking)
         manual_profile = manual.build_manual_feedback(inbox, intents, tracking)
@@ -268,7 +322,7 @@ def apply_batch(
         item_results.append(
             {
                 "index": index,
-                "request": request,
+                "request": audit_request(request, origin),
                 "recommendations": recs,
                 "applied": applied,
             }
@@ -288,7 +342,10 @@ def build_parser() -> argparse.ArgumentParser:
         "--invalid-policy",
         default="strict",
         choices=sorted(INVALID_POLICIES),
-        help="strict rejects the whole batch; skip sanitizes keyword noise then omits invalid machine candidates",
+        help=(
+            "strict rejects the whole batch; skip may sanitize and omit only "
+            "origin=automatic rows, while manual rows remain fail-closed"
+        ),
     )
     parser.add_argument("--now", default="", help=argparse.SUPPRESS)
     return parser
