@@ -52,6 +52,26 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
         self.assertIn("-f run_research_after_deploy=true", onboarding)
         self.assertIn('handoff="${POST_ONBOARDING_HANDOFF:-none}"', onboarding)
 
+    def test_default_onboarding_does_not_supersede_terminal_research_with_private_only_state(self) -> None:
+        text = ONBOARDING_WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("PUBLISHED_COUNT: ${{ steps.onboarding.outputs.published_count }}", text)
+        self.assertIn("MERGED_COUNT: ${{ steps.onboarding.outputs.merged_count }}", text)
+        self.assertIn("public_changed=false", text)
+        self.assertIn(
+            'if [ "${PUBLISHED_COUNT:-0}" -gt 0 ] || [ "${MERGED_COUNT:-0}" -gt 0 ]; then',
+            text,
+        )
+        self.assertIn(
+            'if [ "$pushed" = "true" ] && [ "$public_changed" = "true" ]; then',
+            text,
+        )
+        self.assertIn(
+            "Only private candidate/onboarding metadata changed; no Pages dispatch required.",
+            text,
+        )
+        none_block = text.split('none|"")', 1)[1].split(";;", 1)[0]
+        self.assertIn("-f run_research_after_deploy=true", none_block)
+
     def test_private_candidate_changes_handoff_to_onboarding_before_any_optional_pages_publish(self) -> None:
         text = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("publish_after_reconciliation:", text)
