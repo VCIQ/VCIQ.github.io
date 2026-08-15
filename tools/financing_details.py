@@ -35,6 +35,12 @@ _WORD_MONEY = (
 )
 _MONEY = rf"(?:{_CN_MONEY}|{_SYMBOL_MONEY}|{_WORD_MONEY})"
 
+_CN_ROUND_TOKEN = r"(?:pre[-\s]?[a-f](?:\+)?|[a-f](?:\+)?|天使|种子|战略)\s*轮"
+_EN_ROUND_TOKEN = (
+    r"(?:pre[- ]series\s+[a-f](?:\+)?|series\s+[a-f](?:\+)?|"
+    r"pre[- ]seed|seed|angel|strategic|pre[- ]?[a-f](?:\+)?)"
+)
+
 _VALUATION_PATTERNS = (
     re.compile(
         rf"(?:投后估值|融资后估值|估值)(?:达到|达|约为|约|超过|超|为)?\s*(?P<money>{_MONEY})",
@@ -53,7 +59,78 @@ _VALUATION_PATTERNS = (
         re.IGNORECASE,
     ),
 )
-_MONEY_RE = re.compile(_MONEY, re.IGNORECASE)
+
+# A bare money mention is never enough to become ``financing.amount``. Each
+# pattern below binds the literal amount to the current financing/round syntax.
+# This deliberately trades recall for precision so revenue, ARR, orders and
+# historical funding totals cannot silently become the current round amount.
+_AMOUNT_BINDING_PATTERNS = (
+    re.compile(
+        rf"(?:本轮|该轮|此轮|新一轮)\s*(?:融资|募资)(?:金额|规模)?"
+        rf"(?:为|达|达到|约为|约|超|超过|近|逾|合计)?\s*(?P<money>{_MONEY})",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        rf"(?:融资|募资)(?:金额|规模)(?:为|达|达到|约为|约|超|超过|近|逾|合计)?"
+        rf"\s*(?P<money>{_MONEY})",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        rf"(?:本轮|该轮|此轮|新一轮)?\s*(?:融资|募资)"
+        rf"(?:为|达|达到|约为|约|超|超过|近|逾|合计)?\s*(?P<money>{_MONEY})",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        rf"(?:宣布)?(?:完成|获得|获|拿到|募集|募得)\s*(?P<money>{_MONEY})\s*"
+        rf"(?:{_CN_ROUND_TOKEN}\s*)?(?:融资|股权融资|投资)",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        rf"(?P<money>{_MONEY})\s*(?:{_CN_ROUND_TOKEN})\s*(?:融资|股权融资|投资)?",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        rf"(?:完成|获得|获|宣布完成|宣布获得)?[^。；;]{{0,8}}{_CN_ROUND_TOKEN}\s*"
+        rf"(?:融资|股权融资)[^。；;]{{0,12}}(?:融资|募资)?(?:金额|规模)"
+        rf"(?:为|达|达到|约为|约|超|超过|近|逾)?\s*(?P<money>{_MONEY})",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        rf"\b(?:raises?|raised|raising)\s+(?:a\s+|an\s+)?(?P<money>{_MONEY})",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        rf"\b(?:secures?|secured|securing|closes?|closed|closing|lands?|landed|completes?|completed)\s+"
+        rf"(?:a\s+|an\s+)?(?P<money>{_MONEY})\s+"
+        rf"(?:(?:{_EN_ROUND_TOKEN})(?:\s+(?:round|funding|financing|investment))?"
+        rf"|(?:round|funding|financing|investment))\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        rf"(?P<money>{_MONEY})\s+"
+        rf"(?:(?:{_EN_ROUND_TOKEN})(?:\s+(?:round|funding|financing|investment))?"
+        rf"|(?:round|funding|financing))\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        rf"\b(?:funding|financing|round)(?:\s+(?:amount|size))?\s*"
+        rf"(?:of|at|was|is|totals?|total(?:ed|ling|ing)?)?\s*(?P<money>{_MONEY})",
+        re.IGNORECASE,
+    ),
+)
+
+_CURRENT_ROUND_CONTEXT_RE = re.compile(
+    r"(?:本轮|该轮|此轮|this\s+round|current\s+round)",
+    re.IGNORECASE,
+)
+_NON_CURRENT_MONEY_CONTEXT_RE = re.compile(
+    r"(?:此前|之前|历史|过往|累计|上一轮|上轮|前轮|前次|此前已|总融资|融资总额|已融资|"
+    r"营收|收入|销售额|订单|合同|签约|授信|贷款|债务|负债|采购|交易额|"
+    r"\b(?:previous(?:ly)?|prior|historical|earlier|last\s+round|to\s+date|cumulative|"
+    r"total\s+funding|raised\s+to\s+date|revenue|sales|arr|mrr|gmv|order|contract|"
+    r"credit\s+facility|loan|debt)\b)",
+    re.IGNORECASE,
+)
 
 _CN_ROUND_RE = re.compile(
     r"(?P<round>pre[-\s]?[a-f](?:\+)?|[a-f](?:\+)?|天使|种子|战略)\s*轮",
@@ -103,6 +180,14 @@ def _currency(raw: str) -> str | None:
     return None
 
 
+def _money_value(raw: str) -> dict[str, str]:
+    literal = _clean(raw)
+    value: dict[str, str] = {"original": literal}
+    if currency := _currency(literal):
+        value["currency"] = currency
+    return value
+
+
 def _canonical_round(raw: str) -> str:
     value = _clean(raw)
     folded = value.casefold().replace(" ", "-")
@@ -143,32 +228,43 @@ def _extract_round(title: str, summary: str) -> str | None:
 
 
 def _valuation_match(text: str) -> tuple[dict[str, str] | None, list[tuple[int, int]]]:
+    value: dict[str, str] | None = None
     spans: list[tuple[int, int]] = []
     for pattern in _VALUATION_PATTERNS:
         for match in pattern.finditer(text):
-            spans.append(match.span())
-            raw = _clean(match.group("money"))
-            value: dict[str, str] = {"original": raw}
-            if currency := _currency(raw):
-                value["currency"] = currency
-            return value, spans
-    return None, spans
+            spans.append(match.span("money"))
+            if value is None:
+                value = _money_value(match.group("money"))
+    return value, spans
 
 
 def _overlaps(span: tuple[int, int], excluded: list[tuple[int, int]]) -> bool:
     return any(span[0] < end and start < span[1] for start, end in excluded)
 
 
+def _has_non_current_money_context(text: str, span: tuple[int, int]) -> bool:
+    start, end = span
+    # An explicit current-round cue immediately before the amount outranks older
+    # context elsewhere in the same sentence (for example: 上一轮1亿元，本轮2亿元).
+    prefix = text[max(0, start - 16) : start]
+    if _CURRENT_ROUND_CONTEXT_RE.search(prefix):
+        return False
+    window = text[max(0, start - 18) : min(len(text), end + 16)]
+    return bool(_NON_CURRENT_MONEY_CONTEXT_RE.search(window))
+
+
 def _amount_match(text: str, excluded: list[tuple[int, int]]) -> dict[str, str] | None:
-    for match in _MONEY_RE.finditer(text):
-        if _overlaps(match.span(), excluded):
-            continue
-        raw = _clean(match.group(0))
-        value: dict[str, str] = {"original": raw}
-        if currency := _currency(raw):
-            value["currency"] = currency
-        return value
-    return None
+    candidates: list[tuple[int, int, str]] = []
+    for priority, pattern in enumerate(_AMOUNT_BINDING_PATTERNS):
+        for match in pattern.finditer(text):
+            span = match.span("money")
+            if _overlaps(span, excluded) or _has_non_current_money_context(text, span):
+                continue
+            candidates.append((span[0], priority, match.group("money")))
+    if not candidates:
+        return None
+    _, _, raw = min(candidates)
+    return _money_value(raw)
 
 
 def extract_financing_details(title: Any, summary: Any = "") -> dict[str, Any] | None:
@@ -227,7 +323,8 @@ def validate_financing_details(article: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     if article.get("type") != "融资":
         errors.append("invalid:financing-type")
-    if not financing_event_supported(article.get("title"), article.get("summary")):
+    expected = extract_financing_details(article.get("title"), article.get("summary"))
+    if expected is None:
         errors.append("invalid:financing-semantics")
     if details.get("status") != "completed":
         errors.append("invalid:financing-status")
@@ -235,6 +332,8 @@ def validate_financing_details(article: dict[str, Any]) -> list[str]:
     round_name = details.get("round")
     if round_name is not None and not _clean(round_name):
         errors.append("invalid:financing-round")
+    elif round_name is not None and (expected or {}).get("round") != round_name:
+        errors.append("invalid:financing-round-evidence")
 
     for field in ("amount", "valuation"):
         if field not in details:
@@ -246,6 +345,8 @@ def validate_financing_details(article: dict[str, Any]) -> list[str]:
         currency = money.get("currency")
         if currency is not None and currency not in SUPPORTED_CURRENCIES:
             errors.append(f"invalid:financing-{field}-currency")
+        if (expected or {}).get(field) != money:
+            errors.append(f"invalid:financing-{field}-evidence")
 
     for field in ("investors", "leadInvestors"):
         if field not in details:
