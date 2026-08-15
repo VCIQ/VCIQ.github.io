@@ -3,6 +3,9 @@ import unittest
 from tools.article_publication_gate import financing_event_supported
 from tools.crawl_articles import infer_event_type
 
+# Keep this contract branch-synchronized with main so financing semantics are
+# revalidated together with the latest production route and data constraints.
+
 
 class FinancingEventContractTests(unittest.TestCase):
     def test_completed_primary_market_rounds_are_financing(self) -> None:
