@@ -242,6 +242,9 @@ jobs:
           git restore public/data/articles.json
 
       - name: Commit published profiles and continue the requested handoff
+        env:
+          PUBLISHED_COUNT: ${{ steps.onboarding.outputs.published_count }}
+          MERGED_COUNT: ${{ steps.onboarding.outputs.merged_count }}
         shell: bash
         run: |
           set -euo pipefail
@@ -281,6 +284,11 @@ jobs:
             done
           fi
 
+          public_changed=false
+          if [ "${PUBLISHED_COUNT:-0}" -gt 0 ] || [ "${MERGED_COUNT:-0}" -gt 0 ]; then
+            public_changed=true
+          fi
+
           handoff="${POST_ONBOARDING_HANDOFF:-none}"
           case "$handoff" in
             refresh)
@@ -293,9 +301,12 @@ jobs:
                 -f run_research_after_deploy=true
               ;;
             none|"")
-              if [ "$pushed" = "true" ]; then
-                echo "Onboarding changed public company profiles; publish the updated Pages snapshot."
-                gh workflow run pages.yml --ref main
+              if [ "$pushed" = "true" ] && [ "$public_changed" = "true" ]; then
+                echo "Onboarding changed public company profiles; publish the terminal Pages snapshot and regenerate research."
+                gh workflow run pages.yml --ref main \
+                  -f run_research_after_deploy=true
+              elif [ "$pushed" = "true" ]; then
+                echo "Only private candidate/onboarding metadata changed; no Pages dispatch required."
               fi
               ;;
             *)
