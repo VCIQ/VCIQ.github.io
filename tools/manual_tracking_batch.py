@@ -13,7 +13,8 @@ all-or-nothing semantics. ``skip`` mode is origin-aware:
   fails the whole batch.
 
 Every accepted row is still simulated as one transaction before anything is
-persisted.
+persisted. Apply reports distinguish formal configuration changes, review-queue
+entries, provenance-only records, unchanged requests, and skipped candidates.
 """
 
 from __future__ import annotations
@@ -37,6 +38,7 @@ INVALID_POLICIES = {"strict", "skip"}
 TRACKING_ORIGINS = {"automatic", "manual", "manual-confirmed"}
 REPAIRABLE_ORIGINS = {"automatic", "manual-confirmed"}
 SKIPPABLE_ORIGINS = {"automatic"}
+OUTCOMES = {"applied", "review", "recorded", "unchanged", "skipped"}
 ORIGIN_LABELS = {
     "automatic": "自动候选",
     "manual": "人工输入",
@@ -141,6 +143,98 @@ def skipped_record(index: int, row: Mapping[str, Any], error: Exception) -> dict
         "name": clean(row.get("name"), 160),
         "origin": clean(row.get("origin"), 40),
         "error": clean(error, 500),
+    }
+
+
+def outcome_reason(outcome: str, applied: Mapping[str, Any]) -> str:
+    resolution = applied.get("resolution")
+    resolution = resolution if isinstance(resolution, Mapping) else {}
+    resolution_reason = clean(resolution.get("reason"), 500)
+    if outcome == "review":
+        return resolution_reason or "对象已进入实体解析审核队列，尚未写入正式追踪配置。"
+    if outcome == "applied":
+        return "已更新正式追踪配置。"
+    if outcome == "recorded":
+        changes: list[str] = []
+        if applied.get("intentsChanged") is True:
+            changes.append("tracking intent")
+        if applied.get("inboxChanged") is True:
+            changes.append("capture inbox")
+        suffix = "、".join(changes) or "审计与来源记录"
+        return f"未改动正式追踪配置，但已更新 {suffix}。"
+    if outcome == "unchanged":
+        return "请求与现有追踪状态一致，没有产生新的状态变化。"
+    return "未通过规范校验，未写入任何状态。"
+
+
+def applied_outcome(item: Mapping[str, Any]) -> dict[str, Any]:
+    request = item.get("request")
+    request = request if isinstance(request, Mapping) else {}
+    applied = item.get("applied")
+    applied = applied if isinstance(applied, Mapping) else {}
+    resolution = applied.get("resolution")
+    resolution = resolution if isinstance(resolution, Mapping) else {}
+
+    if applied.get("reviewQueued") is True or clean(resolution.get("status"), 30) == "review":
+        outcome = "review"
+    elif applied.get("configChanged") is True:
+        outcome = "applied"
+    elif applied.get("changed") is True:
+        outcome = "recorded"
+    else:
+        outcome = "unchanged"
+
+    return {
+        "index": int(item.get("index", 0) or 0),
+        "objectType": clean(request.get("kind"), 40),
+        "name": clean(request.get("name"), 160),
+        "origin": clean(request.get("origin"), 40),
+        "outcome": outcome,
+        "reason": outcome_reason(outcome, applied),
+        "targetId": clean(resolution.get("targetId"), 240)
+        or clean(applied.get("entityId"), 240),
+        "configChanged": applied.get("configChanged") is True,
+        "inboxChanged": applied.get("inboxChanged") is True,
+        "intentsChanged": applied.get("intentsChanged") is True,
+        "reviewQueued": applied.get("reviewQueued") is True,
+    }
+
+
+def skipped_outcome(item: Mapping[str, Any]) -> dict[str, Any]:
+    return {
+        "index": int(item.get("index", 0) or 0),
+        "objectType": clean(item.get("objectType"), 40),
+        "name": clean(item.get("name"), 160),
+        "origin": clean(item.get("origin"), 40),
+        "outcome": "skipped",
+        "reason": clean(item.get("error"), 500)
+        or "未通过规范校验，未写入任何状态。",
+        "targetId": "",
+        "configChanged": False,
+        "inboxChanged": False,
+        "intentsChanged": False,
+        "reviewQueued": False,
+    }
+
+
+def outcome_breakdown(
+    items: list[dict[str, Any]],
+    skipped: list[dict[str, Any]],
+) -> dict[str, Any]:
+    outcomes = [applied_outcome(item) for item in items]
+    outcomes.extend(skipped_outcome(item) for item in skipped)
+    outcomes.sort(key=lambda item: int(item.get("index", 0) or 0))
+    counts = {name: 0 for name in OUTCOMES}
+    for item in outcomes:
+        outcome = clean(item.get("outcome"), 30)
+        if outcome in counts:
+            counts[outcome] += 1
+    return {
+        "outcomes": outcomes,
+        "appliedCount": counts["applied"],
+        "reviewQueuedCount": counts["review"],
+        "recordedCount": counts["recorded"],
+        "unchangedCount": counts["unchanged"],
     }
 
 
@@ -368,12 +462,17 @@ def main(argv: list[str] | None = None) -> int:
             "skippedCount": 0,
             "repairedCount": 0,
             "removedKeywordCount": 0,
+            "appliedCount": 0,
+            "reviewQueuedCount": 0,
+            "recordedCount": 0,
+            "unchangedCount": 0,
             "changed": False,
             "configChanged": False,
             "inboxChanged": False,
             "intentsChanged": False,
             "reviewQueued": False,
             "items": [],
+            "outcomes": [],
             "skipped": [],
             "repaired": [],
         }
@@ -405,6 +504,7 @@ def main(argv: list[str] | None = None) -> int:
             result["skipped"] = skipped
             result["repaired"] = repaired
             result.update(flags)
+            result.update(outcome_breakdown(item_results, skipped))
             if flags["configChanged"]:
                 manual.write_json_atomic(manual.TRACKING_PATH, tracking)
             if flags["inboxChanged"]:
