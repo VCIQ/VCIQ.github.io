@@ -10,6 +10,7 @@ const page = read("app/page.tsx");
 const hotPage = read("app/hot/page.tsx");
 const layout = read("app/layout.tsx");
 const searchPage = read("app/search/page.tsx");
+const technologiesPage = read("app/technologies/page.tsx");
 const channelDirectory = read("components/channel-update-directory.tsx");
 const channelDirectoryClient = read("components/channel-update-directory-client.tsx");
 const dashboard = read("components/dashboard-client.tsx");
@@ -145,6 +146,11 @@ test("intelligence controls mount progressively after hydration", () => {
   assert.match(domRuntime, /scheduleCandidateRefresh/);
 });
 
+test("core technology directory keeps summaries on detail pages instead of repeating them in index HTML", () => {
+  assert.doesNotMatch(technologiesPage, /entity\.summary/);
+  assert.match(technologiesPage, /详情保留摘要与可追溯时间线/);
+});
+
 test("Pages build enforces homepage and route-level client asset budgets", () => {
   assert.match(packageJson, /check:homepage-performance/);
   assert.match(packageJson, /scripts\/check-homepage-performance-budget\.mjs/);
@@ -153,5 +159,6 @@ test("Pages build enforces homepage and route-level client asset budgets", () =>
   assert.match(routeBudget, /\/search\//);
   assert.match(routeBudget, /\/hot\//);
   assert.match(routeBudget, /\/favorites\//);
+  assert.match(routeBudget, /\/technologies\//);
   assert.match(routeBudget, /article_search_index\.json/);
 });
