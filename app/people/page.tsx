@@ -10,12 +10,13 @@ export const metadata: Metadata = {
   description: "整理一级市场核心技术与赛道中的创始人、科学家、工程负责人和关键决策者。",
 };
 
-const SUMMARY_LIMIT = 88;
+const SUMMARY_LIMIT = 52;
+const DIRECTORY_TAG_LIMIT = 2;
 
 const statusLabels = {
-  complete: "资料较完整",
-  partial: "持续补充",
-  pending: "等待抓取",
+  complete: "资料完整",
+  partial: "补充中",
+  pending: "待抓取",
 } as const;
 
 function compactSummary(summary: string) {
@@ -57,17 +58,16 @@ export default function PeoplePage() {
           {researchPeople.map((person) => (
             <Link href={`/people/${person.slug}`} key={person.slug}>
               <div className="person-monogram">{person.name.slice(0, 1)}</div>
-              {person.englishName ? <p>{person.englishName}</p> : null}
               <h2>{person.name}</h2>
               <span>{person.role}</span>
               <strong>{compactSummary(person.summary)}</strong>
               <div>
-                {person.sectors.map((sector) => <i key={sector}>{sector}</i>)}
+                {person.sectors.slice(0, DIRECTORY_TAG_LIMIT).map((sector) => <i key={sector}>{sector}</i>)}
                 {person.concepts
-                  .slice(0, Math.max(0, 4 - person.sectors.length))
+                  .slice(0, Math.max(0, DIRECTORY_TAG_LIMIT - person.sectors.length))
                   .map((concept) => <i key={concept}>{concept}</i>)}
               </div>
-              <small>{statusLabels[person.status]} · {person.materials.length} 条可追溯材料</small>
+              <small>{statusLabels[person.status]} · {person.materials.length} 条材料</small>
             </Link>
           ))}
         </div>
