@@ -44,6 +44,9 @@ jobs:
           name: unit-test-log
           path: unit-test.log
           retention-days: 3
+      - name: Simulate Batch 2 activation in candidate workspace
+        if: github.event_name == 'pull_request' && github.head_ref == 'chore/new-tracks-batch2'
+        run: python tools/apply_new_track_proposal.py --in-place
       - run: npm run test:crawler
       - name: Rebuild tracking-derived snapshot for candidate PR config
         if: github.event_name == 'pull_request'
