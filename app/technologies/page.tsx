@@ -36,7 +36,7 @@ export default function CoreTechnologiesPage() {
 
         {coreTechnologyEntities.length ? (
           <div className="sector-card-grid">
-            {coreTechnologyEntities.map((entity, index) => {
+            {coreTechnologyEntities.map((entity) => {
               const evidenceCount = entity.captureCount + entity.articleCount;
               return (
                 <Link
@@ -45,7 +45,6 @@ export default function CoreTechnologiesPage() {
                   key={entity.id}
                 >
                   <div>
-                    <span>{String(index + 1).padStart(2, "0")}</span>
                     <strong>{entity.priority ? `P${entity.priority}` : evidenceCount}</strong>
                   </div>
                   <h2>{entity.name}</h2>
