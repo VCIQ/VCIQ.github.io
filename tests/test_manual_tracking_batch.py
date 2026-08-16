@@ -311,11 +311,25 @@ class ManualTrackingBatchTests(unittest.TestCase):
         intent_names = [row.get("name") for row in self._read("intents")["entities"]]
         self.assertNotIn("stdrc", intent_names)
 
-    def test_skip_policy_fails_when_every_automatic_candidate_is_invalid(self) -> None:
+    def test_skip_policy_all_invalid_automatic_candidates_is_successful_noop(self) -> None:
         before = {key: path.read_bytes() for key, path in self.paths.items()}
-        report = self._run([self.invalid_person()], "apply", expected=2, invalid_policy="skip")
-        self.assertFalse(report["ok"])
-        self.assertIn("均未通过验证", report["error"])
+        report = self._run([self.invalid_person()], "apply", invalid_policy="skip")
+
+        self.assertTrue(report["ok"])
+        self.assertFalse(report["changed"])
+        self.assertFalse(report["configChanged"])
+        self.assertFalse(report["inboxChanged"])
+        self.assertFalse(report["intentsChanged"])
+        self.assertEqual(report["acceptedCount"], 0)
+        self.assertEqual(report["skippedCount"], 1)
+        self.assertEqual(report["appliedCount"], 0)
+        self.assertEqual(report["reviewQueuedCount"], 0)
+        self.assertEqual(report["recordedCount"], 0)
+        self.assertEqual(report["unchangedCount"], 0)
+        self.assertEqual(len(report["outcomes"]), 1)
+        self.assertEqual(report["outcomes"][0]["outcome"], "skipped")
+        self.assertEqual(report["outcomes"][0]["origin"], "automatic")
+        self.assertIn("完整姓名", report["outcomes"][0]["reason"])
         self.assertEqual(before, {key: path.read_bytes() for key, path in self.paths.items()})
 
     def test_skip_policy_repairs_low_signal_automatic_keyword(self) -> None:

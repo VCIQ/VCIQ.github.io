@@ -356,13 +356,10 @@ def simulate_batch(
                 ) from exc
             skipped.append(skipped_record(index, candidate_row, exc))
 
-    if invalid_policy == "skip" and not results:
-        details = "；".join(
-            f"第 {item['index']} 个对象 {item['name'] or item['objectType']}：{item['error']}"
-            for item in skipped[:3]
-        )
-        suffix = f"（{details}）" if details else ""
-        raise manual.ManualTrackingError(f"整批对象均未通过验证，没有可安全写入的对象。{suffix}")
+    # An automatic-only batch may legitimately collapse to a no-op after
+    # canonical validation. Return the skipped outcomes as a successful,
+    # unchanged transaction so the control plane can report each rejection
+    # without presenting an expected safety decision as an infrastructure error.
     return results, skipped, repaired
 
 
