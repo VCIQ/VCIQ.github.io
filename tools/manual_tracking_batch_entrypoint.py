@@ -27,7 +27,14 @@ except ImportError:  # pragma: no cover
     from tools.manual_tracking_keyword_support import enable_keyword_tracking
 
 
-ALL_AUTOMATIC_SKIPPED_PREFIX = "整批对象均未通过验证，没有可安全写入的对象。"
+# manual.clean applies Unicode NFKC normalization, which converts the Chinese
+# comma and parentheses in user-facing errors to their ASCII forms. Normalize
+# the sentinel once as well so the safe-noop boundary is stable across both
+# direct tests and GitHub Actions logs.
+ALL_AUTOMATIC_SKIPPED_PREFIX = manual.clean(
+    "整批对象均未通过验证，没有可安全写入的对象。",
+    200,
+)
 
 
 def _argument_value(argv: list[str], name: str, default: str = "") -> str:
@@ -51,8 +58,8 @@ def _last_json_report(output: str) -> dict[str, Any] | None:
 
 def _skip_reason(error: str) -> str:
     detail = error
-    if "（" in error and error.endswith("）"):
-        detail = error.split("（", 1)[1][:-1]
+    if "(" in error and error.endswith(")"):
+        detail = error.split("(", 1)[1][:-1]
     return manual.clean(detail, 500) or "未通过规范校验，已安全跳过。"
 
 
