@@ -45,6 +45,30 @@ def eastmoney_article(
     return row
 
 
+def official_company_article(
+    article_id: str,
+    published_at: str,
+    source_id: str,
+    importance: int = 70,
+) -> dict:
+    row = article(article_id, published_at, importance)
+    row.update(
+        {
+            "sourceId": source_id,
+            "company": "Shopify",
+            "companySlug": "shopify",
+            "sector": "新消费",
+        }
+    )
+    row["source"] = {
+        "name": "Shopify 官方动态",
+        "url": f"https://www.shopify.com/news/{article_id}",
+        "level": "官方披露",
+        "platform": "官方网站",
+    }
+    return row
+
+
 class SnapshotRetentionTest(unittest.TestCase):
     def test_newest_articles_displace_oldest_at_capacity(self) -> None:
         rows = [
@@ -108,6 +132,10 @@ class SnapshotRetentionTest(unittest.TestCase):
             next_payload["snapshotRetention"]["deduplicateBy"],
             "canonical-source-url",
         )
+        self.assertEqual(
+            next_payload["snapshotRetention"]["sourceStatusAccounting"],
+            "retained-official-company-and-eastmoney-rows",
+        )
         self.assertEqual(snapshot_retention.validate_retention(next_payload, 2), [])
 
     def test_retention_closes_eastmoney_source_accounting_after_tail_drop(self) -> None:
@@ -135,6 +163,41 @@ class SnapshotRetentionTest(unittest.TestCase):
         self.assertNotIn("retainedPrevious", statuses[eastmoney_a])
         self.assertEqual(statuses[eastmoney_b]["accepted"], 1)
         self.assertEqual(statuses[eastmoney_b]["retainedPreviousCount"], 1)
+
+    def test_retention_closes_official_company_accounting_after_tail_drop(self) -> None:
+        shopify = "official-shopify"
+        payload = {
+            "schemaVersion": 3,
+            "articleCount": 2,
+            "articles": [
+                official_company_article("old-shopify", "2026-07-01", shopify),
+                article("newer-other-source", "2026-07-03"),
+            ],
+            "sourceStatus": [
+                {
+                    "id": shopify,
+                    "name": "Shopify 官方动态",
+                    "companySlug": "shopify",
+                    "status": "ok",
+                    "accepted": 1,
+                    "failed": 0,
+                }
+            ],
+        }
+
+        next_payload, removed = snapshot_retention.apply_retention(payload, capacity=1)
+
+        self.assertEqual(removed, 1)
+        status = next_payload["sourceStatus"][0]
+        self.assertEqual(status["acceptedBeforeRetention"], 1)
+        self.assertEqual(status["accepted"], 0)
+        self.assertEqual(status["status"], "empty")
+        self.assertFalse(
+            any(
+                row.get("sourceId") == shopify
+                for row in next_payload["articles"]
+            )
+        )
 
     def test_core_merge_already_applies_the_same_replacement_rule(self) -> None:
         existing = [
