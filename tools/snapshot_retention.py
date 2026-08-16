@@ -10,10 +10,11 @@ The retention pass also removes duplicate source URLs. This is intentionally
 run again after a workflow rebase so a concurrent data commit cannot introduce
 one duplicate URL and block publication of an otherwise valid refresh.
 
-Retention is also the final authority on Eastmoney detail-row accounting. If
-an old Eastmoney detail article falls off the tail during a rebase, the public
-source-status counters are reduced to the actually retained rows so the strict
-source accounting gate remains closed and deterministic.
+Retention is the final authority on committed source-row accounting for source
+families whose strict status contract describes rows that survived publication.
+This includes Eastmoney detail sources and the registry-driven official-company
+sources. Raw official-company crawl acceptance is preserved separately when
+retention changes the committed count.
 """
 
 from __future__ import annotations
@@ -32,7 +33,8 @@ except ImportError:
 
 ROOT = Path(__file__).resolve().parents[1]
 ARTICLES_PATH = ROOT / "public" / "data" / "articles.json"
-RETENTION_SCHEMA_VERSION = 2
+OFFICIAL_COMPANY_REGISTRY_PATH = ROOT / "config" / "official_company_sources.json"
+RETENTION_SCHEMA_VERSION = 3
 RETENTION_STRATEGY = "newest-published-first"
 OVERFLOW_ACTION = "discard-oldest"
 EASTMONEY_DETAIL_STATUS_PREFIX = "official-user-东方财富"
@@ -137,19 +139,60 @@ def retain_latest_articles(
     return retained
 
 
-def _reconcile_eastmoney_retention_accounting(
+def _official_company_status_ids(
+    path: Path = OFFICIAL_COMPANY_REGISTRY_PATH,
+) -> set[str]:
+    """Return the exact source-status ids governed by the official-company registry."""
+
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(f"could not read official company registry: {path}") from exc
+    rows = payload.get("companies", [])
+    if not isinstance(rows, list):
+        raise ValueError("official company registry must contain a companies array")
+    source_ids = {
+        f"official-{str(row.get('slug') or '').strip()}"
+        for row in rows
+        if isinstance(row, dict) and str(row.get("slug") or "").strip()
+    }
+    if not source_ids:
+        raise ValueError("official company registry contains no source ids")
+    return source_ids
+
+
+def _reconcile_retention_source_accounting(
     payload: dict[str, Any], retained: list[dict[str, Any]]
 ) -> list[dict[str, Any]] | None:
-    """Close Eastmoney status counters over the rows that survived retention."""
+    """Close strict source counters over rows that survived final retention.
+
+    Official-company crawlers report how many eligible rows they accepted during
+    collection. Global newest-first retention may subsequently remove every row
+    from an older source, so the committed ``accepted`` count must be rewritten to
+    the retained-row count. The pre-retention crawl count is kept as
+    ``acceptedBeforeRetention`` when it differs, preserving operational evidence
+    without overstating public snapshot coverage.
+    """
 
     raw_statuses = payload.get("sourceStatus")
     if not isinstance(raw_statuses, list):
         return None
 
+    official_company_ids = _official_company_status_ids()
+    tracked_ids = set(official_company_ids)
+    tracked_ids.update(
+        str(raw.get("id") or "").strip()
+        for raw in raw_statuses
+        if isinstance(raw, dict)
+        and str(raw.get("id") or "").strip().startswith(
+            EASTMONEY_DETAIL_STATUS_PREFIX
+        )
+    )
+
     retained_by_source: dict[str, int] = {}
     for article in retained:
         source_id = str(article.get("sourceId") or "").strip()
-        if source_id.startswith(EASTMONEY_DETAIL_STATUS_PREFIX):
+        if source_id in tracked_ids:
             retained_by_source[source_id] = retained_by_source.get(source_id, 0) + 1
 
     statuses: list[dict[str, Any]] = []
@@ -158,26 +201,39 @@ def _reconcile_eastmoney_retention_accounting(
             continue
         status = dict(raw)
         status_id = str(status.get("id") or "").strip()
-        if not status_id.startswith(EASTMONEY_DETAIL_STATUS_PREFIX):
+        is_official_company = status_id in official_company_ids
+        is_eastmoney_detail = status_id.startswith(EASTMONEY_DETAIL_STATUS_PREFIX)
+        if not (is_official_company or is_eastmoney_detail):
             statuses.append(status)
             continue
 
         kept = retained_by_source.get(status_id, 0)
-        status["accepted"] = kept
-        has_history_accounting = (
-            "newAccepted" in status
-            or "retainedPreviousCount" in status
-            or bool(status.get("retainedPrevious"))
-        )
-        if has_history_accounting:
-            current_new = min(_nonnegative_int(status.get("newAccepted")), kept)
-            current_retained = kept - current_new
-            status["newAccepted"] = current_new
-            status["retainedPreviousCount"] = current_retained
-            if current_retained:
-                status["retainedPrevious"] = True
-            else:
-                status.pop("retainedPrevious", None)
+        if is_official_company:
+            accepted_before = _nonnegative_int(status.get("accepted"))
+            if (
+                accepted_before != kept
+                and "acceptedBeforeRetention" not in status
+            ):
+                status["acceptedBeforeRetention"] = accepted_before
+            status["accepted"] = kept
+
+        if is_eastmoney_detail:
+            status["accepted"] = kept
+            has_history_accounting = (
+                "newAccepted" in status
+                or "retainedPreviousCount" in status
+                or bool(status.get("retainedPrevious"))
+            )
+            if has_history_accounting:
+                current_new = min(_nonnegative_int(status.get("newAccepted")), kept)
+                current_retained = kept - current_new
+                status["newAccepted"] = current_new
+                status["retainedPreviousCount"] = current_retained
+                if current_retained:
+                    status["retainedPrevious"] = True
+                else:
+                    status.pop("retainedPrevious", None)
+
         if kept == 0 and status.get("status") in {"ok", "partial"}:
             status["status"] = "empty"
         statuses.append(status)
@@ -191,6 +247,7 @@ def retention_metadata(capacity: int) -> dict[str, Any]:
         "capacity": capacity,
         "overflowAction": OVERFLOW_ACTION,
         "deduplicateBy": "canonical-source-url",
+        "sourceStatusAccounting": "retained-official-company-and-eastmoney-rows",
         "sortFields": ["publishedAt:desc", "importance:desc", "id:desc"],
     }
 
@@ -208,7 +265,7 @@ def apply_retention(
     next_payload["articleCount"] = len(retained)
     next_payload["articles"] = retained
     next_payload["snapshotRetention"] = retention_metadata(capacity)
-    reconciled_statuses = _reconcile_eastmoney_retention_accounting(payload, retained)
+    reconciled_statuses = _reconcile_retention_source_accounting(payload, retained)
     if reconciled_statuses is not None:
         next_payload["sourceStatus"] = reconciled_statuses
     return next_payload, removed
