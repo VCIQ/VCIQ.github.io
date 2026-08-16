@@ -1,0 +1,52 @@
+name: Cancel superseded full-refresh runs
+
+on:
+  push:
+    branches:
+      - ops/cancel-stale-refresh-runs-20260816
+    paths:
+      - .github/workflows/cancel-stale-refresh-runs-20260816.yml
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  cancel:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPOSITORY: ${{ github.repository }}
+    steps:
+      - name: Cancel only the two verified stale refresh runs
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          cancel_if_stale() {
+            local run_id="$1"
+            local expected_sha="$2"
+            local payload actual_sha status workflow_name
+
+            payload="$(gh api "/repos/${REPOSITORY}/actions/runs/${run_id}")"
+            actual_sha="$(jq -r '.head_sha' <<<"$payload")"
+            status="$(jq -r '.status' <<<"$payload")"
+            workflow_name="$(jq -r '.name' <<<"$payload")"
+
+            test "$workflow_name" = "Refresh public intelligence"
+            test "$actual_sha" = "$expected_sha"
+
+            if [[ "$status" == "completed" ]]; then
+              echo "Run ${run_id} already completed; no cancellation required."
+              return 0
+            fi
+
+            gh api --method POST "/repos/${REPOSITORY}/actions/runs/${run_id}/cancel"
+            echo "Cancellation requested for stale refresh run ${run_id} (${actual_sha})."
+          }
+
+          # Cancel the older pending run first so it cannot acquire the writer lock
+          # in the interval between stopping the active stale crawl and starting the
+          # current Shopify-scoped refresh.
+          cancel_if_stale 31917633593 dd35e07f09480e62e6819a6b504fbf9256298251
+          cancel_if_stale 31917538849 21d9c2b3d9de221caeb1621a29e9860ae2a61238
