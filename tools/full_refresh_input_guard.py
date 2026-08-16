@@ -24,11 +24,16 @@ ROOT = Path(__file__).resolve().parents[1]
 
 LIVE_REFRESH_INPUTS: tuple[str, ...] = (
     ".github/workflows/scheduled-sync.yml",
+    ".github/workflows/manual-tracking.yml",
+    ".github/workflows/manual-tracking-batch.yml",
     "tools/crawl_with_wechat_registry.py",
     "tools/article_publication_gate.py",
     "tools/core_official_adapters.py",
     "tools/source_portfolio.py",
     "tools/full_refresh_input_guard.py",
+    "tools/manual_tracking_keyword_support.py",
+    "tools/manual_tracking_entrypoint.py",
+    "tools/manual_tracking_batch_entrypoint.py",
     "config/automation_jobs.json",
     "config/company_registry.json",
     "config/intelligence_sources.json",
