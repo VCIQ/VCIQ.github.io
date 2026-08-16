@@ -6,6 +6,11 @@ paywalls. It can guarantee that no configured source is silently ignored. This
 validator checks routing and diagnostic coverage rather than pretending every
 website must return articles on every run. Adaptive discovery handoffs must also
 resolve to an explicit strict-publisher status.
+
+A small number of broad browser-managed company homepages are intentionally
+handed off to a stricter official-company policy. Those sources remain enabled
+in the management configuration, but they are audited as explicit deferrals
+rather than being crawled twice or reported as missing runtime statuses.
 """
 
 from __future__ import annotations
@@ -43,12 +48,36 @@ def _runtime_id(raw: dict[str, Any], index: int) -> str:
     return f"user-source-{tracking._slug(raw.get('id') or name or index)}"
 
 
+def _deferred_official_source_report(
+    sources: list[dict[str, Any]],
+) -> list[dict[str, str]]:
+    return [
+        {
+            "id": tracking._clean(raw.get("id"), 100) or f"source-{index}",
+            "company": tracking._clean(raw.get("company"), 80),
+            "policy": "scoped-official-company-refresh",
+        }
+        for index, raw in enumerate(sources)
+        if categories.is_official_registry_only_source(raw)
+    ]
+
+
 def evaluate_coverage(
     tracking_config: dict[str, Any],
     snapshot: dict[str, Any],
 ) -> dict[str, Any]:
     sanitized = strict_tracking_config.sanitize_tracking_config(tracking_config)
     enabled_sources = _enabled_raw_sources(sanitized)
+    deferred_sources = [
+        raw
+        for raw in enabled_sources
+        if categories.is_official_registry_only_source(raw)
+    ]
+    runtime_sources = [
+        raw
+        for raw in enabled_sources
+        if not categories.is_official_registry_only_source(raw)
+    ]
     tracks = tracking._enabled_tracks(sanitized)
     runtime_specs, sec_specs = categories._custom_sources(sanitized, tracks)
     runtime_by_id = {
@@ -68,7 +97,7 @@ def evaluate_coverage(
     attempted = 0
     productive = 0
 
-    for index, raw in enumerate(enabled_sources):
+    for index, raw in enumerate(runtime_sources):
         source_type = tracking._clean(raw.get("sourceType"), 30) or "listing-search"
         if source_type == "sec":
             ticker = tracking._clean(raw.get("ticker"), 30).upper()
@@ -164,6 +193,10 @@ def evaluate_coverage(
     return {
         "passed": not errors,
         "enabledConfiguredSources": len(enabled_sources),
+        "runtimeConfiguredSources": len(runtime_sources),
+        "deferredOfficialRegistrySources": _deferred_official_source_report(
+            deferred_sources
+        ),
         "expectedRuntimeStatuses": len(set(expected_ids)),
         "attemptedRuntimeStatuses": attempted,
         "productiveRuntimeStatuses": productive,

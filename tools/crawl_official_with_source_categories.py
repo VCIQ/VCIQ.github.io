@@ -5,22 +5,46 @@ Company sources are eligible for the generic direct website crawler. Media and
 person sources stay in the category-aware feed/search crawler, except for
 Eastmoney, which has a dedicated parser and listed-company attribution adapter
 inside ``crawl_official_with_tracking``.
+
+Shopify is kept as a tracked company but its broad homepage is intentionally
+excluded from lightweight and duplicate user-source crawling. During the full
+official-company refresh, Shopify is limited to Editions, product news and
+investor-relations indexes, with broad sitemap and public-search fallbacks
+disabled.
 """
 
 from __future__ import annotations
 
-from typing import Any
+from dataclasses import replace
+from typing import Any, Callable
 from urllib.parse import urlsplit
 
 try:  # Imported by tests as tools.crawl_official_with_source_categories.
     from . import crawl_official_with_tracking as official_tracking
-    from .crawl_with_source_categories import source_category
+    from . import crawl_with_source_categories as source_categories
 except ImportError:  # Executed directly with ``python tools/...``.
     import crawl_official_with_tracking as official_tracking
-    from crawl_with_source_categories import source_category
+    import crawl_with_source_categories as source_categories
 
 
 PUBLIC_ARTICLE_REGIONS = frozenset({"中国", "美国", "全球"})
+SHOPIFY_SLUG = "shopify"
+SHOPIFY_EDITIONS_URL = "https://www.shopify.com/editions"
+SHOPIFY_PRODUCT_NEWS_URL = "https://www.shopify.com/news/category/product-news"
+SHOPIFY_INVESTOR_URL = "https://www.shopify.com/investors"
+SHOPIFY_INVESTOR_HOST_URL = "https://investors.shopify.com/"
+SHOPIFY_NEWS_URLS = (
+    SHOPIFY_EDITIONS_URL,
+    SHOPIFY_PRODUCT_NEWS_URL,
+    SHOPIFY_INVESTOR_URL,
+    SHOPIFY_INVESTOR_HOST_URL,
+)
+SHOPIFY_ARTICLE_URL_PATTERNS = (
+    r"^https://(?:www\.)?shopify\.com/editions(?:/|$)[^?#]*$",
+    r"^https://(?:www\.)?shopify\.com/news/(?!about-us(?:/|$)|category(?:/|$))[^?#]+$",
+    r"^https://(?:www\.)?shopify\.com/investors(?:/|$)[^?#]*$",
+    r"^https://investors\.shopify\.com/(?!$)[^?#]+$",
+)
 
 
 def _public_article_region(value: Any) -> str:
@@ -28,6 +52,88 @@ def _public_article_region(value: Any) -> str:
 
     region = official_tracking.official.clean_text(str(value or ""))
     return region if region in PUBLIC_ARTICLE_REGIONS else "全球"
+
+
+def _scope_official_spec(spec):
+    """Apply the narrow full-refresh policy for Shopify only."""
+
+    if getattr(spec, "slug", "") != SHOPIFY_SLUG:
+        return spec
+    return replace(
+        spec,
+        homepage=SHOPIFY_EDITIONS_URL,
+        news_urls=SHOPIFY_NEWS_URLS,
+        sitemap_urls=(),
+        article_url_patterns=SHOPIFY_ARTICLE_URL_PATTERNS,
+        max_items=min(int(spec.max_items), 4),
+        max_candidate_links=min(int(spec.max_candidate_links), 12),
+    )
+
+
+def _sitemap_urls_with_source_policy(
+    spec,
+    fallback: Callable[[Any], list[str]],
+) -> list[str]:
+    if getattr(spec, "slug", "") == SHOPIFY_SLUG:
+        return []
+    return fallback(spec)
+
+
+def _search_urls_with_source_policy(
+    spec,
+    user_agent: str,
+    fallback: Callable[[Any, str], list[str]],
+) -> list[str]:
+    if getattr(spec, "slug", "") == SHOPIFY_SLUG:
+        return []
+    return fallback(spec, user_agent)
+
+
+def install_shopify_scope_adapter() -> None:
+    """Limit Shopify to curated product and investor indexes in full refreshes."""
+
+    official = official_tracking.official
+
+    original_load_registry = official.load_registry
+    if not getattr(original_load_registry, "_shopify_scope_adapter", False):
+
+        def load_registry(*args, **kwargs):
+            return [
+                _scope_official_spec(spec)
+                for spec in original_load_registry(*args, **kwargs)
+            ]
+
+        setattr(load_registry, "_shopify_scope_adapter", True)
+        official.load_registry = load_registry
+
+    original_default_sitemaps = official._default_sitemap_urls
+    if not getattr(
+        original_default_sitemaps,
+        "_shopify_source_policy",
+        False,
+    ):
+
+        def default_sitemap_urls(spec):
+            return _sitemap_urls_with_source_policy(
+                spec,
+                original_default_sitemaps,
+            )
+
+        setattr(default_sitemap_urls, "_shopify_source_policy", True)
+        official._default_sitemap_urls = default_sitemap_urls
+
+    original_search_urls = official._search_official_urls
+    if not getattr(original_search_urls, "_shopify_source_policy", False):
+
+        def search_official_urls(spec, user_agent: str):
+            return _search_urls_with_source_policy(
+                spec,
+                user_agent,
+                original_search_urls,
+            )
+
+        setattr(search_official_urls, "_shopify_source_policy", True)
+        official._search_official_urls = search_official_urls
 
 
 def _registered_public_regions(official: Any) -> dict[str, str]:
@@ -127,9 +233,13 @@ def _filtered_tracking(path=official_tracking.TRACKING_PATH) -> dict[str, Any]:
         raw
         for raw in payload.get("sources", [])
         if isinstance(raw, dict)
+        and not source_categories.is_official_registry_only_source(raw)
         and (
-            source_category(raw) == "company"
-            or (source_category(raw) == "media" and _is_supported_media_source(raw))
+            source_categories.source_category(raw) == "company"
+            or (
+                source_categories.source_category(raw) == "media"
+                and _is_supported_media_source(raw)
+            )
         )
     ]
     return filtered
@@ -139,6 +249,7 @@ _original_load_tracking = official_tracking.load_tracking
 
 
 def main() -> int:
+    install_shopify_scope_adapter()
     install_public_region_adapter()
     official_tracking.load_tracking = _filtered_tracking
     return official_tracking.main()
