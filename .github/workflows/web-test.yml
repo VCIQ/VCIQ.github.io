@@ -48,6 +48,9 @@ jobs:
         if: github.event_name == 'pull_request' && github.head_ref == 'chore/new-tracks-batch2'
         run: python tools/apply_new_track_proposal.py --in-place
       - run: npm run test:crawler
+      - name: Attempt Batch 2 generated discovery routes
+        if: github.event_name == 'pull_request' && github.head_ref == 'chore/new-tracks-batch2'
+        run: python tools/probe_new_track_discovery.py --workers 4
       - name: Rebuild tracking-derived snapshot for candidate PR config
         if: github.event_name == 'pull_request'
         run: python tools/enrich_tracking_snapshot.py
