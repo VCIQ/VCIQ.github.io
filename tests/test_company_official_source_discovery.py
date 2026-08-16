@@ -261,9 +261,14 @@ class CompanyOfficialSourceDiscoveryTests(unittest.TestCase):
                 captures_payload={"records": []},
                 limit=6,
             )
-        self.assertNotIn(
-            "onboarding", next_decisions["decisions"]["unresolvedai"]
-        )
+        state = next_decisions["decisions"]["unresolvedai"]["onboarding"]
+        self.assertEqual(state["status"], "awaiting_profile")
+        self.assertEqual(state["requestedBy"], "VCIQ/auto-profile-hold")
+        self.assertTrue(state["evidenceFingerprint"])
+        self.assertIn("wikidata has no exact identity", state["error"])
+        self.assertIn("no verified official site", state["error"])
+        self.assertEqual(report["persistedHoldCount"], 1)
+        self.assertEqual(report["persistedHoldKeys"], ["unresolvedai"])
         self.assertEqual(report["sourceDiscovery"]["attemptedFailureCount"], 1)
         self.assertIn(
             "wikidata has no exact identity",
@@ -271,6 +276,78 @@ class CompanyOfficialSourceDiscoveryTests(unittest.TestCase):
         )
         self.assertEqual(wikidata_mock.call_count, 1)
         self.assertEqual(discover_mock.call_count, 1)
+
+    def test_v2_persisted_hold_does_not_consume_next_batch_slot(self) -> None:
+        held = {
+            **self.candidate("Unresolved AI"),
+            "id": "candidate-unresolvedai",
+            "score": 75,
+            "status": "accepted",
+            "articleCount": 1,
+            "sourceCount": 1,
+            "sourceArticleIds": ["article-a"],
+            "eventTypes": ["产品发布"],
+            "captureIds": [],
+        }
+        next_candidate = {
+            **self.candidate("NextCo"),
+            "id": "candidate-nextco",
+            "score": 80,
+            "status": "accepted",
+            "articleCount": 2,
+            "sourceCount": 2,
+            "sourceArticleIds": ["article-b", "article-c"],
+            "eventTypes": ["产品发布"],
+            "captureIds": [],
+        }
+        decisions = self.decisions("unresolvedai")
+        decisions["decisions"]["unresolvedai"]["onboarding"] = {
+            "status": "awaiting_profile",
+            "mode": "create",
+            "profile": {},
+            "evidenceFingerprint": onboarding_v2.onboarding.evidence_fingerprint(held),
+            "requestedAt": "",
+            "requestedBy": "VCIQ/auto-profile-hold",
+            "publishedAt": "",
+            "publishedSlug": "",
+            "error": "wikidata has no exact identity; no verified official site",
+        }
+        decisions["decisions"]["nextco"] = {
+            "status": "accepted",
+            "note": "manual",
+            "reviewedBy": "VCIQ",
+        }
+        metadata = {
+            "source": "wikidata",
+            "canonicalName": "NextCo",
+            "englishName": "NextCo",
+            "homepage": "https://nextco.example/",
+            "region": "美国",
+            "aliases": [],
+        }
+
+        with patch.object(
+            onboarding_v2.preparation,
+            "resolve_wikidata_company",
+            return_value=(metadata, ""),
+        ) as wikidata_mock, patch.object(
+            onboarding_v2.discovery,
+            "discover_verified_official_site",
+        ) as discover_mock:
+            verified, report = onboarding_v2.discover_candidate_identities(
+                {"candidates": [held, next_candidate]},
+                decisions,
+                {"companies": []},
+                {"companies": []},
+                limit=1,
+            )
+
+        self.assertNotIn("unresolvedai", verified)
+        self.assertEqual(verified["nextco"]["homepage"], "https://nextco.example/")
+        self.assertEqual(report["checkedCount"], 1)
+        self.assertEqual(report["verifiedKeys"], ["nextco"])
+        wikidata_mock.assert_called_once_with("NextCo")
+        discover_mock.assert_not_called()
 
 
 if __name__ == "__main__":
