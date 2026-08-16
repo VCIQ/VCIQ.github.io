@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: "整理一级市场核心技术与赛道中的创始人、科学家、工程负责人和关键决策者。",
 };
 
-const SUMMARY_LIMIT = 52;
+const SUMMARY_LIMIT = 48;
 const DIRECTORY_TAG_LIMIT = 2;
 
 const statusLabels = {
