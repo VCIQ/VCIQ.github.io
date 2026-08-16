@@ -37,6 +37,9 @@ except ImportError:  # Executed directly with ``python tools/...``.
 
 
 VALID_SOURCE_CATEGORIES = {"company", "media", "person"}
+OFFICIAL_REGISTRY_ONLY_SOURCE_IDS = frozenset({"source-auto-shopify"})
+OFFICIAL_REGISTRY_ONLY_COMPANIES = frozenset({"shopify"})
+OFFICIAL_REGISTRY_ONLY_HOSTS = frozenset({"shopify.com"})
 
 
 def source_category(raw: dict[str, Any], source_type: str | None = None) -> str:
@@ -53,6 +56,32 @@ def source_category(raw: dict[str, Any], source_type: str | None = None) -> str:
     ):
         return "company"
     return "media"
+
+
+def is_official_registry_only_source(raw: dict[str, Any]) -> bool:
+    """Return whether a browser-managed source is intentionally handled elsewhere.
+
+    Shopify remains a tracked company, but its broad homepage source is not
+    suitable for the lightweight or generic website crawler. The scoped
+    official-company adapter handles only Shopify Editions, product news and
+    investor-relations pages during the full refresh.
+    """
+
+    source_id = tracking._clean(raw.get("id"), 100).casefold()
+    if source_id in OFFICIAL_REGISTRY_ONLY_SOURCE_IDS:
+        return True
+    if source_category(raw) != "company":
+        return False
+    company = tracking._clean(raw.get("company"), 80).casefold()
+    url = tracking._clean(raw.get("url"), 500)
+    host = (urlsplit(url).hostname or "").casefold().removeprefix("www.")
+    return (
+        company in OFFICIAL_REGISTRY_ONLY_COMPANIES
+        and any(
+            host == allowed or host.endswith(f".{allowed}")
+            for allowed in OFFICIAL_REGISTRY_ONLY_HOSTS
+        )
+    )
 
 
 def _listed_company_index(
@@ -109,6 +138,8 @@ def _custom_sources(
 
     for index, raw in enumerate(tracking_config.get("sources", [])):
         if not isinstance(raw, dict) or raw.get("enabled", True) is False:
+            continue
+        if is_official_registry_only_source(raw):
             continue
 
         raw_name = tracking._clean(raw.get("name"), 80)
@@ -194,9 +225,10 @@ def _custom_sources(
                 spec["ticker"] = ticker
         runtime_specs.append(spec)
 
-    # Route every enabled source. Truncating here would silently ignore
-    # configured sources, which validate_user_source_coverage treats as a
-    # hard failure; per-source maxItems already bounds crawl volume.
+    # Route every enabled source except explicit official-registry handoffs.
+    # Truncating here would silently ignore configured sources, which
+    # validate_user_source_coverage treats as a hard failure; per-source
+    # maxItems already bounds crawl volume.
     return runtime_specs, sec_specs
 
 
