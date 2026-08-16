@@ -13,10 +13,10 @@ on:
         type: choice
         options: [validate, apply]
       object_type:
-        description: "Tracking object type"
+        description: "Tracking object type; keyword is a search seed, not a technology entity"
         required: true
         type: choice
-        options: [technology, track, company, person, source]
+        options: [keyword, technology, track, company, person, source]
       name:
         description: "One canonical name only (do not paste a list)"
         required: true
@@ -26,7 +26,7 @@ on:
         required: false
         type: string
       keywords:
-        description: "Keywords/aliases separated by |; required for a new track"
+        description: "Aliases separated by |; required for a new track and optional for other objects"
         required: false
         type: string
       source_url:
@@ -153,10 +153,12 @@ jobs:
           set -euo pipefail
           python -m py_compile \
             tools/manual_tracking.py \
+            tools/manual_tracking_keyword_support.py \
+            tools/manual_tracking_entrypoint.py \
             tools/tracking_manual_feedback.py \
             tools/expand_tracking_entities.py \
             tools/strict_tracking_config.py
-          python tools/manual_tracking.py \
+          python tools/manual_tracking_entrypoint.py \
             --mode validate \
             --kind "$OBJECT_TYPE" \
             --name "$NAME" \
@@ -233,10 +235,12 @@ jobs:
           set -euo pipefail
           python -m py_compile \
             tools/manual_tracking.py \
+            tools/manual_tracking_keyword_support.py \
+            tools/manual_tracking_entrypoint.py \
             tools/tracking_manual_feedback.py \
             tools/expand_tracking_entities.py \
             tools/strict_tracking_config.py
-          python tools/manual_tracking.py \
+          python tools/manual_tracking_entrypoint.py \
             --mode apply \
             --kind "$OBJECT_TYPE" \
             --name "$NAME" \
@@ -260,9 +264,9 @@ jobs:
                   Path("/tmp/manual-tracking-result.json").read_text(encoding="utf-8")
               )
           except json.JSONDecodeError as exc:
-              raise SystemExit("manual_tracking.py did not emit one JSON report") from exc
+              raise SystemExit("manual_tracking_entrypoint.py did not emit one JSON report") from exc
           if not isinstance(report, dict) or "ok" not in report or "changed" not in report:
-              raise SystemExit("manual_tracking.py report is missing top-level status fields")
+              raise SystemExit("manual tracking report is missing top-level status fields")
           output_names = {
               "changed": "changed",
               "config_changed": "configChanged",
@@ -284,6 +288,7 @@ jobs:
           npm ci
           python -m unittest \
             tests.test_manual_tracking \
+            tests.test_manual_tracking_keyword \
             tests.test_manual_tracking_workflow \
             tests.test_tracking_manual_feedback \
             tests.test_expand_tracking_entities
@@ -312,7 +317,7 @@ jobs:
             config/user_tracking.json \
             config/tracking_capture_inbox.json
           git diff --cached --quiet && {
-            echo "manual_tracking.py reported a change but no approved file changed"
+            echo "manual tracking entrypoint reported a change but no approved file changed"
             exit 1
           }
           git commit -m "config: apply authenticated manual tracking request"

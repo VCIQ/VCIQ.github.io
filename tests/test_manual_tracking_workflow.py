@@ -17,16 +17,17 @@ class ManualTrackingWorkflowTests(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.text = WORKFLOW.read_text(encoding="utf-8")
 
-    def test_entry_is_manual_only_and_covers_all_five_object_types(self) -> None:
+    def test_entry_is_manual_only_and_covers_all_six_object_types(self) -> None:
         trigger = self.text.split("permissions:", 1)[0]
         self.assertIn("workflow_dispatch:", trigger)
         self.assertNotIn("  push:", trigger)
         self.assertNotIn("  schedule:", trigger)
         self.assertIn("options: [validate, apply]", trigger)
         self.assertIn(
-            "options: [technology, track, company, person, source]",
+            "options: [keyword, technology, track, company, person, source]",
             trigger,
         )
+        self.assertIn("keyword is a search seed, not a technology entity", trigger)
 
     def test_validate_is_read_only_and_apply_alone_gets_write_permissions(self) -> None:
         self.assertIn("permissions: {}", self.text)
@@ -72,6 +73,7 @@ class ManualTrackingWorkflowTests(unittest.TestCase):
         self.assertIn('--note "$NOTE"', self.text)
         self.assertIn('--actor "$ACTOR"', self.text)
         self.assertIn('--triggering-actor "$TRIGGERING_ACTOR"', self.text)
+        self.assertIn("python tools/manual_tracking_entrypoint.py", self.text)
 
     def test_apply_uses_shared_fifo_writer_queue_and_main_checkout(self) -> None:
         self.assertIn("group: vciq-repository-writer-${{ github.ref }}", self.text)
@@ -119,11 +121,13 @@ class ManualTrackingWorkflowTests(unittest.TestCase):
         apply = self.text.split("  apply:\n", 1)[1].split("\n  handoff:\n", 1)[0]
         for suite in (
             "tests.test_manual_tracking",
+            "tests.test_manual_tracking_keyword",
             "tests.test_manual_tracking_workflow",
             "tests.test_tracking_manual_feedback",
             "tests.test_expand_tracking_entities",
         ):
             self.assertIn(suite, apply)
+        self.assertIn("tools/manual_tracking_keyword_support.py", apply)
         self.assertIn("tools/expand_tracking_entities.py", apply)
         self.assertIn("tools/strict_tracking_config.py", apply)
 

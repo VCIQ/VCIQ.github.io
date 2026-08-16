@@ -13,7 +13,7 @@ on:
         type: choice
         options: [validate, apply]
       invalid_policy:
-        description: "strict rejects the whole batch; skip omits invalid machine-generated candidates"
+        description: "strict rejects the whole batch; skip may omit only invalid origin=automatic candidates"
         required: true
         default: strict
         type: choice
@@ -113,10 +113,12 @@ jobs:
           python -m py_compile \
             tools/manual_tracking.py \
             tools/manual_tracking_batch.py \
+            tools/manual_tracking_keyword_support.py \
+            tools/manual_tracking_batch_entrypoint.py \
             tools/tracking_manual_feedback.py \
             tools/expand_tracking_entities.py \
             tools/strict_tracking_config.py
-          python tools/manual_tracking_batch.py \
+          python tools/manual_tracking_batch_entrypoint.py \
             --mode validate \
             --invalid-policy "$INVALID_POLICY" \
             --batch-json "$BATCH_JSON" \
@@ -181,10 +183,12 @@ jobs:
           python -m py_compile \
             tools/manual_tracking.py \
             tools/manual_tracking_batch.py \
+            tools/manual_tracking_keyword_support.py \
+            tools/manual_tracking_batch_entrypoint.py \
             tools/tracking_manual_feedback.py \
             tools/expand_tracking_entities.py \
             tools/strict_tracking_config.py
-          python tools/manual_tracking_batch.py \
+          python tools/manual_tracking_batch_entrypoint.py \
             --mode apply \
             --invalid-policy "$INVALID_POLICY" \
             --batch-json "$BATCH_JSON" \
@@ -199,7 +203,7 @@ jobs:
           try:
               report = json.loads(Path("/tmp/manual-tracking-batch-result.json").read_text(encoding="utf-8"))
           except json.JSONDecodeError as exc:
-              raise SystemExit("manual_tracking_batch.py did not emit one JSON report") from exc
+              raise SystemExit("manual_tracking_batch_entrypoint.py did not emit one JSON report") from exc
           if not isinstance(report, dict) or "ok" not in report or "changed" not in report:
               raise SystemExit("manual tracking batch report is missing top-level status fields")
           output_names = {
@@ -230,6 +234,7 @@ jobs:
           python -m unittest \
             tests.test_manual_tracking \
             tests.test_manual_tracking_batch \
+            tests.test_manual_tracking_keyword \
             tests.test_manual_tracking_workflow \
             tests.test_tracking_manual_feedback \
             tests.test_expand_tracking_entities
