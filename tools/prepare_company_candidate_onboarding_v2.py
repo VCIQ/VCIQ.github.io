@@ -12,6 +12,12 @@ Resolution order stays authority-first:
 Only already-verified metadata is passed into the existing onboarding preparer.
 Both successful and failed pre-resolution outcomes are cached for the bounded
 batch so the core preparer never repeats the same external identity lookup.
+
+Persistent identity/source holds are written back as ``awaiting_profile`` states
+with the candidate evidence fingerprint. Subsequent runs skip unchanged holds so
+one unresolved candidate cannot permanently consume the bounded batch. A changed
+evidence fingerprint, an exact registry match, or a newly registered official
+source makes the candidate eligible again.
 """
 
 from __future__ import annotations
@@ -29,6 +35,139 @@ except ImportError:  # pragma: no cover - direct execution
     import company_official_source_discovery as discovery  # type: ignore
     import onboard_company_candidates as onboarding  # type: ignore
     import prepare_company_candidate_onboarding as preparation  # type: ignore
+
+
+PERSISTENT_HOLD_MARKERS = (
+    "investment institution",
+    "wikidata exact identity is a person",
+    "wikidata identity is ambiguous",
+    "wikidata has no exact identity",
+    "wikidata exact identity has no official website",
+    "wikidata returned no candidate",
+    "no verified evidence-linked official site",
+    "no verified official homepage",
+    "official homepage does not name the resolved candidate",
+    "official homepage does not support the candidate sector",
+    "already belongs to another company",
+)
+
+
+def _persistent_hold_reason(reason: str) -> bool:
+    text = str(reason or "").casefold()
+    return any(marker in text for marker in PERSISTENT_HOLD_MARKERS)
+
+
+def _current_persistent_hold(
+    decision: dict[str, Any], candidate: dict[str, Any]
+) -> bool:
+    state = (
+        decision.get("onboarding")
+        if isinstance(decision.get("onboarding"), dict)
+        else {}
+    )
+    if state.get("status") != "awaiting_profile":
+        return False
+    reason = str(state.get("error") or "")
+    if not reason or not _persistent_hold_reason(reason):
+        return False
+    return str(state.get("evidenceFingerprint") or "") == onboarding.evidence_fingerprint(
+        candidate
+    )
+
+
+def _can_bypass_persistent_hold(
+    candidate: dict[str, Any],
+    official_sources_payload: dict[str, Any],
+    registry_payload: dict[str, Any],
+) -> bool:
+    if preparation.candidate_is_institution_like(candidate):
+        return False
+    if preparation._registry_match(registry_payload, candidate):
+        return True
+    return preparation._official_source_match(official_sources_payload, candidate) is not None
+
+
+def _should_skip_persistent_hold(
+    decision: dict[str, Any],
+    candidate: dict[str, Any],
+    official_sources_payload: dict[str, Any],
+    registry_payload: dict[str, Any],
+) -> bool:
+    return _current_persistent_hold(decision, candidate) and not _can_bypass_persistent_hold(
+        candidate, official_sources_payload, registry_payload
+    )
+
+
+def _working_decisions(
+    decisions_payload: dict[str, Any],
+    candidates_payload: dict[str, Any],
+    official_sources_payload: dict[str, Any],
+    registry_payload: dict[str, Any],
+) -> tuple[dict[str, Any], list[str]]:
+    normalized = onboarding.normalize_decisions(decisions_payload)
+    candidates = onboarding.candidate_index(candidates_payload)
+    working: dict[str, dict[str, Any]] = {}
+    skipped: list[str] = []
+
+    for key, decision in normalized["decisions"].items():
+        candidate = candidates.get(key)
+        if candidate and _should_skip_persistent_hold(
+            decision, candidate, official_sources_payload, registry_payload
+        ):
+            skipped.append(key)
+            continue
+
+        row = dict(decision)
+        state = row.get("onboarding") if isinstance(row.get("onboarding"), dict) else {}
+        if state.get("status") == "awaiting_profile":
+            # The candidate is being retried because evidence changed or a formal
+            # registry/source now exists. Do not carry the stale hold into the
+            # fresh attempt; a new persistent failure will be recorded below.
+            row.pop("onboarding", None)
+        working[key] = row
+
+    return {
+        "schemaVersion": normalized["schemaVersion"],
+        "decisions": working,
+    }, sorted(skipped)
+
+
+def _persist_holds(
+    decisions_payload: dict[str, Any],
+    candidates_payload: dict[str, Any],
+    holds: list[dict[str, str]],
+) -> list[str]:
+    candidates = onboarding.candidate_index(candidates_payload)
+    persisted: list[str] = []
+
+    for hold in holds:
+        key = onboarding.decision_key(hold.get("candidateKey"))
+        reason = str(hold.get("reason") or "")
+        candidate = candidates.get(key)
+        decision = decisions_payload.get("decisions", {}).get(key)
+        if (
+            not key
+            or not candidate
+            or not isinstance(decision, dict)
+            or decision.get("status") != "accepted"
+            or not _persistent_hold_reason(reason)
+        ):
+            continue
+
+        decision["onboarding"] = {
+            "status": "awaiting_profile",
+            "mode": "create",
+            "profile": {},
+            "evidenceFingerprint": onboarding.evidence_fingerprint(candidate),
+            "requestedAt": "",
+            "requestedBy": "VCIQ/auto-profile-hold",
+            "publishedAt": "",
+            "publishedSlug": "",
+            "error": reason,
+        }
+        persisted.append(key)
+
+    return sorted(set(persisted))
 
 
 def discover_candidate_identities(
@@ -67,6 +206,10 @@ def discover_candidate_identities(
         if preparation._registry_match(registry_payload, candidate):
             continue
         if preparation._official_source_match(official_sources_payload, candidate) is not None:
+            continue
+        if _should_skip_persistent_hold(
+            decision, candidate, official_sources_payload, registry_payload
+        ):
             continue
 
         checked += 1
@@ -124,9 +267,16 @@ def run(
     captures_payload: dict[str, Any],
     limit: int,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
+    normalized = onboarding.normalize_decisions(decisions_payload)
+    working_decisions, skipped_holds = _working_decisions(
+        normalized,
+        candidates_payload,
+        official_sources_payload,
+        registry_payload,
+    )
     discovered, discovery_report = discover_candidate_identities(
         candidates_payload,
-        decisions_payload,
+        working_decisions,
         official_sources_payload,
         registry_payload,
         limit=limit,
@@ -148,17 +298,26 @@ def run(
         # exact-Wikidata fallback instead of being silently disabled.
         return preparation.resolve_wikidata_company(name)
 
-    next_decisions, onboarding_report = preparation.prepare_automatic_onboarding(
+    prepared_decisions, onboarding_report = preparation.prepare_automatic_onboarding(
         candidates_payload,
-        decisions_payload,
+        working_decisions,
         official_sources_payload,
         registry_payload,
         captures_payload,
         resolver=resolver,
         limit=limit,
     )
-    return next_decisions, {
+    normalized["decisions"].update(prepared_decisions.get("decisions", {}))
+    holds = onboarding_report.get("holds", [])
+    holds = holds if isinstance(holds, list) else []
+    persisted_holds = _persist_holds(normalized, candidates_payload, holds)
+
+    return normalized, {
         **onboarding_report,
+        "persistedHoldCount": len(persisted_holds),
+        "persistedHoldKeys": persisted_holds,
+        "skippedPersistedHoldCount": len(skipped_holds),
+        "skippedPersistedHoldKeys": skipped_holds,
         "sourceDiscovery": discovery_report,
     }
 
