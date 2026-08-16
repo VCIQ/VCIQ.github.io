@@ -6,6 +6,7 @@ from datetime import UTC, datetime
 
 from tools import crawl_articles
 from tools import crawl_official_with_source_categories as category_crawler
+from tools import snapshot_retention
 from tools.crawl_official_companies import load_registry
 
 
@@ -150,6 +151,15 @@ class ProductionOfficialCompanyRegistryTests(unittest.TestCase):
     def test_committed_shopify_rows_obey_public_region_contract(self) -> None:
         official = category_crawler.official_tracking.official
         payload = json.loads(official.OUTPUT_PATH.read_text(encoding="utf-8"))
+
+        # Schema v2 snapshots were produced before official-company status counts
+        # were reconciled after global retention. Migrate that historical fixture
+        # in memory; once schema v3 is committed this branch is no longer used.
+        retention = payload.get("snapshotRetention")
+        retention = retention if isinstance(retention, dict) else {}
+        if int(retention.get("schemaVersion", 0) or 0) < snapshot_retention.RETENTION_SCHEMA_VERSION:
+            payload, _ = snapshot_retention.apply_retention(payload)
+
         shopify_rows = [
             article
             for article in payload.get("articles", [])
@@ -165,8 +175,10 @@ class ProductionOfficialCompanyRegistryTests(unittest.TestCase):
         )
 
         self.assertIsNotNone(shopify_status)
-        if int(shopify_status.get("accepted", 0)) > 0:
-            self.assertTrue(shopify_rows)
+        self.assertEqual(
+            int(shopify_status.get("accepted", 0) or 0),
+            len(shopify_rows),
+        )
         for article in shopify_rows:
             self.assertEqual(article.get("region"), "全球")
             self.assertNotIn(
