@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "proposalVersion": "v1.2",
+  "proposalVersion": "v1.3",
   "generatedDate": "2026-08-16",
   "mode": "proposal-only",
   "targetFile": "config/user_tracking.json",
@@ -13,7 +13,11 @@
   },
   "precheck": {
     "proposalCi": "passed",
-    "activationSimulation": "pending",
+    "activationSimulation": "passed",
+    "validationHead": "ec70d9e3d5f8cf0e0bd8a21b6c509d8e5672fdb8",
+    "frontendRun": 3049,
+    "frontendConclusion": "success",
+    "dependencySecurityConclusion": "success",
     "productionTermCollisionPolicy": "exact normalized collisions are blocking; broader semantic overlap is reviewed as taxonomy warning",
     "generatedDiscovery": {
       "sourceSuffixes": [
@@ -24,9 +28,39 @@
       ],
       "routesPerEnabledTrack": 4,
       "minimumRequiredBySnapshotValidator": 3,
-      "result": "pass"
+      "expectedRoutes": 8,
+      "completedRoutes": 8,
+      "productiveRoutes": 4,
+      "failedRoutes": 2,
+      "candidateArticlesAdded": 26,
+      "result": "pass",
+      "note": "All eight routes were actually attempted. Both Toutiao routes completed with explicit no-match errors; Bing completed empty; Google News CN/US produced candidate articles. Production snapshot validation requires completed attempts, not every route to be productive."
     },
-    "officialSourcePolicy": "do not guess or add company official sources in this batch"
+    "candidateSnapshot": {
+      "trackingConfigHash": "33c4dd19df78b98966afa4f3c15eda06d9404d598def7bfb337f5feb502cb574",
+      "enabledTracks": 25,
+      "trackingSnapshotValidation": "passed",
+      "trackingPagesValidation": "passed"
+    },
+    "tests": {
+      "manualTrackingTests": 72,
+      "typescriptUnitTests": 281,
+      "crawlerTests": 805,
+      "buildPages": "passed",
+      "publicArtifactAudit": "passed",
+      "staticLinkValidation": "passed"
+    },
+    "routeBudgets": {
+      "technologiesHtmlBytes": 89276,
+      "technologiesBudget": 100000,
+      "peopleHtmlBytes": 444376,
+      "peopleBudget": 450000,
+      "technologyIndexHtmlBytes": 561991,
+      "technologyIndexBudget": 600000,
+      "companiesHtmlBytes": 509017,
+      "companiesBudget": 600000
+    },
+    "officialSourcePolicy": "do not guess or add company official sources in this batch; SourceBao official-site candidate is deferred to a separate source-adapter/live-probe change"
   },
   "proposedTracks": [
     {
@@ -92,15 +126,15 @@
     "ticker": "300605",
     "market": "A股",
     "requiredBeforeProductionActivation": true,
-    "status": "candidate activation simulation pending",
-    "reason": "通用 Track 可自动获得 4 路发现源，但若要稳定覆盖财报、业绩预告、可转债、并购重组和重大合同，需同时把恒锋信息接入现有 A股官方披露链路（CNINFO/SZSE）。"
+    "status": "candidate activation simulation passed",
+    "reason": "通用 Track 可自动获得 4 路发现源；生产激活同时把恒锋信息接入现有 A股 listed-company 官方披露链路，以覆盖 CNINFO/SZSE 的财报、业绩预告、可转债、并购重组和重大合同。"
   },
   "activationRequirements": [
-    "人工确认两个 Track 的边界与命名",
-    "对新增关键词做 taxonomy overlap 检查",
-    "确认每个新 Track 自动生成 Bing、Google News 中文、Google News 英文、今日头条 4 路 discovery source",
-    "恒锋信息生产激活前接入 listedCompanies / A股官方披露链路",
-    "在 PR candidate workspace 中真实应用提案后通过 tracking/taxonomy/crawler/candidate snapshot/build:pages",
-    "合并后由正式 Refresh public intelligence 生成生产 track coverage"
+    "proposal validator / taxonomy / exact collision validation passed",
+    "each proposed track generated and actually attempted Bing, Google News Chinese, Google News English and Toutiao discovery routes",
+    "candidate activation appended exactly two tracks and Hengfeng Information 300605 without modifying existing entries",
+    "candidate crawler suite, tracking snapshot, generated tracking pages, public artifact audit, links and performance budgets passed",
+    "production activation must be a separate clean diff and must not merge proposal-only simulator/probe workflow hooks by accident",
+    "after explicit production approval and merge, Refresh public intelligence must generate the new production trackingConfigHash and 25-track coverage"
   ]
 }
