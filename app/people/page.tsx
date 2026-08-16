@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 const SUMMARY_LIMIT = 44;
-const DIRECTORY_TAG_LIMIT = 2;
+const DIRECTORY_TAG_LIMIT = 1;
 
 const statusLabels = {
   complete: "资料完整",
