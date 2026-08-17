@@ -1,0 +1,636 @@
+.dashboard {
+  display: grid;
+  gap: 34px;
+}
+
+.brief {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.briefHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 28px;
+  align-items: end;
+  padding: 30px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.kicker {
+  margin: 0 0 9px;
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .18em;
+}
+
+.briefHeader h1 {
+  max-width: none;
+  margin: 0 0 10px;
+  font-size: clamp(30px, 3.4vw, 48px);
+}
+
+.briefIntro {
+  max-width: 760px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.freshness {
+  display: grid;
+  gap: 5px;
+  min-width: 170px;
+  justify-items: end;
+  color: var(--faint);
+  font-size: 10px;
+}
+
+.freshness strong {
+  color: var(--green-bright);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.metricStrip {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.metricStrip div {
+  min-width: 0;
+  padding: 16px 18px;
+  background: var(--bg);
+}
+
+.metricStrip span,
+.metricStrip strong {
+  display: block;
+}
+
+.metricStrip span {
+  color: var(--faint);
+  font-size: 9px;
+  letter-spacing: .07em;
+}
+
+.metricStrip strong {
+  margin-top: 4px;
+  overflow: hidden;
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.briefBody {
+  display: grid;
+  grid-template-columns: minmax(220px, .6fr) minmax(0, 1.4fr);
+  gap: 0;
+}
+
+.briefLabel {
+  padding: 22px 24px;
+  border-right: 1px solid var(--border-soft);
+}
+
+.briefLabel strong {
+  display: block;
+  margin-bottom: 7px;
+  font: 500 21px/1.25 "Noto Serif SC", "Songti SC", serif;
+}
+
+.briefLabel p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.briefList {
+  display: grid;
+}
+
+.briefItem {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  min-height: 58px;
+  padding: 10px 18px;
+  border: 0;
+  border-bottom: 1px solid var(--border-soft);
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.briefItem:last-child {
+  border-bottom: 0;
+}
+
+.briefItem:hover,
+.briefItemActive {
+  background: var(--surface-2);
+}
+
+.briefRank {
+  color: var(--faint);
+  font: 10px/1 Inter, sans-serif;
+}
+
+.briefCopy {
+  min-width: 0;
+}
+
+.briefCopy strong,
+.briefCopy small {
+  display: block;
+}
+
+.briefCopy strong {
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.briefCopy small {
+  margin-top: 3px;
+  color: var(--faint);
+  font-size: 9px;
+}
+
+.briefScore {
+  color: var(--green-bright);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.workbench {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(320px, .75fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.inbox,
+.analysisPanel,
+.tracking,
+.recentResearch {
+  min-width: 0;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: end;
+  margin-bottom: 16px;
+}
+
+.sectionHeader h2 {
+  margin: 0;
+  font: 500 25px/1.25 "Noto Serif SC", "Songti SC", serif;
+}
+
+.sectionHeader p {
+  margin: 0 0 6px;
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .17em;
+}
+
+.sectionMeta,
+.sectionLink {
+  color: var(--faint);
+  font-size: 10px;
+}
+
+.sectionLink:hover {
+  color: var(--green-bright);
+}
+
+.inbox :global(.filter-bar) {
+  margin-bottom: 0;
+}
+
+.inbox :global(.event-list) {
+  max-height: 1120px;
+  overflow: auto;
+  scrollbar-color: var(--border) transparent;
+}
+
+.selectedEvent {
+  background: color-mix(in srgb, var(--surface-3) 62%, transparent);
+}
+
+.inspectButton {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 9px;
+  padding: 3px 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.inspectButton:hover,
+.inspectButtonActive {
+  border-color: var(--green);
+  color: var(--green-bright);
+}
+
+.analysisPanel {
+  position: sticky;
+  top: 92px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.analysisHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: end;
+  padding: 20px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.analysisHeader p {
+  margin: 0 0 6px;
+  color: var(--green);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: .16em;
+}
+
+.analysisHeader h2 {
+  margin: 0;
+  font: 500 22px/1.2 "Noto Serif SC", "Songti SC", serif;
+}
+
+.analysisHeader a {
+  color: var(--faint);
+  font-size: 9px;
+}
+
+.analysisHeader a:hover {
+  color: var(--green-bright);
+}
+
+.analysisBody {
+  padding: 20px;
+}
+
+.analysisTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 13px;
+}
+
+.analysisTags span {
+  padding: 2px 6px;
+  border: 1px solid var(--border-soft);
+  color: var(--faint);
+  font-size: 9px;
+}
+
+.analysisTitle {
+  margin: 0 0 9px;
+  font-size: 18px;
+  line-height: 1.45;
+}
+
+.analysisSummary {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.75;
+}
+
+.analysisMetrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin: 20px 0;
+  background: var(--border-soft);
+}
+
+.analysisMetrics div {
+  padding: 12px;
+  background: var(--bg);
+}
+
+.analysisMetrics span,
+.analysisMetrics strong {
+  display: block;
+}
+
+.analysisMetrics span {
+  color: var(--faint);
+  font-size: 8px;
+}
+
+.analysisMetrics strong {
+  margin-top: 4px;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+.analysisBlock {
+  padding: 16px 0;
+  border-top: 1px solid var(--border-soft);
+}
+
+.analysisBlock h3 {
+  margin: 0 0 9px;
+  color: var(--faint);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .1em;
+}
+
+.signalList,
+.entityList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.signalList span,
+.entityList span {
+  padding: 4px 7px;
+  background: var(--surface-3);
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.analysisActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.analysisActions a {
+  display: flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.analysisActions a:hover {
+  border-color: var(--green);
+  color: var(--green-bright);
+}
+
+.analysisEmpty {
+  min-height: 300px;
+  display: grid;
+  place-items: center;
+  color: var(--faint);
+  font-size: 11px;
+  text-align: center;
+}
+
+.tracking {
+  padding-top: 4px;
+}
+
+.trackingGrid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.trackingCard {
+  display: flex;
+  min-width: 0;
+  min-height: 142px;
+  flex-direction: column;
+  padding: 14px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+}
+
+.trackingCard:hover {
+  border-color: var(--green);
+}
+
+.trackingCard small {
+  color: var(--faint);
+  font-size: 8px;
+}
+
+.trackingCard h3 {
+  margin: 13px 0 5px;
+  font-size: 13px;
+}
+
+.trackingCard p {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.55;
+}
+
+.trackingCard strong {
+  margin-top: auto;
+  color: var(--green-bright);
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.objectGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.objectCard {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  min-height: 68px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-soft);
+  background: var(--bg);
+}
+
+.objectCard:hover {
+  border-color: var(--green);
+}
+
+.objectCode {
+  color: var(--green);
+  font: 8px/1 Inter, sans-serif;
+  letter-spacing: .08em;
+}
+
+.objectCard div strong,
+.objectCard div small {
+  display: block;
+}
+
+.objectCard div strong {
+  font-size: 11px;
+}
+
+.objectCard div small {
+  margin-top: 2px;
+  color: var(--faint);
+  font-size: 8px;
+}
+
+.objectCount {
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.trackingFooter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+  color: var(--faint);
+  font-size: 9px;
+}
+
+.recentResearch {
+  padding-top: 4px;
+}
+
+.recentGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.recentColumn {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.recentColumn > :global(.headlines-column),
+.recentColumn > :global(.side-column) {
+  border-left: 0;
+  padding-left: 0;
+}
+
+.recentColumn :global(.section-index) {
+  display: none;
+}
+
+.recentColumn :global(.section-heading) {
+  margin-bottom: 13px;
+}
+
+@media (max-width: 1220px) {
+  .metricStrip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .workbench {
+    grid-template-columns: minmax(0, 1.4fr) minmax(300px, .8fr);
+  }
+
+  .trackingGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .objectGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .briefHeader,
+  .briefBody,
+  .workbench,
+  .recentGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .freshness {
+    justify-items: start;
+  }
+
+  .briefLabel {
+    border-right: 0;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .analysisPanel {
+    position: static;
+  }
+
+  .trackingGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .dashboard {
+    gap: 26px;
+  }
+
+  .briefHeader {
+    padding: 22px;
+  }
+
+  .metricStrip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .briefItem {
+    grid-template-columns: 24px minmax(0, 1fr);
+  }
+
+  .briefScore {
+    display: none;
+  }
+
+  .sectionHeader {
+    align-items: start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .inbox :global(.filter-bar) {
+    flex-wrap: wrap;
+  }
+
+  .analysisMetrics {
+    grid-template-columns: 1fr;
+  }
+
+  .analysisActions,
+  .trackingGrid,
+  .objectGrid {
+    grid-template-columns: 1fr;
+  }
+}
