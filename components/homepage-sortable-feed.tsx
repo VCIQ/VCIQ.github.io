@@ -23,7 +23,7 @@ export type HomepageFeedItem = {
   importance: number;
 };
 
-const INITIAL_FEED_RENDER_LIMIT = 60;
+const INITIAL_FEED_RENDER_LIMIT = 24;
 
 function sortItems(items: HomepageFeedItem[], mode: HomepageSortMode) {
   return [...items].sort((left, right) => {
