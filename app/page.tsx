@@ -11,13 +11,41 @@ import { trackedSectors } from "@/lib/tracked-sectors";
 import type { ArticlePayload, LiveIntelligenceEvent } from "@/lib/use-articles";
 import rawArticles from "@/public/data/articles.json";
 
-const INITIAL_KEY_EVENTS_LIMIT = 80;
+const INITIAL_KEY_EVENTS_LIMIT = 36;
 const snapshot = rawArticles as unknown as ArticlePayload;
 const trackedSectorAliases = [
   ...new Set(trackedSectors.flatMap((sector) => sector.aliases)),
 ];
 const trackedSectorNames = new Set(trackedSectorAliases);
 const activeArticles = snapshot.articles.filter((item) => trackedSectorNames.has(item.sector));
+
+function compactHomepageArticle(item: LiveIntelligenceEvent): LiveIntelligenceEvent {
+  return {
+    id: item.id,
+    title: item.title,
+    summary: item.summary,
+    type: item.type,
+    region: item.region,
+    sector: item.sector,
+    company: item.company,
+    companySlug: item.companySlug,
+    personSlug: item.personSlug,
+    sourceId: item.sourceId,
+    publishedAt: item.publishedAt,
+    importance: item.importance,
+    source: item.source,
+    qualityScore: item.qualityScore,
+    qualityStatus: item.qualityStatus,
+    qualitySignals: item.qualitySignals?.slice(0, 4),
+    duplicateCount: item.duplicateCount,
+    eventClusterId: item.eventClusterId,
+    wechatAccount: item.wechatAccount,
+    mentionedCompanies: item.mentionedCompanies?.slice(0, 4),
+    mentionedPeople: item.mentionedPeople?.slice(0, 4),
+    matchedTrackingTerms: item.matchedTrackingTerms?.slice(0, 6),
+  };
+}
+
 const initialArticles: LiveIntelligenceEvent[] = activeArticles
   .filter((item) => item.qualityStatus !== "低可信")
   .sort(
@@ -25,7 +53,8 @@ const initialArticles: LiveIntelligenceEvent[] = activeArticles
       right.importance - left.importance ||
       right.publishedAt.localeCompare(left.publishedAt),
   )
-  .slice(0, INITIAL_KEY_EVENTS_LIMIT);
+  .slice(0, INITIAL_KEY_EVENTS_LIMIT)
+  .map(compactHomepageArticle);
 
 function marketSourceCount(market: "中国" | "美国") {
   return new Set(
