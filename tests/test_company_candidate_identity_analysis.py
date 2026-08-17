@@ -77,7 +77,13 @@ class CompanyCandidateIdentityAnalysisTests(unittest.TestCase):
             summary["atomizedEntities"],
         )
         self.assertEqual(report["mode"], "read-only-dry-run")
+        self.assertFalse(report["safety"]["writesQueue"])
+        self.assertFalse(report["safety"]["changesCandidateStatus"])
         print("COMPANY_CANDIDATE_IDENTITY_DRY_RUN=" + json.dumps(summary, ensure_ascii=False, sort_keys=True))
+        print(
+            "COMPANY_CANDIDATE_IDENTITY_EXAMPLES="
+            + json.dumps(report["examples"], ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+        )
 
 
 if __name__ == "__main__":
