@@ -13,7 +13,7 @@ const searchPage = read("app/search/page.tsx");
 const technologiesPage = read("app/technologies/page.tsx");
 const channelDirectory = read("components/channel-update-directory.tsx");
 const channelDirectoryClient = read("components/channel-update-directory-client.tsx");
-const dashboard = read("components/dashboard-client.tsx");
+const dashboard = read("components/dashboard-v2-client.tsx");
 const favoriteButton = read("components/favorite-button.tsx");
 const favoriteControls = read("components/homepage-favorite-controls.tsx");
 const favoritesPage = read("components/favorites-page.tsx");
@@ -36,7 +36,7 @@ test("homepage client does not import full build-time research datasets", () => 
   assert.doesNotMatch(dashboard, /@\/lib\/intelligence-data/);
   assert.doesNotMatch(dashboard, /@\/lib\/tracked-sectors/);
   assert.doesNotMatch(dashboard, /@\/lib\/core-research-objects/);
-  assert.match(page, /DashboardClient/);
+  assert.match(page, /DashboardV2Client/);
   assert.match(page, /initialPayload/);
   assert.match(page, /bootstrap/);
 });
