@@ -14,6 +14,7 @@ const technologiesPage = read("app/technologies/page.tsx");
 const channelDirectory = read("components/channel-update-directory.tsx");
 const channelDirectoryClient = read("components/channel-update-directory-client.tsx");
 const dashboard = read("components/dashboard-v2-client.tsx");
+const dashboardStyles = read("components/dashboard-v2.module.css");
 const favoriteButton = read("components/favorite-button.tsx");
 const favoriteControls = read("components/homepage-favorite-controls.tsx");
 const favoritesPage = read("components/favorites-page.tsx");
@@ -39,6 +40,16 @@ test("homepage client does not import full build-time research datasets", () => 
   assert.match(page, /DashboardV2Client/);
   assert.match(page, /initialPayload/);
   assert.match(page, /bootstrap/);
+});
+
+test("homepage bootstrap stays compact before the lazy full archive loads", () => {
+  assert.match(page, /INITIAL_KEY_EVENTS_LIMIT = 36/);
+  assert.match(page, /compactHomepageArticle/);
+  assert.match(page, /\.map\(compactHomepageArticle\)/);
+  assert.doesNotMatch(page, /relatedSources: item\.relatedSources/);
+  assert.match(dashboard, /INITIAL_INBOX_RENDER_LIMIT = 24/);
+  assert.match(dashboard, /candidateEvents\.slice\(0, inboxRenderLimit\)/);
+  assert.match(dashboard, /显示更多情报/);
 });
 
 test("global header status is build-time and cannot trigger the article archive fetch", () => {
@@ -99,11 +110,18 @@ test("channel update directories hydrate only a bounded latest window", () => {
   assert.match(packageJson, /build:channel-update-archives/);
 });
 
-test("homepage update stream keeps 200 candidates but mounts only 60 initially", () => {
+test("homepage update stream keeps 200 candidates but mounts only 24 initially", () => {
   assert.match(homepageUpdates, /slice\(0, HOMEPAGE_CHANNEL_UPDATE_LIMIT\)/);
-  assert.match(homepageFeed, /INITIAL_FEED_RENDER_LIMIT = 60/);
+  assert.match(homepageFeed, /INITIAL_FEED_RENDER_LIMIT = 24/);
   assert.match(homepageFeed, /sortedItems\.slice\(0, renderLimit\)/);
   assert.match(homepageFeed, /显示更多/);
+});
+
+test("dashboard v2 keeps the analysis desk visible on narrow workbench layouts", () => {
+  assert.match(dashboardStyles, /@media \(max-width: 980px\)/);
+  assert.match(dashboardStyles, /\.analysisPanel[\s\S]*order: -1/);
+  assert.match(dashboardStyles, /\.analysisPanel[\s\S]*position: sticky/);
+  assert.match(dashboardStyles, /scroll-snap-type: x proximity/);
 });
 
 test("hot ranking starts from a bounded build-time pool and only loads the full archive explicitly", () => {
