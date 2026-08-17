@@ -1,8 +1,8 @@
 import { DailyHeadlines } from "@/components/daily-headlines";
 import {
-  DashboardClient,
+  DashboardV2Client,
   type DashboardBootstrap,
-} from "@/components/dashboard-client";
+} from "@/components/dashboard-v2-client";
 import { HomepageChannelUpdates } from "@/components/homepage-channel-updates";
 import { HomepageTrackingActions } from "@/components/homepage-tracking-actions";
 import { coreResearchObjectStats } from "@/lib/core-research-objects";
@@ -83,13 +83,13 @@ const bootstrap: DashboardBootstrap = {
 export default function Home() {
   return (
     <main className="page-shell">
-      <DashboardClient
+      <DashboardV2Client
         bootstrap={bootstrap}
         initialPayload={initialPayload}
         middle={<DailyHeadlines />}
       >
         <HomepageChannelUpdates />
-      </DashboardClient>
+      </DashboardV2Client>
       <HomepageTrackingActions />
     </main>
   );
