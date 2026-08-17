@@ -1,6 +1,13 @@
 "use client";
 
-import { ArrowUpRight, Bot, Search } from "lucide-react";
+import {
+  ArrowUpRight,
+  BookmarkPlus,
+  Bot,
+  ChevronLeft,
+  ChevronRight,
+  Search,
+} from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState, type ReactNode } from "react";
 import { EventQualityIndicator } from "@/components/event-quality-indicator";
@@ -10,6 +17,7 @@ import {
 } from "@/components/homepage-sort-toggle";
 import styles from "@/components/dashboard-v2.module.css";
 import { getSnapshotFreshness } from "@/lib/snapshot-freshness";
+import { buildTrackingCaptureLink } from "@/lib/tracking-admin-link";
 import {
   useArticles,
   type ArticlePayload,
@@ -35,6 +43,8 @@ const eventTypes = [
   "人物观点",
 ] as const;
 const KEY_EVENTS_LIMIT = 200;
+const INITIAL_INBOX_RENDER_LIMIT = 24;
+const INBOX_RENDER_BATCH = 24;
 const DAILY_BRIEF_LIMIT = 5;
 const TRACKING_ADMIN_URL = "https://vciq-tracking-console.pages.dev/";
 
@@ -113,6 +123,11 @@ function uniqueNonEmpty(values: Array<string | undefined>) {
   return [...new Set(values.map((value) => value?.trim()).filter(Boolean) as string[])];
 }
 
+function compactSummary(summary: string) {
+  const normalized = summary.trim();
+  return normalized.length > 110 ? `${normalized.slice(0, 110)}…` : normalized;
+}
+
 export function DashboardV2Client({
   middle,
   children,
@@ -138,6 +153,7 @@ export function DashboardV2Client({
   const [qualityScope, setQualityScope] = useState<"trusted" | "all">("trusted");
   const [query, setQuery] = useState("");
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
+  const [inboxRenderLimit, setInboxRenderLimit] = useState(INITIAL_INBOX_RENDER_LIMIT);
 
   const enabledSectorNames = useMemo(
     () => new Set(bootstrap.trackedSectorAliases),
@@ -212,7 +228,9 @@ export function DashboardV2Client({
         ),
     [activeArticles, eventSort, eventType, normalizedQuery, qualityScope, region],
   );
-  const displayedEvents = visibleEvents.slice(0, KEY_EVENTS_LIMIT);
+  const candidateEvents = visibleEvents.slice(0, KEY_EVENTS_LIMIT);
+  const displayedEvents = candidateEvents.slice(0, inboxRenderLimit);
+  const hasMoreEvents = displayedEvents.length < candidateEvents.length;
 
   const briefDate = latestPublishedAt;
   const dailyBriefEvents = useMemo(() => {
@@ -254,6 +272,13 @@ export function DashboardV2Client({
           : undefined,
       ]).slice(0, 5)
     : [];
+
+  const selectedCandidateIndex = selectedEvent
+    ? candidateEvents.findIndex((item) => item.id === selectedEvent.id)
+    : -1;
+  const canSelectPrevious = selectedCandidateIndex > 0;
+  const canSelectNext =
+    selectedCandidateIndex >= 0 && selectedCandidateIndex < candidateEvents.length - 1;
 
   const computedSourceCount = new Set(activeArticles.map((item) => item.source.url)).size;
   const computedPlatformCount = new Set(
@@ -309,6 +334,41 @@ export function DashboardV2Client({
       count: bootstrap.researchObjectStats.companyCount,
     },
   ] as const;
+
+  const selectedTrackingHref = selectedEvent
+    ? buildTrackingCaptureLink({
+        url: selectedEvent.source.url,
+        title: selectedEvent.title,
+        summary: selectedEvent.summary,
+        keywords: uniqueNonEmpty([
+          selectedEvent.type,
+          selectedEvent.region,
+          selectedEvent.sector,
+          selectedEvent.company,
+          ...(selectedEvent.matchedTrackingTerms ?? []),
+        ]).slice(0, 8),
+        source: `${selectedEvent.source.level} · ${selectedEvent.source.name}`,
+        channel: "homepage-analysis-desk",
+      })
+    : TRACKING_ADMIN_URL;
+
+  function resetInboxContext() {
+    setInboxRenderLimit(INITIAL_INBOX_RENDER_LIMIT);
+    setSelectedEventId(null);
+  }
+
+  function selectNeighbor(direction: -1 | 1) {
+    if (selectedCandidateIndex < 0) return;
+    const nextIndex = selectedCandidateIndex + direction;
+    const next = candidateEvents[nextIndex];
+    if (!next) return;
+    setSelectedEventId(next.id);
+    if (nextIndex >= inboxRenderLimit) {
+      setInboxRenderLimit((current) =>
+        Math.min(KEY_EVENTS_LIMIT, current + INBOX_RENDER_BATCH),
+      );
+    }
+  }
 
   return (
     <div className={styles.dashboard}>
@@ -372,7 +432,7 @@ export function DashboardV2Client({
               <h2>情报收件箱</h2>
             </div>
             <span className={styles.sectionMeta}>
-              展示 {displayedEvents.length} / {activeArticleCount} · 今日 {todayArticleCount}
+              首屏 {displayedEvents.length} · 候选 {candidateEvents.length} · 总库 {activeArticleCount}
             </span>
           </header>
 
@@ -382,7 +442,10 @@ export function DashboardV2Client({
                 <button
                   className={region === item ? "active" : ""}
                   key={item}
-                  onClick={() => setRegion(item)}
+                  onClick={() => {
+                    setRegion(item);
+                    resetInboxContext();
+                  }}
                 >
                   {item}
                 </button>
@@ -390,16 +453,20 @@ export function DashboardV2Client({
             </div>
             <select
               value={eventType}
-              onChange={(event) =>
-                setEventType(event.target.value as (typeof eventTypes)[number])
-              }
+              onChange={(event) => {
+                setEventType(event.target.value as (typeof eventTypes)[number]);
+                resetInboxContext();
+              }}
               aria-label="事件类型"
             >
               {eventTypes.map((item) => <option key={item}>{item}</option>)}
             </select>
             <select
               value={qualityScope}
-              onChange={(event) => setQualityScope(event.target.value as "trusted" | "all")}
+              onChange={(event) => {
+                setQualityScope(event.target.value as "trusted" | "all");
+                resetInboxContext();
+              }}
               aria-label="线索质量"
             >
               <option value="trusted">可信优先</option>
@@ -407,14 +474,20 @@ export function DashboardV2Client({
             </select>
             <HomepageSortToggle
               value={eventSort}
-              onChange={setEventSort}
+              onChange={(value) => {
+                setEventSort(value);
+                resetInboxContext();
+              }}
               ariaLabel="关键事件排序方式"
             />
             <label className="inline-search">
               <Search size={15} />
               <input
                 value={query}
-                onChange={(event) => setQuery(event.target.value)}
+                onChange={(event) => {
+                  setQuery(event.target.value);
+                  resetInboxContext();
+                }}
                 placeholder="搜索技术、赛道、人物、公司或事件"
                 aria-label="搜索技术、赛道、人物、公司或事件"
               />
@@ -438,25 +511,27 @@ export function DashboardV2Client({
                     <span>{item.sector}</span>
                   </div>
                   <h3><EventTitle item={item} /></h3>
-                  <p>{item.summary}</p>
-                  <a
-                    className="source-link"
-                    href={item.source.url}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {item.source.level} · {item.source.platform ? `${item.source.platform} · ` : ""}{item.source.name}
-                    <ArrowUpRight size={14} />
-                  </a>
+                  <p className={styles.inboxSummary}>{compactSummary(item.summary)}</p>
+                  <div className={styles.eventUtilityRow}>
+                    <a
+                      className="source-link"
+                      href={item.source.url}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {item.source.level} · {item.source.platform ? `${item.source.platform} · ` : ""}{item.source.name}
+                      <ArrowUpRight size={14} />
+                    </a>
+                    <button
+                      type="button"
+                      className={`${styles.inspectButton} ${selectedEvent?.id === item.id ? styles.inspectButtonActive : ""}`}
+                      onClick={() => setSelectedEventId(item.id)}
+                      aria-pressed={selectedEvent?.id === item.id}
+                    >
+                      分析
+                    </button>
+                  </div>
                   <EventQualityIndicator item={item} />
-                  <button
-                    type="button"
-                    className={`${styles.inspectButton} ${selectedEvent?.id === item.id ? styles.inspectButtonActive : ""}`}
-                    onClick={() => setSelectedEventId(item.id)}
-                    aria-pressed={selectedEvent?.id === item.id}
-                  >
-                    在分析桌查看
-                  </button>
                 </div>
                 <div className="importance" title="按事件规模、信源等级与产业影响计算">
                   <span>重要度</span>
@@ -471,6 +546,21 @@ export function DashboardV2Client({
               </div>
             )}
           </div>
+
+          {hasMoreEvents ? (
+            <div className={styles.inboxLoadMore}>
+              <button
+                type="button"
+                onClick={() =>
+                  setInboxRenderLimit((current) =>
+                    Math.min(KEY_EVENTS_LIMIT, current + INBOX_RENDER_BATCH),
+                  )
+                }
+              >
+                显示更多情报 · 已显示 {displayedEvents.length}/{candidateEvents.length}
+              </button>
+            </div>
+          ) : null}
         </div>
 
         <aside className={styles.analysisPanel} aria-label="分析桌">
@@ -479,7 +569,27 @@ export function DashboardV2Client({
               <p>02 / ANALYSIS DESK</p>
               <h2>分析桌</h2>
             </div>
-            <Link href="/research-agent">Research Agent</Link>
+            <div className={styles.analysisHeaderActions}>
+              <div className={styles.analysisNav} aria-label="切换分析事件">
+                <button
+                  type="button"
+                  onClick={() => selectNeighbor(-1)}
+                  disabled={!canSelectPrevious}
+                  aria-label="上一条情报"
+                >
+                  <ChevronLeft size={14} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => selectNeighbor(1)}
+                  disabled={!canSelectNext}
+                  aria-label="下一条情报"
+                >
+                  <ChevronRight size={14} />
+                </button>
+              </div>
+              <Link href="/research-agent">Research Agent</Link>
+            </div>
           </header>
 
           {selectedEvent ? (
@@ -492,11 +602,12 @@ export function DashboardV2Client({
               </div>
               <h3 className={styles.analysisTitle}>{selectedEvent.title}</h3>
               <p className={styles.analysisSummary}>{selectedEvent.summary}</p>
+              <p className={styles.analysisNote}>结构化证据视图 · 非模型结论</p>
 
               <div className={styles.analysisMetrics}>
                 <div><span>优先级</span><strong>{signalLabel(selectedEvent.importance)}</strong></div>
                 <div><span>重要度</span><strong>{selectedEvent.importance}</strong></div>
-                <div><span>信源</span><strong>{selectedEvent.source.level}</strong></div>
+                <div><span>信源等级</span><strong>{selectedEvent.source.level}</strong></div>
               </div>
 
               <div className={styles.analysisBlock}>
@@ -520,6 +631,9 @@ export function DashboardV2Client({
               <div className={styles.analysisActions}>
                 <a href={selectedEvent.source.url} target="_blank" rel="noreferrer">
                   原始信源 <ArrowUpRight size={13} />
+                </a>
+                <a href={selectedTrackingHref} target="_blank" rel="noreferrer">
+                  加入追踪 <BookmarkPlus size={13} />
                 </a>
                 <Link href="/research-agent">
                   深度研究 <Bot size={13} />
@@ -587,7 +701,7 @@ export function DashboardV2Client({
             <p>04 / RECENT RESEARCH</p>
             <h2>最近研究与更新</h2>
           </div>
-          <span className={styles.sectionMeta}>头条与四类研究对象更新</span>
+          <span className={styles.sectionMeta}>按需展开头条与四类研究对象更新</span>
         </header>
         <div className={styles.recentGrid}>
           <div className={styles.recentColumn}>{middle}</div>
