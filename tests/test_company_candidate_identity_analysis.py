@@ -1,6 +1,5 @@
 import importlib.util
 import json
-import sys
 import unittest
 from pathlib import Path
 
@@ -61,13 +60,14 @@ class CompanyCandidateIdentityAnalysisTests(unittest.TestCase):
         self.assertFalse(result["safety"]["changesCandidateStatus"])
 
     def test_repository_dry_run_is_accounted_and_prints_ci_summary(self):
+        queue = MODULE.load_json(ROOT / "config" / "company_candidate_review_queue.json")
         report = MODULE.analyze(
-            MODULE.load_json(ROOT / "config" / "company_candidate_review_queue.json"),
+            queue,
             MODULE.load_json(ROOT / "config" / "company_registry.json"),
             MODULE.load_json(ROOT / "config" / "official_company_sources.json"),
         )
         summary = report["summary"]
-        self.assertEqual(summary["pendingBefore"], 96)
+        self.assertEqual(summary["pendingBefore"], int(queue.get("pendingCount", 0)))
         self.assertGreaterEqual(summary["compoundCandidateRows"], 1)
         self.assertEqual(
             summary["registryResolved"]
