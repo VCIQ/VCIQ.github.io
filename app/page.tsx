@@ -1,10 +1,9 @@
-import { DailyHeadlines } from "@/components/daily-headlines";
 import {
   DashboardV2Client,
   type DashboardBootstrap,
 } from "@/components/dashboard-v2-client";
-import { HomepageChannelUpdates } from "@/components/homepage-channel-updates";
 import { HomepageTrackingActions } from "@/components/homepage-tracking-actions";
+import unifiedStyles from "@/components/homepage-unified-inbox.module.css";
 import { coreResearchObjectStats } from "@/lib/core-research-objects";
 import {
   mergeRankedIntelligenceIntoArticlePayload,
@@ -126,13 +125,14 @@ const bootstrap: DashboardBootstrap = {
 export default function Home() {
   return (
     <main className="page-shell">
-      <DashboardV2Client
-        bootstrap={bootstrap}
-        initialPayload={initialPayload}
-        middle={<DailyHeadlines />}
-      >
-        <HomepageChannelUpdates />
-      </DashboardV2Client>
+      <div className={unifiedStyles.root}>
+        <DashboardV2Client
+          bootstrap={bootstrap}
+          initialPayload={initialPayload}
+        >
+          {null}
+        </DashboardV2Client>
+      </div>
       <HomepageTrackingActions />
     </main>
   );
