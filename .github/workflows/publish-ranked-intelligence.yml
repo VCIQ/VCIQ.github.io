@@ -22,7 +22,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v4
         with:
           ref: main
           fetch-depth: 1
@@ -70,12 +70,12 @@ jobs:
       PROJECTION_BASE64: ${{ inputs.projection_base64 }}
       GH_TOKEN: ${{ github.token }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v4
         with:
           ref: main
           fetch-depth: 0
           persist-credentials: false
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
@@ -110,13 +110,7 @@ jobs:
               --write \
               | tee /tmp/ranked-intelligence-result.json
 
-            changed=$(python - <<'PY'
-          import json
-          from pathlib import Path
-          report = json.loads(Path("/tmp/ranked-intelligence-result.json").read_text(encoding="utf-8"))
-          print("true" if report.get("changed") else "false")
-          PY
-            )
+            changed=$(python -c 'import json; print("true" if json.load(open("/tmp/ranked-intelligence-result.json", encoding="utf-8")).get("changed") else "false")')
             if [ "$changed" != "true" ]; then
               echo "changed=false" >> "$GITHUB_OUTPUT"
               exit 0
