@@ -1,3 +1,8 @@
+import {
+  bootstrapFavoritePreferenceHistory,
+  syncFavoritePreference,
+} from "@/lib/favorite-preference-sync";
+
 export const FAVORITES_STORAGE_KEY = "vciq:favorites:v1";
 export const FAVORITES_CHANGED_EVENT = "vciq:favorites-changed";
 export const FAVORITES_SCHEMA_VERSION = 1;
@@ -67,6 +72,7 @@ let cachedFavoriteItems: FavoriteItem[] = EMPTY_FAVORITES;
 let cachedFavoriteIds = EMPTY_FAVORITE_IDS;
 const favoriteSubscribers = new Set<() => void>();
 let browserListenersAttached = false;
+let preferenceBootstrapStarted = false;
 
 function cleanText(value: unknown, maxLength: number): string {
   if (typeof value !== "string") return "";
@@ -285,6 +291,12 @@ function syncFavoriteCache(): boolean {
   return true;
 }
 
+function maybeBootstrapFavoritePreferences(items: FavoriteItem[]) {
+  if (preferenceBootstrapStarted || items.length === 0) return;
+  preferenceBootstrapStarted = true;
+  void bootstrapFavoritePreferenceHistory(items);
+}
+
 function notifyFavoriteSubscribers() {
   for (const subscriber of favoriteSubscribers) subscriber();
 }
@@ -337,6 +349,7 @@ export function readFavoriteItems(): FavoriteItem[] {
   const storage = browserStorage();
   if (!storage) return EMPTY_FAVORITES;
   syncFavoriteCache();
+  maybeBootstrapFavoritePreferences(cachedFavoriteItems);
   return cachedFavoriteItems;
 }
 
@@ -348,6 +361,7 @@ export function getFavoriteIdSnapshot(): Set<string> {
   const storage = browserStorage();
   if (!storage) return EMPTY_FAVORITE_IDS;
   syncFavoriteCache();
+  maybeBootstrapFavoritePreferences(cachedFavoriteItems);
   return cachedFavoriteIds;
 }
 
@@ -373,9 +387,12 @@ export function isFavorite(id: string): boolean {
 
 export function toggleFavorite(input: FavoriteInput): boolean {
   const current = readFavoriteItems();
-  const existing = cachedFavoriteIds.has(input.id);
-  if (existing) {
+  const existingItem = current.find((item) => item.id === input.id);
+  if (existingItem) {
+    // Local favorite state remains authoritative for UX. Preference sync is
+    // additive and deliberately cannot make an un-favorite operation fail.
     writeFavoriteItems(current.filter((item) => item.id !== input.id));
+    void syncFavoritePreference("remove", existingItem);
     return false;
   }
   const item = normalizeFavorite({
@@ -384,9 +401,13 @@ export function toggleFavorite(input: FavoriteInput): boolean {
   });
   if (!item) return false;
   writeFavoriteItems([item, ...current.filter((entry) => entry.id !== item.id)]);
+  void syncFavoritePreference("save", item);
   return true;
 }
 
 export function removeFavorite(id: string): void {
-  writeFavoriteItems(readFavoriteItems().filter((item) => item.id !== id));
+  const current = readFavoriteItems();
+  const existingItem = current.find((item) => item.id === id);
+  writeFavoriteItems(current.filter((item) => item.id !== id));
+  if (existingItem) void syncFavoritePreference("remove", existingItem);
 }

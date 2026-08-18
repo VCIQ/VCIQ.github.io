@@ -1,23 +1,35 @@
-import { DailyHeadlines } from "@/components/daily-headlines";
 import {
   DashboardV2Client,
   type DashboardBootstrap,
 } from "@/components/dashboard-v2-client";
-import { HomepageChannelUpdates } from "@/components/homepage-channel-updates";
 import { HomepageTrackingActions } from "@/components/homepage-tracking-actions";
+import unifiedStyles from "@/components/homepage-unified-inbox.module.css";
 import { coreResearchObjectStats } from "@/lib/core-research-objects";
+import {
+  mergeRankedIntelligenceIntoArticlePayload,
+  RANKED_INTELLIGENCE_FALLBACK_SECTOR,
+} from "@/lib/ranked-intelligence";
 import { formatTaipeiDate } from "@/lib/snapshot-freshness";
 import { trackedSectors } from "@/lib/tracked-sectors";
 import type { ArticlePayload, LiveIntelligenceEvent } from "@/lib/use-articles";
 import rawArticles from "@/public/data/articles.json";
+import rawRankedIntelligence from "@/public/data/ranked-intelligence.json";
 
 const INITIAL_KEY_EVENTS_LIMIT = 36;
-const snapshot = rawArticles as unknown as ArticlePayload;
+const snapshot = mergeRankedIntelligenceIntoArticlePayload(
+  rawArticles as unknown as ArticlePayload,
+  rawRankedIntelligence,
+);
 const trackedSectorAliases = [
-  ...new Set(trackedSectors.flatMap((sector) => sector.aliases)),
+  ...new Set([
+    ...trackedSectors.flatMap((sector) => sector.aliases),
+    RANKED_INTELLIGENCE_FALLBACK_SECTOR,
+  ]),
 ];
 const trackedSectorNames = new Set(trackedSectorAliases);
-const activeArticles = snapshot.articles.filter((item) => trackedSectorNames.has(item.sector));
+const activeArticles = snapshot.articles.filter(
+  (item) => item.curated || trackedSectorNames.has(item.sector),
+);
 
 function compactHomepageArticle(item: LiveIntelligenceEvent): LiveIntelligenceEvent {
   return {
@@ -34,6 +46,7 @@ function compactHomepageArticle(item: LiveIntelligenceEvent): LiveIntelligenceEv
     publishedAt: item.publishedAt,
     importance: item.importance,
     source: item.source,
+    curated: item.curated,
     qualityScore: item.qualityScore,
     qualityStatus: item.qualityStatus,
     qualitySignals: item.qualitySignals?.slice(0, 4),
@@ -85,7 +98,7 @@ const initialPayload: ArticlePayload = {
 const taipeiToday = formatTaipeiDate(new Date());
 const bootstrap: DashboardBootstrap = {
   trackedSectorAliases,
-  todayArticleCount: activeArticles.filter((item) => item.publishedAt === taipeiToday).length,
+  todayArticleCount: activeArticles.filter((item) => item.publishedAt.slice(0, 10) === taipeiToday).length,
   sectorCount: trackedSectors.length,
   activeArticleCount: activeArticles.length,
   sourceCount: new Set(activeArticles.map((item) => item.source.url)).size,
@@ -112,13 +125,14 @@ const bootstrap: DashboardBootstrap = {
 export default function Home() {
   return (
     <main className="page-shell">
-      <DashboardV2Client
-        bootstrap={bootstrap}
-        initialPayload={initialPayload}
-        middle={<DailyHeadlines />}
-      >
-        <HomepageChannelUpdates />
-      </DashboardV2Client>
+      <div className={unifiedStyles.root}>
+        <DashboardV2Client
+          bootstrap={bootstrap}
+          initialPayload={initialPayload}
+        >
+          {null}
+        </DashboardV2Client>
+      </div>
       <HomepageTrackingActions />
     </main>
   );

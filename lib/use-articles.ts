@@ -1,6 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import {
+  mergeRankedIntelligenceIntoArticlePayload,
+  parseRankedIntelligenceProjection,
+} from "@/lib/ranked-intelligence";
 import type { RefreshAudit } from "@/lib/snapshot-freshness";
 
 export type Region = "中国" | "美国" | "全球";
@@ -166,12 +170,33 @@ function publishArticlePayload(payload: ArticlePayload) {
   for (const subscriber of subscribers) subscriber(payload);
 }
 
+async function fetchRankedIntelligenceProjectionFromNetwork(): Promise<unknown | null> {
+  try {
+    const response = await fetch("/data/ranked-intelligence.json", { cache: "default" });
+    if (!response.ok) return null;
+    const value = await response.json();
+    parseRankedIntelligenceProjection(value);
+    return value;
+  } catch {
+    // The homepage publication bridge is intentionally fail-open: the canonical
+    // article snapshot must remain usable even when the optional projection is
+    // missing, stale, or temporarily malformed.
+    return null;
+  }
+}
+
 async function fetchArticlesFromNetwork(): Promise<ArticlePayload> {
-  const response = await fetch("/data/articles.json", { cache: "default" });
+  const [response, rankedProjection] = await Promise.all([
+    fetch("/data/articles.json", { cache: "default" }),
+    fetchRankedIntelligenceProjectionFromNetwork(),
+  ]);
   if (!response.ok) {
     throw new Error(`Public article data returned ${response.status}`);
   }
-  return parseArticlePayload(await response.json());
+  const payload = parseArticlePayload(await response.json());
+  return rankedProjection
+    ? mergeRankedIntelligenceIntoArticlePayload(payload, rankedProjection)
+    : payload;
 }
 
 async function loadArticles(force = false): Promise<ArticlePayload> {

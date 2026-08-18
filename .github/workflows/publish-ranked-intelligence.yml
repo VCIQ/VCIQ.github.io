@@ -1,0 +1,151 @@
+name: Publish ranked intelligence homepage projection
+
+on:
+  workflow_dispatch:
+    inputs:
+      projection_base64:
+        description: "Public-safe Ranked Intelligence projection (UTF-8 JSON, base64 encoded)"
+        required: true
+        type: string
+
+permissions: {}
+
+concurrency:
+  group: ranked-intelligence-homepage-main
+  cancel-in-progress: false
+
+jobs:
+  authorize:
+    name: Authorize projection publisher
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Require canonical repository and allowlisted actors
+        env:
+          ACTUAL_REPOSITORY: ${{ github.repository }}
+          ACTUAL_REF: ${{ github.ref }}
+          ACTOR: ${{ github.actor }}
+          TRIGGERING_ACTOR: ${{ github.triggering_actor }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$ACTUAL_REPOSITORY" = "VCIQ/VCIQ.github.io"
+          test "$ACTUAL_REF" = "refs/heads/main"
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          admins = json.loads(Path("config/tracking_admins.json").read_text(encoding="utf-8"))
+          allowed = {
+              str(actor).strip().casefold()
+              for actor in admins.get("actors", [])
+              if str(actor).strip()
+          }
+          checked = {
+              "github.actor": os.environ.get("ACTOR", "").strip(),
+              "github.triggering_actor": os.environ.get("TRIGGERING_ACTOR", "").strip(),
+          }
+          denied = [label for label, actor in checked.items() if actor.casefold() not in allowed]
+          if denied:
+              raise SystemExit("ranked-intelligence publisher is not allowlisted: " + ", ".join(denied))
+          print("authorized actors: " + ", ".join(checked.values()))
+          PY
+
+  publish:
+    name: Validate and publish homepage projection
+    needs: authorize
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    env:
+      PROJECTION_BASE64: ${{ inputs.projection_base64 }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate projection contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_ranked_intelligence_projection
+          python tools/ranked_intelligence_projection.py \
+            --input-base64 "$PROJECTION_BASE64" \
+            --path public/data/ranked-intelligence.json \
+            > /tmp/ranked-intelligence-validation.json
+          cat /tmp/ranked-intelligence-validation.json
+
+      - name: Publish without overwriting concurrent repository writers
+        id: publish
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          gh auth setup-git
+
+          for attempt in 1 2 3; do
+            echo "publication attempt $attempt"
+            git fetch origin main
+            git reset --hard origin/main
+
+            python tools/ranked_intelligence_projection.py \
+              --input-base64 "$PROJECTION_BASE64" \
+              --path public/data/ranked-intelligence.json \
+              --write \
+              | tee /tmp/ranked-intelligence-result.json
+
+            changed=$(python -c 'import json; print("true" if json.load(open("/tmp/ranked-intelligence-result.json", encoding="utf-8")).get("changed") else "false")')
+            if [ "$changed" != "true" ]; then
+              echo "changed=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+
+            git add -- public/data/ranked-intelligence.json
+            git diff --cached --quiet && {
+              echo "validator reported a change but projection file is unchanged"
+              exit 1
+            }
+            git commit -m "data: publish ranked intelligence homepage projection"
+
+            if git push origin HEAD:main; then
+              echo "changed=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+
+            echo "main advanced before push; retrying from the new main head"
+          done
+
+          echo "main kept advancing; projection will retry on the next Inbox refresh"
+          exit 1
+
+      - name: Summarize projection publication
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "## Ranked Intelligence homepage projection"
+            echo
+            if [ -f /tmp/ranked-intelligence-result.json ]; then
+              echo '```json'
+              cat /tmp/ranked-intelligence-result.json
+              echo '```'
+            else
+              echo "Projection did not reach the publication step."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
