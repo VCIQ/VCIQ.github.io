@@ -13,3 +13,9 @@ This gives the system one additive learning path:
 `Favorite history + future save/remove → private tracking_events → Unified Preference Profile → Ranked Intelligence`
 
 It does not create companies, people, technologies, tracks, memberships, or source-catalog entries. Those mutations remain behind the authenticated Capture / Manual Tracking validation and apply flow.
+
+## Integration validation
+
+The repository-wide `/search/` route budget issue that previously blocked this PR is intentionally fixed outside this bridge. PR #279 landed on `main` as commit `5deeb7fa56a6c0fc230993eeb4e37a68ba4dbbe0`; its validated `/search/` output is 78,377 bytes against the 100,000-byte HTML budget. This branch does not copy or modify the search-route implementation. The purpose of this note is to force a fresh merge-result validation against the repaired `main` while keeping the Favorite / Ranked Intelligence changes isolated.
+
+A separate production-browser acceptance check is still required for the authenticated cross-origin Favorite write: local Favorite persistence must remain immediate, the private request must succeed only with a valid tracking-admin Access session, and blocking or signing out of that private request must never roll back the browser Favorite.
