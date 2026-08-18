@@ -1,4 +1,7 @@
+import { mergeRankedIntelligenceIntoArticlePayload } from "@/lib/ranked-intelligence";
+import type { ArticlePayload } from "@/lib/use-articles";
 import rawArticles from "@/public/data/articles.json";
+import rawRankedIntelligence from "@/public/data/ranked-intelligence.json";
 
 export type DailyHeadline = {
   id: string;
@@ -31,7 +34,8 @@ export const DAILY_HEADLINES_PER_SOURCE_PER_DAY = 50;
 
 // Search and discovery proxies are query results, not the site's own
 // configured publishers; regulator filings and paper indexes are not
-// headline material either.
+// headline material either. Google Alerts RSS is allowed because the bridge
+// projects the canonical publisher URL/source rather than a Google result URL.
 const EXCLUDED_PLATFORMS = new Set([
   "Google News",
   "谷歌新闻",
@@ -43,7 +47,10 @@ const EXCLUDED_PLATFORMS = new Set([
   "OpenAlex",
 ]);
 
-const payload = rawArticles as ArticlesPayload;
+const payload = mergeRankedIntelligenceIntoArticlePayload(
+  rawArticles as unknown as ArticlePayload,
+  rawRankedIntelligence,
+) as ArticlesPayload;
 
 function headlineDay(publishedAt: string): string {
   return publishedAt.slice(0, 10);
