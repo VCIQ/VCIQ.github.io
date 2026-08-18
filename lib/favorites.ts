@@ -1,4 +1,7 @@
-import { syncFavoritePreference } from "@/lib/favorite-preference-sync";
+import {
+  bootstrapFavoritePreferenceHistory,
+  syncFavoritePreference,
+} from "@/lib/favorite-preference-sync";
 
 export const FAVORITES_STORAGE_KEY = "vciq:favorites:v1";
 export const FAVORITES_CHANGED_EVENT = "vciq:favorites-changed";
@@ -69,6 +72,7 @@ let cachedFavoriteItems: FavoriteItem[] = EMPTY_FAVORITES;
 let cachedFavoriteIds = EMPTY_FAVORITE_IDS;
 const favoriteSubscribers = new Set<() => void>();
 let browserListenersAttached = false;
+let preferenceBootstrapStarted = false;
 
 function cleanText(value: unknown, maxLength: number): string {
   if (typeof value !== "string") return "";
@@ -287,6 +291,12 @@ function syncFavoriteCache(): boolean {
   return true;
 }
 
+function maybeBootstrapFavoritePreferences(items: FavoriteItem[]) {
+  if (preferenceBootstrapStarted || items.length === 0) return;
+  preferenceBootstrapStarted = true;
+  void bootstrapFavoritePreferenceHistory(items);
+}
+
 function notifyFavoriteSubscribers() {
   for (const subscriber of favoriteSubscribers) subscriber();
 }
@@ -339,6 +349,7 @@ export function readFavoriteItems(): FavoriteItem[] {
   const storage = browserStorage();
   if (!storage) return EMPTY_FAVORITES;
   syncFavoriteCache();
+  maybeBootstrapFavoritePreferences(cachedFavoriteItems);
   return cachedFavoriteItems;
 }
 
@@ -350,6 +361,7 @@ export function getFavoriteIdSnapshot(): Set<string> {
   const storage = browserStorage();
   if (!storage) return EMPTY_FAVORITE_IDS;
   syncFavoriteCache();
+  maybeBootstrapFavoritePreferences(cachedFavoriteItems);
   return cachedFavoriteIds;
 }
 
