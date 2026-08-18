@@ -68,12 +68,16 @@ export async function syncFavoritePreference(
   action: FavoritePreferenceSyncAction,
   item: FavoritePreferenceSyncItem,
 ): Promise<boolean> {
-  if (typeof window === "undefined" || typeof fetch !== "function") return false;
+  if (
+    typeof window === "undefined"
+    || typeof fetch !== "function"
+    || !window.location?.origin
+  ) return false;
   const payload = buildFavoritePreferenceSyncPayload(action, item, window.location.origin);
   if (!payload) return false;
 
   const controller = new AbortController();
-  const timeout = window.setTimeout(() => controller.abort(), SYNC_TIMEOUT_MS);
+  const timeout = globalThis.setTimeout(() => controller.abort(), SYNC_TIMEOUT_MS);
   try {
     const response = await fetch(`${trackingAdminBase()}${FAVORITE_PREFERENCE_PATH}`, {
       method: "POST",
@@ -96,6 +100,6 @@ export async function syncFavoritePreference(
   } catch {
     return false;
   } finally {
-    window.clearTimeout(timeout);
+    globalThis.clearTimeout(timeout);
   }
 }
