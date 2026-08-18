@@ -44,8 +44,7 @@ test("invalid favorite links are never sent to the preference endpoint", () => {
 test("favorite history bootstrap sends one compact private preference request", async () => {
   const previousWindow = globalThis.window;
   const previousFetch = globalThis.fetch;
-  let requestCount = 0;
-  let capturedBody: Record<string, unknown> | null = null;
+  const capturedBodies: Array<Record<string, unknown>> = [];
 
   Object.defineProperty(globalThis, "window", {
     configurable: true,
@@ -54,8 +53,7 @@ test("favorite history bootstrap sends one compact private preference request", 
   Object.defineProperty(globalThis, "fetch", {
     configurable: true,
     value: async (_input: RequestInfo | URL, init?: RequestInit) => {
-      requestCount += 1;
-      capturedBody = JSON.parse(String(init?.body ?? "{}")) as Record<string, unknown>;
+      capturedBodies.push(JSON.parse(String(init?.body ?? "{}")) as Record<string, unknown>);
       return new Response("{}", { status: 200 });
     },
   });
@@ -83,10 +81,11 @@ test("favorite history bootstrap sends one compact private preference request", 
     ]);
 
     assert.equal(ok, true);
-    assert.equal(requestCount, 1);
-    assert.equal(capturedBody?.bootstrap, true);
-    assert.equal(Array.isArray(capturedBody?.items), true);
-    assert.equal((capturedBody?.items as unknown[]).length, 2);
+    assert.equal(capturedBodies.length, 1);
+    const capturedBody = capturedBodies[0] ?? {};
+    assert.equal(capturedBody.bootstrap, true);
+    assert.equal(Array.isArray(capturedBody.items), true);
+    assert.equal((capturedBody.items as unknown[]).length, 2);
   } finally {
     if (previousWindow === undefined) Reflect.deleteProperty(globalThis, "window");
     else Object.defineProperty(globalThis, "window", { configurable: true, value: previousWindow });
