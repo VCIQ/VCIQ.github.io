@@ -1,6 +1,8 @@
 const DEFAULT_TRACKING_ADMIN = "https://vciq-tracking-console.pages.dev";
 const FAVORITE_PREFERENCE_PATH = "/api/tracking-admin/v1/preferences/favorite";
 const SYNC_TIMEOUT_MS = 5_000;
+const BOOTSTRAP_TIMEOUT_MS = 8_000;
+const MAX_BOOTSTRAP_FAVORITES = 200;
 
 export type FavoritePreferenceSyncAction = "save" | "remove";
 
@@ -35,6 +37,12 @@ function trackingAdminBase(): string {
   return (process.env.NEXT_PUBLIC_TRACKING_ADMIN_URL || DEFAULT_TRACKING_ADMIN).replace(/\/+$/, "");
 }
 
+function browserOrigin(): string {
+  return typeof window !== "undefined" && window.location?.origin
+    ? window.location.origin
+    : "";
+}
+
 export function buildFavoritePreferenceSyncPayload(
   action: FavoritePreferenceSyncAction,
   item: FavoritePreferenceSyncItem,
@@ -64,29 +72,20 @@ export function buildFavoritePreferenceSyncPayload(
   };
 }
 
-export async function syncFavoritePreference(
-  action: FavoritePreferenceSyncAction,
-  item: FavoritePreferenceSyncItem,
+async function postPreferencePayload(
+  payload: unknown,
+  timeoutMs: number,
+  keepalive: boolean,
 ): Promise<boolean> {
-  if (
-    typeof window === "undefined"
-    || typeof fetch !== "function"
-    || !window.location?.origin
-  ) return false;
-  const payload = buildFavoritePreferenceSyncPayload(action, item, window.location.origin);
-  if (!payload) return false;
-
+  if (typeof fetch !== "function" || !browserOrigin()) return false;
   const controller = new AbortController();
-  const timeout = globalThis.setTimeout(() => controller.abort(), SYNC_TIMEOUT_MS);
+  const timeout = globalThis.setTimeout(() => controller.abort(), timeoutMs);
   try {
     const response = await fetch(`${trackingAdminBase()}${FAVORITE_PREFERENCE_PATH}`, {
       method: "POST",
-      // Favorite persistence is local-first. The private preference event is a
-      // best-effort learning signal authenticated by the existing Cloudflare
-      // Access session; no GitHub or database credential is exposed here.
       credentials: "include",
       mode: "cors",
-      keepalive: true,
+      keepalive,
       headers: {
         accept: "application/json",
         // text/plain is CORS-safelisted and lets the private endpoint parse the
@@ -102,4 +101,40 @@ export async function syncFavoritePreference(
   } finally {
     globalThis.clearTimeout(timeout);
   }
+}
+
+export async function syncFavoritePreference(
+  action: FavoritePreferenceSyncAction,
+  item: FavoritePreferenceSyncItem,
+): Promise<boolean> {
+  const origin = browserOrigin();
+  if (!origin) return false;
+  const payload = buildFavoritePreferenceSyncPayload(action, item, origin);
+  if (!payload) return false;
+
+  // Favorite persistence is local-first. The private preference event is a
+  // best-effort learning signal authenticated by the existing Cloudflare
+  // Access session; no GitHub or database credential is exposed here.
+  return postPreferencePayload(payload, SYNC_TIMEOUT_MS, true);
+}
+
+export async function bootstrapFavoritePreferenceHistory(
+  items: FavoritePreferenceSyncItem[],
+): Promise<boolean> {
+  const origin = browserOrigin();
+  if (!origin || !Array.isArray(items) || items.length === 0) return false;
+  const normalizedItems = items
+    .slice(0, MAX_BOOTSTRAP_FAVORITES)
+    .map((item) => buildFavoritePreferenceSyncPayload("save", item, origin)?.item ?? null)
+    .filter((item): item is NonNullable<typeof item> => Boolean(item));
+  if (!normalizedItems.length) return false;
+
+  // A historical import can exceed the browser keepalive body budget, so it is
+  // sent once per page runtime without keepalive. Individual future Favorite
+  // actions continue to use the small keepalive request above.
+  return postPreferencePayload(
+    { bootstrap: true, items: normalizedItems },
+    BOOTSTRAP_TIMEOUT_MS,
+    false,
+  );
 }
