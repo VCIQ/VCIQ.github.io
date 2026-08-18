@@ -11,46 +11,57 @@ export const metadata: Metadata = {
   description: "搜索核心技术、核心赛道、核心人物、核心公司和辅助证据资料。",
 };
 
+const SEARCH_TEXT_LIMIT = 80;
+
+function compactSearchText(parts: Array<string | undefined>): string {
+  const value = parts
+    .map((part) => part?.trim())
+    .filter((part): part is string => Boolean(part))
+    .join(" · ");
+  if (value.length <= SEARCH_TEXT_LIMIT) return value;
+  return `${value.slice(0, SEARCH_TEXT_LIMIT - 1).trimEnd()}…`;
+}
+
 const staticRecords: SearchRecord[] = [
   ...coreTechnologyEntities.map((item) => ({
     type: "技术" as const,
     title: item.name,
-    text: `${item.summary} · ${item.trackNames.join(" / ")}`,
+    text: compactSearchText(item.trackNames),
     href: `/tracking/entities/topic/${item.slug}`,
     region: "全球",
   })),
   ...trackedSectors.map((item) => ({
     type: "赛道" as const,
     title: item.name,
-    text: `热度 ${item.heat} · 数据完整度 ${item.completeness}%`,
+    text: `热度 ${item.heat} · 完整度 ${item.completeness}%`,
     href: `/technology/${item.slug}`,
     region: "全球",
   })),
   ...researchPeople.map((item) => ({
     type: "人物" as const,
     title: item.name,
-    text: item.summary,
+    text: compactSearchText([item.englishName, item.role]),
     href: `/people/${item.slug}`,
     region: "全球",
   })),
   ...companies.map((item) => ({
     type: "公司" as const,
     title: item.name,
-    text: item.summary,
+    text: compactSearchText([item.englishName, item.sector, item.stage]),
     href: `/companies/${item.slug}`,
     region: item.region,
   })),
   ...institutionCatalog.map((item) => ({
     type: "资料" as const,
     title: item.name,
-    text: `投资机构 · ${item.stages} · ${item.sectors.join(" / ")}`,
+    text: compactSearchText([item.englishName, item.type, item.stages]),
     href: `/institutions/${item.slug}`,
     region: item.region,
   })),
   ...reports.map((item) => ({
     type: "资料" as const,
     title: item.title,
-    text: `研究报告 · ${item.summary}`,
+    text: compactSearchText(["研究报告", item.tags.join(" / ")]),
     href: `/reports/${item.slug}`,
     region: "全球",
   })),
