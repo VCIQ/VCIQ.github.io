@@ -14,11 +14,31 @@ const GENERIC_LATIN_TOKENS = new Set([
   "openai", "chatgpt", "news", "update", "launch", "launches", "released", "release",
   "announces", "announced", "official", "product", "products", "feature", "features", "version",
 ]);
+const TITLE_IDENTITY_STOPWORDS = new Set([
+  "news", "update", "launch", "launches", "released", "release", "announces", "announced",
+  "official", "product", "products", "feature", "features", "version", "with", "from", "about",
+  "after", "before", "into", "more", "new", "for", "the", "and",
+]);
 const GENERIC_CJK_BIGRAMS = new Set([
   "发布", "推出", "上线", "正式", "最新", "新增", "产品", "版本", "功能", "公司", "宣布",
   "今日", "消息", "相关", "进行", "应用", "使用", "视频", "媒体", "报道",
 ]);
+const GENERIC_CJK_TRIGRAMS = new Set([
+  "人工智能", "有限公司", "最新消息", "正式发布", "正式推出", "公司宣布", "相关消息",
+  "媒体报道", "今日消息", "产品发布", "功能更新", "用户使用", "技术发展",
+]);
 const GENERIC_EVENT_ANCHORS = new Set(["ai", "agi", "aiagi", "人工智能", "全球", "美国", "中国"]);
+const ROUNDUP_TITLE_RE = /(?:早报|晚报|日报|周报|月报|晨报|要闻|盘点|速览|一览|汇总|热点|简报)/u;
+const SEMANTIC_EVENT_CONCEPTS: Array<[string, RegExp]> = [
+  ["audience:minor", /(?:青少年|少年版|青春版|未成年(?:人)?|儿童|孩子|年轻用户|teen(?:s|ager|agers)?|adolescent(?:s)?|minor(?:s)?|young users?|under\s*(?:13|18)|13岁以下|18岁以下)/iu],
+  ["control:parental", /(?:家长|父母|监护|家长控制|parent(?:s|al)?|guardian(?:s)?)/iu],
+  ["safety:minor", /(?:安全防护|安全措施|安全保护|未成年人保护|age[- ]appropriate|safety|safeguard(?:s|ing)?|protection)/iu],
+  ["mode:study", /(?:学习模式|学习引导|学习辅导|study mode|learning mode)/iu],
+  ["restriction:age", /(?:年龄限制|年龄门槛|限制使用|禁用|under\s*(?:13|18)|age restriction(?:s)?|13岁以下|18岁以下)/iu],
+  ["feature:voice", /(?:实时语音|语音模式|voice mode|voice feature|voice translation)/iu],
+  ["feature:translation", /(?:实时翻译|语音翻译|translation|translate)/iu],
+];
+const HIGH_SIGNAL_EVENT_CONCEPTS = new Set(["audience:minor"]);
 
 export type RankedIntelligenceEntity = {
   objectType: "company" | "person" | "technology";
@@ -322,6 +342,61 @@ function eventTimestamp(value: string): number | null {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
+function cjkRuns(value: string): string[] {
+  return text(value, 500).match(/[\u3400-\u9fff]{2,}/g) ?? [];
+}
+
+function cjkTrigrams(value: string): Set<string> {
+  const result = new Set<string>();
+  for (const run of cjkRuns(value)) {
+    for (let index = 0; index < run.length - 2; index += 1) {
+      const trigram = run.slice(index, index + 3);
+      if (!GENERIC_CJK_TRIGRAMS.has(trigram)) result.add(trigram);
+    }
+  }
+  return result;
+}
+
+function compoundHomepageEvent(item: LiveIntelligenceEvent): boolean {
+  const title = text(item.title, 500);
+  if (!title) return false;
+  if (ROUNDUP_TITLE_RE.test(title)) return true;
+  const hardSeparators = title.match(/[；;｜|]/g)?.length ?? 0;
+  return hardSeparators >= 1 && title.length >= 42;
+}
+
+function semanticEventConceptKeys(item: LiveIntelligenceEvent): Set<string> {
+  const haystack = `${text(item.title, 500)} ${text(item.summary, 1000)}`.normalize("NFKC");
+  const result = new Set<string>();
+  for (const [concept, pattern] of SEMANTIC_EVENT_CONCEPTS) {
+    if (pattern.test(haystack)) result.add(concept);
+  }
+  return result;
+}
+
+function semanticEventEvidence(left: LiveIntelligenceEvent, right: LiveIntelligenceEvent): {
+  sharedCount: number;
+  highSignal: boolean;
+} {
+  const a = semanticEventConceptKeys(left);
+  const b = semanticEventConceptKeys(right);
+  const shared = [...a].filter((concept) => b.has(concept));
+  return {
+    sharedCount: shared.length,
+    highSignal: shared.some((concept) => HIGH_SIGNAL_EVENT_CONCEPTS.has(concept)),
+  };
+}
+
+function titleIdentityTokens(value: string): Set<string> {
+  const result = new Set<string>();
+  const normalized = text(value, 500).toLocaleLowerCase("en-US");
+  for (const token of normalized.match(/[a-z0-9][a-z0-9.+_-]{2,}/g) ?? []) {
+    const cleaned = token.replace(/[^a-z0-9]/g, "");
+    if (cleaned.length >= 3 && !TITLE_IDENTITY_STOPWORDS.has(cleaned)) result.add(cleaned);
+  }
+  return result;
+}
+
 function topicTokens(value: string): Set<string> {
   const normalized = text(value, 500).toLocaleLowerCase("en-US");
   const result = new Set<string>();
@@ -349,6 +424,10 @@ function titleTopicContainment(left: string, right: string): number {
   const b = topicTokens(right);
   if (!a.size || !b.size) return 0;
   return overlapCount(a, b) / Math.min(a.size, b.size);
+}
+
+function sharedSalientPhrases(left: string, right: string): number {
+  return overlapCount(cjkTrigrams(left.toLocaleLowerCase("en-US")), cjkTrigrams(right.toLocaleLowerCase("en-US")));
 }
 
 function eventAnchors(item: LiveIntelligenceEvent): Set<string> {
@@ -382,11 +461,30 @@ export function areLikelySameHomepageEvent(
   if (leftTitle && rightTitle && leftTitle === rightTitle) return true;
 
   const anchors = overlapCount(eventAnchors(left), eventAnchors(right));
-  if (anchors === 0) return false;
   const topic = titleTopicContainment(left.title, right.title);
   const contained = Math.min(leftTitle.length, rightTitle.length) >= 10
     && (leftTitle.includes(rightTitle) || rightTitle.includes(leftTitle));
-  return contained || topic >= (anchors >= 2 ? 0.24 : 0.38);
+  const salient = sharedSalientPhrases(left.title, right.title);
+  const semantic = semanticEventEvidence(left, right);
+  const semanticMatch = semantic.highSignal || semantic.sharedCount >= 2;
+  const identity = overlapCount(titleIdentityTokens(left.title), titleIdentityTokens(right.title));
+  const compound = compoundHomepageEvent(left) || compoundHomepageEvent(right);
+
+  if (compound) {
+    if (semantic.highSignal && identity > 0) return true;
+    return anchors > 0 && (contained || topic >= 0.56 || salient >= 2);
+  }
+
+  if (anchors > 0) {
+    return contained
+      || topic >= (anchors >= 2 ? 0.24 : 0.38)
+      || (semanticMatch && identity > 0);
+  }
+
+  // Public projection intentionally omits private Query/category/catalog state. For
+  // Catalog-OFF cross-pipeline matching, require a shared title identity plus strong
+  // event concepts instead of lowering the generic topic threshold globally.
+  return identity > 0 && (semantic.highSignal || semantic.sharedCount >= 2);
 }
 
 function asRelatedSource(item: LiveIntelligenceEvent): RelatedArticleSource {
@@ -424,18 +522,25 @@ function mergeEventArticle(
   projected: LiveIntelligenceEvent,
   includeProjectedPrimary: boolean,
 ): LiveIntelligenceEvent {
-  const projectedPrimary = includeProjectedPrimary ? [asRelatedSource(projected)] : [];
-  const relatedSources = mergeRelatedSources(existing.source.url, [
-    existing.relatedSources,
-    projectedPrimary,
-    projected.relatedSources,
+  const promoteProjected = includeProjectedPrimary
+    && compoundHomepageEvent(existing)
+    && !compoundHomepageEvent(projected);
+  const primary = promoteProjected ? projected : existing;
+  const secondary = promoteProjected ? existing : projected;
+  const secondaryPrimary = includeProjectedPrimary ? [asRelatedSource(secondary)] : [];
+  const relatedSources = mergeRelatedSources(primary.source.url, [
+    primary.relatedSources,
+    secondaryPrimary,
+    secondary.relatedSources,
   ]);
   const visibleSourceCount = 1 + (relatedSources?.length ?? 0);
   return {
-    ...existing,
+    ...primary,
     importance: Math.max(existing.importance, projected.importance),
     curated: true,
-    eventClusterId: existing.eventClusterId || projected.eventClusterId,
+    eventClusterId: promoteProjected
+      ? (projected.eventClusterId || existing.eventClusterId)
+      : (existing.eventClusterId || projected.eventClusterId),
     duplicateCount: Math.max(
       existing.duplicateCount ?? 1,
       projected.duplicateCount ?? 1,
