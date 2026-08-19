@@ -50,6 +50,7 @@ function compactHomepageArticle(item: LiveIntelligenceEvent): LiveIntelligenceEv
     qualityScore: item.qualityScore,
     qualityStatus: item.qualityStatus,
     qualitySignals: item.qualitySignals?.slice(0, 4),
+    relatedSources: item.relatedSources?.slice(0, 3),
     duplicateCount: item.duplicateCount,
     eventClusterId: item.eventClusterId,
     wechatAccount: item.wechatAccount,
