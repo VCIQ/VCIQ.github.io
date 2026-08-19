@@ -117,6 +117,7 @@ test("same company and event type do not collapse unrelated product launches", (
     id: "voice",
     title: "OpenAI 为 ChatGPT 推出全新实时语音翻译功能",
     source: { ...canonicalTeenEvent().source, url: "https://openai.com/news/voice-translation" },
+    eventClusterId: "crawler-event-voice-translation",
   };
   assert.equal(areLikelySameHomepageEvent(teen, voice), false);
 });
