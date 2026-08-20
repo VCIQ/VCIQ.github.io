@@ -68,6 +68,23 @@ class TrackingDiscoveryWorkflowTests(unittest.TestCase):
         self.assertIn("npm run validate:taxonomy", text)
         self.assertNotIn("git pull --rebase origin main", text)
 
+    def test_compound_entity_delta_guards_initial_commit_and_replay(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        guard = "node --import tsx scripts/validate-new-tracking-entities.ts --base-ref HEAD"
+        self.assertEqual(text.count(guard), 2)
+
+        initial = text.split("- name: Validate the expanded config before committing", 1)[1].split(
+            "- name: Commit expanded tracking config", 1
+        )[0]
+        self.assertIn(guard, initial)
+        self.assertLess(initial.index(guard), initial.index("npm run validate:taxonomy"))
+
+        replay = text.split("regenerate_from_latest_main()", 1)[1].split(
+            "if ! commit_current_config", 1
+        )[0]
+        self.assertIn(guard, replay)
+        self.assertLess(replay.index(guard), replay.index("npm run validate:taxonomy"))
+
     def test_successful_push_relies_on_the_full_refresh_push_trigger(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("if git push origin HEAD:main; then", text)

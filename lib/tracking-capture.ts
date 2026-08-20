@@ -3,6 +3,7 @@ import {
   resolveTrackingEntity,
   type TrackingEntityResolution,
 } from "@/lib/entity-resolution";
+import { assertSingleTrackingEntityName } from "@/lib/tracking-entity-integrity";
 import {
   cloneTrackingConfig,
   slugifyTrack,
@@ -213,6 +214,10 @@ export function trackingCaptureId(input: {
 }
 
 function normalizeEntityDraft(draft: TrackingCaptureEntityDraft): TrackingCaptureEntityDraft {
+  if (draft.entityType !== "topic") {
+    assertSingleTrackingEntityName(draft.entityType, draft.name);
+  }
+
   const rawName = cleanText(draft.name, 120);
   if (!rawName) throw new Error("追踪对象名称不能为空。");
   if (/^https?:\/\//i.test(rawName)) throw new Error("追踪对象名称不能是网址。");
