@@ -56,8 +56,16 @@ test("repository delta guard catches compounds beyond runtime normalization caps
 
   const result = spawnSync(
     process.execPath,
-    ["--import", tsxImport, scriptPath, "--base-ref", "HEAD"],
-    { cwd: directory, encoding: "utf8" },
+    [
+      "--import",
+      tsxImport,
+      scriptPath,
+      "--base-ref",
+      "HEAD",
+      "--worktree",
+      directory,
+    ],
+    { cwd: repositoryRoot, encoding: "utf8" },
   );
 
   assert.notEqual(result.status, 0);
