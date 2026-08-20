@@ -2,6 +2,7 @@ import {
   DashboardV2Client,
   type DashboardBootstrap,
 } from "@/components/dashboard-v2-client";
+import dateGuardStyles from "@/components/homepage-event-date-guard.module.css";
 import { HomepageTrackingActions } from "@/components/homepage-tracking-actions";
 import unifiedStyles from "@/components/homepage-unified-inbox.module.css";
 import { coreResearchObjectStats } from "@/lib/core-research-objects";
@@ -125,7 +126,7 @@ const bootstrap: DashboardBootstrap = {
 export default function Home() {
   return (
     <main className="page-shell">
-      <div className={unifiedStyles.root}>
+      <div className={`${unifiedStyles.root} ${dateGuardStyles.root}`}>
         <DashboardV2Client
           bootstrap={bootstrap}
           initialPayload={initialPayload}

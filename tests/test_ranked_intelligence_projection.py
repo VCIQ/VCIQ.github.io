@@ -30,13 +30,63 @@ class RankedIntelligenceProjectionTests(unittest.TestCase):
         normalized = normalize_projection(self.base())
         self.assertEqual(normalized["schemaVersion"], 1)
         self.assertEqual(normalized["items"][0]["score"], 96)
+        self.assertEqual(normalized["items"][0]["duplicateCount"], 1)
+        self.assertEqual(normalized["items"][0]["relatedSources"], [])
         self.assertNotEqual(normalized["contentHash"], "producer-hash-is-not-trusted")
         self.assertEqual(len(normalized["contentHash"]), 64)
+
+    def test_accepts_only_compact_public_event_cluster_evidence(self):
+        value = self.base()
+        value["items"][0].update({
+            "eventClusterId": "intel-event-abc",
+            "duplicateCount": 3,
+            "relatedSources": [{
+                "source": "搜狐",
+                "href": "https://sohu.example/story",
+                "title": "OpenAI 推出青少年版 ChatGPT",
+                "publishedAt": "2026-08-18T04:30:00Z",
+            }],
+        })
+        normalized = normalize_projection(value)
+        item = normalized["items"][0]
+        self.assertEqual(item["eventClusterId"], "intel-event-abc")
+        self.assertEqual(item["duplicateCount"], 3)
+        self.assertEqual(item["relatedSources"][0]["source"], "搜狐")
+        self.assertEqual(
+            set(item["relatedSources"][0]),
+            {"source", "href", "title", "publishedAt"},
+        )
 
     def test_rejects_private_or_control_fields(self):
         value = self.base()
         value["items"][0]["queries"] = ["private alert query"]
         with self.assertRaisesRegex(ValueError, "non-public fields"):
+            normalize_projection(value)
+
+    def test_rejects_private_fields_inside_related_source(self):
+        value = self.base()
+        value["items"][0]["relatedSources"] = [{
+            "source": "Example 2",
+            "href": "https://example.net/story",
+            "title": "same event",
+            "publishedAt": "2026-08-18T04:30:00Z",
+            "query": "private query",
+        }]
+        with self.assertRaisesRegex(ValueError, "non-public fields"):
+            normalize_projection(value)
+
+    def test_rejects_too_many_related_sources(self):
+        value = self.base()
+        value["items"][0]["relatedSources"] = [
+            {
+                "source": f"Source {index}",
+                "href": f"https://source{index}.example/story",
+                "title": "same event",
+                "publishedAt": "2026-08-18T04:30:00Z",
+            }
+            for index in range(4)
+        ]
+        with self.assertRaisesRegex(ValueError, "at most 3"):
             normalize_projection(value)
 
     def test_rejects_feed_or_credential_urls(self):
