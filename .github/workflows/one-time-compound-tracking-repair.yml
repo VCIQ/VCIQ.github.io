@@ -1,0 +1,207 @@
+name: One-time compound tracking repair
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    if: github.head_ref == 'repair/tracking-compound-history-v2' && github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: repair/tracking-compound-history-v2
+          fetch-depth: 0
+
+      - name: Apply reviewed raw 12-to-0 repair
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import re
+          from pathlib import Path
+
+          path = Path('config/user_tracking.json')
+          data = json.loads(path.read_text(encoding='utf-8'))
+
+          rules = [
+              {
+                  'field': 'sampleCompanies',
+                  'old': '阿里云 / Qwen',
+                  'expected': ['ai'],
+                  'replacements': ['阿里云'],
+                  'keywords': ['Qwen'],
+              },
+              {
+                  'field': 'sampleCompanies',
+                  'old': '腾讯 / 元宝',
+                  'expected': ['ai'],
+                  'replacements': ['腾讯'],
+                  'keywords': ['元宝'],
+              },
+              {
+                  'field': 'sampleCompanies',
+                  'old': 'Aliya Capital Partners、Atreides Management、Artisan Partners、Battery Ventures、Diagonal Capital、Intel Capital、Key1 Capital',
+                  'expected': ['semiconductor', 'track-1ccjq49'],
+                  'replacements': [
+                      'Aliya Capital Partners',
+                      'Atreides Management',
+                      'Artisan Partners',
+                      'Battery Ventures',
+                      'Diagonal Capital',
+                      'Intel Capital',
+                      'Key1 Capital',
+                  ],
+                  'keywords': [],
+              },
+              {
+                  'field': 'people',
+                  'old': '王慧文、陈天桥、',
+                  'expected': ['ai', 'track-1ccjq49'],
+                  'replacements': ['王慧文', '陈天桥'],
+                  'keywords': [],
+              },
+              {
+                  'field': 'people',
+                  'old': 'Jeff Dean、陶哲轩、李飞飞、Dawn Song、Oriol Vinyals',
+                  'expected': ['ai', 'robotics', 'ai-2'],
+                  'replacements': ['Jeff Dean', '陶哲轩', '李飞飞', 'Dawn Song', 'Oriol Vinyals'],
+                  'keywords': [],
+              },
+              {
+                  'field': 'people',
+                  'old': 'Quoc Le、Jeff Dean、Sanjay Ghemawat、Quoc Le、Oriol Vinyals',
+                  'expected': ['ai', 'robotics', 'ai-2'],
+                  'replacements': ['Quoc Le', 'Jeff Dean', 'Sanjay Ghemawat', 'Oriol Vinyals'],
+                  'keywords': [],
+              },
+          ]
+
+          separator = re.compile(r'(?:[\n\r、，；;|｜]+|\s+[\/／]\s+|\s+(?:和|与|及)\s+)')
+          content = re.compile(r'[A-Za-z0-9\u3400-\u9fff]')
+
+          def normalize(value):
+              return ' '.join(str(value).strip().split()).casefold()
+
+          def stable_unique(values):
+              output = []
+              seen = set()
+              for value in values:
+                  value = ' '.join(str(value).strip().split())
+                  key = normalize(value)
+                  if not value or key in seen:
+                      continue
+                  seen.add(key)
+                  output.append(value)
+              return output
+
+          def raw_compounds(config):
+              rows = []
+              for track in config.get('tracks', []):
+                  for field, entity_type in (('people', 'person'), ('sampleCompanies', 'company')):
+                      for value in track.get(field, []):
+                          parts = [
+                              part.strip()
+                              for part in separator.split(str(value))
+                              if content.search(part or '')
+                          ]
+                          if len(parts) > 1:
+                              rows.append({
+                                  'trackSlug': track['slug'],
+                                  'entityType': entity_type,
+                                  'value': value,
+                                  'parts': parts,
+                              })
+              return rows
+
+          before = raw_compounds(data)
+          unique_before = {
+              (row['entityType'], normalize(row['value']))
+              for row in before
+          }
+          affected_before = {row['trackSlug'] for row in before}
+          if len(before) != 12 or len(unique_before) != 6 or len(affected_before) != 5:
+              raise SystemExit(
+                  'raw compound inventory drift: '
+                  f'occurrences={len(before)} unique={len(unique_before)} '
+                  f'affected={sorted(affected_before)} rows={before}'
+              )
+
+          tracks = {track['slug']: track for track in data['tracks']}
+          for rule in rules:
+              actual = [
+                  track['slug']
+                  for track in data['tracks']
+                  if rule['old'] in track.get(rule['field'], [])
+              ]
+              if sorted(actual) != sorted(rule['expected']):
+                  raise SystemExit(
+                      f"inventory drift for {rule['old']!r}: "
+                      f"expected={rule['expected']} actual={actual}"
+                  )
+
+          repaired = 0
+          affected = set()
+          for rule in rules:
+              for slug in rule['expected']:
+                  track = tracks[slug]
+                  rebuilt = []
+                  found = 0
+                  for value in track[rule['field']]:
+                      if value == rule['old']:
+                          rebuilt.extend(rule['replacements'])
+                          found += 1
+                      else:
+                          rebuilt.append(value)
+                  if found != 1:
+                      raise SystemExit(
+                          f"expected one occurrence in {slug}: {rule['old']!r}, got {found}"
+                      )
+                  track[rule['field']] = stable_unique(rebuilt)
+                  if rule['keywords']:
+                      track['keywords'] = stable_unique(
+                          track.get('keywords', []) + rule['keywords']
+                      )
+                  repaired += found
+                  affected.add(slug)
+
+          after = raw_compounds(data)
+          if after:
+              raise SystemExit(f'compound values remain after repair: {after}')
+          if repaired != 12 or len(affected) != 5:
+              raise SystemExit(
+                  f'unexpected repair audit: repaired={repaired} affected={sorted(affected)}'
+              )
+
+          path.write_text(
+              json.dumps(data, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          print(json.dumps({
+              'mode': 'raw-repository-repair',
+              'beforeOccurrences': len(before),
+              'beforeUniqueValues': len(unique_before),
+              'repairedOccurrences': repaired,
+              'affectedTrackCount': len(affected),
+              'afterOccurrences': len(after),
+              'afterUniqueValues': 0,
+          }, ensure_ascii=False))
+          PY
+
+      - name: Commit only the repaired tracking config
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add config/user_tracking.json
+          git rm .github/workflows/one-time-compound-tracking-repair.yml
+          printf 'Staged paths:\n'
+          git diff --cached --name-only
+          test "$(git diff --cached --name-only | sort | tr '\n' ' ')" = ".github/workflows/one-time-compound-tracking-repair.yml config/user_tracking.json "
+          git commit -m 'data: repair historical compound tracking entities'
+          git push origin HEAD:repair/tracking-compound-history-v2
