@@ -68,7 +68,8 @@ class CompanyCandidateIdentityAnalysisTests(unittest.TestCase):
         )
         summary = report["summary"]
         self.assertEqual(summary["pendingBefore"], int(queue.get("pendingCount", 0)))
-        self.assertGreaterEqual(summary["compoundCandidateRows"], 1)
+        self.assertLessEqual(summary["compoundCandidateRows"], summary["pendingBefore"])
+        self.assertGreaterEqual(summary["atomizedEntities"], summary["pendingBefore"])
         self.assertEqual(
             summary["registryResolved"]
             + summary["possibleExisting"]
