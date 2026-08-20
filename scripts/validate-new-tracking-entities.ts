@@ -1,5 +1,6 @@
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 import { assertNoNewCompoundTrackingEntities } from "../lib/tracking-entity-integrity";
 import {
@@ -35,12 +36,13 @@ function parseRawTrackingConfig(text: string, label: string): UserTrackingConfig
 }
 
 const baseRef = argumentValue("--base-ref", "HEAD");
+const worktree = resolve(argumentValue("--worktree", "."));
 const previousText = execFileSync(
   "git",
   ["show", `${baseRef}:${TRACKING_CONFIG_PATH}`],
-  { encoding: "utf8" },
+  { encoding: "utf8", cwd: worktree },
 );
-const nextText = readFileSync(TRACKING_CONFIG_PATH, "utf8");
+const nextText = readFileSync(resolve(worktree, TRACKING_CONFIG_PATH), "utf8");
 
 // Integrity checks must inspect the repository's raw arrays. Do not call
 // normalizeTrackingConfig() here: its runtime caps intentionally truncate
