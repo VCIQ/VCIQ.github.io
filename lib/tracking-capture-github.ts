@@ -3,7 +3,10 @@ import {
   base64ToText,
   githubJson,
 } from "@/lib/github-commit";
-import { assertNoNewCompoundTrackingEntities } from "@/lib/tracking-entity-integrity";
+import {
+  assertNoCompoundTrackingEntities,
+  assertNoNewCompoundTrackingEntities,
+} from "@/lib/tracking-entity-integrity";
 import {
   TRACKING_BRANCH,
   TRACKING_CONFIG_PATH,
@@ -101,6 +104,7 @@ export async function commitTrackingCaptureRepositoryState(
   next: { config: UserTrackingConfig; inbox: TrackingCaptureInbox },
 ): Promise<string> {
   assertNoNewCompoundTrackingEntities(state.config, next.config);
+  assertNoCompoundTrackingEntities(next.config);
 
   const latestRef = await githubJson<{ object?: { sha?: string } }>(
     `${GITHUB_API_ROOT}/repos/${TRACKING_REPOSITORY}/git/ref/heads/${TRACKING_BRANCH}`,
