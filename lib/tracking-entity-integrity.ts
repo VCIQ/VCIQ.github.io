@@ -41,6 +41,50 @@ export function assertSingleTrackingEntityName(
   );
 }
 
+export function findCompoundTrackingEntities(
+  config: UserTrackingConfig,
+): TrackingCompoundEntityIssue[] {
+  const issues: TrackingCompoundEntityIssue[] = [];
+
+  for (const track of config.tracks) {
+    for (const { field, entityType } of [
+      { field: "people" as const, entityType: "person" as const },
+      { field: "sampleCompanies" as const, entityType: "company" as const },
+    ]) {
+      for (const value of track[field]) {
+        const parts = splitCompoundTrackingEntityName(value);
+        if (parts.length < 2) continue;
+        issues.push({
+          trackSlug: track.slug,
+          trackName: track.name,
+          entityType,
+          value,
+          parts,
+        });
+      }
+    }
+  }
+
+  return issues;
+}
+
+export function assertNoCompoundTrackingEntities(config: UserTrackingConfig): void {
+  const issues = findCompoundTrackingEntities(config);
+  if (!issues.length) return;
+
+  const preview = issues
+    .slice(0, 5)
+    .map((issue) => {
+      const label = issue.entityType === "person" ? "人物" : "公司";
+      return `${issue.trackName}/${label}“${issue.value}” → ${issue.parts.join("、")}`;
+    })
+    .join("；");
+  const remainder = issues.length > 5 ? `；另有 ${issues.length - 5} 项` : "";
+  throw new Error(
+    `检测到复合追踪实体，user_tracking.json 必须保持零复合状态：${preview}${remainder}。`,
+  );
+}
+
 export function findNewCompoundTrackingEntities(
   previous: UserTrackingConfig,
   next: UserTrackingConfig,
