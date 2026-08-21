@@ -15,11 +15,13 @@ export function ChannelUpdateDirectory({
   layout?: "default" | "split";
 }) {
   const fullDirectory = getChannelUpdateDirectory(channel);
-  const initialLimit =
-    channel === "technology" ? TECHNOLOGY_CHANNEL_UPDATE_LIMIT : INITIAL_CHANNEL_UPDATE_LIMIT;
+  const initialItems = fullDirectory.items.slice(0, INITIAL_CHANNEL_UPDATE_LIMIT);
   const directory = {
     ...fullDirectory,
-    items: fullDirectory.items.slice(0, initialLimit),
+    items:
+      channel === "technology"
+        ? initialItems.slice(0, TECHNOLOGY_CHANNEL_UPDATE_LIMIT)
+        : initialItems,
   };
 
   return (
