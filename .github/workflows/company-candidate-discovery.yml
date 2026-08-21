@@ -39,11 +39,18 @@ permissions:
   actions: write
 
 concurrency:
-  group: vciq-repository-writer-${{ github.ref }}
-  queue: max
+  # Schedule/manual requests may collapse only within the same trigger semantics.
+  # Push runs keep their commit SHA because this workflow later uses that push's
+  # exact before→sha delta to decide whether a public tracking refresh is required.
+  group: vciq-candidate-discovery-${{ github.ref }}-${{ github.event_name }}-${{ github.event_name == 'push' && github.sha || inputs.publish_after_reconciliation || 'false' }}
+  queue: single
 
 jobs:
   discover:
+    concurrency:
+      # Actual repository mutation remains serialized with every other writer.
+      group: vciq-repository-writer-${{ github.ref }}
+      queue: max
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
