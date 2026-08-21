@@ -1,0 +1,248 @@
+name: Read-only repository writer queue audit
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  audit:
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.ref == 'audit/writer-queue-current-v2'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Measure current writer queue latency
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from __future__ import annotations
+
+          import json
+          import math
+          import os
+          import re
+          import urllib.parse
+          import urllib.request
+          from collections import Counter
+          from datetime import UTC, datetime, timedelta
+          from pathlib import Path
+
+          ROOT = Path.cwd()
+          WORKFLOWS = ROOT / '.github' / 'workflows'
+          MARKER = 'vciq-repository-writer-${{ github.ref }}'
+          REPO = os.environ['GH_REPO']
+          TOKEN = os.environ['GH_TOKEN']
+          NOW = datetime.now(UTC)
+          CUTOFF = NOW - timedelta(days=14)
+
+          def dt(value: str | None) -> datetime | None:
+              if not value:
+                  return None
+              return datetime.fromisoformat(value.replace('Z', '+00:00'))
+
+          def seconds_between(later: datetime | None, earlier: datetime | None) -> float | None:
+              if not later or not earlier:
+                  return None
+              return max(0.0, (later - earlier).total_seconds())
+
+          def api(path: str) -> dict:
+              request = urllib.request.Request(
+                  f'https://api.github.com/repos/{REPO}/{path}',
+                  headers={
+                      'Accept': 'application/vnd.github+json',
+                      'Authorization': f'Bearer {TOKEN}',
+                      'X-GitHub-Api-Version': '2022-11-28',
+                      'User-Agent': 'vciq-writer-queue-audit',
+                  },
+              )
+              with urllib.request.urlopen(request, timeout=30) as response:
+                  return json.load(response)
+
+          def percentile(values: list[float], q: float) -> float | None:
+              if not values:
+                  return None
+              ordered = sorted(values)
+              rank = max(0, min(len(ordered) - 1, math.ceil(q * len(ordered)) - 1))
+              return ordered[rank]
+
+          def fmt(seconds: float | None) -> str:
+              if seconds is None:
+                  return '-'
+              if seconds < 60:
+                  return f'{seconds:.0f}s'
+              return f'{seconds / 60:.1f}m'
+
+          def job_lock_specs(text: str) -> list[tuple[str, str]]:
+              if '\njobs:' not in text:
+                  return []
+              jobs = text.split('\njobs:', 1)[1]
+              matches = list(re.finditer(r'^  ([A-Za-z0-9_-]+):\s*$', jobs, flags=re.MULTILINE))
+              result: list[tuple[str, str]] = []
+              for index, match in enumerate(matches):
+                  start = match.end()
+                  end = matches[index + 1].start() if index + 1 < len(matches) else len(jobs)
+                  block = jobs[start:end]
+                  if MARKER not in block:
+                      continue
+                  name_match = re.search(r'^    name:\s*(.+?)\s*$', block, flags=re.MULTILINE)
+                  display = name_match.group(1).strip(' "\'') if name_match else match.group(1)
+                  result.append((match.group(1), display))
+              return result
+
+          workflow_specs: list[dict] = []
+          for path in sorted(WORKFLOWS.glob('*.yml')):
+              text = path.read_text(encoding='utf-8')
+              if MARKER not in text:
+                  continue
+              top = text.split('\njobs:', 1)[0]
+              level = 'workflow' if MARKER in top else 'job'
+              workflow_specs.append(
+                  {
+                      'file': path.name,
+                      'level': level,
+                      'writerJobs': job_lock_specs(text),
+                  }
+              )
+
+          results: list[dict] = []
+          for spec in workflow_specs:
+              encoded = urllib.parse.quote(spec['file'], safe='')
+              payload = api(f'actions/workflows/{encoded}/runs?branch=main&per_page=100')
+              recent = []
+              for run in payload.get('workflow_runs', []):
+                  created = dt(run.get('created_at'))
+                  if not created or created < CUTOFF:
+                      continue
+                  recent.append(run)
+
+              start_waits: list[float] = []
+              durations: list[float] = []
+              writer_latencies: list[float] = []
+              queued_ages: list[float] = []
+              writer_job_queued = 0
+              events = Counter()
+              conclusions = Counter()
+              samples = []
+
+              for run in recent:
+                  created = dt(run.get('created_at'))
+                  started = dt(run.get('run_started_at'))
+                  updated = dt(run.get('updated_at'))
+                  wait = seconds_between(started, created)
+                  duration = seconds_between(updated, started)
+                  if wait is not None:
+                      start_waits.append(wait)
+                  if duration is not None and run.get('status') == 'completed':
+                      durations.append(duration)
+                  if created and run.get('status') == 'queued':
+                      queued_ages.append(max(0.0, (NOW - created).total_seconds()))
+                  events[run.get('event') or 'unknown'] += 1
+                  conclusions[run.get('conclusion') or run.get('status') or 'unknown'] += 1
+
+                  writer_latency = None
+                  writer_status = None
+                  if spec['level'] == 'job' and spec['writerJobs'] and len(samples) < 30:
+                      jobs_payload = api(f"actions/runs/{run['id']}/jobs?per_page=100")
+                      targets = {display for _, display in spec['writerJobs']} | {key for key, _ in spec['writerJobs']}
+                      writer_jobs = [
+                          job for job in jobs_payload.get('jobs', [])
+                          if str(job.get('name') or '') in targets
+                      ]
+                      if writer_jobs:
+                          writer = min(
+                              writer_jobs,
+                              key=lambda job: dt(job.get('started_at')) or NOW,
+                          )
+                          writer_started = dt(writer.get('started_at'))
+                          writer_latency = seconds_between(writer_started, created)
+                          writer_status = writer.get('status')
+                          if writer_latency is not None:
+                              writer_latencies.append(writer_latency)
+                          if writer_status == 'queued':
+                              writer_job_queued += 1
+
+                  if len(samples) < 12:
+                      samples.append(
+                          {
+                              'id': run['id'],
+                              'event': run.get('event'),
+                              'status': run.get('status'),
+                              'conclusion': run.get('conclusion'),
+                              'createdAt': run.get('created_at'),
+                              'startedAt': run.get('run_started_at'),
+                              'workflowStartWaitSeconds': wait,
+                              'durationSeconds': duration,
+                              'writerJobStartLatencySeconds': writer_latency,
+                              'writerJobStatus': writer_status,
+                              'displayTitle': run.get('display_title'),
+                          }
+                      )
+
+              results.append(
+                  {
+                      **spec,
+                      'runs14d': len(recent),
+                      'queuedNow': sum(run.get('status') == 'queued' for run in recent),
+                      'inProgressNow': sum(run.get('status') == 'in_progress' for run in recent),
+                      'writerJobsQueuedNowObserved': writer_job_queued,
+                      'events': dict(events),
+                      'conclusions': dict(conclusions),
+                      'workflowStartWait': {
+                          'p50Seconds': percentile(start_waits, 0.50),
+                          'p90Seconds': percentile(start_waits, 0.90),
+                          'maxSeconds': max(start_waits) if start_waits else None,
+                      },
+                      'writerJobStartLatency': {
+                          'p50Seconds': percentile(writer_latencies, 0.50),
+                          'p90Seconds': percentile(writer_latencies, 0.90),
+                          'maxSeconds': max(writer_latencies) if writer_latencies else None,
+                      },
+                      'completedDuration': {
+                          'p50Seconds': percentile(durations, 0.50),
+                          'p90Seconds': percentile(durations, 0.90),
+                          'maxSeconds': max(durations) if durations else None,
+                      },
+                      'oldestQueuedAgeSeconds': max(queued_ages) if queued_ages else None,
+                      'recentSamples': samples,
+                  }
+              )
+
+          report = {
+              'generatedAt': NOW.isoformat(),
+              'windowDays': 14,
+              'mainWriterWorkflowCount': len(workflow_specs),
+              'workflows': results,
+          }
+          print('WRITER_QUEUE_AUDIT=' + json.dumps(report, ensure_ascii=False, sort_keys=True))
+
+          summary = Path(os.environ['GITHUB_STEP_SUMMARY'])
+          with summary.open('a', encoding='utf-8') as out:
+              out.write('# Repository writer queue audit\n\n')
+              out.write(f"Window: last 14 days; writer workflows: **{len(results)}**.\n\n")
+              out.write('| Workflow | Lock level | Runs | Queued now | Start wait p50 / p90 / max | Writer-job latency p50 / p90 / max | Duration p50 / p90 / max |\n')
+              out.write('|---|---|---:|---:|---:|---:|---:|\n')
+              for row in results:
+                  wait = row['workflowStartWait']
+                  latency = row['writerJobStartLatency']
+                  duration = row['completedDuration']
+                  out.write(
+                      f"| `{row['file']}` | {row['level']} | {row['runs14d']} | {row['queuedNow']} | "
+                      f"{fmt(wait['p50Seconds'])} / {fmt(wait['p90Seconds'])} / {fmt(wait['maxSeconds'])} | "
+                      f"{fmt(latency['p50Seconds'])} / {fmt(latency['p90Seconds'])} / {fmt(latency['maxSeconds'])} | "
+                      f"{fmt(duration['p50Seconds'])} / {fmt(duration['p90Seconds'])} / {fmt(duration['maxSeconds'])} |\n"
+                  )
+          PY
