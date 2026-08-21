@@ -8,10 +8,15 @@ writers that can mutate ``tracks[].people`` or ``tracks[].sampleCompanies``.
 
 from __future__ import annotations
 
+import argparse
+import json
 import re
 import unicodedata
+from pathlib import Path
 from typing import Any
 
+ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_CONFIG_PATH = ROOT / "config" / "user_tracking.json"
 ENTITY_CONTENT_RE = re.compile(r"[A-Za-z0-9\u3400-\u9fff]")
 COMPOUND_SEPARATOR_RE = re.compile(
     r"(?:[\n\r、，；;|｜]+|\s+[\/／]\s+|\s+(?:和|与|及)\s+)"
@@ -86,3 +91,23 @@ def assert_no_compound_tracking_entities(config: Any) -> None:
         + suffix
         + "。"
     )
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG_PATH)
+    args = parser.parse_args(argv)
+
+    try:
+        payload = json.loads(args.config.read_text(encoding="utf-8"))
+        assert_no_compound_tracking_entities(payload)
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
+        print(str(exc))
+        return 1
+
+    print("Tracking entity clean state valid: zero compound people/companies.")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
