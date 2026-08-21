@@ -16,7 +16,7 @@
     "test:unit": "node --import tsx --test tests/*.test.ts",
     "test:crawler": "python3 -m unittest discover -s tests -p \"test_*.py\"",
     "validate:pipeline": "python3 tools/run_pipeline.py check",
-    "validate:tracking": "node scripts/validate-tracking-pages.mjs && npm run validate:tracking-entities",
+    "validate:tracking": "node scripts/validate-tracking-pages.mjs",
     "validate:tracking-entities": "node --import tsx scripts/validate-zero-tracking-compounds.ts",
     "validate:taxonomy": "node --import tsx scripts/validate-tracking-taxonomy.ts",
     "validate:tracking-snapshot": "node scripts/validate-tracking-snapshot.mjs",
