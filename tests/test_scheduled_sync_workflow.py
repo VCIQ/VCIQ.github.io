@@ -9,13 +9,18 @@ WORKFLOW = ROOT / ".github" / "workflows" / "scheduled-sync.yml"
 
 
 class ScheduledSyncWorkflowTest(unittest.TestCase):
-    def test_complete_refresh_preserves_pending_repository_writers(self) -> None:
+    def test_complete_refresh_coalesces_equivalent_requests_but_serializes_crawl_writer(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
-        self.assertIn("group: vciq-repository-writer-", text)
-        self.assertIn("github.ref", text)
-        self.assertIn("queue: max", text)
-        self.assertNotIn("queue: single", text)
-        self.assertIn("must not evict candidate onboarding or reconciliation", text)
+        top = text.split("\njobs:\n", 1)[0]
+        preflight = text.split("  preflight:\n", 1)[1].split("\n  crawl:\n", 1)[0]
+        crawl = text.split("  crawl:\n", 1)[1]
+
+        self.assertIn("group: vciq-public-refresh-${{ github.ref }}", top)
+        self.assertIn("queue: single", top)
+        self.assertNotIn("group: vciq-repository-writer-", top)
+        self.assertNotIn("group: vciq-repository-writer-", preflight)
+        self.assertIn("group: vciq-repository-writer-${{ github.ref }}", crawl)
+        self.assertIn("queue: max", crawl.split("steps:", 1)[0])
         self.assertNotIn("cancel-in-progress:", text)
 
     def test_full_refresh_runs_once_daily_after_the_us_close(self) -> None:
@@ -68,6 +73,7 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
         preflight_block = text.split("  preflight:\n", 1)[1].split("\n  crawl:\n", 1)[0]
         self.assertNotIn("crawl_with_wechat_registry.py --source all", preflight_block)
         self.assertNotIn("gh workflow run scheduled-sync.yml", preflight_block)
+        self.assertNotIn("vciq-repository-writer-", preflight_block)
 
     def test_full_refresh_covers_required_source_families(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
