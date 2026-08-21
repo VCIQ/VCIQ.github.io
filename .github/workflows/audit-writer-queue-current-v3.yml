@@ -1,0 +1,212 @@
+name: Read-only repository writer queue audit v3
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  audit:
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.ref == 'audit/writer-queue-current-v2'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Measure actual job-start latency behind shared writer lock
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from __future__ import annotations
+
+          import json
+          import math
+          import os
+          import re
+          import urllib.parse
+          import urllib.request
+          from datetime import UTC, datetime, timedelta
+          from pathlib import Path
+
+          WORKFLOWS = Path('.github/workflows')
+          MARKER = 'vciq-repository-writer-$' + '{{ github.ref }}'
+          REPO = os.environ['GH_REPO']
+          TOKEN = os.environ['GH_TOKEN']
+          NOW = datetime.now(UTC)
+          CUTOFF = NOW - timedelta(days=14)
+          RECENT_CUTOFF = NOW - timedelta(days=2)
+          JOB_SAMPLE_LIMIT = 24
+
+          def dt(value):
+              return datetime.fromisoformat(value.replace('Z', '+00:00')) if value else None
+
+          def secs(a, b):
+              return max(0.0, (a - b).total_seconds()) if a and b else None
+
+          def api(path):
+              request = urllib.request.Request(
+                  f'https://api.github.com/repos/{REPO}/{path}',
+                  headers={
+                      'Accept': 'application/vnd.github+json',
+                      'Authorization': f'Bearer {TOKEN}',
+                      'X-GitHub-Api-Version': '2022-11-28',
+                      'User-Agent': 'vciq-writer-queue-audit-v3',
+                  },
+              )
+              with urllib.request.urlopen(request, timeout=30) as response:
+                  return json.load(response)
+
+          def percentile(values, q):
+              if not values:
+                  return None
+              ordered = sorted(values)
+              index = max(0, min(len(ordered) - 1, math.ceil(q * len(ordered)) - 1))
+              return ordered[index]
+
+          def metrics(values):
+              return {
+                  'n': len(values),
+                  'p50': percentile(values, 0.50),
+                  'p90': percentile(values, 0.90),
+                  'max': max(values) if values else None,
+                  'over60s': sum(value >= 60 for value in values),
+                  'over300s': sum(value >= 300 for value in values),
+                  'over900s': sum(value >= 900 for value in values),
+              }
+
+          def parse_writer_jobs(text):
+              if '\njobs:' not in text:
+                  return []
+              jobs = text.split('\njobs:', 1)[1]
+              headers = list(re.finditer(r'^  ([A-Za-z0-9_-]+):\s*$', jobs, re.MULTILINE))
+              result = []
+              for index, match in enumerate(headers):
+                  block = jobs[match.end():headers[index + 1].start() if index + 1 < len(headers) else len(jobs)]
+                  if MARKER not in block:
+                      continue
+                  name = re.search(r'^    name:\s*(.+?)\s*$', block, re.MULTILINE)
+                  result.append({
+                      'key': match.group(1),
+                      'display': name.group(1).strip(' "\'') if name else match.group(1),
+                  })
+              return result
+
+          def list_runs(workflow_file):
+              encoded = urllib.parse.quote(workflow_file, safe='')
+              rows = []
+              for page in range(1, 11):
+                  payload = api(f'actions/workflows/{encoded}/runs?branch=main&per_page=100&page={page}')
+                  batch = payload.get('workflow_runs', [])
+                  if not batch:
+                      break
+                  stop = False
+                  for run in batch:
+                      created = dt(run.get('created_at'))
+                      if not created or created < CUTOFF:
+                          stop = True
+                          break
+                      rows.append(run)
+                  if stop or len(batch) < 100:
+                      break
+              return rows
+
+          specs = []
+          for path in sorted(WORKFLOWS.glob('*.yml')):
+              if path.name.startswith('audit-writer-queue-current'):
+                  continue
+              text = path.read_text(encoding='utf-8')
+              if MARKER not in text:
+                  continue
+              top = text.split('\njobs:', 1)[0]
+              specs.append({
+                  'file': path.name,
+                  'level': 'workflow' if MARKER in top else 'job',
+                  'writerJobs': parse_writer_jobs(text),
+                  'queueSingle': 'queue: single' in top,
+                  'queueMax': 'queue: max' in top,
+              })
+
+          report_rows = []
+          for spec in specs:
+              runs = list_runs(spec['file'])
+              first_job_latencies = []
+              writer_job_latencies = []
+              samples = []
+              no_started_job = 0
+
+              for run in runs[:JOB_SAMPLE_LIMIT]:
+                  jobs = api(f"actions/runs/{run['id']}/jobs?per_page=100").get('jobs', [])
+                  created = dt(run.get('created_at'))
+                  started_jobs = [job for job in jobs if dt(job.get('started_at'))]
+                  first_latency = None
+                  writer_latency = None
+                  if started_jobs:
+                      first = min(started_jobs, key=lambda job: dt(job.get('started_at')))
+                      first_latency = secs(dt(first.get('started_at')), created)
+                      if first_latency is not None:
+                          first_job_latencies.append(first_latency)
+                  else:
+                      no_started_job += 1
+
+                  if spec['level'] == 'job' and spec['writerJobs']:
+                      names = {
+                          name
+                          for item in spec['writerJobs']
+                          for name in (item['key'], item['display'])
+                      }
+                      targets = [job for job in jobs if str(job.get('name') or '') in names]
+                      started_targets = [job for job in targets if dt(job.get('started_at'))]
+                      if started_targets:
+                          writer = min(started_targets, key=lambda job: dt(job.get('started_at')))
+                          writer_latency = secs(dt(writer.get('started_at')), created)
+                          if writer_latency is not None:
+                              writer_job_latencies.append(writer_latency)
+
+                  if len(samples) < 8:
+                      samples.append({
+                          'runId': run['id'],
+                          'createdAt': run.get('created_at'),
+                          'status': run.get('status'),
+                          'conclusion': run.get('conclusion'),
+                          'event': run.get('event'),
+                          'firstJobLatencySeconds': first_latency,
+                          'writerJobLatencySeconds': writer_latency,
+                          'title': run.get('display_title'),
+                      })
+
+              report_rows.append({
+                  **spec,
+                  'runs14d': len(runs),
+                  'runs48h': sum((dt(run.get('created_at')) or CUTOFF) >= RECENT_CUTOFF for run in runs),
+                  'queuedNow': sum(run.get('status') == 'queued' for run in runs),
+                  'inProgressNow': sum(run.get('status') == 'in_progress' for run in runs),
+                  'sampledRuns': min(len(runs), JOB_SAMPLE_LIMIT),
+                  'sampledWithoutStartedJob': no_started_job,
+                  'firstJobStartLatencySeconds': metrics(first_job_latencies),
+                  'writerJobStartLatencySeconds': metrics(writer_job_latencies),
+                  'samples': samples,
+              })
+
+          report = {
+              'generatedAt': NOW.isoformat(),
+              'windowDays': 14,
+              'jobSamplePerWorkflow': JOB_SAMPLE_LIMIT,
+              'writerWorkflowCount': len(report_rows),
+              'workflows': report_rows,
+          }
+          print('WRITER_QUEUE_AUDIT_V3=' + json.dumps(report, ensure_ascii=False, sort_keys=True))
+          if not report_rows:
+              raise SystemExit('writer workflow inventory unexpectedly empty')
+          PY
