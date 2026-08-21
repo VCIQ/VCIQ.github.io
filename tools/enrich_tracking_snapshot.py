@@ -73,7 +73,22 @@ def enabled_tracks(config: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def canonical_tracks(tracks: list[dict[str, Any]]) -> str:
-    return json.dumps(tracks, ensure_ascii=False, separators=(",", ":"))
+    # Hash only the persisted tracking identity fields shared with the Node
+    # validator. assign_track_slugs() may attach runtime-only helper fields such
+    # as personSearchTerms to these in-memory dictionaries; those helpers must
+    # never change the configuration identity stored in the article snapshot.
+    projected = [
+        {
+            "slug": clean(track.get("slug"), 80),
+            "name": clean(track.get("name"), 80),
+            "keywords": clean_list(track.get("keywords"), 60),
+            "people": clean_list(track.get("people"), 40),
+            "sampleCompanies": clean_list(track.get("sampleCompanies"), 40),
+        }
+        for track in tracks
+        if isinstance(track, dict)
+    ]
+    return json.dumps(projected, ensure_ascii=False, separators=(",", ":"))
 
 
 def tracking_config_hash(tracks: list[dict[str, Any]]) -> str:
