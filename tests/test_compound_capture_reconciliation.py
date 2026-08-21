@@ -39,6 +39,8 @@ class CompoundCaptureReconciliationTests(unittest.TestCase):
         inbox = load_json(INBOX_PATH)
         decisions = normalize_decision_manifest(load_json(DECISIONS_PATH))
         found: set[str] = set()
+        missing: list[dict[str, object]] = []
+        invalid: list[dict[str, object]] = []
 
         for record in inbox.get("records", []):
             if not isinstance(record, dict):
@@ -51,20 +53,45 @@ class CompoundCaptureReconciliationTests(unittest.TestCase):
                 continue
 
             found.add(name)
+            audit_row = {
+                "id": str(record.get("id") or ""),
+                "entityType": kind,
+                "name": name,
+                "trackSlugs": record.get("trackSlugs", []),
+                "recordStatus": record.get("status"),
+                "recordDecisionKey": (
+                    record.get("resolution", {}).get("decisionKey")
+                    if isinstance(record.get("resolution"), dict)
+                    else ""
+                ),
+            }
             decision = decisions.get(normalize_identity(name))
-            self.assertIsNotNone(
-                decision,
-                f"historical compound capture lacks a versioned quarantine decision: {record.get('id')} {name}",
-            )
-            assert decision is not None
-            self.assertIn(
-                decision["status"],
-                {"review", "rejected"},
-                f"compound capture must never resolve as one entity: {record.get('id')} {name}",
-            )
-            self.assertEqual(decision["entityType"], kind)
-            self.assertEqual(decision["targetId"], "")
+            if decision is None:
+                missing.append(audit_row)
+                continue
 
+            problems: list[str] = []
+            if decision["status"] not in {"review", "rejected"}:
+                problems.append(f"status={decision['status']}")
+            if decision["entityType"] != kind:
+                problems.append(
+                    f"entityType={decision['entityType']} expected={kind}"
+                )
+            if decision["targetId"] != "":
+                problems.append(f"targetId={decision['targetId']}")
+            if problems:
+                invalid.append({**audit_row, "decisionProblems": problems})
+
+        self.assertFalse(
+            missing,
+            "historical compound captures missing quarantine decisions: "
+            + json.dumps(missing, ensure_ascii=False, sort_keys=True),
+        )
+        self.assertFalse(
+            invalid,
+            "historical compound captures have unsafe quarantine decisions: "
+            + json.dumps(invalid, ensure_ascii=False, sort_keys=True),
+        )
         self.assertTrue(
             KNOWN_HISTORICAL_COMPOUNDS.issubset(found),
             f"known historical compound captures disappeared from the audit surface: {sorted(KNOWN_HISTORICAL_COMPOUNDS - found)}",
