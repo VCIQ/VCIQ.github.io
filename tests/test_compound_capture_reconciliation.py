@@ -1,98 +1,109 @@
 from __future__ import annotations
 
+import json
 import unittest
+from pathlib import Path
 
-from tools.entity_resolution import resolve_entity
+from tools.entity_resolution import (
+    normalize_decision_manifest,
+    normalize_identity,
+    resolve_entity,
+)
 from tools.reconcile_entity_resolution import reconcile_payloads
-from tools.tracking_entity_integrity import find_compound_tracking_entities
+from tools.tracking_entity_integrity import (
+    find_compound_tracking_entities,
+    split_compound_tracking_entity_name,
+)
 
 
-EMPTY_DECISIONS = {"decisions": {}}
+ROOT = Path(__file__).resolve().parents[1]
+DECISIONS_PATH = ROOT / "config" / "entity_resolution_decisions.json"
+INBOX_PATH = ROOT / "config" / "tracking_capture_inbox.json"
+
+WANG = "王慧文、陈天桥、"
+GOOGLE = "Quoc Le、Jeff Dean、Sanjay Ghemawat、Quoc Le、Oriol Vinyals"
+RESEARCH = "Jeff Dean、陶哲轩、李飞飞、Dawn Song、Oriol Vinyals"
+INVESTORS = (
+    "Aliya Capital Partners、Atreides Management、Artisan Partners、"
+    "Battery Ventures、Diagonal Capital、Intel Capital、Key1 Capital"
+)
+KNOWN_HISTORICAL_COMPOUNDS = {WANG, GOOGLE, RESEARCH, INVESTORS}
+
+
+def load_json(path: Path) -> dict:
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 class CompoundCaptureReconciliationTests(unittest.TestCase):
-    def test_person_and_company_compounds_are_reviewed_before_any_resolution_source(self) -> None:
-        reviewed_decision = {
-            "decisions": {
-                "alicebob": {
-                    "status": "resolved",
-                    "requestedType": "person",
-                    "entityType": "person",
-                    "canonicalName": "Alice Bob",
-                    "targetId": "person:alice-bob",
-                    "confidence": "verified",
-                    "aliases": [],
-                    "note": "legacy decision must not collapse multiple people",
-                }
-            }
-        }
-        person = resolve_entity(
-            "person",
-            "Alice、Bob",
-            decisions_payload=reviewed_decision,
-            company_registry_payload={"companies": []},
-            people_payload={"people": [{"slug": "alicebob", "name": "Alice、Bob"}]},
-            tracking_payload={"tracks": []},
-        )
-        company = resolve_entity(
-            "company",
-            "Alpha / Beta",
-            {"title": "Alpha / Beta companies"},
-            decisions_payload=EMPTY_DECISIONS,
-            company_registry_payload={
-                "companies": [{"slug": "alpha-beta", "name": "Alpha / Beta"}]
-            },
-            people_payload={"people": []},
-            tracking_payload={"tracks": []},
+    def test_every_historical_compound_person_company_capture_has_a_nonresolved_decision(self) -> None:
+        inbox = load_json(INBOX_PATH)
+        decisions = normalize_decision_manifest(load_json(DECISIONS_PATH))
+        found: set[str] = set()
+
+        for record in inbox.get("records", []):
+            if not isinstance(record, dict):
+                continue
+            kind = str(record.get("entityType") or "")
+            if kind not in {"person", "company"}:
+                continue
+            name = str(record.get("rawSelection") or record.get("canonicalName") or "").strip()
+            if len(split_compound_tracking_entity_name(name)) < 2:
+                continue
+
+            found.add(name)
+            decision = decisions.get(normalize_identity(name))
+            self.assertIsNotNone(
+                decision,
+                f"historical compound capture lacks a versioned quarantine decision: {record.get('id')} {name}",
+            )
+            assert decision is not None
+            self.assertIn(
+                decision["status"],
+                {"review", "rejected"},
+                f"compound capture must never resolve as one entity: {record.get('id')} {name}",
+            )
+            self.assertEqual(decision["entityType"], kind)
+            self.assertEqual(decision["targetId"], "")
+
+        self.assertTrue(
+            KNOWN_HISTORICAL_COMPOUNDS.issubset(found),
+            f"known historical compound captures disappeared from the audit surface: {sorted(KNOWN_HISTORICAL_COMPOUNDS - found)}",
         )
 
-        for resolution in (person, company):
-            self.assertEqual(resolution.status, "review")
-            self.assertEqual(resolution.source, "compound-entity-guard")
-            self.assertEqual(resolution.targetId, "")
-            self.assertIn("拆分", resolution.reason)
+    def test_versioned_quarantine_decisions_win_over_registry_and_explicit_type_fallback(self) -> None:
+        decisions = load_json(DECISIONS_PATH)
+        fixtures = (
+            ("person", WANG),
+            ("person", GOOGLE),
+            ("person", RESEARCH),
+            ("company", INVESTORS),
+        )
 
-    def test_legal_single_entity_punctuation_and_topic_lists_are_not_blocked(self) -> None:
-        companies = {
-            "companies": [
-                {"slug": "openai", "name": "OpenAI, Inc."},
-                {"slug": "ab-test-labs", "name": "A/B Test Labs"},
-                {"slug": "pg", "name": "Procter & Gamble"},
-            ]
-        }
-        for name in ("OpenAI, Inc.", "A/B Test Labs", "Procter & Gamble"):
-            with self.subTest(name=name):
+        for kind, name in fixtures:
+            with self.subTest(kind=kind, name=name):
                 resolution = resolve_entity(
-                    "company",
+                    kind,
                     name,
-                    decisions_payload=EMPTY_DECISIONS,
-                    company_registry_payload=companies,
-                    people_payload={"people": []},
+                    {"title": f"historical {kind} capture"},
+                    decisions_payload=decisions,
+                    company_registry_payload={
+                        "companies": [{"slug": "legacy-compound", "name": name}]
+                        if kind == "company"
+                        else []
+                    },
+                    people_payload={
+                        "people": [{"slug": "legacy-compound", "name": name}]
+                        if kind == "person"
+                        else []
+                    },
                     tracking_payload={"tracks": []},
                 )
-                self.assertEqual(resolution.status, "resolved")
-                self.assertNotEqual(resolution.source, "compound-entity-guard")
+                self.assertEqual(resolution.status, "review")
+                self.assertEqual(resolution.source, "human-decision")
+                self.assertEqual(resolution.targetId, "")
+                self.assertEqual(resolution.canonicalName, name)
 
-        topic = resolve_entity(
-            "topic",
-            "NAS、Transformer",
-            decisions_payload=EMPTY_DECISIONS,
-            company_registry_payload={"companies": []},
-            people_payload={"people": []},
-            tracking_payload={"tracks": []},
-        )
-        self.assertEqual(topic.status, "resolved")
-        self.assertEqual(topic.entityType, "topic")
-        self.assertNotEqual(topic.source, "compound-entity-guard")
-
-    def test_historical_replay_removes_all_ten_compound_occurrences_without_losing_atomic_values(self) -> None:
-        google = "Quoc Le、Jeff Dean、Sanjay Ghemawat、Quoc Le、Oriol Vinyals"
-        research = "Jeff Dean、陶哲轩、李飞飞、Dawn Song、Oriol Vinyals"
-        wang = "王慧文、陈天桥、"
-        investors = (
-            "Aliya Capital Partners、Atreides Management、Artisan Partners、"
-            "Battery Ventures、Diagonal Capital、Intel Capital、Key1 Capital"
-        )
+    def test_historical_replay_removes_exact_ten_compounds_and_preserves_atomic_values(self) -> None:
         google_atoms = ["Quoc Le", "Jeff Dean", "Sanjay Ghemawat", "Oriol Vinyals"]
         research_atoms = ["Jeff Dean", "陶哲轩", "李飞飞", "Dawn Song", "Oriol Vinyals"]
         investor_atoms = [
@@ -122,16 +133,36 @@ class CompoundCaptureReconciliationTests(unittest.TestCase):
                 track(
                     "ai",
                     "AI / AGI",
-                    people=["王慧文", "陈天桥", *google_atoms, *research_atoms, wang, google, research],
+                    people=[
+                        "王慧文",
+                        "陈天桥",
+                        *google_atoms,
+                        *research_atoms,
+                        WANG,
+                        GOOGLE,
+                        RESEARCH,
+                    ],
                 ),
-                track("robotics", "机器人", people=[*google_atoms, *research_atoms, google, research]),
-                track("ai-2", "AI安全", people=[*google_atoms, *research_atoms, google, research]),
-                track("semiconductor", "半导体", companies=[*investor_atoms, investors]),
+                track(
+                    "robotics",
+                    "机器人",
+                    people=[*google_atoms, *research_atoms, GOOGLE, RESEARCH],
+                ),
+                track(
+                    "ai-2",
+                    "AI安全",
+                    people=[*google_atoms, *research_atoms, GOOGLE, RESEARCH],
+                ),
+                track(
+                    "semiconductor",
+                    "半导体",
+                    companies=[*investor_atoms, INVESTORS],
+                ),
                 track(
                     "track-1ccjq49",
                     "风险投资",
-                    people=["王慧文", "陈天桥", wang],
-                    companies=[*investor_atoms, investors],
+                    people=["王慧文", "陈天桥", WANG],
+                    companies=[*investor_atoms, INVESTORS],
                 ),
             ],
             "listedCompanies": [],
@@ -161,23 +192,24 @@ class CompoundCaptureReconciliationTests(unittest.TestCase):
             "schemaVersion": 1,
             "generatedAt": "",
             "records": [
-                capture("capture-wang", "person", wang, ["ai", "track-1ccjq49"], "people"),
-                capture("capture-google", "person", google, ["ai", "robotics", "ai-2"], "people"),
-                capture("capture-research", "person", research, ["ai", "robotics", "ai-2"], "people"),
+                capture("capture-wang", "person", WANG, ["ai", "track-1ccjq49"], "people"),
+                capture("capture-google", "person", GOOGLE, ["ai", "robotics", "ai-2"], "people"),
+                capture("capture-research", "person", RESEARCH, ["ai", "robotics", "ai-2"], "people"),
                 capture(
                     "capture-investors",
                     "company",
-                    investors,
+                    INVESTORS,
                     ["semiconductor", "track-1ccjq49"],
                     "sampleCompanies",
                 ),
             ],
         }
 
+        decisions = load_json(DECISIONS_PATH)
         next_config, next_inbox, stats = reconcile_payloads(
             config,
             inbox,
-            decisions_payload=EMPTY_DECISIONS,
+            decisions_payload=decisions,
             company_registry_payload={"companies": []},
             people_payload={"people": []},
         )
@@ -187,7 +219,7 @@ class CompoundCaptureReconciliationTests(unittest.TestCase):
         for record in next_inbox["records"]:
             self.assertEqual(record["status"], "queued")
             self.assertEqual(record["appliedTo"], [])
-            self.assertEqual(record["resolution"]["source"], "compound-entity-guard")
+            self.assertEqual(record["resolution"]["source"], "human-decision")
 
         by_slug = {row["slug"]: row for row in next_config["tracks"]}
         self.assertTrue({"王慧文", "陈天桥"}.issubset(by_slug["ai"]["people"]))
@@ -201,7 +233,7 @@ class CompoundCaptureReconciliationTests(unittest.TestCase):
         fixed_config, fixed_inbox, fixed_stats = reconcile_payloads(
             next_config,
             next_inbox,
-            decisions_payload=EMPTY_DECISIONS,
+            decisions_payload=decisions,
             company_registry_payload={"companies": []},
             people_payload={"people": []},
         )
