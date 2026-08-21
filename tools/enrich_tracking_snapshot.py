@@ -73,22 +73,7 @@ def enabled_tracks(config: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def canonical_tracks(tracks: list[dict[str, Any]]) -> str:
-    # Hash only the persisted tracking identity fields shared with the Node
-    # validator. assign_track_slugs() may attach runtime-only helper fields such
-    # as personSearchTerms to these in-memory dictionaries; those helpers must
-    # never change the configuration identity stored in the article snapshot.
-    projected = [
-        {
-            "slug": clean(track.get("slug"), 80),
-            "name": clean(track.get("name"), 80),
-            "keywords": clean_list(track.get("keywords"), 60),
-            "people": clean_list(track.get("people"), 40),
-            "sampleCompanies": clean_list(track.get("sampleCompanies"), 40),
-        }
-        for track in tracks
-        if isinstance(track, dict)
-    ]
-    return json.dumps(projected, ensure_ascii=False, separators=(",", ":"))
+    return json.dumps(tracks, ensure_ascii=False, separators=(",", ":"))
 
 
 def tracking_config_hash(tracks: list[dict[str, Any]]) -> str:
@@ -134,96 +119,64 @@ def _matchable_name_terms(name: str) -> list[str]:
     return result
 
 
-def _contains(text: str, value: str) -> bool:
-    return taxonomy.contains_term(text, value)
-
-
-def _unique_terms_per_track(
-    tracks: list[dict[str, Any]], field: str
-) -> dict[str, list[str]]:
-    counts = _term_counts(tracks, field)
-    return {
-        track["slug"]: _unique_terms(track, field, counts)
-        for track in tracks
-    }
-
-
-def _name_terms_per_track(
-    tracks: list[dict[str, Any]],
-) -> dict[str, list[str]]:
-    return {
-        track["slug"]: _matchable_name_terms(track["name"])
-        for track in tracks
-    }
-
-
-def _person_terms_per_track(
-    tracks: list[dict[str, Any]],
-) -> dict[str, list[str]]:
-    return {
-        track["slug"]: _person_terms(track)
-        for track in tracks
-    }
-
-
-def _build_term_owners(
-    terms_by_track: dict[str, list[str]],
-) -> Counter[str]:
-    counts: Counter[str] = Counter()
-    for values in terms_by_track.values():
-        seen: set[str] = set()
-        for value in values:
-            normalized = taxonomy.normalize_term(value)
-            if normalized and normalized not in seen:
-                counts[normalized] += 1
-                seen.add(normalized)
-    return counts
-
-
-def _unique_values(
-    values: list[str], owners: Counter[str]
-) -> list[str]:
-    return [
-        value
-        for value in values
-        if owners[taxonomy.normalize_term(value)] == 1
+def article_text(article: dict[str, Any]) -> str:
+    source = article.get("source") if isinstance(article.get("source"), dict) else {}
+    values: list[Any] = [
+        article.get("title"),
+        article.get("summary"),
+        article.get("company"),
+        article.get("sector"),
+        source.get("name"),
     ]
+    values.extend(article.get("authors", []) if isinstance(article.get("authors"), list) else [])
+    values.extend(
+        article.get("institutions", [])
+        if isinstance(article.get("institutions"), list)
+        else []
+    )
+    return " ".join(clean(value) for value in values if clean(value))
+
+
+def _contains(normalized_text: str, value: str) -> bool:
+    normalized = taxonomy.normalize_term(value)
+    return bool(normalized and normalized in normalized_text)
 
 
 def assign_track_slugs(
     articles: list[dict[str, Any]], tracks: list[dict[str, Any]]
 ) -> dict[str, int]:
-    matched_counts: Counter[str] = Counter()
-    backfilled_counts: Counter[str] = Counter()
     keyword_counts = _term_counts(tracks, "keywords")
     company_counts = _term_counts(tracks, "sampleCompanies")
-    name_terms_by_track = _name_terms_per_track(tracks)
-    name_counts = _build_term_owners(name_terms_by_track)
-    person_terms_by_track = _person_terms_per_track(tracks)
-    person_counts = _build_term_owners(person_terms_by_track)
+    person_values = [
+        {**track, "personSearchTerms": _person_terms(track)} for track in tracks
+    ]
+    person_counts: Counter[str] = Counter()
+    for track in person_values:
+        seen: set[str] = set()
+        for value in track["personSearchTerms"]:
+            normalized = taxonomy.normalize_term(value)
+            if normalized and normalized not in seen:
+                person_counts[normalized] += 1
+                seen.add(normalized)
 
-    for track in tracks:
-        track["personSearchTerms"] = person_terms_by_track[track["slug"]]
+    matched_counts = Counter[str]()
+    backfilled_counts = Counter[str]()
 
     for article in articles:
-        if not isinstance(article, dict):
-            continue
-        sector = clean(article.get("sector"), 100)
-        text = " ".join(
-            clean(article.get(key), 1500)
-            for key in ("title", "summary", "sourceName", "eventType")
-        )
-        normalized_text = taxonomy.normalize_term(text)
+        normalized_text = taxonomy.normalize_term(article_text(article))
+        sector_key = taxonomy.normalize_term(article.get("sector"))
         assigned: list[str] = []
 
-        for track in tracks:
+        for track in person_values:
             slug = track["slug"]
-            direct = taxonomy.track_matches_sector(track, sector)
+            name_alias_keys = {
+                taxonomy.normalize_term(value)
+                for value in taxonomy.name_aliases(track["name"])
+            }
+            direct = sector_key in name_alias_keys
             name_hit = any(
                 _contains(normalized_text, value)
-                for value in _unique_values(
-                    name_terms_by_track[slug], name_counts
-                )
+                for value in _matchable_name_terms(track["name"])
             )
             keyword_hit = any(
                 _contains(normalized_text, value)
@@ -363,38 +316,20 @@ def enrich(payload: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
 def main() -> int:
     if not TRACKING_PATH.exists() or not ARTICLES_PATH.exists():
         raise SystemExit("tracking configuration or article snapshot is missing")
-    config_raw = TRACKING_PATH.read_bytes()
-    config = json.loads(config_raw.decode("utf-8"))
+    config = json.loads(TRACKING_PATH.read_text(encoding="utf-8"))
     payload = json.loads(ARTICLES_PATH.read_text(encoding="utf-8"))
     if not isinstance(config, dict) or not isinstance(payload, dict):
         raise SystemExit("tracking configuration and article snapshot must be objects")
-
     enriched = enrich(payload, config)
-    expected_hash = str(enriched.get("trackingConfigHash") or "")
     if enriched != payload:
         ARTICLES_PATH.write_text(
             json.dumps(enriched, ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
         )
-
-    readback_raw = ARTICLES_PATH.read_bytes()
-    readback = json.loads(readback_raw.decode("utf-8"))
-    readback_hash = clean(readback.get("trackingConfigHash"), 80)
-    if readback_hash != expected_hash:
-        raise SystemExit(
-            "tracking enrichment write-through failed: "
-            f"expected={expected_hash} readback={readback_hash}"
-        )
-
     print(
-        "TRACKING_ENRICHMENT_WRITE="
-        + json.dumps(
+        json.dumps(
             {
-                "rawConfigSha256": hashlib.sha256(config_raw).hexdigest(),
-                "trackingConfigHash": expected_hash,
-                "readbackTrackingConfigHash": readback_hash,
-                "articlesSha256": hashlib.sha256(readback_raw).hexdigest(),
-                "trackingEnrichedAt": readback.get("trackingEnrichedAt"),
+                "trackingConfigHash": enriched.get("trackingConfigHash"),
                 "tracks": len(enriched.get("trackCoverage", {})),
                 "matched": sum(
                     item.get("matchedArticles", 0)
@@ -402,7 +337,6 @@ def main() -> int:
                 ),
             },
             ensure_ascii=False,
-            sort_keys=True,
         )
     )
     return 0
