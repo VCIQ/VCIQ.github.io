@@ -14,6 +14,13 @@ type CanonicalTrack = {
   sampleCompanies: string[];
 };
 
+type PythonParity = {
+  canonical: string;
+  beforeHash: string;
+  afterRuntimeHelpersHash: string;
+  enrichedHash: string;
+};
+
 function clean(value: unknown, limit = 500): string {
   return String(value ?? "").replace(/\s+/gu, " ").trim().slice(0, limit);
 }
@@ -54,7 +61,7 @@ function hash(value: string | Buffer): string {
   return crypto.createHash("sha256").update(value).digest("hex");
 }
 
-test("Python enrichment and Node snapshot validator share one canonical tracking hash", () => {
+test("Python enrichment and Node snapshot validator share one stable tracking hash", () => {
   const rawConfig = fs.readFileSync("config/user_tracking.json");
   const config = JSON.parse(rawConfig.toString("utf8")) as RawConfig;
   const nodeTracks = nodeCanonicalTracks(config);
@@ -67,21 +74,29 @@ test("Python enrichment and Node snapshot validator share one canonical tracking
       "-c",
       [
         "import json",
-        "from tools.enrich_tracking_snapshot import enabled_tracks, canonical_tracks, tracking_config_hash",
+        "from tools.enrich_tracking_snapshot import enabled_tracks, canonical_tracks, tracking_config_hash, assign_track_slugs, enrich",
         "config=json.load(open('config/user_tracking.json', encoding='utf-8'))",
         "tracks=enabled_tracks(config)",
-        "print(json.dumps({'canonical': canonical_tracks(tracks), 'hash': tracking_config_hash(tracks)}, ensure_ascii=False))",
+        "canonical=canonical_tracks(tracks)",
+        "before=tracking_config_hash(tracks)",
+        "assign_track_slugs([], tracks)",
+        "after=tracking_config_hash(tracks)",
+        "payload={'articles': [], 'sourceStatus': [], 'generatedAt': '2026-08-21T00:00:00+00:00'}",
+        "enriched=enrich(payload, config)",
+        "print(json.dumps({'canonical': canonical, 'beforeHash': before, 'afterRuntimeHelpersHash': after, 'enrichedHash': enriched.get('trackingConfigHash')}, ensure_ascii=False))",
       ].join(";"),
     ],
     { encoding: "utf8" },
   ).trim();
-  const python = JSON.parse(pythonJson) as { canonical: string; hash: string };
+  const python = JSON.parse(pythonJson) as PythonParity;
 
   console.log(
     `TRACKING_HASH_PARITY=${JSON.stringify({
       rawConfigSha256: hash(rawConfig),
       nodeHash,
-      pythonHash: python.hash,
+      pythonBeforeHash: python.beforeHash,
+      pythonAfterRuntimeHelpersHash: python.afterRuntimeHelpersHash,
+      pythonEnrichedHash: python.enrichedHash,
       trackCount: nodeTracks.length,
     })}`,
   );
@@ -122,9 +137,19 @@ test("Python enrichment and Node snapshot validator share one canonical tracking
       if (differences.length >= 5) break;
     }
     assert.fail(
-      `tracking canonicalization differs across Node/Python; nodeHash=${nodeHash} pythonHash=${python.hash}; differences=${JSON.stringify(differences)}`,
+      `tracking canonicalization differs across Node/Python; nodeHash=${nodeHash}; differences=${JSON.stringify(differences)}`,
     );
   }
 
-  assert.equal(python.hash, nodeHash);
+  assert.equal(python.beforeHash, nodeHash);
+  assert.equal(
+    python.afterRuntimeHelpersHash,
+    nodeHash,
+    "runtime-only personSearchTerms must not alter the persisted tracking config hash",
+  );
+  assert.equal(
+    python.enrichedHash,
+    nodeHash,
+    "the real enrichment path must write the same tracking hash the Node validator expects",
+  );
 });
