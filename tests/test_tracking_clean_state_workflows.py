@@ -13,24 +13,26 @@ BATCH = ROOT / ".github" / "workflows" / "manual-tracking-batch.yml"
 CAPTURE_GITHUB = ROOT / "lib" / "tracking-capture-github.ts"
 VALIDATOR = ROOT / "scripts" / "validate-zero-tracking-compounds.ts"
 
-HARD_GATE = "npm run validate:tracking-entities"
+TRACKING_VALIDATE = "npm run validate:tracking"
 DELTA_GATE = "node --import tsx scripts/validate-new-tracking-entities.ts --base-ref HEAD"
 
 
 class TrackingCleanStateWorkflowTests(unittest.TestCase):
-    def test_pages_build_enforces_zero_compound_state_before_taxonomy(self) -> None:
+    def test_validate_tracking_composes_the_raw_clean_state_gate(self) -> None:
         package = json.loads(PACKAGE.read_text(encoding="utf-8"))
         scripts = package["scripts"]
         self.assertEqual(
             scripts["validate:tracking-entities"],
             "node --import tsx scripts/validate-zero-tracking-compounds.ts",
         )
+        self.assertEqual(
+            scripts["validate:tracking"],
+            "node scripts/validate-tracking-pages.mjs && npm run validate:tracking-entities",
+        )
         build = scripts["build:pages"]
-        self.assertIn("npm run validate:tracking", build)
-        self.assertIn(HARD_GATE, build)
+        self.assertIn(TRACKING_VALIDATE, build)
         self.assertIn("npm run validate:taxonomy", build)
-        self.assertLess(build.index("npm run validate:tracking"), build.index(HARD_GATE))
-        self.assertLess(build.index(HARD_GATE), build.index("npm run validate:taxonomy"))
+        self.assertLess(build.index(TRACKING_VALIDATE), build.index("npm run validate:taxonomy"))
 
     def test_clean_state_validator_reads_raw_config_without_runtime_normalization(self) -> None:
         text = VALIDATOR.read_text(encoding="utf-8")
@@ -39,37 +41,47 @@ class TrackingCleanStateWorkflowTests(unittest.TestCase):
         self.assertIn("splitCompoundTrackingEntityName", text)
         self.assertNotIn("normalizeTrackingConfig", text)
 
-    def test_discovery_commit_helper_hard_gates_every_commit(self) -> None:
+    def test_discovery_initial_and_replay_validation_both_use_composed_tracking_gate(self) -> None:
         text = DISCOVERY.read_text(encoding="utf-8")
         self.assertEqual(text.count(DELTA_GATE), 2)
-        self.assertEqual(text.count(HARD_GATE), 1)
-        helper = text.split("commit_current_config() {", 1)[1].split(
-            "regenerate_from_latest_main()", 1
-        )[0]
-        self.assertIn(HARD_GATE, helper)
-        self.assertLess(helper.index(HARD_GATE), helper.index("git add"))
-        self.assertGreaterEqual(text.count("commit_current_config"), 3)
+        self.assertEqual(text.count(TRACKING_VALIDATE), 2)
 
-    def _assert_manual_writer_hard_gate(self, path: Path) -> None:
+        initial = text.split("- name: Validate the expanded config before committing", 1)[1].split(
+            "- name: Commit expanded tracking config", 1
+        )[0]
+        replay = text.split("regenerate_from_latest_main()", 1)[1].split(
+            "if ! commit_current_config", 1
+        )[0]
+        for block in (initial, replay):
+            self.assertIn(TRACKING_VALIDATE, block)
+            self.assertIn(DELTA_GATE, block)
+            self.assertIn("npm run validate:taxonomy", block)
+            self.assertLess(block.index(TRACKING_VALIDATE), block.index(DELTA_GATE))
+            self.assertLess(block.index(DELTA_GATE), block.index("npm run validate:taxonomy"))
+
+    def _assert_manual_writer_uses_composed_tracking_gate(self, path: Path) -> None:
         text = path.read_text(encoding="utf-8")
         validation = text.split("- name: Validate changed tracking configuration", 1)[1].split(
             "- name: Commit and push only approved configuration files", 1
         )[0]
-        commit = text.split("- name: Commit and push only approved configuration files", 1)[1].split(
-            "- name: Summarize the public audit record", 1
-        )[0]
+        self.assertEqual(text.count(TRACKING_VALIDATE), 1)
+        self.assertIn(TRACKING_VALIDATE, validation)
+        self.assertIn("npm run validate:taxonomy", validation)
+        self.assertLess(validation.index(TRACKING_VALIDATE), validation.index("npm run validate:taxonomy"))
 
-        self.assertIn(HARD_GATE, validation)
-        self.assertLess(validation.index(HARD_GATE), validation.index("npm run validate:taxonomy"))
-        self.assertIn(HARD_GATE, commit)
-        self.assertLess(commit.index(HARD_GATE), commit.index("git add --"))
-        self.assertEqual(text.count(HARD_GATE), 2)
+        # The validated worktree flows directly into the fail-closed base-SHA check
+        # and commit step; there is no intervening writer step that can mutate it.
+        after_validation = text.split("- name: Validate changed tracking configuration", 1)[1]
+        self.assertLess(
+            after_validation.index("- name: Commit and push only approved configuration files"),
+            after_validation.index("- name: Summarize the public audit record"),
+        )
 
-    def test_single_manual_writer_hard_gates_validation_and_commit(self) -> None:
-        self._assert_manual_writer_hard_gate(MANUAL)
+    def test_single_manual_writer_uses_composed_clean_state_gate(self) -> None:
+        self._assert_manual_writer_uses_composed_tracking_gate(MANUAL)
 
-    def test_batch_manual_writer_hard_gates_validation_and_commit(self) -> None:
-        self._assert_manual_writer_hard_gate(BATCH)
+    def test_batch_manual_writer_uses_composed_clean_state_gate(self) -> None:
+        self._assert_manual_writer_uses_composed_tracking_gate(BATCH)
 
     def test_capture_repository_persistence_checks_full_next_state_before_blobs(self) -> None:
         text = CAPTURE_GITHUB.read_text(encoding="utf-8")
