@@ -50,14 +50,13 @@ function nodeCanonicalTracks(config: RawConfig): CanonicalTrack[] {
     .filter((track) => Boolean(track.slug && track.name));
 }
 
-function hash(value: string): string {
-  return crypto.createHash("sha256").update(value, "utf8").digest("hex");
+function hash(value: string | Buffer): string {
+  return crypto.createHash("sha256").update(value).digest("hex");
 }
 
 test("Python enrichment and Node snapshot validator share one canonical tracking hash", () => {
-  const config = JSON.parse(
-    fs.readFileSync("config/user_tracking.json", "utf8"),
-  ) as RawConfig;
+  const rawConfig = fs.readFileSync("config/user_tracking.json");
+  const config = JSON.parse(rawConfig.toString("utf8")) as RawConfig;
   const nodeTracks = nodeCanonicalTracks(config);
   const nodeJson = JSON.stringify(nodeTracks);
   const nodeHash = hash(nodeJson);
@@ -77,6 +76,15 @@ test("Python enrichment and Node snapshot validator share one canonical tracking
     { encoding: "utf8" },
   ).trim();
   const python = JSON.parse(pythonJson) as { canonical: string; hash: string };
+
+  console.log(
+    `TRACKING_HASH_PARITY=${JSON.stringify({
+      rawConfigSha256: hash(rawConfig),
+      nodeHash,
+      pythonHash: python.hash,
+      trackCount: nodeTracks.length,
+    })}`,
+  );
 
   if (python.canonical !== nodeJson) {
     const pythonTracks = JSON.parse(python.canonical) as CanonicalTrack[];
