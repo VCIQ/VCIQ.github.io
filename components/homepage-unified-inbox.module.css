@@ -1,3 +1,23 @@
 .root :global(section[aria-label="最近研究"]) {
   display: none;
 }
+
+.root :global(.event-date) {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.root :global(.event-date strong) {
+  display: block;
+  width: 4.6ch;
+  max-width: 100%;
+  overflow: hidden;
+  font-variant-numeric: tabular-nums;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+
+.root :global(.event-date span) {
+  display: block;
+  white-space: nowrap;
+}
