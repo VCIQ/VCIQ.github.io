@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-21T00:55:26+00:00",
+  "generatedAt": "2026-08-21T08:48:55+00:00",
   "records": [
     {
       "id": "capture-2ec8ffc94c728f23",
@@ -17656,8 +17656,8 @@
         "canonicalName": "InterPositive、Netflix、Higgsfield AI",
         "targetId": "",
         "confidence": "low",
-        "source": "unresolved",
-        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "source": "human-decision",
+        "reason": "历史采集记录包含多家公司，当前虽未写入追踪配置，但必须保持审核隔离，禁止后续实体解析或注册表变化将其作为单一公司重新应用。",
         "decisionKey": "interpositivenetflixhiggsfieldai",
         "reclassified": false
       }
@@ -17740,8 +17740,8 @@
         "canonicalName": "字节跳动、闪迪",
         "targetId": "",
         "confidence": "low",
-        "source": "unresolved",
-        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "source": "human-decision",
+        "reason": "历史采集记录包含多家公司，禁止作为单一公司实体应用；应按独立公司分别审核。",
         "decisionKey": "字节跳动闪迪",
         "reclassified": false
       }
@@ -17828,8 +17828,8 @@
         "canonicalName": "美团、Manus",
         "targetId": "",
         "confidence": "low",
-        "source": "unresolved",
-        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "source": "human-decision",
+        "reason": "历史采集记录包含多家公司，禁止作为单一公司实体应用；应按独立公司分别审核。",
         "decisionKey": "美团manus",
         "reclassified": false
       }
@@ -17860,24 +17860,21 @@
       },
       "capturedAt": "2026-08-09T07:55:28.292Z",
       "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "ai:people",
-        "track-1ccjq49:people"
-      ],
+      "status": "queued",
+      "appliedTo": [],
       "reasons": [
         "个人研究兴趣"
       ],
       "note": "",
       "resolution": {
-        "status": "resolved",
+        "status": "review",
         "requestedType": "person",
         "entityType": "person",
         "canonicalName": "王慧文、陈天桥、",
-        "targetId": "person:王慧文陈天桥",
-        "confidence": "medium",
-        "source": "explicit-type",
-        "reason": "管理员显式选择“人物”，且未与正式目录冲突。",
+        "targetId": "",
+        "confidence": "low",
+        "source": "human-decision",
+        "reason": "历史采集记录包含多个人物，禁止再作为单一人物实体应用；保留为审核记录，原子人物已由历史修复独立保留。",
         "decisionKey": "王慧文陈天桥",
         "reclassified": false
       }
@@ -18167,8 +18164,8 @@
         "canonicalName": "华虹科技、长江实业",
         "targetId": "",
         "confidence": "low",
-        "source": "unresolved",
-        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "source": "human-decision",
+        "reason": "历史采集记录包含多家公司，禁止作为单一公司实体应用；应按独立公司分别审核。",
         "decisionKey": "华虹科技长江实业",
         "reclassified": false
       }
@@ -18220,8 +18217,8 @@
         "canonicalName": "华星公司、应用材料公司、ASML 、上海爱胜纳、CXMT",
         "targetId": "",
         "confidence": "low",
-        "source": "unresolved",
-        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "source": "human-decision",
+        "reason": "历史采集记录包含多家公司，禁止作为单一公司实体应用；应按独立公司分别审核。",
         "decisionKey": "华星公司应用材料公司asml上海爱胜纳cxmt",
         "reclassified": false
       }
@@ -18273,8 +18270,8 @@
         "canonicalName": "上海艾圣纳、中芯国际(SMIC)、裕良生(Yuliangsheng)",
         "targetId": "",
         "confidence": "low",
-        "source": "unresolved",
-        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "source": "human-decision",
+        "reason": "历史采集记录包含多个公司／机构名称，禁止作为单一公司实体应用；应拆分后分别审核。",
         "decisionKey": "上海艾圣纳中芯国际smic裕良生yuliangsheng",
         "reclassified": false
       }
@@ -18418,12 +18415,8 @@
       },
       "capturedAt": "2026-08-09T06:53:42.548Z",
       "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "ai:people",
-        "robotics:people",
-        "ai-2:people"
-      ],
+      "status": "queued",
+      "appliedTo": [],
       "reasons": [
         "技术突破",
         "个人研究兴趣",
@@ -18431,14 +18424,14 @@
       ],
       "note": "",
       "resolution": {
-        "status": "resolved",
+        "status": "review",
         "requestedType": "person",
         "entityType": "person",
         "canonicalName": "Quoc Le、Jeff Dean、Sanjay Ghemawat、Quoc Le、Oriol Vinyals",
-        "targetId": "person:quoclejeffdeansanjayghemawatquocleoriolvinyals",
-        "confidence": "medium",
-        "source": "explicit-type",
-        "reason": "管理员显式选择“人物”，且未与正式目录冲突。",
+        "targetId": "",
+        "confidence": "low",
+        "source": "human-decision",
+        "reason": "历史采集记录包含多个人物且 Quoc Le 重复出现，禁止再作为单一人物实体应用；原子人物已独立保留。",
         "decisionKey": "quoclejeffdeansanjayghemawatquocleoriolvinyals",
         "reclassified": false
       }
@@ -18577,12 +18570,8 @@
       },
       "capturedAt": "2026-08-09T06:53:42.548Z",
       "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "ai:people",
-        "robotics:people",
-        "ai-2:people"
-      ],
+      "status": "queued",
+      "appliedTo": [],
       "reasons": [
         "技术突破",
         "个人研究兴趣",
@@ -18590,14 +18579,14 @@
       ],
       "note": "",
       "resolution": {
-        "status": "resolved",
+        "status": "review",
         "requestedType": "person",
         "entityType": "person",
         "canonicalName": "Jeff Dean、陶哲轩、李飞飞、Dawn Song、Oriol Vinyals",
-        "targetId": "person:jeffdean陶哲轩李飞飞dawnsongoriolvinyals",
-        "confidence": "medium",
-        "source": "explicit-type",
-        "reason": "管理员显式选择“人物”，且未与正式目录冲突。",
+        "targetId": "",
+        "confidence": "low",
+        "source": "human-decision",
+        "reason": "历史采集记录包含多个人物，禁止再作为单一人物实体应用；原子人物已独立保留。",
         "decisionKey": "jeffdean陶哲轩李飞飞dawnsongoriolvinyals",
         "reclassified": false
       }
@@ -18901,8 +18890,8 @@
         "canonicalName": "Smallest.ai、ElevenLabs、Cartesia 、Sarvam",
         "targetId": "",
         "confidence": "low",
-        "source": "unresolved",
-        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "source": "human-decision",
+        "reason": "历史采集记录包含多家公司，禁止作为单一公司实体应用；应按独立公司分别审核。",
         "decisionKey": "smallestaielevenlabscartesiasarvam",
         "reclassified": false
       }
@@ -18933,22 +18922,19 @@
       },
       "capturedAt": "2026-08-09T00:28:37.172Z",
       "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "semiconductor:sampleCompanies",
-        "track-1ccjq49:sampleCompanies"
-      ],
+      "status": "queued",
+      "appliedTo": [],
       "reasons": [],
       "note": "",
       "resolution": {
-        "status": "resolved",
+        "status": "review",
         "requestedType": "company",
         "entityType": "company",
         "canonicalName": "Aliya Capital Partners、Atreides Management、Artisan Partners、Battery Ventures、Diagonal Capital、Intel Capital、Key1 Capital",
-        "targetId": "company-candidate:aliyacapitalpartnersatreidesmanagementartisanpartnersbatteryventuresdiagonalcapitalintelcapitalkey1capital",
-        "confidence": "medium",
-        "source": "source-context",
-        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "targetId": "",
+        "confidence": "low",
+        "source": "human-decision",
+        "reason": "历史采集记录包含多家投资机构，禁止再作为单一公司实体应用；七家原子机构已由历史修复独立保留。",
         "decisionKey": "aliyacapitalpartnersatreidesmanagementartisanpartnersbatteryventuresdiagonalcapitalintelcapitalkey1capital",
         "reclassified": false
       }
@@ -23171,8 +23157,8 @@
         "canonicalName": "本轮融资由顺为资本与经纬创投共同领投,九坤创投、钧山资本、SEE Fund、猎聘投资、元诺资本、钟鼎资本等多家财务及产业投资机构参与,云启资本、小米战投、弘晖基金、英诺天使基金、东方嘉富",
         "targetId": "",
         "confidence": "low",
-        "source": "unresolved",
-        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "source": "human-decision",
+        "reason": "历史采集记录是融资叙事片段，包含多家投资机构而非单一公司实体；保持审核隔离，禁止后续解析为一个公司。",
         "decisionKey": "本轮融资由顺为资本与经纬创投共同领投九坤创投钧山资本seefund猎聘投资元诺资本钟鼎资本等多家财务及产业投资机构参与云启资本小米战投弘晖基金英诺天使基金东方嘉富",
         "reclassified": false
       }
