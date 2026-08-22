@@ -6,6 +6,97 @@
   scrollbar-color: var(--border) transparent;
 }
 
+.filters {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(210px, 1.4fr) repeat(3, minmax(120px, 0.8fr));
+  gap: 8px;
+  margin: -2px 0 14px;
+  padding: 2px 0 12px;
+  background: var(--surface);
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 0 11px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--faint);
+}
+
+.search:focus-within {
+  border-color: var(--text);
+}
+
+.search input,
+.filters select {
+  min-width: 0;
+  height: 38px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 11px;
+}
+
+.search input {
+  width: 100%;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  outline: 0;
+}
+
+.filters select {
+  padding: 0 28px 0 10px;
+}
+
+.filterMeta {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--faint);
+  font-size: 10px;
+}
+
+.filterMeta button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.filterMeta button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.emptyFilter {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
 .body :global(.people-grid) {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
@@ -16,6 +107,10 @@
   min-height: 470px;
   padding: 18px;
   background: color-mix(in srgb, var(--surface) 90%, transparent);
+}
+
+.body :global(.people-grid > a[hidden]) {
+  display: none;
 }
 
 .body :global(.person-monogram) {
@@ -80,6 +175,17 @@
   }
 }
 
+@media (max-width: 900px) {
+  .filters {
+    position: static;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .search {
+    grid-column: 1 / -1;
+  }
+}
+
 @media (max-width: 760px) {
   .body {
     padding: 14px;
@@ -91,6 +197,16 @@
 }
 
 @media (max-width: 560px) {
+  .filters {
+    grid-template-columns: 1fr;
+  }
+
+  .search,
+  .filterMeta,
+  .emptyFilter {
+    grid-column: 1;
+  }
+
   .body :global(.people-grid) {
     grid-template-columns: 1fr;
   }

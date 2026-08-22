@@ -3,7 +3,9 @@ import { Users } from "lucide-react";
 import Link from "next/link";
 import { ChannelSplitLayout } from "@/components/channel-split-layout";
 import { peopleGeneratedAt, researchPeople } from "@/lib/people-data";
+import { isPersonDirectoryChangeRecent } from "@/lib/person-directory-filter";
 import { getPersonResearchSnapshot } from "@/lib/people-research";
+import { PeopleDirectoryControls } from "./people-directory-controls";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -12,6 +14,7 @@ export const metadata: Metadata = {
 };
 
 const DIRECTORY_TAG_LIMIT = 1;
+const DIRECTORY_GRID_ID = "people-research-directory";
 
 const statusLabels = {
   complete: "档案较完整",
@@ -21,11 +24,20 @@ const statusLabels = {
 
 export default function PeoplePage() {
   const trackedCount = researchPeople.filter((person) => person.tracked).length;
+  const sectors = Array.from(new Set(researchPeople.flatMap((person) => person.sectors)))
+    .sort((left, right) => left.localeCompare(right, "zh-CN"));
   const directory = researchPeople
-    .map((person) => ({
-      person,
-      research: getPersonResearchSnapshot(person),
-    }))
+    .map((person) => {
+      const research = getPersonResearchSnapshot(person);
+      return {
+        person,
+        research,
+        recentChange: isPersonDirectoryChangeRecent(
+          research.latestChange?.date,
+          peopleGeneratedAt,
+        ),
+      };
+    })
     .sort((left, right) =>
       right.research.priority.score - left.research.priority.score
       || (right.research.latestChange?.date ?? "").localeCompare(left.research.latestChange?.date ?? "")
@@ -60,9 +72,17 @@ export default function PeoplePage() {
         bodyClassName={styles.body}
         directoryFirst
       >
-        <div className="people-grid">
-          {directory.map(({ person, research }) => (
-            <Link href={`/people/${person.slug}`} key={person.slug}>
+        <PeopleDirectoryControls sectors={sectors} total={directory.length} gridId={DIRECTORY_GRID_ID} />
+        <div className="people-grid" id={DIRECTORY_GRID_ID}>
+          {directory.map(({ person, research, recentChange }) => (
+            <Link
+              href={`/people/${person.slug}`}
+              key={person.slug}
+              data-person-card
+              data-sectors={person.sectors.join("|")}
+              data-status={person.status}
+              data-recent-change={recentChange ? "true" : "false"}
+            >
               <div className="person-monogram">{person.name.slice(0, 1)}</div>
               <h2>{person.name}</h2>
               <span>{person.role}</span>
