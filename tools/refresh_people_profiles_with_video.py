@@ -53,13 +53,17 @@ def _load_active_research_attempts() -> dict[str, dict[str, str]]:
 
 
 def _candidate_with_research_query(candidate: dict[str, Any]) -> dict[str, Any]:
+    """Bind the active discovery call to the exact scheduler-allocated query.
+
+    Curated videoQueries remain part of the stored person configuration, but they do not
+    replace the query whose cost/yield is being measured for this active research attempt.
+    """
     attempt = _RESEARCH_ATTEMPT_MAP.get(str(candidate.get("slug") or "")) or {}
     query = str(attempt.get("query") or "").strip()
     if not query:
         return candidate
     override = dict(candidate.get("override") or {})
-    existing = [str(value) for value in override.get("videoQueries") or [] if str(value).strip()]
-    override["videoQueries"] = existing or [query]
+    override["videoQueries"] = [query]
     return {**candidate, "override": override}
 
 
@@ -110,20 +114,22 @@ def enrich_candidate(
         return profile
     slug = str(candidate.get("slug") or "")
     discovery_candidate = _candidate_with_research_query(candidate)
-    video_materials: list[dict[str, str]] = []
-    had_error = False
+    query_materials: list[dict[str, str]] = []
+    embedded_materials: list[dict[str, str]] = []
+    query_had_error = False
     try:
-        video_materials.extend(discover_person_video_materials(discovery_candidate))
+        query_materials.extend(discover_person_video_materials(discovery_candidate))
     except Exception:
-        had_error = True
+        query_had_error = True
     if articles:
         try:
-            video_materials.extend(discover_embedded_wechat_video_materials(discovery_candidate, articles))
+            embedded_materials.extend(discover_embedded_wechat_video_materials(discovery_candidate, articles))
         except Exception:
-            had_error = True
-    video_materials = core.dedupe_materials(video_materials)
-    _record_research_attempt(slug, video_materials, had_error)
-    return merge_video_materials(profile, video_materials)
+            pass
+    query_materials = core.dedupe_materials(query_materials)
+    embedded_materials = core.dedupe_materials(embedded_materials)
+    _record_research_attempt(slug, query_materials, query_had_error)
+    return merge_video_materials(profile, core.dedupe_materials([*query_materials, *embedded_materials]))
 
 
 core.enrich_candidate = enrich_candidate
