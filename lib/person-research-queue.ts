@@ -81,6 +81,12 @@ function integer(value: unknown, min = 0, max = 10_000) {
   return Math.min(max, Math.max(min, Math.trunc(number)));
 }
 
+function integerOr(value: unknown, fallback: number, min: number, max: number) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return fallback;
+  return Math.min(max, Math.max(min, Math.trunc(number)));
+}
+
 function signedInteger(value: unknown, min = -100, max = 200) {
   const number = Number(value);
   if (!Number.isFinite(number)) return 0;
@@ -177,31 +183,61 @@ export function normalizePersonResearchQueue(value: unknown): PersonResearchQueu
     ? row.limits as Record<string, unknown>
     : {};
   const limits = {
-    people: integer(limitsRow.people, 1, 50) || 10,
-    tasks: integer(limitsRow.tasks, 1, 100) || 20,
-    tasksPerPerson: integer(limitsRow.tasksPerPerson, 1, 10) || 2,
-    activeQuerySlots: integer(limitsRow.activeQuerySlots, 1, 50) || 10,
+    people: integerOr(limitsRow.people, 10, 1, 50),
+    tasks: integerOr(limitsRow.tasks, 20, 1, 100),
+    tasksPerPerson: integerOr(limitsRow.tasksPerPerson, 2, 1, 10),
+    activeQuerySlots: integerOr(limitsRow.activeQuerySlots, 10, 1, 50),
   };
-  const items = Array.isArray(row.queue)
+  const normalized = Array.isArray(row.queue)
     ? row.queue
         .map(normalizePersonResearchQueueItem)
         .filter((item): item is PersonResearchQueueItem => Boolean(item))
-        .sort((a, b) => a.rank - b.rank || b.score - a.score)
-        .slice(0, limits.tasks)
+        .sort((a, b) => b.score - a.score || a.rank - b.rank || a.taskId.localeCompare(b.taskId))
     : [];
-  const people = new Set(items.map((item) => item.personSlug));
-  const allocated = items.reduce((sum, item) => sum + item.queryBudget, 0);
+
+  const selected: PersonResearchQueueItem[] = [];
+  const selectedPeople = new Set<string>();
+  const tasksPerPerson = new Map<string, number>();
+  for (const item of normalized) {
+    const personTaskCount = tasksPerPerson.get(item.personSlug) ?? 0;
+    if (personTaskCount >= limits.tasksPerPerson) continue;
+    if (!selectedPeople.has(item.personSlug) && selectedPeople.size >= limits.people) continue;
+    selected.push(item);
+    selectedPeople.add(item.personSlug);
+    tasksPerPerson.set(item.personSlug, personTaskCount + 1);
+    if (selected.length >= limits.tasks) break;
+  }
+
+  const queryPeople = new Set<string>();
+  let allocatedQuerySlots = 0;
+  const bounded = selected.map((item, index) => {
+    const canAllocate =
+      item.executor === "person_video" &&
+      item.searchQueries.length > 0 &&
+      !queryPeople.has(item.personSlug) &&
+      allocatedQuerySlots < limits.activeQuerySlots;
+    if (canAllocate) {
+      queryPeople.add(item.personSlug);
+      allocatedQuerySlots += 1;
+    }
+    return {
+      ...item,
+      rank: index + 1,
+      searchQueries: canAllocate ? item.searchQueries.slice(0, 1) : [],
+      queryBudget: canAllocate ? 1 : 0,
+    };
+  });
 
   return {
-    schemaVersion: integer(row.schemaVersion, 1, 10) || 1,
+    schemaVersion: integerOr(row.schemaVersion, 1, 1, 10),
     generatedAt: text(row.generatedAt, 80),
     researchDate: text(row.researchDate, 40),
     limits,
-    candidateTaskCount: integer(row.candidateTaskCount),
-    selectedPeopleCount: Math.min(people.size, limits.people),
-    selectedTaskCount: items.length,
-    allocatedQuerySlots: Math.min(allocated, limits.activeQuerySlots),
-    queue: items,
+    candidateTaskCount: Math.max(integer(row.candidateTaskCount), bounded.length),
+    selectedPeopleCount: selectedPeople.size,
+    selectedTaskCount: bounded.length,
+    allocatedQuerySlots,
+    queue: bounded,
     methodology: text(row.methodology, 900),
   };
 }
