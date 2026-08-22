@@ -26,7 +26,6 @@ const trackRescueTerms: Record<string, string[]> = {
     "wafer",
     "foundry",
     "封装",
-    "packaging",
     "光刻",
     "DRAM",
     "HBM",
@@ -89,6 +88,27 @@ const trackRescueTerms: Record<string, string[]> = {
   AI网络通信: ["AI网络通信", "通信", "无线", "基站", "telecom", "wireless", "RAN", "base station"],
 };
 
+const rescueBlockingTitleTerms = [
+  "save up to",
+  "discount",
+  "coupon",
+  "promo code",
+  "promotion",
+  "deal",
+  "sale",
+  "archives",
+  "archive",
+  "category",
+  "tag page",
+  "优惠",
+  "优惠券",
+  "折扣",
+  "促销",
+  "特价",
+  "满减",
+  "立省",
+];
+
 function normalizedText(value: string) {
   return value.normalize("NFKC").toLocaleLowerCase("zh-CN");
 }
@@ -120,6 +140,10 @@ function matchingAnchors(text: string, track: string) {
   return terms.filter((term) => termMatches(text, term));
 }
 
+function blockingTitleTerms(title: string) {
+  return rescueBlockingTitleTerms.filter((term) => termMatches(title, term));
+}
+
 export function trackSemanticRescueForEvidence(input: {
   track: string;
   title: string;
@@ -135,6 +159,17 @@ export function trackSemanticRescueForEvidence(input: {
       titleAnchors: [],
       summaryAnchors: [],
       reason: "仅对无重点主题且内容证据较弱的事件启用赛道语义救援。",
+    };
+  }
+
+  const blockers = blockingTitleTerms(input.title);
+  if (blockers.length) {
+    return {
+      status: "none",
+      multiplier: 1,
+      titleAnchors: [],
+      summaryAnchors: [],
+      reason: `标题包含促销或索引页信号（${blockers.join("、")}），不允许仅凭赛道词恢复分析权重。`,
     };
   }
 
