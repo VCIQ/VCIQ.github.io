@@ -22,31 +22,33 @@ const statusLabels = {
   pending: "待抓取",
 } as const;
 
-const statusCodes = {
-  complete: "c",
-  partial: "i",
-  pending: "p",
+const statusTokens = {
+  complete: "tc",
+  partial: "ti",
+  pending: "tp",
 } as const;
 
 export default function PeoplePage() {
   const trackedCount = researchPeople.filter((person) => person.tracked).length;
   const sectors = Array.from(new Set(researchPeople.flatMap((person) => person.sectors)))
     .sort((left, right) => left.localeCompare(right, "zh-CN"));
-  const sectorCodes = new Map(sectors.map((sector, index) => [sector, index.toString(36)]));
+  const sectorTokens = new Map(sectors.map((sector, index) => [sector, `s${index.toString(36)}`]));
   const directory = researchPeople
     .map((person) => {
       const research = getPersonResearchSnapshot(person);
+      const recentChange = isPersonDirectoryChangeRecent(
+        research.latestChange?.date,
+        peopleGeneratedAt,
+      );
       return {
         person,
         research,
-        recentChange: isPersonDirectoryChangeRecent(
-          research.latestChange?.date,
-          peopleGeneratedAt,
-        ),
-        sectorKey: person.sectors
-          .map((sector) => sectorCodes.get(sector))
-          .filter(Boolean)
-          .join("."),
+        recentChange,
+        filterClass: [
+          ...person.sectors.map((sector) => sectorTokens.get(sector)).filter(Boolean),
+          statusTokens[person.status],
+          recentChange ? "tr" : "",
+        ].filter(Boolean).join(" "),
       };
     })
     .sort((left, right) =>
@@ -97,15 +99,15 @@ export default function PeoplePage() {
           <select data-sel aria-label="按赛道筛选人物" aria-controls={DIRECTORY_GRID_ID} defaultValue="">
             <option value="">全部赛道</option>
             {sectors.map((sector) => (
-              <option value={sectorCodes.get(sector)} key={sector}>{sector}</option>
+              <option value={sectorTokens.get(sector)} key={sector}>{sector}</option>
             ))}
           </select>
 
           <select data-st aria-label="按档案状态筛选人物" aria-controls={DIRECTORY_GRID_ID} defaultValue="">
             <option value="">全部档案状态</option>
-            <option value="c">档案较完整</option>
-            <option value="i">补充中</option>
-            <option value="p">待抓取</option>
+            <option value="tc">档案较完整</option>
+            <option value="ti">补充中</option>
+            <option value="tp">待抓取</option>
           </select>
 
           <select data-ch aria-label="按近期变化筛选人物" aria-controls={DIRECTORY_GRID_ID} defaultValue="">
@@ -128,13 +130,11 @@ export default function PeoplePage() {
         </div>
 
         <div className="people-grid" id={DIRECTORY_GRID_ID}>
-          {directory.map(({ person, research, recentChange, sectorKey }) => (
+          {directory.map(({ person, research, filterClass }) => (
             <Link
               href={`/people/${person.slug}`}
               key={person.slug}
-              data-s={sectorKey}
-              data-t={statusCodes[person.status]}
-              data-r={recentChange ? "" : undefined}
+              className={filterClass}
             >
               <div className="person-monogram">{person.name.slice(0, 1)}</div>
               <h2>{person.name}</h2>
