@@ -1,17 +1,34 @@
+import importlib.util
 import unittest
+from pathlib import Path
 
-import tools.refresh_people_profiles_with_video as refresh
+from tools import refresh_people_profiles as core
+
+ROOT = Path(__file__).resolve().parents[1]
+ORIGINAL_ENRICH = core.enrich_candidate
+SPEC = importlib.util.spec_from_file_location(
+    "person_research_outcome_attribution_module",
+    ROOT / "tools" / "refresh_people_profiles_with_video.py",
+)
+REFRESH = importlib.util.module_from_spec(SPEC)
+assert SPEC.loader
+try:
+    SPEC.loader.exec_module(REFRESH)
+finally:
+    # The production module intentionally installs its enriched entrypoint on import.
+    # This test needs the helper only, so restore shared core state for later test modules.
+    core.enrich_candidate = ORIGINAL_ENRICH
 
 
 class PersonResearchOutcomeAttributionTests(unittest.TestCase):
     def setUp(self):
-        self.previous = dict(refresh._RESEARCH_ATTEMPT_MAP)
+        self.previous = dict(REFRESH._RESEARCH_ATTEMPT_MAP)
 
     def tearDown(self):
-        refresh._RESEARCH_ATTEMPT_MAP = self.previous
+        REFRESH._RESEARCH_ATTEMPT_MAP = self.previous
 
     def test_scheduler_query_overrides_curated_query_for_measured_attempt(self):
-        refresh._RESEARCH_ATTEMPT_MAP = {
+        REFRESH._RESEARCH_ATTEMPT_MAP = {
             "alice": {"taskId": "task-a", "query": "Alice scheduled research query"}
         }
         candidate = {
@@ -19,7 +36,7 @@ class PersonResearchOutcomeAttributionTests(unittest.TestCase):
             "name": "Alice",
             "override": {"videoQueries": ["Alice old curated query"], "roleHint": "CEO"},
         }
-        measured = refresh._candidate_with_research_query(candidate)
+        measured = REFRESH._candidate_with_research_query(candidate)
         self.assertEqual(measured["override"]["videoQueries"], ["Alice scheduled research query"])
         self.assertEqual(measured["override"]["roleHint"], "CEO")
         self.assertEqual(candidate["override"]["videoQueries"], ["Alice old curated query"])
