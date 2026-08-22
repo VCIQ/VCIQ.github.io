@@ -1,7 +1,7 @@
 import rawArticles from "@/public/data/articles.json";
 import { getChannelUpdateDirectory, type SourceEvidenceGrade } from "@/lib/channel-updates";
 import { technologyTopicDefinitions } from "@/lib/technology-topics";
-import { trackedSectors } from "@/lib/tracked-sectors";
+import { userTrackingConfig } from "@/lib/user-tracking";
 
 type RawArticle = {
   id: string;
@@ -34,11 +34,12 @@ function normalize(value: string) {
     .replace(/[^a-z0-9\u3400-\u9fff]+/gu, "");
 }
 
-const trackKeys = new Set(
-  trackedSectors.flatMap((track) =>
-    [track.name, ...(track.aliases ?? [])].map(normalize).filter(Boolean),
-  ),
+const activeTrackByKey = new Map(
+  userTrackingConfig.tracks
+    .filter((track) => track.enabled)
+    .map((track) => [normalize(track.name), track.name] as const),
 );
+const trackKeys = new Set(activeTrackByKey.keys());
 
 const unresolvedTopicParentTracks = technologyTopicDefinitions.flatMap((topic) =>
   topic.trackNames
@@ -49,16 +50,11 @@ const unresolvedTopicParentTracks = technologyTopicDefinitions.flatMap((topic) =
 function topicIsCompatibleWithTrack(topicSlug: string, trackName: string) {
   const topic = technologyTopicDefinitions.find((item) => item.slug === topicSlug);
   if (!topic) return false;
-  const track = trackedSectors.find(
-    (item) =>
-      normalize(item.name) === normalize(trackName) ||
-      (item.aliases ?? []).some((alias) => normalize(alias) === normalize(trackName)),
+  const canonicalTrack = activeTrackByKey.get(normalize(trackName));
+  if (!canonicalTrack) return false;
+  return topic.trackNames.some(
+    (name) => normalize(name) === normalize(canonicalTrack),
   );
-  if (!track) return false;
-  const names = new Set(
-    [track.name, ...(track.aliases ?? [])].map(normalize).filter(Boolean),
-  );
-  return topic.trackNames.some((name) => names.has(normalize(name)));
 }
 
 const directory = getChannelUpdateDirectory("technology");
@@ -186,7 +182,7 @@ printSamples("TECHNOLOGY_TAXONOMY_PRIMARY_SOURCE_VIOLATIONS", primarySourceViola
 
 if (trackTopicMismatches.length) {
   console.warn(
-    `TECHNOLOGY_TAXONOMY_AUDIT_WARNING: ${trackTopicMismatches.length} cross-track topic candidates require sector/taxonomy review`,
+    `TECHNOLOGY_TAXONOMY_AUDIT_WARNING: ${trackTopicMismatches.length} cross-track topic assignments require sector/taxonomy review`,
   );
 }
 if (untagged.length) {
