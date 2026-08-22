@@ -12,6 +12,7 @@ import {
   institutionEventLayerRecords,
   type InstitutionEventLayerRecord,
 } from "@/lib/institution-data-layer-data";
+import { technologyTopicsForText } from "@/lib/technology-topic-matching";
 import { trackedSectors } from "@/lib/tracked-sectors";
 
 export type ChannelUpdateKey =
@@ -22,6 +23,12 @@ export type ChannelUpdateKey =
   | "people";
 
 export type SourceEvidenceGrade = "A" | "B" | "C" | "D";
+
+export type ChannelUpdateSource = {
+  name: string;
+  href: string;
+  title?: string;
+};
 
 export type ChannelUpdateItem = {
   id: string;
@@ -44,6 +51,13 @@ export type ChannelUpdateItem = {
   sourceGrade?: SourceEvidenceGrade;
   sourceGradeLabel?: string;
   sourceVerificationPolicy?: string;
+  track?: string;
+  region?: string;
+  topicSlugs?: string[];
+  topicNames?: string[];
+  eventClusterId?: string;
+  sources?: ChannelUpdateSource[];
+  sourceCount?: number;
 };
 
 export type ChannelUpdateDirectory = {
@@ -51,6 +65,13 @@ export type ChannelUpdateDirectory = {
   description: string;
   generatedAt: string;
   items: ChannelUpdateItem[];
+};
+
+type ArticleRelatedSource = {
+  name: string;
+  url: string;
+  platform?: string;
+  title?: string;
 };
 
 type ArticleRecord = {
@@ -69,12 +90,16 @@ type ArticleRecord = {
   institutions?: string[];
   mentionedCompanies?: string[];
   mentionedPeople?: string[];
+  matchedTrackingTerms?: string[];
   publishedAt: string;
   importance?: number;
   firstSeenAt?: string;
   firstSeenEstimated?: boolean;
   lastVerifiedAt?: string;
   lastVerifiedEstimated?: boolean;
+  duplicateCount?: number;
+  eventClusterId?: string;
+  relatedSources?: ArticleRelatedSource[];
   source: {
     name: string;
     url: string;
@@ -134,7 +159,6 @@ const articlesPayload = rawArticles as ArticlePayload;
 const researchReportsPayload = rawResearchReports as ResearchReportPayload;
 const peoplePayload = rawPeople as PeoplePayload;
 
-const capitalEventTypes = new Set(["融资", "产业投资", "并购", "IPO"]);
 const materialTypeLabels: Record<string, string> = {
   speech: "演讲",
   interview: "采访",
@@ -147,12 +171,21 @@ const materialTypeLabels: Record<string, string> = {
   biography: "人物资料",
 };
 
-const enabledSectorNames = new Set(
-  trackedSectors.flatMap((sector) => [sector.name, ...(sector.aliases ?? [])]),
-);
-
 function normalize(value: string) {
   return value.toLocaleLowerCase("zh-CN").replace(/[^a-z0-9\u3400-\u9fff]+/gu, "");
+}
+
+const canonicalTrackByKey = new Map(
+  trackedSectors.flatMap((sector) =>
+    [sector.name, ...(sector.aliases ?? [])]
+      .map((name) => normalize(name))
+      .filter(Boolean)
+      .map((key) => [key, sector.name] as const),
+  ),
+);
+
+function resolveCanonicalTrack(value: string) {
+  return canonicalTrackByKey.get(normalize(value));
 }
 
 function uniqueKeywords(values: string[]) {
@@ -164,6 +197,32 @@ function uniqueKeywords(values: string[]) {
     seen.add(normalized);
     return true;
   });
+}
+
+function uniqueSources(values: ChannelUpdateSource[]) {
+  const seen = new Set<string>();
+  return values.filter((value) => {
+    const href = value.href.trim();
+    const key = href.toLocaleLowerCase("en-US");
+    if (!href || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+function articleSources(article: ArticleRecord): ChannelUpdateSource[] {
+  return uniqueSources([
+    {
+      name: article.source.platform || article.source.name,
+      href: article.source.url,
+      title: article.title,
+    },
+    ...(article.relatedSources ?? []).map((source) => ({
+      name: source.platform || source.name,
+      href: source.url,
+      title: source.title,
+    })),
+  ]);
 }
 
 function dedupeAndSort(items: ChannelUpdateItem[]) {
@@ -224,6 +283,106 @@ function articleToUpdate(
   };
 }
 
+const sourceGradeRank: Record<SourceEvidenceGrade, number> = {
+  A: 4,
+  B: 3,
+  C: 2,
+  D: 1,
+};
+
+function preferredEventRepresentative(items: ChannelUpdateItem[]) {
+  return [...items].sort((left, right) => {
+    const gradeDelta =
+      (right.sourceGrade ? sourceGradeRank[right.sourceGrade] : 0) -
+      (left.sourceGrade ? sourceGradeRank[left.sourceGrade] : 0);
+    return (
+      gradeDelta ||
+      right.sortAt.localeCompare(left.sortAt) ||
+      (right.sourceCount ?? 1) - (left.sourceCount ?? 1)
+    );
+  })[0];
+}
+
+export function aggregateTechnologyEventUpdates(items: ChannelUpdateItem[]) {
+  const groups = new Map<string, ChannelUpdateItem[]>();
+  for (const item of items) {
+    const clusterId = item.eventClusterId?.trim();
+    const key = clusterId ? `cluster:${clusterId}` : `item:${item.id}`;
+    const group = groups.get(key) ?? [];
+    group.push(item);
+    groups.set(key, group);
+  }
+
+  return [...groups.values()].map((group) => {
+    const representative = preferredEventRepresentative(group);
+    if (!representative) throw new Error("technology event group has no representative");
+
+    const newest = [...group].sort((left, right) => right.sortAt.localeCompare(left.sortAt))[0];
+    const sources = uniqueSources(group.flatMap((item) => item.sources ?? []));
+    const sourceCount = Math.max(
+      sources.length || 1,
+      ...group.map((item) => item.sourceCount ?? 1),
+    );
+    const firstSeenAt = group
+      .map((item) => item.firstSeenAt)
+      .filter((value): value is string => Boolean(value))
+      .sort()[0];
+    const lastVerifiedAt = group
+      .map((item) => item.lastVerifiedAt)
+      .filter((value): value is string => Boolean(value))
+      .sort()
+      .at(-1);
+
+    return {
+      ...representative,
+      date: newest?.date ?? representative.date,
+      dateOriginal: newest?.dateOriginal ?? representative.dateOriginal,
+      datePrecision: newest?.datePrecision ?? representative.datePrecision,
+      sortAt: newest?.sortAt ?? representative.sortAt,
+      topicSlugs: uniqueKeywords(group.flatMap((item) => item.topicSlugs ?? [])),
+      topicNames: uniqueKeywords(group.flatMap((item) => item.topicNames ?? [])),
+      classifications: uniqueKeywords(
+        group.flatMap((item) => item.classifications ?? []),
+      ),
+      sources,
+      sourceCount,
+      firstSeenAt,
+      firstSeenEstimated: firstSeenAt
+        ? group.find((item) => item.firstSeenAt === firstSeenAt)?.firstSeenEstimated
+        : representative.firstSeenEstimated,
+      lastVerifiedAt,
+      lastVerifiedEstimated: lastVerifiedAt
+        ? group.find((item) => item.lastVerifiedAt === lastVerifiedAt)?.lastVerifiedEstimated
+        : representative.lastVerifiedEstimated,
+    } satisfies ChannelUpdateItem;
+  });
+}
+
+function technologyArticleToUpdate(article: ArticleRecord): ChannelUpdateItem | null {
+  const track = resolveCanonicalTrack(article.sector);
+  if (!track) return null;
+  const topics = technologyTopicsForText([
+    article.title,
+    article.summary,
+    article.company,
+    article.sector,
+    ...(article.matchedTrackingTerms ?? []),
+  ]);
+  const sources = articleSources(article);
+  const base = articleToUpdate(article, `${track} · ${article.region}`);
+
+  return {
+    ...base,
+    track,
+    region: article.region,
+    topicSlugs: topics.map((topic) => topic.slug),
+    topicNames: topics.map((topic) => topic.name),
+    eventClusterId: article.eventClusterId,
+    sources,
+    sourceCount: Math.max(sources.length || 1, article.duplicateCount ?? 1),
+  };
+}
+
 function institutionEventToUpdate(
   event: InstitutionEventLayerRecord,
 ): ChannelUpdateItem {
@@ -272,16 +431,19 @@ function institutionEventToUpdate(
 }
 
 function technologyDirectory(): ChannelUpdateDirectory {
-  const items = articlesPayload.articles
-    .filter((article) => enabledSectorNames.has(article.sector))
-    .map((article) => articleToUpdate(article, `${article.sector} · ${article.region}`));
+  const articleItems = articlesPayload.articles
+    .map(technologyArticleToUpdate)
+    .filter((item): item is ChannelUpdateItem => Boolean(item));
+  const eventItems = aggregateTechnologyEventUpdates(articleItems);
+
   return {
-    title: "赛道更新目录",
-    description: "当前启用赛道的最新公开事件，仅按记录前的绿色事件标签筛选，并按统一日期排序。",
+    title: "科技事件更新目录",
+    description:
+      "按核心赛道、技术主题、事件类型、地区与证据等级筛选；同一事件的重复报道聚合为一条，并保留多个公开信源。",
     generatedAt: articlesPayload.generatedAt,
     items: dedupeAndSort([
       ...getChannelDocumentUpdateItems("technology"),
-      ...items,
+      ...eventItems,
     ]),
   };
 }

@@ -1,7 +1,14 @@
-import type { ChannelUpdateItem } from "./channel-updates";
+import type {
+  ChannelUpdateItem,
+  SourceEvidenceGrade,
+} from "./channel-updates";
 
 export const ALL_CHANNEL_UPDATE_KEYWORDS = "全部";
 export const ALL_CHANNEL_UPDATE_CLASSIFICATIONS = "全部分类";
+export const ALL_CHANNEL_UPDATE_TRACKS = "全部赛道";
+export const ALL_CHANNEL_UPDATE_TOPICS = "全部主题";
+export const ALL_CHANNEL_UPDATE_REGIONS = "全部地区";
+export const ALL_CHANNEL_UPDATE_EVIDENCE = "全部等级";
 
 export type ChannelUpdateSortOrder = "newest" | "oldest";
 
@@ -84,19 +91,62 @@ export function collectChannelUpdateClassifications(
   return collectOptions(items.map((item) => item.classifications ?? []));
 }
 
+export function collectChannelUpdateTracks(
+  items: ChannelUpdateItem[],
+): ChannelUpdateKeywordOption[] {
+  return collectOptions(items.map((item) => (item.track ? [item.track] : [])));
+}
+
+export function collectChannelUpdateTopics(
+  items: ChannelUpdateItem[],
+): ChannelUpdateKeywordOption[] {
+  return collectOptions(items.map((item) => item.topicNames ?? []));
+}
+
+export function collectChannelUpdateRegions(
+  items: ChannelUpdateItem[],
+): ChannelUpdateKeywordOption[] {
+  return collectOptions(items.map((item) => (item.region ? [item.region] : [])));
+}
+
+export function collectChannelUpdateEvidenceGrades(
+  items: ChannelUpdateItem[],
+): ChannelUpdateKeywordOption[] {
+  const options = collectOptions(
+    items.map((item) => (item.sourceGrade ? [item.sourceGrade] : [])),
+  );
+  const order: SourceEvidenceGrade[] = ["A", "B", "C", "D"];
+  return options.sort(
+    (left, right) =>
+      order.indexOf(left.keyword as SourceEvidenceGrade) -
+      order.indexOf(right.keyword as SourceEvidenceGrade),
+  );
+}
+
 export function filterAndSortChannelUpdates({
   items,
   keyword,
   classification = ALL_CHANNEL_UPDATE_CLASSIFICATIONS,
+  track = ALL_CHANNEL_UPDATE_TRACKS,
+  topic = ALL_CHANNEL_UPDATE_TOPICS,
+  region = ALL_CHANNEL_UPDATE_REGIONS,
+  evidence = ALL_CHANNEL_UPDATE_EVIDENCE,
   sortOrder,
 }: {
   items: ChannelUpdateItem[];
   keyword: string;
   classification?: string;
+  track?: string;
+  topic?: string;
+  region?: string;
+  evidence?: string;
   sortOrder: ChannelUpdateSortOrder;
 }) {
   const normalizedKeyword = normalizeKeyword(keyword);
   const normalizedClassification = normalizeKeyword(classification);
+  const normalizedTrack = normalizeKeyword(track);
+  const normalizedTopic = normalizeKeyword(topic);
+  const normalizedRegion = normalizeKeyword(region);
   const filtered = items.filter((item) => {
     const keywordMatches =
       keyword === ALL_CHANNEL_UPDATE_KEYWORDS ||
@@ -109,7 +159,28 @@ export function filterAndSortChannelUpdates({
         (itemClassification) =>
           normalizeKeyword(itemClassification) === normalizedClassification,
       );
-    return keywordMatches && classificationMatches;
+    const trackMatches =
+      track === ALL_CHANNEL_UPDATE_TRACKS ||
+      (item.track ? normalizeKeyword(item.track) === normalizedTrack : false);
+    const topicMatches =
+      topic === ALL_CHANNEL_UPDATE_TOPICS ||
+      (item.topicNames ?? []).some(
+        (itemTopic) => normalizeKeyword(itemTopic) === normalizedTopic,
+      );
+    const regionMatches =
+      region === ALL_CHANNEL_UPDATE_REGIONS ||
+      (item.region ? normalizeKeyword(item.region) === normalizedRegion : false);
+    const evidenceMatches =
+      evidence === ALL_CHANNEL_UPDATE_EVIDENCE || item.sourceGrade === evidence;
+
+    return (
+      keywordMatches &&
+      classificationMatches &&
+      trackMatches &&
+      topicMatches &&
+      regionMatches &&
+      evidenceMatches
+    );
   });
 
   return filtered.sort((left, right) => {
