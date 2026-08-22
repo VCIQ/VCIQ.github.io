@@ -1,7 +1,7 @@
 "use client";
 
 import { RotateCcw, Search } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   matchesPersonDirectoryRecord,
   type PersonDirectoryFilters,
@@ -23,7 +23,8 @@ export function PeopleDirectoryControls({
   const [sector, setSector] = useState("all");
   const [status, setStatus] = useState("all");
   const [change, setChange] = useState<ChangeFilter>("all");
-  const [resultCount, setResultCount] = useState(total);
+  const resultRef = useRef<HTMLSpanElement>(null);
+  const emptyRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
     const grid = document.getElementById(gridId);
@@ -44,8 +45,14 @@ export function PeopleDirectoryControls({
       card.hidden = !matches;
       if (matches) visible += 1;
     }
-    setResultCount(visible);
-  }, [change, gridId, query, sector, status]);
+
+    if (resultRef.current) {
+      resultRef.current.textContent = `显示 ${visible} / ${total} 位人物`;
+    }
+    if (emptyRef.current) {
+      emptyRef.current.hidden = visible !== 0;
+    }
+  }, [change, gridId, query, sector, status, total]);
 
   const hasFilters = Boolean(query || sector !== "all" || status !== "all" || change !== "all");
 
@@ -103,18 +110,16 @@ export function PeopleDirectoryControls({
       </select>
 
       <div className={styles.filterMeta}>
-        <span aria-live="polite">显示 {resultCount} / {total} 位人物</span>
+        <span ref={resultRef} aria-live="polite">显示 {total} / {total} 位人物</span>
         <button type="button" onClick={reset} disabled={!hasFilters}>
           <RotateCcw size={13} aria-hidden="true" />
           重置
         </button>
       </div>
 
-      {resultCount === 0 ? (
-        <p className={styles.emptyFilter} role="status">
-          没有匹配的人物档案，请调整关键词或筛选条件。
-        </p>
-      ) : null}
+      <p ref={emptyRef} className={styles.emptyFilter} role="status" hidden>
+        没有匹配的人物档案，请调整关键词或筛选条件。
+      </p>
     </div>
   );
 }
