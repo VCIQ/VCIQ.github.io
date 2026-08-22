@@ -20,9 +20,11 @@ on:
       - "lib/channel-update-date.ts"
       - "lib/technology-topics.ts"
       - "lib/technology-topic-matching.ts"
+      - "lib/technology-term-matching.ts"
       - "public/data/articles.json"
       - "scripts/audit-technology-taxonomy.ts"
       - "tests/channel-updates.test.ts"
+      - "tests/technology-topics.test.ts"
       - "package.json"
       - ".github/workflows/channel-update-directory-checks.yml"
   push:
@@ -45,9 +47,11 @@ on:
       - "lib/channel-update-date.ts"
       - "lib/technology-topics.ts"
       - "lib/technology-topic-matching.ts"
+      - "lib/technology-term-matching.ts"
       - "public/data/articles.json"
       - "scripts/audit-technology-taxonomy.ts"
       - "tests/channel-updates.test.ts"
+      - "tests/technology-topics.test.ts"
       - "package.json"
       - ".github/workflows/channel-update-directory-checks.yml"
 
@@ -67,6 +71,6 @@ jobs:
       - name: Type-check update directory
         run: npx tsc --noEmit
       - name: Run focused update-directory tests
-        run: node --import tsx --test tests/channel-updates.test.ts
+        run: node --import tsx --test tests/channel-updates.test.ts tests/technology-topics.test.ts
       - name: Audit technology taxonomy quality
         run: npm run audit:technology-taxonomy
