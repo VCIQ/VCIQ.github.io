@@ -1,0 +1,75 @@
+name: Observe Pages deployment
+
+on:
+  workflow_run:
+    workflows:
+      - Build and deploy GitHub Pages
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: vciq-pages-observer
+  cancel-in-progress: false
+
+jobs:
+  record:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.head_branch == 'main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Record latest Pages run and failed log
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_RUN_ID: ${{ github.event.workflow_run.id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p diagnostics
+
+          RUN_ID="$EVENT_RUN_ID"
+          if [ -z "$RUN_ID" ]; then
+            RUN_ID="$(gh run list --workflow pages.yml --branch main --limit 1 --json databaseId --jq '.[0].databaseId')"
+          fi
+          test -n "$RUN_ID"
+
+          gh run view "$RUN_ID" \
+            --json databaseId,status,conclusion,createdAt,updatedAt,headSha,url,event,workflowName \
+            > diagnostics/pages-latest-status.json
+
+          if [ "$(jq -r '.conclusion // ""' diagnostics/pages-latest-status.json)" = "failure" ]; then
+            gh run view "$RUN_ID" --log-failed > diagnostics/pages-latest-failure.txt 2>&1 || true
+          else
+            : > diagnostics/pages-latest-failure.txt
+          fi
+
+      - name: Publish diagnostic snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add diagnostics/pages-latest-status.json diagnostics/pages-latest-failure.txt
+          if git diff --cached --quiet; then
+            echo "Pages diagnostic is already current."
+            exit 0
+          fi
+          git commit -m "ci: record latest Pages deployment status"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+          done
