@@ -6,9 +6,15 @@ on:
       - "tools/person_video_discovery.py"
       - "tools/wechat_channel_card_discovery.py"
       - "tools/refresh_people_profiles_with_video.py"
+      - "tools/person_research_agent.py"
+      - "tools/person_research_scheduler.py"
+      - "tools/person_research_outcomes.py"
       - "tests/test_person_video_discovery.py"
       - "tests/test_wechat_channel_card_discovery.py"
       - "tests/test_refresh_people_profiles_with_video.py"
+      - "tests/test_person_research_scheduler.py"
+      - "tests/test_person_research_outcomes.py"
+      - "tests/test_person_research_daily_budget.py"
       - ".github/workflows/person-video-checks.yml"
   push:
     branches:
@@ -17,9 +23,15 @@ on:
       - "tools/person_video_discovery.py"
       - "tools/wechat_channel_card_discovery.py"
       - "tools/refresh_people_profiles_with_video.py"
+      - "tools/person_research_agent.py"
+      - "tools/person_research_scheduler.py"
+      - "tools/person_research_outcomes.py"
       - "tests/test_person_video_discovery.py"
       - "tests/test_wechat_channel_card_discovery.py"
       - "tests/test_refresh_people_profiles_with_video.py"
+      - "tests/test_person_research_scheduler.py"
+      - "tests/test_person_research_outcomes.py"
+      - "tests/test_person_research_daily_budget.py"
       - ".github/workflows/person-video-checks.yml"
 
 permissions:
@@ -39,3 +51,6 @@ jobs:
           tests.test_person_video_discovery
           tests.test_wechat_channel_card_discovery
           tests.test_refresh_people_profiles_with_video
+          tests.test_person_research_scheduler
+          tests.test_person_research_outcomes
+          tests.test_person_research_daily_budget
