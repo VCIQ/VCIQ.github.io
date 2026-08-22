@@ -14,6 +14,7 @@ export type PersonResearchQueueScoreBreakdown = {
   recency: number;
   crossValidation: number;
   queryReadiness: number;
+  researchOutcomeMemory: number;
 };
 
 export type PersonResearchQueueItem = {
@@ -34,6 +35,7 @@ export type PersonResearchQueueItem = {
   score: number;
   scoreBreakdown: PersonResearchQueueScoreBreakdown;
   whyNow: string[];
+  cooldownUntil: string;
   personRoute: string;
   queryBudget: number;
 };
@@ -52,6 +54,7 @@ export type PersonResearchQueue = {
   selectedPeopleCount: number;
   selectedTaskCount: number;
   allocatedQuerySlots: number;
+  outcomeMemoryAttemptCount: number;
   queue: PersonResearchQueueItem[];
   methodology: string;
 };
@@ -124,6 +127,7 @@ function scoreBreakdown(value: unknown): PersonResearchQueueScoreBreakdown {
     recency: signedInteger(row.recency),
     crossValidation: signedInteger(row.crossValidation),
     queryReadiness: signedInteger(row.queryReadiness),
+    researchOutcomeMemory: signedInteger(row.researchOutcomeMemory),
   };
 }
 
@@ -150,9 +154,12 @@ export function normalizePersonResearchQueueItem(value: unknown): PersonResearch
   const breakdown = scoreBreakdown(row.scoreBreakdown);
   const recomputedScore = Object.values(breakdown).reduce((sum, value) => sum + value, 0);
   const queryBudget = integer(row.queryBudget, 0, 1);
-  const searchQueries = executor === "person_video" && queryBudget > 0
+  const cooldownUntil = text(row.cooldownUntil, 40);
+  const searchQueries = executor === "person_video" && queryBudget > 0 && !cooldownUntil
     ? stringList(row.searchQueries, 1, 220)
-    : [];
+    : executor === "person_video" && queryBudget > 0
+      ? stringList(row.searchQueries, 1, 220)
+      : [];
 
   return {
     rank: integer(row.rank, 1, 10_000),
@@ -171,7 +178,8 @@ export function normalizePersonResearchQueueItem(value: unknown): PersonResearch
     candidateEvidenceCount: integer(row.candidateEvidenceCount, 0, 10),
     score: recomputedScore,
     scoreBreakdown: breakdown,
-    whyNow: stringList(row.whyNow, 5, 220),
+    whyNow: stringList(row.whyNow, 6, 220),
+    cooldownUntil,
     personRoute: internalPersonRoute(row.personRoute, personSlug),
     queryBudget: searchQueries.length ? queryBudget : 0,
   };
@@ -210,10 +218,13 @@ export function normalizePersonResearchQueue(value: unknown): PersonResearchQueu
 
   const queryPeople = new Set<string>();
   let allocatedQuerySlots = 0;
+  const researchDate = text(row.researchDate, 40);
   const bounded = selected.map((item, index) => {
+    const inCooldown = Boolean(item.cooldownUntil && researchDate && item.cooldownUntil > researchDate);
     const canAllocate =
       item.executor === "person_video" &&
       item.searchQueries.length > 0 &&
+      !inCooldown &&
       !queryPeople.has(item.personSlug) &&
       allocatedQuerySlots < limits.activeQuerySlots;
     if (canAllocate) {
@@ -231,14 +242,15 @@ export function normalizePersonResearchQueue(value: unknown): PersonResearchQueu
   return {
     schemaVersion: integerOr(row.schemaVersion, 1, 1, 10),
     generatedAt: text(row.generatedAt, 80),
-    researchDate: text(row.researchDate, 40),
+    researchDate,
     limits,
     candidateTaskCount: Math.max(integer(row.candidateTaskCount), bounded.length),
     selectedPeopleCount: selectedPeople.size,
     selectedTaskCount: bounded.length,
     allocatedQuerySlots,
+    outcomeMemoryAttemptCount: integer(row.outcomeMemoryAttemptCount, 0, 100_000),
     queue: bounded,
-    methodology: text(row.methodology, 900),
+    methodology: text(row.methodology, 1_100),
   };
 }
 

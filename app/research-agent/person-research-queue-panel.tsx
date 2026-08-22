@@ -35,6 +35,7 @@ function scoreSummary(breakdown: PersonResearchQueueScoreBreakdown) {
     ["近期", breakdown.recency],
     ["交叉验证", breakdown.crossValidation],
     ["可执行", breakdown.queryReadiness],
+    ["研究记忆", breakdown.researchOutcomeMemory],
   ] as const;
 }
 
@@ -53,7 +54,7 @@ export default function PersonResearchQueuePanel() {
 
       <p className={styles.queueIntro}>
         从全部开放人物研究任务中按可解释规则分配今日预算。队列只决定“先查什么”和主动检索槽位，
-        不改变任何任务的事实状态或证据门槛。
+        Research Outcome Memory 只记录检索产出与成本，不改变任何事实状态或证据门槛。
       </p>
 
       <div className={styles.queueStats}>
@@ -70,12 +71,12 @@ export default function PersonResearchQueuePanel() {
         <article>
           <span>今日任务</span>
           <strong>{queue.selectedTaskCount}/{queue.limits.tasks}</strong>
-          <small>按研究价值和证据缺口排序</small>
+          <small>历史主动尝试 {queue.outcomeMemoryAttemptCount} 次</small>
         </article>
         <article>
           <span>主动检索槽位</span>
           <strong>{queue.allocatedQuerySlots}/{queue.limits.activeQuerySlots}</strong>
-          <small>每位人物最多占用 1 个槽位</small>
+          <small>近期零产出任务会短暂冷却</small>
         </article>
       </div>
 
@@ -108,9 +109,8 @@ export default function PersonResearchQueuePanel() {
                 <ListChecks size={14} aria-hidden="true" />
                 <span>执行器：{executorLabels[item.executor]}</span>
                 <span>检索槽位：{item.queryBudget}</span>
-                <span>
-                  现有证据：{item.evidenceBasisCount} 基础 / {item.candidateEvidenceCount} 候选
-                </span>
+                <span>现有证据：{item.evidenceBasisCount} 基础 / {item.candidateEvidenceCount} 候选</span>
+                {item.cooldownUntil ? <span>冷却至：{item.cooldownUntil}</span> : null}
               </div>
 
               {item.searchQueries.length > 0 && (
@@ -133,9 +133,7 @@ export default function PersonResearchQueuePanel() {
             </div>
           </article>
         ))}
-        {!queue.queue.length && (
-          <p className={styles.empty}>等待人物主动研究任务生成后形成今日队列。</p>
-        )}
+        {!queue.queue.length && <p className={styles.empty}>等待人物主动研究任务生成后形成今日队列。</p>}
       </div>
 
       <p className={styles.queueMethodology}>{queue.methodology}</p>
