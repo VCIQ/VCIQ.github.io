@@ -4,8 +4,8 @@
 Before a normal refresh, the deterministic person research planner reads the previous
 profile snapshot and produces bounded evidence-search questions. The highest-priority
 video-compatible query is then fed into the existing identity-gated video discovery.
-After the refreshed people snapshot is written, the agenda is rebuilt so open/closed
-research gaps reflect the new evidence.
+The public agenda itself remains derived build data and is regenerated from the refreshed
+people/articles snapshots by the Pages build.
 """
 
 from __future__ import annotations
@@ -25,7 +25,6 @@ from tools.person_research_agent import (
     build_agenda,
     load_json,
     research_queries_by_slug,
-    write_agenda,
 )
 from tools.person_video_discovery import discover_person_video_materials
 from tools.wechat_channel_card_discovery import discover_embedded_wechat_video_materials
@@ -116,14 +115,9 @@ def main() -> int:
     offline = "--offline" in sys.argv
     if not validate_only and not offline:
         _RESEARCH_QUERY_MAP = _load_active_research_queries()
-    result = core.main()
-    if result == 0 and not validate_only:
-        agenda = write_agenda()
-        print(
-            "Rebuilt active person research agenda: "
-            f"{agenda['taskCount']} tasks, {agenda['openTaskCount']} still open."
-        )
-    return result
+        task_person_count = sum(1 for queries in _RESEARCH_QUERY_MAP.values() if queries)
+        print(f"Active person research queries prepared for {task_person_count} people.")
+    return core.main()
 
 
 if __name__ == "__main__":
