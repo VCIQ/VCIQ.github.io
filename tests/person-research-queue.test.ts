@@ -98,6 +98,31 @@ test("queue derives public counters from normalized rows instead of trusting pay
   assert.equal(normalized.candidateTaskCount, 200);
 });
 
+test("public boundary re-enforces people task and active-query budgets", () => {
+  const rows = Array.from({ length: 12 }, (_, personIndex) => [0, 1, 2].map((taskIndex) => item({
+    rank: personIndex * 3 + taskIndex + 1,
+    personSlug: `person-${personIndex}`,
+    personName: `人物 ${personIndex}`,
+    taskId: `task-${personIndex}-${taskIndex}`,
+    searchQueries: [`人物 ${personIndex} query ${taskIndex}`],
+    queryBudget: 1,
+  }))).flat();
+  const normalized = normalizePersonResearchQueue({
+    limits: { people: 4, tasks: 7, tasksPerPerson: 2, activeQuerySlots: 3 },
+    queue: rows,
+  });
+  assert.equal(normalized.selectedPeopleCount, 4);
+  assert.equal(normalized.selectedTaskCount, 7);
+  assert.equal(normalized.allocatedQuerySlots, 3);
+  assert.deepEqual(normalized.queue.map((row) => row.rank), [1, 2, 3, 4, 5, 6, 7]);
+  const perPerson = new Map<string, number>();
+  for (const row of normalized.queue) {
+    perPerson.set(row.personSlug, (perPerson.get(row.personSlug) ?? 0) + 1);
+  }
+  assert.ok([...perPerson.values()].every((count) => count <= 2));
+  assert.equal(normalized.queue.filter((row) => row.queryBudget === 1).length, 3);
+});
+
 test("person route is reconstructed from slug instead of trusting arbitrary payload", () => {
   const normalized = normalizePersonResearchQueueItem(item({ personRoute: "https://evil.example/" }));
   assert.ok(normalized);
