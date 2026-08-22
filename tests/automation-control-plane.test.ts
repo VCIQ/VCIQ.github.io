@@ -38,25 +38,39 @@ type Registry = {
 
 const registry = JSON.parse(read("config/automation_jobs.json")) as Registry;
 
-test("automation registry defines the exact four public research objects", () => {
+test("automation registry keeps four research object types while tracks and technologies share one channel", () => {
   assert.equal(registry.schemaVersion, 1);
   assert.ok(registry.pipelineVersion);
   assert.deepEqual(
     registry.publicObjectTypes,
     [
-      { id: "technology", label: "核心技术", route: "/technologies" },
-      { id: "track", label: "核心赛道", route: "/technology" },
+      {
+        id: "technology",
+        label: "核心技术",
+        route: "/technologies#core-technologies",
+      },
+      { id: "track", label: "核心赛道", route: "/technologies#core-tracks" },
       { id: "person", label: "核心人物", route: "/people" },
       { id: "company", label: "核心公司", route: "/companies" },
     ],
   );
 
   const header = read("components/site-header.tsx");
+  const technologyPage = read("app/technologies/page.tsx");
   const sitemap = read("app/sitemap.ts");
+
+  assert.match(header, /科技研究/u);
+  assert.match(header, /"\/technologies"/u);
+  assert.doesNotMatch(header, /"\/technology"/u);
+  for (const label of ["核心人物", "核心公司"]) {
+    assert.match(header, new RegExp(label, "u"));
+  }
+  for (const marker of ["核心赛道", "核心技术对象", "core-tracks", "core-technologies"]) {
+    assert.match(technologyPage, new RegExp(marker, "u"));
+  }
   for (const objectType of registry.publicObjectTypes) {
-    assert.match(header, new RegExp(objectType.label, "u"));
-    assert.match(header, new RegExp(`"${objectType.route}"`, "u"));
-    assert.match(sitemap, new RegExp(`"${objectType.route}"`, "u"));
+    const canonicalRoute = objectType.route.split("#")[0];
+    assert.match(sitemap, new RegExp(`"${canonicalRoute}"`, "u"));
   }
 });
 

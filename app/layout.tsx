@@ -10,11 +10,11 @@ export const metadata: Metadata = {
     default: "丽泽路1号｜一级市场科技研究",
     template: "%s｜丽泽路1号",
   },
-  description: "围绕核心技术、核心赛道、核心人物与核心公司的可追溯一级市场研究。",
+  description: "围绕核心赛道、重点技术主题、核心技术对象、核心人物与核心公司的可追溯一级市场科技研究。",
   icons: { icon: "/favicon.svg" },
   openGraph: {
     title: "丽泽路1号",
-    description: "以四类核心研究对象组织公开、克制、可追溯的一级市场科技研究。",
+    description: "以核心赛道、技术主题和具体技术对象分层组织公开、克制、可追溯的一级市场科技研究。",
     type: "website",
     locale: "zh_CN",
   },

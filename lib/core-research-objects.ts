@@ -1,6 +1,7 @@
 import { companies } from "@/lib/catalog-data";
 import { researchPeople } from "@/lib/people-data";
 import { publishedTrackingResearchEntities } from "@/lib/published-tracking-entity-research";
+import { technologyTopicDefinitions } from "@/lib/technology-topics";
 import { trackedSectors } from "@/lib/tracked-sectors";
 
 function normalizeResearchObjectName(value: string) {
@@ -43,6 +44,7 @@ export const coreTechnologyEntities = publishedTrackingResearchEntities
 
 export const coreResearchObjectStats = {
   technologyCount: coreTechnologyEntities.length,
+  topicCount: technologyTopicDefinitions.length,
   trackCount: trackedSectors.length,
   personCount: researchPeople.length,
   companyCount: companies.length,

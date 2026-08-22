@@ -15,7 +15,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
     "",
     "/technologies",
-    "/technology",
     "/people",
     "/companies",
     "/institutions",
@@ -24,7 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/favorites",
     "/search",
     "/tracking",
-    ...trackedSectors.map((item) => `/technology/${item.slug}`),
+    ...trackedSectors.map((item) => `/technologies/tracks/${item.slug}`),
     ...companies.map((item) => `/companies/${item.slug}`),
     ...institutionCatalog.map((item) => `/institutions/${item.slug}`),
     ...reports.map((item) => `/reports/${item.slug}`),
