@@ -42,6 +42,7 @@ type SectorQualityInput = Pick<
   | "title"
   | "summary"
   | "source"
+  | "href"
   | "track"
   | "topicSlugs"
   | "sourceGrade"
@@ -365,7 +366,10 @@ export function assessSectorQuality(
   );
   const currentTrackTitleTerms = matchedSectorAnchors(item.title, currentTrack);
   const currentTrackSummaryTerms = matchedSectorAnchors(item.summary, currentTrack);
-  const currentTrackSourceTerms = matchedSectorAnchors(item.source, currentTrack);
+  const currentTrackSourceTerms = matchedSectorAnchors(
+    `${item.source} ${item.href}`,
+    currentTrack,
+  );
 
   let category: SectorQualityCategory;
   let reason: string;
@@ -379,14 +383,15 @@ export function assessSectorQuality(
       ...new Set([...currentTrackTitleTerms, ...currentTrackSourceTerms]),
     ];
     reason = `标题或原始信源仍有“${anchors.join("、")}”等当前赛道锚点，同时出现 ${incompatible.map((topic) => topic.name).join("、")} 的跨赛道技术主题。`;
+  } else if (currentTrackSummaryTerms.length) {
+    category = "needs-review";
+    reason = `摘要仍有“${currentTrackSummaryTerms.join("、")}”等当前赛道锚点；虽然标题支持 ${incompatible.map((topic) => topic.name).join("、")}，但不足以判定应直接改写赛道。`;
   } else if (incompatibleTitleEvidence && recommendations.length) {
     category = "high-confidence-misclassification";
-    reason = `标题直接命中 ${incompatible.map((topic) => topic.name).join("、")}，但标题和原始信源都没有“${currentTrack}”锚点，且该赛道不在这些主题的父赛道中。`;
+    reason = `标题直接命中 ${incompatible.map((topic) => topic.name).join("、")}，而标题、摘要和原始信源都没有“${currentTrack}”锚点，且该赛道不在这些主题的父赛道中。`;
   } else {
     category = "needs-review";
-    reason = currentTrackSummaryTerms.length
-      ? `摘要仍有“${currentTrackSummaryTerms.join("、")}”等当前赛道锚点，但跨赛道主题证据不足以判断应保留还是改写。`
-      : `跨赛道主题主要来自摘要或弱证据，暂不足以自动建议改写“${currentTrack}”。`;
+    reason = `跨赛道主题主要来自摘要或弱证据，暂不足以自动建议改写“${currentTrack}”。`;
   }
 
   return {
