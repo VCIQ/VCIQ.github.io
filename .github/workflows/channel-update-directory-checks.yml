@@ -33,6 +33,7 @@ on:
       - "scripts/audit-sector-normalization.ts"
       - "scripts/audit-canonical-sector-assignments.ts"
       - "scripts/audit-analysis-eligibility.ts"
+      - "scripts/audit-residual-precision.ts"
       - "tests/channel-updates.test.ts"
       - "tests/tracking-taxonomy-identity.test.ts"
       - "tests/technology-topics.test.ts"
@@ -74,6 +75,7 @@ on:
       - "scripts/audit-sector-normalization.ts"
       - "scripts/audit-canonical-sector-assignments.ts"
       - "scripts/audit-analysis-eligibility.ts"
+      - "scripts/audit-residual-precision.ts"
       - "tests/channel-updates.test.ts"
       - "tests/tracking-taxonomy-identity.test.ts"
       - "tests/technology-topics.test.ts"
@@ -110,3 +112,5 @@ jobs:
         run: npm run audit:canonical-sector-assignments
       - name: Audit clean analysis population
         run: npm run audit:analysis-eligibility
+      - name: Audit residual precision
+        run: npm run audit:residual-precision
