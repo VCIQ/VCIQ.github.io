@@ -10,9 +10,17 @@ import {
 import { useId, useMemo, useState } from "react";
 import {
   ALL_CHANNEL_UPDATE_CLASSIFICATIONS,
+  ALL_CHANNEL_UPDATE_EVIDENCE,
   ALL_CHANNEL_UPDATE_KEYWORDS,
+  ALL_CHANNEL_UPDATE_REGIONS,
+  ALL_CHANNEL_UPDATE_TOPICS,
+  ALL_CHANNEL_UPDATE_TRACKS,
   collectChannelUpdateClassifications,
+  collectChannelUpdateEvidenceGrades,
   collectChannelUpdateKeywords,
+  collectChannelUpdateRegions,
+  collectChannelUpdateTopics,
+  collectChannelUpdateTracks,
   countChannelUpdatesFirstSeenForSnapshotDay,
   countChannelUpdatesForSnapshotDay,
   filterAndSortChannelUpdates,
@@ -26,7 +34,7 @@ import { buildTrackingCaptureLink } from "@/lib/tracking-admin-link";
 import styles from "./channel-update-directory.module.css";
 
 const channelLabels: Record<ChannelUpdateKey, string> = {
-  technology: "新兴科技",
+  technology: "科技研究",
   companies: "创业案例",
   institutions: "投资机构",
   reports: "研究报告",
@@ -51,22 +59,94 @@ export function ChannelUpdateDirectoryClient({
 }) {
   const eventTypeSelectId = useId();
   const classificationSelectId = useId();
+  const trackSelectId = useId();
+  const topicSelectId = useId();
+  const regionSelectId = useId();
+  const evidenceSelectId = useId();
   const sortSelectId = useId();
   const [keyword, setKeyword] = useState(ALL_CHANNEL_UPDATE_KEYWORDS);
   const [classification, setClassification] = useState(
     ALL_CHANNEL_UPDATE_CLASSIFICATIONS,
   );
+  const [track, setTrack] = useState(ALL_CHANNEL_UPDATE_TRACKS);
+  const [topic, setTopic] = useState(ALL_CHANNEL_UPDATE_TOPICS);
+  const [region, setRegion] = useState(ALL_CHANNEL_UPDATE_REGIONS);
+  const [evidence, setEvidence] = useState(ALL_CHANNEL_UPDATE_EVIDENCE);
   const [sortOrder, setSortOrder] = useState<ChannelUpdateSortOrder>("newest");
   const [archiveItems, setArchiveItems] = useState<ChannelUpdateDirectory["items"] | null>(null);
   const [archiveLoading, setArchiveLoading] = useState(false);
   const [archiveError, setArchiveError] = useState(false);
 
+  const isTechnologyChannel = channel === "technology";
   const allItems = archiveItems ?? directory.items;
   const fullArchiveLoaded = archiveItems !== null || directory.items.length >= totalItemCount;
 
-  const eventTypeOptions = useMemo(
-    () => collectChannelUpdateKeywords(allItems),
+  const trackOptions = useMemo(
+    () => collectChannelUpdateTracks(allItems),
     [allItems],
+  );
+  const trackScopedItems = useMemo(
+    () =>
+      isTechnologyChannel
+        ? filterAndSortChannelUpdates({
+            items: allItems,
+            keyword: ALL_CHANNEL_UPDATE_KEYWORDS,
+            track,
+            sortOrder: "newest",
+          })
+        : allItems,
+    [allItems, isTechnologyChannel, track],
+  );
+  const topicOptions = useMemo(
+    () => collectChannelUpdateTopics(trackScopedItems),
+    [trackScopedItems],
+  );
+  const topicScopedItems = useMemo(
+    () =>
+      isTechnologyChannel
+        ? filterAndSortChannelUpdates({
+            items: trackScopedItems,
+            keyword: ALL_CHANNEL_UPDATE_KEYWORDS,
+            topic,
+            sortOrder: "newest",
+          })
+        : allItems,
+    [allItems, isTechnologyChannel, topic, trackScopedItems],
+  );
+  const eventTypeOptions = useMemo(
+    () => collectChannelUpdateKeywords(topicScopedItems),
+    [topicScopedItems],
+  );
+  const eventScopedItems = useMemo(
+    () =>
+      isTechnologyChannel
+        ? filterAndSortChannelUpdates({
+            items: topicScopedItems,
+            keyword,
+            sortOrder: "newest",
+          })
+        : allItems,
+    [allItems, isTechnologyChannel, keyword, topicScopedItems],
+  );
+  const regionOptions = useMemo(
+    () => collectChannelUpdateRegions(eventScopedItems),
+    [eventScopedItems],
+  );
+  const regionScopedItems = useMemo(
+    () =>
+      isTechnologyChannel
+        ? filterAndSortChannelUpdates({
+            items: eventScopedItems,
+            keyword: ALL_CHANNEL_UPDATE_KEYWORDS,
+            region,
+            sortOrder: "newest",
+          })
+        : allItems,
+    [allItems, eventScopedItems, isTechnologyChannel, region],
+  );
+  const evidenceOptions = useMemo(
+    () => collectChannelUpdateEvidenceGrades(regionScopedItems),
+    [regionScopedItems],
   );
   const classificationOptions = useMemo(
     () => collectChannelUpdateClassifications(allItems),
@@ -77,10 +157,26 @@ export function ChannelUpdateDirectoryClient({
       filterAndSortChannelUpdates({
         items: allItems,
         keyword,
-        classification,
+        classification: isTechnologyChannel
+          ? ALL_CHANNEL_UPDATE_CLASSIFICATIONS
+          : classification,
+        track: isTechnologyChannel ? track : ALL_CHANNEL_UPDATE_TRACKS,
+        topic: isTechnologyChannel ? topic : ALL_CHANNEL_UPDATE_TOPICS,
+        region: isTechnologyChannel ? region : ALL_CHANNEL_UPDATE_REGIONS,
+        evidence: isTechnologyChannel ? evidence : ALL_CHANNEL_UPDATE_EVIDENCE,
         sortOrder,
       }),
-    [allItems, classification, keyword, sortOrder],
+    [
+      allItems,
+      classification,
+      evidence,
+      isTechnologyChannel,
+      keyword,
+      region,
+      sortOrder,
+      topic,
+      track,
+    ],
   );
   const firstSeenItemCount = useMemo(
     () => countChannelUpdatesFirstSeenForSnapshotDay(allItems, directory.generatedAt),
@@ -98,9 +194,18 @@ export function ChannelUpdateDirectoryClient({
     }
     return latest?.id ?? "";
   }, [visibleItems]);
-  const isFiltered =
-    keyword !== ALL_CHANNEL_UPDATE_KEYWORDS ||
-    classification !== ALL_CHANNEL_UPDATE_CLASSIFICATIONS;
+  const activeFilterLabels = isTechnologyChannel
+    ? [
+        track !== ALL_CHANNEL_UPDATE_TRACKS ? track : "",
+        topic !== ALL_CHANNEL_UPDATE_TOPICS ? topic : "",
+        keyword !== ALL_CHANNEL_UPDATE_KEYWORDS ? keyword : "",
+        region !== ALL_CHANNEL_UPDATE_REGIONS ? region : "",
+        evidence !== ALL_CHANNEL_UPDATE_EVIDENCE ? `${evidence}级` : "",
+      ].filter(Boolean)
+    : [
+        keyword !== ALL_CHANNEL_UPDATE_KEYWORDS ? keyword : "",
+        classification !== ALL_CHANNEL_UPDATE_CLASSIFICATIONS ? classification : "",
+      ].filter(Boolean);
 
   async function loadFullArchive() {
     if (fullArchiveLoaded || archiveLoading) return;
@@ -129,7 +234,7 @@ export function ChannelUpdateDirectoryClient({
       url: item.href,
       title: item.title,
       summary: item.summary,
-      keywords: item.keywords,
+      keywords: [...item.keywords, ...(item.topicNames ?? [])].slice(0, 8),
       source: item.source,
       channel,
     });
@@ -165,7 +270,7 @@ export function ChannelUpdateDirectoryClient({
           {archiveError ? <small>完整目录暂时不可用；最新更新仍可正常浏览。</small> : null}
         </div>
         <div className={styles.snapshot}>
-          <span>滚动总库</span>
+          <span>{isTechnologyChannel ? "聚合事件库" : "滚动总库"}</span>
           <strong>{totalItemCount}</strong>
           <small title="首次收录按精确 firstSeenAt 计算；快照日事件按来源事件日期计算">
             当前载入 {allItems.length} · 今日首次收录 {firstSeenItemCount} · 快照日事件 {snapshotDayItemCount}
@@ -175,11 +280,19 @@ export function ChannelUpdateDirectoryClient({
 
       {allItems.length ? (
         <>
-          <div className={styles.controls}>
+          <div
+            className={`${styles.controls} ${
+              isTechnologyChannel ? styles.technologyControls : ""
+            }`}
+          >
             <div className={styles.controlIntro}>
               <Tags size={17} aria-hidden="true" />
               <div>
-                <strong>按事件和证据分类筛选</strong>
+                <strong>
+                  {isTechnologyChannel
+                    ? "按研究 taxonomy 逐层筛选"
+                    : "按事件和证据分类筛选"}
+                </strong>
                 <span>
                   {fullArchiveLoaded
                     ? "当前筛选完整滚动目录。"
@@ -187,6 +300,45 @@ export function ChannelUpdateDirectoryClient({
                 </span>
               </div>
             </div>
+
+            {isTechnologyChannel ? (
+              <>
+                <label className={styles.control} htmlFor={trackSelectId}>
+                  <span>核心赛道</span>
+                  <select
+                    id={trackSelectId}
+                    value={track}
+                    onChange={(event) => {
+                      setTrack(event.target.value);
+                      setTopic(ALL_CHANNEL_UPDATE_TOPICS);
+                    }}
+                  >
+                    <option value={ALL_CHANNEL_UPDATE_TRACKS}>全部赛道</option>
+                    {trackOptions.map((option) => (
+                      <option key={option.keyword} value={option.keyword}>
+                        {option.keyword}（{option.count}）
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
+                <label className={styles.control} htmlFor={topicSelectId}>
+                  <span>技术主题</span>
+                  <select
+                    id={topicSelectId}
+                    value={topic}
+                    onChange={(event) => setTopic(event.target.value)}
+                  >
+                    <option value={ALL_CHANNEL_UPDATE_TOPICS}>全部主题</option>
+                    {topicOptions.map((option) => (
+                      <option key={option.keyword} value={option.keyword}>
+                        {option.keyword}（{option.count}）
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </>
+            ) : null}
 
             <label className={styles.control} htmlFor={eventTypeSelectId}>
               <span>事件类型</span>
@@ -196,7 +348,7 @@ export function ChannelUpdateDirectoryClient({
                 onChange={(event) => setKeyword(event.target.value)}
               >
                 <option value={ALL_CHANNEL_UPDATE_KEYWORDS}>
-                  全部事件（{allItems.length}）
+                  全部事件（{topicScopedItems.length}）
                 </option>
                 {eventTypeOptions.map((option) => (
                   <option key={option.keyword} value={option.keyword}>
@@ -206,23 +358,59 @@ export function ChannelUpdateDirectoryClient({
               </select>
             </label>
 
-            <label className={styles.control} htmlFor={classificationSelectId}>
-              <span>来源 / 频道分类</span>
-              <select
-                id={classificationSelectId}
-                value={classification}
-                onChange={(event) => setClassification(event.target.value)}
-              >
-                <option value={ALL_CHANNEL_UPDATE_CLASSIFICATIONS}>
-                  全部分类
-                </option>
-                {classificationOptions.map((option) => (
-                  <option key={option.keyword} value={option.keyword}>
-                    {option.keyword}（{option.count}）
+            {isTechnologyChannel ? (
+              <>
+                <label className={styles.control} htmlFor={regionSelectId}>
+                  <span>地区</span>
+                  <select
+                    id={regionSelectId}
+                    value={region}
+                    onChange={(event) => setRegion(event.target.value)}
+                  >
+                    <option value={ALL_CHANNEL_UPDATE_REGIONS}>全部地区</option>
+                    {regionOptions.map((option) => (
+                      <option key={option.keyword} value={option.keyword}>
+                        {option.keyword}（{option.count}）
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
+                <label className={styles.control} htmlFor={evidenceSelectId}>
+                  <span>证据等级</span>
+                  <select
+                    id={evidenceSelectId}
+                    value={evidence}
+                    onChange={(event) => setEvidence(event.target.value)}
+                  >
+                    <option value={ALL_CHANNEL_UPDATE_EVIDENCE}>全部等级</option>
+                    {evidenceOptions.map((option) => (
+                      <option key={option.keyword} value={option.keyword}>
+                        {option.keyword}级（{option.count}）
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </>
+            ) : (
+              <label className={styles.control} htmlFor={classificationSelectId}>
+                <span>来源 / 频道分类</span>
+                <select
+                  id={classificationSelectId}
+                  value={classification}
+                  onChange={(event) => setClassification(event.target.value)}
+                >
+                  <option value={ALL_CHANNEL_UPDATE_CLASSIFICATIONS}>
+                    全部分类
                   </option>
-                ))}
-              </select>
-            </label>
+                  {classificationOptions.map((option) => (
+                    <option key={option.keyword} value={option.keyword}>
+                      {option.keyword}（{option.count}）
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
 
             <label className={styles.control} htmlFor={sortSelectId}>
               <span>时间排序</span>
@@ -241,17 +429,8 @@ export function ChannelUpdateDirectoryClient({
             <div className={styles.resultSummary} aria-live="polite">
               <ArrowDownUp size={14} aria-hidden="true" />
               <span>
-                {isFiltered
-                  ? `${keyword !== ALL_CHANNEL_UPDATE_KEYWORDS ? `“${keyword}”` : ""}${
-                      keyword !== ALL_CHANNEL_UPDATE_KEYWORDS &&
-                      classification !== ALL_CHANNEL_UPDATE_CLASSIFICATIONS
-                        ? " + "
-                        : ""
-                    }${
-                      classification !== ALL_CHANNEL_UPDATE_CLASSIFICATIONS
-                        ? `“${classification}”`
-                        : ""
-                    } · `
+                {activeFilterLabels.length
+                  ? `${activeFilterLabels.map((value) => `“${value}”`).join(" + ")} · `
                   : ""}
                 {visibleItems.length} 条
               </span>
@@ -265,10 +444,17 @@ export function ChannelUpdateDirectoryClient({
                   item.dateOriginal && item.dateOriginal !== item.date
                     ? `来源时间标注：${item.dateOriginal}`
                     : undefined;
+                const visibleSources = (item.sources ?? []).slice(0, 3);
+                const hiddenSourceCount = Math.max(
+                  0,
+                  (item.sourceCount ?? visibleSources.length) - visibleSources.length,
+                );
                 return (
                   <div className={styles.itemWrap} key={item.id}>
                     <a
-                      className={styles.item}
+                      className={`${styles.item} ${
+                        visibleSources.length > 1 ? styles.itemWithSources : ""
+                      }`}
                       href={item.href}
                       rel="noreferrer"
                       target="_blank"
@@ -283,7 +469,10 @@ export function ChannelUpdateDirectoryClient({
                       data-intelligence-source-level={item.sourceGrade}
                       data-intelligence-source-grade={item.sourceGrade}
                       data-intelligence-context={item.context}
-                      data-intelligence-keywords={item.keywords.join("|")}
+                      data-intelligence-keywords={[
+                        ...item.keywords,
+                        ...(item.topicNames ?? []),
+                      ].join("|")}
                       data-intelligence-channel={channel}
                       data-intelligence-channel-label={channelLabels[channel]}
                     >
@@ -302,6 +491,9 @@ export function ChannelUpdateDirectoryClient({
                               {item.sourceGrade}级 · {item.sourceGradeLabel}
                             </em>
                           )}
+                          {(item.sourceCount ?? 1) > 1 && (
+                            <i>{item.sourceCount} 个信源</i>
+                          )}
                           <time
                             dateTime={item.datePrecision === "undated" ? undefined : item.sortAt}
                             title={sourceDateTitle}
@@ -318,6 +510,23 @@ export function ChannelUpdateDirectoryClient({
                       </div>
                       <ArrowUpRight className={styles.arrow} size={18} aria-hidden="true" />
                     </a>
+                    {visibleSources.length > 1 ? (
+                      <div className={styles.sourceRow} aria-label="关联公开信源">
+                        <span>信源</span>
+                        {visibleSources.map((source) => (
+                          <a
+                            href={source.href}
+                            key={source.href}
+                            rel="noreferrer"
+                            target="_blank"
+                            title={source.title}
+                          >
+                            {source.name}
+                          </a>
+                        ))}
+                        {hiddenSourceCount > 0 ? <small>+{hiddenSourceCount}</small> : null}
+                      </div>
+                    ) : null}
                     <button
                       type="button"
                       className={styles.trackingLink}
@@ -334,7 +543,11 @@ export function ChannelUpdateDirectoryClient({
           ) : (
             <div className={styles.empty}>
               <strong>当前筛选条件下暂无更新</strong>
-              <p>请选择其他事件类型或来源分类，或切换回全部。</p>
+              <p>
+                {isTechnologyChannel
+                  ? "请放宽赛道、技术主题、事件类型、地区或证据等级筛选。"
+                  : "请选择其他事件类型或来源分类，或切换回全部。"}
+              </p>
             </div>
           )}
         </>
