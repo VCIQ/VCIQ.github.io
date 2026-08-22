@@ -1,0 +1,135 @@
+.section {
+  margin: 0 0 22px;
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(120deg, color-mix(in srgb, var(--green) 8%, transparent), transparent 42%),
+    var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 420px);
+  gap: 24px;
+  align-items: end;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.header p {
+  margin: 0 0 5px;
+  color: var(--green-bright);
+  font-size: 10px;
+  letter-spacing: .12em;
+}
+
+.header h2 {
+  margin: 0;
+  color: var(--text);
+  font: 500 20px/1.35 "Noto Serif SC", "Songti SC", serif;
+}
+
+.header > span {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.75;
+  text-align: right;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.card {
+  min-width: 0;
+  padding: 18px 20px;
+  border-right: 1px solid var(--border-soft);
+  color: inherit;
+  text-decoration: none;
+  transition: background .18s ease, transform .18s ease;
+}
+
+.card:last-child {
+  border-right: 0;
+}
+
+.card:hover {
+  background: color-mix(in srgb, var(--green) 7%, transparent);
+  transform: translateY(-1px);
+}
+
+.cardTop {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 8px;
+  align-items: center;
+  color: var(--green-bright);
+}
+
+.cardTop span,
+.cardTop b {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .09em;
+}
+
+.card > strong {
+  display: block;
+  margin-top: 13px;
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.card > p {
+  min-height: 42px;
+  margin: 8px 0 14px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.card > small {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--faint);
+  font-size: 10px;
+}
+
+.section > footer {
+  padding: 10px 20px;
+  border-top: 1px solid var(--border-soft);
+  color: var(--faint);
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .header {
+    grid-template-columns: 1fr;
+  }
+
+  .header > span {
+    text-align: left;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    border-right: 0;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .card:last-child {
+    border-bottom: 0;
+  }
+
+  .card > p {
+    min-height: 0;
+  }
+}

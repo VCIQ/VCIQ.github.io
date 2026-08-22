@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { ChannelUpdateDirectory } from "@/components/channel-update-directory";
+import { ResearchSynergyStrip } from "@/components/research-synergy-strip";
 import type { ChannelUpdateKey } from "@/lib/channel-updates";
 import styles from "./channel-split-layout.module.css";
 
@@ -58,20 +59,24 @@ export function ChannelSplitLayout({
       </div>
     </section>
   );
+  const showResearchSynergy = ["technology", "people", "companies"].includes(channel);
 
   return (
-    <div className={styles.splitLayout}>
-      {directoryFirst ? (
-        <>
-          {directoryPanel}
-          {updatesPanel}
-        </>
-      ) : (
-        <>
-          {updatesPanel}
-          {directoryPanel}
-        </>
-      )}
-    </div>
+    <>
+      {showResearchSynergy ? <ResearchSynergyStrip /> : null}
+      <div className={styles.splitLayout}>
+        {directoryFirst ? (
+          <>
+            {directoryPanel}
+            {updatesPanel}
+          </>
+        ) : (
+          <>
+            {updatesPanel}
+            {directoryPanel}
+          </>
+        )}
+      </div>
+    </>
   );
 }
