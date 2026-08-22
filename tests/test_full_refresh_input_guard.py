@@ -17,6 +17,10 @@ class FullRefreshInputGuardTests(unittest.TestCase):
             "tools/core_official_adapters.py",
             "tools/source_portfolio.py",
             "tools/full_refresh_input_guard.py",
+            "tools/refresh_people_profiles_with_video.py",
+            "tools/person_research_agent.py",
+            "tools/person_research_scheduler.py",
+            "tools/person_research_outcomes.py",
             "config/user_tracking.json",
             "config/official_company_sources.json",
             "config/professional_technology_media_sources.json",
@@ -70,17 +74,23 @@ class FullRefreshInputGuardTests(unittest.TestCase):
             (root / "tools").mkdir()
             (root / "config" / "user_tracking.json").write_text("{}\n", encoding="utf-8")
             (root / "tools" / "source_portfolio.py").write_text("VALUE = 1\n", encoding="utf-8")
+            (root / "tools" / "person_research_scheduler.py").write_text("VALUE = 1\n", encoding="utf-8")
             base = self._commit(root, "base")
 
             (root / "config" / "user_tracking.json").write_text('{"version":2}\n', encoding="utf-8")
             (root / "tools" / "source_portfolio.py").write_text("VALUE = 2\n", encoding="utf-8")
+            (root / "tools" / "person_research_scheduler.py").write_text("VALUE = 2\n", encoding="utf-8")
             target = self._commit(root, "live inputs")
 
             result = guard.evaluate_currentness(base, target, cwd=root)
             self.assertFalse(result["current"])
             self.assertEqual(
                 set(result["changedPaths"]),
-                {"config/user_tracking.json", "tools/source_portfolio.py"},
+                {
+                    "config/user_tracking.json",
+                    "tools/source_portfolio.py",
+                    "tools/person_research_scheduler.py",
+                },
             )
 
 
