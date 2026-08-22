@@ -31,13 +31,20 @@ export type SectorQualityFinding = {
   incompatibleTopics: string[];
   currentTrackTitleTerms: string[];
   currentTrackSummaryTerms: string[];
+  currentTrackSourceTerms: string[];
   reason: string;
   sourceGrade?: ChannelUpdateItem["sourceGrade"];
 };
 
 type SectorQualityInput = Pick<
   ChannelUpdateItem,
-  "id" | "title" | "summary" | "track" | "topicSlugs" | "sourceGrade"
+  | "id"
+  | "title"
+  | "summary"
+  | "source"
+  | "track"
+  | "topicSlugs"
+  | "sourceGrade"
 >;
 
 const sectorAnchorTerms: Record<string, string[]> = {
@@ -358,6 +365,7 @@ export function assessSectorQuality(
   );
   const currentTrackTitleTerms = matchedSectorAnchors(item.title, currentTrack);
   const currentTrackSummaryTerms = matchedSectorAnchors(item.summary, currentTrack);
+  const currentTrackSourceTerms = matchedSectorAnchors(item.source, currentTrack);
 
   let category: SectorQualityCategory;
   let reason: string;
@@ -365,12 +373,15 @@ export function assessSectorQuality(
   if (compatible.length) {
     category = "reasonable-cross-sector";
     reason = `当前赛道已有 ${compatible.map((topic) => topic.name).join("、")} 支撑，同时出现 ${incompatible.map((topic) => topic.name).join("、")} 的跨赛道证据。`;
-  } else if (currentTrackTitleTerms.length) {
+  } else if (currentTrackTitleTerms.length || currentTrackSourceTerms.length) {
     category = "reasonable-cross-sector";
-    reason = `标题仍有“${currentTrackTitleTerms.join("、")}”等当前赛道锚点，同时出现 ${incompatible.map((topic) => topic.name).join("、")} 的跨赛道技术主题。`;
+    const anchors = [
+      ...new Set([...currentTrackTitleTerms, ...currentTrackSourceTerms]),
+    ];
+    reason = `标题或原始信源仍有“${anchors.join("、")}”等当前赛道锚点，同时出现 ${incompatible.map((topic) => topic.name).join("、")} 的跨赛道技术主题。`;
   } else if (incompatibleTitleEvidence && recommendations.length) {
     category = "high-confidence-misclassification";
-    reason = `标题直接命中 ${incompatible.map((topic) => topic.name).join("、")}，但没有“${currentTrack}”的标题锚点，且该赛道不在这些主题的父赛道中。`;
+    reason = `标题直接命中 ${incompatible.map((topic) => topic.name).join("、")}，但标题和原始信源都没有“${currentTrack}”锚点，且该赛道不在这些主题的父赛道中。`;
   } else {
     category = "needs-review";
     reason = currentTrackSummaryTerms.length
@@ -389,6 +400,7 @@ export function assessSectorQuality(
     incompatibleTopics: incompatible.map((topic) => topic.name),
     currentTrackTitleTerms,
     currentTrackSummaryTerms,
+    currentTrackSourceTerms,
     reason,
     sourceGrade: item.sourceGrade,
   };
