@@ -16,6 +16,7 @@ import json
 import re
 from pathlib import Path
 from typing import Any, Iterable
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 PEOPLE_PATH = ROOT / "public" / "data" / "people.json"
@@ -49,6 +50,16 @@ DAY = 24 * 60 * 60
 MAX_TASKS_PER_PERSON = 5
 MAX_SEARCH_QUERIES = 3
 MAX_CANDIDATE_EVIDENCE = 4
+TRACKING_QUERY_KEYS = {
+    "utm_source",
+    "utm_medium",
+    "utm_campaign",
+    "utm_term",
+    "utm_content",
+    "utm_id",
+    "gclid",
+    "fbclid",
+}
 
 
 def load_json(path: Path, fallback: Any) -> Any:
@@ -64,6 +75,28 @@ def clean(value: Any, limit: int = 600) -> str:
 
 def normalize(value: Any) -> str:
     return re.sub(r"[^a-z0-9\u3400-\u9fff]+", "", clean(value, 1200).casefold())
+
+
+def canonical_url(value: Any) -> str:
+    raw = clean(value, 1600)
+    if not raw:
+        return ""
+    try:
+        parsed = urlsplit(raw)
+    except ValueError:
+        return raw.casefold()
+    if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+        return raw.casefold()
+    query = urlencode(
+        [
+            (key, val)
+            for key, val in parse_qsl(parsed.query, keep_blank_values=True)
+            if key.casefold() not in TRACKING_QUERY_KEYS
+        ],
+        doseq=True,
+    )
+    path = parsed.path.rstrip("/") or "/"
+    return urlunsplit((parsed.scheme.casefold(), parsed.netloc.casefold(), path, query, ""))
 
 
 def unique(values: Iterable[Any], *, limit: int | None = None) -> list[str]:
@@ -250,9 +283,11 @@ def execution_candidates(
     articles: list[dict[str, Any]],
     organization: str,
     target: str,
+    exclude_urls: Iterable[Any] = (),
 ) -> tuple[list[dict[str, Any]], bool]:
     org_norm = normalize(organization)
     target_norm = normalize(target)
+    excluded = {canonical_url(value) for value in exclude_urls if canonical_url(value)}
     matches: list[tuple[int, dict[str, Any], bool]] = []
     for article in articles:
         if not isinstance(article, dict):
@@ -263,10 +298,14 @@ def execution_candidates(
         target_match = bool(target_norm and target_norm in text)
         if not company_match or (target_norm and not target_match):
             continue
+        candidate = article_candidate(article)
         source_level = clean(source.get("level"))
         official = source_level in OFFICIAL_SOURCE_LEVELS
+        independent = bool(canonical_url(candidate.get("url")) and canonical_url(candidate.get("url")) not in excluded)
         score = (40 if official else 10) + (20 if target_match else 0) + min(20, int(article.get("importance") or 0))
-        matches.append((score, article_candidate(article), official and target_match))
+        if not independent:
+            score -= 30
+        matches.append((score, candidate, official and target_match and independent))
     matches.sort(key=lambda item: (item[0], item[1].get("date", "")), reverse=True)
     candidates = [item[1] for item in matches[:MAX_CANDIDATE_EVIDENCE]]
     supported = any(item[2] for item in matches)
@@ -310,7 +349,7 @@ def build_person_tasks(person: dict[str, Any], articles: list[dict[str, Any]], g
             "增加可归因于人物本人的一手材料，避免人物研究长期依赖第三方报道。",
             ["本人论文/著作", "个人或机构官方主页", "官方 YouTube/视频号", "公开演讲/问答原始视频"],
             bounded_queries(person, [topic, f"{topic} 演讲", f"{topic} 访谈"]),
-            "至少新增 1 条直接可归因于本人的公开材料；若用于观点演进，仍需第二个跨时间证据点。",
+            "人物档案至少补齐到 2 条可直接归因于本人的独立公开材料；若用于观点演进，仍需形成跨时间的同主题证据点。",
             evidence_basis=first_party[-1:] if first_party else [],
         ))
 
@@ -337,7 +376,13 @@ def build_person_tasks(person: dict[str, Any], articles: list[dict[str, Any]], g
         target = next((focus for focus in focuses if normalize(focus) and normalize(focus) in latest_text), "")
         if target:
             organization = next((org for org in organizations if normalize(org) in latest_text), organizations[0])
-            candidates, supported = execution_candidates(person, articles, organization, target)
+            candidates, supported = execution_candidates(
+                person,
+                articles,
+                organization,
+                target,
+                exclude_urls=[latest.get("url")],
+            )
             tasks.append(task(
                 person,
                 "execution_verification",
@@ -347,7 +392,7 @@ def build_person_tasks(person: dict[str, Any], articles: list[dict[str, Any]], g
                 "把“人物表达”与“组织执行”分开验证；人物观点本身不自动等同于公司战略或产品落地。",
                 ["公司官方公告/博客", "产品或技术官方发布", "监管文件", "公司官方开发者/研究页面"],
                 [],
-                "至少存在 1 条独立于人物表述的一手/官方组织来源，同时直接命中组织与目标技术/产品；第三方报道只能形成 candidate_found。",
+                "至少存在 1 条独立于人物表述、且 URL 不与人物证据重合的一手/官方组织来源，同时直接命中组织与目标技术/产品；第三方报道或同一来源复用只能形成 candidate_found。",
                 evidence_basis=[latest],
                 candidate_evidence=candidates,
                 status="supported" if supported else "candidate_found" if candidates else "open",
