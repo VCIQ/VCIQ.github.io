@@ -18,6 +18,16 @@ const highConfidenceIds = new Set(
     .filter((finding) => finding.category === "high-confidence-misclassification")
     .map((finding) => finding.id),
 );
+const correctedHighConfidenceIds = new Set(
+  population
+    .filter(
+      (entry) =>
+        entry.status === "canonical-corrected" && highConfidenceIds.has(entry.item.id),
+    )
+    .map((entry) => entry.item.id),
+);
+const remainingHighConfidenceCount =
+  highConfidenceIds.size - correctedHighConfidenceIds.size;
 
 const invalidWeights = population.filter(
   (entry) =>
@@ -34,7 +44,15 @@ const invalidTrackTargets = population.flatMap((entry) =>
     .map((track) => ({ id: entry.item.id, title: entry.item.title, track })),
 );
 const leakedHighConfidence = population.filter(
-  (entry) => highConfidenceIds.has(entry.item.id) && entry.sectorWeight > 0,
+  (entry) =>
+    highConfidenceIds.has(entry.item.id) &&
+    entry.sectorWeight > 0 &&
+    entry.status !== "canonical-corrected",
+);
+const invalidCanonicalCorrections = population.filter(
+  (entry) =>
+    entry.status === "canonical-corrected" &&
+    (!entry.canonicalAssignment || entry.sectorWeight !== 1 || entry.analysisTracks.length === 0),
 );
 const lostHighConfidenceTopics = population.filter(
   (entry) =>
@@ -97,6 +115,7 @@ const readinessViolations = [
 
 const populationCount =
   snapshot.population.included +
+  snapshot.population.canonicalCorrected +
   snapshot.population.crossSector +
   snapshot.population.downweighted +
   snapshot.population.sectorExcluded +
@@ -168,12 +187,15 @@ const audit = {
   coverage: snapshot.coverage,
   totalEvents: snapshot.population.totalEvents,
   included: snapshot.population.included,
+  canonicalCorrected: snapshot.population.canonicalCorrected,
   crossSector: snapshot.population.crossSector,
   downweighted: snapshot.population.downweighted,
   sectorExcluded: snapshot.population.sectorExcluded,
   unscoped: snapshot.population.unscoped,
   datedForTrend: snapshot.population.datedForTrend,
   highConfidenceSectorFindings: highConfidenceIds.size,
+  correctedHighConfidence: correctedHighConfidenceIds.size,
+  remainingHighConfidence: remainingHighConfidenceCount,
   activeTracks: snapshot.tracks.length,
   technologyTopics: snapshot.topics.length,
   risingTracks,
@@ -184,9 +206,14 @@ const audit = {
 
 console.log(`ANALYSIS_ELIGIBILITY_AUDIT=${JSON.stringify(audit)}`);
 
+if (snapshot.population.canonicalCorrected) {
+  console.warn(
+    `ANALYSIS_ELIGIBILITY_NOTICE: ${snapshot.population.canonicalCorrected} reviewed canonical sector assignments now contribute to sector Momentum while retaining original sector provenance`,
+  );
+}
 if (snapshot.population.sectorExcluded) {
   console.warn(
-    `ANALYSIS_ELIGIBILITY_WARNING: ${snapshot.population.sectorExcluded} high-confidence sector candidates are excluded from sector Momentum until reviewed`,
+    `ANALYSIS_ELIGIBILITY_WARNING: ${snapshot.population.sectorExcluded} unreviewed high-confidence sector candidates remain excluded from sector Momentum`,
   );
 }
 if (snapshot.population.downweighted) {
@@ -204,15 +231,18 @@ const hardFailures = [
   populationCount !== snapshot.population.totalEvents
     ? `population status counts (${populationCount}) do not reconcile to total (${snapshot.population.totalEvents})`
     : "",
-  snapshot.population.sectorExcluded !== highConfidenceIds.size
-    ? `sector-excluded count (${snapshot.population.sectorExcluded}) does not match high-confidence sector findings (${highConfidenceIds.size})`
+  snapshot.population.sectorExcluded !== remainingHighConfidenceCount
+    ? `sector-excluded count (${snapshot.population.sectorExcluded}) does not match unreviewed high-confidence findings (${remainingHighConfidenceCount})`
     : "",
   invalidWeights.length ? `${invalidWeights.length} analysis entries have invalid weights` : "",
   invalidTrackTargets.length
     ? `${invalidTrackTargets.length} analysis entries point to inactive tracks`
     : "",
   leakedHighConfidence.length
-    ? `${leakedHighConfidence.length} high-confidence sector findings leaked into sector Momentum`
+    ? `${leakedHighConfidence.length} unreviewed high-confidence sector findings leaked into sector Momentum`
+    : "",
+  invalidCanonicalCorrections.length
+    ? `${invalidCanonicalCorrections.length} canonical-corrected entries lack a valid reviewed assignment`
     : "",
   lostHighConfidenceTopics.length
     ? `${lostHighConfidenceTopics.length} high-confidence sector findings incorrectly lost valid topic evidence`
