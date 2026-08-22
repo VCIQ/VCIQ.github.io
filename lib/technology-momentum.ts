@@ -7,10 +7,11 @@ import {
 import { technologyTopicDefinitions } from "@/lib/technology-topics";
 import { userTrackingConfig } from "@/lib/user-tracking";
 
-export type MomentumDirection = "up" | "flat" | "down" | "new";
+export type MomentumDirection = "up" | "flat" | "down" | "new" | "insufficient";
 
 export type MomentumWindowComparison = {
   windowDays: number;
+  comparisonReady: boolean;
   currentWeightedEvents: number;
   previousWeightedEvents: number;
   deltaWeightedEvents: number;
@@ -33,6 +34,12 @@ export type TechnologyTopicMomentum = {
 
 export type TechnologyAnalysisSnapshot = {
   asOf: string;
+  coverage: {
+    firstReliableSeenAt: string | null;
+    observedDays: number | null;
+    sevenDayComparisonReady: boolean;
+    thirtyDayComparisonReady: boolean;
+  };
   population: {
     totalEvents: number;
     included: number;
@@ -52,7 +59,8 @@ function roundWeight(value: number) {
   return Math.round(value * 10) / 10;
 }
 
-function validDate(value: string) {
+function validDate(value: string | undefined) {
+  if (!value) return null;
   const parsed = new Date(value);
   return Number.isNaN(parsed.getTime()) ? null : parsed;
 }
@@ -66,6 +74,25 @@ function resolveAsOf(directory: ChannelUpdateDirectory) {
     .filter((value): value is Date => Boolean(value))
     .sort((left, right) => right.getTime() - left.getTime())[0];
   return newest ?? new Date("1970-01-01T00:00:00.000Z");
+}
+
+function observationCoverage(items: ChannelUpdateItem[], asOf: Date) {
+  const reliableFirstSeen = items
+    .filter((item) => item.firstSeenEstimated !== true)
+    .map((item) => validDate(item.firstSeenAt))
+    .filter((value): value is Date => Boolean(value))
+    .filter((value) => value.getTime() <= asOf.getTime())
+    .sort((left, right) => left.getTime() - right.getTime())[0];
+  const observedDays = reliableFirstSeen
+    ? Math.max(0, (asOf.getTime() - reliableFirstSeen.getTime()) / DAY_MS)
+    : null;
+
+  return {
+    firstReliableSeenAt: reliableFirstSeen?.toISOString() ?? null,
+    observedDays: observedDays === null ? null : Math.floor(observedDays * 10) / 10,
+    sevenDayComparisonReady: observedDays !== null && observedDays >= 14,
+    thirtyDayComparisonReady: observedDays !== null && observedDays >= 60,
+  };
 }
 
 function temporalWeight(item: ChannelUpdateItem) {
@@ -100,11 +127,25 @@ function compareWindow(
   entries: TechnologyAnalysisEntry[],
   asOf: Date,
   days: number,
+  comparisonReady: boolean,
   weightForEntry: (entry: TechnologyAnalysisEntry) => number,
 ): MomentumWindowComparison {
   const current = windowWeight(entries, asOf, days, 0, weightForEntry);
   const previous = windowWeight(entries, asOf, days * 2, days, weightForEntry);
   const delta = current - previous;
+
+  if (!comparisonReady) {
+    return {
+      windowDays: days,
+      comparisonReady: false,
+      currentWeightedEvents: roundWeight(current),
+      previousWeightedEvents: roundWeight(previous),
+      deltaWeightedEvents: roundWeight(delta),
+      growthPct: null,
+      direction: "insufficient",
+    };
+  }
+
   const growthPct =
     previous >= 0.5 ? Math.round((delta / previous) * 100) : current >= 0.75 ? null : 0;
 
@@ -119,6 +160,7 @@ function compareWindow(
 
   return {
     windowDays: days,
+    comparisonReady: true,
     currentWeightedEvents: roundWeight(current),
     previousWeightedEvents: roundWeight(previous),
     deltaWeightedEvents: roundWeight(delta),
@@ -141,11 +183,13 @@ export function buildTechnologyAnalysisSnapshot(
   directory: ChannelUpdateDirectory = getChannelUpdateDirectory("technology"),
 ): TechnologyAnalysisSnapshot {
   const asOf = resolveAsOf(directory);
+  const coverage = observationCoverage(directory.items, asOf);
   const population = buildTechnologyAnalysisPopulation(directory.items);
   const activeTracks = userTrackingConfig.tracks.filter((track) => track.enabled);
 
   return {
     asOf: asOf.toISOString(),
+    coverage,
     population: {
       totalEvents: population.length,
       included: population.filter((entry) => entry.status === "included").length,
@@ -157,14 +201,38 @@ export function buildTechnologyAnalysisSnapshot(
     },
     tracks: activeTracks.map((track) => ({
       name: track.name,
-      sevenDayTrend: compareWindow(population, asOf, 7, trackWeight(track.name)),
-      thirtyDayMomentum: compareWindow(population, asOf, 30, trackWeight(track.name)),
+      sevenDayTrend: compareWindow(
+        population,
+        asOf,
+        7,
+        coverage.sevenDayComparisonReady,
+        trackWeight(track.name),
+      ),
+      thirtyDayMomentum: compareWindow(
+        population,
+        asOf,
+        30,
+        coverage.thirtyDayComparisonReady,
+        trackWeight(track.name),
+      ),
     })),
     topics: technologyTopicDefinitions.map((topic) => ({
       slug: topic.slug,
       name: topic.name,
-      sevenDayTrend: compareWindow(population, asOf, 7, topicWeight(topic.slug)),
-      thirtyDayMomentum: compareWindow(population, asOf, 30, topicWeight(topic.slug)),
+      sevenDayTrend: compareWindow(
+        population,
+        asOf,
+        7,
+        coverage.sevenDayComparisonReady,
+        topicWeight(topic.slug),
+      ),
+      thirtyDayMomentum: compareWindow(
+        population,
+        asOf,
+        30,
+        coverage.thirtyDayComparisonReady,
+        topicWeight(topic.slug),
+      ),
     })),
   };
 }
