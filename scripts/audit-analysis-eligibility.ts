@@ -80,6 +80,21 @@ const invalidMomentumRows = [
   ),
 ];
 
+const readinessViolations = [
+  ...snapshot.tracks.flatMap((track) => [
+    { name: track.name, kind: "track-7d", window: track.sevenDayTrend, ready: snapshot.coverage.sevenDayComparisonReady },
+    { name: track.name, kind: "track-30d", window: track.thirtyDayMomentum, ready: snapshot.coverage.thirtyDayComparisonReady },
+  ]),
+  ...snapshot.topics.flatMap((topic) => [
+    { name: topic.name, kind: "topic-7d", window: topic.sevenDayTrend, ready: snapshot.coverage.sevenDayComparisonReady },
+    { name: topic.name, kind: "topic-30d", window: topic.thirtyDayMomentum, ready: snapshot.coverage.thirtyDayComparisonReady },
+  ]),
+].filter(({ window, ready }) =>
+  ready
+    ? !window.comparisonReady || window.direction === "insufficient"
+    : window.comparisonReady || window.direction !== "insufficient" || window.growthPct !== null,
+);
+
 const populationCount =
   snapshot.population.included +
   snapshot.population.crossSector +
@@ -88,7 +103,11 @@ const populationCount =
   snapshot.population.unscoped;
 
 const risingTracks = snapshot.tracks
-  .filter((track) => ["up", "new"].includes(track.thirtyDayMomentum.direction))
+  .filter(
+    (track) =>
+      track.thirtyDayMomentum.comparisonReady &&
+      ["up", "new"].includes(track.thirtyDayMomentum.direction),
+  )
   .sort(
     (left, right) =>
       right.thirtyDayMomentum.deltaWeightedEvents -
@@ -103,7 +122,11 @@ const risingTracks = snapshot.tracks
     growthPct: track.thirtyDayMomentum.growthPct,
   }));
 const risingTopics = snapshot.topics
-  .filter((topic) => ["up", "new"].includes(topic.thirtyDayMomentum.direction))
+  .filter(
+    (topic) =>
+      topic.thirtyDayMomentum.comparisonReady &&
+      ["up", "new"].includes(topic.thirtyDayMomentum.direction),
+  )
   .sort(
     (left, right) =>
       right.thirtyDayMomentum.deltaWeightedEvents -
@@ -117,9 +140,32 @@ const risingTopics = snapshot.topics
     previous: topic.thirtyDayMomentum.previousWeightedEvents,
     growthPct: topic.thirtyDayMomentum.growthPct,
   }));
+const currentThirtyDayTrackActivity = snapshot.tracks
+  .sort(
+    (left, right) =>
+      right.thirtyDayMomentum.currentWeightedEvents -
+      left.thirtyDayMomentum.currentWeightedEvents,
+  )
+  .slice(0, 8)
+  .map((track) => ({
+    name: track.name,
+    current: track.thirtyDayMomentum.currentWeightedEvents,
+  }));
+const currentThirtyDayTopicActivity = snapshot.topics
+  .sort(
+    (left, right) =>
+      right.thirtyDayMomentum.currentWeightedEvents -
+      left.thirtyDayMomentum.currentWeightedEvents,
+  )
+  .slice(0, 8)
+  .map((topic) => ({
+    name: topic.name,
+    current: topic.thirtyDayMomentum.currentWeightedEvents,
+  }));
 
 const audit = {
   asOf: snapshot.asOf,
+  coverage: snapshot.coverage,
   totalEvents: snapshot.population.totalEvents,
   included: snapshot.population.included,
   crossSector: snapshot.population.crossSector,
@@ -132,6 +178,8 @@ const audit = {
   technologyTopics: snapshot.topics.length,
   risingTracks,
   risingTopics,
+  currentThirtyDayTrackActivity,
+  currentThirtyDayTopicActivity,
 };
 
 console.log(`ANALYSIS_ELIGIBILITY_AUDIT=${JSON.stringify(audit)}`);
@@ -144,6 +192,11 @@ if (snapshot.population.sectorExcluded) {
 if (snapshot.population.downweighted) {
   console.warn(
     `ANALYSIS_ELIGIBILITY_WARNING: ${snapshot.population.downweighted} uncertain sector assignments are retained at 0.5 sector weight / 0.75 topic weight`,
+  );
+}
+if (!snapshot.coverage.sevenDayComparisonReady || !snapshot.coverage.thirtyDayComparisonReady) {
+  console.warn(
+    `ANALYSIS_ELIGIBILITY_WARNING: observation history is ${snapshot.coverage.observedDays ?? "unknown"} days; 7D/30D growth remains suppressed until 14/60 reliable first-seen days are available`,
   );
 }
 
@@ -172,6 +225,9 @@ const hardFailures = [
     : "",
   invalidMomentumRows.length
     ? `${invalidMomentumRows.length} track/topic momentum rows contain invalid window values`
+    : "",
+  readinessViolations.length
+    ? `${readinessViolations.length} momentum rows violate the global observation-coverage gate`
     : "",
   snapshot.tracks.length !== activeTrackNames.size
     ? `expected ${activeTrackNames.size} active track momentum rows, got ${snapshot.tracks.length}`
