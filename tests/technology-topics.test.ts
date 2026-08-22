@@ -65,10 +65,34 @@ test("short ASCII technology terms require token boundaries", () => {
   assert.equal(technologyTermMatchesText("GaN RF device", "GaN"), true);
 });
 
+test("four-character model brands still match attached version numbers", () => {
+  assert.equal(technologyTermMatchesText("Qwen3.8-Max is released", "Qwen"), true);
+  const names = technologyTopicsForText(["Qwen3.8-Max is released"]).map(
+    (topic) => topic.name,
+  );
+  assert.ok(names.includes("大模型"));
+});
+
 test("ordinary prose cannot acquire acronym-driven technology topics", () => {
   const names = technologyTopicsForText([
     "A 96GB music workstation posts forward-looking guidance",
   ]).map((topic) => topic.name);
+
+  assert.equal(names.includes("宽禁带半导体"), false);
+  assert.equal(names.includes("6G"), false);
+  assert.equal(names.includes("稳定币"), false);
+});
+
+test("entity topic matching uses the same acronym safety rules", () => {
+  const names = technologyTopicsForEntity({
+    name: "AI Music Workspace",
+    aliases: [],
+    summary: "A 96GB workstation for music creators with forward-looking revenue guidance.",
+    reasons: [],
+    notes: [],
+    researchThesis: "",
+    timeline: [],
+  }).map((topic) => topic.name);
 
   assert.equal(names.includes("宽禁带半导体"), false);
   assert.equal(names.includes("6G"), false);
