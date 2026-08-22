@@ -366,7 +366,6 @@ function technologyArticleToUpdate(article: ArticleRecord): ChannelUpdateItem | 
     article.summary,
     article.company,
     article.sector,
-    ...(article.matchedTrackingTerms ?? []),
   ]);
   const sources = articleSources(article);
   const base = articleToUpdate(article, `${track} · ${article.region}`);
