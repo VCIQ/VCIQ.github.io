@@ -22,12 +22,16 @@ on:
       - "lib/technology-topic-matching.ts"
       - "lib/technology-term-matching.ts"
       - "lib/sector-quality-audit.ts"
+      - "lib/analysis-eligibility.ts"
+      - "lib/technology-momentum.ts"
       - "public/data/articles.json"
       - "scripts/audit-technology-taxonomy.ts"
       - "scripts/audit-sector-quality.ts"
+      - "scripts/audit-analysis-eligibility.ts"
       - "tests/channel-updates.test.ts"
       - "tests/technology-topics.test.ts"
       - "tests/sector-quality-audit.test.ts"
+      - "tests/analysis-eligibility-momentum.test.ts"
       - "package.json"
       - ".github/workflows/channel-update-directory-checks.yml"
   push:
@@ -52,12 +56,16 @@ on:
       - "lib/technology-topic-matching.ts"
       - "lib/technology-term-matching.ts"
       - "lib/sector-quality-audit.ts"
+      - "lib/analysis-eligibility.ts"
+      - "lib/technology-momentum.ts"
       - "public/data/articles.json"
       - "scripts/audit-technology-taxonomy.ts"
       - "scripts/audit-sector-quality.ts"
+      - "scripts/audit-analysis-eligibility.ts"
       - "tests/channel-updates.test.ts"
       - "tests/technology-topics.test.ts"
       - "tests/sector-quality-audit.test.ts"
+      - "tests/analysis-eligibility-momentum.test.ts"
       - "package.json"
       - ".github/workflows/channel-update-directory-checks.yml"
 
@@ -77,8 +85,10 @@ jobs:
       - name: Type-check update directory
         run: npx tsc --noEmit
       - name: Run focused update-directory tests
-        run: node --import tsx --test tests/channel-updates.test.ts tests/technology-topics.test.ts tests/sector-quality-audit.test.ts
+        run: node --import tsx --test tests/channel-updates.test.ts tests/technology-topics.test.ts tests/sector-quality-audit.test.ts tests/analysis-eligibility-momentum.test.ts
       - name: Audit technology taxonomy quality
         run: npm run audit:technology-taxonomy
       - name: Audit sector assignment quality
         run: npm run audit:sector-quality
+      - name: Audit clean analysis population
+        run: npm run audit:analysis-eligibility
