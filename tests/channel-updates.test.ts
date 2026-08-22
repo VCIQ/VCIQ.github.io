@@ -6,14 +6,24 @@ import {
   UNDATED_CHANNEL_UPDATE_SORT_AT,
 } from "../lib/channel-update-date";
 import {
+  ALL_CHANNEL_UPDATE_EVIDENCE,
   ALL_CHANNEL_UPDATE_KEYWORDS,
+  ALL_CHANNEL_UPDATE_REGIONS,
+  ALL_CHANNEL_UPDATE_TOPICS,
+  ALL_CHANNEL_UPDATE_TRACKS,
+  collectChannelUpdateEvidenceGrades,
   collectChannelUpdateKeywords,
+  collectChannelUpdateRegions,
+  collectChannelUpdateTopics,
+  collectChannelUpdateTracks,
   countChannelUpdatesForSnapshotDay,
   filterAndSortChannelUpdates,
 } from "../lib/channel-update-filter";
 import { HOMEPAGE_CHANNEL_UPDATE_LIMIT } from "../lib/homepage-channel-update-config";
 import {
+  aggregateTechnologyEventUpdates,
   getChannelUpdateDirectory,
+  type ChannelUpdateItem,
   type ChannelUpdateKey,
 } from "../lib/channel-updates";
 
@@ -32,23 +42,23 @@ test("homepage channel update directory displays up to 200 deduplicated items", 
 });
 
 test("channel snapshot counts exact and relative updates on the generated day", () => {
-      const sample = getChannelUpdateDirectory("technology").items[0];
-      assert.ok(sample);
-      const items = [
-        { ...sample, id: "today-exact", sortAt: "2026-08-03T10:00:00.000Z", datePrecision: "exact" as const },
-        { ...sample, id: "today-relative", sortAt: "2026-08-03T00:00:00.000Z", datePrecision: "approximate" as const },
-        { ...sample, id: "yesterday", sortAt: "2026-08-02T23:59:59.000Z", datePrecision: "exact" as const },
-        { ...sample, id: "undated", sortAt: UNDATED_CHANNEL_UPDATE_SORT_AT, datePrecision: "undated" as const },
-      ];
+  const sample = getChannelUpdateDirectory("technology").items[0];
+  assert.ok(sample);
+  const items = [
+    { ...sample, id: "today-exact", sortAt: "2026-08-03T10:00:00.000Z", datePrecision: "exact" as const },
+    { ...sample, id: "today-relative", sortAt: "2026-08-03T00:00:00.000Z", datePrecision: "approximate" as const },
+    { ...sample, id: "yesterday", sortAt: "2026-08-02T23:59:59.000Z", datePrecision: "exact" as const },
+    { ...sample, id: "undated", sortAt: UNDATED_CHANNEL_UPDATE_SORT_AT, datePrecision: "undated" as const },
+  ];
 
-      assert.equal(
-        countChannelUpdatesForSnapshotDay(items, "2026-08-03T12:17:00.000Z"),
-        2,
-      );
-      assert.equal(countChannelUpdatesForSnapshotDay(items, "等待更新"), 0);
-    });
+  assert.equal(
+    countChannelUpdatesForSnapshotDay(items, "2026-08-03T12:17:00.000Z"),
+    2,
+  );
+  assert.equal(countChannelUpdatesForSnapshotDay(items, "等待更新"), 0);
+});
 
-    test("normalizes exact, relative and undated source labels", () => {
+test("normalizes exact, relative and undated source labels", () => {
   const exact = normalizeChannelUpdateDate("2020-05-29", snapshotTime);
   assert.equal(exact.displayDate, "2020-05-29");
   assert.equal(exact.precision, "exact");
@@ -148,6 +158,71 @@ test("channel directories deduplicate repeated original links", () => {
   }
 });
 
+test("technology directory contains at most one public row per event cluster", () => {
+  const items = getChannelUpdateDirectory("technology").items;
+  const clusters = items
+    .map((item) => item.eventClusterId)
+    .filter((value): value is string => Boolean(value));
+  assert.equal(new Set(clusters).size, clusters.length);
+  assert.ok(
+    items
+      .filter((item) => item.track)
+      .every((item) => item.region && Array.isArray(item.topicNames)),
+  );
+});
+
+test("technology event aggregation keeps the strongest source and merges source evidence", () => {
+  const sample = getChannelUpdateDirectory("technology").items.find((item) => item.track);
+  assert.ok(sample);
+  const items: ChannelUpdateItem[] = [
+    {
+      ...sample,
+      id: "cluster-b",
+      title: "媒体转载",
+      href: "https://media.example/event",
+      source: "媒体",
+      sourceGrade: "B",
+      sourceGradeLabel: "专业媒体",
+      eventClusterId: "same-event",
+      sortAt: "2026-08-21T12:00:00.000Z",
+      date: "2026-08-21",
+      dateOriginal: "2026-08-21",
+      topicNames: ["具身智能"],
+      topicSlugs: ["embodied-ai"],
+      sources: [{ name: "媒体", href: "https://media.example/event" }],
+      sourceCount: 1,
+    },
+    {
+      ...sample,
+      id: "cluster-a",
+      title: "官方发布",
+      href: "https://official.example/event",
+      source: "官方",
+      sourceGrade: "A",
+      sourceGradeLabel: "官方披露",
+      eventClusterId: "same-event",
+      sortAt: "2026-08-21T10:00:00.000Z",
+      date: "2026-08-21",
+      dateOriginal: "2026-08-21",
+      topicNames: ["人形机器人"],
+      topicSlugs: ["humanoid-robots"],
+      sources: [{ name: "官方", href: "https://official.example/event" }],
+      sourceCount: 1,
+    },
+  ];
+
+  const aggregated = aggregateTechnologyEventUpdates(items);
+  assert.equal(aggregated.length, 1);
+  assert.equal(aggregated[0].href, "https://official.example/event");
+  assert.equal(aggregated[0].sourceGrade, "A");
+  assert.equal(aggregated[0].sortAt, "2026-08-21T12:00:00.000Z");
+  assert.equal(aggregated[0].sourceCount, 2);
+  assert.deepEqual(
+    [...(aggregated[0].topicNames ?? [])].sort(),
+    ["人形机器人", "具身智能"].sort(),
+  );
+});
+
 test("filter options are exactly the visible green event labels", () => {
   for (const channel of channels) {
     const items = getChannelUpdateDirectory(channel).items;
@@ -175,6 +250,79 @@ test("event label options classify every channel and report accurate counts", ()
       assert.equal(option.count, actual, `${channel} event count is wrong for ${option.keyword}`);
     }
   }
+});
+
+test("technology filters combine track topic event region and evidence", () => {
+  const sample = getChannelUpdateDirectory("technology").items.find((item) => item.track);
+  assert.ok(sample);
+  const items: ChannelUpdateItem[] = [
+    {
+      ...sample,
+      id: "robotics-a",
+      label: "技术突破",
+      keywords: ["技术突破"],
+      track: "机器人",
+      region: "中国",
+      topicNames: ["具身智能"],
+      topicSlugs: ["embodied-ai"],
+      sourceGrade: "A",
+    },
+    {
+      ...sample,
+      id: "robotics-b",
+      label: "融资",
+      keywords: ["融资"],
+      track: "机器人",
+      region: "美国",
+      topicNames: ["人形机器人"],
+      topicSlugs: ["humanoid-robots"],
+      sourceGrade: "B",
+    },
+    {
+      ...sample,
+      id: "semiconductor-a",
+      label: "技术突破",
+      keywords: ["技术突破"],
+      track: "半导体",
+      region: "中国",
+      topicNames: ["硅光与光计算"],
+      topicSlugs: ["silicon-photonics"],
+      sourceGrade: "A",
+    },
+  ];
+
+  assert.deepEqual(
+    collectChannelUpdateTracks(items).map((option) => option.keyword).sort(),
+    ["半导体", "机器人"].sort(),
+  );
+  assert.ok(collectChannelUpdateTopics(items).some((option) => option.keyword === "具身智能"));
+  assert.ok(collectChannelUpdateRegions(items).some((option) => option.keyword === "中国"));
+  assert.deepEqual(
+    collectChannelUpdateEvidenceGrades(items).map((option) => option.keyword),
+    ["A", "B"],
+  );
+
+  const filtered = filterAndSortChannelUpdates({
+    items,
+    keyword: "技术突破",
+    track: "机器人",
+    topic: "具身智能",
+    region: "中国",
+    evidence: "A",
+    sortOrder: "newest",
+  });
+  assert.deepEqual(filtered.map((item) => item.id), ["robotics-a"]);
+
+  const all = filterAndSortChannelUpdates({
+    items,
+    keyword: ALL_CHANNEL_UPDATE_KEYWORDS,
+    track: ALL_CHANNEL_UPDATE_TRACKS,
+    topic: ALL_CHANNEL_UPDATE_TOPICS,
+    region: ALL_CHANNEL_UPDATE_REGIONS,
+    evidence: ALL_CHANNEL_UPDATE_EVIDENCE,
+    sortOrder: "newest",
+  });
+  assert.equal(all.length, items.length);
 });
 
 test("event-filtered updates remain time ordered", () => {
