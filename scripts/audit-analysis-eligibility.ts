@@ -38,6 +38,15 @@ const invalidWeights = population.filter(
     entry.topicWeight < 0 ||
     entry.topicWeight > 1,
 );
+const invalidContentWeights = population.filter(
+  (entry) =>
+    entry.contentWeight === undefined ||
+    ![0.25, 0.5, 1].includes(entry.contentWeight) ||
+    (entry.contentRelevanceStatus === "priority-topic" && entry.contentWeight !== 1) ||
+    (entry.contentRelevanceStatus === "usable" && entry.contentWeight !== 1) ||
+    (entry.contentRelevanceStatus === "partial-evidence" && entry.contentWeight !== 0.5) ||
+    (entry.contentRelevanceStatus === "weak-evidence" && entry.contentWeight !== 0.25),
+);
 const invalidTrackTargets = population.flatMap((entry) =>
   entry.analysisTracks
     .filter((track) => !activeTrackNames.has(track))
@@ -192,6 +201,8 @@ const audit = {
   downweighted: snapshot.population.downweighted,
   sectorExcluded: snapshot.population.sectorExcluded,
   unscoped: snapshot.population.unscoped,
+  contentPartialEvidence: snapshot.population.contentPartialEvidence,
+  contentWeakEvidence: snapshot.population.contentWeakEvidence,
   datedForTrend: snapshot.population.datedForTrend,
   highConfidenceSectorFindings: highConfidenceIds.size,
   correctedHighConfidence: correctedHighConfidenceIds.size,
@@ -221,6 +232,11 @@ if (snapshot.population.downweighted) {
     `ANALYSIS_ELIGIBILITY_WARNING: ${snapshot.population.downweighted} uncertain sector assignments are retained at 0.5 sector weight / 0.75 topic weight`,
   );
 }
+if (snapshot.population.contentPartialEvidence || snapshot.population.contentWeakEvidence) {
+  console.warn(
+    `ANALYSIS_ELIGIBILITY_NOTICE: content relevance weighting applies to ${snapshot.population.contentPartialEvidence} partial-evidence events at 0.5 and ${snapshot.population.contentWeakEvidence} weak-evidence events at 0.25; no raw events are deleted`,
+  );
+}
 if (!snapshot.coverage.sevenDayComparisonReady || !snapshot.coverage.thirtyDayComparisonReady) {
   console.warn(
     `ANALYSIS_ELIGIBILITY_WARNING: observation history is ${snapshot.coverage.observedDays ?? "unknown"} days; 7D/30D growth remains suppressed until 14/60 reliable first-seen days are available`,
@@ -235,6 +251,9 @@ const hardFailures = [
     ? `sector-excluded count (${snapshot.population.sectorExcluded}) does not match unreviewed high-confidence findings (${remainingHighConfidenceCount})`
     : "",
   invalidWeights.length ? `${invalidWeights.length} analysis entries have invalid weights` : "",
+  invalidContentWeights.length
+    ? `${invalidContentWeights.length} analysis entries violate content relevance weighting policy`
+    : "",
   invalidTrackTargets.length
     ? `${invalidTrackTargets.length} analysis entries point to inactive tracks`
     : "",

@@ -75,7 +75,13 @@ export const technologyTopicDefinitions: TechnologyTopicDefinition[] = [
     alertQuery: "推理模型",
     trackNames: ["AI / AGI"],
     description: "强调复杂推理、长程任务、规划与验证能力的新一代模型。",
-    matchTerms: ["推理模型", "reasoning model", "reasoning", "推理能力", "长程推理"],
+    matchTerms: [
+      "推理模型",
+      "reasoning model",
+      "reasoning models",
+      "推理能力",
+      "长程推理",
+    ],
   },
   {
     slug: "multimodal-models",
