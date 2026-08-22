@@ -18,7 +18,10 @@ export function ChannelUpdateDirectory({
   const rawDirectory = getChannelUpdateDirectory(channel);
   const fullDirectory =
     channel === "people" ? aggregatePeopleUpdateDirectory(rawDirectory) : rawDirectory;
-  const initialItems = fullDirectory.items.slice(0, INITIAL_CHANNEL_UPDATE_LIMIT);
+  const initialItems =
+    channel === "people"
+      ? fullDirectory.items
+      : fullDirectory.items.slice(0, INITIAL_CHANNEL_UPDATE_LIMIT);
   const directory = {
     ...fullDirectory,
     items:
