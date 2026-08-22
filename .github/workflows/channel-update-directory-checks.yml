@@ -29,6 +29,7 @@ on:
       - "public/data/articles.json"
       - "scripts/audit-technology-taxonomy.ts"
       - "scripts/audit-sector-quality.ts"
+      - "scripts/audit-sector-normalization.ts"
       - "scripts/audit-canonical-sector-assignments.ts"
       - "scripts/audit-analysis-eligibility.ts"
       - "tests/channel-updates.test.ts"
@@ -67,6 +68,7 @@ on:
       - "public/data/articles.json"
       - "scripts/audit-technology-taxonomy.ts"
       - "scripts/audit-sector-quality.ts"
+      - "scripts/audit-sector-normalization.ts"
       - "scripts/audit-canonical-sector-assignments.ts"
       - "scripts/audit-analysis-eligibility.ts"
       - "tests/channel-updates.test.ts"
@@ -98,6 +100,8 @@ jobs:
         run: npm run audit:technology-taxonomy
       - name: Audit sector assignment quality
         run: npm run audit:sector-quality
+      - name: Audit raw-to-channel sector normalization
+        run: npm run audit:sector-normalization
       - name: Audit reviewed canonical sector assignments
         run: npm run audit:canonical-sector-assignments
       - name: Audit clean analysis population
