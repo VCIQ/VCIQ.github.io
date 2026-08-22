@@ -11,9 +11,14 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import json
+import sys
 from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from tools.person_research_agent import (
     OUTPUT_PATH as AGENDA_PATH,
@@ -23,7 +28,6 @@ from tools.person_research_agent import (
     parse_date,
 )
 
-ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_PATH = ROOT / "public" / "data" / "person_research_queue.json"
 
 MAX_DAILY_PEOPLE = 10
