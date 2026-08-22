@@ -3,7 +3,7 @@ import {
   buildSectorQualityReviewQueue,
   type SectorQualityCategory,
 } from "@/lib/sector-quality-audit";
-import { trackedSectors } from "@/lib/tracked-sectors";
+import { userTrackingConfig } from "@/lib/user-tracking";
 
 const technologyItems = getChannelUpdateDirectory("technology").items.filter(
   (item) => Boolean(item.track),
@@ -35,7 +35,11 @@ function countBy(values: string[]) {
     );
 }
 
-const activeTrackNames = new Set(trackedSectors.map((track) => track.name));
+const activeTrackNames = new Set(
+  userTrackingConfig.tracks
+    .filter((track) => track.enabled)
+    .map((track) => track.name),
+);
 const invalidRecommendations = queue.flatMap((finding) =>
   finding.recommendedTracks
     .filter((track) => !activeTrackNames.has(track))
