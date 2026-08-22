@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Users } from "lucide-react";
+import { RotateCcw, Search, Users } from "lucide-react";
 import Link from "next/link";
+import Script from "next/script";
 import { ChannelSplitLayout } from "@/components/channel-split-layout";
 import { peopleGeneratedAt, researchPeople } from "@/lib/people-data";
 import { isPersonDirectoryChangeRecent } from "@/lib/person-directory-filter";
 import { getPersonResearchSnapshot } from "@/lib/people-research";
-import { PeopleDirectoryControls } from "./people-directory-controls";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -22,10 +22,17 @@ const statusLabels = {
   pending: "待抓取",
 } as const;
 
+const statusCodes = {
+  complete: "c",
+  partial: "i",
+  pending: "p",
+} as const;
+
 export default function PeoplePage() {
   const trackedCount = researchPeople.filter((person) => person.tracked).length;
   const sectors = Array.from(new Set(researchPeople.flatMap((person) => person.sectors)))
     .sort((left, right) => left.localeCompare(right, "zh-CN"));
+  const sectorCodes = new Map(sectors.map((sector, index) => [sector, index.toString(36)]));
   const directory = researchPeople
     .map((person) => {
       const research = getPersonResearchSnapshot(person);
@@ -36,6 +43,10 @@ export default function PeoplePage() {
           research.latestChange?.date,
           peopleGeneratedAt,
         ),
+        sectorKey: person.sectors
+          .map((sector) => sectorCodes.get(sector))
+          .filter(Boolean)
+          .join("."),
       };
     })
     .sort((left, right) =>
@@ -72,16 +83,58 @@ export default function PeoplePage() {
         bodyClassName={styles.body}
         directoryFirst
       >
-        <PeopleDirectoryControls sectors={sectors} total={directory.length} gridId={DIRECTORY_GRID_ID} />
+        <div className={styles.filters} aria-label="人物研究目录筛选" data-pf>
+          <label className={styles.search}>
+            <Search size={15} aria-hidden="true" />
+            <input
+              data-q
+              placeholder="搜索人物、角色或研究摘要"
+              aria-label="搜索人物研究档案"
+              aria-controls={DIRECTORY_GRID_ID}
+            />
+          </label>
+
+          <select data-sel aria-label="按赛道筛选人物" aria-controls={DIRECTORY_GRID_ID} defaultValue="">
+            <option value="">全部赛道</option>
+            {sectors.map((sector) => (
+              <option value={sectorCodes.get(sector)} key={sector}>{sector}</option>
+            ))}
+          </select>
+
+          <select data-st aria-label="按档案状态筛选人物" aria-controls={DIRECTORY_GRID_ID} defaultValue="">
+            <option value="">全部档案状态</option>
+            <option value="c">档案较完整</option>
+            <option value="i">补充中</option>
+            <option value="p">待抓取</option>
+          </select>
+
+          <select data-ch aria-label="按近期变化筛选人物" aria-controls={DIRECTORY_GRID_ID} defaultValue="">
+            <option value="">全部变化状态</option>
+            <option value="r">90 天内有变化</option>
+            <option value="q">暂无近期变化</option>
+          </select>
+
+          <div className={styles.filterMeta}>
+            <span data-count aria-live="polite">显示 {directory.length} / {directory.length} 位人物</span>
+            <button type="button" data-reset disabled>
+              <RotateCcw size={13} aria-hidden="true" />
+              重置
+            </button>
+          </div>
+
+          <p className={styles.emptyFilter} data-empty role="status" hidden>
+            没有匹配的人物档案，请调整关键词或筛选条件。
+          </p>
+        </div>
+
         <div className="people-grid" id={DIRECTORY_GRID_ID}>
-          {directory.map(({ person, research, recentChange }) => (
+          {directory.map(({ person, research, recentChange, sectorKey }) => (
             <Link
               href={`/people/${person.slug}`}
               key={person.slug}
-              data-person-card
-              data-sectors={person.sectors.join("|")}
-              data-status={person.status}
-              data-recent-change={recentChange ? "true" : "false"}
+              data-s={sectorKey}
+              data-t={statusCodes[person.status]}
+              data-r={recentChange ? "" : undefined}
             >
               <div className="person-monogram">{person.name.slice(0, 1)}</div>
               <h2>{person.name}</h2>
@@ -118,6 +171,7 @@ export default function PeoplePage() {
             </Link>
           ))}
         </div>
+        <Script src="/people-directory-filter.js" strategy="afterInteractive" />
       </ChannelSplitLayout>
     </main>
   );
