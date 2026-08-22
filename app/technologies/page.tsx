@@ -143,7 +143,7 @@ export default function TechnologyResearchPage() {
             <div>
               <span className={styles.layerIndex}>L3 / TECHNOLOGY ENTITIES</span>
               <h3>核心技术对象</h3>
-              <p>只收录已有公开证据、人工发现或研究记录的具体技术、模型、技术系统与关键能力。</p>
+              <p>只收录已有公开证据、人工发现或研究记录的具体技术、模型、技术系统与关键能力；目录保持紧凑，详情保留摘要与可追溯时间线。</p>
             </div>
             <span className={styles.layerCount}>{coreTechnologyEntities.length} 个对象</span>
           </div>
