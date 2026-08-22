@@ -1,6 +1,6 @@
 .body {
   min-width: 0;
-  max-height: 980px;
+  max-height: 1100px;
   padding: 16px 20px 20px;
   overflow: auto;
   scrollbar-color: var(--border) transparent;
@@ -13,7 +13,7 @@
 }
 
 .body :global(.people-grid > a) {
-  min-height: 330px;
+  min-height: 470px;
   padding: 18px;
   background: color-mix(in srgb, var(--surface) 90%, transparent);
 }
@@ -22,10 +22,6 @@
   width: 58px;
   height: 58px;
   font-size: 23px;
-}
-
-.body :global(.people-grid p) {
-  margin-top: 18px;
 }
 
 .body :global(.people-grid h2) {
@@ -37,6 +33,41 @@
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
+}
+
+.cardResearch {
+  display: grid;
+  gap: 11px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.researchRow {
+  display: grid;
+  gap: 4px;
+}
+
+.researchRow b {
+  color: var(--faint);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.researchRow p {
+  display: -webkit-box;
+  margin: 0 !important;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.55;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.researchRow .latestChange {
+  color: var(--text);
 }
 
 @media (max-width: 1120px) {
@@ -62,5 +93,9 @@
 @media (max-width: 560px) {
   .body :global(.people-grid) {
     grid-template-columns: 1fr;
+  }
+
+  .body :global(.people-grid > a) {
+    min-height: 0;
   }
 }
