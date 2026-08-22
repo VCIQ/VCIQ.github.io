@@ -56,6 +56,7 @@ function percent(value: number | null) {
 export default function PersonResearchQueuePanel() {
   const queue = personResearchQueue;
   const memory = queue.outcomeMemory;
+  const dailyQueryUsage = queue.usedQuerySlotsToday + queue.allocatedQuerySlots;
 
   return (
     <section className={styles.queuePanel} aria-label="今日人物研究队列">
@@ -89,9 +90,9 @@ export default function PersonResearchQueuePanel() {
           <small>按研究价值和证据缺口排序</small>
         </article>
         <article>
-          <span>主动检索槽位</span>
-          <strong>{queue.allocatedQuerySlots}/{queue.limits.activeQuerySlots}</strong>
-          <small>每位人物最多占用 1 个槽位</small>
+          <span>主动检索日预算</span>
+          <strong>{dailyQueryUsage}/{queue.limits.activeQuerySlots}</strong>
+          <small>已执行 {queue.usedQuerySlotsToday} / 待执行 {queue.allocatedQuerySlots}</small>
         </article>
       </div>
 
