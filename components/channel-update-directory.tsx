@@ -7,6 +7,7 @@ import { aggregatePeopleUpdateDirectory } from "@/lib/people-event-updates";
 
 const INITIAL_CHANNEL_UPDATE_LIMIT = 120;
 const TECHNOLOGY_CHANNEL_UPDATE_LIMIT = 30;
+const PEOPLE_CHANNEL_UPDATE_LIMIT = 40;
 
 export function ChannelUpdateDirectory({
   channel,
@@ -18,16 +19,15 @@ export function ChannelUpdateDirectory({
   const rawDirectory = getChannelUpdateDirectory(channel);
   const fullDirectory =
     channel === "people" ? aggregatePeopleUpdateDirectory(rawDirectory) : rawDirectory;
-  const initialItems =
-    channel === "people"
-      ? fullDirectory.items
-      : fullDirectory.items.slice(0, INITIAL_CHANNEL_UPDATE_LIMIT);
+  const initialItems = fullDirectory.items.slice(0, INITIAL_CHANNEL_UPDATE_LIMIT);
   const directory = {
     ...fullDirectory,
     items:
       channel === "technology"
         ? initialItems.slice(0, TECHNOLOGY_CHANNEL_UPDATE_LIMIT)
-        : initialItems,
+        : channel === "people"
+          ? initialItems.slice(0, PEOPLE_CHANNEL_UPDATE_LIMIT)
+          : initialItems,
   };
 
   return (
