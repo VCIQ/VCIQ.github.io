@@ -1,5 +1,9 @@
 import type { ChannelUpdateItem } from "@/lib/channel-updates";
 import {
+  canonicalTracksForItem,
+  type CanonicalSectorAssignmentRecord,
+} from "@/lib/canonical-sector-assignment";
+import {
   buildSectorQualityReviewQueue,
   type SectorQualityCategory,
   type SectorQualityFinding,
@@ -7,6 +11,7 @@ import {
 
 export type AnalysisEligibilityStatus =
   | "included"
+  | "canonical-corrected"
   | "cross-sector"
   | "downweighted"
   | "sector-excluded"
@@ -19,9 +24,13 @@ export type TechnologyAnalysisEntry = {
   topicWeight: number;
   analysisTracks: string[];
   analysisTopicSlugs: string[];
+  observedTrack?: string;
+  canonicalAssignment?: CanonicalSectorAssignmentRecord;
   sectorQualityCategory?: SectorQualityCategory;
   reason: string;
 };
+
+export type CanonicalSectorResolution = ReturnType<typeof canonicalTracksForItem>;
 
 function unique(values: string[]) {
   return [...new Set(values.map((value) => value.trim()).filter(Boolean))];
@@ -30,6 +39,7 @@ function unique(values: string[]) {
 export function analysisEligibilityForFinding(
   item: ChannelUpdateItem,
   finding?: SectorQualityFinding,
+  canonicalResolution: CanonicalSectorResolution = canonicalTracksForItem(item),
 ): TechnologyAnalysisEntry {
   const currentTrack = item.track?.trim() || "";
   const topicSlugs = unique(item.topicSlugs ?? []);
@@ -46,6 +56,24 @@ export function analysisEligibilityForFinding(
     };
   }
 
+  if (canonicalResolution.applied && canonicalResolution.assignment) {
+    return {
+      item,
+      status: "canonical-corrected",
+      sectorWeight: 1,
+      topicWeight: topicSlugs.length ? 1 : 0,
+      analysisTracks: canonicalResolution.canonicalTracks,
+      analysisTopicSlugs: topicSlugs,
+      observedTrack: currentTrack,
+      canonicalAssignment: canonicalResolution.assignment,
+      sectorQualityCategory: finding?.category,
+      reason:
+        canonicalResolution.assignment.mode === "replace"
+          ? `已确认规范赛道覆盖：分析层使用 ${canonicalResolution.canonicalTracks.join("、")}，原始赛道“${currentTrack}”继续保留作为 provenance。`
+          : `已确认跨赛道补充：分析层使用 ${canonicalResolution.canonicalTracks.join("、")}，原始赛道“${currentTrack}”继续保留作为 provenance。`,
+    };
+  }
+
   if (!finding) {
     return {
       item,
@@ -54,6 +82,7 @@ export function analysisEligibilityForFinding(
       topicWeight: topicSlugs.length ? 1 : 0,
       analysisTracks: [currentTrack],
       analysisTopicSlugs: topicSlugs,
+      observedTrack: currentTrack,
       reason: "未发现赛道质量冲突，按完整权重进入分析样本。",
     };
   }
@@ -66,6 +95,7 @@ export function analysisEligibilityForFinding(
       topicWeight: topicSlugs.length ? 1 : 0,
       analysisTracks: [],
       analysisTopicSlugs: topicSlugs,
+      observedTrack: currentTrack,
       sectorQualityCategory: finding.category,
       reason: "高置信度赛道错分候选：纠正前不进入赛道 Momentum，但技术主题证据仍可用于主题趋势。",
     };
@@ -79,6 +109,7 @@ export function analysisEligibilityForFinding(
       topicWeight: topicSlugs.length ? 1 : 0,
       analysisTracks: unique([currentTrack, ...finding.recommendedTracks]),
       analysisTopicSlugs: topicSlugs,
+      observedTrack: currentTrack,
       sectorQualityCategory: finding.category,
       reason: "存在可解释的跨赛道证据：事件以完整权重进入每个相关赛道，赛道总和因此不要求可加。",
     };
@@ -91,6 +122,7 @@ export function analysisEligibilityForFinding(
     topicWeight: topicSlugs.length ? 0.75 : 0,
     analysisTracks: [currentTrack],
     analysisTopicSlugs: topicSlugs,
+    observedTrack: currentTrack,
     sectorQualityCategory: finding.category,
     reason: "赛道归类证据不足：暂保留当前赛道但按 0.5 权重计入，技术主题按 0.75 权重计入。",
   };
