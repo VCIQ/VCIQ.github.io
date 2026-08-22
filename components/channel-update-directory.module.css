@@ -124,6 +124,20 @@
   background: color-mix(in srgb, var(--surface-2) 70%, transparent);
 }
 
+.technologyControls {
+  grid-template-columns: repeat(3, minmax(150px, 1fr));
+}
+
+.technologyControls .controlIntro,
+.technologyControls .resultSummary {
+  grid-column: 1 / -1;
+}
+
+.technologyControls .resultSummary {
+  justify-content: flex-start;
+  min-height: auto;
+}
+
 .controlIntro {
   display: flex;
   gap: 10px;
@@ -211,12 +225,54 @@
   transition: background .18s ease, border-color .18s ease;
 }
 
+.itemWithSources {
+  padding-bottom: 68px;
+}
+
 .itemWrap:last-child .item {
   border-bottom: 0;
 }
 
 .item:hover {
   background: color-mix(in srgb, var(--surface-3) 72%, transparent);
+}
+
+.sourceRow {
+  position: absolute;
+  left: 100px;
+  right: 132px;
+  bottom: 12px;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  color: var(--faint);
+  font-size: 9px;
+}
+
+.sourceRow > span {
+  letter-spacing: .08em;
+}
+
+.sourceRow a {
+  max-width: 150px;
+  overflow: hidden;
+  border: 1px solid var(--border-soft);
+  padding: 2px 6px;
+  color: var(--blue);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sourceRow a:hover {
+  border-color: var(--blue);
+  color: var(--text);
+}
+
+.sourceRow small {
+  color: var(--muted);
 }
 
 .trackingLink {
@@ -365,6 +421,10 @@
     grid-template-columns: minmax(0, 1fr) minmax(190px, 260px) minmax(150px, 180px);
   }
 
+  .technologyControls {
+    grid-template-columns: repeat(2, minmax(150px, 1fr));
+  }
+
   .controlIntro {
     grid-column: 1 / -1;
   }
@@ -399,12 +459,15 @@
     margin: 0;
   }
 
-  .controls {
+  .controls,
+  .technologyControls {
     grid-template-columns: 1fr;
     padding: 15px;
   }
 
-  .controlIntro {
+  .controlIntro,
+  .technologyControls .controlIntro,
+  .technologyControls .resultSummary {
     grid-column: auto;
   }
 
@@ -424,6 +487,20 @@
     grid-template-columns: 38px minmax(0, 1fr) 18px;
     gap: 11px;
     padding: 16px 15px 44px;
+  }
+
+  .itemWithSources {
+    padding-bottom: 88px;
+  }
+
+  .sourceRow {
+    left: 64px;
+    right: 14px;
+    bottom: 42px;
+  }
+
+  .sourceRow a {
+    max-width: 120px;
   }
 
   .trackingLink {
