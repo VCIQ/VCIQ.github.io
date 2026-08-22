@@ -75,7 +75,7 @@ export default function TechnologyResearchPage() {
         <h1>科技研究</h1>
         <p className={styles.headerIntro}>
           用“核心赛道 → 重点技术主题 → 核心技术对象”组织研究入口。赛道保留产业结构与
-          HeatScore；7 日趋势和 30 日 Momentum 则只读取经过 taxonomy、赛道质量与时间覆盖审计后的分析样本。
+          HeatScore；7 日趋势和 30 日 Momentum 只读取经过 taxonomy、赛道质量、规范赛道纠错与时间覆盖审计后的分析样本。原始赛道始终保留为 provenance。
         </p>
         <div className={styles.headerChips}>
           <span><Network size={14} />{trackedSectors.length} 个核心赛道</span>
@@ -84,7 +84,8 @@ export default function TechnologyResearchPage() {
         </div>
         <div className={styles.analysisPolicy}>
           <span>分析时点 {analysis.asOf.slice(0, 10)}</span>
-          <span>{analysis.population.sectorExcluded} 条高置信错分暂不计入赛道 Momentum</span>
+          <span>{analysis.population.canonicalCorrected} 条已确认规范赛道纠错</span>
+          <span>{analysis.population.sectorExcluded} 条未复核高置信错分暂不计入赛道 Momentum</span>
           <span>{analysis.population.downweighted} 条待复核事件降权</span>
           <span>{analysis.population.crossSector} 条合理跨赛道事件保留多赛道贡献</span>
           <span>
@@ -110,7 +111,7 @@ export default function TechnologyResearchPage() {
             <div>
               <span className={styles.layerIndex}>L1 / CORE TRACKS</span>
               <h3>核心赛道</h3>
-              <p>HeatScore 继续保留原算法；7D / 30D 只反映清洗后事件活跃度变化。历史观测不足完整对照窗口时只显示样本量，不输出涨跌。</p>
+              <p>HeatScore 继续保留原算法；7D / 30D 只反映清洗后事件活跃度变化。已确认的规范赛道纠错只覆盖分析层，不回写原始事件；历史观测不足完整对照窗口时只显示样本量，不输出涨跌。</p>
             </div>
             <span className={styles.layerCount}>{trackedSectors.length} 个赛道</span>
           </div>
