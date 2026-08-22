@@ -41,6 +41,105 @@
   text-underline-offset: 3px;
 }
 
+.researchTaskList {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.researchTaskCard {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--border-soft);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+}
+
+.researchTaskMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.researchTaskMeta span,
+.researchTaskEvidenceTypes span {
+  padding: 3px 7px;
+  border: 1px solid var(--border-soft);
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.3;
+}
+
+.researchTaskCard > strong {
+  display: block;
+  margin-top: 11px;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.researchTaskCard > p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.researchTaskEvidenceTypes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.researchTaskEvidenceTypes b,
+.researchTaskQuery b,
+.researchTaskCriteria b,
+.researchTaskCandidates b {
+  color: var(--faint);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.researchTaskQuery,
+.researchTaskCriteria,
+.researchTaskCandidates {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.researchTaskQuery code {
+  display: block;
+  margin-top: 6px;
+  overflow-wrap: anywhere;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.researchTaskCriteria p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.researchTaskCandidates {
+  display: grid;
+  gap: 6px;
+}
+
+.researchTaskCandidates a {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.55;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .implicationGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
