@@ -2,39 +2,46 @@ import type { Metadata } from "next";
 import { Building2 } from "lucide-react";
 import { ChannelSplitLayout } from "@/components/channel-split-layout";
 import { CompanyDirectory } from "@/components/company-directory";
-import { CompanyProfileRefreshStatus } from "@/components/company-profile-refresh-status";
 import { companies } from "@/lib/catalog-data";
+import { researchSynergySummary } from "@/lib/research-relations";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "核心公司",
-  description: "一级市场核心科技公司档案、产品、团队、融资与可追溯来源。",
+  description: "以研究优先级组织核心科技公司，连接赛道、技术主题、关键人物、产品、融资与可追溯事件。",
 };
 
 export default function CompaniesPage() {
   return (
     <main className="page-shell subpage">
       <header className="page-header">
-        <p className="eyebrow">05 / CORE COMPANIES</p>
+        <p className="eyebrow">04 / CORE COMPANIES</p>
         <h1>核心公司</h1>
         <p>
-          {companies.length} 家核心科技公司档案，连接核心技术、产业位置、团队、融资、公开动态、
-          同赛道对照与原始来源。上市、并购和退出信息仅作为公司生命周期证据，不再独立成频道。
+          公司频道负责把赛道与技术变量、关键人物判断落到真实产品、经营、融资和资本结果上。
+          默认先回答为什么值得研究、最近发生了什么、下一步验证什么，再下钻到完整档案与原始证据。
         </p>
+        <div className="hero-chips">
+          <span>{companies.length} 家已发布公司</span>
+          <span>{researchSynergySummary.trackCount} 个核心赛道</span>
+          <span>{researchSynergySummary.companyPersonEdges} 条公司—人物显式关系</span>
+          <span>按研究优先级与最新变化排序</span>
+        </div>
       </header>
 
       <ChannelSplitLayout
         channel="companies"
-        eyebrow="LATEST CORE COMPANY PROFILES"
-        title="核心公司档案"
-        description="按地区与赛道筛选公司，查看技术产品、发展阶段、融资过程、资料完整度及可追溯原始来源。"
+        eyebrow="COMPANY RESEARCH DIRECTORY"
+        title="核心公司研究"
+        description="按研究优先级浏览公司摘要，并按地区、赛道、阶段、近期变化与证据覆盖筛选；公司卡片直接连接技术主题和关键人物。"
         count={companies.length}
-        countLabel="公开公司快照"
+        countLabel="已发布公司"
+        statusText="研究关系持续更新"
         icon={<Building2 size={19} aria-hidden="true" />}
         bodyClassName={styles.body}
+        directoryFirst
       >
         <CompanyDirectory pageSize={6} />
-        <CompanyProfileRefreshStatus />
       </ChannelSplitLayout>
     </main>
   );
