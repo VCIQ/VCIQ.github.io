@@ -13,6 +13,7 @@ type ChannelSplitLayoutProps = {
   statusText?: string;
   icon: ReactNode;
   bodyClassName?: string;
+  directoryFirst?: boolean;
   children: ReactNode;
 };
 
@@ -26,35 +27,51 @@ export function ChannelSplitLayout({
   statusText = "持续更新",
   icon,
   bodyClassName,
+  directoryFirst = false,
   children,
 }: ChannelSplitLayoutProps) {
+  const updatesPanel = (
+    <div className={styles.updatesPanel}>
+      <ChannelUpdateDirectory channel={channel} layout="split" />
+    </div>
+  );
+  const directoryPanel = (
+    <section className={styles.directoryPanel} aria-labelledby={`${channel}-directory-title`}>
+      <header className={styles.panelHeader}>
+        <div>
+          <p className="section-index">{eyebrow}</p>
+          <div className={styles.titleLine}>
+            {icon}
+            <h2 id={`${channel}-directory-title`}>{title}</h2>
+          </div>
+          <p className={styles.panelDescription}>{description}</p>
+        </div>
+        <div className={styles.snapshot}>
+          <span>{countLabel}</span>
+          <strong>{count}</strong>
+          <small>{statusText}</small>
+        </div>
+      </header>
+
+      <div className={`${styles.panelBody}${bodyClassName ? ` ${bodyClassName}` : ""}`}>
+        {children}
+      </div>
+    </section>
+  );
+
   return (
     <div className={styles.splitLayout}>
-      <div className={styles.updatesPanel}>
-        <ChannelUpdateDirectory channel={channel} layout="split" />
-      </div>
-
-      <section className={styles.directoryPanel} aria-labelledby={`${channel}-directory-title`}>
-        <header className={styles.panelHeader}>
-          <div>
-            <p className="section-index">{eyebrow}</p>
-            <div className={styles.titleLine}>
-              {icon}
-              <h2 id={`${channel}-directory-title`}>{title}</h2>
-            </div>
-            <p className={styles.panelDescription}>{description}</p>
-          </div>
-          <div className={styles.snapshot}>
-            <span>{countLabel}</span>
-            <strong>{count}</strong>
-            <small>{statusText}</small>
-          </div>
-        </header>
-
-        <div className={`${styles.panelBody}${bodyClassName ? ` ${bodyClassName}` : ""}`}>
-          {children}
-        </div>
-      </section>
+      {directoryFirst ? (
+        <>
+          {directoryPanel}
+          {updatesPanel}
+        </>
+      ) : (
+        <>
+          {updatesPanel}
+          {directoryPanel}
+        </>
+      )}
     </div>
   );
 }
