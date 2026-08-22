@@ -62,7 +62,7 @@ test("public research detail compatibility component contains no write client", 
 test("public companies page contains formal profiles only", () => {
   const page = read("app/companies/page.tsx");
   assert.match(page, /CompanyDirectory/u);
-  assert.match(page, /CompanyProfileRefreshStatus/u);
+  assert.doesNotMatch(page, /CompanyProfileRefreshStatus/u);
   assert.doesNotMatch(page, /CompanyCandidateDirectory/u);
   assert.equal(
     fs.existsSync(path.join(root, "components/company-candidate-directory.tsx")),

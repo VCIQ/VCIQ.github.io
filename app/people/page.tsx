@@ -8,7 +8,7 @@ import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "核心人物",
-  description: "整理一级市场核心技术与赛道中的创始人、科学家、工程负责人和关键决策者。",
+  description: "研究一级市场核心赛道中的创始人、科学家、工程负责人和关键决策者，并连接其公司与技术证据。",
 };
 
 const DIRECTORY_TAG_LIMIT = 1;
@@ -33,16 +33,17 @@ export default function PeoplePage() {
   return (
     <main className="page-shell subpage">
       <header className="page-header">
-        <p className="eyebrow">04 / CORE PEOPLE</p>
+        <p className="eyebrow">03 / CORE PEOPLE</p>
         <h1>核心人物</h1>
         <p>
-          从人物材料库升级为关键人物研究系统：先回答为什么值得跟踪、最近发生了什么、下一步看什么，
-          再下钻到人物背景、研究主线、观点演进与可追溯原始材料。
+          人物频道解释赛道中的技术判断、组织选择和路线演进：先回答为什么值得跟踪、最近发生了什么、
+          下一步看什么，再连接其任职公司、产品项目、技术主题与事件级公开证据。
         </p>
         <div className="hero-chips">
           <span>{trackedCount} 位重点人物</span>
           <span>{researchPeople.length} 位已发布人物</span>
           <span>按研究优先级排序</span>
+          <span>公司关系仅按显式任职证据挂接</span>
           <span>资料更新 {peopleGeneratedAt.slice(0, 10)}</span>
         </div>
       </header>
@@ -51,7 +52,7 @@ export default function PeoplePage() {
         channel="people"
         eyebrow="CORE PEOPLE RESEARCH DIRECTORY"
         title="核心人物档案"
-        description="先浏览人物研究摘要，再进入其技术与商业主线、观点演进、项目关系和事件级证据。目录按研究优先级排序，而不是按材料数量排序。"
+        description="人物研究承担赛道与公司之间的决策解释层：目录先展示研究摘要，再进入技术主线、观点演进、组织关系和事件级证据。"
         count={researchPeople.length}
         countLabel="已发布人物"
         statusText={`更新 ${peopleGeneratedAt.slice(0, 10)}`}
