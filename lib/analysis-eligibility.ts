@@ -9,7 +9,8 @@ export type AnalysisEligibilityStatus =
   | "included"
   | "cross-sector"
   | "downweighted"
-  | "sector-excluded";
+  | "sector-excluded"
+  | "unscoped";
 
 export type TechnologyAnalysisEntry = {
   item: ChannelUpdateItem;
@@ -36,7 +37,7 @@ export function analysisEligibilityForFinding(
   if (!currentTrack) {
     return {
       item,
-      status: "sector-excluded",
+      status: "unscoped",
       sectorWeight: 0,
       topicWeight: topicSlugs.length ? 1 : 0,
       analysisTracks: [],
