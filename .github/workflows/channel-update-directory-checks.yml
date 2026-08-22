@@ -26,6 +26,7 @@ on:
       - "lib/sector-quality-audit.ts"
       - "lib/canonical-sector-assignment.ts"
       - "lib/content-relevance.ts"
+      - "lib/source-track-relevance.ts"
       - "lib/analysis-eligibility.ts"
       - "lib/technology-momentum.ts"
       - "public/data/articles.json"
@@ -43,6 +44,7 @@ on:
       - "tests/sector-quality-audit.test.ts"
       - "tests/canonical-sector-assignment.test.ts"
       - "tests/content-relevance.test.ts"
+      - "tests/source-track-relevance.test.ts"
       - "tests/analysis-eligibility-momentum.test.ts"
       - "package.json"
       - ".github/workflows/channel-update-directory-checks.yml"
@@ -72,6 +74,7 @@ on:
       - "lib/sector-quality-audit.ts"
       - "lib/canonical-sector-assignment.ts"
       - "lib/content-relevance.ts"
+      - "lib/source-track-relevance.ts"
       - "lib/analysis-eligibility.ts"
       - "lib/technology-momentum.ts"
       - "public/data/articles.json"
@@ -89,6 +92,7 @@ on:
       - "tests/sector-quality-audit.test.ts"
       - "tests/canonical-sector-assignment.test.ts"
       - "tests/content-relevance.test.ts"
+      - "tests/source-track-relevance.test.ts"
       - "tests/analysis-eligibility-momentum.test.ts"
       - "package.json"
       - ".github/workflows/channel-update-directory-checks.yml"
@@ -109,7 +113,7 @@ jobs:
       - name: Type-check update directory
         run: npx tsc --noEmit
       - name: Run focused update-directory tests
-        run: node --import tsx --test tests/channel-updates.test.ts tests/tracking-taxonomy-identity.test.ts tests/technology-topics.test.ts tests/sector-quality-audit.test.ts tests/canonical-sector-assignment.test.ts tests/content-relevance.test.ts tests/analysis-eligibility-momentum.test.ts
+        run: node --import tsx --test tests/channel-updates.test.ts tests/tracking-taxonomy-identity.test.ts tests/technology-topics.test.ts tests/sector-quality-audit.test.ts tests/canonical-sector-assignment.test.ts tests/content-relevance.test.ts tests/source-track-relevance.test.ts tests/analysis-eligibility-momentum.test.ts
       - name: Audit technology taxonomy quality
         run: npm run audit:technology-taxonomy
       - name: Audit sector assignment quality
