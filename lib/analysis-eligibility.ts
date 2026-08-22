@@ -4,6 +4,10 @@ import {
   type CanonicalSectorAssignmentRecord,
 } from "@/lib/canonical-sector-assignment";
 import {
+  contentRelevanceForItem,
+  type ContentRelevanceStatus,
+} from "@/lib/content-relevance";
+import {
   buildSectorQualityReviewQueue,
   type SectorQualityCategory,
   type SectorQualityFinding,
@@ -27,6 +31,8 @@ export type TechnologyAnalysisEntry = {
   observedTrack?: string;
   canonicalAssignment?: CanonicalSectorAssignmentRecord;
   sectorQualityCategory?: SectorQualityCategory;
+  contentRelevanceStatus?: ContentRelevanceStatus;
+  contentWeight?: number;
   reason: string;
 };
 
@@ -128,12 +134,31 @@ export function analysisEligibilityForFinding(
   };
 }
 
+function applyContentRelevance(
+  entry: TechnologyAnalysisEntry,
+): TechnologyAnalysisEntry {
+  const assessment = contentRelevanceForItem(entry.item);
+  return {
+    ...entry,
+    sectorWeight: entry.sectorWeight * assessment.weight,
+    topicWeight: entry.topicWeight * assessment.weight,
+    contentRelevanceStatus: assessment.status,
+    contentWeight: assessment.weight,
+    reason:
+      assessment.weight < 1
+        ? `${entry.reason} ${assessment.reason}`
+        : entry.reason,
+  };
+}
+
 export function buildTechnologyAnalysisPopulation(items: ChannelUpdateItem[]) {
   const reviewById = new Map(
     buildSectorQualityReviewQueue(items).map((finding) => [finding.id, finding]),
   );
 
   return items.map((item) =>
-    analysisEligibilityForFinding(item, reviewById.get(item.id)),
+    applyContentRelevance(
+      analysisEligibilityForFinding(item, reviewById.get(item.id)),
+    ),
   );
 }
