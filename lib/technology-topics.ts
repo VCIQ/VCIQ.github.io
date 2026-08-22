@@ -1,4 +1,8 @@
 import type { TrackingResearchEntity } from "@/lib/tracking-entity-research";
+import {
+  normalizeTechnologyTerm,
+  technologyTermMatchesText,
+} from "@/lib/technology-term-matching";
 
 export type TechnologyTopicDefinition = {
   slug: string;
@@ -24,13 +28,6 @@ type TechnologyEntityLike = Pick<
   | "researchThesis"
   | "timeline"
 >;
-
-function normalizeTechnologyTerm(value: string) {
-  return value
-    .normalize("NFKC")
-    .toLocaleLowerCase("zh-CN")
-    .replace(/[^a-z0-9\u3400-\u9fff]+/gu, "");
-}
 
 export const technologyTopicDefinitions: TechnologyTopicDefinition[] = [
   {
@@ -130,7 +127,7 @@ export const technologyTopicDefinitions: TechnologyTopicDefinition[] = [
     slug: "autonomous-driving",
     name: "自动驾驶",
     alertQuery: "自动驾驶",
-    trackNames: ["机器人"],
+    trackNames: ["机器人", "智能交通"],
     description: "Robotaxi、端到端驾驶、感知规划与车端自主系统。",
     matchTerms: [
       "自动驾驶",
@@ -209,7 +206,7 @@ export const technologyTopicDefinitions: TechnologyTopicDefinition[] = [
     slug: "6g",
     name: "6G",
     alertQuery: "6G",
-    trackNames: ["无线互联网", "商业航天"],
+    trackNames: ["AI网络通信", "商业航天"],
     description: "下一代移动通信、空天地融合网络和关键通信基础设施。",
     matchTerms: ["6G", "第六代移动通信", "空天地一体化"],
   },
@@ -217,7 +214,7 @@ export const technologyTopicDefinitions: TechnologyTopicDefinition[] = [
     slug: "ai-ran",
     name: "AI-RAN",
     alertQuery: "AI-RAN",
-    trackNames: ["无线互联网", "AI / AGI"],
+    trackNames: ["AI网络通信", "AI / AGI"],
     description: "AI 与无线接入网融合，包括基站算力、智能调度与网络自治。",
     matchTerms: ["AI-RAN", "AI RAN", "RAN智能", "无线接入网AI"],
   },
@@ -225,7 +222,7 @@ export const technologyTopicDefinitions: TechnologyTopicDefinition[] = [
     slug: "satellite-internet",
     name: "卫星互联网",
     alertQuery: "卫星互联网",
-    trackNames: ["商业航天", "无线互联网"],
+    trackNames: ["商业航天", "AI网络通信"],
     description: "低轨星座、卫星物联网、卫星移动通信与终端网络服务。",
     matchTerms: [
       "卫星互联网",
@@ -248,7 +245,7 @@ export const technologyTopicDefinitions: TechnologyTopicDefinition[] = [
     slug: "fusion-energy",
     name: "可控核聚变",
     alertQuery: "可控核聚变",
-    trackNames: ["可控核聚变"],
+    trackNames: ["可控核聚变", "新能源"],
     description: "磁约束、惯性约束、聚变装置与商业电站工程化。",
     matchTerms: [
       "可控核聚变",
@@ -278,7 +275,7 @@ export const technologyTopicDefinitions: TechnologyTopicDefinition[] = [
     slug: "ai-drug-discovery",
     name: "AI 制药",
     alertQuery: "AI制药",
-    trackNames: ["生物科技", "AI / AGI"],
+    trackNames: ["生物科技", "医疗科技", "AI / AGI"],
     description: "AI 药物发现、计算生物学、蛋白与分子设计平台。",
     matchTerms: [
       "AI制药",
@@ -330,12 +327,8 @@ export function technologyTopicsForEntity(entity: TechnologyEntityLike) {
   ]
     .filter(Boolean)
     .join(" ");
-  const normalizedCorpus = normalizeTechnologyTerm(corpus);
 
   return technologyTopicDefinitions.filter((topic) =>
-    topic.matchTerms.some((term) => {
-      const normalizedTerm = normalizeTechnologyTerm(term);
-      return normalizedTerm.length >= 2 && normalizedCorpus.includes(normalizedTerm);
-    }),
+    topic.matchTerms.some((term) => technologyTermMatchesText(corpus, term)),
   );
 }
