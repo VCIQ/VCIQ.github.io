@@ -13,6 +13,7 @@ function item(overrides: Partial<AuditInput>): AuditInput {
     title: "Sample event",
     summary: "",
     source: "",
+    href: "https://example.com/item",
     track: "AI / AGI",
     topicSlugs: [],
     sourceGrade: "B",
@@ -45,6 +46,7 @@ test("current-sector title anchors retain hardware-company model releases as cro
       id: "cerebras-multimodal",
       title: "Gemma 4 on Cerebras: Fast Multimodal AI",
       source: "Cerebras",
+      href: "https://www.cerebras.ai/blog/gemma-4",
       track: "半导体",
       topicSlugs: ["multimodal-models"],
     }),
@@ -61,7 +63,8 @@ test("current-sector source anchors retain original company releases as cross-se
     item({
       id: "cerebras-gpt",
       title: "Accelerating GPT-5.6 Sol Ultrafast with OpenAI",
-      source: "Cerebras",
+      source: "Official",
+      href: "https://www.cerebras.ai/blog/gpt-5-6",
       track: "半导体",
       topicSlugs: ["large-models"],
     }),
@@ -71,6 +74,23 @@ test("current-sector source anchors retain original company releases as cross-se
   assert.equal(finding.category, "reasonable-cross-sector");
   assert.deepEqual(finding.currentTrackTitleTerms, []);
   assert.ok(finding.currentTrackSourceTerms.includes("Cerebras"));
+});
+
+test("summary anchors prevent a strong automatic correction", () => {
+  const finding = assessSectorQuality(
+    item({
+      id: "hardware-summary",
+      title: "New GPT inference service launches",
+      summary: "The service runs on a new wafer-scale semiconductor platform.",
+      source: "Industry News",
+      track: "半导体",
+      topicSlugs: ["large-models"],
+    }),
+  );
+
+  assert.ok(finding);
+  assert.equal(finding.category, "needs-review");
+  assert.ok(finding.currentTrackSummaryTerms.includes("semiconductor"));
 });
 
 test("sector ASCII anchors use token boundaries rather than substrings", () => {
