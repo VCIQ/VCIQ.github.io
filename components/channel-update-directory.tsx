@@ -5,7 +5,7 @@ import {
 } from "@/lib/channel-updates";
 
 const INITIAL_CHANNEL_UPDATE_LIMIT = 120;
-const TECHNOLOGY_CHANNEL_UPDATE_LIMIT = 100;
+const TECHNOLOGY_CHANNEL_UPDATE_LIMIT = 30;
 
 export function ChannelUpdateDirectory({
   channel,
