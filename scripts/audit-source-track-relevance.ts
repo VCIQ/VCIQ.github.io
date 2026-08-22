@@ -19,6 +19,13 @@ const moderate = rows
       right.weakEvidenceCount - left.weakEvidenceCount ||
       right.pairCount - left.pairCount,
   );
+const provisional = rows
+  .filter((row) => row.status === "provisional")
+  .sort(
+    (left, right) =>
+      right.weakEvidenceCount - left.weakEvidenceCount ||
+      right.pairCount - left.pairCount,
+  );
 const broadSources = [
   ...new Map(
     rows
@@ -41,6 +48,7 @@ function auditRow(row: (typeof rows)[number]) {
   return {
     source: row.source,
     track: row.track,
+    status: row.status,
     count: row.pairCount,
     topicBacked: row.topicBackedCount,
     crawlerUsable: row.crawlerUsableCount,
@@ -54,22 +62,35 @@ function auditRow(row: (typeof rows)[number]) {
     sourceTrackCount: row.sourceTrackCount,
     weakRate: row.weakRate,
     directEvidenceRate: row.directEvidenceRate,
+    observedDayCount: row.observedDayCount,
+    observationSpanDays: row.observationSpanDays,
     samples: row.samples,
   };
 }
+
+const unstablePenalties = rows.filter(
+  (row) =>
+    (row.status === "severe" &&
+      (row.pairCount < 8 || row.observedDayCount < 3 || row.observationSpanDays < 7)) ||
+    (row.status === "moderate" &&
+      (row.pairCount < 6 || row.observedDayCount < 2 || row.observationSpanDays < 3)),
+);
 
 const audit = {
   eventCount: directory.items.length,
   sourceCount: new Set(rows.map((row) => row.source)).size,
   sourceTrackPairCount: rows.length,
   broadSourceCount: broadSources.length,
-  severeCandidatePairCount: severe.length,
-  moderateCandidatePairCount: moderate.length,
-  severeCandidateEventCount: severe.reduce((sum, row) => sum + row.pairCount, 0),
-  moderateCandidateEventCount: moderate.reduce(
+  severeStablePairCount: severe.length,
+  moderateStablePairCount: moderate.length,
+  provisionalPairCount: provisional.length,
+  severeStableEventCount: severe.reduce((sum, row) => sum + row.pairCount, 0),
+  moderateStableEventCount: moderate.reduce(
     (sum, row) => sum + row.pairCount,
     0,
   ),
+  provisionalEventCount: provisional.reduce((sum, row) => sum + row.pairCount, 0),
+  unstablePenaltyCount: unstablePenalties.length,
 };
 
 console.log(`SOURCE_TRACK_RELEVANCE_AUDIT=${JSON.stringify(audit)}`);
@@ -82,14 +103,29 @@ console.log(
 console.log(
   `SOURCE_TRACK_RELEVANCE_MODERATE=${JSON.stringify(moderate.slice(0, 30).map(auditRow))}`,
 );
+console.log(
+  `SOURCE_TRACK_RELEVANCE_PROVISIONAL=${JSON.stringify(provisional.slice(0, 30).map(auditRow))}`,
+);
 
 if (severe.length) {
   console.warn(
-    `SOURCE_TRACK_RELEVANCE_WARNING: ${severe.length} broad-source × track pairs have >=70% weak evidence and <30% event-level direct evidence; only weak/partial events should receive extra source-track downweighting`,
+    `SOURCE_TRACK_RELEVANCE_WARNING: ${severe.length} source-track pairs remain severe after >=3 observation days spanning >=7 days; only weak/partial events receive the extra penalty`,
   );
 }
 if (moderate.length) {
   console.warn(
-    `SOURCE_TRACK_RELEVANCE_NOTICE: ${moderate.length} additional source-track pairs have mixed topical precision; strong evidence should bypass the source-track gate`,
+    `SOURCE_TRACK_RELEVANCE_NOTICE: ${moderate.length} source-track pairs meet stable moderate criteria after cross-day observation`,
   );
+}
+if (provisional.length) {
+  console.warn(
+    `SOURCE_TRACK_RELEVANCE_NOTICE: ${provisional.length} noisy source-track pairs are still provisional and receive no automatic source-track penalty until temporal stability is established`,
+  );
+}
+
+if (unstablePenalties.length) {
+  console.error(
+    `SOURCE_TRACK_RELEVANCE_AUDIT_ERROR: ${unstablePenalties.length} severe/moderate profiles violate temporal stability gates`,
+  );
+  process.exitCode = 1;
 }
