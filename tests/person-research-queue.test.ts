@@ -4,7 +4,7 @@ import test from "node:test";
 import {
   normalizePersonResearchQueue,
   normalizePersonResearchQueueItem,
-} from "../lib/person-research-queue.ts";
+} from "../lib/person-research-queue";
 
 function item(overrides: Record<string, unknown> = {}) {
   return {
