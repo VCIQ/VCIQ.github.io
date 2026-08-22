@@ -21,10 +21,15 @@ const statusLabels = {
 
 export default function PeoplePage() {
   const trackedCount = researchPeople.filter((person) => person.tracked).length;
-  const directory = researchPeople.map((person) => ({
-    person,
-    research: getPersonResearchSnapshot(person),
-  }));
+  const directory = researchPeople
+    .map((person) => ({
+      person,
+      research: getPersonResearchSnapshot(person),
+    }))
+    .sort((left, right) =>
+      right.research.priority.score - left.research.priority.score
+      || (right.research.latestChange?.date ?? "").localeCompare(left.research.latestChange?.date ?? "")
+      || left.person.name.localeCompare(right.person.name, "zh-CN"));
   return (
     <main className="page-shell subpage">
       <header className="page-header">
@@ -37,6 +42,7 @@ export default function PeoplePage() {
         <div className="hero-chips">
           <span>{trackedCount} 位重点人物</span>
           <span>{researchPeople.length} 位已发布人物</span>
+          <span>按研究优先级排序</span>
           <span>资料更新 {peopleGeneratedAt.slice(0, 10)}</span>
         </div>
       </header>
@@ -45,7 +51,7 @@ export default function PeoplePage() {
         channel="people"
         eyebrow="CORE PEOPLE RESEARCH DIRECTORY"
         title="核心人物档案"
-        description="先浏览人物研究摘要，再进入其技术与商业主线、观点演进、项目关系和事件级证据。"
+        description="先浏览人物研究摘要，再进入其技术与商业主线、观点演进、项目关系和事件级证据。目录按研究优先级排序，而不是按材料数量排序。"
         count={researchPeople.length}
         countLabel="已发布人物"
         statusText={`更新 ${peopleGeneratedAt.slice(0, 10)}`}
@@ -86,7 +92,7 @@ export default function PeoplePage() {
               </div>
 
               <small>
-                {statusLabels[person.status]} · {research.events.length} 个事件 · {person.materials.length} 条原始材料
+                {research.priority.level} · 证据 {research.coverage.score}% · {research.viewChange.label} · {statusLabels[person.status]} · {research.events.length} 个事件
               </small>
             </Link>
           ))}
