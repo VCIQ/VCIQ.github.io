@@ -146,7 +146,21 @@ test("Pages builds current lineage without mutating committed public inputs", ()
     packageJson.scripts["validate:pipeline"],
     "python3 tools/run_pipeline.py check",
   );
-  assert.match(packageJson.scripts["build:pages"], /^npm run validate:pipeline/u);
+  assert.equal(
+    packageJson.scripts["check:person-research-agenda"],
+    "python3 tools/person_research_agent.py --check",
+  );
+  assert.equal(
+    packageJson.scripts["check:person-research-queue"],
+    "python3 tools/person_research_scheduler.py --check",
+  );
+
+  const pagesBuild = packageJson.scripts["build:pages"];
+  assert.match(pagesBuild, /^npm run validate:pipeline/u);
+  assert.match(pagesBuild, /npm run check:person-research-agenda/u);
+  assert.match(pagesBuild, /npm run check:person-research-queue/u);
+  assert.doesNotMatch(pagesBuild, /npm run build:person-research-agenda/u);
+  assert.doesNotMatch(pagesBuild, /npm run build:person-research-queue/u);
 
   const pages = read(".github/workflows/pages.yml");
   assert.match(pages, /fetch-depth: 0/u);

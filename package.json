@@ -12,6 +12,8 @@
     "build:channel-update-archives": "node --import tsx scripts/build-channel-update-archives.ts",
     "build:person-research-agenda": "python3 tools/person_research_agent.py",
     "build:person-research-queue": "python3 tools/person_research_scheduler.py",
+    "check:person-research-agenda": "python3 tools/person_research_agent.py --check",
+    "check:person-research-queue": "python3 tools/person_research_scheduler.py --check",
     "build": "npm run build:search-index && npm run build:channel-update-archives && npm run build:person-research-agenda && npm run build:person-research-queue && bash scripts/build-verified.sh",
     "start": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext start",
     "test": "npm run build && node --test tests/rendered-html.test.mjs",
@@ -35,7 +37,7 @@
     "audit:public-artifact": "node scripts/audit-public-artifact.mjs",
     "check:homepage-performance": "node scripts/check-homepage-performance-budget.mjs",
     "check:route-performance": "node scripts/check-route-performance-budget.mjs",
-    "build:pages": "npm run validate:pipeline && npm run validate:tracking && npm run validate:taxonomy && npm run validate:tracking-snapshot && npm run audit:technology-taxonomy && npm run audit:sector-quality && npm run audit:sector-normalization && npm run audit:canonical-sector-assignments && npm run audit:analysis-eligibility && npm run audit:track-semantic-rescue && npm run audit:source-track-relevance && npm run build:search-index && npm run build:channel-update-archives && npm run build:person-research-agenda && npm run build:person-research-queue && node scripts/build-pages.mjs && npm run verify:tracking-pages && npm run audit:public-artifact && node scripts/validate-static-links.mjs && npm run check:homepage-performance && npm run check:route-performance",
+    "build:pages": "npm run validate:pipeline && npm run validate:tracking && npm run validate:taxonomy && npm run validate:tracking-snapshot && npm run audit:technology-taxonomy && npm run audit:sector-quality && npm run audit:sector-normalization && npm run audit:canonical-sector-assignments && npm run audit:analysis-eligibility && npm run audit:track-semantic-rescue && npm run audit:source-track-relevance && npm run build:search-index && npm run build:channel-update-archives && npm run check:person-research-agenda && npm run check:person-research-queue && node scripts/build-pages.mjs && npm run verify:tracking-pages && npm run audit:public-artifact && node scripts/validate-static-links.mjs && npm run check:homepage-performance && npm run check:route-performance",
     "crawl": "python3 tools/crawl_articles.py",
     "validate:artifact": "bash scripts/validate-artifact.sh",
     "lint": "bash scripts/sites-env.sh -- eslint . --ignore-pattern dist --ignore-pattern .next"
