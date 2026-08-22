@@ -92,8 +92,8 @@ const audit = {
 console.log(`SECTOR_NORMALIZATION_AUDIT=${JSON.stringify(audit)}`);
 
 if (canonicalNameOverrideViolations.length) {
-  console.warn(
-    `SECTOR_NORMALIZATION_WARNING: ${canonicalNameOverrideViolations.length} events already carry an active canonical raw sector but are rewritten to another channel track`,
+  console.error(
+    `SECTOR_NORMALIZATION_AUDIT_ERROR: ${canonicalNameOverrideViolations.length} events already carry an active canonical raw sector but are rewritten to another channel track`,
   );
   console.log(
     `SECTOR_NORMALIZATION_OVERRIDE_SAMPLES=${JSON.stringify(canonicalNameOverrideViolations.slice(0, 30))}`,
@@ -101,14 +101,17 @@ if (canonicalNameOverrideViolations.length) {
 }
 
 if (registryCompensatingForNormalization.length) {
-  console.warn(
-    `SECTOR_NORMALIZATION_WARNING: ${registryCompensatingForNormalization.length} reviewed canonical assignments appear to compensate for downstream sector normalization instead of raw-sector errors`,
+  console.error(
+    `SECTOR_NORMALIZATION_AUDIT_ERROR: ${registryCompensatingForNormalization.length} reviewed assignments still compensate for downstream normalization instead of genuine semantic recategorization`,
   );
   console.log(
     `SECTOR_NORMALIZATION_REGISTRY_COMPENSATION=${JSON.stringify(registryCompensatingForNormalization.slice(0, 30))}`,
   );
 }
 
-// Baseline mode for the first diagnostic PR. After the resolver is fixed this
-// audit becomes a hard gate: an explicit active canonical raw sector must never
-// be overwritten by a dynamic alias.
+if (
+  canonicalNameOverrideViolations.length ||
+  registryCompensatingForNormalization.length
+) {
+  process.exitCode = 1;
+}
