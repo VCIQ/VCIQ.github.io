@@ -41,6 +41,67 @@
   text-underline-offset: 3px;
 }
 
+.implicationGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.implicationCard {
+  min-width: 0;
+  padding: 15px;
+  border: 1px solid var(--border-soft);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+}
+
+.implicationCard > span,
+.viewChangeBox > span {
+  color: var(--faint);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.implicationCard > strong,
+.viewChangeBox > strong {
+  display: block;
+  margin-top: 6px;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.implicationCard > p,
+.viewChangeBox > p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.viewChangeBox {
+  margin-top: 18px;
+  padding: 16px;
+  border: 1px solid var(--border-soft);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+}
+
+.viewEvidence {
+  display: grid;
+  gap: 6px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.viewEvidence a {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .evolutionNotice {
   margin: 16px 0 18px;
   padding: 12px 14px;
@@ -122,7 +183,8 @@
 }
 
 @media (max-width: 900px) {
-  .snapshotGrid {
+  .snapshotGrid,
+  .implicationGrid {
     grid-template-columns: 1fr;
   }
 }
