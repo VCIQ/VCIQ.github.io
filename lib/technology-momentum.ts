@@ -39,6 +39,7 @@ export type TechnologyAnalysisSnapshot = {
     crossSector: number;
     downweighted: number;
     sectorExcluded: number;
+    unscoped: number;
     datedForTrend: number;
   };
   tracks: TechnologyTrackMomentum[];
@@ -151,6 +152,7 @@ export function buildTechnologyAnalysisSnapshot(
       crossSector: population.filter((entry) => entry.status === "cross-sector").length,
       downweighted: population.filter((entry) => entry.status === "downweighted").length,
       sectorExcluded: population.filter((entry) => entry.status === "sector-excluded").length,
+      unscoped: population.filter((entry) => entry.status === "unscoped").length,
       datedForTrend: population.filter((entry) => temporalWeight(entry.item) > 0).length,
     },
     tracks: activeTracks.map((track) => ({
