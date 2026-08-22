@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import unittest
 
+from tools.person_research_outcomes import empty_memory, record_attempt
 from tools.person_research_scheduler import (
     MAX_ACTIVE_QUERY_SLOTS,
     MAX_DAILY_PEOPLE,
@@ -62,6 +63,31 @@ def person(slug: str, *, recent: bool = False):
     return {"slug": slug, "name": slug, "materials": materials}
 
 
+def outcome_event(task_id: str, person_slug: str, research_date: str, *, new: int = 0):
+    accepted = 1 if new else 0
+    return {
+        "taskId": task_id,
+        "personSlug": person_slug,
+        "taskType": "first_party_evidence",
+        "executor": "person_video",
+        "query": f"{person_slug} query {research_date}",
+        "researchDate": research_date,
+        "attemptedAt": f"{research_date}T01:00:00Z",
+        "acceptedEvidenceCount": accepted,
+        "newEvidenceCount": new,
+        "platforms": [
+            {
+                "source": "YouTube",
+                "rawRows": 0,
+                "acceptedEvidenceCount": accepted,
+                "newEvidenceCount": new,
+                "failed": False,
+                "acceptedUrls": ["https://youtube.com/example"] if accepted else [],
+            }
+        ],
+    }
+
+
 class PersonResearchSchedulerTests(unittest.TestCase):
     def test_high_value_recent_viewpoint_task_outranks_cold_evidence_gap(self):
         agenda = {
@@ -94,6 +120,7 @@ class PersonResearchSchedulerTests(unittest.TestCase):
             queue["queue"][0]["score"],
             sum(queue["queue"][0]["scoreBreakdown"].values()),
         )
+        self.assertEqual(queue["queue"][0]["scoreBreakdown"]["researchHistory"], 0)
 
     def test_supported_and_blocked_tasks_do_not_enter_execution_queue(self):
         agenda = {
@@ -185,6 +212,55 @@ class PersonResearchSchedulerTests(unittest.TestCase):
         self.assertEqual(row["executor"], "cross_channel")
         self.assertEqual(row["queryBudget"], 0)
         self.assertGreater(row["scoreBreakdown"]["crossValidation"], 0)
+
+    def test_recent_productive_attempt_adds_small_history_bonus(self):
+        agenda = {
+            "generatedAt": "2026-08-22T00:00:00Z",
+            "people": {
+                "p": {
+                    "personName": "P",
+                    "tasks": [task("productive", priority="P1")],
+                }
+            },
+        }
+        memory = empty_memory()
+        record_attempt(memory, outcome_event("productive", "p", "2026-08-21", new=1))
+        queue = build_daily_queue(agenda, {"people": [person("p")]}, memory)
+        row = queue["queue"][0]
+        self.assertEqual(row["scoreBreakdown"]["researchHistory"], 6)
+        self.assertEqual(row["researchMemory"]["yieldingAttempts"], 1)
+        self.assertTrue(any("新增" in reason for reason in row["whyNow"]))
+        self.assertEqual(row["score"], sum(row["scoreBreakdown"].values()))
+
+    def test_cooldown_keeps_task_visible_but_reallocates_active_query_slot(self):
+        agenda = {
+            "generatedAt": "2026-08-22T00:00:00Z",
+            "people": {
+                "cooled": {
+                    "personName": "Cooled",
+                    "tasks": [task("cooled-task", priority="P0", queries=["cooled query"])],
+                },
+                "ready": {
+                    "personName": "Ready",
+                    "tasks": [task("ready-task", priority="P1", queries=["ready query"])],
+                },
+            },
+        }
+        memory = empty_memory()
+        record_attempt(memory, outcome_event("cooled-task", "cooled", "2026-08-20"))
+        record_attempt(memory, outcome_event("cooled-task", "cooled", "2026-08-21"))
+        queue = build_daily_queue(
+            agenda,
+            {"people": [person("cooled"), person("ready")]},
+            memory,
+        )
+        by_task = {row["taskId"]: row for row in queue["queue"]}
+        self.assertIn("cooled-task", by_task)
+        self.assertTrue(by_task["cooled-task"]["cooldownActive"])
+        self.assertEqual(by_task["cooled-task"]["queryBudget"], 0)
+        self.assertEqual(by_task["cooled-task"]["searchQueries"], [])
+        self.assertEqual(by_task["ready-task"]["queryBudget"], 1)
+        self.assertEqual(queue["allocatedQuerySlots"], 1)
 
 
 if __name__ == "__main__":
