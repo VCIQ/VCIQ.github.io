@@ -47,6 +47,50 @@ const invalidContentWeights = population.filter(
     (entry.contentRelevanceStatus === "partial-evidence" && entry.contentWeight !== 0.5) ||
     (entry.contentRelevanceStatus === "weak-evidence" && entry.contentWeight !== 0.25),
 );
+const invalidSourceTrackWeights = population.filter(
+  (entry) =>
+    entry.sourceTrackWeight === undefined ||
+    ![0.5, 0.75, 1].includes(entry.sourceTrackWeight) ||
+    (entry.sourceTrackRelevanceStatus === "severe-downweight" &&
+      entry.sourceTrackWeight !== 0.5) ||
+    (entry.sourceTrackRelevanceStatus === "moderate-downweight" &&
+      entry.sourceTrackWeight !== 0.75) ||
+    (["bypass-strong-evidence", "normal", "insufficient"].includes(
+      entry.sourceTrackRelevanceStatus ?? "",
+    ) &&
+      entry.sourceTrackWeight !== 1),
+);
+const sourceTrackStrongEvidenceViolations = population.filter(
+  (entry) =>
+    (entry.sourceTrackWeight ?? 1) < 1 &&
+    ((entry.item.topicSlugs?.length ?? 0) > 0 ||
+      entry.contentRelevanceStatus === "usable" ||
+      entry.status === "canonical-corrected"),
+);
+
+function baseSectorWeight(status: (typeof population)[number]["status"]) {
+  if (status === "sector-excluded" || status === "unscoped") return 0;
+  if (status === "downweighted") return 0.5;
+  return 1;
+}
+
+function baseTopicWeight(entry: (typeof population)[number]) {
+  if (!entry.analysisTopicSlugs.length) return 0;
+  return entry.status === "downweighted" ? 0.75 : 1;
+}
+
+const compositionViolations = population.filter((entry) => {
+  const expectedSector =
+    baseSectorWeight(entry.status) *
+    (entry.contentWeight ?? 1) *
+    (entry.sourceTrackWeight ?? 1);
+  const expectedTopic = baseTopicWeight(entry) * (entry.contentWeight ?? 1);
+  return (
+    Math.abs(entry.sectorWeight - expectedSector) > 1e-9 ||
+    Math.abs(entry.topicWeight - expectedTopic) > 1e-9
+  );
+});
+
 const invalidTrackTargets = population.flatMap((entry) =>
   entry.analysisTracks
     .filter((track) => !activeTrackNames.has(track))
@@ -61,7 +105,9 @@ const leakedHighConfidence = population.filter(
 const invalidCanonicalCorrections = population.filter(
   (entry) =>
     entry.status === "canonical-corrected" &&
-    (!entry.canonicalAssignment || entry.sectorWeight !== 1 || entry.analysisTracks.length === 0),
+    (!entry.canonicalAssignment ||
+      entry.analysisTracks.length === 0 ||
+      entry.sourceTrackWeight !== 1),
 );
 const lostHighConfidenceTopics = population.filter(
   (entry) =>
@@ -69,15 +115,11 @@ const lostHighConfidenceTopics = population.filter(
     (entry.item.topicSlugs ?? []).length > 0 &&
     entry.topicWeight <= 0,
 );
-const downweightedPolicyViolations = population.filter(
+const structuralPolicyViolations = population.filter(
   (entry) =>
-    entry.status === "downweighted" &&
-    (entry.sectorWeight !== 0.5 || entry.topicWeight !== 0.75),
-);
-const crossSectorPolicyViolations = population.filter(
-  (entry) =>
-    entry.status === "cross-sector" &&
-    (entry.sectorWeight !== 1 || entry.analysisTracks.length < 2),
+    (entry.status === "cross-sector" && entry.analysisTracks.length < 2) ||
+    (entry.status === "sector-excluded" && entry.analysisTracks.length !== 0) ||
+    (entry.status === "unscoped" && entry.analysisTracks.length !== 0),
 );
 
 function invalidWindow(value: {
@@ -203,6 +245,8 @@ const audit = {
   unscoped: snapshot.population.unscoped,
   contentPartialEvidence: snapshot.population.contentPartialEvidence,
   contentWeakEvidence: snapshot.population.contentWeakEvidence,
+  sourceTrackSevereDownweighted: snapshot.population.sourceTrackSevereDownweighted,
+  sourceTrackModerateDownweighted: snapshot.population.sourceTrackModerateDownweighted,
   datedForTrend: snapshot.population.datedForTrend,
   highConfidenceSectorFindings: highConfidenceIds.size,
   correctedHighConfidence: correctedHighConfidenceIds.size,
@@ -229,12 +273,20 @@ if (snapshot.population.sectorExcluded) {
 }
 if (snapshot.population.downweighted) {
   console.warn(
-    `ANALYSIS_ELIGIBILITY_WARNING: ${snapshot.population.downweighted} uncertain sector assignments are retained at 0.5 sector weight / 0.75 topic weight`,
+    `ANALYSIS_ELIGIBILITY_WARNING: ${snapshot.population.downweighted} uncertain sector assignments retain the base 0.5 sector / 0.75 topic policy before orthogonal relevance weights`,
   );
 }
 if (snapshot.population.contentPartialEvidence || snapshot.population.contentWeakEvidence) {
   console.warn(
     `ANALYSIS_ELIGIBILITY_NOTICE: content relevance weighting applies to ${snapshot.population.contentPartialEvidence} partial-evidence events at 0.5 and ${snapshot.population.contentWeakEvidence} weak-evidence events at 0.25; no raw events are deleted`,
+  );
+}
+if (
+  snapshot.population.sourceTrackSevereDownweighted ||
+  snapshot.population.sourceTrackModerateDownweighted
+) {
+  console.warn(
+    `ANALYSIS_ELIGIBILITY_NOTICE: source-track relevance adds 0.5 weight to ${snapshot.population.sourceTrackSevereDownweighted} severe-pair weak/partial events and 0.75 weight to ${snapshot.population.sourceTrackModerateDownweighted} moderate-pair weak/partial events; strong evidence bypasses this gate`,
   );
 }
 if (!snapshot.coverage.sevenDayComparisonReady || !snapshot.coverage.thirtyDayComparisonReady) {
@@ -254,6 +306,15 @@ const hardFailures = [
   invalidContentWeights.length
     ? `${invalidContentWeights.length} analysis entries violate content relevance weighting policy`
     : "",
+  invalidSourceTrackWeights.length
+    ? `${invalidSourceTrackWeights.length} analysis entries violate source-track relevance weighting policy`
+    : "",
+  sourceTrackStrongEvidenceViolations.length
+    ? `${sourceTrackStrongEvidenceViolations.length} strong-evidence events were incorrectly source-track downweighted`
+    : "",
+  compositionViolations.length
+    ? `${compositionViolations.length} analysis entries violate multiplicative sector/content/source weighting composition`
+    : "",
   invalidTrackTargets.length
     ? `${invalidTrackTargets.length} analysis entries point to inactive tracks`
     : "",
@@ -261,16 +322,13 @@ const hardFailures = [
     ? `${leakedHighConfidence.length} unreviewed high-confidence sector findings leaked into sector Momentum`
     : "",
   invalidCanonicalCorrections.length
-    ? `${invalidCanonicalCorrections.length} canonical-corrected entries lack a valid reviewed assignment`
+    ? `${invalidCanonicalCorrections.length} canonical-corrected entries lack a valid reviewed assignment or source-gate bypass`
     : "",
   lostHighConfidenceTopics.length
     ? `${lostHighConfidenceTopics.length} high-confidence sector findings incorrectly lost valid topic evidence`
     : "",
-  downweightedPolicyViolations.length
-    ? `${downweightedPolicyViolations.length} needs-review entries violate conservative weights`
-    : "",
-  crossSectorPolicyViolations.length
-    ? `${crossSectorPolicyViolations.length} cross-sector entries violate multi-track policy`
+  structuralPolicyViolations.length
+    ? `${structuralPolicyViolations.length} analysis entries violate sector status structure`
     : "",
   invalidMomentumRows.length
     ? `${invalidMomentumRows.length} track/topic momentum rows contain invalid window values`
