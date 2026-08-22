@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { ListChecks, Search, ShieldCheck } from "lucide-react";
+import { History, ListChecks, Search, ShieldCheck } from "lucide-react";
 
 import {
   personResearchQueue,
+  type PersonResearchOutcome,
   type PersonResearchQueueScoreBreakdown,
 } from "@/lib/person-research-queue";
 import styles from "./person-research-queue-panel.module.css";
@@ -26,6 +27,14 @@ const statusLabels = {
   candidate_found: "已有候选",
 };
 
+const outcomeLabels: Record<PersonResearchOutcome, string> = {
+  new_evidence: "发现新增证据",
+  rediscovered: "仅重复命中",
+  no_yield: "未发现合格材料",
+  error: "执行失败",
+  "": "暂无历史",
+};
+
 function scoreSummary(breakdown: PersonResearchQueueScoreBreakdown) {
   return [
     ["优先级", breakdown.priority],
@@ -35,11 +44,18 @@ function scoreSummary(breakdown: PersonResearchQueueScoreBreakdown) {
     ["近期", breakdown.recency],
     ["交叉验证", breakdown.crossValidation],
     ["可执行", breakdown.queryReadiness],
+    ["历史效率", breakdown.researchHistory],
   ] as const;
+}
+
+function percent(value: number | null) {
+  if (value === null) return "—";
+  return `${Math.round(value * 100)}%`;
 }
 
 export default function PersonResearchQueuePanel() {
   const queue = personResearchQueue;
+  const memory = queue.outcomeMemory;
 
   return (
     <section className={styles.queuePanel} aria-label="今日人物研究队列">
@@ -53,7 +69,7 @@ export default function PersonResearchQueuePanel() {
 
       <p className={styles.queueIntro}>
         从全部开放人物研究任务中按可解释规则分配今日预算。队列只决定“先查什么”和主动检索槽位，
-        不改变任何任务的事实状态或证据门槛。
+        不改变任何任务的事实状态或证据门槛；历史研究结果只用于减少重复、低产出的检索浪费。
       </p>
 
       <div className={styles.queueStats}>
@@ -77,6 +93,32 @@ export default function PersonResearchQueuePanel() {
           <strong>{queue.allocatedQuerySlots}/{queue.limits.activeQuerySlots}</strong>
           <small>每位人物最多占用 1 个槽位</small>
         </article>
+      </div>
+
+      <div className={styles.memoryPanel} aria-label="Research Outcome Memory">
+        <div className={styles.memoryHeading}>
+          <div>
+            <History size={16} aria-hidden="true" />
+            <strong>Research Outcome Memory</strong>
+          </div>
+          <small>这里只衡量研究动作产出率，不代表材料可信度。</small>
+        </div>
+        <div className={styles.memoryStats}>
+          <span>历史主动尝试 <strong>{memory.attemptCount}</strong></span>
+          <span>产生新增证据 <strong>{memory.yieldingAttemptCount}</strong></span>
+          <span>新增证据 URL <strong>{memory.newEvidenceCount}</strong></span>
+          <span>未新增尝试 <strong>{memory.zeroYieldAttemptCount}</strong></span>
+          <span>当前冷却任务 <strong>{memory.cooldownTaskCount}</strong></span>
+        </div>
+        {memory.sources.length > 0 && (
+          <div className={styles.sourceYield} aria-label="研究入口历史产出率">
+            {memory.sources.map((source) => (
+              <span key={source.source}>
+                {source.source} · {source.yieldingAttempts}/{source.attempts} 次有新增 · {percent(source.yieldRate)}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className={styles.queueList}>
@@ -112,6 +154,21 @@ export default function PersonResearchQueuePanel() {
                   现有证据：{item.evidenceBasisCount} 基础 / {item.candidateEvidenceCount} 候选
                 </span>
               </div>
+
+              {item.researchMemory.attempts > 0 && (
+                <div className={styles.taskMemory} data-cooldown={item.cooldownActive ? "true" : "false"}>
+                  <span>
+                    历史：{item.researchMemory.attempts} 次主动尝试 / {item.researchMemory.yieldingAttempts} 次发现新增
+                  </span>
+                  <span>上次结果：{outcomeLabels[item.researchMemory.lastOutcome]}</span>
+                  {item.researchMemory.zeroYieldStreak > 0 && (
+                    <span>连续未新增：{item.researchMemory.zeroYieldStreak} 次</span>
+                  )}
+                  {item.cooldownActive && item.researchMemory.nextEligibleDate && (
+                    <strong>主动检索冷却至 {item.researchMemory.nextEligibleDate}</strong>
+                  )}
+                </div>
+              )}
 
               {item.searchQueries.length > 0 && (
                 <div className={styles.queueQuery}>
