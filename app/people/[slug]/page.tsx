@@ -6,6 +6,7 @@ import {
   hanghangchaResearchLink,
   personDatabaseLinks,
 } from "@/lib/external-database-links";
+import { getPersonResearchAgenda } from "@/lib/person-research-agenda";
 import { researchPeople } from "@/lib/people-data";
 import {
   clusterPersonMaterials,
@@ -30,6 +31,21 @@ const materialLabels: Record<string, string> = {
   research_paper: "研究论文",
 };
 
+const researchTaskLabels: Record<string, string> = {
+  identity_verification: "身份核验",
+  first_party_evidence: "补一手证据",
+  viewpoint_verification: "观点变化核验",
+  execution_verification: "组织执行核验",
+  freshness_update: "近期证据补齐",
+};
+
+const researchTaskStatusLabels: Record<string, string> = {
+  open: "待检索",
+  candidate_found: "已找到候选证据",
+  supported: "成功判据已满足",
+  blocked: "暂时受阻",
+};
+
 export function generateStaticParams() {
   return researchPeople.map((item) => ({ slug: item.slug }));
 }
@@ -40,7 +56,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: person?.name ?? "人物研究",
     description: person
-      ? `${person.name}的研究摘要、关键变化、研究主线、观点演进和事件级公开材料。`
+      ? `${person.name}的研究摘要、关键变化、主动研究任务、研究主线、观点演进和事件级公开材料。`
       : "人物研究",
   };
 }
@@ -50,6 +66,7 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
   const person = researchPeople.find((item) => item.slug === slug);
   if (!person) notFound();
   const research = getPersonResearchSnapshot(person);
+  const activeAgenda = getPersonResearchAgenda(person.slug);
   const speechEvents = clusterPersonMaterials(person.speeches, person.name, person.updatedAt);
   const registryLinks = personDatabaseLinks(person.name);
   const externalLinks = [
@@ -60,6 +77,7 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
   ].filter((link): link is NonNullable<typeof link> => Boolean(link));
   const sections = [
     "研究摘要",
+    "主动研究计划",
     "影响映射",
     "人物背景",
     "公司与机构",
@@ -107,6 +125,7 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
             <span>{research.priority.level} · 研究优先级 {research.priority.score}</span>
             <span>证据覆盖 {research.coverage.score}%</span>
             <span>{research.viewChange.label}</span>
+            {activeAgenda && <span>{activeAgenda.openCount} 项主动研究任务</span>}
             {person.sectors.map((sector) => <span key={sector}>{sector}</span>)}
             {person.handles.map((handle) => <span key={handle}>@{handle}</span>)}
             <span>{research.events.length} 个事件 / {person.materials.length} 条原始材料</span>
@@ -166,6 +185,54 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
                 <p>{research.viewChange.summary}</p>
               </div>
             </div>
+          </Section>
+
+          <Section id="主动研究计划" title="主动研究计划">
+            <p className="method-note">
+              这里展示系统下一步准备验证的问题，而不是已经成立的事实。规则引擎根据身份、一手材料、观点变化、近期证据和组织执行缺口生成任务；
+              第三方报道最多把任务推进到“候选证据”，只有满足成功判据的一手或官方证据才会自动关闭任务。
+            </p>
+            {activeAgenda?.tasks.length ? (
+              <div className={styles.researchTaskList}>
+                {activeAgenda.tasks.map((task) => (
+                  <div className={styles.researchTaskCard} key={task.id}>
+                    <div className={styles.researchTaskMeta}>
+                      <span>{task.priority}</span>
+                      <span>{researchTaskLabels[task.taskType] ?? task.taskType}</span>
+                      <span>{researchTaskStatusLabels[task.status] ?? task.status}</span>
+                    </div>
+                    <strong>{task.question}</strong>
+                    <p>{task.objective}</p>
+                    {task.preferredEvidence.length > 0 && (
+                      <div className={styles.researchTaskEvidenceTypes}>
+                        <b>首选证据</b>
+                        {task.preferredEvidence.map((item) => <span key={item}>{item}</span>)}
+                      </div>
+                    )}
+                    {task.searchQueries.length > 0 && (
+                      <div className={styles.researchTaskQuery}>
+                        <b>有界检索方向</b>
+                        <code>{task.searchQueries[0]}</code>
+                      </div>
+                    )}
+                    <div className={styles.researchTaskCriteria}>
+                      <b>成功判据</b>
+                      <p>{task.successCriteria}</p>
+                    </div>
+                    {task.candidateEvidence.length > 0 && (
+                      <div className={styles.researchTaskCandidates}>
+                        <b>当前候选证据</b>
+                        {task.candidateEvidence.map((evidence) => (
+                          <a href={evidence.url} target="_blank" rel="noreferrer" key={evidence.url}>
+                            {evidence.sourceLevel ? `${evidence.sourceLevel} · ` : ""}{evidence.source} · {evidence.title}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : <p>当前没有需要主动补证据的研究任务；后续人物事件或证据缺口变化时会重新生成。</p>}
           </Section>
 
           <Section id="影响映射" title="最新事件影响映射">
@@ -287,6 +354,11 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
             <span>研究优先级</span>
             <strong>{research.priority.level}</strong>
             <p>{research.priority.score} / 100 · 用于决定持续跟踪顺序，不等同于人物社会影响力排名</p>
+          </div>
+          <div className="confidence-box">
+            <span>主动研究</span>
+            <strong>{activeAgenda?.openCount ?? 0}</strong>
+            <p>开放任务按证据缺口生成；满足成功判据后自动关闭或等待下一轮问题</p>
           </div>
           <div className="confidence-box">
             <span>证据覆盖</span>
