@@ -5,6 +5,7 @@ on:
     paths:
       - "app/page.tsx"
       - "app/technology/page.tsx"
+      - "app/technologies/**"
       - "app/companies/page.tsx"
       - "app/institutions/page.tsx"
       - "app/reports/page.tsx"
@@ -17,13 +18,21 @@ on:
       - "lib/channel-updates.ts"
       - "lib/channel-update-filter.ts"
       - "lib/channel-update-date.ts"
+      - "lib/technology-topics.ts"
+      - "lib/technology-topic-matching.ts"
+      - "lib/technology-term-matching.ts"
+      - "public/data/articles.json"
+      - "scripts/audit-technology-taxonomy.ts"
       - "tests/channel-updates.test.ts"
+      - "tests/technology-topics.test.ts"
+      - "package.json"
       - ".github/workflows/channel-update-directory-checks.yml"
   push:
     branches: [main]
     paths:
       - "app/page.tsx"
       - "app/technology/page.tsx"
+      - "app/technologies/**"
       - "app/companies/page.tsx"
       - "app/institutions/page.tsx"
       - "app/reports/page.tsx"
@@ -36,7 +45,14 @@ on:
       - "lib/channel-updates.ts"
       - "lib/channel-update-filter.ts"
       - "lib/channel-update-date.ts"
+      - "lib/technology-topics.ts"
+      - "lib/technology-topic-matching.ts"
+      - "lib/technology-term-matching.ts"
+      - "public/data/articles.json"
+      - "scripts/audit-technology-taxonomy.ts"
       - "tests/channel-updates.test.ts"
+      - "tests/technology-topics.test.ts"
+      - "package.json"
       - ".github/workflows/channel-update-directory-checks.yml"
 
 permissions:
@@ -55,4 +71,6 @@ jobs:
       - name: Type-check update directory
         run: npx tsc --noEmit
       - name: Run focused update-directory tests
-        run: node --import tsx --test tests/channel-updates.test.ts
+        run: node --import tsx --test tests/channel-updates.test.ts tests/technology-topics.test.ts
+      - name: Audit technology taxonomy quality
+        run: npm run audit:technology-taxonomy

@@ -1,23 +1,31 @@
-import { technologyTopicDefinitions } from "@/lib/technology-topics";
-
-function normalizeTechnologyText(value: string) {
-  return value
-    .normalize("NFKC")
-    .toLocaleLowerCase("zh-CN")
-    .replace(/[^a-z0-9\u3400-\u9fff]+/gu, "");
-}
+import { technologyTermMatchesText } from "@/lib/technology-term-matching";
+import {
+  technologyTopicDefinitions,
+  technologyTopicsForTrack,
+} from "@/lib/technology-topics";
 
 export function technologyTopicsForText(
   values: Array<string | undefined | null>,
 ) {
   const corpus = values.filter(Boolean).join(" ");
-  const normalizedCorpus = normalizeTechnologyText(corpus);
-  if (!normalizedCorpus) return [];
+  if (!corpus.trim()) return [];
 
   return technologyTopicDefinitions.filter((topic) =>
-    topic.matchTerms.some((term) => {
-      const normalizedTerm = normalizeTechnologyText(term);
-      return normalizedTerm.length >= 2 && normalizedCorpus.includes(normalizedTerm);
-    }),
+    topic.matchTerms.some((term) => technologyTermMatchesText(corpus, term)),
+  );
+}
+
+export function technologyTopicsForTextInTrack(
+  values: Array<string | undefined | null>,
+  trackName: string,
+) {
+  const allowedTopicSlugs = new Set(
+    technologyTopicsForTrack({ name: trackName, aliases: [] }).map(
+      (topic) => topic.slug,
+    ),
+  );
+
+  return technologyTopicsForText(values).filter((topic) =>
+    allowedTopicSlugs.has(topic.slug),
   );
 }
