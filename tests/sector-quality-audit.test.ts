@@ -33,6 +33,38 @@ test("direct title evidence outside the assigned track becomes a high-confidence
   assert.equal(finding.category, "high-confidence-misclassification");
   assert.deepEqual(finding.recommendedTracks, ["AI / AGI"]);
   assert.deepEqual(finding.incompatibleTopics, ["大模型"]);
+  assert.deepEqual(finding.currentTrackTitleTerms, []);
+});
+
+test("current-sector title anchors retain hardware-company model releases as cross-sector", () => {
+  const finding = assessSectorQuality(
+    item({
+      id: "cerebras-multimodal",
+      title: "Gemma 4 on Cerebras: Fast Multimodal AI",
+      track: "半导体",
+      topicSlugs: ["multimodal-models"],
+    }),
+  );
+
+  assert.ok(finding);
+  assert.equal(finding.category, "reasonable-cross-sector");
+  assert.ok(finding.currentTrackTitleTerms.includes("Cerebras"));
+  assert.deepEqual(finding.recommendedTracks, ["AI / AGI"]);
+});
+
+test("sector ASCII anchors use token boundaries rather than substrings", () => {
+  const finding = assessSectorQuality(
+    item({
+      id: "workspace-not-space",
+      title: "Google Workspace adds Gemini AI controls",
+      track: "商业航天",
+      topicSlugs: ["large-models"],
+    }),
+  );
+
+  assert.ok(finding);
+  assert.equal(finding.category, "high-confidence-misclassification");
+  assert.deepEqual(finding.currentTrackTitleTerms, []);
 });
 
 test("an event with both current-track and adjacent-track topics is retained as cross-sector", () => {
