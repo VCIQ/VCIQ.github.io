@@ -3,7 +3,7 @@
 
 The daily scheduler allocates task-directed query slots. Only those scheduled attempts are
 recorded in the outcome-memory ledger. Candidate discovery never changes supported state;
-it only records research yield for future cooldown/retry decisions.
+it only records research yield for future cooldown/retry and strategy decisions.
 """
 
 from __future__ import annotations
@@ -26,6 +26,7 @@ from tools.person_research_outcome_memory import (
     write_memory,
 )
 from tools.person_research_scheduler import build_daily_queue, scheduled_attempts_by_slug
+from tools.person_research_strategy_memory import classify_source_type
 from tools.person_video_discovery import discover_person_video_materials
 from tools.wechat_channel_card_discovery import discover_embedded_wechat_video_materials
 
@@ -74,19 +75,29 @@ def _record_research_attempt(slug: str, materials: list[dict[str, str]], had_err
         return
     urls = [str(item.get("url") or "") for item in materials if str(item.get("url") or "").strip()]
     hosts: list[str] = []
-    for url in urls:
+    source_type_counts: dict[str, int] = {}
+    for item in materials:
+        url = str(item.get("url") or "").strip()
+        if not url:
+            continue
         host = source_host(url)
         if host and host not in hosts:
             hosts.append(host)
+        source_type = classify_source_type(url, item.get("source"))
+        source_type_counts[source_type] = source_type_counts.get(source_type, 0) + 1
     outcome = "candidate_found" if urls else "error" if had_error else "no_evidence"
     _OUTCOME_MEMORY = append_attempt(_OUTCOME_MEMORY, {
         "taskId": scheduled.get("taskId"),
+        "taskType": scheduled.get("taskType"),
         "personSlug": slug,
         "researchDate": _RESEARCH_DATE,
         "query": scheduled.get("query"),
+        "queryStrategy": scheduled.get("queryStrategy"),
         "outcome": outcome,
         "candidateCount": len(urls),
         "sourceHosts": hosts,
+        "sourceTypes": list(source_type_counts),
+        "sourceTypeCounts": source_type_counts,
     })
 
 
