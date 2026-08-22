@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
-"""Run the person profile refresh with active, public video-platform enrichment.
+"""Run person profile refresh with bounded active research outcome memory.
 
-Before a normal refresh, the deterministic person research planner reads the previous
-profile snapshot and produces bounded evidence-search questions. The daily scheduler then
-allocates a limited number of active research query slots, and only scheduled queries are
-fed into the existing identity-gated video discovery. Baseline person refresh behavior is
-unchanged for people without an allocated active research slot.
+The daily scheduler allocates task-directed query slots. Only those scheduled attempts are
+recorded in the outcome-memory ledger. Candidate discovery never changes supported state;
+it only records research yield for future cooldown/retry decisions.
 """
 
 from __future__ import annotations
@@ -19,47 +17,73 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from tools import refresh_people_profiles as core
-from tools.person_research_agent import (
-    ARTICLES_PATH,
-    PEOPLE_PATH,
-    build_agenda,
-    load_json,
+from tools.person_research_agent import ARTICLES_PATH, PEOPLE_PATH, build_agenda, load_json
+from tools.person_research_outcome_memory import (
+    OUTPUT_PATH as OUTCOME_MEMORY_PATH,
+    append_attempt,
+    load_memory,
+    source_host,
+    write_memory,
 )
-from tools.person_research_scheduler import build_daily_queue, scheduled_queries_by_slug
+from tools.person_research_scheduler import build_daily_queue, scheduled_attempts_by_slug
 from tools.person_video_discovery import discover_person_video_materials
 from tools.wechat_channel_card_discovery import discover_embedded_wechat_video_materials
 
 _BASE_ENRICH_CANDIDATE = core.enrich_candidate
-_RESEARCH_QUERY_MAP: dict[str, list[str]] = {}
+_RESEARCH_ATTEMPT_MAP: dict[str, dict[str, str]] = {}
 _RESEARCH_QUEUE_STATS: dict[str, int] = {}
+_RESEARCH_DATE = ""
+_OUTCOME_MEMORY: dict[str, Any] = {}
 
 
-def _load_active_research_queries() -> dict[str, list[str]]:
-    global _RESEARCH_QUEUE_STATS
+def _load_active_research_attempts() -> dict[str, dict[str, str]]:
+    global _RESEARCH_QUEUE_STATS, _RESEARCH_DATE, _OUTCOME_MEMORY
     people_payload = load_json(PEOPLE_PATH, {"people": []})
-    agenda = build_agenda(
-        people_payload,
-        load_json(ARTICLES_PATH, {"articles": []}),
-    )
-    queue = build_daily_queue(agenda, people_payload)
+    agenda = build_agenda(people_payload, load_json(ARTICLES_PATH, {"articles": []}))
+    _OUTCOME_MEMORY = load_memory(OUTCOME_MEMORY_PATH)
+    queue = build_daily_queue(agenda, people_payload, _OUTCOME_MEMORY)
+    _RESEARCH_DATE = str(queue.get("researchDate") or "")
     _RESEARCH_QUEUE_STATS = {
         "people": int(queue.get("selectedPeopleCount") or 0),
         "tasks": int(queue.get("selectedTaskCount") or 0),
         "queries": int(queue.get("allocatedQuerySlots") or 0),
+        "memory": int(queue.get("outcomeMemoryAttemptCount") or 0),
     }
-    return scheduled_queries_by_slug(queue)
+    return scheduled_attempts_by_slug(queue)
 
 
 def _candidate_with_research_query(candidate: dict[str, Any]) -> dict[str, Any]:
-    queries = _RESEARCH_QUERY_MAP.get(str(candidate.get("slug") or "")) or []
-    if not queries:
+    attempt = _RESEARCH_ATTEMPT_MAP.get(str(candidate.get("slug") or "")) or {}
+    query = str(attempt.get("query") or "").strip()
+    if not query:
         return candidate
     override = dict(candidate.get("override") or {})
     existing = [str(value) for value in override.get("videoQueries") or [] if str(value).strip()]
-    # Existing hand-curated videoQueries retain precedence. The scheduler only fills a
-    # research gap when a curator has not already specified a stronger query.
-    override["videoQueries"] = existing or [queries[0]]
+    override["videoQueries"] = existing or [query]
     return {**candidate, "override": override}
+
+
+def _record_research_attempt(slug: str, materials: list[dict[str, str]], had_error: bool) -> None:
+    global _OUTCOME_MEMORY
+    scheduled = _RESEARCH_ATTEMPT_MAP.get(slug)
+    if not scheduled:
+        return
+    urls = [str(item.get("url") or "") for item in materials if str(item.get("url") or "").strip()]
+    hosts: list[str] = []
+    for url in urls:
+        host = source_host(url)
+        if host and host not in hosts:
+            hosts.append(host)
+    outcome = "candidate_found" if urls else "error" if had_error else "no_evidence"
+    _OUTCOME_MEMORY = append_attempt(_OUTCOME_MEMORY, {
+        "taskId": scheduled.get("taskId"),
+        "personSlug": slug,
+        "researchDate": _RESEARCH_DATE,
+        "query": scheduled.get("query"),
+        "outcome": outcome,
+        "candidateCount": len(urls),
+        "sourceHosts": hosts,
+    })
 
 
 def merge_video_materials(profile: dict[str, Any], video_materials: list[dict[str, str]]) -> dict[str, Any]:
@@ -71,20 +95,8 @@ def merge_video_materials(profile: dict[str, Any], video_materials: list[dict[st
         *(profile.get("sources") or []),
         *(str(item.get("url") or "") for item in video_materials),
     ])
-    status = (
-        "complete"
-        if profile.get("background") and len(materials) >= 4
-        else "partial"
-        if materials
-        else "pending"
-    )
-    return {
-        **profile,
-        "materials": materials,
-        "speeches": speeches,
-        "sources": sources,
-        "status": status,
-    }
+    status = "complete" if profile.get("background") and len(materials) >= 4 else "partial" if materials else "pending"
+    return {**profile, "materials": materials, "speeches": speeches, "sources": sources, "status": status}
 
 
 def enrich_candidate(
@@ -96,41 +108,47 @@ def enrich_candidate(
     profile = _BASE_ENRICH_CANDIDATE(candidate, previous, articles, offline)
     if offline:
         return profile
+    slug = str(candidate.get("slug") or "")
     discovery_candidate = _candidate_with_research_query(candidate)
     video_materials: list[dict[str, str]] = []
+    had_error = False
     try:
         video_materials.extend(discover_person_video_materials(discovery_candidate))
     except Exception:
-        pass
+        had_error = True
     if articles:
         try:
-            video_materials.extend(
-                discover_embedded_wechat_video_materials(discovery_candidate, articles)
-            )
+            video_materials.extend(discover_embedded_wechat_video_materials(discovery_candidate, articles))
         except Exception:
-            pass
+            had_error = True
+    video_materials = core.dedupe_materials(video_materials)
+    _record_research_attempt(slug, video_materials, had_error)
     return merge_video_materials(profile, video_materials)
 
 
-# The core builder resolves this global from its own module, so replace it once before
-# exposing the ordinary build entry point.
 core.enrich_candidate = enrich_candidate
 build_payload = core.build_payload
 
 
 def main() -> int:
-    global _RESEARCH_QUERY_MAP
+    global _RESEARCH_ATTEMPT_MAP
     validate_only = "--validate-only" in sys.argv
     offline = "--offline" in sys.argv
-    if not validate_only and not offline:
-        _RESEARCH_QUERY_MAP = _load_active_research_queries()
+    active = not validate_only and not offline
+    if active:
+        _RESEARCH_ATTEMPT_MAP = _load_active_research_attempts()
         print(
             "Daily person research queue prepared: "
             f"{_RESEARCH_QUEUE_STATS.get('people', 0)} people / "
             f"{_RESEARCH_QUEUE_STATS.get('tasks', 0)} tasks / "
-            f"{_RESEARCH_QUEUE_STATS.get('queries', 0)} active query slots."
+            f"{_RESEARCH_QUEUE_STATS.get('queries', 0)} active query slots / "
+            f"{_RESEARCH_QUEUE_STATS.get('memory', 0)} prior attempts."
         )
-    return core.main()
+    result = core.main()
+    if active:
+        write_memory(_OUTCOME_MEMORY, OUTCOME_MEMORY_PATH)
+        print(f"Person research outcome memory written: {len(_OUTCOME_MEMORY.get('attempts') or [])} attempts.")
+    return result
 
 
 if __name__ == "__main__":
