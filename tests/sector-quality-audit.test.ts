@@ -5,14 +5,16 @@ import {
   buildSectorQualityReviewQueue,
 } from "../lib/sector-quality-audit";
 
-function item(overrides: Record<string, unknown>) {
+type AuditInput = Parameters<typeof assessSectorQuality>[0];
+
+function item(overrides: Partial<AuditInput>): AuditInput {
   return {
     id: "sample",
     title: "Sample event",
     summary: "",
     track: "AI / AGI",
     topicSlugs: [],
-    sourceGrade: "B" as const,
+    sourceGrade: "B",
     ...overrides,
   };
 }
