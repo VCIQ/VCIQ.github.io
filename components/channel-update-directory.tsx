@@ -3,6 +3,7 @@ import {
   getChannelUpdateDirectory,
   type ChannelUpdateKey,
 } from "@/lib/channel-updates";
+import { aggregatePeopleUpdateDirectory } from "@/lib/people-event-updates";
 
 const INITIAL_CHANNEL_UPDATE_LIMIT = 120;
 const TECHNOLOGY_CHANNEL_UPDATE_LIMIT = 30;
@@ -14,7 +15,9 @@ export function ChannelUpdateDirectory({
   channel: ChannelUpdateKey;
   layout?: "default" | "split";
 }) {
-  const fullDirectory = getChannelUpdateDirectory(channel);
+  const rawDirectory = getChannelUpdateDirectory(channel);
+  const fullDirectory =
+    channel === "people" ? aggregatePeopleUpdateDirectory(rawDirectory) : rawDirectory;
   const initialItems = fullDirectory.items.slice(0, INITIAL_CHANNEL_UPDATE_LIMIT);
   const directory = {
     ...fullDirectory,
