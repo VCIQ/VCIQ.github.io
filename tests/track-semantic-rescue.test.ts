@@ -85,3 +85,39 @@ test("ASCII rescue terms use token boundaries", () => {
   assert.ok(result.summaryAnchors.includes("robotics"));
   assert.ok(result.summaryAnchors.includes("humanoid"));
 });
+
+test("promotional titles cannot be rescued only because they mention a robot", () => {
+  const result = trackSemanticRescueForEvidence({
+    track: "机器人",
+    title: "Save Up to $560 Off Robot Lawn Mowers With App Control",
+    summary: "A retail promotion for consumer lawn equipment.",
+    topicCount: 0,
+    contentStatus: "weak-evidence",
+  });
+  assert.equal(result.status, "none");
+  assert.equal(result.multiplier, 1);
+});
+
+test("archive and category pages do not receive semantic rescue", () => {
+  const result = trackSemanticRescueForEvidence({
+    track: "新能源",
+    title: "Wind Energy Archives",
+    summary: "An archive index of older wind energy stories.",
+    topicCount: 0,
+    contentStatus: "weak-evidence",
+  });
+  assert.equal(result.status, "none");
+  assert.equal(result.multiplier, 1);
+});
+
+test("retail packaging language is not treated as semiconductor packaging evidence", () => {
+  const result = trackSemanticRescueForEvidence({
+    track: "半导体",
+    title: "Memory vendor agrees to XMP and EXPO packaging warnings",
+    summary: "A consumer memory marketing settlement about product-box wording.",
+    topicCount: 0,
+    contentStatus: "weak-evidence",
+  });
+  assert.equal(result.status, "none");
+  assert.equal(result.multiplier, 1);
+});
