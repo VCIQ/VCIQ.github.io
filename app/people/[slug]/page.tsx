@@ -6,8 +6,13 @@ import {
   hanghangchaResearchLink,
   personDatabaseLinks,
 } from "@/lib/external-database-links";
-import { researchPeople, type PersonMaterial } from "@/lib/people-data";
-import { getPersonProfile } from "@/lib/research-content";
+import { researchPeople } from "@/lib/people-data";
+import {
+  clusterPersonMaterials,
+  getPersonResearchSnapshot,
+  type PersonMaterialEvent,
+} from "@/lib/people-research";
+import styles from "./page.module.css";
 
 const materialLabels: Record<string, string> = {
   official_profile: "官方档案",
@@ -34,7 +39,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const person = researchPeople.find((item) => item.slug === slug);
   return {
     title: person?.name ?? "人物研究",
-    description: person ? `${person.name}的背景、公司与机构、产品、作品、著作、演讲和公开材料。` : "人物研究",
+    description: person
+      ? `${person.name}的研究摘要、关键变化、研究主线、观点演进和事件级公开材料。`
+      : "人物研究",
   };
 }
 
@@ -42,7 +49,8 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
   const { slug } = await params;
   const person = researchPeople.find((item) => item.slug === slug);
   if (!person) notFound();
-  const profile = getPersonProfile(person);
+  const research = getPersonResearchSnapshot(person);
+  const speechEvents = clusterPersonMaterials(person.speeches, person.name, person.updatedAt);
   const registryLinks = personDatabaseLinks(person.name);
   const externalLinks = [
     ...registryLinks,
@@ -51,14 +59,15 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
       : []),
   ].filter((link): link is NonNullable<typeof link> => Boolean(link));
   const sections = [
+    "研究摘要",
     "人物背景",
     "公司与机构",
     "产品与项目",
     "作品与著作",
-    "演讲与采访",
     "研究主线",
-    "核心概念",
+    "核心观点",
     "观点演进",
+    "演讲与采访",
     "公开材料",
   ];
 
@@ -74,7 +83,7 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
                 id: `person:${person.slug}`,
                 href: `/people/${person.slug}`,
                 title: person.name,
-                summary: person.background || person.summary,
+                summary: research.whyImportant,
                 channel: "people",
                 channelLabel: "人物研究",
                 keywords: [
@@ -82,10 +91,10 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
                   ...person.products,
                 ],
                 sectors: person.sectors,
-                sources: person.materials.slice(0, 16).map((material) => ({
-                  name: material.source,
-                  url: material.url,
-                  level: "原始材料",
+                sources: research.events.slice(0, 16).map((event) => ({
+                  name: event.representative.source,
+                  url: event.representative.url,
+                  level: "事件主信源",
                 })),
                 region: "全球",
                 company: person.organizations[0] ?? "",
@@ -96,7 +105,7 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
           <div className="hero-chips">
             {person.sectors.map((sector) => <span key={sector}>{sector}</span>)}
             {person.handles.map((handle) => <span key={handle}>@{handle}</span>)}
-            <span>{person.status === "complete" ? "资料较完整" : person.status === "partial" ? "持续补充" : "等待抓取"}</span>
+            <span>{research.events.length} 个事件 / {person.materials.length} 条原始材料</span>
           </div>
         </div>
         <div className="person-monogram large">{person.name.slice(0, 1)}</div>
@@ -109,6 +118,33 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
         </aside>
 
         <article className="detail-article">
+          <Section id="研究摘要" title="人物研究摘要">
+            <div className={styles.snapshotGrid}>
+              <div className={styles.snapshotCard}>
+                <span>WHY IT MATTERS</span>
+                <strong>为什么重要</strong>
+                <p>{research.whyImportant}</p>
+              </div>
+              <div className={styles.snapshotCard}>
+                <span>LATEST CHANGE</span>
+                <strong>最新变化</strong>
+                {research.latestChange ? (
+                  <>
+                    <p>{research.latestChange.date} · {research.latestChange.title}</p>
+                    <a href={research.latestChange.url} target="_blank" rel="noreferrer">
+                      {research.latestChange.source} · 查看证据
+                    </a>
+                  </>
+                ) : <p>暂无可核验的近期人物事件。</p>}
+              </div>
+              <div className={styles.snapshotCard}>
+                <span>NEXT WATCH</span>
+                <strong>下一步观察</strong>
+                <p>{research.nextWatch}</p>
+              </div>
+            </div>
+          </Section>
+
           <Section id="人物背景" title="人物背景">
             <p>{person.background || person.summary || "暂无可验证的背景资料，后台将在下一轮统一抓取时继续补充。"}</p>
             {person.aliases.length > 1 && <p className="method-note">别名：{person.aliases.join(" · ")}</p>}
@@ -126,47 +162,65 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
             <FactList values={[...person.works, ...person.books]} empty="暂无已验证的代表作品或著作条目；相关论文仍可在公开材料中查看。" />
           </Section>
 
-          <Section id="演讲与采访" title="演讲、采访与公开对话">
-            <MaterialList materials={person.speeches} empty="暂无已验证的演讲、采访或公开对话。" />
-          </Section>
-
           <Section id="研究主线" title="研究主线">
-            <p>{profile.overview || person.summary}</p>
+            <p>{research.researchOverview}</p>
+            <p className="method-note">
+              研究主线要求同一主题获得跨材料或跨行动的重复证据；人物简介、单次采访和转载数量本身不构成长期技术判断。
+            </p>
           </Section>
 
-          <Section id="核心概念" title="核心概念">
-            {profile.concepts.length ? (
+          <Section id="核心观点" title="核心观点与概念">
+            {research.coreConcepts.length ? (
               <div className="concept-grid">
-                {profile.concepts.map((concept, index) => {
-                  const evidence = person.materials[Math.min(concept.evidenceIndex, person.materials.length - 1)];
-                  return (
-                    <div key={concept.name}>
-                      <span>{String(index + 1).padStart(2, "0")}</span>
-                      <strong>{concept.name}</strong>
-                      <p>{concept.explanation}</p>
-                      {evidence && <a href={evidence.url} target="_blank" rel="noreferrer">相关材料 · {evidence.title}</a>}
-                    </div>
-                  );
-                })}
-              </div>
-            ) : <p>暂无足够材料提炼核心概念。</p>}
-          </Section>
-
-          <Section id="观点演进" title="观点与方法演进">
-            {profile.evolution.length ? (
-              <div className="timeline">
-                {profile.evolution.map((item, index) => (
-                  <div key={item}>
-                    <time>{String(index + 1).padStart(2, "0")}</time>
-                    <div><strong>{item}</strong></div>
+                {research.coreConcepts.map((concept, index) => (
+                  <div key={concept.name}>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <strong>{concept.name}</strong>
+                    <p>{concept.explanation}</p>
+                    {concept.evidence && (
+                      <a href={concept.evidence.url} target="_blank" rel="noreferrer">
+                        相关证据 · {concept.evidence.title}
+                      </a>
+                    )}
                   </div>
                 ))}
               </div>
-            ) : <p>当前材料尚不足以形成可靠的时间演进判断。</p>}
+            ) : <p>当前还没有足够证据提炼稳定的核心观点；暂不从人物背景自动生成观点。</p>}
           </Section>
 
-          <Section id="公开材料" title="全部公开材料">
-            <MaterialList materials={person.materials} empty="暂无可追溯公开材料。" />
+          <Section id="观点演进" title="观点演进 / 公开表达时间线">
+            {!research.hasVerifiedEvolution && (
+              <div className={styles.evolutionNotice}>
+                当前材料还不足以可靠判断观点发生了变化。以下仅展示按时间排列的公开材料样本，
+                不把发布时间差异自动解释为观点迁移。
+              </div>
+            )}
+            {research.evolution.length ? (
+              <div className="timeline">
+                {research.evolution.map((item, index) => (
+                  <div key={`${item.label}-${item.statement}-${index}`}>
+                    <time>{item.label}</time>
+                    <div>
+                      <strong>{item.statement}</strong>
+                      {item.evidence && (
+                        <p><a href={item.evidence.url} target="_blank" rel="noreferrer">{item.evidence.source} · 查看原始材料</a></p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : <p>当前没有足够的时间序列材料。</p>}
+          </Section>
+
+          <Section id="演讲与采访" title="演讲、采访与公开对话">
+            <EventMaterialList events={speechEvents} empty="暂无已验证的演讲、采访或公开对话。" />
+          </Section>
+
+          <Section id="公开材料" title="事件级公开材料">
+            <p className="method-note">
+              同一人物的同一事件聚合为一条主记录，优先展示更接近原始出处的材料；其他转载或镜像仍作为同事件信源保留。
+            </p>
+            <EventMaterialList events={research.events} empty="暂无可追溯公开材料。" />
             <ExternalDatabaseLinks
               links={externalLinks}
               lead="以下入口跳转到外部商业数据库检索该人物的任职、持股、创投记录与相关研报；数据在对方平台查看，本站不抓取、不缓存其内容。"
@@ -176,14 +230,14 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
 
         <aside className="source-rail">
           <div className="confidence-box">
-            <span>公开材料</span>
-            <strong>{person.materials.length}</strong>
-            <p>Wikipedia、Wikidata、官方网站、论文、B 站、微信视频号、YouTube 与公开发文</p>
+            <span>人物事件</span>
+            <strong>{research.events.length}</strong>
+            <p>由 {person.materials.length} 条原始材料按同一人物、标题语义与时间窗口聚合</p>
           </div>
           <div className="confidence-box">
-            <span>所属赛道</span>
-            <strong>{person.sectors.length || "—"}</strong>
-            <p>{person.sectors.join("、") || "精选人物"}</p>
+            <span>原始材料</span>
+            <strong>{person.materials.length}</strong>
+            <p>保留每个事件的公开信源，避免事件去重后丢失证据链</p>
           </div>
           <div className="confidence-box">
             <span>最后更新</span>
@@ -201,32 +255,52 @@ function FactList({ values, empty }: { values: string[]; empty: string }) {
   return <div className="concept-grid">{values.map((value, index) => <div key={value}><span>{String(index + 1).padStart(2, "0")}</span><strong>{value}</strong></div>)}</div>;
 }
 
-function MaterialList({ materials, empty }: { materials: PersonMaterial[]; empty: string }) {
-  if (!materials.length) return <p>{empty}</p>;
+function EventMaterialList({ events, empty }: { events: PersonMaterialEvent[]; empty: string }) {
+  if (!events.length) return <p>{empty}</p>;
   return (
-    <div className="material-list">
-      {materials.map((material) => {
+    <div className={styles.eventList}>
+      {events.map((event) => {
+        const material = event.representative;
         const label = materialLabels[material.type] ?? material.type;
+        const otherSources = event.items
+          .filter((item) => item.url !== material.url)
+          .filter((item, index, values) => values.findIndex((candidate) => candidate.url === item.url) === index)
+          .slice(0, 5);
         return (
-          <a
-            href={material.url}
-            target="_blank"
-            rel="noreferrer"
-            key={`${material.title}-${material.date}-${material.url}`}
-            data-intelligence-item="true"
-            data-intelligence-title={material.title}
-            data-intelligence-summary={material.source}
-            data-intelligence-type={label}
-            data-intelligence-date={material.date}
-            data-intelligence-source={material.source}
-            data-intelligence-source-level="原始材料"
-            data-intelligence-channel="people"
-            data-intelligence-channel-label="人物研究"
-          >
-            <span data-intelligence-type>{label}</span>
-            <div><strong data-intelligence-title>{material.title}</strong><p data-intelligence-source>{material.source}</p></div>
-            <time>{material.date}</time>
-          </a>
+          <div className={styles.eventGroup} key={event.id}>
+            <a
+              className={styles.eventPrimary}
+              href={material.url}
+              target="_blank"
+              rel="noreferrer"
+              data-intelligence-item="true"
+              data-intelligence-title={material.title}
+              data-intelligence-summary={material.source}
+              data-intelligence-type={label}
+              data-intelligence-date={material.date}
+              data-intelligence-source={material.source}
+              data-intelligence-source-level="事件主信源"
+              data-intelligence-channel="people"
+              data-intelligence-channel-label="人物研究"
+            >
+              <span data-intelligence-type>{label}</span>
+              <div>
+                <strong data-intelligence-title>{material.title}</strong>
+                <p data-intelligence-source>{material.source}</p>
+              </div>
+              <time>{material.date}</time>
+            </a>
+            {event.sourceCount > 1 && (
+              <div className={styles.eventSources}>
+                <span>同事件 {event.sourceCount} 个公开信源</span>
+                {otherSources.map((source) => (
+                  <a href={source.url} target="_blank" rel="noreferrer" key={source.url}>
+                    {source.source}
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
         );
       })}
     </div>
