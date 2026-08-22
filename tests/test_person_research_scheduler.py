@@ -2,12 +2,14 @@ from __future__ import annotations
 
 import unittest
 
+from tools.person_research_outcome_memory import build_payload
 from tools.person_research_scheduler import (
     MAX_ACTIVE_QUERY_SLOTS,
     MAX_DAILY_PEOPLE,
     MAX_DAILY_TASKS,
     MAX_TASKS_PER_PERSON,
     build_daily_queue,
+    scheduled_attempts_by_slug,
     scheduled_queries_by_slug,
 )
 
@@ -185,6 +187,60 @@ class PersonResearchSchedulerTests(unittest.TestCase):
         self.assertEqual(row["executor"], "cross_channel")
         self.assertEqual(row["queryBudget"], 0)
         self.assertGreater(row["scoreBreakdown"]["crossValidation"], 0)
+
+    def test_strategy_memory_selects_higher_yield_query_and_preserves_task_state(self):
+        attempts = []
+        for index in range(3):
+            attempts.append({
+                "taskId": f"old-direct-{index}",
+                "taskType": "first_party_evidence",
+                "personSlug": f"old-direct-{index}",
+                "researchDate": "2026-08-10",
+                "query": "Alice 世界模型",
+                "queryStrategy": "topic_direct",
+                "outcome": "no_evidence",
+                "candidateCount": 0,
+                "sourceHosts": [],
+            })
+            attempts.append({
+                "taskId": f"old-speech-{index}",
+                "taskType": "first_party_evidence",
+                "personSlug": f"old-speech-{index}",
+                "researchDate": "2026-08-10",
+                "query": "Alice 世界模型 演讲",
+                "queryStrategy": "topic_speech",
+                "outcome": "candidate_found",
+                "candidateCount": 2,
+                "sourceHosts": ["youtube.com"],
+                "sourceTypeCounts": {"video_platform": 2},
+            })
+        memory = build_payload(attempts)
+        agenda = {
+            "generatedAt": "2026-08-22T00:00:00Z",
+            "people": {
+                "alice": {
+                    "personName": "Alice",
+                    "tasks": [task(
+                        "current",
+                        task_type="first_party_evidence",
+                        priority="P0",
+                        queries=["Alice 世界模型", "Alice 世界模型 演讲"],
+                    )],
+                }
+            },
+        }
+        queue = build_daily_queue(agenda, {"people": [person("alice")]}, memory)
+        row = queue["queue"][0]
+        self.assertEqual(row["status"], "open")
+        self.assertEqual(row["searchQueries"], ["Alice 世界模型 演讲"])
+        self.assertEqual(row["queryStrategy"], "topic_speech")
+        self.assertGreater(row["strategySampleSize"], 0)
+        self.assertGreater(row["scoreBreakdown"]["researchStrategyROI"], 0)
+        self.assertGreater(row["expectedSuccessRate"], 0.5)
+        self.assertEqual(row["topHistoricalSourceType"], "video_platform")
+        attempt = scheduled_attempts_by_slug(queue)["alice"]
+        self.assertEqual(attempt["taskType"], "first_party_evidence")
+        self.assertEqual(attempt["queryStrategy"], "topic_speech")
 
 
 if __name__ == "__main__":

@@ -32,6 +32,7 @@ from tools.person_research_outcome_memory import (
     load_memory,
     task_memory_signal,
 )
+from tools.person_research_strategy_memory import choose_query_strategy
 
 OUTPUT_PATH = ROOT / "public" / "data" / "person_research_queue.json"
 
@@ -163,6 +164,7 @@ def score_task(
     generated_at: str,
     memory: dict[str, Any] | None = None,
     research_date: str = "",
+    strategy: dict[str, Any] | None = None,
 ) -> tuple[int, dict[str, int], list[str], str]:
     priority = PRIORITY_SCORE.get(clean(task.get("priority")), 0)
     task_type = TYPE_SCORE.get(clean(task.get("taskType")), 0)
@@ -174,6 +176,15 @@ def score_task(
     memory_score, memory_reason, cooldown_until = task_memory_signal(
         memory or {}, clean(task.get("id"), 180), research_date
     )
+    strategy = strategy or {}
+    strategy_score = int(strategy.get("historyAdjustment") or 0)
+    sample_size = int(strategy.get("sampleSize") or 0)
+    strategy_reason = ""
+    if sample_size:
+        strategy_reason = (
+            f"{clean(strategy.get('strategyLabel'), 80)} 历史 {sample_size} 次，"
+            f"平滑候选命中率 {float(strategy.get('expectedSuccessRate') or 0):.0%}"
+        )
     breakdown = {
         "priority": priority,
         "taskType": task_type,
@@ -183,6 +194,7 @@ def score_task(
         "crossValidation": cross,
         "queryReadiness": ready,
         "researchOutcomeMemory": memory_score,
+        "researchStrategyROI": strategy_score,
     }
     reasons = [
         f"{clean(task.get('priority'))} 研究任务",
@@ -191,6 +203,7 @@ def score_task(
         cross_reason,
         ready_reason,
         memory_reason,
+        strategy_reason,
     ]
     return sum(breakdown.values()), breakdown, [reason for reason in reasons if reason][:6], cooldown_until
 
@@ -203,6 +216,7 @@ def build_daily_queue(
     generated_at = clean(agenda.get("generatedAt") or people_payload.get("generatedAt"))
     research_date = _research_date(generated_at)
     people = _person_map(people_payload)
+    memory = outcome_memory or {}
     candidates: list[dict[str, Any]] = []
     for slug, record in (agenda.get("people") or {}).items():
         if not isinstance(record, dict):
@@ -214,8 +228,12 @@ def build_daily_queue(
             status = clean(task.get("status"))
             if status in {"supported", "blocked"}:
                 continue
+            raw_queries = [clean(value, 220) for value in (task.get("searchQueries") or [])[:3] if clean(value)]
+            strategy = choose_query_strategy(memory, clean(task.get("taskType"), 80), raw_queries)
+            best_query = clean(strategy.get("query"), 220)
+            ordered_queries = ([best_query] if best_query else []) + [value for value in raw_queries if value != best_query]
             score, breakdown, reasons, cooldown_until = score_task(
-                task, person, generated_at, outcome_memory or {}, research_date
+                task, person, generated_at, memory, research_date, strategy
             )
             candidates.append({
                 "personSlug": str(slug),
@@ -228,7 +246,15 @@ def build_daily_queue(
                 "question": clean(task.get("question"), 520),
                 "successCriteria": clean(task.get("successCriteria"), 620),
                 "executor": _executor(task),
-                "searchQueries": [clean(value, 220) for value in (task.get("searchQueries") or [])[:3] if clean(value)],
+                "searchQueries": ordered_queries[:3],
+                "queryStrategy": clean(strategy.get("strategy"), 80),
+                "queryStrategyLabel": clean(strategy.get("strategyLabel"), 120),
+                "strategySampleSize": int(strategy.get("sampleSize") or 0),
+                "expectedSuccessRate": float(strategy.get("expectedSuccessRate") or 0.5),
+                "expectedEvidenceYield": float(strategy.get("expectedYieldPerSlot") or 0.5),
+                "queryUnitCost": 1,
+                "topHistoricalSourceType": clean(strategy.get("topSourceType"), 80),
+                "topHistoricalSourceTypeLabel": clean(strategy.get("topSourceTypeLabel"), 120),
                 "evidenceBasisCount": len(task.get("evidenceBasis") or []),
                 "candidateEvidenceCount": len(task.get("candidateEvidence") or []),
                 "score": score,
@@ -241,6 +267,7 @@ def build_daily_queue(
     priority_order = {"P0": 0, "P1": 1, "P2": 2, "P3": 3}
     candidates.sort(key=lambda row: (
         -int(row["score"]),
+        -float(row.get("expectedEvidenceYield") or 0),
         priority_order.get(row["priority"], 9),
         row["personSlug"],
         row["taskId"],
@@ -281,9 +308,9 @@ def build_daily_queue(
         elif row["executor"] == "person_video":
             row["searchQueries"] = []
 
-    memory_attempts = len((outcome_memory or {}).get("attempts") or [])
+    memory_attempts = len(memory.get("attempts") or [])
     return {
-        "schemaVersion": 2,
+        "schemaVersion": 3,
         "generatedAt": generated_at,
         "researchDate": research_date,
         "limits": {
@@ -300,8 +327,9 @@ def build_daily_queue(
         "queue": selected,
         "methodology": (
             "队列只排序开放研究任务并分配有限主动检索槽位，不改变事实状态。"
-            "分数由任务优先级、任务类型、状态、证据缺口、近期事件、跨频道验证价值、可执行性和研究执行历史确定；"
-            "近期零产出会短暂冷却以避免重复消耗预算，candidate_found 只代表候选产出而非事实 supported。"
+            "分数由任务价值、证据缺口、近期事件、交叉验证、执行历史与可解释的查询策略 ROI 共同确定；"
+            "同一任务会优先选择历史候选产出更高的 query strategy，但所有策略学习只影响排序和预算，"
+            "candidate_found 仍只代表候选产出，不能绕过 successCriteria 或自动变成事实 supported。"
         ),
     }
 
@@ -327,7 +355,12 @@ def scheduled_attempts_by_slug(queue: dict[str, Any]) -> dict[str, dict[str, str
         queries = [clean(value, 220) for value in row.get("searchQueries") or [] if clean(value)]
         task_id = clean(row.get("taskId"), 180)
         if slug and task_id and queries and slug not in result:
-            result[slug] = {"taskId": task_id, "query": queries[0]}
+            result[slug] = {
+                "taskId": task_id,
+                "taskType": clean(row.get("taskType"), 80),
+                "query": queries[0],
+                "queryStrategy": clean(row.get("queryStrategy"), 80),
+            }
     return result
 
 

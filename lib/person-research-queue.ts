@@ -15,6 +15,7 @@ export type PersonResearchQueueScoreBreakdown = {
   crossValidation: number;
   queryReadiness: number;
   researchOutcomeMemory: number;
+  researchStrategyROI: number;
 };
 
 export type PersonResearchQueueItem = {
@@ -30,6 +31,14 @@ export type PersonResearchQueueItem = {
   successCriteria: string;
   executor: PersonResearchExecutor;
   searchQueries: string[];
+  queryStrategy: string;
+  queryStrategyLabel: string;
+  strategySampleSize: number;
+  expectedSuccessRate: number;
+  expectedEvidenceYield: number;
+  queryUnitCost: number;
+  topHistoricalSourceType: string;
+  topHistoricalSourceTypeLabel: string;
   evidenceBasisCount: number;
   candidateEvidenceCount: number;
   score: number;
@@ -96,6 +105,12 @@ function signedInteger(value: unknown, min = -100, max = 200) {
   return Math.min(max, Math.max(min, Math.trunc(number)));
 }
 
+function boundedNumber(value: unknown, min: number, max: number, fallback = 0) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return fallback;
+  return Math.min(max, Math.max(min, number));
+}
+
 function stringList(value: unknown, limit: number, itemLimit = 260) {
   if (!Array.isArray(value)) return [];
   const result: string[] = [];
@@ -128,6 +143,7 @@ function scoreBreakdown(value: unknown): PersonResearchQueueScoreBreakdown {
     crossValidation: signedInteger(row.crossValidation),
     queryReadiness: signedInteger(row.queryReadiness),
     researchOutcomeMemory: signedInteger(row.researchOutcomeMemory),
+    researchStrategyROI: signedInteger(row.researchStrategyROI, -12, 12),
   };
 }
 
@@ -155,11 +171,9 @@ export function normalizePersonResearchQueueItem(value: unknown): PersonResearch
   const recomputedScore = Object.values(breakdown).reduce((sum, value) => sum + value, 0);
   const queryBudget = integer(row.queryBudget, 0, 1);
   const cooldownUntil = text(row.cooldownUntil, 40);
-  const searchQueries = executor === "person_video" && queryBudget > 0 && !cooldownUntil
+  const searchQueries = executor === "person_video" && queryBudget > 0
     ? stringList(row.searchQueries, 1, 220)
-    : executor === "person_video" && queryBudget > 0
-      ? stringList(row.searchQueries, 1, 220)
-      : [];
+    : [];
 
   return {
     rank: integer(row.rank, 1, 10_000),
@@ -174,6 +188,14 @@ export function normalizePersonResearchQueueItem(value: unknown): PersonResearch
     successCriteria: text(row.successCriteria, 700),
     executor,
     searchQueries,
+    queryStrategy: text(row.queryStrategy, 80),
+    queryStrategyLabel: text(row.queryStrategyLabel, 120),
+    strategySampleSize: integer(row.strategySampleSize, 0, 500),
+    expectedSuccessRate: boundedNumber(row.expectedSuccessRate, 0, 1, 0.5),
+    expectedEvidenceYield: boundedNumber(row.expectedEvidenceYield, 0, 50, 0.5),
+    queryUnitCost: integerOr(row.queryUnitCost, 1, 1, 10),
+    topHistoricalSourceType: text(row.topHistoricalSourceType, 80),
+    topHistoricalSourceTypeLabel: text(row.topHistoricalSourceTypeLabel, 120),
     evidenceBasisCount: integer(row.evidenceBasisCount, 0, 10),
     candidateEvidenceCount: integer(row.candidateEvidenceCount, 0, 10),
     score: recomputedScore,
@@ -200,7 +222,7 @@ export function normalizePersonResearchQueue(value: unknown): PersonResearchQueu
     ? row.queue
         .map(normalizePersonResearchQueueItem)
         .filter((item): item is PersonResearchQueueItem => Boolean(item))
-        .sort((a, b) => b.score - a.score || a.rank - b.rank || a.taskId.localeCompare(b.taskId))
+        .sort((a, b) => b.score - a.score || b.expectedEvidenceYield - a.expectedEvidenceYield || a.rank - b.rank || a.taskId.localeCompare(b.taskId))
     : [];
 
   const selected: PersonResearchQueueItem[] = [];
@@ -250,7 +272,7 @@ export function normalizePersonResearchQueue(value: unknown): PersonResearchQueu
     allocatedQuerySlots,
     outcomeMemoryAttemptCount: integer(row.outcomeMemoryAttemptCount, 0, 100_000),
     queue: bounded,
-    methodology: text(row.methodology, 1_100),
+    methodology: text(row.methodology, 1_300),
   };
 }
 
