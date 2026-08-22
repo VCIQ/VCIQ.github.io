@@ -46,12 +46,7 @@ function normalize(value: string) {
 }
 
 const canonicalTrackByKey = new Map(
-  trackedSectors.flatMap((track) =>
-    [track.name, ...(track.aliases ?? [])]
-      .map((name) => normalize(name))
-      .filter(Boolean)
-      .map((key) => [key, track.name] as const),
-  ),
+  trackedSectors.map((track) => [normalize(track.name), track.name] as const),
 );
 
 function canonicalTrackName(value: string) {
