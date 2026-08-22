@@ -39,7 +39,7 @@ test("technology entities are mapped from public evidence text instead of track 
   const names = technologyTopicsForEntity({
     name: "DeepSeek-V4-Flash-Vision-Exp",
     aliases: ["V4-Flash-Vision-Exp"],
-    summary: "面向多模态 Agent 的视觉语言模型升级。",
+    summary: "面向多模态 AI Agent 的视觉语言模型升级。",
     reasons: [],
     notes: [],
     researchThesis: "",
