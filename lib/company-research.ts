@@ -1,5 +1,6 @@
 import type { Company } from "@/lib/catalog-data";
 import { intelligenceEvents, snapshotDate } from "@/lib/intelligence-data";
+import { isActionableCompanySignal } from "@/lib/company-update-curation";
 import { getCompanyResearch } from "@/lib/research-content";
 import { getCompanyResearchRelations } from "@/lib/research-relations";
 import { getCompanyVentureProfile } from "@/lib/venture-profile-data";
@@ -75,7 +76,15 @@ export function buildCompanyResearchSnapshot(
   const research = getCompanyResearch(company);
   const relations = getCompanyResearchRelations(company.slug);
   const companyEvents = intelligenceEvents
-    .filter((event) => event.companySlug === company.slug)
+    .filter((event) =>
+      event.companySlug === company.slug &&
+      isActionableCompanySignal({
+        title: event.title,
+        summary: event.summary,
+        label: event.type,
+        sourceLevel: event.source.level,
+      }),
+    )
     .sort(
       (left, right) =>
         right.publishedAt.localeCompare(left.publishedAt) ||

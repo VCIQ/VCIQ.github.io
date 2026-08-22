@@ -33,13 +33,36 @@ function normalizeTitle(value: string) {
     .slice(0, 180);
 }
 
-function isActionableCompanyUpdate(item: ChannelUpdateItem) {
-  if (item.sourceGrade === "D") return false;
-  if (item.datePrecision === "undated") return false;
-  const text = `${item.label} ${item.title} ${item.summary}`;
+export function isActionableCompanySignal({
+  title,
+  summary,
+  label,
+  undated = false,
+  sourceGrade,
+  sourceLevel,
+}: {
+  title: string;
+  summary: string;
+  label: string;
+  undated?: boolean;
+  sourceGrade?: SourceEvidenceGrade;
+  sourceLevel?: string;
+}) {
+  if (sourceGrade === "D" || sourceLevel === "待交叉验证" || undated) return false;
+  const text = `${label} ${title} ${summary}`;
   if (EVERGREEN_RE.test(text)) return false;
-  if (ALWAYS_EVENT_LABELS.has(item.label)) return true;
-  return ACTION_SIGNAL_RE.test(`${item.title} ${item.summary}`);
+  if (ALWAYS_EVENT_LABELS.has(label)) return true;
+  return ACTION_SIGNAL_RE.test(`${title} ${summary}`);
+}
+
+function isActionableCompanyUpdate(item: ChannelUpdateItem) {
+  return isActionableCompanySignal({
+    title: item.title,
+    summary: item.summary,
+    label: item.label,
+    undated: item.datePrecision === "undated",
+    sourceGrade: item.sourceGrade,
+  });
 }
 
 function sourceForItem(item: ChannelUpdateItem): ChannelUpdateSource {
