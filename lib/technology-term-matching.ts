@@ -18,7 +18,7 @@ export function technologyTermMatchesText(corpus: string, term: string) {
   if (normalizedTerm.length < 2) return false;
 
   const rawTerm = normalizedSearchText(term).trim();
-  const shortAsciiToken = /^[a-z0-9]+$/u.test(rawTerm) && rawTerm.length <= 4;
+  const shortAsciiToken = /^[a-z0-9]+$/u.test(rawTerm) && rawTerm.length <= 3;
   if (shortAsciiToken) {
     const tokenPattern = new RegExp(
       `(^|[^a-z0-9])${escapeRegExp(rawTerm)}([^a-z0-9]|$)`,
