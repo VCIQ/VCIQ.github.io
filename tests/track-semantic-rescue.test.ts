@@ -76,11 +76,12 @@ test("ASCII rescue terms use token boundaries", () => {
   const result = trackSemanticRescueForEvidence({
     track: "机器人",
     title: "A roboticist discusses resilient systems",
-    summary: "No robot deployment is described.",
+    summary: "Robotics teams deploy a humanoid platform for warehouse trials.",
     topicCount: 0,
     contentStatus: "weak-evidence",
   });
   assert.equal(result.status, "summary-rescue");
   assert.equal(result.titleAnchors.includes("robot"), false);
-  assert.ok(result.summaryAnchors.includes("robot"));
+  assert.ok(result.summaryAnchors.includes("robotics"));
+  assert.ok(result.summaryAnchors.includes("humanoid"));
 });
