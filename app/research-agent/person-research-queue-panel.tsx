@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ListChecks, Search, ShieldCheck } from "lucide-react";
 
 import { personResearchQueue } from "@/lib/person-research-queue";
-import styles from "./research-agent.module.css";
+import styles from "./person-research-queue-panel.module.css";
 
 const taskTypeLabels = {
   identity_verification: "身份核验",
