@@ -43,6 +43,7 @@ export type TechnologyAnalysisSnapshot = {
   population: {
     totalEvents: number;
     included: number;
+    canonicalCorrected: number;
     crossSector: number;
     downweighted: number;
     sectorExcluded: number;
@@ -193,6 +194,7 @@ export function buildTechnologyAnalysisSnapshot(
     population: {
       totalEvents: population.length,
       included: population.filter((entry) => entry.status === "included").length,
+      canonicalCorrected: population.filter((entry) => entry.status === "canonical-corrected").length,
       crossSector: population.filter((entry) => entry.status === "cross-sector").length,
       downweighted: population.filter((entry) => entry.status === "downweighted").length,
       sectorExcluded: population.filter((entry) => entry.status === "sector-excluded").length,
