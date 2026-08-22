@@ -84,6 +84,7 @@ export type PersonResearchQueue = {
   candidateTaskCount: number;
   selectedPeopleCount: number;
   selectedTaskCount: number;
+  usedQuerySlotsToday: number;
   allocatedQuerySlots: number;
   outcomeMemory: PersonResearchOutcomeMemorySummary;
   queue: PersonResearchQueueItem[];
@@ -296,6 +297,7 @@ export function normalizePersonResearchQueue(value: unknown): PersonResearchQueu
     activeQuerySlots: integerOr(limitsRow.activeQuerySlots, 10, 1, 50),
   };
   const researchDate = isoDate(row.researchDate);
+  const usedQuerySlotsToday = integer(row.usedQuerySlotsToday, 0, limits.activeQuerySlots);
   const normalized = Array.isArray(row.queue)
     ? row.queue
         .map(normalizePersonResearchQueueItem)
@@ -325,7 +327,7 @@ export function normalizePersonResearchQueue(value: unknown): PersonResearchQueu
       item.searchQueries.length > 0 &&
       !cooldownActive &&
       !queryPeople.has(item.personSlug) &&
-      allocatedQuerySlots < limits.activeQuerySlots;
+      usedQuerySlotsToday + allocatedQuerySlots < limits.activeQuerySlots;
     if (canAllocate) {
       queryPeople.add(item.personSlug);
       allocatedQuerySlots += 1;
@@ -347,6 +349,7 @@ export function normalizePersonResearchQueue(value: unknown): PersonResearchQueu
     candidateTaskCount: Math.max(integer(row.candidateTaskCount), bounded.length),
     selectedPeopleCount: selectedPeople.size,
     selectedTaskCount: bounded.length,
+    usedQuerySlotsToday,
     allocatedQuerySlots,
     outcomeMemory: outcomeMemorySummary(row.outcomeMemory),
     queue: bounded,
