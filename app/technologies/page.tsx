@@ -3,6 +3,7 @@ import { Cpu, Layers3, Network, RadioTower } from "lucide-react";
 import Link from "next/link";
 import { ChannelSplitLayout } from "@/components/channel-split-layout";
 import { coreTechnologyEntities } from "@/lib/core-research-objects";
+import { buildTechnologyAnalysisSnapshot, type MomentumWindowComparison } from "@/lib/technology-momentum";
 import {
   technologyTopicDefinitions,
   technologyTopicsForEntity,
@@ -16,7 +17,40 @@ export const metadata: Metadata = {
   description: "以核心赛道、重点技术主题和具体技术对象三层结构组织可追溯科技研究。",
 };
 
+function directionMark(direction: MomentumWindowComparison["direction"]) {
+  if (direction === "up") return "↑";
+  if (direction === "down") return "↓";
+  if (direction === "new") return "NEW";
+  return "→";
+}
+
+function growthLabel(momentum: MomentumWindowComparison) {
+  if (!momentum.comparisonReady) return "积累中";
+  if (momentum.growthPct === null) return "NEW";
+  return `${momentum.growthPct > 0 ? "+" : ""}${momentum.growthPct}%`;
+}
+
+function weightedEventLabel(value: number) {
+  return Number.isInteger(value) ? String(value) : value.toFixed(1);
+}
+
+function shortWindowLabel(prefix: string, momentum: MomentumWindowComparison) {
+  const current = weightedEventLabel(momentum.currentWeightedEvents);
+  if (!momentum.comparisonReady) return `${prefix} ${current} · 积累中`;
+  return `${prefix} ${directionMark(momentum.direction)} ${current}`;
+}
+
+function momentumTitle(momentum: MomentumWindowComparison) {
+  if (!momentum.comparisonReady) {
+    return `当前窗口加权事件 ${weightedEventLabel(momentum.currentWeightedEvents)}；可靠 first-seen 观测历史尚不足 ${momentum.windowDays * 2} 天，暂不计算涨跌。`;
+  }
+  return `当前 ${momentum.windowDays} 日 ${weightedEventLabel(momentum.currentWeightedEvents)} / 前 ${momentum.windowDays} 日 ${weightedEventLabel(momentum.previousWeightedEvents)}`;
+}
+
 export default function TechnologyResearchPage() {
+  const analysis = buildTechnologyAnalysisSnapshot();
+  const trackMomentum = new Map(analysis.tracks.map((item) => [item.name, item]));
+  const topicMomentum = new Map(analysis.topics.map((item) => [item.slug, item]));
   const entityTopicMap = new Map(
     coreTechnologyEntities.map((entity) => [
       entity.id,
@@ -31,6 +65,7 @@ export default function TechnologyResearchPage() {
     entities: coreTechnologyEntities.filter((entity) =>
       (entityTopicMap.get(entity.id) ?? []).some((item) => item.slug === topic.slug),
     ),
+    momentum: topicMomentum.get(topic.slug),
   }));
 
   return (
@@ -40,12 +75,22 @@ export default function TechnologyResearchPage() {
         <h1>科技研究</h1>
         <p className={styles.headerIntro}>
           用“核心赛道 → 重点技术主题 → 核心技术对象”组织研究入口。赛道保留产业结构与
-          HeatScore，技术主题承接稳定监测 taxonomy，具体技术对象只在形成公开证据后进入目录。
+          HeatScore；7 日趋势和 30 日 Momentum 则只读取经过 taxonomy、赛道质量与时间覆盖审计后的分析样本。
         </p>
         <div className={styles.headerChips}>
           <span><Network size={14} />{trackedSectors.length} 个核心赛道</span>
           <span><RadioTower size={14} />{technologyTopicDefinitions.length} 个重点技术主题</span>
           <span><Cpu size={14} />{coreTechnologyEntities.length} 个核心技术对象</span>
+        </div>
+        <div className={styles.analysisPolicy}>
+          <span>分析时点 {analysis.asOf.slice(0, 10)}</span>
+          <span>{analysis.population.sectorExcluded} 条高置信错分暂不计入赛道 Momentum</span>
+          <span>{analysis.population.downweighted} 条待复核事件降权</span>
+          <span>{analysis.population.crossSector} 条合理跨赛道事件保留多赛道贡献</span>
+          <span>
+            可靠观测 {analysis.coverage.observedDays === null ? "待建立" : `${analysis.coverage.observedDays} 天`}
+            {` · 7D ${analysis.coverage.sevenDayComparisonReady ? "可比" : "积累中"} · 30D ${analysis.coverage.thirtyDayComparisonReady ? "可比" : "积累中"}`}
+          </span>
         </div>
       </header>
 
@@ -65,13 +110,14 @@ export default function TechnologyResearchPage() {
             <div>
               <span className={styles.layerIndex}>L1 / CORE TRACKS</span>
               <h3>核心赛道</h3>
-              <p>保留产业结构、样本公司、机构、HeatScore 与长期研究变量；这里不与具体技术对象混排。</p>
+              <p>HeatScore 继续保留原算法；7D / 30D 只反映清洗后事件活跃度变化。历史观测不足完整对照窗口时只显示样本量，不输出涨跌。</p>
             </div>
             <span className={styles.layerCount}>{trackedSectors.length} 个赛道</span>
           </div>
           <div className={styles.trackGrid}>
             {trackedSectors.map((sector, index) => {
               const topics = technologyTopicsForTrack(sector);
+              const momentum = trackMomentum.get(sector.name);
               return (
                 <Link
                   href={`/technologies/tracks/${sector.slug}`}
@@ -84,6 +130,16 @@ export default function TechnologyResearchPage() {
                   </div>
                   <h4>{sector.name}</h4>
                   <p>{sector.events} 项公开事件 · {sector.institutions} 家活跃机构</p>
+                  {momentum ? (
+                    <div className={styles.momentumRow}>
+                      <span title={momentumTitle(momentum.sevenDayTrend)}>
+                        {shortWindowLabel("7D", momentum.sevenDayTrend)}
+                      </span>
+                      <span title={momentumTitle(momentum.thirtyDayMomentum)}>
+                        30D {growthLabel(momentum.thirtyDayMomentum)}
+                      </span>
+                    </div>
+                  ) : null}
                   <div className={styles.tagRow}>
                     {(topics.length ? topics.map((topic) => topic.name) : sector.subsectors)
                       .slice(0, 4)
@@ -104,12 +160,12 @@ export default function TechnologyResearchPage() {
             <div>
               <span className={styles.layerIndex}>L2 / TECHNOLOGY TOPICS</span>
               <h3>重点技术主题</h3>
-              <p>固定主题层用于承接 Google Alerts 等稳定监测入口；英文别名、缩写和具体产品继续由后端 taxonomy 扩展。</p>
+              <p>主题趋势保留赛道错分但主题证据仍成立的事件；待复核主题按 0.75 权重计入。时间覆盖不足时同样不输出虚假的增长率。</p>
             </div>
             <span className={styles.layerCount}>{technologyTopicDefinitions.length} 个主题</span>
           </div>
           <div className={styles.topicGrid}>
-            {topicCards.map(({ topic, tracks, entities }, index) => (
+            {topicCards.map(({ topic, tracks, entities, momentum }, index) => (
               <article className={styles.topicCard} id={`topic-${topic.slug}`} key={topic.slug}>
                 <header>
                   <span>{String(index + 1).padStart(2, "0")} · ALERT {topic.alertQuery}</span>
@@ -117,6 +173,16 @@ export default function TechnologyResearchPage() {
                 </header>
                 <h4>{topic.name}</h4>
                 <p>{topic.description}</p>
+                {momentum ? (
+                  <div className={styles.momentumRow}>
+                    <span title={momentumTitle(momentum.sevenDayTrend)}>
+                      {shortWindowLabel("7D", momentum.sevenDayTrend)}
+                    </span>
+                    <span title={momentumTitle(momentum.thirtyDayMomentum)}>
+                      30D {growthLabel(momentum.thirtyDayMomentum)}
+                    </span>
+                  </div>
+                ) : null}
                 <div className={styles.tagRow}>
                   {tracks.map((track) => (
                     <Link href={`/technologies/tracks/${track.slug}`} key={track.slug}>
