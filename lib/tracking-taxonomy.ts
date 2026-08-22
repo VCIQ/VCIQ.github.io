@@ -164,23 +164,47 @@ function termCounts(
   return counts;
 }
 
+function canonicalNameOwners(tracks: TrackingTrack[]) {
+  const owners = new Map<string, Set<string>>();
+  for (const track of tracks.filter((item) => item.enabled)) {
+    for (const value of trackNameAliases(track.name)) {
+      const key = normalizeTaxonomyTerm(value);
+      if (!key) continue;
+      const current = owners.get(key) ?? new Set<string>();
+      current.add(track.slug);
+      owners.set(key, current);
+    }
+  }
+  return owners;
+}
+
 /**
- * Track names always own their derived aliases. A keyword only owns event
- * matching when it is unique across enabled tracks.
+ * Track names always own their derived aliases. A keyword can own event
+ * matching only when it is unique across enabled-track keywords AND does not
+ * collide with another enabled track's canonical name/derived name alias.
+ *
+ * This makes configured keywords strictly secondary discovery terms: they can
+ * never steal identity keys such as `AI / AGI`, `机器人` or `半导体` from the
+ * track whose name actually defines that key.
  */
 export function uniqueIdentityTermsByTrack(
   tracks: TrackingTrack[],
 ): Map<string, string[]> {
   const keywordCounts = termCounts(tracks, (track) => track.keywords);
+  const nameOwners = canonicalNameOwners(tracks);
+
   return new Map(
     tracks.map((track) => [
       track.slug,
       unique(
         [
           ...trackNameAliases(track.name),
-          ...track.keywords.filter(
-            (value) => keywordCounts.get(normalizeTaxonomyTerm(value)) === 1,
-          ),
+          ...track.keywords.filter((value) => {
+            const key = normalizeTaxonomyTerm(value);
+            if (keywordCounts.get(key) !== 1) return false;
+            const owners = nameOwners.get(key);
+            return !owners || (owners.size === 1 && owners.has(track.slug));
+          }),
         ],
         24,
       ),
