@@ -36,6 +36,7 @@ on:
       - "scripts/audit-analysis-eligibility.ts"
       - "scripts/audit-residual-precision.ts"
       - "scripts/audit-content-relevance.ts"
+      - "scripts/audit-source-track-relevance.ts"
       - "tests/channel-updates.test.ts"
       - "tests/tracking-taxonomy-identity.test.ts"
       - "tests/technology-topics.test.ts"
@@ -81,6 +82,7 @@ on:
       - "scripts/audit-analysis-eligibility.ts"
       - "scripts/audit-residual-precision.ts"
       - "scripts/audit-content-relevance.ts"
+      - "scripts/audit-source-track-relevance.ts"
       - "tests/channel-updates.test.ts"
       - "tests/tracking-taxonomy-identity.test.ts"
       - "tests/technology-topics.test.ts"
@@ -122,3 +124,5 @@ jobs:
         run: npm run audit:residual-precision
       - name: Audit content relevance
         run: npm run audit:content-relevance
+      - name: Audit source-track relevance
+        run: npm run audit:source-track-relevance
