@@ -1,5 +1,8 @@
 import type { ChannelUpdateItem } from "@/lib/channel-updates";
-import { contentRelevanceForItem } from "@/lib/content-relevance";
+import {
+  contentRelevanceForItem,
+  type ContentRelevanceStatus,
+} from "@/lib/content-relevance";
 
 export type TrackSemanticRescueStatus =
   | "title-rescue"
@@ -117,14 +120,15 @@ function matchingAnchors(text: string, track: string) {
   return terms.filter((term) => termMatches(text, term));
 }
 
-export function trackSemanticRescueForItem(
-  item: ChannelUpdateItem,
-): TrackSemanticRescueAssessment {
-  const track = item.track?.trim() ?? "";
-  const content = contentRelevanceForItem(item);
-  const topicBacked = (item.topicSlugs?.length ?? 0) > 0;
-
-  if (!track || topicBacked || content.status !== "weak-evidence") {
+export function trackSemanticRescueForEvidence(input: {
+  track: string;
+  title: string;
+  summary: string;
+  topicCount: number;
+  contentStatus: ContentRelevanceStatus;
+}): TrackSemanticRescueAssessment {
+  const track = input.track.trim();
+  if (!track || input.topicCount > 0 || input.contentStatus !== "weak-evidence") {
     return {
       status: "none",
       multiplier: 1,
@@ -134,8 +138,8 @@ export function trackSemanticRescueForItem(
     };
   }
 
-  const titleAnchors = matchingAnchors(item.title, track);
-  const summaryAnchors = matchingAnchors(item.summary, track);
+  const titleAnchors = matchingAnchors(input.title, track);
+  const summaryAnchors = matchingAnchors(input.summary, track);
 
   if (titleAnchors.length) {
     return {
@@ -164,4 +168,17 @@ export function trackSemanticRescueForItem(
     summaryAnchors,
     reason: "未发现足够强的当前赛道语义锚点，不提升弱内容证据权重。",
   };
+}
+
+export function trackSemanticRescueForItem(
+  item: ChannelUpdateItem,
+): TrackSemanticRescueAssessment {
+  const content = contentRelevanceForItem(item);
+  return trackSemanticRescueForEvidence({
+    track: item.track?.trim() ?? "",
+    title: item.title,
+    summary: item.summary,
+    topicCount: item.topicSlugs?.length ?? 0,
+    contentStatus: content.status,
+  });
 }
