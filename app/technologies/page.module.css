@@ -1,0 +1,269 @@
+.body {
+  display: grid;
+  gap: 34px;
+  padding: 22px;
+}
+
+.layer {
+  scroll-margin-top: 96px;
+}
+
+.layer + .layer {
+  padding-top: 30px;
+  border-top: 1px solid var(--border);
+}
+
+.layerHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: end;
+  margin-bottom: 14px;
+}
+
+.layerHeader h3 {
+  margin: 0;
+  font: 500 22px/1.3 "Noto Serif SC", "Songti SC", serif;
+}
+
+.layerHeader p {
+  max-width: 520px;
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.layerIndex {
+  color: var(--green);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .16em;
+}
+
+.layerCount {
+  flex: 0 0 auto;
+  color: var(--faint);
+  font-size: 10px;
+}
+
+.trackGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.trackCard,
+.topicCard,
+.entityCard {
+  border: 1px solid var(--border-soft);
+  background: color-mix(in srgb, var(--surface-2) 78%, transparent);
+}
+
+.trackCard {
+  min-height: 148px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.trackCard:hover,
+.entityCard:hover {
+  border-color: var(--green);
+  background: var(--surface-2);
+}
+
+.cardTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  color: var(--faint);
+  font-size: 9px;
+}
+
+.cardTop strong {
+  color: var(--green-bright);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.03em;
+}
+
+.trackCard h4,
+.entityCard h4 {
+  margin: 13px 0 5px;
+  font: 500 17px/1.3 "Noto Serif SC", "Songti SC", serif;
+}
+
+.trackCard > p,
+.entityCard > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.65;
+}
+
+.tagRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.tagRow span,
+.tagRow a {
+  border: 1px solid var(--border-soft);
+  padding: 2px 6px;
+  color: var(--faint);
+  font-size: 8px;
+}
+
+.tagRow a:hover {
+  color: var(--green-bright);
+  border-color: var(--green);
+}
+
+.trackMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+  color: var(--faint);
+  font-size: 9px;
+}
+
+.topicGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.topicCard {
+  min-height: 188px;
+  padding: 15px;
+  scroll-margin-top: 100px;
+}
+
+.topicCard header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: start;
+}
+
+.topicCard header span {
+  color: var(--green);
+  font-size: 9px;
+  letter-spacing: .1em;
+}
+
+.topicCard header strong {
+  color: var(--green-bright);
+  font-size: 10px;
+}
+
+.topicCard h4 {
+  margin: 9px 0 5px;
+  font: 500 17px/1.3 "Noto Serif SC", "Songti SC", serif;
+}
+
+.topicCard > p {
+  min-height: 48px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.65;
+}
+
+.topicMeta {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-soft);
+  color: var(--faint);
+  font-size: 9px;
+}
+
+.topicEntities {
+  margin-top: 10px;
+  color: var(--faint);
+  font-size: 9px;
+  line-height: 1.6;
+}
+
+.entityGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.entityCard {
+  min-height: 142px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.entityCard .tagRow {
+  padding-top: 10px;
+}
+
+.emptyNote {
+  padding: 16px;
+  border: 1px dashed var(--border);
+  color: var(--faint);
+  font-size: 10px;
+}
+
+.headerIntro {
+  margin: 0 0 8px;
+  color: var(--muted);
+}
+
+.headerChips {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: -6px;
+}
+
+.headerChips span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border);
+  padding: 5px 9px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+@media (max-width: 1360px) {
+  .trackGrid,
+  .entityGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .body {
+    padding: 16px;
+  }
+
+  .layerHeader {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .trackGrid,
+  .topicGrid,
+  .entityGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .topicCard > p {
+    min-height: 0;
+  }
+}
