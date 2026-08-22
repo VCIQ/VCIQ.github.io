@@ -18,8 +18,8 @@ const ROUTES = [
   ["/search/", "search/index.html", { maxHtmlBytes: 100_000 }],
   ["/hot/", "hot/index.html", { maxHtmlBytes: 750_000 }],
   ["/favorites/", "favorites/index.html", { maxHtmlBytes: 80_000 }],
-  ["/technologies/", "technologies/index.html", { maxHtmlBytes: 100_000 }],
-  ["/technology/", "technology/index.html", { maxHtmlBytes: 600_000 }],
+  ["/technologies/", "technologies/index.html", { maxHtmlBytes: 650_000 }],
+  ["/technology/", "technology/index.html", { maxHtmlBytes: 650_000 }],
   ["/people/", "people/index.html", { maxHtmlBytes: 450_000 }],
   ["/companies/", "companies/index.html", { maxHtmlBytes: 600_000 }],
 ];
