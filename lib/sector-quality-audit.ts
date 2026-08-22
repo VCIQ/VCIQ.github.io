@@ -29,6 +29,8 @@ export type SectorQualityFinding = {
   evidenceTopics: SectorQualityTopicEvidence[];
   compatibleTopics: string[];
   incompatibleTopics: string[];
+  currentTrackTitleTerms: string[];
+  currentTrackSummaryTerms: string[];
   reason: string;
   sourceGrade?: ChannelUpdateItem["sourceGrade"];
 };
@@ -38,11 +40,203 @@ type SectorQualityInput = Pick<
   "id" | "title" | "summary" | "track" | "topicSlugs" | "sourceGrade"
 >;
 
+const sectorAnchorTerms: Record<string, string[]> = {
+  "AI / AGI": [
+    "AI Agent",
+    "agentic AI",
+    "大模型",
+    "LLM",
+    "GPT",
+    "Claude",
+    "Gemini",
+    "DeepSeek",
+    "Qwen",
+    "智能体",
+  ],
+  机器人: [
+    "机器人",
+    "robot",
+    "robotics",
+    "humanoid",
+    "具身智能",
+    "physical AI",
+    "robotaxi",
+    "autonomous driving",
+    "Waymo",
+    "Unitree",
+    "宇树",
+  ],
+  半导体: [
+    "半导体",
+    "semiconductor",
+    "chip",
+    "芯片",
+    "GPU",
+    "CPU",
+    "NPU",
+    "TPU",
+    "wafer",
+    "晶圆",
+    "foundry",
+    "封装",
+    "packaging",
+    "RAM",
+    "mini PC",
+    "Cerebras",
+    "SambaNova",
+    "Moore Threads",
+    "摩尔线程",
+    "Mobileye",
+    "HorizonRobotics",
+    "地平线",
+  ],
+  新能源: [
+    "新能源",
+    "battery",
+    "电池",
+    "储能",
+    "solar",
+    "wind",
+    "光伏",
+    "风电",
+    "grid",
+    "电网",
+    "renewable energy",
+  ],
+  可控核聚变: [
+    "可控核聚变",
+    "fusion",
+    "tokamak",
+    "托卡马克",
+    "stellarator",
+    "仿星器",
+  ],
+  生物科技: [
+    "生物科技",
+    "biotech",
+    "biology",
+    "drug",
+    "pharma",
+    "protein",
+    "gene",
+    "genome",
+    "clinical",
+    "molecule",
+    "药物",
+    "蛋白",
+    "基因",
+    "临床",
+    "分子",
+  ],
+  量子计算: ["量子计算", "quantum", "qubit", "量子比特"],
+  商业航天: [
+    "商业航天",
+    "space",
+    "satellite",
+    "卫星",
+    "rocket",
+    "火箭",
+    "orbit",
+    "轨道",
+    "spacecraft",
+    "eVTOL",
+    "vertiport",
+    "Joby",
+    "aviation",
+  ],
+  Web3: [
+    "Web3",
+    "blockchain",
+    "区块链",
+    "crypto",
+    "DeFi",
+    "wallet",
+    "stablecoin",
+    "稳定币",
+    "RWA",
+    "tokenization",
+  ],
+  新材料: [
+    "新材料",
+    "material",
+    "材料",
+    "ceramic",
+    "陶瓷",
+    "alloy",
+    "合金",
+    "composite",
+    "复合材料",
+    "GaN",
+    "SiC",
+    "Ga2O3",
+    "氧化镓",
+  ],
+  医疗科技: [
+    "医疗科技",
+    "medical",
+    "healthcare",
+    "diagnostic",
+    "诊断",
+    "medical device",
+    "医疗器械",
+  ],
+  智能交通: [
+    "智能交通",
+    "transport",
+    "mobility",
+    "autonomous driving",
+    "robotaxi",
+    "vehicle",
+    "车路协同",
+  ],
+  智能制造: [
+    "智能制造",
+    "manufacturing",
+    "factory",
+    "industrial automation",
+    "工厂",
+    "工业自动化",
+  ],
+  AI网络通信: [
+    "AI网络通信",
+    "telecom",
+    "通信",
+    "RAN",
+    "wireless",
+    "无线",
+    "5G",
+    "6G",
+  ],
+};
+
 function normalize(value: string) {
   return value
     .normalize("NFKC")
     .toLocaleLowerCase("zh-CN")
     .replace(/[^a-z0-9\u3400-\u9fff]+/gu, "");
+}
+
+function normalizedSearchText(value: string) {
+  return value.normalize("NFKC").toLocaleLowerCase("zh-CN");
+}
+
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&");
+}
+
+function sectorAnchorMatchesText(text: string, term: string) {
+  const normalizedTerm = normalizedSearchText(term).trim();
+  if (!text.trim() || !normalizedTerm) return false;
+
+  if (/^[a-z0-9.+-]+$/u.test(normalizedTerm)) {
+    const tokenPattern = new RegExp(
+      `(^|[^a-z0-9])${escapeRegExp(normalizedTerm)}([^a-z0-9]|$)`,
+      "iu",
+    );
+    return tokenPattern.test(normalizedSearchText(text));
+  }
+
+  return technologyTermMatchesText(text, term);
 }
 
 const canonicalTrackByKey = new Map(
@@ -68,6 +262,11 @@ function canonicalTopicParentTracks(topic: TechnologyTopicDefinition) {
 function matchedTerms(text: string, topic: TechnologyTopicDefinition) {
   if (!text.trim()) return [];
   return topic.matchTerms.filter((term) => technologyTermMatchesText(text, term));
+}
+
+function matchedSectorAnchors(text: string, track: string) {
+  const anchors = sectorAnchorTerms[track] ?? [track];
+  return anchors.filter((term) => sectorAnchorMatchesText(text, term));
 }
 
 function topicEvidence(
@@ -157,6 +356,8 @@ export function assessSectorQuality(
   const incompatibleTitleEvidence = incompatible.some(
     (topic) => topic.titleTerms.length > 0,
   );
+  const currentTrackTitleTerms = matchedSectorAnchors(item.title, currentTrack);
+  const currentTrackSummaryTerms = matchedSectorAnchors(item.summary, currentTrack);
 
   let category: SectorQualityCategory;
   let reason: string;
@@ -164,12 +365,17 @@ export function assessSectorQuality(
   if (compatible.length) {
     category = "reasonable-cross-sector";
     reason = `当前赛道已有 ${compatible.map((topic) => topic.name).join("、")} 支撑，同时出现 ${incompatible.map((topic) => topic.name).join("、")} 的跨赛道证据。`;
+  } else if (currentTrackTitleTerms.length) {
+    category = "reasonable-cross-sector";
+    reason = `标题仍有“${currentTrackTitleTerms.join("、")}”等当前赛道锚点，同时出现 ${incompatible.map((topic) => topic.name).join("、")} 的跨赛道技术主题。`;
   } else if (incompatibleTitleEvidence && recommendations.length) {
     category = "high-confidence-misclassification";
-    reason = `标题直接命中 ${incompatible.map((topic) => topic.name).join("、")}，但当前赛道“${currentTrack}”不在这些主题的父赛道中。`;
+    reason = `标题直接命中 ${incompatible.map((topic) => topic.name).join("、")}，但没有“${currentTrack}”的标题锚点，且该赛道不在这些主题的父赛道中。`;
   } else {
     category = "needs-review";
-    reason = `跨赛道主题主要来自摘要或弱证据，暂不足以自动建议改写“${currentTrack}”。`;
+    reason = currentTrackSummaryTerms.length
+      ? `摘要仍有“${currentTrackSummaryTerms.join("、")}”等当前赛道锚点，但跨赛道主题证据不足以判断应保留还是改写。`
+      : `跨赛道主题主要来自摘要或弱证据，暂不足以自动建议改写“${currentTrack}”。`;
   }
 
   return {
@@ -181,6 +387,8 @@ export function assessSectorQuality(
     evidenceTopics,
     compatibleTopics: compatible.map((topic) => topic.name),
     incompatibleTopics: incompatible.map((topic) => topic.name),
+    currentTrackTitleTerms,
+    currentTrackSummaryTerms,
     reason,
     sourceGrade: item.sourceGrade,
   };
