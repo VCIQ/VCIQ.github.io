@@ -80,6 +80,24 @@ def _research_date(generated_at: str) -> str:
         return dt.datetime.now(ZoneInfo("Asia/Shanghai")).date().isoformat()
 
 
+def _today_attempt_state(memory: dict[str, Any], research_date: str) -> tuple[int, set[str]]:
+    attempt_ids: set[str] = set()
+    attempted_people: set[str] = set()
+    for outcome in (memory.get("taskOutcomes") or {}).values():
+        if not isinstance(outcome, dict):
+            continue
+        person_slug = clean(outcome.get("personSlug"), 180)
+        for attempt in outcome.get("recentAttempts") or []:
+            if not isinstance(attempt, dict) or clean(attempt.get("researchDate"), 40) != research_date:
+                continue
+            attempt_id = clean(attempt.get("id"), 120)
+            if attempt_id:
+                attempt_ids.add(attempt_id)
+            if person_slug:
+                attempted_people.add(person_slug)
+    return min(MAX_ACTIVE_QUERY_SLOTS, len(attempt_ids)), attempted_people
+
+
 def _recent_material_stats(person: dict[str, Any], generated_at: str) -> tuple[int, int | None]:
     reference = parse_date(generated_at)
     if not reference:
@@ -208,6 +226,7 @@ def build_daily_queue(
     generated_at = clean(agenda.get("generatedAt") or people_payload.get("generatedAt"))
     research_date = _research_date(generated_at)
     memory = normalize_memory(outcome_memory) if outcome_memory is not None else empty_memory()
+    used_query_slots_today, attempted_people_today = _today_attempt_state(memory, research_date)
     people = _person_map(people_payload)
     candidates: list[dict[str, Any]] = []
     for slug, record in (agenda.get("people") or {}).items():
@@ -275,7 +294,7 @@ def build_daily_queue(
         if len(selected) >= MAX_DAILY_TASKS:
             break
 
-    query_people: set[str] = set()
+    query_people: set[str] = set(attempted_people_today)
     allocated = 0
     for rank, row in enumerate(selected, start=1):
         row["rank"] = rank
@@ -285,7 +304,7 @@ def build_daily_queue(
             and row["searchQueries"]
             and not row["cooldownActive"]
             and row["personSlug"] not in query_people
-            and allocated < MAX_ACTIVE_QUERY_SLOTS
+            and used_query_slots_today + allocated < MAX_ACTIVE_QUERY_SLOTS
         ):
             row["queryBudget"] = 1
             row["searchQueries"] = row["searchQueries"][:1]
@@ -307,13 +326,15 @@ def build_daily_queue(
         "candidateTaskCount": len(candidates),
         "selectedPeopleCount": len(selected_people),
         "selectedTaskCount": len(selected),
+        "usedQuerySlotsToday": used_query_slots_today,
         "allocatedQuerySlots": allocated,
         "outcomeMemory": memory_summary(memory, research_date),
         "queue": selected,
         "methodology": (
             "队列只排序开放研究任务并分配有限主动检索槽位，不改变事实状态。"
             "分数由任务优先级、任务类型、状态、证据缺口、近期事件、跨频道验证价值、可执行性和历史研究产出共同确定；"
-            "连续零新增只会小幅降权并暂时冷却主动查询，supported/blocked 不进入今日执行队列。"
+            "连续零新增只会小幅降权并暂时冷却主动查询，同一天已执行尝试会占用日预算且同一人物不重复分配；"
+            "supported/blocked 不进入今日执行队列。"
         ),
     }
 
@@ -347,19 +368,21 @@ def main() -> int:
         if queue["selectedPeopleCount"] > MAX_DAILY_PEOPLE or queue["selectedTaskCount"] > MAX_DAILY_TASKS:
             print("Person research queue exceeds daily limits.")
             return 1
-        if queue["allocatedQuerySlots"] > MAX_ACTIVE_QUERY_SLOTS:
-            print("Person research queue exceeds active query budget.")
+        if queue["usedQuerySlotsToday"] + queue["allocatedQuerySlots"] > MAX_ACTIVE_QUERY_SLOTS:
+            print("Person research queue exceeds active daily query budget.")
             return 1
         print(
             f"Validated person research queue: {queue['selectedPeopleCount']} people, "
-            f"{queue['selectedTaskCount']} tasks, {queue['allocatedQuerySlots']} active queries."
+            f"{queue['selectedTaskCount']} tasks, {queue['usedQuerySlotsToday']} used + "
+            f"{queue['allocatedQuerySlots']} allocated active queries."
         )
         return 0
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(queue, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(
         f"Wrote daily person research queue: {queue['selectedPeopleCount']} people, "
-        f"{queue['selectedTaskCount']} tasks, {queue['allocatedQuerySlots']} active queries -> {args.output}"
+        f"{queue['selectedTaskCount']} tasks, {queue['usedQuerySlotsToday']} used + "
+        f"{queue['allocatedQuerySlots']} allocated active queries -> {args.output}"
     )
     return 0
 
