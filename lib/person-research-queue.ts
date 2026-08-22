@@ -5,6 +5,7 @@ import type {
 } from "@/lib/person-research-agenda";
 
 export type PersonResearchExecutor = "person_video" | "cross_channel" | "official_source";
+export type PersonResearchOutcome = "new_evidence" | "rediscovered" | "no_yield" | "error" | "";
 
 export type PersonResearchQueueScoreBreakdown = {
   priority: number;
@@ -14,6 +15,36 @@ export type PersonResearchQueueScoreBreakdown = {
   recency: number;
   crossValidation: number;
   queryReadiness: number;
+  researchHistory: number;
+};
+
+export type PersonResearchTaskMemory = {
+  attempts: number;
+  yieldingAttempts: number;
+  zeroYieldStreak: number;
+  lastOutcome: PersonResearchOutcome;
+  lastAttemptAt: string;
+  nextEligibleDate: string;
+};
+
+export type PersonResearchOutcomeSource = {
+  source: string;
+  attempts: number;
+  yieldingAttempts: number;
+  failedAttempts: number;
+  acceptedEvidenceCount: number;
+  newEvidenceCount: number;
+  yieldRate: number | null;
+};
+
+export type PersonResearchOutcomeMemorySummary = {
+  attemptCount: number;
+  yieldingAttemptCount: number;
+  zeroYieldAttemptCount: number;
+  acceptedEvidenceCount: number;
+  newEvidenceCount: number;
+  cooldownTaskCount: number;
+  sources: PersonResearchOutcomeSource[];
 };
 
 export type PersonResearchQueueItem = {
@@ -36,6 +67,8 @@ export type PersonResearchQueueItem = {
   whyNow: string[];
   personRoute: string;
   queryBudget: number;
+  researchMemory: PersonResearchTaskMemory;
+  cooldownActive: boolean;
 };
 
 export type PersonResearchQueue = {
@@ -52,6 +85,7 @@ export type PersonResearchQueue = {
   selectedPeopleCount: number;
   selectedTaskCount: number;
   allocatedQuerySlots: number;
+  outcomeMemory: PersonResearchOutcomeMemorySummary;
   queue: PersonResearchQueueItem[];
   methodology: string;
 };
@@ -69,6 +103,13 @@ const EXECUTORS = new Set<PersonResearchExecutor>([
   "person_video",
   "cross_channel",
   "official_source",
+]);
+const OUTCOMES = new Set<PersonResearchOutcome>([
+  "new_evidence",
+  "rediscovered",
+  "no_yield",
+  "error",
+  "",
 ]);
 
 function text(value: unknown, limit = 1_000) {
@@ -93,6 +134,13 @@ function signedInteger(value: unknown, min = -100, max = 200) {
   return Math.min(max, Math.max(min, Math.trunc(number)));
 }
 
+function ratio(value: unknown) {
+  if (value === null || value === undefined) return null;
+  const number = Number(value);
+  if (!Number.isFinite(number)) return null;
+  return Math.min(1, Math.max(0, number));
+}
+
 function stringList(value: unknown, limit: number, itemLimit = 260) {
   if (!Array.isArray(value)) return [];
   const result: string[] = [];
@@ -114,6 +162,15 @@ function internalPersonRoute(value: unknown, slug: string) {
   return `/people/${slug}/`;
 }
 
+function isoDate(value: unknown) {
+  const candidate = text(value, 40).slice(0, 10);
+  return /^\d{4}-\d{2}-\d{2}$/.test(candidate) ? candidate : "";
+}
+
+function isCooldownActive(nextEligibleDate: string, researchDate: string) {
+  return Boolean(nextEligibleDate && researchDate && researchDate < nextEligibleDate);
+}
+
 function scoreBreakdown(value: unknown): PersonResearchQueueScoreBreakdown {
   const row = value && typeof value === "object" ? value as Record<string, unknown> : {};
   return {
@@ -124,6 +181,53 @@ function scoreBreakdown(value: unknown): PersonResearchQueueScoreBreakdown {
     recency: signedInteger(row.recency),
     crossValidation: signedInteger(row.crossValidation),
     queryReadiness: signedInteger(row.queryReadiness),
+    researchHistory: signedInteger(row.researchHistory, -20, 10),
+  };
+}
+
+function taskMemory(value: unknown): PersonResearchTaskMemory {
+  const row = value && typeof value === "object" ? value as Record<string, unknown> : {};
+  const lastOutcome = text(row.lastOutcome, 40) as PersonResearchOutcome;
+  return {
+    attempts: integer(row.attempts, 0, 10_000),
+    yieldingAttempts: integer(row.yieldingAttempts, 0, 10_000),
+    zeroYieldStreak: integer(row.zeroYieldStreak, 0, 100),
+    lastOutcome: OUTCOMES.has(lastOutcome) ? lastOutcome : "",
+    lastAttemptAt: text(row.lastAttemptAt, 80),
+    nextEligibleDate: isoDate(row.nextEligibleDate),
+  };
+}
+
+function outcomeMemorySummary(value: unknown): PersonResearchOutcomeMemorySummary {
+  const row = value && typeof value === "object" ? value as Record<string, unknown> : {};
+  const sources: PersonResearchOutcomeSource[] = [];
+  if (Array.isArray(row.sources)) {
+    for (const raw of row.sources) {
+      if (!raw || typeof raw !== "object") continue;
+      const source = raw as Record<string, unknown>;
+      const name = text(source.source, 100);
+      if (!name) continue;
+      const attempts = integer(source.attempts, 0, 100_000);
+      sources.push({
+        source: name,
+        attempts,
+        yieldingAttempts: Math.min(attempts, integer(source.yieldingAttempts, 0, 100_000)),
+        failedAttempts: Math.min(attempts, integer(source.failedAttempts, 0, 100_000)),
+        acceptedEvidenceCount: integer(source.acceptedEvidenceCount, 0, 1_000_000),
+        newEvidenceCount: integer(source.newEvidenceCount, 0, 1_000_000),
+        yieldRate: ratio(source.yieldRate),
+      });
+      if (sources.length >= 6) break;
+    }
+  }
+  return {
+    attemptCount: integer(row.attemptCount, 0, 1_000_000),
+    yieldingAttemptCount: integer(row.yieldingAttemptCount, 0, 1_000_000),
+    zeroYieldAttemptCount: integer(row.zeroYieldAttemptCount, 0, 1_000_000),
+    acceptedEvidenceCount: integer(row.acceptedEvidenceCount, 0, 1_000_000),
+    newEvidenceCount: integer(row.newEvidenceCount, 0, 1_000_000),
+    cooldownTaskCount: integer(row.cooldownTaskCount, 0, 100_000),
+    sources,
   };
 }
 
@@ -148,11 +252,12 @@ export function normalizePersonResearchQueueItem(value: unknown): PersonResearch
   ) return null;
 
   const breakdown = scoreBreakdown(row.scoreBreakdown);
-  const recomputedScore = Object.values(breakdown).reduce((sum, value) => sum + value, 0);
+  const recomputedScore = Object.values(breakdown).reduce((sum, component) => sum + component, 0);
   const queryBudget = integer(row.queryBudget, 0, 1);
   const searchQueries = executor === "person_video" && queryBudget > 0
     ? stringList(row.searchQueries, 1, 220)
     : [];
+  const memory = taskMemory(row.researchMemory);
 
   return {
     rank: integer(row.rank, 1, 10_000),
@@ -171,9 +276,11 @@ export function normalizePersonResearchQueueItem(value: unknown): PersonResearch
     candidateEvidenceCount: integer(row.candidateEvidenceCount, 0, 10),
     score: recomputedScore,
     scoreBreakdown: breakdown,
-    whyNow: stringList(row.whyNow, 5, 220),
+    whyNow: stringList(row.whyNow, 6, 220),
     personRoute: internalPersonRoute(row.personRoute, personSlug),
     queryBudget: searchQueries.length ? queryBudget : 0,
+    researchMemory: memory,
+    cooldownActive: false,
   };
 }
 
@@ -188,6 +295,7 @@ export function normalizePersonResearchQueue(value: unknown): PersonResearchQueu
     tasksPerPerson: integerOr(limitsRow.tasksPerPerson, 2, 1, 10),
     activeQuerySlots: integerOr(limitsRow.activeQuerySlots, 10, 1, 50),
   };
+  const researchDate = isoDate(row.researchDate);
   const normalized = Array.isArray(row.queue)
     ? row.queue
         .map(normalizePersonResearchQueueItem)
@@ -211,9 +319,11 @@ export function normalizePersonResearchQueue(value: unknown): PersonResearchQueu
   const queryPeople = new Set<string>();
   let allocatedQuerySlots = 0;
   const bounded = selected.map((item, index) => {
+    const cooldownActive = isCooldownActive(item.researchMemory.nextEligibleDate, researchDate);
     const canAllocate =
       item.executor === "person_video" &&
       item.searchQueries.length > 0 &&
+      !cooldownActive &&
       !queryPeople.has(item.personSlug) &&
       allocatedQuerySlots < limits.activeQuerySlots;
     if (canAllocate) {
@@ -225,20 +335,22 @@ export function normalizePersonResearchQueue(value: unknown): PersonResearchQueu
       rank: index + 1,
       searchQueries: canAllocate ? item.searchQueries.slice(0, 1) : [],
       queryBudget: canAllocate ? 1 : 0,
+      cooldownActive,
     };
   });
 
   return {
     schemaVersion: integerOr(row.schemaVersion, 1, 1, 10),
     generatedAt: text(row.generatedAt, 80),
-    researchDate: text(row.researchDate, 40),
+    researchDate,
     limits,
     candidateTaskCount: Math.max(integer(row.candidateTaskCount), bounded.length),
     selectedPeopleCount: selectedPeople.size,
     selectedTaskCount: bounded.length,
     allocatedQuerySlots,
+    outcomeMemory: outcomeMemorySummary(row.outcomeMemory),
     queue: bounded,
-    methodology: text(row.methodology, 900),
+    methodology: text(row.methodology, 1_000),
   };
 }
 
