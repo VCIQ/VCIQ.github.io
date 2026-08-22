@@ -10,14 +10,14 @@ const css = readFileSync(
 test("homepage event dates cannot wrap full ISO timestamps into the content column", () => {
   assert.match(
     css,
-    /\.root :global\(\.event-date\)\s*\{[^}]*overflow:\s*hidden;/s,
+    /\.root :global\(\.event-date\)\s*\{[^}]*overflow:\s*hidden;/,
   );
   assert.match(
     css,
-    /\.root :global\(\.event-date strong\)\s*\{[^}]*width:\s*4\.6ch;[^}]*overflow:\s*hidden;[^}]*white-space:\s*nowrap;/s,
+    /\.root :global\(\.event-date strong\)\s*\{[^}]*width:\s*4\.6ch;[^}]*overflow:\s*hidden;[^}]*white-space:\s*nowrap;/,
   );
   assert.match(
     css,
-    /\.root :global\(\.event-date span\)\s*\{[^}]*white-space:\s*nowrap;/s,
+    /\.root :global\(\.event-date span\)\s*\{[^}]*white-space:\s*nowrap;/,
   );
 });
