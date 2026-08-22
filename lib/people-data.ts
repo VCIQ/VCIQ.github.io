@@ -1,5 +1,6 @@
 import generatedPayload from "@/public/data/people.json";
 import { people as curatedPeople, type Person } from "@/lib/catalog-data";
+import { validatePersonIdentity } from "@/lib/person-identity-validation";
 
 export type PersonMaterial = Person["materials"][number];
 
@@ -120,8 +121,25 @@ function mergePerson(curated: ResearchPerson | undefined, generated: GeneratedPe
   });
 }
 
+const generatedValidation = payload.people.map((person) => ({
+  person,
+  validation: validatePersonIdentity(person),
+}));
+const acceptedGeneratedPeople = generatedValidation
+  .filter(({ validation }) => validation.valid)
+  .map(({ person }) => person);
+
+export const rejectedGeneratedPeople = generatedValidation
+  .filter(({ validation }) => !validation.valid)
+  .map(({ person, validation }) => ({
+    slug: person.slug,
+    name: person.name,
+    reason: validation.reason ?? "identity-validation-failed",
+  }));
+export const rejectedGeneratedPeopleCount = rejectedGeneratedPeople.length;
+
 const bySlug = new Map(curatedPeople.map((person) => [person.slug, fromCurated(person)]));
-for (const generated of payload.people) {
+for (const generated of acceptedGeneratedPeople) {
   bySlug.set(generated.slug, mergePerson(bySlug.get(generated.slug), generated));
 }
 
