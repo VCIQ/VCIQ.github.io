@@ -63,6 +63,9 @@ on:
       - tools/refresh_people_profiles.py
       - tools/refresh_people_profiles_with_video.py
       - tools/person_video_discovery.py
+      - tools/person_research_agent.py
+      - tools/person_research_scheduler.py
+      - tools/person_research_outcomes.py
       - tools/crawl_official_companies.py
       - tools/bytedance_official_sources.py
       - tools/validate_bytedance_official_live.py
@@ -184,6 +187,10 @@ jobs:
             tools/core_official_adapters.py \
             tools/source_portfolio.py \
             tools/full_refresh_input_guard.py \
+            tools/person_research_agent.py \
+            tools/person_research_scheduler.py \
+            tools/person_research_outcomes.py \
+            tools/refresh_people_profiles_with_video.py \
             tools/run_pipeline.py \
             tools/build_pipeline_health.py
           python -m unittest \
@@ -206,6 +213,9 @@ jobs:
             tests.test_core_official_adapters \
             tests.test_source_portfolio \
             tests.test_full_refresh_input_guard \
+            tests.test_person_research_outcomes \
+            tests.test_person_research_scheduler \
+            tests.test_person_research_daily_budget \
             tests.test_listed_company_disclosures \
             tests.test_cninfo_structured_disclosures \
             tests.test_sec_structured_disclosures \
@@ -291,6 +301,7 @@ jobs:
             public/data/listed_company_disclosures.json
             public/data/market_profiles.json
             public/data/people.json
+            public/data/person_research_outcomes.json
             public/data/source_health.json
           )
           CONTROL_PATHS=(
@@ -373,6 +384,8 @@ jobs:
 
             # Re-run deterministic enrichment at the rebased, governed HEAD. Network
             # source statuses and source-health streaks remain those produced by this run.
+            # Person research Outcome Memory enforces the same-day active-query budget,
+            # so this recovery pass cannot multiply the daily task-directed search budget.
             python tools/refresh_market_profiles_enriched.py
             python tools/migrate_article_entities.py
             python tools/refine_eastmoney_snapshot.py
