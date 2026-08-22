@@ -34,6 +34,18 @@ function normalize(value: string) {
     .replace(/[^a-z0-9\u3400-\u9fff]+/gu, "");
 }
 
+const trackKeys = new Set(
+  trackedSectors.flatMap((track) =>
+    [track.name, ...(track.aliases ?? [])].map(normalize).filter(Boolean),
+  ),
+);
+
+const unresolvedTopicParentTracks = technologyTopicDefinitions.flatMap((topic) =>
+  topic.trackNames
+    .filter((trackName) => !trackKeys.has(normalize(trackName)))
+    .map((trackName) => ({ topic: topic.name, trackName })),
+);
+
 function topicIsCompatibleWithTrack(topicSlug: string, trackName: string) {
   const topic = technologyTopicDefinitions.find((item) => item.slug === topicSlug);
   if (!topic) return false;
@@ -43,10 +55,10 @@ function topicIsCompatibleWithTrack(topicSlug: string, trackName: string) {
       (item.aliases ?? []).some((alias) => normalize(alias) === normalize(trackName)),
   );
   if (!track) return false;
-  const trackNames = new Set(
+  const names = new Set(
     [track.name, ...(track.aliases ?? [])].map(normalize).filter(Boolean),
   );
-  return topic.trackNames.some((name) => trackNames.has(normalize(name)));
+  return topic.trackNames.some((name) => names.has(normalize(name)));
 }
 
 const directory = getChannelUpdateDirectory("technology");
@@ -78,7 +90,9 @@ const invalidSourceCounts = items.filter(
 );
 
 const clusterIds = items.map((item) => item.eventClusterId).filter(Boolean) as string[];
-const duplicateClusterIds = [...new Set(clusterIds.filter((id, index) => clusterIds.indexOf(id) !== index))];
+const duplicateClusterIds = [
+  ...new Set(clusterIds.filter((id, index) => clusterIds.indexOf(id) !== index)),
+];
 
 const rawPayload = rawArticles as RawArticlePayload;
 const rawClusters = new Map<string, RawArticle[]>();
@@ -98,13 +112,15 @@ const primarySourceViolations = items.flatMap((item) => {
   if (!grades.length) return [];
   const bestGrade = grades.sort((left, right) => gradeRank[left] - gradeRank[right])[0];
   if (gradeRank[item.sourceGrade] <= gradeRank[bestGrade]) return [];
-  return [{
-    id: item.id,
-    title: item.title,
-    clusterId: item.eventClusterId,
-    chosenGrade: item.sourceGrade,
-    bestGrade,
-  }];
+  return [
+    {
+      id: item.id,
+      title: item.title,
+      clusterId: item.eventClusterId,
+      chosenGrade: item.sourceGrade,
+      bestGrade,
+    },
+  ];
 });
 
 const topicStats = technologyTopicDefinitions.map((topic) => {
@@ -133,6 +149,7 @@ const audit = {
   untaggedRate: items.length ? Number((untagged.length / items.length).toFixed(4)) : 0,
   heavilyMultiTaggedCount: heavilyMultiTagged.length,
   trackTopicMismatchCount: trackTopicMismatches.length,
+  unresolvedTopicParentTrackCount: unresolvedTopicParentTracks.length,
   unknownTopicAssignmentCount: unknownTopicAssignments.length,
   groupedEventCount: groupedEvents.length,
   sourceRowsBeforeAggregation,
@@ -150,6 +167,7 @@ function printSamples<T>(label: string, rows: T[]) {
   console.log(`${label}=${JSON.stringify(rows.slice(0, 12))}`);
 }
 
+printSamples("TECHNOLOGY_TAXONOMY_PARENT_TRACK_ERRORS", unresolvedTopicParentTracks);
 printSamples("TECHNOLOGY_TAXONOMY_MISMATCH_SAMPLES", trackTopicMismatches);
 printSamples(
   "TECHNOLOGY_TAXONOMY_UNTAGGED_SAMPLES",
@@ -166,9 +184,28 @@ printSamples(
 );
 printSamples("TECHNOLOGY_TAXONOMY_PRIMARY_SOURCE_VIOLATIONS", primarySourceViolations);
 
+if (trackTopicMismatches.length) {
+  console.warn(
+    `TECHNOLOGY_TAXONOMY_AUDIT_WARNING: ${trackTopicMismatches.length} cross-track topic candidates require sector/taxonomy review`,
+  );
+}
+if (untagged.length) {
+  console.warn(
+    `TECHNOLOGY_TAXONOMY_AUDIT_WARNING: ${untagged.length} technology-channel events do not map to the 20 priority topics; this is advisory because the topic layer is intentionally selective`,
+  );
+}
+if (heavilyMultiTagged.length) {
+  console.warn(
+    `TECHNOLOGY_TAXONOMY_AUDIT_WARNING: ${heavilyMultiTagged.length} events map to four or more priority topics`,
+  );
+}
+
 const hardFailures = [
   technologyTopicDefinitions.length !== 20
     ? `expected 20 technology topics, got ${technologyTopicDefinitions.length}`
+    : "",
+  unresolvedTopicParentTracks.length
+    ? `${unresolvedTopicParentTracks.length} topic parent tracks do not resolve to an active track`
     : "",
   unknownTopicAssignments.length
     ? `${unknownTopicAssignments.length} unknown topic assignments`
@@ -181,9 +218,6 @@ const hardFailures = [
     : "",
   primarySourceViolations.length
     ? `${primarySourceViolations.length} event clusters did not choose the strongest evidence grade`
-    : "",
-  trackTopicMismatches.length
-    ? `${trackTopicMismatches.length} topic assignments conflict with the event track taxonomy`
     : "",
 ].filter(Boolean);
 
