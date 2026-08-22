@@ -50,8 +50,11 @@ export type TechnologyAnalysisSnapshot = {
     unscoped: number;
     contentPartialEvidence: number;
     contentWeakEvidence: number;
+    semanticTitleRescued: number;
+    semanticSummaryRescued: number;
     sourceTrackSevereDownweighted: number;
     sourceTrackModerateDownweighted: number;
+    sourceTrackProvisional: number;
     datedForTrend: number;
   };
   tracks: TechnologyTrackMomentum[];
@@ -209,11 +212,20 @@ export function buildTechnologyAnalysisSnapshot(
       contentWeakEvidence: population.filter(
         (entry) => entry.contentRelevanceStatus === "weak-evidence",
       ).length,
+      semanticTitleRescued: population.filter(
+        (entry) => entry.trackSemanticRescueStatus === "title-rescue",
+      ).length,
+      semanticSummaryRescued: population.filter(
+        (entry) => entry.trackSemanticRescueStatus === "summary-rescue",
+      ).length,
       sourceTrackSevereDownweighted: population.filter(
         (entry) => entry.sourceTrackRelevanceStatus === "severe-downweight",
       ).length,
       sourceTrackModerateDownweighted: population.filter(
         (entry) => entry.sourceTrackRelevanceStatus === "moderate-downweight",
+      ).length,
+      sourceTrackProvisional: population.filter(
+        (entry) => entry.sourceTrackRelevanceStatus === "provisional",
       ).length,
       datedForTrend: population.filter((entry) => temporalWeight(entry.item) > 0).length,
     },
