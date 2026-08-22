@@ -5,7 +5,7 @@ import {
   sourceTrackWeightForEvidence,
 } from "../lib/source-track-relevance";
 
-test("broad source-track pairs with overwhelmingly weak evidence are severe", () => {
+test("broad source-track pairs with persistent weak evidence are severe", () => {
   assert.equal(
     classifySourceTrackProfile({
       sourceEventCount: 50,
@@ -13,12 +13,14 @@ test("broad source-track pairs with overwhelmingly weak evidence are severe", ()
       pairCount: 43,
       weakEvidenceCount: 37,
       directEvidenceCount: 5,
+      observedDayCount: 5,
+      observationSpanDays: 10,
     }),
     "severe",
   );
 });
 
-test("mixed broad source-track pairs are moderate instead of globally blocked", () => {
+test("mixed broad source-track pairs are moderate after multi-day observation", () => {
   assert.equal(
     classifySourceTrackProfile({
       sourceEventCount: 21,
@@ -26,6 +28,8 @@ test("mixed broad source-track pairs are moderate instead of globally blocked", 
       pairCount: 19,
       weakEvidenceCount: 12,
       directEvidenceCount: 5,
+      observedDayCount: 3,
+      observationSpanDays: 7,
     }),
     "moderate",
   );
@@ -34,13 +38,55 @@ test("mixed broad source-track pairs are moderate instead of globally blocked", 
 test("small samples never trigger automatic source-track penalties", () => {
   assert.equal(
     classifySourceTrackProfile({
-      sourceEventCount: 6,
-      sourceTrackCount: 2,
+      sourceEventCount: 50,
+      sourceTrackCount: 4,
       pairCount: 5,
       weakEvidenceCount: 5,
       directEvidenceCount: 0,
+      observedDayCount: 4,
+      observationSpanDays: 10,
     }),
     "insufficient",
+  );
+});
+
+test("noisy profiles remain provisional until evidence persists across observation days", () => {
+  assert.equal(
+    classifySourceTrackProfile({
+      sourceEventCount: 50,
+      sourceTrackCount: 4,
+      pairCount: 12,
+      weakEvidenceCount: 10,
+      directEvidenceCount: 1,
+      observedDayCount: 1,
+      observationSpanDays: 0,
+    }),
+    "provisional",
+  );
+  assert.deepEqual(
+    sourceTrackWeightForEvidence({
+      profileStatus: "provisional",
+      contentStatus: "weak-evidence",
+      priorityTopic: false,
+      primaryEvidence: false,
+      companyEvidence: false,
+    }),
+    { status: "provisional", weight: 1 },
+  );
+});
+
+test("severe signal degrades only to moderate while temporal evidence is still maturing", () => {
+  assert.equal(
+    classifySourceTrackProfile({
+      sourceEventCount: 50,
+      sourceTrackCount: 4,
+      pairCount: 12,
+      weakEvidenceCount: 10,
+      directEvidenceCount: 1,
+      observedDayCount: 2,
+      observationSpanDays: 4,
+    }),
+    "moderate",
   );
 });
 

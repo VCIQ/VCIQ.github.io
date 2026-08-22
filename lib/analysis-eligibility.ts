@@ -19,6 +19,10 @@ import {
   type SourceTrackProfileStatus,
   type SourceTrackRelevanceStatus,
 } from "@/lib/source-track-relevance";
+import {
+  trackSemanticRescueForItem,
+  type TrackSemanticRescueStatus,
+} from "@/lib/track-semantic-rescue";
 
 export type AnalysisEligibilityStatus =
   | "included"
@@ -40,6 +44,10 @@ export type TechnologyAnalysisEntry = {
   sectorQualityCategory?: SectorQualityCategory;
   contentRelevanceStatus?: ContentRelevanceStatus;
   contentWeight?: number;
+  trackSemanticRescueStatus?: TrackSemanticRescueStatus;
+  trackSemanticRescueMultiplier?: number;
+  trackSemanticTitleAnchors?: string[];
+  trackSemanticSummaryAnchors?: string[];
   sourceTrackProfileStatus?: SourceTrackProfileStatus;
   sourceTrackRelevanceStatus?: SourceTrackRelevanceStatus;
   sourceTrackWeight?: number;
@@ -161,6 +169,24 @@ function applyContentRelevance(
   };
 }
 
+function applyTrackSemanticRescue(
+  entry: TechnologyAnalysisEntry,
+): TechnologyAnalysisEntry {
+  const assessment = trackSemanticRescueForItem(entry.item);
+  return {
+    ...entry,
+    sectorWeight: entry.sectorWeight * assessment.multiplier,
+    trackSemanticRescueStatus: assessment.status,
+    trackSemanticRescueMultiplier: assessment.multiplier,
+    trackSemanticTitleAnchors: assessment.titleAnchors,
+    trackSemanticSummaryAnchors: assessment.summaryAnchors,
+    reason:
+      assessment.multiplier > 1
+        ? `${entry.reason} ${assessment.reason}`
+        : entry.reason,
+  };
+}
+
 function applySourceTrackRelevance(
   entry: TechnologyAnalysisEntry,
   profiles: Map<string, SourceTrackProfile>,
@@ -189,8 +215,10 @@ export function buildTechnologyAnalysisPopulation(items: ChannelUpdateItem[]) {
 
   return items.map((item) =>
     applySourceTrackRelevance(
-      applyContentRelevance(
-        analysisEligibilityForFinding(item, reviewById.get(item.id)),
+      applyTrackSemanticRescue(
+        applyContentRelevance(
+          analysisEligibilityForFinding(item, reviewById.get(item.id)),
+        ),
       ),
       sourceTrackProfiles,
     ),
