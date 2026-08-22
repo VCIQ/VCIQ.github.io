@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { ListChecks, Search, ShieldCheck } from "lucide-react";
 
-import { personResearchQueue } from "@/lib/person-research-queue";
+import {
+  personResearchQueue,
+  type PersonResearchQueueScoreBreakdown,
+} from "@/lib/person-research-queue";
 import styles from "./person-research-queue-panel.module.css";
 
 const taskTypeLabels = {
@@ -23,7 +26,7 @@ const statusLabels = {
   candidate_found: "已有候选",
 };
 
-function scoreSummary(breakdown: typeof personResearchQueue.queue[number]["scoreBreakdown"]) {
+function scoreSummary(breakdown: PersonResearchQueueScoreBreakdown) {
   return [
     ["优先级", breakdown.priority],
     ["类型", breakdown.taskType],
