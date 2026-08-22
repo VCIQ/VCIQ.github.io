@@ -12,6 +12,7 @@ function item(overrides: Partial<AuditInput>): AuditInput {
     id: "sample",
     title: "Sample event",
     summary: "",
+    source: "",
     track: "AI / AGI",
     topicSlugs: [],
     sourceGrade: "B",
@@ -24,6 +25,7 @@ test("direct title evidence outside the assigned track becomes a high-confidence
     item({
       id: "gemini-space",
       title: "Google Gemini Notebook expands into AI Mode Search",
+      source: "DEV Community",
       track: "商业航天",
       topicSlugs: ["large-models"],
     }),
@@ -34,6 +36,7 @@ test("direct title evidence outside the assigned track becomes a high-confidence
   assert.deepEqual(finding.recommendedTracks, ["AI / AGI"]);
   assert.deepEqual(finding.incompatibleTopics, ["大模型"]);
   assert.deepEqual(finding.currentTrackTitleTerms, []);
+  assert.deepEqual(finding.currentTrackSourceTerms, []);
 });
 
 test("current-sector title anchors retain hardware-company model releases as cross-sector", () => {
@@ -41,6 +44,7 @@ test("current-sector title anchors retain hardware-company model releases as cro
     item({
       id: "cerebras-multimodal",
       title: "Gemma 4 on Cerebras: Fast Multimodal AI",
+      source: "Cerebras",
       track: "半导体",
       topicSlugs: ["multimodal-models"],
     }),
@@ -52,11 +56,29 @@ test("current-sector title anchors retain hardware-company model releases as cro
   assert.deepEqual(finding.recommendedTracks, ["AI / AGI"]);
 });
 
+test("current-sector source anchors retain original company releases as cross-sector", () => {
+  const finding = assessSectorQuality(
+    item({
+      id: "cerebras-gpt",
+      title: "Accelerating GPT-5.6 Sol Ultrafast with OpenAI",
+      source: "Cerebras",
+      track: "半导体",
+      topicSlugs: ["large-models"],
+    }),
+  );
+
+  assert.ok(finding);
+  assert.equal(finding.category, "reasonable-cross-sector");
+  assert.deepEqual(finding.currentTrackTitleTerms, []);
+  assert.ok(finding.currentTrackSourceTerms.includes("Cerebras"));
+});
+
 test("sector ASCII anchors use token boundaries rather than substrings", () => {
   const finding = assessSectorQuality(
     item({
       id: "workspace-not-space",
       title: "Google Workspace adds Gemini AI controls",
+      source: "ZDNET",
       track: "商业航天",
       topicSlugs: ["large-models"],
     }),
@@ -89,6 +111,7 @@ test("summary-only cross-track evidence stays in manual review", () => {
       id: "weak-agent-semiconductor",
       title: "New data center deployment enters service",
       summary: "The operator says AI Agent workloads may be supported later.",
+      source: "ITPro",
       track: "半导体",
       topicSlugs: ["ai-agent"],
     }),
