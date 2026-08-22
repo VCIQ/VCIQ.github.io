@@ -46,6 +46,47 @@
   font: 500 21px/1.2 "Noto Serif SC", serif;
 }
 
+.memoryPanel {
+  margin-top: 12px;
+  padding: 14px 15px;
+  border: 1px solid var(--border-soft);
+  background: color-mix(in srgb, var(--green) 4%, var(--surface));
+}
+.memoryHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.memoryHeading > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.memoryHeading svg { color: var(--green); }
+.memoryHeading strong { font-size: 12px; }
+.memoryHeading small { color: var(--faint); }
+.memoryStats,
+.sourceYield {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 10px;
+}
+.memoryStats > span,
+.sourceYield > span {
+  padding: 5px 8px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+  color: var(--faint);
+  font-size: 10px;
+}
+.memoryStats strong {
+  margin-left: 4px;
+  color: var(--text);
+}
+.sourceYield > span { color: var(--muted); }
+
 .queueList { margin-top: 12px; }
 .queueItem {
   display: grid;
@@ -112,6 +153,23 @@
 }
 .queueExecution svg { color: var(--green); }
 
+.taskMemory {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin-top: 10px;
+  padding: 8px 10px;
+  border-left: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--faint);
+  font-size: 10px;
+}
+.taskMemory[data-cooldown="true"] {
+  border-left-color: var(--green);
+  background: color-mix(in srgb, var(--green) 4%, var(--surface));
+}
+.taskMemory strong { color: var(--muted); font-weight: 600; }
+
 .queueQuery {
   display: flex;
   align-items: center;
@@ -155,5 +213,6 @@
   .queueStats { grid-template-columns: 1fr; }
   .queueItem { grid-template-columns: 38px minmax(0, 1fr); gap: 11px; }
   .queueRank { width: 34px; height: 34px; }
-  .sectionHeading { flex-direction: column; gap: 8px; }
+  .sectionHeading,
+  .memoryHeading { flex-direction: column; align-items: flex-start; gap: 8px; }
 }
