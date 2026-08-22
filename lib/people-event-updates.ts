@@ -4,6 +4,7 @@ import type {
   ChannelUpdateSource,
 } from "@/lib/channel-updates";
 import { clusterPersonEventItems } from "@/lib/person-event-clustering";
+import { researchPeople } from "@/lib/people-data";
 
 function uniqueStrings(values: string[]) {
   const seen = new Set<string>();
@@ -47,10 +48,20 @@ function representativeScore(item: ChannelUpdateItem) {
   return (labelScore[item.label] ?? 50) + gradeScore;
 }
 
+function publishablePeopleItems(items: ChannelUpdateItem[]) {
+  const knownNames = new Set(
+    researchPeople.flatMap((person) => [person.name, ...person.aliases]).filter(Boolean),
+  );
+  return items.filter((item) => {
+    if (item.href.startsWith("/documents/")) return true;
+    return knownNames.has(item.context);
+  });
+}
+
 export function aggregatePeopleUpdateDirectory(
   directory: ChannelUpdateDirectory,
 ): ChannelUpdateDirectory {
-  const clusters = clusterPersonEventItems(directory.items, {
+  const clusters = clusterPersonEventItems(publishablePeopleItems(directory.items), {
     referenceDate: directory.generatedAt,
     scopeKey: (item) => item.context || item.id,
     representativeScore,
