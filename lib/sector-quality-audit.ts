@@ -4,7 +4,7 @@ import {
   technologyTopicDefinitions,
   type TechnologyTopicDefinition,
 } from "@/lib/technology-topics";
-import { trackedSectors } from "@/lib/tracked-sectors";
+import { userTrackingConfig } from "@/lib/user-tracking";
 
 export type SectorQualityCategory =
   | "high-confidence-misclassification"
@@ -46,7 +46,9 @@ function normalize(value: string) {
 }
 
 const canonicalTrackByKey = new Map(
-  trackedSectors.map((track) => [normalize(track.name), track.name] as const),
+  userTrackingConfig.tracks
+    .filter((track) => track.enabled)
+    .map((track) => [normalize(track.name), track.name] as const),
 );
 
 function canonicalTrackName(value: string) {
