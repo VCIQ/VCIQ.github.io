@@ -37,11 +37,10 @@
       let visible = 0;
 
       for (const card of cards) {
-        const sectors = (card.dataset.s || "").split(".").filter(Boolean);
-        const recent = card.hasAttribute("data-r");
+        const recent = card.classList.contains("tr");
         const matches = (!needle || normalize(card.textContent || "").includes(needle))
-          && (!sectorValue || sectors.includes(sectorValue))
-          && (!statusValue || card.dataset.t === statusValue)
+          && (!sectorValue || card.classList.contains(sectorValue))
+          && (!statusValue || card.classList.contains(statusValue))
           && (!changeValue || (changeValue === "r" ? recent : !recent));
         card.hidden = !matches;
         if (matches) visible += 1;
