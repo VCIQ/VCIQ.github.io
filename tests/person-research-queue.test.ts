@@ -20,6 +20,14 @@ function item(overrides: Record<string, unknown> = {}) {
     successCriteria: "需要跨时间一手证据直接比较。",
     executor: "person_video",
     searchQueries: ["测试人物 世界模型 完整访谈"],
+    queryStrategy: "full_context_interview",
+    queryStrategyLabel: "完整上下文访谈",
+    strategySampleSize: 4,
+    expectedSuccessRate: 0.75,
+    expectedEvidenceYield: 1.2,
+    queryUnitCost: 1,
+    topHistoricalSourceType: "video_platform",
+    topHistoricalSourceTypeLabel: "视频平台",
     evidenceBasisCount: 2,
     candidateEvidenceCount: 0,
     score: 999,
@@ -31,6 +39,8 @@ function item(overrides: Record<string, unknown> = {}) {
       recency: 8,
       crossValidation: 12,
       queryReadiness: 6,
+      researchOutcomeMemory: 0,
+      researchStrategyROI: 0,
     },
     whyNow: ["P0 研究任务", "需要跨时间一手材料直接比较"],
     personRoute: "/people/test-person/",
@@ -46,6 +56,33 @@ test("queue item recomputes score and keeps one scheduled active query", () => {
   assert.deepEqual(normalized.searchQueries, ["测试人物 世界模型 完整访谈"]);
   assert.equal(normalized.queryBudget, 1);
   assert.equal(normalized.personRoute, "/people/test-person/");
+  assert.equal(normalized.queryStrategy, "full_context_interview");
+  assert.equal(normalized.expectedSuccessRate, 0.75);
+});
+
+test("strategy metrics are bounded and cannot inflate the public score arbitrarily", () => {
+  const normalized = normalizePersonResearchQueueItem(item({
+    expectedSuccessRate: 9,
+    expectedEvidenceYield: 999,
+    queryUnitCost: -5,
+    scoreBreakdown: {
+      priority: 40,
+      taskType: 25,
+      status: 5,
+      evidenceGap: 12,
+      recency: 8,
+      crossValidation: 12,
+      queryReadiness: 6,
+      researchOutcomeMemory: 0,
+      researchStrategyROI: 999,
+    },
+  }));
+  assert.ok(normalized);
+  assert.equal(normalized.expectedSuccessRate, 1);
+  assert.equal(normalized.expectedEvidenceYield, 50);
+  assert.equal(normalized.queryUnitCost, 1);
+  assert.equal(normalized.scoreBreakdown.researchStrategyROI, 12);
+  assert.equal(normalized.score, 120);
 });
 
 test("queue boundary rejects closed states and unsupported executors", () => {
