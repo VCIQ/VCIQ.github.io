@@ -18,6 +18,8 @@ function updateItem(overrides: Partial<ChannelUpdateItem>): ChannelUpdateItem {
     dateOriginal: "2026-08-20",
     datePrecision: "exact",
     sortAt: "2026-08-20T00:00:00.000Z",
+    firstSeenAt: "2026-06-01T00:00:00.000Z",
+    firstSeenEstimated: false,
     keywords: ["产品发布"],
     track: "AI / AGI",
     region: "全球",
@@ -144,6 +146,8 @@ test("7D trend and 30D Momentum are computed from eligibility-weighted equal win
   assert.ok(ai);
   assert.ok(space);
   assert.ok(largeModels);
+  assert.equal(snapshot.coverage.sevenDayComparisonReady, true);
+  assert.equal(snapshot.coverage.thirtyDayComparisonReady, true);
   assert.equal(ai.sevenDayTrend.currentWeightedEvents, 3);
   assert.equal(ai.sevenDayTrend.previousWeightedEvents, 1);
   assert.equal(ai.sevenDayTrend.direction, "up");
@@ -179,4 +183,30 @@ test("approximate dates contribute at reduced temporal weight and undated rows d
   assert.ok(topic);
   assert.equal(topic.sevenDayTrend.currentWeightedEvents, 0.8);
   assert.equal(snapshot.population.datedForTrend, 1);
+});
+
+test("Momentum comparisons stay suppressed until the monitoring history covers both windows", () => {
+  const directory: ChannelUpdateDirectory = {
+    title: "test",
+    description: "test",
+    generatedAt: "2026-08-21T12:00:00.000Z",
+    items: [
+      updateItem({
+        id: "recent-monitoring",
+        title: "DeepSeek large language model update",
+        firstSeenAt: "2026-08-15T00:00:00.000Z",
+        sortAt: "2026-08-20T00:00:00.000Z",
+      }),
+    ],
+  };
+
+  const snapshot = buildTechnologyAnalysisSnapshot(directory);
+  const topic = snapshot.topics.find((item) => item.slug === "large-models");
+  assert.ok(topic);
+  assert.equal(snapshot.coverage.sevenDayComparisonReady, false);
+  assert.equal(snapshot.coverage.thirtyDayComparisonReady, false);
+  assert.equal(topic.sevenDayTrend.comparisonReady, false);
+  assert.equal(topic.sevenDayTrend.direction, "insufficient");
+  assert.equal(topic.sevenDayTrend.growthPct, null);
+  assert.equal(topic.thirtyDayMomentum.direction, "insufficient");
 });
