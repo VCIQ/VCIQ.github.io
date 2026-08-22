@@ -3,7 +3,8 @@
 
 The scheduler does not verify facts. It only ranks already-generated research tasks and
 allocates a small number of active discovery slots. Every score is deterministic and
-published as a component breakdown so the queue remains auditable.
+published as a component breakdown so the queue remains auditable. Historical research
+outcomes can adjust scheduling efficiency, but never change evidence truth/status.
 """
 
 from __future__ import annotations
@@ -26,6 +27,14 @@ from tools.person_research_agent import (
     clean,
     load_json,
     parse_date,
+)
+from tools.person_research_outcomes import (
+    OUTPUT_PATH as OUTCOMES_PATH,
+    empty_memory,
+    load_memory,
+    memory_summary,
+    normalize_memory,
+    task_feedback,
 )
 
 OUTPUT_PATH = ROOT / "public" / "data" / "person_research_queue.json"
@@ -55,6 +64,20 @@ def _person_map(people_payload: dict[str, Any]) -> dict[str, dict[str, Any]]:
         for person in people_payload.get("people") or []
         if isinstance(person, dict) and clean(person.get("slug"))
     }
+
+
+def _research_date(generated_at: str) -> str:
+    try:
+        parsed = (
+            dt.datetime.fromisoformat(generated_at.replace("Z", "+00:00"))
+            if generated_at
+            else dt.datetime.now(dt.timezone.utc)
+        )
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=dt.timezone.utc)
+        return parsed.astimezone(ZoneInfo("Asia/Shanghai")).date().isoformat()
+    except ValueError:
+        return dt.datetime.now(ZoneInfo("Asia/Shanghai")).date().isoformat()
 
 
 def _recent_material_stats(person: dict[str, Any], generated_at: str) -> tuple[int, int | None]:
@@ -146,7 +169,9 @@ def score_task(
     task: dict[str, Any],
     person: dict[str, Any],
     generated_at: str,
+    history: dict[str, Any] | None = None,
 ) -> tuple[int, dict[str, int], list[str]]:
+    history = history or {"score": 0, "reasons": []}
     priority = PRIORITY_SCORE.get(clean(task.get("priority")), 0)
     task_type = TYPE_SCORE.get(clean(task.get("taskType")), 0)
     status = STATUS_SCORE.get(clean(task.get("status")), 0)
@@ -162,19 +187,27 @@ def score_task(
         "recency": recency,
         "crossValidation": cross,
         "queryReadiness": ready,
+        "researchHistory": int(history.get("score") or 0),
     }
     reasons = [
         f"{clean(task.get('priority'))} 研究任务",
         gap_reason,
+        *(history.get("reasons") or []),
         *recency_reasons,
         cross_reason,
         ready_reason,
     ]
-    return sum(breakdown.values()), breakdown, [reason for reason in reasons if reason][:5]
+    return sum(breakdown.values()), breakdown, [reason for reason in reasons if reason][:6]
 
 
-def build_daily_queue(agenda: dict[str, Any], people_payload: dict[str, Any]) -> dict[str, Any]:
+def build_daily_queue(
+    agenda: dict[str, Any],
+    people_payload: dict[str, Any],
+    outcome_memory: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     generated_at = clean(agenda.get("generatedAt") or people_payload.get("generatedAt"))
+    research_date = _research_date(generated_at)
+    memory = normalize_memory(outcome_memory) if outcome_memory is not None else empty_memory()
     people = _person_map(people_payload)
     candidates: list[dict[str, Any]] = []
     for slug, record in (agenda.get("people") or {}).items():
@@ -187,11 +220,13 @@ def build_daily_queue(agenda: dict[str, Any], people_payload: dict[str, Any]) ->
             status = clean(task.get("status"))
             if status in {"supported", "blocked"}:
                 continue
-            score, breakdown, reasons = score_task(task, person, generated_at)
+            task_id = clean(task.get("id"), 180)
+            history = task_feedback(memory, task_id, research_date)
+            score, breakdown, reasons = score_task(task, person, generated_at, history)
             candidates.append({
                 "personSlug": str(slug),
                 "personName": clean(record.get("personName") or person.get("name"), 120),
-                "taskId": clean(task.get("id"), 180),
+                "taskId": task_id,
                 "taskType": clean(task.get("taskType"), 80),
                 "priority": clean(task.get("priority"), 8),
                 "status": status,
@@ -206,6 +241,15 @@ def build_daily_queue(agenda: dict[str, Any], people_payload: dict[str, Any]) ->
                 "scoreBreakdown": breakdown,
                 "whyNow": reasons,
                 "personRoute": f"/people/{slug}/",
+                "researchMemory": {
+                    "attempts": int(history.get("attempts") or 0),
+                    "yieldingAttempts": int(history.get("yieldingAttempts") or 0),
+                    "zeroYieldStreak": int(history.get("zeroYieldStreak") or 0),
+                    "lastOutcome": clean(history.get("lastOutcome"), 40),
+                    "lastAttemptAt": clean(history.get("lastAttemptAt"), 80),
+                    "nextEligibleDate": clean(history.get("nextEligibleDate"), 40),
+                },
+                "cooldownActive": bool(history.get("cooldownActive")),
             })
 
     priority_order = {"P0": 0, "P1": 1, "P2": 2, "P3": 3}
@@ -239,6 +283,7 @@ def build_daily_queue(agenda: dict[str, Any], people_payload: dict[str, Any]) ->
         if (
             row["executor"] == "person_video"
             and row["searchQueries"]
+            and not row["cooldownActive"]
             and row["personSlug"] not in query_people
             and allocated < MAX_ACTIVE_QUERY_SLOTS
         ):
@@ -249,16 +294,8 @@ def build_daily_queue(agenda: dict[str, Any], people_payload: dict[str, Any]) ->
         elif row["executor"] == "person_video":
             row["searchQueries"] = []
 
-    try:
-        parsed = dt.datetime.fromisoformat(generated_at.replace("Z", "+00:00")) if generated_at else dt.datetime.now(dt.timezone.utc)
-        if parsed.tzinfo is None:
-            parsed = parsed.replace(tzinfo=dt.timezone.utc)
-        research_date = parsed.astimezone(ZoneInfo("Asia/Shanghai")).date().isoformat()
-    except ValueError:
-        research_date = dt.datetime.now(ZoneInfo("Asia/Shanghai")).date().isoformat()
-
     return {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "generatedAt": generated_at,
         "researchDate": research_date,
         "limits": {
@@ -271,11 +308,12 @@ def build_daily_queue(agenda: dict[str, Any], people_payload: dict[str, Any]) ->
         "selectedPeopleCount": len(selected_people),
         "selectedTaskCount": len(selected),
         "allocatedQuerySlots": allocated,
+        "outcomeMemory": memory_summary(memory, research_date),
         "queue": selected,
         "methodology": (
             "队列只排序开放研究任务并分配有限主动检索槽位，不改变事实状态。"
-            "分数由任务优先级、任务类型、状态、证据缺口、近期事件、跨频道验证价值和可执行性确定；"
-            "supported/blocked 不进入今日执行队列。"
+            "分数由任务优先级、任务类型、状态、证据缺口、近期事件、跨频道验证价值、可执行性和历史研究产出共同确定；"
+            "连续零新增只会小幅降权并暂时冷却主动查询，supported/blocked 不进入今日执行队列。"
         ),
     }
 
@@ -296,12 +334,14 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--agenda", type=Path, default=AGENDA_PATH)
     parser.add_argument("--people", type=Path, default=PEOPLE_PATH)
+    parser.add_argument("--outcomes", type=Path, default=OUTCOMES_PATH)
     parser.add_argument("--output", type=Path, default=OUTPUT_PATH)
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     queue = build_daily_queue(
         load_json(args.agenda, {"people": {}}),
         load_json(args.people, {"people": []}),
+        load_memory(args.outcomes),
     )
     if args.check:
         if queue["selectedPeopleCount"] > MAX_DAILY_PEOPLE or queue["selectedTaskCount"] > MAX_DAILY_TASKS:
