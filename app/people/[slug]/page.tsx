@@ -60,6 +60,7 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
   ].filter((link): link is NonNullable<typeof link> => Boolean(link));
   const sections = [
     "研究摘要",
+    "影响映射",
     "人物背景",
     "公司与机构",
     "产品与项目",
@@ -103,6 +104,9 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
           </div>
           <p>{person.role}</p>
           <div className="hero-chips">
+            <span>{research.priority.level} · 研究优先级 {research.priority.score}</span>
+            <span>证据覆盖 {research.coverage.score}%</span>
+            <span>{research.viewChange.label}</span>
             {person.sectors.map((sector) => <span key={sector}>{sector}</span>)}
             {person.handles.map((handle) => <span key={handle}>@{handle}</span>)}
             <span>{research.events.length} 个事件 / {person.materials.length} 条原始材料</span>
@@ -142,7 +146,43 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
                 <strong>下一步观察</strong>
                 <p>{research.nextWatch}</p>
               </div>
+              <div className={styles.snapshotCard}>
+                <span>RESEARCH PRIORITY</span>
+                <strong>{research.priority.level} · {research.priority.score} / 100</strong>
+                <p>{research.priority.reasons.join("；") || "当前未出现需要提高研究优先级的额外信号。"}</p>
+              </div>
+              <div className={styles.snapshotCard}>
+                <span>EVIDENCE COVERAGE</span>
+                <strong>{research.coverage.label} · {research.coverage.score}%</strong>
+                <p>
+                  {research.coverage.gaps.length
+                    ? `仍有 ${research.coverage.gaps.length} 项缺口；首要补齐：${research.coverage.gaps[0]}。`
+                    : "当前关键身份、主线、一手材料与时间序列证据已达到较完整覆盖。"}
+                </p>
+              </div>
+              <div className={styles.snapshotCard}>
+                <span>VIEW CHANGE</span>
+                <strong>{research.viewChange.label}</strong>
+                <p>{research.viewChange.summary}</p>
+              </div>
             </div>
+          </Section>
+
+          <Section id="影响映射" title="最新事件影响映射">
+            <p className="method-note">
+              这里回答“这条人物事件对公司、技术或赛道意味着什么”。只映射已有证据关系；未直接命中的对象不会因为人物知名度被自动扩展为事实关联。
+            </p>
+            {research.latestImplications.length ? (
+              <div className={styles.implicationGrid}>
+                {research.latestImplications.map((item) => (
+                  <div className={styles.implicationCard} key={`${item.dimension}-${item.target}`}>
+                    <span>{item.dimension}</span>
+                    <strong>{item.target}</strong>
+                    <p>{item.statement}</p>
+                  </div>
+                ))}
+              </div>
+            ) : <p>当前没有可映射的近期人物事件。</p>}
           </Section>
 
           <Section id="人物背景" title="人物背景">
@@ -189,10 +229,24 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
           </Section>
 
           <Section id="观点演进" title="观点演进 / 公开表达时间线">
+            <div className={styles.viewChangeBox}>
+              <span>{research.viewChange.confidence === "supported" ? "SUPPORTED" : research.viewChange.confidence === "candidate" ? "CANDIDATE" : "INSUFFICIENT"}</span>
+              <strong>{research.viewChange.label}</strong>
+              <p>{research.viewChange.summary}</p>
+              {research.viewChange.evidence.length > 0 && (
+                <div className={styles.viewEvidence}>
+                  {research.viewChange.evidence.map((evidence) => (
+                    <a href={evidence.url} target="_blank" rel="noreferrer" key={evidence.url}>
+                      {evidence.date} · {evidence.title}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
             {!research.hasVerifiedEvolution && (
               <div className={styles.evolutionNotice}>
-                当前材料还不足以可靠判断观点发生了变化。以下仅展示按时间排列的公开材料样本，
-                不把发布时间差异自动解释为观点迁移。
+                下方时间线用于展示公开表达和人工整理的演进线索。只有绑定到足够原始证据的变化才会升级为已验证演进；
+                时间先后本身不代表观点发生迁移。
               </div>
             )}
             {research.evolution.length ? (
@@ -230,14 +284,24 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
 
         <aside className="source-rail">
           <div className="confidence-box">
+            <span>研究优先级</span>
+            <strong>{research.priority.level}</strong>
+            <p>{research.priority.score} / 100 · 用于决定持续跟踪顺序，不等同于人物社会影响力排名</p>
+          </div>
+          <div className="confidence-box">
+            <span>证据覆盖</span>
+            <strong>{research.coverage.score}%</strong>
+            <p>{research.coverage.firstPartyCount} 条一手材料 · {research.coverage.directExpressionEventCount} 个直接表达事件</p>
+          </div>
+          <div className="confidence-box">
+            <span>资料缺口</span>
+            <strong>{research.coverage.gaps.length}</strong>
+            <p>{research.coverage.gaps[0] ?? "当前关键证据维度无明显缺口"}</p>
+          </div>
+          <div className="confidence-box">
             <span>人物事件</span>
             <strong>{research.events.length}</strong>
             <p>由 {person.materials.length} 条原始材料按同一人物、标题语义与时间窗口聚合</p>
-          </div>
-          <div className="confidence-box">
-            <span>原始材料</span>
-            <strong>{person.materials.length}</strong>
-            <p>保留每个事件的公开信源，避免事件去重后丢失证据链</p>
           </div>
           <div className="confidence-box">
             <span>最后更新</span>
