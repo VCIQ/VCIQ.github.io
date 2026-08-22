@@ -58,11 +58,43 @@ test("short ASCII technology terms require token boundaries", () => {
   assert.equal(technologyTermMatchesText("A compact system with 96GB memory", "6G"), false);
   assert.equal(technologyTermMatchesText("forward-looking revenue guidance", "RWA"), false);
   assert.equal(technologyTermMatchesText("gantry automation system", "GaN"), false);
+  assert.equal(technologyTermMatchesText("a GAN image model", "GaN"), false);
+  assert.equal(technologyTermMatchesText("there isn't [ sic ] any plan", "SiC"), false);
 
   assert.equal(technologyTermMatchesText("SiC power device", "SiC"), true);
   assert.equal(technologyTermMatchesText("6G network architecture", "6G"), true);
   assert.equal(technologyTermMatchesText("RWA tokenization platform", "RWA"), true);
   assert.equal(technologyTermMatchesText("GaN RF device", "GaN"), true);
+});
+
+test("separator-sensitive identifiers preserve their token structure", () => {
+  assert.equal(technologyTermMatchesText("2.5D advanced packaging", "2.5D"), true);
+  assert.equal(technologyTermMatchesText("MiMo-V2.5 DeepSeek", "2.5D"), false);
+  assert.equal(technologyTermMatchesText("completed in 2.5 days", "2.5D"), false);
+  assert.equal(technologyTermMatchesText("3D IC integration", "3D IC"), true);
+  assert.equal(technologyTermMatchesText("AI RAN architecture", "AI-RAN"), true);
+});
+
+test("multimodal requires AI or model context", () => {
+  assert.equal(
+    technologyTermMatchesText("a multimodal transportation hub for aircraft and ridesharing", "multimodal"),
+    false,
+  );
+  assert.equal(
+    technologyTermMatchesText("a multimodal AI model for image and language understanding", "multimodal"),
+    true,
+  );
+});
+
+test("reasoning topic requires model-specific evidence rather than generic reasoning prose", () => {
+  const generic = technologyTopicsForText(["A reasoning framework for business planning"]).map(
+    (topic) => topic.name,
+  );
+  const model = technologyTopicsForText(["Microsoft ships new reasoning models"]).map(
+    (topic) => topic.name,
+  );
+  assert.equal(generic.includes("推理模型"), false);
+  assert.ok(model.includes("推理模型"));
 });
 
 test("four-character model brands still match attached version numbers", () => {
