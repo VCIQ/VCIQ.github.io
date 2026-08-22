@@ -12,6 +12,13 @@ import {
   type SectorQualityCategory,
   type SectorQualityFinding,
 } from "@/lib/sector-quality-audit";
+import {
+  buildSourceTrackRelevanceProfiles,
+  sourceTrackRelevanceForItem,
+  type SourceTrackProfile,
+  type SourceTrackProfileStatus,
+  type SourceTrackRelevanceStatus,
+} from "@/lib/source-track-relevance";
 
 export type AnalysisEligibilityStatus =
   | "included"
@@ -33,6 +40,9 @@ export type TechnologyAnalysisEntry = {
   sectorQualityCategory?: SectorQualityCategory;
   contentRelevanceStatus?: ContentRelevanceStatus;
   contentWeight?: number;
+  sourceTrackProfileStatus?: SourceTrackProfileStatus;
+  sourceTrackRelevanceStatus?: SourceTrackRelevanceStatus;
+  sourceTrackWeight?: number;
   reason: string;
 };
 
@@ -151,14 +161,38 @@ function applyContentRelevance(
   };
 }
 
+function applySourceTrackRelevance(
+  entry: TechnologyAnalysisEntry,
+  profiles: Map<string, SourceTrackProfile>,
+): TechnologyAnalysisEntry {
+  const assessment = sourceTrackRelevanceForItem(entry.item, profiles, {
+    canonicalReviewed: entry.status === "canonical-corrected",
+  });
+  return {
+    ...entry,
+    sectorWeight: entry.sectorWeight * assessment.weight,
+    sourceTrackProfileStatus: assessment.profileStatus,
+    sourceTrackRelevanceStatus: assessment.status,
+    sourceTrackWeight: assessment.weight,
+    reason:
+      assessment.weight < 1
+        ? `${entry.reason} ${assessment.reason}`
+        : entry.reason,
+  };
+}
+
 export function buildTechnologyAnalysisPopulation(items: ChannelUpdateItem[]) {
   const reviewById = new Map(
     buildSectorQualityReviewQueue(items).map((finding) => [finding.id, finding]),
   );
+  const sourceTrackProfiles = buildSourceTrackRelevanceProfiles(items);
 
   return items.map((item) =>
-    applyContentRelevance(
-      analysisEligibilityForFinding(item, reviewById.get(item.id)),
+    applySourceTrackRelevance(
+      applyContentRelevance(
+        analysisEligibilityForFinding(item, reviewById.get(item.id)),
+      ),
+      sourceTrackProfiles,
     ),
   );
 }

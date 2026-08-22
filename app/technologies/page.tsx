@@ -75,7 +75,7 @@ export default function TechnologyResearchPage() {
         <h1>科技研究</h1>
         <p className={styles.headerIntro}>
           用“核心赛道 → 重点技术主题 → 核心技术对象”组织研究入口。赛道保留产业结构与
-          HeatScore；7 日趋势和 30 日 Momentum 只读取经过 taxonomy、赛道质量、规范赛道纠错、内容相关性与时间覆盖审计后的分析样本。原始赛道和原始事件始终保留为 provenance。
+          HeatScore；7 日趋势和 30 日 Momentum 只读取经过 taxonomy、赛道质量、规范赛道纠错、内容相关性、来源—赛道相关性与时间覆盖审计后的分析样本。原始赛道和原始事件始终保留为 provenance。
         </p>
         <div className={styles.headerChips}>
           <span><Network size={14} />{trackedSectors.length} 个核心赛道</span>
@@ -90,6 +90,8 @@ export default function TechnologyResearchPage() {
           <span>{analysis.population.crossSector} 条合理跨赛道事件保留多赛道贡献</span>
           <span>{analysis.population.contentPartialEvidence} 条部分内容证据按 0.5 权重</span>
           <span>{analysis.population.contentWeakEvidence} 条弱内容证据按 0.25 权重</span>
+          <span>{analysis.population.sourceTrackSevereDownweighted} 条高噪声来源—赛道弱证据再乘 0.5</span>
+          <span>{analysis.population.sourceTrackModerateDownweighted} 条混合精度来源—赛道弱证据再乘 0.75</span>
           <span>
             可靠观测 {analysis.coverage.observedDays === null ? "待建立" : `${analysis.coverage.observedDays} 天`}
             {` · 7D ${analysis.coverage.sevenDayComparisonReady ? "可比" : "积累中"} · 30D ${analysis.coverage.thirtyDayComparisonReady ? "可比" : "积累中"}`}
@@ -113,7 +115,7 @@ export default function TechnologyResearchPage() {
             <div>
               <span className={styles.layerIndex}>L1 / CORE TRACKS</span>
               <h3>核心赛道</h3>
-              <p>HeatScore 继续保留原算法；7D / 30D 只反映清洗后事件活跃度变化。已确认的规范赛道纠错只覆盖分析层，不回写原始事件；弱内容证据仅降权、不删除，历史观测不足完整对照窗口时只显示样本量，不输出涨跌。</p>
+              <p>HeatScore 继续保留原算法；7D / 30D 只反映清洗后事件活跃度变化。已确认的规范赛道纠错只覆盖分析层，不回写原始事件；弱内容证据仅降权、不删除，宽信源只有在特定赛道上长期以弱证据进入时才追加来源—赛道降权，重点主题、crawler 可用、官方/原始材料、高置信公司和人工纠错证据均豁免。历史观测不足完整对照窗口时只显示样本量，不输出涨跌。</p>
             </div>
             <span className={styles.layerCount}>{trackedSectors.length} 个赛道</span>
           </div>
@@ -163,7 +165,7 @@ export default function TechnologyResearchPage() {
             <div>
               <span className={styles.layerIndex}>L2 / TECHNOLOGY TOPICS</span>
               <h3>重点技术主题</h3>
-              <p>主题趋势保留赛道错分但主题证据仍成立的事件；待复核主题按 0.75 权重计入。明确命中重点技术主题的事件不因 crawler 低置信标签而额外降权；时间覆盖不足时同样不输出虚假的增长率。</p>
+              <p>主题趋势保留赛道错分但主题证据仍成立的事件；待复核主题按 0.75 权重计入。明确命中重点技术主题的事件不因 crawler 低置信标签或来源—赛道噪声而额外降权；时间覆盖不足时同样不输出虚假的增长率。</p>
             </div>
             <span className={styles.layerCount}>{technologyTopicDefinitions.length} 个主题</span>
           </div>
