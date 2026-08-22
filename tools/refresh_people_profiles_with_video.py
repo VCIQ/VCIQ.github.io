@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-"""Run the person profile refresh with public video-platform enrichment enabled."""
+"""Run the person profile refresh with active, public video-platform enrichment.
+
+Before a normal refresh, the deterministic person research planner reads the previous
+profile snapshot and produces bounded evidence-search questions. The highest-priority
+video-compatible query is then fed into the existing identity-gated video discovery.
+The public agenda itself remains derived build data and is regenerated from the refreshed
+people/articles snapshots by the Pages build.
+"""
 
 from __future__ import annotations
 
@@ -12,10 +19,38 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from tools import refresh_people_profiles as core
+from tools.person_research_agent import (
+    ARTICLES_PATH,
+    PEOPLE_PATH,
+    build_agenda,
+    load_json,
+    research_queries_by_slug,
+)
 from tools.person_video_discovery import discover_person_video_materials
 from tools.wechat_channel_card_discovery import discover_embedded_wechat_video_materials
 
 _BASE_ENRICH_CANDIDATE = core.enrich_candidate
+_RESEARCH_QUERY_MAP: dict[str, list[str]] = {}
+
+
+def _load_active_research_queries() -> dict[str, list[str]]:
+    agenda = build_agenda(
+        load_json(PEOPLE_PATH, {"people": []}),
+        load_json(ARTICLES_PATH, {"articles": []}),
+    )
+    return research_queries_by_slug(agenda)
+
+
+def _candidate_with_research_query(candidate: dict[str, Any]) -> dict[str, Any]:
+    queries = _RESEARCH_QUERY_MAP.get(str(candidate.get("slug") or "")) or []
+    if not queries:
+        return candidate
+    override = dict(candidate.get("override") or {})
+    existing = [str(value) for value in override.get("videoQueries") or [] if str(value).strip()]
+    # Existing hand-curated videoQueries retain precedence. The active planner fills a
+    # gap only when a curator has not already specified a stronger query.
+    override["videoQueries"] = existing or [queries[0]]
+    return {**candidate, "override": override}
 
 
 def merge_video_materials(profile: dict[str, Any], video_materials: list[dict[str, str]]) -> dict[str, Any]:
@@ -52,15 +87,16 @@ def enrich_candidate(
     profile = _BASE_ENRICH_CANDIDATE(candidate, previous, articles, offline)
     if offline:
         return profile
+    discovery_candidate = _candidate_with_research_query(candidate)
     video_materials: list[dict[str, str]] = []
     try:
-        video_materials.extend(discover_person_video_materials(candidate))
+        video_materials.extend(discover_person_video_materials(discovery_candidate))
     except Exception:
         pass
     if articles:
         try:
             video_materials.extend(
-                discover_embedded_wechat_video_materials(candidate, articles)
+                discover_embedded_wechat_video_materials(discovery_candidate, articles)
             )
         except Exception:
             pass
@@ -68,10 +104,20 @@ def enrich_candidate(
 
 
 # The core builder resolves this global from its own module, so replace it once before
-# exposing the ordinary CLI/build entry points.
+# exposing the ordinary build entry point.
 core.enrich_candidate = enrich_candidate
 build_payload = core.build_payload
-main = core.main
+
+
+def main() -> int:
+    global _RESEARCH_QUERY_MAP
+    validate_only = "--validate-only" in sys.argv
+    offline = "--offline" in sys.argv
+    if not validate_only and not offline:
+        _RESEARCH_QUERY_MAP = _load_active_research_queries()
+        task_person_count = sum(1 for queries in _RESEARCH_QUERY_MAP.values() if queries)
+        print(f"Active person research queries prepared for {task_person_count} people.")
+    return core.main()
 
 
 if __name__ == "__main__":
