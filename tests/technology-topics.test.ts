@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { technologyTopicsForText } from "../lib/technology-topic-matching";
+import { technologyTermMatchesText } from "../lib/technology-term-matching";
 import {
   technologyTopicDefinitions,
   technologyTopicsForEntity,
@@ -49,4 +51,26 @@ test("technology entities are mapped from public evidence text instead of track 
   assert.ok(names.includes("大模型"));
   assert.ok(names.includes("多模态模型"));
   assert.ok(names.includes("AI 智能体"));
+});
+
+test("short ASCII technology terms require token boundaries", () => {
+  assert.equal(technologyTermMatchesText("AI music startup", "SiC"), false);
+  assert.equal(technologyTermMatchesText("A compact system with 96GB memory", "6G"), false);
+  assert.equal(technologyTermMatchesText("forward-looking revenue guidance", "RWA"), false);
+  assert.equal(technologyTermMatchesText("gantry automation system", "GaN"), false);
+
+  assert.equal(technologyTermMatchesText("SiC power device", "SiC"), true);
+  assert.equal(technologyTermMatchesText("6G network architecture", "6G"), true);
+  assert.equal(technologyTermMatchesText("RWA tokenization platform", "RWA"), true);
+  assert.equal(technologyTermMatchesText("GaN RF device", "GaN"), true);
+});
+
+test("ordinary prose cannot acquire acronym-driven technology topics", () => {
+  const names = technologyTopicsForText([
+    "A 96GB music workstation posts forward-looking guidance",
+  ]).map((topic) => topic.name);
+
+  assert.equal(names.includes("宽禁带半导体"), false);
+  assert.equal(names.includes("6G"), false);
+  assert.equal(names.includes("稳定币"), false);
 });
