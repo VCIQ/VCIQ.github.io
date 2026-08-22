@@ -31,10 +31,20 @@ function item(overrides: Record<string, unknown> = {}) {
       recency: 8,
       crossValidation: 12,
       queryReadiness: 6,
+      researchHistory: 0,
     },
     whyNow: ["P0 研究任务", "需要跨时间一手材料直接比较"],
     personRoute: "/people/test-person/",
     queryBudget: 1,
+    researchMemory: {
+      attempts: 0,
+      yieldingAttempts: 0,
+      zeroYieldStreak: 0,
+      lastOutcome: "",
+      lastAttemptAt: "",
+      nextEligibleDate: "",
+    },
+    cooldownActive: false,
     ...overrides,
   };
 }
@@ -46,6 +56,25 @@ test("queue item recomputes score and keeps one scheduled active query", () => {
   assert.deepEqual(normalized.searchQueries, ["测试人物 世界模型 完整访谈"]);
   assert.equal(normalized.queryBudget, 1);
   assert.equal(normalized.personRoute, "/people/test-person/");
+});
+
+test("research history is part of the recomputed score", () => {
+  const normalized = normalizePersonResearchQueueItem(item({
+    score: 5_000,
+    scoreBreakdown: {
+      priority: 40,
+      taskType: 25,
+      status: 5,
+      evidenceGap: 12,
+      recency: 8,
+      crossValidation: 12,
+      queryReadiness: 6,
+      researchHistory: -6,
+    },
+  }));
+  assert.ok(normalized);
+  assert.equal(normalized.score, 102);
+  assert.equal(normalized.scoreBreakdown.researchHistory, -6);
 });
 
 test("queue boundary rejects closed states and unsupported executors", () => {
@@ -68,7 +97,7 @@ test("non-video tasks cannot smuggle browser search queries or query budget", ()
 
 test("queue derives public counters from normalized rows instead of trusting payload", () => {
   const normalized = normalizePersonResearchQueue({
-    schemaVersion: 1,
+    schemaVersion: 2,
     generatedAt: "2026-08-22T00:00:00Z",
     researchDate: "2026-08-22",
     limits: { people: 10, tasks: 20, tasksPerPerson: 2, activeQuerySlots: 10 },
@@ -108,6 +137,7 @@ test("public boundary re-enforces people task and active-query budgets", () => {
     queryBudget: 1,
   }))).flat();
   const normalized = normalizePersonResearchQueue({
+    researchDate: "2026-08-22",
     limits: { people: 4, tasks: 7, tasksPerPerson: 2, activeQuerySlots: 3 },
     queue: rows,
   });
@@ -121,6 +151,59 @@ test("public boundary re-enforces people task and active-query budgets", () => {
   }
   assert.ok([...perPerson.values()].every((count) => count <= 2));
   assert.equal(normalized.queue.filter((row) => row.queryBudget === 1).length, 3);
+});
+
+test("public boundary recomputes cooldown and withholds query budget", () => {
+  const normalized = normalizePersonResearchQueue({
+    researchDate: "2026-08-22",
+    limits: { people: 10, tasks: 20, tasksPerPerson: 2, activeQuerySlots: 10 },
+    queue: [item({
+      cooldownActive: false,
+      researchMemory: {
+        attempts: 2,
+        yieldingAttempts: 0,
+        zeroYieldStreak: 2,
+        lastOutcome: "no_yield",
+        lastAttemptAt: "2026-08-21T01:00:00+00:00",
+        nextEligibleDate: "2026-08-23",
+      },
+    })],
+  });
+  assert.equal(normalized.queue.length, 1);
+  assert.equal(normalized.queue[0].cooldownActive, true);
+  assert.equal(normalized.queue[0].queryBudget, 0);
+  assert.deepEqual(normalized.queue[0].searchQueries, []);
+});
+
+test("outcome memory summary clamps invalid source counters", () => {
+  const normalized = normalizePersonResearchQueue({
+    outcomeMemory: {
+      attemptCount: 3,
+      yieldingAttemptCount: 2,
+      zeroYieldAttemptCount: 1,
+      acceptedEvidenceCount: 9,
+      newEvidenceCount: 4,
+      cooldownTaskCount: 1,
+      sources: [
+        {
+          source: "YouTube",
+          attempts: 2,
+          yieldingAttempts: 99,
+          failedAttempts: 99,
+          acceptedEvidenceCount: 7,
+          newEvidenceCount: 3,
+          yieldRate: 2,
+        },
+        { source: "", attempts: 5 },
+      ],
+    },
+    queue: [],
+  });
+  assert.equal(normalized.outcomeMemory.attemptCount, 3);
+  assert.equal(normalized.outcomeMemory.sources.length, 1);
+  assert.equal(normalized.outcomeMemory.sources[0].yieldingAttempts, 2);
+  assert.equal(normalized.outcomeMemory.sources[0].failedAttempts, 2);
+  assert.equal(normalized.outcomeMemory.sources[0].yieldRate, 1);
 });
 
 test("person route is reconstructed from slug instead of trusting arbitrary payload", () => {
