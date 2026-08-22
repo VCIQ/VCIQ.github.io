@@ -14,6 +14,7 @@ import {
   researchAgentReport,
   type ResearchAgentEvidence,
 } from "@/lib/research-agent-data";
+import PersonResearchQueuePanel from "./person-research-queue-panel";
 import styles from "./research-agent.module.css";
 
 export const metadata: Metadata = {
@@ -157,6 +158,8 @@ export default function ResearchAgentPage() {
           </div>
         )}
       </section>
+
+      <PersonResearchQueuePanel />
 
       <section className={styles.summaryPanel}>
         <div className={styles.sectionHeading}>

@@ -2,10 +2,10 @@
 """Run the person profile refresh with active, public video-platform enrichment.
 
 Before a normal refresh, the deterministic person research planner reads the previous
-profile snapshot and produces bounded evidence-search questions. The highest-priority
-video-compatible query is then fed into the existing identity-gated video discovery.
-The public agenda itself remains derived build data and is regenerated from the refreshed
-people/articles snapshots by the Pages build.
+profile snapshot and produces bounded evidence-search questions. The daily scheduler then
+allocates a limited number of active research query slots, and only scheduled queries are
+fed into the existing identity-gated video discovery. Baseline person refresh behavior is
+unchanged for people without an allocated active research slot.
 """
 
 from __future__ import annotations
@@ -24,21 +24,30 @@ from tools.person_research_agent import (
     PEOPLE_PATH,
     build_agenda,
     load_json,
-    research_queries_by_slug,
 )
+from tools.person_research_scheduler import build_daily_queue, scheduled_queries_by_slug
 from tools.person_video_discovery import discover_person_video_materials
 from tools.wechat_channel_card_discovery import discover_embedded_wechat_video_materials
 
 _BASE_ENRICH_CANDIDATE = core.enrich_candidate
 _RESEARCH_QUERY_MAP: dict[str, list[str]] = {}
+_RESEARCH_QUEUE_STATS: dict[str, int] = {}
 
 
 def _load_active_research_queries() -> dict[str, list[str]]:
+    global _RESEARCH_QUEUE_STATS
+    people_payload = load_json(PEOPLE_PATH, {"people": []})
     agenda = build_agenda(
-        load_json(PEOPLE_PATH, {"people": []}),
+        people_payload,
         load_json(ARTICLES_PATH, {"articles": []}),
     )
-    return research_queries_by_slug(agenda)
+    queue = build_daily_queue(agenda, people_payload)
+    _RESEARCH_QUEUE_STATS = {
+        "people": int(queue.get("selectedPeopleCount") or 0),
+        "tasks": int(queue.get("selectedTaskCount") or 0),
+        "queries": int(queue.get("allocatedQuerySlots") or 0),
+    }
+    return scheduled_queries_by_slug(queue)
 
 
 def _candidate_with_research_query(candidate: dict[str, Any]) -> dict[str, Any]:
@@ -47,8 +56,8 @@ def _candidate_with_research_query(candidate: dict[str, Any]) -> dict[str, Any]:
         return candidate
     override = dict(candidate.get("override") or {})
     existing = [str(value) for value in override.get("videoQueries") or [] if str(value).strip()]
-    # Existing hand-curated videoQueries retain precedence. The active planner fills a
-    # gap only when a curator has not already specified a stronger query.
+    # Existing hand-curated videoQueries retain precedence. The scheduler only fills a
+    # research gap when a curator has not already specified a stronger query.
     override["videoQueries"] = existing or [queries[0]]
     return {**candidate, "override": override}
 
@@ -115,8 +124,12 @@ def main() -> int:
     offline = "--offline" in sys.argv
     if not validate_only and not offline:
         _RESEARCH_QUERY_MAP = _load_active_research_queries()
-        task_person_count = sum(1 for queries in _RESEARCH_QUERY_MAP.values() if queries)
-        print(f"Active person research queries prepared for {task_person_count} people.")
+        print(
+            "Daily person research queue prepared: "
+            f"{_RESEARCH_QUEUE_STATS.get('people', 0)} people / "
+            f"{_RESEARCH_QUEUE_STATS.get('tasks', 0)} tasks / "
+            f"{_RESEARCH_QUEUE_STATS.get('queries', 0)} active query slots."
+        )
     return core.main()
 
 
