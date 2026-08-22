@@ -35,6 +35,7 @@ class PersonResearchAgentTests(unittest.TestCase):
         self.assertLessEqual(len(evidence_task["searchQueries"]), 3)
         self.assertTrue(evidence_task["searchQueries"])
         self.assertTrue(all("测试人物" in query for query in evidence_task["searchQueries"]))
+        self.assertIn("至少补齐到 2 条", evidence_task["successCriteria"])
         self.assertEqual(evidence_task["status"], "open")
 
     def test_viewpoint_shift_only_creates_verification_task(self):
@@ -114,6 +115,33 @@ class PersonResearchAgentTests(unittest.TestCase):
         task = next(item for item in tasks if item["taskType"] == "execution_verification")
         self.assertEqual(task["status"], "supported")
         self.assertEqual(task["candidateEvidence"][0]["sourceLevel"], "官方披露")
+
+    def test_same_url_official_evidence_cannot_close_execution_task(self):
+        profile = person(materials=[
+            {
+                "title": "测试人物谈 Example Labs Atlas 世界模型",
+                "date": "2026-08-20",
+                "type": "interview",
+                "url": "https://example.com/shared?utm_source=person",
+                "source": "Example Labs",
+            }
+        ])
+        articles = [{
+            "title": "Example Labs 发布 Atlas 世界模型产品更新",
+            "summary": "官方发布 Atlas 世界模型产品与部署信息",
+            "company": "Example Labs",
+            "publishedAt": "2026-08-21",
+            "importance": 9,
+            "source": {
+                "name": "Example Labs",
+                "url": "https://example.com/shared?utm_source=company",
+                "level": "官方披露",
+            },
+        }]
+        tasks = build_person_tasks(profile, articles, "2026-08-22T00:00:00Z")
+        task = next(item for item in tasks if item["taskType"] == "execution_verification")
+        self.assertEqual(task["status"], "candidate_found")
+        self.assertIn("URL 不与人物证据重合", task["successCriteria"])
 
     def test_query_execution_uses_only_open_video_compatible_tasks(self):
         payload = {
