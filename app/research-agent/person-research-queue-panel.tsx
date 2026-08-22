@@ -36,6 +36,7 @@ function scoreSummary(breakdown: PersonResearchQueueScoreBreakdown) {
     ["交叉验证", breakdown.crossValidation],
     ["可执行", breakdown.queryReadiness],
     ["研究记忆", breakdown.researchOutcomeMemory],
+    ["策略 ROI", breakdown.researchStrategyROI],
   ] as const;
 }
 
@@ -53,8 +54,8 @@ export default function PersonResearchQueuePanel() {
       </div>
 
       <p className={styles.queueIntro}>
-        从全部开放人物研究任务中按可解释规则分配今日预算。队列只决定“先查什么”和主动检索槽位，
-        Research Outcome Memory 只记录检索产出与成本，不改变任何事实状态或证据门槛。
+        从全部开放人物研究任务中按可解释规则分配今日预算。队列只决定“先查什么”和主动检索槽位；
+        Research Strategy Memory 会比较历史 query strategy 与来源产出，但只影响排序和检索选择，不改变事实状态或证据门槛。
       </p>
 
       <div className={styles.queueStats}>
@@ -76,7 +77,7 @@ export default function PersonResearchQueuePanel() {
         <article>
           <span>主动检索槽位</span>
           <strong>{queue.allocatedQuerySlots}/{queue.limits.activeQuerySlots}</strong>
-          <small>近期零产出任务会短暂冷却</small>
+          <small>按预期证据产出与冷却状态分配</small>
         </article>
       </div>
 
@@ -110,6 +111,13 @@ export default function PersonResearchQueuePanel() {
                 <span>执行器：{executorLabels[item.executor]}</span>
                 <span>检索槽位：{item.queryBudget}</span>
                 <span>现有证据：{item.evidenceBasisCount} 基础 / {item.candidateEvidenceCount} 候选</span>
+                {item.queryStrategyLabel ? <span>策略：{item.queryStrategyLabel}</span> : null}
+                {item.strategySampleSize > 0 ? (
+                  <span>
+                    历史样本 {item.strategySampleSize} · 预期命中 {(item.expectedSuccessRate * 100).toFixed(0)}% · 单槽位产出 {item.expectedEvidenceYield.toFixed(2)}
+                  </span>
+                ) : null}
+                {item.topHistoricalSourceTypeLabel ? <span>历史高产来源：{item.topHistoricalSourceTypeLabel}</span> : null}
                 {item.cooldownUntil ? <span>冷却至：{item.cooldownUntil}</span> : null}
               </div>
 
