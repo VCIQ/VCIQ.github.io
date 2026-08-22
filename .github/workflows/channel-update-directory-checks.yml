@@ -26,6 +26,7 @@ on:
       - "lib/sector-quality-audit.ts"
       - "lib/canonical-sector-assignment.ts"
       - "lib/content-relevance.ts"
+      - "lib/track-semantic-rescue.ts"
       - "lib/source-track-relevance.ts"
       - "lib/analysis-eligibility.ts"
       - "lib/technology-momentum.ts"
@@ -37,6 +38,7 @@ on:
       - "scripts/audit-analysis-eligibility.ts"
       - "scripts/audit-residual-precision.ts"
       - "scripts/audit-content-relevance.ts"
+      - "scripts/audit-track-semantic-rescue.ts"
       - "scripts/audit-source-track-relevance.ts"
       - "tests/channel-updates.test.ts"
       - "tests/tracking-taxonomy-identity.test.ts"
@@ -44,6 +46,7 @@ on:
       - "tests/sector-quality-audit.test.ts"
       - "tests/canonical-sector-assignment.test.ts"
       - "tests/content-relevance.test.ts"
+      - "tests/track-semantic-rescue.test.ts"
       - "tests/source-track-relevance.test.ts"
       - "tests/analysis-eligibility-momentum.test.ts"
       - "package.json"
@@ -74,6 +77,7 @@ on:
       - "lib/sector-quality-audit.ts"
       - "lib/canonical-sector-assignment.ts"
       - "lib/content-relevance.ts"
+      - "lib/track-semantic-rescue.ts"
       - "lib/source-track-relevance.ts"
       - "lib/analysis-eligibility.ts"
       - "lib/technology-momentum.ts"
@@ -85,6 +89,7 @@ on:
       - "scripts/audit-analysis-eligibility.ts"
       - "scripts/audit-residual-precision.ts"
       - "scripts/audit-content-relevance.ts"
+      - "scripts/audit-track-semantic-rescue.ts"
       - "scripts/audit-source-track-relevance.ts"
       - "tests/channel-updates.test.ts"
       - "tests/tracking-taxonomy-identity.test.ts"
@@ -92,6 +97,7 @@ on:
       - "tests/sector-quality-audit.test.ts"
       - "tests/canonical-sector-assignment.test.ts"
       - "tests/content-relevance.test.ts"
+      - "tests/track-semantic-rescue.test.ts"
       - "tests/source-track-relevance.test.ts"
       - "tests/analysis-eligibility-momentum.test.ts"
       - "package.json"
@@ -113,7 +119,7 @@ jobs:
       - name: Type-check update directory
         run: npx tsc --noEmit
       - name: Run focused update-directory tests
-        run: node --import tsx --test tests/channel-updates.test.ts tests/tracking-taxonomy-identity.test.ts tests/technology-topics.test.ts tests/sector-quality-audit.test.ts tests/canonical-sector-assignment.test.ts tests/content-relevance.test.ts tests/source-track-relevance.test.ts tests/analysis-eligibility-momentum.test.ts
+        run: node --import tsx --test tests/channel-updates.test.ts tests/tracking-taxonomy-identity.test.ts tests/technology-topics.test.ts tests/sector-quality-audit.test.ts tests/canonical-sector-assignment.test.ts tests/content-relevance.test.ts tests/track-semantic-rescue.test.ts tests/source-track-relevance.test.ts tests/analysis-eligibility-momentum.test.ts
       - name: Audit technology taxonomy quality
         run: npm run audit:technology-taxonomy
       - name: Audit sector assignment quality
@@ -128,5 +134,7 @@ jobs:
         run: npm run audit:residual-precision
       - name: Audit content relevance
         run: npm run audit:content-relevance
+      - name: Audit track semantic rescue
+        run: npm run audit:track-semantic-rescue
       - name: Audit source-track relevance
         run: npm run audit:source-track-relevance

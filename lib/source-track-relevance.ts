@@ -9,6 +9,7 @@ export type SourceTrackProfileStatus =
   | "severe"
   | "moderate"
   | "normal"
+  | "provisional"
   | "insufficient";
 
 export type SourceTrackRelevanceStatus =
@@ -16,6 +17,7 @@ export type SourceTrackRelevanceStatus =
   | "severe-downweight"
   | "moderate-downweight"
   | "normal"
+  | "provisional"
   | "insufficient";
 
 export type SourceTrackProfile = {
@@ -37,6 +39,8 @@ export type SourceTrackProfile = {
   directEvidenceCount: number;
   weakRate: number;
   directEvidenceRate: number;
+  observedDayCount: number;
+  observationSpanDays: number;
   samples: string[];
 };
 
@@ -80,9 +84,13 @@ type PairAccumulator = {
   companyEvidenceCount: number;
   trackingTermEvidenceCount: number;
   directEvidenceCount: number;
+  observationDays: Set<string>;
+  firstObservedAt: number | null;
+  lastObservedAt: number | null;
   samples: string[];
 };
 
+const DAY_MS = 24 * 60 * 60 * 1000;
 const rawById = new Map(
   (rawArticles as RawArticlePayload).articles.map((article) => [article.id, article]),
 );
@@ -90,6 +98,16 @@ const rawById = new Map(
 function roundedRate(value: number, total: number) {
   if (!total) return 0;
   return Math.round((value / total) * 1000) / 1000;
+}
+
+function reliableObservationTimestamp(item: ChannelUpdateItem) {
+  if (!item.firstSeenAt || item.firstSeenEstimated === true) return null;
+  const timestamp = Date.parse(item.firstSeenAt);
+  return Number.isFinite(timestamp) ? timestamp : null;
+}
+
+function dayKey(timestamp: number) {
+  return new Date(timestamp).toISOString().slice(0, 10);
 }
 
 export function sourceTrackProfileKey(source: string, track: string) {
@@ -130,21 +148,30 @@ export function classifySourceTrackProfile(input: {
   pairCount: number;
   weakEvidenceCount: number;
   directEvidenceCount: number;
+  observedDayCount?: number;
+  observationSpanDays?: number;
 }): SourceTrackProfileStatus {
   const broadSource = input.sourceEventCount >= 8 && input.sourceTrackCount >= 3;
-  if (!broadSource || input.pairCount < 4) return "insufficient";
+  if (!broadSource || input.pairCount < 6) return "insufficient";
 
   const weakRate = input.weakEvidenceCount / input.pairCount;
   const directEvidenceRate = input.directEvidenceCount / input.pairCount;
-  if (
-    input.pairCount >= 5 &&
-    weakRate >= 0.7 &&
-    directEvidenceRate < 0.3
-  ) {
-    return "severe";
+  const observedDayCount = input.observedDayCount ?? 0;
+  const observationSpanDays = input.observationSpanDays ?? 0;
+  const moderateStable = observedDayCount >= 2 && observationSpanDays >= 3;
+  const severeStable = observedDayCount >= 3 && observationSpanDays >= 7;
+
+  const severeSignal =
+    input.pairCount >= 8 && weakRate >= 0.7 && directEvidenceRate < 0.3;
+  if (severeSignal) {
+    if (severeStable) return "severe";
+    if (moderateStable) return "moderate";
+    return "provisional";
   }
-  if (weakRate >= 0.5 && directEvidenceRate < 0.5) {
-    return "moderate";
+
+  const moderateSignal = weakRate >= 0.5 && directEvidenceRate < 0.5;
+  if (moderateSignal) {
+    return moderateStable ? "moderate" : "provisional";
   }
   return "normal";
 }
@@ -180,6 +207,9 @@ export function buildSourceTrackRelevanceProfiles(items: ChannelUpdateItem[]) {
       companyEvidenceCount: 0,
       trackingTermEvidenceCount: 0,
       directEvidenceCount: 0,
+      observationDays: new Set<string>(),
+      firstObservedAt: null,
+      lastObservedAt: null,
       samples: [],
     };
     pair.pairCount += 1;
@@ -192,6 +222,15 @@ export function buildSourceTrackRelevanceProfiles(items: ChannelUpdateItem[]) {
     if (rawEvidence.trackingTermEvidence) pair.trackingTermEvidenceCount += 1;
     if (directEvidence) pair.directEvidenceCount += 1;
     if (pair.samples.length < 4) pair.samples.push(item.title);
+
+    const observedAt = reliableObservationTimestamp(item);
+    if (observedAt !== null) {
+      pair.observationDays.add(dayKey(observedAt));
+      pair.firstObservedAt =
+        pair.firstObservedAt === null ? observedAt : Math.min(pair.firstObservedAt, observedAt);
+      pair.lastObservedAt =
+        pair.lastObservedAt === null ? observedAt : Math.max(pair.lastObservedAt, observedAt);
+    }
     pairs.set(key, pair);
 
     sourceEventCounts.set(source, (sourceEventCounts.get(source) ?? 0) + 1);
@@ -205,22 +244,42 @@ export function buildSourceTrackRelevanceProfiles(items: ChannelUpdateItem[]) {
       const sourceEventCount = sourceEventCounts.get(pair.source) ?? 0;
       const sourceTrackCount = sourceTracks.get(pair.source)?.size ?? 0;
       const broadSource = sourceEventCount >= 8 && sourceTrackCount >= 3;
+      const observedDayCount = pair.observationDays.size;
+      const observationSpanDays =
+        pair.firstObservedAt !== null && pair.lastObservedAt !== null
+          ? Math.floor(((pair.lastObservedAt - pair.firstObservedAt) / DAY_MS) * 10) / 10
+          : 0;
       const status = classifySourceTrackProfile({
         sourceEventCount,
         sourceTrackCount,
         pairCount: pair.pairCount,
         weakEvidenceCount: pair.weakEvidenceCount,
         directEvidenceCount: pair.directEvidenceCount,
+        observedDayCount,
+        observationSpanDays,
       });
       const profile: SourceTrackProfile = {
         key,
-        ...pair,
+        source: pair.source,
+        track: pair.track,
+        pairCount: pair.pairCount,
+        topicBackedCount: pair.topicBackedCount,
+        crawlerUsableCount: pair.crawlerUsableCount,
+        partialEvidenceCount: pair.partialEvidenceCount,
+        weakEvidenceCount: pair.weakEvidenceCount,
+        primaryEvidenceCount: pair.primaryEvidenceCount,
+        companyEvidenceCount: pair.companyEvidenceCount,
+        trackingTermEvidenceCount: pair.trackingTermEvidenceCount,
+        directEvidenceCount: pair.directEvidenceCount,
+        samples: pair.samples,
         sourceEventCount,
         sourceTrackCount,
         broadSource,
         status,
         weakRate: roundedRate(pair.weakEvidenceCount, pair.pairCount),
         directEvidenceRate: roundedRate(pair.directEvidenceCount, pair.pairCount),
+        observedDayCount,
+        observationSpanDays,
       };
       return [key, profile] as const;
     }),
@@ -248,7 +307,12 @@ export function sourceTrackWeightForEvidence(input: {
   );
   if (!eligibleForSourcePenalty) {
     return {
-      status: input.profileStatus === "insufficient" ? "insufficient" : "normal",
+      status:
+        input.profileStatus === "insufficient"
+          ? "insufficient"
+          : input.profileStatus === "provisional"
+            ? "provisional"
+            : "normal",
       weight: 1,
     };
   }
@@ -260,7 +324,12 @@ export function sourceTrackWeightForEvidence(input: {
     return { status: "moderate-downweight", weight: 0.75 };
   }
   return {
-    status: input.profileStatus === "insufficient" ? "insufficient" : "normal",
+    status:
+      input.profileStatus === "insufficient"
+        ? "insufficient"
+        : input.profileStatus === "provisional"
+          ? "provisional"
+          : "normal",
     weight: 1,
   };
 }
@@ -289,9 +358,11 @@ export function sourceTrackRelevanceForItem(
   if (result.status === "bypass-strong-evidence") {
     reason = "事件已有重点主题、crawler 可用、官方/原始材料、高置信公司或人工规范纠错等强证据，来源—赛道门槛不再处罚。";
   } else if (result.status === "severe-downweight") {
-    reason = `宽信源“${source}”在“${track}”样本中弱证据占比较高；本事件缺少强证据，额外按 0.5 来源—赛道权重计入。`;
+    reason = `宽信源“${source}”在“${track}”经过跨日稳定观测后仍以弱证据为主；本事件缺少强证据，额外按 0.5 来源—赛道权重计入。`;
   } else if (result.status === "moderate-downweight") {
-    reason = `宽信源“${source}”在“${track}”样本中精度混合；本事件缺少强证据，额外按 0.75 来源—赛道权重计入。`;
+    reason = `宽信源“${source}”在“${track}”经过跨日观测后仍呈混合精度；本事件缺少强证据，额外按 0.75 来源—赛道权重计入。`;
+  } else if (result.status === "provisional") {
+    reason = "该来源—赛道组合当前弱证据比例偏高，但跨日观测跨度不足，暂不自动处罚。";
   } else if (result.status === "insufficient") {
     reason = "该来源—赛道组合样本不足或来源不够宽泛，不基于小样本自动处罚。";
   }

@@ -47,6 +47,29 @@ const invalidContentWeights = population.filter(
     (entry.contentRelevanceStatus === "partial-evidence" && entry.contentWeight !== 0.5) ||
     (entry.contentRelevanceStatus === "weak-evidence" && entry.contentWeight !== 0.25),
 );
+const invalidSemanticRescue = population.filter((entry) => {
+  const multiplier = entry.trackSemanticRescueMultiplier;
+  const status = entry.trackSemanticRescueStatus;
+  if (multiplier === undefined || ![1, 1.5, 2].includes(multiplier)) return true;
+  if (multiplier === 1) return status !== "none";
+  if (
+    entry.contentRelevanceStatus !== "weak-evidence" ||
+    entry.analysisTopicSlugs.length > 0
+  ) {
+    return true;
+  }
+  if (status === "title-rescue") {
+    return multiplier !== 2 || !(entry.trackSemanticTitleAnchors?.length ?? 0);
+  }
+  if (status === "summary-rescue") {
+    return (
+      multiplier !== 1.5 ||
+      (entry.trackSemanticTitleAnchors?.length ?? 0) > 0 ||
+      new Set(entry.trackSemanticSummaryAnchors ?? []).size < 2
+    );
+  }
+  return true;
+});
 const invalidSourceTrackWeights = population.filter(
   (entry) =>
     entry.sourceTrackWeight === undefined ||
@@ -55,7 +78,7 @@ const invalidSourceTrackWeights = population.filter(
       entry.sourceTrackWeight !== 0.5) ||
     (entry.sourceTrackRelevanceStatus === "moderate-downweight" &&
       entry.sourceTrackWeight !== 0.75) ||
-    (["bypass-strong-evidence", "normal", "insufficient"].includes(
+    (["bypass-strong-evidence", "normal", "provisional", "insufficient"].includes(
       entry.sourceTrackRelevanceStatus ?? "",
     ) &&
       entry.sourceTrackWeight !== 1),
@@ -83,6 +106,7 @@ const compositionViolations = population.filter((entry) => {
   const expectedSector =
     baseSectorWeight(entry.status) *
     (entry.contentWeight ?? 1) *
+    (entry.trackSemanticRescueMultiplier ?? 1) *
     (entry.sourceTrackWeight ?? 1);
   const expectedTopic = baseTopicWeight(entry) * (entry.contentWeight ?? 1);
   return (
@@ -245,8 +269,11 @@ const audit = {
   unscoped: snapshot.population.unscoped,
   contentPartialEvidence: snapshot.population.contentPartialEvidence,
   contentWeakEvidence: snapshot.population.contentWeakEvidence,
+  semanticTitleRescued: snapshot.population.semanticTitleRescued,
+  semanticSummaryRescued: snapshot.population.semanticSummaryRescued,
   sourceTrackSevereDownweighted: snapshot.population.sourceTrackSevereDownweighted,
   sourceTrackModerateDownweighted: snapshot.population.sourceTrackModerateDownweighted,
+  sourceTrackProvisional: snapshot.population.sourceTrackProvisional,
   datedForTrend: snapshot.population.datedForTrend,
   highConfidenceSectorFindings: highConfidenceIds.size,
   correctedHighConfidence: correctedHighConfidenceIds.size,
@@ -281,12 +308,18 @@ if (snapshot.population.contentPartialEvidence || snapshot.population.contentWea
     `ANALYSIS_ELIGIBILITY_NOTICE: content relevance weighting applies to ${snapshot.population.contentPartialEvidence} partial-evidence events at 0.5 and ${snapshot.population.contentWeakEvidence} weak-evidence events at 0.25; no raw events are deleted`,
   );
 }
+if (snapshot.population.semanticTitleRescued || snapshot.population.semanticSummaryRescued) {
+  console.warn(
+    `ANALYSIS_ELIGIBILITY_NOTICE: track semantic rescue restores limited sector weight for ${snapshot.population.semanticTitleRescued} direct-title and ${snapshot.population.semanticSummaryRescued} multi-summary weak-evidence events; topic Momentum is unchanged`,
+  );
+}
 if (
   snapshot.population.sourceTrackSevereDownweighted ||
-  snapshot.population.sourceTrackModerateDownweighted
+  snapshot.population.sourceTrackModerateDownweighted ||
+  snapshot.population.sourceTrackProvisional
 ) {
   console.warn(
-    `ANALYSIS_ELIGIBILITY_NOTICE: source-track relevance adds 0.5 weight to ${snapshot.population.sourceTrackSevereDownweighted} severe-pair weak/partial events and 0.75 weight to ${snapshot.population.sourceTrackModerateDownweighted} moderate-pair weak/partial events; strong evidence bypasses this gate`,
+    `ANALYSIS_ELIGIBILITY_NOTICE: source-track relevance applies stable-profile penalties to ${snapshot.population.sourceTrackSevereDownweighted} severe and ${snapshot.population.sourceTrackModerateDownweighted} moderate weak/partial events; ${snapshot.population.sourceTrackProvisional} events are in provisional profiles and receive no extra penalty`,
   );
 }
 if (!snapshot.coverage.sevenDayComparisonReady || !snapshot.coverage.thirtyDayComparisonReady) {
@@ -306,6 +339,9 @@ const hardFailures = [
   invalidContentWeights.length
     ? `${invalidContentWeights.length} analysis entries violate content relevance weighting policy`
     : "",
+  invalidSemanticRescue.length
+    ? `${invalidSemanticRescue.length} analysis entries violate track semantic rescue policy`
+    : "",
   invalidSourceTrackWeights.length
     ? `${invalidSourceTrackWeights.length} analysis entries violate source-track relevance weighting policy`
     : "",
@@ -313,7 +349,7 @@ const hardFailures = [
     ? `${sourceTrackStrongEvidenceViolations.length} strong-evidence events were incorrectly source-track downweighted`
     : "",
   compositionViolations.length
-    ? `${compositionViolations.length} analysis entries violate multiplicative sector/content/source weighting composition`
+    ? `${compositionViolations.length} analysis entries violate multiplicative sector/content/rescue/source weighting composition`
     : "",
   invalidTrackTargets.length
     ? `${invalidTrackTargets.length} analysis entries point to inactive tracks`
