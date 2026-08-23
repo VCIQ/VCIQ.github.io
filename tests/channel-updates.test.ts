@@ -20,9 +20,11 @@ import {
   filterAndSortChannelUpdates,
 } from "../lib/channel-update-filter";
 import { HOMEPAGE_CHANNEL_UPDATE_LIMIT } from "../lib/homepage-channel-update-config";
+import { canonicalTracksForItem } from "../lib/canonical-sector-assignment";
 import {
   aggregateTechnologyEventUpdates,
   getChannelUpdateDirectory,
+  technologyEventHasResearchEvidence,
   type ChannelUpdateItem,
   type ChannelUpdateKey,
 } from "../lib/channel-updates";
@@ -171,6 +173,411 @@ test("technology directory contains at most one public row per event cluster", (
   );
 });
 
+test("technology publication requires content evidence independently of source grade", () => {
+  assert.equal(
+    technologyEventHasResearchEvidence({
+      topicCount: 0,
+      track: "AI / AGI",
+      title: "President discusses ground beef imports",
+      summary: "A domestic food-price policy story.",
+      qualityStatus: "低可信",
+      qualitySignals: ["标题命中公司/账号"],
+      sourceGrade: "B",
+    }),
+    false,
+  );
+  assert.equal(
+    technologyEventHasResearchEvidence({
+      topicCount: 0,
+      track: "AI / AGI",
+      title: "A general corporate announcement",
+      summary: "No technology content is present.",
+      qualityStatus: "可用",
+      sourceGrade: "A",
+    }),
+    false,
+  );
+  assert.equal(
+    technologyEventHasResearchEvidence({
+      topicCount: 1,
+      track: "Web3",
+      title: "Claude agents launch a security workflow",
+      summary: "The agent system automates incident response.",
+      sourceGrade: "C",
+    }),
+    true,
+  );
+  for (const title of [
+    "Edge AI Daily 早报（8月23日）",
+    "AI Model Leaderboards & Benchmarks",
+    "DeepSeek 招聘",
+    "更新日志 | DeepSeek API Docs",
+    "Claude Opus",
+    "Mobileye Drive™ | Self-Driving System for Autonomous MaaS",
+    "Technology | Commonwealth Fusion Systems",
+    "SPARC: Proving commercial fusion energy is possible | Commonwealth Fusion Systems",
+    "ARC: Putting fusion energy on the grid | Commonwealth Fusion Systems",
+    "2026中国先进封装企业20强（TOP 20）",
+    "半导体器件的失效分析及可靠性测试",
+    "Understanding Why Agentic AI Demands a Massive CPU Renaissance and How IT Leaders Must Prepare Now | Techspective: A Unique Perspective on Technology",
+    "晶圆厂转先进封装，值不值？",
+    "Agentic AI in the enterprise: How to balance autonomy with constraints",
+    "Getting the most out of GPT-5.6: Sol, Terra, and Luna",
+    "Get access to ChatGPT, Claude & Gemini for just $69.97 today",
+  ]) {
+    assert.equal(
+      technologyEventHasResearchEvidence({
+        topicCount: 1,
+        track: "AI / AGI",
+        title,
+        summary: "The page mentions a large language model.",
+        sourceGrade: "B",
+      }),
+      false,
+      `non-event technology page was admitted: ${title}`,
+    );
+  }
+  assert.equal(
+    technologyEventHasResearchEvidence({
+      topicCount: 1,
+      track: "AI / AGI",
+      title: "OpenAI：RT @adamhfry: This week’s ChatGPT feature drop - Aug 21: Another Friday, another roundup of what we shipped this week: 1/ Recent photos:…",
+      summary:
+        "RT @adamhfry: This week’s ChatGPT feature drop - Aug 21: Another Friday, another roundup of what we shipped this week: 1/ Recent photos:…",
+      sourceName: "X",
+      sourceGrade: "B",
+    }),
+    true,
+  );
+  assert.equal(
+    technologyEventHasResearchEvidence({
+      topicCount: 1,
+      track: "AI / AGI",
+      title:
+        "Google DeepMind：RT @GeminiApp: Gemini 3.7 Flash is now available to all Pro and Ultra users in Gemini chat. This model update delivers improved reasoning…",
+      summary:
+        "RT @GeminiApp: Gemini 3.7 Flash is now available to all Pro and Ultra users in Gemini chat. This model update delivers improved reasoning…",
+      sourceName: "X",
+      sourceGrade: "B",
+    }),
+    true,
+  );
+  assert.equal(
+    technologyEventHasResearchEvidence({
+      topicCount: 1,
+      track: "AI / AGI",
+      title: "A developer tests a new AI model workflow",
+      summary: "A single-author community post.",
+      sourceGrade: "C",
+      sourceName: "DEV Community",
+      sourceCount: 1,
+    }),
+    false,
+  );
+  assert.equal(
+    technologyEventHasResearchEvidence({
+      topicCount: 1,
+      track: "可控核聚变",
+      title: "A generic technology overview",
+      summary: "The page describes a planned fusion system.",
+      sourceUrl: "https://cfs.energy/technology/sparc/\\",
+      sourceGrade: "B",
+    }),
+    false,
+  );
+  assert.equal(
+    technologyEventHasResearchEvidence({
+      topicCount: 1,
+      track: "机器人",
+      title: "Three unrelated headlines joined into one crawler result",
+      summary: "早报来啦~",
+      sourceGrade: "B",
+    }),
+    false,
+  );
+  assert.equal(
+    technologyEventHasResearchEvidence({
+      topicCount: 1,
+      track: "AI / AGI",
+      title: "A developer tests a new AI model workflow",
+      summary: "The event is corroborated by an additional source.",
+      sourceGrade: "C",
+      sourceName: "DEV Community",
+      sourceCount: 2,
+    }),
+    true,
+  );
+  assert.equal(
+    technologyEventHasResearchEvidence({
+      topicCount: 0,
+      track: "商业航天",
+      title: "Rocket Lab schedules its next launch",
+      summary: "The mission will deploy a satellite.",
+      matchedTrackingTerms: ["Rocket Lab"],
+      sourceGrade: "C",
+    }),
+    true,
+  );
+  assert.equal(
+    technologyEventHasResearchEvidence({
+      topicCount: 0,
+      track: "AI语音",
+      title: "以扎实举措推进农业农村现代化",
+      summary: "农业与乡村发展政策解读。",
+      qualitySignals: ["标题命中 2 个追踪词"],
+      sourceGrade: "C",
+    }),
+    false,
+  );
+  assert.equal(
+    technologyEventHasResearchEvidence({
+      topicCount: 0,
+      track: "新能源",
+      title: "Windows platform update reaches general availability",
+      summary: "The software release improves desktop management.",
+      sourceGrade: "B",
+    }),
+    false,
+  );
+  assert.equal(
+    technologyEventHasResearchEvidence({
+      topicCount: 0,
+      track: "生物科技",
+      title: "General Electric expands an industrial service",
+      summary: "The company announced a new maintenance contract.",
+      sourceGrade: "B",
+    }),
+    false,
+  );
+  assert.equal(
+    technologyEventHasResearchEvidence({
+      topicCount: 0,
+      track: "新能源",
+      title: "New wind farm begins commercial operation",
+      summary: "The renewable power project entered service.",
+      sourceGrade: "B",
+    }),
+    true,
+  );
+  assert.equal(
+    technologyEventHasResearchEvidence({
+      topicCount: 0,
+      track: "生物科技",
+      title: "Gene therapy enters a phase 2 clinical trial",
+      summary: "The study enrolled its first patient.",
+      sourceGrade: "B",
+    }),
+    true,
+  );
+  assert.equal(
+    technologyEventHasResearchEvidence({
+      topicCount: 0,
+      track: "新能源",
+      title: "The Apex Institute explains cloud hiring",
+      summary: "Hiring managers discuss AI infrastructure roles.",
+      qualitySignals: ["摘要命中 1 个追踪词", "包含明确事件动作"],
+      sourceGrade: "C",
+    }),
+    false,
+  );
+  assert.equal(
+    technologyEventHasResearchEvidence({
+      topicCount: 0,
+      track: "AI / AGI",
+      title: "MillworkSuite launches AI estimating and direct-to-CAD",
+      summary: "The product converts architectural documents into a priced scope.",
+      sourceGrade: "B",
+    }),
+    true,
+  );
+  assert.equal(
+    technologyEventHasResearchEvidence({
+      topicCount: 0,
+      track: "AI / AGI",
+      title: "Nscale seeks funding for an AI data center",
+      summary: "The company is expanding infrastructure capacity.",
+      qualityStatus: "可用",
+      sourceGrade: "C",
+    }),
+    true,
+  );
+  assert.equal(
+    technologyEventHasResearchEvidence({
+      topicCount: 0,
+      track: "AI / AGI",
+      title: "The first deportation flight to Haiti landed",
+      summary: "Immigration arrests are increasing.",
+      sourceGrade: "B",
+    }),
+    false,
+  );
+});
+
+test("technology publication preserves observed tracks and applies reviewed analysis corrections", () => {
+  const items = getChannelUpdateDirectory("technology").items;
+  const claudeAgents = items.find((item) =>
+    item.title.includes("Claude agents launching a turf war"),
+  );
+  assert.ok(claudeAgents);
+  assert.equal(claudeAgents.track, "Web3");
+  assert.deepEqual(claudeAgents.publicTracks, ["AI / AGI", "AI安全"]);
+  assert.match(claudeAgents.context, /^AI \/ AGI ·/u);
+  assert.ok(claudeAgents.classifications?.includes("规范赛道纠错"));
+  const correction = canonicalTracksForItem(claudeAgents);
+  assert.equal(correction.applied, true);
+  assert.deepEqual(correction.canonicalTracks, ["AI / AGI", "AI安全"]);
+
+  const reviewedCases: Array<[string, string[]]> = [
+    ["Vantage and Nebius move first", ["AI / AGI"]],
+    ["SenseNova U1.5 Lite正式版发布", ["AI / AGI"]],
+    ["DeepSeek to introduce peak and off-peak pricing", ["AI / AGI"]],
+    ["Pixels could soon get AI-powered", ["AI智能终端", "AI / AGI"]],
+    ["Pony AI Inc.’s Second Quarter 2026 Earnings", ["机器人", "智能交通"]],
+    ["Mobileye to establish vertically integrated robotaxi", ["机器人", "智能交通"]],
+    ["Mobileye To Acquire Mentee Robotics", ["机器人", "智能交通"]],
+    ["晶泰科技AI赋能孔道独立调控", ["新材料"]],
+    ["Honor Launches Robot Phone", ["AI智能终端", "AI / AGI"]],
+    ["Grok exfiltrates user data", ["AI / AGI", "AI安全"]],
+    ["Microsoft finally patches critical one-click Copilot", ["AI / AGI", "AI安全"]],
+    ["Google's AI can see your business data", ["AI / AGI", "AI安全"]],
+    ["Helion 完成 Vela 可控核聚变脉冲电源规模测试", ["可控核聚变"]],
+  ];
+  for (const [title, publicTracks] of reviewedCases) {
+    const item = items.find((candidate) => candidate.title.includes(title));
+    assert.ok(item, `${title} is missing from the public event directory`);
+    assert.deepEqual(item.publicTracks, publicTracks, `${title} has stale public tracks`);
+  }
+});
+
+test("technology publication repairs incomplete metadata for verified events", () => {
+  const items = getChannelUpdateDirectory("technology").items;
+  const deepMind = items.find(
+    (item) => item.id === "user-x-googledeepmind-25b4f20ecfb62f41",
+  );
+  assert.ok(deepMind);
+  assert.equal(
+    deepMind.title,
+    "AlphaEvolve 用 AI 将矩阵乘法指数上界推进至 ω < 2.371177",
+  );
+  assert.equal(deepMind.label, "论文");
+  assert.deepEqual(deepMind.keywords, ["论文"]);
+  assert.match(deepMind.summary, /2\.371339.*2\.371177/u);
+  assert.ok(
+    deepMind.sources?.some(
+      (source) => source.href === "https://arxiv.org/abs/2608.16884",
+    ),
+  );
+
+  const helion = items.find(
+    (item) => item.id === "official-helion-7df714571d811ffc",
+  );
+  assert.ok(helion);
+  assert.match(helion.title, /Vela.*Tiny Merge/u);
+  assert.match(helion.summary, /1 Hz.*11 GJ/u);
+  assert.equal(helion.track, "新能源");
+  assert.deepEqual(helion.publicTracks, ["可控核聚变"]);
+});
+
+test("technology track filters use reviewed public tracks without erasing provenance", () => {
+  const claudeAgents = getChannelUpdateDirectory("technology").items.find(
+    (item) => item.title.includes("Claude agents launching a turf war"),
+  );
+  assert.ok(claudeAgents);
+
+  const options = collectChannelUpdateTracks([claudeAgents]);
+  assert.deepEqual(options, [
+    { keyword: "AI / AGI", count: 1 },
+    { keyword: "AI安全", count: 1 },
+  ]);
+  const filtered = filterAndSortChannelUpdates({
+    items: [claudeAgents],
+    keyword: ALL_CHANNEL_UPDATE_KEYWORDS,
+    track: "AI / AGI",
+    sortOrder: "newest",
+  });
+  assert.equal(filtered.length, 1);
+  assert.equal(filtered[0].track, "Web3");
+});
+
+test("technology directory excludes known identity-only and unrelated source collisions", () => {
+  const items = getChannelUpdateDirectory("technology").items;
+  const titles = items.map((item) => item.title);
+  assert.ok(
+    items.every((item) => !/^早报来啦[~～！!]*$/iu.test(item.summary.trim())),
+    "multi-headline morning digests remain in the technology event directory",
+  );
+  const unrelatedPatterns = [
+    /ground beef imports/iu,
+    /Bethenny Frankel/iu,
+    /deportation flight to Haiti/iu,
+    /Pastry chef Katrina Blancaflor/iu,
+    /玻利维亚女律师遭/u,
+    /墨西哥两名渔民船只失事/u,
+    /关久旸：战舰700/u,
+    /以扎实举措推进农业农村现代化/u,
+    /The Apex Institute Reveals What Hiring Managers/iu,
+    /HTX Research Examines U\.S\. AI Equities/iu,
+    /greatest privilege of my life/iu,
+    /IonQ Announces Record Second Quarter 2026 Revenues/iu,
+    /摩根大通：阿里云12%利润率/iu,
+    /Edge AI Daily 早报/iu,
+    /AI Model Leaderboards & Benchmarks/iu,
+    /^Investors$/iu,
+    /^DeepSeek 招聘$/iu,
+    /lifetime subscription/iu,
+    /Bundle Teaches You How To Use AI/iu,
+    /project management training for \$20/iu,
+    /AI models for life for \$54\.97/iu,
+    /ChatGPT, Claude & Gemini for just \$69\.97/iu,
+    /^睿小鉴 - AI导航 - 猫目$/iu,
+    /钛晨报/iu,
+    /^模型 & 价格 \| DeepSeek API Docs$/iu,
+    /^更新日志 \| DeepSeek API Docs$/iu,
+    /^Legal AI solutions for law firms \| Harvey$/iu,
+    /^IROS：国际智能机器人与系统会议$/iu,
+    /^Mobileye Drive™ \| Self-Driving System for Autonomous MaaS$/iu,
+    /^Technology \| Commonwealth Fusion Systems$/iu,
+    /^SPARC: Proving commercial fusion energy is possible \| Commonwealth Fusion Systems$/iu,
+    /^ARC: Putting fusion energy on the grid \| Commonwealth Fusion Systems$/iu,
+    /^Claude (?:Opus|Sonnet)$/iu,
+    /^2026中国先进封装企业20强（TOP 20）$/iu,
+    /this free browser extension made it ridiculously easy$/iu,
+    /^Anthropic：For more on how Claude ran this experiment and the full results, see our blog:/iu,
+    /^半导体器件的失效分析及可靠性测试$/iu,
+    /^Understanding Why Agentic AI Demands a Massive CPU Renaissance/iu,
+    /^晶圆厂转先进封装，值不值？$/iu,
+    /^Agentic AI in the enterprise: How to balance autonomy with constraints$/iu,
+    /^Getting the most out of GPT-5\.6: Sol, Terra, and Luna$/iu,
+    /^Google Pixel (?:Watch 5|11 Pro XL) Review:/iu,
+    /^Don’t use Gemini or ChatGPT for studying — use this free app instead$/iu,
+    /Leveling up OpenCode/iu,
+    /We built a benchmark, then caught it strangling/iu,
+    /cheapest model on my plan loses every benchmark/iu,
+    /Google Gemini Notebook Expands Into AI Mode Search/iu,
+    /Microsoft Expands MAI Playground/iu,
+    /An AI Agent Has Run This SaaS/iu,
+  ];
+  for (const pattern of unrelatedPatterns) {
+    assert.ok(
+      titles.every((title) => !pattern.test(title)),
+      `unrelated technology event remains public: ${pattern}`,
+    );
+  }
+
+  for (const retainedPattern of [
+    /MillworkSuite Launches AI Estimating/iu,
+    /AI data center builder Nscale/iu,
+    /朱雀三号/iu,
+    /AlphaEvolve 用 AI 将矩阵乘法指数上界推进至 ω < 2\.371177/iu,
+    /Helion 完成 Vela 可控核聚变脉冲电源规模测试并推进 Tiny Merge 集成/iu,
+  ]) {
+    assert.ok(
+      titles.some((title) => retainedPattern.test(title)),
+      `relevant long-tail technology event was removed: ${retainedPattern}`,
+    );
+  }
+});
+
 test("technology event aggregation keeps the strongest source and merges source evidence", () => {
   const sample = getChannelUpdateDirectory("technology").items.find((item) => item.track);
   assert.ok(sample);
@@ -262,6 +669,7 @@ test("technology filters combine track topic event region and evidence", () => {
       label: "技术突破",
       keywords: ["技术突破"],
       track: "机器人",
+      publicTracks: undefined,
       region: "中国",
       topicNames: ["具身智能"],
       topicSlugs: ["embodied-ai"],
@@ -273,6 +681,7 @@ test("technology filters combine track topic event region and evidence", () => {
       label: "融资",
       keywords: ["融资"],
       track: "机器人",
+      publicTracks: undefined,
       region: "美国",
       topicNames: ["人形机器人"],
       topicSlugs: ["humanoid-robots"],
@@ -284,6 +693,7 @@ test("technology filters combine track topic event region and evidence", () => {
       label: "技术突破",
       keywords: ["技术突破"],
       track: "半导体",
+      publicTracks: undefined,
       region: "中国",
       topicNames: ["硅光与光计算"],
       topicSlugs: ["silicon-photonics"],

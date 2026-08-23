@@ -4,6 +4,7 @@ import { technologyTopicsForText } from "../lib/technology-topic-matching";
 import { technologyTermMatchesText } from "../lib/technology-term-matching";
 import {
   technologyTopicDefinitions,
+  technologyTopicsForCoreEntity,
   technologyTopicsForEntity,
   technologyTopicsForTrack,
 } from "../lib/technology-topics";
@@ -51,6 +52,56 @@ test("technology entities are mapped from public evidence text instead of track 
   assert.ok(names.includes("大模型"));
   assert.ok(names.includes("多模态模型"));
   assert.ok(names.includes("AI 智能体"));
+});
+
+test("core technology taxonomy ignores adjacent terms in evidence timelines", () => {
+  const entityWithAdjacentTimeline = {
+    name: "Neutral subsystem",
+    aliases: [],
+    researchThesis: "",
+    analystNotes: [],
+    timeline: [
+      {
+        title: "Claude agents use a multimodal large language model",
+        summary: "The neighboring product also supports reasoning models.",
+      },
+    ],
+  };
+  const names = technologyTopicsForCoreEntity(entityWithAdjacentTimeline).map(
+    (topic) => topic.name,
+  );
+
+  assert.deepEqual(names, []);
+});
+
+test("core technology taxonomy keeps explicit agent and canonical model mappings", () => {
+  const topicsFor = (name: string) =>
+    technologyTopicsForCoreEntity({
+      name,
+      aliases: [],
+      researchThesis: "",
+      analystNotes: [],
+    }).map((topic) => topic.name);
+
+  for (const name of ["Claude Code", "Codex", "Agent OS"]) {
+    assert.ok(topicsFor(name).includes("AI 智能体"), `${name} lacks the agent topic`);
+  }
+  assert.ok(topicsFor("Claude Opus").includes("大模型"));
+  assert.equal(topicsFor("Claude Opus").includes("推理模型"), false);
+  assert.ok(topicsFor("Claude Sonnet").includes("大模型"));
+  assert.equal(topicsFor("Claude Sonnet").includes("推理模型"), false);
+  assert.ok(topicsFor("text watermarking").includes("大模型"));
+});
+
+test("core technology taxonomy accepts explicit analyst research but not capture prose", () => {
+  const names = technologyTopicsForCoreEntity({
+    name: "Auditable generation system",
+    aliases: [],
+    researchThesis: "大模型生成内容需要可验证的 text watermarking 能力。",
+    analystNotes: [],
+  }).map((topic) => topic.name);
+
+  assert.ok(names.includes("大模型"));
 });
 
 test("short ASCII technology terms require token boundaries", () => {

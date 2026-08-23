@@ -3,7 +3,7 @@ import { researchPeople } from "@/lib/people-data";
 import { publishedTrackingResearchEntities } from "@/lib/published-tracking-entity-research";
 import {
   technologyTopicDefinitions,
-  technologyTopicsForEntity,
+  technologyTopicsForCoreEntity,
 } from "@/lib/technology-topics";
 import { trackedSectors } from "@/lib/tracked-sectors";
 
@@ -20,6 +20,31 @@ const trackIdentityKeys = new Set(
       .map(normalizeResearchObjectName)
       .filter(Boolean),
   ),
+);
+
+export const CORE_TECHNOLOGY_EXCLUDED_NAMES = [
+  "AI agents",
+  "具身智能",
+  "智能体",
+  "世界模型",
+  "多模态",
+  "数据中心",
+  "DeepMind",
+  "HuggingFace",
+  "Project Panama",
+  "Flash",
+  "Harness",
+] as const;
+
+const excludedCoreTechnologyIdentityKeys = new Set(
+  CORE_TECHNOLOGY_EXCLUDED_NAMES.map(normalizeResearchObjectName),
+);
+
+const coreTechnologyPublicNames = new Map(
+  [
+    ["Opus", "Claude Opus"],
+    ["Sonnet", "Claude Sonnet"],
+  ].map(([source, publicName]) => [normalizeResearchObjectName(source), publicName]),
 );
 
 /**
@@ -40,28 +65,34 @@ function unique(values: Iterable<string>) {
  */
 export const coreTechnologyEntities = publishedTrackingResearchEntities
   .filter((entity) => entity.entityType === "topic")
-  .filter(
-    (entity) =>
-      ![entity.name, ...entity.aliases]
-        .map(normalizeResearchObjectName)
-        .some((key) => key && trackIdentityKeys.has(key)),
-  )
+  .filter((entity) => {
+    const identityKeys = [entity.name, ...entity.aliases]
+      .map(normalizeResearchObjectName)
+      .filter(Boolean);
+    return !identityKeys.some(
+      (key) =>
+        trackIdentityKeys.has(key) || excludedCoreTechnologyIdentityKeys.has(key),
+    );
+  })
   .map((entity) => ({
     entity,
-    topics: technologyTopicsForEntity(entity),
+    topics: technologyTopicsForCoreEntity(entity),
     evidenceCount: entity.captureCount + entity.articleCount,
   }))
   .filter(({ entity, topics, evidenceCount }) =>
     topics.length > 0 &&
     (
       evidenceCount >= 2 ||
-      entity.captureCount > 0 ||
       entity.priority > 0 ||
+      entity.researchThesis.trim().length > 0 ||
       entity.analystNotes.length > 0
     ),
   )
   .map(({ entity, topics }) => ({
     ...entity,
+    name:
+      coreTechnologyPublicNames.get(normalizeResearchObjectName(entity.name)) ??
+      entity.name,
     // Do not expose inherited crawler tracks on the curated technology layer.
     // The topic taxonomy is the canonical source for a technology's parents.
     trackNames: unique(topics.flatMap((topic) => topic.trackNames)),
