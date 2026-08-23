@@ -1,7 +1,79 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-22",
+  "updatedAt": "2026-08-23",
   "assignments": [
+    {
+      "id": "official-helion-7df714571d811ffc",
+      "expectedObservedTrack": "新能源",
+      "canonicalTracks": ["可控核聚变"],
+      "mode": "replace",
+      "reviewedAt": "2026-08-23",
+      "reason": "事件披露 Vela 脉冲电源规模测试与 Tiny Merge 聚变试验台集成，研究对象是可控核聚变工程而非泛新能源。",
+      "evidence": ["Vela 以 1 Hz 运行并累计传输超过 11 GJ 能量", "Tiny Merge 用于研究等离子体行为、合并动力学和下一代磁体设计"]
+    },
+    {
+      "id": "professional-media-techradar-6c418df3c6e6cf11",
+      "expectedObservedTrack": "Web3",
+      "canonicalTracks": ["AI / AGI", "AI安全"],
+      "mode": "replace",
+      "reviewedAt": "2026-08-23",
+      "reason": "事件主体是 Claude 智能体之间的安全冲突与恶意行为，不含 Web3 语义，应在分析层归入 AI / AGI 与 AI 安全。",
+      "evidence": ["标题直接出现 Claude agents", "命中大模型主题且标题、摘要与信源均无 Web3 锚点"]
+    },
+    {
+      "id": "professional-media-itpro-0fefccec63002c6a",
+      "expectedObservedTrack": "半导体",
+      "canonicalTracks": ["AI / AGI"],
+      "mode": "replace",
+      "reviewedAt": "2026-08-23",
+      "reason": "事件主体是 Nebius 在 AI Growth Zone 部署训练与推理基础设施，未讨论半导体器件或制造。",
+      "evidence": ["标题直接出现 AI Growth Zone deployment", "摘要聚焦 AI training、inference 与 enterprise AI workloads"]
+    },
+    {
+      "id": "leiphone-90c4d05f5602ba65",
+      "expectedObservedTrack": "机器人",
+      "canonicalTracks": ["AI / AGI"],
+      "mode": "replace",
+      "reviewedAt": "2026-08-23",
+      "reason": "事件是 SenseNova U1.5 Lite 多模态大模型正式发布，不含机器人产品或具身系统语义。",
+      "evidence": ["标题与摘要明确为多模态大模型发布", "模型面向视觉生成和图像编辑"]
+    },
+    {
+      "id": "professional-media-ars-technica-a9e7d80754e6f186",
+      "expectedObservedTrack": "Web3",
+      "canonicalTracks": ["AI / AGI", "AI安全"],
+      "mode": "replace",
+      "reviewedAt": "2026-08-23",
+      "reason": "事件讨论 Grok 在恶意指令下的数据外泄与 LLM 防护绕过，不含 Web3 技术语义。",
+      "evidence": ["标题直接出现 Grok exfiltrates user data", "摘要明确讨论 LLM safety guardrail"]
+    },
+    {
+      "id": "user-source-source-manual-a729f43ed853bbb2-1fef709088455404",
+      "expectedObservedTrack": "新能源",
+      "canonicalTracks": ["AI / AGI", "AI安全"],
+      "mode": "replace",
+      "reviewedAt": "2026-08-23",
+      "reason": "事件是 Microsoft Copilot 一键漏洞修复与 LLM 指令混淆问题，不含新能源语义。",
+      "evidence": ["标题直接出现 Copilot vulnerability", "摘要讨论 LLM 指令注入与 guardrail 绕过"]
+    },
+    {
+      "id": "user-source-source-zdnet-407c7af6f0899076",
+      "expectedObservedTrack": "商业航天",
+      "canonicalTracks": ["AI / AGI", "AI安全"],
+      "mode": "replace",
+      "reviewedAt": "2026-08-23",
+      "reason": "事件讨论 Gemini 默认访问 Google Workspace 企业数据的隐私与管理问题，不含商业航天语义。",
+      "evidence": ["标题直接出现 Google's AI 与 business data", "摘要聚焦 Gemini 对 Gmail、Docs、Calendar 和 Chat 的访问"]
+    },
+    {
+      "id": "user-source-source-semiconductor-technology-sohu-0158e94d7e073d01",
+      "expectedObservedTrack": "新材料",
+      "canonicalTracks": ["半导体"],
+      "mode": "augment",
+      "reviewedAt": "2026-08-23",
+      "reason": "事件讨论晶圆厂工艺人员转向先进封装，既涉及材料与应力，也直接属于半导体制造和封装。",
+      "evidence": ["标题直接出现晶圆厂与先进封装", "摘要包含光刻、薄膜、刻蚀、CMP、键合等工艺"]
+    },
     {
       "id": "user-source-source-tom-s-hardware-85474b8c2f51dced",
       "expectedObservedTrack": "机器人",
@@ -10,6 +82,69 @@
       "reviewedAt": "2026-08-22",
       "reason": "事件主体是 DeepSeek 编程模型/API token 的使用与商业运营，不存在机器人技术或产业语义。",
       "evidence": ["标题直接出现 DeepSeek coding tokens", "命中 AI 智能体与大模型主题"]
+    },
+    {
+      "id": "user-source-source-manual-9218cafd750da2e9-1336f626f78c2a1b",
+      "expectedObservedTrack": "机器人",
+      "canonicalTracks": ["AI / AGI"],
+      "mode": "replace",
+      "reviewedAt": "2026-08-23",
+      "reason": "事件主体是 DeepSeek API 的峰谷时段定价调整，属于大模型服务与商业化，不含机器人技术或产业语义。",
+      "evidence": ["标题直接出现 DeepSeek API pricing", "命中大模型主题且标题、摘要均无机器人锚点"]
+    },
+    {
+      "id": "user-source-source-android-authority-2a4d3ece0efd4fc8",
+      "expectedObservedTrack": "新能源",
+      "canonicalTracks": ["AI智能终端", "AI / AGI"],
+      "mode": "replace",
+      "reviewedAt": "2026-08-23",
+      "reason": "事件讨论 Pixel 手机使用 Gemini Nano 生成电池使用摘要，核心是端侧 AI 功能，不是新能源技术进展。",
+      "evidence": ["标题直接出现 Pixels 与 AI-powered Battery Usage Summaries", "摘要明确为 Gemini Nano 在手机本地处理使用模式"]
+    },
+    {
+      "id": "user-source-source-track-13f64em-4cccf9ca06142500",
+      "expectedObservedTrack": "AI / AGI",
+      "canonicalTracks": ["机器人", "智能交通"],
+      "mode": "replace",
+      "reviewedAt": "2026-08-23",
+      "reason": "事件是小马智行财报电话会，研究主体为 Robotaxi 与自动驾驶公司经营进展，不属于通用 AI / AGI。",
+      "evidence": ["标题直接出现 Pony AI earnings conference call", "公司主营 Robotaxi 与自动驾驶出行服务"]
+    },
+    {
+      "id": "official-mobileye-2499d6166e00c9de",
+      "expectedObservedTrack": "半导体",
+      "canonicalTracks": ["机器人", "智能交通"],
+      "mode": "replace",
+      "reviewedAt": "2026-08-23",
+      "reason": "事件是 Mobileye 建立垂直一体化 Robotaxi 业务，研究对象是自动驾驶系统与智能出行，不是半导体器件进展。",
+      "evidence": ["标题直接出现 vertically integrated robotaxi business", "摘要明确扩展至自动驾驶出行运营"]
+    },
+    {
+      "id": "official-mobileye-9bd9dce1719f03a1",
+      "expectedObservedTrack": "半导体",
+      "canonicalTracks": ["机器人", "智能交通"],
+      "mode": "replace",
+      "reviewedAt": "2026-08-23",
+      "reason": "事件是 Mobileye 收购 Mentee Robotics 以扩展自动驾驶与人形机器人能力，核心属于机器人和智能交通。",
+      "evidence": ["标题直接出现 acquire Mentee Robotics", "摘要同时指向 autonomous vehicles 与 humanoid robots"]
+    },
+    {
+      "id": "user-source-source-track-1ihs8gk-79857b8f07bb66af",
+      "expectedObservedTrack": "半导体",
+      "canonicalTracks": ["新材料"],
+      "mode": "replace",
+      "reviewedAt": "2026-08-23",
+      "reason": "事件是多孔材料孔道独立调控的科研突破，研究对象为材料设计与表征，不是半导体制造事件。",
+      "evidence": ["标题与摘要聚焦孔道独立调控和 Nature Synthesis 成果", "正文明确为 DW-HOFs 新材料与 AI4S 材料研发"]
+    },
+    {
+      "id": "user-source-source-manual-0f2ec1b400afc6c5-0d6ce12ec333c96b",
+      "expectedObservedTrack": "机器人",
+      "canonicalTracks": ["AI智能终端", "AI / AGI"],
+      "mode": "replace",
+      "reviewedAt": "2026-08-23",
+      "reason": "事件主体是带云台相机和系统级 AI Agent 的 Honor 智能手机，核心是 AI 终端而非独立机器人系统。",
+      "evidence": ["标题直接出现 Robot Phone、Gimbal Camera 与 AI Agent", "摘要明确产品形态为 smartphone"]
     },
     {
       "id": "user-source-source-techradar-c980969805d629ff",

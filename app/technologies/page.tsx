@@ -6,7 +6,7 @@ import { coreTechnologyEntities } from "@/lib/core-research-objects";
 import { buildTechnologyAnalysisSnapshot, type MomentumWindowComparison } from "@/lib/technology-momentum";
 import {
   technologyTopicDefinitions,
-  technologyTopicsForEntity,
+  technologyTopicsForCoreEntity,
   technologyTopicsForTrack,
 } from "@/lib/technology-topics";
 import { trackedSectors } from "@/lib/tracked-sectors";
@@ -54,7 +54,7 @@ export default function TechnologyResearchPage() {
   const entityTopicMap = new Map(
     coreTechnologyEntities.map((entity) => [
       entity.id,
-      technologyTopicsForEntity(entity),
+      technologyTopicsForCoreEntity(entity),
     ]),
   );
   const topicCards = technologyTopicDefinitions.map((topic) => ({
@@ -218,7 +218,7 @@ export default function TechnologyResearchPage() {
             <div>
               <span className={styles.layerIndex}>L3 / TECHNOLOGY ENTITIES</span>
               <h3>核心技术对象</h3>
-              <p>只收录已归入重点技术主题，且具有至少两条公开证据或明确人工研究记录的具体技术、模型、技术系统与关键能力；单证据候选和待归类对象继续保留在溯源库，不进入核心目录；详情保留摘要与可追溯时间线。</p>
+              <p>只收录已归入重点技术主题，且具有至少两条公开证据或明确人工研究记录（研究优先级、研究论点或分析师笔记）的具体技术、模型、技术系统与关键能力；主题归类只读取对象身份与明确研究字段，不由详情时间线中的旁带词自动赋值；单证据候选和待归类对象继续保留在溯源库，不进入核心目录；详情保留摘要与可追溯时间线。</p>
             </div>
             <span className={styles.layerCount}>{coreTechnologyEntities.length} 个对象</span>
           </div>
@@ -255,7 +255,7 @@ export default function TechnologyResearchPage() {
             </div>
           ) : (
             <div className={styles.emptyNote}>
-              暂无达到公开门槛的具体技术对象；对象会在出现可追溯证据、人工发现或研究记录后自动进入目录。
+              暂无达到公开门槛的具体技术对象；对象会在出现至少两条可追溯证据或明确人工研究记录后自动进入目录。
             </div>
           )}
         </section>

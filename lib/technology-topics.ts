@@ -29,6 +29,11 @@ type TechnologyEntityLike = Pick<
   | "timeline"
 >;
 
+type CoreTechnologyEntityLike = Pick<
+  TrackingResearchEntity,
+  "name" | "aliases" | "researchThesis" | "analystNotes"
+>;
+
 export const technologyTopicDefinitions: TechnologyTopicDefinition[] = [
   {
     slug: "ai-agent",
@@ -336,5 +341,51 @@ export function technologyTopicsForEntity(entity: TechnologyEntityLike) {
 
   return technologyTopicDefinitions.filter((topic) =>
     topic.matchTerms.some((term) => technologyTermMatchesText(corpus, term)),
+  );
+}
+
+const coreTechnologyTopicOverrides = new Map<string, readonly string[]>(
+  [
+    ["Claude Code", ["ai-agent", "large-models"]],
+    ["Codex", ["ai-agent", "large-models"]],
+    ["OpenAI Codex", ["ai-agent", "large-models"]],
+    ["Agent OS", ["ai-agent"]],
+    ["Opus", ["large-models"]],
+    ["Claude Opus", ["large-models"]],
+    ["Sonnet", ["large-models"]],
+    ["Claude Sonnet", ["large-models"]],
+    ["text watermarking", ["large-models"]],
+  ].map(([name, topicSlugs]) => [
+    normalizeTechnologyTerm(name as string),
+    topicSlugs as readonly string[],
+  ]),
+);
+
+/**
+ * Core-directory taxonomy is intentionally identity-led. Evidence timelines
+ * often mention adjacent technologies, companies, or use cases; those mentions
+ * support the detail page but must not silently change an object's public topic
+ * or parent track. Explicit analyst research remains eligible taxonomy input.
+ */
+export function technologyTopicsForCoreEntity(entity: CoreTechnologyEntityLike) {
+  const identityKeys = [entity.name, ...entity.aliases]
+    .map(normalizeTechnologyTerm)
+    .filter(Boolean);
+  const overrideSlugs = new Set(
+    identityKeys.flatMap((key) => [...(coreTechnologyTopicOverrides.get(key) ?? [])]),
+  );
+  const curatedCorpus = [
+    entity.name,
+    ...entity.aliases,
+    entity.researchThesis,
+    ...entity.analystNotes.map((note) => note.body),
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return technologyTopicDefinitions.filter(
+    (topic) =>
+      overrideSlugs.has(topic.slug) ||
+      topic.matchTerms.some((term) => technologyTermMatchesText(curatedCorpus, term)),
   );
 }

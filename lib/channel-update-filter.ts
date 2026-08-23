@@ -94,7 +94,15 @@ export function collectChannelUpdateClassifications(
 export function collectChannelUpdateTracks(
   items: ChannelUpdateItem[],
 ): ChannelUpdateKeywordOption[] {
-  return collectOptions(items.map((item) => (item.track ? [item.track] : [])));
+  return collectOptions(
+    items.map((item) =>
+      item.publicTracks?.length
+        ? item.publicTracks
+        : item.track
+          ? [item.track]
+          : [],
+    ),
+  );
 }
 
 export function collectChannelUpdateTopics(
@@ -161,7 +169,13 @@ export function filterAndSortChannelUpdates({
       );
     const trackMatches =
       track === ALL_CHANNEL_UPDATE_TRACKS ||
-      (item.track ? normalizeKeyword(item.track) === normalizedTrack : false);
+      (item.publicTracks?.length
+        ? item.publicTracks.some(
+            (itemTrack) => normalizeKeyword(itemTrack) === normalizedTrack,
+          )
+        : item.track
+          ? normalizeKeyword(item.track) === normalizedTrack
+          : false);
     const topicMatches =
       topic === ALL_CHANNEL_UPDATE_TOPICS ||
       (item.topicNames ?? []).some(
