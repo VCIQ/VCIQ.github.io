@@ -191,6 +191,8 @@ function normalizedSources(outcomes: UnknownRecord): PersonResearchSourceRow[] {
   for (const [, rawMatrix] of entries(outcomes.taskSourceMatrix)) {
     for (const [sourceType, raw] of entries(rawMatrix)) {
       const stat = record(raw);
+      const attempts = integer(stat.attempts, 0, 500);
+      const yieldAttempts = Math.min(attempts, integer(stat.yieldAttempts, 0, 500));
       const row = aggregate.get(sourceType) ?? {
         sourceType,
         label: sourceLabel(sourceType),
@@ -200,8 +202,8 @@ function normalizedSources(outcomes: UnknownRecord): PersonResearchSourceRow[] {
         yieldRate: 0,
         taskCoverage: 0,
       };
-      row.taskAttempts += integer(stat.attempts, 0, 500);
-      row.yieldAttempts += integer(stat.yieldAttempts, 0, 500);
+      row.taskAttempts += attempts;
+      row.yieldAttempts += yieldAttempts;
       row.candidates += integer(stat.candidates, 0, 10_000);
       row.taskCoverage += 1;
       aggregate.set(sourceType, row);
@@ -346,7 +348,7 @@ export function buildPersonResearchStrategyView(
     : [];
   return {
     generatedAt: text(outcomes.generatedAt, 80) || queue.generatedAt,
-    attemptCount: attempts.length,
+    attemptCount: Math.min(500, attempts.length),
     observedStrategyCount: strategies.length,
     observedSourceTypeCount: sources.length,
     measuredCostStrategyCount: strategies.filter((row) => row.costSampleSize > 0).length,
