@@ -49,3 +49,9 @@ test("company, person and track relations expose unique internal research links"
     assert.ok(relations.companies.every((item) => item.href.startsWith("/companies/")));
   }
 });
+
+test("IonQ evidence does not turn a person's surname into the Kimi model brand", () => {
+  const topics = getCompanyResearchRelations("ionq").topics.map((item) => item.name);
+  assert.ok(topics.includes("量子计算"));
+  assert.equal(topics.includes("大模型"), false);
+});
