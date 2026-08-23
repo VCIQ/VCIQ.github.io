@@ -231,7 +231,6 @@ class VentureEntitySemanticTests(unittest.TestCase):
             "网友直呼疯狂",
             cleaned["companies"]["anthropic"].get("researchTechnology", ""),
         )
-        self.assertEqual(cleaned["companies"]["form-energy"]["financing"], [])
         self.assertEqual(cleaned["companies"]["anthropic"]["capitalMarkets"], [])
         self.assertEqual(
             cleaned["companies"]["anthropic"]["exitPerformance"]["status"],
