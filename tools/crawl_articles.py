@@ -259,11 +259,23 @@ COMPANY_ALIASES = (
 
 
 class ArticleHTMLParser(HTMLParser):
+    DATE_CONTAINER_NAMES = {
+        "article-date-info",
+        "article-date",
+        "post-date",
+        "publish-date",
+        "published-date",
+    }
+
     def __init__(self) -> None:
         super().__init__(convert_charrefs=True)
         self.meta: dict[str, str] = {}
         self.links: list[str] = []
         self.time_values: list[str] = []
+        self.date_values: list[str] = []
+        self._date_capture_tag: str | None = None
+        self._date_capture_depth = 0
+        self._date_current: list[str] = []
         self._capture: str | None = None
         self._current: list[str] = []
         self._texts: dict[str, list[str]] = {
@@ -279,6 +291,20 @@ class ArticleHTMLParser(HTMLParser):
     ) -> None:
         tag = tag.lower()
         values = {key.lower(): value or "" for key, value in attrs}
+        if self._date_capture_tag:
+            if tag == self._date_capture_tag:
+                self._date_capture_depth += 1
+        else:
+            date_markers = {
+                token
+                for value in (values.get("class", ""), values.get("id", ""))
+                for token in re.split(r"\s+", value.casefold())
+                if token
+            }
+            if date_markers & self.DATE_CONTAINER_NAMES:
+                self._date_capture_tag = tag
+                self._date_capture_depth = 1
+                self._date_current = []
         if tag == "meta":
             key = (values.get("property") or values.get("name") or "").lower()
             content = values.get("content", "").strip()
@@ -296,6 +322,15 @@ class ArticleHTMLParser(HTMLParser):
             self._current = []
 
     def handle_endtag(self, tag: str) -> None:
+        tag = tag.lower()
+        if tag == self._date_capture_tag:
+            self._date_capture_depth -= 1
+            if self._date_capture_depth == 0:
+                text = clean_text(" ".join(self._date_current))
+                if text:
+                    self.date_values.append(text)
+                self._date_capture_tag = None
+                self._date_current = []
         if tag.lower() == self._capture:
             text = clean_text(" ".join(self._current))
             if text:
@@ -304,6 +339,8 @@ class ArticleHTMLParser(HTMLParser):
             self._current = []
 
     def handle_data(self, data: str) -> None:
+        if self._date_capture_tag:
+            self._date_current.append(data)
         if self._capture:
             self._current.append(data)
 
@@ -673,7 +710,6 @@ def _published_value(parser: ArticleHTMLParser, body: str) -> str | None:
         parser.meta.get("publishdate"),
         parser.time_values[0] if parser.time_values else None,
         parser.text("time"),
-        parser.text("h3"),
     )
     for candidate in candidates:
         if normalize_date(candidate):
@@ -686,39 +722,47 @@ def _published_value(parser: ArticleHTMLParser, body: str) -> str | None:
         for match in re.finditer(pattern, body, flags=re.IGNORECASE):
             if normalize_date(match.group(1)):
                 return match.group(1)
-    # IR templates sometimes omit publication metadata while including both a
-    # future event date in the headline and the actual release date elsewhere.
-    # Prefer the latest valid ISO date that is not materially in the future.
-    valid_iso_dates = [
+    for candidate in parser.date_values:
+        if normalize_date(candidate):
+            return candidate
+
+    # A first heading is used as a date on a small number of legacy newsroom
+    # templates, but it is weaker evidence than an explicitly named date
+    # container.
+    if normalize_date(parser.text("h3")):
+        return parser.text("h3")
+
+    # Full-page text can contain event dates, replay deadlines and future
+    # meeting dates. Only use it when every recognizable date agrees; choosing
+    # the latest date silently turns those unrelated dates into publication
+    # timestamps.
+    page_text = strip_html(body)
+    fallback_dates = {
         normalized
         for raw in re.findall(r"\d{4}-\d{2}-\d{2}", body)
         if (normalized := normalize_date(raw))
-    ]
-    if valid_iso_dates:
-        return max(valid_iso_dates)
-    localized_dates = [
+    }
+    fallback_dates.update(
         normalized
         for match in re.finditer(
             r"(?<!\d)\d{4}\s*(?:年|[/.])\s*\d{1,2}"
             r"\s*(?:月|[/.])\s*\d{1,2}\s*日?",
-            strip_html(body),
+            page_text,
         )
         if (normalized := normalize_date(match.group(0)))
-    ]
-    if localized_dates:
-        return localized_dates[0]
+    )
     named_dates = re.findall(
         r"(?:January|February|March|April|May|June|July|August|September|"
         r"October|November|December)\s+\d{1,2},?\s+\d{4}",
-        strip_html(body),
+        page_text,
         flags=re.IGNORECASE,
     )
-    valid_named_dates = [
+    fallback_dates.update(
         normalized
         for raw in named_dates
         if (normalized := normalize_date(raw))
-    ]
-    return max(valid_named_dates) if valid_named_dates else None
+    )
+    return next(iter(fallback_dates)) if len(fallback_dates) == 1 else None
 
 
 def _source(

@@ -12,6 +12,7 @@ from tools.crawl_articles import (
     ArticleHTMLParser,
     NewsSource,
     _latest_metric,
+    _published_value,
     discover_news_urls,
     evaluate_quality,
     infer_company,
@@ -399,6 +400,62 @@ class CrawlerTests(unittest.TestCase):
         assert parsed is not None
         self.assertEqual(parsed["publishedAt"], "2026-07-23")
         self.assertEqual(parsed["type"], "产品发布")
+
+    def test_explicit_article_date_wins_over_later_event_dates(self) -> None:
+        source = NewsSource(
+            "ionq",
+            "IonQ",
+            "https://ionq.com/news",
+            "IonQ",
+            "ionq",
+            "美国",
+            "量子计算",
+            ("/news/",),
+        )
+        pages = (
+            (
+                "https://ionq.com/news/second-quarter-results-announcement",
+                "IonQ to Announce Second Quarter 2026 Financial Results",
+                '<div class="article-date-info"><span>July 24, 2026</span></div>',
+                "The call is August 5, 2026 and the replay is available until August 19, 2026.",
+                "2026-07-24",
+            ),
+            (
+                "https://ionq.com/news/second-quarter-results",
+                "IonQ Announces Second Quarter 2026 Financial Results",
+                '<div id="published-date"><span>August 5, 2026</span></div>',
+                "The replay remains available until August 19, 2026.",
+                "2026-08-05",
+            ),
+        )
+        for url, title, date_markup, copy, expected in pages:
+            with self.subTest(title=title):
+                page = f"""
+                <html><head>
+                  <meta property="og:title" content="{title}">
+                  <meta property="og:description" content="IonQ reports a company update.">
+                </head><body>
+                  <h1>{title}</h1>
+                  {date_markup}
+                  <p>{copy}</p>
+                </body></html>
+                """
+                parsed = parse_news_article(source, url, page)
+                self.assertIsNotNone(parsed)
+                assert parsed is not None
+                self.assertEqual(parsed["publishedAt"], expected)
+
+    def test_full_page_date_fallback_rejects_ambiguous_dates(self) -> None:
+        parser = ArticleHTMLParser()
+        body = """
+        <html><body>
+          <h1>Example schedules its results call</h1>
+          <p>Results arrive August 5, 2026.</p>
+          <p>The replay remains available until August 19, 2026.</p>
+        </body></html>
+        """
+        parser.feed(body)
+        self.assertIsNone(_published_value(parser, body))
 
     def test_official_candidates_keep_index_order_when_scores_tie(self) -> None:
         listing = (
