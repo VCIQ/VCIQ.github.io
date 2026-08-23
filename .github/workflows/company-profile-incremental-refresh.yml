@@ -40,8 +40,10 @@ jobs:
             tools/company_profile_refresh_queue.py \
             tools/ensure_venture_profile_coverage.py \
             tools/normalize_venture_publication.py \
+            tools/guard_venture_cross_field_noise.py \
             tools/stabilize_venture_research_evidence.py \
             tools/stabilize_venture_publication_pipeline.py \
+            tools/stabilize_venture_guarded_publication.py \
             tools/crawl_venture_profiles.py \
             tools/enrich_venture_profiles.py
           python -m unittest \
@@ -49,6 +51,8 @@ jobs:
             tests.test_ensure_venture_profile_coverage \
             tests.test_stabilize_venture_research_evidence \
             tests.test_stabilize_venture_publication_pipeline \
+            tests.test_stabilize_venture_guarded_publication \
+            tests.test_venture_cross_field_guard \
             tests.test_venture_profile_extraction \
             tests.test_venture_profile_enrichment \
             tests.test_venture_profile_postprocess \
@@ -128,17 +132,13 @@ jobs:
               --max-pages 6
           done
 
-      - name: Reconcile all publication gates to one shared fixed point
+      - name: Reconcile all publication gates and cross-field guard to one fixed point
         if: steps.queue.outputs.count != '0' || steps.coverage.outputs.changed == 'true'
         run: |
           python tools/enrich_venture_profiles.py
-          python tools/stabilize_venture_publication_pipeline.py
-          python tools/stabilize_venture_publication_pipeline.py --check
-          python tools/stabilize_venture_research_evidence.py --check
-          python tools/normalize_venture_publication.py --check
-          python tools/stabilize_venture_profiles.py --check
-          python tools/finalize_venture_profiles.py --check
-          python tools/enforce_venture_entity_semantics.py --check
+          python tools/stabilize_venture_guarded_publication.py
+          python tools/stabilize_venture_guarded_publication.py --check
+          python tools/guard_venture_cross_field_noise.py --check
           python tools/crawl_venture_profiles.py --validate-only
           python tools/enrich_venture_profiles.py --validate-only
 
@@ -158,12 +158,8 @@ jobs:
         run: |
           python tools/company_profile_refresh_queue.py --check
           python tools/ensure_venture_profile_coverage.py --check
-          python tools/stabilize_venture_publication_pipeline.py --check
-          python tools/stabilize_venture_research_evidence.py --check
-          python tools/normalize_venture_publication.py --check
-          python tools/stabilize_venture_profiles.py --check
-          python tools/finalize_venture_profiles.py --check
-          python tools/enforce_venture_entity_semantics.py --check
+          python tools/stabilize_venture_guarded_publication.py --check
+          python tools/guard_venture_cross_field_noise.py --check
           python tools/crawl_venture_profiles.py --validate-only
           python tools/enrich_venture_profiles.py --validate-only
 
@@ -185,12 +181,8 @@ jobs:
             git pull --rebase -X theirs origin main
             python tools/company_profile_refresh_queue.py --check
             python tools/ensure_venture_profile_coverage.py --check
-            python tools/stabilize_venture_publication_pipeline.py --check
-            python tools/stabilize_venture_research_evidence.py --check
-            python tools/normalize_venture_publication.py --check
-            python tools/stabilize_venture_profiles.py --check
-            python tools/finalize_venture_profiles.py --check
-            python tools/enforce_venture_entity_semantics.py --check
+            python tools/stabilize_venture_guarded_publication.py --check
+            python tools/guard_venture_cross_field_noise.py --check
             python tools/crawl_venture_profiles.py --validate-only
             python tools/enrich_venture_profiles.py --validate-only
             if git push origin HEAD:main; then
