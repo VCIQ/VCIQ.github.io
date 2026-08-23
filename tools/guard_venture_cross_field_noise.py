@@ -7,6 +7,7 @@ web discovery but are unsafe to render as structured facts:
 * role/business labels parsed as people;
 * executive/management headings parsed as products;
 * executive biographies parsed as company financing because they mention money;
+* financing/M&A event copy leaking into the core-technology narrative;
 * company summaries truncated after honorific abbreviations such as ``Dr.``.
 
 The transform is deterministic and information-reducing.  It does not invent
@@ -188,6 +189,35 @@ def _sanitize_financing(values: Any, aliases: Sequence[str]) -> list[dict[str, A
     return result
 
 
+def _strip_known_capital_event_copy(value: Any, events: Sequence[dict[str, Any]]) -> str:
+    """Remove exact capital-event prose accidentally reused as technology copy.
+
+    The guard intentionally uses only already-structured event titles/summaries.
+    It does not classify arbitrary technology prose by finance keywords, which
+    avoids deleting legitimate technical descriptions that happen to mention an
+    acquisition or regulatory process.
+    """
+    text = clean_text(value, 2400)
+    if not text:
+        return ""
+    for event in events:
+        if not isinstance(event, dict):
+            continue
+        for field, minimum in (("summary", 24), ("title", 32)):
+            candidate = clean_text(event.get(field), 1200)
+            if len(candidate) < minimum:
+                continue
+            text = re.sub(re.escape(candidate), " ", text, flags=re.IGNORECASE)
+    text = re.sub(r"\s+", " ", text)
+    text = re.sub(r"(?:[。.;；]\s*){2,}", "。", text)
+    return text.strip(" \t\r\n.;；。")
+
+
+def _technology_fallback(products: Sequence[str]) -> str:
+    values = [clean_text(item, 180) for item in products if clean_text(item, 180)]
+    return f"核心技术与产品包括{'、'.join(values[:8])}。" if values else ""
+
+
 def _capital_summary(events: Sequence[dict[str, Any]]) -> dict[str, Any]:
     latest = sorted(
         events,
@@ -250,6 +280,7 @@ def guard_snapshot(
         "removedTeamMembers": 0,
         "removedProducts": 0,
         "removedFinancing": 0,
+        "removedTechnologyCapitalCopy": 0,
         "repairedBackgrounds": 0,
     }
 
@@ -290,6 +321,15 @@ def guard_snapshot(
         )
 
         financing_before = profile.get("financing", [])
+        capital_markets = profile.get("capitalMarkets", [])
+        cross_field_events = [
+            row
+            for row in [
+                *(financing_before if isinstance(financing_before, list) else []),
+                *(capital_markets if isinstance(capital_markets, list) else []),
+            ]
+            if isinstance(row, dict)
+        ]
         profile["financing"] = _sanitize_financing(financing_before, aliases)
         diagnostics["removedFinancing"] += max(
             0,
@@ -297,6 +337,16 @@ def guard_snapshot(
             - len(profile["financing"]),
         )
         profile["capitalSummary"] = _capital_summary(profile["financing"])
+
+        for field in ("technology", "researchTechnology"):
+            original = clean_text(profile.get(field), 2400)
+            sanitized = _strip_known_capital_event_copy(original, cross_field_events)
+            if original and sanitized != original:
+                diagnostics["removedTechnologyCapitalCopy"] += 1
+            if not sanitized:
+                sanitized = _technology_fallback(profile["products"])
+            if sanitized or field in profile:
+                profile[field] = sanitized
 
         background = clean_text(profile.get("background"), 1000)
         if HONORIFIC_TRUNCATION_RE.search(background) and spec:
