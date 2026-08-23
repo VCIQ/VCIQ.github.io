@@ -185,6 +185,38 @@ class VentureProfileStabilizerTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "cycle"):
                 stabilizer.stabilize_snapshot(payload, "catalog", max_passes=4)
 
+    def test_cycle_error_reports_changed_paths(self) -> None:
+        payload = {"state": "a"}
+
+        def finalize(value, _catalog):
+            result = copy.deepcopy(value)
+            result["state"] = "b"
+            return result, {}
+
+        def enforce(value, _catalog):
+            result = copy.deepcopy(value)
+            result["state"] = "a"
+            return result, {}
+
+        with patch.object(stabilizer, "finalize_snapshot", side_effect=finalize), patch.object(
+            stabilizer, "enforce_snapshot", side_effect=enforce
+        ):
+            with self.assertRaises(RuntimeError) as caught:
+                stabilizer.stabilize_snapshot(payload, "catalog", max_passes=4)
+
+        message = str(caught.exception)
+        prefix = "venture terminal gates entered a cycle before reaching a shared fixed point: "
+        self.assertTrue(message.startswith(prefix))
+        details = json.loads(message[len(prefix):])
+        self.assertFalse(details["structuralStable"])
+        self.assertTrue(details["semanticStable"])
+        self.assertEqual(details["finalizeStepDiff"][0]["path"], "$.state")
+        self.assertEqual(details["finalizeStepDiff"][0]["before"], '"a"')
+        self.assertEqual(details["finalizeStepDiff"][0]["after"], '"b"')
+        self.assertEqual(details["semanticStepDiff"][0]["path"], "$.state")
+        self.assertEqual(details["semanticStepDiff"][0]["before"], '"b"')
+        self.assertEqual(details["semanticStepDiff"][0]["after"], '"a"')
+
     def test_rejects_non_positive_pass_limit(self) -> None:
         with self.assertRaisesRegex(ValueError, "positive"):
             stabilizer.stabilize_snapshot({}, "catalog", max_passes=0)
