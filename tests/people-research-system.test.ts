@@ -244,4 +244,116 @@ test("latest change skips clickbait when a nearby research-relevant event exists
 
   const snapshot = getPersonResearchSnapshot(person);
   assert.equal(snapshot.latestChange?.url, "https://example.com/research");
+  assert.equal(snapshot.latestImplications.at(-1)?.target, "Example Labs Research");
+});
+
+test("latest change rejects social association even when it names the person and organization", () => {
+  const person = makePerson({
+    name: "Sam Altman",
+    englishName: "Sam Altman",
+    aliases: ["Sam Altman"],
+    organizations: ["OpenAI"],
+    materials: [
+      {
+        title: "Celebrity is allegedly throwing a dinner for OpenAI CEO Sam Altman",
+        date: "2026-08-22",
+        type: "article",
+        url: "https://example.com/social",
+        source: "Lifestyle Media",
+      },
+      {
+        title: "OpenAI 发布新的模型能力评估",
+        date: "2026-08-20",
+        type: "public_document",
+        url: "https://example.com/model-eval",
+        source: "OpenAI 官方",
+      },
+    ],
+  });
+
+  const snapshot = getPersonResearchSnapshot(person);
+  assert.equal(snapshot.latestChange?.url, "https://example.com/model-eval");
+});
+
+test("latest change does not promote a generic personal post into a research change", () => {
+  const person = makePerson({
+    materials: [
+      {
+        title: "The greatest privilege is working with incredible people",
+        date: "2026-08-22",
+        type: "public_post",
+        url: "https://example.com/generic-post",
+        source: "本人公开账号",
+      },
+    ],
+  });
+
+  assert.equal(getPersonResearchSnapshot(person).latestChange, null);
+});
+
+test("evergreen official profile is context rather than a latest change", () => {
+  const person = makePerson({
+    materials: [
+      {
+        title: "Example Labs",
+        date: "持续更新",
+        type: "official_profile",
+        url: "https://example.com/profile",
+        source: "Example Labs 官网",
+      },
+    ],
+  });
+
+  assert.equal(getPersonResearchSnapshot(person).latestChange, null);
+});
+
+test("evergreen database record is not a latest change", () => {
+  const person = makePerson({
+    materials: [
+      {
+        title: "Test Person — Wikidata",
+        date: "持续更新",
+        type: "public_document",
+        url: "https://www.wikidata.org/wiki/Q1",
+        source: "Wikidata",
+      },
+    ],
+  });
+
+  assert.equal(getPersonResearchSnapshot(person).latestChange, null);
+});
+
+test("aggregated news copy is retained as evidence but not promoted as latest change", () => {
+  const person = makePerson({
+    materials: [
+      {
+        title: "Test Person announces a new model - Stocktwits",
+        date: "2026-08-22",
+        type: "article",
+        url: "https://news.google.com/rss/articles/example",
+        source: "Google News 英文",
+      },
+    ],
+  });
+
+  const snapshot = getPersonResearchSnapshot(person);
+  assert.equal(snapshot.latestChange, null);
+  assert.equal(snapshot.events.length, 1);
+});
+
+test("recent upload of a historical interview is not a current change", () => {
+  const person = makePerson({
+    updatedAt: "2026-08-23T00:00:00Z",
+    materials: [
+      {
+        title: "20050320《对话》：测试人物",
+        date: "2026-08-19",
+        type: "interview",
+        url: "https://example.com/archive",
+        source: "测试人物官方档案",
+      },
+    ],
+  });
+
+  assert.equal(getPersonResearchSnapshot(person).latestChange, null);
 });

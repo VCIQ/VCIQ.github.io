@@ -5,6 +5,11 @@ import type {
 } from "@/lib/channel-updates";
 import { clusterPersonEventItems } from "@/lib/person-event-clustering";
 import { researchPeople } from "@/lib/people-data";
+import {
+  hasPersonResearchAction,
+  isLowSignalPersonTitle,
+  isVideoPlatformMaterial,
+} from "@/lib/person-material-quality";
 
 function uniqueStrings(values: string[]) {
   const seen = new Set<string>();
@@ -49,12 +54,28 @@ function representativeScore(item: ChannelUpdateItem) {
 }
 
 function publishablePeopleItems(items: ChannelUpdateItem[]) {
-  const knownNames = new Set(
-    researchPeople.flatMap((person) => [person.name, ...person.aliases]).filter(Boolean),
+  const peopleByName = new Map(
+    researchPeople.flatMap((person) =>
+      [person.name, ...person.aliases]
+        .filter(Boolean)
+        .map((name) => [name, person] as const)),
   );
   return items.filter((item) => {
     if (item.href.startsWith("/documents/")) return true;
-    return knownNames.has(item.context);
+    const person = peopleByName.get(item.context);
+    if (!person || isLowSignalPersonTitle(item.title)) return false;
+    if (isVideoPlatformMaterial(item.source, item.href)) {
+      const source = item.source.toLocaleLowerCase("zh-CN").replace(/[^a-z0-9\u3400-\u9fff]+/gu, "");
+      const owned = [person.name, person.englishName, ...person.aliases, ...person.organizations]
+        .filter((value): value is string => Boolean(value?.trim()))
+        .some((value) => {
+          const key = value.toLocaleLowerCase("zh-CN").replace(/[^a-z0-9\u3400-\u9fff]+/gu, "");
+          return key.length >= 3 && source.includes(key);
+        });
+      if (!owned) return false;
+    }
+    if (item.label === "人物材料") return hasPersonResearchAction(item.title);
+    return true;
   });
 }
 
