@@ -291,6 +291,7 @@ jobs:
             public/data/listed_company_disclosures.json
             public/data/market_profiles.json
             public/data/people.json
+            public/data/person_research_outcomes.json
             public/data/source_health.json
           )
           CONTROL_PATHS=(
@@ -348,6 +349,16 @@ jobs:
             exit 0
           fi
           git commit -m "data: refresh public intelligence with source health"
+
+          # Every persistent crawler output must be part of the atomic snapshot
+          # before rebase. Otherwise git pull exits 128 after the expensive crawl.
+          UNCOMMITTED=$(git status --short)
+          if [ -n "$UNCOMMITTED" ]; then
+            printf '%s\n' "$UNCOMMITTED"
+            echo "::error title=Unstaged refresh outputs::A persistent refresh output is missing from the atomic staging allowlist."
+            exit 1
+          fi
+
           for attempt in 1 2 3; do
             # Rebase swaps ours/theirs: "theirs" keeps this run's freshly
             # generated snapshot when main changed the same data file.
