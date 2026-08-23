@@ -21,6 +21,7 @@ const statusLabels = {
 
 export default function PeoplePage() {
   const trackedCount = researchPeople.filter((person) => person.tracked).length;
+  const watchCount = researchPeople.length - trackedCount;
   const directory = researchPeople
     .map((person) => ({
       person,
@@ -40,8 +41,8 @@ export default function PeoplePage() {
           下一步看什么，再连接其任职公司、产品项目、技术主题与事件级公开证据。
         </p>
         <div className="hero-chips">
-          <span>{trackedCount} 位重点人物</span>
-          <span>{researchPeople.length} 位已发布人物</span>
+          <span>{trackedCount} 位重点跟踪</span>
+          {watchCount > 0 ? <span>{watchCount} 位观察对象</span> : null}
           <span>按研究优先级排序</span>
           <span>公司关系仅按显式任职证据挂接</span>
           <span>资料更新 {peopleGeneratedAt.slice(0, 10)}</span>
@@ -93,7 +94,7 @@ export default function PeoplePage() {
               </div>
 
               <small>
-                {research.priority.level} · 证据 {research.coverage.score}% · {research.viewChange.label} · {statusLabels[person.status]} · {research.events.length} 个事件
+                {research.priority.level} · 档案完整度 {research.coverage.score}% · {research.viewChange.label} · {statusLabels[person.status]} · {research.events.length} 个事件
               </small>
             </Link>
           ))}
