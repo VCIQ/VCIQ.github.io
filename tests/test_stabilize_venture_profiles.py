@@ -205,11 +205,17 @@ class VentureProfileStabilizerTests(unittest.TestCase):
                 stabilizer.stabilize_snapshot(payload, "catalog", max_passes=4)
 
         message = str(caught.exception)
-        self.assertIn("structuralDiff", message)
-        self.assertIn("finalizeStepDiff", message)
-        self.assertIn("$.state", message)
-        self.assertIn('"before":"a"', message)
-        self.assertIn('"after":"b"', message)
+        prefix = "venture terminal gates entered a cycle before reaching a shared fixed point: "
+        self.assertTrue(message.startswith(prefix))
+        details = json.loads(message[len(prefix):])
+        self.assertFalse(details["structuralStable"])
+        self.assertTrue(details["semanticStable"])
+        self.assertEqual(details["finalizeStepDiff"][0]["path"], "$.state")
+        self.assertEqual(details["finalizeStepDiff"][0]["before"], '"a"')
+        self.assertEqual(details["finalizeStepDiff"][0]["after"], '"b"')
+        self.assertEqual(details["semanticStepDiff"][0]["path"], "$.state")
+        self.assertEqual(details["semanticStepDiff"][0]["before"], '"b"')
+        self.assertEqual(details["semanticStepDiff"][0]["after"], '"a"')
 
     def test_rejects_non_positive_pass_limit(self) -> None:
         with self.assertRaisesRegex(ValueError, "positive"):
