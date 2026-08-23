@@ -122,6 +122,34 @@ function materialScore(material: PersonMaterial) {
   return (typeScore[material.type] ?? 50) + sourceBonus;
 }
 
+const LOW_SIGNAL_TITLE_MARKERS = /must watch|leaves audience speechless|震惊|炸裂|刷屏|全网热议|重磅突发|笑了.{0,12}哭了|附文稿|生肉|搬运/iu;
+
+function materialDirectlyNamesPerson(material: PersonMaterial, person: ResearchPerson) {
+  return [person.name, person.englishName, ...person.aliases]
+    .filter((name): name is string => Boolean(name?.trim()))
+    .some((name) => titleIncludes(material.title, name));
+}
+
+function materialMatchesResearchObject(material: PersonMaterial, person: ResearchPerson) {
+  return [...person.organizations, ...person.products, ...person.concepts]
+    .filter((value) => value.trim().length >= 2)
+    .some((value) => titleIncludes(material.title, value));
+}
+
+function latestResearchChange(person: ResearchPerson, events: PersonMaterialEvent[]) {
+  for (const event of events) {
+    const candidates = [...event.items]
+      .filter((material) => !LOW_SIGNAL_TITLE_MARKERS.test(material.title))
+      .filter((material) =>
+        DIRECT_EXPRESSION_TYPES.has(material.type)
+        || materialDirectlyNamesPerson(material, person)
+        || materialMatchesResearchObject(material, person))
+      .sort((left, right) => materialScore(right) - materialScore(left));
+    if (candidates[0]) return candidates[0];
+  }
+  return events[0]?.representative ?? null;
+}
+
 export function clusterPersonMaterials(
   materials: PersonMaterial[],
   personName: string,
@@ -565,7 +593,7 @@ export function getPersonResearchSnapshot(person: ResearchPerson): PersonResearc
   const timeline = evolutionTimeline(person, events);
   return {
     whyImportant: whyImportant(person),
-    latestChange: events[0]?.representative ?? null,
+    latestChange: latestResearchChange(person, events),
     nextWatch: nextWatch(person, coverage, viewChange),
     researchOverview: researchOverview(person, profile.overview),
     coreConcepts: coreConcepts(person, events),

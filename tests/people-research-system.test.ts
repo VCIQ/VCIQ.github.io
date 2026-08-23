@@ -221,3 +221,27 @@ test("latest event implications separate organization, technology and evidence s
   assert.ok(dimensions.has("技术 / 产品"));
   assert.ok(dimensions.has("证据性质"));
 });
+
+test("latest change skips clickbait when a nearby research-relevant event exists", () => {
+  const person = makePerson({
+    materials: [
+      {
+        title: "Test Person Leaves Audience Speechless (MUST WATCH)",
+        date: "2026-08-22",
+        type: "commentary",
+        url: "https://example.com/clickbait",
+        source: "Video Channel",
+      },
+      {
+        title: "Example Labs 发布 Atlas 世界模型研究进展",
+        date: "2026-08-21",
+        type: "research_paper",
+        url: "https://example.com/research",
+        source: "Example Labs Research",
+      },
+    ],
+  });
+
+  const snapshot = getPersonResearchSnapshot(person);
+  assert.equal(snapshot.latestChange?.url, "https://example.com/research");
+});
