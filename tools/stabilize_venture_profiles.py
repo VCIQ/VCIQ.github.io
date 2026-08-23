@@ -12,9 +12,11 @@ from typing import Any
 try:
     from .enforce_venture_entity_semantics import enforce_snapshot
     from .finalize_venture_profiles import finalize_snapshot
+    from .venture_profile_extraction import parse_catalog
 except ImportError:
     from enforce_venture_entity_semantics import enforce_snapshot
     from finalize_venture_profiles import finalize_snapshot
+    from venture_profile_extraction import parse_catalog
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -104,6 +106,42 @@ def _diff_paths(
     return differences
 
 
+def _anchor_catalog_backgrounds(
+    payload: dict[str, Any], catalog_text: str
+) -> dict[str, Any]:
+    """Keep company identity summaries stable across live crawler refreshes.
+
+    The crawler may discover a valid-looking About sentence in a different
+    language or wording on every run. Company ``background`` and the summary
+    inside ``projectBackground`` are identity fields, so when the catalog has a
+    reviewed summary it is the canonical value for both. More detailed live
+    evidence remains available in technology, products, sources, and other
+    research fields.
+    """
+    anchored = copy.deepcopy(payload)
+    company_specs, _ = parse_catalog(catalog_text)
+    summaries = {
+        spec.slug: spec.summary.strip()
+        for spec in company_specs
+        if spec.summary and spec.summary.strip()
+    }
+    companies = anchored.get("companies", {})
+    if not isinstance(companies, dict):
+        return anchored
+
+    for slug, profile in companies.items():
+        if not isinstance(profile, dict):
+            continue
+        summary = summaries.get(slug)
+        if not summary:
+            continue
+        profile["background"] = summary
+        project = profile.get("projectBackground")
+        if isinstance(project, dict):
+            project["summary"] = summary
+    return anchored
+
+
 def stabilize_snapshot(
     payload: dict[str, Any],
     catalog_text: str,
@@ -120,7 +158,7 @@ def stabilize_snapshot(
     if max_passes < 1:
         raise ValueError("max_passes must be positive")
 
-    current = copy.deepcopy(payload)
+    current = _anchor_catalog_backgrounds(payload, catalog_text)
     seen: dict[str, int] = {_state_key(current): 0}
     history: list[dict[str, Any]] = []
 
