@@ -6,6 +6,12 @@ import {
   type PersonEventCluster,
 } from "@/lib/person-event-clustering";
 import { getPersonProfile } from "@/lib/research-content";
+import {
+  hasPersonResearchAction,
+  isLowSignalPersonTitle,
+  isTrustedPersonChangeSource,
+  isVideoPlatformMaterial,
+} from "@/lib/person-material-quality";
 
 export type PersonMaterialEvent = PersonEventCluster<
   PersonMaterial & { href: string; context: string }
@@ -122,7 +128,13 @@ function materialScore(material: PersonMaterial) {
   return (typeScore[material.type] ?? 50) + sourceBonus;
 }
 
-const LOW_SIGNAL_TITLE_MARKERS = /must watch|leaves audience speechless|震惊|炸裂|刷屏|全网热议|重磅突发|笑了.{0,12}哭了|附文稿|生肉|搬运/iu;
+const ALWAYS_RESEARCH_MATERIAL_TYPES = new Set([
+  "authored_work",
+  "research_paper",
+  "shareholder_letter",
+  "public_document",
+]);
+const RESEARCH_DISCUSSION_TYPES = new Set(["speech", "qa", "interview"]);
 
 function materialDirectlyNamesPerson(material: PersonMaterial, person: ResearchPerson) {
   return [person.name, person.englishName, ...person.aliases]
@@ -136,18 +148,55 @@ function materialMatchesResearchObject(material: PersonMaterial, person: Researc
     .some((value) => titleIncludes(material.title, value));
 }
 
+function videoSourceIsOwned(material: PersonMaterial, person: ResearchPerson) {
+  if (!isVideoPlatformMaterial(material.source, material.url)) return true;
+  const source = compact(material.source);
+  return [person.name, person.englishName, ...person.aliases, ...person.organizations]
+    .filter((value): value is string => Boolean(value?.trim()))
+    .some((value) => {
+      const key = compact(value);
+      return key.length >= 3 && source.includes(key);
+    });
+}
+
+function titleUsesHistoricalUploadAsCurrent(material: PersonMaterial, referenceDate: string) {
+  const referenceYear = new Date(referenceDate).getUTCFullYear();
+  if (!Number.isFinite(referenceYear)) return false;
+  const titleYear = material.title.match(/(?:19|20)\d{2}/u)?.[0];
+  if (!titleYear || Number(titleYear) >= referenceYear - 2) return false;
+  return !material.date.includes(titleYear);
+}
+
 function latestResearchChange(person: ResearchPerson, events: PersonMaterialEvent[]) {
   for (const event of events) {
     const candidates = [...event.items]
-      .filter((material) => !LOW_SIGNAL_TITLE_MARKERS.test(material.title))
+      .filter((material) => !isLowSignalPersonTitle(material.title))
+      .filter((material) => !/持续更新|ongoing/iu.test(material.date))
+      .filter((material) => !titleUsesHistoricalUploadAsCurrent(material, person.updatedAt))
+      .filter((material) => videoSourceIsOwned(material, person))
       .filter((material) =>
-        DIRECT_EXPRESSION_TYPES.has(material.type)
-        || materialDirectlyNamesPerson(material, person)
-        || materialMatchesResearchObject(material, person))
+        !["article", "commentary", "compiled_work", "biography"].includes(material.type)
+        || isTrustedPersonChangeSource(material.source, material.url))
+      .filter((material) =>
+        ALWAYS_RESEARCH_MATERIAL_TYPES.has(material.type)
+        || (
+          RESEARCH_DISCUSSION_TYPES.has(material.type)
+          && (materialMatchesResearchObject(material, person) || hasPersonResearchAction(material.title))
+        )
+        || (
+          material.type === "public_post"
+          && materialMatchesResearchObject(material, person)
+          && hasPersonResearchAction(material.title)
+        )
+        || (
+          materialDirectlyNamesPerson(material, person)
+          && materialMatchesResearchObject(material, person)
+          && hasPersonResearchAction(material.title)
+        ))
       .sort((left, right) => materialScore(right) - materialScore(left));
     if (candidates[0]) return candidates[0];
   }
-  return events[0]?.representative ?? null;
+  return null;
 }
 
 export function clusterPersonMaterials(
@@ -457,8 +506,7 @@ function evidenceRole(material: PersonMaterial) {
   return "当前主要是第三方或整理型材料，只作为旁证，不单独用于认定观点变化或组织执行。";
 }
 
-function latestImplications(person: ResearchPerson, events: PersonMaterialEvent[]): PersonResearchImplication[] {
-  const latest = events[0]?.representative;
+function latestImplications(person: ResearchPerson, latest: PersonMaterial | null): PersonResearchImplication[] {
   if (!latest) return [];
   const implications: PersonResearchImplication[] = [];
   const title = latest.title;
@@ -591,9 +639,10 @@ export function getPersonResearchSnapshot(person: ResearchPerson): PersonResearc
   const coverage = assessPersonResearchCoverage(person, events);
   const viewChange = assessPersonViewChange(person, events);
   const timeline = evolutionTimeline(person, events);
+  const latestChange = latestResearchChange(person, events);
   return {
     whyImportant: whyImportant(person),
-    latestChange: latestResearchChange(person, events),
+    latestChange,
     nextWatch: nextWatch(person, coverage, viewChange),
     researchOverview: researchOverview(person, profile.overview),
     coreConcepts: coreConcepts(person, events),
@@ -602,7 +651,7 @@ export function getPersonResearchSnapshot(person: ResearchPerson): PersonResearc
     viewChange,
     coverage,
     priority: assessPersonResearchPriority(person, events, coverage, viewChange),
-    latestImplications: latestImplications(person, events),
+    latestImplications: latestImplications(person, latestChange),
     events,
   };
 }
