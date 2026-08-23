@@ -9,6 +9,7 @@ it only records research yield for future cooldown/retry and strategy decisions.
 from __future__ import annotations
 
 import sys
+import time
 from pathlib import Path
 from typing import Any
 
@@ -68,7 +69,12 @@ def _candidate_with_research_query(candidate: dict[str, Any]) -> dict[str, Any]:
     return {**candidate, "override": override}
 
 
-def _record_research_attempt(slug: str, materials: list[dict[str, str]], had_error: bool) -> None:
+def _record_research_attempt(
+    slug: str,
+    materials: list[dict[str, str]],
+    had_error: bool,
+    duration_ms: int,
+) -> None:
     global _OUTCOME_MEMORY
     scheduled = _RESEARCH_ATTEMPT_MAP.get(slug)
     if not scheduled:
@@ -98,6 +104,7 @@ def _record_research_attempt(slug: str, materials: list[dict[str, str]], had_err
         "sourceHosts": hosts,
         "sourceTypes": list(source_type_counts),
         "sourceTypeCounts": source_type_counts,
+        "durationMs": max(0, int(duration_ms)),
     })
 
 
@@ -128,10 +135,12 @@ def enrich_candidate(
     query_materials: list[dict[str, str]] = []
     embedded_materials: list[dict[str, str]] = []
     query_had_error = False
+    query_started = time.perf_counter()
     try:
         query_materials.extend(discover_person_video_materials(discovery_candidate))
     except Exception:
         query_had_error = True
+    query_duration_ms = round((time.perf_counter() - query_started) * 1000)
     if articles:
         try:
             embedded_materials.extend(discover_embedded_wechat_video_materials(discovery_candidate, articles))
@@ -139,7 +148,7 @@ def enrich_candidate(
             pass
     query_materials = core.dedupe_materials(query_materials)
     embedded_materials = core.dedupe_materials(embedded_materials)
-    _record_research_attempt(slug, query_materials, query_had_error)
+    _record_research_attempt(slug, query_materials, query_had_error, query_duration_ms)
     return merge_video_materials(profile, core.dedupe_materials([*query_materials, *embedded_materials]))
 
 

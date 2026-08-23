@@ -37,6 +37,7 @@ function scoreSummary(breakdown: PersonResearchQueueScoreBreakdown) {
     ["可执行", breakdown.queryReadiness],
     ["研究记忆", breakdown.researchOutcomeMemory],
     ["策略 ROI", breakdown.researchStrategyROI],
+    ["成本效率", breakdown.researchCostEfficiency],
   ] as const;
 }
 
@@ -54,8 +55,8 @@ export default function PersonResearchQueuePanel() {
       </div>
 
       <p className={styles.queueIntro}>
-        从全部开放人物研究任务中按可解释规则分配今日预算。队列只决定“先查什么”和主动检索槽位；
-        Research Strategy Memory 会比较历史 query strategy 与来源产出，但只影响排序和检索选择，不改变事实状态或证据门槛。
+        先按研究价值选出今日任务，再把有限主动检索槽位优先给“单位成本预期证据产出”更高的任务。
+        成本来自真实主动检索耗时的历史折算；Strategy / Cost Memory 只影响排序与预算，不能改变事实状态或证据门槛。
       </p>
 
       <div className={styles.queueStats}>
@@ -77,7 +78,7 @@ export default function PersonResearchQueuePanel() {
         <article>
           <span>主动检索槽位</span>
           <strong>{queue.allocatedQuerySlots}/{queue.limits.activeQuerySlots}</strong>
-          <small>按预期证据产出与冷却状态分配</small>
+          <small>按研究价值 × 单位成本预期产出分配</small>
         </article>
       </div>
 
@@ -117,6 +118,13 @@ export default function PersonResearchQueuePanel() {
                     历史样本 {item.strategySampleSize} · 预期命中 {(item.expectedSuccessRate * 100).toFixed(0)}% · 单槽位产出 {item.expectedEvidenceYield.toFixed(2)}
                   </span>
                 ) : null}
+                {item.costSampleSize > 0 ? (
+                  <span>
+                    成本样本 {item.costSampleSize} · 预期成本 {item.queryUnitCost.toFixed(2)} · 单位成本产出 {item.expectedYieldPerCost.toFixed(2)}
+                  </span>
+                ) : null}
+                {item.averageQueryDurationMs > 0 ? <span>历史平均检索 {(item.averageQueryDurationMs / 1000).toFixed(1)} 秒</span> : null}
+                <span>预算效用 {item.allocationUtility.toFixed(1)}</span>
                 {item.topHistoricalSourceTypeLabel ? <span>历史高产来源：{item.topHistoricalSourceTypeLabel}</span> : null}
                 {item.cooldownUntil ? <span>冷却至：{item.cooldownUntil}</span> : null}
               </div>

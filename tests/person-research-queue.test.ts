@@ -23,9 +23,13 @@ function item(overrides: Record<string, unknown> = {}) {
     queryStrategy: "full_context_interview",
     queryStrategyLabel: "完整上下文访谈",
     strategySampleSize: 4,
+    costSampleSize: 4,
     expectedSuccessRate: 0.75,
     expectedEvidenceYield: 1.2,
     queryUnitCost: 1,
+    expectedYieldPerCost: 1.2,
+    allocationUtility: 999,
+    averageQueryDurationMs: 10_000,
     topHistoricalSourceType: "video_platform",
     topHistoricalSourceTypeLabel: "视频平台",
     evidenceBasisCount: 2,
@@ -41,6 +45,7 @@ function item(overrides: Record<string, unknown> = {}) {
       queryReadiness: 6,
       researchOutcomeMemory: 0,
       researchStrategyROI: 0,
+      researchCostEfficiency: 0,
     },
     whyNow: ["P0 研究任务", "需要跨时间一手材料直接比较"],
     personRoute: "/people/test-person/",
@@ -49,10 +54,11 @@ function item(overrides: Record<string, unknown> = {}) {
   };
 }
 
-test("queue item recomputes score and keeps one scheduled active query", () => {
+test("queue item recomputes score and allocation utility while keeping one scheduled active query", () => {
   const normalized = normalizePersonResearchQueueItem(item());
   assert.ok(normalized);
   assert.equal(normalized.score, 108);
+  assert.equal(normalized.allocationUtility, 183.6);
   assert.deepEqual(normalized.searchQueries, ["测试人物 世界模型 完整访谈"]);
   assert.equal(normalized.queryBudget, 1);
   assert.equal(normalized.personRoute, "/people/test-person/");
@@ -60,11 +66,14 @@ test("queue item recomputes score and keeps one scheduled active query", () => {
   assert.equal(normalized.expectedSuccessRate, 0.75);
 });
 
-test("strategy metrics are bounded and cannot inflate the public score arbitrarily", () => {
+test("strategy and cost metrics are bounded and cannot inflate the public score arbitrarily", () => {
   const normalized = normalizePersonResearchQueueItem(item({
     expectedSuccessRate: 9,
     expectedEvidenceYield: 999,
     queryUnitCost: -5,
+    expectedYieldPerCost: 999,
+    allocationUtility: 999999,
+    averageQueryDurationMs: 9999999,
     scoreBreakdown: {
       priority: 40,
       taskType: 25,
@@ -75,14 +84,19 @@ test("strategy metrics are bounded and cannot inflate the public score arbitrari
       queryReadiness: 6,
       researchOutcomeMemory: 0,
       researchStrategyROI: 999,
+      researchCostEfficiency: 999,
     },
   }));
   assert.ok(normalized);
   assert.equal(normalized.expectedSuccessRate, 1);
   assert.equal(normalized.expectedEvidenceYield, 50);
   assert.equal(normalized.queryUnitCost, 1);
+  assert.equal(normalized.expectedYieldPerCost, 50);
+  assert.equal(normalized.averageQueryDurationMs, 600_000);
   assert.equal(normalized.scoreBreakdown.researchStrategyROI, 12);
-  assert.equal(normalized.score, 120);
+  assert.equal(normalized.scoreBreakdown.researchCostEfficiency, 8);
+  assert.equal(normalized.score, 128);
+  assert.equal(normalized.allocationUtility, 320);
 });
 
 test("queue boundary rejects closed states and unsupported executors", () => {
@@ -133,6 +147,45 @@ test("queue derives public counters from normalized rows instead of trusting pay
   assert.equal(normalized.selectedTaskCount, 2);
   assert.equal(normalized.allocatedQuerySlots, 1);
   assert.equal(normalized.candidateTaskCount, 200);
+});
+
+test("public boundary allocates the scarce query slot by cost-adjusted utility", () => {
+  const normalized = normalizePersonResearchQueue({
+    researchDate: "2026-08-22",
+    limits: { people: 10, tasks: 20, tasksPerPerson: 2, activeQuerySlots: 1 },
+    queue: [
+      item({
+        personSlug: "high-score-slow",
+        personName: "高分慢检索",
+        taskId: "high-score-slow-task",
+        expectedYieldPerCost: 0.1,
+      }),
+      item({
+        rank: 2,
+        personSlug: "slightly-lower-fast",
+        personName: "稍低分快检索",
+        taskId: "slightly-lower-fast-task",
+        expectedYieldPerCost: 1.5,
+        scoreBreakdown: {
+          priority: 40,
+          taskType: 25,
+          status: 5,
+          evidenceGap: 12,
+          recency: 0,
+          crossValidation: 12,
+          queryReadiness: 6,
+          researchOutcomeMemory: 0,
+          researchStrategyROI: 0,
+          researchCostEfficiency: 0,
+        },
+      }),
+    ],
+  });
+  assert.equal(normalized.queue[0]?.personSlug, "high-score-slow");
+  assert.equal(normalized.queue[0]?.queryBudget, 0);
+  assert.equal(normalized.queue[1]?.personSlug, "slightly-lower-fast");
+  assert.equal(normalized.queue[1]?.queryBudget, 1);
+  assert.ok((normalized.queue[1]?.allocationUtility ?? 0) > (normalized.queue[0]?.allocationUtility ?? 0));
 });
 
 test("public boundary re-enforces people task and active-query budgets", () => {
