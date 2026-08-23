@@ -14,13 +14,49 @@ class PersonResearchOutcomeMemoryTests(unittest.TestCase):
             "outcome": "candidate_found",
             "candidateCount": 2,
             "sourceHosts": ["youtube.com"],
+            "durationMs": 12_000,
         })
         score, reason, cooldown = task_memory_signal(memory, "task-a", "2026-08-22")
         self.assertEqual(score, 6)
         self.assertIn("候选产出", reason)
         self.assertEqual(cooldown, "")
         self.assertEqual(memory["taskStats"]["task-a"]["candidateFound"], 1)
+        self.assertEqual(memory["attempts"][0]["durationMs"], 12_000)
+        self.assertEqual(memory["attempts"][0]["queryCostUnits"], 1.2)
         self.assertNotIn("supported", memory["attempts"][0])
+
+    def test_cost_stats_are_process_metrics_not_fact_state(self):
+        memory = build_payload([
+            {
+                "taskId": "task-a",
+                "taskType": "first_party_evidence",
+                "personSlug": "alice",
+                "researchDate": "2026-08-20",
+                "query": "Alice 演讲",
+                "queryStrategy": "topic_speech",
+                "outcome": "candidate_found",
+                "candidateCount": 1,
+                "sourceHosts": ["youtube.com"],
+                "durationMs": 10_000,
+            },
+            {
+                "taskId": "task-b",
+                "taskType": "first_party_evidence",
+                "personSlug": "bob",
+                "researchDate": "2026-08-21",
+                "query": "Bob 演讲",
+                "queryStrategy": "topic_speech",
+                "outcome": "no_evidence",
+                "candidateCount": 0,
+                "sourceHosts": [],
+                "durationMs": 30_000,
+            },
+        ])
+        stats = memory["queryStrategyCostStats"]["topic_speech"]
+        self.assertEqual(stats["attempts"], 2)
+        self.assertEqual(stats["averageCostUnits"], 2)
+        self.assertEqual(stats["averageDurationMs"], 20_000)
+        self.assertNotIn("supported", memory)
 
     def test_recent_zero_yield_creates_query_cooldown_without_closing_task(self):
         memory = build_payload([{
@@ -73,9 +109,10 @@ class PersonResearchOutcomeMemoryTests(unittest.TestCase):
             "outcome": "no_evidence",
             "candidateCount": 0,
             "sourceHosts": [],
+            "durationMs": 10_000,
         }
         memory = append_attempt({}, attempt)
-        memory = append_attempt(memory, attempt)
+        memory = append_attempt(memory, {**attempt, "durationMs": 20_000})
         self.assertEqual(memory["attemptCount"], 1)
 
 

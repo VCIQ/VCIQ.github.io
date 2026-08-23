@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+from unittest.mock import patch
 
 from tools.person_research_outcome_memory import build_payload
 from tools.person_research_scheduler import (
@@ -164,6 +165,75 @@ class PersonResearchSchedulerTests(unittest.TestCase):
         query_map = scheduled_queries_by_slug(queue)
         self.assertEqual(set(query_map), {row["personSlug"] for row in allocated})
         self.assertTrue(all(len(queries) == 1 for queries in query_map.values()))
+
+    def test_query_slot_prefers_higher_expected_yield_per_cost(self):
+        attempts = []
+        for index in range(3):
+            attempts.extend([
+                {
+                    "taskId": f"slow-{index}",
+                    "taskType": "viewpoint_verification",
+                    "personSlug": f"slow-{index}",
+                    "researchDate": "2026-08-10",
+                    "query": "Slow Person 世界模型 演讲",
+                    "queryStrategy": "topic_speech",
+                    "outcome": "candidate_found",
+                    "candidateCount": 1,
+                    "sourceHosts": ["youtube.com"],
+                    "durationMs": 40_000,
+                    "queryCostUnits": 4,
+                },
+                {
+                    "taskId": f"fast-{index}",
+                    "taskType": "viewpoint_verification",
+                    "personSlug": f"fast-{index}",
+                    "researchDate": "2026-08-10",
+                    "query": "Fast Person 世界模型 访谈",
+                    "queryStrategy": "topic_interview",
+                    "outcome": "candidate_found",
+                    "candidateCount": 1,
+                    "sourceHosts": ["youtube.com"],
+                    "durationMs": 10_000,
+                    "queryCostUnits": 1,
+                },
+            ])
+        memory = build_payload(attempts)
+        agenda = {
+            "generatedAt": "2026-08-22T00:00:00Z",
+            "people": {
+                "slow-person": {
+                    "personName": "Slow Person",
+                    "tasks": [task(
+                        "slow-current",
+                        task_type="viewpoint_verification",
+                        priority="P0",
+                        queries=["Slow Person 世界模型 演讲"],
+                    )],
+                },
+                "fast-person": {
+                    "personName": "Fast Person",
+                    "tasks": [task(
+                        "fast-current",
+                        task_type="viewpoint_verification",
+                        priority="P0",
+                        queries=["Fast Person 世界模型 访谈"],
+                    )],
+                },
+            },
+        }
+        with patch("tools.person_research_scheduler.MAX_ACTIVE_QUERY_SLOTS", 1):
+            queue = build_daily_queue(
+                agenda,
+                {"people": [person("slow-person"), person("fast-person")]},
+                memory,
+            )
+        allocated = [row for row in queue["queue"] if row["queryBudget"] == 1]
+        self.assertEqual(len(allocated), 1)
+        self.assertEqual(allocated[0]["personSlug"], "fast-person")
+        self.assertGreater(allocated[0]["expectedYieldPerCost"], 0.5)
+        self.assertGreater(allocated[0]["allocationUtility"], 0)
+        slow = next(row for row in queue["queue"] if row["personSlug"] == "slow-person")
+        self.assertGreater(allocated[0]["allocationUtility"], slow["allocationUtility"])
 
     def test_execution_candidate_gets_cross_channel_executor_without_video_budget(self):
         agenda = {

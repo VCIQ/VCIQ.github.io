@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from tools.person_research_cost_model import build_cost_stats, cost_units_from_duration
 from tools.person_research_strategy_memory import (
     build_strategy_stats,
     classify_query_strategy,
@@ -52,6 +53,14 @@ def _date(value: Any) -> dt.date | None:
         return dt.date.fromisoformat(text[:10])
     except ValueError:
         return None
+
+
+def _number(value: Any, fallback: float = 0.0) -> float:
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return fallback
+    return number if number == number else fallback
 
 
 def source_host(url: Any) -> str:
@@ -110,6 +119,13 @@ def normalize_attempt(value: Any) -> dict[str, Any] | None:
             source_types.append(source_type)
         if len(source_types) >= 8:
             break
+    duration_ms = max(0, min(600_000, int(_number(value.get("durationMs")))))
+    explicit_cost = _number(value.get("queryCostUnits"))
+    query_cost_units = (
+        round(min(10.0, max(1.0, explicit_cost)), 3)
+        if explicit_cost > 0
+        else cost_units_from_duration(duration_ms)
+    )
     return {
         "taskId": task_id,
         "taskType": task_type,
@@ -122,6 +138,8 @@ def normalize_attempt(value: Any) -> dict[str, Any] | None:
         "sourceHosts": hosts,
         "sourceTypes": source_types,
         "sourceTypeCounts": source_type_counts,
+        "durationMs": duration_ms,
+        "queryCostUnits": query_cost_units,
     }
 
 
@@ -198,17 +216,19 @@ def build_payload(attempts: list[dict[str, Any]]) -> dict[str, Any]:
             source["candidateAttempts"] += 1
             source["candidates"] += attempt["candidateCount"]
     strategy_stats = build_strategy_stats(normalized)
+    cost_stats = build_cost_stats(normalized)
     return {
-        "schemaVersion": 2,
+        "schemaVersion": 3,
         "generatedAt": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
         "attemptCount": len(normalized),
         "attempts": normalized,
         "taskStats": task_stats,
         "sourceStats": source_stats,
         **strategy_stats,
+        **cost_stats,
         "methodology": (
             "仅记录研究执行产出与成本；candidate_found 代表找到候选材料，不代表事实 supported。"
-            "查询策略和来源 ROI 只用于排序与预算分配，不能绕过任务 successCriteria。"
+            "查询策略、来源 ROI 与单位检索成本只用于排序与预算分配，不能绕过任务 successCriteria。"
         ),
     }
 

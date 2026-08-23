@@ -27,12 +27,15 @@ from tools.person_research_agent import (
     load_json,
     parse_date,
 )
+from tools.person_research_cost_model import (
+    allocation_utility,
+    choose_cost_aware_query_strategy,
+)
 from tools.person_research_outcome_memory import (
     OUTPUT_PATH as OUTCOME_MEMORY_PATH,
     load_memory,
     task_memory_signal,
 )
-from tools.person_research_strategy_memory import choose_query_strategy
 
 OUTPUT_PATH = ROOT / "public" / "data" / "person_research_queue.json"
 
@@ -158,6 +161,16 @@ def _executor(task: dict[str, Any]) -> str:
     return "official_source"
 
 
+def _cost_efficiency_score(strategy: dict[str, Any]) -> tuple[int, str]:
+    sample_size = int(strategy.get("costSampleSize") or 0)
+    score = int(strategy.get("costEfficiencyAdjustment") or 0)
+    if sample_size < 2:
+        return 0, ""
+    ratio = float(strategy.get("expectedYieldPerCost") or 0)
+    cost = float(strategy.get("expectedCostUnits") or 1)
+    return score, f"单位成本预期产出 {ratio:.2f}（历史成本 {cost:.2f} 单位）"
+
+
 def score_task(
     task: dict[str, Any],
     person: dict[str, Any],
@@ -178,6 +191,7 @@ def score_task(
     )
     strategy = strategy or {}
     strategy_score = int(strategy.get("historyAdjustment") or 0)
+    cost_score, cost_reason = _cost_efficiency_score(strategy)
     sample_size = int(strategy.get("sampleSize") or 0)
     strategy_reason = ""
     if sample_size:
@@ -195,6 +209,7 @@ def score_task(
         "queryReadiness": ready,
         "researchOutcomeMemory": memory_score,
         "researchStrategyROI": strategy_score,
+        "researchCostEfficiency": cost_score,
     }
     reasons = [
         f"{clean(task.get('priority'))} 研究任务",
@@ -204,6 +219,7 @@ def score_task(
         ready_reason,
         memory_reason,
         strategy_reason,
+        cost_reason,
     ]
     return sum(breakdown.values()), breakdown, [reason for reason in reasons if reason][:6], cooldown_until
 
@@ -229,12 +245,14 @@ def build_daily_queue(
             if status in {"supported", "blocked"}:
                 continue
             raw_queries = [clean(value, 220) for value in (task.get("searchQueries") or [])[:3] if clean(value)]
-            strategy = choose_query_strategy(memory, clean(task.get("taskType"), 80), raw_queries)
+            strategy = choose_cost_aware_query_strategy(memory, clean(task.get("taskType"), 80), raw_queries)
             best_query = clean(strategy.get("query"), 220)
             ordered_queries = ([best_query] if best_query else []) + [value for value in raw_queries if value != best_query]
             score, breakdown, reasons, cooldown_until = score_task(
                 task, person, generated_at, memory, research_date, strategy
             )
+            expected_yield_per_cost = float(strategy.get("expectedYieldPerCost") or 0.5)
+            utility = allocation_utility(score, expected_yield_per_cost)
             candidates.append({
                 "personSlug": str(slug),
                 "personName": clean(record.get("personName") or person.get("name"), 120),
@@ -250,9 +268,13 @@ def build_daily_queue(
                 "queryStrategy": clean(strategy.get("strategy"), 80),
                 "queryStrategyLabel": clean(strategy.get("strategyLabel"), 120),
                 "strategySampleSize": int(strategy.get("sampleSize") or 0),
+                "costSampleSize": int(strategy.get("costSampleSize") or 0),
                 "expectedSuccessRate": float(strategy.get("expectedSuccessRate") or 0.5),
                 "expectedEvidenceYield": float(strategy.get("expectedYieldPerSlot") or 0.5),
-                "queryUnitCost": 1,
+                "queryUnitCost": float(strategy.get("expectedCostUnits") or 1.0),
+                "expectedYieldPerCost": expected_yield_per_cost,
+                "allocationUtility": utility,
+                "averageQueryDurationMs": int(strategy.get("averageDurationMs") or 0),
                 "topHistoricalSourceType": clean(strategy.get("topSourceType"), 80),
                 "topHistoricalSourceTypeLabel": clean(strategy.get("topSourceTypeLabel"), 120),
                 "evidenceBasisCount": len(task.get("evidenceBasis") or []),
@@ -267,7 +289,8 @@ def build_daily_queue(
     priority_order = {"P0": 0, "P1": 1, "P2": 2, "P3": 3}
     candidates.sort(key=lambda row: (
         -int(row["score"]),
-        -float(row.get("expectedEvidenceYield") or 0),
+        -float(row.get("allocationUtility") or 0),
+        -float(row.get("expectedYieldPerCost") or 0),
         priority_order.get(row["priority"], 9),
         row["personSlug"],
         row["taskId"],
@@ -288,29 +311,50 @@ def build_daily_queue(
         if len(selected) >= MAX_DAILY_TASKS:
             break
 
-    query_people: set[str] = set()
-    allocated = 0
     for rank, row in enumerate(selected, start=1):
         row["rank"] = rank
         row["queryBudget"] = 0
+
+    best_query_per_person: dict[str, dict[str, Any]] = {}
+    for row in selected:
         in_cooldown = bool(row.get("cooldownUntil") and row["cooldownUntil"] > research_date)
-        if (
-            row["executor"] == "person_video"
-            and row["searchQueries"]
-            and not in_cooldown
-            and row["personSlug"] not in query_people
-            and allocated < MAX_ACTIVE_QUERY_SLOTS
+        if row["executor"] != "person_video" or not row["searchQueries"] or in_cooldown:
+            continue
+        slug = row["personSlug"]
+        previous = best_query_per_person.get(slug)
+        if not previous or (
+            float(row.get("allocationUtility") or 0),
+            int(row.get("score") or 0),
+            -int(row.get("rank") or 0),
+        ) > (
+            float(previous.get("allocationUtility") or 0),
+            int(previous.get("score") or 0),
+            -int(previous.get("rank") or 0),
         ):
+            best_query_per_person[slug] = row
+
+    query_candidates = sorted(
+        best_query_per_person.values(),
+        key=lambda row: (
+            -float(row.get("allocationUtility") or 0),
+            -int(row.get("score") or 0),
+            int(row.get("rank") or 0),
+        ),
+    )
+    allocated_ids = {
+        row["taskId"] for row in query_candidates[:MAX_ACTIVE_QUERY_SLOTS]
+    }
+    for row in selected:
+        if row["taskId"] in allocated_ids:
             row["queryBudget"] = 1
             row["searchQueries"] = row["searchQueries"][:1]
-            query_people.add(row["personSlug"])
-            allocated += 1
         elif row["executor"] == "person_video":
             row["searchQueries"] = []
 
+    allocated = len(allocated_ids)
     memory_attempts = len(memory.get("attempts") or [])
     return {
-        "schemaVersion": 3,
+        "schemaVersion": 4,
         "generatedAt": generated_at,
         "researchDate": research_date,
         "limits": {
@@ -327,8 +371,9 @@ def build_daily_queue(
         "queue": selected,
         "methodology": (
             "队列只排序开放研究任务并分配有限主动检索槽位，不改变事实状态。"
-            "分数由任务价值、证据缺口、近期事件、交叉验证、执行历史与可解释的查询策略 ROI 共同确定；"
-            "同一任务会优先选择历史候选产出更高的 query strategy，但所有策略学习只影响排序和预算，"
+            "Research Score 仍以任务价值、证据缺口、近期事件和交叉验证为主，并加入小幅、可解释的历史策略与成本效率修正；"
+            "主动 query slot 再按 Research Score × 单位成本预期产出的 allocation utility 分配。"
+            "成本来自真实主动检索耗时的历史折算；无历史策略使用中性成本，不伪造成功率。"
             "candidate_found 仍只代表候选产出，不能绕过 successCriteria 或自动变成事实 supported。"
         ),
     }

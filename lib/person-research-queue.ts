@@ -16,6 +16,7 @@ export type PersonResearchQueueScoreBreakdown = {
   queryReadiness: number;
   researchOutcomeMemory: number;
   researchStrategyROI: number;
+  researchCostEfficiency: number;
 };
 
 export type PersonResearchQueueItem = {
@@ -34,9 +35,13 @@ export type PersonResearchQueueItem = {
   queryStrategy: string;
   queryStrategyLabel: string;
   strategySampleSize: number;
+  costSampleSize: number;
   expectedSuccessRate: number;
   expectedEvidenceYield: number;
   queryUnitCost: number;
+  expectedYieldPerCost: number;
+  allocationUtility: number;
+  averageQueryDurationMs: number;
   topHistoricalSourceType: string;
   topHistoricalSourceTypeLabel: string;
   evidenceBasisCount: number;
@@ -144,7 +149,13 @@ function scoreBreakdown(value: unknown): PersonResearchQueueScoreBreakdown {
     queryReadiness: signedInteger(row.queryReadiness),
     researchOutcomeMemory: signedInteger(row.researchOutcomeMemory),
     researchStrategyROI: signedInteger(row.researchStrategyROI, -12, 12),
+    researchCostEfficiency: signedInteger(row.researchCostEfficiency, -8, 8),
   };
+}
+
+function computeAllocationUtility(score: number, expectedYieldPerCost: number) {
+  const efficiency = Math.min(2, Math.max(0, expectedYieldPerCost));
+  return Math.round(score * (0.5 + efficiency) * 1_000) / 1_000;
 }
 
 export function normalizePersonResearchQueueItem(value: unknown): PersonResearchQueueItem | null {
@@ -169,11 +180,21 @@ export function normalizePersonResearchQueueItem(value: unknown): PersonResearch
 
   const breakdown = scoreBreakdown(row.scoreBreakdown);
   const recomputedScore = Object.values(breakdown).reduce((sum, value) => sum + value, 0);
-  const queryBudget = integer(row.queryBudget, 0, 1);
+  const rawQueryBudget = integer(row.queryBudget, 0, 1);
   const cooldownUntil = text(row.cooldownUntil, 40);
-  const searchQueries = executor === "person_video" && queryBudget > 0
+  const searchQueries = executor === "person_video" && rawQueryBudget > 0
     ? stringList(row.searchQueries, 1, 220)
     : [];
+  const expectedSuccessRate = boundedNumber(row.expectedSuccessRate, 0, 1, 0.5);
+  const expectedEvidenceYield = boundedNumber(row.expectedEvidenceYield, 0, 50, 0.5);
+  const queryUnitCost = boundedNumber(row.queryUnitCost, 1, 10, 1);
+  const expectedYieldPerCost = boundedNumber(
+    row.expectedYieldPerCost,
+    0,
+    50,
+    expectedEvidenceYield / queryUnitCost,
+  );
+  const allocationUtility = computeAllocationUtility(recomputedScore, expectedYieldPerCost);
 
   return {
     rank: integer(row.rank, 1, 10_000),
@@ -191,9 +212,13 @@ export function normalizePersonResearchQueueItem(value: unknown): PersonResearch
     queryStrategy: text(row.queryStrategy, 80),
     queryStrategyLabel: text(row.queryStrategyLabel, 120),
     strategySampleSize: integer(row.strategySampleSize, 0, 500),
-    expectedSuccessRate: boundedNumber(row.expectedSuccessRate, 0, 1, 0.5),
-    expectedEvidenceYield: boundedNumber(row.expectedEvidenceYield, 0, 50, 0.5),
-    queryUnitCost: integerOr(row.queryUnitCost, 1, 1, 10),
+    costSampleSize: integer(row.costSampleSize, 0, 500),
+    expectedSuccessRate,
+    expectedEvidenceYield,
+    queryUnitCost,
+    expectedYieldPerCost,
+    allocationUtility,
+    averageQueryDurationMs: integer(row.averageQueryDurationMs, 0, 600_000),
     topHistoricalSourceType: text(row.topHistoricalSourceType, 80),
     topHistoricalSourceTypeLabel: text(row.topHistoricalSourceTypeLabel, 120),
     evidenceBasisCount: integer(row.evidenceBasisCount, 0, 10),
@@ -203,7 +228,7 @@ export function normalizePersonResearchQueueItem(value: unknown): PersonResearch
     whyNow: stringList(row.whyNow, 6, 220),
     cooldownUntil,
     personRoute: internalPersonRoute(row.personRoute, personSlug),
-    queryBudget: searchQueries.length ? queryBudget : 0,
+    queryBudget: searchQueries.length ? rawQueryBudget : 0,
   };
 }
 
@@ -222,7 +247,7 @@ export function normalizePersonResearchQueue(value: unknown): PersonResearchQueu
     ? row.queue
         .map(normalizePersonResearchQueueItem)
         .filter((item): item is PersonResearchQueueItem => Boolean(item))
-        .sort((a, b) => b.score - a.score || b.expectedEvidenceYield - a.expectedEvidenceYield || a.rank - b.rank || a.taskId.localeCompare(b.taskId))
+        .sort((a, b) => b.score - a.score || b.allocationUtility - a.allocationUtility || a.rank - b.rank || a.taskId.localeCompare(b.taskId))
     : [];
 
   const selected: PersonResearchQueueItem[] = [];
@@ -238,28 +263,30 @@ export function normalizePersonResearchQueue(value: unknown): PersonResearchQueu
     if (selected.length >= limits.tasks) break;
   }
 
-  const queryPeople = new Set<string>();
-  let allocatedQuerySlots = 0;
   const researchDate = text(row.researchDate, 40);
-  const bounded = selected.map((item, index) => {
-    const inCooldown = Boolean(item.cooldownUntil && researchDate && item.cooldownUntil > researchDate);
-    const canAllocate =
-      item.executor === "person_video" &&
-      item.searchQueries.length > 0 &&
-      !inCooldown &&
-      !queryPeople.has(item.personSlug) &&
-      allocatedQuerySlots < limits.activeQuerySlots;
-    if (canAllocate) {
-      queryPeople.add(item.personSlug);
-      allocatedQuerySlots += 1;
-    }
-    return {
-      ...item,
-      rank: index + 1,
-      searchQueries: canAllocate ? item.searchQueries.slice(0, 1) : [],
-      queryBudget: canAllocate ? 1 : 0,
-    };
-  });
+  const queryCandidates = selected
+    .map((item, index) => ({ item, index }))
+    .filter(({ item }) => {
+      const inCooldown = Boolean(item.cooldownUntil && researchDate && item.cooldownUntil > researchDate);
+      return item.executor === "person_video" && item.searchQueries.length > 0 && item.queryBudget > 0 && !inCooldown;
+    })
+    .sort((a, b) => b.item.allocationUtility - a.item.allocationUtility || b.item.score - a.item.score || a.index - b.index);
+
+  const allocatedIndexes = new Set<number>();
+  const allocatedPeople = new Set<string>();
+  for (const candidate of queryCandidates) {
+    if (allocatedPeople.has(candidate.item.personSlug)) continue;
+    if (allocatedIndexes.size >= limits.activeQuerySlots) break;
+    allocatedPeople.add(candidate.item.personSlug);
+    allocatedIndexes.add(candidate.index);
+  }
+
+  const bounded = selected.map((item, index) => ({
+    ...item,
+    rank: index + 1,
+    searchQueries: allocatedIndexes.has(index) ? item.searchQueries.slice(0, 1) : [],
+    queryBudget: allocatedIndexes.has(index) ? 1 : 0,
+  }));
 
   return {
     schemaVersion: integerOr(row.schemaVersion, 1, 1, 10),
@@ -269,10 +296,10 @@ export function normalizePersonResearchQueue(value: unknown): PersonResearchQueu
     candidateTaskCount: Math.max(integer(row.candidateTaskCount), bounded.length),
     selectedPeopleCount: selectedPeople.size,
     selectedTaskCount: bounded.length,
-    allocatedQuerySlots,
+    allocatedQuerySlots: allocatedIndexes.size,
     outcomeMemoryAttemptCount: integer(row.outcomeMemoryAttemptCount, 0, 100_000),
     queue: bounded,
-    methodology: text(row.methodology, 1_300),
+    methodology: text(row.methodology, 1_600),
   };
 }
 

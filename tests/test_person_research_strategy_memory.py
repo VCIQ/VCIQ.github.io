@@ -1,5 +1,6 @@
 import unittest
 
+from tools.person_research_cost_model import choose_cost_aware_query_strategy
 from tools.person_research_strategy_memory import (
     build_strategy_stats,
     choose_query_strategy,
@@ -88,6 +89,46 @@ class PersonResearchStrategyMemoryTests(unittest.TestCase):
         self.assertGreater(choice["historyAdjustment"], 0)
         self.assertGreater(choice["expectedSuccessRate"], 0.5)
         self.assertEqual(choice["topSourceType"], "video_platform")
+        self.assertNotIn("supported", choice)
+
+    def test_cost_aware_choice_prefers_same_yield_at_lower_measured_cost(self):
+        memory = {
+            "attempts": [
+                *[
+                    {
+                        "taskType": "viewpoint_verification",
+                        "query": "Alice 世界模型 演讲",
+                        "queryStrategy": "topic_speech",
+                        "outcome": "candidate_found",
+                        "candidateCount": 1,
+                        "durationMs": 40_000,
+                        "queryCostUnits": 4,
+                    }
+                    for _ in range(3)
+                ],
+                *[
+                    {
+                        "taskType": "viewpoint_verification",
+                        "query": "Alice 世界模型 访谈",
+                        "queryStrategy": "topic_interview",
+                        "outcome": "candidate_found",
+                        "candidateCount": 1,
+                        "durationMs": 10_000,
+                        "queryCostUnits": 1,
+                    }
+                    for _ in range(3)
+                ],
+            ]
+        }
+        choice = choose_cost_aware_query_strategy(
+            memory,
+            "viewpoint_verification",
+            ["Alice 世界模型 演讲", "Alice 世界模型 访谈"],
+        )
+        self.assertEqual(choice["strategy"], "topic_interview")
+        self.assertEqual(choice["expectedCostUnits"], 1)
+        self.assertGreater(choice["expectedYieldPerCost"], 0.5)
+        self.assertGreater(choice["costEfficiencyAdjustment"], 0)
         self.assertNotIn("supported", choice)
 
     def test_unseen_strategy_uses_small_prior_not_fake_history(self):
