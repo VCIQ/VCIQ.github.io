@@ -14,7 +14,19 @@
   border-bottom: 1px solid var(--border-soft);
 }
 .sectionHeading h2 { margin-bottom: 0; font: 500 23px/1.25 "Noto Serif SC", serif; }
-.sectionHeading > span { color: var(--faint); }
+.headingActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--faint);
+  font-size: 10px;
+}
+.headingActions a {
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+}
+.headingActions a:hover { color: var(--text); }
 
 .queueIntro {
   max-width: 980px;
@@ -156,4 +168,5 @@
   .queueItem { grid-template-columns: 38px minmax(0, 1fr); gap: 11px; }
   .queueRank { width: 34px; height: 34px; }
   .sectionHeading { flex-direction: column; gap: 8px; }
+  .headingActions { width: 100%; justify-content: space-between; }
 }
