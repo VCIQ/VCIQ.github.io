@@ -185,6 +185,32 @@ class VentureProfileStabilizerTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "cycle"):
                 stabilizer.stabilize_snapshot(payload, "catalog", max_passes=4)
 
+    def test_cycle_error_reports_changed_paths(self) -> None:
+        payload = {"state": "a"}
+
+        def finalize(value, _catalog):
+            result = copy.deepcopy(value)
+            result["state"] = "b"
+            return result, {}
+
+        def enforce(value, _catalog):
+            result = copy.deepcopy(value)
+            result["state"] = "a"
+            return result, {}
+
+        with patch.object(stabilizer, "finalize_snapshot", side_effect=finalize), patch.object(
+            stabilizer, "enforce_snapshot", side_effect=enforce
+        ):
+            with self.assertRaises(RuntimeError) as caught:
+                stabilizer.stabilize_snapshot(payload, "catalog", max_passes=4)
+
+        message = str(caught.exception)
+        self.assertIn("structuralDiff", message)
+        self.assertIn("finalizeStepDiff", message)
+        self.assertIn("$.state", message)
+        self.assertIn('"before":"a"', message)
+        self.assertIn('"after":"b"', message)
+
     def test_rejects_non_positive_pass_limit(self) -> None:
         with self.assertRaisesRegex(ValueError, "positive"):
             stabilizer.stabilize_snapshot({}, "catalog", max_passes=0)
