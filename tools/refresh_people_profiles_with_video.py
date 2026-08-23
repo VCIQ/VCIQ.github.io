@@ -105,6 +105,7 @@ def _record_research_attempt(
         "sourceTypes": list(source_type_counts),
         "sourceTypeCounts": source_type_counts,
         "durationMs": max(0, int(duration_ms)),
+        "costMeasured": True,
     })
 
 
