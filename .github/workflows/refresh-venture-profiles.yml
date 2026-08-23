@@ -16,6 +16,7 @@ on:
       - tools/finalize_venture_profiles.py
       - tools/enforce_venture_entity_semantics.py
       - tools/guard_venture_cross_field_noise.py
+      - tools/check_venture_cross_field_noise.py
       - tools/stabilize_venture_profiles.py
       - tools/stabilize_venture_research_evidence.py
       - tools/stabilize_venture_publication_pipeline.py
@@ -83,6 +84,7 @@ jobs:
             tools/finalize_venture_profiles.py \
             tools/enforce_venture_entity_semantics.py \
             tools/guard_venture_cross_field_noise.py \
+            tools/check_venture_cross_field_noise.py \
             tools/stabilize_venture_profiles.py \
             tools/stabilize_venture_research_evidence.py \
             tools/stabilize_venture_publication_pipeline.py \
@@ -138,7 +140,7 @@ jobs:
           python tools/enrich_venture_profiles.py --validate-only
           python tools/enrich_professional_venture_sources.py --validate-only
           python tools/stabilize_venture_guarded_publication.py --check
-          python tools/guard_venture_cross_field_noise.py --check
+          python tools/check_venture_cross_field_noise.py --check
           python -m unittest \
             tests.test_venture_profile_extraction \
             tests.test_venture_profile_noise_filters \
