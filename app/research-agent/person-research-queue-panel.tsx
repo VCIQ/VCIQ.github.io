@@ -51,7 +51,10 @@ export default function PersonResearchQueuePanel() {
           <p className="section-index">TODAY&apos;S RESEARCH QUEUE</p>
           <h2>今日人物研究队列</h2>
         </div>
-        <span>{queue.researchDate || "等待生成"}</span>
+        <div className={styles.headingActions}>
+          <span>{queue.researchDate || "等待生成"}</span>
+          <Link href="/research-agent/strategy/">查看研究策略 →</Link>
+        </div>
       </div>
 
       <p className={styles.queueIntro}>
