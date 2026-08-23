@@ -91,6 +91,8 @@ type ArticleRecord = {
   mentionedCompanies?: string[];
   mentionedPeople?: string[];
   matchedTrackingTerms?: string[];
+  qualityStatus?: string;
+  qualitySignals?: string[];
   publishedAt: string;
   importance?: number;
   firstSeenAt?: string;
@@ -369,6 +371,23 @@ function technologyArticleToUpdate(article: ArticleRecord): ChannelUpdateItem | 
   ]);
   const sources = articleSources(article);
   const base = articleToUpdate(article, `${track} · ${article.region}`);
+
+  // Keep every raw article in articles.json for provenance, while preventing
+  // weak keyword collisions and unassessed track-only items from entering the
+  // public technology event directory.
+  const explicitlyMissingTrackingTerm = (article.qualitySignals ?? []).some(
+    (signal) => signal.includes("未命中有效追踪词"),
+  );
+  if (article.qualityStatus === "低可信" && explicitlyMissingTrackingTerm) {
+    return null;
+  }
+  const hasResearchEvidence =
+    topics.length > 0 ||
+    article.qualityStatus === "可用" ||
+    (article.matchedTrackingTerms?.length ?? 0) > 0 ||
+    article.source.evidenceGrade === "A" ||
+    article.source.evidenceGrade === "B";
+  if (!hasResearchEvidence) return null;
 
   return {
     ...base,
