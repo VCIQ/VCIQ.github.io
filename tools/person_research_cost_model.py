@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Cost-aware strategy utilities for person research.
+"""Cost-aware and confidence-calibrated strategy utilities for person research.
 
 This layer learns only research execution cost and candidate yield. It never verifies a
-fact, changes task status, or bypasses success criteria. Cost-aware signals are used only
-to choose among bounded queries and allocate scarce active discovery slots.
+fact, changes task status, or bypasses success criteria. Low-sample observations are
+shrunk toward a neutral prior so one lucky search cannot become a permanent policy.
 """
 
 from __future__ import annotations
@@ -19,6 +19,10 @@ from tools.person_research_strategy_memory import (
 DEFAULT_COST_UNITS = 1.0
 MAX_COST_UNITS = 10.0
 COST_UNIT_MS = 10_000
+CALIBRATION_PRIOR_YIELD_PER_COST = 0.5
+CALIBRATION_PRIOR_STRENGTH = 4
+MIN_RELIABLE_COST_SAMPLES = 3
+HIGH_CONFIDENCE_COST_SAMPLES = 8
 
 
 def _number(value: Any, fallback: float = 0.0) -> float:
@@ -43,10 +47,39 @@ def attempt_cost_units(attempt: dict[str, Any]) -> float:
     return cost_units_from_duration(attempt.get("durationMs"))
 
 
+def strategy_confidence(sample_size: int) -> tuple[float, str]:
+    count = max(0, int(sample_size or 0))
+    weight = round(count / (count + CALIBRATION_PRIOR_STRENGTH), 3) if count else 0.0
+    if count == 0:
+        level = "unseen"
+    elif count < MIN_RELIABLE_COST_SAMPLES:
+        level = "low"
+    elif count < HIGH_CONFIDENCE_COST_SAMPLES:
+        level = "medium"
+    else:
+        level = "high"
+    return weight, level
+
+
+def calibrate_yield_per_cost(observed: Any, sample_size: int) -> float:
+    count = max(0, int(sample_size or 0))
+    raw = max(0.0, min(10.0, _number(observed, CALIBRATION_PRIOR_YIELD_PER_COST)))
+    if count <= 0:
+        return CALIBRATION_PRIOR_YIELD_PER_COST
+    calibrated = (
+        raw * count
+        + CALIBRATION_PRIOR_YIELD_PER_COST * CALIBRATION_PRIOR_STRENGTH
+    ) / (count + CALIBRATION_PRIOR_STRENGTH)
+    return round(calibrated, 3)
+
+
 def _matching_attempts(
     memory: dict[str, Any], task_type: str, strategy: str
 ) -> tuple[list[dict[str, Any]], bool]:
-    attempts = [row for row in memory.get("attempts") or [] if isinstance(row, dict)]
+    attempts = [
+        row for row in memory.get("attempts") or []
+        if isinstance(row, dict) and bool(row.get("costMeasured"))
+    ]
     task_specific = [
         row
         for row in attempts
@@ -94,19 +127,19 @@ def strategy_cost_stats(memory: dict[str, Any], task_type: str, strategy: str) -
     }
 
 
-def cost_efficiency_adjustment(sample_size: int, expected_yield_per_cost: float) -> int:
-    """Return a small bounded score adjustment only after at least two observations."""
-    if sample_size < 2:
+def cost_efficiency_adjustment(sample_size: int, calibrated_yield_per_cost: float) -> int:
+    """Return a small bounded score adjustment only after reliable measured history."""
+    if sample_size < MIN_RELIABLE_COST_SAMPLES:
         return 0
-    if expected_yield_per_cost >= 1.2:
+    if calibrated_yield_per_cost >= 1.2:
         return 8
-    if expected_yield_per_cost >= 0.75:
+    if calibrated_yield_per_cost >= 0.75:
         return 5
-    if expected_yield_per_cost >= 0.4:
+    if calibrated_yield_per_cost >= 0.4:
         return 2
-    if expected_yield_per_cost <= 0.15:
+    if calibrated_yield_per_cost <= 0.15:
         return -6
-    if expected_yield_per_cost <= 0.25:
+    if calibrated_yield_per_cost <= 0.25:
         return -3
     return 0
 
@@ -115,7 +148,7 @@ def build_cost_stats(attempts: list[dict[str, Any]]) -> dict[str, Any]:
     strategy_stats: dict[str, dict[str, float | int]] = {}
     task_strategy_stats: dict[str, dict[str, dict[str, float | int]]] = {}
     for row in attempts:
-        if not isinstance(row, dict):
+        if not isinstance(row, dict) or not bool(row.get("costMeasured")):
             continue
         task_type = clean(row.get("taskType"), 80) or "unknown"
         strategy = clean(row.get("queryStrategy"), 80) or classify_query_strategy(
@@ -161,18 +194,24 @@ def choose_cost_aware_query_strategy(
         base = dict(choose_query_strategy(memory, kind, [text]))
         strategy = clean(base.get("strategy"), 80)
         cost = strategy_cost_stats(memory, kind, strategy)
+        cost_samples = int(cost.get("sampleSize") or 0)
         expected_cost = max(DEFAULT_COST_UNITS, float(cost.get("expectedCostUnits") or DEFAULT_COST_UNITS))
         expected_yield = max(0.0, float(base.get("expectedYieldPerSlot") or 0.5))
-        expected_yield_per_cost = round(expected_yield / expected_cost, 3)
+        observed_yield_per_cost = round(expected_yield / expected_cost, 3)
+        calibrated_yield_per_cost = calibrate_yield_per_cost(observed_yield_per_cost, cost_samples)
+        confidence, confidence_level = strategy_confidence(cost_samples)
         cost_adjustment = cost_efficiency_adjustment(
-            int(cost.get("sampleSize") or 0), expected_yield_per_cost
+            cost_samples, calibrated_yield_per_cost
         )
         base.update(
             {
-                "costSampleSize": int(cost.get("sampleSize") or 0),
+                "costSampleSize": cost_samples,
                 "expectedCostUnits": round(expected_cost, 3),
                 "averageDurationMs": int(cost.get("averageDurationMs") or 0),
-                "expectedYieldPerCost": expected_yield_per_cost,
+                "expectedYieldPerCost": observed_yield_per_cost,
+                "calibratedYieldPerCost": calibrated_yield_per_cost,
+                "strategyConfidence": confidence,
+                "strategyConfidenceLevel": confidence_level,
                 "costEfficiencyAdjustment": cost_adjustment,
                 "costAwareRankingAdjustment": int(base.get("rankingAdjustment") or 0)
                 + cost_adjustment,
@@ -188,7 +227,10 @@ def choose_cost_aware_query_strategy(
                 "costSampleSize": 0,
                 "expectedCostUnits": DEFAULT_COST_UNITS,
                 "averageDurationMs": 0,
-                "expectedYieldPerCost": 0.5,
+                "expectedYieldPerCost": CALIBRATION_PRIOR_YIELD_PER_COST,
+                "calibratedYieldPerCost": CALIBRATION_PRIOR_YIELD_PER_COST,
+                "strategyConfidence": 0.0,
+                "strategyConfidenceLevel": "unseen",
                 "costEfficiencyAdjustment": 0,
                 "costAwareRankingAdjustment": 0,
             }
@@ -198,7 +240,8 @@ def choose_cost_aware_query_strategy(
     candidates.sort(
         key=lambda row: (
             -int(row.get("costAwareRankingAdjustment") or 0),
-            -float(row.get("expectedYieldPerCost") or 0),
+            -float(row.get("calibratedYieldPerCost") or CALIBRATION_PRIOR_YIELD_PER_COST),
+            -float(row.get("strategyConfidence") or 0),
             -float(row.get("expectedYieldPerSlot") or 0),
             int(row.get("originalIndex") or 0),
         )
@@ -206,12 +249,12 @@ def choose_cost_aware_query_strategy(
     return dict(candidates[0])
 
 
-def allocation_utility(research_score: int | float, expected_yield_per_cost: Any) -> float:
-    """Combine research value with cost-adjusted expected yield for query-slot allocation.
+def allocation_utility(research_score: int | float, calibrated_yield_per_cost: Any) -> float:
+    """Combine research value with confidence-calibrated cost-adjusted expected yield.
 
-    Unseen strategies default to yield-per-cost=0.5, producing a neutral 1.0 multiplier.
-    The multiplier is bounded so cheap searches can never overwhelm research importance.
+    Unseen strategies use a neutral calibrated yield-per-cost=0.5. The multiplier is
+    bounded so a cheap or lucky search can never overwhelm research importance.
     """
     score = max(0.0, _number(research_score))
-    efficiency = min(2.0, max(0.0, _number(expected_yield_per_cost, 0.5)))
+    efficiency = min(2.0, max(0.0, _number(calibrated_yield_per_cost, CALIBRATION_PRIOR_YIELD_PER_COST)))
     return round(score * (0.5 + efficiency), 3)
