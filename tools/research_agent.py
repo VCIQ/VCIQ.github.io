@@ -45,6 +45,38 @@ MAX_CHANGES = 36
 MAX_MODEL_CHANGES = 24
 MAX_EVIDENCE_PER_CHANGE = 4
 
+SOURCE_ONLY_FIELDS = {
+    "source",
+    "sources",
+    "sourceUrls",
+    "evidence",
+    "materials",
+}
+IDENTITY_FIELDS = {
+    "id",
+    "slug",
+    "name",
+    "englishName",
+    "aliases",
+    "handles",
+}
+MAINTENANCE_FIELDS = {
+    "warnings",
+    "fallback",
+    "discoveredVia",
+    "listingRole",
+    "trackingStatus",
+    "reviewStatus",
+}
+UNUSABLE_EVIDENCE_GRADES = {
+    "",
+    "未分级",
+    "unknown",
+    "ungraded",
+    "none",
+    "n/a",
+}
+
 VOLATILE_KEYS = {
     "generatedAt",
     "updatedAt",
@@ -74,6 +106,40 @@ ENTITY_LABELS = {
     "institutionEvent": "机构/资本事件",
     "listedDisclosure": "上市公司公告",
 }
+
+
+def _normalize_identity(value: Any) -> str:
+    return re.sub(r"[^0-9a-z\u3400-\u9fff]+", "", str(value or "").casefold())
+
+
+def _person_name_parts(value: Any) -> list[str]:
+    """Return likely individual names contained in a malformed person label.
+
+    Normal names can contain spaces, hyphens, middle dots, or an occasional
+    comma (for example ``Last, First``). The bad ingestion rows seen in this
+    dataset use Chinese list punctuation, repeated commas, or a trailing list
+    separator. Those stronger signals are intentionally used to avoid rejecting
+    legitimate international names.
+    """
+
+    name = re.sub(r"\s+", " ", str(value or "")).strip()
+    if not name:
+        return []
+    strong_list_signal = bool(re.search(r"[、，；;\n]", name))
+    repeated_ascii_commas = name.count(",") > 1 or name.endswith(",")
+    if not strong_list_signal and not repeated_ascii_commas:
+        return [name]
+    return [
+        part.strip(" \t、，,；;")
+        for part in re.split(r"[、，,；;\n]+", name)
+        if part.strip(" \t、，,；;")
+    ]
+
+
+def _is_multi_person_name(value: Any) -> bool:
+    return len(_person_name_parts(value)) > 1 or bool(
+        re.search(r"[、，,；;]\s*$", str(value or ""))
+    )
 
 
 def utc_now() -> datetime:
@@ -294,6 +360,38 @@ def _list_rows(
     return result
 
 
+def _person_record_score(record: Mapping[str, Any]) -> tuple[int, int, str]:
+    sources = record.get("sources")
+    source_count = len(sources) if isinstance(sources, list) else 0
+    substantive_fields = sum(
+        1
+        for key, value in record.items()
+        if key not in SOURCE_ONLY_FIELDS | IDENTITY_FIELDS and value not in (None, "", [], {})
+    )
+    # A deterministic final component makes selection independent of input order.
+    return substantive_fields, source_count, stable_hash(record)
+
+
+def _person_rows(payload: Mapping[str, Any]) -> dict[str, dict[str, Any]]:
+    """Build a person map while quarantining malformed and duplicate identities."""
+
+    rows = _list_rows(payload, "people", compact_person, ("slug", "id", "name"))
+    selected: dict[str, tuple[str, dict[str, Any]]] = {}
+    for entity_id, record in rows.items():
+        name = record.get("name")
+        if not name or _is_multi_person_name(name):
+            continue
+        identity = _normalize_identity(name)
+        if not identity:
+            continue
+        existing = selected.get(identity)
+        if existing is None or _person_record_score(record) > _person_record_score(
+            existing[1]
+        ):
+            selected[identity] = (entity_id, record)
+    return {entity_id: record for entity_id, record in selected.values()}
+
+
 def _flatten_disclosures(payload: Mapping[str, Any]) -> dict[str, dict[str, Any]]:
     companies = payload.get("companies", {})
     if not isinstance(companies, dict):
@@ -352,9 +450,7 @@ def build_snapshot(payloads: InputPayloads, generated_at: str) -> dict[str, Any]
         "marketCompany": _mapping_rows(
             payloads.market_profiles, "profiles", compact_market_company
         ),
-        "person": _list_rows(
-            payloads.people, "people", compact_person, ("slug", "id", "name")
-        ),
+        "person": _person_rows(payloads.people),
         "institutionEvent": _list_rows(
             payloads.institution_events,
             "events",
@@ -537,6 +633,127 @@ def _score_change(
     return 50
 
 
+def _classify_change(
+    dataset: str,
+    action: str,
+    changed_fields: list[str],
+    name: str,
+) -> tuple[str, str]:
+    fields = set(changed_fields)
+    if fields and fields <= SOURCE_ONLY_FIELDS:
+        return "source_refresh", "仅信源集合发生变化"
+    if fields and fields <= IDENTITY_FIELDS | MAINTENANCE_FIELDS:
+        return "entity_reconciliation", "仅实体标识或治理字段发生变化"
+
+    if dataset == "person":
+        if _is_multi_person_name(name):
+            return "entity_reconciliation", "人物名称包含多个身份，已隔离"
+        if action in {"added", "removed"}:
+            return "data_maintenance", "人物档案增删不等同于现实人物事件"
+        if fields & {"role", "organizations"}:
+            return "external_event", "人物任职或组织关系发生可核验变化"
+        return "data_maintenance", "人物资料补录或字段整理"
+
+    if action == "removed":
+        return "data_maintenance", "实体移出快照不代表现实事实撤销"
+    if dataset in EVENT_DATASETS:
+        if action == "added":
+            return "external_event", "新增事件型记录"
+        return "data_maintenance", "既有事件记录字段修订"
+    if action == "added":
+        return "data_maintenance", "新增实体档案不等同于新增现实事件"
+
+    external_fields = {
+        "ventureCompany": {
+            "status",
+            "technology",
+            "products",
+            "team",
+            "financing",
+            "capitalMarkets",
+        },
+        "marketCompany": {
+            "priceHistory",
+            "news",
+            "financials",
+            "valuation",
+            "company",
+        },
+        "institution": {"rankings", "stages", "sectors"},
+    }
+    if fields & external_fields.get(dataset, set()):
+        return "external_event", "包含可形成外部事实主张的字段变化"
+    if fields & SOURCE_ONLY_FIELDS:
+        return "source_refresh", "信源更新伴随非研究字段变化"
+    return "data_maintenance", "结构化资料维护"
+
+
+def _mark_person_reconciliations(
+    changes: list[dict[str, Any]],
+    previous_rows: Mapping[str, Any],
+    current_rows: Mapping[str, Any],
+) -> None:
+    person_changes = [row for row in changes if row.get("dataset") == "person"]
+    added = [row for row in person_changes if row.get("action") == "added"]
+    removed = [row for row in person_changes if row.get("action") == "removed"]
+
+    added_by_name: dict[str, list[dict[str, Any]]] = {}
+    removed_by_name: dict[str, list[dict[str, Any]]] = {}
+    categorized = [
+        *((item, added_by_name) for item in added),
+        *((item, removed_by_name) for item in removed),
+    ]
+    for row, target in categorized:
+        key = _normalize_identity(row.get("entityName"))
+        if key:
+            target.setdefault(key, []).append(row)
+
+    def mark(row: dict[str, Any], reason: str) -> None:
+        row["changeType"] = "entity_reconciliation"
+        row["classificationReason"] = reason
+        row["isResearchCandidate"] = False
+
+    # A stable person changing slug/id appears as a same-run remove/add pair.
+    for identity in set(added_by_name) & set(removed_by_name):
+        for row in added_by_name[identity] + removed_by_name[identity]:
+            mark(row, "同一人物在本轮以不同实体标识增删")
+
+    # Legacy corrupt rows may contain several people in one name and be replaced
+    # by clean individual rows. Neither side is a publishable person event.
+    for old in removed:
+        parts = {
+            _normalize_identity(part)
+            for part in _person_name_parts(old.get("entityName"))
+            if _normalize_identity(part)
+        }
+        matches = parts & set(added_by_name)
+        if len(parts) > 1 or _is_multi_person_name(old.get("entityName")):
+            mark(old, "多人物串联记录被拆分或移除")
+            for identity in matches:
+                for new in added_by_name[identity]:
+                    mark(new, "由多人物串联记录拆分出的实体")
+
+    # Defensive handling for legacy snapshots produced before duplicate
+    # quarantine was introduced.
+    for rows, side in ((previous_rows, "旧快照"), (current_rows, "新快照")):
+        identities: dict[str, list[str]] = {}
+        for entity_id, record in rows.items():
+            if not isinstance(record, dict):
+                continue
+            identity = _normalize_identity(record.get("name"))
+            if identity:
+                identities.setdefault(identity, []).append(str(entity_id))
+        duplicate_ids = {
+            entity_id
+            for entity_ids in identities.values()
+            if len(entity_ids) > 1
+            for entity_id in entity_ids
+        }
+        for row in person_changes:
+            if str(row.get("entityId")) in duplicate_ids:
+                mark(row, f"{side}存在重复人物实体")
+
+
 def diff_snapshots(previous: Mapping[str, Any], current: Mapping[str, Any]) -> list[dict[str, Any]]:
     previous_datasets = previous.get("datasets", {})
     current_datasets = current.get("datasets", {})
@@ -629,8 +846,28 @@ def diff_snapshots(previous: Mapping[str, Any], current: Mapping[str, Any]) -> l
                 }
             )
 
+    for change in changes:
+        change_type, reason = _classify_change(
+            str(change.get("dataset", "")),
+            str(change.get("action", "")),
+            [str(field) for field in change.get("changedFields", [])],
+            str(change.get("entityName", "")),
+        )
+        change["changeType"] = change_type
+        change["classificationReason"] = reason
+        change["isResearchCandidate"] = change_type == "external_event"
+
+    previous_people = previous_datasets.get("person", {})
+    current_people = current_datasets.get("person", {})
+    _mark_person_reconciliations(
+        changes,
+        previous_people if isinstance(previous_people, dict) else {},
+        current_people if isinstance(current_people, dict) else {},
+    )
+
     changes.sort(
         key=lambda item: (
+            item.get("changeType") == "external_event",
             int(item.get("importance", 0)),
             str(item.get("dataset", "")),
             str(item.get("entityName", "")),
@@ -640,10 +877,143 @@ def diff_snapshots(previous: Mapping[str, Any], current: Mapping[str, Any]) -> l
     return changes
 
 
-def _walk_source_candidates(value: Any) -> Iterable[dict[str, Any]]:
+def aggregate_external_changes(changes: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Collapse same-company, same-day disclosures into one research event."""
+
+    disclosure_groups: dict[tuple[str, str], list[dict[str, Any]]] = {}
+    passthrough: list[dict[str, Any]] = []
+    for change in changes:
+        record = change.get("record")
+        if (
+            change.get("changeType") == "external_event"
+            and change.get("dataset") == "listedDisclosure"
+            and change.get("action") == "added"
+            and isinstance(record, dict)
+        ):
+            company_key = str(
+                record.get("companySlug") or change.get("entityName") or ""
+            )
+            published_at = str(record.get("publishedAt") or "")[:10]
+            disclosure_groups.setdefault((company_key, published_at), []).append(change)
+        else:
+            passthrough.append(change)
+
+    aggregated: list[dict[str, Any]] = list(passthrough)
+    for (company_key, published_at), rows in disclosure_groups.items():
+        if len(rows) == 1:
+            aggregated.append(rows[0])
+            continue
+        first = rows[0]
+        documents = [
+            row["record"] for row in rows if isinstance(row.get("record"), dict)
+        ]
+        document_types = sorted(
+            {
+                str(document.get("documentType"))
+                for document in documents
+                if document.get("documentType")
+            }
+        )
+        titles = [
+            str(document.get("title"))
+            for document in documents
+            if document.get("title")
+        ]
+        entity_name = str(first.get("entityName") or company_key)
+        date_text = f"（{published_at}）" if published_at else ""
+        summary = f"{entity_name}{date_text}新增 {len(documents)} 份上市公司公告。"
+        record = {
+            "companySlug": company_key,
+            "companyName": entity_name,
+            "publishedAt": published_at,
+            "documentCount": len(documents),
+            "documentTypes": document_types,
+            "documents": documents,
+        }
+        member_ids = [str(row["id"]) for row in rows]
+        digest = stable_hash(
+            ["listedDisclosureDigest", company_key, published_at, member_ids]
+        )
+        aggregated.append(
+            {
+                "id": f"chg-{digest}",
+                "dataset": "listedDisclosure",
+                "entityType": ENTITY_LABELS["listedDisclosure"],
+                "entityId": (
+                    f"disclosure-digest-{company_key}-"
+                    f"{published_at or stable_hash(titles)}"
+                ),
+                "entityName": entity_name,
+                "action": "added",
+                "changedFields": [
+                    "documents",
+                    "documentTypes",
+                    "publishedAt",
+                ],
+                "summary": summary,
+                "importance": max(int(row.get("importance", 0)) for row in rows),
+                "before": None,
+                "after": {
+                    "documentCount": len(documents),
+                    "documentTypes": document_types,
+                    "publishedAt": published_at,
+                    "titles": titles,
+                },
+                "record": record,
+                "changeType": "external_event",
+                "classificationReason": "同一公司同日公告已聚合为一个研究事件",
+                "isResearchCandidate": True,
+                "groupSize": len(rows),
+                "memberChangeIds": member_ids,
+            }
+        )
+
+    aggregated.sort(
+        key=lambda item: (
+            item.get("changeType") == "external_event",
+            int(item.get("importance", 0)),
+            str(item.get("dataset", "")),
+            str(item.get("entityName", "")),
+        ),
+        reverse=True,
+    )
+    return aggregated
+
+
+def _walk_source_candidates(
+    value: Any,
+    path: tuple[str, ...] = (),
+    inherited_title: str = "",
+    inherited_date: str = "",
+    inherited_grade: str = "",
+) -> Iterable[dict[str, Any]]:
+    """Yield source-like rows, including malformed rows for quality reporting."""
+
     if isinstance(value, dict):
-        url = value.get("url") or value.get("sourceUrl") or value.get("originalPdfUrl")
-        if isinstance(url, str) and url.startswith(("http://", "https://")):
+        title = str(value.get("title") or inherited_title or "").strip()
+        published_at = str(
+            value.get("publishedAt") or value.get("date") or inherited_date or ""
+        ).strip()
+        grade = str(
+            value.get("evidenceGrade")
+            or value.get("level")
+            or value.get("evidenceLabel")
+            or inherited_grade
+            or "未分级"
+        ).strip()
+        has_url_key = any(
+            key in value for key in ("url", "sourceUrl", "originalPdfUrl")
+        )
+        source_container = any(
+            part in {"source", "sources", "evidence"} for part in path
+        )
+        if has_url_key or source_container:
+            raw_url = (
+                value.get("url")
+                or value.get("sourceUrl")
+                or value.get("originalPdfUrl")
+                or ""
+            )
             yield {
                 "sourceName": str(
                     value.get("name")
@@ -652,44 +1022,197 @@ def _walk_source_candidates(value: Any) -> Iterable[dict[str, Any]]:
                     or value.get("platform")
                     or "原始信源"
                 ),
-                "title": str(value.get("title") or "").strip(),
-                "url": url,
-                "publishedAt": str(value.get("publishedAt") or value.get("date") or ""),
-                "evidenceGrade": str(
-                    value.get("evidenceGrade")
-                    or value.get("level")
-                    or value.get("evidenceLabel")
-                    or "未分级"
-                ),
+                "title": title,
+                "url": str(raw_url).strip(),
+                "publishedAt": published_at,
+                "evidenceGrade": grade,
+                "_path": list(path),
+                "_section": str(value.get("section") or "").strip(),
             }
-        for item in value.values():
-            yield from _walk_source_candidates(item)
+        for key, item in value.items():
+            yield from _walk_source_candidates(
+                item,
+                (*path, str(key)),
+                title,
+                published_at,
+                grade if grade != "未分级" else inherited_grade,
+            )
     elif isinstance(value, list):
-        for item in value:
-            yield from _walk_source_candidates(item)
+        for index, item in enumerate(value):
+            yield from _walk_source_candidates(
+                item,
+                (*path, str(index)),
+                inherited_title,
+                inherited_date,
+                inherited_grade,
+            )
+    elif isinstance(value, str) and value.strip().startswith(("http://", "https://")):
+        yield {
+            "sourceName": "原始信源",
+            "title": inherited_title,
+            "url": value.strip(),
+            "publishedAt": inherited_date,
+            "evidenceGrade": inherited_grade or "未分级",
+            "_path": list(path),
+            "_section": "",
+        }
 
 
-def extract_sources(record: Mapping[str, Any], limit: int = MAX_EVIDENCE_PER_CHANGE) -> list[dict[str, Any]]:
-    sources: list[dict[str, Any]] = []
-    seen: set[str] = set()
-    for candidate in _walk_source_candidates(record):
-        url = candidate["url"]
-        if url in seen:
+def _parse_evidence_datetime(value: Any) -> datetime | None:
+    text = str(value or "").strip()
+    if not text:
+        return None
+    try:
+        parsed = datetime.fromisoformat(text.replace("Z", "+00:00"))
+    except ValueError:
+        try:
+            parsed = datetime.strptime(text[:10], "%Y-%m-%d")
+        except ValueError:
+            return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
+def _evidence_quality_issues(
+    candidate: Mapping[str, Any], as_of: datetime | None
+) -> list[str]:
+    issues: list[str] = []
+    url = str(candidate.get("url") or "").strip()
+    if not url.startswith(("http://", "https://")):
+        issues.append("missing_or_invalid_url")
+    if not str(candidate.get("title") or "").strip():
+        issues.append("missing_title")
+    grade = str(candidate.get("evidenceGrade") or "").strip().casefold()
+    if grade in UNUSABLE_EVIDENCE_GRADES:
+        issues.append("ungraded")
+    published_at = _parse_evidence_datetime(candidate.get("publishedAt"))
+    if published_at is None:
+        issues.append("missing_published_at")
+    if as_of is not None and published_at is not None and published_at > as_of:
+        issues.append("future_published_at")
+    return issues
+
+
+def _candidate_claim_fields(
+    candidate: Mapping[str, Any],
+    changed_fields: Iterable[str],
+    dataset: str,
+    action: str,
+) -> list[str]:
+    fields = [str(field) for field in changed_fields]
+    meaningful = [
+        field
+        for field in fields
+        if field not in SOURCE_ONLY_FIELDS | IDENTITY_FIELDS | MAINTENANCE_FIELDS
+    ]
+    section = str(candidate.get("_section") or "")
+    path = [str(part) for part in candidate.get("_path", [])]
+    bound: list[str] = []
+    if section and section in fields:
+        bound.append(section)
+    for part in path:
+        if part in meaningful and part not in bound:
+            bound.append(part)
+    if dataset in EVENT_DATASETS and action == "added" and not bound:
+        event_fields = {
+            "title",
+            "summary",
+            "documentType",
+            "publishedAt",
+            "date",
+            "documents",
+            "documentTypes",
+        }
+        bound.extend(field for field in meaningful if field in event_fields)
+    return bound
+
+
+def extract_sources(
+    record: Mapping[str, Any],
+    limit: int = MAX_EVIDENCE_PER_CHANGE,
+    *,
+    changed_fields: Iterable[str] = (),
+    dataset: str = "",
+    action: str = "updated",
+    as_of: datetime | str | None = None,
+) -> list[dict[str, Any]]:
+    as_of_datetime = (
+        as_of
+        if isinstance(as_of, datetime)
+        else _parse_evidence_datetime(as_of) if as_of is not None else utc_now()
+    )
+    candidates: dict[str, dict[str, Any]] = {}
+    for index, raw_candidate in enumerate(_walk_source_candidates(record)):
+        candidate = dict(raw_candidate)
+        candidate["claimFields"] = _candidate_claim_fields(
+            candidate, changed_fields, dataset, action
+        )
+        candidate["qualityIssues"] = _evidence_quality_issues(
+            candidate, as_of_datetime
+        )
+        candidate["qualityStatus"] = (
+            "passed" if not candidate["qualityIssues"] else "rejected"
+        )
+        candidate["supportStatus"] = (
+            "supports"
+            if candidate["qualityStatus"] == "passed" and candidate["claimFields"]
+            else "insufficient"
+        )
+        url = str(candidate.get("url") or "")
+        dedupe_key = url or f"missing-url-{index}-{stable_hash(candidate)}"
+        existing = candidates.get(dedupe_key)
+        if existing is None:
+            candidates[dedupe_key] = candidate
             continue
-        seen.add(url)
-        sources.append(candidate)
-        if len(sources) >= limit:
-            break
-    return sources
+        merged_fields = sorted(
+            set(existing.get("claimFields", [])) | set(candidate["claimFields"])
+        )
+        preferred = min(
+            (existing, candidate),
+            key=lambda item: (
+                len(item.get("qualityIssues", [])),
+                -len(str(item.get("title") or "")),
+            ),
+        )
+        preferred = dict(preferred)
+        preferred["claimFields"] = merged_fields
+        preferred["supportStatus"] = (
+            "supports"
+            if preferred.get("qualityStatus") == "passed" and merged_fields
+            else "insufficient"
+        )
+        candidates[dedupe_key] = preferred
+
+    ordered = sorted(
+        candidates.values(),
+        key=lambda item: (
+            item.get("supportStatus") != "supports",
+            item.get("qualityStatus") != "passed",
+            len(item.get("qualityIssues", [])),
+            str(item.get("url", "")),
+        ),
+    )
+    return ordered[:limit]
 
 
-def build_evidence_package(changes: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+def build_evidence_package(
+    changes: list[dict[str, Any]],
+    *,
+    as_of: datetime | str | None = None,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     public_changes: list[dict[str, Any]] = []
     evidence: list[dict[str, Any]] = []
     evidence_counter = 1
 
     for change in changes:
-        sources = extract_sources(change.get("record", {}))
+        sources = extract_sources(
+            change.get("record", {}),
+            changed_fields=change.get("changedFields", []),
+            dataset=str(change.get("dataset", "")),
+            action=str(change.get("action", "")),
+            as_of=as_of,
+        )
         evidence_ids: list[str] = []
         if not sources:
             sources = [
@@ -699,29 +1222,105 @@ def build_evidence_package(changes: list[dict[str, Any]]) -> tuple[list[dict[str
                     "url": "",
                     "publishedAt": "",
                     "evidenceGrade": "内部差异证据",
+                    "claimFields": [],
+                    "qualityIssues": ["no_external_evidence"],
+                    "qualityStatus": "rejected",
+                    "supportStatus": "insufficient",
                 }
             ]
+        source_rows: list[tuple[str, dict[str, Any]]] = []
         for source in sources:
             evidence_id = f"E{evidence_counter:03d}"
             evidence_counter += 1
             evidence_ids.append(evidence_id)
+            source_rows.append((evidence_id, source))
+
+        supported_fields = sorted(
+            {
+                field
+                for _, source in source_rows
+                if source.get("supportStatus") == "supports"
+                for field in source.get("claimFields", [])
+            }
+        )
+        raw_claim_fields = [
+            str(field)
+            for field in change.get("changedFields", [])
+            if str(field)
+            not in SOURCE_ONLY_FIELDS | IDENTITY_FIELDS | MAINTENANCE_FIELDS
+        ]
+        public_summary = str(change.get("summary", ""))
+        if change.get("action") == "updated" and supported_fields:
+            public_summary = _change_summary(
+                str(change.get("dataset", "")),
+                "updated",
+                str(change.get("entityName", "")),
+                supported_fields,
+                change.get("before") if isinstance(change.get("before"), dict) else {},
+                change.get("after") if isinstance(change.get("after"), dict) else {},
+            )
+
+        for evidence_id, source in source_rows:
+            public_source = {
+                key: value for key, value in source.items() if not key.startswith("_")
+            }
             evidence.append(
                 {
                     "id": evidence_id,
                     "changeId": change["id"],
                     "entityName": change["entityName"],
-                    "claim": change["summary"],
-                    **source,
+                    "claim": public_summary,
+                    **public_source,
                 }
             )
-        public_changes.append(
-            {
+
+        claim_bindings = []
+        for field in supported_fields:
+            claim_bindings.append(
+                {
+                    "field": field,
+                    "before": change.get("before", {}).get(field)
+                    if isinstance(change.get("before"), dict)
+                    else None,
+                    "after": change.get("after", {}).get(field)
+                    if isinstance(change.get("after"), dict)
+                    else None,
+                    "evidenceIds": [
+                        evidence_id
+                        for evidence_id, source in source_rows
+                        if source.get("supportStatus") == "supports"
+                        and field in source.get("claimFields", [])
+                    ],
+                }
+            )
+        supporting_ids = [
+            evidence_id
+            for evidence_id, source in source_rows
+            if source.get("supportStatus") == "supports"
+        ]
+        public_change = {
                 key: value
                 for key, value in change.items()
                 if key != "record"
+            } | {
+                "summary": public_summary,
+                "claimFields": supported_fields,
+                "claimBindings": claim_bindings,
+                "unsupportedClaimFields": sorted(
+                    set(raw_claim_fields) - set(supported_fields)
+                ),
+                "evidenceIds": evidence_ids,
+                "supportingEvidenceIds": supporting_ids,
+                "evidenceQuality": {
+                    "status": "passed" if supporting_ids else "insufficient",
+                    "supporting": len(supporting_ids),
+                    "total": len(source_rows),
+                },
+                "eligibleForKeyDevelopment": bool(
+                    change.get("changeType") == "external_event" and supporting_ids
+                ),
             }
-            | {"evidenceIds": evidence_ids}
-        )
+        public_changes.append(public_change)
     return public_changes, evidence
 
 
@@ -908,6 +1507,21 @@ def sanitize_analysis(raw: Mapping[str, Any], valid_evidence_ids: set[str]) -> d
             }
         )
 
+    deduplicated_developments: dict[tuple[str, tuple[str, ...]], dict[str, Any]] = {}
+    for item in developments:
+        key = (
+            _normalize_identity(item["title"]),
+            tuple(sorted(_normalize_identity(entity) for entity in item["entities"])),
+        )
+        existing = deduplicated_developments.get(key)
+        if existing is None:
+            deduplicated_developments[key] = item
+            continue
+        existing["evidenceIds"] = list(
+            dict.fromkeys([*existing["evidenceIds"], *item["evidenceIds"]])
+        )[:8]
+        existing["importance"] = max(existing["importance"], item["importance"])
+
     thesis_updates: list[dict[str, Any]] = []
     for item in raw.get("thesisUpdates", []) if isinstance(raw.get("thesisUpdates"), list) else []:
         if not isinstance(item, dict):
@@ -959,8 +1573,10 @@ def sanitize_analysis(raw: Mapping[str, Any], valid_evidence_ids: set[str]) -> d
         )
 
     return {
+        "mode": "model-analysis",
+        "isResearchJudgment": True,
         "executiveSummary": _clean_text(raw.get("executiveSummary"), 1600),
-        "keyDevelopments": developments[:10],
+        "keyDevelopments": list(deduplicated_developments.values())[:10],
         "thesisUpdates": thesis_updates[:10],
         "watchlist": watchlist[:10],
         "risks": risks[:10],
@@ -971,46 +1587,67 @@ def sanitize_analysis(raw: Mapping[str, Any], valid_evidence_ids: set[str]) -> d
 def fallback_analysis(changes: list[dict[str, Any]], reason: str) -> dict[str, Any]:
     if not changes:
         return {
-            "executiveSummary": "本期未检测到进入研究阈值的结构化实体变化。",
+            "mode": "structured-change-only",
+            "isResearchJudgment": False,
+            "executiveSummary": "本期没有通过证据质量门的外部事实候选。",
             "keyDevelopments": [],
             "thesisUpdates": [],
             "watchlist": [],
             "risks": [],
-            "methodologyNote": f"规则引擎输出；{reason}。未使用生成式判断。",
+            "methodologyNote": f"结构化变化检查；{reason}。未执行生成式研判。",
         }
 
+    grouped: dict[tuple[str, str, str], dict[str, Any]] = {}
+    for change in changes:
+        key = (
+            str(change.get("dataset", "")),
+            _normalize_identity(change.get("entityName")),
+            _normalize_identity(change.get("summary")),
+        )
+        existing = grouped.get(key)
+        if existing is None:
+            grouped[key] = copy.deepcopy(change)
+            continue
+        existing["evidenceIds"] = list(
+            dict.fromkeys(
+                [*existing.get("evidenceIds", []), *change.get("evidenceIds", [])]
+            )
+        )[:8]
+
     developments = []
-    for change in changes[:8]:
+    for change in list(grouped.values())[:8]:
         developments.append(
             {
-                "title": change["summary"],
+                "title": f"待复核｜{change['summary']}",
                 "assessment": (
-                    "该条目由结构化差异规则识别，尚未经过模型扩展研判；"
-                    "应优先查看所列原始证据，并结合后续披露确认影响。"
+                    "这是通过基础证据质量门的外部事实候选，仅确认结构化字段变化；"
+                    "当前未生成影响判断，不应视为研究结论。"
                 ),
                 "importance": max(1, min(5, round(int(change["importance"]) / 20))),
-                "confidence": "medium" if int(change["importance"]) >= 70 else "low",
+                "confidence": "low",
                 "entities": [change["entityName"]],
                 "evidenceIds": change.get("evidenceIds", [])[:4],
             }
         )
     return {
+        "mode": "structured-change-only",
+        "isResearchJudgment": False,
         "executiveSummary": (
-            f"本期检测到 {len(changes)} 条结构化变化；以下内容为确定性规则摘要，"
-            "不包含模型补充推断。"
+            f"本期有 {len(changes)} 条外部事实候选通过基础证据质量门。"
+            "当前为降级展示，仅列出字段变化，不提供模型研判或影响结论。"
         ),
         "keyDevelopments": developments,
         "thesisUpdates": [],
         "watchlist": [
             {
                 "item": "复核高优先级变化的原始信源",
-                "reason": "规则摘要只确认仓库字段发生变化，不替代对公告或官方页面的事实核验。",
+                "reason": "降级输出不包含研究判断，仍需人工核对证据是否完整支持对应字段。",
                 "nextEvidence": "监管文件、公司公告或至少一个独立高等级来源。",
                 "evidenceIds": changes[0].get("evidenceIds", [])[:4],
             }
         ],
         "risks": [],
-        "methodologyNote": f"规则引擎输出；{reason}。",
+        "methodologyNote": f"结构化变化降级展示；{reason}。未执行生成式研判。",
     }
 
 
@@ -1086,8 +1723,34 @@ def generate_report(
             baseline_source = "initialized-current"
 
     raw_changes = diff_snapshots(previous_snapshot, current_snapshot)
-    selected_changes = raw_changes[: max(1, max_changes)]
-    changes, evidence = build_evidence_package(selected_changes)
+    aggregated_changes = aggregate_external_changes(raw_changes)
+    research_candidates = [
+        change
+        for change in aggregated_changes
+        if change.get("changeType") == "external_event"
+    ]
+    packaged_candidates, candidate_evidence = build_evidence_package(
+        research_candidates, as_of=now
+    )
+    eligible_candidates = [
+        change
+        for change in packaged_candidates
+        if change.get("eligibleForKeyDevelopment") is True
+    ]
+    changes = copy.deepcopy(eligible_candidates[: max(1, max_changes)])
+    supporting_ids = {
+        evidence_id
+        for change in changes
+        for evidence_id in change.get("supportingEvidenceIds", [])
+    }
+    for change in changes:
+        change["evidenceIds"] = change.get("supportingEvidenceIds", [])
+    evidence = [
+        item
+        for item in candidate_evidence
+        if item.get("id") in supporting_ids
+        and item.get("supportStatus") == "supports"
+    ]
 
     api_key = os.environ.get("SILICONFLOW_API_KEY", "").strip()
     base_url = os.environ.get("SILICONFLOW_BASE_URL", DEFAULT_BASE_URL).strip() or DEFAULT_BASE_URL
@@ -1150,6 +1813,26 @@ def generate_report(
             "totalDetected": len(raw_changes),
             "total": len(changes),
             "byDataset": _dataset_counts(changes),
+            "byChangeType": _dataset_counts(
+                [
+                    {"dataset": str(change.get("changeType", "unknown"))}
+                    for change in raw_changes
+                ]
+            ),
+            "externalCandidates": len(research_candidates),
+            "qualityRejected": len(packaged_candidates) - len(eligible_candidates),
+            "maintenanceExcluded": sum(
+                change.get("changeType") != "external_event"
+                for change in raw_changes
+            ),
+            "aggregatedEvents": max(
+                0,
+                sum(
+                    change.get("changeType") == "external_event"
+                    for change in raw_changes
+                )
+                - len(research_candidates),
+            ),
             "highestImportance": max(
                 (int(change.get("importance", 0)) for change in changes),
                 default=0,
@@ -1161,9 +1844,11 @@ def generate_report(
         "methodology": {
             "stages": [
                 "stable entity snapshot",
-                "field-level change detection",
+                "person identity quarantine and duplicate reconciliation",
+                "field-level change detection and semantic classification",
                 "deterministic materiality ranking",
-                "evidence package",
+                "claim-field-evidence binding and evidence quality gate",
+                "same-entity event aggregation",
                 "LLM structured analysis",
                 "evidence-ID validation",
             ],
@@ -1194,6 +1879,11 @@ def validate_report(report: Mapping[str, Any]) -> list[str]:
         for item in evidence
         if isinstance(item, dict) and isinstance(item.get("id"), str)
     }
+    evidence_by_id = {
+        str(item.get("id")): item
+        for item in evidence
+        if isinstance(item, dict) and isinstance(item.get("id"), str)
+    }
     for change in changes:
         if not isinstance(change, dict):
             errors.append("change row must be an object")
@@ -1203,6 +1893,22 @@ def validate_report(report: Mapping[str, Any]) -> list[str]:
             errors.append(f"change {change.get('id')} has no evidenceIds")
         elif any(item not in evidence_ids for item in ids):
             errors.append(f"change {change.get('id')} references unknown evidence")
+        if change.get("eligibleForKeyDevelopment") is True:
+            if change.get("changeType") != "external_event":
+                errors.append(
+                    f"change {change.get('id')} is eligible but is not an external event"
+                )
+            bindings = change.get("claimBindings")
+            if not isinstance(bindings, list) or not bindings:
+                errors.append(f"change {change.get('id')} has no claim bindings")
+            for evidence_id in ids if isinstance(ids, list) else []:
+                row = evidence_by_id.get(str(evidence_id), {})
+                if row.get("qualityStatus") != "passed" or row.get(
+                    "supportStatus"
+                ) != "supports":
+                    errors.append(
+                        f"change {change.get('id')} references rejected evidence"
+                    )
     analysis = report.get("analysis", {})
     if isinstance(analysis, dict):
         for section in ("keyDevelopments", "thesisUpdates", "watchlist", "risks"):

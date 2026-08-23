@@ -62,6 +62,11 @@ on:
       - tools/validate_market_profiles.py
       - tools/refresh_people_profiles.py
       - tools/refresh_people_profiles_with_video.py
+      - tools/person_research_agent.py
+      - tools/person_research_scheduler.py
+      - tools/person_research_outcome_memory.py
+      - tools/person_research_strategy_memory.py
+      - tools/person_research_cost_model.py
       - tools/person_video_discovery.py
       - tools/crawl_official_companies.py
       - tools/bytedance_official_sources.py
@@ -184,6 +189,11 @@ jobs:
             tools/core_official_adapters.py \
             tools/source_portfolio.py \
             tools/full_refresh_input_guard.py \
+            tools/person_research_agent.py \
+            tools/person_research_scheduler.py \
+            tools/person_research_outcome_memory.py \
+            tools/person_research_strategy_memory.py \
+            tools/person_research_cost_model.py \
             tools/run_pipeline.py \
             tools/build_pipeline_health.py
           python -m unittest \
@@ -206,6 +216,10 @@ jobs:
             tests.test_core_official_adapters \
             tests.test_source_portfolio \
             tests.test_full_refresh_input_guard \
+            tests.test_person_research_agent \
+            tests.test_person_research_scheduler \
+            tests.test_person_research_outcome_memory \
+            tests.test_person_research_outcome_attribution \
             tests.test_listed_company_disclosures \
             tests.test_cninfo_structured_disclosures \
             tests.test_sec_structured_disclosures \
@@ -254,10 +268,14 @@ jobs:
         run: python tools/refine_eastmoney_snapshot.py
       - name: Backfill tracking sectors and coverage
         run: python tools/enrich_tracking_snapshot.py
-      - name: Refresh tracked people profiles and public videos
+      - name: Refresh people and publish the next research agenda and queue
         run: python tools/refresh_people_profiles_with_video.py
       - name: Apply rolling newest-first article retention
         run: python tools/snapshot_retention.py
+      - name: Rebuild the person research plan from final retained inputs
+        run: |
+          python tools/person_research_agent.py
+          python tools/person_research_scheduler.py
       - name: Finalize full refresh audit
         run: python tools/finalize_full_refresh.py
       - name: Update cross-run source health
@@ -291,6 +309,8 @@ jobs:
             public/data/listed_company_disclosures.json
             public/data/market_profiles.json
             public/data/people.json
+            public/data/person_research_agenda.json
+            public/data/person_research_queue.json
             public/data/person_research_outcomes.json
             public/data/source_health.json
           )
@@ -390,6 +410,8 @@ jobs:
             python tools/enrich_tracking_snapshot.py
             python tools/refresh_people_profiles_with_video.py
             python tools/snapshot_retention.py
+            python tools/person_research_agent.py
+            python tools/person_research_scheduler.py
             python tools/refresh_article_quality_gate.py
             python tools/finalize_full_refresh.py
             python tools/source_health_summary.py --check

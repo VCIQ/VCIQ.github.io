@@ -203,6 +203,46 @@ class PipelineControlPlaneTest(unittest.TestCase):
         self.assertTrue((self.root / "public/data/data_lineage.json").is_file())
         self.assertTrue((self.root / "public/data/pipeline_health.json").is_file())
 
+    def test_only_research_agent_can_publish_a_contract_valid_degraded_run(self) -> None:
+        output = self.root / "public/data/source.json"
+        output.write_text(
+            json.dumps({"generatedAt": "2026-08-06T02:00:00Z", "rows": [1]}) + "\n",
+            encoding="utf-8",
+        )
+        registry = load_registry(self.root)
+        with self.assertRaisesRegex(ValueError, "only supported for research-agent-daily"):
+            finalize_pipeline(
+                self.root,
+                registry,
+                "source-refresh",
+                status="degraded",
+                completed_at=datetime(2026, 8, 6, 2, tzinfo=UTC),
+            )
+
+        payload = fixture_registry()
+        payload["jobs"][0]["id"] = "research-agent-daily"
+        payload["jobs"][1]["dependencies"] = ["research-agent-daily"]
+        (self.root / "config/automation_jobs.json").write_text(
+            json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        registry = load_registry(self.root)
+        current, lineage, health = finalize_pipeline(
+            self.root,
+            registry,
+            "research-agent-daily",
+            status="degraded",
+            quality_gate="passed",
+            completed_at=datetime(2026, 8, 6, 2, tzinfo=UTC),
+        )
+
+        artifact = lineage["artifacts"]["public/data/source.json"]
+        self.assertEqual(current["status"], "degraded")
+        self.assertEqual(current["qualityGate"], "passed")
+        self.assertEqual(artifact["producer"]["status"], "degraded")
+        self.assertEqual(artifact["status"], "degraded")
+        self.assertEqual(health["overallStatus"], "degraded")
+
     def test_repeated_finalize_preserves_the_original_source_sha(self) -> None:
         output = self.root / "public/data/source.json"
         output.write_text(

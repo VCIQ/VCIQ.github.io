@@ -14,6 +14,7 @@ import datetime as dt
 import hashlib
 import json
 import re
+import tempfile
 from pathlib import Path
 from typing import Any, Iterable
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
@@ -67,6 +68,21 @@ def load_json(path: Path, fallback: Any) -> Any:
         return json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         return fallback
+
+
+def atomic_write_json(path: Path, payload: Any) -> None:
+    """Publish one JSON artifact without exposing a partially written file."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile(
+        "w",
+        encoding="utf-8",
+        dir=path.parent,
+        delete=False,
+    ) as handle:
+        json.dump(payload, handle, ensure_ascii=False, indent=2)
+        handle.write("\n")
+        temporary = Path(handle.name)
+    temporary.replace(path)
 
 
 def clean(value: Any, limit: int = 600) -> str:
@@ -468,8 +484,7 @@ def write_agenda(people_path: Path = PEOPLE_PATH, articles_path: Path = ARTICLES
         load_json(people_path, {"people": []}),
         load_json(articles_path, {"articles": []}),
     )
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(json.dumps(agenda, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    atomic_write_json(output_path, agenda)
     return agenda
 
 
@@ -496,8 +511,7 @@ def main() -> int:
             return 1
         print(f"Validated {agenda['taskCount']} active person research tasks.")
         return 0
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(agenda, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    atomic_write_json(args.output, agenda)
     print(f"Wrote {agenda['taskCount']} person research tasks to {args.output}")
     return 0
 

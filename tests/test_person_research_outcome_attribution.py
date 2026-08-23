@@ -1,4 +1,6 @@
 import importlib.util
+import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -40,6 +42,45 @@ class PersonResearchOutcomeAttributionTests(unittest.TestCase):
         self.assertEqual(measured["override"]["videoQueries"], ["Alice scheduled research query"])
         self.assertEqual(measured["override"]["roleHint"], "CEO")
         self.assertEqual(candidate["override"]["videoQueries"], ["Alice old curated query"])
+
+    def test_refreshed_snapshot_publishes_nonempty_agenda_and_queue_together(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            people_path = root / "people.json"
+            articles_path = root / "articles.json"
+            agenda_path = root / "person_research_agenda.json"
+            queue_path = root / "person_research_queue.json"
+            people_path.write_text(json.dumps({
+                "generatedAt": "2026-08-23T12:00:00Z",
+                "people": [{
+                    "slug": "alice",
+                    "name": "Alice",
+                    "role": "",
+                    "organizations": [],
+                    "materials": [],
+                    "sectors": ["AI"],
+                }],
+            }), encoding="utf-8")
+            articles_path.write_text('{"articles": []}\n', encoding="utf-8")
+
+            agenda, queue = REFRESH.publish_research_plan(
+                people_path=people_path,
+                articles_path=articles_path,
+                agenda_path=agenda_path,
+                queue_path=queue_path,
+                outcome_memory={"attempts": []},
+            )
+
+            self.assertGreater(agenda["taskCount"], 0)
+            self.assertGreater(queue["selectedTaskCount"], 0)
+            self.assertEqual(
+                json.loads(agenda_path.read_text(encoding="utf-8"))["taskCount"],
+                agenda["taskCount"],
+            )
+            self.assertEqual(
+                json.loads(queue_path.read_text(encoding="utf-8"))["selectedTaskCount"],
+                queue["selectedTaskCount"],
+            )
 
 
 if __name__ == "__main__":

@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
-import json
 import sys
 from pathlib import Path
 from typing import Any
@@ -23,6 +22,7 @@ if str(ROOT) not in sys.path:
 from tools.person_research_agent import (
     OUTPUT_PATH as AGENDA_PATH,
     PEOPLE_PATH,
+    atomic_write_json,
     clean,
     load_json,
     parse_date,
@@ -168,7 +168,7 @@ def _cost_efficiency_score(strategy: dict[str, Any]) -> tuple[int, str]:
         return 0, ""
     ratio = float(strategy.get("expectedYieldPerCost") or 0)
     cost = float(strategy.get("expectedCostUnits") or 1)
-    return score, f"单位成本预期产出 {ratio:.2f}（历史成本 {cost:.2f} 单位）"
+    return score, f"单位成本预期候选产出 {ratio:.2f}（历史成本 {cost:.2f} 单位）"
 
 
 def score_task(
@@ -372,7 +372,7 @@ def build_daily_queue(
         "methodology": (
             "队列只排序开放研究任务并分配有限主动检索槽位，不改变事实状态。"
             "Research Score 仍以任务价值、证据缺口、近期事件和交叉验证为主，并加入小幅、可解释的历史策略与成本效率修正；"
-            "主动 query slot 再按 Research Score × 单位成本预期产出的 allocation utility 分配。"
+            "主动 query slot 再按 Research Score × 单位成本预期候选产出的 allocation utility 分配。"
             "成本来自真实主动检索耗时的历史折算；无历史策略使用中性成本，不伪造成功率。"
             "candidate_found 仍只代表候选产出，不能绕过 successCriteria 或自动变成事实 supported。"
         ),
@@ -434,8 +434,7 @@ def main() -> int:
             f"{queue['selectedTaskCount']} tasks, {queue['allocatedQuerySlots']} active queries."
         )
         return 0
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(queue, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    atomic_write_json(args.output, queue)
     print(
         f"Wrote daily person research queue: {queue['selectedPeopleCount']} people, "
         f"{queue['selectedTaskCount']} tasks, {queue['allocatedQuerySlots']} active queries -> {args.output}"

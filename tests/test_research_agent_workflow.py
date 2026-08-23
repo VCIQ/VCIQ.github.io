@@ -17,12 +17,24 @@ class ResearchAgentWorkflowTest(unittest.TestCase):
         self.assertNotIn("queue: single", text)
         self.assertNotIn("cancel-in-progress:", text)
 
-    def test_research_generation_is_explicit_dispatch_only(self) -> None:
+    def test_research_has_independent_daily_reusable_and_manual_entrypoints(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("  workflow_call:", text)
+        self.assertIn('cron: "30 21 * * *"', text)
+        self.assertIn('timezone: "Asia/Taipei"', text)
         self.assertIn("  workflow_dispatch:", text)
         self.assertNotIn("workflow_run:", text)
         self.assertNotIn('workflows: ["Refresh public intelligence"]', text)
         self.assertNotIn("  push:\n", text)
+
+    def test_api_fallback_is_published_as_degraded_and_can_raise_a_persistent_alert(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn('health_status = "degraded" if status.endswith("-fallback") else "success"', text)
+        self.assertIn('--status "$RESEARCH_HEALTH_STATUS"', text)
+        self.assertIn("fallback_streak", text)
+        self.assertIn('if [ "${FALLBACK_STREAK:-0}" -ge 3 ]', text)
+        self.assertIn("Research Agent 连续规则降级", text)
+        self.assertIn("issues: write", text)
 
     def test_terminal_pages_deployment_dispatches_research(self) -> None:
         pages = PAGES_WORKFLOW.read_text(encoding="utf-8")

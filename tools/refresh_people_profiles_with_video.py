@@ -18,7 +18,14 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from tools import refresh_people_profiles as core
-from tools.person_research_agent import ARTICLES_PATH, PEOPLE_PATH, build_agenda, load_json
+from tools.person_research_agent import (
+    ARTICLES_PATH,
+    OUTPUT_PATH as AGENDA_OUTPUT_PATH,
+    PEOPLE_PATH,
+    atomic_write_json,
+    build_agenda,
+    load_json,
+)
 from tools.person_research_outcome_memory import (
     OUTPUT_PATH as OUTCOME_MEMORY_PATH,
     append_attempt,
@@ -26,7 +33,11 @@ from tools.person_research_outcome_memory import (
     source_host,
     write_memory,
 )
-from tools.person_research_scheduler import build_daily_queue, scheduled_attempts_by_slug
+from tools.person_research_scheduler import (
+    OUTPUT_PATH as QUEUE_OUTPUT_PATH,
+    build_daily_queue,
+    scheduled_attempts_by_slug,
+)
 from tools.person_research_strategy_memory import classify_source_type
 from tools.person_video_discovery import discover_person_video_materials
 from tools.wechat_channel_card_discovery import discover_embedded_wechat_video_materials
@@ -52,6 +63,30 @@ def _load_active_research_attempts() -> dict[str, dict[str, str]]:
         "memory": int(queue.get("outcomeMemoryAttemptCount") or 0),
     }
     return scheduled_attempts_by_slug(queue)
+
+
+def publish_research_plan(
+    *,
+    people_path: Path = PEOPLE_PATH,
+    articles_path: Path = ARTICLES_PATH,
+    agenda_path: Path = AGENDA_OUTPUT_PATH,
+    queue_path: Path = QUEUE_OUTPUT_PATH,
+    outcome_memory: dict[str, Any] | None = None,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Persist the agenda and next queue from the same refreshed snapshot."""
+    people_payload = load_json(people_path, {"people": []})
+    agenda = build_agenda(
+        people_payload,
+        load_json(articles_path, {"articles": []}),
+    )
+    queue = build_daily_queue(
+        agenda,
+        people_payload,
+        outcome_memory if outcome_memory is not None else load_memory(OUTCOME_MEMORY_PATH),
+    )
+    atomic_write_json(agenda_path, agenda)
+    atomic_write_json(queue_path, queue)
+    return agenda, queue
 
 
 def _candidate_with_research_query(candidate: dict[str, Any]) -> dict[str, Any]:
@@ -171,9 +206,15 @@ def main() -> int:
             f"{_RESEARCH_QUEUE_STATS.get('memory', 0)} prior attempts."
         )
     result = core.main()
-    if active:
+    if active and result == 0:
         write_memory(_OUTCOME_MEMORY, OUTCOME_MEMORY_PATH)
-        print(f"Person research outcome memory written: {len(_OUTCOME_MEMORY.get('attempts') or [])} attempts.")
+        agenda, queue = publish_research_plan(outcome_memory=_OUTCOME_MEMORY)
+        print(
+            "Person research plan written: "
+            f"{agenda.get('taskCount', 0)} agenda tasks / "
+            f"{queue.get('selectedTaskCount', 0)} queued tasks / "
+            f"{len(_OUTCOME_MEMORY.get('attempts') or [])} recorded attempts."
+        )
     return result
 
 

@@ -1,15 +1,19 @@
 name: Generate Research Agent v1
 
 on:
-  # Production refreshes hand off through entity reconciliation and a successful
-  # terminal Pages deployment before starting research. Keeping this workflow
-  # dispatch-only prevents the refresh-completion event from competing with the
-  # reconciliation writer for the single repository-writer queue slot.
+  workflow_call:
+  # Keep a daily research checkpoint even when the full-refresh/Pages handoff has
+  # no semantic data commit to dispatch. The shared writer queue still serializes
+  # publication with every other repository producer.
+  schedule:
+    - cron: "30 21 * * *"
+      timezone: "Asia/Taipei"
   workflow_dispatch:
 
 permissions:
   contents: write
   actions: write
+  issues: write
 
 concurrency:
   group: vciq-repository-writer-${{ github.ref }}
@@ -55,10 +59,12 @@ jobs:
         run: python tools/research_agent_runtime.py --bootstrap-git-ref HEAD^
 
       - name: Report model execution status
+        id: research-status
         shell: bash
         run: |
           python - <<'PY'
           import json
+          import os
           from pathlib import Path
 
           report = json.loads(
@@ -69,8 +75,23 @@ jobs:
           reason = ""
           if isinstance(methodology, dict):
               reason = str(methodology.get("fallbackReason") or "")
+          history = report.get("history")
+          fallback_streak = 0
+          if isinstance(history, list):
+              for row in reversed(history):
+                  row_status = str(row.get("runStatus") or "") if isinstance(row, dict) else ""
+                  if not row_status.endswith("-fallback"):
+                      break
+                  fallback_streak += 1
+          health_status = "degraded" if status.endswith("-fallback") else "success"
           print(f"Research Agent runStatus={status} fallbackReason={reason or '-'}")
-          if status == "api-fallback":
+          print(f"Research Agent healthStatus={health_status} fallbackStreak={fallback_streak}")
+          with Path(os.environ["GITHUB_OUTPUT"]).open("a", encoding="utf-8") as output:
+              output.write(f"run_status={status}\n")
+              output.write(f"health_status={health_status}\n")
+              output.write(f"fallback_streak={fallback_streak}\n")
+              output.write(f"fallback_reason={reason or 'unknown reason'}\n")
+          if health_status == "degraded":
               print(
                   f"::warning title=Research Agent degraded::"
                   f"Model analysis fell back to deterministic rules ({reason or 'unknown reason'})."
@@ -83,6 +104,8 @@ jobs:
       - name: Commit generated research data
         id: publish
         shell: bash
+        env:
+          RESEARCH_HEALTH_STATUS: ${{ steps.research-status.outputs.health_status }}
         run: |
           set -euo pipefail
           RESEARCH_PATHS=(
@@ -102,7 +125,8 @@ jobs:
 
           python tools/run_pipeline.py finalize \
             research-agent-daily \
-            --quality-gate passed
+            --quality-gate passed \
+            --status "$RESEARCH_HEALTH_STATUS"
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -120,12 +144,44 @@ jobs:
             python tools/research_agent.py --check
             python tools/run_pipeline.py finalize \
               research-agent-daily \
-              --quality-gate passed
+              --quality-gate passed \
+              --status "$RESEARCH_HEALTH_STATUS"
             git add "${RESEARCH_PATHS[@]}" "${CONTROL_PATHS[@]}"
             if ! git diff --cached --quiet; then
               git commit --amend --no-edit
             fi
           done
+
+      - name: Sync persistent Research Agent degradation issue
+        if: always() && steps.research-status.outcome == 'success'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEALTH_STATUS: ${{ steps.research-status.outputs.health_status }}
+          FALLBACK_STREAK: ${{ steps.research-status.outputs.fallback_streak }}
+          FALLBACK_REASON: ${{ steps.research-status.outputs.fallback_reason }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          TITLE='[自动告警] Research Agent 连续规则降级'
+          ISSUE_NUMBER=$(gh issue list \
+            --state open \
+            --search "$TITLE in:title" \
+            --json number,title \
+            --jq '.[] | select(.title == "[自动告警] Research Agent 连续规则降级") | .number' \
+            | head -n 1)
+
+          if [ "${FALLBACK_STREAK:-0}" -ge 3 ]; then
+            BODY="Research Agent 已连续 ${FALLBACK_STREAK} 轮退化为规则摘要。最近原因：${FALLBACK_REASON:-unknown reason}。运行：${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+            if [ -n "$ISSUE_NUMBER" ]; then
+              gh issue edit "$ISSUE_NUMBER" --body "$BODY"
+            else
+              gh issue create --title "$TITLE" --body "$BODY"
+            fi
+          elif [ "$HEALTH_STATUS" = "success" ] && [ -n "$ISSUE_NUMBER" ]; then
+            gh issue comment "$ISSUE_NUMBER" --body '模型研判已恢复，自动关闭连续降级告警。'
+            gh issue close "$ISSUE_NUMBER" --reason completed
+          fi
 
       - name: Deploy published research data
         if: steps.publish.outputs.changed == 'true'

@@ -203,12 +203,14 @@ def finalize_pipeline(
     lineage_output: Path | None = None,
     health_output: Path | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
-    if status != "success":
-        raise ValueError("only successful runs may update public lineage")
+    job = _job(registry, job_id)
+    if status not in {"success", "degraded"}:
+        raise ValueError("only successful or explicitly degraded runs may update public lineage")
+    if status == "degraded" and job_id != "research-agent-daily":
+        raise ValueError("degraded publication is only supported for research-agent-daily")
     if quality_gate != "passed":
         raise ValueError("public lineage requires quality_gate=passed")
 
-    job = _job(registry, job_id)
     missing = required_outputs(root, job)
     if missing:
         raise FileNotFoundError(

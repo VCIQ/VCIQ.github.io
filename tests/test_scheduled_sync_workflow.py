@@ -186,14 +186,27 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
         self.assertIn("tests.test_refresh_article_quality_gate", text)
 
 
-    def test_person_research_outcome_memory_is_staged_before_rebase(self) -> None:
+    def test_person_research_plan_and_outcome_memory_are_staged_before_rebase(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
         commit_block = text.split(
             "- name: Commit semantically changed public data", 1
         )[1].split("- name: Sync persistent source health issue", 1)[0]
         data_paths = commit_block.split("DATA_PATHS=(", 1)[1].split(")", 1)[0]
 
-        self.assertIn("public/data/person_research_outcomes.json", data_paths)
+        for path in (
+            "public/data/person_research_agenda.json",
+            "public/data/person_research_queue.json",
+            "public/data/person_research_outcomes.json",
+        ):
+            with self.subTest(path=path):
+                self.assertIn(path, data_paths)
+        self.assertIn("publish the next research agenda and queue", text)
+        final_inputs = text.index("Rebuild the person research plan from final retained inputs")
+        retention = text.index("python tools/snapshot_retention.py", final_inputs - 200)
+        agenda = text.index("python tools/person_research_agent.py", final_inputs)
+        queue = text.index("python tools/person_research_scheduler.py", final_inputs)
+        self.assertLess(retention, agenda)
+        self.assertLess(agenda, queue)
         self.assertIn(
             'git add "${DATA_PATHS[@]}" "${CONTROL_PATHS[@]}"',
             commit_block,

@@ -58,7 +58,7 @@ export default function PersonResearchQueuePanel() {
       </div>
 
       <p className={styles.queueIntro}>
-        先按研究价值选出今日任务，再把有限主动检索槽位优先给“单位成本预期证据产出”更高的任务。
+        先按研究价值选出今日任务，再把有限主动检索槽位优先给“单位成本预期候选材料产出”更高的任务。
         成本来自真实主动检索耗时的历史折算；Strategy / Cost Memory 只影响排序与预算，不能改变事实状态或证据门槛。
       </p>
 
@@ -81,7 +81,7 @@ export default function PersonResearchQueuePanel() {
         <article>
           <span>主动检索槽位</span>
           <strong>{queue.allocatedQuerySlots}/{queue.limits.activeQuerySlots}</strong>
-          <small>按研究价值 × 单位成本预期产出分配</small>
+          <small>按研究价值 × 单位成本预期候选产出分配</small>
         </article>
       </div>
 
@@ -118,12 +118,12 @@ export default function PersonResearchQueuePanel() {
                 {item.queryStrategyLabel ? <span>策略：{item.queryStrategyLabel}</span> : null}
                 {item.strategySampleSize > 0 ? (
                   <span>
-                    历史样本 {item.strategySampleSize} · 预期命中 {(item.expectedSuccessRate * 100).toFixed(0)}% · 单槽位产出 {item.expectedEvidenceYield.toFixed(2)}
+                    历史样本 {item.strategySampleSize} · 候选命中 {(item.expectedSuccessRate * 100).toFixed(0)}% · 单槽位候选 {item.expectedEvidenceYield.toFixed(2)}
                   </span>
                 ) : null}
                 {item.costSampleSize > 0 ? (
                   <span>
-                    成本样本 {item.costSampleSize} · 预期成本 {item.queryUnitCost.toFixed(2)} · 单位成本产出 {item.expectedYieldPerCost.toFixed(2)}
+                    成本样本 {item.costSampleSize} · 预期成本 {item.queryUnitCost.toFixed(2)} · 单位成本候选 {item.expectedYieldPerCost.toFixed(2)}
                   </span>
                 ) : null}
                 {item.averageQueryDurationMs > 0 ? <span>历史平均检索 {(item.averageQueryDurationMs / 1000).toFixed(1)} 秒</span> : null}

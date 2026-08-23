@@ -11,6 +11,7 @@ from __future__ import annotations
 import datetime as dt
 import json
 import sys
+import tempfile
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
@@ -236,4 +237,13 @@ def build_payload(attempts: list[dict[str, Any]]) -> dict[str, Any]:
 def write_memory(memory: dict[str, Any], path: Path = OUTPUT_PATH) -> None:
     payload = build_payload(normalized_attempts(memory))
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    with tempfile.NamedTemporaryFile(
+        "w",
+        encoding="utf-8",
+        dir=path.parent,
+        delete=False,
+    ) as handle:
+        json.dump(payload, handle, ensure_ascii=False, indent=2)
+        handle.write("\n")
+        temporary = Path(handle.name)
+    temporary.replace(path)

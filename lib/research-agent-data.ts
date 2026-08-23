@@ -10,6 +10,10 @@ export type ResearchAgentEvidence = {
   url: string;
   publishedAt: string;
   evidenceGrade: string;
+  claimFields?: string[];
+  qualityIssues?: string[];
+  qualityStatus?: "passed" | "rejected";
+  supportStatus?: "supports" | "insufficient";
 };
 
 export type ResearchAgentChange = {
@@ -25,6 +29,17 @@ export type ResearchAgentChange = {
   before: Record<string, unknown> | null;
   after: Record<string, unknown> | null;
   evidenceIds: string[];
+  changeType?: "external_event" | "data_maintenance" | "entity_reconciliation" | "source_refresh";
+  classificationReason?: string;
+  claimFields?: string[];
+  claimBindings?: {
+    field: string;
+    before: unknown;
+    after: unknown;
+    evidenceIds: string[];
+  }[];
+  supportingEvidenceIds?: string[];
+  eligibleForKeyDevelopment?: boolean;
 };
 
 export type ResearchDevelopment = {
@@ -74,9 +89,16 @@ export type ResearchAgentReport = {
     totalDetected: number;
     total: number;
     byDataset: Record<string, number>;
+    byChangeType?: Record<string, number>;
+    externalCandidates?: number;
+    qualityRejected?: number;
+    maintenanceExcluded?: number;
+    aggregatedEvents?: number;
     highestImportance: number;
   };
   analysis: {
+    mode?: "model-analysis" | "structured-change-only";
+    isResearchJudgment?: boolean;
     executiveSummary: string;
     keyDevelopments: ResearchDevelopment[];
     thesisUpdates: ResearchThesisUpdate[];

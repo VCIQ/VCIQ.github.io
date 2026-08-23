@@ -133,6 +133,24 @@
           "public": true
         },
         {
+          "path": "public/data/person_research_agenda.json",
+          "required": true,
+          "shared": false,
+          "public": true
+        },
+        {
+          "path": "public/data/person_research_queue.json",
+          "required": true,
+          "shared": false,
+          "public": true
+        },
+        {
+          "path": "public/data/person_research_outcomes.json",
+          "required": true,
+          "shared": false,
+          "public": true
+        },
+        {
           "path": "public/data/source_health.json",
           "required": true,
           "shared": true,
@@ -284,8 +302,16 @@
       "name": "每日证据约束研究摘要",
       "owner": "research",
       "workflow": ".github/workflows/research-agent-v1.yml",
-      "schedule": null,
-      "trigger": "after-successful-full-refresh-and-manual",
+      "schedule": "30 21 * * * @ Asia/Taipei",
+      "trigger": "scheduled-reusable-and-manual",
+      "researchObjectCoverage": [
+        "person",
+        "company"
+      ],
+      "pendingObjectCoverage": [
+        "technology",
+        "track"
+      ],
       "dependencies": [
         "public-intelligence-full-refresh"
       ],

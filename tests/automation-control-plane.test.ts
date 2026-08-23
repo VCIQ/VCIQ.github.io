@@ -18,6 +18,7 @@ type AutomationJob = {
   name: string;
   owner: string;
   workflow: string;
+  schedule?: string | null;
   trigger: string;
   dependencies: string[];
   inputs: string[];
@@ -136,6 +137,29 @@ test("automation jobs have unique identities, valid dependencies and auditable c
     state.set(jobId, "done");
   }
   for (const job of registry.jobs) visit(job.id);
+});
+
+test("research automation declares current object coverage and persistent person planning outputs", () => {
+  const fullRefresh = registry.jobs.find((job) => job.id === "public-intelligence-full-refresh");
+  const research = registry.jobs.find((job) => job.id === "research-agent-daily") as
+    | (AutomationJob & {
+        researchObjectCoverage?: string[];
+        pendingObjectCoverage?: string[];
+      })
+    | undefined;
+
+  assert.ok(fullRefresh);
+  assert.ok(research);
+  assert.deepEqual(research.researchObjectCoverage, ["person", "company"]);
+  assert.deepEqual(research.pendingObjectCoverage, ["technology", "track"]);
+  assert.ok(research.schedule);
+  for (const output of [
+    "public/data/person_research_agenda.json",
+    "public/data/person_research_queue.json",
+    "public/data/person_research_outcomes.json",
+  ]) {
+    assert.equal(fullRefresh.outputs.some((row) => row.path === output), true, output);
+  }
 });
 
 test("Pages builds current lineage without mutating committed public inputs", () => {
