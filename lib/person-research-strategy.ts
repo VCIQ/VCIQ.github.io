@@ -122,12 +122,12 @@ function text(value: unknown, limit = 500) {
 }
 
 function integer(value: unknown, min = 0, max = 100_000) {
-  const number = Number(value);
-  if (!Number.isFinite(number)) return min;
-  return Math.min(max, Math.max(min, Math.trunc(number)));
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) return min;
+  return Math.min(max, Math.max(min, Math.trunc(parsed)));
 }
 
-function number(value: unknown, min = 0, max = 100_000, fallback = 0) {
+function boundedNumber(value: unknown, min = 0, max = 100_000, fallback = 0) {
   const parsed = Number(value);
   if (!Number.isFinite(parsed)) return fallback;
   return Math.min(max, Math.max(min, parsed));
@@ -138,11 +138,11 @@ function ratio(numerator: number, denominator: number) {
 }
 
 function strategyLabel(strategy: string) {
-  return personResearchQueryStrategyLabels[strategy] ?? strategy || "未分类策略";
+  return personResearchQueryStrategyLabels[strategy] ?? (strategy || "未分类策略");
 }
 
 function sourceLabel(sourceType: string) {
-  return personResearchSourceTypeLabels[sourceType] ?? sourceType || "未分类来源";
+  return personResearchSourceTypeLabels[sourceType] ?? (sourceType || "未分类来源");
 }
 
 function normalizedStrategies(outcomes: UnknownRecord): PersonResearchStrategyRow[] {
@@ -157,7 +157,7 @@ function normalizedStrategies(outcomes: UnknownRecord): PersonResearchStrategyRo
       const errors = Math.min(attempts, integer(stat.errors, 0, 500));
       const candidates = integer(stat.candidates, 0, 10_000);
       const costSampleSize = integer(cost.attempts, 0, 500);
-      const averageCostUnits = costSampleSize > 0 ? number(cost.averageCostUnits, 1, 10, 1) : 1;
+      const averageCostUnits = costSampleSize > 0 ? boundedNumber(cost.averageCostUnits, 1, 10, 1) : 1;
       const averageDurationMs = costSampleSize > 0 ? integer(cost.averageDurationMs, 0, 600_000) : 0;
       const averageCandidates = ratio(candidates, attempts);
       return {
@@ -235,7 +235,7 @@ function observedTaskStrategy(
       const candidates = integer(stat.candidates, 0, 10_000);
       const averageCandidates = ratio(candidates, attempts);
       const costSamples = integer(cost.attempts, 0, 500);
-      const averageCostUnits = costSamples > 0 ? number(cost.averageCostUnits, 1, 10, 1) : 1;
+      const averageCostUnits = costSamples > 0 ? boundedNumber(cost.averageCostUnits, 1, 10, 1) : 1;
       return {
         strategy,
         strategyLabel: strategyLabel(strategy),
@@ -337,7 +337,9 @@ export function buildPersonResearchStrategyView(
       queueExamples: queueExamples(queue, taskType),
     };
   });
-  const attempts = Array.isArray(outcomes.attempts) ? outcomes.attempts.filter((item) => item && typeof item === "object") : [];
+  const attempts = Array.isArray(outcomes.attempts)
+    ? outcomes.attempts.filter((item) => item && typeof item === "object")
+    : [];
   return {
     generatedAt: text(outcomes.generatedAt, 80) || queue.generatedAt,
     attemptCount: attempts.length,
