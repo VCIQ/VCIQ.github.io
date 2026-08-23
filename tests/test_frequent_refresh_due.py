@@ -41,17 +41,29 @@ class FrequentRefreshDueTests(unittest.TestCase):
         self.assertTrue(result["due"])
         self.assertEqual(result["reason"], "age-threshold")
 
-    def test_previous_day_full_refresh_keeps_later_scheduled_run_blocked(self) -> None:
+    def test_previous_day_full_refresh_blocks_during_reservation(self) -> None:
+        result = evaluate_due(
+            payload(
+                last_news="2026-08-13T22:00:00+00:00",
+                last_full="2026-08-13T15:30:00+00:00",
+            ),
+            event_name="schedule",
+            now=datetime(2026, 8, 14, 0, 17, tzinfo=UTC),
+        )
+        self.assertFalse(result["due"])
+        self.assertEqual(result["reason"], "awaiting-daily-full-refresh")
+
+    def test_previous_day_full_refresh_fails_open_after_reservation(self) -> None:
         result = evaluate_due(
             payload(
                 last_news="2026-08-14T00:00:00+00:00",
-                last_full="2026-08-12T23:30:00+00:00",
+                last_full="2026-08-13T15:30:00+00:00",
             ),
             event_name="schedule",
             now=datetime(2026, 8, 14, 2, 17, tzinfo=UTC),
         )
-        self.assertFalse(result["due"])
-        self.assertEqual(result["reason"], "awaiting-daily-full-refresh")
+        self.assertTrue(result["due"])
+        self.assertEqual(result["reason"], "age-threshold")
 
     def test_manual_dispatch_bypasses_full_refresh_reservation(self) -> None:
         result = evaluate_due(
@@ -71,7 +83,7 @@ class FrequentRefreshDueTests(unittest.TestCase):
         self.assertTrue(result["due"])
         self.assertEqual(result["reason"], "age-threshold")
 
-    def test_rollout_without_full_marker_fails_open_after_bootstrap_window(self) -> None:
+    def test_rollout_without_full_marker_fails_open_after_reservation(self) -> None:
         result = evaluate_due(
             payload(last_news="2026-08-13T23:00:00+00:00"),
             event_name="schedule",

@@ -149,4 +149,5 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           echo "A real news crawl was published; refresh derived entity and candidate state before Pages."
-          gh workflow run company-candidate-discovery.yml --ref main
+          gh workflow run company-candidate-discovery.yml --ref main \
+            -f publish_after_reconciliation=true
