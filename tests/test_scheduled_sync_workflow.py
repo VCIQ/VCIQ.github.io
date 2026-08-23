@@ -186,5 +186,23 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
         self.assertIn("tests.test_refresh_article_quality_gate", text)
 
 
+    def test_person_research_outcome_memory_is_staged_before_rebase(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        commit_block = text.split(
+            "- name: Commit semantically changed public data", 1
+        )[1].split("- name: Sync persistent source health issue", 1)[0]
+        data_paths = commit_block.split("DATA_PATHS=(", 1)[1].split(")", 1)[0]
+
+        self.assertIn("public/data/person_research_outcomes.json", data_paths)
+        self.assertIn(
+            'git add "${DATA_PATHS[@]}" "${CONTROL_PATHS[@]}"',
+            commit_block,
+        )
+        self.assertIn("UNCOMMITTED=$(git status --short)", commit_block)
+        self.assertLess(
+            commit_block.index("UNCOMMITTED=$(git status --short)"),
+            commit_block.index("git pull --rebase -X theirs origin main"),
+        )
+
 if __name__ == "__main__":
     unittest.main()
