@@ -6,6 +6,7 @@ import unittest
 
 from tools import enforce_venture_entity_semantics as entity_semantics
 from tools import finalize_venture_profiles as structural_finalization
+from tools import guard_venture_cross_field_noise as cross_field_noise_guard
 from tools import normalize_venture_profiles as base_normalization
 from tools import refine_venture_research_evidence as research_evidence
 from tools import sanitize_venture_profiles as low_level_sanitization
@@ -203,6 +204,45 @@ class VenturePublicationFixedPointTests(unittest.TestCase):
             ),
             1,
         )
+
+    def test_capital_summary_dedup_uses_one_cross_gate_contract(self) -> None:
+        align_capital_event_patterns()
+        events = [
+            {
+                "date": "2026-06-01",
+                "title": "Helion funding event A",
+                "amount": "15.5 Billion",
+                "round": "Series G",
+                "investors": ["Example Capital"],
+            },
+            {
+                "date": "2026-05-01",
+                "title": "Helion funding event B",
+                "amount": "$15.5 Billion",
+                "round": "Series G",
+                "investors": ["Example Capital"],
+            },
+            {
+                "date": "2026-04-01",
+                "title": "Helion funding event C",
+                "amount": "$465 Million",
+                "round": "Series F",
+                "investors": ["Another Investor"],
+            },
+        ]
+
+        canonical = structural_finalization._capital_summary(events)
+        self.assertEqual(
+            canonical["disclosedAmounts"],
+            ["15.5 Billion", "$465 Million"],
+        )
+        self.assertIs(entity_semantics._capital_summary, structural_finalization._capital_summary)
+        self.assertIs(
+            cross_field_noise_guard._capital_summary,
+            structural_finalization._capital_summary,
+        )
+        self.assertEqual(entity_semantics._capital_summary(events), canonical)
+        self.assertEqual(cross_field_noise_guard._capital_summary(events), canonical)
 
     def test_context_without_transaction_action_is_not_a_capital_event(self) -> None:
         align_capital_event_patterns()
