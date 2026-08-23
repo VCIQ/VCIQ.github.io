@@ -62,10 +62,16 @@ export function technologyTermMatchesText(corpus: string, term: string) {
     return asciiBoundaryPattern(rawTerm)?.test(searchText) ?? false;
   }
 
-  const shortAsciiToken = /^[a-z0-9]+$/u.test(rawTerm) && rawTerm.length <= 3;
-  if (shortAsciiToken) {
+  // Match ASCII product names against the punctuation-preserving source text.
+  // Normalizing the whole corpus into one compact token made adjacent words
+  // such as "Kim, IonQ" look like the unrelated model brand "Kimi". Longer
+  // names intentionally keep an open right edge so version suffixes such as
+  // Qwen3.8 and Kimi-K2 continue to match.
+  const asciiToken = /^[a-z0-9]+$/u.test(rawTerm);
+  if (asciiToken) {
+    const rightBoundary = rawTerm.length <= 3 ? "([^a-z0-9]|$)" : "";
     const tokenPattern = new RegExp(
-      `(^|[^a-z0-9])${escapeRegExp(rawTerm)}([^a-z0-9]|$)`,
+      `(^|[^a-z0-9])${escapeRegExp(rawTerm)}${rightBoundary}`,
       "iu",
     );
     return tokenPattern.test(searchText);

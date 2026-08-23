@@ -99,6 +99,8 @@ test("reasoning topic requires model-specific evidence rather than generic reaso
 
 test("four-character model brands still match attached version numbers", () => {
   assert.equal(technologyTermMatchesText("Qwen3.8-Max is released", "Qwen"), true);
+  assert.equal(technologyTermMatchesText("Kimi-K2 is released", "Kimi"), true);
+  assert.equal(technologyTermMatchesText("Jungsang Kim, IonQ emerged", "Kimi"), false);
   const names = technologyTopicsForText(["Qwen3.8-Max is released"]).map(
     (topic) => topic.name,
   );

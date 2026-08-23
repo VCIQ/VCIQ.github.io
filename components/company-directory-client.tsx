@@ -3,6 +3,7 @@
 import { ArrowUpRight, Search } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { companyDirectoryRelationTags } from "../lib/company-directory-tags";
 import styles from "./company-directory.module.css";
 
 export type CompanyDirectoryRecord = {
@@ -170,8 +171,7 @@ export function CompanyDirectoryClient({
             </div>
 
             <div className={styles.relationRow}>
-              {[...company.relatedTracks, ...company.relatedTopics, ...company.relatedPeople]
-                .slice(0, 4)
+              {companyDirectoryRelationTags(company)
                 .map((item) => <span key={item}>{item}</span>)}
               {!company.relatedTracks.length && !company.relatedTopics.length && !company.relatedPeople.length
                 ? <span>关系待建立</span>
