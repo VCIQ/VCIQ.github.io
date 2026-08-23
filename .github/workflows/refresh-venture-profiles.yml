@@ -10,12 +10,16 @@ on:
       - tools/enrich_professional_venture_sources.py
       - tools/refine_venture_research_evidence.py
       - tools/normalize_venture_profiles.py
+      - tools/normalize_venture_publication.py
       - tools/sanitize_venture_profiles.py
       - tools/sanitize_venture_narratives.py
       - tools/finalize_venture_profiles.py
       - tools/enforce_venture_entity_semantics.py
       - tools/guard_venture_cross_field_noise.py
       - tools/stabilize_venture_profiles.py
+      - tools/stabilize_venture_research_evidence.py
+      - tools/stabilize_venture_publication_pipeline.py
+      - tools/stabilize_venture_guarded_publication.py
       - lib/catalog-data.ts
       - lib/venture-profile-data.ts
       - lib/professional-venture-data.ts
@@ -34,6 +38,9 @@ on:
       - tests/test_venture_entity_semantics.py
       - tests/test_venture_cross_field_guard.py
       - tests/test_stabilize_venture_profiles.py
+      - tests/test_stabilize_venture_research_evidence.py
+      - tests/test_stabilize_venture_publication_pipeline.py
+      - tests/test_stabilize_venture_guarded_publication.py
       - tests/venture-profile-data.test.ts
       - tests/professional-venture-data.test.ts
       - .github/workflows/refresh-venture-profiles.yml
@@ -70,12 +77,16 @@ jobs:
             tools/enrich_professional_venture_sources.py \
             tools/refine_venture_research_evidence.py \
             tools/normalize_venture_profiles.py \
+            tools/normalize_venture_publication.py \
             tools/sanitize_venture_profiles.py \
             tools/sanitize_venture_narratives.py \
             tools/finalize_venture_profiles.py \
             tools/enforce_venture_entity_semantics.py \
             tools/guard_venture_cross_field_noise.py \
-            tools/stabilize_venture_profiles.py
+            tools/stabilize_venture_profiles.py \
+            tools/stabilize_venture_research_evidence.py \
+            tools/stabilize_venture_publication_pipeline.py \
+            tools/stabilize_venture_guarded_publication.py
           python -m unittest \
             tests.test_venture_profile_extraction \
             tests.test_venture_profile_noise_filters \
@@ -88,7 +99,10 @@ jobs:
             tests.test_finalize_venture_profiles \
             tests.test_venture_entity_semantics \
             tests.test_venture_cross_field_guard \
-            tests.test_stabilize_venture_profiles
+            tests.test_stabilize_venture_profiles \
+            tests.test_stabilize_venture_research_evidence \
+            tests.test_stabilize_venture_publication_pipeline \
+            tests.test_stabilize_venture_guarded_publication
       - name: Record catalog revision
         id: catalog-before
         env:
@@ -114,32 +128,16 @@ jobs:
           TIANYANCHA_TOKEN: ${{ secrets.TIANYANCHA_TOKEN }}
           VENTURE_PROFILE_USER_AGENT: ${{ vars.VENTURE_PROFILE_USER_AGENT }}
         run: python tools/enrich_professional_venture_sources.py
-      - name: Align research fields to entity-specific evidence
+      - name: Reconcile all publication gates and cross-field guard to one fixed point
         run: |
-          python tools/refine_venture_research_evidence.py
-          python tools/refine_venture_research_evidence.py --check
-      - name: Normalize cross-entity profile consistency
-        run: python tools/normalize_venture_profiles.py
-      - name: Remove high-confidence cross-field profile noise
-        run: |
-          python tools/guard_venture_cross_field_noise.py
-          python tools/guard_venture_cross_field_noise.py --check
-      - name: Reach the shared terminal quality fixed point
-        run: |
-          python tools/stabilize_venture_profiles.py
-          python tools/stabilize_venture_profiles.py --check
-          python tools/finalize_venture_profiles.py --check
-          python tools/enforce_venture_entity_semantics.py --check
-          python tools/guard_venture_cross_field_noise.py --check
+          python tools/stabilize_venture_guarded_publication.py
+          python tools/stabilize_venture_guarded_publication.py --check
       - name: Validate generated venture snapshot
         run: |
           python tools/crawl_venture_profiles.py --validate-only
           python tools/enrich_venture_profiles.py --validate-only
           python tools/enrich_professional_venture_sources.py --validate-only
-          python tools/refine_venture_research_evidence.py --check
-          python tools/stabilize_venture_profiles.py --check
-          python tools/finalize_venture_profiles.py --check
-          python tools/enforce_venture_entity_semantics.py --check
+          python tools/stabilize_venture_guarded_publication.py --check
           python tools/guard_venture_cross_field_noise.py --check
           python -m unittest \
             tests.test_venture_profile_extraction \
@@ -153,7 +151,10 @@ jobs:
             tests.test_finalize_venture_profiles \
             tests.test_venture_entity_semantics \
             tests.test_venture_cross_field_guard \
-            tests.test_stabilize_venture_profiles
+            tests.test_stabilize_venture_profiles \
+            tests.test_stabilize_venture_research_evidence \
+            tests.test_stabilize_venture_publication_pipeline \
+            tests.test_stabilize_venture_guarded_publication
       - uses: actions/setup-node@v4
         with:
           node-version: 22
