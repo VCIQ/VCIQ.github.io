@@ -29,6 +29,15 @@ class VentureCrossFieldGuardTests(unittest.TestCase):
                         "problemSolved": "",
                         "marketOpportunity": "",
                     },
+                    "technology": (
+                        "IonQ receives final regulatory approval to acquire SkyWater Technology, creating a vertically integrated U.S. quantum platform. "
+                        "IonQ completes its acquisition of SkyWater Technology, creating the only vertically integrated full-stack quantum platform to accelerate quantum computing. "
+                        "IonQ builds trapped-ion quantum computers and quantum networking systems."
+                    ),
+                    "researchTechnology": (
+                        "IonQ completes its acquisition of SkyWater Technology, creating the only vertically integrated full-stack quantum platform to accelerate quantum computing. "
+                        "IonQ builds trapped-ion quantum computers and quantum networking systems."
+                    ),
                     "products": [
                         "离子阱量子计算机",
                         "云访问",
@@ -80,7 +89,28 @@ class VentureCrossFieldGuardTests(unittest.TestCase):
                             "sourceUrl": "https://ionq.com/news/raise",
                         },
                     ],
-                    "capitalMarkets": [],
+                    "capitalMarkets": [
+                        {
+                            "date": "2026-07-31",
+                            "type": "并购/退出",
+                            "title": "IonQ Receives Regulatory Approval for SkyWater Acquisition",
+                            "summary": "IonQ receives final regulatory approval to acquire SkyWater Technology, creating a vertically integrated U.S. quantum platform.",
+                            "amount": "",
+                            "round": "",
+                            "investors": [],
+                            "sourceUrl": "https://ionq.com/news/skywater-approval",
+                        },
+                        {
+                            "date": "2026-07-31",
+                            "type": "并购/退出",
+                            "title": "IonQ Completes Acquisition of SkyWater Technology",
+                            "summary": "IonQ completes its acquisition of SkyWater Technology, creating the only vertically integrated full-stack quantum platform to accelerate quantum computing.",
+                            "amount": "",
+                            "round": "",
+                            "investors": [],
+                            "sourceUrl": "https://ionq.com/news/skywater-complete",
+                        },
+                    ],
                     "sources": [],
                     "evidenceScore": 100,
                 }
@@ -108,6 +138,22 @@ class VentureCrossFieldGuardTests(unittest.TestCase):
         self.assertEqual(diagnostics["removedTeamMembers"], 4)
         self.assertEqual(diagnostics["removedProducts"], 1)
         self.assertEqual(diagnostics["removedFinancing"], 1)
+
+    def test_removes_known_capital_event_copy_from_technology(self) -> None:
+        cleaned, diagnostics = guard.guard_snapshot(self.payload(), CATALOG)
+        profile = cleaned["companies"]["ionq"]
+
+        self.assertEqual(
+            profile["technology"],
+            "IonQ builds trapped-ion quantum computers and quantum networking systems",
+        )
+        self.assertEqual(
+            profile["researchTechnology"],
+            "IonQ builds trapped-ion quantum computers and quantum networking systems",
+        )
+        self.assertNotIn("SkyWater", profile["technology"])
+        self.assertNotIn("acquisition", profile["researchTechnology"].casefold())
+        self.assertEqual(diagnostics["removedTechnologyCapitalCopy"], 2)
 
     def test_repairs_honorific_truncated_background_from_catalog(self) -> None:
         cleaned, diagnostics = guard.guard_snapshot(self.payload(), CATALOG)
