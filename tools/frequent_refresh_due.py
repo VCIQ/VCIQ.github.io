@@ -15,7 +15,7 @@ ARTICLES_PATH = ROOT / "public" / "data" / "articles.json"
 MIN_CRAWL_AGE_MINUTES = 90
 TAIPEI = ZoneInfo("Asia/Taipei")
 FULL_REFRESH_RESERVATION_START_HOUR = 6
-FULL_REFRESH_BOOTSTRAP_RELEASE_HOUR = 9
+FULL_REFRESH_RESERVATION_END_HOUR = 9
 
 
 def _parse_timestamp(value: Any) -> datetime | None:
@@ -72,6 +72,11 @@ def _awaiting_daily_full_refresh(payload: dict[str, Any], current: datetime) -> 
     local_now = current.astimezone(TAIPEI)
     if local_now.hour < FULL_REFRESH_RESERVATION_START_HOUR:
         return False
+    if local_now.hour >= FULL_REFRESH_RESERVATION_END_HOUR:
+        # The daily full refresh owns the early-morning window, but a failed or
+        # delayed full refresh must not freeze lightweight intelligence for the
+        # rest of the day. Fail open once the reservation window expires.
+        return False
 
     raw = last_full_refresh_at(payload)
     last_full = _parse_timestamp(raw)
@@ -79,10 +84,9 @@ def _awaiting_daily_full_refresh(payload: dict[str, Any], current: datetime) -> 
         return last_full.astimezone(TAIPEI).date() != local_now.date()
 
     # During rollout there may be no durable full-refresh marker yet because a
-    # frequent refresh replaced the old audit object. Reserve the morning
-    # window anyway, but fail open later in the day so bootstrap cannot freeze
-    # lightweight updates forever if the first post-rollout full refresh fails.
-    return local_now.hour < FULL_REFRESH_BOOTSTRAP_RELEASE_HOUR
+    # frequent refresh replaced the old audit object. Treat that the same as a
+    # missing daily full refresh while the reservation window is active.
+    return True
 
 
 def evaluate_due(
