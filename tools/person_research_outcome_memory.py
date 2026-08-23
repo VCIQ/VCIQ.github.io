@@ -120,6 +120,10 @@ def normalize_attempt(value: Any) -> dict[str, Any] | None:
         if len(source_types) >= 8:
             break
     duration_ms = max(0, min(600_000, int(_number(value.get("durationMs")))))
+    # A neutral 1.0 cost prior is useful for scheduling unseen strategies, but it is not
+    # empirical evidence. Only a real measured duration (or an explicit measured flag)
+    # may enter the cost-history sample used for confidence/calibration.
+    cost_measured = bool(value.get("costMeasured")) or duration_ms > 0
     explicit_cost = _number(value.get("queryCostUnits"))
     query_cost_units = (
         round(min(10.0, max(1.0, explicit_cost)), 3)
@@ -140,6 +144,7 @@ def normalize_attempt(value: Any) -> dict[str, Any] | None:
         "sourceTypeCounts": source_type_counts,
         "durationMs": duration_ms,
         "queryCostUnits": query_cost_units,
+        "costMeasured": cost_measured,
     }
 
 
@@ -218,9 +223,10 @@ def build_payload(attempts: list[dict[str, Any]]) -> dict[str, Any]:
     strategy_stats = build_strategy_stats(normalized)
     cost_stats = build_cost_stats(normalized)
     return {
-        "schemaVersion": 3,
+        "schemaVersion": 4,
         "generatedAt": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
         "attemptCount": len(normalized),
+        "measuredCostAttemptCount": sum(1 for row in normalized if row.get("costMeasured")),
         "attempts": normalized,
         "taskStats": task_stats,
         "sourceStats": source_stats,
@@ -228,7 +234,8 @@ def build_payload(attempts: list[dict[str, Any]]) -> dict[str, Any]:
         **cost_stats,
         "methodology": (
             "仅记录研究执行产出与成本；candidate_found 代表找到候选材料，不代表事实 supported。"
-            "查询策略、来源 ROI 与单位检索成本只用于排序与预算分配，不能绕过任务 successCriteria。"
+            "只有真实主动检索耗时才计入成本样本；中性成本先验不冒充历史观测。"
+            "查询策略、来源 ROI、成本置信度和探索预算只用于排序与预算分配，不能绕过任务 successCriteria。"
         ),
     }
 
