@@ -1,38 +1,77 @@
-name: Check venture profile refresh
+name: Observe venture profile refresh
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - .github/workflows/check-venture-profile-refresh.yml
+  workflow_run:
+    workflows:
+      - Refresh venture profiles
+    types: [completed]
+  workflow_dispatch:
 
 permissions:
   contents: write
   actions: read
 
+concurrency:
+  group: vciq-venture-profile-refresh-observer
+  cancel-in-progress: false
+
 jobs:
   inspect:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.head_branch == 'main'
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
-      - name: Record refresh status
+      - name: Record latest refresh status and failed log
         env:
           GH_TOKEN: ${{ github.token }}
+          EVENT_RUN_ID: ${{ github.event.workflow_run.id }}
         shell: bash
         run: |
-          # status revision: filtered-data-v6
+          set -euo pipefail
           mkdir -p diagnostics
-          gh run list \
-            --workflow refresh-venture-profiles.yml \
-            --limit 10 \
-            --json databaseId,status,conclusion,createdAt,updatedAt,headSha,url \
+
+          RUN_ID="$EVENT_RUN_ID"
+          if [ -z "$RUN_ID" ]; then
+            RUN_ID="$(gh run list --workflow refresh-venture-profiles.yml --branch main --limit 1 --json databaseId --jq '.[0].databaseId')"
+          fi
+          test -n "$RUN_ID"
+
+          gh run view "$RUN_ID" \
+            --json databaseId,status,conclusion,createdAt,updatedAt,headSha,url,event,workflowName \
             > diagnostics/venture-profile-refresh-status.json
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add diagnostics/venture-profile-refresh-status.json
-          git commit -m 'ci: record venture profile refresh status'
-          git pull --rebase origin main
-          git push origin HEAD:main
+
+          if [ "$(jq -r '.conclusion // ""' diagnostics/venture-profile-refresh-status.json)" = "failure" ]; then
+            gh run view "$RUN_ID" --log-failed > diagnostics/venture-profile-refresh-failure.txt 2>&1 || true
+          else
+            : > diagnostics/venture-profile-refresh-failure.txt
+          fi
+
+      - name: Publish diagnostic snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            diagnostics/venture-profile-refresh-status.json \
+            diagnostics/venture-profile-refresh-failure.txt
+          if git diff --cached --quiet; then
+            echo "Venture profile refresh diagnostic is already current."
+            exit 0
+          fi
+          git commit -m "ci: record venture profile refresh status"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+          done
