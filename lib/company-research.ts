@@ -123,10 +123,12 @@ export function buildCompanyResearchSnapshot(
       : "关键人物关系待建立",
   ];
   const level = score >= 70 ? "P1" : score >= 45 ? "P2" : "P3";
+  const curatedWhyImportant = `${company.summary} ${research.industryPosition}`.trim();
   const whyImportant = cleanSentence(
-    venture?.projectBackground?.summary ||
+    curatedWhyImportant ||
+      venture?.projectBackground?.summary ||
       venture?.background ||
-      `${company.summary} ${research.industryPosition}`,
+      company.product,
   );
 
   return {
