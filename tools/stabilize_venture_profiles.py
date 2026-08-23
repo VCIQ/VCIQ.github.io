@@ -22,6 +22,88 @@ CATALOG_PATH = ROOT / "lib" / "catalog-data.ts"
 SNAPSHOT_PATH = ROOT / "public" / "data" / "venture_profiles.json"
 
 
+def _state_key(payload: dict[str, Any]) -> str:
+    return json.dumps(
+        payload,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+
+
+def _preview(value: Any, limit: int = 180) -> str:
+    rendered = json.dumps(
+        value,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+    return rendered if len(rendered) <= limit else rendered[: limit - 1] + "…"
+
+
+def _diff_paths(
+    left: Any,
+    right: Any,
+    *,
+    prefix: str = "$",
+    limit: int = 30,
+) -> list[dict[str, str]]:
+    """Return a bounded set of JSON-style paths changed by one terminal gate."""
+    differences: list[dict[str, str]] = []
+
+    def visit(before: Any, after: Any, path: str) -> None:
+        if len(differences) >= limit or before == after:
+            return
+        if isinstance(before, dict) and isinstance(after, dict):
+            for key in sorted(set(before) | set(after), key=str):
+                if len(differences) >= limit:
+                    break
+                child = f"{path}.{key}"
+                if key not in before:
+                    differences.append(
+                        {"path": child, "before": "<missing>", "after": _preview(after[key])}
+                    )
+                elif key not in after:
+                    differences.append(
+                        {"path": child, "before": _preview(before[key]), "after": "<missing>"}
+                    )
+                else:
+                    visit(before[key], after[key], child)
+            return
+        if isinstance(before, list) and isinstance(after, list):
+            shared = min(len(before), len(after))
+            for index in range(shared):
+                if len(differences) >= limit:
+                    break
+                visit(before[index], after[index], f"{path}[{index}]")
+            for index in range(shared, max(len(before), len(after))):
+                if len(differences) >= limit:
+                    break
+                if index >= len(before):
+                    differences.append(
+                        {
+                            "path": f"{path}[{index}]",
+                            "before": "<missing>",
+                            "after": _preview(after[index]),
+                        }
+                    )
+                else:
+                    differences.append(
+                        {
+                            "path": f"{path}[{index}]",
+                            "before": _preview(before[index]),
+                            "after": "<missing>",
+                        }
+                    )
+            return
+        differences.append(
+            {"path": path, "before": _preview(before), "after": _preview(after)}
+        )
+
+    visit(left, right, prefix)
+    return differences
+
+
 def stabilize_snapshot(
     payload: dict[str, Any],
     catalog_text: str,
@@ -39,7 +121,7 @@ def stabilize_snapshot(
         raise ValueError("max_passes must be positive")
 
     current = copy.deepcopy(payload)
-    seen: set[str] = set()
+    seen: dict[str, int] = {_state_key(current): 0}
     history: list[dict[str, Any]] = []
 
     for pass_index in range(1, max_passes + 1):
@@ -55,6 +137,8 @@ def stabilize_snapshot(
 
         structural_stable = structural_check == semantic
         semantic_stable = semantic_check == semantic
+        structural_diff = _diff_paths(semantic, structural_check)
+        semantic_diff = _diff_paths(semantic, semantic_check)
         history.append(
             {
                 "pass": pass_index,
@@ -64,6 +148,8 @@ def stabilize_snapshot(
                 "semantic": semantic_diagnostics,
                 "structuralCheck": structural_check_diagnostics,
                 "semanticCheck": semantic_check_diagnostics,
+                "structuralDiff": structural_diff,
+                "semanticDiff": semantic_diff,
             }
         )
         if structural_stable and semantic_stable:
@@ -73,21 +159,41 @@ def stabilize_snapshot(
                 "history": history,
             }
 
-        state_key = json.dumps(
-            semantic,
-            ensure_ascii=False,
-            sort_keys=True,
-            separators=(",", ":"),
-        )
+        state_key = _state_key(semantic)
         if state_key in seen:
             raise RuntimeError(
-                "venture terminal gates entered a cycle before reaching a shared fixed point"
+                "venture terminal gates entered a cycle before reaching a shared fixed point: "
+                + json.dumps(
+                    {
+                        "repeatedFromPass": seen[state_key],
+                        "repeatedAtPass": pass_index,
+                        "structuralStable": structural_stable,
+                        "semanticStable": semantic_stable,
+                        "structuralDiff": structural_diff,
+                        "semanticDiff": semantic_diff,
+                        "finalizeStepDiff": _diff_paths(current, structural),
+                        "semanticStepDiff": _diff_paths(structural, semantic),
+                    },
+                    ensure_ascii=False,
+                    sort_keys=True,
+                )
             )
-        seen.add(state_key)
+        seen[state_key] = pass_index
         current = semantic
 
+    last = history[-1] if history else {}
     raise RuntimeError(
-        f"venture terminal gates did not converge within {max_passes} passes"
+        f"venture terminal gates did not converge within {max_passes} passes: "
+        + json.dumps(
+            {
+                "structuralStable": last.get("structuralStable"),
+                "semanticStable": last.get("semanticStable"),
+                "structuralDiff": last.get("structuralDiff", []),
+                "semanticDiff": last.get("semanticDiff", []),
+            },
+            ensure_ascii=False,
+            sort_keys=True,
+        )
     )
 
 
