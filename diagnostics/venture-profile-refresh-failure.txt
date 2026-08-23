@@ -1,17 +1,29 @@
-refresh	Align research fields to entity-specific evidence	﻿2026-08-23T03:20:28.9625274Z ##[group]Run python tools/refine_venture_research_evidence.py
-refresh	Align research fields to entity-specific evidence	2026-08-23T03:20:28.9625852Z ^[[36;1mpython tools/refine_venture_research_evidence.py^[[0m
-refresh	Align research fields to entity-specific evidence	2026-08-23T03:20:28.9626356Z ^[[36;1mpython tools/refine_venture_research_evidence.py --check^[[0m
-refresh	Align research fields to entity-specific evidence	2026-08-23T03:20:28.9649270Z shell: /usr/bin/bash -e {0}
-refresh	Align research fields to entity-specific evidence	2026-08-23T03:20:28.9649581Z env:
-refresh	Align research fields to entity-specific evidence	2026-08-23T03:20:28.9649947Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.14/x64
-refresh	Align research fields to entity-specific evidence	2026-08-23T03:20:28.9650362Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib/pkgconfig
-refresh	Align research fields to entity-specific evidence	2026-08-23T03:20:28.9650754Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
-refresh	Align research fields to entity-specific evidence	2026-08-23T03:20:28.9651100Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
-refresh	Align research fields to entity-specific evidence	2026-08-23T03:20:28.9651432Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
-refresh	Align research fields to entity-specific evidence	2026-08-23T03:20:28.9651776Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib
-refresh	Align research fields to entity-specific evidence	2026-08-23T03:20:28.9652066Z ##[endgroup]
-refresh	Align research fields to entity-specific evidence	2026-08-23T03:20:30.1061497Z {"capitalEventsRerouted": 197, "companiesRefined": 63, "institutionsRefined": 11, "productDescriptionsReplaced": 297, "teamSummariesCleared": 32}
-refresh	Align research fields to entity-specific evidence	2026-08-23T03:20:30.1062939Z Updated public/data/venture_profiles.json.
-refresh	Align research fields to entity-specific evidence	2026-08-23T03:20:30.9712308Z {"capitalEventsRerouted": 14, "companiesRefined": 13, "institutionsRefined": 0, "productDescriptionsReplaced": 1, "teamSummariesCleared": 0}
-refresh	Align research fields to entity-specific evidence	2026-08-23T03:20:30.9713816Z Venture profile snapshot requires evidence alignment.
-refresh	Align research fields to entity-specific evidence	2026-08-23T03:20:30.9807866Z ##[error]Process completed with exit code 1.
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	﻿2026-08-23T03:34:56.2469602Z ##[group]Run python tools/stabilize_venture_guarded_publication.py
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:34:56.2470147Z ^[[36;1mpython tools/stabilize_venture_guarded_publication.py^[[0m
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:34:56.2470596Z ^[[36;1mpython tools/stabilize_venture_guarded_publication.py --check^[[0m
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:34:56.2491727Z shell: /usr/bin/bash -e {0}
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:34:56.2492079Z env:
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:34:56.2492390Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.14/x64
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:34:56.2493101Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib/pkgconfig
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:34:56.2493555Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:34:56.2493964Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:34:56.2494649Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:34:56.2495054Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:34:56.2495374Z ##[endgroup]
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:35:00.3311812Z Traceback (most recent call last):
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:35:00.3321615Z   File "/home/runner/work/VCIQ.github.io/VCIQ.github.io/tools/stabilize_venture_guarded_publication.py", line 167, in <module>
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:35:00.3322932Z     raise SystemExit(main())
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:35:00.3323467Z                      ^^^^^^
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:35:00.3324207Z   File "/home/runner/work/VCIQ.github.io/VCIQ.github.io/tools/stabilize_venture_guarded_publication.py", line 141, in main
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:35:00.3325076Z     stabilized, diagnostics = stabilize_guarded_publication_snapshot(
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:35:00.3325631Z                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:35:00.3326677Z   File "/home/runner/work/VCIQ.github.io/VCIQ.github.io/tools/stabilize_venture_guarded_publication.py", line 69, in stabilize_guarded_publication_snapshot
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:35:00.3327662Z     published, publication_diagnostics = publication_stabilizer(
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:35:00.3328158Z                                          ^^^^^^^^^^^^^^^^^^^^^^^
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:35:00.3329066Z   File "/home/runner/work/VCIQ.github.io/VCIQ.github.io/tools/stabilize_venture_publication_pipeline.py", line 215, in stabilize_publication_snapshot
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:35:00.3329950Z     candidate, terminal_diagnostics = terminal_stabilizer(
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:35:00.3342575Z                                       ^^^^^^^^^^^^^^^^^^^^
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:35:00.3353139Z   File "/home/runner/work/VCIQ.github.io/VCIQ.github.io/tools/stabilize_venture_profiles.py", line 83, in stabilize_snapshot
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:35:00.3354135Z     raise RuntimeError(
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:35:00.3354908Z RuntimeError: venture terminal gates entered a cycle before reaching a shared fixed point
+refresh	Reconcile all publication gates and cross-field guard to one fixed point	2026-08-23T03:35:00.3523199Z ##[error]Process completed with exit code 1.
