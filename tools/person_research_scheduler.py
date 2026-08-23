@@ -2,8 +2,8 @@
 """Schedule a bounded daily queue from the active person research agenda.
 
 The scheduler does not verify facts. It only ranks already-generated research tasks and
-allocates a small number of active discovery slots. Every score is deterministic and
-published as a component breakdown so the queue remains auditable.
+allocates a small number of active discovery slots. Low-sample strategy ROI is calibrated
+toward a neutral prior and a small exploration reserve prevents premature policy lock-in.
 """
 
 from __future__ import annotations
@@ -43,6 +43,7 @@ MAX_DAILY_PEOPLE = 10
 MAX_DAILY_TASKS = 20
 MAX_TASKS_PER_PERSON = 2
 MAX_ACTIVE_QUERY_SLOTS = 10
+MAX_EXPLORATION_QUERY_SLOTS = 2
 RECENT_WINDOW_DAYS = 30
 DAY = 24 * 60 * 60
 
@@ -56,6 +57,7 @@ TYPE_SCORE = {
 }
 STATUS_SCORE = {"candidate_found": 12, "open": 5, "blocked": -20}
 VIDEO_TASK_TYPES = {"first_party_evidence", "viewpoint_verification", "freshness_update"}
+LOW_CONFIDENCE_LEVELS = {"unseen", "low"}
 
 
 def _person_map(people_payload: dict[str, Any]) -> dict[str, dict[str, Any]]:
@@ -164,11 +166,11 @@ def _executor(task: dict[str, Any]) -> str:
 def _cost_efficiency_score(strategy: dict[str, Any]) -> tuple[int, str]:
     sample_size = int(strategy.get("costSampleSize") or 0)
     score = int(strategy.get("costEfficiencyAdjustment") or 0)
-    if sample_size < 2:
+    if sample_size < 3:
         return 0, ""
-    ratio = float(strategy.get("expectedYieldPerCost") or 0)
+    ratio = float(strategy.get("calibratedYieldPerCost") or 0.5)
     cost = float(strategy.get("expectedCostUnits") or 1)
-    return score, f"单位成本预期产出 {ratio:.2f}（历史成本 {cost:.2f} 单位）"
+    return score, f"校准后单位成本预期产出 {ratio:.2f}（{sample_size} 个成本样本，历史成本 {cost:.2f} 单位）"
 
 
 def score_task(
@@ -224,6 +226,64 @@ def score_task(
     return sum(breakdown.values()), breakdown, [reason for reason in reasons if reason][:6], cooldown_until
 
 
+def _allocate_query_slots(
+    selected: list[dict[str, Any]], research_date: str
+) -> tuple[set[str], set[str]]:
+    """Allocate exploit slots plus a bounded low-confidence exploration reserve."""
+    best_query_per_person: dict[str, dict[str, Any]] = {}
+    for row in selected:
+        in_cooldown = bool(row.get("cooldownUntil") and row["cooldownUntil"] > research_date)
+        if row["executor"] != "person_video" or not row["searchQueries"] or in_cooldown:
+            continue
+        slug = row["personSlug"]
+        previous = best_query_per_person.get(slug)
+        if not previous or (
+            float(row.get("allocationUtility") or 0),
+            int(row.get("score") or 0),
+            -int(row.get("rank") or 0),
+        ) > (
+            float(previous.get("allocationUtility") or 0),
+            int(previous.get("score") or 0),
+            -int(previous.get("rank") or 0),
+        ):
+            best_query_per_person[slug] = row
+
+    query_candidates = list(best_query_per_person.values())
+    exploration_candidates = sorted(
+        [
+            row for row in query_candidates
+            if clean(row.get("strategyConfidenceLevel"), 20) in LOW_CONFIDENCE_LEVELS
+        ],
+        key=lambda row: (
+            -int(row.get("score") or 0),
+            float(row.get("strategyConfidence") or 0),
+            int(row.get("rank") or 0),
+        ),
+    )
+    exploration_limit = min(
+        MAX_EXPLORATION_QUERY_SLOTS,
+        MAX_ACTIVE_QUERY_SLOTS,
+        len(exploration_candidates),
+    )
+    exploration_ids = {
+        row["taskId"] for row in exploration_candidates[:exploration_limit]
+    }
+
+    remaining_slots = max(0, MAX_ACTIVE_QUERY_SLOTS - len(exploration_ids))
+    exploitation_candidates = sorted(
+        [row for row in query_candidates if row["taskId"] not in exploration_ids],
+        key=lambda row: (
+            -float(row.get("allocationUtility") or 0),
+            -int(row.get("score") or 0),
+            int(row.get("rank") or 0),
+        ),
+    )
+    exploitation_ids = {
+        row["taskId"] for row in exploitation_candidates[:remaining_slots]
+    }
+    return exploration_ids | exploitation_ids, exploration_ids
+
+
 def build_daily_queue(
     agenda: dict[str, Any],
     people_payload: dict[str, Any],
@@ -252,7 +312,8 @@ def build_daily_queue(
                 task, person, generated_at, memory, research_date, strategy
             )
             expected_yield_per_cost = float(strategy.get("expectedYieldPerCost") or 0.5)
-            utility = allocation_utility(score, expected_yield_per_cost)
+            calibrated_yield_per_cost = float(strategy.get("calibratedYieldPerCost") or 0.5)
+            utility = allocation_utility(score, calibrated_yield_per_cost)
             candidates.append({
                 "personSlug": str(slug),
                 "personName": clean(record.get("personName") or person.get("name"), 120),
@@ -269,10 +330,13 @@ def build_daily_queue(
                 "queryStrategyLabel": clean(strategy.get("strategyLabel"), 120),
                 "strategySampleSize": int(strategy.get("sampleSize") or 0),
                 "costSampleSize": int(strategy.get("costSampleSize") or 0),
+                "strategyConfidence": float(strategy.get("strategyConfidence") or 0),
+                "strategyConfidenceLevel": clean(strategy.get("strategyConfidenceLevel"), 20) or "unseen",
                 "expectedSuccessRate": float(strategy.get("expectedSuccessRate") or 0.5),
                 "expectedEvidenceYield": float(strategy.get("expectedYieldPerSlot") or 0.5),
                 "queryUnitCost": float(strategy.get("expectedCostUnits") or 1.0),
                 "expectedYieldPerCost": expected_yield_per_cost,
+                "calibratedYieldPerCost": calibrated_yield_per_cost,
                 "allocationUtility": utility,
                 "averageQueryDurationMs": int(strategy.get("averageDurationMs") or 0),
                 "topHistoricalSourceType": clean(strategy.get("topSourceType"), 80),
@@ -290,7 +354,7 @@ def build_daily_queue(
     candidates.sort(key=lambda row: (
         -int(row["score"]),
         -float(row.get("allocationUtility") or 0),
-        -float(row.get("expectedYieldPerCost") or 0),
+        -float(row.get("calibratedYieldPerCost") or 0),
         priority_order.get(row["priority"], 9),
         row["personSlug"],
         row["taskId"],
@@ -314,47 +378,27 @@ def build_daily_queue(
     for rank, row in enumerate(selected, start=1):
         row["rank"] = rank
         row["queryBudget"] = 0
+        row["allocationMode"] = "none"
 
-    best_query_per_person: dict[str, dict[str, Any]] = {}
-    for row in selected:
-        in_cooldown = bool(row.get("cooldownUntil") and row["cooldownUntil"] > research_date)
-        if row["executor"] != "person_video" or not row["searchQueries"] or in_cooldown:
-            continue
-        slug = row["personSlug"]
-        previous = best_query_per_person.get(slug)
-        if not previous or (
-            float(row.get("allocationUtility") or 0),
-            int(row.get("score") or 0),
-            -int(row.get("rank") or 0),
-        ) > (
-            float(previous.get("allocationUtility") or 0),
-            int(previous.get("score") or 0),
-            -int(previous.get("rank") or 0),
-        ):
-            best_query_per_person[slug] = row
-
-    query_candidates = sorted(
-        best_query_per_person.values(),
-        key=lambda row: (
-            -float(row.get("allocationUtility") or 0),
-            -int(row.get("score") or 0),
-            int(row.get("rank") or 0),
-        ),
-    )
-    allocated_ids = {
-        row["taskId"] for row in query_candidates[:MAX_ACTIVE_QUERY_SLOTS]
-    }
+    allocated_ids, exploration_ids = _allocate_query_slots(selected, research_date)
     for row in selected:
         if row["taskId"] in allocated_ids:
             row["queryBudget"] = 1
             row["searchQueries"] = row["searchQueries"][:1]
+            if row["taskId"] in exploration_ids:
+                row["allocationMode"] = "explore"
+            elif row.get("strategyConfidenceLevel") in LOW_CONFIDENCE_LEVELS:
+                row["allocationMode"] = "baseline"
+            else:
+                row["allocationMode"] = "exploit"
         elif row["executor"] == "person_video":
             row["searchQueries"] = []
 
     allocated = len(allocated_ids)
+    exploration_used = len(exploration_ids)
     memory_attempts = len(memory.get("attempts") or [])
     return {
-        "schemaVersion": 4,
+        "schemaVersion": 5,
         "generatedAt": generated_at,
         "researchDate": research_date,
         "limits": {
@@ -362,18 +406,20 @@ def build_daily_queue(
             "tasks": MAX_DAILY_TASKS,
             "tasksPerPerson": MAX_TASKS_PER_PERSON,
             "activeQuerySlots": MAX_ACTIVE_QUERY_SLOTS,
+            "explorationQuerySlots": MAX_EXPLORATION_QUERY_SLOTS,
         },
         "candidateTaskCount": len(candidates),
         "selectedPeopleCount": len(selected_people),
         "selectedTaskCount": len(selected),
         "allocatedQuerySlots": allocated,
+        "explorationQuerySlotsUsed": exploration_used,
         "outcomeMemoryAttemptCount": memory_attempts,
         "queue": selected,
         "methodology": (
             "队列只排序开放研究任务并分配有限主动检索槽位，不改变事实状态。"
-            "Research Score 仍以任务价值、证据缺口、近期事件和交叉验证为主，并加入小幅、可解释的历史策略与成本效率修正；"
-            "主动 query slot 再按 Research Score × 单位成本预期产出的 allocation utility 分配。"
-            "成本来自真实主动检索耗时的历史折算；无历史策略使用中性成本，不伪造成功率。"
+            "Strategy Calibration 会把低样本单位成本产出向中性先验收缩，避免一次偶然成功形成长期策略锁定。"
+            "每日最多保留 2 个低置信度探索槽位，其余预算优先利用校准后高价值策略；同一人物仍最多 1 个主动 query slot。"
+            "只有真实主动检索耗时计入成本样本；无历史成本使用中性先验但不冒充观测。"
             "candidate_found 仍只代表候选产出，不能绕过 successCriteria 或自动变成事实 supported。"
         ),
     }
@@ -405,6 +451,7 @@ def scheduled_attempts_by_slug(queue: dict[str, Any]) -> dict[str, dict[str, str
                 "taskType": clean(row.get("taskType"), 80),
                 "query": queries[0],
                 "queryStrategy": clean(row.get("queryStrategy"), 80),
+                "allocationMode": clean(row.get("allocationMode"), 20),
             }
     return result
 
@@ -429,16 +476,21 @@ def main() -> int:
         if queue["allocatedQuerySlots"] > MAX_ACTIVE_QUERY_SLOTS:
             print("Person research queue exceeds active query budget.")
             return 1
+        if queue["explorationQuerySlotsUsed"] > MAX_EXPLORATION_QUERY_SLOTS:
+            print("Person research queue exceeds exploration budget.")
+            return 1
         print(
             f"Validated person research queue: {queue['selectedPeopleCount']} people, "
-            f"{queue['selectedTaskCount']} tasks, {queue['allocatedQuerySlots']} active queries."
+            f"{queue['selectedTaskCount']} tasks, {queue['allocatedQuerySlots']} active queries, "
+            f"{queue['explorationQuerySlotsUsed']} exploration slots."
         )
         return 0
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(queue, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(
         f"Wrote daily person research queue: {queue['selectedPeopleCount']} people, "
-        f"{queue['selectedTaskCount']} tasks, {queue['allocatedQuerySlots']} active queries -> {args.output}"
+        f"{queue['selectedTaskCount']} tasks, {queue['allocatedQuerySlots']} active queries, "
+        f"{queue['explorationQuerySlotsUsed']} exploration slots -> {args.output}"
     )
     return 0
 
