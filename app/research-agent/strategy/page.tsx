@@ -104,7 +104,8 @@ export default function PersonResearchStrategyPage() {
               {task.mode === "observed" ? (
                 <p>
                   历史 {task.attempts} 次 · 候选命中 {percent(task.expectedSuccessRate)} ·
-                  平均候选 {task.averageCandidates.toFixed(2)} · 单位成本产出 {task.candidateYieldPerCost.toFixed(2)}
+                  平均候选 {task.averageCandidates.toFixed(2)}
+                  {task.costSampleSize > 0 ? ` · 单位成本产出 ${task.candidateYieldPerCost.toFixed(2)}` : " · 成本样本待积累"}
                 </p>
               ) : task.mode === "rule_prior" ? (
                 <p>
@@ -115,7 +116,13 @@ export default function PersonResearchStrategyPage() {
               )}
               <div className={styles.strategyFacts}>
                 {task.sourceTypeLabel ? <span>优先来源：{task.sourceTypeLabel}</span> : <span>优先来源：待积累</span>}
-                <span>预期成本：{task.averageCostUnits.toFixed(2)} 单位</span>
+                {task.costSampleSize > 0 ? (
+                  <span>历史成本：{task.averageCostUnits.toFixed(2)} 单位</span>
+                ) : task.mode === "rule_prior" ? (
+                  <span>成本：中性先验 1.00 单位</span>
+                ) : (
+                  <span>成本：待积累</span>
+                )}
               </div>
               {task.queueExamples.length > 0 && (
                 <div className={styles.examples}>
