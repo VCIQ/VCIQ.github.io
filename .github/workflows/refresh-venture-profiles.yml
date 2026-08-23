@@ -14,6 +14,7 @@ on:
       - tools/sanitize_venture_narratives.py
       - tools/finalize_venture_profiles.py
       - tools/enforce_venture_entity_semantics.py
+      - tools/guard_venture_cross_field_noise.py
       - tools/stabilize_venture_profiles.py
       - lib/catalog-data.ts
       - lib/venture-profile-data.ts
@@ -31,6 +32,7 @@ on:
       - tests/test_venture_narrative_sanitizer.py
       - tests/test_finalize_venture_profiles.py
       - tests/test_venture_entity_semantics.py
+      - tests/test_venture_cross_field_guard.py
       - tests/test_stabilize_venture_profiles.py
       - tests/venture-profile-data.test.ts
       - tests/professional-venture-data.test.ts
@@ -72,6 +74,7 @@ jobs:
             tools/sanitize_venture_narratives.py \
             tools/finalize_venture_profiles.py \
             tools/enforce_venture_entity_semantics.py \
+            tools/guard_venture_cross_field_noise.py \
             tools/stabilize_venture_profiles.py
           python -m unittest \
             tests.test_venture_profile_extraction \
@@ -84,6 +87,7 @@ jobs:
             tests.test_venture_narrative_sanitizer \
             tests.test_finalize_venture_profiles \
             tests.test_venture_entity_semantics \
+            tests.test_venture_cross_field_guard \
             tests.test_stabilize_venture_profiles
       - name: Record catalog revision
         id: catalog-before
@@ -116,12 +120,17 @@ jobs:
           python tools/refine_venture_research_evidence.py --check
       - name: Normalize cross-entity profile consistency
         run: python tools/normalize_venture_profiles.py
+      - name: Remove high-confidence cross-field profile noise
+        run: |
+          python tools/guard_venture_cross_field_noise.py
+          python tools/guard_venture_cross_field_noise.py --check
       - name: Reach the shared terminal quality fixed point
         run: |
           python tools/stabilize_venture_profiles.py
           python tools/stabilize_venture_profiles.py --check
           python tools/finalize_venture_profiles.py --check
           python tools/enforce_venture_entity_semantics.py --check
+          python tools/guard_venture_cross_field_noise.py --check
       - name: Validate generated venture snapshot
         run: |
           python tools/crawl_venture_profiles.py --validate-only
@@ -131,6 +140,7 @@ jobs:
           python tools/stabilize_venture_profiles.py --check
           python tools/finalize_venture_profiles.py --check
           python tools/enforce_venture_entity_semantics.py --check
+          python tools/guard_venture_cross_field_noise.py --check
           python -m unittest \
             tests.test_venture_profile_extraction \
             tests.test_venture_profile_noise_filters \
@@ -142,6 +152,7 @@ jobs:
             tests.test_venture_narrative_sanitizer \
             tests.test_finalize_venture_profiles \
             tests.test_venture_entity_semantics \
+            tests.test_venture_cross_field_guard \
             tests.test_stabilize_venture_profiles
       - uses: actions/setup-node@v4
         with:
