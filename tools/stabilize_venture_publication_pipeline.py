@@ -13,6 +13,7 @@ from typing import Any, Callable
 try:
     from . import enforce_venture_entity_semantics as entity_semantics
     from . import finalize_venture_profiles as structural_finalization
+    from . import guard_venture_cross_field_noise as cross_field_noise_guard
     from . import normalize_venture_profiles as base_normalization
     from . import refine_venture_research_evidence as research_evidence
     from . import sanitize_venture_profiles as low_level_sanitization
@@ -27,6 +28,7 @@ try:
 except ImportError:
     import enforce_venture_entity_semantics as entity_semantics
     import finalize_venture_profiles as structural_finalization
+    import guard_venture_cross_field_noise as cross_field_noise_guard
     import normalize_venture_profiles as base_normalization
     import refine_venture_research_evidence as research_evidence
     import sanitize_venture_profiles as low_level_sanitization
@@ -83,7 +85,7 @@ CROSS_GATE_CAPITAL_ACTION_RE = re.compile(
 
 
 def align_capital_event_patterns() -> None:
-    """Install one explicit-action pattern across every mutable publication gate."""
+    """Install shared capital-event and summary contracts across mutable gates."""
 
     research_evidence.FINANCING_RE = CROSS_GATE_FINANCING_ACTION_RE
     base_normalization.FINANCING_ACTION_PATTERN = CROSS_GATE_FINANCING_ACTION_RE
@@ -96,6 +98,15 @@ def align_capital_event_patterns() -> None:
     low_level_sanitization.CAPITAL_ACTION_RE = CROSS_GATE_CAPITAL_ACTION_RE
     structural_finalization.CAPITAL_EVIDENCE_RE = CROSS_GATE_CAPITAL_ACTION_RE
     entity_semantics.CAPITAL_ACTION_RE = CROSS_GATE_CAPITAL_ACTION_RE
+
+    # Capital summaries are derived fields. The structural finalizer owns their
+    # canonical representation because it de-duplicates semantically equivalent
+    # amount/round/investor labels via normalized keys. The semantic and
+    # cross-field guards must reuse that exact builder instead of re-creating
+    # summaries with raw-string de-duplication (for example treating
+    # ``15.5 Billion`` and ``$15.5 Billion`` as two different amounts).
+    entity_semantics._capital_summary = structural_finalization._capital_summary
+    cross_field_noise_guard._capital_summary = structural_finalization._capital_summary
 
 
 def _state_key(payload: dict[str, Any]) -> str:
