@@ -82,6 +82,7 @@ export type PersonResearchTaskStrategy = {
   sourceType: string;
   sourceTypeLabel: string;
   attempts: number;
+  costSampleSize: number;
   expectedSuccessRate: number;
   averageCandidates: number;
   averageCostUnits: number;
@@ -234,12 +235,13 @@ function observedTaskStrategy(
       const candidateFound = Math.min(attempts, integer(stat.candidateFound, 0, 500));
       const candidates = integer(stat.candidates, 0, 10_000);
       const averageCandidates = ratio(candidates, attempts);
-      const costSamples = integer(cost.attempts, 0, 500);
-      const averageCostUnits = costSamples > 0 ? boundedNumber(cost.averageCostUnits, 1, 10, 1) : 1;
+      const costSampleSize = integer(cost.attempts, 0, 500);
+      const averageCostUnits = costSampleSize > 0 ? boundedNumber(cost.averageCostUnits, 1, 10, 1) : 1;
       return {
         strategy,
         strategyLabel: strategyLabel(strategy),
         attempts,
+        costSampleSize,
         expectedSuccessRate: ratio(candidateFound, attempts),
         averageCandidates,
         averageCostUnits,
@@ -291,6 +293,7 @@ function scheduledFallback(
     sourceType: best.topHistoricalSourceType,
     sourceTypeLabel: best.topHistoricalSourceTypeLabel,
     attempts: best.strategySampleSize,
+    costSampleSize: best.costSampleSize,
     expectedSuccessRate: best.expectedSuccessRate,
     averageCandidates: best.expectedEvidenceYield,
     averageCostUnits: best.queryUnitCost,
@@ -329,6 +332,7 @@ export function buildPersonResearchStrategyView(
         sourceType: "",
         sourceTypeLabel: "",
         attempts: 0,
+        costSampleSize: 0,
         expectedSuccessRate: 0,
         averageCandidates: 0,
         averageCostUnits: 1,
