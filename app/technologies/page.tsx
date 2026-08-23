@@ -218,7 +218,7 @@ export default function TechnologyResearchPage() {
             <div>
               <span className={styles.layerIndex}>L3 / TECHNOLOGY ENTITIES</span>
               <h3>核心技术对象</h3>
-              <p>只收录已归入重点技术主题，且具有至少两条公开证据或明确人工研究记录的具体技术、模型、技术系统与关键能力；单证据候选和待归类对象继续保留在溯源库，不进入核心目录。</p>
+              <p>只收录已归入重点技术主题，且具有至少两条公开证据或明确人工研究记录的具体技术、模型、技术系统与关键能力；单证据候选和待归类对象继续保留在溯源库，不进入核心目录；详情保留摘要与可追溯时间线。</p>
             </div>
             <span className={styles.layerCount}>{coreTechnologyEntities.length} 个对象</span>
           </div>
