@@ -52,7 +52,7 @@ function updateFavoritesPageCopy(status: SyncState) {
   if (note) note.textContent = "项收藏 · 本地可用，云同步暂不可用";
   if (safetyTitle) safetyTitle.textContent = "本地收藏已保留";
   if (safetyCopy) {
-    safetyCopy.textContent = "云端同步暂时不可用，不影响当前浏览器中的收藏；恢复连接后会自动重新同步。";
+    safetyCopy.textContent = "云端同步暂时不可用，不影响当前浏览器中的收藏；可重新连接管理端后再次尝试。";
   }
 }
 
@@ -77,13 +77,16 @@ export function FavoriteCloudSync() {
     if (favoriteCloudSyncIsDue()) void sync();
 
     const onVisible = () => {
-      if (document.visibilityState === "visible" && favoriteCloudSyncIsDue()) {
+      if (document.visibilityState !== "visible") return;
+      if (status?.state === "auth-required" || status?.state === "unavailable") {
         void sync();
+        return;
       }
+      if (favoriteCloudSyncIsDue()) void sync();
     };
     document.addEventListener("visibilitychange", onVisible);
     return () => document.removeEventListener("visibilitychange", onVisible);
-  }, [sync]);
+  }, [status, sync]);
 
   useEffect(() => {
     if (!pathname.startsWith("/favorites")) return;
@@ -94,11 +97,8 @@ export function FavoriteCloudSync() {
     return () => window.cancelAnimationFrame(frame);
   }, [pathname, status]);
 
-  if (
-    !pathname.startsWith("/favorites") ||
-    !actionMount ||
-    status?.state !== "auth-required"
-  ) {
+  const needsConnection = status?.state === "auth-required" || status?.state === "unavailable";
+  if (!pathname.startsWith("/favorites") || !actionMount || !needsConnection) {
     return null;
   }
 
@@ -107,7 +107,7 @@ export function FavoriteCloudSync() {
       href={TRACKING_ADMIN_URL}
       target="_blank"
       rel="noreferrer"
-      title="登录受保护的管理端以启用跨浏览器收藏同步"
+      title="打开受保护的管理端并建立云收藏会话"
       style={{
         display: "inline-flex",
         minHeight: 36,
