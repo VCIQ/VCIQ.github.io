@@ -234,44 +234,93 @@
   font-size: 10px;
 }
 
+:global(.page-header):has(.headerIntro) {
+  gap: 18px 28px;
+  padding: 24px 0 18px;
+}
+
+:global(.page-header):has(.headerIntro) .eyebrow {
+  margin-bottom: -8px;
+}
+
+:global(.page-header):has(.headerIntro) h1 {
+  font-size: clamp(42px, 4vw, 56px);
+}
+
 .headerIntro {
-  margin: 0 0 8px;
+  display: -webkit-box;
+  max-width: 580px;
+  margin: 0;
+  overflow: hidden;
   color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .headerChips {
-  grid-column: 1 / -1;
+  grid-column: 1 / 2;
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
-  margin-top: -6px;
+  gap: 12px;
+  align-items: center;
+  margin-top: 0;
 }
 
 .headerChips span {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  border: 1px solid var(--border);
-  padding: 5px 9px;
+  gap: 5px;
+  border: 0;
+  padding: 0;
   color: var(--muted);
   font-size: 10px;
+  white-space: nowrap;
+}
+
+.headerChips svg {
+  width: 13px;
+  height: 13px;
+  color: var(--green);
 }
 
 .analysisPolicy {
-  grid-column: 1 / -1;
+  grid-column: 2 / 3;
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 2px;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  margin-top: 0;
+}
+
+.analysisPolicy::before {
+  content: "数据质量";
+  color: var(--green-bright);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .08em;
 }
 
 .analysisPolicy span {
-  border-left: 2px solid var(--green);
-  background: color-mix(in srgb, var(--surface-2) 72%, transparent);
-  padding: 4px 8px;
+  border-left: 0;
+  background: transparent;
+  padding: 0;
   color: var(--faint);
   font-size: 9px;
   line-height: 1.45;
+  white-space: nowrap;
+}
+
+.analysisPolicy span:nth-child(n + 2):not(:last-child) {
+  display: none;
+}
+
+.analysisPolicy span:last-child {
+  padding-left: 10px;
+  border-left: 1px solid var(--border);
 }
 
 @media (max-width: 1360px) {
@@ -284,6 +333,34 @@
 @media (max-width: 760px) {
   .body {
     padding: 16px;
+  }
+
+  :global(.page-header):has(.headerIntro) {
+    gap: 12px;
+    padding: 20px 0 16px;
+  }
+
+  :global(.page-header):has(.headerIntro) .eyebrow {
+    margin-bottom: 0;
+  }
+
+  :global(.page-header):has(.headerIntro) h1 {
+    font-size: clamp(36px, 11vw, 48px);
+  }
+
+  .headerIntro {
+    max-width: none;
+    -webkit-line-clamp: 3;
+  }
+
+  .headerChips,
+  .analysisPolicy {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+  }
+
+  .analysisPolicy {
+    gap: 8px;
   }
 
   .layerHeader {
