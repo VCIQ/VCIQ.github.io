@@ -1,0 +1,24 @@
+name: One-time publication reconciliation trigger
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/trigger-publication-reconciliation.yml
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Force a public-intelligence refresh at current main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run frequent-intelligence-refresh.yml \
+            --ref main \
+            --repo "$GITHUB_REPOSITORY"
+          echo "Dispatched Refresh public intelligence every two hours on main."
