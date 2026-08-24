@@ -17,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/technologies",
     "/people",
     "/companies",
+    "/sources",
     "/institutions",
     "/reports",
     "/research-agent",
