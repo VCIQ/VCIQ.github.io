@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-24T03:02:10+00:00",
+  "generatedAt": "2026-08-24T05:05:56+00:00",
   "records": [
     {
       "id": "capture-f738c9387815b80d",
@@ -41,10 +41,10 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "RSS 2026",
-        "targetId": "technology-9c7eba0bac4f2914de9e",
+        "targetId": "topic:rss2026",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "rss2026",
         "reclassified": false
       }
@@ -89,59 +89,11 @@
         "requestedType": "person",
         "entityType": "person",
         "canonicalName": "黄文龙",
-        "targetId": "person:黄文龙",
-        "confidence": "medium",
-        "source": "explicit-type",
-        "reason": "管理员显式选择“人物”，且未与正式目录冲突。",
-        "decisionKey": "黄文龙",
-        "reclassified": false
-      }
-    },
-    {
-      "id": "capture-eb721279bdff4c7f",
-      "entityType": "topic",
-      "canonicalName": "Ojai",
-      "rawSelection": "Ojai",
-      "aliases": [],
-      "trackSlugs": [
-        "semiconductor",
-        "robotics"
-      ],
-      "trackNames": [
-        "半导体",
-        "机器人"
-      ],
-      "source": {
-        "articleId": "",
-        "title": "Ojai",
-        "url": "https://phandroid.com/2026/08/20/waymos-new-taxi-upgrade-adds-gemini-ai-to-cabins/",
-        "summary": "",
-        "sourceName": "GitHub Actions · 内部手动追踪",
-        "channel": "manual-tracking",
-        "channelLabel": "内部管理",
-        "eventType": "人工追踪"
-      },
-      "capturedAt": "2026-08-24T03:00:04+00:00",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "semiconductor:keywords",
-        "robotics:keywords"
-      ],
-      "reasons": [
-        "个人研究兴趣"
-      ],
-      "note": "",
-      "resolution": {
-        "status": "resolved",
-        "requestedType": "topic",
-        "entityType": "topic",
-        "canonicalName": "Ojai",
-        "targetId": "technology-3d815c23c85cae911a2b",
+        "targetId": "person:person-788bbbd245",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
-        "decisionKey": "ojai",
+        "source": "people-registry",
+        "reason": "名称唯一命中正式人物目录。",
+        "decisionKey": "黄文龙",
         "reclassified": false
       }
     },
@@ -189,6 +141,54 @@
         "source": "unresolved",
         "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
         "decisionKey": "waymo",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-eb721279bdff4c7f",
+      "entityType": "topic",
+      "canonicalName": "Ojai",
+      "rawSelection": "Ojai",
+      "aliases": [],
+      "trackSlugs": [
+        "semiconductor",
+        "robotics"
+      ],
+      "trackNames": [
+        "半导体",
+        "机器人"
+      ],
+      "source": {
+        "articleId": "",
+        "title": "Ojai",
+        "url": "https://phandroid.com/2026/08/20/waymos-new-taxi-upgrade-adds-gemini-ai-to-cabins/",
+        "summary": "",
+        "sourceName": "GitHub Actions · 内部手动追踪",
+        "channel": "manual-tracking",
+        "channelLabel": "内部管理",
+        "eventType": "人工追踪"
+      },
+      "capturedAt": "2026-08-24T03:00:04+00:00",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "semiconductor:keywords",
+        "robotics:keywords"
+      ],
+      "reasons": [
+        "个人研究兴趣"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "Ojai",
+        "targetId": "topic:ojai",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "ojai",
         "reclassified": false
       }
     },
@@ -283,10 +283,10 @@
         "requestedType": "person",
         "entityType": "person",
         "canonicalName": "石毅",
-        "targetId": "person:石毅",
-        "confidence": "medium",
-        "source": "explicit-type",
-        "reason": "管理员显式选择“人物”，且未与正式目录冲突。",
+        "targetId": "person:person-777f7b5420",
+        "confidence": "high",
+        "source": "people-registry",
+        "reason": "名称唯一命中正式人物目录。",
         "decisionKey": "石毅",
         "reclassified": false
       }
