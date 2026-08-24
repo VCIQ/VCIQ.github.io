@@ -4,10 +4,12 @@ import test from "node:test";
 
 const page = await readFile(new URL("../app/favorites/page.tsx", import.meta.url), "utf8");
 const css = await readFile(new URL("../app/favorites/favorites.css", import.meta.url), "utf8");
+const prehydrateCss = await readFile(new URL("../app/favorites/favorites-prehydrate.css", import.meta.url), "utf8");
 const marker = await readFile(new URL("../components/favorites-hydration-marker.tsx", import.meta.url), "utf8");
 
 test("favorites critical controls are statically styled before client hydration", () => {
   assert.match(page, /import "\.\/favorites\.css"/);
+  assert.match(page, /import "\.\/favorites-prehydrate\.css"/);
   for (const selector of [
     ".favorites-safety",
     ".favorites-transfer-actions",
@@ -21,6 +23,13 @@ test("favorites critical controls are statically styled before client hydration"
     assert.ok(css.includes(selector), `missing static selector ${selector}`);
   }
   assert.match(css, /\.favorites-file-input\s*\{[^}]*display:\s*none\s*!important/s);
+});
+
+test("favorites pre-hydration state does not present a false zero", () => {
+  assert.match(prehydrateCss, /data-vciq-favorites-hydrated="1"/);
+  assert.match(prehydrateCss, /content:\s*"…"/);
+  assert.match(prehydrateCss, /正在加载本地与云端账户/);
+  assert.match(prehydrateCss, /收藏同步/);
 });
 
 test("favorites page performs a single cache-busting recovery when hydration stalls", () => {
