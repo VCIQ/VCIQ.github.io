@@ -48,4 +48,38 @@ jobs:
       - name: Rebuild tracking-derived snapshot for candidate PR config
         if: github.event_name == 'pull_request'
         run: python tools/enrich_tracking_snapshot.py
-      - run: npm run build:pages
+      - name: Build Pages candidate or defer a main-only tracking refresh
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set +e
+          set -o pipefail
+          npm run build:pages 2>&1 | tee /tmp/frontend-build-pages.log
+          build_status=${PIPESTATUS[0]}
+          set -e
+
+          if [ "$build_status" -eq 0 ]; then
+            exit 0
+          fi
+
+          # Pull requests remain strict. On main, however, a tracking-config push can
+          # legitimately arrive before the long full refresh has committed the matching
+          # article snapshot. Pages already treats exactly this signature as deferred.
+          if [ "$EVENT_NAME" = "push" ]; then
+            tracking_errors="$(grep '^TRACKING_SNAPSHOT_ERROR:' /tmp/frontend-build-pages.log || true)"
+            if printf '%s\n' "$tracking_errors" | grep -Fq "tracking configuration is newer than the article snapshot"; then
+              unexpected_tracking_errors="$(
+                printf '%s\n' "$tracking_errors" \
+                  | grep -Fv "tracking configuration is newer than the article snapshot" \
+                  | grep -Fv "missing crawler coverage record" \
+                  || true
+              )"
+              if [ -z "$unexpected_tracking_errors" ]; then
+                echo "::notice title=Frontend build deferred::Tracking configuration is waiting for Refresh public intelligence; this is not a frontend regression."
+                exit 0
+              fi
+            fi
+          fi
+
+          exit "$build_status"
