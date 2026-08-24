@@ -1,0 +1,307 @@
+name: Internal company candidate review
+
+# Authenticated control-plane entry for reviewing private company candidates.
+# This repository is public: inputs, logs and review notes are public audit data.
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: "Validate previews the decision; apply writes it to main"
+        required: true
+        default: validate
+        type: choice
+        options: [validate, apply]
+      candidate_key:
+        description: "Stable candidate decision key"
+        required: true
+        type: string
+      decision:
+        description: "Final human review decision"
+        required: true
+        type: choice
+        options: [accepted, rejected, merged]
+      merged_slug:
+        description: "Existing company slug; required only for merged"
+        required: false
+        type: string
+      note:
+        description: "PUBLIC audit note; do not enter private or confidential information"
+        required: true
+        type: string
+      expected_revision:
+        description: "Full main SHA of the reviewed candidate snapshot"
+        required: true
+        type: string
+
+permissions: {}
+
+env:
+  EXPECTED_REPOSITORY: VCIQ/VCIQ.github.io
+
+jobs:
+  authorize:
+    name: Authorize internal operator
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: Require canonical repository, main and workflow dispatch
+        env:
+          ACTUAL_REPOSITORY: ${{ github.repository }}
+          ACTUAL_REF: ${{ github.ref }}
+          ACTUAL_EVENT: ${{ github.event_name }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$ACTUAL_REPOSITORY" = "$EXPECTED_REPOSITORY"
+          test "$ACTUAL_REF" = "refs/heads/main"
+          test "$ACTUAL_EVENT" = "workflow_dispatch"
+
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Require initiator and rerun actor to be allowlisted
+        env:
+          ACTOR: ${{ github.actor }}
+          TRIGGERING_ACTOR: ${{ github.triggering_actor }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          admins = json.loads(Path("config/tracking_admins.json").read_text(encoding="utf-8"))
+          allowed = {
+              str(actor).strip().casefold()
+              for actor in admins.get("actors", [])
+              if str(actor).strip()
+          }
+          checked = {
+              "github.actor": os.environ.get("ACTOR", "").strip(),
+              "github.triggering_actor": os.environ.get("TRIGGERING_ACTOR", "").strip(),
+          }
+          denied = [label for label, actor in checked.items() if actor.casefold() not in allowed]
+          if denied:
+              raise SystemExit("company candidate review actor is not allowlisted: " + ", ".join(denied))
+          print("authorized actors: " + ", ".join(checked.values()))
+          PY
+
+  validate:
+    name: Validate company candidate decision
+    needs: authorize
+    if: inputs.operation == 'validate'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: tracking-admin
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 1
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Reject stale candidate snapshots
+        env:
+          EXPECTED_REVISION: ${{ inputs.expected_revision }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$EXPECTED_REVISION" || {
+            echo "candidate snapshot is stale; refresh the tracking console before reviewing" >&2
+            exit 1
+          }
+
+      - name: Validate and preview decision
+        env:
+          CANDIDATE_KEY: ${{ inputs.candidate_key }}
+          DECISION: ${{ inputs.decision }}
+          MERGED_SLUG: ${{ inputs.merged_slug }}
+          NOTE: ${{ inputs.note }}
+          EXPECTED_REVISION: ${{ inputs.expected_revision }}
+          ACTOR: ${{ github.actor }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile tools/company_candidate_review_decision.py
+          python tools/company_candidate_review_decision.py \
+            --mode validate \
+            --candidate-key "$CANDIDATE_KEY" \
+            --decision "$DECISION" \
+            --merged-slug "$MERGED_SLUG" \
+            --note "$NOTE" \
+            --reviewed-by "$ACTOR/tracking-console" \
+            --expected-revision "$EXPECTED_REVISION" \
+            | tee /tmp/company-candidate-review.json
+          {
+            echo "## Company candidate review validation"
+            echo
+            echo '```json'
+            cat /tmp/company-candidate-review.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  apply:
+    name: Apply company candidate decision
+    needs: authorize
+    if: inputs.operation == 'apply'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: tracking-admin
+    concurrency:
+      group: vciq-repository-writer-${{ github.ref }}
+      queue: max
+    permissions:
+      contents: write
+    outputs:
+      changed: ${{ steps.review.outputs.changed }}
+      requires_onboarding: ${{ steps.review.outputs.requires_onboarding }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Capture and verify exact reviewed revision
+        id: base
+        env:
+          EXPECTED_REVISION: ${{ inputs.expected_revision }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          base_sha="$(git rev-parse HEAD)"
+          test "$base_sha" = "$EXPECTED_REVISION" || {
+            echo "candidate snapshot is stale; refresh the tracking console before reviewing" >&2
+            exit 1
+          }
+          echo "sha=$base_sha" >> "$GITHUB_OUTPUT"
+
+      - name: Apply reviewed decision and rebuild private queue
+        id: review
+        env:
+          CANDIDATE_KEY: ${{ inputs.candidate_key }}
+          DECISION: ${{ inputs.decision }}
+          MERGED_SLUG: ${{ inputs.merged_slug }}
+          NOTE: ${{ inputs.note }}
+          EXPECTED_REVISION: ${{ inputs.expected_revision }}
+          ACTOR: ${{ github.actor }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            tools/company_candidate_review_decision.py \
+            tools/build_company_candidates.py
+          python tools/company_candidate_review_decision.py \
+            --mode apply \
+            --candidate-key "$CANDIDATE_KEY" \
+            --decision "$DECISION" \
+            --merged-slug "$MERGED_SLUG" \
+            --note "$NOTE" \
+            --reviewed-by "$ACTOR/tracking-console" \
+            --expected-revision "$EXPECTED_REVISION" \
+            | tee /tmp/company-candidate-review.json
+
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          report = json.loads(Path('/tmp/company-candidate-review.json').read_text(encoding='utf-8'))
+          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as output:
+              output.write('changed=' + str(bool(report.get('changed'))).lower() + '\n')
+              output.write('requires_onboarding=' + str(bool(report.get('requiresOnboarding'))).lower() + '\n')
+          PY
+
+          if [ "$(python -c "import json; print(str(bool(json.load(open('/tmp/company-candidate-review.json'))['changed'])).lower())")" = "true" ]; then
+            python tools/build_company_candidates.py --output config/company_candidate_review_queue.json
+          fi
+
+      - name: Validate candidate decision invariants
+        if: steps.review.outputs.changed == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest tests.test_company_candidate_review_decision
+          python tools/build_company_candidates.py \
+            --output config/company_candidate_review_queue.json \
+            --check
+
+      - name: Commit only approved candidate review files
+        if: steps.review.outputs.changed == 'true'
+        env:
+          BASE_SHA: ${{ steps.base.outputs.sha }}
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "$BASE_SHA" || {
+            echo "main advanced while the review was running; refusing to replay the decision" >&2
+            exit 1
+          }
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- \
+            config/company_candidate_decisions.json \
+            config/company_candidate_review_queue.json
+          git diff --cached --quiet && {
+            echo "review tool reported a change but no approved candidate file changed" >&2
+            exit 1
+          }
+          git commit -m "config: apply authenticated company candidate review"
+
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "$BASE_SHA" || {
+            echo "main advanced before push; refusing to rebase, force, or overwrite it" >&2
+            exit 1
+          }
+          gh auth setup-git
+          git push origin HEAD:main
+
+      - name: Summarize public audit record
+        if: always() && steps.review.outcome != 'skipped'
+        shell: bash
+        run: |
+          {
+            echo "## Company candidate review apply"
+            echo
+            echo "> Inputs, logs and review notes in this public repository are not confidential."
+            echo
+            echo '```json'
+            cat /tmp/company-candidate-review.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  handoff:
+    name: Continue verified company onboarding
+    needs: apply
+    if: needs.apply.outputs.changed == 'true' && needs.apply.outputs.requires_onboarding == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Start existing onboarding quality gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh workflow run company-candidate-onboarding.yml --ref main \
+            -f post_onboarding_handoff=none
