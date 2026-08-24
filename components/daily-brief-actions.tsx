@@ -1,20 +1,36 @@
 "use client";
 
 import { ArrowUpRight, Bookmark, BookmarkPlus, Share2 } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import styles from "@/components/daily-brief-actions.module.css";
 import { useFavorite } from "@/components/use-favorites";
+import { selectDailyBriefEvents } from "@/lib/daily-brief";
 import {
   toggleFavorite,
   type FavoriteChannel,
   type FavoriteInput,
 } from "@/lib/favorites";
 import { buildTrackingCaptureLink } from "@/lib/tracking-admin-link";
-import type { LiveIntelligenceEvent } from "@/lib/use-articles";
+import {
+  useArticles,
+  type ArticlePayload,
+  type LiveIntelligenceEvent,
+} from "@/lib/use-articles";
 
 const SHARE_REQUEST_EVENT = "vciq:favorite-share-request";
+const DAILY_BRIEF_LIMIT = 10;
 
 type FavoriteChannelMeta = {
   channel: FavoriteChannel;
   channelLabel: string;
+};
+
+type ActionTarget = {
+  button: HTMLButtonElement;
+  host: HTMLElement;
+  item: LiveIntelligenceEvent;
+  top: number;
 };
 
 function channelForEvent(item: LiveIntelligenceEvent): FavoriteChannelMeta {
@@ -109,18 +125,12 @@ function shareDailyBriefEvent(item: LiveIntelligenceEvent) {
   );
 }
 
-export function DailyBriefActions({
-  item,
-  className,
-}: {
-  item: LiveIntelligenceEvent;
-  className?: string;
-}) {
+export function DailyBriefActions({ item }: { item: LiveIntelligenceEvent }) {
   const favorite = dailyBriefFavoriteInput(item);
   const saved = useFavorite(favorite.id);
 
   return (
-    <div className={className} aria-label={`快速操作：${item.title}`}>
+    <div className={styles.actions} aria-label={`快速操作：${item.title}`}>
       <button
         type="button"
         data-saved={saved ? "true" : "false"}
@@ -158,5 +168,130 @@ export function DailyBriefActions({
         <ArrowUpRight size={14} />
       </a>
     </div>
+  );
+}
+
+export function DailyBriefQuickActions({
+  initialPayload,
+  trackedSectorAliases,
+}: {
+  initialPayload: ArticlePayload;
+  trackedSectorAliases: string[];
+}) {
+  const { articles } = useArticles(initialPayload);
+  const [targets, setTargets] = useState<ActionTarget[]>([]);
+  const sharedSelectionApplied = useRef(false);
+
+  const dailyBriefEvents = useMemo(() => {
+    const enabled = new Set(trackedSectorAliases);
+    const trusted = articles.filter(
+      (item) => enabled.has(item.sector) && item.qualityStatus !== "低可信",
+    );
+    const briefDate = trusted.reduce(
+      (latest, item) => (item.publishedAt > latest ? item.publishedAt : latest),
+      "",
+    );
+    const sameDay = briefDate
+      ? trusted.filter((item) => item.publishedAt === briefDate)
+      : [];
+    const source = sameDay.length >= DAILY_BRIEF_LIMIT ? sameDay : trusted;
+    return selectDailyBriefEvents(source, DAILY_BRIEF_LIMIT, briefDate);
+  }, [articles, trackedSectorAliases]);
+
+  useEffect(() => {
+    const section = document.querySelector<HTMLElement>(
+      'section[aria-label="每日情报简报"]',
+    );
+    if (!section) return;
+    section.id = "daily-brief";
+
+    const analysis = document.querySelector<HTMLElement>('aside[aria-label="分析桌"]');
+    if (analysis) analysis.id = "analysis-desk";
+
+    const rowListeners = new Map<HTMLButtonElement, () => void>();
+
+    const scan = () => {
+      const buttons = [
+        ...section.querySelectorAll<HTMLButtonElement>('button[class*="briefItem"]'),
+      ].slice(0, DAILY_BRIEF_LIMIT);
+      const compact = window.matchMedia("(max-width: 720px)").matches;
+      const next: ActionTarget[] = [];
+
+      buttons.forEach((button, index) => {
+        const item = dailyBriefEvents[index];
+        const host = button.parentElement;
+        if (!item || !host) return;
+
+        host.style.position = "relative";
+        button.style.paddingRight = compact ? "126px" : "160px";
+        button.dataset.dailyBriefEvent = dailyBriefEventKey(item);
+        button.title = "点击查看分析；右侧可收藏、追踪、分享或打开原文";
+
+        const top = button.offsetTop + Math.max(0, (button.offsetHeight - 27) / 2);
+        next.push({ button, host, item, top });
+
+        if (!rowListeners.has(button)) {
+          const onClick = () => {
+            window.requestAnimationFrame(() => {
+              document.getElementById("analysis-desk")?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            });
+          };
+          rowListeners.set(button, onClick);
+          button.addEventListener("click", onClick);
+        }
+      });
+
+      setTargets(next);
+
+      if (!sharedSelectionApplied.current) {
+        const requested = new URLSearchParams(window.location.search).get("event");
+        if (requested) {
+          const index = dailyBriefEvents.findIndex(
+            (item) => item.id === requested || dailyBriefEventKey(item) === requested,
+          );
+          const button = index >= 0 ? buttons[index] : undefined;
+          if (button) {
+            sharedSelectionApplied.current = true;
+            button.click();
+            window.requestAnimationFrame(() => {
+              section.scrollIntoView({ behavior: "auto", block: "start" });
+            });
+          }
+        }
+      }
+    };
+
+    scan();
+    window.addEventListener("resize", scan);
+
+    return () => {
+      window.removeEventListener("resize", scan);
+      for (const [button, listener] of rowListeners) {
+        button.removeEventListener("click", listener);
+        button.style.paddingRight = "";
+        delete button.dataset.dailyBriefEvent;
+      }
+    };
+  }, [dailyBriefEvents]);
+
+  return (
+    <>
+      {targets.map(({ host, item, top }) =>
+        createPortal(
+          <div
+            className={styles.mount}
+            style={{ top }}
+            data-daily-brief-action-mount
+          >
+            <DailyBriefActions item={item} />
+          </div>,
+          host,
+          `daily-brief-actions:${dailyBriefEventKey(item)}`,
+        ),
+      )}
+    </>
   );
 }
