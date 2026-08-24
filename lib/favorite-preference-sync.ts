@@ -2,6 +2,7 @@ const DEFAULT_TRACKING_ADMIN = "https://vciq-tracking-console.pages.dev";
 const FAVORITE_PREFERENCE_PATH = "/api/tracking-admin/v1/preferences/favorite";
 const SYNC_TIMEOUT_MS = 5_000;
 const BOOTSTRAP_TIMEOUT_MS = 8_000;
+const READ_TIMEOUT_MS = 8_000;
 const MAX_BOOTSTRAP_FAVORITES = 200;
 
 export type FavoritePreferenceSyncAction = "save" | "remove";
@@ -23,6 +24,22 @@ export interface FavoritePreferenceSyncItem {
   eventType?: string;
   savedAt?: string;
 }
+
+export type FavoriteCloudRecord = {
+  action: FavoritePreferenceSyncAction;
+  updatedAt: string;
+  item: FavoritePreferenceSyncItem & { savedAt?: string };
+};
+
+export type FavoriteCloudState = {
+  available: boolean;
+  records: FavoriteCloudRecord[];
+  activeCount: number;
+  tombstoneCount: number;
+  updatedAt: string | null;
+  authRequired: boolean;
+  status: number;
+};
 
 function absolutePublicUrl(value: string, publicOrigin: string): string {
   try {
@@ -98,6 +115,71 @@ async function postPreferencePayload(
     return response.ok;
   } catch {
     return false;
+  } finally {
+    globalThis.clearTimeout(timeout);
+  }
+}
+
+function validCloudRecord(value: unknown): value is FavoriteCloudRecord {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return false;
+  const record = value as Partial<FavoriteCloudRecord>;
+  if (record.action !== "save" && record.action !== "remove") return false;
+  if (typeof record.updatedAt !== "string") return false;
+  if (!record.item || typeof record.item !== "object") return false;
+  return (
+    typeof record.item.id === "string" &&
+    typeof record.item.href === "string" &&
+    typeof record.item.title === "string"
+  );
+}
+
+export async function fetchFavoritePreferenceCloudState(): Promise<FavoriteCloudState> {
+  const empty = (status = 0, authRequired = false): FavoriteCloudState => ({
+    available: false,
+    records: [],
+    activeCount: 0,
+    tombstoneCount: 0,
+    updatedAt: null,
+    authRequired,
+    status,
+  });
+  if (typeof fetch !== "function" || !browserOrigin()) return empty();
+
+  const controller = new AbortController();
+  const timeout = globalThis.setTimeout(() => controller.abort(), READ_TIMEOUT_MS);
+  try {
+    const response = await fetch(`${trackingAdminBase()}${FAVORITE_PREFERENCE_PATH}`, {
+      method: "GET",
+      credentials: "include",
+      mode: "cors",
+      cache: "no-store",
+      headers: { accept: "application/json" },
+      signal: controller.signal,
+    });
+    if (response.status === 401 || response.status === 403) {
+      return empty(response.status, true);
+    }
+    if (!response.ok) return empty(response.status);
+
+    const body = await response.json() as Record<string, unknown>;
+    const records = Array.isArray(body.records)
+      ? body.records.filter(validCloudRecord)
+      : [];
+    return {
+      available: body.available === true,
+      records,
+      activeCount: Number.isFinite(Number(body.activeCount))
+        ? Math.max(0, Math.trunc(Number(body.activeCount)))
+        : records.filter((record) => record.action === "save").length,
+      tombstoneCount: Number.isFinite(Number(body.tombstoneCount))
+        ? Math.max(0, Math.trunc(Number(body.tombstoneCount)))
+        : records.filter((record) => record.action === "remove").length,
+      updatedAt: typeof body.updatedAt === "string" ? body.updatedAt : null,
+      authRequired: false,
+      status: response.status,
+    };
+  } catch {
+    return empty();
   } finally {
     globalThis.clearTimeout(timeout);
   }
