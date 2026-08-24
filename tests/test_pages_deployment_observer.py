@@ -16,8 +16,8 @@ class PagesDeploymentObserverWorkflowTests(unittest.TestCase):
 
     def test_observer_distinguishes_workflow_success_from_real_deployment(self):
         self.assertIn("workflowName,jobs", self.source)
-        self.assertIn('select(.name == \\"deploy\\")', self.source)
-        self.assertIn('deployment_status=\"deferred\"', self.source)
+        self.assertIn('select(.name == "deploy")', self.source)
+        self.assertIn('deployment_status="deferred"', self.source)
         self.assertIn("deploymentStatus", self.source)
         self.assertIn("deployConclusion", self.source)
 
@@ -26,9 +26,9 @@ class PagesDeploymentObserverWorkflowTests(unittest.TestCase):
             "tracking configuration is newer than the article snapshot",
             self.source,
         )
-        self.assertIn('deferred_reason=\"tracking_snapshot_refresh\"', self.source)
+        self.assertIn('deferred_reason="tracking_snapshot_refresh"', self.source)
         self.assertIn("gh workflow run scheduled-sync.yml", self.source)
-        self.assertIn('--ref main', self.source)
+        self.assertIn("--ref main", self.source)
 
 
 if __name__ == "__main__":
