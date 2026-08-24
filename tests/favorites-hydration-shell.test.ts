@@ -22,7 +22,7 @@ test("favorites critical controls are statically styled before client hydration"
   ]) {
     assert.ok(css.includes(selector), `missing static selector ${selector}`);
   }
-  assert.match(css, /\.favorites-file-input\s*\{[^}]*display:\s*none\s*!important/s);
+  assert.match(css, /\.favorites-file-input\s*\{[^}]*display:\s*none\s*!important/);
 });
 
 test("favorites pre-hydration state does not present a false zero", () => {
