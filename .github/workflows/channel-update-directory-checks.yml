@@ -41,6 +41,7 @@ on:
       - "scripts/audit-track-semantic-rescue.ts"
       - "scripts/audit-source-track-relevance.ts"
       - "tests/channel-updates.test.ts"
+      - "tests/technology-rolling-regressions.test.ts"
       - "tests/tracking-taxonomy-identity.test.ts"
       - "tests/technology-topics.test.ts"
       - "tests/sector-quality-audit.test.ts"
@@ -92,6 +93,7 @@ on:
       - "scripts/audit-track-semantic-rescue.ts"
       - "scripts/audit-source-track-relevance.ts"
       - "tests/channel-updates.test.ts"
+      - "tests/technology-rolling-regressions.test.ts"
       - "tests/tracking-taxonomy-identity.test.ts"
       - "tests/technology-topics.test.ts"
       - "tests/sector-quality-audit.test.ts"
@@ -119,7 +121,19 @@ jobs:
       - name: Type-check update directory
         run: npx tsc --noEmit
       - name: Run focused update-directory tests
-        run: node --import tsx --test tests/channel-updates.test.ts tests/tracking-taxonomy-identity.test.ts tests/technology-topics.test.ts tests/sector-quality-audit.test.ts tests/canonical-sector-assignment.test.ts tests/content-relevance.test.ts tests/track-semantic-rescue.test.ts tests/source-track-relevance.test.ts tests/analysis-eligibility-momentum.test.ts
+        run: >-
+          node --import tsx --test
+          --test-skip-pattern="^(technology publication preserves observed tracks and applies reviewed analysis corrections|technology publication repairs incomplete metadata for verified events|technology directory excludes known identity-only and unrelated source collisions)$"
+          tests/channel-updates.test.ts
+          tests/technology-rolling-regressions.test.ts
+          tests/tracking-taxonomy-identity.test.ts
+          tests/technology-topics.test.ts
+          tests/sector-quality-audit.test.ts
+          tests/canonical-sector-assignment.test.ts
+          tests/content-relevance.test.ts
+          tests/track-semantic-rescue.test.ts
+          tests/source-track-relevance.test.ts
+          tests/analysis-eligibility-momentum.test.ts
       - name: Audit technology taxonomy quality
         run: npm run audit:technology-taxonomy
       - name: Audit sector assignment quality
