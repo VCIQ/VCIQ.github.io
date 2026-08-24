@@ -15,7 +15,9 @@ import {
 
 export const FAVORITE_CLOUD_SYNC_STATUS_EVENT = "vciq:favorite-cloud-sync-status";
 const CLOUD_SYNC_SUCCESS_KEY = "vciq:favorites-cloud:last-success:v1";
+const CLOUD_SYNC_ATTEMPT_KEY = "vciq:favorites-cloud:last-attempt:v1";
 const CLOUD_SYNC_INTERVAL_MS = 5 * 60_000;
+const CLOUD_RETRY_INTERVAL_MS = 60_000;
 const MAX_FAVORITES = 300;
 
 export type FavoriteCloudSyncStatus =
@@ -104,25 +106,35 @@ function publishStatus(status: FavoriteCloudSyncStatus) {
   );
 }
 
-function recordSuccessfulSync() {
+function writeSessionTimestamp(key: string) {
   if (typeof window === "undefined") return;
   try {
-    window.sessionStorage.setItem(CLOUD_SYNC_SUCCESS_KEY, String(Date.now()));
+    window.sessionStorage.setItem(key, String(Date.now()));
   } catch {}
+}
+
+function readSessionTimestamp(key: string) {
+  if (typeof window === "undefined") return 0;
+  try {
+    const value = Number(window.sessionStorage.getItem(key) ?? 0);
+    return Number.isFinite(value) && value > 0 ? value : 0;
+  } catch {
+    return 0;
+  }
 }
 
 export function favoriteCloudSyncIsDue() {
   if (typeof window === "undefined") return false;
-  try {
-    const last = Number(window.sessionStorage.getItem(CLOUD_SYNC_SUCCESS_KEY) ?? 0);
-    return !Number.isFinite(last) || last <= 0 || Date.now() - last >= CLOUD_SYNC_INTERVAL_MS;
-  } catch {
-    return true;
-  }
+  const now = Date.now();
+  const lastSuccess = readSessionTimestamp(CLOUD_SYNC_SUCCESS_KEY);
+  const lastAttempt = readSessionTimestamp(CLOUD_SYNC_ATTEMPT_KEY);
+  if (lastSuccess && now - lastSuccess < CLOUD_SYNC_INTERVAL_MS) return false;
+  return !lastAttempt || now - lastAttempt >= CLOUD_RETRY_INTERVAL_MS;
 }
 
 export async function reconcileFavoritesWithCloud(): Promise<FavoriteCloudSyncStatus> {
   const local = readFavoriteItems();
+  writeSessionTimestamp(CLOUD_SYNC_ATTEMPT_KEY);
 
   // Existing browser-only collections are uploaded before the first read. The
   // server bootstrap is insert-only for IDs it has never seen, so an explicit
@@ -147,7 +159,7 @@ export async function reconcileFavoritesWithCloud(): Promise<FavoriteCloudSyncSt
 
   const merged = mergeFavoriteCloudRecords(local, cloud.records);
   replaceLocalFavorites(merged.items);
-  recordSuccessfulSync();
+  writeSessionTimestamp(CLOUD_SYNC_SUCCESS_KEY);
 
   const status: FavoriteCloudSyncStatus = {
     state: "synced",
