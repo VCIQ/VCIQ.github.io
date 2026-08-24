@@ -1,0 +1,70 @@
+.mount {
+  position: absolute;
+  right: 43px;
+  z-index: 8;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px;
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--bg) 70%, transparent);
+  opacity: .58;
+  backdrop-filter: blur(8px);
+  transition: opacity .15s ease, border-color .15s ease;
+}
+
+.actions:hover,
+.actions:focus-within {
+  border-color: color-mix(in srgb, var(--green) 58%, var(--border));
+  opacity: 1;
+}
+
+.actions button,
+.actions a {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--faint);
+  cursor: pointer;
+}
+
+.actions button:hover,
+.actions button:focus-visible,
+.actions a:hover,
+.actions a:focus-visible,
+.actions button[data-saved="true"] {
+  outline: none;
+  background: var(--surface-3);
+  color: var(--green-bright);
+}
+
+.actions button[data-saved="true"] {
+  color: var(--green);
+}
+
+@media (max-width: 720px) {
+  .mount {
+    right: 9px;
+  }
+
+  .actions {
+    gap: 1px;
+    border-color: var(--border-soft);
+    box-shadow: none;
+    opacity: .82;
+  }
+
+  .actions button,
+  .actions a {
+    width: 25px;
+    height: 25px;
+  }
+}

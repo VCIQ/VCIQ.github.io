@@ -2,6 +2,7 @@ import {
   DashboardV2Client,
   type DashboardBootstrap,
 } from "@/components/dashboard-v2-client";
+import { DailyBriefQuickActions } from "@/components/daily-brief-actions";
 import { HomepageTrackingActions } from "@/components/homepage-tracking-actions";
 import unifiedStyles from "@/components/homepage-unified-inbox.module.css";
 import { coreResearchObjectStats } from "@/lib/core-research-objects";
@@ -132,6 +133,10 @@ export default function Home() {
         >
           {null}
         </DashboardV2Client>
+        <DailyBriefQuickActions
+          initialPayload={initialPayload}
+          trackedSectorAliases={trackedSectorAliases}
+        />
       </div>
       <HomepageTrackingActions />
     </main>
