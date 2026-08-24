@@ -1,9 +1,11 @@
 const DEFAULT_TRACKING_ADMIN = "https://vciq-tracking-console.pages.dev";
 const FAVORITE_PREFERENCE_PATH = "/api/tracking-admin/v1/preferences/favorite";
+const PENDING_FAVORITE_SYNC_KEY = "vciq:favorites-cloud:pending:v1";
 const SYNC_TIMEOUT_MS = 5_000;
 const BOOTSTRAP_TIMEOUT_MS = 8_000;
 const READ_TIMEOUT_MS = 8_000;
 const MAX_BOOTSTRAP_FAVORITES = 200;
+const MAX_PENDING_FAVORITES = 300;
 
 export type FavoritePreferenceSyncAction = "save" | "remove";
 
@@ -41,7 +43,14 @@ export type FavoriteCloudState = {
   status: number;
 };
 
+type PendingFavoriteSync = {
+  action: FavoritePreferenceSyncAction;
+  item: FavoritePreferenceSyncItem;
+  token: string;
+};
+
 let bootstrapInFlight: Promise<boolean> | null = null;
+let pendingTokenCounter = 0;
 
 function absolutePublicUrl(value: string, publicOrigin: string): string {
   try {
@@ -60,6 +69,15 @@ function browserOrigin(): string {
   return typeof window !== "undefined" && window.location?.origin
     ? window.location.origin
     : "";
+}
+
+function browserStorage(): Storage | null {
+  if (typeof window === "undefined") return null;
+  try {
+    return window.localStorage;
+  } catch {
+    return null;
+  }
 }
 
 export function buildFavoritePreferenceSyncPayload(
@@ -89,6 +107,59 @@ export function buildFavoritePreferenceSyncPayload(
       savedAt: item.savedAt ?? "",
     },
   };
+}
+
+function validPendingFavoriteSync(value: unknown): value is PendingFavoriteSync {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return false;
+  const pending = value as Partial<PendingFavoriteSync>;
+  if (pending.action !== "save" && pending.action !== "remove") return false;
+  if (typeof pending.token !== "string" || !pending.token) return false;
+  if (!pending.item || typeof pending.item !== "object") return false;
+  return Boolean(buildFavoritePreferenceSyncPayload(pending.action, pending.item));
+}
+
+function readPendingFavoriteSyncs(): PendingFavoriteSync[] {
+  const storage = browserStorage();
+  if (!storage) return [];
+  try {
+    const parsed = JSON.parse(storage.getItem(PENDING_FAVORITE_SYNC_KEY) ?? "[]") as unknown;
+    return Array.isArray(parsed)
+      ? parsed.filter(validPendingFavoriteSync).slice(0, MAX_PENDING_FAVORITES)
+      : [];
+  } catch {
+    return [];
+  }
+}
+
+function writePendingFavoriteSyncs(items: PendingFavoriteSync[]) {
+  const storage = browserStorage();
+  if (!storage) return;
+  try {
+    storage.setItem(PENDING_FAVORITE_SYNC_KEY, JSON.stringify(items.slice(0, MAX_PENDING_FAVORITES)));
+  } catch {}
+}
+
+function nextPendingToken() {
+  pendingTokenCounter += 1;
+  return `${Date.now().toString(36)}-${pendingTokenCounter.toString(36)}`;
+}
+
+function queuePendingFavoriteSync(
+  action: FavoritePreferenceSyncAction,
+  item: FavoritePreferenceSyncItem,
+): PendingFavoriteSync {
+  const pending: PendingFavoriteSync = { action, item, token: nextPendingToken() };
+  const current = readPendingFavoriteSyncs().filter((entry) => entry.item.id !== item.id);
+  writePendingFavoriteSyncs([pending, ...current]);
+  return pending;
+}
+
+function clearPendingFavoriteSyncIfCurrent(pending: PendingFavoriteSync) {
+  const current = readPendingFavoriteSyncs();
+  const next = current.filter(
+    (entry) => !(entry.item.id === pending.item.id && entry.token === pending.token),
+  );
+  if (next.length !== current.length) writePendingFavoriteSyncs(next);
 }
 
 async function postPreferencePayload(
@@ -196,9 +267,28 @@ export async function syncFavoritePreference(
   const payload = buildFavoritePreferenceSyncPayload(action, item, origin);
   if (!payload) return false;
 
-  // Local state remains the immediate UX source while the authenticated ledger
-  // provides account-level preference and recovery state.
-  return postPreferencePayload(payload, SYNC_TIMEOUT_MS, true);
+  // Queue before the network call so a newer local action cannot be erased by
+  // an older request that happens to finish later.
+  const pending = queuePendingFavoriteSync(action, item);
+  const synced = await postPreferencePayload(payload, SYNC_TIMEOUT_MS, true);
+  if (synced) clearPendingFavoriteSyncIfCurrent(pending);
+  return synced;
+}
+
+export async function flushPendingFavoritePreferences(): Promise<number> {
+  const pending = readPendingFavoriteSyncs();
+  if (!pending.length) return 0;
+
+  let synced = 0;
+  for (const entry of pending) {
+    const payload = buildFavoritePreferenceSyncPayload(entry.action, entry.item, browserOrigin());
+    if (!payload) continue;
+    if (await postPreferencePayload(payload, SYNC_TIMEOUT_MS, false)) {
+      clearPendingFavoriteSyncIfCurrent(entry);
+      synced += 1;
+    }
+  }
+  return synced;
 }
 
 export async function bootstrapFavoritePreferenceHistory(
