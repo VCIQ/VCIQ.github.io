@@ -9,7 +9,7 @@ on:
 
 permissions:
   contents: write
-  actions: read
+  actions: write
 
 concurrency:
   group: vciq-pages-observer
@@ -27,7 +27,7 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
-      - name: Record latest Pages run and failed log
+      - name: Record latest Pages run and real deployment outcome
         env:
           GH_TOKEN: ${{ github.token }}
           EVENT_RUN_ID: ${{ github.event.workflow_run.id }}
@@ -43,14 +43,74 @@ jobs:
           test -n "$RUN_ID"
 
           gh run view "$RUN_ID" \
-            --json databaseId,status,conclusion,createdAt,updatedAt,headSha,url,event,workflowName \
+            --json databaseId,status,conclusion,createdAt,updatedAt,headSha,url,event,workflowName,jobs \
+            > /tmp/pages-run.json
+
+          BUILD_CONCLUSION="$(jq -r '[.jobs[] | select(.name == "build") | .conclusion][0] // "missing"' /tmp/pages-run.json)"
+          DEPLOY_CONCLUSION="$(jq -r '[.jobs[] | select(.name == "deploy") | .conclusion][0] // "missing"' /tmp/pages-run.json)"
+          BUILD_JOB_ID="$(jq -r '[.jobs[] | select(.name == "build") | .databaseId][0] // ""' /tmp/pages-run.json)"
+          RUN_CONCLUSION="$(jq -r '.conclusion // ""' /tmp/pages-run.json)"
+
+          deployment_status="incomplete"
+          if [ "$DEPLOY_CONCLUSION" = "success" ]; then
+            deployment_status="deployed"
+          elif [ "$RUN_CONCLUSION" = "failure" ]; then
+            deployment_status="failed"
+          elif [ "$DEPLOY_CONCLUSION" = "skipped" ]; then
+            deployment_status="deferred"
+          fi
+
+          deferred_reason=""
+          if [ "$deployment_status" = "deferred" ] && [ -n "$BUILD_JOB_ID" ]; then
+            BUILD_LOG="$(gh run view "$RUN_ID" --job "$BUILD_JOB_ID" --log 2>/dev/null || true)"
+            if printf '%s\n' "$BUILD_LOG" | grep -Fq "tracking configuration is newer than the article snapshot"; then
+              deferred_reason="tracking_snapshot_refresh"
+            elif printf '%s\n' "$BUILD_LOG" | grep -Fq "entity resolution reconciliation is not at a fixed point"; then
+              deferred_reason="entity_reconciliation"
+            else
+              deferred_reason="publication_readiness"
+            fi
+          fi
+
+          jq \
+            --arg buildConclusion "$BUILD_CONCLUSION" \
+            --arg deployConclusion "$DEPLOY_CONCLUSION" \
+            --arg deploymentStatus "$deployment_status" \
+            --arg deferredReason "$deferred_reason" \
+            'del(.jobs) + {
+              buildConclusion: $buildConclusion,
+              deployConclusion: $deployConclusion,
+              deploymentStatus: $deploymentStatus,
+              deferredReason: (if $deferredReason == "" then null else $deferredReason end)
+            }' \
+            /tmp/pages-run.json \
             > diagnostics/pages-latest-status.json
 
-          if [ "$(jq -r '.conclusion // ""' diagnostics/pages-latest-status.json)" = "failure" ]; then
+          if [ "$RUN_CONCLUSION" = "failure" ]; then
             gh run view "$RUN_ID" --log-failed > diagnostics/pages-latest-failure.txt 2>&1 || true
           else
             : > diagnostics/pages-latest-failure.txt
           fi
+
+      - name: Recover a deferred stale-tracking publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          deployment_status="$(jq -r '.deploymentStatus // ""' diagnostics/pages-latest-status.json)"
+          deferred_reason="$(jq -r '.deferredReason // ""' diagnostics/pages-latest-status.json)"
+
+          if [ "$deployment_status" != "deferred" ] || [ "$deferred_reason" != "tracking_snapshot_refresh" ]; then
+            echo "No stale-tracking recovery is required."
+            exit 0
+          fi
+
+          echo "Pages was deferred because tracking inputs are newer than the article snapshot."
+          echo "Dispatching a current full refresh; the refresh workflow owns serialization and currentness checks."
+          gh workflow run scheduled-sync.yml \
+            --ref main \
+            --repo "$GITHUB_REPOSITORY"
 
       - name: Publish diagnostic snapshot
         shell: bash
