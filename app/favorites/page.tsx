@@ -3,6 +3,7 @@ import { ExternalFavoriteCapture } from "@/components/external-favorite-capture"
 import { FavoritesHydrationMarker } from "@/components/favorites-hydration-marker";
 import { FavoritesPage } from "@/components/favorites-page";
 import "./favorites.css";
+import "./favorites-prehydrate.css";
 
 export const metadata: Metadata = {
   title: "收藏",
