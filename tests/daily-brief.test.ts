@@ -89,6 +89,29 @@ test("Daily Brief honors canonical URLs and upstream event clusters", () => {
   assert.equal(isDailyBriefDuplicate(clusterA, clusterB), true);
 });
 
+test("Daily Brief keeps similar same-company stories separate when the event meaning differs", () => {
+  const enterprise = event(
+    "enterprise",
+    "OpenAI 发布 ChatGPT 企业版全新安全控制功能",
+    { type: "产品发布" },
+  );
+  const teen = event(
+    "teen",
+    "OpenAI 发布 ChatGPT 青少年版全新家长控制功能",
+    { type: "产品发布" },
+  );
+  const gpt6 = event("gpt6", "OpenAI 发布 GPT-6 模型，性能提升显著", {
+    type: "产品发布",
+  });
+  const gpt7 = event("gpt7", "OpenAI 发布 GPT-7 模型，性能提升显著", {
+    type: "产品发布",
+  });
+
+  assert.equal(isDailyBriefDuplicate(enterprise, teen), false);
+  assert.ok(briefTitleSimilarity(gpt6.title, gpt7.title) >= 0.86);
+  assert.equal(isDailyBriefDuplicate(gpt6, gpt7), false);
+});
+
 test("Daily Brief expands to ten unique events and backfills after dedupe", () => {
   const unique = Array.from({ length: 11 }, (_, index) =>
     event(`unique-${index}`, `独立事件 ${index}：${"甲乙丙丁戊己庚辛壬癸"[index % 10]} 技术进展`, {
