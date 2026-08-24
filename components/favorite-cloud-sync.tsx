@@ -9,6 +9,7 @@ import {
   reconcileFavoritesWithCloud,
   type FavoriteCloudSyncStatus,
 } from "@/lib/favorite-cloud-sync";
+import { FAVORITES_CHANGED_EVENT } from "@/lib/favorites";
 
 const TRACKING_ADMIN_URL = "https://vciq-tracking-console.pages.dev/";
 
@@ -90,11 +91,21 @@ export function FavoriteCloudSync() {
 
   useEffect(() => {
     if (!pathname.startsWith("/favorites")) return;
-    updateFavoritesPageCopy(status);
-    const frame = window.requestAnimationFrame(() => {
-      setActionMount(document.querySelector<HTMLElement>(".favorites-transfer-actions"));
-    });
-    return () => window.cancelAnimationFrame(frame);
+    let frame = 0;
+    const apply = () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        updateFavoritesPageCopy(status);
+        setActionMount(document.querySelector<HTMLElement>(".favorites-transfer-actions"));
+      });
+    };
+
+    apply();
+    window.addEventListener(FAVORITES_CHANGED_EVENT, apply);
+    return () => {
+      window.removeEventListener(FAVORITES_CHANGED_EVENT, apply);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
   }, [pathname, status]);
 
   const needsConnection = status?.state === "auth-required" || status?.state === "unavailable";
