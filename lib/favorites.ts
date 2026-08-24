@@ -56,9 +56,15 @@ export type FavoriteItem = Omit<
   savedAt: string;
 };
 
-type FavoritePayload = {
+export type FavoritePayload = {
   schemaVersion: 1;
   items: FavoriteItem[];
+};
+
+export type FavoriteImportResult = {
+  added: number;
+  skipped: number;
+  total: number;
 };
 
 const MAX_FAVORITES = 300;
@@ -380,6 +386,65 @@ function writeFavoriteItems(items: FavoriteItem[]): void {
   window.dispatchEvent(new CustomEvent(FAVORITES_CHANGED_EVENT));
 }
 
+export function serializeFavoriteItems(items = readFavoriteItems()): string {
+  const payload: FavoritePayload = {
+    schemaVersion: FAVORITES_SCHEMA_VERSION,
+    items: items.slice(0, MAX_FAVORITES),
+  };
+  return JSON.stringify(payload, null, 2);
+}
+
+export function importFavoriteItems(value: string): FavoriteImportResult {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(value) as unknown;
+  } catch {
+    throw new Error("收藏文件不是有效的 JSON 文件");
+  }
+
+  const rawItems = Array.isArray(parsed)
+    ? parsed
+    : parsed &&
+        typeof parsed === "object" &&
+        Array.isArray((parsed as Record<string, unknown>).items)
+      ? ((parsed as Record<string, unknown>).items as unknown[])
+      : null;
+  if (!rawItems) throw new Error("收藏文件中没有可识别的收藏列表");
+
+  const current = readFavoriteItems();
+  const existingIds = new Set(current.map((item) => item.id));
+  const imported: FavoriteItem[] = [];
+  for (const raw of rawItems) {
+    const item = normalizeFavorite(raw);
+    if (!item || existingIds.has(item.id)) continue;
+    existingIds.add(item.id);
+    imported.push(item);
+    if (current.length + imported.length >= MAX_FAVORITES) break;
+  }
+
+  if (imported.length) {
+    writeFavoriteItems([...imported, ...current]);
+    for (const importedItem of imported) {
+      void syncFavoritePreference("save", importedItem);
+    }
+  }
+  return {
+    added: imported.length,
+    skipped: Math.max(0, rawItems.length - imported.length),
+    total: rawItems.length,
+  };
+}
+
+export function restoreFavorite(item: FavoriteItem): boolean {
+  const current = readFavoriteItems();
+  if (current.some((entry) => entry.id === item.id)) return false;
+  const restored = normalizeFavorite(item);
+  if (!restored) return false;
+  writeFavoriteItems([restored, ...current]);
+  void syncFavoritePreference("save", restored);
+  return true;
+}
+
 export function isFavorite(id: string): boolean {
   getFavoriteIdSnapshot();
   return cachedFavoriteIds.has(id);
@@ -405,9 +470,11 @@ export function toggleFavorite(input: FavoriteInput): boolean {
   return true;
 }
 
-export function removeFavorite(id: string): void {
+export function removeFavorite(id: string): FavoriteItem | null {
   const current = readFavoriteItems();
   const existingItem = current.find((item) => item.id === id);
+  if (!existingItem) return null;
   writeFavoriteItems(current.filter((item) => item.id !== id));
-  if (existingItem) void syncFavoritePreference("remove", existingItem);
+  void syncFavoritePreference("remove", existingItem);
+  return existingItem;
 }
