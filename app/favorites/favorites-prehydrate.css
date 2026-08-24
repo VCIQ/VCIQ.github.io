@@ -1,0 +1,28 @@
+html:not([data-vciq-favorites-hydrated="1"]) .favorites-signal-card > span,
+html:not([data-vciq-favorites-hydrated="1"]) .favorites-signal-card > p,
+html:not([data-vciq-favorites-hydrated="1"]) .favorites-signal-card > strong {
+  position: relative;
+  color: transparent;
+}
+
+html:not([data-vciq-favorites-hydrated="1"]) .favorites-signal-card > span::after,
+html:not([data-vciq-favorites-hydrated="1"]) .favorites-signal-card > p::after,
+html:not([data-vciq-favorites-hydrated="1"]) .favorites-signal-card > strong::after {
+  position: absolute;
+  inset: 0 auto auto 0;
+  color: var(--faint);
+  white-space: nowrap;
+}
+
+html:not([data-vciq-favorites-hydrated="1"]) .favorites-signal-card > span::after {
+  content: "收藏同步";
+}
+
+html:not([data-vciq-favorites-hydrated="1"]) .favorites-signal-card > strong::after {
+  content: "…";
+  color: var(--green-bright);
+}
+
+html:not([data-vciq-favorites-hydrated="1"]) .favorites-signal-card > p::after {
+  content: "项收藏 · 正在加载本地与云端账户";
+}
