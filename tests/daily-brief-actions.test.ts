@@ -6,7 +6,7 @@ import {
   dailyBriefFavoriteInput,
   dailyBriefPermalink,
   dailyBriefTrackingHref,
-} from "../components/daily-brief-actions";
+} from "../lib/daily-brief-actions";
 import type { LiveIntelligenceEvent } from "../lib/use-articles";
 
 function event(overrides: Partial<LiveIntelligenceEvent> = {}): LiveIntelligenceEvent {
