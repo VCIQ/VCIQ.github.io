@@ -159,8 +159,13 @@ export function dailyBriefScore(item: LiveIntelligenceEvent) {
 function compareDailyBriefCandidates(
   left: LiveIntelligenceEvent,
   right: LiveIntelligenceEvent,
+  preferredDate?: string,
 ) {
+  const preferredDateDelta = preferredDate
+    ? Number(right.publishedAt === preferredDate) - Number(left.publishedAt === preferredDate)
+    : 0;
   return (
+    preferredDateDelta ||
     dailyBriefScore(right) - dailyBriefScore(left) ||
     right.importance - left.importance ||
     (right.qualityScore ?? 0) - (left.qualityScore ?? 0) ||
@@ -190,10 +195,13 @@ function wouldDuplicate(
 export function selectDailyBriefEvents(
   candidates: LiveIntelligenceEvent[],
   limit = DEFAULT_DAILY_BRIEF_LIMIT,
+  preferredDate?: string,
 ) {
   if (limit <= 0 || !candidates.length) return [];
 
-  const ranked = [...candidates].sort(compareDailyBriefCandidates);
+  const ranked = [...candidates].sort((left, right) =>
+    compareDailyBriefCandidates(left, right, preferredDate),
+  );
   const selected: LiveIntelligenceEvent[] = [];
   const sourceCounts = new Map<string, number>();
   const entityCounts = new Map<string, number>();
