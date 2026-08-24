@@ -15,6 +15,7 @@ type ChannelSplitLayoutProps = {
   icon: ReactNode;
   bodyClassName?: string;
   directoryFirst?: boolean;
+  afterResearchSynergy?: ReactNode;
   children: ReactNode;
 };
 
@@ -29,6 +30,7 @@ export function ChannelSplitLayout({
   icon,
   bodyClassName,
   directoryFirst = false,
+  afterResearchSynergy,
   children,
 }: ChannelSplitLayoutProps) {
   const updatesPanel = (
@@ -64,6 +66,7 @@ export function ChannelSplitLayout({
   return (
     <>
       {showResearchSynergy ? <ResearchSynergyStrip /> : null}
+      {afterResearchSynergy}
       <div className={styles.splitLayout}>
         {directoryFirst ? (
           <>
