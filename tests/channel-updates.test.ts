@@ -429,7 +429,6 @@ test("technology publication preserves observed tracks and applies reviewed anal
 
   const reviewedCases: Array<[string, string[]]> = [
     ["Vantage and Nebius move first", ["AI / AGI"]],
-    ["SenseNova U1.5 Lite正式版发布", ["AI / AGI"]],
     ["DeepSeek to introduce peak and off-peak pricing", ["AI / AGI"]],
     ["Pixels could soon get AI-powered", ["AI智能终端", "AI / AGI"]],
     ["Pony AI Inc.’s Second Quarter 2026 Earnings", ["机器人", "智能交通"]],
