@@ -234,6 +234,147 @@
   font-size: 10px;
 }
 
+.pulseSection {
+  margin: 0 0 22px;
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(105deg, color-mix(in srgb, var(--green) 7%, transparent), transparent 38%),
+    var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.pulseHeader {
+  display: grid;
+  grid-template-columns: minmax(180px, .62fr) minmax(320px, 1fr) auto;
+  gap: 20px;
+  align-items: end;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.pulseHeader > div > span {
+  color: var(--green-bright);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .14em;
+}
+
+.pulseHeader h2 {
+  margin: 2px 0 0;
+  font: 500 19px/1.3 "Noto Serif SC", "Songti SC", serif;
+}
+
+.pulseHeader > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.pulseHeader > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--green-bright);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.pulseHeader > a:hover {
+  text-decoration: underline;
+}
+
+.pulseGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.pulseCard {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  gap: 3px 10px;
+  min-width: 0;
+  padding: 13px 15px;
+  border-right: 1px solid var(--border-soft);
+  transition: background .18s ease;
+}
+
+.pulseCard:last-child {
+  border-right: 0;
+}
+
+.pulseCard:hover {
+  background: color-mix(in srgb, var(--green) 6%, transparent);
+}
+
+.pulseRank {
+  grid-row: 1 / 3;
+  padding-top: 2px;
+  color: var(--green);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .1em;
+}
+
+.pulseMain {
+  min-width: 0;
+}
+
+.pulseMain strong {
+  display: block;
+  overflow: hidden;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pulseMain small {
+  display: block;
+  margin-top: 2px;
+  overflow: hidden;
+  color: var(--faint);
+  font-size: 9px;
+  line-height: 1.5;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pulseHeat {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.pulseHeat small {
+  color: var(--faint);
+  font-size: 8px;
+  letter-spacing: .08em;
+}
+
+.pulseHeat b {
+  color: var(--green-bright);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -.03em;
+}
+
+.pulseMomentum {
+  grid-column: 2 / 4;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 650;
+  letter-spacing: .03em;
+}
+
 :global(.page-header):has(.headerIntro) {
   gap: 18px 28px;
   padding: 24px 0 18px;
@@ -330,6 +471,24 @@
   }
 }
 
+@media (max-width: 1180px) {
+  .pulseGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pulseCard {
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .pulseCard:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .pulseCard:nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
+}
+
 @media (max-width: 760px) {
   .body {
     padding: 16px;
@@ -361,6 +520,31 @@
 
   .analysisPolicy {
     gap: 8px;
+  }
+
+  .pulseHeader {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    align-items: start;
+  }
+
+  .pulseHeader > a {
+    margin-top: 2px;
+  }
+
+  .pulseGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .pulseCard,
+  .pulseCard:nth-child(2n),
+  .pulseCard:nth-last-child(-n + 2) {
+    border-right: 0;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .pulseCard:last-child {
+    border-bottom: 0;
   }
 
   .layerHeader {
