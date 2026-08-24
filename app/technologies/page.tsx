@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cpu, Layers3, Network, RadioTower } from "lucide-react";
+import { ArrowRight, Cpu, Layers3, Network, RadioTower } from "lucide-react";
 import Link from "next/link";
 import { ChannelSplitLayout } from "@/components/channel-split-layout";
 import { coreTechnologyEntities } from "@/lib/core-research-objects";
@@ -67,6 +67,14 @@ export default function TechnologyResearchPage() {
     ),
     momentum: topicMomentum.get(topic.slug),
   }));
+  const pulseTracks = [...trackedSectors]
+    .sort((left, right) => right.heat - left.heat)
+    .slice(0, 4)
+    .map((sector) => ({
+      sector,
+      momentum: trackMomentum.get(sector.name),
+      topicCount: technologyTopicsForTrack(sector).length,
+    }));
   const semanticRescued =
     analysis.population.semanticTitleRescued + analysis.population.semanticSummaryRescued;
 
@@ -113,6 +121,56 @@ export default function TechnologyResearchPage() {
         statusText={`${technologyTopicDefinitions.length} 主题 · ${coreTechnologyEntities.length} 技术对象`}
         icon={<Layers3 size={19} aria-hidden="true" />}
         bodyClassName={styles.body}
+        afterResearchSynergy={
+          <section className={styles.pulseSection} aria-labelledby="technology-pulse-title">
+            <header className={styles.pulseHeader}>
+              <div>
+                <span>TECHNOLOGY PULSE</span>
+                <h2 id="technology-pulse-title">当前技术脉搏</h2>
+              </div>
+              <p>
+                按 HeatScore 展示当前优先查看的赛道；7D / 30D 只在可靠观测覆盖足够时输出比较。
+              </p>
+              <a href="#core-tracks">
+                查看全部赛道
+                <ArrowRight size={13} aria-hidden="true" />
+              </a>
+            </header>
+            <div className={styles.pulseGrid}>
+              {pulseTracks.map(({ sector, momentum, topicCount }, index) => (
+                <Link
+                  href={`/technologies/tracks/${sector.slug}`}
+                  className={styles.pulseCard}
+                  key={sector.slug}
+                >
+                  <span className={styles.pulseRank}>{String(index + 1).padStart(2, "0")}</span>
+                  <div className={styles.pulseMain}>
+                    <strong>{sector.name}</strong>
+                    <small>{topicCount} 个重点主题 · {sector.events} 项公开事件</small>
+                  </div>
+                  <div className={styles.pulseHeat}>
+                    <small>HEAT</small>
+                    <b>{sector.heat}</b>
+                  </div>
+                  <div className={styles.pulseMomentum}>
+                    {momentum ? (
+                      <>
+                        <span title={momentumTitle(momentum.sevenDayTrend)}>
+                          {shortWindowLabel("7D", momentum.sevenDayTrend)}
+                        </span>
+                        <span title={momentumTitle(momentum.thirtyDayMomentum)}>
+                          30D {growthLabel(momentum.thirtyDayMomentum)}
+                        </span>
+                      </>
+                    ) : (
+                      <span>趋势积累中</span>
+                    )}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        }
       >
         <section className={styles.layer} id="core-tracks">
           <div className={styles.layerHeader}>
