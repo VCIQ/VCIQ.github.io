@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { FavoriteCloudSync } from "@/components/favorite-cloud-sync";
 import { IntelligenceFavoriteControls } from "@/components/homepage-favorite-controls";
 import { IntelligenceHotnessControls } from "@/components/intelligence-hotness-controls";
 import { WechatShareCompat } from "@/components/wechat-share-compat";
@@ -13,6 +14,7 @@ export function SiteClientControls() {
 
   return (
     <>
+      <FavoriteCloudSync />
       <IntelligenceFavoriteControls />
       <IntelligenceHotnessControls />
       <WechatShareCompat />
