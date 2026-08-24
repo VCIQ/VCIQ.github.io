@@ -30,9 +30,18 @@ const pillars = [
   },
 ] as const;
 
-export function ResearchSynergyStrip() {
+type ResearchSynergyStripProps = {
+  compactOnMobile?: boolean;
+};
+
+export function ResearchSynergyStrip({
+  compactOnMobile = false,
+}: ResearchSynergyStripProps) {
   return (
-    <section className={styles.section} aria-labelledby="research-synergy-title">
+    <section
+      className={`${styles.section}${compactOnMobile ? ` ${styles.compactMobile}` : ""}`}
+      aria-labelledby="research-synergy-title"
+    >
       <header className={styles.header}>
         <div>
           <p>RESEARCH OBJECT GRAPH</p>
