@@ -3,7 +3,8 @@
 
 The producer lives in the private tracking-admin repository. This consumer is
 intentionally strict because its output is committed to the public website.
-Only public article metadata and coarse resolver results are allowed through.
+Only public article metadata and coarse resolver/event-cluster results are
+allowed through.
 """
 
 from __future__ import annotations
@@ -30,11 +31,16 @@ ITEM_KEYS = {
     "eventTypes",
     "entities",
     "tracks",
+    "eventClusterId",
+    "duplicateCount",
+    "relatedSources",
 }
 ENTITY_KEYS = {"objectType", "name"}
+RELATED_SOURCE_KEYS = {"source", "href", "title", "publishedAt"}
 ALLOWED_PRIORITIES = {"P0", "P1", "P2"}
 ALLOWED_ENTITY_TYPES = {"company", "person", "technology"}
 MAX_ITEMS = 24
+MAX_RELATED_SOURCES = 3
 
 
 def compact_text(value: Any, limit: int) -> str:
@@ -97,6 +103,24 @@ def normalize_entity(value: Any) -> dict[str, str]:
     return {"objectType": object_type, "name": name}
 
 
+def normalize_related_source(value: Any, primary_href: str) -> dict[str, str]:
+    if not isinstance(value, dict):
+        raise ValueError("related source must be an object")
+    reject_extra_keys(value, RELATED_SOURCE_KEYS, "related source")
+    href = http_url(value.get("href"))
+    if href == primary_href:
+        raise ValueError("related source must not repeat the primary href")
+    source = compact_text(value.get("source"), 160)
+    if not source:
+        source = urlsplit(href).hostname or ""
+    return {
+        "source": source,
+        "href": href,
+        "title": compact_text(value.get("title"), 240),
+        "publishedAt": iso_datetime(value.get("publishedAt")),
+    }
+
+
 def normalize_item(value: Any) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise ValueError("projection item must be an object")
@@ -122,8 +146,31 @@ def normalize_item(value: Any) -> dict[str, Any]:
         raise ValueError("item entities exceeds the public projection limit")
     entities = [normalize_entity(entity) for entity in entities_value]
 
+    event_cluster_id = compact_text(value.get("eventClusterId"), 160)
+    duplicate_count = value.get("duplicateCount", 1)
+    if isinstance(duplicate_count, bool) or not isinstance(duplicate_count, (int, float)):
+        raise ValueError("item duplicateCount must be numeric")
+    duplicate_count = max(1, min(1000, int(duplicate_count)))
+
+    related_value = value.get("relatedSources", [])
+    if not isinstance(related_value, list) or len(related_value) > MAX_RELATED_SOURCES:
+        raise ValueError(
+            f"item relatedSources must contain at most {MAX_RELATED_SOURCES} public sources"
+        )
+    related_sources: list[dict[str, str]] = []
+    seen_related: set[str] = set()
+    for raw in related_value:
+        normalized = normalize_related_source(raw, href)
+        if normalized["href"] in seen_related:
+            continue
+        seen_related.add(normalized["href"])
+        related_sources.append(normalized)
+
+    if duplicate_count < len(related_sources) + 1:
+        duplicate_count = len(related_sources) + 1
+
     return {
-        "id": compact_text(value.get("id"), 240) or href,
+        "id": compact_text(value.get("id"), 240) or event_cluster_id or href,
         "title": title,
         "summary": compact_text(value.get("summary"), 700),
         "href": href,
@@ -134,6 +181,9 @@ def normalize_item(value: Any) -> dict[str, Any]:
         "eventTypes": unique_strings(value.get("eventTypes", []), limit=6),
         "entities": entities,
         "tracks": unique_strings(value.get("tracks", []), limit=4),
+        "eventClusterId": event_cluster_id,
+        "duplicateCount": duplicate_count,
+        "relatedSources": related_sources,
     }
 
 
