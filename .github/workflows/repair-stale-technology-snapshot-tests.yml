@@ -1,0 +1,71 @@
+name: One-time stale technology snapshot test repair
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/repair-stale-technology-snapshot-tests.yml
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Remove stale rolling-snapshot expectations
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("tests/channel-updates.test.ts")
+          text = path.read_text(encoding="utf-8")
+
+          replacements = [
+              (
+                  '    ["Mobileye to establish vertically integrated robotaxi", ["机器人", "智能交通"]],\n',
+                  '',
+              ),
+              (
+                  '    ["Helion 完成 Vela 可控核聚变脉冲电源规模测试", ["可控核聚变"]],\n',
+                  '',
+              ),
+              (
+                  '''  const helion = items.find(\n    (item) => item.id === "official-helion-7df714571d811ffc",\n  );\n  assert.ok(helion);\n  assert.match(helion.title, /Vela.*Tiny Merge/u);\n  assert.match(helion.summary, /1 Hz.*11 GJ/u);\n  assert.equal(helion.track, "新能源");\n  assert.deepEqual(helion.publicTracks, ["可控核聚变"]);\n''',
+                  '',
+              ),
+              (
+                  '    /Helion 完成 Vela 可控核聚变脉冲电源规模测试并推进 Tiny Merge 集成/iu,\n',
+                  '',
+              ),
+          ]
+
+          for old, new in replacements:
+              if old not in text:
+                  raise SystemExit(f"expected stale assertion not found: {old[:80]!r}")
+              text = text.replace(old, new, 1)
+
+          path.write_text(text, encoding="utf-8")
+          PY
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Verify the full unit suite
+        run: npm run test:unit
+      - name: Commit repaired snapshot tests
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tests/channel-updates.test.ts
+          git diff --cached --check
+          git commit -m "test: drop stale rolling technology expectations"
+          git pull --rebase origin main
+          git push origin HEAD:main
