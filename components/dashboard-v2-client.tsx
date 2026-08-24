@@ -16,6 +16,7 @@ import {
   type HomepageSortMode,
 } from "@/components/homepage-sort-toggle";
 import styles from "@/components/dashboard-v2.module.css";
+import { dailyBriefScore, selectDailyBriefEvents } from "@/lib/daily-brief";
 import { getSnapshotFreshness } from "@/lib/snapshot-freshness";
 import { buildTrackingCaptureLink } from "@/lib/tracking-admin-link";
 import {
@@ -45,7 +46,7 @@ const eventTypes = [
 const KEY_EVENTS_LIMIT = 200;
 const INITIAL_INBOX_RENDER_LIMIT = 24;
 const INBOX_RENDER_BATCH = 24;
-const DAILY_BRIEF_LIMIT = 5;
+const DAILY_BRIEF_LIMIT = 10;
 const TRACKING_ADMIN_URL = "https://vciq-tracking-console.pages.dev/";
 
 const focusCompanies = [
@@ -237,14 +238,8 @@ export function DashboardV2Client({
     const sameDay = briefDate
       ? trustedArticles.filter((item) => item.publishedAt === briefDate)
       : [];
-    const source = sameDay.length >= 3 ? sameDay : trustedArticles;
-    return [...source]
-      .sort(
-        (left, right) =>
-          right.importance - left.importance ||
-          right.publishedAt.localeCompare(left.publishedAt),
-      )
-      .slice(0, DAILY_BRIEF_LIMIT);
+    const source = sameDay.length >= DAILY_BRIEF_LIMIT ? sameDay : trustedArticles;
+    return selectDailyBriefEvents(source, DAILY_BRIEF_LIMIT, briefDate);
   }, [briefDate, trustedArticles]);
 
   const selectedEvent =
@@ -400,7 +395,7 @@ export function DashboardV2Client({
         <div className={styles.briefBody}>
           <div className={styles.briefLabel}>
             <strong>Daily Brief</strong>
-            <p>{freshness.description}</p>
+            <p>{freshness.description} · Top 10 独立事件，已按事件级去重与来源多样性重排。</p>
           </div>
           <div className={styles.briefList}>
             {dailyBriefEvents.length ? dailyBriefEvents.map((item, index) => (
@@ -415,7 +410,12 @@ export function DashboardV2Client({
                   <strong>{item.title}</strong>
                   <small>{item.type} · {item.region} · {item.sector}</small>
                 </span>
-                <span className={styles.briefScore}>{item.importance}</span>
+                <span
+                  className={styles.briefScore}
+                  title="Daily Brief 综合优先级：重要度、质量、信源等级与多源佐证"
+                >
+                  {dailyBriefScore(item)}
+                </span>
               </button>
             )) : (
               <div className={styles.analysisEmpty}>等待下一次可信情报刷新。</div>
