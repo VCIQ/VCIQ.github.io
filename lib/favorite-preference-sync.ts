@@ -41,6 +41,8 @@ export type FavoriteCloudState = {
   status: number;
 };
 
+let bootstrapInFlight: Promise<boolean> | null = null;
+
 function absolutePublicUrl(value: string, publicOrigin: string): string {
   try {
     const url = new URL(value, publicOrigin);
@@ -194,15 +196,16 @@ export async function syncFavoritePreference(
   const payload = buildFavoritePreferenceSyncPayload(action, item, origin);
   if (!payload) return false;
 
-  // Favorite persistence is local-first. The private preference event is a
-  // best-effort learning signal authenticated by the existing Cloudflare
-  // Access session; no GitHub or database credential is exposed here.
+  // Local state remains the immediate UX source while the authenticated ledger
+  // provides account-level preference and recovery state.
   return postPreferencePayload(payload, SYNC_TIMEOUT_MS, true);
 }
 
 export async function bootstrapFavoritePreferenceHistory(
   items: FavoritePreferenceSyncItem[],
 ): Promise<boolean> {
+  if (bootstrapInFlight) return bootstrapInFlight;
+
   const origin = browserOrigin();
   if (!origin || !Array.isArray(items) || items.length === 0) return false;
   const normalizedItems = items
@@ -212,11 +215,17 @@ export async function bootstrapFavoritePreferenceHistory(
   if (!normalizedItems.length) return false;
 
   // A historical import can exceed the browser keepalive body budget, so it is
-  // sent once per page runtime without keepalive. Individual future Favorite
-  // actions continue to use the small keepalive request above.
-  return postPreferencePayload(
+  // sent once per concurrent page bootstrap. Individual future Favorite actions
+  // continue to use the small keepalive request above.
+  const request = postPreferencePayload(
     { bootstrap: true, items: normalizedItems },
     BOOTSTRAP_TIMEOUT_MS,
     false,
   );
+  bootstrapInFlight = request;
+  try {
+    return await request;
+  } finally {
+    if (bootstrapInFlight === request) bootstrapInFlight = null;
+  }
 }
