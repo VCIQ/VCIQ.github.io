@@ -96,6 +96,31 @@ export function briefTitleSimilarity(leftTitle: string, rightTitle: string) {
   return (2 * overlap) / (leftBigrams.size + rightBigrams.size);
 }
 
+function numericTitleCues(rawTitle: string) {
+  const normalized = rawTitle
+    .normalize("NFKC")
+    .toLowerCase()
+    .replace(/三分之一/g, "1/3")
+    .replace(/二分之一/g, "1/2")
+    .replace(/四分之一/g, "1/4");
+  return new Set(
+    (normalized.match(/\d+(?:[./]\d+)?%?/g) ?? []).filter((cue) => {
+      const numeric = Number(cue.replace(/[%/].*$/, ""));
+      return !(Number.isInteger(numeric) && numeric >= 1900 && numeric <= 2099);
+    }),
+  );
+}
+
+function numericCueRelation(leftTitle: string, rightTitle: string) {
+  const left = numericTitleCues(leftTitle);
+  const right = numericTitleCues(rightTitle);
+  if (!left.size || !right.size) {
+    return { shared: false, conflicting: false };
+  }
+  const shared = [...left].some((cue) => right.has(cue));
+  return { shared, conflicting: !shared };
+}
+
 function entityKeys(item: LiveIntelligenceEvent) {
   return new Set(
     [
@@ -137,10 +162,17 @@ export function isDailyBriefDuplicate(
 
   const similarity = briefTitleSimilarity(left.title, right.title);
   const sameDay = left.publishedAt === right.publishedAt;
-  const sameTaxonomy = left.type === right.type && left.sector === right.sector;
+  const numericCues = numericCueRelation(left.title, right.title);
 
-  if (similarity >= 0.72) return true;
-  return similarity >= 0.48 && sameDay && (sharesEntity(left, right) || sameTaxonomy);
+  // High lexical similarity is useful for cross-source copies, but version/model
+  // numbers that disagree are treated as explicit evidence of different events.
+  if (similarity >= 0.86 && !numericCues.conflicting) return true;
+
+  // A coarse taxonomy such as "论文 · AI / AGI" is not sufficient evidence for
+  // semantic duplication. Moderate-similarity fallbacks require a shared entity
+  // plus a shared quantitative fact, which catches common paraphrased-study cases
+  // without collapsing a day's distinct stories about the same company.
+  return similarity >= 0.48 && sameDay && sharesEntity(left, right) && numericCues.shared;
 }
 
 export function dailyBriefScore(item: LiveIntelligenceEvent) {
