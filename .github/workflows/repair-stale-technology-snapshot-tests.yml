@@ -9,6 +9,8 @@ on:
 permissions:
   contents: write
 
+# This second commit intentionally starts the one-time repair after the workflow
+# file already exists on the default branch.
 jobs:
   repair:
     runs-on: ubuntu-latest
