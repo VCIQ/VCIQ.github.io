@@ -67,13 +67,18 @@ export default function TechnologyResearchPage() {
     ),
     momentum: topicMomentum.get(topic.slug),
   }));
-  const pulseTracks = [...trackedSectors]
-    .sort((left, right) => right.heat - left.heat)
-    .slice(0, 4)
+  const pulseTracks = trackedSectors
     .map((sector) => ({
       sector,
+      topics: technologyTopicsForTrack(sector),
+    }))
+    .filter(({ topics }) => topics.length > 0)
+    .sort((left, right) => right.sector.heat - left.sector.heat)
+    .slice(0, 4)
+    .map(({ sector, topics }) => ({
+      sector,
       momentum: trackMomentum.get(sector.name),
-      topicCount: technologyTopicsForTrack(sector).length,
+      topicCount: topics.length,
     }));
   const semanticRescued =
     analysis.population.semanticTitleRescued + analysis.population.semanticSummaryRescued;
@@ -84,8 +89,7 @@ export default function TechnologyResearchPage() {
         <p className="eyebrow">02 / TECHNOLOGY RESEARCH</p>
         <h1>科技研究</h1>
         <p className={styles.headerIntro}>
-          用“核心赛道 → 重点技术主题 → 核心技术对象”组织研究入口。赛道保留产业结构与
-          HeatScore；7 日趋势和 30 日 Momentum 只读取经过 taxonomy、赛道质量、规范赛道纠错、内容相关性、赛道语义救援、来源—赛道稳定性与时间覆盖审计后的分析样本。原始赛道和原始事件始终保留为 provenance。
+          用“核心赛道 → 重点技术主题 → 核心技术对象”组织研究入口，并用经质量审计的 7D / 30D 事件变化识别当前技术脉搏；原始赛道与事件始终保留，可继续下钻追溯。
         </p>
         <div className={styles.headerChips}>
           <span><Network size={14} />{trackedSectors.length} 个核心赛道</span>
@@ -129,7 +133,7 @@ export default function TechnologyResearchPage() {
                 <h2 id="technology-pulse-title">当前技术脉搏</h2>
               </div>
               <p>
-                按 HeatScore 展示当前优先查看的赛道；7D / 30D 只在可靠观测覆盖足够时输出比较。
+                按 HeatScore 展示已有重点技术主题的优先赛道；7D / 30D 只在可靠观测覆盖足够时输出比较。
               </p>
               <a href="#core-tracks">
                 查看全部赛道
