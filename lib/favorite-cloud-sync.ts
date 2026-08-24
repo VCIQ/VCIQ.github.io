@@ -10,6 +10,7 @@ import {
 import {
   bootstrapFavoritePreferenceHistory,
   fetchFavoritePreferenceCloudState,
+  flushPendingFavoritePreferences,
   type FavoriteCloudRecord,
 } from "@/lib/favorite-preference-sync";
 
@@ -135,6 +136,11 @@ export function favoriteCloudSyncIsDue() {
 export async function reconcileFavoritesWithCloud(): Promise<FavoriteCloudSyncStatus> {
   const local = readFavoriteItems();
   writeSessionTimestamp(CLOUD_SYNC_ATTEMPT_KEY);
+
+  // Preserve the latest local intent first. A failed remove/save is queued by
+  // syncFavoritePreference; flushing it before bootstrap/read prevents the
+  // cloud ledger from resurrecting a stale favorite after connectivity returns.
+  await flushPendingFavoritePreferences();
 
   // Existing browser-only collections are uploaded before the first read. The
   // server bootstrap is insert-only for IDs it has never seen, so an explicit
