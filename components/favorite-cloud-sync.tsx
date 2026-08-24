@@ -12,7 +12,7 @@ import {
 
 const TRACKING_ADMIN_URL = "https://vciq-tracking-console.pages.dev/";
 
-type SyncState = FavoriteCloudSyncStatus | { state: "checking" } | null;
+type SyncState = FavoriteCloudSyncStatus | null;
 
 function updateFavoritesPageCopy(status: SyncState) {
   const card = document.querySelector<HTMLElement>(".favorites-signal-card");
@@ -22,7 +22,7 @@ function updateFavoritesPageCopy(status: SyncState) {
   const safetyTitle = safety?.querySelector<HTMLElement>("strong");
   const safetyCopy = safety?.querySelector<HTMLElement>("p");
 
-  if (!status || status.state === "checking") {
+  if (!status) {
     if (label) label.textContent = "收藏同步";
     if (note) note.textContent = "项收藏 · 正在检查云端账户";
     return;
@@ -65,13 +65,13 @@ export function FavoriteCloudSync() {
   const sync = useCallback(async () => {
     if (inFlight.current) return;
     inFlight.current = true;
-    if (pathname.startsWith("/favorites")) setStatus({ state: "checking" });
     try {
-      setStatus(await reconcileFavoritesWithCloud());
+      const next = await reconcileFavoritesWithCloud();
+      setStatus(next);
     } finally {
       inFlight.current = false;
     }
-  }, [pathname]);
+  }, []);
 
   useEffect(() => {
     if (favoriteCloudSyncIsDue()) void sync();
@@ -88,7 +88,10 @@ export function FavoriteCloudSync() {
   useEffect(() => {
     if (!pathname.startsWith("/favorites")) return;
     updateFavoritesPageCopy(status);
-    setActionMount(document.querySelector<HTMLElement>(".favorites-transfer-actions"));
+    const frame = window.requestAnimationFrame(() => {
+      setActionMount(document.querySelector<HTMLElement>(".favorites-transfer-actions"));
+    });
+    return () => window.cancelAnimationFrame(frame);
   }, [pathname, status]);
 
   if (
