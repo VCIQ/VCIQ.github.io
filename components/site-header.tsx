@@ -9,6 +9,7 @@ const navItems = [
   ["科技研究", "/technologies"],
   ["核心人物", "/people"],
   ["核心公司", "/companies"],
+  ["核心信源", "/sources"],
 ];
 
 const TRACKING_ADMIN_URL = "https://vciq-tracking-console.pages.dev/";
