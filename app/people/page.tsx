@@ -41,7 +41,7 @@ export default function PeoplePage() {
       || left.person.name.localeCompare(right.person.name, "zh-CN"));
   return (
     <main className="page-shell subpage">
-      <header className="page-header">
+      <header className={`page-header ${styles.channelHeader}`}>
         <p className="eyebrow">03 / CORE PEOPLE</p>
         <h1>核心人物</h1>
         <p>
