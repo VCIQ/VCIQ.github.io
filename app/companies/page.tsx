@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function CompaniesPage() {
   return (
     <main className="page-shell subpage">
-      <header className="page-header">
+      <header className={`page-header ${styles.channelHeader}`}>
         <p className="eyebrow">04 / CORE COMPANIES</p>
         <h1>核心公司</h1>
         <p>
