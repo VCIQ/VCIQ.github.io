@@ -31,6 +31,8 @@ jobs:
           cache: npm
       - name: Install locked project dependencies
         run: npm ci
+      - name: Rebuild tracking-derived snapshot for candidate PR config
+        run: python tools/enrich_tracking_snapshot.py
       - name: Build static Pages candidate
         run: npm run build:pages
       - name: Install Chromium for visual QA
@@ -84,7 +86,7 @@ jobs:
             fi
           done
           printf '%s\n' \
-            "Candidate commit: ${GITHUB_SHA}" \
+            "Candidate merge commit: ${GITHUB_SHA}" \
             "Desktop viewport: 1440x900" \
             "Mobile viewport: 390x844" \
             "Purpose: first-screen hierarchy comparison only" \
