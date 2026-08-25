@@ -1,44 +1,3989 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-24T23:50:56+00:00",
+  "generatedAt": "2026-08-25T03:08:59+00:00",
   "asOfDate": "2026-08-25",
-  "runStatus": "no-material-change",
+  "runStatus": "model",
   "baselineSource": "snapshot",
   "model": {
     "provider": "SiliconFlow",
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": false,
-    "usage": {}
+    "used": true,
+    "usage": {
+      "prompt_tokens": 9901,
+      "completion_tokens": 5001,
+      "total_tokens": 14902,
+      "completion_tokens_details": {
+        "reasoning_tokens": 3091
+      },
+      "prompt_tokens_details": {
+        "cached_tokens": 9728
+      },
+      "prompt_cache_hit_tokens": 9728,
+      "prompt_cache_miss_tokens": 173
+    }
   },
   "changeSummary": {
-    "totalDetected": 35,
-    "total": 0,
-    "byDataset": {},
-    "byChangeType": {
-      "external_event": 14,
-      "data_maintenance": 4,
-      "source_refresh": 17
+    "totalDetected": 55,
+    "total": 36,
+    "byDataset": {
+      "institutionEvent": 36
     },
-    "externalCandidates": 14,
-    "qualityRejected": 14,
-    "maintenanceExcluded": 21,
+    "byChangeType": {
+      "external_event": 53,
+      "data_maintenance": 2
+    },
+    "externalCandidates": 53,
+    "qualityRejected": 3,
+    "maintenanceExcluded": 2,
     "aggregatedEvents": 0,
-    "highestImportance": 0
+    "highestImportance": 86
   },
   "analysis": {
-    "mode": "structured-change-only",
-    "isResearchJudgment": false,
-    "executiveSummary": "本期没有通过证据质量门的外部事实候选。",
-    "keyDevelopments": [],
-    "thesisUpdates": [],
-    "watchlist": [],
-    "risks": [],
-    "methodologyNote": "结构化变化检查；本期无材料变化。未执行生成式研判。"
+    "mode": "model-analysis",
+    "isResearchJudgment": true,
+    "executiveSummary": "证据包显示，阿里巴巴云业务与AI收入增长强劲，宁德时代在储能、碳中和及产业链投资上多线推进，科技一级市场融资活跃，AI Agent、物理AI、AI住宅、生物科技等赛道获资本关注；宇树科技IPO与SK海力士扩产显示产业扩张迹象。但多数事件证据等级为C级媒体来源，需以官方公告或财报交叉验证。 质量门诊断：缺少发布时间 10、证据合格但未绑定变化字段 2。",
+    "keyDevelopments": [
+      {
+        "title": "阿里巴巴云收入增速45%创新高，AI相关收入连续三年三位数增长",
+        "assessment": "事实：阿里巴巴云收入增速达45%创新高，AI相关收入连续三年三位数增长，算力资本支出预计三年内回本（E008、E009）。推断：AI商业化加速可能持续拉动云业务增长。待验证：算力资本支出回本为管理层预期，需后续财报验证。",
+        "importance": 5,
+        "confidence": "medium",
+        "entities": [
+          "阿里巴巴"
+        ],
+        "evidenceIds": [
+          "E008",
+          "E009"
+        ]
+      },
+      {
+        "title": "宁德时代实现碳中和目标并推进储能合作与产业链投资",
+        "assessment": "事实：宁德时代宣布实现2025核心运营碳中和目标，并设定2035价值链目标（E007）；与Quinbrook推进Supernode储能合作（E006）；媒体报道其41亿元入股中恒科技（E010）。推断：宁德时代在储能和产业链协同上布局深化。待验证：入股金额及协同细节需官方确认。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "宁德时代"
+        ],
+        "evidenceIds": [
+          "E006",
+          "E007",
+          "E010"
+        ]
+      },
+      {
+        "title": "科技一级市场融资活跃：AI Agent、物理AI、AI住宅、生物科技等赛道密集获投",
+        "assessment": "事实：清雁科技完成数亿元A轮（E014、E015），栖息地完成7亿元A轮（E016），独到科技完成近亿元A+轮（E013），亮源新创获数亿元Pre-A轮（E012），时安生物完成近4亿元A轮（E018），常州鉴芯半导体完成天使轮（E020）。推断：资本对AI及硬科技赛道保持高热度。待验证：各轮融资的投资方与估值细节需以官方公告为准。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "科技产业",
+          "清雁科技",
+          "栖息地",
+          "独到科技",
+          "亮源新创",
+          "时安生物",
+          "常州鉴芯半导体"
+        ],
+        "evidenceIds": [
+          "E012",
+          "E013",
+          "E014",
+          "E015",
+          "E016",
+          "E018",
+          "E020"
+        ]
+      },
+      {
+        "title": "宇树科技IPO发行价超150元/股，SK海力士投资54万亿韩元扩产",
+        "assessment": "事实：行业周报提及宇树科技IPO发行价超150元/股，SK海力士投资54万亿韩元扩产（E017）。推断：机器人赛道估值和半导体扩产显示产业景气。待验证：该信息来自行业周报，非官方公告，需招股书或公司声明确认。",
+        "importance": 3,
+        "confidence": "low",
+        "entities": [
+          "宇树科技",
+          "SK海力士"
+        ],
+        "evidenceIds": [
+          "E017"
+        ]
+      },
+      {
+        "title": "OenoBench发布葡萄酒领域LLM评估基准",
+        "assessment": "事实：arXiv发布OenoBench，一个面向葡萄酒领域的知识 grounded LLM评估基准（E005）。推断：该基准可能用于检验大模型在垂直领域的知识能力。待验证：基准的采用度和影响力尚不明确。",
+        "importance": 2,
+        "confidence": "high",
+        "entities": [
+          "OenoBench"
+        ],
+        "evidenceIds": [
+          "E005"
+        ]
+      }
+    ],
+    "thesisUpdates": [
+      {
+        "entity": "阿里巴巴",
+        "direction": "positive",
+        "statement": "云业务增速创新高，AI相关收入连续三年三位数增长，算力资本支出预计三年内回本，AI商业化加速。",
+        "evidenceIds": [
+          "E008",
+          "E009"
+        ]
+      },
+      {
+        "entity": "宁德时代",
+        "direction": "positive",
+        "statement": "实现2025核心运营碳中和目标，推进Supernode储能合作，并以41亿元入股中恒科技，显示储能与产业链布局深化。",
+        "evidenceIds": [
+          "E006",
+          "E007",
+          "E010"
+        ]
+      },
+      {
+        "entity": "科技一级市场",
+        "direction": "positive",
+        "statement": "AI Agent、物理AI、AI住宅、生物科技等赛道融资活跃，资本持续涌入，行业景气度较高。",
+        "evidenceIds": [
+          "E012",
+          "E013",
+          "E014",
+          "E015",
+          "E016",
+          "E018"
+        ]
+      },
+      {
+        "entity": "机器人/半导体产业",
+        "direction": "mixed",
+        "statement": "宇树科技IPO发行价超150元/股显示机器人赛道热度，SK海力士大规模扩产显示半导体需求，但证据等级较低需验证。",
+        "evidenceIds": [
+          "E017"
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "item": "阿里巴巴算力资本支出回本进度",
+        "reason": "公司预计三年内回本，需后续季度财报验证实际回报。",
+        "nextEvidence": "阿里巴巴下一季度财报或资本开支披露",
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "item": "宁德时代与Quinbrook Supernode项目后续阶段",
+        "reason": "Stage 2和Stage 3里程碑后，需关注项目并网和运营数据。",
+        "nextEvidence": "项目阶段进展公告或运营数据",
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "item": "宁德时代2035价值链碳中和目标执行",
+        "reason": "2025核心运营目标已实现，但价值链目标更广，需年度ESG报告跟踪。",
+        "nextEvidence": "年度可持续发展报告",
+        "evidenceIds": [
+          "E007"
+        ]
+      },
+      {
+        "item": "清雁科技物理AI产品落地",
+        "reason": "数亿元A轮融资后，需关注其几何物理驱动基础设施的商业化进展。",
+        "nextEvidence": "产品发布或客户案例",
+        "evidenceIds": [
+          "E014",
+          "E015"
+        ]
+      },
+      {
+        "item": "亮源新创（ChatGPT核心贡献者）后续融资/产品",
+        "reason": "Pre-A轮数亿元融资，需关注团队背景和产品路线。",
+        "nextEvidence": "后续融资或产品发布",
+        "evidenceIds": [
+          "E012"
+        ]
+      },
+      {
+        "item": "宇树科技IPO定价及上市表现",
+        "reason": "发行价超150元/股来自行业周报，需官方招股书或交易所公告确认。",
+        "nextEvidence": "招股书或上市公告",
+        "evidenceIds": [
+          "E017"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "证据等级风险",
+        "reason": "多数融资和商业事件证据为C级媒体来源，可能包含夸大或不准确信息，需官方渠道交叉验证。",
+        "evidenceIds": [
+          "E008",
+          "E009",
+          "E010",
+          "E012",
+          "E013",
+          "E014",
+          "E015",
+          "E016"
+        ]
+      },
+      {
+        "risk": "阿里巴巴数据未获官方财报原文确认",
+        "reason": "云增速45%和AI收入三位数增长来自媒体，需以财报为准。",
+        "evidenceIds": [
+          "E008",
+          "E009"
+        ]
+      },
+      {
+        "risk": "宁德时代入股中恒科技金额未官方确认",
+        "reason": "41亿入股来自新浪财经，宁德时代官方未直接披露。",
+        "evidenceIds": [
+          "E010"
+        ]
+      },
+      {
+        "risk": "宇树科技IPO信息可靠性",
+        "reason": "发行价来自机械行业周报，可能非最终定价。",
+        "evidenceIds": [
+          "E017"
+        ]
+      }
+    ],
+    "methodologyNote": "本分析仅基于证据包内提供的changes与evidence数据，不补充外部事实。事实、推断与待验证事项已在各条目中区分表述。证据等级B/C级中，B级多为机构官方来源，C级多为媒体来源；低等级证据不作为确定性重大事实。所有判断均引用至少一个evidenceIds中的证据编号。本输出不构成任何买入、卖出、目标价或收益承诺。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
   },
-  "changes": [],
-  "evidence": [],
+  "changes": [
+    {
+      "id": "chg-f29dbd5e6c140909d4c0",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "arxiv-ai-f4e868e7544cbade",
+      "entityName": "OenoBench: A Wine-Domain Benchmark for Knowledge-Grounded Evaluation of Large Language Models",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：OenoBench: A Wine-Domain Benchmark for Knowledge-Grounded Evaluation of Large Language Models。",
+      "importance": 86,
+      "before": null,
+      "after": {
+        "articleId": "arxiv-ai-f4e868e7544cbade",
+        "attributionStatus": "attributed",
+        "attributions": [
+          {
+            "evidence": [
+              "Benchmark"
+            ],
+            "institutionId": "profile:benchmark",
+            "institutionName": "Benchmark",
+            "methods": [
+              "reviewed-alias-text"
+            ]
+          }
+        ],
+        "company": "科技产业",
+        "eventType": "论文",
+        "firstSeenEstimated": false,
+        "id": "arxiv-ai-f4e868e7544cbade",
+        "institutionIds": [
+          "profile:benchmark"
+        ],
+        "institutionNames": [
+          "Benchmark"
+        ],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E005"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E005"
+      ],
+      "supportingEvidenceIds": [
+        "E005"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-fe4f4937c2387aa084b2",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "catl-c494a7862e029f46",
+      "entityName": "CATL and Quinbrook Build on Supernode Partnership Following Stage 2 and Stage 3 Major Milestones",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "companySlug",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：CATL and Quinbrook Build on Supernode Partnership Following Stage 2 and Stage 3 Major Milestones。",
+      "importance": 86,
+      "before": null,
+      "after": {
+        "articleId": "catl-c494a7862e029f46",
+        "attributionStatus": "attributed",
+        "attributions": [
+          {
+            "evidence": [
+              "宁德时代"
+            ],
+            "institutionId": "institution:宁德时代",
+            "institutionName": "宁德时代",
+            "methods": [
+              "reviewed-alias-text"
+            ]
+          }
+        ],
+        "company": "宁德时代",
+        "companySlug": "catl",
+        "eventType": "融资",
+        "firstSeenEstimated": false,
+        "id": "catl-c494a7862e029f46",
+        "institutionIds": [
+          "institution:宁德时代"
+        ],
+        "institutionNames": [
+          "宁德时代"
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E006"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "companySlug",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated"
+      ],
+      "evidenceIds": [
+        "E006"
+      ],
+      "supportingEvidenceIds": [
+        "E006"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-317d583bf56bd6f8c11d",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "catl-ba07486ab2fc6712",
+      "entityName": "CATL Achieves 2025 Core Operation Carbon Neutrality Target, Sets Path to 2035 Value-Chain Goal",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "companySlug",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：CATL Achieves 2025 Core Operation Carbon Neutrality Target, Sets Path to 2035 Value-Chain Goal。",
+      "importance": 86,
+      "before": null,
+      "after": {
+        "articleId": "catl-ba07486ab2fc6712",
+        "attributionStatus": "attributed",
+        "attributions": [
+          {
+            "evidence": [
+              "宁德时代"
+            ],
+            "institutionId": "institution:宁德时代",
+            "institutionName": "宁德时代",
+            "methods": [
+              "reviewed-alias-text"
+            ]
+          }
+        ],
+        "company": "宁德时代",
+        "companySlug": "catl",
+        "eventType": "公司动态",
+        "firstSeenEstimated": false,
+        "id": "catl-ba07486ab2fc6712",
+        "institutionIds": [
+          "institution:宁德时代"
+        ],
+        "institutionNames": [
+          "宁德时代"
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E007"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "companySlug",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated"
+      ],
+      "evidenceIds": [
+        "E007"
+      ],
+      "supportingEvidenceIds": [
+        "E007"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-350fcf918c89294fce94",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-track-zlbbw1-302072631a2619f6",
+      "entityName": "阿里财报：云增速45%创新高，AI相关收入连续三年三位数增长",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：阿里财报：云增速45%创新高，AI相关收入连续三年三位数增长。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-track-zlbbw1-302072631a2619f6",
+        "attributionStatus": "attributed",
+        "attributions": [
+          {
+            "evidence": [
+              "阿里巴巴"
+            ],
+            "institutionId": "institution:阿里巴巴",
+            "institutionName": "阿里巴巴",
+            "methods": [
+              "reviewed-alias-text"
+            ]
+          }
+        ],
+        "company": "科技产业",
+        "eventType": "财报",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-track-zlbbw1-302072631a2619f6",
+        "institutionIds": [
+          "institution:阿里巴巴"
+        ],
+        "institutionNames": [
+          "阿里巴巴"
+        ],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E008"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E008"
+      ],
+      "supportingEvidenceIds": [
+        "E008"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-f7affefc9f00a9f6934d",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-track-e58ig-ae1a796c20f40017",
+      "entityName": "阿里巴巴AI商业化全面加速 云收入增速创22个季度新高 算力资本支出预计三年内回本",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：阿里巴巴AI商业化全面加速 云收入增速创22个季度新高 算力资本支出预计三年内回本。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-track-e58ig-ae1a796c20f40017",
+        "attributionStatus": "attributed",
+        "attributions": [
+          {
+            "evidence": [
+              "阿里巴巴"
+            ],
+            "institutionId": "institution:阿里巴巴",
+            "institutionName": "阿里巴巴",
+            "methods": [
+              "reviewed-alias-text"
+            ]
+          }
+        ],
+        "company": "科技产业",
+        "eventType": "商业进展",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-track-e58ig-ae1a796c20f40017",
+        "institutionIds": [
+          "institution:阿里巴巴"
+        ],
+        "institutionNames": [
+          "阿里巴巴"
+        ],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E009"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E009"
+      ],
+      "supportingEvidenceIds": [
+        "E009"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-8d6c440d724383082c77",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-manual-20bb24a76db33a43-ce74afd9eb2a6fa5",
+      "entityName": "重磅！宁德时代41亿入股中恒科技，三大领域协同合作",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "companySlug",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：重磅！宁德时代41亿入股中恒科技，三大领域协同合作。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-manual-20bb24a76db33a43-ce74afd9eb2a6fa5",
+        "attributionStatus": "attributed",
+        "attributions": [
+          {
+            "evidence": [
+              "宁德时代"
+            ],
+            "institutionId": "institution:宁德时代",
+            "institutionName": "宁德时代",
+            "methods": [
+              "reviewed-alias-text"
+            ]
+          }
+        ],
+        "company": "宁德时代",
+        "companySlug": "catl",
+        "eventType": "商业进展",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-manual-20bb24a76db33a43-ce74afd9eb2a6fa5",
+        "institutionIds": [
+          "institution:宁德时代"
+        ],
+        "institutionNames": [
+          "宁德时代"
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E010"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "companySlug",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated"
+      ],
+      "evidenceIds": [
+        "E010"
+      ],
+      "supportingEvidenceIds": [
+        "E010"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-863e7e3b2f1f11e673a5",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-track-c6s6ma-cceafe34785594f1",
+      "entityName": "独家｜90后“诺奖门徒”李相良，拿下超亿天使轮",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：独家｜90后“诺奖门徒”李相良，拿下超亿天使轮。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-track-c6s6ma-cceafe34785594f1",
+        "attributionStatus": "unattributed",
+        "attributions": [],
+        "company": "科技产业",
+        "eventType": "融资",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-track-c6s6ma-cceafe34785594f1",
+        "institutionIds": [],
+        "institutionNames": [],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E011"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E011"
+      ],
+      "supportingEvidenceIds": [
+        "E011"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-dcbc7c6bea1a45c5590b",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-manual-898ce88c3d6215f5-976c5f561fa5b680",
+      "entityName": "独家丨国科投资领投ChatGPT核心贡献者，亮源新创获数亿元Pre-A轮融资",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "companySlug",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：独家丨国科投资领投ChatGPT核心贡献者，亮源新创获数亿元Pre-A轮融资。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-manual-898ce88c3d6215f5-976c5f561fa5b680",
+        "attributionStatus": "attributed",
+        "attributions": [
+          {
+            "evidence": [
+              "国科投资"
+            ],
+            "institutionId": "institution:国科投资",
+            "institutionName": "国科投资",
+            "methods": [
+              "reviewed-alias-text"
+            ]
+          }
+        ],
+        "company": "OpenAI",
+        "companySlug": "openai",
+        "eventType": "融资",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-manual-898ce88c3d6215f5-976c5f561fa5b680",
+        "institutionIds": [
+          "institution:国科投资"
+        ],
+        "institutionNames": [
+          "国科投资"
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E012"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "companySlug",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated"
+      ],
+      "evidenceIds": [
+        "E012"
+      ],
+      "supportingEvidenceIds": [
+        "E012"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-713821a1cb4e08cff2ad",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-track-zlbbw1-30c102056d7b1e32",
+      "entityName": "独到科技完成近亿元A+轮融资，赛富领投，清华系AI Agent公司打造业务世界的Agent编译器｜独家-钛媒体官方网站",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：独到科技完成近亿元A+轮融资，赛富领投，清华系AI Agent公司打造业务世界的Agent编译器｜独家-钛媒体官方网站。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-track-zlbbw1-30c102056d7b1e32",
+        "attributionStatus": "unattributed",
+        "attributions": [],
+        "company": "科技产业",
+        "eventType": "融资",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-track-zlbbw1-30c102056d7b1e32",
+        "institutionIds": [],
+        "institutionNames": [],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E013"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E013"
+      ],
+      "supportingEvidenceIds": [
+        "E013"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-7deb829e16456f1366ec",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-track-rcvvao-21e3c93bae47f754",
+      "entityName": "清雁科技完成数亿元A轮融资，聚焦几何物理驱动的物理AI基础设施",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：清雁科技完成数亿元A轮融资，聚焦几何物理驱动的物理AI基础设施。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-track-rcvvao-21e3c93bae47f754",
+        "attributionStatus": "attributed",
+        "attributions": [
+          {
+            "evidence": [
+              "君联资本"
+            ],
+            "institutionId": "profile:legend-capital",
+            "institutionName": "君联资本",
+            "methods": [
+              "reviewed-alias-text"
+            ]
+          }
+        ],
+        "company": "科技产业",
+        "eventType": "融资",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-track-rcvvao-21e3c93bae47f754",
+        "institutionIds": [
+          "profile:legend-capital"
+        ],
+        "institutionNames": [
+          "君联资本"
+        ],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E014"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E014"
+      ],
+      "supportingEvidenceIds": [
+        "E014"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-e0107bbc5ba1c358f3a5",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-track-c6s6ma-0820229ef2bcff3b",
+      "entityName": "清雁科技完成数亿元A轮融资",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：清雁科技完成数亿元A轮融资。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-track-c6s6ma-0820229ef2bcff3b",
+        "attributionStatus": "attributed",
+        "attributions": [
+          {
+            "evidence": [
+              "君联资本"
+            ],
+            "institutionId": "profile:legend-capital",
+            "institutionName": "君联资本",
+            "methods": [
+              "reviewed-alias-text"
+            ]
+          },
+          {
+            "evidence": [
+              "苏创投"
+            ],
+            "institutionId": "institution:苏创投",
+            "institutionName": "苏创投",
+            "methods": [
+              "reviewed-alias-text"
+            ]
+          }
+        ],
+        "company": "科技产业",
+        "eventType": "融资",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-track-c6s6ma-0820229ef2bcff3b",
+        "institutionIds": [
+          "institution:苏创投",
+          "profile:legend-capital"
+        ],
+        "institutionNames": [
+          "君联资本",
+          "苏创投"
+        ],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E015"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E015"
+      ],
+      "supportingEvidenceIds": [
+        "E015"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-7377b67db97612f6d668",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-track-rcvvao-02f49f6f4aee13ce",
+      "entityName": "栖息地完成7亿元A轮融资，加速AI原生智能住宅研发与全球总部建设",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：栖息地完成7亿元A轮融资，加速AI原生智能住宅研发与全球总部建设。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-track-rcvvao-02f49f6f4aee13ce",
+        "attributionStatus": "unattributed",
+        "attributions": [],
+        "company": "科技产业",
+        "eventType": "融资",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-track-rcvvao-02f49f6f4aee13ce",
+        "institutionIds": [],
+        "institutionNames": [],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E016"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E016"
+      ],
+      "supportingEvidenceIds": [
+        "E016"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-989b5e23cff8e902e85d",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-manual-cbdb4c79a612763c-8854761fc7ded8a1",
+      "entityName": "机械行业周报：宇树科技IPO发行价超150元／股 SK海力士投资54万亿韩元扩产",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：机械行业周报：宇树科技IPO发行价超150元／股 SK海力士投资54万亿韩元扩产。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-manual-cbdb4c79a612763c-8854761fc7ded8a1",
+        "attributionStatus": "unattributed",
+        "attributions": [],
+        "company": "科技产业",
+        "eventType": "产业投资",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-manual-cbdb4c79a612763c-8854761fc7ded8a1",
+        "institutionIds": [],
+        "institutionNames": [],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E017"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E017"
+      ],
+      "supportingEvidenceIds": [
+        "E017"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-18cbf15e45fc1c2f6da9",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-track-c6s6ma-3b2787b6d7e66225",
+      "entityName": "时安生物完成近 4 亿元A轮系列融资",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：时安生物完成近 4 亿元A轮系列融资。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-track-c6s6ma-3b2787b6d7e66225",
+        "attributionStatus": "unattributed",
+        "attributions": [],
+        "company": "科技产业",
+        "eventType": "融资",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-track-c6s6ma-3b2787b6d7e66225",
+        "institutionIds": [],
+        "institutionNames": [],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E018"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E018"
+      ],
+      "supportingEvidenceIds": [
+        "E018"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-9bd55a388cf6a95427c9",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-track-rcvvao-2-2e4a98e726150989",
+      "entityName": "投资界AI周报| 机器人挤爆北京亦庄",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：投资界AI周报| 机器人挤爆北京亦庄。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-track-rcvvao-2-2e4a98e726150989",
+        "attributionStatus": "unattributed",
+        "attributions": [],
+        "company": "科技产业",
+        "eventType": "产业投资",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-track-rcvvao-2-2e4a98e726150989",
+        "institutionIds": [],
+        "institutionNames": [],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E019"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E019"
+      ],
+      "supportingEvidenceIds": [
+        "E019"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-23dd56efea25832f7500",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-track-c6s6ma-645df02133b99b78",
+      "entityName": "常州鉴芯半导体完成天使轮融资",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：常州鉴芯半导体完成天使轮融资。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-track-c6s6ma-645df02133b99b78",
+        "attributionStatus": "unattributed",
+        "attributions": [],
+        "company": "科技产业",
+        "eventType": "融资",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-track-c6s6ma-645df02133b99b78",
+        "institutionIds": [],
+        "institutionNames": [],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E020"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E020"
+      ],
+      "supportingEvidenceIds": [
+        "E020"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-b0a358469e04f0b7d53e",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "leiphone-785b18d75bb2f72d",
+      "entityName": "对话王文涛：Maker 圈老将再创业， 为什么 x86 是最好的桌面 CNC 底座？",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：对话王文涛：Maker 圈老将再创业， 为什么 x86 是最好的桌面 CNC 底座？。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "leiphone-785b18d75bb2f72d",
+        "attributionStatus": "attributed",
+        "attributions": [
+          {
+            "evidence": [
+              "奇绩创坛"
+            ],
+            "institutionId": "institution:奇绩创坛",
+            "institutionName": "奇绩创坛",
+            "methods": [
+              "reviewed-alias-text"
+            ]
+          }
+        ],
+        "company": "科技产业",
+        "eventType": "融资",
+        "firstSeenEstimated": false,
+        "id": "leiphone-785b18d75bb2f72d",
+        "institutionIds": [
+          "institution:奇绩创坛"
+        ],
+        "institutionNames": [
+          "奇绩创坛"
+        ],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E021"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E021"
+      ],
+      "supportingEvidenceIds": [
+        "E021"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-c2c12e4896e64555537d",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-manual-898ce88c3d6215f5-d6d2fadc4abcf084",
+      "entityName": "宇树科技IPO定价揭晓 发行市值610亿元 DeepSeek等9家投资者参与战配",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "companySlug",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：宇树科技IPO定价揭晓 发行市值610亿元 DeepSeek等9家投资者参与战配。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-manual-898ce88c3d6215f5-d6d2fadc4abcf084",
+        "attributionStatus": "unattributed",
+        "attributions": [],
+        "company": "DeepSeek",
+        "companySlug": "deepseek",
+        "eventType": "产业投资",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-manual-898ce88c3d6215f5-d6d2fadc4abcf084",
+        "institutionIds": [],
+        "institutionNames": []
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E022"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "companySlug",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated"
+      ],
+      "evidenceIds": [
+        "E022"
+      ],
+      "supportingEvidenceIds": [
+        "E022"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-bfc76d58af33aefaf212",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-manual-898ce88c3d6215f5-cf6c9b5a78f4a98d",
+      "entityName": "兰州银行拟收购临洮金城村镇银行 年内全国超150家村镇银行获批退出",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：兰州银行拟收购临洮金城村镇银行 年内全国超150家村镇银行获批退出。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-manual-898ce88c3d6215f5-cf6c9b5a78f4a98d",
+        "attributionStatus": "unattributed",
+        "attributions": [],
+        "company": "科技产业",
+        "eventType": "并购",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-manual-898ce88c3d6215f5-cf6c9b5a78f4a98d",
+        "institutionIds": [],
+        "institutionNames": [],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E023"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E023"
+      ],
+      "supportingEvidenceIds": [
+        "E023"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-18d9e99718be01838ccd",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "official-user-东方财富-7e726386f923c87f",
+      "entityName": "全球市场波动中 谁在买入中国资产",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：全球市场波动中 谁在买入中国资产。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "official-user-东方财富-7e726386f923c87f",
+        "attributionStatus": "attributed",
+        "attributions": [
+          {
+            "evidence": [
+              "阿里巴巴"
+            ],
+            "institutionId": "institution:阿里巴巴",
+            "institutionName": "阿里巴巴",
+            "methods": [
+              "reviewed-alias-text"
+            ]
+          }
+        ],
+        "company": "科技产业",
+        "eventType": "公司动态",
+        "firstSeenEstimated": true,
+        "id": "official-user-东方财富-7e726386f923c87f",
+        "institutionIds": [
+          "institution:阿里巴巴"
+        ],
+        "institutionNames": [
+          "阿里巴巴"
+        ],
+        "lastVerifiedEstimated": true
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E024"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E024"
+      ],
+      "supportingEvidenceIds": [
+        "E024"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-dbd1acdcd9d265296676",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-infoworld-01a77e914069dedf",
+      "entityName": "Zhipu says new coding AI developed advanced cyber skills faster than expected",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "companySlug",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：Zhipu says new coding AI developed advanced cyber skills faster than expected。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-infoworld-01a77e914069dedf",
+        "attributionStatus": "attributed",
+        "attributions": [
+          {
+            "evidence": [
+              "Benchmark"
+            ],
+            "institutionId": "profile:benchmark",
+            "institutionName": "Benchmark",
+            "methods": [
+              "reviewed-alias-text"
+            ]
+          }
+        ],
+        "company": "智谱AI",
+        "companySlug": "zhipu-ai",
+        "eventType": "公司动态",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-infoworld-01a77e914069dedf",
+        "institutionIds": [
+          "profile:benchmark"
+        ],
+        "institutionNames": [
+          "Benchmark"
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E025"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "companySlug",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated"
+      ],
+      "evidenceIds": [
+        "E025"
+      ],
+      "supportingEvidenceIds": [
+        "E025"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-937b9631e0bc34ede6a3",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "professional-media-technode-91435609c4c8f245",
+      "entityName": "Z.ai launches GLM-5.3 with claimed 50% gain on coding benchmark",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "companySlug",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：Z.ai launches GLM-5.3 with claimed 50% gain on coding benchmark。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "professional-media-technode-91435609c4c8f245",
+        "attributionStatus": "attributed",
+        "attributions": [
+          {
+            "evidence": [
+              "Benchmark"
+            ],
+            "institutionId": "profile:benchmark",
+            "institutionName": "Benchmark",
+            "methods": [
+              "reviewed-alias-text"
+            ]
+          }
+        ],
+        "company": "智谱AI",
+        "companySlug": "zhipu-ai",
+        "eventType": "产品发布",
+        "firstSeenEstimated": false,
+        "id": "professional-media-technode-91435609c4c8f245",
+        "institutionIds": [
+          "profile:benchmark"
+        ],
+        "institutionNames": [
+          "Benchmark"
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E026"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "companySlug",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated"
+      ],
+      "evidenceIds": [
+        "E026"
+      ],
+      "supportingEvidenceIds": [
+        "E026"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-dbb280b20adb1193c387",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-y-combinator-blog-26b0c9dd61858730",
+      "entityName": "Y Combinator",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：Y Combinator。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-y-combinator-blog-26b0c9dd61858730",
+        "attributionStatus": "attributed",
+        "attributions": [
+          {
+            "evidence": [
+              "Y Combinator",
+              "ycombinator.com"
+            ],
+            "institutionId": "profile:yc",
+            "institutionName": "Y Combinator",
+            "methods": [
+              "official-domain",
+              "reviewed-alias-text"
+            ]
+          }
+        ],
+        "company": "科技产业",
+        "eventType": "公司动态",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-y-combinator-blog-26b0c9dd61858730",
+        "institutionIds": [
+          "profile:yc"
+        ],
+        "institutionNames": [
+          "Y Combinator"
+        ],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E027"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E027"
+      ],
+      "supportingEvidenceIds": [
+        "E027"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-2585c906b4e2f9b83531",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "techcrunch-venture-e67e31e29e0cc631",
+      "entityName": "Why is the DOJ investigating Andreessen Horowitz’s board seats?",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：Why is the DOJ investigating Andreessen Horowitz’s board seats?。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "techcrunch-venture-e67e31e29e0cc631",
+        "attributionStatus": "attributed",
+        "attributions": [
+          {
+            "evidence": [
+              "Andreessen Horowitz"
+            ],
+            "institutionId": "profile:a16z",
+            "institutionName": "Andreessen Horowitz",
+            "methods": [
+              "reviewed-alias-text"
+            ]
+          }
+        ],
+        "company": "科技产业",
+        "eventType": "公司动态",
+        "firstSeenEstimated": false,
+        "id": "techcrunch-venture-e67e31e29e0cc631",
+        "institutionIds": [
+          "profile:a16z"
+        ],
+        "institutionNames": [
+          "Andreessen Horowitz"
+        ],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E028"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E028"
+      ],
+      "supportingEvidenceIds": [
+        "E028"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-9b82b6d50fcfed171ba7",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-dev-community-d5e5f67858a45c6c",
+      "entityName": "We built a benchmark, then caught it strangling the models it was grading",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：We built a benchmark, then caught it strangling the models it was grading。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-dev-community-d5e5f67858a45c6c",
+        "attributionStatus": "attributed",
+        "attributions": [
+          {
+            "evidence": [
+              "Benchmark"
+            ],
+            "institutionId": "profile:benchmark",
+            "institutionName": "Benchmark",
+            "methods": [
+              "reviewed-alias-text"
+            ]
+          }
+        ],
+        "company": "科技产业",
+        "eventType": "技术突破",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-dev-community-d5e5f67858a45c6c",
+        "institutionIds": [
+          "profile:benchmark"
+        ],
+        "institutionNames": [
+          "Benchmark"
+        ],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E029"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E029"
+      ],
+      "supportingEvidenceIds": [
+        "E029"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-04e217ed8f2e20a9a044",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "techcrunch-venture-299f42df9591c973",
+      "entityName": "Valor, Point72 back General Intuition at $6B valuation as AI startup pushes into robotics",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：Valor, Point72 back General Intuition at $6B valuation as AI startup pushes into robotics。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "techcrunch-venture-299f42df9591c973",
+        "attributionStatus": "unattributed",
+        "attributions": [],
+        "company": "科技产业",
+        "eventType": "融资",
+        "firstSeenEstimated": false,
+        "id": "techcrunch-venture-299f42df9591c973",
+        "institutionIds": [],
+        "institutionNames": [],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E030"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E030"
+      ],
+      "supportingEvidenceIds": [
+        "E030"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-5db2d02050f63595856c",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-technews180-bc53be681fabb2c2",
+      "entityName": "Twin1 AI Raises $20 Million to Build Digital AI Twins for Knowledge Workers",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：Twin1 AI Raises $20 Million to Build Digital AI Twins for Knowledge Workers。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-technews180-bc53be681fabb2c2",
+        "attributionStatus": "unattributed",
+        "attributions": [],
+        "company": "科技产业",
+        "eventType": "融资",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-technews180-bc53be681fabb2c2",
+        "institutionIds": [],
+        "institutionNames": [],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E031"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E031"
+      ],
+      "supportingEvidenceIds": [
+        "E031"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-1ec3f9111252619c0ba0",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-dev-community-3eafeca99750fd82",
+      "entityName": "The cheapest model on my plan loses every benchmark. It still beats models charging 14x more.",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：The cheapest model on my plan loses every benchmark. It still beats models charging 14x more.。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-dev-community-3eafeca99750fd82",
+        "attributionStatus": "attributed",
+        "attributions": [
+          {
+            "evidence": [
+              "Benchmark"
+            ],
+            "institutionId": "profile:benchmark",
+            "institutionName": "Benchmark",
+            "methods": [
+              "reviewed-alias-text"
+            ]
+          }
+        ],
+        "company": "科技产业",
+        "eventType": "技术突破",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-dev-community-3eafeca99750fd82",
+        "institutionIds": [
+          "profile:benchmark"
+        ],
+        "institutionNames": [
+          "Benchmark"
+        ],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E032"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E032"
+      ],
+      "supportingEvidenceIds": [
+        "E032"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-884eb408a8eb51d1bc02",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-manual-805a31766b9e334d-94f17a9fb89a6344",
+      "entityName": "The Google Pixel 11 Pro XL: A smarter phone for getting things done",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：The Google Pixel 11 Pro XL: A smarter phone for getting things done。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-manual-805a31766b9e334d-94f17a9fb89a6344",
+        "attributionStatus": "attributed",
+        "attributions": [
+          {
+            "evidence": [
+              "Benchmark"
+            ],
+            "institutionId": "profile:benchmark",
+            "institutionName": "Benchmark",
+            "methods": [
+              "reviewed-alias-text"
+            ]
+          }
+        ],
+        "company": "科技产业",
+        "eventType": "公司动态",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-manual-805a31766b9e334d-94f17a9fb89a6344",
+        "institutionIds": [
+          "profile:benchmark"
+        ],
+        "institutionNames": [
+          "Benchmark"
+        ],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E033"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E033"
+      ],
+      "supportingEvidenceIds": [
+        "E033"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-562de10453d936ea70a4",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "techcrunch-venture-1838fc7c2644c982",
+      "entityName": "The DOJ is investigating a16z. What does this mean for venture capital?",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：The DOJ is investigating a16z. What does this mean for venture capital?。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "techcrunch-venture-1838fc7c2644c982",
+        "attributionStatus": "attributed",
+        "attributions": [
+          {
+            "evidence": [
+              "Andreessen Horowitz"
+            ],
+            "institutionId": "profile:a16z",
+            "institutionName": "Andreessen Horowitz",
+            "methods": [
+              "reviewed-alias-text"
+            ]
+          }
+        ],
+        "company": "科技产业",
+        "eventType": "公司动态",
+        "firstSeenEstimated": false,
+        "id": "techcrunch-venture-1838fc7c2644c982",
+        "institutionIds": [
+          "profile:a16z"
+        ],
+        "institutionNames": [
+          "Andreessen Horowitz"
+        ],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E034"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E034"
+      ],
+      "supportingEvidenceIds": [
+        "E034"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-2b2f1c6f3d058d6f10b2",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-pr-newswire-consumer-technology-d2689d6bca11c0a2",
+      "entityName": "SuperMoney's AI Scores 99.4% on Its CFP® Knowledge Benchmark",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：SuperMoney's AI Scores 99.4% on Its CFP® Knowledge Benchmark。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-pr-newswire-consumer-technology-d2689d6bca11c0a2",
+        "attributionStatus": "attributed",
+        "attributions": [
+          {
+            "evidence": [
+              "Benchmark"
+            ],
+            "institutionId": "profile:benchmark",
+            "institutionName": "Benchmark",
+            "methods": [
+              "reviewed-alias-text"
+            ]
+          }
+        ],
+        "company": "科技产业",
+        "eventType": "技术突破",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-pr-newswire-consumer-technology-d2689d6bca11c0a2",
+        "institutionIds": [
+          "profile:benchmark"
+        ],
+        "institutionNames": [
+          "Benchmark"
+        ],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E035"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E035"
+      ],
+      "supportingEvidenceIds": [
+        "E035"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-9ccbc8716667e853e4e2",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-siliconangle-c343b30ab0e5ae7c",
+      "entityName": "Starcloud raises $250M to build AI data centers in orbit - SiliconANGLE",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：Starcloud raises $250M to build AI data centers in orbit - SiliconANGLE。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-siliconangle-c343b30ab0e5ae7c",
+        "attributionStatus": "unattributed",
+        "attributions": [],
+        "company": "科技产业",
+        "eventType": "融资",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-siliconangle-c343b30ab0e5ae7c",
+        "institutionIds": [],
+        "institutionNames": [],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E036"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E036"
+      ],
+      "supportingEvidenceIds": [
+        "E036"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-230a7bc2dd44db8b0c01",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-it-news-africa-c177cbb3cfbd6615",
+      "entityName": "South Africa: WhatsApp-based workforce management platform raises $8.4m",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：South Africa: WhatsApp-based workforce management platform raises $8.4m。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-it-news-africa-c177cbb3cfbd6615",
+        "attributionStatus": "unattributed",
+        "attributions": [],
+        "company": "科技产业",
+        "eventType": "融资",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-it-news-africa-c177cbb3cfbd6615",
+        "institutionIds": [],
+        "institutionNames": [],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E037"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E037"
+      ],
+      "supportingEvidenceIds": [
+        "E037"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-6619cbe879546455bfad",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-track-c6s6ma-8448bfc0e069066b",
+      "entityName": "SigmaZ 完成数百万美元融资",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：SigmaZ 完成数百万美元融资。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "user-source-source-track-c6s6ma-8448bfc0e069066b",
+        "attributionStatus": "attributed",
+        "attributions": [
+          {
+            "evidence": [
+              "云启资本"
+            ],
+            "institutionId": "institution:云启资本",
+            "institutionName": "云启资本",
+            "methods": [
+              "reviewed-alias-text"
+            ]
+          },
+          {
+            "evidence": [
+              "蓝驰创投"
+            ],
+            "institutionId": "institution:蓝驰创投",
+            "institutionName": "蓝驰创投",
+            "methods": [
+              "reviewed-alias-text"
+            ]
+          }
+        ],
+        "company": "科技产业",
+        "eventType": "融资",
+        "firstSeenEstimated": false,
+        "id": "user-source-source-track-c6s6ma-8448bfc0e069066b",
+        "institutionIds": [
+          "institution:云启资本",
+          "institution:蓝驰创投"
+        ],
+        "institutionNames": [
+          "云启资本",
+          "蓝驰创投"
+        ],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E038"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E038"
+      ],
+      "supportingEvidenceIds": [
+        "E038"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-64b506de69173e2b7107",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "techcrunch-venture-c16a02bf3bf045fe",
+      "entityName": "Rillet raises $100M Series C at $1B valuation — 2 years after emerging from stealth",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：Rillet raises $100M Series C at $1B valuation — 2 years after emerging from stealth。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "techcrunch-venture-c16a02bf3bf045fe",
+        "attributionStatus": "unattributed",
+        "attributions": [],
+        "company": "科技产业",
+        "eventType": "融资",
+        "firstSeenEstimated": false,
+        "id": "techcrunch-venture-c16a02bf3bf045fe",
+        "institutionIds": [],
+        "institutionNames": [],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E039"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E039"
+      ],
+      "supportingEvidenceIds": [
+        "E039"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-29752324f6e0fb0e5677",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "techcrunch-venture-84f66d37f7724b6b",
+      "entityName": "Reach Capital raises $265M Fund V to back AI founders building to ‘expand human potential’",
+      "action": "added",
+      "changedFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "id",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "publishedAt",
+        "region"
+      ],
+      "summary": "新增机构/资本事件记录：Reach Capital raises $265M Fund V to back AI founders building to ‘expand human potential’。",
+      "importance": 70,
+      "before": null,
+      "after": {
+        "articleId": "techcrunch-venture-84f66d37f7724b6b",
+        "attributionStatus": "unattributed",
+        "attributions": [],
+        "company": "科技产业",
+        "eventType": "融资",
+        "firstSeenEstimated": false,
+        "id": "techcrunch-venture-84f66d37f7724b6b",
+        "institutionIds": [],
+        "institutionNames": [],
+        "lastVerifiedEstimated": false
+      },
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E040"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "articleId",
+        "attributionStatus",
+        "attributions",
+        "company",
+        "eventType",
+        "firstSeenEstimated",
+        "institutionIds",
+        "institutionNames",
+        "lastVerifiedEstimated",
+        "region"
+      ],
+      "evidenceIds": [
+        "E040"
+      ],
+      "supportingEvidenceIds": [
+        "E040"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E005",
+      "changeId": "chg-f29dbd5e6c140909d4c0",
+      "entityName": "OenoBench: A Wine-Domain Benchmark for Knowledge-Grounded Evaluation of Large Language Models",
+      "claim": "新增机构/资本事件记录：OenoBench: A Wine-Domain Benchmark for Knowledge-Grounded Evaluation of Large Language Models。",
+      "sourceName": "arXiv · Core AI companies",
+      "title": "OenoBench: A Wine-Domain Benchmark for Knowledge-Grounded Evaluation of Large Language Models",
+      "url": "https://arxiv.org/abs/2608.20106v1",
+      "publishedAt": "2026-08-20",
+      "evidenceGrade": "B",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E006",
+      "changeId": "chg-fe4f4937c2387aa084b2",
+      "entityName": "CATL and Quinbrook Build on Supernode Partnership Following Stage 2 and Stage 3 Major Milestones",
+      "claim": "新增机构/资本事件记录：CATL and Quinbrook Build on Supernode Partnership Following Stage 2 and Stage 3 Major Milestones。",
+      "sourceName": "CATL",
+      "title": "CATL and Quinbrook Build on Supernode Partnership Following Stage 2 and Stage 3 Major Milestones",
+      "url": "https://www.catl.com/en/news/6951.html",
+      "publishedAt": "2026-08-14",
+      "evidenceGrade": "B",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E007",
+      "changeId": "chg-317d583bf56bd6f8c11d",
+      "entityName": "CATL Achieves 2025 Core Operation Carbon Neutrality Target, Sets Path to 2035 Value-Chain Goal",
+      "claim": "新增机构/资本事件记录：CATL Achieves 2025 Core Operation Carbon Neutrality Target, Sets Path to 2035 Value-Chain Goal。",
+      "sourceName": "CATL",
+      "title": "CATL Achieves 2025 Core Operation Carbon Neutrality Target, Sets Path to 2035 Value-Chain Goal",
+      "url": "https://www.catl.com/en/news/6953.html",
+      "publishedAt": "2026-08-17",
+      "evidenceGrade": "B",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E008",
+      "changeId": "chg-350fcf918c89294fce94",
+      "entityName": "阿里财报：云增速45%创新高，AI相关收入连续三年三位数增长",
+      "claim": "新增机构/资本事件记录：阿里财报：云增速45%创新高，AI相关收入连续三年三位数增长。",
+      "sourceName": "钛媒体",
+      "title": "阿里财报：云增速45%创新高，AI相关收入连续三年三位数增长",
+      "url": "https://tmtpost.com/nictation/8110694.html",
+      "publishedAt": "2026-08-20",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E009",
+      "changeId": "chg-f7affefc9f00a9f6934d",
+      "entityName": "阿里巴巴AI商业化全面加速 云收入增速创22个季度新高 算力资本支出预计三年内回本",
+      "claim": "新增机构/资本事件记录：阿里巴巴AI商业化全面加速 云收入增速创22个季度新高 算力资本支出预计三年内回本。",
+      "sourceName": "新浪财经",
+      "title": "阿里巴巴AI商业化全面加速 云收入增速创22个季度新高 算力资本支出预计三年内回本",
+      "url": "https://finance.sina.com.cn/stock/bxjj/2026-08-21/doc-ininzaze1699241.shtml",
+      "publishedAt": "2026-08-21",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E010",
+      "changeId": "chg-8d6c440d724383082c77",
+      "entityName": "重磅！宁德时代41亿入股中恒科技，三大领域协同合作",
+      "claim": "新增机构/资本事件记录：重磅！宁德时代41亿入股中恒科技，三大领域协同合作。",
+      "sourceName": "新浪财经 · 新浪",
+      "title": "重磅！宁德时代41亿入股中恒科技，三大领域协同合作",
+      "url": "https://finance.sina.com.cn/stock/zqgd/2026-08-15/doc-ininkmqn3545336.shtml",
+      "publishedAt": "2026-08-15",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E011",
+      "changeId": "chg-863e7e3b2f1f11e673a5",
+      "entityName": "独家｜90后“诺奖门徒”李相良，拿下超亿天使轮",
+      "claim": "新增机构/资本事件记录：独家｜90后“诺奖门徒”李相良，拿下超亿天使轮。",
+      "sourceName": "投中网",
+      "title": "独家｜90后“诺奖门徒”李相良，拿下超亿天使轮",
+      "url": "https://www.chinaventure.com.cn/news/114-20260814-392762.html",
+      "publishedAt": "2026-08-14",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E012",
+      "changeId": "chg-dcbc7c6bea1a45c5590b",
+      "entityName": "独家丨国科投资领投ChatGPT核心贡献者，亮源新创获数亿元Pre-A轮融资",
+      "claim": "新增机构/资本事件记录：独家丨国科投资领投ChatGPT核心贡献者，亮源新创获数亿元Pre-A轮融资。",
+      "sourceName": "媒体报道 · 新浪 · 新浪财经",
+      "title": "独家丨国科投资领投ChatGPT核心贡献者，亮源新创获数亿元Pre-A轮融资",
+      "url": "https://finance.sina.com.cn/roll/2026-08-14/doc-ininfvzw2690225.shtml",
+      "publishedAt": "2026-08-14",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E013",
+      "changeId": "chg-713821a1cb4e08cff2ad",
+      "entityName": "独到科技完成近亿元A+轮融资，赛富领投，清华系AI Agent公司打造业务世界的Agent编译器｜独家-钛媒体官方网站",
+      "claim": "新增机构/资本事件记录：独到科技完成近亿元A+轮融资，赛富领投，清华系AI Agent公司打造业务世界的Agent编译器｜独家-钛媒体官方网站。",
+      "sourceName": "钛媒体",
+      "title": "独到科技完成近亿元A+轮融资，赛富领投，清华系AI Agent公司打造业务世界的Agent编译器｜独家-钛媒体官方网站",
+      "url": "https://www.tmtpost.com/8106792.html",
+      "publishedAt": "2026-08-21",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E014",
+      "changeId": "chg-7deb829e16456f1366ec",
+      "entityName": "清雁科技完成数亿元A轮融资，聚焦几何物理驱动的物理AI基础设施",
+      "claim": "新增机构/资本事件记录：清雁科技完成数亿元A轮融资，聚焦几何物理驱动的物理AI基础设施。",
+      "sourceName": "投资界",
+      "title": "清雁科技完成数亿元A轮融资，聚焦几何物理驱动的物理AI基础设施",
+      "url": "https://news.pedaily.cn/202608/567947.shtml",
+      "publishedAt": "2026-08-21",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E015",
+      "changeId": "chg-e0107bbc5ba1c358f3a5",
+      "entityName": "清雁科技完成数亿元A轮融资",
+      "claim": "新增机构/资本事件记录：清雁科技完成数亿元A轮融资。",
+      "sourceName": "投中网",
+      "title": "清雁科技完成数亿元A轮融资",
+      "url": "https://www.chinaventure.com.cn/news/113-20260819-392828.html",
+      "publishedAt": "2026-08-19",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E016",
+      "changeId": "chg-7377b67db97612f6d668",
+      "entityName": "栖息地完成7亿元A轮融资，加速AI原生智能住宅研发与全球总部建设",
+      "claim": "新增机构/资本事件记录：栖息地完成7亿元A轮融资，加速AI原生智能住宅研发与全球总部建设。",
+      "sourceName": "投资界",
+      "title": "栖息地完成7亿元A轮融资，加速AI原生智能住宅研发与全球总部建设",
+      "url": "https://news.pedaily.cn/202608/567951.shtml",
+      "publishedAt": "2026-08-21",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E017",
+      "changeId": "chg-989b5e23cff8e902e85d",
+      "entityName": "机械行业周报：宇树科技IPO发行价超150元／股 SK海力士投资54万亿韩元扩产",
+      "claim": "新增机构/资本事件记录：机械行业周报：宇树科技IPO发行价超150元／股 SK海力士投资54万亿韩元扩产。",
+      "sourceName": "新浪财经 · 新浪",
+      "title": "机械行业周报：宇树科技IPO发行价超150元／股 SK海力士投资54万亿韩元扩产",
+      "url": "http://stock.finance.sina.com.cn/stock/go.php/vReport_Show/kind/lastest/rptid/840120542645/index.phtml",
+      "publishedAt": "2026-08-15",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E018",
+      "changeId": "chg-18cbf15e45fc1c2f6da9",
+      "entityName": "时安生物完成近 4 亿元A轮系列融资",
+      "claim": "新增机构/资本事件记录：时安生物完成近 4 亿元A轮系列融资。",
+      "sourceName": "投中网",
+      "title": "时安生物完成近 4 亿元A轮系列融资",
+      "url": "https://www.chinaventure.com.cn/news/111-20260820-392847.html",
+      "publishedAt": "2026-08-20",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E019",
+      "changeId": "chg-9bd55a388cf6a95427c9",
+      "entityName": "投资界AI周报| 机器人挤爆北京亦庄",
+      "claim": "新增机构/资本事件记录：投资界AI周报| 机器人挤爆北京亦庄。",
+      "sourceName": "投资界",
+      "title": "投资界AI周报| 机器人挤爆北京亦庄",
+      "url": "https://news.pedaily.cn/202608/567965.shtml",
+      "publishedAt": "2026-08-21",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E020",
+      "changeId": "chg-23dd56efea25832f7500",
+      "entityName": "常州鉴芯半导体完成天使轮融资",
+      "claim": "新增机构/资本事件记录：常州鉴芯半导体完成天使轮融资。",
+      "sourceName": "投中网",
+      "title": "常州鉴芯半导体完成天使轮融资",
+      "url": "https://www.chinaventure.com.cn/news/114-20260819-392829.html",
+      "publishedAt": "2026-08-19",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E021",
+      "changeId": "chg-b0a358469e04f0b7d53e",
+      "entityName": "对话王文涛：Maker 圈老将再创业， 为什么 x86 是最好的桌面 CNC 底座？",
+      "claim": "新增机构/资本事件记录：对话王文涛：Maker 圈老将再创业， 为什么 x86 是最好的桌面 CNC 底座？。",
+      "sourceName": "雷峰网",
+      "title": "对话王文涛：Maker 圈老将再创业， 为什么 x86 是最好的桌面 CNC 底座？",
+      "url": "https://www.leiphone.com/category/weiwu/ubQYvNeHTcJLMavN.html",
+      "publishedAt": "2026-08-24",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E022",
+      "changeId": "chg-c2c12e4896e64555537d",
+      "entityName": "宇树科技IPO定价揭晓 发行市值610亿元 DeepSeek等9家投资者参与战配",
+      "claim": "新增机构/资本事件记录：宇树科技IPO定价揭晓 发行市值610亿元 DeepSeek等9家投资者参与战配。",
+      "sourceName": "媒体报道 · 新浪 · 新浪财经",
+      "title": "宇树科技IPO定价揭晓 发行市值610亿元 DeepSeek等9家投资者参与战配",
+      "url": "https://finance.sina.com.cn/zt_d/subject-1786068090",
+      "publishedAt": "2026-08-19",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E023",
+      "changeId": "chg-bfc76d58af33aefaf212",
+      "entityName": "兰州银行拟收购临洮金城村镇银行 年内全国超150家村镇银行获批退出",
+      "claim": "新增机构/资本事件记录：兰州银行拟收购临洮金城村镇银行 年内全国超150家村镇银行获批退出。",
+      "sourceName": "媒体报道 · 新浪 · 新浪财经",
+      "title": "兰州银行拟收购临洮金城村镇银行 年内全国超150家村镇银行获批退出",
+      "url": "https://finance.sina.com.cn/jjxw/2026-08-16/doc-ininpmti7621417.shtml",
+      "publishedAt": "2026-08-16",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E024",
+      "changeId": "chg-18d9e99718be01838ccd",
+      "entityName": "全球市场波动中 谁在买入中国资产",
+      "claim": "新增机构/资本事件记录：全球市场波动中 谁在买入中国资产。",
+      "sourceName": "东方财富",
+      "title": "全球市场波动中 谁在买入中国资产",
+      "url": "https://finance.eastmoney.com/a/202608243850439157.html",
+      "publishedAt": "2026-08-24",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E025",
+      "changeId": "chg-dbd1acdcd9d265296676",
+      "entityName": "Zhipu says new coding AI developed advanced cyber skills faster than expected",
+      "claim": "新增机构/资本事件记录：Zhipu says new coding AI developed advanced cyber skills faster than expected。",
+      "sourceName": "InfoWorld",
+      "title": "Zhipu says new coding AI developed advanced cyber skills faster than expected",
+      "url": "https://www.infoworld.com/article/4210495/zhipu-says-new-coding-ai-developed-advanced-cyber-skills-faster-than-expected.html",
+      "publishedAt": "2026-08-17",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E026",
+      "changeId": "chg-937b9631e0bc34ede6a3",
+      "entityName": "Z.ai launches GLM-5.3 with claimed 50% gain on coding benchmark",
+      "claim": "新增机构/资本事件记录：Z.ai launches GLM-5.3 with claimed 50% gain on coding benchmark。",
+      "sourceName": "TechNode",
+      "title": "Z.ai launches GLM-5.3 with claimed 50% gain on coding benchmark",
+      "url": "https://technode.com/2026/08/17/z-ai-launches-glm-5-3-with-claimed-50-gain-on-coding-benchmark",
+      "publishedAt": "2026-08-17",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E027",
+      "changeId": "chg-dbb280b20adb1193c387",
+      "entityName": "Y Combinator",
+      "claim": "新增机构/资本事件记录：Y Combinator。",
+      "sourceName": "Y Combinator Blog",
+      "title": "Y Combinator",
+      "url": "https://ycombinator.com/events",
+      "publishedAt": "2026-08-16",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E028",
+      "changeId": "chg-2585c906b4e2f9b83531",
+      "entityName": "Why is the DOJ investigating Andreessen Horowitz’s board seats?",
+      "claim": "新增机构/资本事件记录：Why is the DOJ investigating Andreessen Horowitz’s board seats?。",
+      "sourceName": "TechCrunch Venture",
+      "title": "Why is the DOJ investigating Andreessen Horowitz’s board seats?",
+      "url": "https://techcrunch.com/video/why-is-the-doj-investigating-andreessen-horowitzs-board-seats",
+      "publishedAt": "2026-08-21",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E029",
+      "changeId": "chg-9b82b6d50fcfed171ba7",
+      "entityName": "We built a benchmark, then caught it strangling the models it was grading",
+      "claim": "新增机构/资本事件记录：We built a benchmark, then caught it strangling the models it was grading。",
+      "sourceName": "DEV Community",
+      "title": "We built a benchmark, then caught it strangling the models it was grading",
+      "url": "https://dev.to/fortitudeomnis/we-built-a-benchmark-then-caught-it-strangling-the-models-it-was-grading-27gl",
+      "publishedAt": "2026-08-21",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E030",
+      "changeId": "chg-04e217ed8f2e20a9a044",
+      "entityName": "Valor, Point72 back General Intuition at $6B valuation as AI startup pushes into robotics",
+      "claim": "新增机构/资本事件记录：Valor, Point72 back General Intuition at $6B valuation as AI startup pushes into robotics。",
+      "sourceName": "TechCrunch Venture",
+      "title": "Valor, Point72 back General Intuition at $6B valuation as AI startup pushes into robotics",
+      "url": "https://techcrunch.com/2026/08/24/valor-point72-back-general-intuition-at-6b-valuation-as-ai-startup-pushes-into-robotics",
+      "publishedAt": "2026-08-24",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E031",
+      "changeId": "chg-5db2d02050f63595856c",
+      "entityName": "Twin1 AI Raises $20 Million to Build Digital AI Twins for Knowledge Workers",
+      "claim": "新增机构/资本事件记录：Twin1 AI Raises $20 Million to Build Digital AI Twins for Knowledge Workers。",
+      "sourceName": "TechNews180",
+      "title": "Twin1 AI Raises $20 Million to Build Digital AI Twins for Knowledge Workers",
+      "url": "https://technews180.com/funding-news/twin1-ai-raises-20-million-to-build-digital-ai-twins-for-knowledge-workers",
+      "publishedAt": "2026-08-21",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E032",
+      "changeId": "chg-1ec3f9111252619c0ba0",
+      "entityName": "The cheapest model on my plan loses every benchmark. It still beats models charging 14x more.",
+      "claim": "新增机构/资本事件记录：The cheapest model on my plan loses every benchmark. It still beats models charging 14x more.。",
+      "sourceName": "DEV Community",
+      "title": "The cheapest model on my plan loses every benchmark. It still beats models charging 14x more.",
+      "url": "https://dev.to/dev_michael/the-cheapest-model-on-my-plan-loses-every-benchmark-it-still-beats-models-charging-14x-more-2po8",
+      "publishedAt": "2026-08-21",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E033",
+      "changeId": "chg-884eb408a8eb51d1bc02",
+      "entityName": "The Google Pixel 11 Pro XL: A smarter phone for getting things done",
+      "claim": "新增机构/资本事件记录：The Google Pixel 11 Pro XL: A smarter phone for getting things done。",
+      "sourceName": "Computerworld",
+      "title": "The Google Pixel 11 Pro XL: A smarter phone for getting things done",
+      "url": "https://www.computerworld.com/article/4211520/google-pixel-11-pro-xl-review-a-smarter-phone-for-getting-things-done.html",
+      "publishedAt": "2026-08-19",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E034",
+      "changeId": "chg-562de10453d936ea70a4",
+      "entityName": "The DOJ is investigating a16z. What does this mean for venture capital?",
+      "claim": "新增机构/资本事件记录：The DOJ is investigating a16z. What does this mean for venture capital?。",
+      "sourceName": "TechCrunch Venture",
+      "title": "The DOJ is investigating a16z. What does this mean for venture capital?",
+      "url": "https://techcrunch.com/podcast/the-doj-is-investigating-a16z-what-does-this-mean-for-venture-capital",
+      "publishedAt": "2026-08-21",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E035",
+      "changeId": "chg-2b2f1c6f3d058d6f10b2",
+      "entityName": "SuperMoney's AI Scores 99.4% on Its CFP® Knowledge Benchmark",
+      "claim": "新增机构/资本事件记录：SuperMoney's AI Scores 99.4% on Its CFP® Knowledge Benchmark。",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "SuperMoney's AI Scores 99.4% on Its CFP® Knowledge Benchmark",
+      "url": "https://prnewswire.com/news-releases/supermoneys-ai-scores-99-4-on-its-cfp-knowledge-benchmark-302855891.html",
+      "publishedAt": "2026-08-20",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E036",
+      "changeId": "chg-9ccbc8716667e853e4e2",
+      "entityName": "Starcloud raises $250M to build AI data centers in orbit - SiliconANGLE",
+      "claim": "新增机构/资本事件记录：Starcloud raises $250M to build AI data centers in orbit - SiliconANGLE。",
+      "sourceName": "SiliconANGLE",
+      "title": "Starcloud raises $250M to build AI data centers in orbit - SiliconANGLE",
+      "url": "https://siliconangle.com/2026/08/21/starcloud-raises-250m-to-build-ai-data-centers-in-orbit",
+      "publishedAt": "2026-08-21",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E037",
+      "changeId": "chg-230a7bc2dd44db8b0c01",
+      "entityName": "South Africa: WhatsApp-based workforce management platform raises $8.4m",
+      "claim": "新增机构/资本事件记录：South Africa: WhatsApp-based workforce management platform raises $8.4m。",
+      "sourceName": "IT News Africa",
+      "title": "South Africa: WhatsApp-based workforce management platform raises $8.4m",
+      "url": "https://www.itnewsafrica.com/2026/08/south-africa-whatsapp-based-workforce-management-platform-raises-8-4m",
+      "publishedAt": "2026-08-20",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E038",
+      "changeId": "chg-6619cbe879546455bfad",
+      "entityName": "SigmaZ 完成数百万美元融资",
+      "claim": "新增机构/资本事件记录：SigmaZ 完成数百万美元融资。",
+      "sourceName": "投中网",
+      "title": "SigmaZ 完成数百万美元融资",
+      "url": "https://www.chinaventure.com.cn/news/113-20260820-392836.html",
+      "publishedAt": "2026-08-20",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E039",
+      "changeId": "chg-64b506de69173e2b7107",
+      "entityName": "Rillet raises $100M Series C at $1B valuation — 2 years after emerging from stealth",
+      "claim": "新增机构/资本事件记录：Rillet raises $100M Series C at $1B valuation — 2 years after emerging from stealth。",
+      "sourceName": "TechCrunch Venture",
+      "title": "Rillet raises $100M Series C at $1B valuation — 2 years after emerging from stealth",
+      "url": "https://techcrunch.com/2026/08/19/rillet-raises-100m-series-c-at-1b-valuation-2-years-after-emerging-from-stealth",
+      "publishedAt": "2026-08-19",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E040",
+      "changeId": "chg-29752324f6e0fb0e5677",
+      "entityName": "Reach Capital raises $265M Fund V to back AI founders building to ‘expand human potential’",
+      "claim": "新增机构/资本事件记录：Reach Capital raises $265M Fund V to back AI founders building to ‘expand human potential’。",
+      "sourceName": "TechCrunch Venture",
+      "title": "Reach Capital raises $265M Fund V to back AI founders building to ‘expand human potential’",
+      "url": "https://techcrunch.com/2026/08/18/reach-capital-raises-265m-fund-v-to-back-ai-founders-building-to-expand-human-potential",
+      "publishedAt": "2026-08-18",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    }
+  ],
   "methodology": {
     "stages": [
       "stable entity snapshot",
@@ -154,10 +4099,70 @@
     },
     {
       "date": "2026-08-25",
-      "generatedAt": "2026-08-24T23:50:56+00:00",
-      "runStatus": "no-material-change",
-      "changeCount": 0,
-      "executiveSummary": "本期没有通过证据质量门的外部事实候选。"
+      "generatedAt": "2026-08-25T03:08:59+00:00",
+      "runStatus": "model",
+      "changeCount": 36,
+      "executiveSummary": "证据包显示，阿里巴巴云业务与AI收入增长强劲，宁德时代在储能、碳中和及产业链投资上多线推进，科技一级市场融资活跃，AI Agent、物理AI、AI住宅、生物科技等赛道获资本关注；宇树科技IPO与SK海力士扩产显示产业扩张迹象。但多数事件证据等级为C级媒体来源，需以官方公告或财报交叉验证。"
     }
-  ]
+  ],
+  "qualityDiagnostics": {
+    "candidateCount": 53,
+    "eligibleCandidateCount": 50,
+    "rejectedCandidateCount": 3,
+    "rejectedByDataset": {
+      "ventureCompany": 3
+    },
+    "evidenceCount": 62,
+    "supportingEvidenceCount": 50,
+    "rejectedEvidenceCount": 10,
+    "passedButUnboundEvidenceCount": 2,
+    "rejectionReasons": {
+      "missing_published_at": 10
+    }
+  },
+  "researchScope": {
+    "technology": {
+      "label": "核心技术",
+      "status": "pending-artifact",
+      "count": null,
+      "note": "尚未进入 Research Agent 稳定快照；技术频道继续独立发布。"
+    },
+    "track": {
+      "label": "核心赛道",
+      "status": "pending-artifact",
+      "count": null,
+      "note": "尚未进入 Research Agent 稳定快照；赛道频道继续独立发布。"
+    },
+    "person": {
+      "label": "核心人物",
+      "status": "active",
+      "count": 93,
+      "note": "已进入每日实体快照与变化检测。"
+    },
+    "ventureCompany": {
+      "label": "核心公司",
+      "status": "active",
+      "count": 63,
+      "note": "已进入每日实体快照与变化检测。"
+    }
+  },
+  "pipelineHealth": {
+    "overallStatus": "stale",
+    "healthyJobs": 7,
+    "jobCount": 9,
+    "issueJobs": [
+      {
+        "jobId": "institution-data-layers",
+        "name": "机构证据层重建",
+        "status": "stale",
+        "lastCompletedAt": "2026-08-05T03:45:08Z"
+      },
+      {
+        "jobId": "source-performance-review",
+        "name": "月度信源效能审查",
+        "status": "unknown",
+        "lastCompletedAt": null
+      }
+    ]
+  }
 }
