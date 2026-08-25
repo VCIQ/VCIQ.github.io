@@ -12,12 +12,20 @@ export const metadata: Metadata = {
 };
 
 const DIRECTORY_TAG_LIMIT = 1;
+const DIRECTORY_SUMMARY_LIMIT = 82;
+const DIRECTORY_EVENT_LIMIT = 72;
 
 const statusLabels = {
   complete: "档案较完整",
   partial: "补充中",
   pending: "待抓取",
 } as const;
+
+function directoryPreview(value: string, limit: number): string {
+  const text = value.replace(/\s+/g, " ").trim();
+  if (text.length <= limit) return text;
+  return `${text.slice(0, Math.max(1, limit - 1)).trimEnd()}…`;
+}
 
 export default function PeoplePage() {
   const trackedCount = researchPeople.filter((person) => person.tracked).length;
@@ -53,7 +61,7 @@ export default function PeoplePage() {
         channel="people"
         eyebrow="CORE PEOPLE RESEARCH DIRECTORY"
         title="核心人物档案"
-        description="人物研究承担赛道与公司之间的决策解释层：目录先展示研究摘要，再进入技术主线、观点演进、组织关系和事件级证据。"
+        description="人物研究承担赛道与公司之间的决策解释层：目录展示精简研究预览，完整判断、技术主线、观点演进、组织关系和事件证据进入人物详情查看。"
         count={researchPeople.length}
         countLabel="已发布人物"
         statusText={`更新 ${peopleGeneratedAt.slice(0, 10)}`}
@@ -77,19 +85,19 @@ export default function PeoplePage() {
               <div className={styles.cardResearch}>
                 <div className={styles.researchRow}>
                   <b>为什么重要</b>
-                  <p>{research.whyImportant}</p>
+                  <p>{directoryPreview(research.whyImportant, DIRECTORY_SUMMARY_LIMIT)}</p>
                 </div>
                 <div className={styles.researchRow}>
                   <b>最新变化</b>
                   <p className={styles.latestChange}>
                     {research.latestChange
-                      ? `${research.latestChange.date} · ${research.latestChange.title}`
+                      ? `${research.latestChange.date} · ${directoryPreview(research.latestChange.title, DIRECTORY_EVENT_LIMIT)}`
                       : "暂无可核验的近期人物事件。"}
                   </p>
                 </div>
                 <div className={styles.researchRow}>
                   <b>下一步观察</b>
-                  <p>{research.nextWatch}</p>
+                  <p>{directoryPreview(research.nextWatch, DIRECTORY_SUMMARY_LIMIT)}</p>
                 </div>
               </div>
 
