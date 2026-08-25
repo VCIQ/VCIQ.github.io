@@ -12,8 +12,8 @@ export const metadata: Metadata = {
 };
 
 const DIRECTORY_TAG_LIMIT = 1;
-const DIRECTORY_SUMMARY_LIMIT = 82;
-const DIRECTORY_EVENT_LIMIT = 72;
+const DIRECTORY_SUMMARY_LIMIT = 44;
+const DIRECTORY_EVENT_LIMIT = 44;
 
 const statusLabels = {
   complete: "档案较完整",
@@ -102,7 +102,7 @@ export default function PeoplePage() {
               </div>
 
               <small>
-                {research.priority.level} · 档案完整度 {research.coverage.score}% · {research.viewChange.label} · {statusLabels[person.status]} · {research.events.length} 个事件
+                {research.priority.level} · 完整度 {research.coverage.score}% · {statusLabels[person.status]}
               </small>
             </Link>
           ))}
