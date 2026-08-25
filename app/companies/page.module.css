@@ -3,12 +3,16 @@
 }
 
 .body :global(.directory-filters) {
+  position: sticky;
+  z-index: 4;
+  top: 0;
   flex-wrap: wrap;
   margin: 0;
-  padding: 16px 20px;
+  padding: 14px 18px;
   border: 0;
   border-bottom: 1px solid var(--border);
-  background: color-mix(in srgb, var(--surface-2) 70%, transparent);
+  background: color-mix(in srgb, var(--surface-2) 94%, var(--surface));
+  backdrop-filter: blur(12px);
 }
 
 .body :global(.directory-search) {
@@ -64,6 +68,11 @@
 }
 
 @media (max-width: 760px) {
+  .body :global(.directory-filters) {
+    position: static;
+    backdrop-filter: none;
+  }
+
   .body :global(.catalog-grid) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     padding: 14px;
@@ -71,11 +80,29 @@
 }
 
 @media (max-width: 560px) {
+  .body :global(.directory-filters) {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    padding: 12px 14px;
+  }
+
+  .body :global(.directory-search) {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .body :global(.directory-filters select) {
+    width: 100%;
+    min-width: 0;
+  }
+
   .body :global(.catalog-grid) {
     grid-template-columns: 1fr;
   }
 
   .body :global(.directory-filters > span) {
-    text-align: left;
+    display: none;
   }
 }

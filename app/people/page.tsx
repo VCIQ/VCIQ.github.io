@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Users } from "lucide-react";
 import Link from "next/link";
 import { ChannelSplitLayout } from "@/components/channel-split-layout";
+import channelHeaderStyles from "@/components/research-channel-header.module.css";
+import { getChannelUpdateDirectory } from "@/lib/channel-updates";
 import { peopleGeneratedAt, researchPeople } from "@/lib/people-data";
 import { getPersonResearchSnapshot } from "@/lib/people-research";
 import styles from "./page.module.css";
@@ -19,9 +21,15 @@ const statusLabels = {
   pending: "待抓取",
 } as const;
 
+function directoryExcerpt(value: string, limit: number): string {
+  const normalized = value.replace(/\s+/gu, " ").trim();
+  return normalized.length <= limit ? normalized : `${normalized.slice(0, limit).trimEnd()}…`;
+}
+
 export default function PeoplePage() {
   const trackedCount = researchPeople.filter((person) => person.tracked).length;
   const watchCount = researchPeople.length - trackedCount;
+  const peopleUpdates = getChannelUpdateDirectory("people");
   const directory = researchPeople
     .map((person) => ({
       person,
@@ -33,18 +41,16 @@ export default function PeoplePage() {
       || left.person.name.localeCompare(right.person.name, "zh-CN"));
   return (
     <main className="page-shell subpage">
-      <header className="page-header">
+      <header className={`page-header ${channelHeaderStyles.header}`}>
         <p className="eyebrow">03 / CORE PEOPLE</p>
         <h1>核心人物</h1>
         <p>
-          人物频道解释赛道中的技术判断、组织选择和路线演进：先回答为什么值得跟踪、最近发生了什么、
-          下一步看什么，再连接其任职公司、产品项目、技术主题与事件级公开证据。
+          围绕人物研究优先级、近期变化和下一步观察组织目录，并连接任职公司、技术主题与事件级公开证据。
         </p>
         <div className="hero-chips">
           <span>{trackedCount} 位重点跟踪</span>
           {watchCount > 0 ? <span>{watchCount} 位观察对象</span> : null}
-          <span>按研究优先级排序</span>
-          <span>公司关系仅按显式任职证据挂接</span>
+          <span>{peopleUpdates.items.length} 条人物更新</span>
           <span>资料更新 {peopleGeneratedAt.slice(0, 10)}</span>
         </div>
       </header>
@@ -53,7 +59,7 @@ export default function PeoplePage() {
         channel="people"
         eyebrow="CORE PEOPLE RESEARCH DIRECTORY"
         title="核心人物档案"
-        description="人物研究承担赛道与公司之间的决策解释层：目录先展示研究摘要，再进入技术主线、观点演进、组织关系和事件级证据。"
+        description="目录优先回答为什么值得关注和最近发生了什么；下一步观察、技术主线、观点演进与组织关系进入人物详情页。"
         count={researchPeople.length}
         countLabel="已发布人物"
         statusText={`更新 ${peopleGeneratedAt.slice(0, 10)}`}
@@ -77,19 +83,15 @@ export default function PeoplePage() {
               <div className={styles.cardResearch}>
                 <div className={styles.researchRow}>
                   <b>为什么重要</b>
-                  <p>{research.whyImportant}</p>
+                  <p>{directoryExcerpt(research.whyImportant, 72)}</p>
                 </div>
                 <div className={styles.researchRow}>
                   <b>最新变化</b>
                   <p className={styles.latestChange}>
                     {research.latestChange
-                      ? `${research.latestChange.date} · ${research.latestChange.title}`
+                      ? `${research.latestChange.date} · ${directoryExcerpt(research.latestChange.title, 60)}`
                       : "暂无可核验的近期人物事件。"}
                   </p>
-                </div>
-                <div className={styles.researchRow}>
-                  <b>下一步观察</b>
-                  <p>{research.nextWatch}</p>
                 </div>
               </div>
 

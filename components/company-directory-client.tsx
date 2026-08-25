@@ -104,8 +104,8 @@ export function CompanyDirectoryClient({
 
   return (
     <>
-      <div className={styles.filters}>
-        <label className={styles.search}>
+      <div className={`${styles.filters} directory-filters`}>
+        <label className={`${styles.search} directory-search`}>
           <Search size={16} aria-hidden="true" />
           <input
             value={query}

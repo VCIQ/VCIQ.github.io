@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ArrowUpRight, Radio, ShieldCheck } from "lucide-react";
+import channelHeaderStyles from "@/components/research-channel-header.module.css";
 import {
   coreSourceStats,
   coreSourcesByKind,
@@ -41,45 +42,46 @@ const groups: Array<{
 export default function SourcesPage() {
   return (
     <main className="page-shell subpage">
-      <header className="page-header">
+      <header className={`page-header ${channelHeaderStyles.header}`}>
         <p className="eyebrow">05 / CORE SOURCES</p>
         <h1>核心信源</h1>
         <p>
-          信源不是文章的附属字段，而是 VCIQ 的第五类研究对象。这里记录哪些公众号、专业媒体、研究机构和官方入口值得持续观察，
-          并把它们与赛道、技术、人物、公司及研究线索连接起来。
+          持续评估哪些公众号、专业媒体、研究机构和官方入口值得跟踪，并把它们与赛道、技术、人物和公司连接起来。
         </p>
         <div className="hero-chips">
           <span>{coreSourceStats.total} 个已配置重点信源</span>
           <span>{coreSourceStats.wechat} 个微信公众号</span>
           <span>{coreSourceStats.official} 个官方 / 原始来源</span>
-          <span>{coreSourceStats.sectors} 个显式赛道覆盖</span>
+          <span>{coreSourceStats.media} 个媒体 / 研究来源</span>
         </div>
       </header>
 
-      <section className={styles.lifecycle} aria-label="信源生命周期">
-        <div className={styles.lifecycleIntro}>
+      <details className={styles.lifecycle}>
+        <summary>
           <span>SOURCE LIFECYCLE</span>
-          <h2>先进入候选，再追踪，最后才升级为核心信源</h2>
+          <strong>Candidate → Tracked → Core</strong>
+          <small>评级规则作为二级信息收起</small>
+        </summary>
+        <div className={styles.lifecycleDetails}>
           <p>
-            一篇高价值文章可以证明“这个来源值得继续看”，但不能单独证明整个媒体长期高质量。
-            因此文章收藏与研究线索负责发现，后续持续命中率、直接证据比例、跨日稳定性和人工判断共同决定是否升级。
+            一篇高价值文章只能产生候选信号；持续命中率、直接证据比例、跨日稳定性和人工判断共同决定是否升级。
           </p>
+          <div className={styles.lifecycleFlow}>
+            <div>
+              <strong>Candidate</strong>
+              <p>由收藏文章、研究线索或自动发现首次提出。</p>
+            </div>
+            <div>
+              <strong>Tracked</strong>
+              <p>人工确认后进入持续抓取与来源—赛道质量观测。</p>
+            </div>
+            <div>
+              <strong>Core</strong>
+              <p>经过多期证据积累后，成为长期研究入口与高权重信源。</p>
+            </div>
+          </div>
         </div>
-        <div className={styles.lifecycleFlow}>
-          <div>
-            <strong>Candidate</strong>
-            <p>由收藏文章、研究线索或自动发现首次提出。</p>
-          </div>
-          <div>
-            <strong>Tracked</strong>
-            <p>人工确认后进入持续抓取与来源—赛道质量观测。</p>
-          </div>
-          <div>
-            <strong>Core</strong>
-            <p>经过多期证据积累后，成为长期研究入口与高权重信源。</p>
-          </div>
-        </div>
-      </section>
+      </details>
 
       {groups.map((group) => {
         const sources = coreSourcesByKind(group.kind);
@@ -106,6 +108,13 @@ export default function SourcesPage() {
                       <h3>{source.name}</h3>
                     </div>
                     <span className={styles.status}>TRACKED</span>
+                  </div>
+
+                  <div className={styles.coverageRow} aria-label="覆盖摘要">
+                    {source.sectors.length ? <span>{source.sectors.length} 赛道</span> : null}
+                    {source.companies.length ? <span>{source.companies.length} 公司</span> : null}
+                    {source.people.length ? <span>{source.people.length} 人物</span> : null}
+                    {source.keywords.length ? <span>{source.keywords.length} 发现词</span> : null}
                   </div>
 
                   {source.sectors.length ? (
