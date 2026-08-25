@@ -5,6 +5,7 @@ import { FavoritesPage } from "@/components/favorites-page";
 import { WeChatFavoriteResearchPanel } from "@/components/wechat-favorite-research-panel";
 import "./favorites.css";
 import "./favorites-prehydrate.css";
+import "./wechat-favorite-research-panel.css";
 
 export const metadata: Metadata = {
   title: "收藏",
