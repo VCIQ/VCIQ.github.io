@@ -19,6 +19,8 @@ type ChannelSplitLayoutProps = {
   children: ReactNode;
 };
 
+type ResearchChannel = "technology" | "people" | "companies";
+
 export function ChannelSplitLayout({
   channel,
   eyebrow,
@@ -61,15 +63,15 @@ export function ChannelSplitLayout({
       </div>
     </section>
   );
-  const showResearchSynergy = ["technology", "people", "companies"].includes(channel);
+  const researchChannel = ["technology", "people", "companies"].includes(channel)
+    ? (channel as ResearchChannel)
+    : null;
 
   return (
     <>
-      {showResearchSynergy ? (
-        <ResearchSynergyStrip compactOnMobile={channel === "technology"} />
-      ) : null}
       {afterResearchSynergy}
-      <div className={styles.splitLayout}>
+      {researchChannel ? <ResearchSynergyStrip currentChannel={researchChannel} /> : null}
+      <div className={`${styles.splitLayout}${researchChannel ? ` ${styles.researchDense}` : ""}`}>
         {directoryFirst ? (
           <>
             {directoryPanel}
