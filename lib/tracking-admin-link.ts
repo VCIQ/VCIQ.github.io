@@ -9,8 +9,11 @@ export interface TrackingCaptureLinkInput {
 
 const DEFAULT_TRACKING_ADMIN = "https://vciq-tracking-console.pages.dev";
 
-export function buildTrackingCaptureLink(input: TrackingCaptureLinkInput): string {
-  const base = (process.env.NEXT_PUBLIC_TRACKING_ADMIN_URL || DEFAULT_TRACKING_ADMIN).replace(/\/+$/, "");
+function trackingAdminBase(): string {
+  return (process.env.NEXT_PUBLIC_TRACKING_ADMIN_URL || DEFAULT_TRACKING_ADMIN).replace(/\/+$/, "");
+}
+
+function trackingCaptureParams(input: TrackingCaptureLinkInput): URLSearchParams {
   const params = new URLSearchParams();
   params.set("url", input.url);
   if (input.title) params.set("title", input.title.slice(0, 500));
@@ -18,5 +21,17 @@ export function buildTrackingCaptureLink(input: TrackingCaptureLinkInput): strin
   if (input.keywords?.length) params.set("keywords", input.keywords.slice(0, 30).join("|"));
   if (input.source) params.set("source", input.source.slice(0, 160));
   if (input.channel) params.set("channel", input.channel.slice(0, 80));
-  return `${base}/capture?${params.toString()}`;
+  return params;
+}
+
+function buildTrackingAdminLink(path: string, input: TrackingCaptureLinkInput): string {
+  return `${trackingAdminBase()}${path}?${trackingCaptureParams(input).toString()}`;
+}
+
+export function buildTrackingCaptureLink(input: TrackingCaptureLinkInput): string {
+  return buildTrackingAdminLink("/capture", input);
+}
+
+export function buildTrackingManualTextLink(input: TrackingCaptureLinkInput): string {
+  return buildTrackingAdminLink("/capture/manual-text", input);
 }
