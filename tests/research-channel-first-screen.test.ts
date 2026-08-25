@@ -33,6 +33,7 @@ test("technology pulse is placed before the compact research path and research p
 test("people and company headers expose current research signals rather than methodology chips", async () => {
   const people = await source("app/people/page.tsx");
   const companies = await source("app/companies/page.tsx");
+  const companyCss = await source("app/companies/page.module.css");
 
   assert.match(people, /research-channel-header\.module\.css/);
   assert.match(people, /getChannelUpdateDirectory\("people"\)/);
@@ -44,6 +45,7 @@ test("people and company headers expose current research signals rather than met
   assert.match(companies, /getChannelUpdateDirectory\("companies"\)/);
   assert.match(companies, /companyUpdates\.items\.length/);
   assert.doesNotMatch(companies, /按研究优先级与最新变化排序/);
+  assert.match(companyCss, /\.body :global\(\.directory-filters\)[\s\S]*position:\s*sticky/);
 });
 
 test("source cards appear after a collapsed lifecycle rule and expose coverage at a glance", async () => {
