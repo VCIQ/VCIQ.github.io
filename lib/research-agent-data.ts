@@ -1,4 +1,5 @@
 import rawResearchAgentReport from "@/public/data/research_agent_daily.json";
+import rawResearchAgentSnapshot from "@/public/data/research_agent_snapshot.json";
 
 export type ResearchAgentEvidence = {
   id: string;
@@ -158,16 +159,39 @@ export type ResearchAgentReport = {
   }[];
 };
 
+type ResearchAgentSnapshot = {
+  datasets?: Record<string, Record<string, unknown>>;
+};
+
 const typedRawResearchAgentReport = rawResearchAgentReport as ResearchAgentReport;
+const typedRawResearchAgentSnapshot = rawResearchAgentSnapshot as ResearchAgentSnapshot;
+
+function snapshotCoverageCount(dataset: string): number | null {
+  const rows = typedRawResearchAgentSnapshot.datasets?.[dataset];
+  return rows && typeof rows === "object" ? Object.keys(rows).length : null;
+}
 
 function coverageMetric(
   scopeKey: string,
   fallbackKey: string = scopeKey,
 ): ResearchDatasetMetric {
   const scope = typedRawResearchAgentReport.researchScope?.[scopeKey];
-  if (!scope) return typedRawResearchAgentReport.changeSummary.byDataset[fallbackKey] ?? 0;
-  if (scope.status === "active" && typeof scope.count === "number") return scope.count;
-  return "待接入";
+  if (scope) {
+    if (scope.status === "active" && typeof scope.count === "number") return scope.count;
+    return "待接入";
+  }
+
+  // Technology and track are not yet part of the stable Research Agent snapshot.
+  // Never translate a missing daily-report metric into the misleading value 0.
+  if (scopeKey === "technology" || scopeKey === "track") return "待接入";
+
+  // A report can lag behind its companion snapshot while the repository writer
+  // queue is busy. Fall back to the stable snapshot so page coverage remains
+  // semantically correct even before the next daily report is generated.
+  const snapshotCount = snapshotCoverageCount(scopeKey);
+  if (snapshotCount !== null) return snapshotCount;
+
+  return typedRawResearchAgentReport.changeSummary.byDataset[fallbackKey] ?? 0;
 }
 
 // `page.tsx` historically reused changeSummary.byDataset for the coverage strip.
@@ -175,21 +199,19 @@ function coverageMetric(
 // that the four core-object cards display tracked-object coverage rather than
 // this-run change counts. The page already treats `sector` as the legacy track
 // key and filters it out of the auxiliary-dataset strip, so keep that key here.
-export const researchAgentReport: ResearchAgentReport = typedRawResearchAgentReport.researchScope
-  ? {
-      ...typedRawResearchAgentReport,
-      changeSummary: {
-        ...typedRawResearchAgentReport.changeSummary,
-        byDataset: {
-          ...typedRawResearchAgentReport.changeSummary.byDataset,
-          technology: coverageMetric("technology"),
-          sector: coverageMetric("track", "sector"),
-          person: coverageMetric("person"),
-          ventureCompany: coverageMetric("ventureCompany"),
-        },
-      },
-    }
-  : typedRawResearchAgentReport;
+export const researchAgentReport: ResearchAgentReport = {
+  ...typedRawResearchAgentReport,
+  changeSummary: {
+    ...typedRawResearchAgentReport.changeSummary,
+    byDataset: {
+      ...typedRawResearchAgentReport.changeSummary.byDataset,
+      technology: coverageMetric("technology"),
+      sector: coverageMetric("track", "sector"),
+      person: coverageMetric("person"),
+      ventureCompany: coverageMetric("ventureCompany"),
+    },
+  },
+};
 
 export const researchAgentEvidenceById = new Map(
   researchAgentReport.evidence.map((item) => [item.id, item]),
