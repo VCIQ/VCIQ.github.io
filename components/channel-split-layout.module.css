@@ -25,20 +25,20 @@
 }
 
 .updatesPanel :global([data-layout="split"] > div:has(h2[id$="-updates-title"])) {
-  grid-template-columns: minmax(0, 1fr) 120px;
-  gap: 20px;
-  min-height: 154px;
-  padding: 20px 22px;
+  grid-template-columns: minmax(0, 1fr) 112px;
+  gap: 16px;
+  min-height: 132px;
+  padding: 16px 18px;
 }
 
 .updatesPanel :global([data-layout="split"] h2[id$="-updates-title"]) {
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .updatesPanel :global([data-layout="split"] > div:has(> label)) {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
-  padding: 16px 20px;
+  padding: 14px 18px;
 }
 
 .updatesPanel :global([data-layout="split"] > div:has(> label) > div:first-child),
@@ -89,61 +89,61 @@
 .panelHeader {
   display: grid;
   flex: 0 0 auto;
-  grid-template-columns: minmax(0, 1fr) 120px;
-  gap: 20px;
+  grid-template-columns: minmax(0, 1fr) 112px;
+  gap: 16px;
   align-items: end;
-  min-height: 154px;
-  padding: 20px 22px;
+  min-height: 132px;
+  padding: 16px 18px;
   border-bottom: 1px solid var(--border);
 }
 
 .titleLine {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
   color: var(--green-bright);
 }
 
 .titleLine h2 {
   margin: 0;
   color: var(--text);
-  font: 500 22px/1.25 "Noto Serif SC", "Songti SC", serif;
+  font: 500 20px/1.25 "Noto Serif SC", "Songti SC", serif;
 }
 
 .panelDescription {
   max-width: 620px;
-  margin: 10px 0 0;
+  margin: 8px 0 0;
   color: var(--muted);
-  font-size: 12px;
-  line-height: 1.7;
+  font-size: 11px;
+  line-height: 1.6;
 }
 
 .snapshot {
   display: grid;
   justify-items: end;
   border-left: 1px solid var(--border-soft);
-  padding-left: 18px;
+  padding-left: 16px;
 }
 
 .snapshot span {
   color: var(--faint);
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: .1em;
   text-align: right;
 }
 
 .snapshot strong {
   color: var(--text);
-  font-size: 34px;
+  font-size: 30px;
   font-weight: 500;
   line-height: 1;
   letter-spacing: -.04em;
 }
 
 .snapshot small {
-  margin-top: 7px;
+  margin-top: 6px;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 9px;
   text-align: right;
 }
 
@@ -193,7 +193,7 @@
     gap: 10px;
     border-top: 1px solid var(--border-soft);
     border-left: 0;
-    padding: 14px 0 0;
+    padding: 12px 0 0;
   }
 
   .snapshot small {
