@@ -2,6 +2,16 @@ name: Generate Research Agent v1
 
 on:
   workflow_call:
+  # Implementation-only push trigger: regenerate immediately after Research Agent
+  # code/policy changes, without reacting to its own generated data commits.
+  push:
+    branches: [main]
+    paths:
+      - tools/research_agent.py
+      - tools/research_agent_runtime.py
+      - tools/research_agent_evidence_policy.py
+      - tools/research_agent_enhanced_runtime.py
+      - .github/workflows/research-agent-v1.yml
   # Keep a daily research checkpoint even when the full-refresh/Pages handoff has
   # no semantic data commit to dispatch. The shared writer queue still serializes
   # publication with every other repository producer.
@@ -39,10 +49,13 @@ jobs:
           python -m py_compile \
             tools/research_agent.py \
             tools/research_agent_runtime.py \
+            tools/research_agent_evidence_policy.py \
+            tools/research_agent_enhanced_runtime.py \
             tools/run_pipeline.py \
             tools/build_pipeline_health.py
           python -m unittest tests.test_research_agent tests.test_research_agent_workflow
           python -m unittest tests.test_research_agent_runtime
+          python -m unittest tests.test_research_agent_evidence_policy
           python -m unittest tests.test_pipeline_control
           python tools/run_pipeline.py check
 
@@ -56,7 +69,7 @@ jobs:
           RESEARCH_AGENT_API_TIMEOUT: "180"
           RESEARCH_AGENT_API_RETRIES: "1"
           RESEARCH_AGENT_MODEL_CHANGE_LIMIT: "16"
-        run: python tools/research_agent_runtime.py --bootstrap-git-ref HEAD^
+        run: python tools/research_agent_enhanced_runtime.py --bootstrap-git-ref HEAD^
 
       - name: Report model execution status
         id: research-status
@@ -83,18 +96,40 @@ jobs:
                   if not row_status.endswith("-fallback"):
                       break
                   fallback_streak += 1
+
           health_status = "degraded" if status.endswith("-fallback") else "success"
+          change_summary = report.get("changeSummary")
+          external_candidates = 0
+          quality_rejected = 0
+          if isinstance(change_summary, dict):
+              external_candidates = int(change_summary.get("externalCandidates") or 0)
+              quality_rejected = int(change_summary.get("qualityRejected") or 0)
+          gate_rejected_all = (
+              external_candidates >= 3 and quality_rejected >= external_candidates
+          )
+          health_reason = reason
+          if gate_rejected_all and health_status == "success":
+              health_status = "degraded"
+              health_reason = (
+                  f"evidence gate rejected all {external_candidates} external candidates"
+              )
+
           print(f"Research Agent runStatus={status} fallbackReason={reason or '-'}")
-          print(f"Research Agent healthStatus={health_status} fallbackStreak={fallback_streak}")
+          print(
+              f"Research Agent healthStatus={health_status} "
+              f"fallbackStreak={fallback_streak} qualityRejected={quality_rejected}/"
+              f"{external_candidates}"
+          )
           with Path(os.environ["GITHUB_OUTPUT"]).open("a", encoding="utf-8") as output:
               output.write(f"run_status={status}\n")
               output.write(f"health_status={health_status}\n")
               output.write(f"fallback_streak={fallback_streak}\n")
               output.write(f"fallback_reason={reason or 'unknown reason'}\n")
+              output.write(f"health_reason={health_reason or 'healthy'}\n")
           if health_status == "degraded":
               print(
                   f"::warning title=Research Agent degraded::"
-                  f"Model analysis fell back to deterministic rules ({reason or 'unknown reason'})."
+                  f"{health_reason or 'Research Agent health contract degraded.'}"
               )
           PY
 

@@ -17,15 +17,18 @@ class ResearchAgentWorkflowTest(unittest.TestCase):
         self.assertNotIn("queue: single", text)
         self.assertNotIn("cancel-in-progress:", text)
 
-    def test_research_has_independent_daily_reusable_and_manual_entrypoints(self) -> None:
+    def test_research_has_daily_reusable_manual_and_implementation_entrypoints(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("  workflow_call:", text)
         self.assertIn('cron: "30 21 * * *"', text)
         self.assertIn('timezone: "Asia/Taipei"', text)
         self.assertIn("  workflow_dispatch:", text)
+        self.assertIn("  push:\n", text)
+        self.assertIn("      - tools/research_agent.py", text)
+        self.assertIn("      - tools/research_agent_evidence_policy.py", text)
+        self.assertIn("      - tools/research_agent_enhanced_runtime.py", text)
         self.assertNotIn("workflow_run:", text)
         self.assertNotIn('workflows: ["Refresh public intelligence"]', text)
-        self.assertNotIn("  push:\n", text)
 
     def test_api_fallback_is_published_as_degraded_and_can_raise_a_persistent_alert(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
@@ -51,6 +54,7 @@ class ResearchAgentWorkflowTest(unittest.TestCase):
             text,
         )
         self.assertIn("python -m unittest tests.test_research_agent_runtime", text)
+        self.assertIn("python -m unittest tests.test_research_agent_evidence_policy", text)
         self.assertIn("python tools/run_pipeline.py check", text)
 
 

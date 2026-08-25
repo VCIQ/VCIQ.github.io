@@ -71,6 +71,39 @@ export type ResearchRisk = {
   evidenceIds: string[];
 };
 
+export type ResearchScopeEntry = {
+  label: string;
+  status: "active" | "pending-artifact" | string;
+  count: number | null;
+  note: string;
+};
+
+export type ResearchQualityDiagnostics = {
+  candidateCount: number;
+  eligibleCandidateCount: number;
+  rejectedCandidateCount: number;
+  rejectedByDataset: Record<string, number>;
+  evidenceCount: number;
+  supportingEvidenceCount: number;
+  rejectedEvidenceCount: number;
+  passedButUnboundEvidenceCount: number;
+  rejectionReasons: Record<string, number>;
+};
+
+export type ResearchPipelineHealth = {
+  overallStatus: string;
+  healthyJobs: number;
+  jobCount: number;
+  issueJobs: {
+    jobId: string;
+    name: string;
+    status: string;
+    lastCompletedAt: string | null;
+  }[];
+};
+
+export type ResearchDatasetMetric = number | string;
+
 export type ResearchAgentReport = {
   schemaVersion: number;
   generatedAt: string;
@@ -88,7 +121,7 @@ export type ResearchAgentReport = {
   changeSummary: {
     totalDetected: number;
     total: number;
-    byDataset: Record<string, number>;
+    byDataset: Record<string, ResearchDatasetMetric>;
     byChangeType?: Record<string, number>;
     externalCandidates?: number;
     qualityRejected?: number;
@@ -96,6 +129,9 @@ export type ResearchAgentReport = {
     aggregatedEvents?: number;
     highestImportance: number;
   };
+  researchScope?: Record<string, ResearchScopeEntry>;
+  qualityDiagnostics?: ResearchQualityDiagnostics;
+  pipelineHealth?: ResearchPipelineHealth;
   analysis: {
     mode?: "model-analysis" | "structured-change-only";
     isResearchJudgment?: boolean;
@@ -122,7 +158,39 @@ export type ResearchAgentReport = {
   }[];
 };
 
-export const researchAgentReport = rawResearchAgentReport as ResearchAgentReport;
+const typedRawResearchAgentReport = rawResearchAgentReport as ResearchAgentReport;
+
+function coverageMetric(
+  scopeKey: string,
+  fallbackKey: string = scopeKey,
+): ResearchDatasetMetric {
+  const scope = typedRawResearchAgentReport.researchScope?.[scopeKey];
+  if (!scope) return typedRawResearchAgentReport.changeSummary.byDataset[fallbackKey] ?? 0;
+  if (scope.status === "active" && typeof scope.count === "number") return scope.count;
+  return "待接入";
+}
+
+// `page.tsx` historically reused changeSummary.byDataset for the coverage strip.
+// Keep the canonical JSON semantics intact, but adapt only the exported view so
+// that the four core-object cards display tracked-object coverage rather than
+// this-run change counts. The page already treats `sector` as the legacy track
+// key and filters it out of the auxiliary-dataset strip, so keep that key here.
+export const researchAgentReport: ResearchAgentReport = typedRawResearchAgentReport.researchScope
+  ? {
+      ...typedRawResearchAgentReport,
+      changeSummary: {
+        ...typedRawResearchAgentReport.changeSummary,
+        byDataset: {
+          ...typedRawResearchAgentReport.changeSummary.byDataset,
+          technology: coverageMetric("technology"),
+          sector: coverageMetric("track", "sector"),
+          person: coverageMetric("person"),
+          ventureCompany: coverageMetric("ventureCompany"),
+        },
+      },
+    }
+  : typedRawResearchAgentReport;
+
 export const researchAgentEvidenceById = new Map(
   researchAgentReport.evidence.map((item) => [item.id, item]),
 );
