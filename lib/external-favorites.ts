@@ -1,5 +1,9 @@
 import type { FavoriteInput, FavoriteItem } from "@/lib/favorites";
-import { buildTrackingCaptureLink } from "@/lib/tracking-admin-link";
+import {
+  buildTrackingCaptureLink,
+  buildTrackingManualTextLink,
+  type TrackingCaptureLinkInput,
+} from "@/lib/tracking-admin-link";
 
 export type ExternalFavoriteCategory =
   | "reference"
@@ -80,6 +84,19 @@ export function canonicalExternalArticleUrl(value: string): string {
   }
 }
 
+export function isWeChatArticleUrl(value: string): boolean {
+  const canonical = canonicalExternalArticleUrl(value);
+  if (!canonical) return false;
+  try {
+    const url = new URL(canonical);
+    const path = url.pathname.replace(/\/+$/, "") || "/";
+    return url.hostname.toLocaleLowerCase("en-US") === "mp.weixin.qq.com"
+      && (path === "/s" || path.startsWith("/s/"));
+  } catch {
+    return false;
+  }
+}
+
 function stableHash(value: string): string {
   let hash = 0x811c9dc5;
   for (let index = 0; index < value.length; index += 1) {
@@ -128,17 +145,29 @@ export function isExternalFavorite(item: Pick<FavoriteItem, "href">): boolean {
   return /^https?:\/\//i.test(item.href);
 }
 
-export function researchLeadHrefForFavorite(
+function trackingInputForFavorite(
   item: Pick<FavoriteItem, "href" | "title" | "summary" | "keywords" | "sectors" | "sources" | "channelLabel">,
-): string {
-  return buildTrackingCaptureLink({
+): TrackingCaptureLinkInput {
+  return {
     url: item.href,
     title: item.title,
     summary: item.summary,
     keywords: [...new Set([...item.sectors, ...item.keywords])].slice(0, 30),
     source: item.sources[0]?.name,
     channel: `favorites:${item.channelLabel}`,
-  });
+  };
+}
+
+export function researchLeadHrefForFavorite(
+  item: Pick<FavoriteItem, "href" | "title" | "summary" | "keywords" | "sectors" | "sources" | "channelLabel">,
+): string {
+  return buildTrackingCaptureLink(trackingInputForFavorite(item));
+}
+
+export function manualTextHrefForFavorite(
+  item: Pick<FavoriteItem, "href" | "title" | "summary" | "keywords" | "sectors" | "sources" | "channelLabel">,
+): string {
+  return buildTrackingManualTextLink(trackingInputForFavorite(item));
 }
 
 export const externalFavoriteCategoryOptions: Array<{
