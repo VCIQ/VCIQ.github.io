@@ -59,7 +59,7 @@ export default function PeoplePage() {
         channel="people"
         eyebrow="CORE PEOPLE RESEARCH DIRECTORY"
         title="核心人物档案"
-        description="人物研究承担赛道与公司之间的决策解释层：目录先展示研究摘要，再进入技术主线、观点演进、组织关系和事件级证据。"
+        description="目录优先回答为什么值得关注和最近发生了什么；下一步观察、技术主线、观点演进与组织关系进入人物详情页。"
         count={researchPeople.length}
         countLabel="已发布人物"
         statusText={`更新 ${peopleGeneratedAt.slice(0, 10)}`}
@@ -92,10 +92,6 @@ export default function PeoplePage() {
                       ? `${research.latestChange.date} · ${directoryExcerpt(research.latestChange.title, 60)}`
                       : "暂无可核验的近期人物事件。"}
                   </p>
-                </div>
-                <div className={styles.researchRow}>
-                  <b>下一步观察</b>
-                  <p>{directoryExcerpt(research.nextWatch, 72)}</p>
                 </div>
               </div>
 
