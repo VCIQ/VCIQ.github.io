@@ -83,19 +83,19 @@ export default function PeoplePage() {
               <div className={styles.cardResearch}>
                 <div className={styles.researchRow}>
                   <b>为什么重要</b>
-                  <p>{directoryExcerpt(research.whyImportant, 96)}</p>
+                  <p>{directoryExcerpt(research.whyImportant, 72)}</p>
                 </div>
                 <div className={styles.researchRow}>
                   <b>最新变化</b>
                   <p className={styles.latestChange}>
                     {research.latestChange
-                      ? `${research.latestChange.date} · ${directoryExcerpt(research.latestChange.title, 86)}`
+                      ? `${research.latestChange.date} · ${directoryExcerpt(research.latestChange.title, 60)}`
                       : "暂无可核验的近期人物事件。"}
                   </p>
                 </div>
                 <div className={styles.researchRow}>
                   <b>下一步观察</b>
-                  <p>{directoryExcerpt(research.nextWatch, 96)}</p>
+                  <p>{directoryExcerpt(research.nextWatch, 72)}</p>
                 </div>
               </div>
 
