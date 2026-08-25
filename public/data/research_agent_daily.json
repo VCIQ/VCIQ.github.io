@@ -1,40 +1,525 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-25T14:40:52+00:00",
-  "asOfDate": "2026-08-25",
-  "runStatus": "no-material-change",
+  "generatedAt": "2026-08-25T17:45:28+00:00",
+  "asOfDate": "2026-08-26",
+  "runStatus": "model",
   "baselineSource": "snapshot",
   "model": {
     "provider": "SiliconFlow",
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": false,
-    "usage": {}
+    "used": true,
+    "usage": {
+      "prompt_tokens": 3591,
+      "completion_tokens": 2819,
+      "total_tokens": 6410,
+      "completion_tokens_details": {
+        "reasoning_tokens": 1722
+      },
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 3591
+    }
   },
   "changeSummary": {
-    "totalDetected": 0,
-    "total": 0,
-    "byDataset": {},
-    "byChangeType": {},
-    "externalCandidates": 0,
-    "qualityRejected": 0,
-    "maintenanceExcluded": 0,
+    "totalDetected": 6,
+    "total": 2,
+    "byDataset": {
+      "ventureCompany": 2
+    },
+    "byChangeType": {
+      "external_event": 4,
+      "source_refresh": 2
+    },
+    "externalCandidates": 4,
+    "qualityRejected": 2,
+    "maintenanceExcluded": 2,
     "aggregatedEvents": 0,
-    "highestImportance": 0
+    "highestImportance": 88
   },
   "analysis": {
-    "mode": "structured-change-only",
-    "isResearchJudgment": false,
-    "executiveSummary": "本期没有通过证据质量门的外部事实候选。",
-    "keyDevelopments": [],
-    "thesisUpdates": [],
-    "watchlist": [],
-    "risks": [],
-    "methodologyNote": "结构化变化检查；本期无材料变化。未执行生成式研判。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown、每日证据约束研究摘要=degraded。"
+    "mode": "model-analysis",
+    "isResearchJudgment": true,
+    "executiveSummary": "证据包显示两项重要更新：Joby Aviation宣布与Atoms战略合作建设美国垂直起降机场网络，并上调2026年收入指引；Form Energy完成7.5亿美元Series G融资，由T. Rowe Price领投。两者均处于商业化推进阶段，但具体执行细节和财务影响仍需后续证据验证。 质量门诊断：缺少发布时间 8、证据未分级 1、证据合格但未绑定变化字段 3。",
+    "keyDevelopments": [
+      {
+        "title": "Joby Aviation与Atoms达成战略合作，共建美国垂直起降机场网络",
+        "assessment": "根据官方披露，Joby Aviation与Atoms建立战略合作伙伴关系，计划在Joby准备早期运营的市场收购和开发下一代交通枢纽，作为多式联运枢纽，整合电动飞机、自动驾驶地面车辆和共享出行，并配备现场电力设施。该合作属于白宫支持的eVTOL集成试点计划（eIPP）的一部分。这标志着Joby在商业化基础设施方面取得进展，但尚处于早期阶段，具体机场选址和建设时间表未披露。",
+        "importance": 4,
+        "confidence": "high",
+        "entities": [
+          "Joby Aviation",
+          "Atoms"
+        ],
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "title": "Joby Aviation上调2026年收入指引",
+        "assessment": "Joby Aviation在2026年第二季度财务业绩中宣布上调2026年收入指引。由于证据仅提供摘要，未披露具体金额或调整幅度，因此只能确认公司上调指引这一事实，无法评估幅度或对估值的具体影响。",
+        "importance": 4,
+        "confidence": "high",
+        "entities": [
+          "Joby Aviation"
+        ],
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "title": "Form Energy完成7.5亿美元Series G融资",
+        "assessment": "Form Energy宣布完成7.5亿美元Series G融资，由T. Rowe Price领投，该公司此前也领投了Series F轮。融资将用于扩大铁空气电池制造并加速商业部署。证据显示这是公司总融资的一部分，但未提供累计融资总额。该融资规模较大，表明投资者对多日储能技术路线的信心，但商业化交付能力仍需验证。",
+        "importance": 5,
+        "confidence": "high",
+        "entities": [
+          "Form Energy",
+          "T. Rowe Price"
+        ],
+        "evidenceIds": [
+          "E014",
+          "E013",
+          "E015"
+        ]
+      }
+    ],
+    "thesisUpdates": [
+      {
+        "entity": "Joby Aviation",
+        "direction": "positive",
+        "statement": "Joby通过战略合作和收入指引上调，商业化进程信号积极，但需关注eIPP试点执行和基础设施落地进度。",
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "entity": "Form Energy",
+        "direction": "positive",
+        "statement": "Form Energy获得大规模融资，资金充足支持制造扩张，但需验证其铁空气电池技术的规模化交付能力。",
+        "evidenceIds": [
+          "E014",
+          "E013",
+          "E015"
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "item": "Joby eIPP试点运营进展",
+        "reason": "垂直起降机场网络合作是早期运营的前提，试点结果将影响商业化时间表。",
+        "nextEvidence": "Joby后续季度财报或eIPP试点公告",
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "item": "Form Energy制造产能扩张与订单",
+        "reason": "融资用于扩大制造，需观察产能爬坡和客户合同落地。",
+        "nextEvidence": "Form Energy关于制造突破或商业部署的公告",
+        "evidenceIds": [
+          "E014",
+          "E013"
+        ]
+      },
+      {
+        "item": "Joby收入指引上调的具体幅度",
+        "reason": "当前证据未披露具体数字，需后续财报确认。",
+        "nextEvidence": "Joby 2026年第三季度财报或更新指引",
+        "evidenceIds": [
+          "E005"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "政策依赖风险",
+        "reason": "Joby的垂直起降机场网络合作依托白宫支持的eIPP计划，政策变化可能影响项目推进。",
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "risk": "执行风险",
+        "reason": "Form Energy融资规模大，但铁空气电池的规模化制造和商业化部署存在技术及市场执行不确定性。",
+        "evidenceIds": [
+          "E014"
+        ]
+      },
+      {
+        "risk": "证据时效性风险",
+        "reason": "部分证据（E013、E015）的发布时间与内容日期不一致，可能影响信息时效性判断。",
+        "evidenceIds": [
+          "E013",
+          "E015"
+        ]
+      }
+    ],
+    "methodologyNote": "本分析仅基于证据包中的官方披露信息，不补充外部事实。所有判断均引用证据编号，区分事实与推断。事实部分来自证据原文，推断部分基于证据内容进行合理推导，但未形成确定性结论。不提供买入、卖出、目标价或收益承诺。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
   },
-  "changes": [],
-  "evidence": [],
+  "changes": [
+    {
+      "id": "chg-d93083933adb00009cc0",
+      "dataset": "ventureCompany",
+      "entityType": "创业公司",
+      "entityId": "joby",
+      "entityName": "Joby Aviation",
+      "action": "updated",
+      "changedFields": [
+        "capitalMarkets",
+        "financing"
+      ],
+      "summary": "Joby Aviation 的 capitalMarkets、financing 发生变化。",
+      "importance": 88,
+      "before": {
+        "capitalMarkets": [
+          {
+            "date": "2026-07-16",
+            "investors": [],
+            "sourceUrl": "https://www.jobyaviation.com/news/2025-impact-report",
+            "summary": "Joby Aviation Impact Reports: 2024 2023 2022 Read next Joby Aviation to Scale Defense Business Through Acquisition of Resonant Sciences Building the Next Generation of Aerospace in Ohio Joby Reports Second Quarter 2026 Financial Results © 2026 Joby Aero, Inc.",
+            "title": "2025 Impact Report | Joby Aviation",
+            "type": "并购/退出"
+          }
+        ],
+        "financing": []
+      },
+      "after": {
+        "capitalMarkets": [
+          {
+            "date": "2026-07-16",
+            "investors": [],
+            "sourceUrl": "https://www.jobyaviation.com/news/2025-impact-report",
+            "summary": "Joby Aviation Impact Reports: 2024 2023 2022 Read next Joby Aviation to Scale Defense Business Through Acquisition of Resonant Sciences Building the Next Generation of Aerospace in Ohio Joby Reports Second Quarter 2026 Financial Results © 2026 Joby Aero, Inc.",
+            "title": "2025 Impact Report | Joby Aviation",
+            "type": "并购/退出"
+          },
+          {
+            "date": "2026-08-04",
+            "investors": [],
+            "round": "Strategic",
+            "sourceUrl": "https://www.jobyaviation.com/news/atoms-and-joby-aviation-form-strategic-partnership-to-build-americas-vertiport-network",
+            "summary": "Atoms and Joby Aviation have formed a strategic partnership to acquire and develop next-generation transportation hubs in markets where Joby is preparing early operations under the White House-backed eVTOL Integration Pilot Program (eIPP) Vertiports will operate as multimodal transportation hubs where electric aircraft, autonomous ground vehicles, and ridesharing converge, anchored by on-site power for charging and operations",
+            "title": "Atoms and Joby Aviation Form Strategic Partnership to Build America's Vertiport Network",
+            "type": "上市"
+          }
+        ],
+        "financing": [
+          {
+            "date": "2026-08-05",
+            "investors": [],
+            "sourceUrl": "https://www.jobyaviation.com/news/joby-reports-second-quarter-2026-financial-results",
+            "summary": "Company Raises 2026 Revenue Guidance",
+            "title": "Joby Reports Second Quarter 2026 Financial Results",
+            "type": "融资"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "capitalMarkets",
+        "financing"
+      ],
+      "claimBindings": [
+        {
+          "field": "capitalMarkets",
+          "before": [
+            {
+              "date": "2026-07-16",
+              "investors": [],
+              "sourceUrl": "https://www.jobyaviation.com/news/2025-impact-report",
+              "summary": "Joby Aviation Impact Reports: 2024 2023 2022 Read next Joby Aviation to Scale Defense Business Through Acquisition of Resonant Sciences Building the Next Generation of Aerospace in Ohio Joby Reports Second Quarter 2026 Financial Results © 2026 Joby Aero, Inc.",
+              "title": "2025 Impact Report | Joby Aviation",
+              "type": "并购/退出"
+            }
+          ],
+          "after": [
+            {
+              "date": "2026-07-16",
+              "investors": [],
+              "sourceUrl": "https://www.jobyaviation.com/news/2025-impact-report",
+              "summary": "Joby Aviation Impact Reports: 2024 2023 2022 Read next Joby Aviation to Scale Defense Business Through Acquisition of Resonant Sciences Building the Next Generation of Aerospace in Ohio Joby Reports Second Quarter 2026 Financial Results © 2026 Joby Aero, Inc.",
+              "title": "2025 Impact Report | Joby Aviation",
+              "type": "并购/退出"
+            },
+            {
+              "date": "2026-08-04",
+              "investors": [],
+              "round": "Strategic",
+              "sourceUrl": "https://www.jobyaviation.com/news/atoms-and-joby-aviation-form-strategic-partnership-to-build-americas-vertiport-network",
+              "summary": "Atoms and Joby Aviation have formed a strategic partnership to acquire and develop next-generation transportation hubs in markets where Joby is preparing early operations under the White House-backed eVTOL Integration Pilot Program (eIPP) Vertiports will operate as multimodal transportation hubs where electric aircraft, autonomous ground vehicles, and ridesharing converge, anchored by on-site power for charging and operations",
+              "title": "Atoms and Joby Aviation Form Strategic Partnership to Build America's Vertiport Network",
+              "type": "上市"
+            }
+          ],
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "financing",
+          "before": [],
+          "after": [
+            {
+              "date": "2026-08-05",
+              "investors": [],
+              "sourceUrl": "https://www.jobyaviation.com/news/joby-reports-second-quarter-2026-financial-results",
+              "summary": "Company Raises 2026 Revenue Guidance",
+              "title": "Joby Reports Second Quarter 2026 Financial Results",
+              "type": "融资"
+            }
+          ],
+          "evidenceIds": [
+            "E005"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [],
+      "evidenceIds": [
+        "E005"
+      ],
+      "supportingEvidenceIds": [
+        "E005"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-22e3dab75a1fddc85afc",
+      "dataset": "ventureCompany",
+      "entityType": "创业公司",
+      "entityId": "form-energy",
+      "entityName": "Form Energy",
+      "action": "updated",
+      "changedFields": [
+        "financing"
+      ],
+      "summary": "Form Energy 的 financing 发生变化。",
+      "importance": 88,
+      "before": {
+        "financing": [
+          {
+            "amount": "$750M",
+            "date": "2020-03-04",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/",
+            "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
+            "type": "融资"
+          },
+          {
+            "amount": "$750M",
+            "date": "2026-08-12",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+            "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+            "type": "融资"
+          }
+        ]
+      },
+      "after": {
+        "financing": [
+          {
+            "amount": "$750M",
+            "date": "2020-03-04",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/",
+            "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
+            "type": "融资"
+          },
+          {
+            "date": "2026-08-12",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing",
+            "summary": "Weirton, WV – August 12, 2026 – Form Energy, Inc., an American technology company developing and commercializing a new class of cost-effective, multi-day energy storage systems, announced today a $750 million Series G financing round led by T. Rowe Price, which also led the company’s prior Series F round. This round brings Form Energy’s total […]",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+            "type": "融资"
+          },
+          {
+            "amount": "$750M",
+            "date": "2026-08-12",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+            "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+            "type": "融资"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "financing"
+      ],
+      "claimBindings": [
+        {
+          "field": "financing",
+          "before": [
+            {
+              "amount": "$750M",
+              "date": "2020-03-04",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/",
+              "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
+              "type": "融资"
+            },
+            {
+              "amount": "$750M",
+              "date": "2026-08-12",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+              "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+              "type": "融资"
+            }
+          ],
+          "after": [
+            {
+              "amount": "$750M",
+              "date": "2020-03-04",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/",
+              "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
+              "type": "融资"
+            },
+            {
+              "date": "2026-08-12",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing",
+              "summary": "Weirton, WV – August 12, 2026 – Form Energy, Inc., an American technology company developing and commercializing a new class of cost-effective, multi-day energy storage systems, announced today a $750 million Series G financing round led by T. Rowe Price, which also led the company’s prior Series F round. This round brings Form Energy’s total […]",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+              "type": "融资"
+            },
+            {
+              "amount": "$750M",
+              "date": "2026-08-12",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+              "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+              "type": "融资"
+            }
+          ],
+          "evidenceIds": [
+            "E013",
+            "E014",
+            "E015"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [],
+      "evidenceIds": [
+        "E013",
+        "E014",
+        "E015"
+      ],
+      "supportingEvidenceIds": [
+        "E013",
+        "E014",
+        "E015"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 3,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E005",
+      "changeId": "chg-d93083933adb00009cc0",
+      "entityName": "Joby Aviation",
+      "claim": "Joby Aviation 的 capitalMarkets、financing 发生变化。",
+      "sourceName": "Joby Aviation",
+      "title": "2025 Impact Report | Joby Aviation",
+      "url": "https://www.jobyaviation.com/news/2025-impact-report",
+      "publishedAt": "2026-07-16",
+      "evidenceGrade": "官方披露",
+      "claimFields": [
+        "capitalMarkets",
+        "financing"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E013",
+      "changeId": "chg-22e3dab75a1fddc85afc",
+      "entityName": "Form Energy",
+      "claim": "Form Energy 的 financing 发生变化。",
+      "sourceName": "Form Energy",
+      "title": "Home",
+      "url": "https://formenergy.com/",
+      "publishedAt": "2020-03-04",
+      "evidenceGrade": "官方披露",
+      "claimFields": [
+        "financing"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E014",
+      "changeId": "chg-22e3dab75a1fddc85afc",
+      "entityName": "Form Energy",
+      "claim": "Form Energy 的 financing 发生变化。",
+      "sourceName": "Form Energy",
+      "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+      "url": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+      "publishedAt": "2026-08-12",
+      "evidenceGrade": "官方披露",
+      "claimFields": [
+        "financing"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E015",
+      "changeId": "chg-22e3dab75a1fddc85afc",
+      "entityName": "Form Energy",
+      "claim": "Form Energy 的 financing 发生变化。",
+      "sourceName": "Form Energy",
+      "title": "Newsroom",
+      "url": "https://formenergy.com/newsroom/",
+      "publishedAt": "2021-03-19",
+      "evidenceGrade": "官方披露",
+      "claimFields": [
+        "financing"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    }
+  ],
   "methodology": {
     "stages": [
       "stable entity snapshot",
@@ -154,18 +639,30 @@
       "runStatus": "no-material-change",
       "changeCount": 0,
       "executiveSummary": "本期没有通过证据质量门的外部事实候选。"
+    },
+    {
+      "date": "2026-08-26",
+      "generatedAt": "2026-08-25T17:45:28+00:00",
+      "runStatus": "model",
+      "changeCount": 2,
+      "executiveSummary": "证据包显示两项重要更新：Joby Aviation宣布与Atoms战略合作建设美国垂直起降机场网络，并上调2026年收入指引；Form Energy完成7.5亿美元Series G融资，由T. Rowe Price领投。两者均处于商业化推进阶段，但具体执行细节和财务影响仍需后续证据验证。"
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 0,
-    "eligibleCandidateCount": 0,
-    "rejectedCandidateCount": 0,
-    "rejectedByDataset": {},
-    "evidenceCount": 0,
-    "supportingEvidenceCount": 0,
-    "rejectedEvidenceCount": 0,
-    "passedButUnboundEvidenceCount": 0,
-    "rejectionReasons": {}
+    "candidateCount": 4,
+    "eligibleCandidateCount": 2,
+    "rejectedCandidateCount": 2,
+    "rejectedByDataset": {
+      "ventureCompany": 2
+    },
+    "evidenceCount": 16,
+    "supportingEvidenceCount": 4,
+    "rejectedEvidenceCount": 9,
+    "passedButUnboundEvidenceCount": 3,
+    "rejectionReasons": {
+      "missing_published_at": 8,
+      "ungraded": 1
+    }
   },
   "researchScope": {
     "technology": {
@@ -194,8 +691,8 @@
     }
   },
   "pipelineHealth": {
-    "overallStatus": "degraded",
-    "healthyJobs": 6,
+    "overallStatus": "stale",
+    "healthyJobs": 7,
     "jobCount": 9,
     "issueJobs": [
       {
@@ -209,12 +706,6 @@
         "name": "月度信源效能审查",
         "status": "unknown",
         "lastCompletedAt": null
-      },
-      {
-        "jobId": "research-agent-daily",
-        "name": "每日证据约束研究摘要",
-        "status": "degraded",
-        "lastCompletedAt": "2026-08-25T14:40:14Z"
       }
     ]
   }
