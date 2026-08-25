@@ -80,11 +80,29 @@
 }
 
 @media (max-width: 560px) {
+  .body :global(.directory-filters) {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    padding: 12px 14px;
+  }
+
+  .body :global(.directory-search) {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .body :global(.directory-filters select) {
+    width: 100%;
+    min-width: 0;
+  }
+
   .body :global(.catalog-grid) {
     grid-template-columns: 1fr;
   }
 
   .body :global(.directory-filters > span) {
-    text-align: left;
+    display: none;
   }
 }
