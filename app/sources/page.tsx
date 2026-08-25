@@ -41,7 +41,7 @@ const groups: Array<{
 export default function SourcesPage() {
   return (
     <main className="page-shell subpage">
-      <header className="page-header">
+      <header className={`page-header ${styles.channelHeader}`}>
         <p className="eyebrow">05 / CORE SOURCES</p>
         <h1>核心信源</h1>
         <p>
@@ -59,24 +59,23 @@ export default function SourcesPage() {
       <section className={styles.lifecycle} aria-label="信源生命周期">
         <div className={styles.lifecycleIntro}>
           <span>SOURCE LIFECYCLE</span>
-          <h2>先进入候选，再追踪，最后才升级为核心信源</h2>
+          <h2>候选 → 持续追踪 → 核心信源</h2>
           <p>
-            一篇高价值文章可以证明“这个来源值得继续看”，但不能单独证明整个媒体长期高质量。
-            因此文章收藏与研究线索负责发现，后续持续命中率、直接证据比例、跨日稳定性和人工判断共同决定是否升级。
+            单篇高价值文章只产生候选信号；持续命中率、直接证据比例、跨日稳定性与人工判断共同决定是否升级。
           </p>
         </div>
         <div className={styles.lifecycleFlow}>
           <div>
             <strong>Candidate</strong>
-            <p>由收藏文章、研究线索或自动发现首次提出。</p>
+            <p>由收藏、研究线索或自动发现提出。</p>
           </div>
           <div>
             <strong>Tracked</strong>
-            <p>人工确认后进入持续抓取与来源—赛道质量观测。</p>
+            <p>人工确认后进入持续抓取与质量观测。</p>
           </div>
           <div>
             <strong>Core</strong>
-            <p>经过多期证据积累后，成为长期研究入口与高权重信源。</p>
+            <p>多期证据稳定后成为长期研究入口。</p>
           </div>
         </div>
       </section>

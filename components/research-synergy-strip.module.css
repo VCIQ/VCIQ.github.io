@@ -1,5 +1,5 @@
 .section {
-  margin: 0 0 22px;
+  margin: 0 0 16px;
   border: 1px solid var(--border);
   background:
     linear-gradient(120deg, color-mix(in srgb, var(--green) 8%, transparent), transparent 42%),
@@ -9,30 +9,30 @@
 
 .header {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(240px, 420px);
-  gap: 24px;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 380px);
+  gap: 16px;
   align-items: end;
-  padding: 18px 20px;
+  padding: 11px 15px;
   border-bottom: 1px solid var(--border-soft);
 }
 
 .header p {
-  margin: 0 0 5px;
+  margin: 0 0 3px;
   color: var(--green-bright);
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: .12em;
 }
 
 .header h2 {
   margin: 0;
   color: var(--text);
-  font: 500 20px/1.35 "Noto Serif SC", "Songti SC", serif;
+  font: 500 17px/1.3 "Noto Serif SC", "Songti SC", serif;
 }
 
 .header > span {
   color: var(--muted);
-  font-size: 12px;
-  line-height: 1.75;
+  font-size: 11px;
+  line-height: 1.55;
   text-align: right;
 }
 
@@ -43,7 +43,7 @@
 
 .card {
   min-width: 0;
-  padding: 18px 20px;
+  padding: 11px 15px;
   border-right: 1px solid var(--border-soft);
   color: inherit;
   text-decoration: none;
@@ -62,54 +62,57 @@
 .cardTop {
   display: grid;
   grid-template-columns: auto 1fr auto;
-  gap: 8px;
+  gap: 7px;
   align-items: center;
   color: var(--green-bright);
 }
 
+.cardTop svg {
+  width: 15px;
+  height: 15px;
+}
+
 .cardTop span,
 .cardTop b {
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 500;
-  letter-spacing: .09em;
+  letter-spacing: .08em;
 }
 
 .card > strong {
   display: block;
-  margin-top: 13px;
+  margin-top: 7px;
   color: var(--text);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
 }
 
 .card > p {
-  min-height: 42px;
-  margin: 8px 0 14px;
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.7;
+  display: none;
 }
 
 .card > small {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 8px;
+  margin-top: 6px;
   color: var(--faint);
-  font-size: 10px;
+  font-size: 9px;
 }
 
 .section > footer {
-  padding: 10px 20px;
+  padding: 7px 15px;
   border-top: 1px solid var(--border-soft);
   color: var(--faint);
-  font-size: 10px;
-  line-height: 1.6;
+  font-size: 9px;
+  line-height: 1.5;
 }
 
 @media (max-width: 900px) {
   .header {
     grid-template-columns: 1fr;
+    gap: 5px;
   }
 
   .header > span {
@@ -117,31 +120,28 @@
   }
 
   .grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .card {
-    border-right: 0;
-    border-bottom: 1px solid var(--border-soft);
-  }
-
+  .card,
   .card:last-child {
+    border-right: 1px solid var(--border-soft);
     border-bottom: 0;
   }
 
-  .card > p {
-    min-height: 0;
+  .card:last-child {
+    border-right: 0;
   }
 }
 
 @media (max-width: 760px) {
   .compactMobile {
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
 
   .compactMobile .header {
     gap: 0;
-    padding: 11px 12px;
+    padding: 10px 11px;
   }
 
   .compactMobile .header p {
@@ -150,7 +150,7 @@
   }
 
   .compactMobile .header h2 {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .compactMobile .header > span,
@@ -164,7 +164,7 @@
 
   .compactMobile .card,
   .compactMobile .card:last-child {
-    padding: 10px 9px;
+    padding: 9px 8px;
     border-right: 1px solid var(--border-soft);
     border-bottom: 0;
   }
@@ -175,7 +175,7 @@
 
   .compactMobile .cardTop {
     grid-template-columns: auto 1fr;
-    gap: 6px;
+    gap: 5px;
   }
 
   .compactMobile .cardTop span {
@@ -188,21 +188,17 @@
   }
 
   .compactMobile .card > strong {
-    margin-top: 7px;
-    font-size: 13px;
-    line-height: 1.35;
-  }
-
-  .compactMobile .card > p {
-    display: none;
+    margin-top: 6px;
+    font-size: 12px;
+    line-height: 1.3;
   }
 
   .compactMobile .card > small {
     display: block;
-    margin-top: 5px;
+    margin-top: 4px;
     overflow: hidden;
     font-size: 8px;
-    line-height: 1.4;
+    line-height: 1.35;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
