@@ -13,6 +13,8 @@ import {
   buildExternalFavoriteInput,
   externalFavoriteCategoryOptions,
   isExternalFavorite,
+  isWeChatArticleUrl,
+  manualTextHrefForFavorite,
   researchLeadHrefForFavorite,
   type ExternalFavoriteCategory,
 } from "@/lib/external-favorites";
@@ -38,6 +40,8 @@ export function ExternalFavoriteCapture() {
     title: string;
     articleHref: string;
     researchHref: string;
+    manualTextHref?: string;
+    isWeChat: boolean;
   } | null>(null);
 
   const recentExternal = useMemo(
@@ -68,14 +72,22 @@ export function ExternalFavoriteCapture() {
       sources: input.sources ?? [],
     };
     const researchHref = researchLeadHrefForFavorite(leadSource);
+    const isWeChat = isWeChatArticleUrl(leadSource.href);
+    const manualTextHref = isWeChat ? manualTextHrefForFavorite(leadSource) : undefined;
 
     if (duplicate) {
       setSavedLead({
         title: duplicate.title,
         articleHref: duplicate.href,
         researchHref,
+        manualTextHref,
+        isWeChat,
       });
-      setNotice("这篇文章已经在收藏中，没有重复写入。");
+      setNotice(
+        isWeChat
+          ? "这篇微信文章已经在收藏中。收藏仅保存元数据；服务器读取可能受限，建议粘贴浏览器正文分析。"
+          : "这篇文章已经在收藏中，没有重复写入。",
+      );
       return;
     }
 
@@ -85,8 +97,18 @@ export function ExternalFavoriteCapture() {
       return;
     }
 
-    setSavedLead({ title: input.title, articleHref: input.href, researchHref });
-    setNotice("已收藏。文章只保存元数据、摘要和原始链接，不镜像全文。");
+    setSavedLead({
+      title: input.title,
+      articleHref: input.href,
+      researchHref,
+      manualTextHref,
+      isWeChat,
+    });
+    setNotice(
+      isWeChat
+        ? "已收藏。微信文章只保存元数据；服务器读取可能受限，推荐从 Chrome 复制正文进入分析。"
+        : "已收藏。文章只保存元数据、摘要和原始链接，不镜像全文。",
+    );
     setForm(EMPTY_FORM);
   };
 
@@ -224,18 +246,30 @@ export function ExternalFavoriteCapture() {
             {savedLead ? (
               <div className="research-lead-callout">
                 <div>
-                  <span>下一步 · RESEARCH LEAD</span>
+                  <span>{savedLead.isWeChat ? "微信文章 · BROWSER ASSISTED" : "下一步 · RESEARCH LEAD"}</span>
                   <strong>{savedLead.title}</strong>
                   <p>
-                    将同一篇文章送入受保护的 Capture；系统会提取赛道、技术、人物、公司和信源候选，确认后才进入正式追踪。
+                    {savedLead.isWeChat
+                      ? "状态：收藏仅保存元数据；服务器自动读取可能受微信反爬限制。推荐从 Chrome 复制正文，进入受保护 Capture 后再审核候选。"
+                      : "将同一篇文章送入受保护的 Capture；系统会提取赛道、技术、人物、公司和信源候选，确认后才进入正式追踪。"}
                   </p>
                 </div>
                 <div>
+                  {savedLead.isWeChat && savedLead.manualTextHref ? (
+                    <a href={savedLead.manualTextHref} target="_blank" rel="noreferrer" className="lead-action">
+                      <FlaskConical size={14} />粘贴正文并分析
+                    </a>
+                  ) : null}
+                  <a
+                    href={savedLead.researchHref}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={savedLead.isWeChat ? undefined : "lead-action"}
+                  >
+                    <FlaskConical size={14} />{savedLead.isWeChat ? "自动尝试解析" : "转为研究线索"}
+                  </a>
                   <a href={savedLead.articleHref} target="_blank" rel="noreferrer">
                     <ExternalLink size={14} />打开原文
-                  </a>
-                  <a href={savedLead.researchHref} target="_blank" rel="noreferrer" className="lead-action">
-                    <FlaskConical size={14} />转为研究线索
                   </a>
                 </div>
               </div>
@@ -245,23 +279,26 @@ export function ExternalFavoriteCapture() {
               <div className="recent-external-favorites">
                 <div className="recent-head">
                   <strong>最近的站外收藏</strong>
-                  <span>已有文章也可以随时转为研究线索</span>
+                  <span>微信文章优先从浏览器正文进入研究分析</span>
                 </div>
-                {recentExternal.map((item) => (
-                  <div className="recent-row" key={item.id}>
-                    <div>
-                      <strong>{item.title}</strong>
-                      <span>{item.sources[0]?.name || new URL(item.href).hostname}</span>
+                {recentExternal.map((item) => {
+                  const isWeChat = isWeChatArticleUrl(item.href);
+                  return (
+                    <div className="recent-row" key={item.id}>
+                      <div>
+                        <strong>{item.title}</strong>
+                        <span>{item.sources[0]?.name || new URL(item.href).hostname}</span>
+                      </div>
+                      <a
+                        href={isWeChat ? manualTextHrefForFavorite(item) : researchLeadHrefForFavorite(item)}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {isWeChat ? "粘贴正文分析 ↗" : "研究线索 ↗"}
+                      </a>
                     </div>
-                    <a
-                      href={researchLeadHrefForFavorite(item)}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      研究线索 ↗
-                    </a>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             ) : null}
 
