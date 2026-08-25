@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-24T23:36:52+00:00",
-  "personCount": 88,
-  "taskCount": 202,
-  "openTaskCount": 202,
+  "generatedAt": "2026-08-25T05:35:47+00:00",
+  "personCount": 94,
+  "taskCount": 222,
+  "openTaskCount": 222,
   "people": {
     "ali-ghodsi": {
       "personName": "Ali Ghodsi",
@@ -385,38 +385,6 @@
         }
       ],
       "openCount": 2
-    },
-    "fei-fei-li": {
-      "personName": "李飞飞",
-      "tasks": [
-        {
-          "id": "person-research-f59d0473307e",
-          "taskType": "execution_verification",
-          "priority": "P1",
-          "target": "Stanford University · 机器人",
-          "question": "李飞飞 的最新公开事件涉及“机器人”后，Stanford University 是否出现独立的产品、技术、组织或商业执行证据？",
-          "objective": "把“人物表达”与“组织执行”分开验证；人物观点本身不自动等同于公司战略或产品落地。",
-          "preferredEvidence": [
-            "公司官方公告/博客",
-            "产品或技术官方发布",
-            "监管文件",
-            "公司官方开发者/研究页面"
-          ],
-          "searchQueries": [],
-          "successCriteria": "至少存在 1 条独立于人物表述、且 URL 不与人物证据重合的一手/官方组织来源，同时直接命中组织与目标技术/产品；第三方报道或同一来源复用只能形成 candidate_found。",
-          "evidenceBasis": [
-            {
-              "title": "【The Circuit节目】AI教母 李飞飞 ：未来不止聊天机器人 | 十亿美元押注空间智能新赛道",
-              "url": "https://www.bilibili.com/video/BV1RChP67ELR",
-              "source": "Bilibili · KrillinAI小林",
-              "date": "2026-08-24"
-            }
-          ],
-          "candidateEvidence": [],
-          "status": "open"
-        }
-      ],
-      "openCount": 1
     },
     "gary-dickerson": {
       "personName": "Gary Dickerson",
@@ -2023,6 +1991,80 @@
       ],
       "openCount": 3
     },
+    "person-e1e5851c60": {
+      "personName": "无需",
+      "tasks": [
+        {
+          "id": "person-research-ecc2888696bd",
+          "taskType": "first_party_evidence",
+          "priority": "P0",
+          "target": "AI / AGI",
+          "question": "能否找到 无需 围绕“AI / AGI”的本人演讲、访谈、论文、公开发文或官方文件？",
+          "objective": "增加可归因于人物本人的一手材料，避免人物研究长期依赖第三方报道。",
+          "preferredEvidence": [
+            "本人论文/著作",
+            "个人或机构官方主页",
+            "官方 YouTube/视频号",
+            "公开演讲/问答原始视频"
+          ],
+          "searchQueries": [
+            "无需 AI / AGI",
+            "无需 AI / AGI 演讲",
+            "无需 AI / AGI 访谈"
+          ],
+          "successCriteria": "人物档案至少补齐到 2 条可直接归因于本人的独立公开材料；若用于观点演进，仍需形成跨时间的同主题证据点。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        },
+        {
+          "id": "person-research-28eba915b52b",
+          "taskType": "identity_verification",
+          "priority": "P0",
+          "target": "身份与任职",
+          "question": "无需 当前公开身份、任职机构和角色能否由本人、机构官网或监管/学术档案独立核验？",
+          "objective": "补齐人物身份与任职证据；在验证完成前，不把网页标题、媒体称谓或自动抽取角色当作正式任职。",
+          "preferredEvidence": [
+            "机构官方人物页",
+            "个人学术主页",
+            "监管文件",
+            "官方任命/团队页面"
+          ],
+          "searchQueries": [
+            "无需 official profile",
+            "无需 个人主页",
+            "无需 任职 官方"
+          ],
+          "successCriteria": "至少取得 1 条可直接归因于本人或任职机构的公开来源，同时明确姓名与当前角色。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        },
+        {
+          "id": "person-research-c423cc69990c",
+          "taskType": "freshness_update",
+          "priority": "P2",
+          "target": "AI / AGI",
+          "question": "无需 最近 180 天是否有新的本人公开表达、论文、产品/项目动作或任职变化？",
+          "objective": "补齐近期时间窗口，避免用多年以前的材料代表人物当前判断。",
+          "preferredEvidence": [
+            "本人/机构官方更新",
+            "近期演讲或采访",
+            "近期论文/公开文件"
+          ],
+          "searchQueries": [
+            "无需 AI / AGI",
+            "无需 AI / AGI 2026",
+            "无需 最新演讲 访谈"
+          ],
+          "successCriteria": "找到至少 1 条最近 180 天的一手或机构官方材料；否则保持 open 并明确近期证据空窗。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        }
+      ],
+      "openCount": 3
+    },
     "person-7bb7c301c0": {
       "personName": "杨仝",
       "tasks": [
@@ -2940,6 +2982,80 @@
       ],
       "openCount": 2
     },
+    "adam-winter": {
+      "personName": "Adam Winter",
+      "tasks": [
+        {
+          "id": "person-research-3ce0903cc901",
+          "taskType": "first_party_evidence",
+          "priority": "P0",
+          "target": "半导体",
+          "question": "能否找到 Adam Winter 围绕“半导体”的本人演讲、访谈、论文、公开发文或官方文件？",
+          "objective": "增加可归因于人物本人的一手材料，避免人物研究长期依赖第三方报道。",
+          "preferredEvidence": [
+            "本人论文/著作",
+            "个人或机构官方主页",
+            "官方 YouTube/视频号",
+            "公开演讲/问答原始视频"
+          ],
+          "searchQueries": [
+            "Adam Winter 半导体",
+            "Adam Winter 半导体 演讲",
+            "Adam Winter 半导体 访谈"
+          ],
+          "successCriteria": "人物档案至少补齐到 2 条可直接归因于本人的独立公开材料；若用于观点演进，仍需形成跨时间的同主题证据点。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        },
+        {
+          "id": "person-research-5f7252c2f5f6",
+          "taskType": "identity_verification",
+          "priority": "P0",
+          "target": "身份与任职",
+          "question": "Adam Winter 当前公开身份、任职机构和角色能否由本人、机构官网或监管/学术档案独立核验？",
+          "objective": "补齐人物身份与任职证据；在验证完成前，不把网页标题、媒体称谓或自动抽取角色当作正式任职。",
+          "preferredEvidence": [
+            "机构官方人物页",
+            "个人学术主页",
+            "监管文件",
+            "官方任命/团队页面"
+          ],
+          "searchQueries": [
+            "Adam Winter official profile",
+            "Adam Winter 个人主页",
+            "Adam Winter 任职 官方"
+          ],
+          "successCriteria": "至少取得 1 条可直接归因于本人或任职机构的公开来源，同时明确姓名与当前角色。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        },
+        {
+          "id": "person-research-e06ce3ebd8d3",
+          "taskType": "freshness_update",
+          "priority": "P2",
+          "target": "半导体",
+          "question": "Adam Winter 最近 180 天是否有新的本人公开表达、论文、产品/项目动作或任职变化？",
+          "objective": "补齐近期时间窗口，避免用多年以前的材料代表人物当前判断。",
+          "preferredEvidence": [
+            "本人/机构官方更新",
+            "近期演讲或采访",
+            "近期论文/公开文件"
+          ],
+          "searchQueries": [
+            "Adam Winter 半导体",
+            "Adam Winter 半导体 2026",
+            "Adam Winter 最新演讲 访谈"
+          ],
+          "successCriteria": "找到至少 1 条最近 180 天的一手或机构官方材料；否则保持 open 并明确近期证据空窗。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        }
+      ],
+      "openCount": 3
+    },
     "class-presiden-thomas-sonderman": {
       "personName": "Class Presiden Thomas Sonderman",
       "tasks": [
@@ -3366,6 +3482,154 @@
             "Yossi Meyouhas 半导体",
             "Yossi Meyouhas 半导体 2026",
             "Yossi Meyouhas 最新演讲 访谈"
+          ],
+          "successCriteria": "找到至少 1 条最近 180 天的一手或机构官方材料；否则保持 open 并明确近期证据空窗。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        }
+      ],
+      "openCount": 3
+    },
+    "person-933835ed02": {
+      "personName": "蔡宁",
+      "tasks": [
+        {
+          "id": "person-research-f205c1255e2b",
+          "taskType": "first_party_evidence",
+          "priority": "P0",
+          "target": "半导体",
+          "question": "能否找到 蔡宁 围绕“半导体”的本人演讲、访谈、论文、公开发文或官方文件？",
+          "objective": "增加可归因于人物本人的一手材料，避免人物研究长期依赖第三方报道。",
+          "preferredEvidence": [
+            "本人论文/著作",
+            "个人或机构官方主页",
+            "官方 YouTube/视频号",
+            "公开演讲/问答原始视频"
+          ],
+          "searchQueries": [
+            "蔡宁 半导体",
+            "蔡宁 半导体 演讲",
+            "蔡宁 半导体 访谈"
+          ],
+          "successCriteria": "人物档案至少补齐到 2 条可直接归因于本人的独立公开材料；若用于观点演进，仍需形成跨时间的同主题证据点。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        },
+        {
+          "id": "person-research-7998bfa9d36b",
+          "taskType": "identity_verification",
+          "priority": "P0",
+          "target": "身份与任职",
+          "question": "蔡宁 当前公开身份、任职机构和角色能否由本人、机构官网或监管/学术档案独立核验？",
+          "objective": "补齐人物身份与任职证据；在验证完成前，不把网页标题、媒体称谓或自动抽取角色当作正式任职。",
+          "preferredEvidence": [
+            "机构官方人物页",
+            "个人学术主页",
+            "监管文件",
+            "官方任命/团队页面"
+          ],
+          "searchQueries": [
+            "蔡宁 official profile",
+            "蔡宁 个人主页",
+            "蔡宁 任职 官方"
+          ],
+          "successCriteria": "至少取得 1 条可直接归因于本人或任职机构的公开来源，同时明确姓名与当前角色。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        },
+        {
+          "id": "person-research-1e1efb5ce932",
+          "taskType": "freshness_update",
+          "priority": "P2",
+          "target": "半导体",
+          "question": "蔡宁 最近 180 天是否有新的本人公开表达、论文、产品/项目动作或任职变化？",
+          "objective": "补齐近期时间窗口，避免用多年以前的材料代表人物当前判断。",
+          "preferredEvidence": [
+            "本人/机构官方更新",
+            "近期演讲或采访",
+            "近期论文/公开文件"
+          ],
+          "searchQueries": [
+            "蔡宁 半导体",
+            "蔡宁 半导体 2026",
+            "蔡宁 最新演讲 访谈"
+          ],
+          "successCriteria": "找到至少 1 条最近 180 天的一手或机构官方材料；否则保持 open 并明确近期证据空窗。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        }
+      ],
+      "openCount": 3
+    },
+    "person-bb72579e50": {
+      "personName": "蔡宁带队亮",
+      "tasks": [
+        {
+          "id": "person-research-95b7800a689d",
+          "taskType": "first_party_evidence",
+          "priority": "P0",
+          "target": "半导体",
+          "question": "能否找到 蔡宁带队亮 围绕“半导体”的本人演讲、访谈、论文、公开发文或官方文件？",
+          "objective": "增加可归因于人物本人的一手材料，避免人物研究长期依赖第三方报道。",
+          "preferredEvidence": [
+            "本人论文/著作",
+            "个人或机构官方主页",
+            "官方 YouTube/视频号",
+            "公开演讲/问答原始视频"
+          ],
+          "searchQueries": [
+            "蔡宁带队亮 半导体",
+            "蔡宁带队亮 半导体 演讲",
+            "蔡宁带队亮 半导体 访谈"
+          ],
+          "successCriteria": "人物档案至少补齐到 2 条可直接归因于本人的独立公开材料；若用于观点演进，仍需形成跨时间的同主题证据点。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        },
+        {
+          "id": "person-research-ed4647773a22",
+          "taskType": "identity_verification",
+          "priority": "P0",
+          "target": "身份与任职",
+          "question": "蔡宁带队亮 当前公开身份、任职机构和角色能否由本人、机构官网或监管/学术档案独立核验？",
+          "objective": "补齐人物身份与任职证据；在验证完成前，不把网页标题、媒体称谓或自动抽取角色当作正式任职。",
+          "preferredEvidence": [
+            "机构官方人物页",
+            "个人学术主页",
+            "监管文件",
+            "官方任命/团队页面"
+          ],
+          "searchQueries": [
+            "蔡宁带队亮 official profile",
+            "蔡宁带队亮 个人主页",
+            "蔡宁带队亮 任职 官方"
+          ],
+          "successCriteria": "至少取得 1 条可直接归因于本人或任职机构的公开来源，同时明确姓名与当前角色。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        },
+        {
+          "id": "person-research-62a737b83caa",
+          "taskType": "freshness_update",
+          "priority": "P2",
+          "target": "半导体",
+          "question": "蔡宁带队亮 最近 180 天是否有新的本人公开表达、论文、产品/项目动作或任职变化？",
+          "objective": "补齐近期时间窗口，避免用多年以前的材料代表人物当前判断。",
+          "preferredEvidence": [
+            "本人/机构官方更新",
+            "近期演讲或采访",
+            "近期论文/公开文件"
+          ],
+          "searchQueries": [
+            "蔡宁带队亮 半导体",
+            "蔡宁带队亮 半导体 2026",
+            "蔡宁带队亮 最新演讲 访谈"
           ],
           "successCriteria": "找到至少 1 条最近 180 天的一手或机构官方材料；否则保持 open 并明确近期证据空窗。",
           "evidenceBasis": [],
@@ -3943,13 +4207,6 @@
           ],
           "candidateEvidence": [
             {
-              "title": "小米机器人，闷声干大事",
-              "url": "https://www.leiphone.com/category/industrynews/Y2iGKMHBj6jXCOWz.html",
-              "source": "雷峰网",
-              "sourceLevel": "媒体报道",
-              "date": "2026-08-24"
-            },
-            {
               "title": "王兴兴进入奥德赛时期，呼唤梁文锋",
               "url": "https://news.pedaily.cn/202608/567885.shtml",
               "source": "投资界",
@@ -3967,6 +4224,13 @@
               "title": "宇树科技今日登陆科创板 A股“人形机器人第一股”来了",
               "url": "https://finance.sina.com.cn/jjxw/2026-08-19/doc-ininuqvh2985347.shtml",
               "source": "媒体报道 · 新浪 · 新浪财经",
+              "sourceLevel": "媒体报道",
+              "date": "2026-08-19"
+            },
+            {
+              "title": "宇树科技今日上市，多只港股已抱上这条「机器人大腿」；人均557万元！寒武纪124名员工股票激励将到账；入校即入企！格力技校开启首届招生",
+              "url": "https://www.leiphone.com/category/zaobao/4d2UMjJsoreZMbco.html",
+              "source": "媒体报道 · 雷峰网",
               "sourceLevel": "媒体报道",
               "date": "2026-08-19"
             }
@@ -4219,6 +4483,154 @@
             "刘浩 机器人",
             "刘浩 机器人 2026",
             "刘浩 最新演讲 访谈"
+          ],
+          "successCriteria": "找到至少 1 条最近 180 天的一手或机构官方材料；否则保持 open 并明确近期证据空窗。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        }
+      ],
+      "openCount": 3
+    },
+    "person-d117254a06": {
+      "personName": "姚卯青",
+      "tasks": [
+        {
+          "id": "person-research-bb8f5587715a",
+          "taskType": "first_party_evidence",
+          "priority": "P0",
+          "target": "机器人",
+          "question": "能否找到 姚卯青 围绕“机器人”的本人演讲、访谈、论文、公开发文或官方文件？",
+          "objective": "增加可归因于人物本人的一手材料，避免人物研究长期依赖第三方报道。",
+          "preferredEvidence": [
+            "本人论文/著作",
+            "个人或机构官方主页",
+            "官方 YouTube/视频号",
+            "公开演讲/问答原始视频"
+          ],
+          "searchQueries": [
+            "姚卯青 机器人",
+            "姚卯青 机器人 演讲",
+            "姚卯青 机器人 访谈"
+          ],
+          "successCriteria": "人物档案至少补齐到 2 条可直接归因于本人的独立公开材料；若用于观点演进，仍需形成跨时间的同主题证据点。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        },
+        {
+          "id": "person-research-61ce418c9e67",
+          "taskType": "identity_verification",
+          "priority": "P0",
+          "target": "身份与任职",
+          "question": "姚卯青 当前公开身份、任职机构和角色能否由本人、机构官网或监管/学术档案独立核验？",
+          "objective": "补齐人物身份与任职证据；在验证完成前，不把网页标题、媒体称谓或自动抽取角色当作正式任职。",
+          "preferredEvidence": [
+            "机构官方人物页",
+            "个人学术主页",
+            "监管文件",
+            "官方任命/团队页面"
+          ],
+          "searchQueries": [
+            "姚卯青 official profile",
+            "姚卯青 个人主页",
+            "姚卯青 任职 官方"
+          ],
+          "successCriteria": "至少取得 1 条可直接归因于本人或任职机构的公开来源，同时明确姓名与当前角色。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        },
+        {
+          "id": "person-research-9ccefb6c5f6f",
+          "taskType": "freshness_update",
+          "priority": "P2",
+          "target": "机器人",
+          "question": "姚卯青 最近 180 天是否有新的本人公开表达、论文、产品/项目动作或任职变化？",
+          "objective": "补齐近期时间窗口，避免用多年以前的材料代表人物当前判断。",
+          "preferredEvidence": [
+            "本人/机构官方更新",
+            "近期演讲或采访",
+            "近期论文/公开文件"
+          ],
+          "searchQueries": [
+            "姚卯青 机器人",
+            "姚卯青 机器人 2026",
+            "姚卯青 最新演讲 访谈"
+          ],
+          "successCriteria": "找到至少 1 条最近 180 天的一手或机构官方材料；否则保持 open 并明确近期证据空窗。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        }
+      ],
+      "openCount": 3
+    },
+    "person-8cacae9511": {
+      "personName": "姜青松",
+      "tasks": [
+        {
+          "id": "person-research-b6d044093d3a",
+          "taskType": "first_party_evidence",
+          "priority": "P0",
+          "target": "机器人",
+          "question": "能否找到 姜青松 围绕“机器人”的本人演讲、访谈、论文、公开发文或官方文件？",
+          "objective": "增加可归因于人物本人的一手材料，避免人物研究长期依赖第三方报道。",
+          "preferredEvidence": [
+            "本人论文/著作",
+            "个人或机构官方主页",
+            "官方 YouTube/视频号",
+            "公开演讲/问答原始视频"
+          ],
+          "searchQueries": [
+            "姜青松 机器人",
+            "姜青松 机器人 演讲",
+            "姜青松 机器人 访谈"
+          ],
+          "successCriteria": "人物档案至少补齐到 2 条可直接归因于本人的独立公开材料；若用于观点演进，仍需形成跨时间的同主题证据点。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        },
+        {
+          "id": "person-research-64963d8507e2",
+          "taskType": "identity_verification",
+          "priority": "P0",
+          "target": "身份与任职",
+          "question": "姜青松 当前公开身份、任职机构和角色能否由本人、机构官网或监管/学术档案独立核验？",
+          "objective": "补齐人物身份与任职证据；在验证完成前，不把网页标题、媒体称谓或自动抽取角色当作正式任职。",
+          "preferredEvidence": [
+            "机构官方人物页",
+            "个人学术主页",
+            "监管文件",
+            "官方任命/团队页面"
+          ],
+          "searchQueries": [
+            "姜青松 official profile",
+            "姜青松 个人主页",
+            "姜青松 任职 官方"
+          ],
+          "successCriteria": "至少取得 1 条可直接归因于本人或任职机构的公开来源，同时明确姓名与当前角色。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        },
+        {
+          "id": "person-research-8d2dcb3d51c9",
+          "taskType": "freshness_update",
+          "priority": "P2",
+          "target": "机器人",
+          "question": "姜青松 最近 180 天是否有新的本人公开表达、论文、产品/项目动作或任职变化？",
+          "objective": "补齐近期时间窗口，避免用多年以前的材料代表人物当前判断。",
+          "preferredEvidence": [
+            "本人/机构官方更新",
+            "近期演讲或采访",
+            "近期论文/公开文件"
+          ],
+          "searchQueries": [
+            "姜青松 机器人",
+            "姜青松 机器人 2026",
+            "姜青松 最新演讲 访谈"
           ],
           "successCriteria": "找到至少 1 条最近 180 天的一手或机构官方材料；否则保持 open 并明确近期证据空窗。",
           "evidenceBasis": [],
@@ -5208,6 +5620,80 @@
             "James Cadwallader Partnered Since 风险投资",
             "James Cadwallader Partnered Since 风险投资 2026",
             "James Cadwallader Partnered Since 最新演讲 访谈"
+          ],
+          "successCriteria": "找到至少 1 条最近 180 天的一手或机构官方材料；否则保持 open 并明确近期证据空窗。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        }
+      ],
+      "openCount": 3
+    },
+    "person-58448d80c5": {
+      "personName": "周志峰荣获",
+      "tasks": [
+        {
+          "id": "person-research-c77da5ee3cba",
+          "taskType": "first_party_evidence",
+          "priority": "P0",
+          "target": "风险投资",
+          "question": "能否找到 周志峰荣获 围绕“风险投资”的本人演讲、访谈、论文、公开发文或官方文件？",
+          "objective": "增加可归因于人物本人的一手材料，避免人物研究长期依赖第三方报道。",
+          "preferredEvidence": [
+            "本人论文/著作",
+            "个人或机构官方主页",
+            "官方 YouTube/视频号",
+            "公开演讲/问答原始视频"
+          ],
+          "searchQueries": [
+            "周志峰荣获 风险投资",
+            "周志峰荣获 风险投资 演讲",
+            "周志峰荣获 风险投资 访谈"
+          ],
+          "successCriteria": "人物档案至少补齐到 2 条可直接归因于本人的独立公开材料；若用于观点演进，仍需形成跨时间的同主题证据点。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        },
+        {
+          "id": "person-research-75b6d93e22ad",
+          "taskType": "identity_verification",
+          "priority": "P0",
+          "target": "身份与任职",
+          "question": "周志峰荣获 当前公开身份、任职机构和角色能否由本人、机构官网或监管/学术档案独立核验？",
+          "objective": "补齐人物身份与任职证据；在验证完成前，不把网页标题、媒体称谓或自动抽取角色当作正式任职。",
+          "preferredEvidence": [
+            "机构官方人物页",
+            "个人学术主页",
+            "监管文件",
+            "官方任命/团队页面"
+          ],
+          "searchQueries": [
+            "周志峰荣获 official profile",
+            "周志峰荣获 个人主页",
+            "周志峰荣获 任职 官方"
+          ],
+          "successCriteria": "至少取得 1 条可直接归因于本人或任职机构的公开来源，同时明确姓名与当前角色。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        },
+        {
+          "id": "person-research-cc3ef494837f",
+          "taskType": "freshness_update",
+          "priority": "P2",
+          "target": "风险投资",
+          "question": "周志峰荣获 最近 180 天是否有新的本人公开表达、论文、产品/项目动作或任职变化？",
+          "objective": "补齐近期时间窗口，避免用多年以前的材料代表人物当前判断。",
+          "preferredEvidence": [
+            "本人/机构官方更新",
+            "近期演讲或采访",
+            "近期论文/公开文件"
+          ],
+          "searchQueries": [
+            "周志峰荣获 风险投资",
+            "周志峰荣获 风险投资 2026",
+            "周志峰荣获 最新演讲 访谈"
           ],
           "successCriteria": "找到至少 1 条最近 180 天的一手或机构官方材料；否则保持 open 并明确近期证据空窗。",
           "evidenceBasis": [],
