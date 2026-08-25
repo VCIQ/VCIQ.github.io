@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ExternalFavoriteCapture } from "@/components/external-favorite-capture";
 import { FavoritesHydrationMarker } from "@/components/favorites-hydration-marker";
 import { FavoritesPage } from "@/components/favorites-page";
+import { WeChatFavoriteResearchPanel } from "@/components/wechat-favorite-research-panel";
 import "./favorites.css";
 import "./favorites-prehydrate.css";
 
@@ -36,6 +37,7 @@ export default function FavoriteChannelPage() {
       <script dangerouslySetInnerHTML={{ __html: favoritesHydrationWatchdog }} />
       <FavoritesHydrationMarker />
       <FavoritesPage />
+      <WeChatFavoriteResearchPanel />
       <ExternalFavoriteCapture />
     </main>
   );
