@@ -2,6 +2,16 @@ name: Generate Research Agent v1
 
 on:
   workflow_call:
+  # Implementation-only push trigger: regenerate immediately after Research Agent
+  # code/policy changes, without reacting to its own generated data commits.
+  push:
+    branches: [main]
+    paths:
+      - tools/research_agent.py
+      - tools/research_agent_runtime.py
+      - tools/research_agent_evidence_policy.py
+      - tools/research_agent_enhanced_runtime.py
+      - .github/workflows/research-agent-v1.yml
   # Keep a daily research checkpoint even when the full-refresh/Pages handoff has
   # no semantic data commit to dispatch. The shared writer queue still serializes
   # publication with every other repository producer.
