@@ -26,6 +26,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: vciq-repository-writer-${{ github.ref }}
@@ -93,3 +94,8 @@ jobs:
               exit 1
             fi
           done
+
+      - name: Refresh Research Agent after institution checkpoint
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run research-agent-v1.yml --ref main --repo "$GITHUB_REPOSITORY"
