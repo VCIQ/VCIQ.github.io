@@ -173,7 +173,8 @@ function coverageMetric(
 // `page.tsx` historically reused changeSummary.byDataset for the coverage strip.
 // Keep the canonical JSON semantics intact, but adapt only the exported view so
 // that the four core-object cards display tracked-object coverage rather than
-// this-run change counts. Non-core dataset metrics remain unchanged.
+// this-run change counts. The page already treats `sector` as the legacy track
+// key and filters it out of the auxiliary-dataset strip, so keep that key here.
 export const researchAgentReport: ResearchAgentReport = typedRawResearchAgentReport.researchScope
   ? {
       ...typedRawResearchAgentReport,
@@ -182,7 +183,7 @@ export const researchAgentReport: ResearchAgentReport = typedRawResearchAgentRep
         byDataset: {
           ...typedRawResearchAgentReport.changeSummary.byDataset,
           technology: coverageMetric("technology"),
-          track: coverageMetric("track"),
+          sector: coverageMetric("track", "sector"),
           person: coverageMetric("person"),
           ventureCompany: coverageMetric("ventureCompany"),
         },
