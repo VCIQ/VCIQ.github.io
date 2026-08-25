@@ -16,6 +16,12 @@ on:
       - public/data/star_market_investors.json
       - scripts/build-institution-data-layers.ts
       - .github/workflows/institution-data-layers.yml
+  # GITHUB_TOKEN-authored data commits do not reliably fan out into another
+  # workflow run. Keep an independent twice-weekly checkpoint comfortably inside
+  # the 168-hour freshness SLA.
+  schedule:
+    - cron: "40 7 * * 1,4"
+      timezone: "Asia/Taipei"
   workflow_dispatch:
 
 permissions:
