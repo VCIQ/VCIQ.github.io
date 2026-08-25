@@ -21,6 +21,11 @@ const statusLabels = {
   pending: "待抓取",
 } as const;
 
+function directoryExcerpt(value: string, limit: number): string {
+  const normalized = value.replace(/\s+/gu, " ").trim();
+  return normalized.length <= limit ? normalized : `${normalized.slice(0, limit).trimEnd()}…`;
+}
+
 export default function PeoplePage() {
   const trackedCount = researchPeople.filter((person) => person.tracked).length;
   const watchCount = researchPeople.length - trackedCount;
@@ -78,19 +83,19 @@ export default function PeoplePage() {
               <div className={styles.cardResearch}>
                 <div className={styles.researchRow}>
                   <b>为什么重要</b>
-                  <p>{research.whyImportant}</p>
+                  <p>{directoryExcerpt(research.whyImportant, 96)}</p>
                 </div>
                 <div className={styles.researchRow}>
                   <b>最新变化</b>
                   <p className={styles.latestChange}>
                     {research.latestChange
-                      ? `${research.latestChange.date} · ${research.latestChange.title}`
+                      ? `${research.latestChange.date} · ${directoryExcerpt(research.latestChange.title, 86)}`
                       : "暂无可核验的近期人物事件。"}
                   </p>
                 </div>
                 <div className={styles.researchRow}>
                   <b>下一步观察</b>
-                  <p>{research.nextWatch}</p>
+                  <p>{directoryExcerpt(research.nextWatch, 96)}</p>
                 </div>
               </div>
 
