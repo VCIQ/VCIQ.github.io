@@ -29,6 +29,72 @@ class PeopleVideoEnrichmentTest(unittest.TestCase):
             },
         }
 
+    def test_tracking_identity_parser_recovers_malformed_bilingual_labels(self):
+        self.assertEqual(
+            MODULE.parse_tracking_identity("黄仁勋(Jensen Huang"),
+            ("黄仁勋", "Jensen Huang", ""),
+        )
+        self.assertEqual(
+            MODULE.parse_tracking_identity("克莱门特·德朗格（Clément Delangue）"),
+            ("克莱门特·德朗格", "Clément Delangue", ""),
+        )
+        self.assertEqual(
+            MODULE.parse_tracking_identity("埃隆·马斯克 @elonmusk"),
+            ("埃隆·马斯克", "", "elonmusk"),
+        )
+
+    def test_candidate_collection_normalizes_identity_without_changing_public_slug(self):
+        tracking = {
+            "tracks": [
+                {
+                    "name": "AI / AGI",
+                    "enabled": True,
+                    "people": [
+                        "黄仁勋(Jensen Huang",
+                        "克莱门特·德朗格(Clément Delangue",
+                    ],
+                }
+            ]
+        }
+        people, _ = MODULE.collect_candidates(tracking, {"people": [], "organizationAccounts": []})
+        by_slug = {person["slug"]: person for person in people}
+
+        jensen = by_slug["jensen-huang"]
+        self.assertEqual(jensen["name"], "黄仁勋")
+        self.assertEqual(jensen["englishName"], "Jensen Huang")
+        self.assertIn("黄仁勋", jensen["aliases"])
+        self.assertIn("Jensen Huang", jensen["aliases"])
+        self.assertNotIn("黄仁勋(Jensen Huang", jensen["aliases"])
+
+        clement = by_slug["cl-ment-delangue"]
+        self.assertEqual(clement["name"], "克莱门特·德朗格")
+        self.assertEqual(clement["englishName"], "Clément Delangue")
+        self.assertNotIn("克莱门特·德朗格(Clément Delangue", clement["aliases"])
+
+    def test_prior_people_snapshot_is_normalized_before_research_scheduling(self):
+        payload = {
+            "schemaVersion": 1,
+            "personCount": 1,
+            "people": [
+                {
+                    "slug": "jensen-huang",
+                    "name": "黄仁勋(Jensen Huang",
+                    "englishName": "黄仁勋(Jensen Huang",
+                    "aliases": ["黄仁勋(Jensen Huang"],
+                    "handles": [],
+                    "materials": [],
+                }
+            ],
+        }
+        normalized = MODULE.normalize_people_payload_identities(payload)
+        self.assertEqual(normalized["personCount"], 1)
+        person = normalized["people"][0]
+        self.assertEqual(person["slug"], "jensen-huang")
+        self.assertEqual(person["name"], "黄仁勋")
+        self.assertEqual(person["englishName"], "Jensen Huang")
+        self.assertEqual(person["aliases"], ["黄仁勋", "Jensen Huang"])
+        self.assertNotIn("黄仁勋(Jensen Huang", person["aliases"])
+
     def test_online_enrichment_adds_all_video_paths(self):
         youtube = {
             "title": "Sam Altman interview on AI",
