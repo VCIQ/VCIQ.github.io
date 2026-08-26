@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+from datetime import UTC, datetime, timedelta
 from unittest.mock import patch
 
 from tools import company_official_source_discovery as discovery
@@ -41,6 +42,32 @@ class CompanyOfficialSourceDiscoveryTests(unittest.TestCase):
                     "reviewedBy": "VCIQ",
                 }
             }
+        }
+
+    def accepted_candidate(self, name: str) -> dict:
+        return {
+            **self.candidate(name),
+            "id": f"candidate-{name.casefold().replace(' ', '')}",
+            "score": 75,
+            "status": "accepted",
+            "articleCount": 1,
+            "sourceCount": 1,
+            "sourceArticleIds": ["article-a"],
+            "eventTypes": ["产品发布"],
+            "captureIds": [],
+        }
+
+    def persistent_hold(self, candidate: dict, *, requested_at: str) -> dict:
+        return {
+            "status": "awaiting_profile",
+            "mode": "create",
+            "profile": {},
+            "evidenceFingerprint": onboarding_v2.onboarding.evidence_fingerprint(candidate),
+            "requestedAt": requested_at,
+            "requestedBy": onboarding_v2.PERSISTENT_HOLD_REQUESTER,
+            "publishedAt": "",
+            "publishedSlug": "",
+            "error": "wikidata has no exact identity; no verified official site",
         }
 
     def test_brand_domain_candidates_are_bounded_and_exact(self) -> None:
@@ -232,18 +259,9 @@ class CompanyOfficialSourceDiscoveryTests(unittest.TestCase):
         self.assertEqual(report["attemptedFailureCount"], 0)
         discover_mock.assert_called_once()
 
-    def test_v2_caches_negative_identity_resolution_for_core_preparer(self) -> None:
-        candidate = {
-            **self.candidate("Unresolved AI"),
-            "id": "candidate-unresolvedai",
-            "score": 75,
-            "status": "accepted",
-            "articleCount": 1,
-            "sourceCount": 1,
-            "sourceArticleIds": ["article-a"],
-            "eventTypes": ["产品发布"],
-            "captureIds": [],
-        }
+    def test_v2_caches_negative_identity_resolution_and_persists_hold(self) -> None:
+        candidate = self.accepted_candidate("Unresolved AI")
+        now = datetime(2026, 8, 26, 6, tzinfo=UTC)
         with patch.object(
             onboarding_v2.preparation,
             "resolve_wikidata_company",
@@ -260,17 +278,270 @@ class CompanyOfficialSourceDiscoveryTests(unittest.TestCase):
                 registry_payload={"companies": []},
                 captures_payload={"records": []},
                 limit=6,
+                now=now,
             )
-        self.assertNotIn(
-            "onboarding", next_decisions["decisions"]["unresolvedai"]
-        )
+        state = next_decisions["decisions"]["unresolvedai"]["onboarding"]
+        self.assertEqual(state["status"], "awaiting_profile")
+        self.assertEqual(state["requestedBy"], onboarding_v2.PERSISTENT_HOLD_REQUESTER)
+        self.assertEqual(state["requestedAt"], "2026-08-26T06:00:00+00:00")
+        self.assertTrue(state["evidenceFingerprint"])
+        self.assertIn("wikidata has no exact identity", state["error"])
+        self.assertIn("no verified official site", state["error"])
+        self.assertEqual(report["persistedHoldCount"], 1)
+        self.assertEqual(report["persistedHoldKeys"], ["unresolvedai"])
         self.assertEqual(report["sourceDiscovery"]["attemptedFailureCount"], 1)
-        self.assertIn(
-            "wikidata has no exact identity",
-            report["sourceDiscovery"]["attemptedReasons"]["unresolvedai"],
-        )
         self.assertEqual(wikidata_mock.call_count, 1)
         self.assertEqual(discover_mock.call_count, 1)
+
+    def test_v2_fresh_persisted_hold_does_not_consume_next_batch_slot(self) -> None:
+        now = datetime(2026, 8, 26, 6, tzinfo=UTC)
+        held = self.accepted_candidate("Unresolved AI")
+        next_candidate = {
+            **self.accepted_candidate("NextCo"),
+            "score": 80,
+            "articleCount": 2,
+            "sourceCount": 2,
+            "sourceArticleIds": ["article-b", "article-c"],
+        }
+        decisions = self.decisions("unresolvedai")
+        decisions["decisions"]["unresolvedai"]["onboarding"] = self.persistent_hold(
+            held,
+            requested_at=(now - timedelta(days=1)).isoformat(),
+        )
+        decisions["decisions"]["nextco"] = {
+            "status": "accepted",
+            "note": "manual",
+            "reviewedBy": "VCIQ",
+        }
+        metadata = {
+            "source": "wikidata",
+            "canonicalName": "NextCo",
+            "englishName": "NextCo",
+            "homepage": "https://nextco.example/",
+            "region": "美国",
+            "aliases": [],
+        }
+
+        with patch.object(
+            onboarding_v2.preparation,
+            "resolve_wikidata_company",
+            return_value=(metadata, ""),
+        ) as wikidata_mock, patch.object(
+            onboarding_v2.discovery,
+            "discover_verified_official_site",
+        ) as discover_mock:
+            verified, report = onboarding_v2.discover_candidate_identities(
+                {"candidates": [held, next_candidate]},
+                decisions,
+                {"companies": []},
+                {"companies": []},
+                limit=1,
+                now=now,
+            )
+
+        self.assertNotIn("unresolvedai", verified)
+        self.assertEqual(verified["nextco"]["homepage"], "https://nextco.example/")
+        self.assertEqual(report["checkedCount"], 1)
+        self.assertEqual(report["verifiedKeys"], ["nextco"])
+        wikidata_mock.assert_called_once_with("NextCo")
+        discover_mock.assert_not_called()
+
+    def test_v2_run_removes_fresh_hold_from_bounded_working_decisions(self) -> None:
+        now = datetime(2026, 8, 26, 6, tzinfo=UTC)
+        held = self.accepted_candidate("Unresolved AI")
+        next_candidate = self.accepted_candidate("NextCo")
+        decisions = self.decisions("unresolvedai")
+        decisions["decisions"]["unresolvedai"]["onboarding"] = self.persistent_hold(
+            held,
+            requested_at=(now - timedelta(days=1)).isoformat(),
+        )
+        decisions["decisions"]["nextco"] = {
+            "status": "accepted",
+            "note": "manual",
+            "reviewedBy": "VCIQ",
+        }
+
+        def fake_prepare(
+            _candidates,
+            working_decisions,
+            _official_sources,
+            _registry,
+            _captures,
+            **_kwargs,
+        ):
+            self.assertNotIn("unresolvedai", working_decisions["decisions"])
+            self.assertIn("nextco", working_decisions["decisions"])
+            return working_decisions, {
+                "processedCount": 1,
+                "requestedCount": 0,
+                "requestedKeys": [],
+                "mergedCount": 0,
+                "mergedKeys": [],
+                "holdCount": 0,
+                "holds": [],
+            }
+
+        with patch.object(
+            onboarding_v2.preparation,
+            "resolve_wikidata_company",
+            return_value=(None, "wikidata has no exact identity"),
+        ), patch.object(
+            onboarding_v2.discovery,
+            "discover_verified_official_site",
+            return_value=(None, "no verified official site"),
+        ), patch.object(
+            onboarding_v2.preparation,
+            "prepare_automatic_onboarding",
+            side_effect=fake_prepare,
+        ):
+            next_decisions, report = onboarding_v2.run(
+                candidates_payload={"candidates": [held, next_candidate]},
+                decisions_payload=decisions,
+                official_sources_payload={"companies": []},
+                registry_payload={"companies": []},
+                captures_payload={"records": []},
+                limit=1,
+                now=now,
+            )
+
+        self.assertIn("unresolvedai", next_decisions["decisions"])
+        self.assertEqual(
+            next_decisions["decisions"]["unresolvedai"]["onboarding"]["status"],
+            "awaiting_profile",
+        )
+        self.assertEqual(report["skippedPersistedHoldKeys"], ["unresolvedai"])
+
+    def test_v2_expired_persisted_hold_retries_without_new_candidate_evidence(self) -> None:
+        now = datetime(2026, 8, 26, 6, tzinfo=UTC)
+        held = self.accepted_candidate("Unresolved AI")
+        decisions = self.decisions("unresolvedai")
+        decisions["decisions"]["unresolvedai"]["onboarding"] = self.persistent_hold(
+            held,
+            requested_at=(
+                now - timedelta(days=onboarding_v2.PERSISTENT_HOLD_RETRY_DAYS + 1)
+            ).isoformat(),
+        )
+        metadata = {
+            "source": "wikidata",
+            "canonicalName": "Unresolved AI",
+            "englishName": "Unresolved AI",
+            "homepage": "https://unresolved.example/",
+            "region": "美国",
+            "aliases": [],
+        }
+
+        def fake_prepare(
+            _candidates,
+            working_decisions,
+            _official_sources,
+            _registry,
+            _captures,
+            **_kwargs,
+        ):
+            self.assertNotIn(
+                "onboarding", working_decisions["decisions"]["unresolvedai"]
+            )
+            return working_decisions, {
+                "processedCount": 1,
+                "requestedCount": 0,
+                "requestedKeys": [],
+                "mergedCount": 0,
+                "mergedKeys": [],
+                "holdCount": 0,
+                "holds": [],
+            }
+
+        with patch.object(
+            onboarding_v2.preparation,
+            "resolve_wikidata_company",
+            return_value=(metadata, ""),
+        ) as wikidata_mock, patch.object(
+            onboarding_v2.preparation,
+            "prepare_automatic_onboarding",
+            side_effect=fake_prepare,
+        ):
+            _next_decisions, report = onboarding_v2.run(
+                candidates_payload={"candidates": [held]},
+                decisions_payload=decisions,
+                official_sources_payload={"companies": []},
+                registry_payload={"companies": []},
+                captures_payload={"records": []},
+                limit=1,
+                now=now,
+            )
+
+        wikidata_mock.assert_called_once_with("Unresolved AI")
+        self.assertEqual(report["retriedPersistedHoldKeys"], ["unresolvedai"])
+        self.assertEqual(report["skippedPersistedHoldCount"], 0)
+
+    def test_v2_new_official_source_bypasses_fresh_persisted_hold(self) -> None:
+        now = datetime(2026, 8, 26, 6, tzinfo=UTC)
+        held = self.accepted_candidate("Unresolved AI")
+        decisions = self.decisions("unresolvedai")
+        decisions["decisions"]["unresolvedai"]["onboarding"] = self.persistent_hold(
+            held,
+            requested_at=(now - timedelta(days=1)).isoformat(),
+        )
+        official_metadata = {
+            "slug": "unresolved-ai",
+            "name": "Unresolved AI",
+            "homepage": "https://unresolved.example/",
+        }
+
+        def fake_prepare(
+            _candidates,
+            working_decisions,
+            _official_sources,
+            _registry,
+            _captures,
+            **_kwargs,
+        ):
+            self.assertNotIn(
+                "onboarding", working_decisions["decisions"]["unresolvedai"]
+            )
+            return working_decisions, {
+                "processedCount": 1,
+                "requestedCount": 0,
+                "requestedKeys": [],
+                "mergedCount": 0,
+                "mergedKeys": [],
+                "holdCount": 0,
+                "holds": [],
+            }
+
+        with patch.object(
+            onboarding_v2.preparation,
+            "_official_source_match",
+            return_value=official_metadata,
+        ), patch.object(
+            onboarding_v2.preparation,
+            "prepare_automatic_onboarding",
+            side_effect=fake_prepare,
+        ):
+            _next_decisions, report = onboarding_v2.run(
+                candidates_payload={"candidates": [held]},
+                decisions_payload=decisions,
+                official_sources_payload={"companies": [official_metadata]},
+                registry_payload={"companies": []},
+                captures_payload={"records": []},
+                limit=1,
+                now=now,
+            )
+
+        self.assertEqual(report["retriedPersistedHoldKeys"], ["unresolvedai"])
+        self.assertEqual(report["skippedPersistedHoldCount"], 0)
+
+    def test_v2_transient_hold_is_not_persisted(self) -> None:
+        candidate = self.accepted_candidate("Transient AI")
+        decisions = self.decisions("transientai")
+        persisted = onboarding_v2._persist_holds(
+            decisions,
+            {"candidates": [candidate]},
+            [{"candidateKey": "transientai", "reason": "official homepage fetch TimeoutError"}],
+            requested_at="2026-08-26T06:00:00+00:00",
+        )
+        self.assertEqual(persisted, [])
+        self.assertNotIn("onboarding", decisions["decisions"]["transientai"])
 
 
 if __name__ == "__main__":
