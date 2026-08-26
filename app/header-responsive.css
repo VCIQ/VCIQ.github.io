@@ -90,3 +90,31 @@
     height: 34px;
   }
 }
+
+/* Core research channels keep a tablet-width content rail after the main nav
+   switches to the mobile menu. This removes the 901px -> 900px jump where the
+   page used to shrink from roughly 860px to 720px and collapse the channel
+   hero at the same moment. True single-column treatment still begins at 760px. */
+@media (max-width: 900px) and (min-width: 761px) {
+  body:has(> main.page-shell.subpage > section[aria-labelledby="research-synergy-title"]) .header-inner,
+  body:has(> main.page-shell.subpage > section[aria-label="信源生命周期"]) .header-inner,
+  body:has(> main.page-shell.subpage > section[aria-labelledby="research-synergy-title"]) > .site-footer,
+  body:has(> main.page-shell.subpage > section[aria-label="信源生命周期"]) > .site-footer,
+  .page-shell.subpage:has(> section[aria-labelledby="research-synergy-title"]),
+  .page-shell.subpage:has(> section[aria-label="信源生命周期"]) {
+    width: min(100% - 28px, 860px);
+  }
+
+  .page-shell.subpage:has(> section[aria-labelledby="research-synergy-title"]) > .page-header,
+  .page-shell.subpage:has(> section[aria-label="信源生命周期"]) > .page-header {
+    grid-template-columns: minmax(0, .9fr) minmax(300px, 1.1fr);
+    gap: 14px 24px;
+    align-items: end;
+  }
+
+  .page-shell.subpage:has(> section[aria-labelledby="research-synergy-title"]) > .page-header .eyebrow,
+  .page-shell.subpage:has(> section[aria-label="信源生命周期"]) > .page-header .eyebrow {
+    grid-column: 1 / -1;
+    margin-bottom: -6px;
+  }
+}
