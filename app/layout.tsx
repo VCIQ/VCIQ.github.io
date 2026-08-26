@@ -4,6 +4,7 @@ import { SiteClientControls } from "@/components/site-client-controls";
 import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
 import "./header-responsive.css";
+import "./detail-visual.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://vciq.github.io"),
