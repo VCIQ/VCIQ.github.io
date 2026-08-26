@@ -156,10 +156,6 @@ export default function PeoplePage() {
                       : "暂无可核验的近期人物事件。"}
                   </p>
                 </div>
-                <div className={styles.researchRow}>
-                  <b>下一步观察</b>
-                  <p>{directoryPreview(research.nextWatch, DIRECTORY_SUMMARY_LIMIT)}</p>
-                </div>
               </div>
 
               <small>
