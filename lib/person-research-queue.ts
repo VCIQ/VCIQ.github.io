@@ -1,4 +1,6 @@
 import publicQueue from "@/public/data/person_research_queue.json";
+import { researchPeople } from "@/lib/people-data";
+import { replaceLegacyPersonIdentityText } from "@/lib/person-name-normalization";
 import type {
   PersonResearchTaskStatus,
   PersonResearchTaskType,
@@ -87,6 +89,7 @@ const EXECUTORS = new Set<PersonResearchExecutor>([
   "cross_channel",
   "official_source",
 ]);
+const canonicalPeopleBySlug = new Map(researchPeople.map((person) => [person.slug, person]));
 
 function text(value: unknown, limit = 1_000) {
   return typeof value === "string" ? value.trim().slice(0, limit) : "";
@@ -167,11 +170,11 @@ export function normalizePersonResearchQueueItem(value: unknown): PersonResearch
   const priority = text(row.priority, 8) as PersonResearchQueueItem["priority"];
   const status = text(row.status, 40) as PersonResearchQueueItem["status"];
   const executor = text(row.executor, 40) as PersonResearchExecutor;
-  const question = text(row.question, 620);
+  const rawQuestion = text(row.question, 620);
   if (
     !personSlug ||
     !taskId ||
-    !question ||
+    !rawQuestion ||
     !TASK_TYPES.has(taskType) ||
     !PRIORITIES.has(priority) ||
     !STATUSES.has(status) ||
@@ -182,7 +185,7 @@ export function normalizePersonResearchQueueItem(value: unknown): PersonResearch
   const recomputedScore = Object.values(breakdown).reduce((sum, value) => sum + value, 0);
   const rawQueryBudget = integer(row.queryBudget, 0, 1);
   const cooldownUntil = text(row.cooldownUntil, 40);
-  const searchQueries = executor === "person_video" && rawQueryBudget > 0
+  const rawSearchQueries = executor === "person_video" && rawQueryBudget > 0
     ? stringList(row.searchQueries, 1, 220)
     : [];
   const expectedSuccessRate = boundedNumber(row.expectedSuccessRate, 0, 1, 0.5);
@@ -195,18 +198,28 @@ export function normalizePersonResearchQueueItem(value: unknown): PersonResearch
     expectedEvidenceYield / queryUnitCost,
   );
   const allocationUtility = computeAllocationUtility(recomputedScore, expectedYieldPerCost);
+  const rawPersonName = text(row.personName, 160) || personSlug;
+  const person = canonicalPeopleBySlug.get(personSlug);
+  const legacyLabels = [rawPersonName];
+  const canonical = (value: string) => person
+    ? replaceLegacyPersonIdentityText(value, legacyLabels, person)
+    : value;
+  const canonicalSearch = (value: string) => person
+    ? replaceLegacyPersonIdentityText(value, legacyLabels, person, "search")
+    : value;
+  const searchQueries = rawSearchQueries.map(canonicalSearch);
 
   return {
     rank: integer(row.rank, 1, 10_000),
     personSlug,
-    personName: text(row.personName, 160) || personSlug,
+    personName: person?.name ?? rawPersonName,
     taskId,
     taskType,
     priority,
     status,
-    target: text(row.target, 200),
-    question,
-    successCriteria: text(row.successCriteria, 700),
+    target: canonical(text(row.target, 200)),
+    question: canonical(rawQuestion),
+    successCriteria: canonical(text(row.successCriteria, 700)),
     executor,
     searchQueries,
     queryStrategy: text(row.queryStrategy, 80),
@@ -225,7 +238,7 @@ export function normalizePersonResearchQueueItem(value: unknown): PersonResearch
     candidateEvidenceCount: integer(row.candidateEvidenceCount, 0, 10),
     score: recomputedScore,
     scoreBreakdown: breakdown,
-    whyNow: stringList(row.whyNow, 6, 220),
+    whyNow: stringList(row.whyNow, 6, 220).map(canonical),
     cooldownUntil,
     personRoute: internalPersonRoute(row.personRoute, personSlug),
     queryBudget: searchQueries.length ? rawQueryBudget : 0,
