@@ -218,3 +218,21 @@ test("person route is reconstructed from slug instead of trusting arbitrary payl
   assert.ok(normalized);
   assert.equal(normalized.personRoute, "/people/test-person/");
 });
+
+test("persisted queue text uses the canonical person identity for known slugs", () => {
+  const normalized = normalizePersonResearchQueueItem(item({
+    personSlug: "jensen-huang",
+    personName: "黄仁勋(Jensen Huang",
+    question: "能否找到 黄仁勋(Jensen Huang 围绕 AI 的本人演讲？",
+    searchQueries: ["黄仁勋(Jensen Huang AI 演讲"],
+    target: "黄仁勋(Jensen Huang · AI",
+    successCriteria: "黄仁勋(Jensen Huang 的一手材料直接命中主题。",
+  }));
+  assert.ok(normalized);
+  assert.equal(normalized.personName, "黄仁勋");
+  assert.equal(normalized.question.includes("黄仁勋(Jensen Huang"), false);
+  assert.ok(normalized.question.includes("黄仁勋（Jensen Huang）"));
+  assert.deepEqual(normalized.searchQueries, ["黄仁勋 Jensen Huang AI 演讲"]);
+  assert.equal(normalized.target.includes("黄仁勋(Jensen Huang"), false);
+  assert.equal(normalized.successCriteria.includes("黄仁勋(Jensen Huang"), false);
+});
