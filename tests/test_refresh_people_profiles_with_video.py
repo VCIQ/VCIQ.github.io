@@ -71,6 +71,30 @@ class PeopleVideoEnrichmentTest(unittest.TestCase):
         self.assertEqual(clement["englishName"], "Clément Delangue")
         self.assertNotIn("克莱门特·德朗格(Clément Delangue", clement["aliases"])
 
+    def test_prior_people_snapshot_is_normalized_before_research_scheduling(self):
+        payload = {
+            "schemaVersion": 1,
+            "personCount": 1,
+            "people": [
+                {
+                    "slug": "jensen-huang",
+                    "name": "黄仁勋(Jensen Huang",
+                    "englishName": "黄仁勋(Jensen Huang",
+                    "aliases": ["黄仁勋(Jensen Huang"],
+                    "handles": [],
+                    "materials": [],
+                }
+            ],
+        }
+        normalized = MODULE.normalize_people_payload_identities(payload)
+        self.assertEqual(normalized["personCount"], 1)
+        person = normalized["people"][0]
+        self.assertEqual(person["slug"], "jensen-huang")
+        self.assertEqual(person["name"], "黄仁勋")
+        self.assertEqual(person["englishName"], "Jensen Huang")
+        self.assertEqual(person["aliases"], ["黄仁勋", "Jensen Huang"])
+        self.assertNotIn("黄仁勋(Jensen Huang", person["aliases"])
+
     def test_online_enrichment_adds_all_video_paths(self):
         youtube = {
             "title": "Sam Altman interview on AI",
