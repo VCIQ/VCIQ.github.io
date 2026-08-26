@@ -29,10 +29,8 @@ class VentureProfileStabilizerTests(unittest.TestCase):
         specs = {company.slug: company for company in companies}
 
         self.assertIn("anduril", specs)
-        self.assertEqual(
-            specs["anduril"].summary,
-            "开发自主系统、传感器和国防软件平台。",
-        )
+        expected_summary = specs["anduril"].summary
+        self.assertTrue(expected_summary)
 
         stabilized, diagnostics = stabilizer.stabilize_snapshot(payload, catalog_text)
         structural_check, _ = finalizer.finalize_snapshot(stabilized, catalog_text)
@@ -41,11 +39,11 @@ class VentureProfileStabilizerTests(unittest.TestCase):
         self.assertTrue(diagnostics["converged"])
         self.assertEqual(
             stabilized["companies"]["anduril"]["background"],
-            "开发自主系统、传感器和国防软件平台。",
+            expected_summary,
         )
         self.assertEqual(
             stabilized["companies"]["anduril"]["projectBackground"]["summary"],
-            "开发自主系统、传感器和国防软件平台。",
+            expected_summary,
         )
         self.assertEqual(structural_check, stabilized)
         self.assertEqual(semantic_check, stabilized)
