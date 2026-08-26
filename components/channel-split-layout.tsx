@@ -65,8 +65,8 @@ export function ChannelSplitLayout({
 
   return (
     <>
-      {showResearchSynergy ? <ResearchSynergyStrip compactOnMobile /> : null}
       {afterResearchSynergy}
+      {showResearchSynergy ? <ResearchSynergyStrip compactOnMobile /> : null}
       <div className={styles.splitLayout}>
         {directoryFirst ? (
           <>
