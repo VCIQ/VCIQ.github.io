@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-26T00:06:51+00:00",
+  "generatedAt": "2026-08-26T02:44:09+00:00",
   "asOfDate": "2026-08-26",
   "runStatus": "model",
   "baselineSource": "snapshot",
@@ -11,449 +11,220 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 12320,
-      "completion_tokens": 6262,
-      "total_tokens": 18582,
+      "prompt_tokens": 4223,
+      "completion_tokens": 2607,
+      "total_tokens": 6830,
       "completion_tokens_details": {
-        "reasoning_tokens": 4266
+        "reasoning_tokens": 1019
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 12320
+      "prompt_cache_miss_tokens": 4223
     }
   },
   "changeSummary": {
-    "totalDetected": 29,
-    "total": 11,
+    "totalDetected": 6,
+    "total": 3,
     "byDataset": {
-      "marketCompany": 11
+      "ventureCompany": 3
     },
     "byChangeType": {
-      "external_event": 11,
-      "data_maintenance": 4,
-      "source_refresh": 14
+      "external_event": 5,
+      "source_refresh": 1
     },
-    "externalCandidates": 11,
-    "qualityRejected": 0,
-    "maintenanceExcluded": 18,
+    "externalCandidates": 5,
+    "qualityRejected": 2,
+    "maintenanceExcluded": 1,
     "aggregatedEvents": 0,
-    "highestImportance": 48
+    "highestImportance": 88
   },
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "证据包显示，2026年8月25日美股收盘后，多家科技公司行情出现显著变化：Tempus AI上涨39.24%，Recursion上涨15.21%，文远知行上涨1.33%；Rocket Lab下跌15.47%，Aurora下跌6.18%，Joby下跌5.62%，IonQ下跌4.69%，Rigetti下跌4.35%，小马智行下跌2.65%，Mobileye下跌2.14%。宁德时代新闻流新增多篇媒体报道，涉及高利润讨论、A股分红、产业链IPO等。所有行情数据来自Yahoo财经，新闻来自新浪财经。证据仅支持价格变动和新闻标题，未提供驱动因素或基本面信息，相关原因需待验证。",
+    "executiveSummary": "证据包显示三项创业公司数据变更，均涉及融资或资本市场字段的调整。宁德时代（CATL）的financing字段由一条2026-08-14的融资记录变为空，但该记录对应的官方新闻仍指向Quinbrook Supernode项目合作；Joby Aviation的capitalMarkets和financing字段删除了Atoms战略合作及2026年Q2财报相关条目，仅保留2025 Impact Report；Form Energy的financing字段删除了2026-08-12一条重复的Series G融资记录，但该融资事件仍由其他官方来源支持。整体看，变更多为数据记录清理或去重，不改变相关公司已披露的核心业务事实，但需注意区分数据层变化与真实事件变化。 质量门诊断：缺少发布时间 10、证据未分级 1、证据合格但未绑定变化字段 4。",
     "keyDevelopments": [
       {
-        "title": "Tempus AI 股价单日大涨39.24%",
-        "assessment": "根据Yahoo财经行情数据，Tempus AI收盘价较前收盘上涨39.24%，为证据包中最大单日涨幅。证据仅包含行情数据，未提供驱动因素，需待验证。",
-        "importance": 5,
-        "confidence": "high",
-        "entities": [
-          "Tempus AI, Inc."
-        ],
-        "evidenceIds": [
-          "E013"
-        ]
-      },
-      {
-        "title": "Rocket Lab 股价单日下跌15.47%",
-        "assessment": "Rocket Lab收盘价较前收盘下跌15.47%，跌幅显著。证据仅限行情数据，未说明具体原因，需待验证。",
-        "importance": 5,
-        "confidence": "high",
-        "entities": [
-          "Rocket Lab Corporation"
-        ],
-        "evidenceIds": [
-          "E017"
-        ]
-      },
-      {
-        "title": "自动驾驶相关公司行情分化",
-        "assessment": "文远知行上涨1.33%，小马智行下跌2.65%，Aurora下跌6.18%，Mobileye下跌2.14%。这些公司同属自动驾驶/出行科技领域，但证据包未提供业务关联或共同驱动因素，仅能确认当日行情表现。",
-        "importance": 4,
-        "confidence": "high",
-        "entities": [
-          "文远知行",
-          "小马智行",
-          "Aurora Innovation, Inc.",
-          "Mobileye Global Inc."
-        ],
-        "evidenceIds": [
-          "E001",
-          "E005",
-          "E041",
-          "E029"
-        ]
-      },
-      {
-        "title": "量子计算概念股回调",
-        "assessment": "IonQ下跌4.69%，Rigetti下跌4.35%。两者均属量子计算领域，但证据未提供板块联动原因。",
+        "title": "宁德时代financing字段移除一条融资记录，但官方新闻仍显示Supernode项目合作",
+        "assessment": "根据E001，宁德时代官网新闻提及Quinbrook Supernode电池储能项目完成Stage 2商业运营并达成Stage 3融资关闭，CATL作为核心储能系统供应商。数据变更将financing字段从有该记录变为空，属于数据层调整，不改变新闻本身的存在。推断：该记录可能因归类或去重被移除，但无法从证据确认融资事件被撤销。",
         "importance": 3,
-        "confidence": "high",
-        "entities": [
-          "IonQ, Inc.",
-          "Rigetti Computing, Inc."
-        ],
-        "evidenceIds": [
-          "E037",
-          "E021"
-        ]
-      },
-      {
-        "title": "Recursion Pharmaceuticals 股价上涨15.21%",
-        "assessment": "Recursion收盘价较前收盘上涨15.21%，涨幅较大，但证据仅限行情数据，驱动因素待验证。",
-        "importance": 3,
-        "confidence": "high",
-        "entities": [
-          "Recursion Pharmaceuticals, Inc."
-        ],
-        "evidenceIds": [
-          "E025"
-        ]
-      },
-      {
-        "title": "Joby Aviation 股价下跌5.62%",
-        "assessment": "Joby Aviation收盘价较前收盘下跌5.62%，证据仅限行情数据，未提供原因。",
-        "importance": 2,
-        "confidence": "high",
-        "entities": [
-          "Joby Aviation, Inc."
-        ],
-        "evidenceIds": [
-          "E033"
-        ]
-      },
-      {
-        "title": "宁德时代新闻流更新",
-        "assessment": "新增多篇媒体报道，涉及宁德时代高利润讨论、A股中期分红、产业链公司IPO问询等。这些是媒体标题，未验证内容，不能作为公司基本面变化的直接证据。",
-        "importance": 2,
         "confidence": "medium",
         "entities": [
-          "宁德时代"
+          "宁德时代",
+          "Quinbrook",
+          "Supernode"
         ],
-        "evidenceIds": [
-          "E009",
-          "E010",
-          "E011",
-          "E012"
-        ]
-      }
-    ],
-    "thesisUpdates": [
-      {
-        "entity": "Tempus AI, Inc.",
-        "direction": "positive",
-        "statement": "股价单日上涨39.24%，市场情绪强烈，但缺乏基本面证据，需关注后续公告或新闻。",
-        "evidenceIds": [
-          "E013"
-        ]
-      },
-      {
-        "entity": "Rocket Lab Corporation",
-        "direction": "negative",
-        "statement": "股价单日下跌15.47%，可能反映市场担忧，但证据未提供原因，需验证。",
-        "evidenceIds": [
-          "E017"
-        ]
-      },
-      {
-        "entity": "文远知行",
-        "direction": "positive",
-        "statement": "股价小幅上涨1.33%，表现相对稳健，但幅度有限。",
         "evidenceIds": [
           "E001"
         ]
       },
       {
-        "entity": "小马智行",
-        "direction": "negative",
-        "statement": "股价下跌2.65%，与文远知行分化，但证据未提供原因。",
-        "evidenceIds": [
-          "E005"
-        ]
-      },
-      {
-        "entity": "Aurora Innovation, Inc.",
-        "direction": "negative",
-        "statement": "股价下跌6.18%，跌幅在自动驾驶相关公司中较大。",
-        "evidenceIds": [
-          "E041"
-        ]
-      },
-      {
-        "entity": "IonQ, Inc.",
-        "direction": "negative",
-        "statement": "股价下跌4.69%，量子计算板块回调。",
-        "evidenceIds": [
-          "E037"
-        ]
-      },
-      {
-        "entity": "Recursion Pharmaceuticals, Inc.",
-        "direction": "positive",
-        "statement": "股价上涨15.21%，表现突出，但原因待验证。",
-        "evidenceIds": [
-          "E025"
-        ]
-      },
-      {
-        "entity": "宁德时代",
-        "direction": "neutral",
-        "statement": "新闻流更新，但无明确方向性信息。",
-        "evidenceIds": [
-          "E009",
-          "E010",
-          "E011",
-          "E012"
-        ]
-      }
-    ],
-    "watchlist": [
-      {
-        "item": "Tempus AI 大涨驱动因素",
-        "reason": "单日涨幅39.24%异常显著，但证据包无相关新闻或公告，需查找后续披露。",
-        "nextEvidence": "Tempus AI 的新闻、公告或财报",
-        "evidenceIds": [
-          "E013"
-        ]
-      },
-      {
-        "item": "Rocket Lab 大跌原因",
-        "reason": "单日跌幅15.47%，可能涉及行业或公司特定事件，需验证。",
-        "nextEvidence": "Rocket Lab 的新闻、公告或行业动态",
-        "evidenceIds": [
-          "E017"
-        ]
-      },
-      {
-        "item": "自动驾驶板块分化持续性",
-        "reason": "文远知行上涨而小马智行、Aurora、Mobileye下跌，需观察是否反映基本面差异或市场情绪。",
-        "nextEvidence": "各公司后续订单、监管进展或财报",
-        "evidenceIds": [
-          "E001",
-          "E005",
-          "E041",
-          "E029"
-        ]
-      },
-      {
-        "item": "量子计算板块回调",
-        "reason": "IonQ和Rigetti同步下跌，需关注是否行业性利空。",
-        "nextEvidence": "量子计算行业新闻或公司公告",
-        "evidenceIds": [
-          "E037",
-          "E021"
-        ]
-      },
-      {
-        "item": "宁德时代相关报道内容",
-        "reason": "新增新闻标题涉及高利润、分红等，但未验证内容，需阅读原文确认。",
-        "nextEvidence": "完整文章内容或公司官方回应",
-        "evidenceIds": [
-          "E009",
-          "E010",
-          "E011",
-          "E012"
-        ]
-      }
-    ],
-    "risks": [
-      {
-        "risk": "行情数据波动可能由情绪或流动性驱动，不代表基本面变化",
-        "reason": "证据包仅包含收盘价和涨跌幅，无成交量或基本面信息，且metrics字段被标记为unsupported。",
-        "evidenceIds": [
-          "E013",
-          "E017"
-        ]
-      },
-      {
-        "risk": "媒体报道标题可能具有倾向性或片面性，不能作为事实依据",
-        "reason": "宁德时代相关新闻来自新浪财经，标题如'高利润该咋看'可能包含观点，未验证内容。",
+        "title": "Joby Aviation资本市场与融资记录删减，保留Impact Report",
+        "assessment": "E009为Joby Aviation官方2025 Impact Report，变更前capitalMarkets包含Atoms战略合作（2026-08-04）和2025 Impact Report（2026-07-16），financing包含2026-08-05 Q2财报融资条目；变更后仅保留Impact Report，Atoms合作和Q2财报条目被移除。证据本身未说明删除原因，可能是数据整理或事件状态变化，需进一步验证。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "Joby Aviation",
+          "Atoms"
+        ],
         "evidenceIds": [
           "E009"
         ]
       },
       {
-        "risk": "证据包时间点单一，无法判断趋势",
-        "reason": "所有行情数据均为2026-08-25收盘后快照，缺乏历史对比。",
+        "title": "Form Energy融资记录去重，Series G融资事件仍获官方支持",
+        "assessment": "E017、E018、E019均为Form Energy官方披露。变更前financing有三条记录，其中两条为2026-08-12的Series G融资新闻（URL略有差异），变更后保留2020-03-04首页摘要和2026-08-12带斜杠URL的新闻，删除了不带斜杠的重复条目。该融资事件本身仍由E018和E019支持，变更属于记录去重。",
+        "importance": 2,
+        "confidence": "high",
+        "entities": [
+          "Form Energy"
+        ],
         "evidenceIds": [
-          "E001",
-          "E005"
+          "E017",
+          "E018",
+          "E019"
         ]
       }
     ],
-    "methodologyNote": "本分析仅基于证据包中的quote和news字段，区分事实与推断。行情数据（Yahoo财经）为事实，但价格变动的原因和影响为推断；新闻标题（新浪财经）为媒体报道，未验证内容，不作为确定性事实。未使用被标记为unsupported的metrics和priceHistory字段。不提供买入、卖出、目标价或收益承诺。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
+    "thesisUpdates": [
+      {
+        "entity": "宁德时代",
+        "direction": "neutral",
+        "statement": "financing字段记录被移除，但E001官方新闻仍显示CATL与Quinbrook在Supernode项目上的合作及Stage 3融资关闭，因此该变更不构成对宁德时代储能业务地位的负面证据，也不足以确认正面进展。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "entity": "Joby Aviation",
+        "direction": "mixed",
+        "statement": "Atoms战略合作和Q2财报融资条目从数据集中移除，可能反映数据更新或事件状态变化，但E009保留的Impact Report仍显示公司持续发布年度报告。该变更对Joby的资本市场活动信号不明确，需等待官方进一步披露。",
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "entity": "Form Energy",
+        "direction": "positive",
+        "statement": "Series G融资记录虽经过去重，但E018明确显示Form Energy于2026-08-12宣布获得7.5亿美元Series G融资，由T. Rowe Price领投，用于扩大铁空气电池制造和商业部署。该融资事件得到官方多来源支持，方向偏正面。",
+        "evidenceIds": [
+          "E017",
+          "E018",
+          "E019"
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "item": "宁德时代Supernode项目Stage 3融资状态",
+        "reason": "E001显示Stage 3已达成财务关闭，但financing字段被移除，需确认该事件是否仍被官方视为有效融资记录，或仅为数据归类调整。",
+        "nextEvidence": "宁德时代或Quinbrook后续关于Supernode Stage 3的官方公告或项目进展",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "item": "Joby Aviation与Atoms的vertiport合作是否继续",
+        "reason": "E009变更删除了Atoms战略合作条目，但该合作曾于2026-08-04宣布，需验证合作是否终止、暂停或仅因数据整理被移除。",
+        "nextEvidence": "Joby Aviation或Atoms关于vertiport网络的后续官方声明",
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "item": "Form Energy Series G融资的完整投资者名单和资金用途",
+        "reason": "E018仅提及T. Rowe Price领投，未列出全部投资者，且变更后保留的URL版本摘要不完整，需获取完整新闻稿以核实融资细节。",
+        "nextEvidence": "Form Energy官方新闻稿全文或后续融资公告",
+        "evidenceIds": [
+          "E018",
+          "E019"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "数据记录变更可能被误读为事件撤销",
+        "reason": "宁德时代和Joby的financing/capitalMarkets字段删除条目，但对应官方新闻仍存在或未说明原因，若直接解读为融资取消或合作终止，可能产生错误判断。",
+        "evidenceIds": [
+          "E001",
+          "E009"
+        ]
+      },
+      {
+        "risk": "证据来源时间跨度大，可能影响时效性",
+        "reason": "E017发布于2020-03-04，E019发布于2021-03-19，虽为官方披露，但用于支持2026年融资变化时，需注意信息时效和上下文差异。",
+        "evidenceIds": [
+          "E017",
+          "E019"
+        ]
+      },
+      {
+        "risk": "低等级或内部差异证据可能造成确定性误判",
+        "reason": "本证据包均为官方披露，但部分URL和摘要存在重复或截断，若未交叉验证，可能将数据清理误认为重大事件。",
+        "evidenceIds": [
+          "E017",
+          "E018",
+          "E019"
+        ]
+      }
+    ],
+    "methodologyNote": "本分析仅基于证据包内提供的change和evidence数据，不补充外部事实。所有判断均引用evidenceIds中的证据编号。事实层面仅陈述证据中明确出现的字段变化和官方披露内容；推断层面明确标注为推断，并标注置信度。对于数据记录删除与真实事件取消之间的差异，保持谨慎，不给出投资结论或目标价。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
   },
   "changes": [
     {
-      "id": "chg-95247b061761f71c43a4",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "weride",
-      "entityName": "文远知行",
+      "id": "chg-f0a2e9692eddf94cdec2",
+      "dataset": "ventureCompany",
+      "entityType": "创业公司",
+      "entityId": "catl",
+      "entityName": "宁德时代",
       "action": "updated",
       "changedFields": [
-        "metrics",
-        "priceHistory",
-        "quote"
+        "financing"
       ],
-      "summary": "文远知行 的 quote 发生变化。",
-      "importance": 48,
+      "summary": "宁德时代 的 financing 发生变化。",
+      "importance": 88,
       "before": {
-        "metrics": [
+        "financing": [
           {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$251.81万"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "19.44元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.79元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$18.80亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "3.11亿股"
-          },
-          {
-            "id": "marketCap",
-            "label": "总市值",
-            "value": "US$19.90亿"
-          },
-          "…另 7 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 5.97,
-            "date": "2026-08-24",
-            "high": 6.36,
-            "low": 5.905,
-            "open": 6.335,
-            "volume": 2832200.0
-          },
-          {
-            "close": 6.06,
-            "date": "2026-08-25",
-            "high": 6.0997,
-            "low": 5.885,
-            "open": 5.93,
-            "volume": 406355.0
+            "date": "2026-08-14",
+            "investors": [],
+            "sourceUrl": "https://www.catl.com/en/news/6951.html",
+            "summary": "Brisbane, Australia | 14 August 2026 — Quinbrook's Supernode battery energy storage project has completed Stage 2 commercial operation and reached financial close on A$469 million financing for Stage 3, marking a further milestone in the phased development of Australia's largest operational BESS campus.With planned capacity expected to exceed 3 GWh, Supernode is supported by CATL as its core energy storage system supplier for all three stContemporary Amperex Technology Co., Limited (CATL) is a g",
+            "title": "CATL and Quinbrook Build on Supernode Partnership Following Stage 2 and Stage 3 Major Milestones",
+            "type": "融资"
           }
-        ],
-        "quote": {
-          "asOf": "2026-08-25T14:26:12+00:00",
-          "change": 0.05,
-          "changePercent": 0.83,
-          "currency": "USD",
-          "previousClose": 6.0
-        }
+        ]
       },
       "after": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$975.19万"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "19.44元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.79元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$18.89亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "3.11亿股"
-          },
-          {
-            "id": "marketCap",
-            "label": "总市值",
-            "value": "US$20.00亿"
-          },
-          "…另 7 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 5.97,
-            "date": "2026-08-24",
-            "high": 6.36,
-            "low": 5.905,
-            "open": 6.335,
-            "volume": 2832200.0
-          },
-          {
-            "close": 6.08,
-            "date": "2026-08-25",
-            "high": 6.105,
-            "low": 5.885,
-            "open": 5.93,
-            "volume": 1607127.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-25T20:00:00+00:00",
-          "change": 0.08,
-          "changePercent": 1.33,
-          "currency": "USD",
-          "previousClose": 6.0
-        }
+        "financing": []
       },
       "changeType": "external_event",
       "classificationReason": "包含可形成外部事实主张的字段变化",
       "isResearchCandidate": true,
       "claimFields": [
-        "quote"
+        "financing"
       ],
       "claimBindings": [
         {
-          "field": "quote",
-          "before": {
-            "asOf": "2026-08-25T14:26:12+00:00",
-            "change": 0.05,
-            "changePercent": 0.83,
-            "currency": "USD",
-            "previousClose": 6.0
-          },
-          "after": {
-            "asOf": "2026-08-25T20:00:00+00:00",
-            "change": 0.08,
-            "changePercent": 1.33,
-            "currency": "USD",
-            "previousClose": 6.0
-          },
+          "field": "financing",
+          "before": [
+            {
+              "date": "2026-08-14",
+              "investors": [],
+              "sourceUrl": "https://www.catl.com/en/news/6951.html",
+              "summary": "Brisbane, Australia | 14 August 2026 — Quinbrook's Supernode battery energy storage project has completed Stage 2 commercial operation and reached financial close on A$469 million financing for Stage 3, marking a further milestone in the phased development of Australia's largest operational BESS campus.With planned capacity expected to exceed 3 GWh, Supernode is supported by CATL as its core energy storage system supplier for all three stContemporary Amperex Technology Co., Limited (CATL) is a g",
+              "title": "CATL and Quinbrook Build on Supernode Partnership Following Stage 2 and Stage 3 Major Milestones",
+              "type": "融资"
+            }
+          ],
+          "after": [],
           "evidenceIds": [
             "E001"
           ]
         }
       ],
-      "unsupportedClaimFields": [
-        "metrics",
-        "priceHistory"
-      ],
+      "unsupportedClaimFields": [],
       "evidenceIds": [
         "E001"
       ],
@@ -468,564 +239,129 @@
       "eligibleForKeyDevelopment": true
     },
     {
-      "id": "chg-cf9f83451fa34a4e0e8e",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "pony-ai",
-      "entityName": "小马智行",
+      "id": "chg-19197570e343e0c8588f",
+      "dataset": "ventureCompany",
+      "entityType": "创业公司",
+      "entityId": "joby",
+      "entityName": "Joby Aviation",
       "action": "updated",
       "changedFields": [
-        "metrics",
-        "priceHistory",
-        "quote"
+        "capitalMarkets",
+        "financing"
       ],
-      "summary": "小马智行 的 quote 发生变化。",
-      "importance": 48,
+      "summary": "Joby Aviation 的 capitalMarkets、financing 发生变化。",
+      "importance": 88,
       "before": {
-        "metrics": [
+        "capitalMarkets": [
           {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$979.25万"
+            "date": "2026-07-16",
+            "investors": [],
+            "sourceUrl": "https://www.jobyaviation.com/news/2025-impact-report",
+            "summary": "Joby Aviation Impact Reports: 2024 2023 2022 Read next Joby Aviation to Scale Defense Business Through Acquisition of Resonant Sciences Building the Next Generation of Aerospace in Ohio Joby Reports Second Quarter 2026 Financial Results © 2026 Joby Aero, Inc.",
+            "title": "2025 Impact Report | Joby Aviation",
+            "type": "并购/退出"
           },
           {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "3.63美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.27美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.25美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$26.36亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "3.53亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 7.555,
-            "date": "2026-08-24",
-            "high": 7.98,
-            "low": 7.4,
-            "open": 7.9,
-            "volume": 5944400.0
-          },
-          {
-            "close": 7.46,
-            "date": "2026-08-25",
-            "high": 7.559,
-            "low": 7.305,
-            "open": 7.55,
-            "volume": 1315632.0
+            "date": "2026-08-04",
+            "investors": [],
+            "round": "Strategic",
+            "sourceUrl": "https://www.jobyaviation.com/news/atoms-and-joby-aviation-form-strategic-partnership-to-build-americas-vertiport-network",
+            "summary": "Atoms and Joby Aviation have formed a strategic partnership to acquire and develop next-generation transportation hubs in markets where Joby is preparing early operations under the White House-backed eVTOL Integration Pilot Program (eIPP) Vertiports will operate as multimodal transportation hubs where electric aircraft, autonomous ground vehicles, and ridesharing converge, anchored by on-site power for charging and operations",
+            "title": "Atoms and Joby Aviation Form Strategic Partnership to Build America's Vertiport Network",
+            "type": "上市"
           }
         ],
-        "quote": {
-          "asOf": "2026-08-25T14:26:15+00:00",
-          "change": -0.285,
-          "changePercent": -3.68,
-          "currency": "USD",
-          "previousClose": 7.745
-        }
+        "financing": [
+          {
+            "date": "2026-08-05",
+            "investors": [],
+            "sourceUrl": "https://www.jobyaviation.com/news/joby-reports-second-quarter-2026-financial-results",
+            "summary": "Company Raises 2026 Revenue Guidance",
+            "title": "Joby Reports Second Quarter 2026 Financial Results",
+            "type": "融资"
+          }
+        ]
       },
       "after": {
-        "metrics": [
+        "capitalMarkets": [
           {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$3061.31万"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "3.63美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.27美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.25美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$26.64亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "3.53亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 7.555,
-            "date": "2026-08-24",
-            "high": 7.98,
-            "low": 7.4,
-            "open": 7.9,
-            "volume": 5957700.0
-          },
-          {
-            "close": 7.54,
-            "date": "2026-08-25",
-            "high": 7.559,
-            "low": 7.305,
-            "open": 7.55,
-            "volume": 4070656.0
+            "date": "2026-07-16",
+            "investors": [],
+            "sourceUrl": "https://www.jobyaviation.com/news/2025-impact-report",
+            "summary": "Joby Aviation Impact Reports: 2024 2023 2022 Read next Joby Aviation to Scale Defense Business Through Acquisition of Resonant Sciences Building the Next Generation of Aerospace in Ohio Joby Reports Second Quarter 2026 Financial Results © 2026 Joby Aero, Inc.",
+            "title": "2025 Impact Report | Joby Aviation",
+            "type": "并购/退出"
           }
         ],
-        "quote": {
-          "asOf": "2026-08-25T20:00:00+00:00",
-          "change": -0.205,
-          "changePercent": -2.65,
-          "currency": "USD",
-          "previousClose": 7.745
-        }
+        "financing": []
       },
       "changeType": "external_event",
       "classificationReason": "包含可形成外部事实主张的字段变化",
       "isResearchCandidate": true,
       "claimFields": [
-        "quote"
+        "capitalMarkets",
+        "financing"
       ],
       "claimBindings": [
         {
-          "field": "quote",
-          "before": {
-            "asOf": "2026-08-25T14:26:15+00:00",
-            "change": -0.285,
-            "changePercent": -3.68,
-            "currency": "USD",
-            "previousClose": 7.745
-          },
-          "after": {
-            "asOf": "2026-08-25T20:00:00+00:00",
-            "change": -0.205,
-            "changePercent": -2.65,
-            "currency": "USD",
-            "previousClose": 7.745
-          },
-          "evidenceIds": [
-            "E005"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "metrics",
-        "priceHistory"
-      ],
-      "evidenceIds": [
-        "E005"
-      ],
-      "supportingEvidenceIds": [
-        "E005"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-9f742068cf6488872b41",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "catl",
-      "entityName": "宁德时代",
-      "action": "updated",
-      "changedFields": [
-        "news"
-      ],
-      "summary": "宁德时代 的 news 发生变化。",
-      "importance": 48,
-      "before": {
-        "news": [
-          {
-            "publishedAt": "2026-08-25T17:17:00+08:00",
-            "source": "新浪财经",
-            "title": "汰弱留强",
-            "url": "https://cj.sina.cn/articles/view/2812319402/a7a096aa02703ev84"
-          },
-          {
-            "publishedAt": "2026-08-25T18:44:00+08:00",
-            "source": "新浪财经",
-            "title": "主力资金 | 尾盘主力大幅出逃5股",
-            "url": "https://cj.sina.cn/articles/view/5574738445/14c47c20d01901jxu4"
-          },
-          {
-            "publishedAt": "2026-08-25T20:35:00+08:00",
-            "source": "新浪财经",
-            "title": "赛豆AIVA将采用换电模式，首款车型ME7年内亮相",
-            "url": "https://finance.sina.com.cn/7x24/2026-08-25/doc-inippvun5500268.shtml"
-          },
-          {
-            "publishedAt": "2026-08-25T17:43:00+08:00",
-            "source": "新浪财经",
-            "title": "屹艮科技完成亿元级战略融资",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-25/doc-inipprnk9644058.shtml"
-          },
-          {
-            "publishedAt": "2026-08-25T20:54:00+08:00",
-            "source": "新浪财经",
-            "title": "深度绑定“宁王” 天华新能冲刺港股IPO进入关键期 遭监管询问“是否存在利益输送”？",
-            "url": "https://finance.sina.com.cn/roll/2026-08-25/doc-inippvuq2296514.shtml"
-          },
-          {
-            "publishedAt": "2026-08-25T17:21:00+08:00",
-            "source": "新浪财经",
-            "title": "科创债火爆，谁在发行？谁是“承销王”？",
-            "url": "https://finance.sina.com.cn/stock/stockzmt/2026-08-25/doc-inippmeu2333148.shtml"
-          },
-          "…另 4 项"
-        ]
-      },
-      "after": {
-        "news": [
-          {
-            "publishedAt": "2026-08-26T06:16:00+08:00",
-            "source": "新浪财经",
-            "title": "宁德时代的高利润该咋看？（小经说汽车）",
-            "url": "https://cj.sina.cn/articles/view/6456450127/180d59c4f02002cbde"
-          },
-          {
-            "publishedAt": "2026-08-26T00:00:00+08:00",
-            "source": "新浪财经",
-            "title": "A股中期分红密集落地 448家公司派现超2300亿元",
-            "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e47059093zz0"
-          },
-          {
-            "publishedAt": "2026-08-26T00:00:00+08:00",
-            "source": "新浪财经",
-            "title": "恒翼能IPO三轮问询必答题：大客户依赖症如何化解",
-            "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e4705909412w"
-          },
-          {
-            "publishedAt": "2026-08-26T00:00:00+08:00",
-            "source": "新浪财经",
-            "title": "福建哪些产业正加速聚能起势？",
-            "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e470590941lg"
-          },
-          {
-            "publishedAt": "2026-08-25T20:35:00+08:00",
-            "source": "新浪财经",
-            "title": "赛豆AIVA将采用换电模式，首款车型ME7年内亮相",
-            "url": "https://finance.sina.com.cn/7x24/2026-08-25/doc-inippvun5500268.shtml"
-          },
-          {
-            "publishedAt": "2026-08-26T04:18:00+08:00",
-            "source": "新浪财经",
-            "title": "投资加码带动业绩释放 电力设备储能产业链迎周期回暖",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-26/doc-inipqsye2210595.shtml"
-          },
-          "…另 4 项"
-        ]
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "news"
-      ],
-      "claimBindings": [
-        {
-          "field": "news",
+          "field": "capitalMarkets",
           "before": [
             {
-              "publishedAt": "2026-08-25T17:17:00+08:00",
-              "source": "新浪财经",
-              "title": "汰弱留强",
-              "url": "https://cj.sina.cn/articles/view/2812319402/a7a096aa02703ev84"
+              "date": "2026-07-16",
+              "investors": [],
+              "sourceUrl": "https://www.jobyaviation.com/news/2025-impact-report",
+              "summary": "Joby Aviation Impact Reports: 2024 2023 2022 Read next Joby Aviation to Scale Defense Business Through Acquisition of Resonant Sciences Building the Next Generation of Aerospace in Ohio Joby Reports Second Quarter 2026 Financial Results © 2026 Joby Aero, Inc.",
+              "title": "2025 Impact Report | Joby Aviation",
+              "type": "并购/退出"
             },
             {
-              "publishedAt": "2026-08-25T18:44:00+08:00",
-              "source": "新浪财经",
-              "title": "主力资金 | 尾盘主力大幅出逃5股",
-              "url": "https://cj.sina.cn/articles/view/5574738445/14c47c20d01901jxu4"
-            },
-            {
-              "publishedAt": "2026-08-25T20:35:00+08:00",
-              "source": "新浪财经",
-              "title": "赛豆AIVA将采用换电模式，首款车型ME7年内亮相",
-              "url": "https://finance.sina.com.cn/7x24/2026-08-25/doc-inippvun5500268.shtml"
-            },
-            {
-              "publishedAt": "2026-08-25T17:43:00+08:00",
-              "source": "新浪财经",
-              "title": "屹艮科技完成亿元级战略融资",
-              "url": "https://finance.sina.com.cn/jjxw/2026-08-25/doc-inipprnk9644058.shtml"
-            },
-            {
-              "publishedAt": "2026-08-25T20:54:00+08:00",
-              "source": "新浪财经",
-              "title": "深度绑定“宁王” 天华新能冲刺港股IPO进入关键期 遭监管询问“是否存在利益输送”？",
-              "url": "https://finance.sina.com.cn/roll/2026-08-25/doc-inippvuq2296514.shtml"
-            },
-            {
-              "publishedAt": "2026-08-25T17:21:00+08:00",
-              "source": "新浪财经",
-              "title": "科创债火爆，谁在发行？谁是“承销王”？",
-              "url": "https://finance.sina.com.cn/stock/stockzmt/2026-08-25/doc-inippmeu2333148.shtml"
-            },
-            "…另 4 项"
+              "date": "2026-08-04",
+              "investors": [],
+              "round": "Strategic",
+              "sourceUrl": "https://www.jobyaviation.com/news/atoms-and-joby-aviation-form-strategic-partnership-to-build-americas-vertiport-network",
+              "summary": "Atoms and Joby Aviation have formed a strategic partnership to acquire and develop next-generation transportation hubs in markets where Joby is preparing early operations under the White House-backed eVTOL Integration Pilot Program (eIPP) Vertiports will operate as multimodal transportation hubs where electric aircraft, autonomous ground vehicles, and ridesharing converge, anchored by on-site power for charging and operations",
+              "title": "Atoms and Joby Aviation Form Strategic Partnership to Build America's Vertiport Network",
+              "type": "上市"
+            }
           ],
           "after": [
             {
-              "publishedAt": "2026-08-26T06:16:00+08:00",
-              "source": "新浪财经",
-              "title": "宁德时代的高利润该咋看？（小经说汽车）",
-              "url": "https://cj.sina.cn/articles/view/6456450127/180d59c4f02002cbde"
-            },
-            {
-              "publishedAt": "2026-08-26T00:00:00+08:00",
-              "source": "新浪财经",
-              "title": "A股中期分红密集落地 448家公司派现超2300亿元",
-              "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e47059093zz0"
-            },
-            {
-              "publishedAt": "2026-08-26T00:00:00+08:00",
-              "source": "新浪财经",
-              "title": "恒翼能IPO三轮问询必答题：大客户依赖症如何化解",
-              "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e4705909412w"
-            },
-            {
-              "publishedAt": "2026-08-26T00:00:00+08:00",
-              "source": "新浪财经",
-              "title": "福建哪些产业正加速聚能起势？",
-              "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e470590941lg"
-            },
-            {
-              "publishedAt": "2026-08-25T20:35:00+08:00",
-              "source": "新浪财经",
-              "title": "赛豆AIVA将采用换电模式，首款车型ME7年内亮相",
-              "url": "https://finance.sina.com.cn/7x24/2026-08-25/doc-inippvun5500268.shtml"
-            },
-            {
-              "publishedAt": "2026-08-26T04:18:00+08:00",
-              "source": "新浪财经",
-              "title": "投资加码带动业绩释放 电力设备储能产业链迎周期回暖",
-              "url": "https://finance.sina.com.cn/jjxw/2026-08-26/doc-inipqsye2210595.shtml"
-            },
-            "…另 4 项"
+              "date": "2026-07-16",
+              "investors": [],
+              "sourceUrl": "https://www.jobyaviation.com/news/2025-impact-report",
+              "summary": "Joby Aviation Impact Reports: 2024 2023 2022 Read next Joby Aviation to Scale Defense Business Through Acquisition of Resonant Sciences Building the Next Generation of Aerospace in Ohio Joby Reports Second Quarter 2026 Financial Results © 2026 Joby Aero, Inc.",
+              "title": "2025 Impact Report | Joby Aviation",
+              "type": "并购/退出"
+            }
           ],
           "evidenceIds": [
-            "E009",
-            "E010",
-            "E011",
-            "E012"
+            "E009"
+          ]
+        },
+        {
+          "field": "financing",
+          "before": [
+            {
+              "date": "2026-08-05",
+              "investors": [],
+              "sourceUrl": "https://www.jobyaviation.com/news/joby-reports-second-quarter-2026-financial-results",
+              "summary": "Company Raises 2026 Revenue Guidance",
+              "title": "Joby Reports Second Quarter 2026 Financial Results",
+              "type": "融资"
+            }
+          ],
+          "after": [],
+          "evidenceIds": [
+            "E009"
           ]
         }
       ],
       "unsupportedClaimFields": [],
       "evidenceIds": [
-        "E009",
-        "E010",
-        "E011",
-        "E012"
+        "E009"
       ],
       "supportingEvidenceIds": [
-        "E009",
-        "E010",
-        "E011",
-        "E012"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 4,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-50f847c10b5c8336eb08",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "tempus-ai",
-      "entityName": "Tempus AI, Inc.",
-      "action": "updated",
-      "changedFields": [
-        "metrics",
-        "priceHistory",
-        "quote"
-      ],
-      "summary": "Tempus AI, Inc. 的 quote 发生变化。",
-      "importance": 48,
-      "before": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$2.10亿"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "2.47美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.45美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.67美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$119.74亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "1.75亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 66.169998,
-            "date": "2026-08-24",
-            "high": 72.019997,
-            "low": 65.93,
-            "open": 70.074997,
-            "volume": 11887100.0
-          },
-          {
-            "close": 68.269997,
-            "date": "2026-08-25",
-            "high": 68.800003,
-            "low": 63.6101,
-            "open": 66.445,
-            "volume": 3152439.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-25T14:26:20+00:00",
-          "change": 18.91,
-          "changePercent": 38.31,
-          "currency": "USD",
-          "previousClose": 49.36
-        }
-      },
-      "after": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$6.07亿"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "2.47美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.45美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.67美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$120.55亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "1.75亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 66.169998,
-            "date": "2026-08-24",
-            "high": 72.019997,
-            "low": 65.93,
-            "open": 70.074997,
-            "volume": 11929300.0
-          },
-          {
-            "close": 68.730003,
-            "date": "2026-08-25",
-            "high": 70.790001,
-            "low": 63.6101,
-            "open": 66.445,
-            "volume": 8857386.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-25T20:00:00+00:00",
-          "change": 19.37,
-          "changePercent": 39.24,
-          "currency": "USD",
-          "previousClose": 49.36
-        }
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "quote"
-      ],
-      "claimBindings": [
-        {
-          "field": "quote",
-          "before": {
-            "asOf": "2026-08-25T14:26:20+00:00",
-            "change": 18.91,
-            "changePercent": 38.31,
-            "currency": "USD",
-            "previousClose": 49.36
-          },
-          "after": {
-            "asOf": "2026-08-25T20:00:00+00:00",
-            "change": 19.37,
-            "changePercent": 39.24,
-            "currency": "USD",
-            "previousClose": 49.36
-          },
-          "evidenceIds": [
-            "E013"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "metrics",
-        "priceHistory"
-      ],
-      "evidenceIds": [
-        "E013"
-      ],
-      "supportingEvidenceIds": [
-        "E013"
+        "E009"
       ],
       "evidenceQuality": {
         "status": "passed",
@@ -1035,1254 +371,157 @@
       "eligibleForKeyDevelopment": true
     },
     {
-      "id": "chg-da5f7e7c288b30a9339c",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "rocket-lab",
-      "entityName": "Rocket Lab Corporation",
+      "id": "chg-4c07bfdfe4d4e20ddbab",
+      "dataset": "ventureCompany",
+      "entityType": "创业公司",
+      "entityId": "form-energy",
+      "entityName": "Form Energy",
       "action": "updated",
       "changedFields": [
-        "metrics",
-        "priceHistory",
-        "quote"
+        "financing"
       ],
-      "summary": "Rocket Lab Corporation 的 quote 发生变化。",
-      "importance": 48,
+      "summary": "Form Energy 的 financing 发生变化。",
+      "importance": 88,
       "before": {
-        "metrics": [
+        "financing": [
           {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$3.58亿"
+            "amount": "$750M",
+            "date": "2020-03-04",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/",
+            "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
+            "type": "融资"
           },
           {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "5.84美元"
+            "date": "2026-08-12",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing",
+            "summary": "Weirton, WV – August 12, 2026 – Form Energy, Inc., an American technology company developing and commercializing a new class of cost-effective, multi-day energy storage systems, announced today a $750 million Series G financing round led by T. Rowe Price, which also led the company’s prior Series F round. This round brings Form Energy’s total […]",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+            "type": "融资"
           },
           {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.22美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.15美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$401.27亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "5.98亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 68.279999,
-            "date": "2026-08-24",
-            "high": 71.209999,
-            "low": 68.169998,
-            "open": 71.209999,
-            "volume": 14350000.0
-          },
-          {
-            "close": 67.0755,
-            "date": "2026-08-25",
-            "high": 70.0,
-            "low": 66.639999,
-            "open": 69.894997,
-            "volume": 5274975.0
+            "amount": "$750M",
+            "date": "2026-08-12",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+            "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+            "type": "融资"
           }
-        ],
-        "quote": {
-          "asOf": "2026-08-25T14:26:17+00:00",
-          "change": -12.11,
-          "changePercent": -15.3,
-          "currency": "USD",
-          "previousClose": 79.16
-        }
+        ]
       },
       "after": {
-        "metrics": [
+        "financing": [
           {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$10.15亿"
+            "amount": "$750M",
+            "date": "2020-03-04",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/",
+            "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
+            "type": "融资"
           },
           {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "5.84美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.22美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.15美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$400.43亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "5.98亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 68.279999,
-            "date": "2026-08-24",
-            "high": 71.209999,
-            "low": 68.169998,
-            "open": 71.209999,
-            "volume": 14461300.0
-          },
-          {
-            "close": 66.910004,
-            "date": "2026-08-25",
-            "high": 70.0,
-            "low": 66.480003,
-            "open": 69.894997,
-            "volume": 14891920.0
+            "amount": "$750M",
+            "date": "2026-08-12",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+            "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+            "type": "融资"
           }
-        ],
-        "quote": {
-          "asOf": "2026-08-25T20:00:00+00:00",
-          "change": -12.25,
-          "changePercent": -15.47,
-          "currency": "USD",
-          "previousClose": 79.16
-        }
+        ]
       },
       "changeType": "external_event",
       "classificationReason": "包含可形成外部事实主张的字段变化",
       "isResearchCandidate": true,
       "claimFields": [
-        "quote"
+        "financing"
       ],
       "claimBindings": [
         {
-          "field": "quote",
-          "before": {
-            "asOf": "2026-08-25T14:26:17+00:00",
-            "change": -12.11,
-            "changePercent": -15.3,
-            "currency": "USD",
-            "previousClose": 79.16
-          },
-          "after": {
-            "asOf": "2026-08-25T20:00:00+00:00",
-            "change": -12.25,
-            "changePercent": -15.47,
-            "currency": "USD",
-            "previousClose": 79.16
-          },
+          "field": "financing",
+          "before": [
+            {
+              "amount": "$750M",
+              "date": "2020-03-04",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/",
+              "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
+              "type": "融资"
+            },
+            {
+              "date": "2026-08-12",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing",
+              "summary": "Weirton, WV – August 12, 2026 – Form Energy, Inc., an American technology company developing and commercializing a new class of cost-effective, multi-day energy storage systems, announced today a $750 million Series G financing round led by T. Rowe Price, which also led the company’s prior Series F round. This round brings Form Energy’s total […]",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+              "type": "融资"
+            },
+            {
+              "amount": "$750M",
+              "date": "2026-08-12",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+              "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+              "type": "融资"
+            }
+          ],
+          "after": [
+            {
+              "amount": "$750M",
+              "date": "2020-03-04",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/",
+              "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
+              "type": "融资"
+            },
+            {
+              "amount": "$750M",
+              "date": "2026-08-12",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+              "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+              "type": "融资"
+            }
+          ],
           "evidenceIds": [
-            "E017"
+            "E017",
+            "E018",
+            "E019"
           ]
         }
       ],
-      "unsupportedClaimFields": [
-        "metrics",
-        "priceHistory"
-      ],
+      "unsupportedClaimFields": [],
       "evidenceIds": [
-        "E017"
+        "E017",
+        "E018",
+        "E019"
       ],
       "supportingEvidenceIds": [
-        "E017"
+        "E017",
+        "E018",
+        "E019"
       ],
       "evidenceQuality": {
         "status": "passed",
-        "supporting": 1,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-46babf22c9da3eb87869",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "rigetti",
-      "entityName": "Rigetti Computing, Inc.",
-      "action": "updated",
-      "changedFields": [
-        "metrics",
-        "priceHistory",
-        "quote"
-      ],
-      "summary": "Rigetti Computing, Inc. 的 quote 发生变化。",
-      "importance": 48,
-      "before": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$6283.11万"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "1.61美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.1美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.06美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$55.36亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "3.34亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 16.370001,
-            "date": "2026-08-24",
-            "high": 17.5,
-            "low": 16.309999,
-            "open": 17.495001,
-            "volume": 21656900.0
-          },
-          {
-            "close": 16.58,
-            "date": "2026-08-25",
-            "high": 16.889999,
-            "low": 16.34,
-            "open": 16.83,
-            "volume": 3790991.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-25T14:26:13+00:00",
-          "change": -1.125,
-          "changePercent": -6.35,
-          "currency": "USD",
-          "previousClose": 17.71
-        }
-      },
-      "after": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$2.29亿"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "1.61美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.1美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.06美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$56.54亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "3.34亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 16.370001,
-            "date": "2026-08-24",
-            "high": 17.5,
-            "low": 16.309999,
-            "open": 17.495001,
-            "volume": 21717600.0
-          },
-          {
-            "close": 16.940001,
-            "date": "2026-08-25",
-            "high": 17.24,
-            "low": 16.34,
-            "open": 16.83,
-            "volume": 13522896.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-25T20:00:00+00:00",
-          "change": -0.77,
-          "changePercent": -4.35,
-          "currency": "USD",
-          "previousClose": 17.71
-        }
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "quote"
-      ],
-      "claimBindings": [
-        {
-          "field": "quote",
-          "before": {
-            "asOf": "2026-08-25T14:26:13+00:00",
-            "change": -1.125,
-            "changePercent": -6.35,
-            "currency": "USD",
-            "previousClose": 17.71
-          },
-          "after": {
-            "asOf": "2026-08-25T20:00:00+00:00",
-            "change": -0.77,
-            "changePercent": -4.35,
-            "currency": "USD",
-            "previousClose": 17.71
-          },
-          "evidenceIds": [
-            "E021"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "metrics",
-        "priceHistory"
-      ],
-      "evidenceIds": [
-        "E021"
-      ],
-      "supportingEvidenceIds": [
-        "E021"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-67694779f6ee64d5ece6",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "recursion",
-      "entityName": "Recursion Pharmaceuticals, Inc.",
-      "action": "updated",
-      "changedFields": [
-        "metrics",
-        "priceHistory",
-        "quote"
-      ],
-      "summary": "Recursion Pharmaceuticals, Inc. 的 quote 发生变化。",
-      "importance": 48,
-      "before": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$1487.99万"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "1.71美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.35美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.47美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$18.47亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "5.35亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 3.25,
-            "date": "2026-08-24",
-            "high": 3.44,
-            "low": 3.215,
-            "open": 3.42,
-            "volume": 15076100.0
-          },
-          {
-            "close": 3.45,
-            "date": "2026-08-25",
-            "high": 3.48,
-            "low": 3.26,
-            "open": 3.2725,
-            "volume": 4401101.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-25T14:26:15+00:00",
-          "change": 0.36,
-          "changePercent": 11.65,
-          "currency": "USD",
-          "previousClose": 3.09
-        }
-      },
-      "after": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$7888.38万"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "1.71美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.35美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.47美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$19.06亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "5.35亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 3.25,
-            "date": "2026-08-24",
-            "high": 3.44,
-            "low": 3.215,
-            "open": 3.42,
-            "volume": 15155100.0
-          },
-          {
-            "close": 3.56,
-            "date": "2026-08-25",
-            "high": 3.59,
-            "low": 3.26,
-            "open": 3.2725,
-            "volume": 22412224.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-25T20:00:00+00:00",
-          "change": 0.47,
-          "changePercent": 15.21,
-          "currency": "USD",
-          "previousClose": 3.09
-        }
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "quote"
-      ],
-      "claimBindings": [
-        {
-          "field": "quote",
-          "before": {
-            "asOf": "2026-08-25T14:26:15+00:00",
-            "change": 0.36,
-            "changePercent": 11.65,
-            "currency": "USD",
-            "previousClose": 3.09
-          },
-          "after": {
-            "asOf": "2026-08-25T20:00:00+00:00",
-            "change": 0.47,
-            "changePercent": 15.21,
-            "currency": "USD",
-            "previousClose": 3.09
-          },
-          "evidenceIds": [
-            "E025"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "metrics",
-        "priceHistory"
-      ],
-      "evidenceIds": [
-        "E025"
-      ],
-      "supportingEvidenceIds": [
-        "E025"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-77edca8b18f7bf3e73f1",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "mobileye",
-      "entityName": "Mobileye Global Inc.",
-      "action": "updated",
-      "changedFields": [
-        "metrics",
-        "priceHistory",
-        "quote"
-      ],
-      "summary": "Mobileye Global Inc. 的 quote 发生变化。",
-      "importance": 48,
-      "before": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$328.05万"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "9.77美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.25美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "4.7美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$21.70亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "2.52亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 8.64,
-            "date": "2026-08-24",
-            "high": 8.94,
-            "low": 8.55,
-            "open": 8.93,
-            "volume": 4899300.0
-          },
-          {
-            "close": 8.595,
-            "date": "2026-08-25",
-            "high": 8.6995,
-            "low": 8.585,
-            "open": 8.64,
-            "volume": 377746.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-25T14:26:23+00:00",
-          "change": -0.275,
-          "changePercent": -3.1,
-          "currency": "USD",
-          "previousClose": 8.87
-        }
-      },
-      "after": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$2127.29万"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "9.77美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.25美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "4.7美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$21.91亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "2.52亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 8.64,
-            "date": "2026-08-24",
-            "high": 8.94,
-            "low": 8.55,
-            "open": 8.93,
-            "volume": 4899300.0
-          },
-          {
-            "close": 8.68,
-            "date": "2026-08-25",
-            "high": 8.75,
-            "low": 8.575,
-            "open": 8.64,
-            "volume": 2451145.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-25T20:00:01+00:00",
-          "change": -0.19,
-          "changePercent": -2.14,
-          "currency": "USD",
-          "previousClose": 8.87
-        }
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "quote"
-      ],
-      "claimBindings": [
-        {
-          "field": "quote",
-          "before": {
-            "asOf": "2026-08-25T14:26:23+00:00",
-            "change": -0.275,
-            "changePercent": -3.1,
-            "currency": "USD",
-            "previousClose": 8.87
-          },
-          "after": {
-            "asOf": "2026-08-25T20:00:01+00:00",
-            "change": -0.19,
-            "changePercent": -2.14,
-            "currency": "USD",
-            "previousClose": 8.87
-          },
-          "evidenceIds": [
-            "E029"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "metrics",
-        "priceHistory"
-      ],
-      "evidenceIds": [
-        "E029"
-      ],
-      "supportingEvidenceIds": [
-        "E029"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-593b95571ab9b581c96b",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "joby",
-      "entityName": "Joby Aviation, Inc.",
-      "action": "updated",
-      "changedFields": [
-        "metrics",
-        "priceHistory",
-        "quote"
-      ],
-      "summary": "Joby Aviation, Inc. 的 quote 发生变化。",
-      "importance": 48,
-      "before": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$2851.44万"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "1.79美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.32美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.37美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$71.41亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "9.89亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 7.19,
-            "date": "2026-08-24",
-            "high": 7.48,
-            "low": 7.16,
-            "open": 7.45,
-            "volume": 23595900.0
-          },
-          {
-            "close": 7.21,
-            "date": "2026-08-25",
-            "high": 7.32,
-            "low": 7.14,
-            "open": 7.32,
-            "volume": 3950976.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-25T14:26:24+00:00",
-          "change": -0.43,
-          "changePercent": -5.62,
-          "currency": "USD",
-          "previousClose": 7.65
-        }
-      },
-      "after": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$1.59亿"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "1.79美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.32美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.37美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$71.41亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "9.89亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 7.19,
-            "date": "2026-08-24",
-            "high": 7.48,
-            "low": 7.16,
-            "open": 7.45,
-            "volume": 23635400.0
-          },
-          {
-            "close": 7.22,
-            "date": "2026-08-25",
-            "high": 7.32,
-            "low": 7.14,
-            "open": 7.32,
-            "volume": 21926039.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-25T20:00:02+00:00",
-          "change": -0.43,
-          "changePercent": -5.62,
-          "currency": "USD",
-          "previousClose": 7.65
-        }
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "quote"
-      ],
-      "claimBindings": [
-        {
-          "field": "quote",
-          "before": {
-            "asOf": "2026-08-25T14:26:24+00:00",
-            "change": -0.43,
-            "changePercent": -5.62,
-            "currency": "USD",
-            "previousClose": 7.65
-          },
-          "after": {
-            "asOf": "2026-08-25T20:00:02+00:00",
-            "change": -0.43,
-            "changePercent": -5.62,
-            "currency": "USD",
-            "previousClose": 7.65
-          },
-          "evidenceIds": [
-            "E033"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "metrics",
-        "priceHistory"
-      ],
-      "evidenceIds": [
-        "E033"
-      ],
-      "supportingEvidenceIds": [
-        "E033"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-85b314dfff7c9a2a7479",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "ionq",
-      "entityName": "IonQ, Inc.",
-      "action": "updated",
-      "changedFields": [
-        "metrics",
-        "priceHistory",
-        "quote"
-      ],
-      "summary": "IonQ, Inc. 的 quote 发生变化。",
-      "importance": 48,
-      "before": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$1.58亿"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "8.73美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.67美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "2.92美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$157.24亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "3.81亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 41.060001,
-            "date": "2026-08-24",
-            "high": 43.549999,
-            "low": 40.959999,
-            "open": 43.330002,
-            "volume": 17191200.0
-          },
-          {
-            "close": 41.271099,
-            "date": "2026-08-25",
-            "high": 42.220001,
-            "low": 40.994999,
-            "open": 42.080002,
-            "volume": 3789541.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-25T14:26:11+00:00",
-          "change": -2.849,
-          "changePercent": -6.46,
-          "currency": "USD",
-          "previousClose": 44.12
-        }
-      },
-      "after": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$5.18亿"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "8.73美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.67美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "2.92美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$160.21亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "3.81亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 41.060001,
-            "date": "2026-08-24",
-            "high": 43.549999,
-            "low": 40.959999,
-            "open": 43.330002,
-            "volume": 17251100.0
-          },
-          {
-            "close": 42.049999,
-            "date": "2026-08-25",
-            "high": 42.669998,
-            "low": 40.994999,
-            "open": 42.080002,
-            "volume": 12307383.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-25T20:00:02+00:00",
-          "change": -2.07,
-          "changePercent": -4.69,
-          "currency": "USD",
-          "previousClose": 44.12
-        }
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "quote"
-      ],
-      "claimBindings": [
-        {
-          "field": "quote",
-          "before": {
-            "asOf": "2026-08-25T14:26:11+00:00",
-            "change": -2.849,
-            "changePercent": -6.46,
-            "currency": "USD",
-            "previousClose": 44.12
-          },
-          "after": {
-            "asOf": "2026-08-25T20:00:02+00:00",
-            "change": -2.07,
-            "changePercent": -4.69,
-            "currency": "USD",
-            "previousClose": 44.12
-          },
-          "evidenceIds": [
-            "E037"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "metrics",
-        "priceHistory"
-      ],
-      "evidenceIds": [
-        "E037"
-      ],
-      "supportingEvidenceIds": [
-        "E037"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-365d58584e5f73751d18",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "aurora",
-      "entityName": "Aurora Innovation, Inc.",
-      "action": "updated",
-      "changedFields": [
-        "metrics",
-        "priceHistory",
-        "quote"
-      ],
-      "summary": "Aurora Innovation, Inc. 的 quote 发生变化。",
-      "importance": 48,
-      "before": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$3192.19万"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "0.98美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.19美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.25美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$99.50亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "17.08亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 5.69,
-            "date": "2026-08-24",
-            "high": 6.21,
-            "low": 5.62,
-            "open": 6.19,
-            "volume": 39976900.0
-          },
-          {
-            "close": 5.825,
-            "date": "2026-08-25",
-            "high": 5.94,
-            "low": 5.65,
-            "open": 5.75,
-            "volume": 5458973.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-25T14:26:23+00:00",
-          "change": -0.325,
-          "changePercent": -5.28,
-          "currency": "USD",
-          "previousClose": 6.15
-        }
-      },
-      "after": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$1.86亿"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "0.98美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.19美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.25美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$98.56亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "17.08亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 5.69,
-            "date": "2026-08-24",
-            "high": 6.21,
-            "low": 5.62,
-            "open": 6.19,
-            "volume": 40006100.0
-          },
-          {
-            "close": 5.77,
-            "date": "2026-08-25",
-            "high": 5.94,
-            "low": 5.65,
-            "open": 5.75,
-            "volume": 31904364.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-25T20:00:01+00:00",
-          "change": -0.38,
-          "changePercent": -6.18,
-          "currency": "USD",
-          "previousClose": 6.15
-        }
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "quote"
-      ],
-      "claimBindings": [
-        {
-          "field": "quote",
-          "before": {
-            "asOf": "2026-08-25T14:26:23+00:00",
-            "change": -0.325,
-            "changePercent": -5.28,
-            "currency": "USD",
-            "previousClose": 6.15
-          },
-          "after": {
-            "asOf": "2026-08-25T20:00:01+00:00",
-            "change": -0.38,
-            "changePercent": -6.18,
-            "currency": "USD",
-            "previousClose": 6.15
-          },
-          "evidenceIds": [
-            "E041"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "metrics",
-        "priceHistory"
-      ],
-      "evidenceIds": [
-        "E041"
-      ],
-      "supportingEvidenceIds": [
-        "E041"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
+        "supporting": 3,
         "total": 4
       },
       "eligibleForKeyDevelopment": true
@@ -2291,33 +530,16 @@
   "evidence": [
     {
       "id": "E001",
-      "changeId": "chg-95247b061761f71c43a4",
-      "entityName": "文远知行",
-      "claim": "文远知行 的 quote 发生变化。",
-      "sourceName": "Yahoo财经",
-      "title": "Yahoo财经 行情数据",
-      "url": "https://sg.finance.yahoo.com/quote/WRD/",
-      "publishedAt": "2026-08-25T20:00:00+00:00",
-      "evidenceGrade": "市场数据",
+      "changeId": "chg-f0a2e9692eddf94cdec2",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 financing 发生变化。",
+      "sourceName": "CATL",
+      "title": "宁德时代·CATL",
+      "url": "https://www.catl.com/",
+      "publishedAt": "2026-08-20",
+      "evidenceGrade": "官方披露",
       "claimFields": [
-        "quote"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E005",
-      "changeId": "chg-cf9f83451fa34a4e0e8e",
-      "entityName": "小马智行",
-      "claim": "小马智行 的 quote 发生变化。",
-      "sourceName": "Yahoo财经",
-      "title": "Yahoo财经 行情数据",
-      "url": "https://sg.finance.yahoo.com/quote/PONY/",
-      "publishedAt": "2026-08-25T20:00:00+00:00",
-      "evidenceGrade": "市场数据",
-      "claimFields": [
-        "quote"
+        "financing"
       ],
       "qualityIssues": [],
       "qualityStatus": "passed",
@@ -2325,84 +547,17 @@
     },
     {
       "id": "E009",
-      "changeId": "chg-9f742068cf6488872b41",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 的 news 发生变化。",
-      "sourceName": "新浪财经",
-      "title": "宁德时代的高利润该咋看？（小经说汽车）",
-      "url": "https://cj.sina.cn/articles/view/6456450127/180d59c4f02002cbde",
-      "publishedAt": "2026-08-26T06:16:00+08:00",
-      "evidenceGrade": "媒体报道",
+      "changeId": "chg-19197570e343e0c8588f",
+      "entityName": "Joby Aviation",
+      "claim": "Joby Aviation 的 capitalMarkets、financing 发生变化。",
+      "sourceName": "Joby Aviation",
+      "title": "2025 Impact Report | Joby Aviation",
+      "url": "https://www.jobyaviation.com/news/2025-impact-report",
+      "publishedAt": "2026-07-16",
+      "evidenceGrade": "官方披露",
       "claimFields": [
-        "news"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E010",
-      "changeId": "chg-9f742068cf6488872b41",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 的 news 发生变化。",
-      "sourceName": "新浪财经",
-      "title": "A股中期分红密集落地 448家公司派现超2300亿元",
-      "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e47059093zz0",
-      "publishedAt": "2026-08-26T00:00:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E011",
-      "changeId": "chg-9f742068cf6488872b41",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 的 news 发生变化。",
-      "sourceName": "新浪财经",
-      "title": "恒翼能IPO三轮问询必答题：大客户依赖症如何化解",
-      "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e4705909412w",
-      "publishedAt": "2026-08-26T00:00:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E012",
-      "changeId": "chg-9f742068cf6488872b41",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 的 news 发生变化。",
-      "sourceName": "新浪财经",
-      "title": "福建哪些产业正加速聚能起势？",
-      "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e470590941lg",
-      "publishedAt": "2026-08-26T00:00:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E013",
-      "changeId": "chg-50f847c10b5c8336eb08",
-      "entityName": "Tempus AI, Inc.",
-      "claim": "Tempus AI, Inc. 的 quote 发生变化。",
-      "sourceName": "Yahoo财经",
-      "title": "Yahoo财经 行情数据",
-      "url": "https://sg.finance.yahoo.com/quote/TEM/",
-      "publishedAt": "2026-08-25T20:00:00+00:00",
-      "evidenceGrade": "市场数据",
-      "claimFields": [
-        "quote"
+        "capitalMarkets",
+        "financing"
       ],
       "qualityIssues": [],
       "qualityStatus": "passed",
@@ -2410,118 +565,50 @@
     },
     {
       "id": "E017",
-      "changeId": "chg-da5f7e7c288b30a9339c",
-      "entityName": "Rocket Lab Corporation",
-      "claim": "Rocket Lab Corporation 的 quote 发生变化。",
-      "sourceName": "Yahoo财经",
-      "title": "Yahoo财经 行情数据",
-      "url": "https://sg.finance.yahoo.com/quote/RKLB/",
-      "publishedAt": "2026-08-25T20:00:00+00:00",
-      "evidenceGrade": "市场数据",
+      "changeId": "chg-4c07bfdfe4d4e20ddbab",
+      "entityName": "Form Energy",
+      "claim": "Form Energy 的 financing 发生变化。",
+      "sourceName": "Form Energy",
+      "title": "Home",
+      "url": "https://formenergy.com/",
+      "publishedAt": "2020-03-04",
+      "evidenceGrade": "官方披露",
       "claimFields": [
-        "quote"
+        "financing"
       ],
       "qualityIssues": [],
       "qualityStatus": "passed",
       "supportStatus": "supports"
     },
     {
-      "id": "E021",
-      "changeId": "chg-46babf22c9da3eb87869",
-      "entityName": "Rigetti Computing, Inc.",
-      "claim": "Rigetti Computing, Inc. 的 quote 发生变化。",
-      "sourceName": "Yahoo财经",
-      "title": "Yahoo财经 行情数据",
-      "url": "https://sg.finance.yahoo.com/quote/RGTI/",
-      "publishedAt": "2026-08-25T20:00:00+00:00",
-      "evidenceGrade": "市场数据",
+      "id": "E018",
+      "changeId": "chg-4c07bfdfe4d4e20ddbab",
+      "entityName": "Form Energy",
+      "claim": "Form Energy 的 financing 发生变化。",
+      "sourceName": "Form Energy",
+      "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+      "url": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+      "publishedAt": "2026-08-12",
+      "evidenceGrade": "官方披露",
       "claimFields": [
-        "quote"
+        "financing"
       ],
       "qualityIssues": [],
       "qualityStatus": "passed",
       "supportStatus": "supports"
     },
     {
-      "id": "E025",
-      "changeId": "chg-67694779f6ee64d5ece6",
-      "entityName": "Recursion Pharmaceuticals, Inc.",
-      "claim": "Recursion Pharmaceuticals, Inc. 的 quote 发生变化。",
-      "sourceName": "Yahoo财经",
-      "title": "Yahoo财经 行情数据",
-      "url": "https://sg.finance.yahoo.com/quote/RXRX/",
-      "publishedAt": "2026-08-25T20:00:00+00:00",
-      "evidenceGrade": "市场数据",
+      "id": "E019",
+      "changeId": "chg-4c07bfdfe4d4e20ddbab",
+      "entityName": "Form Energy",
+      "claim": "Form Energy 的 financing 发生变化。",
+      "sourceName": "Form Energy",
+      "title": "Newsroom",
+      "url": "https://formenergy.com/newsroom/",
+      "publishedAt": "2021-03-19",
+      "evidenceGrade": "官方披露",
       "claimFields": [
-        "quote"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E029",
-      "changeId": "chg-77edca8b18f7bf3e73f1",
-      "entityName": "Mobileye Global Inc.",
-      "claim": "Mobileye Global Inc. 的 quote 发生变化。",
-      "sourceName": "Yahoo财经",
-      "title": "Yahoo财经 行情数据",
-      "url": "https://sg.finance.yahoo.com/quote/MBLY/",
-      "publishedAt": "2026-08-25T20:00:01+00:00",
-      "evidenceGrade": "市场数据",
-      "claimFields": [
-        "quote"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E033",
-      "changeId": "chg-593b95571ab9b581c96b",
-      "entityName": "Joby Aviation, Inc.",
-      "claim": "Joby Aviation, Inc. 的 quote 发生变化。",
-      "sourceName": "Yahoo财经",
-      "title": "Yahoo财经 行情数据",
-      "url": "https://sg.finance.yahoo.com/quote/JOBY/",
-      "publishedAt": "2026-08-25T20:00:02+00:00",
-      "evidenceGrade": "市场数据",
-      "claimFields": [
-        "quote"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E037",
-      "changeId": "chg-85b314dfff7c9a2a7479",
-      "entityName": "IonQ, Inc.",
-      "claim": "IonQ, Inc. 的 quote 发生变化。",
-      "sourceName": "Yahoo财经",
-      "title": "Yahoo财经 行情数据",
-      "url": "https://sg.finance.yahoo.com/quote/IONQ/",
-      "publishedAt": "2026-08-25T20:00:02+00:00",
-      "evidenceGrade": "市场数据",
-      "claimFields": [
-        "quote"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E041",
-      "changeId": "chg-365d58584e5f73751d18",
-      "entityName": "Aurora Innovation, Inc.",
-      "claim": "Aurora Innovation, Inc. 的 quote 发生变化。",
-      "sourceName": "Yahoo财经",
-      "title": "Yahoo财经 行情数据",
-      "url": "https://sg.finance.yahoo.com/quote/AUR/",
-      "publishedAt": "2026-08-25T20:00:01+00:00",
-      "evidenceGrade": "市场数据",
-      "claimFields": [
-        "quote"
+        "financing"
       ],
       "qualityIssues": [],
       "qualityStatus": "passed",
@@ -2650,24 +737,25 @@
     },
     {
       "date": "2026-08-26",
-      "generatedAt": "2026-08-26T00:06:51+00:00",
+      "generatedAt": "2026-08-26T02:44:09+00:00",
       "runStatus": "model",
-      "changeCount": 11,
-      "executiveSummary": "证据包显示，2026年8月25日美股收盘后，多家科技公司行情出现显著变化：Tempus AI上涨39.24%，Recursion上涨15.21%，文远知行上涨1.33%；Rocket Lab下跌15.47%，Aurora下跌6.18%，Joby下跌5.62%，IonQ下跌4.69%，Rigetti下跌4.35%，小马智行下跌2.65%，Mobileye下跌2.14%。宁德时代新闻流新增多篇媒体报道，涉及高利润讨论、A股分红、产业链IPO等。所有行情数据来自Yahoo财经，新闻来自新浪财经。证据仅支持价格变动和新闻标题，未提供驱动因素或基本面信息，相关原因需待验证。"
+      "changeCount": 3,
+      "executiveSummary": "证据包显示三项创业公司数据变更，均涉及融资或资本市场字段的调整。宁德时代（CATL）的financing字段由一条2026-08-14的融资记录变为空，但该记录对应的官方新闻仍指向Quinbrook Supernode项目合作；Joby Aviation的capitalMarkets和financing字段删除了Atoms战略合作及2026年Q2财报相关条目，仅保留2025 Impact Report；Form Energy的financing字段删除了2026-08-12一条重复的Series G融资记录，但该融资事件仍由其他官方来源支持。整体看，变更多为数据记录清理或去重，不改变相关公司已披露的核心业务事实，但需注意区分数据层变化与真实事件变化。"
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 11,
-    "eligibleCandidateCount": 11,
-    "rejectedCandidateCount": 0,
-    "rejectedByDataset": {},
-    "evidenceCount": 44,
-    "supportingEvidenceCount": 14,
-    "rejectedEvidenceCount": 3,
-    "passedButUnboundEvidenceCount": 27,
+    "candidateCount": 5,
+    "eligibleCandidateCount": 3,
+    "rejectedCandidateCount": 2,
+    "rejectedByDataset": {
+      "ventureCompany": 2
+    },
+    "evidenceCount": 20,
+    "supportingEvidenceCount": 5,
+    "rejectedEvidenceCount": 11,
+    "passedButUnboundEvidenceCount": 4,
     "rejectionReasons": {
-      "missing_published_at": 3,
-      "missing_title": 1,
+      "missing_published_at": 10,
       "ungraded": 1
     }
   },
