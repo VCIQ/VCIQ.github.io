@@ -8,6 +8,7 @@ it only records research yield for future cooldown/retry and strategy decisions.
 
 from __future__ import annotations
 
+import re
 import sys
 import time
 from pathlib import Path
@@ -42,11 +43,116 @@ from tools.person_research_strategy_memory import classify_source_type
 from tools.person_video_discovery import discover_person_video_materials
 from tools.wechat_channel_card_discovery import discover_embedded_wechat_video_materials
 
+_BASE_COLLECT_CANDIDATES = core.collect_candidates
 _BASE_ENRICH_CANDIDATE = core.enrich_candidate
 _RESEARCH_ATTEMPT_MAP: dict[str, dict[str, str]] = {}
 _RESEARCH_QUEUE_STATS: dict[str, int] = {}
 _RESEARCH_DATE = ""
 _OUTCOME_MEMORY: dict[str, Any] = {}
+
+
+def _has_cjk(value: str) -> bool:
+    return bool(re.search(r"[\u3400-\u9fff]", value))
+
+
+def _has_latin(value: str) -> bool:
+    return bool(re.search(r"[A-Za-z\u00c0-\u024f]", value))
+
+
+def parse_tracking_identity(raw: str) -> tuple[str, str, str]:
+    """Return canonical display name, English name and handle from a tracking seed.
+
+    Legacy tracking configuration contains a few bilingual labels with a missing
+    closing parenthesis. Treat a parenthetical as an identity split only when one
+    side is CJK and the other is Latin, so role/status parentheticals remain intact.
+    """
+    label, handle = core.parse_tracking_label(str(raw or ""))
+    match = re.match(r"^(.+?)\s*[（(]\s*([^()（）]+?)\s*[)）]?\s*$", label)
+    if not match:
+        english_name = label if _has_latin(label) and not _has_cjk(label) else ""
+        return label.strip(), english_name.strip(), handle
+    left = match.group(1).strip()
+    right = match.group(2).strip()
+    if _has_cjk(left) and _has_latin(right) and not _has_cjk(right):
+        return left, right, handle
+    if _has_latin(left) and not _has_cjk(left) and _has_cjk(right):
+        return right, left, handle
+    english_name = label if _has_latin(label) and not _has_cjk(label) else ""
+    return label.strip(), english_name.strip(), handle
+
+
+def collect_candidates(
+    tracking: dict[str, Any], overrides: dict[str, Any]
+) -> tuple[list[dict[str, Any]], list[str]]:
+    """Collect tracked people with canonical bilingual identities and stable slugs."""
+    explicit_orgs = {core.normalize(value) for value in overrides.get("organizationAccounts") or []}
+    override_index: dict[str, dict[str, Any]] = {}
+    for item in overrides.get("people") or []:
+        for alias in core.unique([
+            item.get("canonicalName", ""),
+            item.get("englishName", ""),
+            *(item.get("aliases") or []),
+        ]):
+            override_index[core.normalize(alias)] = item
+
+    grouped: dict[str, dict[str, Any]] = {}
+    excluded: list[str] = []
+    for track in tracking.get("tracks") or []:
+        if track.get("enabled") is False:
+            continue
+        sector = str(track.get("name") or track.get("slug") or "未分类")
+        for raw in track.get("people") or []:
+            raw_text = str(raw)
+            name, parsed_english_name, handle = parse_tracking_identity(raw_text)
+            override = (
+                override_index.get(core.normalize(name))
+                or override_index.get(core.normalize(parsed_english_name))
+                or override_index.get(core.normalize(raw_text))
+            )
+            if core.is_organization_account(raw_text, name, handle, explicit_orgs):
+                excluded.append(raw_text)
+                continue
+            canonical = str((override or {}).get("canonicalName") or name).strip()
+            english_name = str(
+                (override or {}).get("englishName")
+                or parsed_english_name
+                or (canonical if _has_latin(canonical) and not _has_cjk(canonical) else "")
+            ).strip()
+            if not canonical:
+                continue
+            # Preserve existing public URLs: bilingual seeds historically derived
+            # ASCII slugs from the English fragment even when the display name is CJK.
+            slug = str(
+                (override or {}).get("slug")
+                or core.fallback_slug(canonical, handle or english_name)
+            )
+            entry = grouped.setdefault(slug, {
+                "slug": slug,
+                "name": canonical,
+                "englishName": english_name or canonical,
+                "aliases": [],
+                "handles": [],
+                "sectors": [],
+                "override": override or {},
+            })
+            entry["aliases"] = core.unique([
+                *entry["aliases"],
+                name,
+                parsed_english_name,
+                canonical,
+                english_name,
+                str((override or {}).get("englishName") or ""),
+                *((override or {}).get("aliases") or []),
+            ])
+            entry["handles"] = core.unique([
+                *entry["handles"],
+                handle,
+                *((override or {}).get("handles") or []),
+            ])
+            entry["sectors"] = core.unique([*entry["sectors"], sector])
+    return sorted(
+        grouped.values(), key=lambda item: (item["sectors"][0], item["englishName"])
+    ), core.unique(excluded)
 
 
 def _load_active_research_attempts() -> dict[str, dict[str, str]]:
@@ -187,6 +293,7 @@ def enrich_candidate(
     return merge_video_materials(profile, core.dedupe_materials([*query_materials, *embedded_materials]))
 
 
+core.collect_candidates = collect_candidates
 core.enrich_candidate = enrich_candidate
 build_payload = core.build_payload
 
