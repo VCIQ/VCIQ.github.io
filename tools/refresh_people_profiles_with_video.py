@@ -155,9 +155,72 @@ def collect_candidates(
     ), core.unique(excluded)
 
 
+def normalize_person_record_identity(person: dict[str, Any]) -> dict[str, Any]:
+    """Canonicalize a prior people.json row without changing its slug or evidence."""
+    primary_name, primary_english, primary_handle = parse_tracking_identity(
+        str(person.get("name") or "")
+    )
+    english_name_value, english_from_field, english_handle = parse_tracking_identity(
+        str(person.get("englishName") or "")
+    )
+    parsed_aliases = [
+        parse_tracking_identity(str(alias))
+        for alias in person.get("aliases") or []
+    ]
+    name = primary_name or english_name_value or str(person.get("name") or "").strip()
+    english_name = (
+        primary_english
+        or english_from_field
+        or (
+            english_name_value
+            if _has_latin(english_name_value) and not _has_cjk(english_name_value)
+            else ""
+        )
+        or str(person.get("englishName") or "").strip()
+        or name
+    )
+    aliases = core.unique([
+        name,
+        english_name,
+        primary_name,
+        primary_english,
+        english_name_value,
+        english_from_field,
+        *(
+            part
+            for parsed in parsed_aliases
+            for part in (parsed[0], parsed[1])
+        ),
+    ])
+    handles = core.unique([
+        *(person.get("handles") or []),
+        primary_handle,
+        english_handle,
+        *(parsed[2] for parsed in parsed_aliases),
+    ])
+    return {
+        **person,
+        "name": name,
+        "englishName": english_name,
+        "aliases": aliases,
+        "handles": handles,
+    }
+
+
+def normalize_people_payload_identities(payload: dict[str, Any]) -> dict[str, Any]:
+    people = [
+        normalize_person_record_identity(person)
+        for person in payload.get("people") or []
+        if isinstance(person, dict)
+    ]
+    return {**payload, "people": people, "personCount": len(people)}
+
+
 def _load_active_research_attempts() -> dict[str, dict[str, str]]:
     global _RESEARCH_QUEUE_STATS, _RESEARCH_DATE, _OUTCOME_MEMORY
-    people_payload = load_json(PEOPLE_PATH, {"people": []})
+    people_payload = normalize_people_payload_identities(
+        load_json(PEOPLE_PATH, {"people": []})
+    )
     agenda = build_agenda(people_payload, load_json(ARTICLES_PATH, {"articles": []}))
     _OUTCOME_MEMORY = load_memory(OUTCOME_MEMORY_PATH)
     queue = build_daily_queue(agenda, people_payload, _OUTCOME_MEMORY)
@@ -180,7 +243,9 @@ def publish_research_plan(
     outcome_memory: dict[str, Any] | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     """Persist the agenda and next queue from the same refreshed snapshot."""
-    people_payload = load_json(people_path, {"people": []})
+    people_payload = normalize_people_payload_identities(
+        load_json(people_path, {"people": []})
+    )
     agenda = build_agenda(
         people_payload,
         load_json(articles_path, {"articles": []}),
