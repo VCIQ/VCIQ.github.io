@@ -1,40 +1,2533 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-25T19:43:00+00:00",
+  "generatedAt": "2026-08-26T00:06:51+00:00",
   "asOfDate": "2026-08-26",
-  "runStatus": "no-material-change",
+  "runStatus": "model",
   "baselineSource": "snapshot",
   "model": {
     "provider": "SiliconFlow",
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": false,
-    "usage": {}
+    "used": true,
+    "usage": {
+      "prompt_tokens": 12320,
+      "completion_tokens": 6262,
+      "total_tokens": 18582,
+      "completion_tokens_details": {
+        "reasoning_tokens": 4266
+      },
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 12320
+    }
   },
   "changeSummary": {
-    "totalDetected": 0,
-    "total": 0,
-    "byDataset": {},
-    "byChangeType": {},
-    "externalCandidates": 0,
+    "totalDetected": 29,
+    "total": 11,
+    "byDataset": {
+      "marketCompany": 11
+    },
+    "byChangeType": {
+      "external_event": 11,
+      "data_maintenance": 4,
+      "source_refresh": 14
+    },
+    "externalCandidates": 11,
     "qualityRejected": 0,
-    "maintenanceExcluded": 0,
+    "maintenanceExcluded": 18,
     "aggregatedEvents": 0,
-    "highestImportance": 0
+    "highestImportance": 48
   },
   "analysis": {
-    "mode": "structured-change-only",
-    "isResearchJudgment": false,
-    "executiveSummary": "本期没有通过证据质量门的外部事实候选。",
-    "keyDevelopments": [],
-    "thesisUpdates": [],
-    "watchlist": [],
-    "risks": [],
-    "methodologyNote": "结构化变化检查；本期无材料变化。未执行生成式研判。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
+    "mode": "model-analysis",
+    "isResearchJudgment": true,
+    "executiveSummary": "证据包显示，2026年8月25日美股收盘后，多家科技公司行情出现显著变化：Tempus AI上涨39.24%，Recursion上涨15.21%，文远知行上涨1.33%；Rocket Lab下跌15.47%，Aurora下跌6.18%，Joby下跌5.62%，IonQ下跌4.69%，Rigetti下跌4.35%，小马智行下跌2.65%，Mobileye下跌2.14%。宁德时代新闻流新增多篇媒体报道，涉及高利润讨论、A股分红、产业链IPO等。所有行情数据来自Yahoo财经，新闻来自新浪财经。证据仅支持价格变动和新闻标题，未提供驱动因素或基本面信息，相关原因需待验证。",
+    "keyDevelopments": [
+      {
+        "title": "Tempus AI 股价单日大涨39.24%",
+        "assessment": "根据Yahoo财经行情数据，Tempus AI收盘价较前收盘上涨39.24%，为证据包中最大单日涨幅。证据仅包含行情数据，未提供驱动因素，需待验证。",
+        "importance": 5,
+        "confidence": "high",
+        "entities": [
+          "Tempus AI, Inc."
+        ],
+        "evidenceIds": [
+          "E013"
+        ]
+      },
+      {
+        "title": "Rocket Lab 股价单日下跌15.47%",
+        "assessment": "Rocket Lab收盘价较前收盘下跌15.47%，跌幅显著。证据仅限行情数据，未说明具体原因，需待验证。",
+        "importance": 5,
+        "confidence": "high",
+        "entities": [
+          "Rocket Lab Corporation"
+        ],
+        "evidenceIds": [
+          "E017"
+        ]
+      },
+      {
+        "title": "自动驾驶相关公司行情分化",
+        "assessment": "文远知行上涨1.33%，小马智行下跌2.65%，Aurora下跌6.18%，Mobileye下跌2.14%。这些公司同属自动驾驶/出行科技领域，但证据包未提供业务关联或共同驱动因素，仅能确认当日行情表现。",
+        "importance": 4,
+        "confidence": "high",
+        "entities": [
+          "文远知行",
+          "小马智行",
+          "Aurora Innovation, Inc.",
+          "Mobileye Global Inc."
+        ],
+        "evidenceIds": [
+          "E001",
+          "E005",
+          "E041",
+          "E029"
+        ]
+      },
+      {
+        "title": "量子计算概念股回调",
+        "assessment": "IonQ下跌4.69%，Rigetti下跌4.35%。两者均属量子计算领域，但证据未提供板块联动原因。",
+        "importance": 3,
+        "confidence": "high",
+        "entities": [
+          "IonQ, Inc.",
+          "Rigetti Computing, Inc."
+        ],
+        "evidenceIds": [
+          "E037",
+          "E021"
+        ]
+      },
+      {
+        "title": "Recursion Pharmaceuticals 股价上涨15.21%",
+        "assessment": "Recursion收盘价较前收盘上涨15.21%，涨幅较大，但证据仅限行情数据，驱动因素待验证。",
+        "importance": 3,
+        "confidence": "high",
+        "entities": [
+          "Recursion Pharmaceuticals, Inc."
+        ],
+        "evidenceIds": [
+          "E025"
+        ]
+      },
+      {
+        "title": "Joby Aviation 股价下跌5.62%",
+        "assessment": "Joby Aviation收盘价较前收盘下跌5.62%，证据仅限行情数据，未提供原因。",
+        "importance": 2,
+        "confidence": "high",
+        "entities": [
+          "Joby Aviation, Inc."
+        ],
+        "evidenceIds": [
+          "E033"
+        ]
+      },
+      {
+        "title": "宁德时代新闻流更新",
+        "assessment": "新增多篇媒体报道，涉及宁德时代高利润讨论、A股中期分红、产业链公司IPO问询等。这些是媒体标题，未验证内容，不能作为公司基本面变化的直接证据。",
+        "importance": 2,
+        "confidence": "medium",
+        "entities": [
+          "宁德时代"
+        ],
+        "evidenceIds": [
+          "E009",
+          "E010",
+          "E011",
+          "E012"
+        ]
+      }
+    ],
+    "thesisUpdates": [
+      {
+        "entity": "Tempus AI, Inc.",
+        "direction": "positive",
+        "statement": "股价单日上涨39.24%，市场情绪强烈，但缺乏基本面证据，需关注后续公告或新闻。",
+        "evidenceIds": [
+          "E013"
+        ]
+      },
+      {
+        "entity": "Rocket Lab Corporation",
+        "direction": "negative",
+        "statement": "股价单日下跌15.47%，可能反映市场担忧，但证据未提供原因，需验证。",
+        "evidenceIds": [
+          "E017"
+        ]
+      },
+      {
+        "entity": "文远知行",
+        "direction": "positive",
+        "statement": "股价小幅上涨1.33%，表现相对稳健，但幅度有限。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "entity": "小马智行",
+        "direction": "negative",
+        "statement": "股价下跌2.65%，与文远知行分化，但证据未提供原因。",
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "entity": "Aurora Innovation, Inc.",
+        "direction": "negative",
+        "statement": "股价下跌6.18%，跌幅在自动驾驶相关公司中较大。",
+        "evidenceIds": [
+          "E041"
+        ]
+      },
+      {
+        "entity": "IonQ, Inc.",
+        "direction": "negative",
+        "statement": "股价下跌4.69%，量子计算板块回调。",
+        "evidenceIds": [
+          "E037"
+        ]
+      },
+      {
+        "entity": "Recursion Pharmaceuticals, Inc.",
+        "direction": "positive",
+        "statement": "股价上涨15.21%，表现突出，但原因待验证。",
+        "evidenceIds": [
+          "E025"
+        ]
+      },
+      {
+        "entity": "宁德时代",
+        "direction": "neutral",
+        "statement": "新闻流更新，但无明确方向性信息。",
+        "evidenceIds": [
+          "E009",
+          "E010",
+          "E011",
+          "E012"
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "item": "Tempus AI 大涨驱动因素",
+        "reason": "单日涨幅39.24%异常显著，但证据包无相关新闻或公告，需查找后续披露。",
+        "nextEvidence": "Tempus AI 的新闻、公告或财报",
+        "evidenceIds": [
+          "E013"
+        ]
+      },
+      {
+        "item": "Rocket Lab 大跌原因",
+        "reason": "单日跌幅15.47%，可能涉及行业或公司特定事件，需验证。",
+        "nextEvidence": "Rocket Lab 的新闻、公告或行业动态",
+        "evidenceIds": [
+          "E017"
+        ]
+      },
+      {
+        "item": "自动驾驶板块分化持续性",
+        "reason": "文远知行上涨而小马智行、Aurora、Mobileye下跌，需观察是否反映基本面差异或市场情绪。",
+        "nextEvidence": "各公司后续订单、监管进展或财报",
+        "evidenceIds": [
+          "E001",
+          "E005",
+          "E041",
+          "E029"
+        ]
+      },
+      {
+        "item": "量子计算板块回调",
+        "reason": "IonQ和Rigetti同步下跌，需关注是否行业性利空。",
+        "nextEvidence": "量子计算行业新闻或公司公告",
+        "evidenceIds": [
+          "E037",
+          "E021"
+        ]
+      },
+      {
+        "item": "宁德时代相关报道内容",
+        "reason": "新增新闻标题涉及高利润、分红等，但未验证内容，需阅读原文确认。",
+        "nextEvidence": "完整文章内容或公司官方回应",
+        "evidenceIds": [
+          "E009",
+          "E010",
+          "E011",
+          "E012"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "行情数据波动可能由情绪或流动性驱动，不代表基本面变化",
+        "reason": "证据包仅包含收盘价和涨跌幅，无成交量或基本面信息，且metrics字段被标记为unsupported。",
+        "evidenceIds": [
+          "E013",
+          "E017"
+        ]
+      },
+      {
+        "risk": "媒体报道标题可能具有倾向性或片面性，不能作为事实依据",
+        "reason": "宁德时代相关新闻来自新浪财经，标题如'高利润该咋看'可能包含观点，未验证内容。",
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "risk": "证据包时间点单一，无法判断趋势",
+        "reason": "所有行情数据均为2026-08-25收盘后快照，缺乏历史对比。",
+        "evidenceIds": [
+          "E001",
+          "E005"
+        ]
+      }
+    ],
+    "methodologyNote": "本分析仅基于证据包中的quote和news字段，区分事实与推断。行情数据（Yahoo财经）为事实，但价格变动的原因和影响为推断；新闻标题（新浪财经）为媒体报道，未验证内容，不作为确定性事实。未使用被标记为unsupported的metrics和priceHistory字段。不提供买入、卖出、目标价或收益承诺。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
   },
-  "changes": [],
-  "evidence": [],
+  "changes": [
+    {
+      "id": "chg-95247b061761f71c43a4",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "weride",
+      "entityName": "文远知行",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
+      "summary": "文远知行 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$251.81万"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "19.44元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.79元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$18.80亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "3.11亿股"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$19.90亿"
+          },
+          "…另 7 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 5.97,
+            "date": "2026-08-24",
+            "high": 6.36,
+            "low": 5.905,
+            "open": 6.335,
+            "volume": 2832200.0
+          },
+          {
+            "close": 6.06,
+            "date": "2026-08-25",
+            "high": 6.0997,
+            "low": 5.885,
+            "open": 5.93,
+            "volume": 406355.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-25T14:26:12+00:00",
+          "change": 0.05,
+          "changePercent": 0.83,
+          "currency": "USD",
+          "previousClose": 6.0
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$975.19万"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "19.44元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.79元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$18.89亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "3.11亿股"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$20.00亿"
+          },
+          "…另 7 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 5.97,
+            "date": "2026-08-24",
+            "high": 6.36,
+            "low": 5.905,
+            "open": 6.335,
+            "volume": 2832200.0
+          },
+          {
+            "close": 6.08,
+            "date": "2026-08-25",
+            "high": 6.105,
+            "low": 5.885,
+            "open": 5.93,
+            "volume": 1607127.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-25T20:00:00+00:00",
+          "change": 0.08,
+          "changePercent": 1.33,
+          "currency": "USD",
+          "previousClose": 6.0
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-25T14:26:12+00:00",
+            "change": 0.05,
+            "changePercent": 0.83,
+            "currency": "USD",
+            "previousClose": 6.0
+          },
+          "after": {
+            "asOf": "2026-08-25T20:00:00+00:00",
+            "change": 0.08,
+            "changePercent": 1.33,
+            "currency": "USD",
+            "previousClose": 6.0
+          },
+          "evidenceIds": [
+            "E001"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory"
+      ],
+      "evidenceIds": [
+        "E001"
+      ],
+      "supportingEvidenceIds": [
+        "E001"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-cf9f83451fa34a4e0e8e",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "pony-ai",
+      "entityName": "小马智行",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
+      "summary": "小马智行 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$979.25万"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "3.63美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.27美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.25美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$26.36亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "3.53亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 7.555,
+            "date": "2026-08-24",
+            "high": 7.98,
+            "low": 7.4,
+            "open": 7.9,
+            "volume": 5944400.0
+          },
+          {
+            "close": 7.46,
+            "date": "2026-08-25",
+            "high": 7.559,
+            "low": 7.305,
+            "open": 7.55,
+            "volume": 1315632.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-25T14:26:15+00:00",
+          "change": -0.285,
+          "changePercent": -3.68,
+          "currency": "USD",
+          "previousClose": 7.745
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$3061.31万"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "3.63美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.27美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.25美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$26.64亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "3.53亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 7.555,
+            "date": "2026-08-24",
+            "high": 7.98,
+            "low": 7.4,
+            "open": 7.9,
+            "volume": 5957700.0
+          },
+          {
+            "close": 7.54,
+            "date": "2026-08-25",
+            "high": 7.559,
+            "low": 7.305,
+            "open": 7.55,
+            "volume": 4070656.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-25T20:00:00+00:00",
+          "change": -0.205,
+          "changePercent": -2.65,
+          "currency": "USD",
+          "previousClose": 7.745
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-25T14:26:15+00:00",
+            "change": -0.285,
+            "changePercent": -3.68,
+            "currency": "USD",
+            "previousClose": 7.745
+          },
+          "after": {
+            "asOf": "2026-08-25T20:00:00+00:00",
+            "change": -0.205,
+            "changePercent": -2.65,
+            "currency": "USD",
+            "previousClose": 7.745
+          },
+          "evidenceIds": [
+            "E005"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory"
+      ],
+      "evidenceIds": [
+        "E005"
+      ],
+      "supportingEvidenceIds": [
+        "E005"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-9f742068cf6488872b41",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "catl",
+      "entityName": "宁德时代",
+      "action": "updated",
+      "changedFields": [
+        "news"
+      ],
+      "summary": "宁德时代 的 news 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": [
+          {
+            "publishedAt": "2026-08-25T17:17:00+08:00",
+            "source": "新浪财经",
+            "title": "汰弱留强",
+            "url": "https://cj.sina.cn/articles/view/2812319402/a7a096aa02703ev84"
+          },
+          {
+            "publishedAt": "2026-08-25T18:44:00+08:00",
+            "source": "新浪财经",
+            "title": "主力资金 | 尾盘主力大幅出逃5股",
+            "url": "https://cj.sina.cn/articles/view/5574738445/14c47c20d01901jxu4"
+          },
+          {
+            "publishedAt": "2026-08-25T20:35:00+08:00",
+            "source": "新浪财经",
+            "title": "赛豆AIVA将采用换电模式，首款车型ME7年内亮相",
+            "url": "https://finance.sina.com.cn/7x24/2026-08-25/doc-inippvun5500268.shtml"
+          },
+          {
+            "publishedAt": "2026-08-25T17:43:00+08:00",
+            "source": "新浪财经",
+            "title": "屹艮科技完成亿元级战略融资",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-25/doc-inipprnk9644058.shtml"
+          },
+          {
+            "publishedAt": "2026-08-25T20:54:00+08:00",
+            "source": "新浪财经",
+            "title": "深度绑定“宁王” 天华新能冲刺港股IPO进入关键期 遭监管询问“是否存在利益输送”？",
+            "url": "https://finance.sina.com.cn/roll/2026-08-25/doc-inippvuq2296514.shtml"
+          },
+          {
+            "publishedAt": "2026-08-25T17:21:00+08:00",
+            "source": "新浪财经",
+            "title": "科创债火爆，谁在发行？谁是“承销王”？",
+            "url": "https://finance.sina.com.cn/stock/stockzmt/2026-08-25/doc-inippmeu2333148.shtml"
+          },
+          "…另 4 项"
+        ]
+      },
+      "after": {
+        "news": [
+          {
+            "publishedAt": "2026-08-26T06:16:00+08:00",
+            "source": "新浪财经",
+            "title": "宁德时代的高利润该咋看？（小经说汽车）",
+            "url": "https://cj.sina.cn/articles/view/6456450127/180d59c4f02002cbde"
+          },
+          {
+            "publishedAt": "2026-08-26T00:00:00+08:00",
+            "source": "新浪财经",
+            "title": "A股中期分红密集落地 448家公司派现超2300亿元",
+            "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e47059093zz0"
+          },
+          {
+            "publishedAt": "2026-08-26T00:00:00+08:00",
+            "source": "新浪财经",
+            "title": "恒翼能IPO三轮问询必答题：大客户依赖症如何化解",
+            "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e4705909412w"
+          },
+          {
+            "publishedAt": "2026-08-26T00:00:00+08:00",
+            "source": "新浪财经",
+            "title": "福建哪些产业正加速聚能起势？",
+            "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e470590941lg"
+          },
+          {
+            "publishedAt": "2026-08-25T20:35:00+08:00",
+            "source": "新浪财经",
+            "title": "赛豆AIVA将采用换电模式，首款车型ME7年内亮相",
+            "url": "https://finance.sina.com.cn/7x24/2026-08-25/doc-inippvun5500268.shtml"
+          },
+          {
+            "publishedAt": "2026-08-26T04:18:00+08:00",
+            "source": "新浪财经",
+            "title": "投资加码带动业绩释放 电力设备储能产业链迎周期回暖",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-26/doc-inipqsye2210595.shtml"
+          },
+          "…另 4 项"
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [
+            {
+              "publishedAt": "2026-08-25T17:17:00+08:00",
+              "source": "新浪财经",
+              "title": "汰弱留强",
+              "url": "https://cj.sina.cn/articles/view/2812319402/a7a096aa02703ev84"
+            },
+            {
+              "publishedAt": "2026-08-25T18:44:00+08:00",
+              "source": "新浪财经",
+              "title": "主力资金 | 尾盘主力大幅出逃5股",
+              "url": "https://cj.sina.cn/articles/view/5574738445/14c47c20d01901jxu4"
+            },
+            {
+              "publishedAt": "2026-08-25T20:35:00+08:00",
+              "source": "新浪财经",
+              "title": "赛豆AIVA将采用换电模式，首款车型ME7年内亮相",
+              "url": "https://finance.sina.com.cn/7x24/2026-08-25/doc-inippvun5500268.shtml"
+            },
+            {
+              "publishedAt": "2026-08-25T17:43:00+08:00",
+              "source": "新浪财经",
+              "title": "屹艮科技完成亿元级战略融资",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-25/doc-inipprnk9644058.shtml"
+            },
+            {
+              "publishedAt": "2026-08-25T20:54:00+08:00",
+              "source": "新浪财经",
+              "title": "深度绑定“宁王” 天华新能冲刺港股IPO进入关键期 遭监管询问“是否存在利益输送”？",
+              "url": "https://finance.sina.com.cn/roll/2026-08-25/doc-inippvuq2296514.shtml"
+            },
+            {
+              "publishedAt": "2026-08-25T17:21:00+08:00",
+              "source": "新浪财经",
+              "title": "科创债火爆，谁在发行？谁是“承销王”？",
+              "url": "https://finance.sina.com.cn/stock/stockzmt/2026-08-25/doc-inippmeu2333148.shtml"
+            },
+            "…另 4 项"
+          ],
+          "after": [
+            {
+              "publishedAt": "2026-08-26T06:16:00+08:00",
+              "source": "新浪财经",
+              "title": "宁德时代的高利润该咋看？（小经说汽车）",
+              "url": "https://cj.sina.cn/articles/view/6456450127/180d59c4f02002cbde"
+            },
+            {
+              "publishedAt": "2026-08-26T00:00:00+08:00",
+              "source": "新浪财经",
+              "title": "A股中期分红密集落地 448家公司派现超2300亿元",
+              "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e47059093zz0"
+            },
+            {
+              "publishedAt": "2026-08-26T00:00:00+08:00",
+              "source": "新浪财经",
+              "title": "恒翼能IPO三轮问询必答题：大客户依赖症如何化解",
+              "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e4705909412w"
+            },
+            {
+              "publishedAt": "2026-08-26T00:00:00+08:00",
+              "source": "新浪财经",
+              "title": "福建哪些产业正加速聚能起势？",
+              "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e470590941lg"
+            },
+            {
+              "publishedAt": "2026-08-25T20:35:00+08:00",
+              "source": "新浪财经",
+              "title": "赛豆AIVA将采用换电模式，首款车型ME7年内亮相",
+              "url": "https://finance.sina.com.cn/7x24/2026-08-25/doc-inippvun5500268.shtml"
+            },
+            {
+              "publishedAt": "2026-08-26T04:18:00+08:00",
+              "source": "新浪财经",
+              "title": "投资加码带动业绩释放 电力设备储能产业链迎周期回暖",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-26/doc-inipqsye2210595.shtml"
+            },
+            "…另 4 项"
+          ],
+          "evidenceIds": [
+            "E009",
+            "E010",
+            "E011",
+            "E012"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [],
+      "evidenceIds": [
+        "E009",
+        "E010",
+        "E011",
+        "E012"
+      ],
+      "supportingEvidenceIds": [
+        "E009",
+        "E010",
+        "E011",
+        "E012"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 4,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-50f847c10b5c8336eb08",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "tempus-ai",
+      "entityName": "Tempus AI, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
+      "summary": "Tempus AI, Inc. 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$2.10亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "2.47美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.45美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.67美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$119.74亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "1.75亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 66.169998,
+            "date": "2026-08-24",
+            "high": 72.019997,
+            "low": 65.93,
+            "open": 70.074997,
+            "volume": 11887100.0
+          },
+          {
+            "close": 68.269997,
+            "date": "2026-08-25",
+            "high": 68.800003,
+            "low": 63.6101,
+            "open": 66.445,
+            "volume": 3152439.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-25T14:26:20+00:00",
+          "change": 18.91,
+          "changePercent": 38.31,
+          "currency": "USD",
+          "previousClose": 49.36
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$6.07亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "2.47美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.45美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.67美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$120.55亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "1.75亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 66.169998,
+            "date": "2026-08-24",
+            "high": 72.019997,
+            "low": 65.93,
+            "open": 70.074997,
+            "volume": 11929300.0
+          },
+          {
+            "close": 68.730003,
+            "date": "2026-08-25",
+            "high": 70.790001,
+            "low": 63.6101,
+            "open": 66.445,
+            "volume": 8857386.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-25T20:00:00+00:00",
+          "change": 19.37,
+          "changePercent": 39.24,
+          "currency": "USD",
+          "previousClose": 49.36
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-25T14:26:20+00:00",
+            "change": 18.91,
+            "changePercent": 38.31,
+            "currency": "USD",
+            "previousClose": 49.36
+          },
+          "after": {
+            "asOf": "2026-08-25T20:00:00+00:00",
+            "change": 19.37,
+            "changePercent": 39.24,
+            "currency": "USD",
+            "previousClose": 49.36
+          },
+          "evidenceIds": [
+            "E013"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory"
+      ],
+      "evidenceIds": [
+        "E013"
+      ],
+      "supportingEvidenceIds": [
+        "E013"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-da5f7e7c288b30a9339c",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "rocket-lab",
+      "entityName": "Rocket Lab Corporation",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
+      "summary": "Rocket Lab Corporation 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$3.58亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "5.84美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.22美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.15美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$401.27亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "5.98亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 68.279999,
+            "date": "2026-08-24",
+            "high": 71.209999,
+            "low": 68.169998,
+            "open": 71.209999,
+            "volume": 14350000.0
+          },
+          {
+            "close": 67.0755,
+            "date": "2026-08-25",
+            "high": 70.0,
+            "low": 66.639999,
+            "open": 69.894997,
+            "volume": 5274975.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-25T14:26:17+00:00",
+          "change": -12.11,
+          "changePercent": -15.3,
+          "currency": "USD",
+          "previousClose": 79.16
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$10.15亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "5.84美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.22美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.15美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$400.43亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "5.98亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 68.279999,
+            "date": "2026-08-24",
+            "high": 71.209999,
+            "low": 68.169998,
+            "open": 71.209999,
+            "volume": 14461300.0
+          },
+          {
+            "close": 66.910004,
+            "date": "2026-08-25",
+            "high": 70.0,
+            "low": 66.480003,
+            "open": 69.894997,
+            "volume": 14891920.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-25T20:00:00+00:00",
+          "change": -12.25,
+          "changePercent": -15.47,
+          "currency": "USD",
+          "previousClose": 79.16
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-25T14:26:17+00:00",
+            "change": -12.11,
+            "changePercent": -15.3,
+            "currency": "USD",
+            "previousClose": 79.16
+          },
+          "after": {
+            "asOf": "2026-08-25T20:00:00+00:00",
+            "change": -12.25,
+            "changePercent": -15.47,
+            "currency": "USD",
+            "previousClose": 79.16
+          },
+          "evidenceIds": [
+            "E017"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory"
+      ],
+      "evidenceIds": [
+        "E017"
+      ],
+      "supportingEvidenceIds": [
+        "E017"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-46babf22c9da3eb87869",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "rigetti",
+      "entityName": "Rigetti Computing, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
+      "summary": "Rigetti Computing, Inc. 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$6283.11万"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "1.61美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.1美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.06美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$55.36亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "3.34亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 16.370001,
+            "date": "2026-08-24",
+            "high": 17.5,
+            "low": 16.309999,
+            "open": 17.495001,
+            "volume": 21656900.0
+          },
+          {
+            "close": 16.58,
+            "date": "2026-08-25",
+            "high": 16.889999,
+            "low": 16.34,
+            "open": 16.83,
+            "volume": 3790991.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-25T14:26:13+00:00",
+          "change": -1.125,
+          "changePercent": -6.35,
+          "currency": "USD",
+          "previousClose": 17.71
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$2.29亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "1.61美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.1美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.06美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$56.54亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "3.34亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 16.370001,
+            "date": "2026-08-24",
+            "high": 17.5,
+            "low": 16.309999,
+            "open": 17.495001,
+            "volume": 21717600.0
+          },
+          {
+            "close": 16.940001,
+            "date": "2026-08-25",
+            "high": 17.24,
+            "low": 16.34,
+            "open": 16.83,
+            "volume": 13522896.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-25T20:00:00+00:00",
+          "change": -0.77,
+          "changePercent": -4.35,
+          "currency": "USD",
+          "previousClose": 17.71
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-25T14:26:13+00:00",
+            "change": -1.125,
+            "changePercent": -6.35,
+            "currency": "USD",
+            "previousClose": 17.71
+          },
+          "after": {
+            "asOf": "2026-08-25T20:00:00+00:00",
+            "change": -0.77,
+            "changePercent": -4.35,
+            "currency": "USD",
+            "previousClose": 17.71
+          },
+          "evidenceIds": [
+            "E021"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory"
+      ],
+      "evidenceIds": [
+        "E021"
+      ],
+      "supportingEvidenceIds": [
+        "E021"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-67694779f6ee64d5ece6",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "recursion",
+      "entityName": "Recursion Pharmaceuticals, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
+      "summary": "Recursion Pharmaceuticals, Inc. 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$1487.99万"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "1.71美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.35美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.47美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$18.47亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "5.35亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 3.25,
+            "date": "2026-08-24",
+            "high": 3.44,
+            "low": 3.215,
+            "open": 3.42,
+            "volume": 15076100.0
+          },
+          {
+            "close": 3.45,
+            "date": "2026-08-25",
+            "high": 3.48,
+            "low": 3.26,
+            "open": 3.2725,
+            "volume": 4401101.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-25T14:26:15+00:00",
+          "change": 0.36,
+          "changePercent": 11.65,
+          "currency": "USD",
+          "previousClose": 3.09
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$7888.38万"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "1.71美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.35美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.47美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$19.06亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "5.35亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 3.25,
+            "date": "2026-08-24",
+            "high": 3.44,
+            "low": 3.215,
+            "open": 3.42,
+            "volume": 15155100.0
+          },
+          {
+            "close": 3.56,
+            "date": "2026-08-25",
+            "high": 3.59,
+            "low": 3.26,
+            "open": 3.2725,
+            "volume": 22412224.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-25T20:00:00+00:00",
+          "change": 0.47,
+          "changePercent": 15.21,
+          "currency": "USD",
+          "previousClose": 3.09
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-25T14:26:15+00:00",
+            "change": 0.36,
+            "changePercent": 11.65,
+            "currency": "USD",
+            "previousClose": 3.09
+          },
+          "after": {
+            "asOf": "2026-08-25T20:00:00+00:00",
+            "change": 0.47,
+            "changePercent": 15.21,
+            "currency": "USD",
+            "previousClose": 3.09
+          },
+          "evidenceIds": [
+            "E025"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory"
+      ],
+      "evidenceIds": [
+        "E025"
+      ],
+      "supportingEvidenceIds": [
+        "E025"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-77edca8b18f7bf3e73f1",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "mobileye",
+      "entityName": "Mobileye Global Inc.",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
+      "summary": "Mobileye Global Inc. 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$328.05万"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "9.77美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.25美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "4.7美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$21.70亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "2.52亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 8.64,
+            "date": "2026-08-24",
+            "high": 8.94,
+            "low": 8.55,
+            "open": 8.93,
+            "volume": 4899300.0
+          },
+          {
+            "close": 8.595,
+            "date": "2026-08-25",
+            "high": 8.6995,
+            "low": 8.585,
+            "open": 8.64,
+            "volume": 377746.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-25T14:26:23+00:00",
+          "change": -0.275,
+          "changePercent": -3.1,
+          "currency": "USD",
+          "previousClose": 8.87
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$2127.29万"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "9.77美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.25美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "4.7美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$21.91亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "2.52亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 8.64,
+            "date": "2026-08-24",
+            "high": 8.94,
+            "low": 8.55,
+            "open": 8.93,
+            "volume": 4899300.0
+          },
+          {
+            "close": 8.68,
+            "date": "2026-08-25",
+            "high": 8.75,
+            "low": 8.575,
+            "open": 8.64,
+            "volume": 2451145.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-25T20:00:01+00:00",
+          "change": -0.19,
+          "changePercent": -2.14,
+          "currency": "USD",
+          "previousClose": 8.87
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-25T14:26:23+00:00",
+            "change": -0.275,
+            "changePercent": -3.1,
+            "currency": "USD",
+            "previousClose": 8.87
+          },
+          "after": {
+            "asOf": "2026-08-25T20:00:01+00:00",
+            "change": -0.19,
+            "changePercent": -2.14,
+            "currency": "USD",
+            "previousClose": 8.87
+          },
+          "evidenceIds": [
+            "E029"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory"
+      ],
+      "evidenceIds": [
+        "E029"
+      ],
+      "supportingEvidenceIds": [
+        "E029"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-593b95571ab9b581c96b",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "joby",
+      "entityName": "Joby Aviation, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
+      "summary": "Joby Aviation, Inc. 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$2851.44万"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "1.79美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.32美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.37美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$71.41亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "9.89亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 7.19,
+            "date": "2026-08-24",
+            "high": 7.48,
+            "low": 7.16,
+            "open": 7.45,
+            "volume": 23595900.0
+          },
+          {
+            "close": 7.21,
+            "date": "2026-08-25",
+            "high": 7.32,
+            "low": 7.14,
+            "open": 7.32,
+            "volume": 3950976.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-25T14:26:24+00:00",
+          "change": -0.43,
+          "changePercent": -5.62,
+          "currency": "USD",
+          "previousClose": 7.65
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$1.59亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "1.79美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.32美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.37美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$71.41亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "9.89亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 7.19,
+            "date": "2026-08-24",
+            "high": 7.48,
+            "low": 7.16,
+            "open": 7.45,
+            "volume": 23635400.0
+          },
+          {
+            "close": 7.22,
+            "date": "2026-08-25",
+            "high": 7.32,
+            "low": 7.14,
+            "open": 7.32,
+            "volume": 21926039.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-25T20:00:02+00:00",
+          "change": -0.43,
+          "changePercent": -5.62,
+          "currency": "USD",
+          "previousClose": 7.65
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-25T14:26:24+00:00",
+            "change": -0.43,
+            "changePercent": -5.62,
+            "currency": "USD",
+            "previousClose": 7.65
+          },
+          "after": {
+            "asOf": "2026-08-25T20:00:02+00:00",
+            "change": -0.43,
+            "changePercent": -5.62,
+            "currency": "USD",
+            "previousClose": 7.65
+          },
+          "evidenceIds": [
+            "E033"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory"
+      ],
+      "evidenceIds": [
+        "E033"
+      ],
+      "supportingEvidenceIds": [
+        "E033"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-85b314dfff7c9a2a7479",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "ionq",
+      "entityName": "IonQ, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
+      "summary": "IonQ, Inc. 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$1.58亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "8.73美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.67美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "2.92美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$157.24亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "3.81亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 41.060001,
+            "date": "2026-08-24",
+            "high": 43.549999,
+            "low": 40.959999,
+            "open": 43.330002,
+            "volume": 17191200.0
+          },
+          {
+            "close": 41.271099,
+            "date": "2026-08-25",
+            "high": 42.220001,
+            "low": 40.994999,
+            "open": 42.080002,
+            "volume": 3789541.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-25T14:26:11+00:00",
+          "change": -2.849,
+          "changePercent": -6.46,
+          "currency": "USD",
+          "previousClose": 44.12
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$5.18亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "8.73美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.67美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "2.92美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$160.21亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "3.81亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 41.060001,
+            "date": "2026-08-24",
+            "high": 43.549999,
+            "low": 40.959999,
+            "open": 43.330002,
+            "volume": 17251100.0
+          },
+          {
+            "close": 42.049999,
+            "date": "2026-08-25",
+            "high": 42.669998,
+            "low": 40.994999,
+            "open": 42.080002,
+            "volume": 12307383.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-25T20:00:02+00:00",
+          "change": -2.07,
+          "changePercent": -4.69,
+          "currency": "USD",
+          "previousClose": 44.12
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-25T14:26:11+00:00",
+            "change": -2.849,
+            "changePercent": -6.46,
+            "currency": "USD",
+            "previousClose": 44.12
+          },
+          "after": {
+            "asOf": "2026-08-25T20:00:02+00:00",
+            "change": -2.07,
+            "changePercent": -4.69,
+            "currency": "USD",
+            "previousClose": 44.12
+          },
+          "evidenceIds": [
+            "E037"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory"
+      ],
+      "evidenceIds": [
+        "E037"
+      ],
+      "supportingEvidenceIds": [
+        "E037"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-365d58584e5f73751d18",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "aurora",
+      "entityName": "Aurora Innovation, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
+      "summary": "Aurora Innovation, Inc. 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$3192.19万"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "0.98美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.19美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.25美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$99.50亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "17.08亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 5.69,
+            "date": "2026-08-24",
+            "high": 6.21,
+            "low": 5.62,
+            "open": 6.19,
+            "volume": 39976900.0
+          },
+          {
+            "close": 5.825,
+            "date": "2026-08-25",
+            "high": 5.94,
+            "low": 5.65,
+            "open": 5.75,
+            "volume": 5458973.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-25T14:26:23+00:00",
+          "change": -0.325,
+          "changePercent": -5.28,
+          "currency": "USD",
+          "previousClose": 6.15
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$1.86亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "0.98美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.19美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.25美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$98.56亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "17.08亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 5.69,
+            "date": "2026-08-24",
+            "high": 6.21,
+            "low": 5.62,
+            "open": 6.19,
+            "volume": 40006100.0
+          },
+          {
+            "close": 5.77,
+            "date": "2026-08-25",
+            "high": 5.94,
+            "low": 5.65,
+            "open": 5.75,
+            "volume": 31904364.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-25T20:00:01+00:00",
+          "change": -0.38,
+          "changePercent": -6.18,
+          "currency": "USD",
+          "previousClose": 6.15
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-25T14:26:23+00:00",
+            "change": -0.325,
+            "changePercent": -5.28,
+            "currency": "USD",
+            "previousClose": 6.15
+          },
+          "after": {
+            "asOf": "2026-08-25T20:00:01+00:00",
+            "change": -0.38,
+            "changePercent": -6.18,
+            "currency": "USD",
+            "previousClose": 6.15
+          },
+          "evidenceIds": [
+            "E041"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory"
+      ],
+      "evidenceIds": [
+        "E041"
+      ],
+      "supportingEvidenceIds": [
+        "E041"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E001",
+      "changeId": "chg-95247b061761f71c43a4",
+      "entityName": "文远知行",
+      "claim": "文远知行 的 quote 发生变化。",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/WRD/",
+      "publishedAt": "2026-08-25T20:00:00+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E005",
+      "changeId": "chg-cf9f83451fa34a4e0e8e",
+      "entityName": "小马智行",
+      "claim": "小马智行 的 quote 发生变化。",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/PONY/",
+      "publishedAt": "2026-08-25T20:00:00+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E009",
+      "changeId": "chg-9f742068cf6488872b41",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "宁德时代的高利润该咋看？（小经说汽车）",
+      "url": "https://cj.sina.cn/articles/view/6456450127/180d59c4f02002cbde",
+      "publishedAt": "2026-08-26T06:16:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E010",
+      "changeId": "chg-9f742068cf6488872b41",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "A股中期分红密集落地 448家公司派现超2300亿元",
+      "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e47059093zz0",
+      "publishedAt": "2026-08-26T00:00:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E011",
+      "changeId": "chg-9f742068cf6488872b41",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "恒翼能IPO三轮问询必答题：大客户依赖症如何化解",
+      "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e4705909412w",
+      "publishedAt": "2026-08-26T00:00:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E012",
+      "changeId": "chg-9f742068cf6488872b41",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "福建哪些产业正加速聚能起势？",
+      "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e470590941lg",
+      "publishedAt": "2026-08-26T00:00:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E013",
+      "changeId": "chg-50f847c10b5c8336eb08",
+      "entityName": "Tempus AI, Inc.",
+      "claim": "Tempus AI, Inc. 的 quote 发生变化。",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/TEM/",
+      "publishedAt": "2026-08-25T20:00:00+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E017",
+      "changeId": "chg-da5f7e7c288b30a9339c",
+      "entityName": "Rocket Lab Corporation",
+      "claim": "Rocket Lab Corporation 的 quote 发生变化。",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/RKLB/",
+      "publishedAt": "2026-08-25T20:00:00+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E021",
+      "changeId": "chg-46babf22c9da3eb87869",
+      "entityName": "Rigetti Computing, Inc.",
+      "claim": "Rigetti Computing, Inc. 的 quote 发生变化。",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/RGTI/",
+      "publishedAt": "2026-08-25T20:00:00+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E025",
+      "changeId": "chg-67694779f6ee64d5ece6",
+      "entityName": "Recursion Pharmaceuticals, Inc.",
+      "claim": "Recursion Pharmaceuticals, Inc. 的 quote 发生变化。",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/RXRX/",
+      "publishedAt": "2026-08-25T20:00:00+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E029",
+      "changeId": "chg-77edca8b18f7bf3e73f1",
+      "entityName": "Mobileye Global Inc.",
+      "claim": "Mobileye Global Inc. 的 quote 发生变化。",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/MBLY/",
+      "publishedAt": "2026-08-25T20:00:01+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E033",
+      "changeId": "chg-593b95571ab9b581c96b",
+      "entityName": "Joby Aviation, Inc.",
+      "claim": "Joby Aviation, Inc. 的 quote 发生变化。",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/JOBY/",
+      "publishedAt": "2026-08-25T20:00:02+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E037",
+      "changeId": "chg-85b314dfff7c9a2a7479",
+      "entityName": "IonQ, Inc.",
+      "claim": "IonQ, Inc. 的 quote 发生变化。",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/IONQ/",
+      "publishedAt": "2026-08-25T20:00:02+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E041",
+      "changeId": "chg-365d58584e5f73751d18",
+      "entityName": "Aurora Innovation, Inc.",
+      "claim": "Aurora Innovation, Inc. 的 quote 发生变化。",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/AUR/",
+      "publishedAt": "2026-08-25T20:00:01+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    }
+  ],
   "methodology": {
     "stages": [
       "stable entity snapshot",
@@ -157,22 +2650,26 @@
     },
     {
       "date": "2026-08-26",
-      "generatedAt": "2026-08-25T19:43:00+00:00",
-      "runStatus": "no-material-change",
-      "changeCount": 0,
-      "executiveSummary": "本期没有通过证据质量门的外部事实候选。"
+      "generatedAt": "2026-08-26T00:06:51+00:00",
+      "runStatus": "model",
+      "changeCount": 11,
+      "executiveSummary": "证据包显示，2026年8月25日美股收盘后，多家科技公司行情出现显著变化：Tempus AI上涨39.24%，Recursion上涨15.21%，文远知行上涨1.33%；Rocket Lab下跌15.47%，Aurora下跌6.18%，Joby下跌5.62%，IonQ下跌4.69%，Rigetti下跌4.35%，小马智行下跌2.65%，Mobileye下跌2.14%。宁德时代新闻流新增多篇媒体报道，涉及高利润讨论、A股分红、产业链IPO等。所有行情数据来自Yahoo财经，新闻来自新浪财经。证据仅支持价格变动和新闻标题，未提供驱动因素或基本面信息，相关原因需待验证。"
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 0,
-    "eligibleCandidateCount": 0,
+    "candidateCount": 11,
+    "eligibleCandidateCount": 11,
     "rejectedCandidateCount": 0,
     "rejectedByDataset": {},
-    "evidenceCount": 0,
-    "supportingEvidenceCount": 0,
-    "rejectedEvidenceCount": 0,
-    "passedButUnboundEvidenceCount": 0,
-    "rejectionReasons": {}
+    "evidenceCount": 44,
+    "supportingEvidenceCount": 14,
+    "rejectedEvidenceCount": 3,
+    "passedButUnboundEvidenceCount": 27,
+    "rejectionReasons": {
+      "missing_published_at": 3,
+      "missing_title": 1,
+      "ungraded": 1
+    }
   },
   "researchScope": {
     "technology": {
