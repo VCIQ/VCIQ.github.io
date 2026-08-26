@@ -113,6 +113,11 @@ def _can_bypass_persistent_hold(
     official_sources_payload: dict[str, Any],
     registry_payload: dict[str, Any],
 ) -> bool:
+    # The core preparer intentionally rejects institution-like candidates before
+    # registry/source resolution. Do not repeatedly unlock those holds merely
+    # because an institution has an official page; they retry on expiry/evidence.
+    if preparation.candidate_is_institution_like(candidate):
+        return False
     if preparation._registry_match(registry_payload, candidate):
         return True
     return preparation._official_source_match(official_sources_payload, candidate) is not None
