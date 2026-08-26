@@ -1,230 +1,305 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-26T02:44:09+00:00",
+  "generatedAt": "2026-08-26T09:01:56+00:00",
   "asOfDate": "2026-08-26",
-  "runStatus": "model",
+  "runStatus": "api-fallback",
   "baselineSource": "snapshot",
   "model": {
     "provider": "SiliconFlow",
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": true,
-    "usage": {
-      "prompt_tokens": 4223,
-      "completion_tokens": 2607,
-      "total_tokens": 6830,
-      "completion_tokens_details": {
-        "reasoning_tokens": 1019
-      },
-      "prompt_tokens_details": {
-        "cached_tokens": 0
-      },
-      "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 4223
-    }
+    "used": false,
+    "usage": {}
   },
   "changeSummary": {
-    "totalDetected": 6,
-    "total": 3,
+    "totalDetected": 33,
+    "total": 6,
     "byDataset": {
-      "ventureCompany": 3
+      "marketCompany": 6
     },
     "byChangeType": {
-      "external_event": 5,
-      "source_refresh": 1
+      "external_event": 15,
+      "data_maintenance": 4,
+      "source_refresh": 14
     },
-    "externalCandidates": 5,
-    "qualityRejected": 2,
-    "maintenanceExcluded": 1,
+    "externalCandidates": 15,
+    "qualityRejected": 9,
+    "maintenanceExcluded": 18,
     "aggregatedEvents": 0,
-    "highestImportance": 88
+    "highestImportance": 48
   },
   "analysis": {
-    "mode": "model-analysis",
-    "isResearchJudgment": true,
-    "executiveSummary": "证据包显示三项创业公司数据变更，均涉及融资或资本市场字段的调整。宁德时代（CATL）的financing字段由一条2026-08-14的融资记录变为空，但该记录对应的官方新闻仍指向Quinbrook Supernode项目合作；Joby Aviation的capitalMarkets和financing字段删除了Atoms战略合作及2026年Q2财报相关条目，仅保留2025 Impact Report；Form Energy的financing字段删除了2026-08-12一条重复的Series G融资记录，但该融资事件仍由其他官方来源支持。整体看，变更多为数据记录清理或去重，不改变相关公司已披露的核心业务事实，但需注意区分数据层变化与真实事件变化。 质量门诊断：缺少发布时间 10、证据未分级 1、证据合格但未绑定变化字段 4。",
+    "mode": "structured-change-only",
+    "isResearchJudgment": false,
+    "executiveSummary": "本期有 6 条外部事实候选通过基础证据质量门。当前为降级展示，仅列出字段变化，不提供模型研判或影响结论。 质量门诊断：缺少发布时间 4、缺少标题 2、证据未分级 2、证据合格但未绑定变化字段 38。",
     "keyDevelopments": [
       {
-        "title": "宁德时代financing字段移除一条融资记录，但官方新闻仍显示Supernode项目合作",
-        "assessment": "根据E001，宁德时代官网新闻提及Quinbrook Supernode电池储能项目完成Stage 2商业运营并达成Stage 3融资关闭，CATL作为核心储能系统供应商。数据变更将financing字段从有该记录变为空，属于数据层调整，不改变新闻本身的存在。推断：该记录可能因归类或去重被移除，但无法从证据确认融资事件被撤销。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "宁德时代",
-          "Quinbrook",
-          "Supernode"
-        ],
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "title": "Joby Aviation资本市场与融资记录删减，保留Impact Report",
-        "assessment": "E009为Joby Aviation官方2025 Impact Report，变更前capitalMarkets包含Atoms战略合作（2026-08-04）和2025 Impact Report（2026-07-16），financing包含2026-08-05 Q2财报融资条目；变更后仅保留Impact Report，Atoms合作和Q2财报条目被移除。证据本身未说明删除原因，可能是数据整理或事件状态变化，需进一步验证。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "Joby Aviation",
-          "Atoms"
-        ],
-        "evidenceIds": [
-          "E009"
-        ]
-      },
-      {
-        "title": "Form Energy融资记录去重，Series G融资事件仍获官方支持",
-        "assessment": "E017、E018、E019均为Form Energy官方披露。变更前financing有三条记录，其中两条为2026-08-12的Series G融资新闻（URL略有差异），变更后保留2020-03-04首页摘要和2026-08-12带斜杠URL的新闻，删除了不带斜杠的重复条目。该融资事件本身仍由E018和E019支持，变更属于记录去重。",
+        "title": "待复核｜晶泰控股有限公司 的 quote 发生变化。",
+        "assessment": "这是通过基础证据质量门的外部事实候选，仅确认结构化字段变化；当前未生成影响判断，不应视为研究结论。",
         "importance": 2,
-        "confidence": "high",
+        "confidence": "low",
         "entities": [
-          "Form Energy"
+          "晶泰控股有限公司"
         ],
-        "evidenceIds": [
-          "E017",
-          "E018",
-          "E019"
-        ]
-      }
-    ],
-    "thesisUpdates": [
-      {
-        "entity": "宁德时代",
-        "direction": "neutral",
-        "statement": "financing字段记录被移除，但E001官方新闻仍显示CATL与Quinbrook在Supernode项目上的合作及Stage 3融资关闭，因此该变更不构成对宁德时代储能业务地位的负面证据，也不足以确认正面进展。",
         "evidenceIds": [
           "E001"
         ]
       },
       {
-        "entity": "Joby Aviation",
-        "direction": "mixed",
-        "statement": "Atoms战略合作和Q2财报融资条目从数据集中移除，可能反映数据更新或事件状态变化，但E009保留的Impact Report仍显示公司持续发布年度报告。该变更对Joby的资本市场活动信号不明确，需等待官方进一步披露。",
+        "title": "待复核｜宁德时代 的 news 发生变化。",
+        "assessment": "这是通过基础证据质量门的外部事实候选，仅确认结构化字段变化；当前未生成影响判断，不应视为研究结论。",
+        "importance": 2,
+        "confidence": "low",
+        "entities": [
+          "宁德时代"
+        ],
         "evidenceIds": [
-          "E009"
+          "E013",
+          "E014",
+          "E015",
+          "E016"
         ]
       },
       {
-        "entity": "Form Energy",
-        "direction": "positive",
-        "statement": "Series G融资记录虽经过去重，但E018明确显示Form Energy于2026-08-12宣布获得7.5亿美元Series G融资，由T. Rowe Price领投，用于扩大铁空气电池制造和商业部署。该融资事件得到官方多来源支持，方向偏正面。",
+        "title": "待复核｜华大基因 的 news 发生变化。",
+        "assessment": "这是通过基础证据质量门的外部事实候选，仅确认结构化字段变化；当前未生成影响判断，不应视为研究结论。",
+        "importance": 2,
+        "confidence": "low",
+        "entities": [
+          "华大基因"
+        ],
         "evidenceIds": [
           "E017",
           "E018",
-          "E019"
+          "E019",
+          "E020"
+        ]
+      },
+      {
+        "title": "待复核｜中科寒武纪科技股份有限公司 的 news 发生变化。",
+        "assessment": "这是通过基础证据质量门的外部事实候选，仅确认结构化字段变化；当前未生成影响判断，不应视为研究结论。",
+        "importance": 2,
+        "confidence": "low",
+        "entities": [
+          "中科寒武纪科技股份有限公司"
+        ],
+        "evidenceIds": [
+          "E021",
+          "E022",
+          "E023",
+          "E024"
+        ]
+      },
+      {
+        "title": "待复核｜Joby Aviation, Inc. 的 news 发生变化。",
+        "assessment": "这是通过基础证据质量门的外部事实候选，仅确认结构化字段变化；当前未生成影响判断，不应视为研究结论。",
+        "importance": 2,
+        "confidence": "low",
+        "entities": [
+          "Joby Aviation, Inc."
+        ],
+        "evidenceIds": [
+          "E045"
+        ]
+      },
+      {
+        "title": "待复核｜Horizon Robotics 的 news 发生变化。",
+        "assessment": "这是通过基础证据质量门的外部事实候选，仅确认结构化字段变化；当前未生成影响判断，不应视为研究结论。",
+        "importance": 2,
+        "confidence": "low",
+        "entities": [
+          "Horizon Robotics"
+        ],
+        "evidenceIds": [
+          "E053",
+          "E054",
+          "E055",
+          "E056"
         ]
       }
     ],
+    "thesisUpdates": [],
     "watchlist": [
       {
-        "item": "宁德时代Supernode项目Stage 3融资状态",
-        "reason": "E001显示Stage 3已达成财务关闭，但financing字段被移除，需确认该事件是否仍被官方视为有效融资记录，或仅为数据归类调整。",
-        "nextEvidence": "宁德时代或Quinbrook后续关于Supernode Stage 3的官方公告或项目进展",
+        "item": "复核高优先级变化的原始信源",
+        "reason": "降级输出不包含研究判断，仍需人工核对证据是否完整支持对应字段。",
+        "nextEvidence": "监管文件、公司公告或至少一个独立高等级来源。",
         "evidenceIds": [
           "E001"
         ]
-      },
-      {
-        "item": "Joby Aviation与Atoms的vertiport合作是否继续",
-        "reason": "E009变更删除了Atoms战略合作条目，但该合作曾于2026-08-04宣布，需验证合作是否终止、暂停或仅因数据整理被移除。",
-        "nextEvidence": "Joby Aviation或Atoms关于vertiport网络的后续官方声明",
-        "evidenceIds": [
-          "E009"
-        ]
-      },
-      {
-        "item": "Form Energy Series G融资的完整投资者名单和资金用途",
-        "reason": "E018仅提及T. Rowe Price领投，未列出全部投资者，且变更后保留的URL版本摘要不完整，需获取完整新闻稿以核实融资细节。",
-        "nextEvidence": "Form Energy官方新闻稿全文或后续融资公告",
-        "evidenceIds": [
-          "E018",
-          "E019"
-        ]
       }
     ],
-    "risks": [
-      {
-        "risk": "数据记录变更可能被误读为事件撤销",
-        "reason": "宁德时代和Joby的financing/capitalMarkets字段删除条目，但对应官方新闻仍存在或未说明原因，若直接解读为融资取消或合作终止，可能产生错误判断。",
-        "evidenceIds": [
-          "E001",
-          "E009"
-        ]
-      },
-      {
-        "risk": "证据来源时间跨度大，可能影响时效性",
-        "reason": "E017发布于2020-03-04，E019发布于2021-03-19，虽为官方披露，但用于支持2026年融资变化时，需注意信息时效和上下文差异。",
-        "evidenceIds": [
-          "E017",
-          "E019"
-        ]
-      },
-      {
-        "risk": "低等级或内部差异证据可能造成确定性误判",
-        "reason": "本证据包均为官方披露，但部分URL和摘要存在重复或截断，若未交叉验证，可能将数据清理误认为重大事件。",
-        "evidenceIds": [
-          "E017",
-          "E018",
-          "E019"
-        ]
-      }
-    ],
-    "methodologyNote": "本分析仅基于证据包内提供的change和evidence数据，不补充外部事实。所有判断均引用evidenceIds中的证据编号。事实层面仅陈述证据中明确出现的字段变化和官方披露内容；推断层面明确标注为推断，并标注置信度。对于数据记录删除与真实事件取消之间的差异，保持谨慎，不给出投资结论或目标价。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
+    "risks": [],
+    "methodologyNote": "结构化变化降级展示；SiliconFlow 模型请求超时，已切换到规则引擎。未执行生成式研判。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
   },
   "changes": [
     {
-      "id": "chg-f0a2e9692eddf94cdec2",
-      "dataset": "ventureCompany",
-      "entityType": "创业公司",
-      "entityId": "catl",
-      "entityName": "宁德时代",
+      "id": "chg-4400f067c948085f95dc",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "xtalpi",
+      "entityName": "晶泰控股有限公司",
       "action": "updated",
       "changedFields": [
-        "financing"
+        "metrics",
+        "priceHistory",
+        "quote"
       ],
-      "summary": "宁德时代 的 financing 发生变化。",
-      "importance": 88,
+      "summary": "晶泰控股有限公司 的 quote 发生变化。",
+      "importance": 48,
       "before": {
-        "financing": [
+        "metrics": [
           {
-            "date": "2026-08-14",
-            "investors": [],
-            "sourceUrl": "https://www.catl.com/en/news/6951.html",
-            "summary": "Brisbane, Australia | 14 August 2026 — Quinbrook's Supernode battery energy storage project has completed Stage 2 commercial operation and reached financial close on A$469 million financing for Stage 3, marking a further milestone in the phased development of Australia's largest operational BESS campus.With planned capacity expected to exceed 3 GWh, Supernode is supported by CATL as its core energy storage system supplier for all three stContemporary Amperex Technology Co., Limited (CATL) is a g",
-            "title": "CATL and Quinbrook Build on Supernode Partnership Following Stage 2 and Stage 3 Major Milestones",
-            "type": "融资"
+            "id": "amount",
+            "label": "成交额",
+            "value": "HK$3.46亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "2.09元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.09元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.06元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "HK$327.28亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "43.03亿股"
+          },
+          "…另 7 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 7.375,
+            "date": "2026-08-24",
+            "high": 7.885,
+            "low": 7.35,
+            "open": 7.86,
+            "volume": 46520036.0
+          },
+          {
+            "close": 7.605,
+            "date": "2026-08-25",
+            "high": 7.675,
+            "low": 7.3,
+            "open": 7.4,
+            "volume": 45928955.0
           }
-        ]
+        ],
+        "quote": {
+          "asOf": "2026-08-25T16:08:20+08:00",
+          "change": 0.23,
+          "changePercent": 3.12,
+          "currency": "HKD",
+          "previousClose": 7.375
+        }
       },
       "after": {
-        "financing": []
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "HK$3.26亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "2.09元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.09元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.06元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "HK$324.91亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "43.03亿股"
+          },
+          "…另 7 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 7.605,
+            "date": "2026-08-25",
+            "high": 7.675,
+            "low": 7.3,
+            "open": 7.4,
+            "volume": 45928955.0
+          },
+          {
+            "close": 7.55,
+            "date": "2026-08-26",
+            "high": 7.845,
+            "low": 7.51,
+            "open": 7.695,
+            "volume": 42883594.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-26T16:08:04+08:00",
+          "change": -0.055,
+          "changePercent": -0.72,
+          "currency": "HKD",
+          "previousClose": 7.605
+        }
       },
       "changeType": "external_event",
       "classificationReason": "包含可形成外部事实主张的字段变化",
       "isResearchCandidate": true,
       "claimFields": [
-        "financing"
+        "quote"
       ],
       "claimBindings": [
         {
-          "field": "financing",
-          "before": [
-            {
-              "date": "2026-08-14",
-              "investors": [],
-              "sourceUrl": "https://www.catl.com/en/news/6951.html",
-              "summary": "Brisbane, Australia | 14 August 2026 — Quinbrook's Supernode battery energy storage project has completed Stage 2 commercial operation and reached financial close on A$469 million financing for Stage 3, marking a further milestone in the phased development of Australia's largest operational BESS campus.With planned capacity expected to exceed 3 GWh, Supernode is supported by CATL as its core energy storage system supplier for all three stContemporary Amperex Technology Co., Limited (CATL) is a g",
-              "title": "CATL and Quinbrook Build on Supernode Partnership Following Stage 2 and Stage 3 Major Milestones",
-              "type": "融资"
-            }
-          ],
-          "after": [],
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-25T16:08:20+08:00",
+            "change": 0.23,
+            "changePercent": 3.12,
+            "currency": "HKD",
+            "previousClose": 7.375
+          },
+          "after": {
+            "asOf": "2026-08-26T16:08:04+08:00",
+            "change": -0.055,
+            "changePercent": -0.72,
+            "currency": "HKD",
+            "previousClose": 7.605
+          },
           "evidenceIds": [
             "E001"
           ]
         }
       ],
-      "unsupportedClaimFields": [],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory"
+      ],
       "evidenceIds": [
         "E001"
       ],
@@ -239,289 +314,1470 @@
       "eligibleForKeyDevelopment": true
     },
     {
-      "id": "chg-19197570e343e0c8588f",
-      "dataset": "ventureCompany",
-      "entityType": "创业公司",
-      "entityId": "joby",
-      "entityName": "Joby Aviation",
+      "id": "chg-b0c2f9bb45f07b911523",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "catl",
+      "entityName": "宁德时代",
       "action": "updated",
       "changedFields": [
-        "capitalMarkets",
-        "financing"
+        "metrics",
+        "news",
+        "priceHistory",
+        "quote"
       ],
-      "summary": "Joby Aviation 的 capitalMarkets、financing 发生变化。",
-      "importance": 88,
+      "summary": "宁德时代 的 news 发生变化。",
+      "importance": 48,
       "before": {
-        "capitalMarkets": [
+        "metrics": [
           {
-            "date": "2026-07-16",
-            "investors": [],
-            "sourceUrl": "https://www.jobyaviation.com/news/2025-impact-report",
-            "summary": "Joby Aviation Impact Reports: 2024 2023 2022 Read next Joby Aviation to Scale Defense Business Through Acquisition of Resonant Sciences Building the Next Generation of Aerospace in Ohio Joby Reports Second Quarter 2026 Financial Results © 2026 Joby Aero, Inc.",
-            "title": "2025 Impact Report | Joby Aviation",
-            "type": "并购/退出"
+            "id": "amount",
+            "label": "成交额",
+            "value": "¥99.25亿"
           },
           {
-            "date": "2026-08-04",
-            "investors": [],
-            "round": "Strategic",
-            "sourceUrl": "https://www.jobyaviation.com/news/atoms-and-joby-aviation-form-strategic-partnership-to-build-americas-vertiport-network",
-            "summary": "Atoms and Joby Aviation have formed a strategic partnership to acquire and develop next-generation transportation hubs in markets where Joby is preparing early operations under the White House-backed eVTOL Integration Pilot Program (eIPP) Vertiports will operate as multimodal transportation hubs where electric aircraft, autonomous ground vehicles, and ridesharing converge, anchored by on-site power for charging and operations",
-            "title": "Atoms and Joby Aviation Form Strategic Partnership to Build America's Vertiport Network",
-            "type": "上市"
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "81.99元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "13.02元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "9.51元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "¥1.60万亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "42.60亿股"
+          },
+          "…另 8 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-08-26T06:16:00+08:00",
+            "source": "新浪财经",
+            "title": "宁德时代的高利润该咋看？（小经说汽车）",
+            "url": "https://cj.sina.cn/articles/view/6456450127/180d59c4f02002cbde"
+          },
+          {
+            "publishedAt": "2026-08-26T00:00:00+08:00",
+            "source": "新浪财经",
+            "title": "A股中期分红密集落地 448家公司派现超2300亿元",
+            "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e47059093zz0"
+          },
+          {
+            "publishedAt": "2026-08-26T00:00:00+08:00",
+            "source": "新浪财经",
+            "title": "恒翼能IPO三轮问询必答题：大客户依赖症如何化解",
+            "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e4705909412w"
+          },
+          {
+            "publishedAt": "2026-08-26T00:00:00+08:00",
+            "source": "新浪财经",
+            "title": "福建哪些产业正加速聚能起势？",
+            "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e470590941lg"
+          },
+          {
+            "publishedAt": "2026-08-25T20:35:00+08:00",
+            "source": "新浪财经",
+            "title": "赛豆AIVA将采用换电模式，首款车型ME7年内亮相",
+            "url": "https://finance.sina.com.cn/7x24/2026-08-25/doc-inippvun5500268.shtml"
+          },
+          {
+            "publishedAt": "2026-08-26T04:18:00+08:00",
+            "source": "新浪财经",
+            "title": "投资加码带动业绩释放 电力设备储能产业链迎周期回暖",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-26/doc-inipqsye2210595.shtml"
+          },
+          "…另 4 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 387.89,
+            "date": "2026-08-24",
+            "high": 394.4,
+            "low": 386.68,
+            "open": 391.15,
+            "volume": 139730.0
+          },
+          {
+            "close": 376.73,
+            "date": "2026-08-25",
+            "high": 391.15,
+            "low": 376.06,
+            "open": 391.0,
+            "volume": 260646.0
           }
         ],
-        "financing": [
-          {
-            "date": "2026-08-05",
-            "investors": [],
-            "sourceUrl": "https://www.jobyaviation.com/news/joby-reports-second-quarter-2026-financial-results",
-            "summary": "Company Raises 2026 Revenue Guidance",
-            "title": "Joby Reports Second Quarter 2026 Financial Results",
-            "type": "融资"
-          }
-        ]
+        "quote": {
+          "asOf": "2026-08-25T16:23:30+08:00",
+          "change": -11.16,
+          "changePercent": -2.88,
+          "currency": "CNY",
+          "previousClose": 387.89
+        }
       },
       "after": {
-        "capitalMarkets": [
+        "metrics": [
           {
-            "date": "2026-07-16",
-            "investors": [],
-            "sourceUrl": "https://www.jobyaviation.com/news/2025-impact-report",
-            "summary": "Joby Aviation Impact Reports: 2024 2023 2022 Read next Joby Aviation to Scale Defense Business Through Acquisition of Resonant Sciences Building the Next Generation of Aerospace in Ohio Joby Reports Second Quarter 2026 Financial Results © 2026 Joby Aero, Inc.",
-            "title": "2025 Impact Report | Joby Aviation",
-            "type": "并购/退出"
+            "id": "amount",
+            "label": "成交额",
+            "value": "¥79.09亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "81.99元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "13.02元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "9.51元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "¥1.61万亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "42.60亿股"
+          },
+          "…另 8 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-08-26T15:51:00+08:00",
+            "source": "新浪财经",
+            "title": "昆明国资入局，和宁德时代旗下时代电服合作落地百座巧克力换电站",
+            "url": "https://cj.sina.cn/articles/view/5044281310/12ca99fde02002kmy2"
+          },
+          {
+            "publishedAt": "2026-08-26T13:45:00+08:00",
+            "source": "新浪财经",
+            "title": "集邦咨询：上半年全球储能电芯出货量超460GWh 同比大增约94%",
+            "url": "https://cj.sina.cn/articles/view/5835524730/15bd30a7a020029ase"
+          },
+          {
+            "publishedAt": "2026-08-26T15:12:00+08:00",
+            "source": "新浪财经",
+            "title": "时代电服与昆发展新能源签署战略合作协议 计划共建100座巧克力换电站",
+            "url": "https://finance.sina.com.cn/7x24/2026-08-26/doc-iniprqcu2310043.shtml"
+          },
+          {
+            "publishedAt": "2026-08-26T12:53:00+08:00",
+            "source": "新浪财经",
+            "title": "突然撤销！宁德时代枧下窝矿复产进展又现新情况",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-26/doc-iniprivs1046183.shtml"
+          },
+          {
+            "publishedAt": "2026-08-26T12:52:00+08:00",
+            "source": "新浪财经",
+            "title": "3年销量增长930多倍，中国新能源汽车为何能领跑",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-26/doc-iniprivw2289735.shtml"
+          },
+          {
+            "publishedAt": "2026-08-26T16:23:00+08:00",
+            "source": "新浪财经",
+            "title": "慧翰股份跌1.42%，成交额3785.47万元，今日主力净流入-240.81万",
+            "url": "https://finance.sina.com.cn/stock/aiassist/ggsp/2026-08-26/doc-iniprumq5498506.shtml"
+          },
+          "…另 4 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 376.73,
+            "date": "2026-08-25",
+            "high": 391.15,
+            "low": 376.06,
+            "open": 391.0,
+            "volume": 260646.0
+          },
+          {
+            "close": 379.0,
+            "date": "2026-08-26",
+            "high": 385.5,
+            "low": 373.71,
+            "open": 379.9,
+            "volume": 207162.0
           }
         ],
-        "financing": []
+        "quote": {
+          "asOf": "2026-08-26T15:35:45+08:00",
+          "change": 2.27,
+          "changePercent": 0.6,
+          "currency": "CNY",
+          "previousClose": 376.73
+        }
       },
       "changeType": "external_event",
       "classificationReason": "包含可形成外部事实主张的字段变化",
       "isResearchCandidate": true,
       "claimFields": [
-        "capitalMarkets",
-        "financing"
+        "news"
       ],
       "claimBindings": [
         {
-          "field": "capitalMarkets",
+          "field": "news",
           "before": [
             {
-              "date": "2026-07-16",
-              "investors": [],
-              "sourceUrl": "https://www.jobyaviation.com/news/2025-impact-report",
-              "summary": "Joby Aviation Impact Reports: 2024 2023 2022 Read next Joby Aviation to Scale Defense Business Through Acquisition of Resonant Sciences Building the Next Generation of Aerospace in Ohio Joby Reports Second Quarter 2026 Financial Results © 2026 Joby Aero, Inc.",
-              "title": "2025 Impact Report | Joby Aviation",
-              "type": "并购/退出"
+              "publishedAt": "2026-08-26T06:16:00+08:00",
+              "source": "新浪财经",
+              "title": "宁德时代的高利润该咋看？（小经说汽车）",
+              "url": "https://cj.sina.cn/articles/view/6456450127/180d59c4f02002cbde"
             },
             {
-              "date": "2026-08-04",
-              "investors": [],
-              "round": "Strategic",
-              "sourceUrl": "https://www.jobyaviation.com/news/atoms-and-joby-aviation-form-strategic-partnership-to-build-americas-vertiport-network",
-              "summary": "Atoms and Joby Aviation have formed a strategic partnership to acquire and develop next-generation transportation hubs in markets where Joby is preparing early operations under the White House-backed eVTOL Integration Pilot Program (eIPP) Vertiports will operate as multimodal transportation hubs where electric aircraft, autonomous ground vehicles, and ridesharing converge, anchored by on-site power for charging and operations",
-              "title": "Atoms and Joby Aviation Form Strategic Partnership to Build America's Vertiport Network",
-              "type": "上市"
-            }
+              "publishedAt": "2026-08-26T00:00:00+08:00",
+              "source": "新浪财经",
+              "title": "A股中期分红密集落地 448家公司派现超2300亿元",
+              "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e47059093zz0"
+            },
+            {
+              "publishedAt": "2026-08-26T00:00:00+08:00",
+              "source": "新浪财经",
+              "title": "恒翼能IPO三轮问询必答题：大客户依赖症如何化解",
+              "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e4705909412w"
+            },
+            {
+              "publishedAt": "2026-08-26T00:00:00+08:00",
+              "source": "新浪财经",
+              "title": "福建哪些产业正加速聚能起势？",
+              "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e470590941lg"
+            },
+            {
+              "publishedAt": "2026-08-25T20:35:00+08:00",
+              "source": "新浪财经",
+              "title": "赛豆AIVA将采用换电模式，首款车型ME7年内亮相",
+              "url": "https://finance.sina.com.cn/7x24/2026-08-25/doc-inippvun5500268.shtml"
+            },
+            {
+              "publishedAt": "2026-08-26T04:18:00+08:00",
+              "source": "新浪财经",
+              "title": "投资加码带动业绩释放 电力设备储能产业链迎周期回暖",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-26/doc-inipqsye2210595.shtml"
+            },
+            "…另 4 项"
           ],
           "after": [
             {
-              "date": "2026-07-16",
-              "investors": [],
-              "sourceUrl": "https://www.jobyaviation.com/news/2025-impact-report",
-              "summary": "Joby Aviation Impact Reports: 2024 2023 2022 Read next Joby Aviation to Scale Defense Business Through Acquisition of Resonant Sciences Building the Next Generation of Aerospace in Ohio Joby Reports Second Quarter 2026 Financial Results © 2026 Joby Aero, Inc.",
-              "title": "2025 Impact Report | Joby Aviation",
-              "type": "并购/退出"
-            }
-          ],
-          "evidenceIds": [
-            "E009"
-          ]
-        },
-        {
-          "field": "financing",
-          "before": [
+              "publishedAt": "2026-08-26T15:51:00+08:00",
+              "source": "新浪财经",
+              "title": "昆明国资入局，和宁德时代旗下时代电服合作落地百座巧克力换电站",
+              "url": "https://cj.sina.cn/articles/view/5044281310/12ca99fde02002kmy2"
+            },
             {
-              "date": "2026-08-05",
-              "investors": [],
-              "sourceUrl": "https://www.jobyaviation.com/news/joby-reports-second-quarter-2026-financial-results",
-              "summary": "Company Raises 2026 Revenue Guidance",
-              "title": "Joby Reports Second Quarter 2026 Financial Results",
-              "type": "融资"
-            }
+              "publishedAt": "2026-08-26T13:45:00+08:00",
+              "source": "新浪财经",
+              "title": "集邦咨询：上半年全球储能电芯出货量超460GWh 同比大增约94%",
+              "url": "https://cj.sina.cn/articles/view/5835524730/15bd30a7a020029ase"
+            },
+            {
+              "publishedAt": "2026-08-26T15:12:00+08:00",
+              "source": "新浪财经",
+              "title": "时代电服与昆发展新能源签署战略合作协议 计划共建100座巧克力换电站",
+              "url": "https://finance.sina.com.cn/7x24/2026-08-26/doc-iniprqcu2310043.shtml"
+            },
+            {
+              "publishedAt": "2026-08-26T12:53:00+08:00",
+              "source": "新浪财经",
+              "title": "突然撤销！宁德时代枧下窝矿复产进展又现新情况",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-26/doc-iniprivs1046183.shtml"
+            },
+            {
+              "publishedAt": "2026-08-26T12:52:00+08:00",
+              "source": "新浪财经",
+              "title": "3年销量增长930多倍，中国新能源汽车为何能领跑",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-26/doc-iniprivw2289735.shtml"
+            },
+            {
+              "publishedAt": "2026-08-26T16:23:00+08:00",
+              "source": "新浪财经",
+              "title": "慧翰股份跌1.42%，成交额3785.47万元，今日主力净流入-240.81万",
+              "url": "https://finance.sina.com.cn/stock/aiassist/ggsp/2026-08-26/doc-iniprumq5498506.shtml"
+            },
+            "…另 4 项"
           ],
-          "after": [],
           "evidenceIds": [
-            "E009"
+            "E013",
+            "E014",
+            "E015",
+            "E016"
           ]
         }
       ],
-      "unsupportedClaimFields": [],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
       "evidenceIds": [
-        "E009"
+        "E013",
+        "E014",
+        "E015",
+        "E016"
       ],
       "supportingEvidenceIds": [
-        "E009"
+        "E013",
+        "E014",
+        "E015",
+        "E016"
       ],
       "evidenceQuality": {
         "status": "passed",
-        "supporting": 1,
+        "supporting": 4,
         "total": 4
       },
       "eligibleForKeyDevelopment": true
     },
     {
-      "id": "chg-4c07bfdfe4d4e20ddbab",
-      "dataset": "ventureCompany",
-      "entityType": "创业公司",
-      "entityId": "form-energy",
-      "entityName": "Form Energy",
+      "id": "chg-21ba8ce7ad97cc10f2a1",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "bgi-genomics",
+      "entityName": "华大基因",
       "action": "updated",
       "changedFields": [
-        "financing"
+        "metrics",
+        "news",
+        "priceHistory",
+        "quote"
       ],
-      "summary": "Form Energy 的 financing 发生变化。",
-      "importance": 88,
+      "summary": "华大基因 的 news 发生变化。",
+      "importance": 48,
       "before": {
-        "financing": [
+        "metrics": [
           {
-            "amount": "$750M",
-            "date": "2020-03-04",
-            "investors": [],
-            "round": "Series G",
-            "sourceUrl": "https://formenergy.com/",
-            "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
-            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
-            "type": "融资"
+            "id": "amount",
+            "label": "成交额",
+            "value": "¥5.51亿"
           },
           {
-            "date": "2026-08-12",
-            "investors": [],
-            "round": "Series G",
-            "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing",
-            "summary": "Weirton, WV – August 12, 2026 – Form Energy, Inc., an American technology company developing and commercializing a new class of cost-effective, multi-day energy storage systems, announced today a $750 million Series G financing round led by T. Rowe Price, which also led the company’s prior Series F round. This round brings Form Energy’s total […]",
-            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
-            "type": "融资"
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "20.36元"
           },
           {
-            "amount": "$750M",
-            "date": "2026-08-12",
-            "investors": [],
-            "round": "Series G",
-            "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
-            "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
-            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
-            "type": "融资"
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.66元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.11元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "¥169.24亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "4.16亿股"
+          },
+          "…另 8 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-08-24T14:40:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因上半年经营现金流连负 易方达退出前10流通股东",
+            "url": "https://cj.sina.cn/articles/view/1663612603/6328b6bb020022tw2"
+          },
+          {
+            "publishedAt": "2026-08-22T02:46:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因新注册《出生缺陷防控系统V2.0》项目的软件著作权",
+            "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002he90"
+          },
+          {
+            "publishedAt": "2026-08-22T10:12:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因(300676.SZ)：2026年中报净利润为4740.46万元",
+            "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002iloa"
+          },
+          {
+            "publishedAt": "2026-08-24T13:44:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因2026年半年报：净利4740.46万元增718%，精准医学检测驱动盈利修复",
+            "url": "https://cj.sina.cn/articles/view/5617041192/14ecd3f2802001pas0"
+          },
+          {
+            "publishedAt": "2026-08-22T10:17:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因：上半年营收同比增长9.59%，净利润达4740万元",
+            "url": "https://cj.sina.cn/articles/view/7317133861/1b4229a2502001heee"
+          },
+          {
+            "publishedAt": "2026-08-25T00:00:00+08:00",
+            "source": "新浪财经",
+            "title": "体外诊断公司深化AI技术布局",
+            "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e47059093ry4"
+          },
+          "…另 4 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 41.9,
+            "date": "2026-08-24",
+            "high": 43.2,
+            "low": 40.76,
+            "open": 42.55,
+            "volume": 203055.0
+          },
+          {
+            "close": 40.68,
+            "date": "2026-08-25",
+            "high": 42.2,
+            "low": 40.39,
+            "open": 41.51,
+            "volume": 134939.0
           }
-        ]
+        ],
+        "quote": {
+          "asOf": "2026-08-25T16:23:30+08:00",
+          "change": -1.22,
+          "changePercent": -2.91,
+          "currency": "CNY",
+          "previousClose": 41.9
+        }
       },
       "after": {
-        "financing": [
+        "metrics": [
           {
-            "amount": "$750M",
-            "date": "2020-03-04",
-            "investors": [],
-            "round": "Series G",
-            "sourceUrl": "https://formenergy.com/",
-            "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
-            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
-            "type": "融资"
+            "id": "amount",
+            "label": "成交额",
+            "value": "¥5.76亿"
           },
           {
-            "amount": "$750M",
-            "date": "2026-08-12",
-            "investors": [],
-            "round": "Series G",
-            "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
-            "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
-            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
-            "type": "融资"
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "20.36元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.66元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.11元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "¥169.49亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "4.16亿股"
+          },
+          "…另 8 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-08-26T13:35:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因(300676)：1H26提质增效驱动净利率提升",
+            "url": "http://stock.finance.sina.com.cn/stock/go.php/vReport_Show/kind/search/rptid/841064563136/index.phtml"
+          },
+          {
+            "publishedAt": "2026-08-24T14:40:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因上半年经营现金流连负 易方达退出前10流通股东",
+            "url": "https://cj.sina.cn/articles/view/1663612603/6328b6bb020022tw2"
+          },
+          {
+            "publishedAt": "2026-08-22T02:46:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因新注册《出生缺陷防控系统V2.0》项目的软件著作权",
+            "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002he90"
+          },
+          {
+            "publishedAt": "2026-08-22T10:12:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因(300676.SZ)：2026年中报净利润为4740.46万元",
+            "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002iloa"
+          },
+          {
+            "publishedAt": "2026-08-24T13:44:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因2026年半年报：净利4740.46万元增718%，精准医学检测驱动盈利修复",
+            "url": "https://cj.sina.cn/articles/view/5617041192/14ecd3f2802001pas0"
+          },
+          {
+            "publishedAt": "2026-08-22T10:17:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因：上半年营收同比增长9.59%，净利润达4740万元",
+            "url": "https://cj.sina.cn/articles/view/7317133861/1b4229a2502001heee"
+          },
+          "…另 4 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 40.68,
+            "date": "2026-08-25",
+            "high": 42.2,
+            "low": 40.39,
+            "open": 41.51,
+            "volume": 134939.0
+          },
+          {
+            "close": 40.74,
+            "date": "2026-08-26",
+            "high": 42.68,
+            "low": 40.51,
+            "open": 41.76,
+            "volume": 139746.0
           }
-        ]
+        ],
+        "quote": {
+          "asOf": "2026-08-26T15:35:45+08:00",
+          "change": 0.06,
+          "changePercent": 0.15,
+          "currency": "CNY",
+          "previousClose": 40.68
+        }
       },
       "changeType": "external_event",
       "classificationReason": "包含可形成外部事实主张的字段变化",
       "isResearchCandidate": true,
       "claimFields": [
-        "financing"
+        "news"
       ],
       "claimBindings": [
         {
-          "field": "financing",
+          "field": "news",
           "before": [
             {
-              "amount": "$750M",
-              "date": "2020-03-04",
-              "investors": [],
-              "round": "Series G",
-              "sourceUrl": "https://formenergy.com/",
-              "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
-              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
-              "type": "融资"
+              "publishedAt": "2026-08-24T14:40:00+08:00",
+              "source": "新浪财经",
+              "title": "华大基因上半年经营现金流连负 易方达退出前10流通股东",
+              "url": "https://cj.sina.cn/articles/view/1663612603/6328b6bb020022tw2"
             },
             {
-              "date": "2026-08-12",
-              "investors": [],
-              "round": "Series G",
-              "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing",
-              "summary": "Weirton, WV – August 12, 2026 – Form Energy, Inc., an American technology company developing and commercializing a new class of cost-effective, multi-day energy storage systems, announced today a $750 million Series G financing round led by T. Rowe Price, which also led the company’s prior Series F round. This round brings Form Energy’s total […]",
-              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
-              "type": "融资"
+              "publishedAt": "2026-08-22T02:46:00+08:00",
+              "source": "新浪财经",
+              "title": "华大基因新注册《出生缺陷防控系统V2.0》项目的软件著作权",
+              "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002he90"
             },
             {
-              "amount": "$750M",
-              "date": "2026-08-12",
-              "investors": [],
-              "round": "Series G",
-              "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
-              "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
-              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
-              "type": "融资"
-            }
+              "publishedAt": "2026-08-22T10:12:00+08:00",
+              "source": "新浪财经",
+              "title": "华大基因(300676.SZ)：2026年中报净利润为4740.46万元",
+              "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002iloa"
+            },
+            {
+              "publishedAt": "2026-08-24T13:44:00+08:00",
+              "source": "新浪财经",
+              "title": "华大基因2026年半年报：净利4740.46万元增718%，精准医学检测驱动盈利修复",
+              "url": "https://cj.sina.cn/articles/view/5617041192/14ecd3f2802001pas0"
+            },
+            {
+              "publishedAt": "2026-08-22T10:17:00+08:00",
+              "source": "新浪财经",
+              "title": "华大基因：上半年营收同比增长9.59%，净利润达4740万元",
+              "url": "https://cj.sina.cn/articles/view/7317133861/1b4229a2502001heee"
+            },
+            {
+              "publishedAt": "2026-08-25T00:00:00+08:00",
+              "source": "新浪财经",
+              "title": "体外诊断公司深化AI技术布局",
+              "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e47059093ry4"
+            },
+            "…另 4 项"
           ],
           "after": [
             {
-              "amount": "$750M",
-              "date": "2020-03-04",
-              "investors": [],
-              "round": "Series G",
-              "sourceUrl": "https://formenergy.com/",
-              "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
-              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
-              "type": "融资"
+              "publishedAt": "2026-08-26T13:35:00+08:00",
+              "source": "新浪财经",
+              "title": "华大基因(300676)：1H26提质增效驱动净利率提升",
+              "url": "http://stock.finance.sina.com.cn/stock/go.php/vReport_Show/kind/search/rptid/841064563136/index.phtml"
             },
             {
-              "amount": "$750M",
-              "date": "2026-08-12",
-              "investors": [],
-              "round": "Series G",
-              "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
-              "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
-              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
-              "type": "融资"
-            }
+              "publishedAt": "2026-08-24T14:40:00+08:00",
+              "source": "新浪财经",
+              "title": "华大基因上半年经营现金流连负 易方达退出前10流通股东",
+              "url": "https://cj.sina.cn/articles/view/1663612603/6328b6bb020022tw2"
+            },
+            {
+              "publishedAt": "2026-08-22T02:46:00+08:00",
+              "source": "新浪财经",
+              "title": "华大基因新注册《出生缺陷防控系统V2.0》项目的软件著作权",
+              "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002he90"
+            },
+            {
+              "publishedAt": "2026-08-22T10:12:00+08:00",
+              "source": "新浪财经",
+              "title": "华大基因(300676.SZ)：2026年中报净利润为4740.46万元",
+              "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002iloa"
+            },
+            {
+              "publishedAt": "2026-08-24T13:44:00+08:00",
+              "source": "新浪财经",
+              "title": "华大基因2026年半年报：净利4740.46万元增718%，精准医学检测驱动盈利修复",
+              "url": "https://cj.sina.cn/articles/view/5617041192/14ecd3f2802001pas0"
+            },
+            {
+              "publishedAt": "2026-08-22T10:17:00+08:00",
+              "source": "新浪财经",
+              "title": "华大基因：上半年营收同比增长9.59%，净利润达4740万元",
+              "url": "https://cj.sina.cn/articles/view/7317133861/1b4229a2502001heee"
+            },
+            "…另 4 项"
           ],
           "evidenceIds": [
             "E017",
             "E018",
-            "E019"
+            "E019",
+            "E020"
           ]
         }
       ],
-      "unsupportedClaimFields": [],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
       "evidenceIds": [
         "E017",
         "E018",
-        "E019"
+        "E019",
+        "E020"
       ],
       "supportingEvidenceIds": [
         "E017",
         "E018",
-        "E019"
+        "E019",
+        "E020"
       ],
       "evidenceQuality": {
         "status": "passed",
-        "supporting": 3,
+        "supporting": 4,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-a39a236effcd5db8fda8",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "cambricon",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "news",
+        "priceHistory",
+        "quote"
+      ],
+      "summary": "中科寒武纪科技股份有限公司 的 news 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "¥125.89亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "21.57元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.50元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "3.68元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "¥6354.44亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "6.29亿股"
+          },
+          "…另 8 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-08-25T17:17:00+08:00",
+            "source": "新浪财经",
+            "title": "汰弱留强",
+            "url": "https://cj.sina.cn/articles/view/2812319402/a7a096aa02703ev84"
+          },
+          {
+            "publishedAt": "2026-08-25T14:41:00+08:00",
+            "source": "新浪财经",
+            "title": "A股算力概念股走强，寒武纪涨超4%",
+            "url": "https://cj.sina.cn/articles/view/5115326071/130e5ae7702002zx8y"
+          },
+          {
+            "publishedAt": "2026-08-25T13:35:00+08:00",
+            "source": "新浪财经",
+            "title": "科创AIETF鹏华(589090)标的指数涨超2.4%，字节AI办公产品“豆包工作”正式发布",
+            "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002iq6y"
+          },
+          {
+            "publishedAt": "2026-08-25T14:54:00+08:00",
+            "source": "新浪财经",
+            "title": "半导体ETF鹏华(159813)盘中净申购2000万份，高盛大幅上调半导体行业支出预期",
+            "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002iqaq"
+          },
+          {
+            "publishedAt": "2026-08-25T13:13:00+08:00",
+            "source": "新浪财经",
+            "title": "科创芯片设计ETF国联安盘中一度翻红，半导体ETF国联安跌幅收窄",
+            "url": "https://cj.sina.cn/articles/view/7651844612/1c815e20400101za1y"
+          },
+          {
+            "publishedAt": "2026-08-25T13:39:00+08:00",
+            "source": "新浪财经",
+            "title": "人工智能ETF华富(515980)午后反转拉升 成分股石头科技20cm涨停",
+            "url": "https://finance.sina.com.cn/7x24/2026-08-25/doc-inippewq9667250.shtml"
+          },
+          "…另 4 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 969.05,
+            "date": "2026-08-24",
+            "high": 1039.0,
+            "low": 950.0,
+            "open": 1035.0,
+            "volume": 17280561.0
+          },
+          {
+            "close": 1010.48,
+            "date": "2026-08-25",
+            "high": 1029.24,
+            "low": 953.0,
+            "open": 970.0,
+            "volume": 12571975.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-25T15:34:59+08:00",
+          "change": 41.43,
+          "changePercent": 4.28,
+          "currency": "CNY",
+          "previousClose": 969.05
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "¥99.53亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "21.57元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.50元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "3.68元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "¥6414.31亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "6.29亿股"
+          },
+          "…另 8 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-08-26T10:34:00+08:00",
+            "source": "新浪财经",
+            "title": "章建平75亿押注中际旭创，百亿“牛散”们有何底牌",
+            "url": "https://cj.sina.cn/articles/view/1651428902/626ece2602001j84q"
+          },
+          {
+            "publishedAt": "2026-08-26T09:55:00+08:00",
+            "source": "新浪财经",
+            "title": "Q3成熟DRAM将涨50%，供给紧俏预期升温！芯片板块分化，盛科通信上涨2.89%",
+            "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002hs1g"
+          },
+          {
+            "publishedAt": "2026-08-26T07:18:00+08:00",
+            "source": "新浪财经",
+            "title": "算力存储双驱动 芯片设计行业迎高光时刻",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-26/doc-inipqxfw1160819.shtml"
+          },
+          {
+            "publishedAt": "2026-08-26T07:24:00+08:00",
+            "source": "新浪财经",
+            "title": "科创板公司交出上半年新质“答卷” 三大硬科技产业迸发增长新动能",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-26/doc-inipqxfy5419378.shtml"
+          },
+          {
+            "publishedAt": "2026-08-26T09:13:00+08:00",
+            "source": "新浪财经",
+            "title": "上证180指数上涨0.10%，上证180ETF平安(530280)多股上涨",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-26/doc-inipqxhc6344392.shtml"
+          },
+          {
+            "publishedAt": "2026-08-26T14:17:00+08:00",
+            "source": "新浪财经",
+            "title": "摩根士丹利预计DRAM供应短缺可能持续至2028年，AI板块震荡上行",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-26/doc-iniprqcq0962510.shtml"
+          },
+          "…另 4 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 1010.48,
+            "date": "2026-08-25",
+            "high": 1029.24,
+            "low": 953.0,
+            "open": 970.0,
+            "volume": 12571975.0
+          },
+          {
+            "close": 1020.0,
+            "date": "2026-08-26",
+            "high": 1036.85,
+            "low": 1001.12,
+            "open": 1005.0,
+            "volume": 9728315.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-26T15:34:59+08:00",
+          "change": 9.52,
+          "changePercent": 0.94,
+          "currency": "CNY",
+          "previousClose": 1010.48
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [
+            {
+              "publishedAt": "2026-08-25T17:17:00+08:00",
+              "source": "新浪财经",
+              "title": "汰弱留强",
+              "url": "https://cj.sina.cn/articles/view/2812319402/a7a096aa02703ev84"
+            },
+            {
+              "publishedAt": "2026-08-25T14:41:00+08:00",
+              "source": "新浪财经",
+              "title": "A股算力概念股走强，寒武纪涨超4%",
+              "url": "https://cj.sina.cn/articles/view/5115326071/130e5ae7702002zx8y"
+            },
+            {
+              "publishedAt": "2026-08-25T13:35:00+08:00",
+              "source": "新浪财经",
+              "title": "科创AIETF鹏华(589090)标的指数涨超2.4%，字节AI办公产品“豆包工作”正式发布",
+              "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002iq6y"
+            },
+            {
+              "publishedAt": "2026-08-25T14:54:00+08:00",
+              "source": "新浪财经",
+              "title": "半导体ETF鹏华(159813)盘中净申购2000万份，高盛大幅上调半导体行业支出预期",
+              "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002iqaq"
+            },
+            {
+              "publishedAt": "2026-08-25T13:13:00+08:00",
+              "source": "新浪财经",
+              "title": "科创芯片设计ETF国联安盘中一度翻红，半导体ETF国联安跌幅收窄",
+              "url": "https://cj.sina.cn/articles/view/7651844612/1c815e20400101za1y"
+            },
+            {
+              "publishedAt": "2026-08-25T13:39:00+08:00",
+              "source": "新浪财经",
+              "title": "人工智能ETF华富(515980)午后反转拉升 成分股石头科技20cm涨停",
+              "url": "https://finance.sina.com.cn/7x24/2026-08-25/doc-inippewq9667250.shtml"
+            },
+            "…另 4 项"
+          ],
+          "after": [
+            {
+              "publishedAt": "2026-08-26T10:34:00+08:00",
+              "source": "新浪财经",
+              "title": "章建平75亿押注中际旭创，百亿“牛散”们有何底牌",
+              "url": "https://cj.sina.cn/articles/view/1651428902/626ece2602001j84q"
+            },
+            {
+              "publishedAt": "2026-08-26T09:55:00+08:00",
+              "source": "新浪财经",
+              "title": "Q3成熟DRAM将涨50%，供给紧俏预期升温！芯片板块分化，盛科通信上涨2.89%",
+              "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002hs1g"
+            },
+            {
+              "publishedAt": "2026-08-26T07:18:00+08:00",
+              "source": "新浪财经",
+              "title": "算力存储双驱动 芯片设计行业迎高光时刻",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-26/doc-inipqxfw1160819.shtml"
+            },
+            {
+              "publishedAt": "2026-08-26T07:24:00+08:00",
+              "source": "新浪财经",
+              "title": "科创板公司交出上半年新质“答卷” 三大硬科技产业迸发增长新动能",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-26/doc-inipqxfy5419378.shtml"
+            },
+            {
+              "publishedAt": "2026-08-26T09:13:00+08:00",
+              "source": "新浪财经",
+              "title": "上证180指数上涨0.10%，上证180ETF平安(530280)多股上涨",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-26/doc-inipqxhc6344392.shtml"
+            },
+            {
+              "publishedAt": "2026-08-26T14:17:00+08:00",
+              "source": "新浪财经",
+              "title": "摩根士丹利预计DRAM供应短缺可能持续至2028年，AI板块震荡上行",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-26/doc-iniprqcq0962510.shtml"
+            },
+            "…另 4 项"
+          ],
+          "evidenceIds": [
+            "E021",
+            "E022",
+            "E023",
+            "E024"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
+      "evidenceIds": [
+        "E021",
+        "E022",
+        "E023",
+        "E024"
+      ],
+      "supportingEvidenceIds": [
+        "E021",
+        "E022",
+        "E023",
+        "E024"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 4,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-1c230c902716d722839a",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "joby",
+      "entityName": "Joby Aviation, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "news",
+        "priceHistory"
+      ],
+      "summary": "Joby Aviation, Inc. 的 news 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": [
+          {
+            "publishedAt": "2025-12-09T03:50:10+00:00",
+            "source": "Yahoo财经",
+            "title": "India's GMR Airports plans about $245 million long-term bond sale, sources say",
+            "url": "https://sg.finance.yahoo.com/news/indias-gmr-airports-plans-245-035010993.html?.tsrc=rss"
+          },
+          {
+            "publishedAt": "2026-04-28T12:55:00+00:00",
+            "source": "Yahoo财经",
+            "title": "NYSE Content Update: Joby Aviation Rings Opening Bell Following NYC Test Flight",
+            "url": "https://sg.finance.yahoo.com/news/nyse-content-joby-aviation-rings-125500166.html?.tsrc=rss"
+          }
+        ],
+        "priceHistory": [
+          {
+            "close": 7.19,
+            "date": "2026-08-24",
+            "high": 7.48,
+            "low": 7.16,
+            "open": 7.45,
+            "volume": 23635400.0
+          },
+          {
+            "close": 7.22,
+            "date": "2026-08-25",
+            "high": 7.32,
+            "low": 7.14,
+            "open": 7.32,
+            "volume": 21926039.0
+          }
+        ]
+      },
+      "after": {
+        "news": [
+          {
+            "publishedAt": "2026-04-28T12:55:00+00:00",
+            "source": "Yahoo财经",
+            "title": "NYSE Content Update: Joby Aviation Rings Opening Bell Following NYC Test Flight",
+            "url": "https://sg.finance.yahoo.com/news/nyse-content-joby-aviation-rings-125500166.html?.tsrc=rss"
+          }
+        ],
+        "priceHistory": [
+          {
+            "close": 7.19,
+            "date": "2026-08-24",
+            "high": 7.48,
+            "low": 7.16,
+            "open": 7.45,
+            "volume": 23635400.0
+          },
+          {
+            "close": 7.22,
+            "date": "2026-08-25",
+            "high": 7.32,
+            "low": 7.14,
+            "open": 7.32,
+            "volume": 21944300.0
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [
+            {
+              "publishedAt": "2025-12-09T03:50:10+00:00",
+              "source": "Yahoo财经",
+              "title": "India's GMR Airports plans about $245 million long-term bond sale, sources say",
+              "url": "https://sg.finance.yahoo.com/news/indias-gmr-airports-plans-245-035010993.html?.tsrc=rss"
+            },
+            {
+              "publishedAt": "2026-04-28T12:55:00+00:00",
+              "source": "Yahoo财经",
+              "title": "NYSE Content Update: Joby Aviation Rings Opening Bell Following NYC Test Flight",
+              "url": "https://sg.finance.yahoo.com/news/nyse-content-joby-aviation-rings-125500166.html?.tsrc=rss"
+            }
+          ],
+          "after": [
+            {
+              "publishedAt": "2026-04-28T12:55:00+00:00",
+              "source": "Yahoo财经",
+              "title": "NYSE Content Update: Joby Aviation Rings Opening Bell Following NYC Test Flight",
+              "url": "https://sg.finance.yahoo.com/news/nyse-content-joby-aviation-rings-125500166.html?.tsrc=rss"
+            }
+          ],
+          "evidenceIds": [
+            "E045"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "priceHistory"
+      ],
+      "evidenceIds": [
+        "E045"
+      ],
+      "supportingEvidenceIds": [
+        "E045"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-598a3e9866673a1e98fa",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "horizon-robotics",
+      "entityName": "Horizon Robotics",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "news",
+        "priceHistory",
+        "quote",
+        "sources"
+      ],
+      "summary": "Horizon Robotics 的 news 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "HK$4.31亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "0.86元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.14元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.81元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "HK$656.39亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "137.61亿股"
+          },
+          "…另 7 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-08-14T23:26:00+08:00",
+            "source": "新浪财经",
+            "title": "Momenta破发背后：锚定地平线估值 “物理AI”故事未兑现?市场为何不买单？",
+            "url": "https://finance.sina.com.cn/stock/observe/2026-08-14/doc-ininicvh2449481.shtml"
+          },
+          {
+            "publishedAt": "2026-08-10T11:40:00+08:00",
+            "source": "新浪财经",
+            "title": "智驾多维共振提速，8月汽车智能化赛道机遇凸显",
+            "url": "https://finance.sina.com.cn/stock/relnews/cn/2026-08-10/doc-inimuzxp1307502.shtml"
+          },
+          {
+            "publishedAt": "2026-08-12T11:17:00+08:00",
+            "source": "新浪财经",
+            "title": "上半年国内智驾市场份额数据出炉：华为千里Momenta前三",
+            "url": "https://finance.sina.com.cn/stock/relnews/cn/2026-08-12/doc-inimzqcr3734436.shtml"
+          },
+          {
+            "publishedAt": "2026-08-12T11:06:00+08:00",
+            "source": "新浪财经",
+            "title": "地平线HSD迎发布以来最大规模的OTA升级：长期保持「端到端的中国标杆」",
+            "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-08-12/doc-inimzqcp6968312.shtml"
+          },
+          {
+            "publishedAt": "2026-08-14T16:09:00+08:00",
+            "source": "新浪财经",
+            "title": "地平线星空再获头部新能源车企定点！",
+            "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-08-14/doc-ininhtfm2811046.shtml"
+          },
+          {
+            "publishedAt": "2026-08-19T14:38:00+08:00",
+            "source": "新浪财经",
+            "title": "博世携手地平线，第四代多功能摄像头三季度量产",
+            "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-08-19/doc-ininvshr7069609.shtml"
+          },
+          "…另 4 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 4.745,
+            "date": "2026-08-24",
+            "high": 5.0,
+            "low": 4.71,
+            "open": 5.0,
+            "volume": 105618223.0
+          },
+          {
+            "close": 4.77,
+            "date": "2026-08-25",
+            "high": 4.835,
+            "low": 4.71,
+            "open": 4.835,
+            "volume": 90486683.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-25T16:08:20+08:00",
+          "change": 0.025,
+          "changePercent": 0.53,
+          "currency": "HKD",
+          "previousClose": 4.745
+        },
+        "sources": {
+          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=hk09660%2Cday%2C%2C%2C120%2Cqfq",
+          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=116.09660&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
+          "sinaFinance": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/HK9660/",
+          "yahooFinance": "https://sg.finance.yahoo.com/quote/9660.HK/"
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "0.86元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.14元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.81元"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "HK$755.42亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "104.69亿元"
+          },
+          {
+            "id": "revenue",
+            "label": "营业收入",
+            "value": "37.58亿元"
+          },
+          "…另 2 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-08-14T23:26:00+08:00",
+            "source": "新浪财经",
+            "title": "Momenta与地平线：市值背后的效率优势与长期命题",
+            "url": "https://finance.sina.com.cn/stock/observe/2026-08-14/doc-ininicvh2449481.shtml"
+          },
+          {
+            "publishedAt": "2026-08-12T11:17:00+08:00",
+            "source": "新浪财经",
+            "title": "上半年国内智驾市场份额数据出炉：华为千里Momenta前三",
+            "url": "https://finance.sina.com.cn/stock/relnews/cn/2026-08-12/doc-inimzqcr3734436.shtml"
+          },
+          {
+            "publishedAt": "2026-08-12T11:06:00+08:00",
+            "source": "新浪财经",
+            "title": "地平线HSD迎发布以来最大规模的OTA升级：长期保持「端到端的中国标杆」",
+            "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-08-12/doc-inimzqcp6968312.shtml"
+          },
+          {
+            "publishedAt": "2026-08-14T16:09:00+08:00",
+            "source": "新浪财经",
+            "title": "地平线星空再获头部新能源车企定点！",
+            "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-08-14/doc-ininhtfm2811046.shtml"
+          },
+          {
+            "publishedAt": "2026-08-19T14:38:00+08:00",
+            "source": "新浪财经",
+            "title": "博世携手地平线，第四代多功能摄像头三季度量产",
+            "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-08-19/doc-ininvshr7069609.shtml"
+          },
+          {
+            "publishedAt": "2026-08-20T11:19:00+08:00",
+            "source": "新浪财经",
+            "title": "机器人行业热点频现 相关概念股普升 微创机器人-B(02252)涨5.13%",
+            "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-08-20/doc-ininxqxw2123414.shtml"
+          },
+          "…另 4 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 4.77,
+            "date": "2026-08-25",
+            "high": 4.835,
+            "low": 4.71,
+            "open": 4.835,
+            "volume": 90486683.0
+          },
+          {
+            "close": 4.735,
+            "date": "2026-08-26",
+            "high": 4.86,
+            "low": 4.735,
+            "open": 4.805,
+            "volume": 51447209.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-26T16:08:06+08:00",
+          "change": -0.035,
+          "changePercent": -0.73,
+          "currency": "HKD",
+          "previousClose": 4.77
+        },
+        "sources": {
+          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=hk09660%2Cday%2C%2C%2C120%2Cqfq",
+          "sinaFinance": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/HK9660/",
+          "yahooFinance": "https://sg.finance.yahoo.com/quote/9660.HK/"
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [
+            {
+              "publishedAt": "2026-08-14T23:26:00+08:00",
+              "source": "新浪财经",
+              "title": "Momenta破发背后：锚定地平线估值 “物理AI”故事未兑现?市场为何不买单？",
+              "url": "https://finance.sina.com.cn/stock/observe/2026-08-14/doc-ininicvh2449481.shtml"
+            },
+            {
+              "publishedAt": "2026-08-10T11:40:00+08:00",
+              "source": "新浪财经",
+              "title": "智驾多维共振提速，8月汽车智能化赛道机遇凸显",
+              "url": "https://finance.sina.com.cn/stock/relnews/cn/2026-08-10/doc-inimuzxp1307502.shtml"
+            },
+            {
+              "publishedAt": "2026-08-12T11:17:00+08:00",
+              "source": "新浪财经",
+              "title": "上半年国内智驾市场份额数据出炉：华为千里Momenta前三",
+              "url": "https://finance.sina.com.cn/stock/relnews/cn/2026-08-12/doc-inimzqcr3734436.shtml"
+            },
+            {
+              "publishedAt": "2026-08-12T11:06:00+08:00",
+              "source": "新浪财经",
+              "title": "地平线HSD迎发布以来最大规模的OTA升级：长期保持「端到端的中国标杆」",
+              "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-08-12/doc-inimzqcp6968312.shtml"
+            },
+            {
+              "publishedAt": "2026-08-14T16:09:00+08:00",
+              "source": "新浪财经",
+              "title": "地平线星空再获头部新能源车企定点！",
+              "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-08-14/doc-ininhtfm2811046.shtml"
+            },
+            {
+              "publishedAt": "2026-08-19T14:38:00+08:00",
+              "source": "新浪财经",
+              "title": "博世携手地平线，第四代多功能摄像头三季度量产",
+              "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-08-19/doc-ininvshr7069609.shtml"
+            },
+            "…另 4 项"
+          ],
+          "after": [
+            {
+              "publishedAt": "2026-08-14T23:26:00+08:00",
+              "source": "新浪财经",
+              "title": "Momenta与地平线：市值背后的效率优势与长期命题",
+              "url": "https://finance.sina.com.cn/stock/observe/2026-08-14/doc-ininicvh2449481.shtml"
+            },
+            {
+              "publishedAt": "2026-08-12T11:17:00+08:00",
+              "source": "新浪财经",
+              "title": "上半年国内智驾市场份额数据出炉：华为千里Momenta前三",
+              "url": "https://finance.sina.com.cn/stock/relnews/cn/2026-08-12/doc-inimzqcr3734436.shtml"
+            },
+            {
+              "publishedAt": "2026-08-12T11:06:00+08:00",
+              "source": "新浪财经",
+              "title": "地平线HSD迎发布以来最大规模的OTA升级：长期保持「端到端的中国标杆」",
+              "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-08-12/doc-inimzqcp6968312.shtml"
+            },
+            {
+              "publishedAt": "2026-08-14T16:09:00+08:00",
+              "source": "新浪财经",
+              "title": "地平线星空再获头部新能源车企定点！",
+              "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-08-14/doc-ininhtfm2811046.shtml"
+            },
+            {
+              "publishedAt": "2026-08-19T14:38:00+08:00",
+              "source": "新浪财经",
+              "title": "博世携手地平线，第四代多功能摄像头三季度量产",
+              "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-08-19/doc-ininvshr7069609.shtml"
+            },
+            {
+              "publishedAt": "2026-08-20T11:19:00+08:00",
+              "source": "新浪财经",
+              "title": "机器人行业热点频现 相关概念股普升 微创机器人-B(02252)涨5.13%",
+              "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-08-20/doc-ininxqxw2123414.shtml"
+            },
+            "…另 4 项"
+          ],
+          "evidenceIds": [
+            "E053",
+            "E054",
+            "E055",
+            "E056"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
+      "evidenceIds": [
+        "E053",
+        "E054",
+        "E055",
+        "E056"
+      ],
+      "supportingEvidenceIds": [
+        "E053",
+        "E054",
+        "E055",
+        "E056"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 4,
         "total": 4
       },
       "eligibleForKeyDevelopment": true
@@ -530,34 +1786,84 @@
   "evidence": [
     {
       "id": "E001",
-      "changeId": "chg-f0a2e9692eddf94cdec2",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 的 financing 发生变化。",
-      "sourceName": "CATL",
-      "title": "宁德时代·CATL",
-      "url": "https://www.catl.com/",
-      "publishedAt": "2026-08-20",
-      "evidenceGrade": "官方披露",
+      "changeId": "chg-4400f067c948085f95dc",
+      "entityName": "晶泰控股有限公司",
+      "claim": "晶泰控股有限公司 的 quote 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "新浪财经 行情数据",
+      "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
+      "publishedAt": "2026-08-26T16:08:04+08:00",
+      "evidenceGrade": "市场数据",
       "claimFields": [
-        "financing"
+        "quote"
       ],
       "qualityIssues": [],
       "qualityStatus": "passed",
       "supportStatus": "supports"
     },
     {
-      "id": "E009",
-      "changeId": "chg-19197570e343e0c8588f",
-      "entityName": "Joby Aviation",
-      "claim": "Joby Aviation 的 capitalMarkets、financing 发生变化。",
-      "sourceName": "Joby Aviation",
-      "title": "2025 Impact Report | Joby Aviation",
-      "url": "https://www.jobyaviation.com/news/2025-impact-report",
-      "publishedAt": "2026-07-16",
-      "evidenceGrade": "官方披露",
+      "id": "E013",
+      "changeId": "chg-b0c2f9bb45f07b911523",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "昆明国资入局，和宁德时代旗下时代电服合作落地百座巧克力换电站",
+      "url": "https://cj.sina.cn/articles/view/5044281310/12ca99fde02002kmy2",
+      "publishedAt": "2026-08-26T15:51:00+08:00",
+      "evidenceGrade": "媒体报道",
       "claimFields": [
-        "capitalMarkets",
-        "financing"
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E014",
+      "changeId": "chg-b0c2f9bb45f07b911523",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "集邦咨询：上半年全球储能电芯出货量超460GWh 同比大增约94%",
+      "url": "https://cj.sina.cn/articles/view/5835524730/15bd30a7a020029ase",
+      "publishedAt": "2026-08-26T13:45:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E015",
+      "changeId": "chg-b0c2f9bb45f07b911523",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "时代电服与昆发展新能源签署战略合作协议 计划共建100座巧克力换电站",
+      "url": "https://finance.sina.com.cn/7x24/2026-08-26/doc-iniprqcu2310043.shtml",
+      "publishedAt": "2026-08-26T15:12:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E016",
+      "changeId": "chg-b0c2f9bb45f07b911523",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "突然撤销！宁德时代枧下窝矿复产进展又现新情况",
+      "url": "https://finance.sina.com.cn/jjxw/2026-08-26/doc-iniprivs1046183.shtml",
+      "publishedAt": "2026-08-26T12:53:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
       ],
       "qualityIssues": [],
       "qualityStatus": "passed",
@@ -565,16 +1871,16 @@
     },
     {
       "id": "E017",
-      "changeId": "chg-4c07bfdfe4d4e20ddbab",
-      "entityName": "Form Energy",
-      "claim": "Form Energy 的 financing 发生变化。",
-      "sourceName": "Form Energy",
-      "title": "Home",
-      "url": "https://formenergy.com/",
-      "publishedAt": "2020-03-04",
-      "evidenceGrade": "官方披露",
+      "changeId": "chg-21ba8ce7ad97cc10f2a1",
+      "entityName": "华大基因",
+      "claim": "华大基因 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "华大基因(300676)：1H26提质增效驱动净利率提升",
+      "url": "http://stock.finance.sina.com.cn/stock/go.php/vReport_Show/kind/search/rptid/841064563136/index.phtml",
+      "publishedAt": "2026-08-26T13:35:00+08:00",
+      "evidenceGrade": "媒体报道",
       "claimFields": [
-        "financing"
+        "news"
       ],
       "qualityIssues": [],
       "qualityStatus": "passed",
@@ -582,16 +1888,16 @@
     },
     {
       "id": "E018",
-      "changeId": "chg-4c07bfdfe4d4e20ddbab",
-      "entityName": "Form Energy",
-      "claim": "Form Energy 的 financing 发生变化。",
-      "sourceName": "Form Energy",
-      "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
-      "url": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
-      "publishedAt": "2026-08-12",
-      "evidenceGrade": "官方披露",
+      "changeId": "chg-21ba8ce7ad97cc10f2a1",
+      "entityName": "华大基因",
+      "claim": "华大基因 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "华大基因上半年经营现金流连负 易方达退出前10流通股东",
+      "url": "https://cj.sina.cn/articles/view/1663612603/6328b6bb020022tw2",
+      "publishedAt": "2026-08-24T14:40:00+08:00",
+      "evidenceGrade": "媒体报道",
       "claimFields": [
-        "financing"
+        "news"
       ],
       "qualityIssues": [],
       "qualityStatus": "passed",
@@ -599,16 +1905,186 @@
     },
     {
       "id": "E019",
-      "changeId": "chg-4c07bfdfe4d4e20ddbab",
-      "entityName": "Form Energy",
-      "claim": "Form Energy 的 financing 发生变化。",
-      "sourceName": "Form Energy",
-      "title": "Newsroom",
-      "url": "https://formenergy.com/newsroom/",
-      "publishedAt": "2021-03-19",
-      "evidenceGrade": "官方披露",
+      "changeId": "chg-21ba8ce7ad97cc10f2a1",
+      "entityName": "华大基因",
+      "claim": "华大基因 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "华大基因新注册《出生缺陷防控系统V2.0》项目的软件著作权",
+      "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002he90",
+      "publishedAt": "2026-08-22T02:46:00+08:00",
+      "evidenceGrade": "媒体报道",
       "claimFields": [
-        "financing"
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E020",
+      "changeId": "chg-21ba8ce7ad97cc10f2a1",
+      "entityName": "华大基因",
+      "claim": "华大基因 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "华大基因(300676.SZ)：2026年中报净利润为4740.46万元",
+      "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002iloa",
+      "publishedAt": "2026-08-22T10:12:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E021",
+      "changeId": "chg-a39a236effcd5db8fda8",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "章建平75亿押注中际旭创，百亿“牛散”们有何底牌",
+      "url": "https://cj.sina.cn/articles/view/1651428902/626ece2602001j84q",
+      "publishedAt": "2026-08-26T10:34:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E022",
+      "changeId": "chg-a39a236effcd5db8fda8",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "Q3成熟DRAM将涨50%，供给紧俏预期升温！芯片板块分化，盛科通信上涨2.89%",
+      "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002hs1g",
+      "publishedAt": "2026-08-26T09:55:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E023",
+      "changeId": "chg-a39a236effcd5db8fda8",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "算力存储双驱动 芯片设计行业迎高光时刻",
+      "url": "https://finance.sina.com.cn/jjxw/2026-08-26/doc-inipqxfw1160819.shtml",
+      "publishedAt": "2026-08-26T07:18:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E024",
+      "changeId": "chg-a39a236effcd5db8fda8",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "科创板公司交出上半年新质“答卷” 三大硬科技产业迸发增长新动能",
+      "url": "https://finance.sina.com.cn/jjxw/2026-08-26/doc-inipqxfy5419378.shtml",
+      "publishedAt": "2026-08-26T07:24:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E045",
+      "changeId": "chg-1c230c902716d722839a",
+      "entityName": "Joby Aviation, Inc.",
+      "claim": "Joby Aviation, Inc. 的 news 发生变化。",
+      "sourceName": "Yahoo财经",
+      "title": "NYSE Content Update: Joby Aviation Rings Opening Bell Following NYC Test Flight",
+      "url": "https://sg.finance.yahoo.com/news/nyse-content-joby-aviation-rings-125500166.html?.tsrc=rss",
+      "publishedAt": "2026-04-28T12:55:00+00:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E053",
+      "changeId": "chg-598a3e9866673a1e98fa",
+      "entityName": "Horizon Robotics",
+      "claim": "Horizon Robotics 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "Momenta与地平线：市值背后的效率优势与长期命题",
+      "url": "https://finance.sina.com.cn/stock/observe/2026-08-14/doc-ininicvh2449481.shtml",
+      "publishedAt": "2026-08-14T23:26:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E054",
+      "changeId": "chg-598a3e9866673a1e98fa",
+      "entityName": "Horizon Robotics",
+      "claim": "Horizon Robotics 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "上半年国内智驾市场份额数据出炉：华为千里Momenta前三",
+      "url": "https://finance.sina.com.cn/stock/relnews/cn/2026-08-12/doc-inimzqcr3734436.shtml",
+      "publishedAt": "2026-08-12T11:17:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E055",
+      "changeId": "chg-598a3e9866673a1e98fa",
+      "entityName": "Horizon Robotics",
+      "claim": "Horizon Robotics 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "地平线HSD迎发布以来最大规模的OTA升级：长期保持「端到端的中国标杆」",
+      "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-08-12/doc-inimzqcp6968312.shtml",
+      "publishedAt": "2026-08-12T11:06:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E056",
+      "changeId": "chg-598a3e9866673a1e98fa",
+      "entityName": "Horizon Robotics",
+      "claim": "Horizon Robotics 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "地平线星空再获头部新能源车企定点！",
+      "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-08-14/doc-ininhtfm2811046.shtml",
+      "publishedAt": "2026-08-14T16:09:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
       ],
       "qualityIssues": [],
       "qualityStatus": "passed",
@@ -626,7 +2102,7 @@
       "LLM structured analysis",
       "evidence-ID validation"
     ],
-    "fallbackReason": "",
+    "fallbackReason": "SiliconFlowTimeoutError",
     "disclaimer": "信息仅供研究，不构成投资建议；关键事实应回溯原始信源。"
   },
   "history": [
@@ -737,26 +2213,27 @@
     },
     {
       "date": "2026-08-26",
-      "generatedAt": "2026-08-26T02:44:09+00:00",
-      "runStatus": "model",
-      "changeCount": 3,
-      "executiveSummary": "证据包显示三项创业公司数据变更，均涉及融资或资本市场字段的调整。宁德时代（CATL）的financing字段由一条2026-08-14的融资记录变为空，但该记录对应的官方新闻仍指向Quinbrook Supernode项目合作；Joby Aviation的capitalMarkets和financing字段删除了Atoms战略合作及2026年Q2财报相关条目，仅保留2025 Impact Report；Form Energy的financing字段删除了2026-08-12一条重复的Series G融资记录，但该融资事件仍由其他官方来源支持。整体看，变更多为数据记录清理或去重，不改变相关公司已披露的核心业务事实，但需注意区分数据层变化与真实事件变化。"
+      "generatedAt": "2026-08-26T09:01:56+00:00",
+      "runStatus": "api-fallback",
+      "changeCount": 6,
+      "executiveSummary": "本期有 6 条外部事实候选通过基础证据质量门。当前为降级展示，仅列出字段变化，不提供模型研判或影响结论。"
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 5,
-    "eligibleCandidateCount": 3,
-    "rejectedCandidateCount": 2,
+    "candidateCount": 15,
+    "eligibleCandidateCount": 6,
+    "rejectedCandidateCount": 9,
     "rejectedByDataset": {
-      "ventureCompany": 2
+      "marketCompany": 9
     },
-    "evidenceCount": 20,
-    "supportingEvidenceCount": 5,
-    "rejectedEvidenceCount": 11,
-    "passedButUnboundEvidenceCount": 4,
+    "evidenceCount": 60,
+    "supportingEvidenceCount": 18,
+    "rejectedEvidenceCount": 4,
+    "passedButUnboundEvidenceCount": 38,
     "rejectionReasons": {
-      "missing_published_at": 10,
-      "ungraded": 1
+      "missing_published_at": 4,
+      "missing_title": 2,
+      "ungraded": 2
     }
   },
   "researchScope": {
