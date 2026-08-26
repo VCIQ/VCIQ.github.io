@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 
+// Lock the index/detail presentation boundary without changing person research data.
 const page = readFileSync("app/people/page.tsx", "utf8");
 
 test("people directory keeps only the two decision-useful preview rows", () => {
