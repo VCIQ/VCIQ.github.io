@@ -125,7 +125,7 @@ export default function TechnologyResearchPage() {
         statusText={`${technologyTopicDefinitions.length} 主题 · ${coreTechnologyEntities.length} 技术对象`}
         icon={<Layers3 size={19} aria-hidden="true" />}
         bodyClassName={styles.body}
-        afterResearchSynergy={
+        beforeResearchSynergy={
           <section className={styles.pulseSection} aria-labelledby="technology-pulse-title">
             <header className={styles.pulseHeader}>
               <div>
