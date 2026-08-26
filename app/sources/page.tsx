@@ -56,29 +56,32 @@ export default function SourcesPage() {
         </div>
       </header>
 
-      <section className={styles.lifecycle} aria-label="信源生命周期">
-        <div className={styles.lifecycleIntro}>
+      <details className={styles.lifecycle}>
+        <summary>
           <span>SOURCE LIFECYCLE</span>
-          <h2>候选 → 持续追踪 → 核心信源</h2>
+          <strong>Candidate → Tracked → Core</strong>
+          <small>展开查看信源升级规则</small>
+        </summary>
+        <div className={styles.lifecycleDetails}>
           <p>
             单篇高价值文章只产生候选信号；持续命中率、直接证据比例、跨日稳定性与人工判断共同决定是否升级。
           </p>
+          <div className={styles.lifecycleFlow}>
+            <div>
+              <strong>Candidate</strong>
+              <p>由收藏、研究线索或自动发现提出。</p>
+            </div>
+            <div>
+              <strong>Tracked</strong>
+              <p>人工确认后进入持续抓取与质量观测。</p>
+            </div>
+            <div>
+              <strong>Core</strong>
+              <p>多期证据稳定后成为长期研究入口。</p>
+            </div>
+          </div>
         </div>
-        <div className={styles.lifecycleFlow}>
-          <div>
-            <strong>Candidate</strong>
-            <p>由收藏、研究线索或自动发现提出。</p>
-          </div>
-          <div>
-            <strong>Tracked</strong>
-            <p>人工确认后进入持续抓取与质量观测。</p>
-          </div>
-          <div>
-            <strong>Core</strong>
-            <p>多期证据稳定后成为长期研究入口。</p>
-          </div>
-        </div>
-      </section>
+      </details>
 
       {groups.map((group) => {
         const sources = coreSourcesByKind(group.kind);
@@ -105,6 +108,13 @@ export default function SourcesPage() {
                       <h3>{source.name}</h3>
                     </div>
                     <span className={styles.status}>TRACKED</span>
+                  </div>
+
+                  <div className={styles.coverageRow} aria-label="覆盖摘要">
+                    {source.sectors.length ? <span>{source.sectors.length} 赛道</span> : null}
+                    {source.companies.length ? <span>{source.companies.length} 公司</span> : null}
+                    {source.people.length ? <span>{source.people.length} 人物</span> : null}
+                    {source.keywords.length ? <span>{source.keywords.length} 发现词</span> : null}
                   </div>
 
                   {source.sectors.length ? (
