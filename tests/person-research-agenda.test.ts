@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
+  getPersonResearchAgenda,
   normalizePersonResearchAgenda,
   normalizePersonResearchTask,
 } from "../lib/person-research-agenda";
@@ -88,4 +89,20 @@ test("agenda derives open counts from normalized task status instead of trusting
   assert.equal(agenda.taskCount, 2);
   assert.equal(agenda.openTaskCount, 1);
   assert.equal(agenda.people["test-person"].openCount, 1);
+});
+
+test("persisted agenda text is rebound to the current canonical person identity", () => {
+  const agenda = getPersonResearchAgenda("jensen-huang");
+  assert.ok(agenda);
+  assert.equal(agenda.personName, "黄仁勋");
+  const text = agenda.tasks.flatMap((task) => [
+    task.target,
+    task.question,
+    task.objective,
+    task.successCriteria,
+    ...task.searchQueries,
+  ]).join("\n");
+  assert.equal(text.includes("黄仁勋(Jensen Huang"), false);
+  assert.ok(text.includes("黄仁勋"));
+  assert.ok(agenda.tasks.flatMap((task) => task.searchQueries).every((query) => !query.includes("（")));
 });

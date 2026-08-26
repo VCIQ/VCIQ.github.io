@@ -1,4 +1,6 @@
 import publicAgenda from "@/public/data/person_research_agenda.json";
+import { researchPeople } from "@/lib/people-data";
+import { replaceLegacyPersonIdentityText } from "@/lib/person-name-normalization";
 
 export type PersonResearchTaskType =
   | "identity_verification"
@@ -174,7 +176,35 @@ export function normalizePersonResearchAgenda(value: unknown): PersonResearchAge
   };
 }
 
-export const personResearchAgenda = normalizePersonResearchAgenda(publicAgenda);
+const canonicalPeopleBySlug = new Map(researchPeople.map((person) => [person.slug, person]));
+
+function canonicalizeAgendaEntry(slug: string, entry: PersonResearchAgendaEntry): PersonResearchAgendaEntry {
+  const person = canonicalPeopleBySlug.get(slug);
+  if (!person) return entry;
+  const legacyLabels = [entry.personName];
+  return {
+    ...entry,
+    personName: person.name,
+    tasks: entry.tasks.map((task) => ({
+      ...task,
+      target: replaceLegacyPersonIdentityText(task.target, legacyLabels, person),
+      question: replaceLegacyPersonIdentityText(task.question, legacyLabels, person),
+      objective: replaceLegacyPersonIdentityText(task.objective, legacyLabels, person),
+      searchQueries: task.searchQueries.map((query) =>
+        replaceLegacyPersonIdentityText(query, legacyLabels, person, "search")
+      ),
+      successCriteria: replaceLegacyPersonIdentityText(task.successCriteria, legacyLabels, person),
+    })),
+  };
+}
+
+const normalizedAgenda = normalizePersonResearchAgenda(publicAgenda);
+export const personResearchAgenda: PersonResearchAgenda = {
+  ...normalizedAgenda,
+  people: Object.fromEntries(
+    Object.entries(normalizedAgenda.people).map(([slug, entry]) => [slug, canonicalizeAgendaEntry(slug, entry)]),
+  ),
+};
 
 export function getPersonResearchAgenda(slug: string): PersonResearchAgendaEntry | null {
   return personResearchAgenda.people[slug] ?? null;

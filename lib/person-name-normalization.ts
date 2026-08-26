@@ -11,6 +11,12 @@ export type ParsedPersonIdentityLabel = {
   handle: string;
 };
 
+export type CanonicalPersonIdentity = {
+  name: string;
+  englishName: string;
+  aliases?: string[];
+};
+
 function clean(value: string): string {
   return String(value ?? "").replace(/\s+/g, " ").trim();
 }
@@ -120,4 +126,38 @@ export function normalizeGeneratedPersonIdentity<T extends GeneratedIdentityShap
     aliases,
     handles,
   };
+}
+
+export function canonicalPersonDisplayLabel(person: CanonicalPersonIdentity): string {
+  const name = clean(person.name);
+  const englishName = clean(person.englishName);
+  if (!englishName || key(englishName) === key(name)) return name;
+  return `${name}（${englishName}）`;
+}
+
+export function canonicalPersonSearchLabel(person: CanonicalPersonIdentity): string {
+  const name = clean(person.name);
+  const englishName = clean(person.englishName);
+  return unique([name, englishName]).join(" ");
+}
+
+/** Replace identity labels embedded in persisted research text with the current canonical identity. */
+export function replaceLegacyPersonIdentityText(
+  value: string,
+  legacyLabels: string[],
+  person: CanonicalPersonIdentity,
+  mode: "display" | "search" = "display",
+): string {
+  let result = String(value ?? "");
+  const replacement = mode === "search"
+    ? canonicalPersonSearchLabel(person)
+    : canonicalPersonDisplayLabel(person);
+  const candidates = unique(legacyLabels)
+    .filter((label) => key(label) !== key(replacement))
+    .sort((left, right) => right.length - left.length);
+  for (const label of candidates) {
+    if (!label) continue;
+    result = result.split(label).join(replacement);
+  }
+  return result;
 }
