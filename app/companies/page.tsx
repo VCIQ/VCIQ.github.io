@@ -3,6 +3,7 @@ import { Building2 } from "lucide-react";
 import { ChannelSplitLayout } from "@/components/channel-split-layout";
 import { CompanyDirectory } from "@/components/company-directory";
 import { companies } from "@/lib/catalog-data";
+import { getChannelUpdateDirectory } from "@/lib/channel-updates";
 import { researchSynergySummary } from "@/lib/research-relations";
 import styles from "./page.module.css";
 
@@ -12,6 +13,8 @@ export const metadata: Metadata = {
 };
 
 export default function CompaniesPage() {
+  const companyUpdates = getChannelUpdateDirectory("companies");
+
   return (
     <main className="page-shell subpage">
       <header className={`page-header ${styles.channelHeader}`}>
@@ -23,9 +26,9 @@ export default function CompaniesPage() {
         </p>
         <div className="hero-chips">
           <span>{companies.length} 家已发布公司</span>
+          <span>{companyUpdates.items.length} 条当前重要事件</span>
           <span>{researchSynergySummary.trackCount} 个核心赛道</span>
           <span>{researchSynergySummary.companyPersonEdges} 条公司—人物显式关系</span>
-          <span>按研究优先级与最新变化排序</span>
         </div>
       </header>
 
