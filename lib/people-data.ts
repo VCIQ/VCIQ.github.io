@@ -1,6 +1,7 @@
 import generatedPayload from "@/public/data/people.json";
 import { people as curatedPeople, type Person } from "@/lib/catalog-data";
 import { validatePersonIdentity } from "@/lib/person-identity-validation";
+import { normalizeGeneratedPersonIdentity } from "@/lib/person-name-normalization";
 
 export type PersonMaterial = Person["materials"][number];
 
@@ -31,6 +32,7 @@ type GeneratedPayload = {
 };
 
 const payload = generatedPayload as GeneratedPayload;
+const normalizedGeneratedPeople = payload.people.map((person) => normalizeGeneratedPersonIdentity(person));
 
 function uniqueStrings(values: string[]): string[] {
   const seen = new Set<string>();
@@ -121,7 +123,7 @@ function mergePerson(curated: ResearchPerson | undefined, generated: GeneratedPe
   });
 }
 
-const generatedValidation = payload.people.map((person) => ({
+const generatedValidation = normalizedGeneratedPeople.map((person) => ({
   person,
   validation: validatePersonIdentity(person),
 }));
