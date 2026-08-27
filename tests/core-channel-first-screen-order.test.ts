@@ -138,7 +138,8 @@ test("people and company cards stay scan-dense without dropping research context
   assert.match(companyCss, /\.relationRow \{[\s\S]*flex-wrap:\s*nowrap/);
   assert.match(companyCss, /\.cardMetrics \{/);
 
-  assert.match(people, /styles\.personCard/);
+  assert.doesNotMatch(people, /styles\.personCard/);
+  assert.match(people, /className=\{filterClass\}/);
   assertOrder(
     people,
     "<header className={styles.personLead}>",
