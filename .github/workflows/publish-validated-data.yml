@@ -85,8 +85,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          pages_args=()
           if [ "${RUN_RESEARCH_AFTER_DEPLOY:-false}" = "true" ]; then
-            gh workflow run pages.yml --ref main -f run_research_after_deploy=true
-          else
-            gh workflow run pages.yml --ref main
+            pages_args=(-f run_research_after_deploy=true)
           fi
+          gh workflow run pages.yml --ref main "${pages_args[@]}"
