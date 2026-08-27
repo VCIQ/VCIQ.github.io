@@ -47,7 +47,6 @@ export function ChannelSplitLayout({
             {icon}
             <h2 id={`${channel}-directory-title`}>{title}</h2>
           </div>
-          <p className={styles.panelDescription}>{description}</p>
         </div>
         <div className={styles.snapshot}>
           <span>{countLabel}</span>
@@ -66,7 +65,6 @@ export function ChannelSplitLayout({
   return (
     <>
       {beforeResearchSynergy}
-      {showResearchSynergy ? <ResearchSynergyStrip compactOnMobile /> : null}
       <div className={styles.splitLayout}>
         {directoryFirst ? (
           <>
@@ -80,6 +78,15 @@ export function ChannelSplitLayout({
           </>
         )}
       </div>
+      {showResearchSynergy ? <ResearchSynergyStrip compactOnMobile /> : null}
+      <details className={styles.directoryNote}>
+        <summary>
+          <span>DIRECTORY NOTE</span>
+          <strong>{title}说明</strong>
+          <small>展开查看</small>
+        </summary>
+        <p>{description}</p>
+      </details>
     </>
   );
 }

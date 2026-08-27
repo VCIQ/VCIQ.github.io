@@ -20,10 +20,6 @@ export default function CompaniesPage() {
       <header className={`page-header ${styles.channelHeader}`}>
         <p className="eyebrow">04 / CORE COMPANIES</p>
         <h1>核心公司</h1>
-        <p>
-          公司频道负责把赛道与技术变量、关键人物判断落到真实产品、经营、融资和资本结果上。
-          默认先回答为什么值得研究、最近发生了什么、下一步验证什么，再下钻到完整档案与原始证据。
-        </p>
         <div className="hero-chips">
           <span>{companies.length} 家已发布公司</span>
           <span>{companyUpdates.items.length} 条当前重要事件</span>
@@ -46,6 +42,18 @@ export default function CompaniesPage() {
       >
         <CompanyDirectory pageSize={6} />
       </ChannelSplitLayout>
+
+      <details className={styles.methodology}>
+        <summary>
+          <span>COMPANY RESEARCH METHOD</span>
+          <strong>公司研究说明</strong>
+          <small>展开查看</small>
+        </summary>
+        <p>
+          公司频道把赛道与技术变量、关键人物判断落到真实产品、经营、融资和资本结果上；先看近期变化与研究对象，
+          再通过完整档案和原始证据验证为什么值得研究、下一步需要验证什么。
+        </p>
+      </details>
     </main>
   );
 }

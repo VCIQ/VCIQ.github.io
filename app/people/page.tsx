@@ -3,6 +3,7 @@ import { RotateCcw, Search, Users } from "lucide-react";
 import Link from "next/link";
 import Script from "next/script";
 import { ChannelSplitLayout } from "@/components/channel-split-layout";
+import { getChannelUpdateDirectory } from "@/lib/channel-updates";
 import { isPersonDirectoryChangeRecent } from "@/lib/person-directory-filter";
 import { peopleGeneratedAt, researchPeople } from "@/lib/people-data";
 import { getPersonResearchSnapshot } from "@/lib/people-research";
@@ -39,6 +40,7 @@ function directoryPreview(value: string, limit: number): string {
 export default function PeoplePage() {
   const trackedCount = researchPeople.filter((person) => person.tracked).length;
   const watchCount = researchPeople.length - trackedCount;
+  const peopleUpdates = getChannelUpdateDirectory("people");
   const sectors = Array.from(new Set(researchPeople.flatMap((person) => person.sectors)))
     .sort((left, right) => left.localeCompare(right, "zh-CN"));
   const sectorTokens = new Map(sectors.map((sector, index) => [sector, `s${index.toString(36)}`]));
@@ -68,15 +70,10 @@ export default function PeoplePage() {
       <header className={`page-header ${styles.channelHeader}`}>
         <p className="eyebrow">03 / CORE PEOPLE</p>
         <h1>核心人物</h1>
-        <p>
-          人物频道解释赛道中的技术判断、组织选择和路线演进：先回答为什么值得跟踪、最近发生了什么、
-          下一步看什么，再连接其任职公司、产品项目、技术主题与事件级公开证据。
-        </p>
         <div className="hero-chips">
           <span>{trackedCount} 位重点跟踪</span>
           {watchCount > 0 ? <span>{watchCount} 位观察对象</span> : null}
-          <span>按研究优先级排序</span>
-          <span>公司关系仅按显式任职证据挂接</span>
+          <span>{peopleUpdates.items.length} 条人物更新</span>
           <span>资料更新 {peopleGeneratedAt.slice(0, 10)}</span>
         </div>
       </header>
@@ -85,7 +82,7 @@ export default function PeoplePage() {
         channel="people"
         eyebrow="CORE PEOPLE RESEARCH DIRECTORY"
         title="核心人物档案"
-        description="人物研究承担赛道与公司之间的决策解释层：目录展示精简研究预览，完整判断、技术主线、观点演进、组织关系和事件证据进入人物详情查看。"
+        description="目录展示精简研究预览；完整判断、技术主线、观点演进、组织关系和事件证据进入人物详情查看。"
         count={researchPeople.length}
         countLabel="已发布人物"
         statusText={`更新 ${peopleGeneratedAt.slice(0, 10)}`}
@@ -166,6 +163,18 @@ export default function PeoplePage() {
         </div>
         <Script src="/people-directory-filter.js" strategy="afterInteractive" />
       </ChannelSplitLayout>
+
+      <details className={styles.methodology}>
+        <summary>
+          <span>PEOPLE RESEARCH METHOD</span>
+          <strong>人物研究说明</strong>
+          <small>展开查看</small>
+        </summary>
+        <p>
+          人物频道解释赛道中的技术判断、组织选择和路线演进：先回答为什么值得跟踪、最近发生了什么、下一步看什么，
+          再连接其任职公司、产品项目、技术主题与事件级公开证据。公司关系仅按显式任职证据挂接。
+        </p>
+      </details>
     </main>
   );
 }

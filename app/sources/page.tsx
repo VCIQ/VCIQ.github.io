@@ -44,10 +44,6 @@ export default function SourcesPage() {
       <header className={`page-header ${styles.channelHeader}`}>
         <p className="eyebrow">05 / CORE SOURCES</p>
         <h1>核心信源</h1>
-        <p>
-          信源不是文章的附属字段，而是 VCIQ 的第五类研究对象。这里记录哪些公众号、专业媒体、研究机构和官方入口值得持续观察，
-          并把它们与赛道、技术、人物、公司及研究线索连接起来。
-        </p>
         <div className="hero-chips">
           <span>{coreSourceStats.total} 个已配置重点信源</span>
           <span>{coreSourceStats.wechat} 个微信公众号</span>
@@ -55,33 +51,6 @@ export default function SourcesPage() {
           <span>{coreSourceStats.sectors} 个显式赛道覆盖</span>
         </div>
       </header>
-
-      <details className={styles.lifecycle}>
-        <summary>
-          <span>SOURCE LIFECYCLE</span>
-          <strong>Candidate → Tracked → Core</strong>
-          <small>展开查看信源升级规则</small>
-        </summary>
-        <div className={styles.lifecycleDetails}>
-          <p>
-            单篇高价值文章只产生候选信号；持续命中率、直接证据比例、跨日稳定性与人工判断共同决定是否升级。
-          </p>
-          <div className={styles.lifecycleFlow}>
-            <div>
-              <strong>Candidate</strong>
-              <p>由收藏、研究线索或自动发现提出。</p>
-            </div>
-            <div>
-              <strong>Tracked</strong>
-              <p>人工确认后进入持续抓取与质量观测。</p>
-            </div>
-            <div>
-              <strong>Core</strong>
-              <p>多期证据稳定后成为长期研究入口。</p>
-            </div>
-          </div>
-        </div>
-      </details>
 
       {groups.map((group) => {
         const sources = coreSourcesByKind(group.kind);
@@ -95,7 +64,6 @@ export default function SourcesPage() {
               </div>
               <strong>{sources.length} 个已追踪</strong>
             </div>
-            <p className="intro-copy">{group.description}</p>
 
             <div className={styles.grid}>
               {sources.map((source) => (
@@ -159,9 +127,49 @@ export default function SourcesPage() {
                 </article>
               ))}
             </div>
+            <p className="intro-copy">{group.description}</p>
           </section>
         );
       })}
+
+      <details className={styles.lifecycle}>
+        <summary>
+          <span>SOURCE LIFECYCLE</span>
+          <strong>Candidate → Tracked → Core</strong>
+          <small>展开查看信源升级规则</small>
+        </summary>
+        <div className={styles.lifecycleDetails}>
+          <p>
+            单篇高价值文章只产生候选信号；持续命中率、直接证据比例、跨日稳定性与人工判断共同决定是否升级。
+          </p>
+          <div className={styles.lifecycleFlow}>
+            <div>
+              <strong>Candidate</strong>
+              <p>由收藏、研究线索或自动发现提出。</p>
+            </div>
+            <div>
+              <strong>Tracked</strong>
+              <p>人工确认后进入持续抓取与质量观测。</p>
+            </div>
+            <div>
+              <strong>Core</strong>
+              <p>多期证据稳定后成为长期研究入口。</p>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details className={styles.methodology}>
+        <summary>
+          <span>SOURCE RESEARCH METHOD</span>
+          <strong>信源频道说明</strong>
+          <small>展开查看</small>
+        </summary>
+        <p>
+          信源是 VCIQ 的第五类研究对象。这里持续评估哪些公众号、专业媒体、研究机构和官方入口值得观察，
+          并把它们与赛道、技术、人物、公司及研究线索连接起来。
+        </p>
+      </details>
 
       <section className={styles.group} aria-label="信源治理原则">
         <div className={styles.groupHeader}>
