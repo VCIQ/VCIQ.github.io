@@ -1,27 +1,24 @@
 .channelHeader {
-  gap: 18px 30px;
-  padding: 28px 0 18px;
+  grid-template-columns: minmax(220px, auto) minmax(0, 1fr);
+  gap: 6px 24px;
+  align-items: center;
+  padding: 14px 0 12px;
 }
 
 .channelHeader :global(.eyebrow) {
-  margin-bottom: -10px;
+  grid-column: 1 / -1;
+  margin-bottom: 0;
 }
 
 .channelHeader h1 {
-  font-size: clamp(42px, 4vw, 56px);
-}
-
-.channelHeader > p:not([class~="eyebrow"]) {
-  max-width: 600px;
-  margin: 0;
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.65;
+  font-size: clamp(38px, 3.4vw, 50px);
 }
 
 .channelHeader :global(.hero-chips) {
-  grid-column: 1 / -1;
+  grid-column: 2;
+  justify-content: flex-end;
   gap: 7px;
+  margin: 0;
 }
 
 .body {
@@ -226,6 +223,53 @@
   color: var(--text);
 }
 
+.methodology {
+  margin-top: 18px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.methodology summary {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: 10px;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 2px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.methodology summary::-webkit-details-marker {
+  display: none;
+}
+
+.methodology summary span {
+  color: var(--green);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+
+.methodology summary strong {
+  font-size: 11px;
+}
+
+.methodology summary small {
+  justify-self: end;
+  color: var(--faint);
+  font-size: 9px;
+}
+
+.methodology > p {
+  max-width: 780px;
+  margin: 0;
+  padding: 0 2px 14px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.7;
+}
+
 @media (max-width: 1120px) {
   .body {
     max-height: none;
@@ -238,16 +282,14 @@
 
 @media (max-width: 900px) {
   .channelHeader {
-    gap: 12px;
-    padding: 22px 0 16px;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 12px 0;
   }
 
-  .channelHeader :global(.eyebrow) {
-    margin-bottom: 0;
-  }
-
-  .channelHeader > p:not([class~="eyebrow"]) {
-    max-width: none;
+  .channelHeader :global(.hero-chips) {
+    grid-column: 1;
+    justify-content: flex-start;
   }
 }
 
@@ -276,10 +318,6 @@
 }
 
 @media (max-width: 600px) {
-  .channelHeader {
-    padding: 18px 0 14px;
-  }
-
   .channelHeader h1 {
     font-size: 34px;
   }
