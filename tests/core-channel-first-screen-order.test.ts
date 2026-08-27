@@ -118,6 +118,42 @@ test("people and company cards lead with latest change and company secondary fil
   assert.match(companyCss, /\.advancedGrid \{[\s\S]*grid-template-columns:\s*repeat\(3, minmax\(0, 1fr\)\)/);
 });
 
+test("people and company cards stay scan-dense without dropping research context", async () => {
+  const people = await source("app/people/page.tsx");
+  const peopleCss = await source("app/people/page.module.css");
+  const companies = await source("components/company-directory-client.tsx");
+  const companyCss = await source("components/company-directory.module.css");
+
+  assert.match(companies, /className=\{styles\.cardMetrics\}/);
+  assert.match(companies, /<dt>阶段<\/dt>/);
+  assert.match(companies, /<dt>证据<\/dt>/);
+  assert.match(companies, /<dt>研究分<\/dt>/);
+  assert.match(companies, /companyDirectoryRelationTags\(company\)/);
+  assert.match(companies, /company\.coverageLabel/);
+  assert.match(companies, /company\.identityConfidence/);
+  assert.match(companies, /company\.updatedAt/);
+  assert.match(companyCss, /\.card \{[\s\S]*min-height:\s*228px/);
+  assert.match(companyCss, /\.researchRows p \{[\s\S]*-webkit-line-clamp:\s*1/);
+  assert.match(companyCss, /\.researchRows > div:first-child p \{[\s\S]*-webkit-line-clamp:\s*2/);
+  assert.match(companyCss, /\.relationRow \{[\s\S]*flex-wrap:\s*nowrap/);
+  assert.match(companyCss, /\.cardMetrics \{/);
+
+  assert.match(people, /styles\.personCard/);
+  assertOrder(
+    people,
+    "<header className={styles.personLead}>",
+    "<section className={styles.cardResearch}>",
+    "person identity should remain a compact lead-in before live research rows",
+  );
+  assert.match(people, /research\.priority\.level/);
+  assert.match(people, /research\.coverage\.score/);
+  assert.match(people, /statusLabels\[person\.status\]/);
+  assert.match(peopleCss, /\.body :global\(\.people-grid > a\) \{[\s\S]*min-height:\s*212px/);
+  assert.match(peopleCss, /\.personLead \{/);
+  assert.match(peopleCss, /\.researchRow \{[\s\S]*grid-template-columns:\s*48px minmax\(0, 1fr\)/);
+  assert.match(peopleCss, /\.researchRow:first-child p \{[\s\S]*-webkit-line-clamp:\s*2/);
+});
+
 test("sources render tracked source cards before lifecycle and governance explanations", async () => {
   const sources = await source("app/sources/page.tsx");
 
