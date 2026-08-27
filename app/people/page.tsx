@@ -132,7 +132,7 @@ export default function PeoplePage() {
             <Link
               href={`/people/${person.slug}`}
               key={person.slug}
-              className={`${styles.personCard} ${filterClass}`}
+              className={filterClass}
             >
               <header className={styles.personLead}>
                 <div className="person-monogram">{person.name.slice(0, 1)}</div>
