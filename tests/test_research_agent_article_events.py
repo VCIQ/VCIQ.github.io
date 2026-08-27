@@ -1,10 +1,15 @@
 from __future__ import annotations
 
 import copy
+import json
 import unittest
+from pathlib import Path
 
 from tools import research_agent as agent
 from tools import research_agent_article_events as article_events
+
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def article(
@@ -116,6 +121,36 @@ class ResearchAgentArticleEventsTest(unittest.TestCase):
                 {"articles": [candidate]}, "2026-08-27T10:00:00+00:00"
             ),
             {},
+        )
+
+    def test_current_production_snapshot_yields_high_value_event_rows(self) -> None:
+        payload = json.loads(
+            (ROOT / "public" / "data" / "articles.json").read_text(encoding="utf-8")
+        )
+        gate = payload.get("qualityGate")
+        self.assertIsInstance(gate, dict)
+        self.assertIs(gate.get("passed"), True)
+        raw_articles = payload.get("articles")
+        self.assertIsInstance(raw_articles, list)
+        published = [
+            article_events._parse_datetime(row.get("publishedAt"))
+            for row in raw_articles
+            if isinstance(row, dict)
+        ]
+        dates = [value for value in published if value is not None]
+        self.assertTrue(dates)
+        as_of = max(dates).isoformat()
+
+        rows = article_events.build_event_rows(payload, as_of)
+
+        self.assertGreater(len(rows), 0)
+        self.assertLessEqual(len(rows), article_events.MAX_EVENT_ROWS)
+        self.assertTrue(
+            all(
+                int(record.get("importance", 0)) >= article_events.MIN_IMPORTANCE
+                and bool(record.get("sources"))
+                for record in rows.values()
+            )
         )
 
     def test_intelligence_event_additions_use_external_event_semantics(self) -> None:
