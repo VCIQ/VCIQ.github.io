@@ -129,18 +129,27 @@ export default function PeoplePage() {
 
         <div className="people-grid" id={DIRECTORY_GRID_ID}>
           {directory.map(({ person, research, filterClass }) => (
-            <Link href={`/people/${person.slug}`} key={person.slug} className={filterClass}>
-              <div className="person-monogram">{person.name.slice(0, 1)}</div>
-              <h2>{person.name}</h2>
-              <span>{person.role}</span>
-              <div>
+            <Link
+              href={`/people/${person.slug}`}
+              key={person.slug}
+              className={`${styles.personCard} ${filterClass}`}
+            >
+              <header className={styles.personLead}>
+                <div className="person-monogram">{person.name.slice(0, 1)}</div>
+                <div className={styles.personIdentity}>
+                  <h2>{person.name}</h2>
+                  <span>{person.role}</span>
+                </div>
+              </header>
+
+              <div className={styles.personTags}>
                 {person.sectors.slice(0, DIRECTORY_TAG_LIMIT).map((sector) => <i key={sector}>{sector}</i>)}
                 {person.concepts
                   .slice(0, Math.max(0, DIRECTORY_TAG_LIMIT - person.sectors.length))
                   .map((concept) => <i key={concept}>{concept}</i>)}
               </div>
 
-              <div className={styles.cardResearch}>
+              <section className={styles.cardResearch}>
                 <div className={styles.researchRow}>
                   <b>最新变化</b>
                   <p className={styles.latestChange}>
@@ -153,9 +162,9 @@ export default function PeoplePage() {
                   <b>为什么重要</b>
                   <p>{directoryPreview(research.whyImportant, DIRECTORY_SUMMARY_LIMIT)}</p>
                 </div>
-              </div>
+              </section>
 
-              <small>
+              <small className={styles.personMeta}>
                 {research.priority.level} · 完整度 {research.coverage.score}% · {statusLabels[person.status]}
               </small>
             </Link>
