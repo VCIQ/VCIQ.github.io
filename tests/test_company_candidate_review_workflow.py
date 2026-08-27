@@ -17,18 +17,22 @@ class CompanyCandidateReviewWorkflowTests(unittest.TestCase):
         self.assertIn('test "$ACTUAL_REF" = "refs/heads/main"', self.text)
         self.assertIn('test "$ACTUAL_EVENT" = "workflow_dispatch"', self.text)
 
-    def test_supports_only_governed_final_actions(self):
+    def test_supports_only_governed_final_actions_and_batch_input(self):
         self.assertIn("options: [accepted, rejected, merged]", self.text)
+        self.assertIn("decisions_json:", self.text)
         self.assertIn("tools/company_candidate_review_decision.py", self.text)
+        self.assertIn("tools/company_candidate_review_batch.py", self.text)
         self.assertIn("--mode validate", self.text)
         self.assertIn("--mode apply", self.text)
 
-    def test_stale_snapshot_fails_before_write(self):
-        self.assertGreaterEqual(self.text.count('test "$base_sha" = "$EXPECTED_REVISION"'), 1)
-        self.assertIn('test "$(git rev-parse HEAD)" = "$EXPECTED_REVISION"', self.text)
+    def test_candidate_fingerprint_replaces_repository_snapshot_lock(self):
+        self.assertIn("candidate_fingerprint:", self.text)
+        self.assertIn("CANDIDATE_FINGERPRINT", self.text)
+        self.assertIn("candidateFingerprint", self.text)
+        self.assertNotIn("EXPECTED_REVISION", self.text)
+        self.assertNotIn("expected_revision", self.text)
         self.assertIn('test "$(git rev-parse origin/main)" = "$BASE_SHA"', self.text)
-        self.assertIn("refusing to replay the decision", self.text)
-        self.assertIn("refusing to rebase, force, or overwrite", self.text)
+        self.assertIn("main advanced during the short writer section", self.text)
 
     def test_shared_writer_queue_and_narrow_commit_allowlist(self):
         self.assertIn("group: vciq-repository-writer-${{ github.ref }}", self.text)

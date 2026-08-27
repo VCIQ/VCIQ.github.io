@@ -1,6 +1,6 @@
 name: Internal company candidate review
 
-# Authenticated control-plane entry for reviewing private company candidates.
+# Authenticated control-plane entry for reviewing company candidates.
 # This repository is public: inputs, logs and review notes are public audit data.
 on:
   workflow_dispatch:
@@ -11,26 +11,41 @@ on:
         default: validate
         type: choice
         options: [validate, apply]
+      decisions_json:
+        description: "JSON array of up to 20 fingerprint-bound review decisions"
+        required: false
+        default: ""
+        type: string
       candidate_key:
-        description: "Stable candidate decision key"
-        required: true
+        description: "Legacy single candidate decision key"
+        required: false
+        default: ""
         type: string
       decision:
-        description: "Final human review decision"
-        required: true
+        description: "Legacy single decision"
+        required: false
+        default: accepted
         type: choice
         options: [accepted, rejected, merged]
+      candidate_fingerprint:
+        description: "Legacy single candidate SHA-256 evidence fingerprint"
+        required: false
+        default: ""
+        type: string
       merged_slug:
         description: "Existing company slug; required only for merged"
         required: false
+        default: ""
+        type: string
+      homepage_hint:
+        description: "Optional official homepage hint for an accepted candidate"
+        required: false
+        default: ""
         type: string
       note:
-        description: "PUBLIC audit note; do not enter private or confidential information"
-        required: true
-        type: string
-      expected_revision:
-        description: "Full main SHA of the reviewed candidate snapshot"
-        required: true
+        description: "Optional PUBLIC audit note; never enter confidential information"
+        required: false
+        default: ""
         type: string
 
 permissions: {}
@@ -93,7 +108,7 @@ jobs:
           PY
 
   validate:
-    name: Validate company candidate decision
+    name: Validate company candidate decisions
     needs: authorize
     if: inputs.operation == 'validate'
     runs-on: ubuntu-latest
@@ -111,37 +126,42 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Reject stale candidate snapshots
+      - name: Validate and preview fingerprint-bound decisions
         env:
-          EXPECTED_REVISION: ${{ inputs.expected_revision }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          test "$(git rev-parse HEAD)" = "$EXPECTED_REVISION" || {
-            echo "candidate snapshot is stale; refresh the tracking console before reviewing" >&2
-            exit 1
-          }
-
-      - name: Validate and preview decision
-        env:
+          DECISIONS_JSON: ${{ inputs.decisions_json }}
           CANDIDATE_KEY: ${{ inputs.candidate_key }}
           DECISION: ${{ inputs.decision }}
+          CANDIDATE_FINGERPRINT: ${{ inputs.candidate_fingerprint }}
           MERGED_SLUG: ${{ inputs.merged_slug }}
+          HOMEPAGE_HINT: ${{ inputs.homepage_hint }}
           NOTE: ${{ inputs.note }}
-          EXPECTED_REVISION: ${{ inputs.expected_revision }}
           ACTOR: ${{ github.actor }}
         shell: bash
         run: |
           set -euo pipefail
-          python -m py_compile tools/company_candidate_review_decision.py
-          python tools/company_candidate_review_decision.py \
+          python -m py_compile \
+            tools/company_candidate_review_decision.py \
+            tools/company_candidate_review_batch.py
+          if [ -n "$DECISIONS_JSON" ]; then
+            batch="$DECISIONS_JSON"
+          else
+            batch="$(python - <<'PY'
+          import json, os
+          print(json.dumps([{
+              'candidateKey': os.environ.get('CANDIDATE_KEY', ''),
+              'decision': os.environ.get('DECISION', ''),
+              'candidateFingerprint': os.environ.get('CANDIDATE_FINGERPRINT', ''),
+              'mergedSlug': os.environ.get('MERGED_SLUG', ''),
+              'homepageHint': os.environ.get('HOMEPAGE_HINT', ''),
+              'note': os.environ.get('NOTE', ''),
+          }], ensure_ascii=False, separators=(',', ':')))
+          PY
+          )"
+          fi
+          python tools/company_candidate_review_batch.py \
             --mode validate \
-            --candidate-key "$CANDIDATE_KEY" \
-            --decision "$DECISION" \
-            --merged-slug "$MERGED_SLUG" \
-            --note "$NOTE" \
+            --batch-json "$batch" \
             --reviewed-by "$ACTOR/tracking-console" \
-            --expected-revision "$EXPECTED_REVISION" \
             | tee /tmp/company-candidate-review.json
           {
             echo "## Company candidate review validation"
@@ -152,13 +172,14 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
   apply:
-    name: Apply company candidate decision
+    name: Apply company candidate decisions
     needs: authorize
     if: inputs.operation == 'apply'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment: tracking-admin
     concurrency:
+      # Serialize only the short repository mutation section with all other writers.
       group: vciq-repository-writer-${{ github.ref }}
       queue: max
     permissions:
@@ -176,43 +197,49 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Capture and verify exact reviewed revision
+      - name: Capture current writer base
         id: base
-        env:
-          EXPECTED_REVISION: ${{ inputs.expected_revision }}
         shell: bash
-        run: |
-          set -euo pipefail
-          base_sha="$(git rev-parse HEAD)"
-          test "$base_sha" = "$EXPECTED_REVISION" || {
-            echo "candidate snapshot is stale; refresh the tracking console before reviewing" >&2
-            exit 1
-          }
-          echo "sha=$base_sha" >> "$GITHUB_OUTPUT"
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
-      - name: Apply reviewed decision and rebuild private queue
+      - name: Apply batch decisions and rebuild private queue
         id: review
         env:
+          DECISIONS_JSON: ${{ inputs.decisions_json }}
           CANDIDATE_KEY: ${{ inputs.candidate_key }}
           DECISION: ${{ inputs.decision }}
+          CANDIDATE_FINGERPRINT: ${{ inputs.candidate_fingerprint }}
           MERGED_SLUG: ${{ inputs.merged_slug }}
+          HOMEPAGE_HINT: ${{ inputs.homepage_hint }}
           NOTE: ${{ inputs.note }}
-          EXPECTED_REVISION: ${{ inputs.expected_revision }}
           ACTOR: ${{ github.actor }}
         shell: bash
         run: |
           set -euo pipefail
           python -m py_compile \
             tools/company_candidate_review_decision.py \
+            tools/company_candidate_review_batch.py \
             tools/build_company_candidates.py
-          python tools/company_candidate_review_decision.py \
+          if [ -n "$DECISIONS_JSON" ]; then
+            batch="$DECISIONS_JSON"
+          else
+            batch="$(python - <<'PY'
+          import json, os
+          print(json.dumps([{
+              'candidateKey': os.environ.get('CANDIDATE_KEY', ''),
+              'decision': os.environ.get('DECISION', ''),
+              'candidateFingerprint': os.environ.get('CANDIDATE_FINGERPRINT', ''),
+              'mergedSlug': os.environ.get('MERGED_SLUG', ''),
+              'homepageHint': os.environ.get('HOMEPAGE_HINT', ''),
+              'note': os.environ.get('NOTE', ''),
+          }], ensure_ascii=False, separators=(',', ':')))
+          PY
+          )"
+          fi
+          python tools/company_candidate_review_batch.py \
             --mode apply \
-            --candidate-key "$CANDIDATE_KEY" \
-            --decision "$DECISION" \
-            --merged-slug "$MERGED_SLUG" \
-            --note "$NOTE" \
+            --batch-json "$batch" \
             --reviewed-by "$ACTOR/tracking-console" \
-            --expected-revision "$EXPECTED_REVISION" \
             | tee /tmp/company-candidate-review.json
 
           python - <<'PY'
@@ -235,7 +262,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m unittest tests.test_company_candidate_review_decision
+          python -m unittest \
+            tests.test_company_candidate_review_decision \
+            tests.test_company_candidate_review_batch
           python tools/build_company_candidates.py \
             --output config/company_candidate_review_queue.json \
             --check
@@ -248,12 +277,6 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git fetch origin main
-          test "$(git rev-parse origin/main)" = "$BASE_SHA" || {
-            echo "main advanced while the review was running; refusing to replay the decision" >&2
-            exit 1
-          }
-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- \
@@ -263,11 +286,14 @@ jobs:
             echo "review tool reported a change but no approved candidate file changed" >&2
             exit 1
           }
-          git commit -m "config: apply authenticated company candidate review"
+          git commit -m "config: apply authenticated company candidate review batch"
 
+          # The human review is no longer tied to BASE_SHA. This short check only
+          # protects the actual push from an unexpected writer outside the shared
+          # repository-writer queue.
           git fetch origin main
           test "$(git rev-parse origin/main)" = "$BASE_SHA" || {
-            echo "main advanced before push; refusing to rebase, force, or overwrite it" >&2
+            echo "main advanced during the short writer section; retry this batch" >&2
             exit 1
           }
           gh auth setup-git
