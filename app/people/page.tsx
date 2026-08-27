@@ -142,16 +142,16 @@ export default function PeoplePage() {
 
               <div className={styles.cardResearch}>
                 <div className={styles.researchRow}>
-                  <b>为什么重要</b>
-                  <p>{directoryPreview(research.whyImportant, DIRECTORY_SUMMARY_LIMIT)}</p>
-                </div>
-                <div className={styles.researchRow}>
                   <b>最新变化</b>
                   <p className={styles.latestChange}>
                     {research.latestChange
                       ? `${research.latestChange.date} · ${directoryPreview(research.latestChange.title, DIRECTORY_EVENT_LIMIT)}`
                       : "暂无可核验的近期人物事件。"}
                   </p>
+                </div>
+                <div className={styles.researchRow}>
+                  <b>为什么重要</b>
+                  <p>{directoryPreview(research.whyImportant, DIRECTORY_SUMMARY_LIMIT)}</p>
                 </div>
               </div>
 

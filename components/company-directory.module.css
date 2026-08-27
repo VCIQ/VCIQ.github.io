@@ -1,40 +1,46 @@
 .filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 9px;
-  align-items: center;
-  padding: 16px 20px;
+  display: grid;
+  gap: 8px;
+  padding: 12px 20px 10px;
   border-bottom: 1px solid var(--border);
   background: color-mix(in srgb, var(--surface-2) 70%, transparent);
 }
 
-.filters select,
+.primaryFilters {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.6fr) repeat(2, minmax(118px, .7fr));
+  gap: 8px;
+  align-items: center;
+}
+
+.primaryFilters select,
+.advancedGrid select,
 .search {
-  min-height: 38px;
+  min-height: 36px;
   border: 1px solid var(--border-soft);
   background: var(--surface);
   color: var(--text);
 }
 
-.filters select {
-  flex: 1 1 118px;
-  min-width: 108px;
+.primaryFilters select,
+.advancedGrid select {
+  min-width: 0;
   padding: 0 9px;
   font-size: 11px;
 }
 
 .search {
   display: flex;
-  flex: 2 1 260px;
   align-items: center;
   gap: 8px;
-  min-width: 220px;
+  min-width: 0;
   padding: 0 11px;
   color: var(--faint);
 }
 
 .search input {
   width: 100%;
+  min-width: 0;
   border: 0;
   outline: 0;
   background: transparent;
@@ -42,8 +48,57 @@
   font: inherit;
 }
 
-.filters > span {
-  flex: 1 0 100%;
+.filterMeta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 28px;
+}
+
+.advancedFilters {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.advancedFilters summary {
+  display: inline-flex;
+  min-height: 26px;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+  padding: 0 9px;
+  color: var(--muted);
+  font-size: 10px;
+  list-style: none;
+  user-select: none;
+}
+
+.advancedFilters summary::-webkit-details-marker {
+  display: none;
+}
+
+.advancedFilters summary::after {
+  margin-left: 8px;
+  color: var(--green-bright);
+  content: "+";
+}
+
+.advancedFilters[open] summary::after {
+  content: "−";
+}
+
+.advancedGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding-top: 8px;
+}
+
+.filterMeta > span {
+  flex: 0 0 auto;
+  padding-top: 7px;
   color: var(--faint);
   font-size: 10px;
   text-align: right;
@@ -53,7 +108,7 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
-  padding: 16px 20px 0;
+  padding: 12px 20px 0;
 }
 
 .card {
@@ -274,14 +329,31 @@
 @media (max-width: 560px) {
   .grid {
     grid-template-columns: 1fr;
-    padding: 14px;
+    padding: 10px 14px 0;
   }
 
   .filters {
-    padding: 14px;
+    padding: 12px 14px 10px;
   }
 
-  .filters > span {
-    text-align: left;
+  .primaryFilters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .search {
+    grid-column: 1 / -1;
+  }
+
+  .filterMeta {
+    align-items: center;
+  }
+
+  .advancedGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .filterMeta > span {
+    padding-top: 0;
+    text-align: right;
   }
 }

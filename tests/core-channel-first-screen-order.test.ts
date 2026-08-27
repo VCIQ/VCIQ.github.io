@@ -74,6 +74,50 @@ test("people and company channel headers expose current signals before explanati
   assert.doesNotMatch(companyHeader, /公司频道负责把赛道与技术变量/);
 });
 
+test("people and company cards lead with latest change and company secondary filters stay collapsed", async () => {
+  const people = await source("app/people/page.tsx");
+  const companies = await source("components/company-directory-client.tsx");
+  const companyCss = await source("components/company-directory.module.css");
+
+  assertOrder(
+    people,
+    "<b>最新变化</b>",
+    "<b>为什么重要</b>",
+    "person cards must surface the latest verified change before static importance context",
+  );
+  assertOrder(
+    companies,
+    "<strong>最新变化</strong>",
+    "<strong>为什么重要</strong>",
+    "company cards must surface the latest verified change before static importance context",
+  );
+
+  const advancedStart = companies.indexOf("<details className={styles.advancedFilters}>");
+  const advancedEnd = companies.indexOf("</details>", advancedStart);
+  assert.ok(advancedStart >= 0 && advancedEnd > advancedStart, "missing collapsed secondary company filters");
+  const advancedFilters = companies.slice(advancedStart, advancedEnd);
+  assert.match(advancedFilters, /value=\{region\}/);
+  assert.match(advancedFilters, /value=\{sector\}/);
+  assert.match(advancedFilters, /value=\{stage\}/);
+  assert.doesNotMatch(advancedFilters, /value=\{signal\}|value=\{sortOrder\}/);
+  assertOrder(
+    companies,
+    "value={signal}",
+    "<details className={styles.advancedFilters}>",
+    "research signal must remain a primary company filter",
+  );
+  assertOrder(
+    companies,
+    "value={sortOrder}",
+    "<details className={styles.advancedFilters}>",
+    "sort order must remain a primary company control",
+  );
+
+  assert.match(companyCss, /\.primaryFilters \{[\s\S]*grid-template-columns:\s*minmax\(220px, 1\.6fr\) repeat\(2, minmax\(118px, \.7fr\)\)/);
+  assert.match(companyCss, /\.advancedFilters summary \{/);
+  assert.match(companyCss, /\.advancedGrid \{[\s\S]*grid-template-columns:\s*repeat\(3, minmax\(0, 1fr\)\)/);
+});
+
 test("sources render tracked source cards before lifecycle and governance explanations", async () => {
   const sources = await source("app/sources/page.tsx");
 
