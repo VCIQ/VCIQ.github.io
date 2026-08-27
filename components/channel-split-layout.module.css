@@ -35,9 +35,14 @@
   font-size: 18px;
 }
 
-.updatesPanel :global([data-layout="split"] > div:has(h2[id$="-updates-title"]) p:last-of-type),
-.updatesPanel :global([data-layout="split"] > div:has(h2[id$="-updates-title"]) button) {
+.updatesPanel :global([data-layout="split"] > div:has(h2[id$="-updates-title"]) p:last-of-type) {
   display: none;
+}
+
+.updatesPanel :global([data-layout="split"] > div:has(h2[id$="-updates-title"]) button) {
+  margin-top: 5px;
+  padding: 3px 7px;
+  font-size: 8px;
 }
 
 .updatesPanel :global([data-layout="split"] > div:has(> label)) {
