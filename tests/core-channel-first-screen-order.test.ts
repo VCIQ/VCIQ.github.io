@@ -40,7 +40,7 @@ test("1440x900 core-channel contract puts live panels before research methodolog
 
   assert.match(css, /min-height:\s*88px/);
   assert.match(css, /grid-template-columns:\s*repeat\(3, minmax\(0, 1fr\)\)/);
-  assert.match(css, /div:first-child\) \{\s*display:\s*none;/s);
+  assert.match(css, /div:first-child\) \{\s*display:\s*none;/);
 });
 
 test("people and company channel headers expose current signals before explanations", async () => {
@@ -107,7 +107,7 @@ test("technology keeps the pulse visible and removes methodology from the first-
     "<section className={styles.layer} id=\"core-tracks\">",
     "Technology Pulse must remain the research-now signal before taxonomy content",
   );
-  assert.match(css, /\.headerIntro,\s*\.analysisPolicy \{\s*display:\s*none;/s);
-  assert.match(css, /\.pulseHeader > p \{\s*display:\s*none;/s);
+  assert.match(css, /\.headerIntro,\s*\.analysisPolicy \{\s*display:\s*none;/);
+  assert.match(css, /\.pulseHeader > p \{\s*display:\s*none;/);
   assert.match(css, /\.pulseHeader \{[\s\S]*grid-template-columns:\s*minmax\(180px, 1fr\) auto;/);
 });
