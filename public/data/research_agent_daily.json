@@ -1,40 +1,498 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-27T10:38:13+00:00",
+  "generatedAt": "2026-08-27T13:36:58+00:00",
   "asOfDate": "2026-08-27",
-  "runStatus": "no-material-change",
+  "runStatus": "model",
   "baselineSource": "snapshot",
   "model": {
     "provider": "SiliconFlow",
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": false,
-    "usage": {}
+    "used": true,
+    "usage": {
+      "prompt_tokens": 2917,
+      "completion_tokens": 2280,
+      "total_tokens": 5197,
+      "completion_tokens_details": {
+        "reasoning_tokens": 1460
+      },
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 2917
+    }
   },
   "changeSummary": {
-    "totalDetected": 0,
-    "total": 0,
-    "byDataset": {},
-    "byChangeType": {},
-    "externalCandidates": 0,
-    "qualityRejected": 0,
-    "maintenanceExcluded": 0,
+    "totalDetected": 4,
+    "total": 2,
+    "byDataset": {
+      "ventureCompany": 2
+    },
+    "byChangeType": {
+      "external_event": 3,
+      "source_refresh": 1
+    },
+    "externalCandidates": 3,
+    "qualityRejected": 1,
+    "maintenanceExcluded": 1,
     "aggregatedEvents": 0,
-    "highestImportance": 0
+    "highestImportance": 88
   },
   "analysis": {
-    "mode": "structured-change-only",
-    "isResearchJudgment": false,
-    "executiveSummary": "本期没有通过证据质量门的外部事实候选。",
-    "keyDevelopments": [],
-    "thesisUpdates": [],
-    "watchlist": [],
-    "risks": [],
-    "methodologyNote": "结构化变化检查；本期无材料变化。未执行生成式研判。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
+    "mode": "model-analysis",
+    "isResearchJudgment": true,
+    "executiveSummary": "证据包显示两项重大融资事件：星河动力于2025年9月完成24亿元D轮融资；Form Energy于2026年8月完成7.5亿美元G轮融资，用于扩大铁空气电池制造和加速商业部署。两项融资均来自公司官方披露，但投资者名单未在证据中披露。 质量门诊断：缺少发布时间 6、证据合格但未绑定变化字段 2。",
+    "keyDevelopments": [
+      {
+        "title": "星河动力完成24亿元D轮融资",
+        "assessment": "官方披露显示星河动力完成D轮融资，总额24亿元，但未披露投资者。该融资将支持公司发展，但具体用途未说明。",
+        "importance": 4,
+        "confidence": "high",
+        "entities": [
+          "星河动力"
+        ],
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "title": "Form Energy完成7.5亿美元G轮融资",
+        "assessment": "官方新闻稿显示Form Energy完成7.5亿美元G轮融资，用于扩大铁空气电池制造和加速商业部署。该轮融资表明公司获得大规模资本支持。",
+        "importance": 5,
+        "confidence": "high",
+        "entities": [
+          "Form Energy"
+        ],
+        "evidenceIds": [
+          "E006"
+        ]
+      }
+    ],
+    "thesisUpdates": [
+      {
+        "entity": "星河动力",
+        "direction": "positive",
+        "statement": "完成24亿元D轮融资，资金实力增强，但投资者和具体用途待验证。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "entity": "Form Energy",
+        "direction": "positive",
+        "statement": "完成7.5亿美元G轮融资，明确用于扩大铁空气电池制造和加速商业部署，商业化进程有望加速。",
+        "evidenceIds": [
+          "E006"
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "item": "星河动力D轮融资的投资者构成及资金用途",
+        "reason": "证据中未披露投资者，需进一步验证融资质量与战略协同。",
+        "nextEvidence": "星河动力官方后续公告或第三方融资数据库",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "item": "Form Energy G轮融资的投资者及总融资额",
+        "reason": "新闻稿提到'This round brings Form Energy's total […]'，但证据中未给出完整总额，需补充。",
+        "nextEvidence": "Form Energy官方新闻稿全文或投资者公告",
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "item": "Form Energy铁空气电池制造突破与商业部署进展",
+        "reason": "融资用途指向制造和部署，但证据中未提供具体里程碑。",
+        "nextEvidence": "Form Energy后续新闻或项目公告",
+        "evidenceIds": [
+          "E006"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "单一来源风险",
+        "reason": "两项融资均仅依赖公司官方披露，缺乏独立第三方验证，可能存在信息偏差。",
+        "evidenceIds": [
+          "E001",
+          "E006"
+        ]
+      },
+      {
+        "risk": "投资者信息缺失",
+        "reason": "证据中未披露投资者名单，无法评估融资质量和战略价值。",
+        "evidenceIds": [
+          "E001",
+          "E006"
+        ]
+      },
+      {
+        "risk": "时间滞后风险",
+        "reason": "星河动力融资发生于2025年9月，距数据截止日已近一年，当前状态可能已变化。",
+        "evidenceIds": [
+          "E001"
+        ]
+      }
+    ],
+    "methodologyNote": "本分析仅基于证据包中的官方披露信息，未补充外部事实。所有判断均引用证据编号。融资事件作为事实陈述，但投资者、估值、资金用途等未披露信息列为待验证事项。不构成投资建议。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
   },
-  "changes": [],
-  "evidence": [],
+  "changes": [
+    {
+      "id": "chg-024b5ad8babd99686fd9",
+      "dataset": "ventureCompany",
+      "entityType": "创业公司",
+      "entityId": "galactic-energy",
+      "entityName": "星河动力",
+      "action": "updated",
+      "changedFields": [
+        "financing",
+        "products",
+        "status",
+        "warnings"
+      ],
+      "summary": "星河动力 的 financing 发生变化。",
+      "importance": 88,
+      "before": {
+        "financing": [],
+        "products": [
+          "智神星系列运载火箭",
+          "谷神星"
+        ],
+        "status": "retained",
+        "warnings": [
+          "homepage FetchError: TimeoutError: timed out",
+          "本轮公开页面信息少于上一版，已保留更完整的历史档案。"
+        ]
+      },
+      "after": {
+        "financing": [
+          {
+            "amount": "24亿元",
+            "investors": [],
+            "round": "D轮",
+            "sourceUrl": "http://www.galactic-energy.cn/index.php/List/cid/11",
+            "summary": "阅读更多 星河动力智神星一号可重复使用运载火箭一子级动力系统海上试车圆满成功 星河动力智神星一号可重复使用运载火箭一子级动力系统海上试车圆满成功 阅读更多 星河动力航天完成24亿元D轮融资 星河动力航天完成24亿元D轮融资 阅读更多 智神星一号二子级动力系统试车取得圆满成功！",
+            "title": "阅读更多 星河动力智神星一号可重复使用运载火箭一子级动力系统海上试车圆满成功 星河动力智神星一号可重复使用运载火箭一子级动力系统海上试车圆满成功 阅读更多 星河动力航天完成24亿元D轮融资 星河动力航天完成24亿元D轮融资 阅读更多 智神星",
+            "type": "资本市场"
+          },
+          {
+            "amount": "24亿元",
+            "date": "2025-09-30",
+            "investors": [],
+            "round": "D轮",
+            "sourceUrl": "http://www.galactic-energy.cn/index.php/Show/cid/11/aid/269",
+            "summary": "近日，北京星河动力航天科技股份有限公司（以下简称星河动力）顺利完成D轮融资，融资总额共计24亿元。",
+            "title": "星河动力航天完成24亿元D轮融资-星河动力航天",
+            "type": "融资"
+          }
+        ],
+        "products": [
+          "“边界” 动力系统",
+          "智神星系列运载火箭",
+          "谷神星"
+        ],
+        "status": "ok",
+        "warnings": [
+          "http://www.galactic-energy.cn/about: FetchError: HTTPError: HTTP Error 404: Not Found"
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "financing"
+      ],
+      "claimBindings": [
+        {
+          "field": "financing",
+          "before": [],
+          "after": [
+            {
+              "amount": "24亿元",
+              "investors": [],
+              "round": "D轮",
+              "sourceUrl": "http://www.galactic-energy.cn/index.php/List/cid/11",
+              "summary": "阅读更多 星河动力智神星一号可重复使用运载火箭一子级动力系统海上试车圆满成功 星河动力智神星一号可重复使用运载火箭一子级动力系统海上试车圆满成功 阅读更多 星河动力航天完成24亿元D轮融资 星河动力航天完成24亿元D轮融资 阅读更多 智神星一号二子级动力系统试车取得圆满成功！",
+              "title": "阅读更多 星河动力智神星一号可重复使用运载火箭一子级动力系统海上试车圆满成功 星河动力智神星一号可重复使用运载火箭一子级动力系统海上试车圆满成功 阅读更多 星河动力航天完成24亿元D轮融资 星河动力航天完成24亿元D轮融资 阅读更多 智神星",
+              "type": "资本市场"
+            },
+            {
+              "amount": "24亿元",
+              "date": "2025-09-30",
+              "investors": [],
+              "round": "D轮",
+              "sourceUrl": "http://www.galactic-energy.cn/index.php/Show/cid/11/aid/269",
+              "summary": "近日，北京星河动力航天科技股份有限公司（以下简称星河动力）顺利完成D轮融资，融资总额共计24亿元。",
+              "title": "星河动力航天完成24亿元D轮融资-星河动力航天",
+              "type": "融资"
+            }
+          ],
+          "evidenceIds": [
+            "E001"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "products",
+        "status"
+      ],
+      "evidenceIds": [
+        "E001"
+      ],
+      "supportingEvidenceIds": [
+        "E001"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-3f5954d0ab21c5c754e4",
+      "dataset": "ventureCompany",
+      "entityType": "创业公司",
+      "entityId": "form-energy",
+      "entityName": "Form Energy",
+      "action": "updated",
+      "changedFields": [
+        "financing",
+        "sources",
+        "status",
+        "warnings"
+      ],
+      "summary": "Form Energy 的 financing 发生变化。",
+      "importance": 88,
+      "before": {
+        "financing": [],
+        "sources": [
+          {
+            "level": "官方披露",
+            "name": "Form Energy",
+            "section": "background",
+            "url": "https://formenergy.com/"
+          }
+        ],
+        "status": "partial",
+        "warnings": [
+          "thin page: https://formenergy.com/about",
+          "thin page: https://formenergy.com/company",
+          "thin page: https://formenergy.com/leadership",
+          "thin page: https://formenergy.com/products",
+          "thin page: https://formenergy.com/team"
+        ]
+      },
+      "after": {
+        "financing": [
+          {
+            "amount": "$750M",
+            "date": "2020-03-04",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/",
+            "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
+            "type": "融资"
+          },
+          {
+            "amount": "$750M",
+            "date": "2026-08-12",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+            "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+            "type": "融资"
+          }
+        ],
+        "sources": [
+          {
+            "level": "官方披露",
+            "name": "Form Energy",
+            "publishedAt": "2020-03-04",
+            "section": "background",
+            "title": "Home",
+            "url": "https://formenergy.com/"
+          },
+          {
+            "level": "官方披露",
+            "name": "Form Energy",
+            "publishedAt": "2022-08-05",
+            "section": "background",
+            "title": "About",
+            "url": "https://formenergy.com/about"
+          },
+          {
+            "level": "官方披露",
+            "name": "Form Energy",
+            "section": "financing",
+            "title": "Press Release Archives",
+            "url": "https://formenergy.com/category/press-release"
+          },
+          {
+            "level": "官方披露",
+            "name": "Form Energy",
+            "publishedAt": "2026-08-12",
+            "section": "capitalMarkets",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+            "url": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/"
+          },
+          {
+            "level": "官方披露",
+            "name": "Form Energy",
+            "publishedAt": "2021-03-19",
+            "section": "financing",
+            "title": "Newsroom",
+            "url": "https://formenergy.com/newsroom/"
+          },
+          {
+            "level": "官方披露",
+            "name": "Form Energy",
+            "publishedAt": "2021-07-22",
+            "section": "technology",
+            "title": "Grid Modeling Software",
+            "url": "https://formenergy.com/technology/grid-modeling-software/"
+          }
+        ],
+        "status": "ok",
+        "warnings": []
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "financing"
+      ],
+      "claimBindings": [
+        {
+          "field": "financing",
+          "before": [],
+          "after": [
+            {
+              "amount": "$750M",
+              "date": "2020-03-04",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/",
+              "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
+              "type": "融资"
+            },
+            {
+              "amount": "$750M",
+              "date": "2026-08-12",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+              "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+              "type": "融资"
+            }
+          ],
+          "evidenceIds": [
+            "E005",
+            "E006",
+            "E007"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "status"
+      ],
+      "evidenceIds": [
+        "E005",
+        "E006",
+        "E007"
+      ],
+      "supportingEvidenceIds": [
+        "E005",
+        "E006",
+        "E007"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 3,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E001",
+      "changeId": "chg-024b5ad8babd99686fd9",
+      "entityName": "星河动力",
+      "claim": "星河动力 的 financing 发生变化。",
+      "sourceName": "星河动力",
+      "title": "星河动力航天完成24亿元D轮融资-星河动力航天",
+      "url": "http://www.galactic-energy.cn/index.php/Show/cid/11/aid/269",
+      "publishedAt": "2025-09-30",
+      "evidenceGrade": "官方披露",
+      "claimFields": [
+        "financing"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E005",
+      "changeId": "chg-3f5954d0ab21c5c754e4",
+      "entityName": "Form Energy",
+      "claim": "Form Energy 的 financing 发生变化。",
+      "sourceName": "Form Energy",
+      "title": "Home",
+      "url": "https://formenergy.com/",
+      "publishedAt": "2020-03-04",
+      "evidenceGrade": "官方披露",
+      "claimFields": [
+        "financing"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E006",
+      "changeId": "chg-3f5954d0ab21c5c754e4",
+      "entityName": "Form Energy",
+      "claim": "Form Energy 的 financing 发生变化。",
+      "sourceName": "Form Energy",
+      "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+      "url": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+      "publishedAt": "2026-08-12",
+      "evidenceGrade": "官方披露",
+      "claimFields": [
+        "financing"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E007",
+      "changeId": "chg-3f5954d0ab21c5c754e4",
+      "entityName": "Form Energy",
+      "claim": "Form Energy 的 financing 发生变化。",
+      "sourceName": "Form Energy",
+      "title": "Newsroom",
+      "url": "https://formenergy.com/newsroom/",
+      "publishedAt": "2021-03-19",
+      "evidenceGrade": "官方披露",
+      "claimFields": [
+        "financing"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    }
+  ],
   "methodology": {
     "stages": [
       "stable entity snapshot",
@@ -164,22 +622,26 @@
     },
     {
       "date": "2026-08-27",
-      "generatedAt": "2026-08-27T10:38:13+00:00",
-      "runStatus": "no-material-change",
-      "changeCount": 0,
-      "executiveSummary": "本期没有通过证据质量门的外部事实候选。"
+      "generatedAt": "2026-08-27T13:36:58+00:00",
+      "runStatus": "model",
+      "changeCount": 2,
+      "executiveSummary": "证据包显示两项重大融资事件：星河动力于2025年9月完成24亿元D轮融资；Form Energy于2026年8月完成7.5亿美元G轮融资，用于扩大铁空气电池制造和加速商业部署。两项融资均来自公司官方披露，但投资者名单未在证据中披露。"
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 0,
-    "eligibleCandidateCount": 0,
-    "rejectedCandidateCount": 0,
-    "rejectedByDataset": {},
-    "evidenceCount": 0,
-    "supportingEvidenceCount": 0,
-    "rejectedEvidenceCount": 0,
-    "passedButUnboundEvidenceCount": 0,
-    "rejectionReasons": {}
+    "candidateCount": 3,
+    "eligibleCandidateCount": 2,
+    "rejectedCandidateCount": 1,
+    "rejectedByDataset": {
+      "ventureCompany": 1
+    },
+    "evidenceCount": 12,
+    "supportingEvidenceCount": 4,
+    "rejectedEvidenceCount": 6,
+    "passedButUnboundEvidenceCount": 2,
+    "rejectionReasons": {
+      "missing_published_at": 6
+    }
   },
   "researchScope": {
     "technology": {
