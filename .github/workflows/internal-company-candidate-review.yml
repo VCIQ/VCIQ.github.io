@@ -139,7 +139,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m py_compile tools/company_candidate_review_decision.py
+          python -m py_compile \
+            tools/company_candidate_review_decision.py \
+            tools/company_candidate_review_batch.py
           if [ -n "$DECISIONS_JSON" ]; then
             batch="$DECISIONS_JSON"
           else
@@ -156,7 +158,7 @@ jobs:
           PY
           )"
           fi
-          python tools/company_candidate_review_decision.py \
+          python tools/company_candidate_review_batch.py \
             --mode validate \
             --batch-json "$batch" \
             --reviewed-by "$ACTOR/tracking-console" \
@@ -216,6 +218,7 @@ jobs:
           set -euo pipefail
           python -m py_compile \
             tools/company_candidate_review_decision.py \
+            tools/company_candidate_review_batch.py \
             tools/build_company_candidates.py
           if [ -n "$DECISIONS_JSON" ]; then
             batch="$DECISIONS_JSON"
@@ -233,7 +236,7 @@ jobs:
           PY
           )"
           fi
-          python tools/company_candidate_review_decision.py \
+          python tools/company_candidate_review_batch.py \
             --mode apply \
             --batch-json "$batch" \
             --reviewed-by "$ACTOR/tracking-console" \
@@ -259,7 +262,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m unittest tests.test_company_candidate_review_decision
+          python -m unittest \
+            tests.test_company_candidate_review_decision \
+            tests.test_company_candidate_review_batch
           python tools/build_company_candidates.py \
             --output config/company_candidate_review_queue.json \
             --check
