@@ -26,6 +26,7 @@ class ResearchAgentWorkflowTest(unittest.TestCase):
         self.assertIn("  push:\n", text)
         self.assertIn("      - tools/research_agent.py", text)
         self.assertIn("      - tools/research_agent_evidence_policy.py", text)
+        self.assertIn("      - tools/research_agent_article_events.py", text)
         self.assertIn("      - tools/research_agent_enhanced_runtime.py", text)
         self.assertNotIn("workflow_run:", text)
         self.assertNotIn('workflows: ["Refresh public intelligence"]', text)
@@ -53,8 +54,11 @@ class ResearchAgentWorkflowTest(unittest.TestCase):
             "python -m unittest tests.test_research_agent tests.test_research_agent_workflow",
             text,
         )
+        self.assertIn("tools/research_agent_article_events.py", text)
         self.assertIn("python -m unittest tests.test_research_agent_runtime", text)
         self.assertIn("python -m unittest tests.test_research_agent_evidence_policy", text)
+        self.assertIn("python -m unittest tests.test_research_agent_article_events", text)
+        self.assertIn("python -m unittest tests.test_research_agent_publication_handoff", text)
         self.assertIn("python tools/run_pipeline.py check", text)
 
 
