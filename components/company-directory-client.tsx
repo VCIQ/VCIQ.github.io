@@ -60,6 +60,7 @@ export function CompanyDirectoryClient({
   const regions = ["全部", ...Array.from(new Set(records.map((item) => item.region))).sort()];
   const sectors = ["全部", ...Array.from(new Set(records.map((item) => item.sector))).sort()];
   const stages = ["全部", ...Array.from(new Set(records.map((item) => item.stage))).sort()];
+  const advancedFilterCount = [region, sector, stage].filter((item) => item !== "全部").length;
 
   const filtered = useMemo(() => {
     const needle = query.trim().toLocaleLowerCase("zh-CN");
@@ -105,34 +106,43 @@ export function CompanyDirectoryClient({
   return (
     <>
       <div className={styles.filters}>
-        <label className={styles.search}>
-          <Search size={16} aria-hidden="true" />
-          <input
-            value={query}
-            onChange={(event) => updateFilter(() => setQuery(event.target.value))}
-            placeholder="公司、产品、技术主题或关键人物"
-            aria-label="搜索公司研究档案"
-          />
-        </label>
-        <select value={region} onChange={(event) => updateFilter(() => setRegion(event.target.value))} aria-label="地区">
-          {regions.map((item) => <option key={item}>{item}</option>)}
-        </select>
-        <select value={sector} onChange={(event) => updateFilter(() => setSector(event.target.value))} aria-label="赛道">
-          {sectors.map((item) => <option key={item}>{item}</option>)}
-        </select>
-        <select value={stage} onChange={(event) => updateFilter(() => setStage(event.target.value))} aria-label="阶段">
-          {stages.map((item) => <option key={item}>{item}</option>)}
-        </select>
-        <select value={signal} onChange={(event) => updateFilter(() => setSignal(event.target.value as ResearchSignal))} aria-label="研究信号">
-          {(["全部", "重点跟踪", "近期变化", "高证据覆盖", "待补证据"] as ResearchSignal[]).map((item) => <option key={item}>{item}</option>)}
-        </select>
-        <select value={sortOrder} onChange={(event) => updateFilter(() => setSortOrder(event.target.value as SortOrder))} aria-label="排序">
-          <option value="priority">研究优先级</option>
-          <option value="latest">最新变化</option>
-          <option value="coverage">证据覆盖</option>
-          <option value="name">公司名称</option>
-        </select>
-        <span>共 {filtered.length} 家公司研究档案</span>
+        <div className={styles.primaryFilters}>
+          <label className={styles.search}>
+            <Search size={16} aria-hidden="true" />
+            <input
+              value={query}
+              onChange={(event) => updateFilter(() => setQuery(event.target.value))}
+              placeholder="公司、产品、技术主题或关键人物"
+              aria-label="搜索公司研究档案"
+            />
+          </label>
+          <select value={signal} onChange={(event) => updateFilter(() => setSignal(event.target.value as ResearchSignal))} aria-label="研究信号">
+            {(["全部", "重点跟踪", "近期变化", "高证据覆盖", "待补证据"] as ResearchSignal[]).map((item) => <option key={item}>{item}</option>)}
+          </select>
+          <select value={sortOrder} onChange={(event) => updateFilter(() => setSortOrder(event.target.value as SortOrder))} aria-label="排序">
+            <option value="priority">研究优先级</option>
+            <option value="latest">最新变化</option>
+            <option value="coverage">证据覆盖</option>
+            <option value="name">公司名称</option>
+          </select>
+        </div>
+        <div className={styles.filterMeta}>
+          <details className={styles.advancedFilters}>
+            <summary>更多筛选{advancedFilterCount ? ` · ${advancedFilterCount}` : ""}</summary>
+            <div className={styles.advancedGrid}>
+              <select value={region} onChange={(event) => updateFilter(() => setRegion(event.target.value))} aria-label="地区">
+                {regions.map((item) => <option key={item}>{item}</option>)}
+              </select>
+              <select value={sector} onChange={(event) => updateFilter(() => setSector(event.target.value))} aria-label="赛道">
+                {sectors.map((item) => <option key={item}>{item}</option>)}
+              </select>
+              <select value={stage} onChange={(event) => updateFilter(() => setStage(event.target.value))} aria-label="阶段">
+                {stages.map((item) => <option key={item}>{item}</option>)}
+              </select>
+            </div>
+          </details>
+          <span>共 {filtered.length} 家公司研究档案</span>
+        </div>
       </div>
 
       <div className={styles.grid}>
@@ -153,16 +163,16 @@ export function CompanyDirectoryClient({
 
             <div className={styles.researchRows}>
               <div>
-                <strong>为什么重要</strong>
-                <p>{company.whyImportant}</p>
-              </div>
-              <div>
                 <strong>最新变化</strong>
                 <p>
                   {company.latestChange
                     ? `${company.latestChange.date} · ${company.latestChange.title}`
                     : "暂无达到公开门槛的近期公司事件。"}
                 </p>
+              </div>
+              <div>
+                <strong>为什么重要</strong>
+                <p>{company.whyImportant}</p>
               </div>
               <div>
                 <strong>下一步观察</strong>
