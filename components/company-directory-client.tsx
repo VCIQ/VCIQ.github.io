@@ -158,7 +158,7 @@ export function CompanyDirectoryClient({
                 <h3>{company.name}</h3>
                 <p>{company.englishName}</p>
               </div>
-              <ArrowUpRight size={17} aria-hidden="true" />
+              <ArrowUpRight size={16} aria-hidden="true" />
             </div>
 
             <div className={styles.researchRows}>
@@ -188,15 +188,15 @@ export function CompanyDirectoryClient({
                 : null}
             </div>
 
-            <dl>
+            <dl className={styles.cardMetrics} aria-label="公司研究指标">
               <div><dt>阶段</dt><dd>{company.stage}</dd></div>
               <div>
-                <dt>证据覆盖</dt>
+                <dt>证据</dt>
                 <dd>{company.hasProfile ? `${company.evidenceScore}%` : "待刷新"}</dd>
               </div>
               <div><dt>研究分</dt><dd>{company.priorityScore}</dd></div>
             </dl>
-            <small>
+            <small className={styles.cardFooter}>
               {company.coverageLabel} · 主体核验 {company.identityConfidence}%
               {company.updatedAt ? ` · 更新 ${company.updatedAt}` : ""}
             </small>
