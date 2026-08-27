@@ -1,22 +1,28 @@
 #!/usr/bin/env python3
 """Validate and apply authenticated company-candidate review decisions.
 
-This module is intentionally narrow. It writes only the private candidate decision
-ledger consumed by the existing company onboarding workflow. A decision never
-creates a company profile directly: accepted/merged candidates still pass the
-existing onboarding, official-source and profile quality gates.
+Human review answers one narrow question: is this candidate a company, not a
+company, or an alias of an existing company? Review decisions are intentionally
+separate from publication. Accepted/merged candidates still pass the existing
+official-source, profile and publication quality gates.
+
+Batch review uses a candidate-specific SHA-256 evidence fingerprint instead of a
+repository-wide main SHA. Unrelated repository writes therefore do not invalidate
+a human decision, while any change to the reviewed candidate evidence still does.
 """
 
 from __future__ import annotations
 
 import argparse
 import copy
+import hashlib
 import json
 import re
 import unicodedata
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, Mapping
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 CANDIDATES_PATH = ROOT / "config" / "company_candidate_review_queue.json"
@@ -26,7 +32,8 @@ REGISTRY_PATH = ROOT / "config" / "company_registry.json"
 VALID_ACTIONS = {"accepted", "rejected", "merged"}
 FINAL_STATUSES = {"accepted", "rejected", "merged", "published"}
 SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
-SHA_RE = re.compile(r"^[0-9a-f]{40}$")
+FINGERPRINT_RE = re.compile(r"^[0-9a-f]{64}$")
+MAX_BATCH = 20
 
 
 class ReviewDecisionError(ValueError):
@@ -103,14 +110,56 @@ def registry_slugs(payload: Mapping[str, Any]) -> set[str]:
     }
 
 
+def _string_list(value: Any, limit: int = 40) -> list[str]:
+    if not isinstance(value, list):
+        return []
+    return sorted({clean(item, 2_000) for item in value if clean(item, 2_000)})[:limit]
+
+
+def candidate_review_fingerprint(candidate: Mapping[str, Any]) -> str:
+    """Fingerprint only evidence that can change the human identity decision."""
+    payload = {
+        "decisionKey": normalize_identity(candidate.get("decisionKey") or candidate.get("name")),
+        "score": max(0, min(100, int(candidate.get("score", 0) or 0))),
+        "articleCount": max(0, int(candidate.get("articleCount", 0) or 0)),
+        "sourceCount": max(0, int(candidate.get("sourceCount", 0) or 0)),
+        "sourceArticleIds": _string_list(candidate.get("sourceArticleIds")),
+        "sourceUrls": _string_list(candidate.get("sourceUrls")),
+    }
+    raw = json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
+    return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
+
+def _safe_homepage(value: Any) -> str:
+    url = clean(value, 2_000)
+    if not url:
+        return ""
+    try:
+        parsed = urlsplit(url)
+    except ValueError:
+        return ""
+    if parsed.scheme not in {"http", "https"} or not parsed.hostname:
+        return ""
+    return url
+
+
+def default_note(action: str) -> str:
+    if action == "accepted":
+        return "人工确认该候选为独立公司实体；正式发布仍须通过自动建档、官方来源和质量门。"
+    if action == "rejected":
+        return "人工确认该候选不是应进入公司目录的独立公司实体。"
+    return "人工确认该候选应合并到现有公司实体；别名关系仍须通过后续校验。"
+
+
 def validate_review_request(
     *,
     candidate_key: Any,
     action: Any,
-    note: Any,
-    merged_slug: Any,
+    note: Any = "",
+    merged_slug: Any = "",
     reviewed_by: Any,
-    expected_revision: Any,
+    candidate_fingerprint: Any = "",
+    homepage_hint: Any = "",
 ) -> dict[str, str]:
     key = normalize_identity(candidate_key)
     if len(key) < 2 or len(key) > 200:
@@ -120,9 +169,7 @@ def validate_review_request(
     if decision not in VALID_ACTIONS:
         raise ReviewDecisionError("decision must be accepted, rejected, or merged")
 
-    public_note = clean(note, 500)
-    if len(public_note) < 2:
-        raise ReviewDecisionError("a public review note is required")
+    public_note = clean(note, 500) or default_note(decision)
 
     merge_target = clean(merged_slug, 120).casefold()
     if decision == "merged":
@@ -135,9 +182,15 @@ def validate_review_request(
     if not actor or "@" in actor:
         raise ReviewDecisionError("reviewedBy must be a public audit actor label, not an email address")
 
-    revision = clean(expected_revision, 40).casefold()
-    if not SHA_RE.fullmatch(revision):
-        raise ReviewDecisionError("expected revision must be a full git SHA")
+    fingerprint = clean(candidate_fingerprint, 64).casefold()
+    if fingerprint and not FINGERPRINT_RE.fullmatch(fingerprint):
+        raise ReviewDecisionError("candidate fingerprint must be a SHA-256 hex digest")
+
+    homepage = _safe_homepage(homepage_hint)
+    if clean(homepage_hint, 2_000) and not homepage:
+        raise ReviewDecisionError("homepage hint must be a public http(s) URL")
+    if decision != "accepted" and homepage:
+        raise ReviewDecisionError("homepage hint is only valid for accepted decisions")
 
     return {
         "candidateKey": key,
@@ -145,30 +198,75 @@ def validate_review_request(
         "note": public_note,
         "mergedSlug": merge_target,
         "reviewedBy": actor,
-        "expectedRevision": revision,
+        "candidateFingerprint": fingerprint,
+        "homepageHint": homepage,
     }
 
 
-def apply_review_decision(
+def validate_review_requests(raw: Any, *, reviewed_by: str) -> list[dict[str, str]]:
+    if not isinstance(raw, list) or not raw:
+        raise ReviewDecisionError("decisions batch must be a non-empty JSON array")
+    if len(raw) > MAX_BATCH:
+        raise ReviewDecisionError(f"at most {MAX_BATCH} candidate decisions may be submitted at once")
+    requests: list[dict[str, str]] = []
+    seen: set[str] = set()
+    for item in raw:
+        if not isinstance(item, dict):
+            raise ReviewDecisionError("every batch decision must be a JSON object")
+        request = validate_review_request(
+            candidate_key=item.get("candidateKey"),
+            action=item.get("decision"),
+            note=item.get("note", ""),
+            merged_slug=item.get("mergedSlug", ""),
+            reviewed_by=reviewed_by,
+            candidate_fingerprint=item.get("candidateFingerprint", ""),
+            homepage_hint=item.get("homepageHint", ""),
+        )
+        if request["candidateKey"] in seen:
+            raise ReviewDecisionError("the same candidate cannot appear twice in one batch")
+        seen.add(request["candidateKey"])
+        requests.append(request)
+    return requests
+
+
+def _preflight_requests(
+    candidates_payload: Mapping[str, Any],
+    registry_payload: Mapping[str, Any],
+    requests: list[Mapping[str, str]],
+) -> None:
+    candidates = candidate_index(candidates_payload)
+    slugs = registry_slugs(registry_payload)
+    for request in requests:
+        candidate = candidates.get(request["candidateKey"])
+        if candidate is None:
+            raise ReviewDecisionError(
+                f"candidate {request['candidateKey']} is no longer present in the review queue"
+            )
+        if clean(candidate.get("status"), 30) != "pending":
+            raise ReviewDecisionError(
+                f"candidate {request['candidateKey']} is no longer pending review"
+            )
+        expected = request.get("candidateFingerprint", "")
+        if expected and candidate_review_fingerprint(candidate) != expected:
+            raise ReviewDecisionError(
+                f"candidate {request['candidateKey']} evidence changed; refresh the review queue"
+            )
+        if request["decision"] == "merged" and request["mergedSlug"] not in slugs:
+            raise ReviewDecisionError(
+                f"merge target {request['mergedSlug']} does not exist in the company registry"
+            )
+
+
+def _apply_one(
     candidates_payload: Mapping[str, Any],
     decisions_payload: Mapping[str, Any],
-    registry_payload: Mapping[str, Any],
     request: Mapping[str, str],
     *,
     now: datetime | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
-    candidates = candidate_index(candidates_payload)
-    key = request["candidateKey"]
-    candidate = candidates.get(key)
-    if candidate is None:
-        raise ReviewDecisionError("candidate is no longer present in the review queue")
-    if clean(candidate.get("status"), 30) != "pending":
-        raise ReviewDecisionError("candidate is no longer pending review")
-
+    candidate = candidate_index(candidates_payload)[request["candidateKey"]]
     action = request["decision"]
     merge_target = request["mergedSlug"]
-    if action == "merged" and merge_target not in registry_slugs(registry_payload):
-        raise ReviewDecisionError("merge target does not exist in the company registry")
 
     root = copy.deepcopy(decisions_payload) if isinstance(decisions_payload, Mapping) else {}
     if not isinstance(root, dict):
@@ -180,7 +278,7 @@ def apply_review_decision(
         root["decisions"] = raw_decisions
 
     existing_index = decision_index(root)
-    existing = existing_index.get(key)
+    existing = existing_index.get(request["candidateKey"])
     if existing:
         existing_status = clean(existing[1].get("status"), 30)
         if existing_status in FINAL_STATUSES:
@@ -189,7 +287,7 @@ def apply_review_decision(
                 return root, {
                     "ok": True,
                     "changed": False,
-                    "candidateKey": key,
+                    "candidateKey": request["candidateKey"],
                     "name": clean(candidate.get("name"), 240),
                     "decision": existing_status,
                     "mergedSlug": merge_target,
@@ -197,70 +295,114 @@ def apply_review_decision(
                     "requiresOnboarding": action in {"accepted", "merged"},
                 }
             raise ReviewDecisionError(
-                f"candidate already has final decision {existing_status}; final review decisions are immutable"
+                f"candidate {request['candidateKey']} already has final decision {existing_status}"
             )
 
-    raw_key = existing[0] if existing else clean(candidate.get("decisionKey"), 200) or key
+    raw_key = existing[0] if existing else clean(candidate.get("decisionKey"), 200) or request["candidateKey"]
     previous = copy.deepcopy(existing[1]) if existing else {}
     previous.update(
         {
             "status": action,
             "note": request["note"],
             "mergedSlug": merge_target,
+            "homepageHint": request.get("homepageHint", "") if action == "accepted" else "",
             "decidedAt": now_iso(now),
             "reviewedBy": request["reviewedBy"],
         }
     )
     raw_decisions[raw_key] = previous
 
-    report = {
+    return root, {
         "ok": True,
         "changed": True,
-        "candidateKey": key,
+        "candidateKey": request["candidateKey"],
         "name": clean(candidate.get("name"), 240),
         "decision": action,
         "mergedSlug": merge_target,
-        "message": "review decision validated" if action != "merged" else "merge decision validated against existing registry slug",
+        "homepageHint": request.get("homepageHint", ""),
+        "message": "review decision validated",
         "requiresOnboarding": action in {"accepted", "merged"},
     }
-    return root, report
+
+
+def apply_review_decisions(
+    candidates_payload: Mapping[str, Any],
+    decisions_payload: Mapping[str, Any],
+    registry_payload: Mapping[str, Any],
+    requests: list[Mapping[str, str]],
+    *,
+    now: datetime | None = None,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    _preflight_requests(candidates_payload, registry_payload, requests)
+    updated: Mapping[str, Any] = decisions_payload
+    reports: list[dict[str, Any]] = []
+    timestamp = now or datetime.now(UTC)
+    for request in requests:
+        updated, report = _apply_one(
+            candidates_payload,
+            updated,
+            request,
+            now=timestamp,
+        )
+        reports.append(report)
+    changed_count = sum(1 for report in reports if report.get("changed"))
+    return dict(updated), {
+        "ok": True,
+        "changed": changed_count > 0,
+        "changedCount": changed_count,
+        "decisionCount": len(reports),
+        "requiresOnboarding": any(report.get("requiresOnboarding") for report in reports),
+        "reports": reports,
+    }
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--mode", choices=["validate", "apply"], required=True)
-    parser.add_argument("--candidate-key", required=True)
-    parser.add_argument("--decision", required=True)
+    parser.add_argument("--batch-json", default="")
+    parser.add_argument("--candidate-key", default="")
+    parser.add_argument("--decision", default="")
+    parser.add_argument("--candidate-fingerprint", default="")
     parser.add_argument("--merged-slug", default="")
-    parser.add_argument("--note", required=True)
+    parser.add_argument("--homepage-hint", default="")
+    parser.add_argument("--note", default="")
     parser.add_argument("--reviewed-by", required=True)
-    parser.add_argument("--expected-revision", required=True)
     parser.add_argument("--candidates", default=str(CANDIDATES_PATH))
     parser.add_argument("--decisions", default=str(DECISIONS_PATH))
     parser.add_argument("--registry", default=str(REGISTRY_PATH))
     args = parser.parse_args()
 
-    request = validate_review_request(
-        candidate_key=args.candidate_key,
-        action=args.decision,
-        note=args.note,
-        merged_slug=args.merged_slug,
-        reviewed_by=args.reviewed_by,
-        expected_revision=args.expected_revision,
-    )
+    if args.batch_json:
+        try:
+            raw_batch = json.loads(args.batch_json)
+        except json.JSONDecodeError as exc:
+            raise ReviewDecisionError("batch JSON is invalid") from exc
+        requests = validate_review_requests(raw_batch, reviewed_by=args.reviewed_by)
+    else:
+        requests = [
+            validate_review_request(
+                candidate_key=args.candidate_key,
+                action=args.decision,
+                note=args.note,
+                merged_slug=args.merged_slug,
+                reviewed_by=args.reviewed_by,
+                candidate_fingerprint=args.candidate_fingerprint,
+                homepage_hint=args.homepage_hint,
+            )
+        ]
+
     candidates_path = Path(args.candidates)
     decisions_path = Path(args.decisions)
     registry_path = Path(args.registry)
-    updated, report = apply_review_decision(
+    updated, report = apply_review_decisions(
         load_json(candidates_path),
         load_json(decisions_path),
         load_json(registry_path),
-        request,
+        requests,
     )
     if args.mode == "apply" and report["changed"]:
         write_json(decisions_path, updated)
     report["mode"] = args.mode
-    report["expectedRevision"] = request["expectedRevision"]
     print(json.dumps(report, ensure_ascii=False))
     return 0
 
