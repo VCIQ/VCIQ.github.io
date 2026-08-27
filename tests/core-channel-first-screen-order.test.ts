@@ -97,7 +97,7 @@ test("sources render tracked source cards before lifecycle and governance explan
   );
 });
 
-test("technology keeps the pulse visible and removes methodology from the first-screen header", async () => {
+test("technology keeps current data first and pushes taxonomy methodology to the bottom", async () => {
   const technology = await source("app/technologies/page.tsx");
   const css = await source("app/technologies/page.module.css");
 
@@ -107,6 +107,27 @@ test("technology keeps the pulse visible and removes methodology from the first-
     "<section className={styles.layer} id=\"core-tracks\">",
     "Technology Pulse must remain the research-now signal before taxonomy content",
   );
+  assertOrder(
+    technology,
+    "<div className={styles.trackGrid}>",
+    "<summary><strong>科技研究口径与方法说明</strong></summary>",
+    "track cards must appear before the methodology disclosure",
+  );
+  assertOrder(
+    technology,
+    "<div className={styles.topicGrid}>",
+    "<summary><strong>科技研究口径与方法说明</strong></summary>",
+    "topic cards must appear before the methodology disclosure",
+  );
+  assertOrder(
+    technology,
+    "<section className={styles.layer} id=\"core-technologies\">",
+    "<summary><strong>科技研究口径与方法说明</strong></summary>",
+    "technology-entity content must appear before the methodology disclosure",
+  );
+  assert.doesNotMatch(technology, /<h3>核心赛道<\/h3>\s*<p>/);
+  assert.doesNotMatch(technology, /<h3>重点技术主题<\/h3>\s*<p>/);
+  assert.doesNotMatch(technology, /<h3>核心技术对象<\/h3>\s*<p>/);
   assert.match(css, /\.headerIntro,\s*\.analysisPolicy \{\s*display:\s*none;/);
   assert.match(css, /\.pulseHeader > p \{\s*display:\s*none;/);
   assert.match(css, /\.pulseHeader \{[\s\S]*grid-template-columns:\s*minmax\(180px, 1fr\) auto;/);
