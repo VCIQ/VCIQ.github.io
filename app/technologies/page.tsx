@@ -17,6 +17,15 @@ export const metadata: Metadata = {
   description: "以核心赛道、重点技术主题和具体技术对象三层结构组织可追溯科技研究。",
 };
 
+const technologyMethodologyNotes = {
+  tracks:
+    "HeatScore 继续保留原算法；7D / 30D 只反映清洗后事件活跃度变化。已确认的规范赛道纠错只覆盖分析层，不回写原始事件；弱内容证据仅降权、不删除，但无重点主题的弱证据若在标题或摘要中仍有明确当前赛道语义，可有限恢复赛道权重。宽信源只有在特定赛道上形成足够样本且跨日持续低精度时才追加来源—赛道降权，尚在观测期的组合不处罚；重点主题、crawler 可用、官方/原始材料、高置信公司和人工纠错证据均豁免。历史观测不足完整对照窗口时只显示样本量，不输出涨跌。",
+  topics:
+    "主题趋势保留赛道错分但主题证据仍成立的事件；待复核主题按 0.75 权重计入。赛道语义救援和来源—赛道档位只影响赛道 Momentum，不修改技术主题权重；明确命中重点技术主题的事件也不因 crawler 低置信标签而额外降权。时间覆盖不足时同样不输出虚假的增长率。",
+  entities:
+    "只收录已归入重点技术主题，且具有至少两条公开证据或明确人工研究记录（研究优先级、研究论点或分析师笔记）的具体技术、模型、技术系统与关键能力；主题归类只读取对象身份与明确研究字段，不由详情时间线中的旁带词自动赋值；单证据候选和待归类对象继续保留在溯源库，不进入核心目录；详情保留摘要与可追溯时间线。",
+} as const;
+
 function directionMark(direction: MomentumWindowComparison["direction"]) {
   if (direction === "up") return "↑";
   if (direction === "down") return "↓";
@@ -181,7 +190,6 @@ export default function TechnologyResearchPage() {
             <div>
               <span className={styles.layerIndex}>L1 / CORE TRACKS</span>
               <h3>核心赛道</h3>
-              <p>HeatScore 继续保留原算法；7D / 30D 只反映清洗后事件活跃度变化。已确认的规范赛道纠错只覆盖分析层，不回写原始事件；弱内容证据仅降权、不删除，但无重点主题的弱证据若在标题或摘要中仍有明确当前赛道语义，可有限恢复赛道权重。宽信源只有在特定赛道上形成足够样本且跨日持续低精度时才追加来源—赛道降权，尚在观测期的组合不处罚；重点主题、crawler 可用、官方/原始材料、高置信公司和人工纠错证据均豁免。历史观测不足完整对照窗口时只显示样本量，不输出涨跌。</p>
             </div>
             <span className={styles.layerCount}>{trackedSectors.length} 个赛道</span>
           </div>
@@ -231,7 +239,6 @@ export default function TechnologyResearchPage() {
             <div>
               <span className={styles.layerIndex}>L2 / TECHNOLOGY TOPICS</span>
               <h3>重点技术主题</h3>
-              <p>主题趋势保留赛道错分但主题证据仍成立的事件；待复核主题按 0.75 权重计入。赛道语义救援和来源—赛道档位只影响赛道 Momentum，不修改技术主题权重；明确命中重点技术主题的事件也不因 crawler 低置信标签而额外降权。时间覆盖不足时同样不输出虚假的增长率。</p>
             </div>
             <span className={styles.layerCount}>{technologyTopicDefinitions.length} 个主题</span>
           </div>
@@ -280,7 +287,6 @@ export default function TechnologyResearchPage() {
             <div>
               <span className={styles.layerIndex}>L3 / TECHNOLOGY ENTITIES</span>
               <h3>核心技术对象</h3>
-              <p>只收录已归入重点技术主题，且具有至少两条公开证据或明确人工研究记录（研究优先级、研究论点或分析师笔记）的具体技术、模型、技术系统与关键能力；主题归类只读取对象身份与明确研究字段，不由详情时间线中的旁带词自动赋值；单证据候选和待归类对象继续保留在溯源库，不进入核心目录；详情保留摘要与可追溯时间线。</p>
             </div>
             <span className={styles.layerCount}>{coreTechnologyEntities.length} 个对象</span>
           </div>
@@ -321,6 +327,13 @@ export default function TechnologyResearchPage() {
             </div>
           )}
         </section>
+
+        <details className={styles.emptyNote}>
+          <summary><strong>科技研究口径与方法说明</strong></summary>
+          <p><strong>核心赛道：</strong>{technologyMethodologyNotes.tracks}</p>
+          <p><strong>重点技术主题：</strong>{technologyMethodologyNotes.topics}</p>
+          <p><strong>核心技术对象：</strong>{technologyMethodologyNotes.entities}</p>
+        </details>
       </ChannelSplitLayout>
     </main>
   );
