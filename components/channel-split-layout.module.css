@@ -2,7 +2,7 @@
   --channel-split-panel-height: 960px;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 22px;
+  gap: 18px;
   align-items: stretch;
 }
 
@@ -26,27 +26,32 @@
 
 .updatesPanel :global([data-layout="split"] > div:has(h2[id$="-updates-title"])) {
   grid-template-columns: minmax(0, 1fr) 112px;
-  gap: 16px;
-  min-height: 132px;
-  padding: 16px 18px;
+  gap: 12px;
+  min-height: 88px;
+  padding: 11px 14px;
 }
 
 .updatesPanel :global([data-layout="split"] h2[id$="-updates-title"]) {
-  font-size: 20px;
+  font-size: 18px;
+}
+
+.updatesPanel :global([data-layout="split"] > div:has(h2[id$="-updates-title"]) p:last-of-type),
+.updatesPanel :global([data-layout="split"] > div:has(h2[id$="-updates-title"]) button) {
+  display: none;
 }
 
 .updatesPanel :global([data-layout="split"] > div:has(> label)) {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  padding: 14px 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding: 10px 14px;
 }
 
-.updatesPanel :global([data-layout="split"] > div:has(> label) > div:first-child),
+.updatesPanel :global([data-layout="split"] > div:has(> label) > div:first-child) {
+  display: none;
+}
+
 .updatesPanel :global([data-layout="split"] > div:has(> label) > div:last-child) {
   grid-column: 1 / -1;
-}
-
-.updatesPanel :global([data-layout="split"] > div:has(> label) > div:last-child) {
   justify-content: flex-start;
   min-height: auto;
 }
@@ -59,9 +64,9 @@
 }
 
 .updatesPanel :global([data-layout="split"] a[data-intelligence-item="true"]) {
-  grid-template-columns: 42px minmax(0, 1fr) 18px;
-  gap: 12px;
-  padding: 16px 18px;
+  grid-template-columns: 38px minmax(0, 1fr) 18px;
+  gap: 10px;
+  padding: 13px 14px;
 }
 
 .updatesPanel :global([data-layout="split"] a[data-intelligence-item="true"] h3) {
@@ -90,60 +95,52 @@
   display: grid;
   flex: 0 0 auto;
   grid-template-columns: minmax(0, 1fr) 112px;
-  gap: 16px;
-  align-items: end;
-  min-height: 132px;
-  padding: 16px 18px;
+  gap: 12px;
+  align-items: center;
+  min-height: 88px;
+  padding: 11px 14px;
   border-bottom: 1px solid var(--border);
 }
 
 .titleLine {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 8px;
   color: var(--green-bright);
 }
 
 .titleLine h2 {
   margin: 0;
   color: var(--text);
-  font: 500 20px/1.25 "Noto Serif SC", "Songti SC", serif;
-}
-
-.panelDescription {
-  max-width: 620px;
-  margin: 8px 0 0;
-  color: var(--muted);
-  font-size: 11px;
-  line-height: 1.6;
+  font: 500 18px/1.25 "Noto Serif SC", "Songti SC", serif;
 }
 
 .snapshot {
   display: grid;
   justify-items: end;
   border-left: 1px solid var(--border-soft);
-  padding-left: 16px;
+  padding-left: 14px;
 }
 
 .snapshot span {
   color: var(--faint);
-  font-size: 9px;
+  font-size: 8px;
   letter-spacing: .1em;
   text-align: right;
 }
 
 .snapshot strong {
   color: var(--text);
-  font-size: 30px;
+  font-size: 27px;
   font-weight: 500;
   line-height: 1;
   letter-spacing: -.04em;
 }
 
 .snapshot small {
-  margin-top: 6px;
+  margin-top: 4px;
   color: var(--muted);
-  font-size: 9px;
+  font-size: 8px;
   text-align: right;
 }
 
@@ -151,6 +148,54 @@
   flex: 1;
   overflow: auto;
   scrollbar-color: var(--border) transparent;
+}
+
+.directoryNote {
+  margin: 0 0 18px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+}
+
+.directoryNote summary {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: 10px;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 2px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.directoryNote summary::-webkit-details-marker {
+  display: none;
+}
+
+.directoryNote summary span {
+  color: var(--green);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+
+.directoryNote summary strong {
+  color: var(--text);
+  font-size: 11px;
+}
+
+.directoryNote summary small {
+  justify-self: end;
+  color: var(--faint);
+  font-size: 9px;
+}
+
+.directoryNote > p {
+  max-width: 760px;
+  margin: 0;
+  padding: 0 2px 12px;
+  font-size: 10px;
+  line-height: 1.65;
 }
 
 @media (max-width: 1120px) {
@@ -186,6 +231,10 @@
     min-height: 0;
   }
 
+  .updatesPanel :global([data-layout="split"] > div:has(> label)) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .snapshot {
     grid-template-columns: auto auto 1fr;
     justify-items: start;
@@ -193,7 +242,7 @@
     gap: 10px;
     border-top: 1px solid var(--border-soft);
     border-left: 0;
-    padding: 12px 0 0;
+    padding: 9px 0 0;
   }
 
   .snapshot small {
