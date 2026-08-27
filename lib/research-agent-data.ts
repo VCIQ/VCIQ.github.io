@@ -218,6 +218,7 @@ export const researchAgentEvidenceById = new Map(
 );
 
 export const researchAgentDatasetLabels: Record<string, string> = {
+  intelligenceEvent: "高价值情报事件",
   ventureCompany: "核心公司",
   person: "核心人物",
   institution: "辅助证据·投资机构",
