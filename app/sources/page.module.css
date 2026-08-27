@@ -1,52 +1,53 @@
 .channelHeader {
-  gap: 18px 30px;
-  padding: 28px 0 18px;
+  grid-template-columns: minmax(220px, auto) minmax(0, 1fr);
+  gap: 6px 24px;
+  align-items: center;
+  padding: 14px 0 12px;
 }
 
 .channelHeader :global(.eyebrow) {
-  margin-bottom: -10px;
+  grid-column: 1 / -1;
+  margin-bottom: 0;
 }
 
 .channelHeader h1 {
-  font-size: clamp(42px, 4vw, 56px);
-}
-
-.channelHeader > p:not([class~="eyebrow"]) {
-  max-width: 600px;
-  margin: 0;
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.65;
+  font-size: clamp(38px, 3.4vw, 50px);
 }
 
 .channelHeader :global(.hero-chips) {
-  grid-column: 1 / -1;
+  grid-column: 2;
+  justify-content: flex-end;
   gap: 7px;
+  margin: 0;
 }
 
-.lifecycle {
+.lifecycle,
+.methodology {
   margin: 0 0 18px;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   background: color-mix(in srgb, var(--surface) 78%, transparent);
 }
 
-.lifecycle summary {
+.lifecycle summary,
+.methodology summary {
   display: grid;
   grid-template-columns: auto auto 1fr auto;
   gap: 12px;
   align-items: center;
-  min-height: 54px;
-  padding: 9px 0;
+  min-height: 50px;
+  padding: 8px 0;
   cursor: pointer;
   list-style: none;
 }
 
-.lifecycle summary::-webkit-details-marker {
+.lifecycle summary::-webkit-details-marker,
+.methodology summary::-webkit-details-marker {
   display: none;
 }
 
 .lifecycle summary > span,
+.methodology summary > span,
 .groupHeader span,
 .cardMeta,
 .signalLabel {
@@ -56,31 +57,36 @@
   text-transform: uppercase;
 }
 
-.lifecycle summary > span {
+.lifecycle summary > span,
+.methodology summary > span {
   color: var(--green);
   font-size: 9px;
   font-weight: 700;
   letter-spacing: .12em;
 }
 
-.lifecycle summary > strong {
+.lifecycle summary > strong,
+.methodology summary > strong {
   color: var(--text);
   font-size: 12px;
 }
 
-.lifecycle summary > small {
+.lifecycle summary > small,
+.methodology summary > small {
   justify-self: end;
   color: var(--muted);
   font-size: 9px;
 }
 
-.lifecycle summary::after {
+.lifecycle summary::after,
+.methodology summary::after {
   content: "＋";
   color: var(--green-bright);
   font-size: 11px;
 }
 
-.lifecycle[open] summary::after {
+.lifecycle[open] summary::after,
+.methodology[open] summary::after {
   content: "－";
 }
 
@@ -93,11 +99,17 @@
   border-top: 1px solid var(--border-soft);
 }
 
-.lifecycleDetails > p {
+.lifecycleDetails > p,
+.methodology > p {
   margin: 0;
   color: var(--muted);
   font-size: 11px;
   line-height: 1.7;
+}
+
+.methodology > p {
+  max-width: 820px;
+  padding: 0 0 14px;
 }
 
 .lifecycleFlow {
@@ -155,8 +167,10 @@
 }
 
 .group > :global(.intro-copy) {
-  margin-bottom: 12px;
-  font-size: 12px;
+  max-width: 820px;
+  margin: 10px 0 0;
+  color: var(--faint);
+  font-size: 10px;
   line-height: 1.6;
 }
 
@@ -313,16 +327,14 @@
 
 @media (max-width: 900px) {
   .channelHeader {
-    gap: 12px;
-    padding: 22px 0 16px;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 12px 0;
   }
 
-  .channelHeader :global(.eyebrow) {
-    margin-bottom: 0;
-  }
-
-  .channelHeader > p:not([class~="eyebrow"]) {
-    max-width: none;
+  .channelHeader :global(.hero-chips) {
+    grid-column: 1;
+    justify-content: flex-start;
   }
 }
 
@@ -332,12 +344,15 @@
     grid-template-columns: 1fr;
   }
 
-  .lifecycle summary {
+  .lifecycle summary,
+  .methodology summary {
     grid-template-columns: 1fr auto;
   }
 
   .lifecycle summary > span,
-  .lifecycle summary > small {
+  .lifecycle summary > small,
+  .methodology summary > span,
+  .methodology summary > small {
     display: none;
   }
 
@@ -356,10 +371,6 @@
 }
 
 @media (max-width: 600px) {
-  .channelHeader {
-    padding: 18px 0 14px;
-  }
-
   .channelHeader h1 {
     font-size: 34px;
   }
