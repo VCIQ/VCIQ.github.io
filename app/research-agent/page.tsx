@@ -29,7 +29,7 @@ const researchWorkspaceUrl = process.env.NEXT_PUBLIC_QM_WORKSPACE_URL?.trim();
 
 const statusLabels: Record<string, string> = {
   model: "模型研判完成",
-  "no-material-change": "无材料变化",
+  "no-material-change": "本轮无新增重大变化",
   "offline-fallback": "离线规则摘要",
   "missing-key-fallback": "等待 API 密钥",
   "api-fallback": "API 降级摘要",
@@ -210,7 +210,7 @@ function EvidenceLinks({ ids }: { ids: string[] }) {
 }
 
 export default function ResearchAgentPage() {
-  const { analysis, changeSummary, changes, evidence, history, methodology, model } =
+  const { analysis, changeSummary, changes, evidence, history, methodology, model, pipelineHealth } =
     researchAgentReport;
   const status = statusLabels[researchAgentReport.runStatus] ?? researchAgentReport.runStatus;
   const isDegraded = degradedStatuses.has(researchAgentReport.runStatus);
@@ -234,14 +234,17 @@ export default function ResearchAgentPage() {
   const hasQueuedResearch =
     personResearchQueue.candidateTaskCount > 0 || personResearchQueue.selectedTaskCount > 0;
   const coreObjectCoverage = [
-    { label: "核心技术", count: suppressLegacyDegradedOutput ? 0 : changeSummary.byDataset.technology ?? 0 },
-    { label: "核心赛道", count: suppressLegacyDegradedOutput ? 0 : changeSummary.byDataset.track ?? changeSummary.byDataset.sector ?? 0 },
-    { label: "核心人物", count: suppressLegacyDegradedOutput ? 0 : changeSummary.byDataset.person ?? 0 },
-    { label: "核心公司", count: suppressLegacyDegradedOutput ? 0 : changeSummary.byDataset.ventureCompany ?? 0 },
+    { label: "核心技术", count: changeSummary.byDataset.technology ?? "待接入" },
+    { label: "核心赛道", count: changeSummary.byDataset.track ?? changeSummary.byDataset.sector ?? "待接入" },
+    { label: "核心人物", count: changeSummary.byDataset.person ?? 0 },
+    { label: "核心公司", count: changeSummary.byDataset.ventureCompany ?? 0 },
   ];
   const hasQualityBreakdown =
     typeof changeSummary.maintenanceExcluded === "number" ||
     typeof changeSummary.qualityRejected === "number";
+  const pipelineSummary = pipelineHealth
+    ? `管线 ${pipelineHealth.healthyJobs}/${pipelineHealth.jobCount} 正常`
+    : "管线状态待同步";
 
   return (
     <main className="page-shell subpage">
@@ -288,7 +291,7 @@ export default function ResearchAgentPage() {
           <Radar size={19} aria-hidden="true" />
           <span>数据截至</span>
           <strong>{researchAgentReport.asOfDate || "—"}</strong>
-          <small>{formatDate(researchAgentReport.generatedAt)}</small>
+          <small>{formatDate(researchAgentReport.generatedAt)} · {pipelineSummary}</small>
         </article>
       </section>
 
@@ -329,7 +332,7 @@ export default function ResearchAgentPage() {
             : localizeFieldNames(analysis.executiveSummary)}
         </p>
         <div className={styles.coverageBlock}>
-          <strong>四类研究对象覆盖</strong>
+          <strong>当前研究对象覆盖</strong>
           <div className={styles.datasetStrip}>
             {coreObjectCoverage.map((item) => (
               <span key={item.label} data-empty={item.count === 0}>
@@ -337,6 +340,16 @@ export default function ResearchAgentPage() {
               </span>
             ))}
           </div>
+          <p className={styles.filterHint}>
+            存量覆盖来自当前研究范围或稳定快照；“本期变化”和“证据节点”只表示本轮增量。
+            即使本轮无新增重大变化或进入降级模式，也不会把历史研究对象清零。
+          </p>
+          {pipelineHealth && pipelineHealth.issueJobs.length > 0 && (
+            <p className={styles.filterHint}>
+              数据管线：{pipelineHealth.healthyJobs}/{pipelineHealth.jobCount} 正常；待关注
+              {" "}{pipelineHealth.issueJobs.map((item) => `${item.name}（${item.status}）`).join("、")}。
+            </p>
+          )}
         </div>
         <div className={styles.datasetStrip} aria-label="本轮辅助证据与数据集变化">
           {Object.entries(changeSummary.byDataset)
@@ -383,7 +396,7 @@ export default function ResearchAgentPage() {
               <p className={styles.empty}>
                 {suppressLegacyDegradedOutput
                   ? "旧版降级结果已隔离，等待下一轮质量门重建。"
-                  : "本期无关键变化。"}
+                  : "本轮无新增关键变化；存量研究对象仍保留。"}
               </p>
             )}
           </div>
@@ -521,7 +534,7 @@ export default function ResearchAgentPage() {
             <p className={styles.empty}>
               {suppressLegacyDegradedOutput
                 ? "旧版变化明细已隔离，等待下一轮按新质量门重建。"
-                : "等待新一轮实体快照产生材料变化。"}
+                : "本轮没有新的实体级材料变化；当前存量研究对象仍保留。"}
             </p>
           )}
         </div>
