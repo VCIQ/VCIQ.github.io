@@ -46,8 +46,47 @@ jobs:
             "head_sha=${{ github.event.workflow_run.head_sha }}" \
             "conclusion=${{ github.event.workflow_run.conclusion }}"
 
-      - name: Dispatch one Pages build from the latest main
+      - name: Decide whether Research Agent needs a post-deploy run
+        id: research-handoff
+        if: github.event_name == 'workflow_run'
+        env:
+          SOURCE_WORKFLOW_NAME: ${{ github.event.workflow_run.name }}
+          SOURCE_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
         shell: bash
         run: |
           set -euo pipefail
-          gh workflow run pages.yml --ref main
+          run_research=false
+          case "${SOURCE_WORKFLOW_NAME:-}" in
+            "Refresh public intelligence every two hours"|\
+            "Refresh public intelligence"|\
+            "Refresh venture profiles"|\
+            "Refresh all listed-company research PDFs"|\
+            "Refresh institution rankings"|\
+            "Refresh STAR Market investors")
+              changed_paths="$(
+                gh api \
+                  -H 'Accept: application/vnd.github+json' \
+                  "repos/${GH_REPO}/compare/${SOURCE_HEAD_SHA}...main" \
+                  --jq '.files[].filename' \
+                  || true
+              )"
+              printf '%s\n' "$changed_paths"
+              if printf '%s\n' "$changed_paths" | grep -Eq '^public/data/(articles|venture_profiles|institution_entities|market_profiles|people|institution_events|listed_company_disclosures)\.json$'; then
+                run_research=true
+              fi
+              ;;
+          esac
+          echo "run_research=$run_research" >> "$GITHUB_OUTPUT"
+          echo "Research Agent post-deploy handoff: $run_research"
+
+      - name: Dispatch one Pages build from the latest main
+        env:
+          RUN_RESEARCH_AFTER_DEPLOY: ${{ steps.research-handoff.outputs.run_research }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          pages_args=()
+          if [ "${RUN_RESEARCH_AFTER_DEPLOY:-false}" = "true" ]; then
+            pages_args=(-f run_research_after_deploy=true)
+          fi
+          gh workflow run pages.yml --ref main "${pages_args[@]}"

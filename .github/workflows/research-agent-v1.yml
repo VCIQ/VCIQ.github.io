@@ -10,6 +10,7 @@ on:
       - tools/research_agent.py
       - tools/research_agent_runtime.py
       - tools/research_agent_evidence_policy.py
+      - tools/research_agent_article_events.py
       - tools/research_agent_enhanced_runtime.py
       - .github/workflows/research-agent-v1.yml
   # Keep a daily research checkpoint even when the full-refresh/Pages handoff has
@@ -50,12 +51,15 @@ jobs:
             tools/research_agent.py \
             tools/research_agent_runtime.py \
             tools/research_agent_evidence_policy.py \
+            tools/research_agent_article_events.py \
             tools/research_agent_enhanced_runtime.py \
             tools/run_pipeline.py \
             tools/build_pipeline_health.py
           python -m unittest tests.test_research_agent tests.test_research_agent_workflow
           python -m unittest tests.test_research_agent_runtime
           python -m unittest tests.test_research_agent_evidence_policy
+          python -m unittest tests.test_research_agent_article_events
+          python -m unittest tests.test_research_agent_publication_handoff
           python -m unittest tests.test_pipeline_control
           python tools/run_pipeline.py check
 
