@@ -1,42 +1,6051 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-28T12:56:26+00:00",
-  "asOfDate": "2026-08-28",
-  "runStatus": "no-material-change",
+  "generatedAt": "2026-08-28T16:13:54+00:00",
+  "asOfDate": "2026-08-29",
+  "runStatus": "model",
   "baselineSource": "snapshot",
   "model": {
     "provider": "SiliconFlow",
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": false,
-    "usage": {}
+    "used": true,
+    "usage": {
+      "prompt_tokens": 16211,
+      "completion_tokens": 3502,
+      "total_tokens": 19713,
+      "completion_tokens_details": {
+        "reasoning_tokens": 1615
+      },
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 16211
+    }
   },
   "changeSummary": {
-    "totalDetected": 3,
-    "total": 0,
-    "byDataset": {},
-    "byChangeType": {
-      "external_event": 3
+    "totalDetected": 72,
+    "total": 29,
+    "byDataset": {
+      "intelligenceEvent": 14,
+      "marketCompany": 15
     },
-    "externalCandidates": 3,
-    "qualityRejected": 3,
-    "maintenanceExcluded": 0,
+    "byChangeType": {
+      "external_event": 29,
+      "data_maintenance": 24,
+      "source_refresh": 19
+    },
+    "externalCandidates": 29,
+    "qualityRejected": 0,
+    "maintenanceExcluded": 43,
     "aggregatedEvents": 0,
-    "highestImportance": 0
+    "highestImportance": 91
   },
   "analysis": {
-    "mode": "structured-change-only",
-    "isResearchJudgment": false,
-    "executiveSummary": "本轮检测到 3 个外部事实候选，但全部未通过证据质量门。 质量门诊断：缺少发布时间 9、缺少标题 1。",
-    "keyDevelopments": [],
-    "thesisUpdates": [],
-    "watchlist": [],
-    "risks": [],
-    "methodologyNote": "结构化变化检查；本期无材料变化。未执行生成式研判。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
+    "mode": "model-analysis",
+    "isResearchJudgment": true,
+    "executiveSummary": "本报告基于2026-08-28证据包，梳理了AI/半导体、AI制药、政策与市场动态。关键事件包括：DLSS 5被移植至RTX 4000系列（E001）、Nvidia收购Hugging Face的报道（E002）、Anthropic与Moderna在AI制药领域的突破（E003）、证监会发布支持房企融资的12条意见（E006）、OpenAI在印度推出ChatGPT广告并聘请Meta高管（E005/E007）、百度发布DuMateBench基准（E009）。多数证据等级为C或D，需谨慎对待；宝马电动车交付数据（E012）和仰望U7挑战（E013）为官方披露，可信度较高。整体看，AI算力生态、AI制药和政策支持是当前主线，但部分重大事件尚未获官方确认。",
+    "keyDevelopments": [
+      {
+        "title": "DLSS 5已被移植至RTX 4000系列显卡",
+        "assessment": "据Tom's Hardware报道，modders通过修补不兼容的CUDA指令，使DLSS 5在RTX 4000系列上运行。该事件显示旧硬件可能通过软件补丁获得新功能，但证据等级为C，且未获NVIDIA官方确认，需验证其稳定性与性能表现。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "NVIDIA",
+          "RTX 4000",
+          "DLSS 5"
+        ],
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "title": "Nvidia收购Hugging Face的报道引发关注",
+        "assessment": "PCMag评论文章称交易金额约129亿美元，并指出该交易引发开发者担忧和监管审查。该报道为评论性质，证据等级C，交易本身未获官方确认，存在较大不确定性。",
+        "importance": 5,
+        "confidence": "low",
+        "entities": [
+          "Nvidia",
+          "Hugging Face"
+        ],
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "title": "Anthropic与Moderna在AI制药领域取得进展",
+        "assessment": "Anthropic依托Claude大模型自主设计14个临床靶点蛋白结合剂，合作方Twist Bioscience股价单日上涨22%；Moderna与默沙东联合宣布个性化mRNA癌症疫苗III期达到主要终点。证据等级C，具体临床数据未完整披露，需关注后续验证。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "Anthropic",
+          "Moderna",
+          "默沙东",
+          "Twist Bioscience"
+        ],
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "title": "证监会发布12条意见支持房企合理融资",
+        "assessment": "证监会发布《关于资本市场支持构建房地产发展新模式的意见》，明确“一视同仁满足不同所有制房地产开发企业合理融资需求”，并加大债券融资支持。该政策信号明确，但具体执行效果待观察。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "证监会",
+          "房地产企业"
+        ],
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "title": "OpenAI在印度推出ChatGPT广告并聘请Meta高管",
+        "assessment": "多个来源报道OpenAI在印度启动ChatGPT广告投放，并聘请Meta高管，为2027年IPO铺路。证据等级为D，信息来自聚合新闻，细节有限，需进一步核实。",
+        "importance": 3,
+        "confidence": "low",
+        "entities": [
+          "OpenAI",
+          "Meta"
+        ],
+        "evidenceIds": [
+          "E005",
+          "E007"
+        ]
+      },
+      {
+        "title": "百度发布DuMateBench基准测试",
+        "assessment": "百度推出DuMateBench，用于评估AI代理完成真实世界任务的能力，包含200多个办公任务。该基准有助于推动AI代理落地，但影响程度需观察行业采用情况。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "百度"
+        ],
+        "evidenceIds": [
+          "E009"
+        ]
+      }
+    ],
+    "thesisUpdates": [
+      {
+        "entity": "NVIDIA",
+        "direction": "mixed",
+        "statement": "DLSS 5移植至RTX 4000显示旧硬件仍有价值，但收购Hugging Face的报道带来监管与开发者关系风险，整体影响多空交织。",
+        "evidenceIds": [
+          "E001",
+          "E002"
+        ]
+      },
+      {
+        "entity": "AI制药",
+        "direction": "positive",
+        "statement": "Anthropic和Moderna的进展表明AI在药物发现与疫苗开发中加速落地，市场给予积极反馈，但临床验证仍是关键。",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "entity": "OpenAI",
+        "direction": "positive",
+        "statement": "印度市场广告投放和高管招聘显示其商业化与IPO准备加速，但证据等级较低，需官方确认。",
+        "evidenceIds": [
+          "E005",
+          "E007"
+        ]
+      },
+      {
+        "entity": "中国房地产",
+        "direction": "positive",
+        "statement": "证监会明确支持房企合理融资，政策环境改善，但实际融资落地情况需跟踪。",
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "entity": "百度",
+        "direction": "neutral",
+        "statement": "发布DuMateBench基准是技术布局，但尚未形成商业闭环，影响待观察。",
+        "evidenceIds": [
+          "E009"
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "item": "Nvidia收购Hugging Face的官方确认与监管审批",
+        "reason": "目前仅有评论文章报道，交易未获官方证实，若成行将重塑AI开源生态。",
+        "nextEvidence": "Nvidia或Hugging Face官方公告、监管文件",
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "item": "DLSS 5在RTX 4000上的实际性能与稳定性",
+        "reason": "移植依赖补丁，可能影响游戏体验，需关注NVIDIA是否正式支持。",
+        "nextEvidence": "更多第三方测试、NVIDIA官方回应",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "item": "Anthropic蛋白结合剂与Moderna疫苗的临床数据",
+        "reason": "摘要未披露完整数据，需验证可重复性与疗效。",
+        "nextEvidence": "论文发表、临床试验详细结果",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "item": "证监会12条意见后房企融资落地情况",
+        "reason": "政策发布后需观察债券发行和银行信贷的实际变化。",
+        "nextEvidence": "房企发债公告、信贷数据",
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "item": "OpenAI印度广告投放与高管任命细节",
+        "reason": "证据等级低，需官方新闻稿或可靠媒体确认。",
+        "nextEvidence": "OpenAI官方博客、印度本地媒体报道",
+        "evidenceIds": [
+          "E005",
+          "E007"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "证据等级偏低导致误判",
+        "reason": "多数关键事件证据等级为C或D，如Nvidia收购、OpenAI印度扩张，可能基于传闻或二手信息，存在不实风险。",
+        "evidenceIds": [
+          "E002",
+          "E005",
+          "E007"
+        ]
+      },
+      {
+        "risk": "监管风险",
+        "reason": "Nvidia收购Hugging Face可能面临反垄断审查；证监会政策虽支持房企，但执行中可能伴随合规风险。",
+        "evidenceIds": [
+          "E002",
+          "E006"
+        ]
+      },
+      {
+        "risk": "技术落地不及预期",
+        "reason": "DLSS 5移植和AI制药成果均处于早期，性能、安全性和临床效果存在不确定性。",
+        "evidenceIds": [
+          "E001",
+          "E003"
+        ]
+      },
+      {
+        "risk": "市场波动风险",
+        "reason": "A股当日创业板指跌逾1%，文远知行股价下跌6.12%，显示市场情绪脆弱，相关概念股可能波动。",
+        "evidenceIds": [
+          "E011",
+          "E019"
+        ]
+      }
+    ],
+    "methodologyNote": "本报告仅基于提供的证据包（E001-E019）进行分析，未补充外部事实。所有判断均引用证据编号，并区分事实、推断与待验证事项。证据等级C或D的信息被标记为低置信度，不作为确定性结论。不提供任何买入、卖出、目标价或收益承诺。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown、每日证据约束研究摘要=degraded。"
   },
-  "changes": [],
-  "evidence": [],
+  "changes": [
+    {
+      "id": "chg-f38274b1089dab07a7b5",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-8e155b2ac797fe0199",
+      "entityName": "DLSS 5 has already been ported to work on RTX 4000 Series graphics cards — incompatible CUDA instructions get patched to work on previous-gen hardware",
+      "action": "added",
+      "changedFields": [
+        "title",
+        "summary",
+        "type",
+        "publishedAt",
+        "company",
+        "sector",
+        "region",
+        "importance",
+        "qualityScore",
+        "sources"
+      ],
+      "summary": "新增高价值情报事件记录：DLSS 5 has already been ported to work on RTX 4000 Series graphics cards — incompatible CUDA instructions get patched to work on previous-gen hardware。",
+      "importance": 91,
+      "before": null,
+      "after": {
+        "title": "DLSS 5 has already been ported to work on RTX 4000 Series graphics cards — incompatible CUDA instructions get patched to work on previous-gen hardware",
+        "summary": "Tom's Hardware has verified that modders have managed to get DLSS 5 up and running on RTX 4000 series graphics cards, following the leaked release of the DLSS 5 nvngx_dlssnr.dll yesterday, which saw modders flock to integrate it into other titles outside of R…",
+        "type": "融资",
+        "publishedAt": "2026-08-28",
+        "company": "科技产业",
+        "sector": "半导体",
+        "region": "美国",
+        "importance": 91,
+        "qualityScore": 0,
+        "sources": [
+          {
+            "name": "Tom's Hardware",
+            "url": "https://www.tomshardware.com/pc-components/gpus/exclusive-dlss-5-has-already-been-ported-to-work-on-rtx-4000-series-graphics-cards-incompatible-cuda-instructions-get-patched-to-work-on-previous-gen-hardware",
+            "title": "DLSS 5 has already been ported to work on RTX 4000 Series graphics cards — incompatible CUDA instructions get patched to work on previous-gen hardware",
+            "publishedAt": "2026-08-28",
+            "level": "C",
+            "section": "summary"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-28",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Tom's Hardware has verified that modders have managed to get DLSS 5 up and running on RTX 4000 series graphics cards, following the leaked release of the DLSS 5 nvngx_dlssnr.dll yesterday, which saw modders flock to integrate it into other titles outside of R…",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "DLSS 5 has already been ported to work on RTX 4000 Series graphics cards — incompatible CUDA instructions get patched to work on previous-gen hardware",
+          "evidenceIds": [
+            "E001"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "company",
+        "importance",
+        "qualityScore",
+        "region",
+        "sector",
+        "type"
+      ],
+      "evidenceIds": [
+        "E001"
+      ],
+      "supportingEvidenceIds": [
+        "E001"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-7520dd75d4e34a675088",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-c5a0b7a4380ccc2255",
+      "entityName": "Nvidia's Hugging Face Acquisition Is Logical, Ambitious, and Headed Straight Into a Minefield",
+      "action": "added",
+      "changedFields": [
+        "title",
+        "summary",
+        "type",
+        "publishedAt",
+        "company",
+        "sector",
+        "region",
+        "importance",
+        "qualityScore",
+        "sources"
+      ],
+      "summary": "新增高价值情报事件记录：Nvidia's Hugging Face Acquisition Is Logical, Ambitious, and Headed Straight Into a Minefield。",
+      "importance": 89,
+      "before": null,
+      "after": {
+        "title": "Nvidia's Hugging Face Acquisition Is Logical, Ambitious, and Headed Straight Into a Minefield",
+        "summary": "The reported $12.9 billion deal is a savvy move, but it's raising urgent concerns among developers and invites regulatory scrutiny.",
+        "type": "并购",
+        "publishedAt": "2026-08-28",
+        "company": "科技产业",
+        "sector": "AI / AGI",
+        "region": "美国",
+        "importance": 89,
+        "qualityScore": 0,
+        "sources": [
+          {
+            "name": "PCMag",
+            "url": "https://www.pcmag.com/opinions/nvidia-hugging-face-acquisition-logical-ambitious-headed-for-minefield",
+            "title": "Nvidia's Hugging Face Acquisition Is Logical, Ambitious, and Headed Straight Into a Minefield",
+            "publishedAt": "2026-08-28",
+            "level": "C",
+            "section": "summary"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-28",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "The reported $12.9 billion deal is a savvy move, but it's raising urgent concerns among developers and invites regulatory scrutiny.",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Nvidia's Hugging Face Acquisition Is Logical, Ambitious, and Headed Straight Into a Minefield",
+          "evidenceIds": [
+            "E002"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "company",
+        "importance",
+        "qualityScore",
+        "region",
+        "sector",
+        "type"
+      ],
+      "evidenceIds": [
+        "E002"
+      ],
+      "supportingEvidenceIds": [
+        "E002"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-cd6d531b58ca9495e2e2",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-8662ca88ab6861ac4f",
+      "entityName": "Anthropic、Moderna先后引爆舆论场，AI制药到底该奖励什么？",
+      "action": "added",
+      "changedFields": [
+        "title",
+        "summary",
+        "type",
+        "publishedAt",
+        "company",
+        "companySlug",
+        "sector",
+        "region",
+        "importance",
+        "qualityScore",
+        "sources"
+      ],
+      "summary": "新增高价值情报事件记录：Anthropic、Moderna先后引爆舆论场，AI制药到底该奖励什么？。",
+      "importance": 85,
+      "before": null,
+      "after": {
+        "title": "Anthropic、Moderna先后引爆舆论场，AI制药到底该奖励什么？",
+        "summary": "算法只是一小部分，但市场仍愿意为算法加价。 作者丨 周蕾 编辑丨 岑峰 上周，两条AI制药新闻在24小时之内，先后引燃了舆论场： 先是Anthropic发布早期药物研发成果：依托Claude大模型，他们几乎在无人工干预的情况下，自主设计出14个临床靶点的蛋白结合剂，全部实验数据公开，所合作的外部平台Twist Bioscience股价单日飙升22%。 次日，全球mRNA巨头Moderna与默沙东联合宣布，其个性化mRNA癌症疫苗intesmeran autogene在针对高危黑色素瘤的全球III期临床试验中达到主…",
+        "type": "技术突破",
+        "publishedAt": "2026-08-28",
+        "company": "Anthropic",
+        "companySlug": "anthropic",
+        "sector": "新能源",
+        "region": "中国",
+        "importance": 85,
+        "qualityScore": 0
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-28",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "算法只是一小部分，但市场仍愿意为算法加价。 作者丨 周蕾 编辑丨 岑峰 上周，两条AI制药新闻在24小时之内，先后引燃了舆论场： 先是Anthropic发布早期药物研发成果：依托Claude大模型，他们几乎在无人工干预的情况下，自主设计出14个临床靶点的蛋白结合剂，全部实验数据公开，所合作的外部平台Twist Bioscience股价单日飙升22%。 次日，全球mRNA巨头Moderna与默沙东联合宣布，其个性化mRNA癌症疫苗intesmeran autogene在针对高危黑色素瘤的全球III期临床试验中达到主…",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Anthropic、Moderna先后引爆舆论场，AI制药到底该奖励什么？",
+          "evidenceIds": [
+            "E003"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "company",
+        "companySlug",
+        "importance",
+        "qualityScore",
+        "region",
+        "sector",
+        "type"
+      ],
+      "evidenceIds": [
+        "E003"
+      ],
+      "supportingEvidenceIds": [
+        "E003"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-f6b1641b870bda506d7c",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-1222856c8cfd44bbe4",
+      "entityName": "上海医药中报利润冰火反差背后，巨头转型遇现实考题丨看财报",
+      "action": "added",
+      "changedFields": [
+        "title",
+        "summary",
+        "type",
+        "publishedAt",
+        "company",
+        "sector",
+        "region",
+        "importance",
+        "qualityScore",
+        "sources"
+      ],
+      "summary": "新增高价值情报事件记录：上海医药中报利润冰火反差背后，巨头转型遇现实考题丨看财报。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "title": "上海医药中报利润冰火反差背后，巨头转型遇现实考题丨看财报",
+        "summary": "公司处在结构调整的关键阶段。",
+        "type": "财报",
+        "publishedAt": "2026-08-28",
+        "company": "科技产业",
+        "sector": "AI / AGI",
+        "region": "中国",
+        "importance": 84,
+        "qualityScore": 0,
+        "sources": [
+          {
+            "name": "钛媒体",
+            "url": "https://www.tmtpost.com/8121190.html",
+            "title": "上海医药中报利润冰火反差背后，巨头转型遇现实考题丨看财报",
+            "publishedAt": "2026-08-28",
+            "level": "C",
+            "section": "summary"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-28",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "公司处在结构调整的关键阶段。",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "上海医药中报利润冰火反差背后，巨头转型遇现实考题丨看财报",
+          "evidenceIds": [
+            "E004"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "company",
+        "importance",
+        "qualityScore",
+        "region",
+        "sector",
+        "type"
+      ],
+      "evidenceIds": [
+        "E004"
+      ],
+      "supportingEvidenceIds": [
+        "E004"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-b9d5407f50558d03fecc",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-fe9ed91c1f0dc32883",
+      "entityName": "OpenAI Expands India Push With ChatGPT Ads Launch And Senior Meta Executive Hire - AI Insider",
+      "action": "added",
+      "changedFields": [
+        "title",
+        "summary",
+        "type",
+        "publishedAt",
+        "company",
+        "companySlug",
+        "sector",
+        "region",
+        "importance",
+        "qualityScore",
+        "qualityStatus",
+        "sources"
+      ],
+      "summary": "新增高价值情报事件记录：OpenAI Expands India Push With ChatGPT Ads Launch And Senior Meta Executive Hire - AI Insider。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "title": "OpenAI Expands India Push With ChatGPT Ads Launch And Senior Meta Executive Hire - AI Insider",
+        "summary": "OpenAI Expands India Push With ChatGPT Ads Launch And Senior Meta Executive Hire AI Insider",
+        "type": "商业进展",
+        "publishedAt": "2026-08-28",
+        "company": "OpenAI",
+        "companySlug": "openai",
+        "sector": "AI / AGI",
+        "region": "美国",
+        "importance": 84,
+        "qualityScore": 52
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-28",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "OpenAI Expands India Push With ChatGPT Ads Launch And Senior Meta Executive Hire AI Insider",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "OpenAI Expands India Push With ChatGPT Ads Launch And Senior Meta Executive Hire - AI Insider",
+          "evidenceIds": [
+            "E005"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "company",
+        "companySlug",
+        "importance",
+        "qualityScore",
+        "qualityStatus",
+        "region",
+        "sector",
+        "type"
+      ],
+      "evidenceIds": [
+        "E005"
+      ],
+      "supportingEvidenceIds": [
+        "E005"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-f665cb5d4c3cf077db51",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-e49c346c1631c16ca7",
+      "entityName": "证监会发布12条意见，明确支持房企合理融资、加大债券融资支持力度",
+      "action": "added",
+      "changedFields": [
+        "title",
+        "summary",
+        "type",
+        "publishedAt",
+        "company",
+        "sector",
+        "region",
+        "importance",
+        "qualityScore",
+        "sources"
+      ],
+      "summary": "新增高价值情报事件记录：证监会发布12条意见，明确支持房企合理融资、加大债券融资支持力度。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "title": "证监会发布12条意见，明确支持房企合理融资、加大债券融资支持力度",
+        "summary": "“一视同仁满足不同所有制房地产开发企业合理融资需求。” 上市房企融资迎来政策利好。 8月28日晚间，证监会发布《关于资本市场支持构建房地产发展新模式的意见》（下称《意...",
+        "type": "产品发布",
+        "publishedAt": "2026-08-28",
+        "company": "科技产业",
+        "sector": "AI / AGI",
+        "region": "中国",
+        "importance": 82,
+        "qualityScore": 0,
+        "sources": [
+          {
+            "name": "新浪财经",
+            "url": "https://finance.sina.com.cn/roll/2026-08-28/doc-inipwnxt9980793.shtml",
+            "title": "证监会发布12条意见，明确支持房企合理融资、加大债券融资支持力度",
+            "publishedAt": "2026-08-28",
+            "level": "C",
+            "section": "summary"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-28",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "“一视同仁满足不同所有制房地产开发企业合理融资需求。” 上市房企融资迎来政策利好。 8月28日晚间，证监会发布《关于资本市场支持构建房地产发展新模式的意见》（下称《意...",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "证监会发布12条意见，明确支持房企合理融资、加大债券融资支持力度",
+          "evidenceIds": [
+            "E006"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "company",
+        "importance",
+        "qualityScore",
+        "region",
+        "sector",
+        "type"
+      ],
+      "evidenceIds": [
+        "E006"
+      ],
+      "supportingEvidenceIds": [
+        "E006"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-520b96fff177ffd84b17",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-e30e3a59946f2184e1",
+      "entityName": "OpenAI launches ChatGPT ads in India ahead of 2027 IPO - qz.com",
+      "action": "added",
+      "changedFields": [
+        "title",
+        "summary",
+        "type",
+        "publishedAt",
+        "company",
+        "companySlug",
+        "sector",
+        "region",
+        "importance",
+        "qualityScore",
+        "qualityStatus",
+        "sources"
+      ],
+      "summary": "新增高价值情报事件记录：OpenAI launches ChatGPT ads in India ahead of 2027 IPO - qz.com。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "title": "OpenAI launches ChatGPT ads in India ahead of 2027 IPO - qz.com",
+        "summary": "OpenAI launches ChatGPT ads in India ahead of 2027 IPO qz.com",
+        "type": "产品发布",
+        "publishedAt": "2026-08-28",
+        "company": "OpenAI",
+        "companySlug": "openai",
+        "sector": "AI / AGI",
+        "region": "美国",
+        "importance": 82,
+        "qualityScore": 54
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-28",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "OpenAI launches ChatGPT ads in India ahead of 2027 IPO qz.com",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "OpenAI launches ChatGPT ads in India ahead of 2027 IPO - qz.com",
+          "evidenceIds": [
+            "E007"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "company",
+        "companySlug",
+        "importance",
+        "qualityScore",
+        "qualityStatus",
+        "region",
+        "sector",
+        "type"
+      ],
+      "evidenceIds": [
+        "E007"
+      ],
+      "supportingEvidenceIds": [
+        "E007"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-63a6a61235b4e0d6c1f0",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-d754d190496e8dfddd",
+      "entityName": "Clicklinks | Sanyou Bio Launches Clicklinks, an AI-Driven Innovation Hub for Original Drug Discovery",
+      "action": "added",
+      "changedFields": [
+        "title",
+        "summary",
+        "type",
+        "publishedAt",
+        "company",
+        "sector",
+        "region",
+        "importance",
+        "qualityScore",
+        "sources"
+      ],
+      "summary": "新增高价值情报事件记录：Clicklinks | Sanyou Bio Launches Clicklinks, an AI-Driven Innovation Hub for Original Drug Discovery。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "title": "Clicklinks | Sanyou Bio Launches Clicklinks, an AI-Driven Innovation Hub for Original Drug Discovery",
+        "summary": "SHANGHAI, Aug. 28, 2026 /PRNewswire/ -- Sanyou Biopharmaceuticals Co., Ltd. (hereinafter referred to as \"Sanyou Bio\"), today announced the official launch of Clicklinks, an AI-STAL and SAI-DA powered collaborative network designed to support original drug dis…",
+        "type": "产品发布",
+        "publishedAt": "2026-08-28",
+        "company": "科技产业",
+        "sector": "生物科技",
+        "region": "全球",
+        "importance": 82,
+        "qualityScore": 0,
+        "sources": [
+          {
+            "name": "PR Newswire Consumer Technology",
+            "url": "https://www.prnewswire.com/news-releases/clicklinks--sanyou-bio-launches-clicklinks-an-ai-driven-innovation-hub-for-original-drug-discovery-302862406.html",
+            "title": "Clicklinks | Sanyou Bio Launches Clicklinks, an AI-Driven Innovation Hub for Original Drug Discovery",
+            "publishedAt": "2026-08-28",
+            "level": "B",
+            "section": "summary"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-28",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "SHANGHAI, Aug. 28, 2026 /PRNewswire/ -- Sanyou Biopharmaceuticals Co., Ltd. (hereinafter referred to as \"Sanyou Bio\"), today announced the official launch of Clicklinks, an AI-STAL and SAI-DA powered collaborative network designed to support original drug dis…",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Clicklinks | Sanyou Bio Launches Clicklinks, an AI-Driven Innovation Hub for Original Drug Discovery",
+          "evidenceIds": [
+            "E008"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "company",
+        "importance",
+        "qualityScore",
+        "region",
+        "sector",
+        "type"
+      ],
+      "evidenceIds": [
+        "E008"
+      ],
+      "supportingEvidenceIds": [
+        "E008"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-8e8f15c06623c03d48be",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-485c928f8e3da24c96",
+      "entityName": "Baidu launches DuMateBench benchmark for real-world AI agent delivery",
+      "action": "added",
+      "changedFields": [
+        "title",
+        "summary",
+        "type",
+        "publishedAt",
+        "company",
+        "sector",
+        "region",
+        "importance",
+        "qualityScore",
+        "qualityStatus",
+        "sources"
+      ],
+      "summary": "新增高价值情报事件记录：Baidu launches DuMateBench benchmark for real-world AI agent delivery。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "title": "Baidu launches DuMateBench benchmark for real-world AI agent delivery",
+        "summary": "Baidu has launched DuMateBench, an evaluation leaderboard designed to measure whether AI agents can complete real-world tasks and deliver usable outputs, rather than only generate answers. The benchmark includes more than 200 office tasks across six categorie…",
+        "type": "产品发布",
+        "publishedAt": "2026-08-28",
+        "company": "科技产业",
+        "sector": "AI / AGI",
+        "region": "全球",
+        "importance": 82,
+        "qualityScore": 54,
+        "qualityStatus": "可用"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-28",
+          "evidenceIds": [
+            "E009"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Baidu has launched DuMateBench, an evaluation leaderboard designed to measure whether AI agents can complete real-world tasks and deliver usable outputs, rather than only generate answers. The benchmark includes more than 200 office tasks across six categorie…",
+          "evidenceIds": [
+            "E009"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Baidu launches DuMateBench benchmark for real-world AI agent delivery",
+          "evidenceIds": [
+            "E009"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "company",
+        "importance",
+        "qualityScore",
+        "qualityStatus",
+        "region",
+        "sector",
+        "type"
+      ],
+      "evidenceIds": [
+        "E009"
+      ],
+      "supportingEvidenceIds": [
+        "E009"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-bc596ffbd9b4cb2f4f02",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-56eb4a26b2b39ae877",
+      "entityName": "睿尔曼智能回应人形机器人数据训练中心关停：数据采集模式升级",
+      "action": "added",
+      "changedFields": [
+        "title",
+        "summary",
+        "type",
+        "publishedAt",
+        "company",
+        "sector",
+        "region",
+        "importance",
+        "qualityScore",
+        "sources"
+      ],
+      "summary": "新增高价值情报事件记录：睿尔曼智能回应人形机器人数据训练中心关停：数据采集模式升级。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "title": "睿尔曼智能回应人形机器人数据训练中心关停：数据采集模式升级",
+        "summary": "8月28日，有媒体报道，北京首个人形 机器人 数据训练中心已于近日正式停止运营。据悉，睿尔曼智能为该数据训练中心的核心设备与技术提供方。2025年，该 数据中心 在北京石景山正式落地，部署108台 机器人 、十大场景，每年预计产出超百万条多模态数据。 记者注意到，28日，睿尔曼智能创始人兼CEO郑随兵在朋友圈确认这一消息。 睿尔曼智能相关负责人对记者表示，北京中心的调整是公司数据采集模式从1.0到2.0的主动战略升级。北京中心采用集中式部署，完成的是“实验室场景”数据采集的验证。而具身智能要真正“真干活”，数据必…",
+        "type": "公司动态",
+        "publishedAt": "2026-08-28",
+        "company": "科技产业",
+        "sector": "机器人",
+        "region": "全球",
+        "importance": 80,
+        "qualityScore": 0,
+        "sources": [
+          {
+            "name": "东方财富",
+            "url": "https://finance.eastmoney.com/a/202608283858694335.html",
+            "title": "睿尔曼智能回应人形机器人数据训练中心关停：数据采集模式升级",
+            "publishedAt": "2026-08-28",
+            "level": "C",
+            "section": "summary"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-28",
+          "evidenceIds": [
+            "E010"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "8月28日，有媒体报道，北京首个人形 机器人 数据训练中心已于近日正式停止运营。据悉，睿尔曼智能为该数据训练中心的核心设备与技术提供方。2025年，该 数据中心 在北京石景山正式落地，部署108台 机器人 、十大场景，每年预计产出超百万条多模态数据。 记者注意到，28日，睿尔曼智能创始人兼CEO郑随兵在朋友圈确认这一消息。 睿尔曼智能相关负责人对记者表示，北京中心的调整是公司数据采集模式从1.0到2.0的主动战略升级。北京中心采用集中式部署，完成的是“实验室场景”数据采集的验证。而具身智能要真正“真干活”，数据必…",
+          "evidenceIds": [
+            "E010"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "睿尔曼智能回应人形机器人数据训练中心关停：数据采集模式升级",
+          "evidenceIds": [
+            "E010"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "company",
+        "importance",
+        "qualityScore",
+        "region",
+        "sector",
+        "type"
+      ],
+      "evidenceIds": [
+        "E010"
+      ],
+      "supportingEvidenceIds": [
+        "E010"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-80c4443a174eeeec7613",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-d50351f3ffd2be6fb3",
+      "entityName": "沪指震荡整理 创业板指跌逾1% 粮食概念股大涨",
+      "action": "added",
+      "changedFields": [
+        "title",
+        "summary",
+        "type",
+        "publishedAt",
+        "company",
+        "sector",
+        "region",
+        "importance",
+        "qualityScore",
+        "sources"
+      ],
+      "summary": "新增高价值情报事件记录：沪指震荡整理 创业板指跌逾1% 粮食概念股大涨。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "title": "沪指震荡整理 创业板指跌逾1% 粮食概念股大涨",
+        "summary": "A股三大指数今日走势分化，沪指震荡整理，创业板指走势较弱。截止收盘，沪指跌0.11%，收报3952.18点；深证成指跌0.68%，收报13953.07点；创业板指跌1.41%，收报3424.40点。沪深京三市成交额2.12万亿，较昨日小幅缩量233亿。 行业板块涨多跌少，农化制品、房地产服务、化学原料、农林牧渔、石油石化、一般零售、旅游及景区板块涨幅居前，医疗服务、生物制品、半导体、机器人板块跌幅居前。 个股方面，上涨股票数量超过3000只，逾80只股涨停。粮食概念股大涨，黑芝麻、敦煌种业、新赛股份、万向德农涨停。",
+        "type": "公司动态",
+        "publishedAt": "2026-08-28",
+        "company": "科技产业",
+        "sector": "机器人",
+        "region": "全球",
+        "importance": 80,
+        "qualityScore": 0,
+        "sources": [
+          {
+            "name": "东方财富",
+            "url": "https://finance.eastmoney.com/a/202608283858072733.html",
+            "title": "沪指震荡整理 创业板指跌逾1% 粮食概念股大涨",
+            "publishedAt": "2026-08-28",
+            "level": "媒体报道",
+            "section": "summary"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-28",
+          "evidenceIds": [
+            "E011"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "A股三大指数今日走势分化，沪指震荡整理，创业板指走势较弱。截止收盘，沪指跌0.11%，收报3952.18点；深证成指跌0.68%，收报13953.07点；创业板指跌1.41%，收报3424.40点。沪深京三市成交额2.12万亿，较昨日小幅缩量233亿。 行业板块涨多跌少，农化制品、房地产服务、化学原料、农林牧渔、石油石化、一般零售、旅游及景区板块涨幅居前，医疗服务、生物制品、半导体、机器人板块跌幅居前。 个股方面，上涨股票数量超过3000只，逾80只股涨停。粮食概念股大涨，黑芝麻、敦煌种业、新赛股份、万向德农涨停。",
+          "evidenceIds": [
+            "E011"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "沪指震荡整理 创业板指跌逾1% 粮食概念股大涨",
+          "evidenceIds": [
+            "E011"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "company",
+        "importance",
+        "qualityScore",
+        "region",
+        "sector",
+        "type"
+      ],
+      "evidenceIds": [
+        "E011"
+      ],
+      "supportingEvidenceIds": [
+        "E011"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-6882cc91bff0d51122cc",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-26c0f87fc3bfa55be8",
+      "entityName": "宝马集团全球纯电动车累计交付突破200万辆",
+      "action": "added",
+      "changedFields": [
+        "title",
+        "summary",
+        "type",
+        "publishedAt",
+        "company",
+        "sector",
+        "region",
+        "importance",
+        "qualityScore",
+        "sources"
+      ],
+      "summary": "新增高价值情报事件记录：宝马集团全球纯电动车累计交付突破200万辆。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "title": "宝马集团全球纯电动车累计交付突破200万辆",
+        "summary": "宝马集团电动化迎来新的里程碑。自2013年首款BMW i3上市以来，集团在全球市场向客户累计交付的纯电动车已突破200万辆。包括插电式混合动力车型在内，集团自2013年以来累计售出约350万辆新能源车。",
+        "type": "公司动态",
+        "publishedAt": "2026-08-28",
+        "company": "新浪网",
+        "sector": "AI语音",
+        "region": "中国",
+        "importance": 80,
+        "qualityScore": 0,
+        "sources": [
+          {
+            "name": "新浪网",
+            "url": "https://auto.sina.com.cn/news/2026-08-28/detail-inipwnxp9057770.shtml",
+            "title": "宝马集团全球纯电动车累计交付突破200万辆",
+            "publishedAt": "2026-08-28",
+            "level": "官方披露",
+            "section": "summary"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-28",
+          "evidenceIds": [
+            "E012"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "宝马集团电动化迎来新的里程碑。自2013年首款BMW i3上市以来，集团在全球市场向客户累计交付的纯电动车已突破200万辆。包括插电式混合动力车型在内，集团自2013年以来累计售出约350万辆新能源车。",
+          "evidenceIds": [
+            "E012"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "宝马集团全球纯电动车累计交付突破200万辆",
+          "evidenceIds": [
+            "E012"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "company",
+        "importance",
+        "qualityScore",
+        "region",
+        "sector",
+        "type"
+      ],
+      "evidenceIds": [
+        "E012"
+      ],
+      "supportingEvidenceIds": [
+        "E012"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-8ce6c6f39f4339f2ef3d",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-f1b502740c99deee56",
+      "entityName": "9天3万公里淬炼量产实力，仰望U7极限挑战",
+      "action": "added",
+      "changedFields": [
+        "title",
+        "summary",
+        "type",
+        "publishedAt",
+        "company",
+        "sector",
+        "region",
+        "importance",
+        "qualityScore",
+        "sources"
+      ],
+      "summary": "新增高价值情报事件记录：9天3万公里淬炼量产实力，仰望U7极限挑战。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "title": "9天3万公里淬炼量产实力，仰望U7极限挑战",
+        "summary": "新浪网 发布“9天3万公里淬炼量产实力，仰望U7极限挑战”；完整事实、数据与附件见官方原文。",
+        "type": "公司动态",
+        "publishedAt": "2026-08-25",
+        "company": "新浪网",
+        "sector": "AI语音",
+        "region": "中国",
+        "importance": 80,
+        "qualityScore": 0,
+        "sources": [
+          {
+            "name": "新浪网",
+            "url": "https://auto.sina.com.cn/news/2026-08-25/detail-inipqaan2259332.shtml",
+            "title": "9天3万公里淬炼量产实力，仰望U7极限挑战",
+            "publishedAt": "2026-08-25",
+            "level": "官方披露",
+            "section": "summary"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-25",
+          "evidenceIds": [
+            "E013"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "新浪网 发布“9天3万公里淬炼量产实力，仰望U7极限挑战”；完整事实、数据与附件见官方原文。",
+          "evidenceIds": [
+            "E013"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "9天3万公里淬炼量产实力，仰望U7极限挑战",
+          "evidenceIds": [
+            "E013"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "company",
+        "importance",
+        "qualityScore",
+        "region",
+        "sector",
+        "type"
+      ],
+      "evidenceIds": [
+        "E013"
+      ],
+      "supportingEvidenceIds": [
+        "E013"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-e889d11733f09eb5e7eb",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-e35944cb3892482920",
+      "entityName": "116家公司联名呼吁网络安全 机构看好的绩优概念股出炉",
+      "action": "added",
+      "changedFields": [
+        "title",
+        "summary",
+        "type",
+        "publishedAt",
+        "company",
+        "sector",
+        "region",
+        "importance",
+        "qualityScore",
+        "sources"
+      ],
+      "summary": "新增高价值情报事件记录：116家公司联名呼吁网络安全 机构看好的绩优概念股出炉。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "title": "116家公司联名呼吁网络安全 机构看好的绩优概念股出炉",
+        "summary": "116家公司发表联名信，呼吁将 网络安全 置于首要位置。 今日（8月28日）A股市场早间冲高回落，医药医疗、 风电设备 、 工程机械 、 半导体 等方向跌幅居前。 AI应用 板块走强，AI办公、AI编程等细分领域指数涨幅居前。 鼎捷数智 开盘迅速“20cm”涨停，公司昨日晚间披露2026年半年度报告，今年上半年实现营业收入11.01亿元，同比增长5.37%；实现归母净利润1.88亿元，同比增长318.5%。",
+        "type": "公司动态",
+        "publishedAt": "2026-08-28",
+        "company": "科技产业",
+        "sector": "半导体",
+        "region": "全球",
+        "importance": 80,
+        "qualityScore": 0,
+        "sources": [
+          {
+            "name": "东方财富",
+            "url": "https://finance.eastmoney.com/a/202608283857964571.html",
+            "title": "116家公司联名呼吁网络安全 机构看好的绩优概念股出炉",
+            "publishedAt": "2026-08-28",
+            "level": "媒体报道",
+            "section": "summary"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-28",
+          "evidenceIds": [
+            "E014"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "116家公司发表联名信，呼吁将 网络安全 置于首要位置。 今日（8月28日）A股市场早间冲高回落，医药医疗、 风电设备 、 工程机械 、 半导体 等方向跌幅居前。 AI应用 板块走强，AI办公、AI编程等细分领域指数涨幅居前。 鼎捷数智 开盘迅速“20cm”涨停，公司昨日晚间披露2026年半年度报告，今年上半年实现营业收入11.01亿元，同比增长5.37%；实现归母净利润1.88亿元，同比增长318.5%。",
+          "evidenceIds": [
+            "E014"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "116家公司联名呼吁网络安全 机构看好的绩优概念股出炉",
+          "evidenceIds": [
+            "E014"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "company",
+        "importance",
+        "qualityScore",
+        "region",
+        "sector",
+        "type"
+      ],
+      "evidenceIds": [
+        "E014"
+      ],
+      "supportingEvidenceIds": [
+        "E014"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-6210ea141fc21ce9a512",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "xtalpi",
+      "entityName": "晶泰控股有限公司",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "news",
+        "priceHistory",
+        "quote",
+        "sources"
+      ],
+      "summary": "晶泰控股有限公司 的 news 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "HK$4.52亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "2.09元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.09元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.06元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "HK$327.06亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "43.03亿股"
+          },
+          "…另 7 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-08-23T06:33:00+08:00",
+            "source": "新浪财经",
+            "title": "河套深港科技创新合作区深圳园区——奋力构建世界级科研枢纽",
+            "url": "https://cj.sina.cn/articles/view/1663612603/6328b6bb020022soq"
+          },
+          {
+            "publishedAt": "2026-08-25T13:37:00+08:00",
+            "source": "新浪财经",
+            "title": "AI4S迎来“结算周期”：谁在率先跑通 “规模化量产”闭环？",
+            "url": "https://cj.sina.cn/articles/view/5115326071/130e5ae7702002zx5a"
+          },
+          {
+            "publishedAt": "2026-08-23T05:46:00+08:00",
+            "source": "新浪财经",
+            "title": "奋力构建世界级科研枢纽",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-23/doc-inipfvph7289429.shtml"
+          },
+          {
+            "publishedAt": "2026-08-24T08:51:00+08:00",
+            "source": "新浪财经",
+            "title": "AI医疗：千亿赛道，谁在领跑？",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-24/doc-inipkkzy2090567.shtml"
+          },
+          {
+            "publishedAt": "2026-08-25T15:44:00+08:00",
+            "source": "新浪财经",
+            "title": "上半年，服务出口同比增长17.6% “中国服务”加速走向海外（经济聚焦）",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-25/doc-inippmen9678219.shtml"
+          },
+          {
+            "publishedAt": "2026-08-25T19:19:00+08:00",
+            "source": "新浪财经",
+            "title": "“中国服务”加速走向海外",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-25/doc-inipprnq5553370.shtml"
+          },
+          "…另 4 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 7.46,
+            "date": "2026-08-27",
+            "high": 7.61,
+            "low": 7.4,
+            "open": 7.595,
+            "volume": 41223010.0
+          },
+          {
+            "close": 7.595,
+            "date": "2026-08-28",
+            "high": 7.82,
+            "low": 7.44,
+            "open": 7.5,
+            "volume": 58786087.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-28T14:54:27+08:00",
+          "change": 0.14,
+          "changePercent": 1.88,
+          "currency": "HKD",
+          "previousClose": 7.46
+        },
+        "sources": {
+          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=hk02228%2Cday%2C%2C%2C120%2Cqfq",
+          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=116.02228&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
+          "sinaFinance": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/HK2228/",
+          "yahooFinance": "https://sg.finance.yahoo.com/quote/2228.HK/"
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "2.09元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.09元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.06元"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "HK$327.03亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "2.25亿元"
+          },
+          {
+            "id": "revenue",
+            "label": "营业收入",
+            "value": "3.94亿元"
+          },
+          "…另 2 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-08-23T06:33:00+08:00",
+            "source": "新浪财经",
+            "title": "河套深港科技创新合作区深圳园区——奋力构建世界级科研枢纽",
+            "url": "https://cj.sina.cn/articles/view/1663612603/6328b6bb020022soq"
+          },
+          {
+            "publishedAt": "2026-08-25T13:37:00+08:00",
+            "source": "新浪财经",
+            "title": "AI4S迎来“结算周期”：谁在率先跑通 “规模化量产”闭环？",
+            "url": "https://cj.sina.cn/articles/view/5115326071/130e5ae7702002zx5a"
+          },
+          {
+            "publishedAt": "2026-08-24T08:51:00+08:00",
+            "source": "新浪财经",
+            "title": "AI医疗：千亿赛道，谁在领跑？",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-24/doc-inipkkzy2090567.shtml"
+          },
+          {
+            "publishedAt": "2026-08-25T15:44:00+08:00",
+            "source": "新浪财经",
+            "title": "上半年，服务出口同比增长17.6% “中国服务”加速走向海外（经济聚焦）",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-25/doc-inippmen9678219.shtml"
+          },
+          {
+            "publishedAt": "2026-08-25T19:19:00+08:00",
+            "source": "新浪财经",
+            "title": "“中国服务”加速走向海外",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-25/doc-inipprnq5553370.shtml"
+          },
+          {
+            "publishedAt": "2026-08-27T23:08:00+08:00",
+            "source": "新浪财经",
+            "title": "晶泰科技温书豪：AI4S将成AI的“核心下半场”",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-27/doc-inipuqhm9141396.shtml"
+          },
+          "…另 4 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 7.46,
+            "date": "2026-08-27",
+            "high": 7.61,
+            "low": 7.4,
+            "open": 7.595,
+            "volume": 41223010.0
+          },
+          {
+            "close": 7.6,
+            "date": "2026-08-28",
+            "high": 7.82,
+            "low": 7.44,
+            "open": 7.5,
+            "volume": 68139769.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-28T16:08:36+08:00",
+          "change": 0.14,
+          "changePercent": 1.88,
+          "currency": "HKD",
+          "previousClose": 7.46
+        },
+        "sources": {
+          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=hk02228%2Cday%2C%2C%2C120%2Cqfq",
+          "sinaFinance": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/HK2228/",
+          "yahooFinance": "https://sg.finance.yahoo.com/quote/2228.HK/"
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [
+            {
+              "publishedAt": "2026-08-23T06:33:00+08:00",
+              "source": "新浪财经",
+              "title": "河套深港科技创新合作区深圳园区——奋力构建世界级科研枢纽",
+              "url": "https://cj.sina.cn/articles/view/1663612603/6328b6bb020022soq"
+            },
+            {
+              "publishedAt": "2026-08-25T13:37:00+08:00",
+              "source": "新浪财经",
+              "title": "AI4S迎来“结算周期”：谁在率先跑通 “规模化量产”闭环？",
+              "url": "https://cj.sina.cn/articles/view/5115326071/130e5ae7702002zx5a"
+            },
+            {
+              "publishedAt": "2026-08-23T05:46:00+08:00",
+              "source": "新浪财经",
+              "title": "奋力构建世界级科研枢纽",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-23/doc-inipfvph7289429.shtml"
+            },
+            {
+              "publishedAt": "2026-08-24T08:51:00+08:00",
+              "source": "新浪财经",
+              "title": "AI医疗：千亿赛道，谁在领跑？",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-24/doc-inipkkzy2090567.shtml"
+            },
+            {
+              "publishedAt": "2026-08-25T15:44:00+08:00",
+              "source": "新浪财经",
+              "title": "上半年，服务出口同比增长17.6% “中国服务”加速走向海外（经济聚焦）",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-25/doc-inippmen9678219.shtml"
+            },
+            {
+              "publishedAt": "2026-08-25T19:19:00+08:00",
+              "source": "新浪财经",
+              "title": "“中国服务”加速走向海外",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-25/doc-inipprnq5553370.shtml"
+            },
+            "…另 4 项"
+          ],
+          "after": [
+            {
+              "publishedAt": "2026-08-23T06:33:00+08:00",
+              "source": "新浪财经",
+              "title": "河套深港科技创新合作区深圳园区——奋力构建世界级科研枢纽",
+              "url": "https://cj.sina.cn/articles/view/1663612603/6328b6bb020022soq"
+            },
+            {
+              "publishedAt": "2026-08-25T13:37:00+08:00",
+              "source": "新浪财经",
+              "title": "AI4S迎来“结算周期”：谁在率先跑通 “规模化量产”闭环？",
+              "url": "https://cj.sina.cn/articles/view/5115326071/130e5ae7702002zx5a"
+            },
+            {
+              "publishedAt": "2026-08-24T08:51:00+08:00",
+              "source": "新浪财经",
+              "title": "AI医疗：千亿赛道，谁在领跑？",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-24/doc-inipkkzy2090567.shtml"
+            },
+            {
+              "publishedAt": "2026-08-25T15:44:00+08:00",
+              "source": "新浪财经",
+              "title": "上半年，服务出口同比增长17.6% “中国服务”加速走向海外（经济聚焦）",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-25/doc-inippmen9678219.shtml"
+            },
+            {
+              "publishedAt": "2026-08-25T19:19:00+08:00",
+              "source": "新浪财经",
+              "title": "“中国服务”加速走向海外",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-25/doc-inipprnq5553370.shtml"
+            },
+            {
+              "publishedAt": "2026-08-27T23:08:00+08:00",
+              "source": "新浪财经",
+              "title": "晶泰科技温书豪：AI4S将成AI的“核心下半场”",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-27/doc-inipuqhm9141396.shtml"
+            },
+            "…另 4 项"
+          ],
+          "evidenceIds": [
+            "E015",
+            "E016",
+            "E017",
+            "E018"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
+      "evidenceIds": [
+        "E015",
+        "E016",
+        "E017",
+        "E018"
+      ],
+      "supportingEvidenceIds": [
+        "E015",
+        "E016",
+        "E017",
+        "E018"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 4,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-cbf194db3541cec84f10",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "weride",
+      "entityName": "文远知行",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote",
+        "sources"
+      ],
+      "summary": "文远知行 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$1366.47万"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "19.44元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.79元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$18.67亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "3.11亿股"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$19.77亿"
+          },
+          "…另 7 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 5.91,
+            "date": "2026-08-26",
+            "high": 6.02,
+            "low": 5.83,
+            "open": 6.01,
+            "volume": 2792200.0
+          },
+          {
+            "close": 6.01,
+            "date": "2026-08-27",
+            "high": 6.065,
+            "low": 5.889,
+            "open": 5.93,
+            "volume": 2285900.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-27T20:00:00+00:00",
+          "change": -0.06,
+          "changePercent": -0.99,
+          "currency": "USD",
+          "previousClose": 6.07
+        },
+        "sources": {
+          "price": "https://query1.finance.yahoo.com/v8/finance/chart/WRD?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
+          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=105.WRD&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/WRD/",
+          "yahooFinance": "https://sg.finance.yahoo.com/quote/WRD/"
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "19.44元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.79元"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$19.92亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "7.9亿元"
+          },
+          {
+            "id": "revenue",
+            "label": "营业收入",
+            "value": "3.46亿元"
+          },
+          {
+            "id": "roa",
+            "label": "总资产收益率",
+            "value": "9.46%"
+          },
+          "…另 2 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 6.01,
+            "date": "2026-08-27",
+            "high": 6.065,
+            "low": 5.889,
+            "open": 5.93,
+            "volume": 2285900.0
+          },
+          {
+            "close": 6.055,
+            "date": "2026-08-28",
+            "high": 6.155,
+            "low": 6.01,
+            "open": 6.08,
+            "volume": 471303.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-28T15:49:44+00:00",
+          "change": -0.395,
+          "changePercent": -6.12,
+          "currency": "USD",
+          "previousClose": 6.45
+        },
+        "sources": {
+          "price": "https://query1.finance.yahoo.com/v8/finance/chart/WRD?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/WRD/",
+          "yahooFinance": "https://sg.finance.yahoo.com/quote/WRD/"
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-27T20:00:00+00:00",
+            "change": -0.06,
+            "changePercent": -0.99,
+            "currency": "USD",
+            "previousClose": 6.07
+          },
+          "after": {
+            "asOf": "2026-08-28T15:49:44+00:00",
+            "change": -0.395,
+            "changePercent": -6.12,
+            "currency": "USD",
+            "previousClose": 6.45
+          },
+          "evidenceIds": [
+            "E019"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory"
+      ],
+      "evidenceIds": [
+        "E019"
+      ],
+      "supportingEvidenceIds": [
+        "E019"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-0325a1b21d1012d8cd59",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "pony-ai",
+      "entityName": "小马智行",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote",
+        "sources"
+      ],
+      "summary": "小马智行 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$2306.91万"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "3.63美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.27美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.25美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$26.57亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "3.53亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 7.28,
+            "date": "2026-08-26",
+            "high": 7.42,
+            "low": 7.18,
+            "open": 7.3,
+            "volume": 6503600.0
+          },
+          {
+            "close": 7.52,
+            "date": "2026-08-27",
+            "high": 7.6,
+            "low": 7.29,
+            "open": 7.39,
+            "volume": 3084000.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-27T20:00:00+00:00",
+          "change": -0.225,
+          "changePercent": -2.91,
+          "currency": "USD",
+          "previousClose": 7.745
+        },
+        "sources": {
+          "price": "https://query1.finance.yahoo.com/v8/finance/chart/PONY?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
+          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=105.PONY&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/PONY/",
+          "yahooFinance": "https://sg.finance.yahoo.com/quote/PONY/"
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "3.63美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.27美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.25美元"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$33.24亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "1.1亿美元"
+          },
+          {
+            "id": "revenue",
+            "label": "营业收入",
+            "value": "7047.00万美元"
+          },
+          "…另 3 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 7.52,
+            "date": "2026-08-27",
+            "high": 7.6,
+            "low": 7.29,
+            "open": 7.39,
+            "volume": 3084000.0
+          },
+          {
+            "close": 7.66,
+            "date": "2026-08-28",
+            "high": 7.695,
+            "low": 7.485,
+            "open": 7.55,
+            "volume": 1043564.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-28T15:49:58+00:00",
+          "change": -0.57,
+          "changePercent": -6.93,
+          "currency": "USD",
+          "previousClose": 8.23
+        },
+        "sources": {
+          "price": "https://query1.finance.yahoo.com/v8/finance/chart/PONY?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/PONY/",
+          "yahooFinance": "https://sg.finance.yahoo.com/quote/PONY/"
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-27T20:00:00+00:00",
+            "change": -0.225,
+            "changePercent": -2.91,
+            "currency": "USD",
+            "previousClose": 7.745
+          },
+          "after": {
+            "asOf": "2026-08-28T15:49:58+00:00",
+            "change": -0.57,
+            "changePercent": -6.93,
+            "currency": "USD",
+            "previousClose": 8.23
+          },
+          "evidenceIds": [
+            "E023"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory"
+      ],
+      "evidenceIds": [
+        "E023"
+      ],
+      "supportingEvidenceIds": [
+        "E023"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-eb0105b51ac88fa5121a",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "catl",
+      "entityName": "宁德时代",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "news",
+        "priceHistory",
+        "quote",
+        "sources"
+      ],
+      "summary": "宁德时代 的 news 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "¥94.11亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "81.99元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "13.02元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "9.51元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "¥1.57万亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "42.60亿股"
+          },
+          "…另 8 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-08-28T11:21:00+08:00",
+            "source": "新浪财经",
+            "title": "A股年内回购破10亿 头部公司真金白银传递信心",
+            "url": "https://cj.sina.cn/articles/view/6489090969/182c7ab9900101ve2k"
+          },
+          {
+            "publishedAt": "2026-08-28T09:12:00+08:00",
+            "source": "新浪财经",
+            "title": "极狐阿尔法T7售价13.78万元起：北汽蓝谷毛利率连续三季度转正，冲刺单月5万辆",
+            "url": "https://cj.sina.cn/articles/view/7935425109/1d8fcfa5502001k8vw"
+          },
+          {
+            "publishedAt": "2026-08-28T12:25:00+08:00",
+            "source": "新浪财经",
+            "title": "创业板781家公司披露半年报 超七成实现盈利",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzx5746561.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T11:03:00+08:00",
+            "source": "新浪财经",
+            "title": "宁德时代入股物理AI公司深度智控",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvwaa0138291.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T09:35:00+08:00",
+            "source": "新浪财经",
+            "title": "宁德时代：8月27日获融资买入11.07亿元，融资余额连续3天增加，市场人气旺盛属强势市场",
+            "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-08-28/doc-inipvrtz5670922.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T13:42:00+08:00",
+            "source": "新浪财经",
+            "title": "传DeepSeek寻求新一轮融资 计划筹集74亿美元",
+            "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-08-28/doc-inipwait4562187.shtml"
+          },
+          "…另 4 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 373.0,
+            "date": "2026-08-27",
+            "high": 378.66,
+            "low": 370.05,
+            "open": 376.5,
+            "volume": 233738.0
+          },
+          {
+            "close": 368.31,
+            "date": "2026-08-28",
+            "high": 371.25,
+            "low": 364.13,
+            "open": 368.0,
+            "volume": 257986.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-28T14:54:27+08:00",
+          "change": -4.65,
+          "changePercent": -1.25,
+          "currency": "CNY",
+          "previousClose": 373.0
+        },
+        "sources": {
+          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz300750%2Cday%2C%2C%2C120%2Cqfq",
+          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=0.300750&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
+          "sinaFinance": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/300750/"
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "81.99元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "13.02元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "9.51元"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "42.60亿"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "¥1.71万亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "432.84亿元"
+          },
+          "…另 3 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-08-28T18:19:00+08:00",
+            "source": "新浪财经",
+            "title": "21独家｜华为入局换电赛道，奕境第二款车考虑换电版本",
+            "url": "https://cj.sina.cn/articles/view/1651428902/626ece2602001jb7u"
+          },
+          {
+            "publishedAt": "2026-08-28T19:35:00+08:00",
+            "source": "新浪财经",
+            "title": "【投融资动态】酝电智能A轮融资，投资方为吴江创投",
+            "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002i3c0"
+          },
+          {
+            "publishedAt": "2026-08-28T19:33:00+08:00",
+            "source": "新浪财经",
+            "title": "A股已有780家公司中期分红，前十名拟分近千亿，中国移动一家就超500亿",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipwnxp9032507.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T21:02:00+08:00",
+            "source": "新浪财经",
+            "title": "公司是否与宁德时代有固态电池业务合作？志特新材回应",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipwtfm4369165.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T18:30:00+08:00",
+            "source": "新浪财经",
+            "title": "智通港股空仓持单统计|8月28日",
+            "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-08-28/doc-inipwnxp4432579.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T18:09:00+08:00",
+            "source": "新浪财经",
+            "title": "【电动装备】纯电拖轮从\\\"首艘\\\"走向\\\"标配\\\"：广州港再发9300万招标",
+            "url": "https://finance.sina.com.cn/stock/relnews/cn/2026-08-28/doc-inipwnxp8960893.shtml"
+          },
+          "…另 4 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 373.0,
+            "date": "2026-08-27",
+            "high": 378.66,
+            "low": 370.05,
+            "open": 376.5,
+            "volume": 233738.0
+          },
+          {
+            "close": 368.5,
+            "date": "2026-08-28",
+            "high": 371.25,
+            "low": 364.13,
+            "open": 368.0,
+            "volume": 263770.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-28T15:35:15+08:00",
+          "change": -4.5,
+          "changePercent": -1.21,
+          "currency": "CNY",
+          "previousClose": 373.0
+        },
+        "sources": {
+          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz300750%2Cday%2C%2C%2C120%2Cqfq",
+          "sinaFinance": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/300750/"
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [
+            {
+              "publishedAt": "2026-08-28T11:21:00+08:00",
+              "source": "新浪财经",
+              "title": "A股年内回购破10亿 头部公司真金白银传递信心",
+              "url": "https://cj.sina.cn/articles/view/6489090969/182c7ab9900101ve2k"
+            },
+            {
+              "publishedAt": "2026-08-28T09:12:00+08:00",
+              "source": "新浪财经",
+              "title": "极狐阿尔法T7售价13.78万元起：北汽蓝谷毛利率连续三季度转正，冲刺单月5万辆",
+              "url": "https://cj.sina.cn/articles/view/7935425109/1d8fcfa5502001k8vw"
+            },
+            {
+              "publishedAt": "2026-08-28T12:25:00+08:00",
+              "source": "新浪财经",
+              "title": "创业板781家公司披露半年报 超七成实现盈利",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzx5746561.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T11:03:00+08:00",
+              "source": "新浪财经",
+              "title": "宁德时代入股物理AI公司深度智控",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvwaa0138291.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T09:35:00+08:00",
+              "source": "新浪财经",
+              "title": "宁德时代：8月27日获融资买入11.07亿元，融资余额连续3天增加，市场人气旺盛属强势市场",
+              "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-08-28/doc-inipvrtz5670922.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T13:42:00+08:00",
+              "source": "新浪财经",
+              "title": "传DeepSeek寻求新一轮融资 计划筹集74亿美元",
+              "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-08-28/doc-inipwait4562187.shtml"
+            },
+            "…另 4 项"
+          ],
+          "after": [
+            {
+              "publishedAt": "2026-08-28T18:19:00+08:00",
+              "source": "新浪财经",
+              "title": "21独家｜华为入局换电赛道，奕境第二款车考虑换电版本",
+              "url": "https://cj.sina.cn/articles/view/1651428902/626ece2602001jb7u"
+            },
+            {
+              "publishedAt": "2026-08-28T19:35:00+08:00",
+              "source": "新浪财经",
+              "title": "【投融资动态】酝电智能A轮融资，投资方为吴江创投",
+              "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002i3c0"
+            },
+            {
+              "publishedAt": "2026-08-28T19:33:00+08:00",
+              "source": "新浪财经",
+              "title": "A股已有780家公司中期分红，前十名拟分近千亿，中国移动一家就超500亿",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipwnxp9032507.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T21:02:00+08:00",
+              "source": "新浪财经",
+              "title": "公司是否与宁德时代有固态电池业务合作？志特新材回应",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipwtfm4369165.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T18:30:00+08:00",
+              "source": "新浪财经",
+              "title": "智通港股空仓持单统计|8月28日",
+              "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-08-28/doc-inipwnxp4432579.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T18:09:00+08:00",
+              "source": "新浪财经",
+              "title": "【电动装备】纯电拖轮从\\\"首艘\\\"走向\\\"标配\\\"：广州港再发9300万招标",
+              "url": "https://finance.sina.com.cn/stock/relnews/cn/2026-08-28/doc-inipwnxp8960893.shtml"
+            },
+            "…另 4 项"
+          ],
+          "evidenceIds": [
+            "E027",
+            "E028",
+            "E029",
+            "E030"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
+      "evidenceIds": [
+        "E027",
+        "E028",
+        "E029",
+        "E030"
+      ],
+      "supportingEvidenceIds": [
+        "E027",
+        "E028",
+        "E029",
+        "E030"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 4,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-34e570d0b9d1b15d5b2b",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "bgi-genomics",
+      "entityName": "华大基因",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "news",
+        "priceHistory",
+        "quote",
+        "sources"
+      ],
+      "summary": "华大基因 的 news 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "¥3.84亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "20.36元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.66元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.11元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "¥164.33亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "4.16亿股"
+          },
+          "…另 8 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-08-26T13:35:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因(300676)：1H26提质增效驱动净利率提升",
+            "url": "http://stock.finance.sina.com.cn/stock/go.php/vReport_Show/kind/search/rptid/841064563136/index.phtml"
+          },
+          {
+            "publishedAt": "2026-08-24T14:40:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因上半年经营现金流连负 易方达退出前10流通股东",
+            "url": "https://cj.sina.cn/articles/view/1663612603/6328b6bb020022tw2"
+          },
+          {
+            "publishedAt": "2026-08-27T03:35:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因新注册《基于blast比对结果绘制比较基因组圈图软件V1.0》项目的软件著作权",
+            "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002hv9g"
+          },
+          {
+            "publishedAt": "2026-08-24T13:44:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因2026年半年报：净利4740.46万元增718%，精准医学检测驱动盈利修复",
+            "url": "https://cj.sina.cn/articles/view/5617041192/14ecd3f2802001pas0"
+          },
+          {
+            "publishedAt": "2026-08-25T00:00:00+08:00",
+            "source": "新浪财经",
+            "title": "体外诊断公司深化AI技术布局",
+            "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e47059093ry4"
+          },
+          {
+            "publishedAt": "2026-08-24T07:40:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因上半年营收18亿：同比增10% 净利4740万，实现扭亏为盈",
+            "url": "https://cj.sina.cn/articles/view/7915963911/1d7d40607001017fq8"
+          },
+          "…另 4 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 40.78,
+            "date": "2026-08-27",
+            "high": 41.4,
+            "low": 40.05,
+            "open": 40.58,
+            "volume": 104319.0
+          },
+          {
+            "close": 39.5,
+            "date": "2026-08-28",
+            "high": 40.87,
+            "low": 39.44,
+            "open": 40.36,
+            "volume": 96020.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-28T14:54:30+08:00",
+          "change": -1.27,
+          "changePercent": -3.11,
+          "currency": "CNY",
+          "previousClose": 40.78
+        },
+        "sources": {
+          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz300676%2Cday%2C%2C%2C120%2Cqfq",
+          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=0.300676&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
+          "sinaFinance": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/300676/"
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "20.36元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.66元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.11元"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "4.16亿"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "¥165.19亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "0.47亿元"
+          },
+          "…另 3 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-08-26T13:35:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因(300676)：1H26提质增效驱动净利率提升",
+            "url": "http://stock.finance.sina.com.cn/stock/go.php/vReport_Show/kind/search/rptid/841064563136/index.phtml"
+          },
+          {
+            "publishedAt": "2026-08-24T14:40:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因上半年经营现金流连负 易方达退出前10流通股东",
+            "url": "https://cj.sina.cn/articles/view/1663612603/6328b6bb020022tw2"
+          },
+          {
+            "publishedAt": "2026-08-27T03:35:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因新注册《基于blast比对结果绘制比较基因组圈图软件V1.0》项目的软件著作权",
+            "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002hv9g"
+          },
+          {
+            "publishedAt": "2026-08-24T13:44:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因2026年半年报：净利4740.46万元增718%，精准医学检测驱动盈利修复",
+            "url": "https://cj.sina.cn/articles/view/5617041192/14ecd3f2802001pas0"
+          },
+          {
+            "publishedAt": "2026-08-25T00:00:00+08:00",
+            "source": "新浪财经",
+            "title": "体外诊断公司深化AI技术布局",
+            "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e47059093ry4"
+          },
+          {
+            "publishedAt": "2026-08-28T00:00:00+08:00",
+            "source": "新浪财经",
+            "title": "中源协和聘任54岁杨帆为副总经理及财务总监",
+            "url": "https://finance.sina.com.cn/stock/aiassist/ggbd/2026-08-28/doc-inipuqhp5945138.shtml"
+          },
+          "…另 4 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 40.78,
+            "date": "2026-08-27",
+            "high": 41.4,
+            "low": 40.05,
+            "open": 40.58,
+            "volume": 104319.0
+          },
+          {
+            "close": 39.52,
+            "date": "2026-08-28",
+            "high": 40.87,
+            "low": 39.44,
+            "open": 40.36,
+            "volume": 99734.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-28T15:35:15+08:00",
+          "change": -1.26,
+          "changePercent": -3.09,
+          "currency": "CNY",
+          "previousClose": 40.78
+        },
+        "sources": {
+          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz300676%2Cday%2C%2C%2C120%2Cqfq",
+          "sinaFinance": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/300676/"
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [
+            {
+              "publishedAt": "2026-08-26T13:35:00+08:00",
+              "source": "新浪财经",
+              "title": "华大基因(300676)：1H26提质增效驱动净利率提升",
+              "url": "http://stock.finance.sina.com.cn/stock/go.php/vReport_Show/kind/search/rptid/841064563136/index.phtml"
+            },
+            {
+              "publishedAt": "2026-08-24T14:40:00+08:00",
+              "source": "新浪财经",
+              "title": "华大基因上半年经营现金流连负 易方达退出前10流通股东",
+              "url": "https://cj.sina.cn/articles/view/1663612603/6328b6bb020022tw2"
+            },
+            {
+              "publishedAt": "2026-08-27T03:35:00+08:00",
+              "source": "新浪财经",
+              "title": "华大基因新注册《基于blast比对结果绘制比较基因组圈图软件V1.0》项目的软件著作权",
+              "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002hv9g"
+            },
+            {
+              "publishedAt": "2026-08-24T13:44:00+08:00",
+              "source": "新浪财经",
+              "title": "华大基因2026年半年报：净利4740.46万元增718%，精准医学检测驱动盈利修复",
+              "url": "https://cj.sina.cn/articles/view/5617041192/14ecd3f2802001pas0"
+            },
+            {
+              "publishedAt": "2026-08-25T00:00:00+08:00",
+              "source": "新浪财经",
+              "title": "体外诊断公司深化AI技术布局",
+              "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e47059093ry4"
+            },
+            {
+              "publishedAt": "2026-08-24T07:40:00+08:00",
+              "source": "新浪财经",
+              "title": "华大基因上半年营收18亿：同比增10% 净利4740万，实现扭亏为盈",
+              "url": "https://cj.sina.cn/articles/view/7915963911/1d7d40607001017fq8"
+            },
+            "…另 4 项"
+          ],
+          "after": [
+            {
+              "publishedAt": "2026-08-26T13:35:00+08:00",
+              "source": "新浪财经",
+              "title": "华大基因(300676)：1H26提质增效驱动净利率提升",
+              "url": "http://stock.finance.sina.com.cn/stock/go.php/vReport_Show/kind/search/rptid/841064563136/index.phtml"
+            },
+            {
+              "publishedAt": "2026-08-24T14:40:00+08:00",
+              "source": "新浪财经",
+              "title": "华大基因上半年经营现金流连负 易方达退出前10流通股东",
+              "url": "https://cj.sina.cn/articles/view/1663612603/6328b6bb020022tw2"
+            },
+            {
+              "publishedAt": "2026-08-27T03:35:00+08:00",
+              "source": "新浪财经",
+              "title": "华大基因新注册《基于blast比对结果绘制比较基因组圈图软件V1.0》项目的软件著作权",
+              "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002hv9g"
+            },
+            {
+              "publishedAt": "2026-08-24T13:44:00+08:00",
+              "source": "新浪财经",
+              "title": "华大基因2026年半年报：净利4740.46万元增718%，精准医学检测驱动盈利修复",
+              "url": "https://cj.sina.cn/articles/view/5617041192/14ecd3f2802001pas0"
+            },
+            {
+              "publishedAt": "2026-08-25T00:00:00+08:00",
+              "source": "新浪财经",
+              "title": "体外诊断公司深化AI技术布局",
+              "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e47059093ry4"
+            },
+            {
+              "publishedAt": "2026-08-28T00:00:00+08:00",
+              "source": "新浪财经",
+              "title": "中源协和聘任54岁杨帆为副总经理及财务总监",
+              "url": "https://finance.sina.com.cn/stock/aiassist/ggbd/2026-08-28/doc-inipuqhp5945138.shtml"
+            },
+            "…另 4 项"
+          ],
+          "evidenceIds": [
+            "E031",
+            "E032",
+            "E033",
+            "E034"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
+      "evidenceIds": [
+        "E031",
+        "E032",
+        "E033",
+        "E034"
+      ],
+      "supportingEvidenceIds": [
+        "E031",
+        "E032",
+        "E033",
+        "E034"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 4,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-ee9ad7fbdcc0c089b00e",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "cambricon",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "news",
+        "priceHistory",
+        "quote",
+        "sources"
+      ],
+      "summary": "中科寒武纪科技股份有限公司 的 news 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "¥114.24亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "21.57元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.50元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "3.68元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "¥6574.04亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "6.29亿股"
+          },
+          "…另 8 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-08-28T09:58:00+08:00",
+            "source": "新浪财经",
+            "title": "国产AI办公智能体开启规模化发展浪潮，科创AIETF博时(588790)跟踪指数涨超1%",
+            "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002ixhu"
+          },
+          {
+            "publishedAt": "2026-08-28T10:03:00+08:00",
+            "source": "新浪财经",
+            "title": "科创AIETF鹏华(589090)、科创创业人工智能ETF鹏华(588410)标的指数均涨超1.5%，软件板块迎来海内外利好催化",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4721256.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T10:16:00+08:00",
+            "source": "新浪财经",
+            "title": "算力需求向硬件上游传导，消费电子核心上游环节集体走强",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4727023.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T10:52:00+08:00",
+            "source": "新浪财经",
+            "title": "科创50ETF平安(589150)交投活跃，AI驱动PCB、软件等细分板块走强",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4746462.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T13:20:00+08:00",
+            "source": "新浪财经",
+            "title": "国产模型加速落地叠加算力需求爆发，国产AI芯片进入上升通道，重视下半年芯片设计机会",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzv4686253.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T13:23:00+08:00",
+            "source": "新浪财经",
+            "title": "商汤大装置为智谱GLM-5.3-Flash提供国产算力，头部大模型国产算力承接取得实质进展",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzx5800960.shtml"
+          },
+          "…另 4 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 1048.0,
+            "date": "2026-08-27",
+            "high": 1055.0,
+            "low": 1033.18,
+            "open": 1045.5,
+            "volume": 9138437.0
+          },
+          {
+            "close": 1045.0,
+            "date": "2026-08-28",
+            "high": 1090.71,
+            "low": 1042.01,
+            "open": 1050.0,
+            "volume": 10653762.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-28T14:54:27+08:00",
+          "change": -2.6,
+          "changePercent": -0.25,
+          "currency": "CNY",
+          "previousClose": 1048.0
+        },
+        "sources": {
+          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh688256%2Cday%2C%2C%2C120%2Cqfq",
+          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=1.688256&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
+          "sinaFinance": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/688256/"
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "21.57元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.50元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "3.68元"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "6.28亿"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "¥6583.30亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "23.11亿元"
+          },
+          "…另 3 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-08-28T19:05:00+08:00",
+            "source": "新浪财经",
+            "title": "章建平夫妇现身亨通光电，章盟主二季度上演百亿大调仓",
+            "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002tolm"
+          },
+          {
+            "publishedAt": "2026-08-28T10:03:00+08:00",
+            "source": "新浪财经",
+            "title": "科创AIETF鹏华(589090)、科创创业人工智能ETF鹏华(588410)标的指数均涨超1.5%，软件板块迎来海内外利好催化",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4721256.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T10:16:00+08:00",
+            "source": "新浪财经",
+            "title": "算力需求向硬件上游传导，消费电子核心上游环节集体走强",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4727023.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T10:52:00+08:00",
+            "source": "新浪财经",
+            "title": "科创50ETF平安(589150)交投活跃，AI驱动PCB、软件等细分板块走强",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4746462.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T13:20:00+08:00",
+            "source": "新浪财经",
+            "title": "国产模型加速落地叠加算力需求爆发，国产AI芯片进入上升通道，重视下半年芯片设计机会",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzv4686253.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T13:23:00+08:00",
+            "source": "新浪财经",
+            "title": "商汤大装置为智谱GLM-5.3-Flash提供国产算力，头部大模型国产算力承接取得实质进展",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzx5800960.shtml"
+          },
+          "…另 4 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 1048.0,
+            "date": "2026-08-27",
+            "high": 1055.0,
+            "low": 1033.18,
+            "open": 1045.5,
+            "volume": 9138437.0
+          },
+          {
+            "close": 1046.63,
+            "date": "2026-08-28",
+            "high": 1090.71,
+            "low": 1042.01,
+            "open": 1050.0,
+            "volume": 10860437.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-28T15:34:58+08:00",
+          "change": -1.37,
+          "changePercent": -0.13,
+          "currency": "CNY",
+          "previousClose": 1048.0
+        },
+        "sources": {
+          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh688256%2Cday%2C%2C%2C120%2Cqfq",
+          "sinaFinance": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/688256/"
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [
+            {
+              "publishedAt": "2026-08-28T09:58:00+08:00",
+              "source": "新浪财经",
+              "title": "国产AI办公智能体开启规模化发展浪潮，科创AIETF博时(588790)跟踪指数涨超1%",
+              "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002ixhu"
+            },
+            {
+              "publishedAt": "2026-08-28T10:03:00+08:00",
+              "source": "新浪财经",
+              "title": "科创AIETF鹏华(589090)、科创创业人工智能ETF鹏华(588410)标的指数均涨超1.5%，软件板块迎来海内外利好催化",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4721256.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T10:16:00+08:00",
+              "source": "新浪财经",
+              "title": "算力需求向硬件上游传导，消费电子核心上游环节集体走强",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4727023.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T10:52:00+08:00",
+              "source": "新浪财经",
+              "title": "科创50ETF平安(589150)交投活跃，AI驱动PCB、软件等细分板块走强",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4746462.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T13:20:00+08:00",
+              "source": "新浪财经",
+              "title": "国产模型加速落地叠加算力需求爆发，国产AI芯片进入上升通道，重视下半年芯片设计机会",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzv4686253.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T13:23:00+08:00",
+              "source": "新浪财经",
+              "title": "商汤大装置为智谱GLM-5.3-Flash提供国产算力，头部大模型国产算力承接取得实质进展",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzx5800960.shtml"
+            },
+            "…另 4 项"
+          ],
+          "after": [
+            {
+              "publishedAt": "2026-08-28T19:05:00+08:00",
+              "source": "新浪财经",
+              "title": "章建平夫妇现身亨通光电，章盟主二季度上演百亿大调仓",
+              "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002tolm"
+            },
+            {
+              "publishedAt": "2026-08-28T10:03:00+08:00",
+              "source": "新浪财经",
+              "title": "科创AIETF鹏华(589090)、科创创业人工智能ETF鹏华(588410)标的指数均涨超1.5%，软件板块迎来海内外利好催化",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4721256.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T10:16:00+08:00",
+              "source": "新浪财经",
+              "title": "算力需求向硬件上游传导，消费电子核心上游环节集体走强",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4727023.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T10:52:00+08:00",
+              "source": "新浪财经",
+              "title": "科创50ETF平安(589150)交投活跃，AI驱动PCB、软件等细分板块走强",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4746462.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T13:20:00+08:00",
+              "source": "新浪财经",
+              "title": "国产模型加速落地叠加算力需求爆发，国产AI芯片进入上升通道，重视下半年芯片设计机会",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzv4686253.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T13:23:00+08:00",
+              "source": "新浪财经",
+              "title": "商汤大装置为智谱GLM-5.3-Flash提供国产算力，头部大模型国产算力承接取得实质进展",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzx5800960.shtml"
+            },
+            "…另 4 项"
+          ],
+          "evidenceIds": [
+            "E035",
+            "E036",
+            "E037",
+            "E038"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
+      "evidenceIds": [
+        "E035",
+        "E036",
+        "E037",
+        "E038"
+      ],
+      "supportingEvidenceIds": [
+        "E035",
+        "E036",
+        "E037",
+        "E038"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 4,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-20daec2dfddca325a6f8",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "tempus-ai",
+      "entityName": "Tempus AI, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
+      "summary": "Tempus AI, Inc. 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "2.47美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.45美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.67美元"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$127.24亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "1.2亿美元"
+          },
+          {
+            "id": "revenue",
+            "label": "营业收入",
+            "value": "7.31亿美元"
+          },
+          "…另 3 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 68.480003,
+            "date": "2026-08-26",
+            "high": 70.217003,
+            "low": 67.300003,
+            "open": 67.480003,
+            "volume": 5225800.0
+          },
+          {
+            "close": 70.690002,
+            "date": "2026-08-27",
+            "high": 71.889999,
+            "low": 67.800003,
+            "open": 68.650002,
+            "volume": 6575700.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-27T20:00:00+00:00",
+          "change": 4.04,
+          "changePercent": 6.06,
+          "currency": "USD",
+          "previousClose": 66.65
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "2.47美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.45美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.67美元"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$119.01亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "1.2亿美元"
+          },
+          {
+            "id": "revenue",
+            "label": "营业收入",
+            "value": "7.31亿美元"
+          },
+          "…另 3 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 70.690002,
+            "date": "2026-08-27",
+            "high": 71.889999,
+            "low": 67.800003,
+            "open": 68.650002,
+            "volume": 6575700.0
+          },
+          {
+            "close": 66.1166,
+            "date": "2026-08-28",
+            "high": 70.899902,
+            "low": 65.900002,
+            "open": 68.997498,
+            "volume": 3500521.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-28T15:50:20+00:00",
+          "change": -6.44,
+          "changePercent": -8.86,
+          "currency": "USD",
+          "previousClose": 72.69
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-27T20:00:00+00:00",
+            "change": 4.04,
+            "changePercent": 6.06,
+            "currency": "USD",
+            "previousClose": 66.65
+          },
+          "after": {
+            "asOf": "2026-08-28T15:50:20+00:00",
+            "change": -6.44,
+            "changePercent": -8.86,
+            "currency": "USD",
+            "previousClose": 72.69
+          },
+          "evidenceIds": [
+            "E039"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory"
+      ],
+      "evidenceIds": [
+        "E039"
+      ],
+      "supportingEvidenceIds": [
+        "E039"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-4e5a618bac7474bf46b8",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "rocket-lab",
+      "entityName": "Rocket Lab Corporation",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote",
+        "sources"
+      ],
+      "summary": "Rocket Lab Corporation 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$7.66亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "5.84美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.22美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.15美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$404.14亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "5.98亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 66.18,
+            "date": "2026-08-26",
+            "high": 67.675003,
+            "low": 65.800003,
+            "open": 66.400002,
+            "volume": 11166200.0
+          },
+          {
+            "close": 67.529999,
+            "date": "2026-08-27",
+            "high": 67.57,
+            "low": 65.419998,
+            "open": 66.910004,
+            "volume": 11397800.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-27T20:00:00+00:00",
+          "change": -5.42,
+          "changePercent": -7.43,
+          "currency": "USD",
+          "previousClose": 72.95
+        },
+        "sources": {
+          "price": "https://query1.finance.yahoo.com/v8/finance/chart/RKLB?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
+          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=105.RKLB&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/RKLB/",
+          "yahooFinance": "https://sg.finance.yahoo.com/quote/RKLB/"
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "5.84美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.22美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.15美元"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$385.86亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "9428万美元"
+          },
+          {
+            "id": "revenue",
+            "label": "营业收入",
+            "value": "4.34亿美元"
+          },
+          "…另 3 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 67.529999,
+            "date": "2026-08-27",
+            "high": 67.57,
+            "low": 65.419998,
+            "open": 66.910004,
+            "volume": 11397800.0
+          },
+          {
+            "close": 64.525002,
+            "date": "2026-08-28",
+            "high": 66.749901,
+            "low": 64.449997,
+            "open": 66.699997,
+            "volume": 7588602.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-28T15:50:12+00:00",
+          "change": -8.06,
+          "changePercent": -11.11,
+          "currency": "USD",
+          "previousClose": 72.57
+        },
+        "sources": {
+          "price": "https://query1.finance.yahoo.com/v8/finance/chart/RKLB?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/RKLB/",
+          "yahooFinance": "https://sg.finance.yahoo.com/quote/RKLB/"
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-27T20:00:00+00:00",
+            "change": -5.42,
+            "changePercent": -7.43,
+            "currency": "USD",
+            "previousClose": 72.95
+          },
+          "after": {
+            "asOf": "2026-08-28T15:50:12+00:00",
+            "change": -8.06,
+            "changePercent": -11.11,
+            "currency": "USD",
+            "previousClose": 72.57
+          },
+          "evidenceIds": [
+            "E043"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory"
+      ],
+      "evidenceIds": [
+        "E043"
+      ],
+      "supportingEvidenceIds": [
+        "E043"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-b85ffaef11659ef45eba",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "rigetti",
+      "entityName": "Rigetti Computing, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote",
+        "sources"
+      ],
+      "summary": "Rigetti Computing, Inc. 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$2.49亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "1.61美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.1美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.06美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$54.87亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "3.34亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 15.94,
+            "date": "2026-08-26",
+            "high": 16.940001,
+            "low": 15.93,
+            "open": 16.700001,
+            "volume": 15413300.0
+          },
+          {
+            "close": 16.440001,
+            "date": "2026-08-27",
+            "high": 16.68,
+            "low": 16.01,
+            "open": 16.285,
+            "volume": 15112600.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-27T20:00:01+00:00",
+          "change": 0.375,
+          "changePercent": 2.33,
+          "currency": "USD",
+          "previousClose": 16.065
+        },
+        "sources": {
+          "price": "https://query1.finance.yahoo.com/v8/finance/chart/RGTI?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
+          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=105.RGTI&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/RGTI/",
+          "yahooFinance": "https://sg.finance.yahoo.com/quote/RGTI/"
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "1.61美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.1美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.06美元"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$52.44亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "4359.2万美元"
+          },
+          {
+            "id": "revenue",
+            "label": "营业收入",
+            "value": "953.80万美元"
+          },
+          "…另 3 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 16.440001,
+            "date": "2026-08-27",
+            "high": 16.68,
+            "low": 16.01,
+            "open": 16.285,
+            "volume": 15112600.0
+          },
+          {
+            "close": 15.7,
+            "date": "2026-08-28",
+            "high": 16.360001,
+            "low": 15.655,
+            "open": 16.23,
+            "volume": 6486517.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-28T15:50:08+00:00",
+          "change": -2.21,
+          "changePercent": -12.34,
+          "currency": "USD",
+          "previousClose": 17.91
+        },
+        "sources": {
+          "price": "https://query1.finance.yahoo.com/v8/finance/chart/RGTI?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/RGTI/",
+          "yahooFinance": "https://sg.finance.yahoo.com/quote/RGTI/"
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-27T20:00:01+00:00",
+            "change": 0.375,
+            "changePercent": 2.33,
+            "currency": "USD",
+            "previousClose": 16.065
+          },
+          "after": {
+            "asOf": "2026-08-28T15:50:08+00:00",
+            "change": -2.21,
+            "changePercent": -12.34,
+            "currency": "USD",
+            "previousClose": 17.91
+          },
+          "evidenceIds": [
+            "E047"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory"
+      ],
+      "evidenceIds": [
+        "E047"
+      ],
+      "supportingEvidenceIds": [
+        "E047"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-0aa15f55e732bbcc94be",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "recursion",
+      "entityName": "Recursion Pharmaceuticals, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
+      "summary": "Recursion Pharmaceuticals, Inc. 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "1.71美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.35美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.47美元"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$18.40亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "2.49亿美元"
+          },
+          {
+            "id": "revenue",
+            "label": "营业收入",
+            "value": "1414.30万美元"
+          },
+          "…另 3 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 3.49,
+            "date": "2026-08-26",
+            "high": 3.55,
+            "low": 3.43,
+            "open": 3.51,
+            "volume": 12978400.0
+          },
+          {
+            "close": 3.44,
+            "date": "2026-08-27",
+            "high": 3.55,
+            "low": 3.42,
+            "open": 3.515,
+            "volume": 10930100.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-27T20:00:00+00:00",
+          "change": 0.1,
+          "changePercent": 2.99,
+          "currency": "USD",
+          "previousClose": 3.34
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "1.71美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.35美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.47美元"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$18.00亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "2.49亿美元"
+          },
+          {
+            "id": "revenue",
+            "label": "营业收入",
+            "value": "1414.30万美元"
+          },
+          "…另 3 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 3.44,
+            "date": "2026-08-27",
+            "high": 3.55,
+            "low": 3.42,
+            "open": 3.515,
+            "volume": 10930100.0
+          },
+          {
+            "close": 3.365,
+            "date": "2026-08-28",
+            "high": 3.45,
+            "low": 3.315,
+            "open": 3.4,
+            "volume": 4382901.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-28T15:49:58+00:00",
+          "change": -0.135,
+          "changePercent": -3.86,
+          "currency": "USD",
+          "previousClose": 3.5
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-27T20:00:00+00:00",
+            "change": 0.1,
+            "changePercent": 2.99,
+            "currency": "USD",
+            "previousClose": 3.34
+          },
+          "after": {
+            "asOf": "2026-08-28T15:49:58+00:00",
+            "change": -0.135,
+            "changePercent": -3.86,
+            "currency": "USD",
+            "previousClose": 3.5
+          },
+          "evidenceIds": [
+            "E051"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory"
+      ],
+      "evidenceIds": [
+        "E051"
+      ],
+      "supportingEvidenceIds": [
+        "E051"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-bc3b3725832056b1bf38",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "mobileye",
+      "entityName": "Mobileye Global Inc.",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
+      "summary": "Mobileye Global Inc. 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "9.77美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.25美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "4.7美元"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$73.18亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "38.39亿美元"
+          },
+          {
+            "id": "revenue",
+            "label": "营业收入",
+            "value": "10.66亿美元"
+          },
+          "…另 3 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 8.54,
+            "date": "2026-08-26",
+            "high": 8.75,
+            "low": 8.46,
+            "open": 8.66,
+            "volume": 2881100.0
+          },
+          {
+            "close": 8.61,
+            "date": "2026-08-27",
+            "high": 8.83,
+            "low": 8.56,
+            "open": 8.65,
+            "volume": 3027800.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-27T20:00:01+00:00",
+          "change": -0.27,
+          "changePercent": -3.04,
+          "currency": "USD",
+          "previousClose": 8.88
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "9.77美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.25美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "4.7美元"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$72.76亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "38.39亿美元"
+          },
+          {
+            "id": "revenue",
+            "label": "营业收入",
+            "value": "10.66亿美元"
+          },
+          "…另 3 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 8.61,
+            "date": "2026-08-27",
+            "high": 8.83,
+            "low": 8.56,
+            "open": 8.65,
+            "volume": 3027800.0
+          },
+          {
+            "close": 8.56,
+            "date": "2026-08-28",
+            "high": 8.83,
+            "low": 8.555,
+            "open": 8.65,
+            "volume": 1207989.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-28T15:50:18+00:00",
+          "change": -0.465,
+          "changePercent": -5.15,
+          "currency": "USD",
+          "previousClose": 9.03
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-27T20:00:01+00:00",
+            "change": -0.27,
+            "changePercent": -3.04,
+            "currency": "USD",
+            "previousClose": 8.88
+          },
+          "after": {
+            "asOf": "2026-08-28T15:50:18+00:00",
+            "change": -0.465,
+            "changePercent": -5.15,
+            "currency": "USD",
+            "previousClose": 9.03
+          },
+          "evidenceIds": [
+            "E055"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory"
+      ],
+      "evidenceIds": [
+        "E055"
+      ],
+      "supportingEvidenceIds": [
+        "E055"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-e64bb53520199f53c3d4",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "joby",
+      "entityName": "Joby Aviation, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "news",
+        "priceHistory",
+        "quote"
+      ],
+      "summary": "Joby Aviation, Inc. 的 news、quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "1.79美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.32美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.37美元"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$70.71亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "3.55亿美元"
+          },
+          {
+            "id": "revenue",
+            "label": "营业收入",
+            "value": "6288.50万美元"
+          },
+          "…另 3 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-04-28T12:55:00+00:00",
+            "source": "Yahoo财经",
+            "title": "NYSE Content Update: Joby Aviation Rings Opening Bell Following NYC Test Flight",
+            "url": "https://sg.finance.yahoo.com/news/nyse-content-joby-aviation-rings-125500166.html?.tsrc=rss"
+          }
+        ],
+        "priceHistory": [
+          {
+            "close": 7.14,
+            "date": "2026-08-26",
+            "high": 7.355,
+            "low": 7.11,
+            "open": 7.18,
+            "volume": 18210200.0
+          },
+          {
+            "close": 7.15,
+            "date": "2026-08-27",
+            "high": 7.29,
+            "low": 7.08,
+            "open": 7.26,
+            "volume": 15680000.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-27T20:00:03+00:00",
+          "change": -0.43,
+          "changePercent": -5.67,
+          "currency": "USD",
+          "previousClose": 7.58
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "1.79美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.32美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.37美元"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$69.23亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "3.55亿美元"
+          },
+          {
+            "id": "revenue",
+            "label": "营业收入",
+            "value": "6288.50万美元"
+          },
+          "…另 3 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2025-09-16T05:00:20+00:00",
+            "source": "Yahoo财经",
+            "title": "CORRECTED-EMERGING MARKETS-Taiwan, S.Korea stocks hit record highs before Fed decision",
+            "url": "https://sg.finance.yahoo.com/news/emerging-markets-taiwan-korea-stocks-050020934.html?.tsrc=rss"
+          },
+          {
+            "publishedAt": "2026-04-28T12:55:00+00:00",
+            "source": "Yahoo财经",
+            "title": "NYSE Content Update: Joby Aviation Rings Opening Bell Following NYC Test Flight",
+            "url": "https://sg.finance.yahoo.com/news/nyse-content-joby-aviation-rings-125500166.html?.tsrc=rss"
+          }
+        ],
+        "priceHistory": [
+          {
+            "close": 7.15,
+            "date": "2026-08-27",
+            "high": 7.29,
+            "low": 7.08,
+            "open": 7.26,
+            "volume": 15680000.0
+          },
+          {
+            "close": 7.0,
+            "date": "2026-08-28",
+            "high": 7.18,
+            "low": 6.99,
+            "open": 7.15,
+            "volume": 8172951.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-28T15:50:17+00:00",
+          "change": -0.53,
+          "changePercent": -7.04,
+          "currency": "USD",
+          "previousClose": 7.53
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news",
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [
+            {
+              "publishedAt": "2026-04-28T12:55:00+00:00",
+              "source": "Yahoo财经",
+              "title": "NYSE Content Update: Joby Aviation Rings Opening Bell Following NYC Test Flight",
+              "url": "https://sg.finance.yahoo.com/news/nyse-content-joby-aviation-rings-125500166.html?.tsrc=rss"
+            }
+          ],
+          "after": [
+            {
+              "publishedAt": "2025-09-16T05:00:20+00:00",
+              "source": "Yahoo财经",
+              "title": "CORRECTED-EMERGING MARKETS-Taiwan, S.Korea stocks hit record highs before Fed decision",
+              "url": "https://sg.finance.yahoo.com/news/emerging-markets-taiwan-korea-stocks-050020934.html?.tsrc=rss"
+            },
+            {
+              "publishedAt": "2026-04-28T12:55:00+00:00",
+              "source": "Yahoo财经",
+              "title": "NYSE Content Update: Joby Aviation Rings Opening Bell Following NYC Test Flight",
+              "url": "https://sg.finance.yahoo.com/news/nyse-content-joby-aviation-rings-125500166.html?.tsrc=rss"
+            }
+          ],
+          "evidenceIds": [
+            "E059",
+            "E060"
+          ]
+        },
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-27T20:00:03+00:00",
+            "change": -0.43,
+            "changePercent": -5.67,
+            "currency": "USD",
+            "previousClose": 7.58
+          },
+          "after": {
+            "asOf": "2026-08-28T15:50:17+00:00",
+            "change": -0.53,
+            "changePercent": -7.04,
+            "currency": "USD",
+            "previousClose": 7.53
+          },
+          "evidenceIds": [
+            "E061"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory"
+      ],
+      "evidenceIds": [
+        "E059",
+        "E060",
+        "E061"
+      ],
+      "supportingEvidenceIds": [
+        "E059",
+        "E060",
+        "E061"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 3,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-ec70736598311f269184",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "ionq",
+      "entityName": "IonQ, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote",
+        "sources"
+      ],
+      "summary": "IonQ, Inc. 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$6.28亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "8.73美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.67美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "2.92美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$161.77亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "3.81亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 40.029999,
+            "date": "2026-08-26",
+            "high": 41.91,
+            "low": 39.959999,
+            "open": 41.060001,
+            "volume": 13106100.0
+          },
+          {
+            "close": 42.459999,
+            "date": "2026-08-27",
+            "high": 42.939999,
+            "low": 40.759998,
+            "open": 41.029999,
+            "volume": 14816900.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-27T20:00:03+00:00",
+          "change": 0.93,
+          "changePercent": 2.24,
+          "currency": "USD",
+          "previousClose": 41.53
+        },
+        "sources": {
+          "price": "https://query1.finance.yahoo.com/v8/finance/chart/IONQ?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
+          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=106.IONQ&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/IONQ/",
+          "yahooFinance": "https://sg.finance.yahoo.com/quote/IONQ/"
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "8.73美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.67美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "2.92美元"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$149.92亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "10.62亿美元"
+          },
+          {
+            "id": "revenue",
+            "label": "营业收入",
+            "value": "1.45亿美元"
+          },
+          "…另 3 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 42.459999,
+            "date": "2026-08-27",
+            "high": 42.939999,
+            "low": 40.759998,
+            "open": 41.029999,
+            "volume": 14816900.0
+          },
+          {
+            "close": 39.349701,
+            "date": "2026-08-28",
+            "high": 41.920502,
+            "low": 39.32,
+            "open": 41.73,
+            "volume": 8647037.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-28T15:50:10+00:00",
+          "change": -5.52,
+          "changePercent": -12.3,
+          "currency": "USD",
+          "previousClose": 44.86
+        },
+        "sources": {
+          "price": "https://query1.finance.yahoo.com/v8/finance/chart/IONQ?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/IONQ/",
+          "yahooFinance": "https://sg.finance.yahoo.com/quote/IONQ/"
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-27T20:00:03+00:00",
+            "change": 0.93,
+            "changePercent": 2.24,
+            "currency": "USD",
+            "previousClose": 41.53
+          },
+          "after": {
+            "asOf": "2026-08-28T15:50:10+00:00",
+            "change": -5.52,
+            "changePercent": -12.3,
+            "currency": "USD",
+            "previousClose": 44.86
+          },
+          "evidenceIds": [
+            "E063"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory"
+      ],
+      "evidenceIds": [
+        "E063"
+      ],
+      "supportingEvidenceIds": [
+        "E063"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-9d412ebfb46dfe7135e1",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "horizon-robotics",
+      "entityName": "Horizon Robotics",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "news",
+        "priceHistory",
+        "quote",
+        "sources"
+      ],
+      "summary": "Horizon Robotics 的 news 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "HK$2.03亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "0.86元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.14元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.81元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "HK$652.26亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "137.61亿股"
+          },
+          "…另 7 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-08-28T08:24:00+08:00",
+            "source": "新浪财经",
+            "title": "比亚迪大汉EV开启预售，长安CS55蓝鲸超擎混动上市｜一周车闻",
+            "url": "https://cj.sina.cn/articles/view/1733360754/6750fc7202001i4as"
+          },
+          {
+            "publishedAt": "2026-08-27T10:30:00+08:00",
+            "source": "新浪财经",
+            "title": "把城市NOA打到10万元级，大众和地平线打响合资智驾反击战",
+            "url": "https://cj.sina.cn/articles/view/1750070171/684ff39b00101hp7c"
+          },
+          {
+            "publishedAt": "2026-08-27T18:13:00+08:00",
+            "source": "新浪财经",
+            "title": "智驾最舒服的十年，结束了",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-27/doc-inipucsr5279112.shtml"
+          },
+          {
+            "publishedAt": "2026-08-27T16:12:00+08:00",
+            "source": "新浪财经",
+            "title": "2026 年高端行李箱国货发展启示：立足国内出行场景，舒提啦（SHUTILA）打造本土化高端箱包",
+            "url": "https://finance.sina.com.cn/roll/2026-08-27/doc-iniptxkt5356944.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T07:41:00+08:00",
+            "source": "新浪财经",
+            "title": "极限竞速：地平线6PS5版或将延期，微软预告片已悄然移除PS5标识",
+            "url": "https://finance.sina.com.cn/roll/2026-08-28/doc-inipvrtx4693204.shtml"
+          },
+          {
+            "publishedAt": "2026-08-20T11:19:00+08:00",
+            "source": "新浪财经",
+            "title": "机器人行业热点频现 相关概念股普升 微创机器人-B(02252)涨5.13%",
+            "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-08-20/doc-ininxqxw2123414.shtml"
+          },
+          "…另 4 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 4.745,
+            "date": "2026-08-27",
+            "high": 4.78,
+            "low": 4.675,
+            "open": 4.735,
+            "volume": 54132431.0
+          },
+          {
+            "close": 4.74,
+            "date": "2026-08-28",
+            "high": 4.815,
+            "low": 4.7,
+            "open": 4.72,
+            "volume": 42561768.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-28T14:54:14+08:00",
+          "change": -0.005,
+          "changePercent": -0.1,
+          "currency": "HKD",
+          "previousClose": 4.745
+        },
+        "sources": {
+          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=hk09660%2Cday%2C%2C%2C120%2Cqfq",
+          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=116.09660&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
+          "sinaFinance": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/HK9660/",
+          "yahooFinance": "https://sg.finance.yahoo.com/quote/9660.HK/"
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "0.86元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.14元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.81元"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "HK$757.02亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "104.69亿元"
+          },
+          {
+            "id": "revenue",
+            "label": "营业收入",
+            "value": "37.58亿元"
+          },
+          "…另 2 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-08-28T19:38:00+08:00",
+            "source": "新浪财经",
+            "title": "更接地气的德味SUV 抢先体验一汽大众ID.AURA T6",
+            "url": "https://auto.sina.com.cn/newcar/2026-08-28/detail-inipwnxp9025857.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T08:24:00+08:00",
+            "source": "新浪财经",
+            "title": "比亚迪大汉EV开启预售，长安CS55蓝鲸超擎混动上市｜一周车闻",
+            "url": "https://cj.sina.cn/articles/view/1733360754/6750fc7202001i4as"
+          },
+          {
+            "publishedAt": "2026-08-27T10:30:00+08:00",
+            "source": "新浪财经",
+            "title": "把城市NOA打到10万元级，大众和地平线打响合资智驾反击战",
+            "url": "https://cj.sina.cn/articles/view/1750070171/684ff39b00101hp7c"
+          },
+          {
+            "publishedAt": "2026-08-28T17:14:00+08:00",
+            "source": "新浪财经",
+            "title": "一汽大众捷达M6首台量产车正式下线",
+            "url": "https://finance.sina.com.cn/7x24/2026-08-28/doc-inipwhrr9007553.shtml"
+          },
+          {
+            "publishedAt": "2026-08-27T18:13:00+08:00",
+            "source": "新浪财经",
+            "title": "智驾最舒服的十年，结束了",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-27/doc-inipucsr5279112.shtml"
+          },
+          {
+            "publishedAt": "2026-08-27T16:12:00+08:00",
+            "source": "新浪财经",
+            "title": "2026 年高端行李箱国货发展启示：立足国内出行场景，舒提啦（SHUTILA）打造本土化高端箱包",
+            "url": "https://finance.sina.com.cn/roll/2026-08-27/doc-iniptxkt5356944.shtml"
+          },
+          "…另 4 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 4.745,
+            "date": "2026-08-27",
+            "high": 4.78,
+            "low": 4.675,
+            "open": 4.735,
+            "volume": 54132431.0
+          },
+          {
+            "close": 4.745,
+            "date": "2026-08-28",
+            "high": 4.815,
+            "low": 4.7,
+            "open": 4.72,
+            "volume": 54512361.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-28T16:08:36+08:00",
+          "change": -0.0,
+          "changePercent": -0.0,
+          "currency": "HKD",
+          "previousClose": 4.745
+        },
+        "sources": {
+          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=hk09660%2Cday%2C%2C%2C120%2Cqfq",
+          "sinaFinance": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/HK9660/",
+          "yahooFinance": "https://sg.finance.yahoo.com/quote/9660.HK/"
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [
+            {
+              "publishedAt": "2026-08-28T08:24:00+08:00",
+              "source": "新浪财经",
+              "title": "比亚迪大汉EV开启预售，长安CS55蓝鲸超擎混动上市｜一周车闻",
+              "url": "https://cj.sina.cn/articles/view/1733360754/6750fc7202001i4as"
+            },
+            {
+              "publishedAt": "2026-08-27T10:30:00+08:00",
+              "source": "新浪财经",
+              "title": "把城市NOA打到10万元级，大众和地平线打响合资智驾反击战",
+              "url": "https://cj.sina.cn/articles/view/1750070171/684ff39b00101hp7c"
+            },
+            {
+              "publishedAt": "2026-08-27T18:13:00+08:00",
+              "source": "新浪财经",
+              "title": "智驾最舒服的十年，结束了",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-27/doc-inipucsr5279112.shtml"
+            },
+            {
+              "publishedAt": "2026-08-27T16:12:00+08:00",
+              "source": "新浪财经",
+              "title": "2026 年高端行李箱国货发展启示：立足国内出行场景，舒提啦（SHUTILA）打造本土化高端箱包",
+              "url": "https://finance.sina.com.cn/roll/2026-08-27/doc-iniptxkt5356944.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T07:41:00+08:00",
+              "source": "新浪财经",
+              "title": "极限竞速：地平线6PS5版或将延期，微软预告片已悄然移除PS5标识",
+              "url": "https://finance.sina.com.cn/roll/2026-08-28/doc-inipvrtx4693204.shtml"
+            },
+            {
+              "publishedAt": "2026-08-20T11:19:00+08:00",
+              "source": "新浪财经",
+              "title": "机器人行业热点频现 相关概念股普升 微创机器人-B(02252)涨5.13%",
+              "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-08-20/doc-ininxqxw2123414.shtml"
+            },
+            "…另 4 项"
+          ],
+          "after": [
+            {
+              "publishedAt": "2026-08-28T19:38:00+08:00",
+              "source": "新浪财经",
+              "title": "更接地气的德味SUV 抢先体验一汽大众ID.AURA T6",
+              "url": "https://auto.sina.com.cn/newcar/2026-08-28/detail-inipwnxp9025857.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T08:24:00+08:00",
+              "source": "新浪财经",
+              "title": "比亚迪大汉EV开启预售，长安CS55蓝鲸超擎混动上市｜一周车闻",
+              "url": "https://cj.sina.cn/articles/view/1733360754/6750fc7202001i4as"
+            },
+            {
+              "publishedAt": "2026-08-27T10:30:00+08:00",
+              "source": "新浪财经",
+              "title": "把城市NOA打到10万元级，大众和地平线打响合资智驾反击战",
+              "url": "https://cj.sina.cn/articles/view/1750070171/684ff39b00101hp7c"
+            },
+            {
+              "publishedAt": "2026-08-28T17:14:00+08:00",
+              "source": "新浪财经",
+              "title": "一汽大众捷达M6首台量产车正式下线",
+              "url": "https://finance.sina.com.cn/7x24/2026-08-28/doc-inipwhrr9007553.shtml"
+            },
+            {
+              "publishedAt": "2026-08-27T18:13:00+08:00",
+              "source": "新浪财经",
+              "title": "智驾最舒服的十年，结束了",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-27/doc-inipucsr5279112.shtml"
+            },
+            {
+              "publishedAt": "2026-08-27T16:12:00+08:00",
+              "source": "新浪财经",
+              "title": "2026 年高端行李箱国货发展启示：立足国内出行场景，舒提啦（SHUTILA）打造本土化高端箱包",
+              "url": "https://finance.sina.com.cn/roll/2026-08-27/doc-iniptxkt5356944.shtml"
+            },
+            "…另 4 项"
+          ],
+          "evidenceIds": [
+            "E067",
+            "E068",
+            "E069",
+            "E070"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
+      "evidenceIds": [
+        "E067",
+        "E068",
+        "E069",
+        "E070"
+      ],
+      "supportingEvidenceIds": [
+        "E067",
+        "E068",
+        "E069",
+        "E070"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 4,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-fba487a9b41a3d55a601",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "aurora",
+      "entityName": "Aurora Innovation, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
+      "summary": "Aurora Innovation, Inc. 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "0.98美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.19美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.25美元"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$114.03亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "4.93亿美元"
+          },
+          {
+            "id": "revenue",
+            "label": "营业收入",
+            "value": "300.00万美元"
+          },
+          "…另 3 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 5.76,
+            "date": "2026-08-26",
+            "high": 5.88,
+            "low": 5.66,
+            "open": 5.77,
+            "volume": 19898600.0
+          },
+          {
+            "close": 5.69,
+            "date": "2026-08-27",
+            "high": 5.93,
+            "low": 5.66,
+            "open": 5.925,
+            "volume": 25394500.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-27T20:00:01+00:00",
+          "change": -0.43,
+          "changePercent": -7.03,
+          "currency": "USD",
+          "previousClose": 6.12
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "0.98美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.19美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.25美元"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$115.13亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "4.93亿美元"
+          },
+          {
+            "id": "revenue",
+            "label": "营业收入",
+            "value": "300.00万美元"
+          },
+          "…另 3 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 5.69,
+            "date": "2026-08-27",
+            "high": 5.93,
+            "low": 5.66,
+            "open": 5.925,
+            "volume": 25394500.0
+          },
+          {
+            "close": 5.745,
+            "date": "2026-08-28",
+            "high": 5.8,
+            "low": 5.61,
+            "open": 5.705,
+            "volume": 8830768.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-28T15:50:11+00:00",
+          "change": -0.495,
+          "changePercent": -7.93,
+          "currency": "USD",
+          "previousClose": 6.24
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-27T20:00:01+00:00",
+            "change": -0.43,
+            "changePercent": -7.03,
+            "currency": "USD",
+            "previousClose": 6.12
+          },
+          "after": {
+            "asOf": "2026-08-28T15:50:11+00:00",
+            "change": -0.495,
+            "changePercent": -7.93,
+            "currency": "USD",
+            "previousClose": 6.24
+          },
+          "evidenceIds": [
+            "E071"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics",
+        "priceHistory"
+      ],
+      "evidenceIds": [
+        "E071"
+      ],
+      "supportingEvidenceIds": [
+        "E071"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E001",
+      "changeId": "chg-f38274b1089dab07a7b5",
+      "entityName": "DLSS 5 has already been ported to work on RTX 4000 Series graphics cards — incompatible CUDA instructions get patched to work on previous-gen hardware",
+      "claim": "新增高价值情报事件记录：DLSS 5 has already been ported to work on RTX 4000 Series graphics cards — incompatible CUDA instructions get patched to work on previous-gen hardware。",
+      "sourceName": "Tom's Hardware",
+      "title": "DLSS 5 has already been ported to work on RTX 4000 Series graphics cards — incompatible CUDA instructions get patched to work on previous-gen hardware",
+      "url": "https://www.tomshardware.com/pc-components/gpus/exclusive-dlss-5-has-already-been-ported-to-work-on-rtx-4000-series-graphics-cards-incompatible-cuda-instructions-get-patched-to-work-on-previous-gen-hardware",
+      "publishedAt": "2026-08-28",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E002",
+      "changeId": "chg-7520dd75d4e34a675088",
+      "entityName": "Nvidia's Hugging Face Acquisition Is Logical, Ambitious, and Headed Straight Into a Minefield",
+      "claim": "新增高价值情报事件记录：Nvidia's Hugging Face Acquisition Is Logical, Ambitious, and Headed Straight Into a Minefield。",
+      "sourceName": "PCMag",
+      "title": "Nvidia's Hugging Face Acquisition Is Logical, Ambitious, and Headed Straight Into a Minefield",
+      "url": "https://www.pcmag.com/opinions/nvidia-hugging-face-acquisition-logical-ambitious-headed-for-minefield",
+      "publishedAt": "2026-08-28",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E003",
+      "changeId": "chg-cd6d531b58ca9495e2e2",
+      "entityName": "Anthropic、Moderna先后引爆舆论场，AI制药到底该奖励什么？",
+      "claim": "新增高价值情报事件记录：Anthropic、Moderna先后引爆舆论场，AI制药到底该奖励什么？。",
+      "sourceName": "雷峰网",
+      "title": "Anthropic、Moderna先后引爆舆论场，AI制药到底该奖励什么？",
+      "url": "https://www.leiphone.com/category/aihealth/rJaUKQDWe0u0pfDt.html",
+      "publishedAt": "2026-08-28",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E004",
+      "changeId": "chg-f6b1641b870bda506d7c",
+      "entityName": "上海医药中报利润冰火反差背后，巨头转型遇现实考题丨看财报",
+      "claim": "新增高价值情报事件记录：上海医药中报利润冰火反差背后，巨头转型遇现实考题丨看财报。",
+      "sourceName": "钛媒体",
+      "title": "上海医药中报利润冰火反差背后，巨头转型遇现实考题丨看财报",
+      "url": "https://www.tmtpost.com/8121190.html",
+      "publishedAt": "2026-08-28",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E005",
+      "changeId": "chg-b9d5407f50558d03fecc",
+      "entityName": "OpenAI Expands India Push With ChatGPT Ads Launch And Senior Meta Executive Hire - AI Insider",
+      "claim": "新增高价值情报事件记录：OpenAI Expands India Push With ChatGPT Ads Launch And Senior Meta Executive Hire - AI Insider。",
+      "sourceName": "GEO · Google News 英文",
+      "title": "OpenAI Expands India Push With ChatGPT Ads Launch And Senior Meta Executive Hire - AI Insider",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPckFkTkl5bUF4UmpPdGNMTzNfSk02VU1zMVdnZHgzcEFLY253a3VXY0JSZUYtZDRhSHEtRGw4YzdyWGxxZTZjUlRqNWs5MUEyNFFOa1dOV1RCeGxaMlFBSi0xX3V4bzdiUWtSSkNEUkNVOWVlNGRyakZkMDFZMktUZm1tMVlUZldDbWJHcE5NVktOcUVLbGQ1WE1nYjJCdnVGd0laOTZLeWpSZGFKS29fcEJJV3dKUklsMGc?oc=5",
+      "publishedAt": "2026-08-28",
+      "evidenceGrade": "D",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E006",
+      "changeId": "chg-f665cb5d4c3cf077db51",
+      "entityName": "证监会发布12条意见，明确支持房企合理融资、加大债券融资支持力度",
+      "claim": "新增高价值情报事件记录：证监会发布12条意见，明确支持房企合理融资、加大债券融资支持力度。",
+      "sourceName": "新浪财经",
+      "title": "证监会发布12条意见，明确支持房企合理融资、加大债券融资支持力度",
+      "url": "https://finance.sina.com.cn/roll/2026-08-28/doc-inipwnxt9980793.shtml",
+      "publishedAt": "2026-08-28",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E007",
+      "changeId": "chg-520b96fff177ffd84b17",
+      "entityName": "OpenAI launches ChatGPT ads in India ahead of 2027 IPO - qz.com",
+      "claim": "新增高价值情报事件记录：OpenAI launches ChatGPT ads in India ahead of 2027 IPO - qz.com。",
+      "sourceName": "GEO · Google News 英文",
+      "title": "OpenAI launches ChatGPT ads in India ahead of 2027 IPO - qz.com",
+      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE8wb1FzNnlESWt2UzliLXExSHhNMEdlZUJKeWh6SjZ3ZHFMb2xVQlFTbkFaY1RPSkxWQnlpU0RrZU9mZDhMdEl3SnczVFVYY1NVcW5QUWI2Q2J4T2VRdGY3MW5sVUZURjhkTVE?oc=5",
+      "publishedAt": "2026-08-28",
+      "evidenceGrade": "D",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E008",
+      "changeId": "chg-63a6a61235b4e0d6c1f0",
+      "entityName": "Clicklinks | Sanyou Bio Launches Clicklinks, an AI-Driven Innovation Hub for Original Drug Discovery",
+      "claim": "新增高价值情报事件记录：Clicklinks | Sanyou Bio Launches Clicklinks, an AI-Driven Innovation Hub for Original Drug Discovery。",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "Clicklinks | Sanyou Bio Launches Clicklinks, an AI-Driven Innovation Hub for Original Drug Discovery",
+      "url": "https://www.prnewswire.com/news-releases/clicklinks--sanyou-bio-launches-clicklinks-an-ai-driven-innovation-hub-for-original-drug-discovery-302862406.html",
+      "publishedAt": "2026-08-28",
+      "evidenceGrade": "B",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E009",
+      "changeId": "chg-8e8f15c06623c03d48be",
+      "entityName": "Baidu launches DuMateBench benchmark for real-world AI agent delivery",
+      "claim": "新增高价值情报事件记录：Baidu launches DuMateBench benchmark for real-world AI agent delivery。",
+      "sourceName": "TechNode",
+      "title": "Baidu launches DuMateBench benchmark for real-world AI agent delivery",
+      "url": "https://technode.com/2026/08/28/baidu-launches-dumatebench-benchmark-for-real-world-ai-agent-delivery",
+      "publishedAt": "2026-08-28",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E010",
+      "changeId": "chg-bc596ffbd9b4cb2f4f02",
+      "entityName": "睿尔曼智能回应人形机器人数据训练中心关停：数据采集模式升级",
+      "claim": "新增高价值情报事件记录：睿尔曼智能回应人形机器人数据训练中心关停：数据采集模式升级。",
+      "sourceName": "东方财富",
+      "title": "睿尔曼智能回应人形机器人数据训练中心关停：数据采集模式升级",
+      "url": "https://finance.eastmoney.com/a/202608283858694335.html",
+      "publishedAt": "2026-08-28",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E011",
+      "changeId": "chg-80c4443a174eeeec7613",
+      "entityName": "沪指震荡整理 创业板指跌逾1% 粮食概念股大涨",
+      "claim": "新增高价值情报事件记录：沪指震荡整理 创业板指跌逾1% 粮食概念股大涨。",
+      "sourceName": "东方财富",
+      "title": "沪指震荡整理 创业板指跌逾1% 粮食概念股大涨",
+      "url": "https://finance.eastmoney.com/a/202608283858072733.html",
+      "publishedAt": "2026-08-28",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E012",
+      "changeId": "chg-6882cc91bff0d51122cc",
+      "entityName": "宝马集团全球纯电动车累计交付突破200万辆",
+      "claim": "新增高价值情报事件记录：宝马集团全球纯电动车累计交付突破200万辆。",
+      "sourceName": "新浪网",
+      "title": "宝马集团全球纯电动车累计交付突破200万辆",
+      "url": "https://auto.sina.com.cn/news/2026-08-28/detail-inipwnxp9057770.shtml",
+      "publishedAt": "2026-08-28",
+      "evidenceGrade": "官方披露",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E013",
+      "changeId": "chg-8ce6c6f39f4339f2ef3d",
+      "entityName": "9天3万公里淬炼量产实力，仰望U7极限挑战",
+      "claim": "新增高价值情报事件记录：9天3万公里淬炼量产实力，仰望U7极限挑战。",
+      "sourceName": "新浪网",
+      "title": "9天3万公里淬炼量产实力，仰望U7极限挑战",
+      "url": "https://auto.sina.com.cn/news/2026-08-25/detail-inipqaan2259332.shtml",
+      "publishedAt": "2026-08-25",
+      "evidenceGrade": "官方披露",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E014",
+      "changeId": "chg-e889d11733f09eb5e7eb",
+      "entityName": "116家公司联名呼吁网络安全 机构看好的绩优概念股出炉",
+      "claim": "新增高价值情报事件记录：116家公司联名呼吁网络安全 机构看好的绩优概念股出炉。",
+      "sourceName": "东方财富",
+      "title": "116家公司联名呼吁网络安全 机构看好的绩优概念股出炉",
+      "url": "https://finance.eastmoney.com/a/202608283857964571.html",
+      "publishedAt": "2026-08-28",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E015",
+      "changeId": "chg-6210ea141fc21ce9a512",
+      "entityName": "晶泰控股有限公司",
+      "claim": "晶泰控股有限公司 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "河套深港科技创新合作区深圳园区——奋力构建世界级科研枢纽",
+      "url": "https://cj.sina.cn/articles/view/1663612603/6328b6bb020022soq",
+      "publishedAt": "2026-08-23T06:33:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E016",
+      "changeId": "chg-6210ea141fc21ce9a512",
+      "entityName": "晶泰控股有限公司",
+      "claim": "晶泰控股有限公司 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "AI4S迎来“结算周期”：谁在率先跑通 “规模化量产”闭环？",
+      "url": "https://cj.sina.cn/articles/view/5115326071/130e5ae7702002zx5a",
+      "publishedAt": "2026-08-25T13:37:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E017",
+      "changeId": "chg-6210ea141fc21ce9a512",
+      "entityName": "晶泰控股有限公司",
+      "claim": "晶泰控股有限公司 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "AI医疗：千亿赛道，谁在领跑？",
+      "url": "https://finance.sina.com.cn/jjxw/2026-08-24/doc-inipkkzy2090567.shtml",
+      "publishedAt": "2026-08-24T08:51:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E018",
+      "changeId": "chg-6210ea141fc21ce9a512",
+      "entityName": "晶泰控股有限公司",
+      "claim": "晶泰控股有限公司 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "上半年，服务出口同比增长17.6% “中国服务”加速走向海外（经济聚焦）",
+      "url": "https://finance.sina.com.cn/jjxw/2026-08-25/doc-inippmen9678219.shtml",
+      "publishedAt": "2026-08-25T15:44:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E019",
+      "changeId": "chg-cbf194db3541cec84f10",
+      "entityName": "文远知行",
+      "claim": "文远知行 的 quote 发生变化。",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/WRD/",
+      "publishedAt": "2026-08-28T15:49:44+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E023",
+      "changeId": "chg-0325a1b21d1012d8cd59",
+      "entityName": "小马智行",
+      "claim": "小马智行 的 quote 发生变化。",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/PONY/",
+      "publishedAt": "2026-08-28T15:49:58+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E027",
+      "changeId": "chg-eb0105b51ac88fa5121a",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "21独家｜华为入局换电赛道，奕境第二款车考虑换电版本",
+      "url": "https://cj.sina.cn/articles/view/1651428902/626ece2602001jb7u",
+      "publishedAt": "2026-08-28T18:19:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E028",
+      "changeId": "chg-eb0105b51ac88fa5121a",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "【投融资动态】酝电智能A轮融资，投资方为吴江创投",
+      "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002i3c0",
+      "publishedAt": "2026-08-28T19:35:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E029",
+      "changeId": "chg-eb0105b51ac88fa5121a",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "A股已有780家公司中期分红，前十名拟分近千亿，中国移动一家就超500亿",
+      "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipwnxp9032507.shtml",
+      "publishedAt": "2026-08-28T19:33:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E030",
+      "changeId": "chg-eb0105b51ac88fa5121a",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "公司是否与宁德时代有固态电池业务合作？志特新材回应",
+      "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipwtfm4369165.shtml",
+      "publishedAt": "2026-08-28T21:02:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E031",
+      "changeId": "chg-34e570d0b9d1b15d5b2b",
+      "entityName": "华大基因",
+      "claim": "华大基因 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "华大基因(300676)：1H26提质增效驱动净利率提升",
+      "url": "http://stock.finance.sina.com.cn/stock/go.php/vReport_Show/kind/search/rptid/841064563136/index.phtml",
+      "publishedAt": "2026-08-26T13:35:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E032",
+      "changeId": "chg-34e570d0b9d1b15d5b2b",
+      "entityName": "华大基因",
+      "claim": "华大基因 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "华大基因上半年经营现金流连负 易方达退出前10流通股东",
+      "url": "https://cj.sina.cn/articles/view/1663612603/6328b6bb020022tw2",
+      "publishedAt": "2026-08-24T14:40:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E033",
+      "changeId": "chg-34e570d0b9d1b15d5b2b",
+      "entityName": "华大基因",
+      "claim": "华大基因 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "华大基因新注册《基于blast比对结果绘制比较基因组圈图软件V1.0》项目的软件著作权",
+      "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002hv9g",
+      "publishedAt": "2026-08-27T03:35:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E034",
+      "changeId": "chg-34e570d0b9d1b15d5b2b",
+      "entityName": "华大基因",
+      "claim": "华大基因 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "华大基因2026年半年报：净利4740.46万元增718%，精准医学检测驱动盈利修复",
+      "url": "https://cj.sina.cn/articles/view/5617041192/14ecd3f2802001pas0",
+      "publishedAt": "2026-08-24T13:44:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E035",
+      "changeId": "chg-ee9ad7fbdcc0c089b00e",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "章建平夫妇现身亨通光电，章盟主二季度上演百亿大调仓",
+      "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002tolm",
+      "publishedAt": "2026-08-28T19:05:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E036",
+      "changeId": "chg-ee9ad7fbdcc0c089b00e",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "科创AIETF鹏华(589090)、科创创业人工智能ETF鹏华(588410)标的指数均涨超1.5%，软件板块迎来海内外利好催化",
+      "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4721256.shtml",
+      "publishedAt": "2026-08-28T10:03:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E037",
+      "changeId": "chg-ee9ad7fbdcc0c089b00e",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "算力需求向硬件上游传导，消费电子核心上游环节集体走强",
+      "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4727023.shtml",
+      "publishedAt": "2026-08-28T10:16:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E038",
+      "changeId": "chg-ee9ad7fbdcc0c089b00e",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "科创50ETF平安(589150)交投活跃，AI驱动PCB、软件等细分板块走强",
+      "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4746462.shtml",
+      "publishedAt": "2026-08-28T10:52:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E039",
+      "changeId": "chg-20daec2dfddca325a6f8",
+      "entityName": "Tempus AI, Inc.",
+      "claim": "Tempus AI, Inc. 的 quote 发生变化。",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/TEM/",
+      "publishedAt": "2026-08-28T15:50:20+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E043",
+      "changeId": "chg-4e5a618bac7474bf46b8",
+      "entityName": "Rocket Lab Corporation",
+      "claim": "Rocket Lab Corporation 的 quote 发生变化。",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/RKLB/",
+      "publishedAt": "2026-08-28T15:50:12+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E047",
+      "changeId": "chg-b85ffaef11659ef45eba",
+      "entityName": "Rigetti Computing, Inc.",
+      "claim": "Rigetti Computing, Inc. 的 quote 发生变化。",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/RGTI/",
+      "publishedAt": "2026-08-28T15:50:08+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E051",
+      "changeId": "chg-0aa15f55e732bbcc94be",
+      "entityName": "Recursion Pharmaceuticals, Inc.",
+      "claim": "Recursion Pharmaceuticals, Inc. 的 quote 发生变化。",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/RXRX/",
+      "publishedAt": "2026-08-28T15:49:58+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E055",
+      "changeId": "chg-bc3b3725832056b1bf38",
+      "entityName": "Mobileye Global Inc.",
+      "claim": "Mobileye Global Inc. 的 quote 发生变化。",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/MBLY/",
+      "publishedAt": "2026-08-28T15:50:18+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E059",
+      "changeId": "chg-e64bb53520199f53c3d4",
+      "entityName": "Joby Aviation, Inc.",
+      "claim": "Joby Aviation, Inc. 的 news、quote 发生变化。",
+      "sourceName": "Yahoo财经",
+      "title": "CORRECTED-EMERGING MARKETS-Taiwan, S.Korea stocks hit record highs before Fed decision",
+      "url": "https://sg.finance.yahoo.com/news/emerging-markets-taiwan-korea-stocks-050020934.html?.tsrc=rss",
+      "publishedAt": "2025-09-16T05:00:20+00:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E060",
+      "changeId": "chg-e64bb53520199f53c3d4",
+      "entityName": "Joby Aviation, Inc.",
+      "claim": "Joby Aviation, Inc. 的 news、quote 发生变化。",
+      "sourceName": "Yahoo财经",
+      "title": "NYSE Content Update: Joby Aviation Rings Opening Bell Following NYC Test Flight",
+      "url": "https://sg.finance.yahoo.com/news/nyse-content-joby-aviation-rings-125500166.html?.tsrc=rss",
+      "publishedAt": "2026-04-28T12:55:00+00:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E061",
+      "changeId": "chg-e64bb53520199f53c3d4",
+      "entityName": "Joby Aviation, Inc.",
+      "claim": "Joby Aviation, Inc. 的 news、quote 发生变化。",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/JOBY/",
+      "publishedAt": "2026-08-28T15:50:17+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E063",
+      "changeId": "chg-ec70736598311f269184",
+      "entityName": "IonQ, Inc.",
+      "claim": "IonQ, Inc. 的 quote 发生变化。",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/IONQ/",
+      "publishedAt": "2026-08-28T15:50:10+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E067",
+      "changeId": "chg-9d412ebfb46dfe7135e1",
+      "entityName": "Horizon Robotics",
+      "claim": "Horizon Robotics 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "更接地气的德味SUV 抢先体验一汽大众ID.AURA T6",
+      "url": "https://auto.sina.com.cn/newcar/2026-08-28/detail-inipwnxp9025857.shtml",
+      "publishedAt": "2026-08-28T19:38:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E068",
+      "changeId": "chg-9d412ebfb46dfe7135e1",
+      "entityName": "Horizon Robotics",
+      "claim": "Horizon Robotics 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "比亚迪大汉EV开启预售，长安CS55蓝鲸超擎混动上市｜一周车闻",
+      "url": "https://cj.sina.cn/articles/view/1733360754/6750fc7202001i4as",
+      "publishedAt": "2026-08-28T08:24:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E069",
+      "changeId": "chg-9d412ebfb46dfe7135e1",
+      "entityName": "Horizon Robotics",
+      "claim": "Horizon Robotics 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "把城市NOA打到10万元级，大众和地平线打响合资智驾反击战",
+      "url": "https://cj.sina.cn/articles/view/1750070171/684ff39b00101hp7c",
+      "publishedAt": "2026-08-27T10:30:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E070",
+      "changeId": "chg-9d412ebfb46dfe7135e1",
+      "entityName": "Horizon Robotics",
+      "claim": "Horizon Robotics 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "一汽大众捷达M6首台量产车正式下线",
+      "url": "https://finance.sina.com.cn/7x24/2026-08-28/doc-inipwhrr9007553.shtml",
+      "publishedAt": "2026-08-28T17:14:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E071",
+      "changeId": "chg-fba487a9b41a3d55a601",
+      "entityName": "Aurora Innovation, Inc.",
+      "claim": "Aurora Innovation, Inc. 的 quote 发生变化。",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/AUR/",
+      "publishedAt": "2026-08-28T15:50:11+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    }
+  ],
   "methodology": {
     "stages": [
       "stable entity snapshot",
@@ -177,22 +6186,28 @@
       "runStatus": "no-material-change",
       "changeCount": 0,
       "executiveSummary": "本轮检测到 3 个外部事实候选，但全部未通过证据质量门。"
+    },
+    {
+      "date": "2026-08-29",
+      "generatedAt": "2026-08-28T16:13:54+00:00",
+      "runStatus": "model",
+      "changeCount": 29,
+      "executiveSummary": "本报告基于2026-08-28证据包，梳理了AI/半导体、AI制药、政策与市场动态。关键事件包括：DLSS 5被移植至RTX 4000系列（E001）、Nvidia收购Hugging Face的报道（E002）、Anthropic与Moderna在AI制药领域的突破（E003）、证监会发布支持房企融资的12条意见（E006）、OpenAI在印度推出ChatGPT广告并聘请Meta高管（E005/E007）、百度发布DuMateBench基准（E009）。多数证据等级为C或D，需谨慎对待；宝马电动车交付数据（E012）和仰望U7挑战（E013）为官方披露，可信度较高。整体看，AI算力生态、AI制药和政策支持是当前主线，但部分重大事件尚未获官方确认。"
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 3,
-    "eligibleCandidateCount": 0,
-    "rejectedCandidateCount": 3,
-    "rejectedByDataset": {
-      "ventureCompany": 3
-    },
-    "evidenceCount": 9,
-    "supportingEvidenceCount": 0,
-    "rejectedEvidenceCount": 9,
-    "passedButUnboundEvidenceCount": 0,
+    "candidateCount": 29,
+    "eligibleCandidateCount": 29,
+    "rejectedCandidateCount": 0,
+    "rejectedByDataset": {},
+    "evidenceCount": 74,
+    "supportingEvidenceCount": 46,
+    "rejectedEvidenceCount": 3,
+    "passedButUnboundEvidenceCount": 25,
     "rejectionReasons": {
-      "missing_published_at": 9,
-      "missing_title": 1
+      "missing_published_at": 3,
+      "missing_title": 3,
+      "ungraded": 3
     }
   },
   "researchScope": {
@@ -211,7 +6226,7 @@
     "person": {
       "label": "核心人物",
       "status": "active",
-      "count": 106,
+      "count": 111,
       "note": "已进入每日实体快照与变化检测。"
     },
     "ventureCompany": {
@@ -222,8 +6237,8 @@
     }
   },
   "pipelineHealth": {
-    "overallStatus": "stale",
-    "healthyJobs": 7,
+    "overallStatus": "degraded",
+    "healthyJobs": 6,
     "jobCount": 9,
     "issueJobs": [
       {
@@ -237,6 +6252,12 @@
         "name": "月度信源效能审查",
         "status": "unknown",
         "lastCompletedAt": null
+      },
+      {
+        "jobId": "research-agent-daily",
+        "name": "每日证据约束研究摘要",
+        "status": "degraded",
+        "lastCompletedAt": "2026-08-28T12:56:26Z"
       }
     ]
   }
