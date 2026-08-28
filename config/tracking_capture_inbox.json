@@ -1,50 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-28T09:28:53+00:00",
+  "generatedAt": "2026-08-28T09:30:07+00:00",
   "records": [
-    {
-      "id": "capture-5eb556158a053b4c",
-      "entityType": "company",
-      "canonicalName": "a16z",
-      "rawSelection": "a16z",
-      "aliases": [],
-      "trackSlugs": [
-        "track-1ccjq49"
-      ],
-      "trackNames": [
-        "风险投资"
-      ],
-      "source": {
-        "articleId": "",
-        "title": "a16z",
-        "url": "https://mp.weixin.qq.com/s/0XqeiTSdW9W5DTCH6gHOcw",
-        "summary": "人工补充公司对象;来源文章:a16z 三位合伙人罕见复盘:如果你错过了 Cursor,你错过的到底是什么",
-        "sourceName": "GitHub Actions · 内部手动追踪",
-        "channel": "manual-tracking",
-        "channelLabel": "内部管理",
-        "eventType": "人工追踪"
-      },
-      "capturedAt": "2026-08-28T09:28:53+00:00",
-      "capturedBy": "VCIQ",
-      "status": "queued",
-      "appliedTo": [],
-      "reasons": [
-        "个人研究兴趣"
-      ],
-      "note": "人工补充公司对象;来源文章:a16z 三位合伙人罕见复盘:如果你错过了 Cursor,你错过的到底是什么",
-      "resolution": {
-        "status": "resolved",
-        "requestedType": "company",
-        "entityType": "company",
-        "canonicalName": "a16z",
-        "targetId": "company-candidate:a16z",
-        "confidence": "medium",
-        "source": "source-context",
-        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
-        "decisionKey": "a16z",
-        "reclassified": false
-      }
-    },
     {
       "id": "capture-a59c2d97ea2630ac",
       "entityType": "topic",
@@ -85,11 +42,56 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "Claude",
-        "targetId": "technology-c857d09db23e6822e360",
+        "targetId": "topic:claude",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "claude",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-5eb556158a053b4c",
+      "entityType": "company",
+      "canonicalName": "a16z",
+      "rawSelection": "a16z",
+      "aliases": [],
+      "trackSlugs": [
+        "track-1ccjq49"
+      ],
+      "trackNames": [
+        "风险投资"
+      ],
+      "source": {
+        "articleId": "",
+        "title": "a16z",
+        "url": "https://mp.weixin.qq.com/s/0XqeiTSdW9W5DTCH6gHOcw",
+        "summary": "人工补充公司对象;来源文章:a16z 三位合伙人罕见复盘:如果你错过了 Cursor,你错过的到底是什么",
+        "sourceName": "GitHub Actions · 内部手动追踪",
+        "channel": "manual-tracking",
+        "channelLabel": "内部管理",
+        "eventType": "人工追踪"
+      },
+      "capturedAt": "2026-08-28T09:28:53+00:00",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "track-1ccjq49:sampleCompanies"
+      ],
+      "reasons": [
+        "个人研究兴趣"
+      ],
+      "note": "人工补充公司对象;来源文章:a16z 三位合伙人罕见复盘:如果你错过了 Cursor,你错过的到底是什么",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "a16z",
+        "targetId": "company-candidate:a16z",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "a16z",
         "reclassified": false
       }
     },
