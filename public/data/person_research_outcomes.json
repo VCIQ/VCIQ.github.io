@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-08-27T04:24:01+00:00",
-  "attemptCount": 23,
+  "generatedAt": "2026-08-28T02:12:17+00:00",
+  "attemptCount": 26,
   "attempts": [
     {
       "taskId": "person-research-fcb717642c97",
@@ -390,6 +390,57 @@
       },
       "durationMs": 2349,
       "queryCostUnits": 1.0
+    },
+    {
+      "taskId": "person-research-aa23543c79b0",
+      "taskType": "first_party_evidence",
+      "personSlug": "person-3e26654b56",
+      "researchDate": "2026-08-28",
+      "query": "胡德波 AI / AGI 演讲",
+      "queryStrategy": "topic_speech",
+      "outcome": "no_evidence",
+      "candidateCount": 0,
+      "sourceHosts": [],
+      "sourceTypes": [],
+      "sourceTypeCounts": {},
+      "durationMs": 1526,
+      "queryCostUnits": 1.0
+    },
+    {
+      "taskId": "person-research-f1704de9007f",
+      "taskType": "first_party_evidence",
+      "personSlug": "person-5a4999f041",
+      "researchDate": "2026-08-28",
+      "query": "高允毅 AI / AGI 演讲",
+      "queryStrategy": "topic_speech",
+      "outcome": "no_evidence",
+      "candidateCount": 0,
+      "sourceHosts": [],
+      "sourceTypes": [],
+      "sourceTypeCounts": {},
+      "durationMs": 1354,
+      "queryCostUnits": 1.0
+    },
+    {
+      "taskId": "person-research-d8703bb7f4b3",
+      "taskType": "first_party_evidence",
+      "personSlug": "zhang-xue",
+      "researchDate": "2026-08-28",
+      "query": "Zhang Xue 机器人 演讲",
+      "queryStrategy": "topic_speech",
+      "outcome": "candidate_found",
+      "candidateCount": 4,
+      "sourceHosts": [
+        "youtube.com"
+      ],
+      "sourceTypes": [
+        "video_platform"
+      ],
+      "sourceTypeCounts": {
+        "video_platform": 4
+      },
+      "durationMs": 2482,
+      "queryCostUnits": 1.0
     }
   ],
   "taskStats": {
@@ -400,9 +451,9 @@
       "errors": 0
     },
     "person-research-aa23543c79b0": {
-      "attempts": 2,
+      "attempts": 3,
       "candidateFound": 0,
-      "noEvidence": 2,
+      "noEvidence": 3,
       "errors": 0
     },
     "person-research-f3306c36da8c": {
@@ -412,14 +463,14 @@
       "errors": 0
     },
     "person-research-f1704de9007f": {
-      "attempts": 2,
+      "attempts": 3,
       "candidateFound": 0,
-      "noEvidence": 2,
+      "noEvidence": 3,
       "errors": 0
     },
     "person-research-d8703bb7f4b3": {
-      "attempts": 7,
-      "candidateFound": 6,
+      "attempts": 8,
+      "candidateFound": 7,
       "noEvidence": 1,
       "errors": 0
     },
@@ -462,8 +513,8 @@
   },
   "sourceStats": {
     "youtube.com": {
-      "candidateAttempts": 7,
-      "candidates": 32
+      "candidateAttempts": 8,
+      "candidates": 36
     },
     "bilibili.com": {
       "candidateAttempts": 1,
@@ -472,62 +523,62 @@
   },
   "queryStrategyStats": {
     "topic_speech": {
-      "attempts": 23,
-      "candidateFound": 7,
-      "noEvidence": 16,
+      "attempts": 26,
+      "candidateFound": 8,
+      "noEvidence": 18,
       "errors": 0,
-      "candidates": 32,
-      "successRate": 0.304,
-      "averageCandidates": 1.391
+      "candidates": 36,
+      "successRate": 0.308,
+      "averageCandidates": 1.385
     }
   },
   "taskStrategyStats": {
     "first_party_evidence": {
       "topic_speech": {
-        "attempts": 23,
-        "candidateFound": 7,
-        "noEvidence": 16,
+        "attempts": 26,
+        "candidateFound": 8,
+        "noEvidence": 18,
         "errors": 0,
-        "candidates": 32,
-        "successRate": 0.304,
-        "averageCandidates": 1.391
+        "candidates": 36,
+        "successRate": 0.308,
+        "averageCandidates": 1.385
       }
     }
   },
   "sourceTypeStats": {
     "video_platform": {
-      "yieldAttempts": 7,
-      "candidates": 32,
-      "averageCandidatesPerYield": 4.571
+      "yieldAttempts": 8,
+      "candidates": 36,
+      "averageCandidatesPerYield": 4.5
     }
   },
   "taskSourceMatrix": {
     "first_party_evidence": {
       "video_platform": {
-        "attempts": 23,
-        "yieldAttempts": 7,
-        "yieldRate": 0.304,
-        "candidates": 32
+        "attempts": 26,
+        "yieldAttempts": 8,
+        "yieldRate": 0.308,
+        "candidates": 36
       }
     }
   },
   "queryStrategyCostStats": {
     "topic_speech": {
-      "attempts": 23,
-      "costUnits": 23.0,
-      "durationMs": 40883,
+      "attempts": 26,
+      "costUnits": 26.0,
+      "durationMs": 46245,
       "averageCostUnits": 1.0,
-      "averageDurationMs": 1778
+      "averageDurationMs": 1779
     }
   },
   "taskStrategyCostStats": {
     "first_party_evidence": {
       "topic_speech": {
-        "attempts": 23,
-        "costUnits": 23.0,
-        "durationMs": 40883,
+        "attempts": 26,
+        "costUnits": 26.0,
+        "durationMs": 46245,
         "averageCostUnits": 1.0,
-        "averageDurationMs": 1778
+        "averageDurationMs": 1779
       }
     }
   },
