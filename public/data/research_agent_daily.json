@@ -1,40 +1,373 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-29T17:17:55+00:00",
+  "generatedAt": "2026-08-29T18:15:41+00:00",
   "asOfDate": "2026-08-30",
-  "runStatus": "no-material-change",
+  "runStatus": "model",
   "baselineSource": "snapshot",
   "model": {
     "provider": "SiliconFlow",
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": false,
-    "usage": {}
+    "used": true,
+    "usage": {
+      "prompt_tokens": 2197,
+      "completion_tokens": 2078,
+      "total_tokens": 4275,
+      "completion_tokens_details": {
+        "reasoning_tokens": 1227
+      },
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 2197
+    }
   },
   "changeSummary": {
-    "totalDetected": 0,
-    "total": 0,
-    "byDataset": {},
-    "byChangeType": {},
-    "externalCandidates": 0,
+    "totalDetected": 2,
+    "total": 2,
+    "byDataset": {
+      "intelligenceEvent": 2
+    },
+    "byChangeType": {
+      "external_event": 2
+    },
+    "externalCandidates": 2,
     "qualityRejected": 0,
     "maintenanceExcluded": 0,
     "aggregatedEvents": 0,
-    "highestImportance": 0
+    "highestImportance": 86
   },
   "analysis": {
-    "mode": "structured-change-only",
-    "isResearchJudgment": false,
-    "executiveSummary": "本轮未检测到新的外部事实候选。",
-    "keyDevelopments": [],
-    "thesisUpdates": [],
-    "watchlist": [],
-    "risks": [],
-    "methodologyNote": "结构化变化检查；本期无材料变化。未执行生成式研判。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
+    "mode": "model-analysis",
+    "isResearchJudgment": true,
+    "executiveSummary": "证据包新增两条高价值情报事件：Nvidia拟设立员工资助的政治行动委员会（PAC）以影响美国政策（E001，C级证据）；OpenAI发布适用于ChatGPT Work和Codex的Admin插件（E002，D级证据）。两者均为外部事件快照，证据等级偏低，需进一步验证。",
+    "keyDevelopments": [
+      {
+        "title": "Nvidia拟设立员工资助的政治行动委员会（PAC）以影响美国政策",
+        "assessment": "根据TechRadar报道，Nvidia正寻求设立由员工资助的PAC，以参与塑造美国政策。该报道为C级单一来源，仅能确认公司有此意向，具体规模、时间及政策目标未披露，不应视为确定性重大事实。",
+        "importance": 3,
+        "confidence": "low",
+        "entities": [
+          "Nvidia",
+          "美国政策",
+          "半导体"
+        ],
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "title": "OpenAI发布适用于ChatGPT Work和Codex的Admin插件",
+        "assessment": "据新浪财经转载（经Google News聚合）报道，OpenAI发布了适用于ChatGPT Work和Codex的Admin插件，涉及管理、额度、管理员、数据、群组等功能。该证据等级为D，来源为聚合转载且标题含噪声字符，需以官方公告验证。",
+        "importance": 3,
+        "confidence": "low",
+        "entities": [
+          "OpenAI",
+          "ChatGPT Work",
+          "Codex"
+        ],
+        "evidenceIds": [
+          "E002"
+        ]
+      }
+    ],
+    "thesisUpdates": [
+      {
+        "entity": "Nvidia",
+        "direction": "mixed",
+        "statement": "证据显示Nvidia拟通过员工资助PAC参与美国政策塑造，但具体政策目标和影响尚不明确，暂维持中性观察。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "entity": "OpenAI",
+        "direction": "positive",
+        "statement": "若报道属实，OpenAI通过Admin插件增强企业客户的管理、额度与数据控制能力，利好企业级产品线；但需官方确认。",
+        "evidenceIds": [
+          "E002"
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "item": "Nvidia PAC正式注册与资金规模",
+        "reason": "目前仅有媒体报道，需等待FEC备案或公司声明确认。",
+        "nextEvidence": "Nvidia官方公告或美国联邦选举委员会（FEC）备案记录",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "item": "OpenAI Admin插件官方文档与上线状态",
+        "reason": "证据来源为聚合转载，需OpenAI官方博客或帮助文档确认功能细节。",
+        "nextEvidence": "OpenAI官方发布说明或产品页面",
+        "evidenceIds": [
+          "E002"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "证据等级风险",
+        "reason": "E001为C级单一来源，E002为D级聚合转载，均可能包含不准确或夸大信息，不能作为确定性事实。",
+        "evidenceIds": [
+          "E001",
+          "E002"
+        ]
+      },
+      {
+        "risk": "政策参与风险",
+        "reason": "Nvidia设立PAC可能引发公众与监管对科技企业政治影响力的关注，但当前证据不足以评估实际影响。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "risk": "产品功能风险",
+        "reason": "Admin插件若未正式发布或功能与报道不符，可能影响企业客户预期。",
+        "evidenceIds": [
+          "E002"
+        ]
+      }
+    ],
+    "methodologyNote": "本分析仅基于证据包中的两条新增事件记录。E001来自TechRadar（C级），E002来自Google News聚合的新浪财经转载（D级）。所有判断均标注置信度，未补充外部事实，不构成投资建议。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
   },
-  "changes": [],
-  "evidence": [],
+  "changes": [
+    {
+      "id": "chg-11ecbf9e3f990e6d2286",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-279160119f5983e272",
+      "entityName": "Nvidia looks to set up an employee-funded political action committee to try and shape US policy in its favor",
+      "action": "added",
+      "changedFields": [
+        "title",
+        "summary",
+        "type",
+        "publishedAt",
+        "company",
+        "sector",
+        "region",
+        "importance",
+        "qualityScore",
+        "sources"
+      ],
+      "summary": "新增高价值情报事件记录：Nvidia looks to set up an employee-funded political action committee to try and shape US policy in its favor。",
+      "importance": 86,
+      "before": null,
+      "after": {
+        "title": "Nvidia looks to set up an employee-funded political action committee to try and shape US policy in its favor",
+        "summary": "Nvidia is looking to set up a political action committee (PAC) Many companies have set up PACs to help shape US policy The US mid-term elections have seen a record level of corporate funding Companies using their money to shape policy in the United States is…",
+        "type": "政策",
+        "publishedAt": "2026-08-29",
+        "company": "科技产业",
+        "sector": "半导体",
+        "region": "全球",
+        "importance": 86,
+        "qualityScore": 0,
+        "sources": [
+          {
+            "name": "TechRadar",
+            "url": "https://www.techradar.com/pro/nvidia-wants-to-set-up-an-employee-funded-political-action-committee-to-shape-us-policy-in-its-favor",
+            "title": "Nvidia looks to set up an employee-funded political action committee to try and shape US policy in its favor",
+            "publishedAt": "2026-08-29",
+            "level": "C",
+            "section": "summary"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-29",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Nvidia is looking to set up a political action committee (PAC) Many companies have set up PACs to help shape US policy The US mid-term elections have seen a record level of corporate funding Companies using their money to shape policy in the United States is…",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Nvidia looks to set up an employee-funded political action committee to try and shape US policy in its favor",
+          "evidenceIds": [
+            "E001"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "company",
+        "importance",
+        "qualityScore",
+        "region",
+        "sector",
+        "type"
+      ],
+      "evidenceIds": [
+        "E001"
+      ],
+      "supportingEvidenceIds": [
+        "E001"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-1d3f8778c13a0e79f245",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-2ca8bbfcede2b97d29",
+      "entityName": "OpenAI发布适用于ChatGPT Work和Codex的Admin插件|管理|额度|管理员|数据|群组_手机新浪网 - 新浪财经",
+      "action": "added",
+      "changedFields": [
+        "title",
+        "summary",
+        "type",
+        "publishedAt",
+        "company",
+        "companySlug",
+        "sector",
+        "region",
+        "importance",
+        "qualityScore",
+        "qualityStatus",
+        "sources"
+      ],
+      "summary": "新增高价值情报事件记录：OpenAI发布适用于ChatGPT Work和Codex的Admin插件|管理|额度|管理员|数据|群组_手机新浪网 - 新浪财经。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "title": "OpenAI发布适用于ChatGPT Work和Codex的Admin插件|管理|额度|管理员|数据|群组_手机新浪网 - 新浪财经",
+        "summary": "OpenAI发布适用于ChatGPT Work和Codex的Admin插件|管理|额度|管理员|数据|群组_手机新浪网 新浪财经",
+        "type": "产品发布",
+        "publishedAt": "2026-08-26",
+        "company": "OpenAI",
+        "companySlug": "openai",
+        "sector": "AI / AGI",
+        "region": "中国",
+        "importance": 82,
+        "qualityScore": 52
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-26",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "OpenAI发布适用于ChatGPT Work和Codex的Admin插件|管理|额度|管理员|数据|群组_手机新浪网 新浪财经",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "OpenAI发布适用于ChatGPT Work和Codex的Admin插件|管理|额度|管理员|数据|群组_手机新浪网 - 新浪财经",
+          "evidenceIds": [
+            "E002"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "company",
+        "companySlug",
+        "importance",
+        "qualityScore",
+        "qualityStatus",
+        "region",
+        "sector",
+        "type"
+      ],
+      "evidenceIds": [
+        "E002"
+      ],
+      "supportingEvidenceIds": [
+        "E002"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E001",
+      "changeId": "chg-11ecbf9e3f990e6d2286",
+      "entityName": "Nvidia looks to set up an employee-funded political action committee to try and shape US policy in its favor",
+      "claim": "新增高价值情报事件记录：Nvidia looks to set up an employee-funded political action committee to try and shape US policy in its favor。",
+      "sourceName": "TechRadar",
+      "title": "Nvidia looks to set up an employee-funded political action committee to try and shape US policy in its favor",
+      "url": "https://www.techradar.com/pro/nvidia-wants-to-set-up-an-employee-funded-political-action-committee-to-shape-us-policy-in-its-favor",
+      "publishedAt": "2026-08-29",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E002",
+      "changeId": "chg-1d3f8778c13a0e79f245",
+      "entityName": "OpenAI发布适用于ChatGPT Work和Codex的Admin插件|管理|额度|管理员|数据|群组_手机新浪网 - 新浪财经",
+      "claim": "新增高价值情报事件记录：OpenAI发布适用于ChatGPT Work和Codex的Admin插件|管理|额度|管理员|数据|群组_手机新浪网 - 新浪财经。",
+      "sourceName": "GEO · Google News 中文",
+      "title": "OpenAI发布适用于ChatGPT Work和Codex的Admin插件|管理|额度|管理员|数据|群组_手机新浪网 - 新浪财经",
+      "url": "https://news.google.com/rss/articles/CBMingJBVV95cUxPeXgwMm1PdUpDdGhXdTJDU3RvT0o3MWVXSHZRVTd5ZzV0M1Q4aV83UldWYl9uLTNPNWwxZmdVTDdqaHNwWVRXdlhoMWtNNDhIRFhselcyZFR6OE1GUkZ5WXFLRGh2MFRjX0xZSkdlb2FWaVBXbFp0dDl1MFBsUzBjaEc2Z1oxS18zS0Y4aEExX3ZOZ0pkRHoyeUwzYTdWTlQwQ2pleGNXQXFsVWxUUzQ1OUZ4Y3JnaUgxeHNvVG8yeEtVQXQ5WE1pNjVIQ25PUzN3alc4QXVCRmt0Q1RBSGx4OVpXajg0OEhzeWg1dTh0LVZ5Rnl1VWF0TWF2RjJsTlVuNUtvMTRLUUUzMnp0WUFBbHR4SWt6VHVHb3NuMG5R?oc=5",
+      "publishedAt": "2026-08-26",
+      "evidenceGrade": "D",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    }
+  ],
   "methodology": {
     "stages": [
       "stable entity snapshot",
@@ -185,19 +518,19 @@
     },
     {
       "date": "2026-08-30",
-      "generatedAt": "2026-08-29T17:17:55+00:00",
-      "runStatus": "no-material-change",
-      "changeCount": 0,
-      "executiveSummary": "本轮未检测到新的外部事实候选。"
+      "generatedAt": "2026-08-29T18:15:41+00:00",
+      "runStatus": "model",
+      "changeCount": 2,
+      "executiveSummary": "证据包新增两条高价值情报事件：Nvidia拟设立员工资助的政治行动委员会（PAC）以影响美国政策（E001，C级证据）；OpenAI发布适用于ChatGPT Work和Codex的Admin插件（E002，D级证据）。两者均为外部事件快照，证据等级偏低，需进一步验证。"
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 0,
-    "eligibleCandidateCount": 0,
+    "candidateCount": 2,
+    "eligibleCandidateCount": 2,
     "rejectedCandidateCount": 0,
     "rejectedByDataset": {},
-    "evidenceCount": 0,
-    "supportingEvidenceCount": 0,
+    "evidenceCount": 2,
+    "supportingEvidenceCount": 2,
     "rejectedEvidenceCount": 0,
     "passedButUnboundEvidenceCount": 0,
     "rejectionReasons": {}
