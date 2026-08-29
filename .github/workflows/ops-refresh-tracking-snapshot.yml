@@ -11,26 +11,24 @@ permissions:
   actions: write
 
 jobs:
-  dispatch:
+  release:
     runs-on: ubuntu-latest
     steps:
-      - name: Replace queued full refreshes with a lightweight tracking refresh
+      - name: Cancel only the feature-triggered PDF refresh before commit
         env:
           GH_TOKEN: ${{ github.token }}
+          TARGET_RUN_ID: "33251977840"
         shell: bash
         run: |
           set -euo pipefail
-          mapfile -t queued_full_runs < <(
-            gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/scheduled-sync.yml/runs?per_page=30" \
-              --jq '.workflow_runs[] | select(.status == "queued" or .status == "pending" or .status == "waiting" or .status == "requested") | .id'
-          )
-          for run_id in "${queued_full_runs[@]}"; do
-            echo "cancel queued full refresh ${run_id}"
-            gh api --method POST "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}/cancel" || true
-          done
-
-          echo "dispatch lightweight refresh from current main"
-          gh api \
-            --method POST \
-            "repos/${GITHUB_REPOSITORY}/actions/workflows/frequent-intelligence-refresh.yml/dispatches" \
-            -f ref=main
+          status=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${TARGET_RUN_ID}" --jq .status)
+          echo "PDF refresh ${TARGET_RUN_ID} status=${status}"
+          case "$status" in
+            queued|pending|in_progress|waiting|requested)
+              gh api --method POST "repos/${GITHUB_REPOSITORY}/actions/runs/${TARGET_RUN_ID}/cancel"
+              echo "cancel requested before PDF archive commit"
+              ;;
+            *)
+              echo "PDF refresh is already terminal; no action required"
+              ;;
+          esac
