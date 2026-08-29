@@ -1,4 +1,4 @@
-name: One-time source governance pruned production verification
+name: One-time source governance exact-title verification
 
 on:
   push:
@@ -20,60 +20,123 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Run exact production adapter for target accounts
+      - name: Resolve current public-index titles to verified WeChat originals
         run: |
           python - <<'PY'
           import json
+          import re
           from tools import crawl_with_wechat_registry as app
+          from tools import wechat_source_registry
 
           base = app.base
           crawler = base.tracking.crawler
-          app.core_official_adapters.install(crawler)
           app.http_policy_bridge.install(crawler)
-          app.search_index_feed_redirects.install(crawler)
           app.wechat_fetch_compat.install(app.wechat_public_sources)
           app.wechat_registry_bridge.install(app.wechat_public_sources)
           app.wechat_original_redirect_bridge.install(app.wechat_public_sources, app.wechat_registry_bridge)
-          app.wechat_index_context_guard.install(app.wechat_registry_bridge)
-          app.wechat_index_record_fallback.install(app.wechat_public_sources, app.wechat_registry_bridge)
           app.wechat_sogou_redirect_compat.install(app.wechat_sogou_index)
           app.wechat_sogou_link_compat.install(app.wechat_sogou_index)
-          app.wechat_public_aggregator.install(app.wechat_sogou_index)
-          app.wechat_sogou_bridge.install(app.wechat_public_sources)
 
           tracking_config = base.tracking.load_tracking()
           tracks = base.tracking._enabled_tracks(tracking_config)
           specs = app.wechat_public_sources.generated_wechat_sources(tracks, base.tracking)
-          targets = {
-              "user-track-wechat-cbea-battery-energy",
-              "user-track-wechat-chiptrend-ic-semiconductor",
-              "user-track-wechat-eefocus-semiconductor",
-              "user-track-wechat-gg-lithium-energy",
-              "user-track-wechat-gg-robot-robotics",
-              "user-track-wechat-icbank-semiconductor",
-              "user-track-wechat-ijiwei-semiconductor",
-              "user-track-wechat-robospeak-robotics",
-              "user-track-wechat-semiconductor-technology-semiconductor",
-          }
-          selected = [s for s in specs if s.get("id") in targets]
-          print("SELECTED_COUNT", len(selected))
+          spec_by_id = {s.get("id"): s for s in specs}
 
-          for spec in selected:
+          cases = [
+              (
+                  "user-track-wechat-robospeak-robotics",
+                  "进击的微米级战场：手术机器人的国产化下半场，谁在“硬卡”我们的脖子？",
+              ),
+              (
+                  "user-track-wechat-icbank-semiconductor",
+                  "独家丨腾讯芯片一号位，离职创业，投身AI CPU",
+              ),
+              (
+                  "user-track-wechat-gg-robot-robotics",
+                  "投资10亿元的具身机器人制造基地落地常州；宇树发布9900元7轴力控臂；超150款新品WRC集中发布 | 市场观察",
+              ),
+          ]
+
+          def norm(value):
+              return re.sub(r"[\W_]+", "", str(value or ""), flags=re.UNICODE).casefold()
+
+          for source_id, title in cases:
+              spec = spec_by_id[source_id]
+              search_url = app.wechat_sogou_index.build_search_url(spec, query=title)
               try:
-                  articles, status = app.wechat_public_sources.crawl_wechat_source(
-                      spec, crawler.DEFAULT_USER_AGENT, crawler
-                  )
-                  print("PRUNED_STATUS " + json.dumps(status, ensure_ascii=False, sort_keys=True))
-                  print("PRUNED_ARTICLES " + json.dumps({
-                      "id": spec.get("id"),
-                      "count": len(articles),
-                      "dates": [a.get("publishedAt") for a in articles[:5]],
-                      "titles": [a.get("title") for a in articles[:5]],
-                      "accounts": [a.get("wechatAccount") for a in articles[:5]],
-                  }, ensure_ascii=False, sort_keys=True))
+                  search_body = app.wechat_sogou_index._request(search_url)
+                  rows = app.wechat_sogou_index.parse_search_results(search_body, search_url)
               except Exception as exc:
-                  print("PRUNED_EXCEPTION " + json.dumps({
-                      "id": spec.get("id"), "name": spec.get("name"),
+                  print("EXACT_SEARCH_ERROR " + json.dumps({
+                      "id": source_id, "title": title,
                       "error": f"{type(exc).__name__}: {exc}",
                   }, ensure_ascii=False, sort_keys=True))
+                  continue
+
+              wanted = norm(title)
+              ranked = sorted(
+                  rows,
+                  key=lambda r: (wanted == norm(r.get("title")), wanted in norm(r.get("title"))),
+                  reverse=True,
+              )
+              print("EXACT_SEARCH " + json.dumps({
+                  "id": source_id,
+                  "name": spec.get("name"),
+                  "title": title,
+                  "count": len(rows),
+                  "results": [
+                      {"title": r.get("title"), "account": r.get("account"), "publishedAt": r.get("publishedAt")}
+                      for r in ranked[:5]
+                  ],
+              }, ensure_ascii=False, sort_keys=True))
+
+              verified = []
+              for row in ranked[:3]:
+                  similarity = wanted == norm(row.get("title")) or wanted in norm(row.get("title")) or norm(row.get("title")) in wanted
+                  if not similarity:
+                      continue
+                  try:
+                      result_url = app.wechat_sogou_link_compat.guarded_result_url(row["url"], search_body)
+                      jump_body = app.wechat_sogou_index._request(
+                          app.wechat_sogou_index._normalized_url(result_url), referer=search_url
+                      )
+                      direct = app.wechat_sogou_index.resolve_script_url(jump_body)
+                      if not direct:
+                          continue
+                      body = app.wechat_public_sources.fetch_public_wechat_page(direct)
+                      parser = app.wechat_public_sources.WeChatPageParser()
+                      parser.feed(body or "")
+                      observed = parser.account or app.wechat_public_sources._js_value(
+                          body or "", ("nickname", "profile_nickname", "account_name")
+                      )
+                      article = app.wechat_public_sources.parse_wechat_article(
+                          spec,
+                          direct,
+                          body,
+                          crawler,
+                          fallback_title=str(row.get("title") or title),
+                          fallback_summary=str(row.get("summary") or ""),
+                          fallback_date=None,
+                      )
+                      verified.append({
+                          "searchTitle": row.get("title"),
+                          "directUrl": direct,
+                          "observedAccount": observed,
+                          "accountMatch": wechat_source_registry.account_matches(spec, observed),
+                          "parsed": article is not None,
+                          "articleTitle": (article or {}).get("title"),
+                          "publishedAt": (article or {}).get("publishedAt"),
+                          "wechatAccount": (article or {}).get("wechatAccount"),
+                          "companies": (article or {}).get("companies"),
+                          "people": (article or {}).get("people"),
+                          "keywords": (article or {}).get("keywords"),
+                      })
+                  except Exception as exc:
+                      verified.append({
+                          "searchTitle": row.get("title"),
+                          "error": f"{type(exc).__name__}: {exc}",
+                      })
+              print("EXACT_VERIFIED " + json.dumps({
+                  "id": source_id, "name": spec.get("name"), "verified": verified,
+              }, ensure_ascii=False, sort_keys=True))
           PY
