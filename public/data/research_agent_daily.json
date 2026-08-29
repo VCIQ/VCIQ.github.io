@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-29T08:40:18+00:00",
+  "generatedAt": "2026-08-29T09:51:11+00:00",
   "asOfDate": "2026-08-29",
-  "runStatus": "api-fallback",
+  "runStatus": "no-material-change",
   "baselineSource": "snapshot",
   "model": {
     "provider": "SiliconFlow",
@@ -13,678 +13,28 @@
     "usage": {}
   },
   "changeSummary": {
-    "totalDetected": 25,
-    "total": 5,
-    "byDataset": {
-      "ventureCompany": 3,
-      "intelligenceEvent": 2
-    },
-    "byChangeType": {
-      "external_event": 9,
-      "data_maintenance": 16
-    },
-    "externalCandidates": 9,
-    "qualityRejected": 4,
-    "maintenanceExcluded": 16,
+    "totalDetected": 0,
+    "total": 0,
+    "byDataset": {},
+    "byChangeType": {},
+    "externalCandidates": 0,
+    "qualityRejected": 0,
+    "maintenanceExcluded": 0,
     "aggregatedEvents": 0,
-    "highestImportance": 88
+    "highestImportance": 0
   },
   "analysis": {
     "mode": "structured-change-only",
     "isResearchJudgment": false,
-    "executiveSummary": "本期有 5 条外部事实候选通过基础证据质量门。当前为降级展示，仅列出字段变化，不提供模型研判或影响结论。 质量门诊断：缺少发布时间 13、证据未分级 6、缺少标题 1、证据合格但未绑定变化字段 3。",
-    "keyDevelopments": [
-      {
-        "title": "待复核｜宁德时代 的 financing 发生变化。",
-        "assessment": "这是通过基础证据质量门的外部事实候选，仅确认结构化字段变化；当前未生成影响判断，不应视为研究结论。",
-        "importance": 4,
-        "confidence": "low",
-        "entities": [
-          "宁德时代"
-        ],
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "title": "待复核｜SambaNova Systems 的 financing 发生变化。",
-        "assessment": "这是通过基础证据质量门的外部事实候选，仅确认结构化字段变化；当前未生成影响判断，不应视为研究结论。",
-        "importance": 4,
-        "confidence": "low",
-        "entities": [
-          "SambaNova Systems"
-        ],
-        "evidenceIds": [
-          "E005"
-        ]
-      },
-      {
-        "title": "待复核｜Joby Aviation 的 capitalMarkets、financing 发生变化。",
-        "assessment": "这是通过基础证据质量门的外部事实候选，仅确认结构化字段变化；当前未生成影响判断，不应视为研究结论。",
-        "importance": 4,
-        "confidence": "low",
-        "entities": [
-          "Joby Aviation"
-        ],
-        "evidenceIds": [
-          "E016"
-        ]
-      },
-      {
-        "title": "待复核｜新增高价值情报事件记录：今年最好的机器人落地场景，可能在上海一家冰淇凌店。",
-        "assessment": "这是通过基础证据质量门的外部事实候选，仅确认结构化字段变化；当前未生成影响判断，不应视为研究结论。",
-        "importance": 4,
-        "confidence": "low",
-        "entities": [
-          "今年最好的机器人落地场景，可能在上海一家冰淇凌店"
-        ],
-        "evidenceIds": [
-          "E026"
-        ]
-      },
-      {
-        "title": "待复核｜新增高价值情报事件记录：Lenovo launches new budget LOQ gaming PC with up to Intel Core 7, 32GB RAM, and Nvidia RTX GPUs。",
-        "assessment": "这是通过基础证据质量门的外部事实候选，仅确认结构化字段变化；当前未生成影响判断，不应视为研究结论。",
-        "importance": 4,
-        "confidence": "low",
-        "entities": [
-          "Lenovo launches new budget LOQ gaming PC with up to Intel Core 7, 32GB RAM, and Nvidia RTX GPUs"
-        ],
-        "evidenceIds": [
-          "E027"
-        ]
-      }
-    ],
+    "executiveSummary": "本轮未检测到新的外部事实候选。",
+    "keyDevelopments": [],
     "thesisUpdates": [],
-    "watchlist": [
-      {
-        "item": "复核高优先级变化的原始信源",
-        "reason": "降级输出不包含研究判断，仍需人工核对证据是否完整支持对应字段。",
-        "nextEvidence": "监管文件、公司公告或至少一个独立高等级来源。",
-        "evidenceIds": [
-          "E001"
-        ]
-      }
-    ],
+    "watchlist": [],
     "risks": [],
-    "methodologyNote": "结构化变化降级展示；SiliconFlow 模型请求超时，已切换到规则引擎。未执行生成式研判。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
+    "methodologyNote": "结构化变化检查；本期无材料变化。未执行生成式研判。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown、每日证据约束研究摘要=degraded。"
   },
-  "changes": [
-    {
-      "id": "chg-6d475ee553ecb41be66e",
-      "dataset": "ventureCompany",
-      "entityType": "创业公司",
-      "entityId": "catl",
-      "entityName": "宁德时代",
-      "action": "updated",
-      "changedFields": [
-        "financing"
-      ],
-      "summary": "宁德时代 的 financing 发生变化。",
-      "importance": 88,
-      "before": {
-        "financing": []
-      },
-      "after": {
-        "financing": [
-          {
-            "date": "2026-08-14",
-            "investors": [],
-            "sourceUrl": "https://www.catl.com/en/news/6951.html",
-            "summary": "Brisbane, Australia | 14 August 2026 — Quinbrook's Supernode battery energy storage project has completed Stage 2 commercial operation and reached financial close on A$469 million financing for Stage 3, marking a further milestone in the phased development of Australia's largest operational BESS campus.With planned capacity expected to exceed 3 GWh, Supernode is supported by CATL as its core energy storage system supplier for all three stContemporary Amperex Technology Co., Limited (CATL) is a g",
-            "title": "CATL and Quinbrook Build on Supernode Partnership Following Stage 2 and Stage 3 Major Milestones",
-            "type": "融资"
-          }
-        ]
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "financing"
-      ],
-      "claimBindings": [
-        {
-          "field": "financing",
-          "before": [],
-          "after": [
-            {
-              "date": "2026-08-14",
-              "investors": [],
-              "sourceUrl": "https://www.catl.com/en/news/6951.html",
-              "summary": "Brisbane, Australia | 14 August 2026 — Quinbrook's Supernode battery energy storage project has completed Stage 2 commercial operation and reached financial close on A$469 million financing for Stage 3, marking a further milestone in the phased development of Australia's largest operational BESS campus.With planned capacity expected to exceed 3 GWh, Supernode is supported by CATL as its core energy storage system supplier for all three stContemporary Amperex Technology Co., Limited (CATL) is a g",
-              "title": "CATL and Quinbrook Build on Supernode Partnership Following Stage 2 and Stage 3 Major Milestones",
-              "type": "融资"
-            }
-          ],
-          "evidenceIds": [
-            "E001"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [],
-      "evidenceIds": [
-        "E001"
-      ],
-      "supportingEvidenceIds": [
-        "E001"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-a803f83606b732d92db5",
-      "dataset": "ventureCompany",
-      "entityType": "创业公司",
-      "entityId": "sambanova",
-      "entityName": "SambaNova Systems",
-      "action": "updated",
-      "changedFields": [
-        "financing"
-      ],
-      "summary": "SambaNova Systems 的 financing 发生变化。",
-      "importance": 88,
-      "before": {
-        "financing": [
-          {
-            "amount": "$1B",
-            "date": "2026-07-08",
-            "investors": [],
-            "sourceUrl": "https://sambanova.ai/press/sambanova-completes-first-close-of-1b-financing-at-11b-valuation",
-            "summary": "SambaNova Completes First Close of $1B Financing at $11B Valuation SambaCloud SambaStack SambaManaged SambaRack RDU Dataflow Technology SambaRack RDU Dataflow Products SambaCloud SambaStack SambaManaged Technology SambaRack RDU Dataflow Inference Providers Argyll (UK) Infercom (EU) OVHcloud (EU) Sou",
-            "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
-            "type": "融资"
-          }
-        ]
-      },
-      "after": {
-        "financing": [
-          {
-            "amount": "$1B",
-            "date": "2026-07-08",
-            "investors": [],
-            "sourceUrl": "https://sambanova.ai/press/sambanova-completes-first-close-of-1b-financing-at-11b-valuation",
-            "summary": "SambaNova Completes First Close of $1B Financing at $11B Valuation SambaCloud SambaStack SambaManaged SambaRack RDU Dataflow Technology SambaRack RDU Dataflow Products SambaCloud SambaStack SambaManaged Technology SambaRack RDU Dataflow Inference Providers Sovereign AI Developers & Enterprises Gover",
-            "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
-            "type": "融资"
-          }
-        ]
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "financing"
-      ],
-      "claimBindings": [
-        {
-          "field": "financing",
-          "before": [
-            {
-              "amount": "$1B",
-              "date": "2026-07-08",
-              "investors": [],
-              "sourceUrl": "https://sambanova.ai/press/sambanova-completes-first-close-of-1b-financing-at-11b-valuation",
-              "summary": "SambaNova Completes First Close of $1B Financing at $11B Valuation SambaCloud SambaStack SambaManaged SambaRack RDU Dataflow Technology SambaRack RDU Dataflow Products SambaCloud SambaStack SambaManaged Technology SambaRack RDU Dataflow Inference Providers Argyll (UK) Infercom (EU) OVHcloud (EU) Sou",
-              "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
-              "type": "融资"
-            }
-          ],
-          "after": [
-            {
-              "amount": "$1B",
-              "date": "2026-07-08",
-              "investors": [],
-              "sourceUrl": "https://sambanova.ai/press/sambanova-completes-first-close-of-1b-financing-at-11b-valuation",
-              "summary": "SambaNova Completes First Close of $1B Financing at $11B Valuation SambaCloud SambaStack SambaManaged SambaRack RDU Dataflow Technology SambaRack RDU Dataflow Products SambaCloud SambaStack SambaManaged Technology SambaRack RDU Dataflow Inference Providers Sovereign AI Developers & Enterprises Gover",
-              "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
-              "type": "融资"
-            }
-          ],
-          "evidenceIds": [
-            "E005"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [],
-      "evidenceIds": [
-        "E005"
-      ],
-      "supportingEvidenceIds": [
-        "E005"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-d93083933adb00009cc0",
-      "dataset": "ventureCompany",
-      "entityType": "创业公司",
-      "entityId": "joby",
-      "entityName": "Joby Aviation",
-      "action": "updated",
-      "changedFields": [
-        "capitalMarkets",
-        "financing"
-      ],
-      "summary": "Joby Aviation 的 capitalMarkets、financing 发生变化。",
-      "importance": 88,
-      "before": {
-        "capitalMarkets": [
-          {
-            "date": "2026-07-16",
-            "investors": [],
-            "sourceUrl": "https://www.jobyaviation.com/news/2025-impact-report",
-            "summary": "Joby Aviation Impact Reports: 2024 2023 2022 Read next Joby Aviation to Scale Defense Business Through Acquisition of Resonant Sciences Building the Next Generation of Aerospace in Ohio Joby Reports Second Quarter 2026 Financial Results © 2026 Joby Aero, Inc.",
-            "title": "2025 Impact Report | Joby Aviation",
-            "type": "并购/退出"
-          }
-        ],
-        "financing": []
-      },
-      "after": {
-        "capitalMarkets": [
-          {
-            "date": "2026-07-16",
-            "investors": [],
-            "sourceUrl": "https://www.jobyaviation.com/news/2025-impact-report",
-            "summary": "Joby Aviation Impact Reports: 2024 2023 2022 Read next Joby Aviation to Scale Defense Business Through Acquisition of Resonant Sciences Building the Next Generation of Aerospace in Ohio Joby Reports Second Quarter 2026 Financial Results © 2026 Joby Aero, Inc.",
-            "title": "2025 Impact Report | Joby Aviation",
-            "type": "并购/退出"
-          },
-          {
-            "date": "2026-08-04",
-            "investors": [],
-            "round": "Strategic",
-            "sourceUrl": "https://www.jobyaviation.com/news/atoms-and-joby-aviation-form-strategic-partnership-to-build-americas-vertiport-network",
-            "summary": "Atoms and Joby Aviation have formed a strategic partnership to acquire and develop next-generation transportation hubs in markets where Joby is preparing early operations under the White House-backed eVTOL Integration Pilot Program (eIPP) Vertiports will operate as multimodal transportation hubs where electric aircraft, autonomous ground vehicles, and ridesharing converge, anchored by on-site power for charging and operations",
-            "title": "Atoms and Joby Aviation Form Strategic Partnership to Build America's Vertiport Network",
-            "type": "上市"
-          }
-        ],
-        "financing": [
-          {
-            "date": "2026-08-05",
-            "investors": [],
-            "sourceUrl": "https://www.jobyaviation.com/news/joby-reports-second-quarter-2026-financial-results",
-            "summary": "Company Raises 2026 Revenue Guidance",
-            "title": "Joby Reports Second Quarter 2026 Financial Results",
-            "type": "融资"
-          }
-        ]
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "capitalMarkets",
-        "financing"
-      ],
-      "claimBindings": [
-        {
-          "field": "capitalMarkets",
-          "before": [
-            {
-              "date": "2026-07-16",
-              "investors": [],
-              "sourceUrl": "https://www.jobyaviation.com/news/2025-impact-report",
-              "summary": "Joby Aviation Impact Reports: 2024 2023 2022 Read next Joby Aviation to Scale Defense Business Through Acquisition of Resonant Sciences Building the Next Generation of Aerospace in Ohio Joby Reports Second Quarter 2026 Financial Results © 2026 Joby Aero, Inc.",
-              "title": "2025 Impact Report | Joby Aviation",
-              "type": "并购/退出"
-            }
-          ],
-          "after": [
-            {
-              "date": "2026-07-16",
-              "investors": [],
-              "sourceUrl": "https://www.jobyaviation.com/news/2025-impact-report",
-              "summary": "Joby Aviation Impact Reports: 2024 2023 2022 Read next Joby Aviation to Scale Defense Business Through Acquisition of Resonant Sciences Building the Next Generation of Aerospace in Ohio Joby Reports Second Quarter 2026 Financial Results © 2026 Joby Aero, Inc.",
-              "title": "2025 Impact Report | Joby Aviation",
-              "type": "并购/退出"
-            },
-            {
-              "date": "2026-08-04",
-              "investors": [],
-              "round": "Strategic",
-              "sourceUrl": "https://www.jobyaviation.com/news/atoms-and-joby-aviation-form-strategic-partnership-to-build-americas-vertiport-network",
-              "summary": "Atoms and Joby Aviation have formed a strategic partnership to acquire and develop next-generation transportation hubs in markets where Joby is preparing early operations under the White House-backed eVTOL Integration Pilot Program (eIPP) Vertiports will operate as multimodal transportation hubs where electric aircraft, autonomous ground vehicles, and ridesharing converge, anchored by on-site power for charging and operations",
-              "title": "Atoms and Joby Aviation Form Strategic Partnership to Build America's Vertiport Network",
-              "type": "上市"
-            }
-          ],
-          "evidenceIds": [
-            "E016"
-          ]
-        },
-        {
-          "field": "financing",
-          "before": [],
-          "after": [
-            {
-              "date": "2026-08-05",
-              "investors": [],
-              "sourceUrl": "https://www.jobyaviation.com/news/joby-reports-second-quarter-2026-financial-results",
-              "summary": "Company Raises 2026 Revenue Guidance",
-              "title": "Joby Reports Second Quarter 2026 Financial Results",
-              "type": "融资"
-            }
-          ],
-          "evidenceIds": [
-            "E016"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [],
-      "evidenceIds": [
-        "E016"
-      ],
-      "supportingEvidenceIds": [
-        "E016"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-9dfbfa33ca398304f7b2",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-7aa0277321a88cf1ae",
-      "entityName": "今年最好的机器人落地场景，可能在上海一家冰淇凌店",
-      "action": "added",
-      "changedFields": [
-        "title",
-        "summary",
-        "type",
-        "publishedAt",
-        "company",
-        "sector",
-        "region",
-        "importance",
-        "qualityScore",
-        "sources"
-      ],
-      "summary": "新增高价值情报事件记录：今年最好的机器人落地场景，可能在上海一家冰淇凌店。",
-      "importance": 84,
-      "before": null,
-      "after": {
-        "title": "今年最好的机器人落地场景，可能在上海一家冰淇凌店",
-        "summary": "只做真正有价值的事，而非做给别人看",
-        "type": "商业进展",
-        "publishedAt": "2026-08-29",
-        "company": "科技产业",
-        "sector": "机器人",
-        "region": "中国",
-        "importance": 84,
-        "qualityScore": 0,
-        "sources": [
-          {
-            "name": "钛媒体",
-            "url": "https://www.tmtpost.com/8121421.html",
-            "title": "今年最好的机器人落地场景，可能在上海一家冰淇凌店",
-            "publishedAt": "2026-08-29",
-            "level": "C",
-            "section": "summary"
-          }
-        ]
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-08-29",
-          "evidenceIds": [
-            "E026"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "只做真正有价值的事，而非做给别人看",
-          "evidenceIds": [
-            "E026"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "今年最好的机器人落地场景，可能在上海一家冰淇凌店",
-          "evidenceIds": [
-            "E026"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "company",
-        "importance",
-        "qualityScore",
-        "region",
-        "sector",
-        "type"
-      ],
-      "evidenceIds": [
-        "E026"
-      ],
-      "supportingEvidenceIds": [
-        "E026"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-014bc301baf5be52ab64",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-27da334ed54ad6aa91",
-      "entityName": "Lenovo launches new budget LOQ gaming PC with up to Intel Core 7, 32GB RAM, and Nvidia RTX GPUs",
-      "action": "added",
-      "changedFields": [
-        "title",
-        "summary",
-        "type",
-        "publishedAt",
-        "company",
-        "sector",
-        "region",
-        "importance",
-        "qualityScore",
-        "sources"
-      ],
-      "summary": "新增高价值情报事件记录：Lenovo launches new budget LOQ gaming PC with up to Intel Core 7, 32GB RAM, and Nvidia RTX GPUs。",
-      "importance": 82,
-      "before": null,
-      "after": {
-        "title": "Lenovo launches new budget LOQ gaming PC with up to Intel Core 7, 32GB RAM, and Nvidia RTX GPUs",
-        "summary": "Lenovo has announced the LOQ Tower 17IRH11, an entry-level gaming PC powered by Intel Core 200 series mobile processors. Set to launch first in Europe, it also features up to Nvidia GeForce RTX 5060 Ti graphics, 32GB of dual-channel DDR5 RAM, and a 1TB PCIe G…",
-        "type": "产品发布",
-        "publishedAt": "2026-08-29",
-        "company": "科技产业",
-        "sector": "半导体",
-        "region": "全球",
-        "importance": 82,
-        "qualityScore": 0,
-        "sources": [
-          {
-            "name": "Notebookcheck",
-            "url": "https://www.notebookcheck.net/Lenovo-launches-new-budget-LOQ-gaming-PC-with-up-to-Intel-Core-7-32GB-RAM-and-Nvidia-RTX-GPUs.1381901.0.html",
-            "title": "Lenovo launches new budget LOQ gaming PC with up to Intel Core 7, 32GB RAM, and Nvidia RTX GPUs",
-            "publishedAt": "2026-08-29",
-            "level": "C",
-            "section": "summary"
-          }
-        ]
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-08-29",
-          "evidenceIds": [
-            "E027"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Lenovo has announced the LOQ Tower 17IRH11, an entry-level gaming PC powered by Intel Core 200 series mobile processors. Set to launch first in Europe, it also features up to Nvidia GeForce RTX 5060 Ti graphics, 32GB of dual-channel DDR5 RAM, and a 1TB PCIe G…",
-          "evidenceIds": [
-            "E027"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Lenovo launches new budget LOQ gaming PC with up to Intel Core 7, 32GB RAM, and Nvidia RTX GPUs",
-          "evidenceIds": [
-            "E027"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "company",
-        "importance",
-        "qualityScore",
-        "region",
-        "sector",
-        "type"
-      ],
-      "evidenceIds": [
-        "E027"
-      ],
-      "supportingEvidenceIds": [
-        "E027"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "eligibleForKeyDevelopment": true
-    }
-  ],
-  "evidence": [
-    {
-      "id": "E001",
-      "changeId": "chg-6d475ee553ecb41be66e",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 的 financing 发生变化。",
-      "sourceName": "CATL",
-      "title": "宁德时代·CATL",
-      "url": "https://www.catl.com/",
-      "publishedAt": "2026-08-20",
-      "evidenceGrade": "官方披露",
-      "claimFields": [
-        "financing"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E005",
-      "changeId": "chg-a803f83606b732d92db5",
-      "entityName": "SambaNova Systems",
-      "claim": "SambaNova Systems 的 financing 发生变化。",
-      "sourceName": "SambaNova",
-      "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
-      "url": "https://sambanova.ai/press/sambanova-completes-first-close-of-1b-financing-at-11b-valuation",
-      "publishedAt": "2026-07-08",
-      "evidenceGrade": "官方披露",
-      "claimFields": [
-        "financing"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E016",
-      "changeId": "chg-d93083933adb00009cc0",
-      "entityName": "Joby Aviation",
-      "claim": "Joby Aviation 的 capitalMarkets、financing 发生变化。",
-      "sourceName": "Joby Aviation",
-      "title": "2025 Impact Report | Joby Aviation",
-      "url": "https://www.jobyaviation.com/news/2025-impact-report",
-      "publishedAt": "2026-07-16",
-      "evidenceGrade": "官方披露",
-      "claimFields": [
-        "capitalMarkets",
-        "financing"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E026",
-      "changeId": "chg-9dfbfa33ca398304f7b2",
-      "entityName": "今年最好的机器人落地场景，可能在上海一家冰淇凌店",
-      "claim": "新增高价值情报事件记录：今年最好的机器人落地场景，可能在上海一家冰淇凌店。",
-      "sourceName": "钛媒体",
-      "title": "今年最好的机器人落地场景，可能在上海一家冰淇凌店",
-      "url": "https://www.tmtpost.com/8121421.html",
-      "publishedAt": "2026-08-29",
-      "evidenceGrade": "C",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E027",
-      "changeId": "chg-014bc301baf5be52ab64",
-      "entityName": "Lenovo launches new budget LOQ gaming PC with up to Intel Core 7, 32GB RAM, and Nvidia RTX GPUs",
-      "claim": "新增高价值情报事件记录：Lenovo launches new budget LOQ gaming PC with up to Intel Core 7, 32GB RAM, and Nvidia RTX GPUs。",
-      "sourceName": "Notebookcheck",
-      "title": "Lenovo launches new budget LOQ gaming PC with up to Intel Core 7, 32GB RAM, and Nvidia RTX GPUs",
-      "url": "https://www.notebookcheck.net/Lenovo-launches-new-budget-LOQ-gaming-PC-with-up-to-Intel-Core-7-32GB-RAM-and-Nvidia-RTX-GPUs.1381901.0.html",
-      "publishedAt": "2026-08-29",
-      "evidenceGrade": "C",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    }
-  ],
+  "changes": [],
+  "evidence": [],
   "methodology": {
     "stages": [
       "stable entity snapshot",
@@ -696,7 +46,7 @@
       "LLM structured analysis",
       "evidence-ID validation"
     ],
-    "fallbackReason": "SiliconFlowTimeoutError",
+    "fallbackReason": "",
     "disclaimer": "信息仅供研究，不构成投资建议；关键事实应回溯原始信源。"
   },
   "history": [
@@ -828,28 +178,22 @@
     },
     {
       "date": "2026-08-29",
-      "generatedAt": "2026-08-29T08:40:18+00:00",
-      "runStatus": "api-fallback",
-      "changeCount": 5,
-      "executiveSummary": "本期有 5 条外部事实候选通过基础证据质量门。当前为降级展示，仅列出字段变化，不提供模型研判或影响结论。"
+      "generatedAt": "2026-08-29T09:51:11+00:00",
+      "runStatus": "no-material-change",
+      "changeCount": 0,
+      "executiveSummary": "本轮未检测到新的外部事实候选。"
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 9,
-    "eligibleCandidateCount": 5,
-    "rejectedCandidateCount": 4,
-    "rejectedByDataset": {
-      "ventureCompany": 4
-    },
-    "evidenceCount": 27,
-    "supportingEvidenceCount": 5,
-    "rejectedEvidenceCount": 19,
-    "passedButUnboundEvidenceCount": 3,
-    "rejectionReasons": {
-      "missing_published_at": 13,
-      "ungraded": 6,
-      "missing_title": 1
-    }
+    "candidateCount": 0,
+    "eligibleCandidateCount": 0,
+    "rejectedCandidateCount": 0,
+    "rejectedByDataset": {},
+    "evidenceCount": 0,
+    "supportingEvidenceCount": 0,
+    "rejectedEvidenceCount": 0,
+    "passedButUnboundEvidenceCount": 0,
+    "rejectionReasons": {}
   },
   "researchScope": {
     "technology": {
@@ -878,8 +222,8 @@
     }
   },
   "pipelineHealth": {
-    "overallStatus": "stale",
-    "healthyJobs": 7,
+    "overallStatus": "degraded",
+    "healthyJobs": 6,
     "jobCount": 9,
     "issueJobs": [
       {
@@ -893,6 +237,12 @@
         "name": "月度信源效能审查",
         "status": "unknown",
         "lastCompletedAt": null
+      },
+      {
+        "jobId": "research-agent-daily",
+        "name": "每日证据约束研究摘要",
+        "status": "degraded",
+        "lastCompletedAt": "2026-08-29T08:46:23Z"
       }
     ]
   }
