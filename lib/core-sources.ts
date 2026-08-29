@@ -2,11 +2,14 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import intelligenceSourcesConfig from "@/config/intelligence_sources.json";
+import listedCompanyDisclosureSourcesConfig from "@/config/listed_company_disclosure_sources.json";
+import officialCompanySourcesConfig from "@/config/official_company_sources.json";
 import wechatSourcesConfig from "@/config/wechat_sources.json";
 
 export type CoreSourceKind = "微信公众号" | "媒体 / 研究" | "官方 / 原始";
 export type SourceLifecycle = "candidate" | "tracked" | "core";
 export type SourceHealthStatus = "ok" | "partial" | "error" | "unknown";
+export type SourceRole = "primary" | "corroboration" | "discovery";
 
 export type SourceEndpoint = {
   id: string;
@@ -28,6 +31,7 @@ export type CoreSource = {
   kind: CoreSourceKind;
   platform: string;
   sourceLevel: string;
+  sourceRole: SourceRole;
   region: string;
   sectors: string[];
   keywords: string[];
@@ -93,6 +97,12 @@ function sourceKind(platform: string, sourceLevel: string): CoreSourceKind {
   return "媒体 / 研究";
 }
 
+function sourceRole(sourceLevel: string, platform: string): SourceRole {
+  if (["官方披露", "原始材料", "监管文件"].includes(sourceLevel)) return "primary";
+  if (platform === "微信") return "discovery";
+  return "corroboration";
+}
+
 function sectorKeys(value: unknown): string[] {
   const source = record(value);
   return Object.keys(source).map((item) => text(item, 80)).filter(Boolean).slice(0, 16);
@@ -156,6 +166,8 @@ function channelLabel(sourceId: string, platform: string): string {
   const id = sourceId.toLocaleLowerCase("en-US");
   if (id.includes("wechat") || platform === "微信") return "微信公开索引";
   if (id.includes("sohu")) return "搜狐公开页";
+  if (id.includes("sec") || platform.includes("SEC")) return "监管披露";
+  if (id.includes("cninfo") || platform.includes("巨潮")) return "交易所 / 公告平台";
   if (id.includes("auto-media")) return "公开网页";
   return platform || "公开网页";
 }
@@ -261,25 +273,41 @@ function feedEndpoints(id: string, platform: string): SourceEndpoint[] {
   });
 }
 
-function wechatEndpoints(id: string, name: string): SourceEndpoint[] {
-  const publisherKey = normalizedIdentity(name);
+function publisherEndpoints(
+  id: string,
+  name: string,
+  aliases: string[],
+  fallbackLabel: string,
+  fallbackPlatform: string,
+): SourceEndpoint[] {
+  const publisherKeys = [name, ...aliases].map(normalizedIdentity).filter(Boolean);
   const configKey = normalizedIdentity(id);
   const rows = activeHealthRows((sourceId, item) => {
     const sourceIdKey = normalizedIdentity(sourceId);
     const observedNameKey = normalizedIdentity(item.name);
-    const nameMatch = Boolean(
-      publisherKey
+    const nameMatch = publisherKeys.some((key) =>
+      key.length >= 3
       && observedNameKey
-      && (observedNameKey === publisherKey || observedNameKey.includes(publisherKey)),
+      && (observedNameKey === key || observedNameKey.includes(key)),
     );
     const idMatch = Boolean(configKey && sourceIdKey.includes(configKey));
     return nameMatch || idMatch;
   });
-  const endpoints = buildEndpoints(rows, {
-    id: `wechat:${id}`,
-    label: "微信公开索引",
-    platform: "微信",
+  return buildEndpoints(rows, {
+    id,
+    label: fallbackLabel,
+    platform: fallbackPlatform,
   });
+}
+
+function wechatEndpoints(id: string, name: string): SourceEndpoint[] {
+  const endpoints = publisherEndpoints(
+    `wechat:${id}`,
+    name,
+    [],
+    "微信公开索引",
+    "微信",
+  );
   if (!endpoints.some((endpoint) => endpoint.label === "微信公开索引")) {
     endpoints.unshift({
       id: `wechat:${id}:wechat-index`,
@@ -312,6 +340,7 @@ function buildFeedSources(): CoreSource[] {
       kind: sourceKind(platform, sourceLevel),
       platform,
       sourceLevel,
+      sourceRole: sourceRole(sourceLevel, platform),
       region: text(feed.region, 60) || "全球",
       sectors: explicitSector ? [explicitSector] : [],
       keywords: strings(feed.keywords, 28),
@@ -342,11 +371,87 @@ function buildWechatSources(): CoreSource[] {
       kind: "微信公众号",
       platform: "微信",
       sourceLevel: text(account.sourceLevel, 60) || "媒体报道",
+      sourceRole: "discovery",
       region: text(account.region, 60) || "中国",
       sectors: sectorKeys(sectorKeywords),
       keywords: flattenSectorKeywords(sectorKeywords),
       companies: strings(account.companies, 20),
       people: strings(account.people, 20),
+      lifecycle: "tracked",
+      healthStatus: overallPublisherStatus(endpoints),
+      healthUpdatedAt: healthContext.generatedAt,
+      endpoints,
+    }];
+  });
+}
+
+function buildOfficialCompanySources(): CoreSource[] {
+  const config = record(officialCompanySourcesConfig);
+  const companies = Array.isArray(config.companies) ? config.companies : [];
+  return companies.flatMap((value): CoreSource[] => {
+    const company = record(value);
+    const slug = text(company.slug, 100);
+    const name = text(company.name, 140);
+    if (!slug || !name || company.enabled === false) return [];
+    const aliases = strings(company.aliases, 20);
+    const newsUrls = strings(company.newsUrls, 12);
+    const sector = text(company.sector, 80);
+    const endpoints = publisherEndpoints(
+      `official-company:${slug}`,
+      name,
+      aliases,
+      "官方网站",
+      "官方网站",
+    );
+    return [{
+      id: `official-company:${slug}`,
+      name,
+      kind: "官方 / 原始",
+      platform: "官方网站",
+      sourceLevel: "官方披露",
+      sourceRole: "primary",
+      region: text(company.region, 60) || "全球",
+      sectors: sector ? [sector] : [],
+      keywords: [],
+      companies: [name],
+      people: [],
+      url: safeHttpUrl(newsUrls[0]) || safeHttpUrl(company.homepage),
+      lifecycle: newsUrls.length ? "tracked" : "candidate",
+      healthStatus: overallPublisherStatus(endpoints),
+      healthUpdatedAt: healthContext.generatedAt,
+      endpoints,
+    }];
+  });
+}
+
+function buildRegulatorySources(): CoreSource[] {
+  const config = record(listedCompanyDisclosureSourcesConfig);
+  const officialSources = record(config.officialSources);
+  return Object.entries(officialSources).flatMap(([id, raw]): CoreSource[] => {
+    const item = record(raw);
+    const name = text(item.name, 140);
+    if (!id || !name) return [];
+    const aliases = strings(item.hosts, 12);
+    const endpoints = publisherEndpoints(
+      `regulatory:${id}`,
+      name,
+      aliases,
+      "监管 / 交易所",
+      "监管机构",
+    );
+    return [{
+      id: `regulatory:${id}`,
+      name,
+      kind: "官方 / 原始",
+      platform: "监管机构",
+      sourceLevel: "监管文件",
+      sourceRole: "primary",
+      region: id === "sec" ? "美国" : id === "hkex" ? "中国香港" : "中国",
+      sectors: [],
+      keywords: ["监管披露", "交易所公告"],
+      companies: [],
+      people: [],
+      url: safeHttpUrl(item.homepage),
       lifecycle: "tracked",
       healthStatus: overallPublisherStatus(endpoints),
       healthUpdatedAt: healthContext.generatedAt,
@@ -362,14 +467,21 @@ function sourceIdentity(source: CoreSource): string {
 export const coreSources: CoreSource[] = (() => {
   const seen = new Set<string>();
   const result: CoreSource[] = [];
-  for (const source of [...buildWechatSources(), ...buildFeedSources()]) {
+  for (const source of [
+    ...buildWechatSources(),
+    ...buildFeedSources(),
+    ...buildOfficialCompanySources(),
+    ...buildRegulatorySources(),
+  ]) {
     const identity = sourceIdentity(source);
     if (seen.has(identity)) continue;
     seen.add(identity);
     result.push(source);
   }
   return result.sort((left, right) =>
-    left.kind.localeCompare(right.kind, "zh-CN") || left.name.localeCompare(right.name, "zh-CN"),
+    left.kind.localeCompare(right.kind, "zh-CN")
+    || left.sourceRole.localeCompare(right.sourceRole, "en-US")
+    || left.name.localeCompare(right.name, "zh-CN"),
   );
 })();
 
@@ -378,12 +490,17 @@ export const coreSourceStats = {
   wechat: coreSources.filter((item) => item.kind === "微信公众号").length,
   official: coreSources.filter((item) => item.kind === "官方 / 原始").length,
   media: coreSources.filter((item) => item.kind === "媒体 / 研究").length,
+  primary: coreSources.filter((item) => item.sourceRole === "primary").length,
+  corroboration: coreSources.filter((item) => item.sourceRole === "corroboration").length,
+  discovery: coreSources.filter((item) => item.sourceRole === "discovery").length,
   sectors: new Set(coreSources.flatMap((item) => item.sectors)).size,
   regions: new Set(coreSources.map((item) => item.region)).size,
   healthy: coreSources.filter((item) => item.healthStatus === "ok").length,
   partial: coreSources.filter((item) => item.healthStatus === "partial").length,
   error: coreSources.filter((item) => item.healthStatus === "error").length,
   unknown: coreSources.filter((item) => item.healthStatus === "unknown").length,
+  candidate: coreSources.filter((item) => item.lifecycle === "candidate").length,
+  tracked: coreSources.filter((item) => item.lifecycle === "tracked").length,
   core: coreSources.filter((item) => item.lifecycle === "core").length,
 };
 
