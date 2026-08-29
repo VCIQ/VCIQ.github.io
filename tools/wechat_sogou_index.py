@@ -172,7 +172,10 @@ def build_search_url(
     query: str | None = None,
 ) -> str:
     term = _clean(query, 38) if query is not None else _query_term(spec)
-    return f"https://weixin.sogou.com/weixin?type=2&query={quote(term)}&page={max(1, page)}&ie=utf8&tsn=1"
+    return (
+        "https://weixin.sogou.com/weixin?"
+        f"type=2&s_from=input&query={quote(term)}&page={max(1, page)}&ie=utf8"
+    )
 
 
 def _result_blocks(body: str) -> list[str]:
