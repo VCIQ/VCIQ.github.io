@@ -3,12 +3,19 @@
 Sogou result pages expose ``/link?url=...`` entries plus a small client-side
 ``k``/``h`` calculation. This module reproduces that public-page calculation
 before following the result. CAPTCHA pages remain terminal failures.
+
+Search-result timestamps are not trusted as final publication dates. They are
+used only as a conservative request-budget filter: rows that are *explicitly*
+older than the configured freshness window do not consume a Sogou redirect
+request. Missing or apparently recent timestamps still resolve normally and
+must pass the original WeChat page's own date/account/content validation later.
 """
 
 from __future__ import annotations
 
 import random
 import re
+from datetime import UTC, datetime, timedelta
 from typing import Any
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
@@ -45,6 +52,32 @@ def guarded_result_url(
     )
 
 
+def _reported_row_may_be_fresh(row: dict[str, Any], spec: dict[str, Any]) -> bool:
+    """Keep unknown/recent rows; prune only rows explicitly outside the window.
+
+    The Sogou timestamp is discovery metadata rather than publication evidence.
+    A false-recent value therefore still proceeds to the original WeChat page,
+    where the canonical publication date is checked again. This function only
+    prevents obviously old rows from spending redirect-resolution requests.
+    """
+
+    value = str(row.get("publishedAt") or "").strip()
+    if not value:
+        return True
+    try:
+        published = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        try:
+            published = datetime.strptime(value[:10], "%Y-%m-%d").replace(tzinfo=UTC)
+        except ValueError:
+            return True
+    if published.tzinfo is None:
+        published = published.replace(tzinfo=UTC)
+    max_age_days = max(1, int(spec.get("maxArticleAgeDays", 45) or 45))
+    cutoff = datetime.now(UTC) - timedelta(days=max_age_days)
+    return published >= cutoff
+
+
 def install(index: Any) -> None:
     """Patch Sogou discovery while retaining its session and CAPTCHA circuit breaker."""
 
@@ -56,9 +89,10 @@ def install(index: Any) -> None:
         search_url = index.build_search_url(spec)
         search_body = index._request(search_url)
         rows = index.parse_search_results(search_body, search_url)
+        candidates = [row for row in rows if _reported_row_may_be_fresh(row, spec)]
         resolved = 0
         failures = 0
-        for row in rows:
+        for row in candidates:
             try:
                 result_url = guarded_result_url(row["url"], search_body)
                 body = index._request(
@@ -76,6 +110,8 @@ def install(index: Any) -> None:
             "provider": "sogou-weixin",
             "query": index._query_term(spec),
             "scanned": len(rows),
+            "eligibleForResolution": len(candidates),
+            "stalePruned": len(rows) - len(candidates),
             "resolved": resolved,
             "failed": failures,
         }
