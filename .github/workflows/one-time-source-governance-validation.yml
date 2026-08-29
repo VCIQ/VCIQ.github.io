@@ -20,63 +20,61 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Audit publisher-only Sogou account labels
+      - name: Test recent publisher-only Sogou queries
         run: |
           python - <<'PY'
           import html
           import json
           import re
+          from urllib.parse import quote
           from tools import wechat_sogou_index as sogou
           from tools import wechat_source_registry as registry
 
-          publishers = [
-              "高工机器人", "机器人大讲堂", "集微网", "半导体行业观察", "半导体技术",
-              "芯潮IC", "与非网", "高工锂电", "电池中国",
-          ]
+          publishers = ["高工机器人", "半导体技术", "电池中国"]
 
-          def strip_markup(value):
+          def clean(value):
               return re.sub(r"\s+", " ", html.unescape(re.sub(r"(?is)<[^>]+>", " ", value or ""))).strip()
 
           for publisher in publishers:
               spec = {"expectedAccounts": [publisher]}
-              url = sogou.build_search_url({"name": publisher, "queryIdentity": publisher}, query=publisher)
-              try:
-                  body = sogou._request(url)
-              except Exception as exc:
-                  print("PUBLISHER_QUERY_ERROR " + json.dumps({
+              variants = {
+                  "default": f"https://weixin.sogou.com/weixin?type=2&s_from=input&query={quote(publisher)}&ie=utf8&page=1",
+                  "recent": f"https://weixin.sogou.com/weixin?type=2&s_from=input&query={quote(publisher)}&ie=utf8&page=1&tsn=1",
+              }
+              for label, url in variants.items():
+                  try:
+                      body = sogou._request(url)
+                  except Exception as exc:
+                      print("RECENT_QUERY_ERROR " + json.dumps({
+                          "publisher": publisher,
+                          "variant": label,
+                          "error": f"{type(exc).__name__}: {exc}",
+                      }, ensure_ascii=False, sort_keys=True))
+                      continue
+                  rows = []
+                  for index, block in enumerate(sogou._result_blocks(body)):
+                      account = clean(sogou._first_match(
+                          r'<span[^>]*class="[^"]*all-time-y2[^"]*"[^>]*>(.*?)</span>', block
+                      ))
+                      title = clean(sogou._first_match(
+                          r'<a(?=[^>]*(?:id="sogou_vr_11002601_title_\d+"|uigs="article_title_\d+"))[^>]*>(.*?)</a>', block
+                      ))
+                      timestamp = (
+                          sogou._first_match(r"timeConvert\(\s*['\"]?(\d{10,13})['\"]?\s*\)", block)
+                          or sogou._first_match(r'\b(?:t|time)="(\d{10,13})"', block)
+                      )
+                      rows.append({
+                          "index": index,
+                          "title": title,
+                          "account": account,
+                          "matched": registry.account_matches(spec, account),
+                          "timestamp": timestamp,
+                      })
+                  print("RECENT_QUERY_SUMMARY " + json.dumps({
                       "publisher": publisher,
-                      "error": f"{type(exc).__name__}: {exc}",
-                  }, ensure_ascii=False, sort_keys=True))
-                  continue
-
-              blocks = sogou._result_blocks(body)
-              labels = []
-              rows = []
-              for index, block in enumerate(blocks):
-                  label_html = sogou._first_match(
-                      r'<span[^>]*class="[^"]*all-time-y2[^"]*"[^>]*>(.*?)</span>',
-                      block,
-                  )
-                  label = strip_markup(label_html)
-                  title_html = sogou._first_match(
-                      r'<a(?=[^>]*(?:id="sogou_vr_11002601_title_\d+"|uigs="article_title_\d+"))[^>]*>(.*?)</a>',
-                      block,
-                  )
-                  title = strip_markup(title_html)
-                  matched = registry.account_matches(spec, label)
-                  labels.append(label)
-                  rows.append({"index": index, "title": title, "account": label, "matched": matched})
-
-              print("PUBLISHER_QUERY_SUMMARY " + json.dumps({
-                  "publisher": publisher,
-                  "resultCount": len(blocks),
-                  "labeledCount": sum(bool(label) for label in labels),
-                  "matchedCount": sum(row["matched"] for row in rows),
-                  "accounts": labels,
-              }, ensure_ascii=False, sort_keys=True))
-              for row in rows:
-                  print("PUBLISHER_QUERY_ROW " + json.dumps({
-                      "publisher": publisher,
-                      **row,
+                      "variant": label,
+                      "resultCount": len(rows),
+                      "matchedCount": sum(row["matched"] for row in rows),
+                      "rows": rows,
                   }, ensure_ascii=False, sort_keys=True))
           PY
