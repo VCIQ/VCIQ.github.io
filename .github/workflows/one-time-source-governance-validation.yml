@@ -1,4 +1,4 @@
-name: One-time source governance production-path verification
+name: One-time source governance candidate verification
 
 on:
   push:
@@ -20,75 +20,77 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Run exact production WeChat adapter for target accounts
+      - name: Inspect target candidate identity and relevance
         run: |
           python - <<'PY'
           import json
-
           from tools import crawl_with_wechat_registry as app
 
           base = app.base
           crawler = base.tracking.crawler
-
-          app.core_official_adapters.install(crawler)
           app.http_policy_bridge.install(crawler)
-          app.search_index_feed_redirects.install(crawler)
           app.wechat_fetch_compat.install(app.wechat_public_sources)
           app.wechat_registry_bridge.install(app.wechat_public_sources)
-          app.wechat_original_redirect_bridge.install(app.wechat_public_sources, app.wechat_registry_bridge)
-          app.wechat_index_context_guard.install(app.wechat_registry_bridge)
-          app.wechat_index_record_fallback.install(app.wechat_public_sources, app.wechat_registry_bridge)
           app.wechat_sogou_redirect_compat.install(app.wechat_sogou_index)
           app.wechat_sogou_link_compat.install(app.wechat_sogou_index)
-          app.wechat_public_aggregator.install(app.wechat_sogou_index)
-          app.wechat_sogou_bridge.install(app.wechat_public_sources)
 
           tracking_config = base.tracking.load_tracking()
           tracks = base.tracking._enabled_tracks(tracking_config)
           specs = app.wechat_public_sources.generated_wechat_sources(tracks, base.tracking)
-
-          targets = {
-              "user-track-wechat-cbea-battery-energy",
-              "user-track-wechat-chiptrend-ic-semiconductor",
-              "user-track-wechat-eefocus-semiconductor",
-              "user-track-wechat-gg-lithium-energy",
-              "user-track-wechat-gg-robot-robotics",
-              "user-track-wechat-icbank-semiconductor",
-              "user-track-wechat-ijiwei-semiconductor",
+          target_ids = {
               "user-track-wechat-robospeak-robotics",
-              "user-track-wechat-semiconductor-technology-semiconductor",
+              "user-track-wechat-gg-robot-robotics",
           }
-          selected = [spec for spec in specs if spec.get("id") in targets]
-          print("TARGET_SPEC_COUNT", len(selected))
-          print("ALL_WECHAT_SPEC_COUNT", len(specs))
-          for idx, spec in enumerate(specs):
-              if spec.get("id") in targets:
-                  print("TARGET_ORDER", idx, spec.get("id"), spec.get("name"), "generic=", spec.get("genericDiscovery"))
+          selected = [s for s in specs if s.get("id") in target_ids]
 
-          failed = []
           for spec in selected:
-              try:
-                  articles, status = app.wechat_public_sources.crawl_wechat_source(
-                      spec, crawler.DEFAULT_USER_AGENT, crawler
-                  )
-              except Exception as exc:
-                  print("PRODUCTION_SMOKE_EXCEPTION " + json.dumps({
-                      "id": spec.get("id"), "name": spec.get("name"),
-                      "error": f"{type(exc).__name__}: {exc}",
-                  }, ensure_ascii=False, sort_keys=True))
-                  failed.append(spec.get("id"))
-                  continue
-              print("PRODUCTION_SMOKE_STATUS " + json.dumps(status, ensure_ascii=False, sort_keys=True))
-              print("PRODUCTION_SMOKE_ARTICLES " + json.dumps({
-                  "id": spec.get("id"),
-                  "count": len(articles),
-                  "titles": [a.get("title") for a in articles[:3]],
-                  "publishers": [a.get("wechatAccount") for a in articles[:3]],
-                  "urls": [(a.get("source") or {}).get("url") for a in articles[:3]],
+              print("SPEC " + json.dumps({
+                  "id": spec.get("id"), "name": spec.get("name"),
+                  "expectedAccounts": spec.get("expectedAccounts"),
+                  "queryIdentity": spec.get("queryIdentity"),
+                  "sector": spec.get("sector"),
+                  "keywords": spec.get("keywords", [])[:12],
               }, ensure_ascii=False, sort_keys=True))
-              if not articles or int(status.get("scanned", 0) or 0) <= 0:
-                  failed.append(spec.get("id"))
-
-          if failed:
-              raise SystemExit("Production-path smoke failed for: " + ", ".join(str(x) for x in failed))
+              rows, meta = app.wechat_sogou_index.discover(spec)
+              print("DISCOVERY_META " + json.dumps(meta, ensure_ascii=False, sort_keys=True))
+              for i, row in enumerate(rows[:5]):
+                  direct = str(row.get("directUrl") or "")
+                  info = {
+                      "i": i,
+                      "title": row.get("title"),
+                      "searchAccount": row.get("account"),
+                      "publishedAt": row.get("publishedAt"),
+                      "directUrl": direct,
+                  }
+                  if not direct:
+                      print("CANDIDATE " + json.dumps(info, ensure_ascii=False, sort_keys=True))
+                      continue
+                  try:
+                      body = app.wechat_public_sources.fetch_public_wechat_page(direct)
+                      parser = app.wechat_public_sources.WeChatPageParser()
+                      parser.feed(body or "")
+                      observed = parser.account or app.wechat_public_sources._js_value(
+                          body or "", ("nickname", "profile_nickname", "account_name")
+                      )
+                      blocked = [m for m in app.wechat_public_sources.BLOCK_PAGE_MARKERS if m in (body or "")]
+                      companies, people, keywords = app.wechat_public_sources._relevance_entities(
+                          parser.title or str(row.get("title") or ""),
+                          str(row.get("summary") or ""),
+                          parser.content,
+                          spec,
+                          crawler,
+                      )
+                      info.update({
+                          "observedAccount": observed,
+                          "accountMatch": app.wechat_source_registry.account_matches(spec, observed),
+                          "pageTitle": parser.title,
+                          "contentChars": len(parser.content),
+                          "blockedMarkers": blocked,
+                          "matchedCompanies": companies,
+                          "matchedPeople": people,
+                          "matchedKeywords": keywords,
+                      })
+                  except Exception as exc:
+                      info["fetchError"] = f"{type(exc).__name__}: {exc}"
+                  print("CANDIDATE " + json.dumps(info, ensure_ascii=False, sort_keys=True))
           PY
