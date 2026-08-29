@@ -1,4 +1,4 @@
-name: One-time source governance endpoint verification
+name: One-time source governance validation dispatch
 
 on:
   push:
@@ -9,68 +9,14 @@ on:
 
 permissions:
   contents: read
+  actions: write
 
 jobs:
-  inspect:
+  dispatch:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: main
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - name: Smoke repaired WeChat discovery
+      - name: Dispatch forced production refresh
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          from tools import wechat_sogou_index as sogou
-
-          target_ids = {
-              "robospeak", "gg-robot", "icbank", "ijiwei", "semiconductor-technology",
-              "chiptrend-ic", "eefocus", "gg-lithium", "cbea-battery",
-          }
-          config = json.loads(Path("config/wechat_sources.json").read_text(encoding="utf-8"))
-          accounts = [row for row in config.get("accounts", []) if row.get("id") in target_ids]
-          failures = []
-          for account in accounts:
-              sector = str(account.get("defaultSector") or "")
-              spec = {
-                  "name": account["name"],
-                  "expectedAccounts": [account["name"]],
-                  "queryIdentity": account["name"],
-                  "sector": sector,
-                  "keywords": list((account.get("sectorKeywords") or {}).get(sector, [])),
-              }
-              query = sogou._query_terms(spec)[0]
-              url = sogou.build_search_url(spec, query=query)
-              try:
-                  rows = sogou.parse_search_results(sogou._request(url), url)
-              except Exception as exc:
-                  print(f"TARGET_ERROR id={account['id']} name={account['name']} stage=search error={type(exc).__name__}: {exc}")
-                  failures.append(account["id"])
-                  continue
-              direct = ""
-              direct_error = ""
-              if rows:
-                  try:
-                      direct = sogou.resolve_result_url(rows[0]["url"], url)
-                  except Exception as exc:
-                      direct_error = f"{type(exc).__name__}: {exc}"
-              print(
-                  "TARGET_RESULT " + json.dumps({
-                      "id": account["id"],
-                      "name": account["name"],
-                      "query": query,
-                      "scanned": len(rows),
-                      "firstTitle": rows[0].get("title") if rows else None,
-                      "firstDirectIsWechat": direct.startswith("https://mp.weixin.qq.com/s?") if direct else False,
-                      "directError": direct_error or None,
-                  }, ensure_ascii=False, sort_keys=True)
-              )
-              if not rows or not direct.startswith("https://mp.weixin.qq.com/s?"):
-                  failures.append(account["id"])
-          if failures:
-              raise SystemExit("Discovery smoke failed for: " + ", ".join(failures))
-          PY
+          gh workflow run frequent-intelligence-refresh.yml --repo "$GITHUB_REPOSITORY" --ref main
