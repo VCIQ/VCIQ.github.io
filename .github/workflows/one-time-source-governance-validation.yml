@@ -20,37 +20,41 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Inspect public index link shapes
+      - name: Inspect redirect and search form
         run: |
           python - <<'PY'
           import re
-          from urllib.request import Request, urlopen
-          from tools import wechat_original_redirect_bridge as redirect
+          from urllib.error import HTTPError
+          from urllib.request import HTTPRedirectHandler, Request, build_opener, urlopen
 
           UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36"
-          urls = [
-              "https://www.jintiankansha.com/column/kusWRkBYTA",
-              "https://www.jintiankansha.com/column/Zxejk8mnLx",
-              "https://www.jintiankansha.com/column/gsHCdSoSpq?type=recent",
-              "https://www.jintiankansha.com/t/McBR6khl8D",
-              "https://www.jintiankansha.com/t/jbqYzrtHc6",
-              "https://www.jintiankansha.com/t/T2X1uYMP8k",
-          ]
-          for url in urls:
+
+          class NoRedirect(HTTPRedirectHandler):
+              def redirect_request(self, req, fp, code, msg, headers, newurl):
+                  return None
+
+          opener = build_opener(NoRedirect)
+          for endpoint in [
+              "https://www.jintiankansha.com/t_original/McBR6khl8D",
+              "https://www.jintiankansha.com/t_original/9IpnSXWyyd",
+              "https://www.jintiankansha.com/t_original/T2X1uYMP8k",
+          ]:
+              req = Request(endpoint, headers={"User-Agent": UA, "Accept-Language": "zh-CN,zh;q=0.9", "Referer": endpoint.replace("/t_original/", "/t/")})
               try:
-                  req = Request(url, headers={"User-Agent": UA, "Accept-Language": "zh-CN,zh;q=0.9"})
-                  with urlopen(req, timeout=18) as response:
-                      final = response.geturl()
-                      body = response.read(1_500_000).decode(response.headers.get_content_charset() or "utf-8", errors="replace")
-                  print(f"INDEX_PAGE url={url} final={final} bytes={len(body)}")
-                  hrefs = re.findall(r'href=[\"\']([^\"\']+)[\"\']', body, flags=re.I)
-                  interesting = [h for h in hrefs if any(x in h for x in ("/t/", "/t_original/", "mp.weixin.qq.com"))]
-                  print("INDEX_LINKS " + repr(interesting[:30]))
-                  if "/t/" in url:
-                      print("RESOLVED_ORIGINAL " + repr(redirect.resolve_detail_url(url, body, UA)))
-                  forms = re.findall(r'<form\b[^>]*action=[\"\']?([^\"\' >]+)', body, flags=re.I)
-                  if forms:
-                      print("FORM_ACTIONS " + repr(forms[:10]))
+                  with opener.open(req, timeout=18) as response:
+                      body = response.read(200_000).decode(response.headers.get_content_charset() or "utf-8", errors="replace")
+                      print(f"ORIGINAL_RESPONSE endpoint={endpoint} status={response.status} final={response.geturl()} location={response.headers.get('Location')} bytes={len(body)}")
+                      print("ORIGINAL_BODY " + repr(body[:1200]))
+              except HTTPError as exc:
+                  body = exc.read(200_000).decode(exc.headers.get_content_charset() or "utf-8", errors="replace")
+                  print(f"ORIGINAL_HTTP_ERROR endpoint={endpoint} status={exc.code} location={exc.headers.get('Location')} bytes={len(body)}")
+                  print("ORIGINAL_ERROR_BODY " + repr(body[:1200]))
               except Exception as exc:
-                  print(f"INDEX_ERROR url={url} error={type(exc).__name__}: {exc}")
+                  print(f"ORIGINAL_EXCEPTION endpoint={endpoint} error={type(exc).__name__}: {exc}")
+
+          root_req = Request("https://www.jintiankansha.com/", headers={"User-Agent": UA, "Accept-Language": "zh-CN,zh;q=0.9"})
+          with urlopen(root_req, timeout=18) as response:
+              root = response.read(500_000).decode(response.headers.get_content_charset() or "utf-8", errors="replace")
+          match = re.search(r'(<form\b[^>]*action=[\"\']/search[\"\'][\s\S]*?</form>)', root, flags=re.I)
+          print("SEARCH_FORM " + repr(match.group(1)[:3000] if match else ""))
           PY
