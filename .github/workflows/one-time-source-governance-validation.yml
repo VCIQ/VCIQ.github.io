@@ -38,37 +38,56 @@ jobs:
           def clean(value):
               return re.sub(r"\s+", " ", html.unescape(re.sub(r"(?is)<[^>]+>", " ", value or ""))).strip()
 
+          def attr(tag, name):
+              m = re.search(rf'''(?is)\b{name}\s*=\s*(?:["']([^"']*)["']|([^\s>]+))''', tag)
+              if not m:
+                  return ""
+              return m.group(1) if m.group(1) is not None else m.group(2)
+
           home = crawler.fetch_text(ROOT, crawler.DEFAULT_USER_AGENT)
-          form = re.search(r'(?is)<form\b[^>]*action=["\']/search["\'][^>]*>.*?</form>', home or "")
+          form = re.search(r'''(?is)<form\b[^>]*action=["']/search["'][^>]*>.*?</form>''', home or "")
+          hidden_default = ""
           if form:
               raw = form.group(0)
               inputs = []
               for tag in re.findall(r"(?is)<input\b[^>]*>", raw):
-                  attrs = {}
-                  for key, _, quoted, bare in re.findall(r'''(?is)([\w:-]+)\s*=\s*(["'])(.*?)\2|([\w:-]+)\s*=\s*([^\s>]+)''', tag):
-                      pass
-                  def attr(name):
-                      m = re.search(rf'''(?is)\b{name}\s*=\s*(?:["']([^"']*)["']|([^\s>]+))''', tag)
-                      return (m.group(1) if m and m.group(1) is not None else m.group(2) if m else "")
-                  inputs.append({
-                      "name": attr("name"),
-                      "type": attr("type"),
-                      "value": html.unescape(attr("value")),
-                      "placeholder": html.unescape(attr("placeholder")),
-                  })
-              print("SEARCH_FORM_RAW " + json.dumps({"html": clean(raw)[:3000], "inputs": inputs}, ensure_ascii=False, sort_keys=True))
+                  item = {
+                      "name": attr(tag, "name"),
+                      "type": attr(tag, "type"),
+                      "value": html.unescape(attr(tag, "value")),
+                      "placeholder": html.unescape(attr(tag, "placeholder")),
+                  }
+                  inputs.append(item)
+                  if item["name"] == "search_type":
+                      hidden_default = item["value"]
+              print("SEARCH_FORM_RAW " + json.dumps({
+                  "html": re.sub(r"\s+", " ", raw)[:4000],
+                  "inputs": inputs,
+                  "hiddenDefault": hidden_default,
+              }, ensure_ascii=False, sort_keys=True))
 
-          variants = [
-              ("omitted", ""),
+          variants = [("omitted", "")]
+          if hidden_default:
+              variants.append(("hidden-default", hidden_default))
+          variants.extend([
               ("column", "column"),
               ("article", "article"),
               ("0", "0"),
               ("1", "1"),
               ("2", "2"),
-          ]
+          ])
+          deduped_variants = []
+          seen_variants = set()
+          for label, value in variants:
+              key = value
+              if key in seen_variants:
+                  continue
+              seen_variants.add(key)
+              deduped_variants.append((label, value))
 
           for publisher in publishers:
-              for label, search_type in variants:
+              found = False
+              for label, search_type in deduped_variants:
                   params = f"keyword={quote(publisher)}"
                   if search_type:
                       params += f"&search_type={quote(search_type)}"
@@ -76,34 +95,49 @@ jobs:
                   try:
                       body = crawler.fetch_text(url, crawler.DEFAULT_USER_AGENT)
                   except Exception as exc:
-                      print("SEARCH_ERROR " + json.dumps({"publisher": publisher, "variant": label, "error": f"{type(exc).__name__}: {exc}"}, ensure_ascii=False, sort_keys=True))
+                      print("SEARCH_ERROR " + json.dumps({
+                          "publisher": publisher,
+                          "variant": label,
+                          "error": f"{type(exc).__name__}: {exc}",
+                      }, ensure_ascii=False, sort_keys=True))
                       continue
 
                   columns = []
+                  seen_columns = set()
                   for match in re.finditer(r'''(?is)<a\b([^>]*)href=["']([^"']*/column/[A-Za-z0-9_-]+[^"']*)["']([^>]*)>(.*?)</a>''', body or ""):
                       href = urljoin(url, html.unescape(match.group(2)))
-                      text = clean(match.group(4))
-                      if href not in [item["url"] for item in columns]:
-                          columns.append({"url": href, "text": text})
+                      if href in seen_columns:
+                          continue
+                      seen_columns.add(href)
+                      columns.append({"url": href, "text": clean(match.group(4))})
+
                   details = []
+                  seen_details = set()
                   for match in re.finditer(r'''(?is)<a\b([^>]*)href=["']([^"']*/t/[A-Za-z0-9_-]+[^"']*)["']([^>]*)>(.*?)</a>''', body or ""):
                       href = urljoin(url, html.unescape(match.group(2)))
-                      text = clean(match.group(4))
-                      if href not in [item["url"] for item in details]:
-                          details.append({"url": href, "text": text})
+                      if href in seen_details:
+                          continue
+                      seen_details.add(href)
+                      details.append({"url": href, "text": clean(match.group(4))})
 
-                  page_title = clean(re.search(r"(?is)<title[^>]*>(.*?)</title>", body).group(1)) if re.search(r"(?is)<title[^>]*>(.*?)</title>", body or "") else ""
-                  print("SEARCH_RESULT " + json.dumps({
+                  title_match = re.search(r"(?is)<title[^>]*>(.*?)</title>", body or "")
+                  result = {
                       "publisher": publisher,
                       "variant": label,
                       "url": url,
                       "bytes": len(body or ""),
-                      "pageTitle": page_title,
+                      "pageTitle": clean(title_match.group(1)) if title_match else "",
                       "columnCount": len(columns),
-                      "columns": columns[:8],
+                      "columns": columns[:10],
                       "detailCount": len(details),
                       "details": details[:5],
-                  }, ensure_ascii=False, sort_keys=True))
+                  }
+                  print("SEARCH_RESULT " + json.dumps(result, ensure_ascii=False, sort_keys=True))
                   if columns:
+                      found = True
                       break
+              print("SEARCH_FINAL " + json.dumps({
+                  "publisher": publisher,
+                  "foundColumn": found,
+              }, ensure_ascii=False, sort_keys=True))
           PY
