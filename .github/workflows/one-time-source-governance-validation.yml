@@ -20,31 +20,57 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Inspect Sogou identity and redirect
+      - name: Smoke repaired WeChat discovery
         run: |
           python - <<'PY'
-          import html
-          import re
-          from urllib.parse import quote
+          import json
+          from pathlib import Path
           from tools import wechat_sogou_index as sogou
 
-          publisher = "量子位"
-          url = f"https://weixin.sogou.com/weixin?type=2&s_from=input&query={quote(publisher)}&ie=utf8"
-          body = sogou._request(url)
-          blocks = sogou._result_blocks(body)
-          rows = sogou.parse_search_results(body, url)
-          print(f"RESULTS blocks={len(blocks)} rows={len(rows)}")
-          if blocks:
-              block = re.sub(r'\s+', ' ', blocks[0])
-              print("FIRST_BLOCK " + repr(block[:12000]))
-              for pattern in [r'uigs="article_account_\d+"', r'class="[^"]*account[^"]*"', r'account[^<]{0,300}', r'account-name[^<]{0,300}']:
-                  print(f"ACCOUNT_PATTERN {pattern!r} count={len(re.findall(pattern, blocks[0], flags=re.I))}")
-          if rows:
-              row = rows[0]
-              print(f"FIRST_ROW title={row.get('title')!r} account={row.get('account')!r} url={row.get('url')!r}")
+          target_ids = {
+              "robospeak", "gg-robot", "icbank", "ijiwei", "semiconductor-technology",
+              "chiptrend-ic", "eefocus", "gg-lithium", "cbea-battery",
+          }
+          config = json.loads(Path("config/wechat_sources.json").read_text(encoding="utf-8"))
+          accounts = [row for row in config.get("accounts", []) if row.get("id") in target_ids]
+          failures = []
+          for account in accounts:
+              sector = str(account.get("defaultSector") or "")
+              spec = {
+                  "name": account["name"],
+                  "expectedAccounts": [account["name"]],
+                  "queryIdentity": account["name"],
+                  "sector": sector,
+                  "keywords": list((account.get("sectorKeywords") or {}).get(sector, [])),
+              }
+              query = sogou._query_terms(spec)[0]
+              url = sogou.build_search_url(spec, query=query)
               try:
-                  direct = sogou.resolve_result_url(row['url'], url)
-                  print(f"DIRECT_RESULT {direct!r}")
+                  rows = sogou.parse_search_results(sogou._request(url), url)
               except Exception as exc:
-                  print(f"DIRECT_ERROR {type(exc).__name__}: {exc}")
+                  print(f"TARGET_ERROR id={account['id']} name={account['name']} stage=search error={type(exc).__name__}: {exc}")
+                  failures.append(account["id"])
+                  continue
+              direct = ""
+              direct_error = ""
+              if rows:
+                  try:
+                      direct = sogou.resolve_result_url(rows[0]["url"], url)
+                  except Exception as exc:
+                      direct_error = f"{type(exc).__name__}: {exc}"
+              print(
+                  "TARGET_RESULT " + json.dumps({
+                      "id": account["id"],
+                      "name": account["name"],
+                      "query": query,
+                      "scanned": len(rows),
+                      "firstTitle": rows[0].get("title") if rows else None,
+                      "firstDirectIsWechat": direct.startswith("https://mp.weixin.qq.com/s?") if direct else False,
+                      "directError": direct_error or None,
+                  }, ensure_ascii=False, sort_keys=True)
+              )
+              if not rows or not direct.startswith("https://mp.weixin.qq.com/s?"):
+                  failures.append(account["id"])
+          if failures:
+              raise SystemExit("Discovery smoke failed for: " + ", ".join(failures))
           PY
