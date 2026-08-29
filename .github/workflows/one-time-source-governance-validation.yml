@@ -20,15 +20,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Test public-index title to original WeChat recovery
+      - name: Isolate public-title to original WeChat recovery
         run: |
           python - <<'PY'
           import html
           import json
           import re
+          from html.parser import HTMLParser
+          from urllib.parse import quote, urljoin
           from tools import crawl_articles as crawler
           from tools import wechat_public_sources as wechat
-          from tools import wechat_registry_bridge as bridge
           from tools import wechat_sogou_index as sogou
           from tools import wechat_source_registry as registry
 
@@ -41,56 +42,82 @@ jobs:
           def clean(value):
               return re.sub(r"\s+", " ", html.unescape(re.sub(r"(?is)<[^>]+>", " ", value or ""))).strip()
 
+          class DetailAnchorParser(HTMLParser):
+              def __init__(self, base_url):
+                  super().__init__(convert_charrefs=True)
+                  self.base_url = base_url
+                  self.rows = []
+                  self.href = ""
+                  self.parts = []
+
+              def handle_starttag(self, tag, attrs):
+                  if tag.casefold() != "a":
+                      return
+                  values = {k.casefold(): v or "" for k, v in attrs}
+                  href = urljoin(self.base_url, values.get("href", ""))
+                  if re.search(r"https?://(?:www\.)?jintiankansha\.(?:com|me)/t/[A-Za-z0-9_-]+", href):
+                      self.href = href
+                      self.parts = []
+
+              def handle_data(self, data):
+                  if self.href:
+                      self.parts.append(data)
+
+              def handle_endtag(self, tag):
+                  if tag.casefold() != "a" or not self.href:
+                      return
+                  title = clean(" ".join(self.parts))
+                  if title:
+                      self.rows.append({"url": self.href, "title": title})
+                  self.href = ""
+                  self.parts = []
+
           for publisher, index_url in cases:
-              spec = {
-                  "id": "diagnostic-" + publisher,
-                  "name": publisher,
-                  "expectedAccounts": [publisher],
-                  "keywords": ["芯片", "机器人", "半导体", "产业", "技术"],
-                  "trackedCompanies": [],
-                  "trackedPeople": [],
-              }
+              spec = {"expectedAccounts": [publisher]}
               try:
                   index_body = crawler.fetch_text(index_url, crawler.DEFAULT_USER_AGENT)
-                  index_rows = bridge._extract_index_rows(
-                      index_body, index_url, spec, crawler, require_account_context=True
-                  )
               except Exception as exc:
-                  print("TITLE_RECOVERY_INDEX_ERROR " + json.dumps({
-                      "publisher": publisher,
-                      "error": f"{type(exc).__name__}: {exc}",
-                  }, ensure_ascii=False, sort_keys=True))
+                  print("RAW_INDEX_ERROR " + json.dumps({"publisher": publisher, "error": f"{type(exc).__name__}: {exc}"}, ensure_ascii=False, sort_keys=True))
                   continue
 
-              print("TITLE_RECOVERY_INDEX " + json.dumps({
+              parser = DetailAnchorParser(index_url)
+              parser.feed(index_body or "")
+              deduped = []
+              seen = set()
+              for row in parser.rows:
+                  if row["url"] in seen:
+                      continue
+                  seen.add(row["url"])
+                  deduped.append(row)
+
+              print("RAW_INDEX_TITLES " + json.dumps({
                   "publisher": publisher,
-                  "rowCount": len(index_rows),
-                  "titles": [row.get("title") for row in index_rows[:4]],
+                  "count": len(deduped),
+                  "titles": [row["title"] for row in deduped[:8]],
               }, ensure_ascii=False, sort_keys=True))
 
               recovered = False
-              for index_row in index_rows[:3]:
-                  title = clean(index_row.get("title"))
-                  if not title:
-                      continue
-                  search_url = sogou.build_search_url(
-                      {"name": publisher, "queryIdentity": publisher}, query=title[:38]
+              for row in deduped[:5]:
+                  title = row["title"]
+                  search_url = (
+                      "https://weixin.sogou.com/weixin?"
+                      f"type=2&s_from=input&query={quote(title)}&page=1&ie=utf8"
                   )
                   try:
-                      body = sogou._request(search_url)
+                      search_body = sogou._request(search_url)
                   except Exception as exc:
-                      print("TITLE_RECOVERY_SEARCH_ERROR " + json.dumps({
-                          "publisher": publisher,
-                          "title": title,
-                          "error": f"{type(exc).__name__}: {exc}",
-                      }, ensure_ascii=False, sort_keys=True))
+                      print("EXACT_TITLE_SEARCH_ERROR " + json.dumps({"publisher": publisher, "title": title, "error": f"{type(exc).__name__}: {exc}"}, ensure_ascii=False, sort_keys=True))
                       continue
 
                   candidates = []
-                  for block in sogou._result_blocks(body):
+                  for block in sogou._result_blocks(search_body):
                       account = clean(sogou._first_match(
                           r'<span[^>]*class="[^"]*all-time-y2[^"]*"[^>]*>(.*?)</span>', block
                       ))
+                      if not account:
+                          account = clean(sogou._first_match(
+                              r'<a(?=[^>]*(?:class="[^"]*account[^"]*"|uigs="article_account_\d+"))[^>]*>(.*?)</a>', block
+                          ))
                       href = sogou._first_match(
                           r'<a(?=[^>]*(?:id="sogou_vr_11002601_title_\d+"|uigs="article_title_\d+"))[^>]*href="([^"]+)"[^>]*>', block
                       )
@@ -99,70 +126,56 @@ jobs:
                       ))
                       if not href:
                           continue
-                      candidates.append((account, result_title, sogou._normalized_url(sogou.urljoin(search_url, sogou._url_entity_unescape(href)))))
+                      candidates.append({
+                          "account": account,
+                          "title": result_title,
+                          "resultUrl": sogou._normalized_url(urljoin(search_url, sogou._url_entity_unescape(href))),
+                      })
 
-                  print("TITLE_RECOVERY_SEARCH " + json.dumps({
+                  print("EXACT_TITLE_SEARCH " + json.dumps({
                       "publisher": publisher,
                       "queryTitle": title,
                       "candidateCount": len(candidates),
-                      "candidateAccounts": [item[0] for item in candidates],
-                      "candidateTitles": [item[1] for item in candidates[:5]],
+                      "candidateAccounts": [item["account"] for item in candidates],
+                      "candidateTitles": [item["title"] for item in candidates[:6]],
                   }, ensure_ascii=False, sort_keys=True))
 
-                  for account, result_title, result_url in candidates:
-                      if not registry.account_matches(spec, account):
+                  for candidate in candidates:
+                      if not registry.account_matches(spec, candidate["account"]):
                           continue
                       try:
-                          direct = sogou.resolve_result_url(result_url, search_url)
+                          direct = sogou.resolve_result_url(candidate["resultUrl"], search_url)
                       except Exception as exc:
-                          print("TITLE_RECOVERY_RESOLVE_ERROR " + json.dumps({
-                              "publisher": publisher,
-                              "title": result_title,
-                              "error": f"{type(exc).__name__}: {exc}",
-                          }, ensure_ascii=False, sort_keys=True))
+                          print("EXACT_TITLE_RESOLVE_ERROR " + json.dumps({"publisher": publisher, "title": candidate["title"], "error": f"{type(exc).__name__}: {exc}"}, ensure_ascii=False, sort_keys=True))
                           continue
                       if not direct.startswith("https://mp.weixin.qq.com/s"):
                           continue
                       try:
-                          direct_body = wechat.fetch_public_wechat_page(direct)
-                          parser = wechat.WeChatPageParser()
-                          parser.feed(direct_body or "")
-                          observed = parser.account or wechat._js_value(
-                              direct_body or "", ("nickname", "profile_nickname", "account_name")
-                          )
-                          published = wechat._published_at(parser, direct_body or "", crawler)
-                          page_title = (
-                              parser.meta.get("og:title")
-                              or parser.meta.get("twitter:title")
-                              or parser.title
-                              or wechat._js_value(direct_body or "", ("msg_title", "title"))
-                          )
+                          body = wechat.fetch_public_wechat_page(direct)
+                          page = wechat.WeChatPageParser()
+                          page.feed(body or "")
+                          observed = page.account or wechat._js_value(body or "", ("nickname", "profile_nickname", "account_name"))
+                          published = wechat._published_at(page, body or "", crawler)
+                          page_title = page.meta.get("og:title") or page.meta.get("twitter:title") or page.title or wechat._js_value(body or "", ("msg_title", "title"))
                       except Exception as exc:
-                          print("TITLE_RECOVERY_FETCH_ERROR " + json.dumps({
-                              "publisher": publisher,
-                              "direct": direct,
-                              "error": f"{type(exc).__name__}: {exc}",
-                          }, ensure_ascii=False, sort_keys=True))
+                          print("EXACT_TITLE_FETCH_ERROR " + json.dumps({"publisher": publisher, "direct": direct, "error": f"{type(exc).__name__}: {exc}"}, ensure_ascii=False, sort_keys=True))
                           continue
-                      ok = registry.account_matches(spec, observed)
-                      print("TITLE_RECOVERY_DIRECT " + json.dumps({
+                      matches = registry.account_matches(spec, observed)
+                      print("EXACT_TITLE_DIRECT " + json.dumps({
                           "publisher": publisher,
                           "queryTitle": title,
-                          "searchTitle": result_title,
+                          "searchTitle": candidate["title"],
                           "direct": direct,
                           "observedAccount": observed,
                           "publishedAt": published,
                           "pageTitle": clean(page_title),
-                          "accountMatches": ok,
+                          "accountMatches": matches,
                       }, ensure_ascii=False, sort_keys=True))
-                      if ok:
+                      if matches:
                           recovered = True
                           break
                   if recovered:
                       break
 
-              print("TITLE_RECOVERY_FINAL " + json.dumps({
-                  "publisher": publisher,
-                  "recovered": recovered,
-              }, ensure_ascii=False, sort_keys=True))
+              print("EXACT_TITLE_FINAL " + json.dumps({"publisher": publisher, "recovered": recovered}, ensure_ascii=False, sort_keys=True))
           PY
