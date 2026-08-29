@@ -20,27 +20,37 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Print raw WeChat crawl statuses
+      - name: Inspect public index link shapes
         run: |
           python - <<'PY'
-          import json
-          from pathlib import Path
+          import re
+          from urllib.request import Request, urlopen
+          from tools import wechat_original_redirect_bridge as redirect
 
-          targets = {
-              "user-track-wechat-cbea-battery-energy",
-              "user-track-wechat-chiptrend-ic-semiconductor",
-              "user-track-wechat-eefocus-semiconductor",
-              "user-track-wechat-gg-lithium-energy",
-              "user-track-wechat-gg-robot-robotics",
-              "user-track-wechat-icbank-semiconductor",
-              "user-track-wechat-ijiwei-semiconductor",
-              "user-track-wechat-robospeak-robotics",
-              "user-track-wechat-semiconductor-technology-semiconductor",
-          }
-          payload = json.loads(Path("public/data/articles.json").read_text(encoding="utf-8"))
-          statuses = payload.get("sourceStatus", [])
-          for entry in statuses:
-              if not isinstance(entry, dict) or entry.get("id") not in targets:
-                  continue
-              print("RAW_WECHAT_STATUS " + json.dumps(entry, ensure_ascii=False, sort_keys=True))
+          UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36"
+          urls = [
+              "https://www.jintiankansha.com/column/kusWRkBYTA",
+              "https://www.jintiankansha.com/column/Zxejk8mnLx",
+              "https://www.jintiankansha.com/column/gsHCdSoSpq?type=recent",
+              "https://www.jintiankansha.com/t/McBR6khl8D",
+              "https://www.jintiankansha.com/t/jbqYzrtHc6",
+              "https://www.jintiankansha.com/t/T2X1uYMP8k",
+          ]
+          for url in urls:
+              try:
+                  req = Request(url, headers={"User-Agent": UA, "Accept-Language": "zh-CN,zh;q=0.9"})
+                  with urlopen(req, timeout=18) as response:
+                      final = response.geturl()
+                      body = response.read(1_500_000).decode(response.headers.get_content_charset() or "utf-8", errors="replace")
+                  print(f"INDEX_PAGE url={url} final={final} bytes={len(body)}")
+                  hrefs = re.findall(r'href=[\"\']([^\"\']+)[\"\']', body, flags=re.I)
+                  interesting = [h for h in hrefs if any(x in h for x in ("/t/", "/t_original/", "mp.weixin.qq.com"))]
+                  print("INDEX_LINKS " + repr(interesting[:30]))
+                  if "/t/" in url:
+                      print("RESOLVED_ORIGINAL " + repr(redirect.resolve_detail_url(url, body, UA)))
+                  forms = re.findall(r'<form\b[^>]*action=[\"\']?([^\"\' >]+)', body, flags=re.I)
+                  if forms:
+                      print("FORM_ACTIONS " + repr(forms[:10]))
+              except Exception as exc:
+                  print(f"INDEX_ERROR url={url} error={type(exc).__name__}: {exc}")
           PY
