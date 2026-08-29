@@ -20,7 +20,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Validate Sogou query parameters
+      - name: Inspect Sogou identity and redirect
         run: |
           python - <<'PY'
           import html
@@ -29,28 +29,22 @@ jobs:
           from tools import wechat_sogou_index as sogou
 
           publisher = "量子位"
-          variants = {
-              "current": f"https://weixin.sogou.com/weixin?type=2&query={quote(publisher)}&page=1&ie=utf8&tsn=1",
-              "form-min": f"https://weixin.sogou.com/weixin?type=2&s_from=input&query={quote(publisher)}&ie=utf8",
-              "form-full": f"https://weixin.sogou.com/weixin?ie=utf8&s_from=input&_sug_=n&_sug_type_=&type=2&query={quote(publisher)}",
-              "form-page": f"https://weixin.sogou.com/weixin?ie=utf8&s_from=input&_sug_=n&_sug_type_=&type=2&query={quote(publisher)}&page=1",
-          }
-          for label, url in variants.items():
+          url = f"https://weixin.sogou.com/weixin?type=2&s_from=input&query={quote(publisher)}&ie=utf8"
+          body = sogou._request(url)
+          blocks = sogou._result_blocks(body)
+          rows = sogou.parse_search_results(body, url)
+          print(f"RESULTS blocks={len(blocks)} rows={len(rows)}")
+          if blocks:
+              block = re.sub(r'\s+', ' ', blocks[0])
+              print("FIRST_BLOCK " + repr(block[:12000]))
+              for pattern in [r'uigs="article_account_\d+"', r'class="[^"]*account[^"]*"', r'account[^<]{0,300}', r'account-name[^<]{0,300}']:
+                  print(f"ACCOUNT_PATTERN {pattern!r} count={len(re.findall(pattern, blocks[0], flags=re.I))}")
+          if rows:
+              row = rows[0]
+              print(f"FIRST_ROW title={row.get('title')!r} account={row.get('account')!r} url={row.get('url')!r}")
               try:
-                  body = sogou._request(url)
+                  direct = sogou.resolve_result_url(row['url'], url)
+                  print(f"DIRECT_RESULT {direct!r}")
               except Exception as exc:
-                  print(f"VARIANT_ERROR label={label} error={type(exc).__name__}: {exc}")
-                  continue
-              title = re.search(r'(?is)<title[^>]*>(.*?)</title>', body)
-              input_value = re.search(r'(?is)<input[^>]+(?:id|name)=["\']query["\'][^>]+value=["\']([^"\']*)', body)
-              parsed = sogou.parse_search_results(body, url)
-              print(
-                  f"VARIANT label={label} bytes={len(body)} "
-                  f"title={(re.sub(r'\\s+', ' ', html.unescape(title.group(1))).strip() if title else '')!r} "
-                  f"queryValue={(html.unescape(input_value.group(1)) if input_value else '')!r} "
-                  f"legacyId={body.count('sogou_vr_11002601_title_')} legacyUigs={body.count('article_title_')} "
-                  f"newsBox={body.casefold().count('news-box')} txtBox={body.casefold().count('txt-box')} parsed={len(parsed)}"
-              )
-              for row in parsed[:2]:
-                  print(f"ROW label={label} title={row.get('title')!r} account={row.get('account')!r} url={row.get('url')!r}")
+                  print(f"DIRECT_ERROR {type(exc).__name__}: {exc}")
           PY
