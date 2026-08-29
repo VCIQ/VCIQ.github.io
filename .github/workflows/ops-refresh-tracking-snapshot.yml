@@ -30,4 +30,7 @@ jobs:
           done
 
           echo "dispatch lightweight refresh from current main"
-          gh workflow run frequent-intelligence-refresh.yml --ref main
+          gh api \
+            --method POST \
+            "repos/${GITHUB_REPOSITORY}/actions/workflows/frequent-intelligence-refresh.yml/dispatches" \
+            -f ref=main
