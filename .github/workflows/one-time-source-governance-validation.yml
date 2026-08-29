@@ -1,4 +1,4 @@
-name: One-time source governance validation dispatch
+name: One-time source governance endpoint verification
 
 on:
   push:
@@ -9,14 +9,126 @@ on:
 
 permissions:
   contents: read
-  actions: write
 
 jobs:
-  dispatch:
+  verify:
     runs-on: ubuntu-latest
     steps:
-      - name: Dispatch forced production refresh
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify nine WeChat endpoints through production adapter chain
         run: |
-          gh workflow run frequent-intelligence-refresh.yml --repo "$GITHUB_REPOSITORY" --ref main
+          python - <<'PY'
+          import json
+          from tools import crawl_with_wechat_registry as app
+
+          TARGETS = {
+              "user-track-wechat-cbea-battery-energy",
+              "user-track-wechat-chiptrend-ic-semiconductor",
+              "user-track-wechat-eefocus-semiconductor",
+              "user-track-wechat-gg-lithium-energy",
+              "user-track-wechat-gg-robot-robotics",
+              "user-track-wechat-icbank-semiconductor",
+              "user-track-wechat-ijiwei-semiconductor",
+              "user-track-wechat-robospeak-robotics",
+              "user-track-wechat-semiconductor-technology-semiconductor",
+          }
+
+          def diagnostic_base_main():
+              base = app.base
+              base._install_strict_tracking_validation()
+              base.tracking_taxonomy.install(base.tracking)
+              base.x_rate_limit.install(base.tracking.crawler)
+              base.wechat_public_sources.install(base.tracking)
+              base.tracking._custom_sources = base._custom_sources
+              base._install_generic_adapter()
+              base.configure_crawler()
+              base._install_empty_sec_guard()
+
+              raw_config = base.tracking.crawler.load_config()
+              tracking_config = base.tracking.load_tracking()
+              merged, sec_specs, active_ids = base.tracking.build_merged_config(
+                  raw_config, tracking_config
+              )
+              base.tracking._install_runtime_overrides(merged, sec_specs, active_ids)
+
+              specs = {
+                  spec.get("id"): spec
+                  for spec in merged.get("publicDiscovery", [])
+                  if isinstance(spec, dict) and spec.get("id") in TARGETS
+              }
+              missing = sorted(TARGETS - set(specs))
+              if missing:
+                  raise SystemExit("Missing production specs: " + ", ".join(missing))
+
+              crawler = base.tracking.crawler
+              user_agent = crawler.DEFAULT_USER_AGENT
+              failed = []
+              for source_id in sorted(TARGETS):
+                  spec = specs[source_id]
+                  try:
+                      articles, status = crawler._crawl_config_source(spec, user_agent)
+                  except Exception as exc:
+                      print(
+                          "PRODUCTION_WECHAT_EXCEPTION "
+                          + json.dumps(
+                              {
+                                  "id": source_id,
+                                  "name": spec.get("name"),
+                                  "error": f"{type(exc).__name__}: {exc}",
+                              },
+                              ensure_ascii=False,
+                              sort_keys=True,
+                          )
+                      )
+                      failed.append(source_id)
+                      continue
+
+                  direct_urls = [
+                      str((article.get("source") or {}).get("url") or "")
+                      for article in articles
+                      if isinstance(article, dict)
+                  ]
+                  observed_accounts = [
+                      str(article.get("wechatAccount") or "")
+                      for article in articles
+                      if isinstance(article, dict)
+                  ]
+                  row = {
+                      "id": source_id,
+                      "name": spec.get("name"),
+                      "status": status.get("status"),
+                      "scanned": status.get("scanned"),
+                      "accepted": status.get("accepted"),
+                      "failed": status.get("failed"),
+                      "error": status.get("error"),
+                      "allDirectWechat": bool(direct_urls)
+                      and all(url.startswith("https://mp.weixin.qq.com/s?") for url in direct_urls),
+                      "observedAccounts": sorted(set(observed_accounts)),
+                      "sampleUrls": direct_urls[:2],
+                  }
+                  print(
+                      "PRODUCTION_WECHAT_STATUS "
+                      + json.dumps(row, ensure_ascii=False, sort_keys=True)
+                  )
+                  if (
+                      status.get("status") not in {"ok", "partial"}
+                      or int(status.get("scanned", 0) or 0) <= 0
+                      or int(status.get("accepted", 0) or 0) <= 0
+                      or not row["allDirectWechat"]
+                  ):
+                      failed.append(source_id)
+
+              if failed:
+                  raise SystemExit(
+                      "Production adapter verification failed for: " + ", ".join(failed)
+                  )
+              return 0
+
+          app.base.main = diagnostic_base_main
+          raise SystemExit(app.main())
+          PY
