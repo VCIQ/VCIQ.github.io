@@ -1,22 +1,22 @@
 import type { Metadata } from "next";
 import { ArrowUpRight, Radio, ShieldCheck } from "lucide-react";
 import {
-  coreSourceStats,
-  coreSourcesByKind,
-  type CoreSourceKind,
+  sourceDirectoryStats,
+  sourcesByDirectoryKind,
+  type SourceDirectoryKind,
   type SourceHealthStatus,
   type SourceRole,
-} from "@/lib/core-sources";
+} from "@/lib/source-directory";
 import type { SourcePromotionState } from "@/lib/source-lifecycle";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "重点信源",
-  description: "将微信公众号、专业媒体、公司官方来源、监管机构与原始材料作为第五类研究对象，并公开呈现角色、生命周期与采集健康。",
+  description: "将微信公众号、X 发现源、原始研究论文、专业媒体、公司官方来源与监管材料统一纳入 Source Entity 模型，并公开呈现角色、生命周期与采集健康。",
 };
 
 const groups: Array<{
-  kind: CoreSourceKind;
+  kind: SourceDirectoryKind;
   eyebrow: string;
   title: string;
   description: string;
@@ -25,7 +25,19 @@ const groups: Array<{
     kind: "微信公众号",
     eyebrow: "DISCOVERY SOURCES",
     title: "微信公众号",
-    description: "中文科技与产业精确信源主要承担发现职责；采集健康与媒体本身分开评估，微信索引失效不等于 Publisher 失效。",
+    description: "中文科技与产业精确信源主要承担发现职责；采集健康与媒体本身分开评估，微信索引失效不等于 Source Entity 失效。",
+  },
+  {
+    kind: "X / 发现",
+    eyebrow: "DISCOVERY SOURCES",
+    title: "X Profiles",
+    description: "组织与研究者的 X Profile 作为高时效发现入口单独管理，不与公司官网、论文和监管披露等 Primary Sources 混合；后续事实结论仍需要回到原始材料核验。",
+  },
+  {
+    kind: "论文 / 原始研究",
+    eyebrow: "PRIMARY RESEARCH SOURCES",
+    title: "论文与原始研究",
+    description: "直接读取已配置的论文仓库与原始研究检索入口。当前启用的 arXiv 采集不再只存在于 crawler 配置，而是进入 Source Governance、Collector Health 与生命周期模型。",
   },
   {
     kind: "官方 / 原始",
@@ -74,7 +86,7 @@ function compactDate(value?: string): string {
 }
 
 export default function SourcesPage() {
-  const issueCount = coreSourceStats.partial + coreSourceStats.error;
+  const issueCount = sourceDirectoryStats.partial + sourceDirectoryStats.error;
 
   return (
     <main className="page-shell subpage">
@@ -82,17 +94,19 @@ export default function SourcesPage() {
         <p className="eyebrow">05 / SOURCE GOVERNANCE</p>
         <h1>重点信源</h1>
         <div className="hero-chips">
-          <span>{coreSourceStats.total} 个已配置 Publisher</span>
-          <span>{coreSourceStats.primary} 个 Primary Source</span>
-          <span>{coreSourceStats.healthy} 个当前健康</span>
+          <span>{sourceDirectoryStats.total} 个 Source Entity</span>
+          <span>{sourceDirectoryStats.primary} 个 Primary Source</span>
+          <span>{sourceDirectoryStats.papers} 个原始研究源</span>
+          <span>{sourceDirectoryStats.xProfiles} 个 X Discovery Source</span>
+          <span>{sourceDirectoryStats.healthy} 个当前健康</span>
           <span>{issueCount} 个存在采集异常</span>
-          <span>{coreSourceStats.evidencePending} 个等待晋级证据</span>
-          <span>{coreSourceStats.reviewPending} 个 Core Ready</span>
+          <span>{sourceDirectoryStats.evidencePending} 个等待晋级证据</span>
+          <span>{sourceDirectoryStats.reviewPending} 个 Core Ready</span>
         </div>
       </header>
 
       {groups.map((group) => {
-        const sources = coreSourcesByKind(group.kind);
+        const sources = sourcesByDirectoryKind(group.kind);
         if (!sources.length) return null;
         return (
           <section className={styles.group} key={group.kind}>
@@ -101,7 +115,7 @@ export default function SourcesPage() {
                 <span>{group.eyebrow}</span>
                 <h2>{group.title}</h2>
               </div>
-              <strong>{sources.length} 个 Publisher</strong>
+              <strong>{sources.length} 个信源实体</strong>
             </div>
 
             <div className={styles.grid}>
@@ -142,7 +156,7 @@ export default function SourcesPage() {
                   <div className={styles.endpointBlock} aria-label="采集通道健康">
                     <div className={styles.endpointHeader}>
                       <span>COLLECTION ENDPOINTS</span>
-                      <small>Publisher 与采集通道分离</small>
+                      <small>Source Entity 与采集通道分离</small>
                     </div>
                     <div className={styles.endpointList}>
                       {source.endpoints.slice(0, 4).map((endpoint) => (
@@ -227,7 +241,7 @@ export default function SourcesPage() {
           <div className={styles.lifecycleFlow}>
             <div>
               <strong>Candidate</strong>
-              <p>已有明确 Publisher，但稳定采集入口或质量证据仍不足。</p>
+              <p>已有明确 Source Entity，但稳定采集入口或质量证据仍不足。</p>
             </div>
             <div>
               <strong>Tracked</strong>
@@ -248,8 +262,8 @@ export default function SourcesPage() {
           <small>展开查看</small>
         </summary>
         <p>
-          Primary Source 包括公司官网、监管/交易所披露与原始材料；Corroboration Source 用于独立交叉验证；Discovery Source 负责高召回发现。
-          Publisher 表示媒体、机构或公司本身，Collection Endpoint 表示微信索引、官网、RSS、监管接口或公开网页等采集通道。
+          Primary Source 包括公司官网、监管/交易所披露、论文与原始研究材料；Corroboration Source 用于独立交叉验证；Discovery Source 包括微信公众号与 X Profiles，负责高召回和高时效发现。
+          Source Entity 表示媒体、机构、公司、研究仓库或公开账号本身，Collection Endpoint 表示微信索引、官网、RSS、论文 API、X 公开时间线、监管接口或公开网页等采集通道。
         </p>
       </details>
 
@@ -267,12 +281,12 @@ export default function SourcesPage() {
             <p>单篇优秀文章只产生候选信号；不因一次收藏就把整个公众号或媒体升级为核心信源。</p>
           </article>
           <article>
-            <strong>Publisher ≠ Collection Endpoint</strong>
-            <p>同一 Publisher 的微信、官网、RSS 与公开镜像分别记录健康；可靠备用通道可用时，不把 Publisher 整体误判为失效。</p>
+            <strong>Source Entity ≠ Collection Endpoint</strong>
+            <p>同一实体的微信、官网、RSS、论文 API 与公开时间线分别记录健康；可靠备用通道可用时，不把实体整体误判为失效。</p>
           </article>
           <article>
             <strong>发现 ≠ 事实确认</strong>
-            <p>微信公众号与媒体负责发现和交叉验证；重大公司、融资、监管和产品事实优先回溯公司官网、交易所、监管文件或原始材料。</p>
+            <p>微信公众号、X Profiles 与媒体负责发现和交叉验证；重大公司、融资、监管、产品和研究结论优先回溯公司官网、论文、交易所、监管文件或其他原始材料。</p>
           </article>
           <article>
             <strong>Core 必须经过质量门槛</strong>
