@@ -20,86 +20,63 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Inspect Sogou account-search result structure
+      - name: Audit publisher-only Sogou account labels
         run: |
           python - <<'PY'
           import html
           import json
           import re
-          from urllib.parse import quote
           from tools import wechat_sogou_index as sogou
+          from tools import wechat_source_registry as registry
 
-          for publisher in ["高工机器人", "电池中国", "量子位"]:
-              url = (
-                  "https://weixin.sogou.com/weixin?"
-                  f"type=1&s_from=input&query={quote(publisher)}&ie=utf8"
-              )
+          publishers = [
+              "高工机器人", "机器人大讲堂", "集微网", "半导体行业观察", "半导体技术",
+              "芯潮IC", "与非网", "高工锂电", "电池中国",
+          ]
+
+          def strip_markup(value):
+              return re.sub(r"\s+", " ", html.unescape(re.sub(r"(?is)<[^>]+>", " ", value or ""))).strip()
+
+          for publisher in publishers:
+              spec = {"expectedAccounts": [publisher]}
+              url = sogou.build_search_url({"name": publisher, "queryIdentity": publisher}, query=publisher)
               try:
                   body = sogou._request(url)
               except Exception as exc:
-                  print(f"ACCOUNT_SEARCH_ERROR publisher={publisher} error={type(exc).__name__}: {exc}")
+                  print("PUBLISHER_QUERY_ERROR " + json.dumps({
+                      "publisher": publisher,
+                      "error": f"{type(exc).__name__}: {exc}",
+                  }, ensure_ascii=False, sort_keys=True))
                   continue
 
-              title = re.search(r'(?is)<title[^>]*>(.*?)</title>', body)
-              print(
-                  "ACCOUNT_SEARCH_META "
-                  + json.dumps(
-                      {
-                          "publisher": publisher,
-                          "bytes": len(body),
-                          "title": re.sub(r"\s+", " ", html.unescape(title.group(1))).strip() if title else "",
-                          "antispider": "antispider" in body.casefold(),
-                          "captcha": "验证码" in body,
-                          "accountBoxes": len(re.findall(r"sogou_vr_11002301_box_\d+", body)),
-                          "articleLinks": len(re.findall(r"/link\?", body)),
-                      },
-                      ensure_ascii=False,
-                      sort_keys=True,
+              blocks = sogou._result_blocks(body)
+              labels = []
+              rows = []
+              for index, block in enumerate(blocks):
+                  label_html = sogou._first_match(
+                      r'<span[^>]*class="[^"]*all-time-y2[^"]*"[^>]*>(.*?)</span>',
+                      block,
                   )
-              )
+                  label = strip_markup(label_html)
+                  title_html = sogou._first_match(
+                      r'<a(?=[^>]*(?:id="sogou_vr_11002601_title_\d+"|uigs="article_title_\d+"))[^>]*>(.*?)</a>',
+                      block,
+                  )
+                  title = strip_markup(title_html)
+                  matched = registry.account_matches(spec, label)
+                  labels.append(label)
+                  rows.append({"index": index, "title": title, "account": label, "matched": matched})
 
-              anchors = re.findall(r'(?is)<a\b([^>]*)>(.*?)</a>', body)
-              for attrs, inner in anchors:
-                  text = re.sub(r'(?is)<[^>]+>', ' ', inner)
-                  text = re.sub(r'\s+', ' ', html.unescape(text)).strip()
-                  href_match = re.search(r'''href\s*=\s*["']([^"']+)["']''', attrs, flags=re.I)
-                  href = html.unescape(href_match.group(1)) if href_match else ""
-                  hay = f"{attrs} {text} {href}"
-                  if (
-                      publisher in hay
-                      or "/link?" in href
-                      or "sogou_vr_11002301" in attrs
-                      or "account" in attrs.casefold()
-                  ):
-                      print(
-                          "ACCOUNT_ANCHOR "
-                          + json.dumps(
-                              {
-                                  "publisher": publisher,
-                                  "text": text[:300],
-                                  "href": href[:700],
-                                  "attrs": re.sub(r"\s+", " ", attrs).strip()[:700],
-                              },
-                              ensure_ascii=False,
-                              sort_keys=True,
-                          )
-                      )
-
-              for pattern in [
-                  r'(?is)<li[^>]+id="sogou_vr_11002301_box_\d+".*?</li>',
-                  r'(?is)<div[^>]+class="[^"]*txt-box[^"]*".*?</div>\s*</div>',
-              ]:
-                  blocks = re.findall(pattern, body)
-                  if blocks:
-                      print(
-                          "ACCOUNT_BLOCK "
-                          + json.dumps(
-                              {
-                                  "publisher": publisher,
-                                  "html": re.sub(r"\s+", " ", blocks[0])[:12000],
-                              },
-                              ensure_ascii=False,
-                          )
-                      )
-                      break
+              print("PUBLISHER_QUERY_SUMMARY " + json.dumps({
+                  "publisher": publisher,
+                  "resultCount": len(blocks),
+                  "labeledCount": sum(bool(label) for label in labels),
+                  "matchedCount": sum(row["matched"] for row in rows),
+                  "accounts": labels,
+              }, ensure_ascii=False, sort_keys=True))
+              for row in rows:
+                  print("PUBLISHER_QUERY_ROW " + json.dumps({
+                      "publisher": publisher,
+                      **row,
+                  }, ensure_ascii=False, sort_keys=True))
           PY
