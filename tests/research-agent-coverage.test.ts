@@ -2,7 +2,10 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 
-import { researchAgentReport } from "../lib/research-agent-data";
+import {
+  researchAgentReport,
+  type ResearchScopeEntry,
+} from "../lib/research-agent-data";
 
 test("Research Agent core coverage is never masked by degraded run output", () => {
   const page = readFileSync(
@@ -28,7 +31,7 @@ test("Research Agent published coverage follows researchScope semantics", () => 
   ];
 
   for (const [scopeKey, metricKey] of mappings) {
-    const entry = scope[scopeKey];
+    const entry: ResearchScopeEntry | undefined = scope[scopeKey];
     assert.ok(entry);
     const metric = researchAgentReport.changeSummary.byDataset[metricKey];
     if (entry.status === "active" && typeof entry.count === "number") {
@@ -45,7 +48,7 @@ test("a zero-delta run does not imply zero active-object coverage", () => {
   const scope = researchAgentReport.researchScope;
   assert.ok(scope);
   for (const key of ["person", "ventureCompany"] as const) {
-    const entry = scope[key];
+    const entry: ResearchScopeEntry | undefined = scope[key];
     if (entry?.status !== "active" || typeof entry.count !== "number") continue;
     const metric = researchAgentReport.changeSummary.byDataset[key];
     assert.equal(metric, entry.count);

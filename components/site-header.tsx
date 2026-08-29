@@ -7,6 +7,7 @@ import { useState, type ReactNode } from "react";
 const navItems = [
   ["研究首页", "/"],
   ["科技研究", "/technologies"],
+  ["研究简报", "/reports"],
   ["核心人物", "/people"],
   ["核心公司", "/companies"],
   ["核心信源", "/sources"],
