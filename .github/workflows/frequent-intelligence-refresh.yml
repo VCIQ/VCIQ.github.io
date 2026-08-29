@@ -54,6 +54,7 @@ jobs:
             tools/migrate_article_entities.py \
             tools/enrich_tracking_snapshot.py \
             tools/snapshot_retention.py \
+            tools/update_source_health.py \
             tools/run_pipeline.py \
             tools/build_pipeline_health.py
           python -m unittest \
@@ -87,6 +88,9 @@ jobs:
       - name: Stamp the successful frequent refresh
         if: steps.due.outputs.due == 'true'
         run: python tools/finalize_frequent_refresh.py
+      - name: Refresh source health from the current crawl
+        if: steps.due.outputs.due == 'true'
+        run: python tools/update_source_health.py
       - name: Commit the checked intelligence snapshot
         id: data-update
         if: steps.due.outputs.due == 'true'
@@ -95,25 +99,26 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          DATA_PATHS=(public/data/articles.json)
+          ARTICLE_PATHS=(public/data/articles.json)
+          HEALTH_PATHS=(public/data/source_health.json)
           CONTROL_PATHS=(
             public/data/data_lineage.json
             public/data/pipeline_health.json
           )
-          SEMANTIC_JSON=$(python tools/semantic_data_diff.py --base HEAD "${DATA_PATHS[@]}")
+          SEMANTIC_JSON=$(python tools/semantic_data_diff.py --base HEAD "${ARTICLE_PATHS[@]}")
           echo "$SEMANTIC_JSON"
           SEMANTIC_CHANGED=$(printf '%s' "$SEMANTIC_JSON" | python -c 'import json,sys; print(str(json.load(sys.stdin)["changed"]).lower())')
           if [ "$SEMANTIC_CHANGED" != "true" ]; then
-            echo "No semantic article changes; publishing the completed source-crawl audit."
+            echo "No semantic article changes; publishing the completed source-crawl audit and fresh source health."
           fi
 
           python tools/run_pipeline.py finalize \
             public-intelligence-frequent-refresh \
             --quality-gate passed
 
-          git add "${DATA_PATHS[@]}" "${CONTROL_PATHS[@]}"
+          git add "${ARTICLE_PATHS[@]}" "${HEALTH_PATHS[@]}" "${CONTROL_PATHS[@]}"
           if git diff --cached --quiet; then
-            echo "No crawl-audit or intelligence changes to publish."
+            echo "No crawl-audit, source-health or intelligence changes to publish."
             echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -121,6 +126,12 @@ jobs:
 
           for attempt in 1 2 3; do
             git pull --rebase -X theirs origin main
+
+            # Source health is cross-run state. Always rebuild this crawl from the
+            # latest remote baseline so a push retry cannot count the same crawl
+            # twice or overwrite a newer health history published while we ran.
+            git show origin/main:public/data/source_health.json > public/data/source_health.json
+
             python tools/migrate_article_entities.py
             python tools/enrich_tracking_snapshot.py
             python tools/snapshot_retention.py
@@ -128,10 +139,11 @@ jobs:
             python tools/snapshot_retention.py --check
             python tools/crawl_articles.py --validate-only
             python tools/validate_user_source_coverage.py
+            python tools/update_source_health.py
             python tools/run_pipeline.py finalize \
               public-intelligence-frequent-refresh \
               --quality-gate passed
-            git add "${DATA_PATHS[@]}" "${CONTROL_PATHS[@]}"
+            git add "${ARTICLE_PATHS[@]}" "${HEALTH_PATHS[@]}" "${CONTROL_PATHS[@]}"
             if ! git diff --cached --quiet; then
               git commit --amend --no-edit
             fi
