@@ -1,4 +1,4 @@
-name: One-time source governance full-path trace
+name: One-time source governance freshness query verification
 
 on:
   push:
@@ -20,87 +20,70 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Trace one recent article through the full production stack
+      - name: Compare freshness-biased Sogou queries
         run: |
           python - <<'PY'
           import json
+          from datetime import UTC, datetime
           from tools import crawl_with_wechat_registry as app
-          from tools import wechat_source_registry
 
           base = app.base
           crawler = base.tracking.crawler
-
-          # Exact production installation order through the WeChat adapters.
-          app.core_official_adapters.install(crawler)
           app.http_policy_bridge.install(crawler)
-          app.search_index_feed_redirects.install(crawler)
-          app.wechat_fetch_compat.install(app.wechat_public_sources)
-          app.wechat_registry_bridge.install(app.wechat_public_sources)
-          app.wechat_original_redirect_bridge.install(app.wechat_public_sources, app.wechat_registry_bridge)
-          app.wechat_index_context_guard.install(app.wechat_registry_bridge)
-          app.wechat_index_record_fallback.install(app.wechat_public_sources, app.wechat_registry_bridge)
           app.wechat_sogou_redirect_compat.install(app.wechat_sogou_index)
           app.wechat_sogou_link_compat.install(app.wechat_sogou_index)
-          app.wechat_public_aggregator.install(app.wechat_sogou_index)
-          app.wechat_sogou_bridge.install(app.wechat_public_sources)
 
           tracking_config = base.tracking.load_tracking()
           tracks = base.tracking._enabled_tracks(tracking_config)
           specs = app.wechat_public_sources.generated_wechat_sources(tracks, base.tracking)
-          spec = next(s for s in specs if s.get("id") == "user-track-wechat-robospeak-robotics")
+          targets = {
+              "user-track-wechat-cbea-battery-energy",
+              "user-track-wechat-chiptrend-ic-semiconductor",
+              "user-track-wechat-eefocus-semiconductor",
+              "user-track-wechat-gg-lithium-energy",
+              "user-track-wechat-gg-robot-robotics",
+              "user-track-wechat-icbank-semiconductor",
+              "user-track-wechat-ijiwei-semiconductor",
+              "user-track-wechat-robospeak-robotics",
+              "user-track-wechat-semiconductor-technology-semiconductor",
+          }
+          selected = [s for s in specs if s.get("id") in targets]
+          now = datetime.now(UTC)
+          year = str(now.year)
+          month = str(now.month)
 
-          rows, meta = app.wechat_sogou_index.discover(spec)
-          print("META " + json.dumps(meta, ensure_ascii=False, sort_keys=True))
-          recent_rows = [
-              row for row in rows
-              if row.get("directUrl") and app.wechat_sogou_bridge._is_recent(
-                  row.get("publishedAt"), int(spec.get("maxArticleAgeDays", 45)), crawler
-              )
-          ]
-          print("RECENT_ROWS " + json.dumps([
-              {"title": r.get("title"), "publishedAt": r.get("publishedAt"), "directUrl": r.get("directUrl"), "account": r.get("account")}
-              for r in recent_rows
-          ], ensure_ascii=False, sort_keys=True))
-          if not recent_rows:
-              raise SystemExit("No recent row available for full-path trace")
-
-          row = recent_rows[0]
-          direct = str(row["directUrl"])
-          body = app.wechat_public_sources.fetch_public_wechat_page(direct)
-          parser = app.wechat_public_sources.WeChatPageParser()
-          parser.feed(body or "")
-          observed = parser.account or app.wechat_public_sources._js_value(
-              body or "", ("nickname", "profile_nickname", "account_name")
-          )
-          print("FETCH " + json.dumps({
-              "directUrl": direct,
-              "bodyChars": len(body),
-              "observedAccount": observed,
-              "accountMatch": wechat_source_registry.account_matches(spec, observed),
-              "pageTitle": parser.title,
-              "contentChars": len(parser.content),
-          }, ensure_ascii=False, sort_keys=True))
-
-          article = app.wechat_public_sources.parse_wechat_article(
-              spec,
-              direct,
-              body,
-              crawler,
-              fallback_title=str(row.get("title") or ""),
-              fallback_summary=str(row.get("summary") or ""),
-              fallback_date=str(row.get("publishedAt") or "") or None,
-          )
-          print("PARSE_RESULT " + json.dumps({
-              "isNone": article is None,
-              "title": (article or {}).get("title"),
-              "publishedAt": (article or {}).get("publishedAt"),
-              "wechatAccount": (article or {}).get("wechatAccount"),
-              "wechatContentMode": (article or {}).get("wechatContentMode"),
-              "source": (article or {}).get("source"),
-              "companies": (article or {}).get("companies"),
-              "people": (article or {}).get("people"),
-              "keywords": (article or {}).get("keywords"),
-          }, ensure_ascii=False, sort_keys=True))
-          if article is None:
-              raise SystemExit("Full production parse rejected the known-good recent row")
+          for spec in selected:
+              identity = str(spec.get("queryIdentity") or spec.get("name") or "")
+              topic = app.wechat_sogou_index._topic_term(spec, identity)
+              variants = [
+                  ("baseline", f"{identity} {topic}".strip()),
+                  ("year", f"{identity} {year}".strip()),
+                  ("year-topic", f"{identity} {topic} {year}".strip()),
+                  ("year-month", f"{identity} {year} {month}月".strip()),
+              ]
+              seen = set()
+              for label, query in variants:
+                  if query in seen:
+                      continue
+                  seen.add(query)
+                  url = app.wechat_sogou_index.build_search_url(spec, query=query)
+                  try:
+                      body = app.wechat_sogou_index._request(url)
+                      rows = app.wechat_sogou_index.parse_search_results(body, url)
+                  except Exception as exc:
+                      print("QUERY_ERROR " + json.dumps({
+                          "id": spec.get("id"), "name": spec.get("name"),
+                          "variant": label, "query": query,
+                          "error": f"{type(exc).__name__}: {exc}",
+                      }, ensure_ascii=False, sort_keys=True))
+                      continue
+                  print("QUERY_RESULT " + json.dumps({
+                      "id": spec.get("id"),
+                      "name": spec.get("name"),
+                      "variant": label,
+                      "query": query,
+                      "count": len(rows),
+                      "dates": [r.get("publishedAt") for r in rows],
+                      "titles": [r.get("title") for r in rows[:3]],
+                  }, ensure_ascii=False, sort_keys=True))
           PY
