@@ -1,0 +1,33 @@
+name: Ops refresh tracking snapshot
+
+on:
+  push:
+    branches:
+      - ops/refresh-tracking-snapshot
+    paths:
+      - .github/workflows/ops-refresh-tracking-snapshot.yml
+
+permissions:
+  actions: write
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Replace queued full refreshes with a lightweight tracking refresh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t queued_full_runs < <(
+            gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/scheduled-sync.yml/runs?per_page=30" \
+              --jq '.workflow_runs[] | select(.status == "queued" or .status == "pending" or .status == "waiting" or .status == "requested") | .id'
+          )
+          for run_id in "${queued_full_runs[@]}"; do
+            echo "cancel queued full refresh ${run_id}"
+            gh api --method POST "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}/cancel" || true
+          done
+
+          echo "dispatch lightweight refresh from current main"
+          gh workflow run frequent-intelligence-refresh.yml --ref main
