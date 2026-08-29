@@ -139,6 +139,14 @@ const topicRules: Record<string, TopicRule> = {
       "数据中心",
       "算力投资",
     ],
+    companyKeywordRequiredSlugs: [
+      "openai",
+      "anthropic",
+      "xai",
+      "deepseek",
+      "databricks",
+      "scale-ai",
+    ],
   },
 };
 
@@ -164,6 +172,10 @@ function sourceRank(source: Source) {
     待交叉验证: 1,
   };
   return rank[source.level] ?? 0;
+}
+
+function isCoreEvidenceSource(source: Source) {
+  return /^https?:\/\//u.test(source.url) && sourceRank(source) >= 2;
 }
 
 function normalizedTitleKey(title: string) {
@@ -196,6 +208,11 @@ export function resolveTopicEvidence({
   const candidates: Omit<TopicEvidence, "evidenceId">[] = [];
 
   for (const event of events) {
+    // Core briefs require a directly traceable public source and exclude records
+    // explicitly marked as awaiting cross-validation. Those records can remain in
+    // the broader intelligence dataset without being promoted into research claims.
+    if (!isCoreEvidenceSource(event.source)) continue;
+
     const inTopicSector = content.eventSectors.includes(event.sector);
     const inTopicCompany = Boolean(
       event.companySlug && content.companySlugs.includes(event.companySlug),
@@ -236,7 +253,8 @@ export function resolveTopicEvidence({
       continue;
     }
 
-    // Reports without a dedicated V1 rule retain the legacy sector fallback.
+    // Reports without a dedicated V1 rule retain the legacy sector fallback,
+    // while still obeying the source-quality gate above.
     candidates.push({
       event,
       matchKind: "sector",
@@ -318,7 +336,7 @@ export function buildTopicResearchBrief({
 
   const coverageSummary = resolved.evidence.length
     ? `专题规则共筛出 ${resolved.totalMatches} 条相关事件；当前展示最近 ${resolved.evidence.length} 条，覆盖 ${sourceCount} 个可追溯来源与 ${companyCount} 个公司/主体。过去 30 天有 ${recent30Count} 条进入当前核心证据集。`
-    : "当前快照尚未筛出满足专题规则的事件；页面保留研究框架与后续跟踪项，并等待新的可验证证据。";
+    : "当前快照尚未筛出满足专题规则与来源质量门的事件；页面保留研究框架与后续跟踪项，并等待新的可验证证据。";
   const evidenceSummary = dominantTypes.length
     ? `当前核心证据主要集中在${dominantTypes.map((item) => `“${item}”`).join("、")}。这些事实用于更新专题判断，但不会把同赛道的邻近事件自动视为本专题证据。`
     : "当前没有足够的专题证据形成事件类型分布。";
