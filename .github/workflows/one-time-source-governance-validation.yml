@@ -1,4 +1,4 @@
-name: One-time source governance freshness query verification
+name: One-time source governance account-search verification
 
 on:
   push:
@@ -20,54 +20,51 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Validate one low-rate freshness-biased query per account
+      - name: Inspect public Sogou account-search result shape
         run: |
           python - <<'PY'
+          import html
           import json
-          from datetime import UTC, datetime
+          import re
+          from urllib.parse import quote
           from tools import crawl_with_wechat_registry as app
 
-          base = app.base
-          crawler = base.tracking.crawler
-          app.http_policy_bridge.install(crawler)
-          app.wechat_registry_bridge.install(app.wechat_public_sources)
-
-          tracking_config = base.tracking.load_tracking()
-          tracks = base.tracking._enabled_tracks(tracking_config)
-          specs = app.wechat_public_sources.generated_wechat_sources(tracks, base.tracking)
-          targets = {
-              "user-track-wechat-cbea-battery-energy",
-              "user-track-wechat-chiptrend-ic-semiconductor",
-              "user-track-wechat-eefocus-semiconductor",
-              "user-track-wechat-gg-lithium-energy",
-              "user-track-wechat-gg-robot-robotics",
-              "user-track-wechat-icbank-semiconductor",
-              "user-track-wechat-ijiwei-semiconductor",
-              "user-track-wechat-robospeak-robotics",
-              "user-track-wechat-semiconductor-technology-semiconductor",
-          }
-          selected = [s for s in specs if s.get("id") in targets]
-          print("SELECTED_COUNT", len(selected))
-          now = datetime.now(UTC)
-
-          for spec in selected:
-              identity = str(spec.get("queryIdentity") or spec.get("name") or "")
-              query = f"{identity} {now.year} {now.month}月"
-              url = app.wechat_sogou_index.build_search_url(spec, query=query)
+          app.http_policy_bridge.install(app.base.tracking.crawler)
+          for account in ["机器人大讲堂", "高工机器人"]:
+              url = f"https://weixin.sogou.com/weixin?type=1&s_from=input&query={quote(account)}&ie=utf8"
               try:
                   body = app.wechat_sogou_index._request(url)
-                  rows = app.wechat_sogou_index.parse_search_results(body, url)
-                  print("FRESH_QUERY " + json.dumps({
-                      "id": spec.get("id"),
-                      "name": spec.get("name"),
-                      "query": query,
-                      "count": len(rows),
-                      "dates": [r.get("publishedAt") for r in rows],
-                      "titles": [r.get("title") for r in rows[:5]],
-                  }, ensure_ascii=False, sort_keys=True))
               except Exception as exc:
-                  print("FRESH_ERROR " + json.dumps({
-                      "id": spec.get("id"), "name": spec.get("name"),
-                      "query": query, "error": f"{type(exc).__name__}: {exc}",
-                  }, ensure_ascii=False, sort_keys=True))
+                  print("ACCOUNT_SEARCH_ERROR " + json.dumps({"account": account, "error": f"{type(exc).__name__}: {exc}"}, ensure_ascii=False))
+                  continue
+              print("ACCOUNT_PAGE " + json.dumps({
+                  "account": account,
+                  "bytes": len(body),
+                  "antispider": "antispider" in body.casefold(),
+                  "captcha": "验证码" in body,
+                  "accountMarkers": body.count("account_name_"),
+                  "profileMarkers": body.count("weixin_account"),
+                  "articleTitleMarkers": body.count("article_title_"),
+              }, ensure_ascii=False, sort_keys=True))
+              anchors = re.findall(r'(?is)<a\b([^>]*)>(.*?)</a>', body)
+              shown = 0
+              for attrs, inner in anchors:
+                  text = re.sub(r'(?is)<[^>]+>', ' ', inner)
+                  text = re.sub(r'\s+', ' ', html.unescape(text)).strip()
+                  hrefm = re.search(r'''href\s*=\s*["']([^"']+)["']''', attrs, flags=re.I)
+                  href = html.unescape(hrefm.group(1)) if hrefm else ""
+                  hay = (text + " " + attrs + " " + href).casefold()
+                  if account in text or "account" in hay or "profile" in hay or "/link?" in href or "mp.weixin.qq.com" in href:
+                      print("ACCOUNT_ANCHOR " + json.dumps({
+                          "account": account,
+                          "text": text[:300],
+                          "href": href[:800],
+                          "attrs": re.sub(r'\s+', ' ', attrs).strip()[:800],
+                      }, ensure_ascii=False, sort_keys=True))
+                      shown += 1
+                      if shown >= 25:
+                          break
+              for marker in ["最近文章", "最新文章", "认证", "微信号", "月发文", "last_article", "recent"]:
+                  if marker.casefold() in body.casefold():
+                      print("ACCOUNT_MARKER " + json.dumps({"account": account, "marker": marker}, ensure_ascii=False))
           PY
