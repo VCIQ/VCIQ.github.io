@@ -43,8 +43,32 @@ class FrequentRefreshWorkflowTests(unittest.TestCase):
 
     def test_successful_crawl_persists_audit_even_without_new_articles(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
-        self.assertIn("No semantic article changes; publishing the completed source-crawl audit.", text)
-        self.assertNotIn("git restore \"${DATA_PATHS[@]}\"", text)
+        self.assertIn(
+            "No semantic article changes; publishing the completed source-crawl audit and fresh source health.",
+            text,
+        )
+        self.assertNotIn("git restore \"${ARTICLE_PATHS[@]}\"", text)
+
+    def test_real_crawl_refreshes_and_commits_source_health(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("tools/update_source_health.py", text)
+        self.assertIn("HEALTH_PATHS=(public/data/source_health.json)", text)
+        self.assertIn(
+            'git add "${ARTICLE_PATHS[@]}" "${HEALTH_PATHS[@]}" "${CONTROL_PATHS[@]}"',
+            text,
+        )
+        self.assertGreaterEqual(text.count("python tools/update_source_health.py"), 2)
+
+    def test_push_retry_rebuilds_health_from_latest_remote_baseline(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        reset = "git show origin/main:public/data/source_health.json > public/data/source_health.json"
+        self.assertIn(reset, text)
+        retry = text.index("for attempt in 1 2 3; do")
+        reset_at = text.index(reset, retry)
+        recompute_at = text.index("python tools/update_source_health.py", reset_at)
+        push_at = text.index("git push origin HEAD:main", recompute_at)
+        self.assertLess(reset_at, recompute_at)
+        self.assertLess(recompute_at, push_at)
 
     def test_bot_authored_refresh_reconciles_then_requests_terminal_publication(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
