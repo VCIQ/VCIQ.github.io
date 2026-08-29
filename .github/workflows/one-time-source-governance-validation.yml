@@ -24,14 +24,12 @@ jobs:
         run: |
           python - <<'PY'
           import json
-          from pathlib import Path
 
           from tools import crawl_with_wechat_registry as app
 
           base = app.base
           crawler = base.tracking.crawler
 
-          # Reproduce the production install order used by crawl_with_wechat_registry.main().
           app.core_official_adapters.install(crawler)
           app.http_policy_bridge.install(crawler)
           app.search_index_feed_redirects.install(crawler)
@@ -46,7 +44,7 @@ jobs:
           app.wechat_sogou_bridge.install(app.wechat_public_sources)
 
           tracking_config = base.tracking.load_tracking()
-          tracks = base.tracking.enabled_tracks(tracking_config)
+          tracks = base.tracking._enabled_tracks(tracking_config)
           specs = app.wechat_public_sources.generated_wechat_sources(tracks, base.tracking)
 
           targets = {
