@@ -1,0 +1,24 @@
+name: One-time source governance validation dispatch
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/one-time-source-governance-validation.yml"
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger a real frequent intelligence refresh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run frequent-intelligence-refresh.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref main
