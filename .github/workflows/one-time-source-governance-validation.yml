@@ -1,4 +1,4 @@
-name: One-time source governance validation dispatch
+name: One-time source governance endpoint verification
 
 on:
   push:
@@ -9,16 +9,46 @@ on:
 
 permissions:
   contents: read
-  actions: write
 
 jobs:
-  dispatch:
+  inspect:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger a real frequent intelligence refresh
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Print WeChat source health
         run: |
-          gh workflow run frequent-intelligence-refresh.yml \
-            --repo "$GITHUB_REPOSITORY" \
-            --ref main
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          payload = json.loads(Path("public/data/source_health.json").read_text(encoding="utf-8"))
+          print(json.dumps({"generatedAt": payload.get("generatedAt")}, ensure_ascii=False))
+          sources = payload.get("sources", {})
+          rows = []
+          for source_id, entry in sources.items():
+              if not source_id.startswith("user-track-wechat-"):
+                  continue
+              rows.append({
+                  "id": source_id,
+                  "name": entry.get("name"),
+                  "platform": entry.get("platform"),
+                  "lastStatus": entry.get("lastStatus"),
+                  "scanned": entry.get("scanned"),
+                  "accepted": entry.get("accepted"),
+                  "failed": entry.get("failed"),
+                  "candidateCount": entry.get("candidateCount"),
+                  "publishedCount": entry.get("publishedCount"),
+                  "withheldCount": entry.get("withheldCount"),
+                  "alertActive": entry.get("alertActive"),
+                  "collectionState": entry.get("collectionState"),
+                  "reason": entry.get("reason"),
+                  "lastSeenAt": entry.get("lastSeenAt"),
+              })
+          for row in sorted(rows, key=lambda item: item["id"]):
+              print("WECHAT_HEALTH " + json.dumps(row, ensure_ascii=False, sort_keys=True))
+          PY
