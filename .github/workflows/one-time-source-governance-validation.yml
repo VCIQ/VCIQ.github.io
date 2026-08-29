@@ -1,4 +1,4 @@
-name: One-time source governance final verification
+name: One-time source governance production-path verification
 
 on:
   push:
@@ -20,11 +20,34 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Inspect final WeChat production recovery state
+      - name: Run exact production WeChat adapter for target accounts
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
+
+          from tools import crawl_with_wechat_registry as app
+
+          base = app.base
+          crawler = base.tracking.crawler
+
+          # Reproduce the production install order used by crawl_with_wechat_registry.main().
+          app.core_official_adapters.install(crawler)
+          app.http_policy_bridge.install(crawler)
+          app.search_index_feed_redirects.install(crawler)
+          app.wechat_fetch_compat.install(app.wechat_public_sources)
+          app.wechat_registry_bridge.install(app.wechat_public_sources)
+          app.wechat_original_redirect_bridge.install(app.wechat_public_sources, app.wechat_registry_bridge)
+          app.wechat_index_context_guard.install(app.wechat_registry_bridge)
+          app.wechat_index_record_fallback.install(app.wechat_public_sources, app.wechat_registry_bridge)
+          app.wechat_sogou_redirect_compat.install(app.wechat_sogou_index)
+          app.wechat_sogou_link_compat.install(app.wechat_sogou_index)
+          app.wechat_public_aggregator.install(app.wechat_sogou_index)
+          app.wechat_sogou_bridge.install(app.wechat_public_sources)
+
+          tracking_config = base.tracking.load_tracking()
+          tracks = base.tracking.enabled_tracks(tracking_config)
+          specs = app.wechat_public_sources.generated_wechat_sources(tracks, base.tracking)
 
           targets = {
               "user-track-wechat-cbea-battery-energy",
@@ -37,59 +60,37 @@ jobs:
               "user-track-wechat-robospeak-robotics",
               "user-track-wechat-semiconductor-technology-semiconductor",
           }
+          selected = [spec for spec in specs if spec.get("id") in targets]
+          print("TARGET_SPEC_COUNT", len(selected))
+          print("ALL_WECHAT_SPEC_COUNT", len(specs))
+          for idx, spec in enumerate(specs):
+              if spec.get("id") in targets:
+                  print("TARGET_ORDER", idx, spec.get("id"), spec.get("name"), "generic=", spec.get("genericDiscovery"))
 
-          articles = json.loads(Path("public/data/articles.json").read_text(encoding="utf-8"))
-          health = json.loads(Path("public/data/source_health.json").read_text(encoding="utf-8"))
+          failed = []
+          for spec in selected:
+              try:
+                  articles, status = app.wechat_public_sources.crawl_wechat_source(
+                      spec, crawler.DEFAULT_USER_AGENT, crawler
+                  )
+              except Exception as exc:
+                  print("PRODUCTION_SMOKE_EXCEPTION " + json.dumps({
+                      "id": spec.get("id"), "name": spec.get("name"),
+                      "error": f"{type(exc).__name__}: {exc}",
+                  }, ensure_ascii=False, sort_keys=True))
+                  failed.append(spec.get("id"))
+                  continue
+              print("PRODUCTION_SMOKE_STATUS " + json.dumps(status, ensure_ascii=False, sort_keys=True))
+              print("PRODUCTION_SMOKE_ARTICLES " + json.dumps({
+                  "id": spec.get("id"),
+                  "count": len(articles),
+                  "titles": [a.get("title") for a in articles[:3]],
+                  "publishers": [a.get("wechatAccount") for a in articles[:3]],
+                  "urls": [(a.get("source") or {}).get("url") for a in articles[:3]],
+              }, ensure_ascii=False, sort_keys=True))
+              if not articles or int(status.get("scanned", 0) or 0) <= 0:
+                  failed.append(spec.get("id"))
 
-          print("HEALTH_GENERATED_AT " + str(health.get("generatedAt")))
-
-          statuses = {
-              str(row.get("id") or row.get("sourceId") or ""): row
-              for row in articles.get("sourceStatus", [])
-              if isinstance(row, dict)
-          }
-          health_sources = health.get("sources", {}) if isinstance(health.get("sources"), dict) else {}
-
-          missing = []
-          for source_id in sorted(targets):
-              status = statuses.get(source_id)
-              h = health_sources.get(source_id)
-              if status is None:
-                  missing.append(source_id)
-              srow = {
-                  "id": source_id,
-                  "name": (status or {}).get("name"),
-                  "status": (status or {}).get("status"),
-                  "scanned": (status or {}).get("scanned"),
-                  "accepted": (status or {}).get("accepted"),
-                  "newAccepted": (status or {}).get("newAccepted"),
-                  "failed": (status or {}).get("failed"),
-                  "retainedPrevious": (status or {}).get("retainedPrevious"),
-                  "discoveryProvider": (status or {}).get("discoveryProvider"),
-                  "sogouScanned": (status or {}).get("sogouScanned"),
-                  "sogouResolved": (status or {}).get("sogouResolved"),
-                  "query": (status or {}).get("query"),
-                  "queryAttempts": (status or {}).get("queryAttempts"),
-                  "error": (status or {}).get("error"),
-              }
-              hrow = {
-                  "id": source_id,
-                  "lastStatus": (h or {}).get("lastStatus"),
-                  "scanned": (h or {}).get("scanned"),
-                  "accepted": (h or {}).get("accepted"),
-                  "consecutiveFailures": (h or {}).get("consecutiveFailures"),
-                  "consecutiveSuccesses": (h or {}).get("consecutiveSuccesses"),
-                  "recoverySuccesses": (h or {}).get("recoverySuccesses"),
-                  "alertActive": (h or {}).get("alertActive"),
-                  "quarantined": (h or {}).get("quarantined"),
-                  "collectionState": (h or {}).get("collectionState"),
-                  "reason": (h or {}).get("reason"),
-                  "lastSeenAt": (h or {}).get("lastSeenAt"),
-                  "lastSuccessAt": (h or {}).get("lastSuccessAt"),
-              }
-              print("FINAL_WECHAT_STATUS " + json.dumps(srow, ensure_ascii=False, sort_keys=True))
-              print("FINAL_WECHAT_HEALTH " + json.dumps(hrow, ensure_ascii=False, sort_keys=True))
-
-          if missing:
-              raise SystemExit("Missing sourceStatus rows: " + ", ".join(missing))
+          if failed:
+              raise SystemExit("Production-path smoke failed for: " + ", ".join(str(x) for x in failed))
           PY
