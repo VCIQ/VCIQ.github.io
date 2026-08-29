@@ -1,358 +1,168 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-29T04:53:23+00:00",
+  "generatedAt": "2026-08-29T08:40:18+00:00",
   "asOfDate": "2026-08-29",
-  "runStatus": "model",
+  "runStatus": "api-fallback",
   "baselineSource": "snapshot",
   "model": {
     "provider": "SiliconFlow",
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": true,
-    "usage": {
-      "prompt_tokens": 24067,
-      "completion_tokens": 7608,
-      "total_tokens": 31675,
-      "completion_tokens_details": {
-        "reasoning_tokens": 5582
-      },
-      "prompt_tokens_details": {
-        "cached_tokens": 0
-      },
-      "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 24067
-    }
+    "used": false,
+    "usage": {}
   },
   "changeSummary": {
-    "totalDetected": 63,
-    "total": 18,
+    "totalDetected": 25,
+    "total": 5,
     "byDataset": {
-      "intelligenceEvent": 4,
-      "marketCompany": 14
+      "ventureCompany": 3,
+      "intelligenceEvent": 2
     },
     "byChangeType": {
-      "external_event": 18,
-      "data_maintenance": 20,
-      "source_refresh": 25
+      "external_event": 9,
+      "data_maintenance": 16
     },
-    "externalCandidates": 18,
-    "qualityRejected": 0,
-    "maintenanceExcluded": 45,
+    "externalCandidates": 9,
+    "qualityRejected": 4,
+    "maintenanceExcluded": 16,
     "aggregatedEvents": 0,
-    "highestImportance": 89
+    "highestImportance": 88
   },
   "analysis": {
-    "mode": "model-analysis",
-    "isResearchJudgment": true,
-    "executiveSummary": "本证据包覆盖2026年8月28-29日多项科技与市场动态：OpenAI宣布因Cursor被SpaceX收购将终止合作；世界人形机器人运动会奖牌榜引发对行业实力评估的讨论；Morefine发布工业迷你PC；Databricks推出Genie One新功能；多只美股科技股（文远知行、小马智行、Tempus AI、Rocket Lab、Rigetti、IonQ等）出现较大跌幅；宁德时代、华大基因、寒武纪等公司新闻流更新。多数事件证据等级为C或媒体报道，需谨慎对待。",
+    "mode": "structured-change-only",
+    "isResearchJudgment": false,
+    "executiveSummary": "本期有 5 条外部事实候选通过基础证据质量门。当前为降级展示，仅列出字段变化，不提供模型研判或影响结论。 质量门诊断：缺少发布时间 13、证据未分级 6、缺少标题 1、证据合格但未绑定变化字段 3。",
     "keyDevelopments": [
       {
-        "title": "OpenAI宣布因Cursor被SpaceX收购将终止合作",
-        "assessment": "据新浪财经报道（等级C），OpenAI宣布因Cursor被SpaceX收购将终止与其合作，Cursor对OpenAI模型的直接访问将于11月12日结束。该事件为单一来源，且涉及并购与AI生态，需进一步验证。",
+        "title": "待复核｜宁德时代 的 financing 发生变化。",
+        "assessment": "这是通过基础证据质量门的外部事实候选，仅确认结构化字段变化；当前未生成影响判断，不应视为研究结论。",
         "importance": 4,
         "confidence": "low",
         "entities": [
-          "OpenAI",
-          "Cursor",
-          "SpaceX"
+          "宁德时代"
         ],
         "evidenceIds": [
           "E001"
         ]
       },
       {
-        "title": "世界人形机器人运动会奖牌榜引发实力评估讨论",
-        "assessment": "钛媒体文章（等级C）指出，2026世界人形机器人运动会企业合并奖牌榜中智元、天工、宇树、银河通用分列前列，但奖牌数受报项、第三方队伍、参赛模式影响，不能直接等同综合实力。此为分析性观点，需结合量产与落地数据。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "智元",
-          "天工",
-          "宇树",
-          "银河通用"
-        ],
-        "evidenceIds": [
-          "E002"
-        ]
-      },
-      {
-        "title": "Morefine发布无风扇工业迷你PC IPC-200",
-        "assessment": "据Notebookcheck报道（等级C），Morefine推出IPC-200，采用Intel低功耗N100处理器，配备VGA和2个COM端口，面向工业与嵌入式应用。产品信息具体，但来源单一。",
-        "importance": 2,
-        "confidence": "medium",
-        "entities": [
-          "Morefine",
-          "Intel"
-        ],
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "title": "Databricks发布Genie One新功能",
-        "assessment": "Databricks官方博客宣布Genie One新功能，旨在将洞察转化为行动，但证据摘要仅含'We a'，具体功能细节不完整，需进一步获取原文。",
-        "importance": 2,
+        "title": "待复核｜SambaNova Systems 的 financing 发生变化。",
+        "assessment": "这是通过基础证据质量门的外部事实候选，仅确认结构化字段变化；当前未生成影响判断，不应视为研究结论。",
+        "importance": 4,
         "confidence": "low",
         "entities": [
-          "Databricks"
+          "SambaNova Systems"
         ],
         "evidenceIds": [
-          "E004"
+          "E005"
         ]
       },
       {
-        "title": "多只美股科技主题股单日大幅下跌",
-        "assessment": "2026年8月28日收盘数据显示，文远知行跌6.2%、小马智行跌7.9%、Tempus AI跌11.9%、Rocket Lab跌11.27%、Rigetti跌12.95%、IonQ跌12.62%。这些为市场数据，反映当日股价表现，但证据包未提供下跌原因，不能推断为基本面恶化。",
+        "title": "待复核｜Joby Aviation 的 capitalMarkets、financing 发生变化。",
+        "assessment": "这是通过基础证据质量门的外部事实候选，仅确认结构化字段变化；当前未生成影响判断，不应视为研究结论。",
         "importance": 4,
-        "confidence": "high",
+        "confidence": "low",
         "entities": [
-          "文远知行",
-          "小马智行",
-          "Tempus AI",
-          "Rocket Lab",
-          "Rigetti",
-          "IonQ"
+          "Joby Aviation"
         ],
         "evidenceIds": [
-          "E005",
-          "E009",
-          "E025",
-          "E029",
-          "E033",
-          "E049"
+          "E016"
         ]
       },
       {
-        "title": "华大基因半年报净利大增但现金流为负",
-        "assessment": "据新浪财经报道，华大基因2026年半年报净利4740.46万元，同比增长718%，精准医学检测驱动盈利修复；但另有报道称上半年经营现金流连续为负。两者均来自媒体报道，需以正式财报为准。",
-        "importance": 3,
-        "confidence": "medium",
+        "title": "待复核｜新增高价值情报事件记录：今年最好的机器人落地场景，可能在上海一家冰淇凌店。",
+        "assessment": "这是通过基础证据质量门的外部事实候选，仅确认结构化字段变化；当前未生成影响判断，不应视为研究结论。",
+        "importance": 4,
+        "confidence": "low",
         "entities": [
-          "华大基因"
+          "今年最好的机器人落地场景，可能在上海一家冰淇凌店"
         ],
         "evidenceIds": [
-          "E020",
-          "E018"
+          "E026"
+        ]
+      },
+      {
+        "title": "待复核｜新增高价值情报事件记录：Lenovo launches new budget LOQ gaming PC with up to Intel Core 7, 32GB RAM, and Nvidia RTX GPUs。",
+        "assessment": "这是通过基础证据质量门的外部事实候选，仅确认结构化字段变化；当前未生成影响判断，不应视为研究结论。",
+        "importance": 4,
+        "confidence": "low",
+        "entities": [
+          "Lenovo launches new budget LOQ gaming PC with up to Intel Core 7, 32GB RAM, and Nvidia RTX GPUs"
+        ],
+        "evidenceIds": [
+          "E027"
         ]
       }
     ],
-    "thesisUpdates": [
-      {
-        "entity": "OpenAI",
-        "direction": "mixed",
-        "statement": "OpenAI主动终止与Cursor的合作（据称因Cursor被SpaceX收购），短期可能影响其开发者工具生态触达，但属于战略调整，长期影响待观察。证据等级C，需验证。",
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "entity": "人形机器人产业",
-        "direction": "mixed",
-        "statement": "运动会奖牌榜显示智元、天工等领先，但奖牌数受报项、参赛模式等因素影响，不能直接等同综合实力；评判需结合量产、场景落地与长期运行表现。",
-        "evidenceIds": [
-          "E002"
-        ]
-      },
-      {
-        "entity": "华大基因",
-        "direction": "mixed",
-        "statement": "净利同比大幅增长，但经营现金流连续为负，盈利质量与现金流改善情况需持续观察。",
-        "evidenceIds": [
-          "E020",
-          "E018"
-        ]
-      },
-      {
-        "entity": "美股科技主题股",
-        "direction": "negative",
-        "statement": "多只个股单日录得较大跌幅，市场情绪或风险偏好承压，但证据包未提供宏观或公司特定原因，应视为短期市场波动。",
-        "evidenceIds": [
-          "E005",
-          "E009",
-          "E025",
-          "E029",
-          "E033",
-          "E049"
-        ]
-      },
-      {
-        "entity": "宁德时代",
-        "direction": "neutral",
-        "statement": "新注册软件著作权属常规知识产权动作；媒体报道称其锁定电池市场半壁江山，但该表述为分析观点，暂无独立数据支持。",
-        "evidenceIds": [
-          "E015",
-          "E013"
-        ]
-      }
-    ],
+    "thesisUpdates": [],
     "watchlist": [
       {
-        "item": "OpenAI与Cursor合作终止的后续影响",
-        "reason": "单一来源报道，需观察OpenAI官方公告、Cursor回应以及是否影响开发者生态。",
-        "nextEvidence": "OpenAI官方公告或Cursor官方声明",
+        "item": "复核高优先级变化的原始信源",
+        "reason": "降级输出不包含研究判断，仍需人工核对证据是否完整支持对应字段。",
+        "nextEvidence": "监管文件、公司公告或至少一个独立高等级来源。",
         "evidenceIds": [
           "E001"
         ]
-      },
-      {
-        "item": "人形机器人企业量产与场景落地",
-        "reason": "奖牌榜不能直接等同实力，需跟踪智元、宇树、天工、银河通用的量产订单和长期运行数据。",
-        "nextEvidence": "企业财报、量产交付数据或行业报告",
-        "evidenceIds": [
-          "E002"
-        ]
-      },
-      {
-        "item": "华大基因经营现金流改善情况",
-        "reason": "净利增长与现金流为负并存，需确认盈利质量。",
-        "nextEvidence": "下一季度财报或现金流数据",
-        "evidenceIds": [
-          "E018",
-          "E020"
-        ]
-      },
-      {
-        "item": "美股科技股下跌的驱动因素",
-        "reason": "多只个股同步大跌，可能反映共同宏观因素，但证据包未提供背景。",
-        "nextEvidence": "市场指数、宏观新闻或公司公告",
-        "evidenceIds": [
-          "E005",
-          "E009",
-          "E025",
-          "E029",
-          "E033",
-          "E049"
-        ]
-      },
-      {
-        "item": "宁德时代市场份额与车企电池自研趋势",
-        "reason": "媒体报道称宁德时代锁定半壁市场，需验证市占率数据及车企自研影响。",
-        "nextEvidence": "行业出货量数据、公司公告或券商研报",
-        "evidenceIds": [
-          "E013"
-        ]
       }
     ],
-    "risks": [
-      {
-        "risk": "证据等级偏低，部分事件可能不准确",
-        "reason": "OpenAI、人形机器人、Morefine等事件均来自等级C或单一媒体报道，存在夸大或误报风险。",
-        "evidenceIds": [
-          "E001",
-          "E002",
-          "E003"
-        ]
-      },
-      {
-        "risk": "市场数据波动缺乏背景解释",
-        "reason": "多只个股大跌可能由宏观因素驱动，但证据包未提供，若据此推断公司基本面将产生误导。",
-        "evidenceIds": [
-          "E005",
-          "E009",
-          "E025",
-          "E029",
-          "E033",
-          "E049"
-        ]
-      },
-      {
-        "risk": "华大基因盈利可持续性存疑",
-        "reason": "净利大增但经营现金流连续为负，可能影响盈利质量与后续经营。",
-        "evidenceIds": [
-          "E018",
-          "E020"
-        ]
-      },
-      {
-        "risk": "Databricks功能信息不完整",
-        "reason": "证据摘要残缺，无法确认Genie One新功能的具体内容与影响，存在误判风险。",
-        "evidenceIds": [
-          "E004"
-        ]
-      }
-    ],
-    "methodologyNote": "本分析仅基于证据包中的变化记录与证据条目，未补充外部事实。事实与推断已尽量区分：市场数据、公司公告等视为事实性证据，但等级C或媒体报道标注为低置信度；分析性观点（如奖牌榜解读、市场份额报道）视为推断。所有判断均引用证据编号。本报告不构成投资建议。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
+    "risks": [],
+    "methodologyNote": "结构化变化降级展示；SiliconFlow 模型请求超时，已切换到规则引擎。未执行生成式研判。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
   },
   "changes": [
     {
-      "id": "chg-323b1eefd24319746076",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-dd270bf06b1fcdb68e",
-      "entityName": "OpenAI：因Cursor被SpaceX收购，将终止与其合作",
-      "action": "added",
+      "id": "chg-6d475ee553ecb41be66e",
+      "dataset": "ventureCompany",
+      "entityType": "创业公司",
+      "entityId": "catl",
+      "entityName": "宁德时代",
+      "action": "updated",
       "changedFields": [
-        "title",
-        "summary",
-        "type",
-        "publishedAt",
-        "company",
-        "companySlug",
-        "sector",
-        "region",
-        "importance",
-        "qualityScore",
-        "sources"
+        "financing"
       ],
-      "summary": "新增高价值情报事件记录：OpenAI：因Cursor被SpaceX收购，将终止与其合作。",
-      "importance": 89,
-      "before": null,
+      "summary": "宁德时代 的 financing 发生变化。",
+      "importance": 88,
+      "before": {
+        "financing": []
+      },
       "after": {
-        "title": "OpenAI：因Cursor被SpaceX收购，将终止与其合作",
-        "summary": "Open宣布，因Cursor被SpaceX收购，将终止与其的合作关系。根据我们的提议，Cursor对我们模型的直接访问将于11月12日结束。",
-        "type": "并购",
-        "publishedAt": "2026-08-29",
-        "company": "OpenAI",
-        "companySlug": "openai",
-        "sector": "商业航天",
-        "region": "中国",
-        "importance": 89,
-        "qualityScore": 0
+        "financing": [
+          {
+            "date": "2026-08-14",
+            "investors": [],
+            "sourceUrl": "https://www.catl.com/en/news/6951.html",
+            "summary": "Brisbane, Australia | 14 August 2026 — Quinbrook's Supernode battery energy storage project has completed Stage 2 commercial operation and reached financial close on A$469 million financing for Stage 3, marking a further milestone in the phased development of Australia's largest operational BESS campus.With planned capacity expected to exceed 3 GWh, Supernode is supported by CATL as its core energy storage system supplier for all three stContemporary Amperex Technology Co., Limited (CATL) is a g",
+            "title": "CATL and Quinbrook Build on Supernode Partnership Following Stage 2 and Stage 3 Major Milestones",
+            "type": "融资"
+          }
+        ]
       },
       "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
       "isResearchCandidate": true,
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "financing"
       ],
       "claimBindings": [
         {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-08-29",
-          "evidenceIds": [
-            "E001"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Open宣布，因Cursor被SpaceX收购，将终止与其的合作关系。根据我们的提议，Cursor对我们模型的直接访问将于11月12日结束。",
-          "evidenceIds": [
-            "E001"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "OpenAI：因Cursor被SpaceX收购，将终止与其合作",
+          "field": "financing",
+          "before": [],
+          "after": [
+            {
+              "date": "2026-08-14",
+              "investors": [],
+              "sourceUrl": "https://www.catl.com/en/news/6951.html",
+              "summary": "Brisbane, Australia | 14 August 2026 — Quinbrook's Supernode battery energy storage project has completed Stage 2 commercial operation and reached financial close on A$469 million financing for Stage 3, marking a further milestone in the phased development of Australia's largest operational BESS campus.With planned capacity expected to exceed 3 GWh, Supernode is supported by CATL as its core energy storage system supplier for all three stContemporary Amperex Technology Co., Limited (CATL) is a g",
+              "title": "CATL and Quinbrook Build on Supernode Partnership Following Stage 2 and Stage 3 Major Milestones",
+              "type": "融资"
+            }
+          ],
           "evidenceIds": [
             "E001"
           ]
         }
       ],
-      "unsupportedClaimFields": [
-        "company",
-        "companySlug",
-        "importance",
-        "qualityScore",
-        "region",
-        "sector",
-        "type"
-      ],
+      "unsupportedClaimFields": [],
       "evidenceIds": [
         "E001"
       ],
@@ -362,16 +172,236 @@
       "evidenceQuality": {
         "status": "passed",
         "supporting": 1,
-        "total": 1
+        "total": 4
       },
       "eligibleForKeyDevelopment": true
     },
     {
-      "id": "chg-dc6f80d0c715bf5aa1da",
+      "id": "chg-a803f83606b732d92db5",
+      "dataset": "ventureCompany",
+      "entityType": "创业公司",
+      "entityId": "sambanova",
+      "entityName": "SambaNova Systems",
+      "action": "updated",
+      "changedFields": [
+        "financing"
+      ],
+      "summary": "SambaNova Systems 的 financing 发生变化。",
+      "importance": 88,
+      "before": {
+        "financing": [
+          {
+            "amount": "$1B",
+            "date": "2026-07-08",
+            "investors": [],
+            "sourceUrl": "https://sambanova.ai/press/sambanova-completes-first-close-of-1b-financing-at-11b-valuation",
+            "summary": "SambaNova Completes First Close of $1B Financing at $11B Valuation SambaCloud SambaStack SambaManaged SambaRack RDU Dataflow Technology SambaRack RDU Dataflow Products SambaCloud SambaStack SambaManaged Technology SambaRack RDU Dataflow Inference Providers Argyll (UK) Infercom (EU) OVHcloud (EU) Sou",
+            "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
+            "type": "融资"
+          }
+        ]
+      },
+      "after": {
+        "financing": [
+          {
+            "amount": "$1B",
+            "date": "2026-07-08",
+            "investors": [],
+            "sourceUrl": "https://sambanova.ai/press/sambanova-completes-first-close-of-1b-financing-at-11b-valuation",
+            "summary": "SambaNova Completes First Close of $1B Financing at $11B Valuation SambaCloud SambaStack SambaManaged SambaRack RDU Dataflow Technology SambaRack RDU Dataflow Products SambaCloud SambaStack SambaManaged Technology SambaRack RDU Dataflow Inference Providers Sovereign AI Developers & Enterprises Gover",
+            "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
+            "type": "融资"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "financing"
+      ],
+      "claimBindings": [
+        {
+          "field": "financing",
+          "before": [
+            {
+              "amount": "$1B",
+              "date": "2026-07-08",
+              "investors": [],
+              "sourceUrl": "https://sambanova.ai/press/sambanova-completes-first-close-of-1b-financing-at-11b-valuation",
+              "summary": "SambaNova Completes First Close of $1B Financing at $11B Valuation SambaCloud SambaStack SambaManaged SambaRack RDU Dataflow Technology SambaRack RDU Dataflow Products SambaCloud SambaStack SambaManaged Technology SambaRack RDU Dataflow Inference Providers Argyll (UK) Infercom (EU) OVHcloud (EU) Sou",
+              "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
+              "type": "融资"
+            }
+          ],
+          "after": [
+            {
+              "amount": "$1B",
+              "date": "2026-07-08",
+              "investors": [],
+              "sourceUrl": "https://sambanova.ai/press/sambanova-completes-first-close-of-1b-financing-at-11b-valuation",
+              "summary": "SambaNova Completes First Close of $1B Financing at $11B Valuation SambaCloud SambaStack SambaManaged SambaRack RDU Dataflow Technology SambaRack RDU Dataflow Products SambaCloud SambaStack SambaManaged Technology SambaRack RDU Dataflow Inference Providers Sovereign AI Developers & Enterprises Gover",
+              "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
+              "type": "融资"
+            }
+          ],
+          "evidenceIds": [
+            "E005"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [],
+      "evidenceIds": [
+        "E005"
+      ],
+      "supportingEvidenceIds": [
+        "E005"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-d93083933adb00009cc0",
+      "dataset": "ventureCompany",
+      "entityType": "创业公司",
+      "entityId": "joby",
+      "entityName": "Joby Aviation",
+      "action": "updated",
+      "changedFields": [
+        "capitalMarkets",
+        "financing"
+      ],
+      "summary": "Joby Aviation 的 capitalMarkets、financing 发生变化。",
+      "importance": 88,
+      "before": {
+        "capitalMarkets": [
+          {
+            "date": "2026-07-16",
+            "investors": [],
+            "sourceUrl": "https://www.jobyaviation.com/news/2025-impact-report",
+            "summary": "Joby Aviation Impact Reports: 2024 2023 2022 Read next Joby Aviation to Scale Defense Business Through Acquisition of Resonant Sciences Building the Next Generation of Aerospace in Ohio Joby Reports Second Quarter 2026 Financial Results © 2026 Joby Aero, Inc.",
+            "title": "2025 Impact Report | Joby Aviation",
+            "type": "并购/退出"
+          }
+        ],
+        "financing": []
+      },
+      "after": {
+        "capitalMarkets": [
+          {
+            "date": "2026-07-16",
+            "investors": [],
+            "sourceUrl": "https://www.jobyaviation.com/news/2025-impact-report",
+            "summary": "Joby Aviation Impact Reports: 2024 2023 2022 Read next Joby Aviation to Scale Defense Business Through Acquisition of Resonant Sciences Building the Next Generation of Aerospace in Ohio Joby Reports Second Quarter 2026 Financial Results © 2026 Joby Aero, Inc.",
+            "title": "2025 Impact Report | Joby Aviation",
+            "type": "并购/退出"
+          },
+          {
+            "date": "2026-08-04",
+            "investors": [],
+            "round": "Strategic",
+            "sourceUrl": "https://www.jobyaviation.com/news/atoms-and-joby-aviation-form-strategic-partnership-to-build-americas-vertiport-network",
+            "summary": "Atoms and Joby Aviation have formed a strategic partnership to acquire and develop next-generation transportation hubs in markets where Joby is preparing early operations under the White House-backed eVTOL Integration Pilot Program (eIPP) Vertiports will operate as multimodal transportation hubs where electric aircraft, autonomous ground vehicles, and ridesharing converge, anchored by on-site power for charging and operations",
+            "title": "Atoms and Joby Aviation Form Strategic Partnership to Build America's Vertiport Network",
+            "type": "上市"
+          }
+        ],
+        "financing": [
+          {
+            "date": "2026-08-05",
+            "investors": [],
+            "sourceUrl": "https://www.jobyaviation.com/news/joby-reports-second-quarter-2026-financial-results",
+            "summary": "Company Raises 2026 Revenue Guidance",
+            "title": "Joby Reports Second Quarter 2026 Financial Results",
+            "type": "融资"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "capitalMarkets",
+        "financing"
+      ],
+      "claimBindings": [
+        {
+          "field": "capitalMarkets",
+          "before": [
+            {
+              "date": "2026-07-16",
+              "investors": [],
+              "sourceUrl": "https://www.jobyaviation.com/news/2025-impact-report",
+              "summary": "Joby Aviation Impact Reports: 2024 2023 2022 Read next Joby Aviation to Scale Defense Business Through Acquisition of Resonant Sciences Building the Next Generation of Aerospace in Ohio Joby Reports Second Quarter 2026 Financial Results © 2026 Joby Aero, Inc.",
+              "title": "2025 Impact Report | Joby Aviation",
+              "type": "并购/退出"
+            }
+          ],
+          "after": [
+            {
+              "date": "2026-07-16",
+              "investors": [],
+              "sourceUrl": "https://www.jobyaviation.com/news/2025-impact-report",
+              "summary": "Joby Aviation Impact Reports: 2024 2023 2022 Read next Joby Aviation to Scale Defense Business Through Acquisition of Resonant Sciences Building the Next Generation of Aerospace in Ohio Joby Reports Second Quarter 2026 Financial Results © 2026 Joby Aero, Inc.",
+              "title": "2025 Impact Report | Joby Aviation",
+              "type": "并购/退出"
+            },
+            {
+              "date": "2026-08-04",
+              "investors": [],
+              "round": "Strategic",
+              "sourceUrl": "https://www.jobyaviation.com/news/atoms-and-joby-aviation-form-strategic-partnership-to-build-americas-vertiport-network",
+              "summary": "Atoms and Joby Aviation have formed a strategic partnership to acquire and develop next-generation transportation hubs in markets where Joby is preparing early operations under the White House-backed eVTOL Integration Pilot Program (eIPP) Vertiports will operate as multimodal transportation hubs where electric aircraft, autonomous ground vehicles, and ridesharing converge, anchored by on-site power for charging and operations",
+              "title": "Atoms and Joby Aviation Form Strategic Partnership to Build America's Vertiport Network",
+              "type": "上市"
+            }
+          ],
+          "evidenceIds": [
+            "E016"
+          ]
+        },
+        {
+          "field": "financing",
+          "before": [],
+          "after": [
+            {
+              "date": "2026-08-05",
+              "investors": [],
+              "sourceUrl": "https://www.jobyaviation.com/news/joby-reports-second-quarter-2026-financial-results",
+              "summary": "Company Raises 2026 Revenue Guidance",
+              "title": "Joby Reports Second Quarter 2026 Financial Results",
+              "type": "融资"
+            }
+          ],
+          "evidenceIds": [
+            "E016"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [],
+      "evidenceIds": [
+        "E016"
+      ],
+      "supportingEvidenceIds": [
+        "E016"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-9dfbfa33ca398304f7b2",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-b57c3c32a58658be40",
-      "entityName": "46枚、45枚、10枚、5枚，人形机器人运动会的奖牌数到底在测什么",
+      "entityId": "intelligence-event-7aa0277321a88cf1ae",
+      "entityName": "今年最好的机器人落地场景，可能在上海一家冰淇凌店",
       "action": "added",
       "changedFields": [
         "title",
@@ -385,24 +415,24 @@
         "qualityScore",
         "sources"
       ],
-      "summary": "新增高价值情报事件记录：46枚、45枚、10枚、5枚，人形机器人运动会的奖牌数到底在测什么。",
-      "importance": 85,
+      "summary": "新增高价值情报事件记录：今年最好的机器人落地场景，可能在上海一家冰淇凌店。",
+      "importance": 84,
       "before": null,
       "after": {
-        "title": "46枚、45枚、10枚、5枚，人形机器人运动会的奖牌数到底在测什么",
-        "summary": "2026 世界人形机器人运动会企业合并奖牌榜，智元、天工、宇树、银河通用分列前列，但奖牌数受报项、第三方队伍、参赛模式影响，不能直接等同综合实力。各家技术侧重不同，赛事提供横向参照，评判企业还需结合量产、场景落地与长期运行表现。",
-        "type": "技术突破",
+        "title": "今年最好的机器人落地场景，可能在上海一家冰淇凌店",
+        "summary": "只做真正有价值的事，而非做给别人看",
+        "type": "商业进展",
         "publishedAt": "2026-08-29",
         "company": "科技产业",
         "sector": "机器人",
         "region": "中国",
-        "importance": 85,
+        "importance": 84,
         "qualityScore": 0,
         "sources": [
           {
             "name": "钛媒体",
-            "url": "https://www.tmtpost.com/8120414.html",
-            "title": "46枚、45枚、10枚、5枚，人形机器人运动会的奖牌数到底在测什么",
+            "url": "https://www.tmtpost.com/8121421.html",
+            "title": "今年最好的机器人落地场景，可能在上海一家冰淇凌店",
             "publishedAt": "2026-08-29",
             "level": "C",
             "section": "summary"
@@ -423,23 +453,23 @@
           "before": null,
           "after": "2026-08-29",
           "evidenceIds": [
-            "E002"
+            "E026"
           ]
         },
         {
           "field": "summary",
           "before": null,
-          "after": "2026 世界人形机器人运动会企业合并奖牌榜，智元、天工、宇树、银河通用分列前列，但奖牌数受报项、第三方队伍、参赛模式影响，不能直接等同综合实力。各家技术侧重不同，赛事提供横向参照，评判企业还需结合量产、场景落地与长期运行表现。",
+          "after": "只做真正有价值的事，而非做给别人看",
           "evidenceIds": [
-            "E002"
+            "E026"
           ]
         },
         {
           "field": "title",
           "before": null,
-          "after": "46枚、45枚、10枚、5枚，人形机器人运动会的奖牌数到底在测什么",
+          "after": "今年最好的机器人落地场景，可能在上海一家冰淇凌店",
           "evidenceIds": [
-            "E002"
+            "E026"
           ]
         }
       ],
@@ -452,10 +482,10 @@
         "type"
       ],
       "evidenceIds": [
-        "E002"
+        "E026"
       ],
       "supportingEvidenceIds": [
-        "E002"
+        "E026"
       ],
       "evidenceQuality": {
         "status": "passed",
@@ -465,11 +495,11 @@
       "eligibleForKeyDevelopment": true
     },
     {
-      "id": "chg-d4b513be2065f489cd65",
+      "id": "chg-014bc301baf5be52ab64",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-f90a91369e0b6319b6",
-      "entityName": "Morefine launches new fanless mini PC with entry-level Alder Lake CPU and plenty of legacy I/O",
+      "entityId": "intelligence-event-27da334ed54ad6aa91",
+      "entityName": "Lenovo launches new budget LOQ gaming PC with up to Intel Core 7, 32GB RAM, and Nvidia RTX GPUs",
       "action": "added",
       "changedFields": [
         "title",
@@ -483,24 +513,24 @@
         "qualityScore",
         "sources"
       ],
-      "summary": "新增高价值情报事件记录：Morefine launches new fanless mini PC with entry-level Alder Lake CPU and plenty of legacy I/O。",
+      "summary": "新增高价值情报事件记录：Lenovo launches new budget LOQ gaming PC with up to Intel Core 7, 32GB RAM, and Nvidia RTX GPUs。",
       "importance": 82,
       "before": null,
       "after": {
-        "title": "Morefine launches new fanless mini PC with entry-level Alder Lake CPU and plenty of legacy I/O",
-        "summary": "Morefine has launched the IPC-200, a fanless mini PC built for industrial and embedded applications. It combines Intel's low-power N100 processor with plenty of connectivity, including a VGA port and 2 COM ports.",
+        "title": "Lenovo launches new budget LOQ gaming PC with up to Intel Core 7, 32GB RAM, and Nvidia RTX GPUs",
+        "summary": "Lenovo has announced the LOQ Tower 17IRH11, an entry-level gaming PC powered by Intel Core 200 series mobile processors. Set to launch first in Europe, it also features up to Nvidia GeForce RTX 5060 Ti graphics, 32GB of dual-channel DDR5 RAM, and a 1TB PCIe G…",
         "type": "产品发布",
         "publishedAt": "2026-08-29",
         "company": "科技产业",
-        "sector": "智能制造",
+        "sector": "半导体",
         "region": "全球",
         "importance": 82,
         "qualityScore": 0,
         "sources": [
           {
             "name": "Notebookcheck",
-            "url": "https://www.notebookcheck.net/Morefine-launches-new-fanless-mini-PC-with-entry-level-Alder-Lake-CPU-and-plenty-of-legacy-I-O.1382247.0.html",
-            "title": "Morefine launches new fanless mini PC with entry-level Alder Lake CPU and plenty of legacy I/O",
+            "url": "https://www.notebookcheck.net/Lenovo-launches-new-budget-LOQ-gaming-PC-with-up-to-Intel-Core-7-32GB-RAM-and-Nvidia-RTX-GPUs.1381901.0.html",
+            "title": "Lenovo launches new budget LOQ gaming PC with up to Intel Core 7, 32GB RAM, and Nvidia RTX GPUs",
             "publishedAt": "2026-08-29",
             "level": "C",
             "section": "summary"
@@ -521,23 +551,23 @@
           "before": null,
           "after": "2026-08-29",
           "evidenceIds": [
-            "E003"
+            "E027"
           ]
         },
         {
           "field": "summary",
           "before": null,
-          "after": "Morefine has launched the IPC-200, a fanless mini PC built for industrial and embedded applications. It combines Intel's low-power N100 processor with plenty of connectivity, including a VGA port and 2 COM ports.",
+          "after": "Lenovo has announced the LOQ Tower 17IRH11, an entry-level gaming PC powered by Intel Core 200 series mobile processors. Set to launch first in Europe, it also features up to Nvidia GeForce RTX 5060 Ti graphics, 32GB of dual-channel DDR5 RAM, and a 1TB PCIe G…",
           "evidenceIds": [
-            "E003"
+            "E027"
           ]
         },
         {
           "field": "title",
           "before": null,
-          "after": "Morefine launches new fanless mini PC with entry-level Alder Lake CPU and plenty of legacy I/O",
+          "after": "Lenovo launches new budget LOQ gaming PC with up to Intel Core 7, 32GB RAM, and Nvidia RTX GPUs",
           "evidenceIds": [
-            "E003"
+            "E027"
           ]
         }
       ],
@@ -550,3210 +580,15 @@
         "type"
       ],
       "evidenceIds": [
-        "E003"
+        "E027"
       ],
       "supportingEvidenceIds": [
-        "E003"
+        "E027"
       ],
       "evidenceQuality": {
         "status": "passed",
         "supporting": 1,
         "total": 1
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-2ecb24171c97d6826125",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-bf17c3b46860058717",
-      "entityName": "Beyond answers: New Genie One features to turn insights into action",
-      "action": "added",
-      "changedFields": [
-        "title",
-        "summary",
-        "type",
-        "publishedAt",
-        "company",
-        "companySlug",
-        "sector",
-        "region",
-        "importance",
-        "qualityScore",
-        "sources"
-      ],
-      "summary": "新增高价值情报事件记录：Beyond answers: New Genie One features to turn insights into action。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "title": "Beyond answers: New Genie One features to turn insights into action",
-        "summary": "We a",
-        "type": "公司动态",
-        "publishedAt": "2026-08-28",
-        "company": "Databricks",
-        "companySlug": "databricks",
-        "sector": "AI / AGI",
-        "region": "美国",
-        "importance": 80,
-        "qualityScore": 0
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-08-28",
-          "evidenceIds": [
-            "E004"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "We a",
-          "evidenceIds": [
-            "E004"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Beyond answers: New Genie One features to turn insights into action",
-          "evidenceIds": [
-            "E004"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "company",
-        "companySlug",
-        "importance",
-        "qualityScore",
-        "region",
-        "sector",
-        "type"
-      ],
-      "evidenceIds": [
-        "E004"
-      ],
-      "supportingEvidenceIds": [
-        "E004"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-6c89afd343be86224f59",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "weride",
-      "entityName": "文远知行",
-      "action": "updated",
-      "changedFields": [
-        "metrics",
-        "priceHistory",
-        "quote",
-        "sources"
-      ],
-      "summary": "文远知行 的 quote 发生变化。",
-      "importance": 48,
-      "before": {
-        "metrics": [
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "19.44元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.79元"
-          },
-          {
-            "id": "marketCap",
-            "label": "总市值",
-            "value": "US$19.69亿"
-          },
-          {
-            "id": "netIncome",
-            "label": "净利润",
-            "value": "7.9亿元"
-          },
-          {
-            "id": "revenue",
-            "label": "营业收入",
-            "value": "3.46亿元"
-          },
-          {
-            "id": "roa",
-            "label": "总资产收益率",
-            "value": "9.46%"
-          },
-          "…另 2 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 6.01,
-            "date": "2026-08-27",
-            "high": 6.065,
-            "low": 5.889,
-            "open": 5.93,
-            "volume": 2285900.0
-          },
-          {
-            "close": 5.985,
-            "date": "2026-08-28",
-            "high": 6.155,
-            "low": 5.985,
-            "open": 6.08,
-            "volume": 708309.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-28T17:05:05+00:00",
-          "change": -0.465,
-          "changePercent": -7.21,
-          "currency": "USD",
-          "previousClose": 6.45
-        },
-        "sources": {
-          "price": "https://query1.finance.yahoo.com/v8/finance/chart/WRD?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/WRD/",
-          "yahooFinance": "https://sg.finance.yahoo.com/quote/WRD/"
-        }
-      },
-      "after": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$872.40万"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "19.44元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.79元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$18.80亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "3.11亿股"
-          },
-          {
-            "id": "marketCap",
-            "label": "总市值",
-            "value": "US$19.90亿"
-          },
-          "…另 7 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 5.91,
-            "date": "2026-08-26",
-            "high": 6.02,
-            "low": 5.83,
-            "open": 6.01,
-            "volume": 2792200.0
-          },
-          {
-            "close": 6.01,
-            "date": "2026-08-27",
-            "high": 6.065,
-            "low": 5.889,
-            "open": 5.93,
-            "volume": 2285900.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-28T20:00:00+00:00",
-          "change": -0.4,
-          "changePercent": -6.2,
-          "currency": "USD",
-          "previousClose": 6.45
-        },
-        "sources": {
-          "price": "https://query1.finance.yahoo.com/v8/finance/chart/WRD?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
-          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=105.WRD&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/WRD/",
-          "yahooFinance": "https://sg.finance.yahoo.com/quote/WRD/"
-        }
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "quote"
-      ],
-      "claimBindings": [
-        {
-          "field": "quote",
-          "before": {
-            "asOf": "2026-08-28T17:05:05+00:00",
-            "change": -0.465,
-            "changePercent": -7.21,
-            "currency": "USD",
-            "previousClose": 6.45
-          },
-          "after": {
-            "asOf": "2026-08-28T20:00:00+00:00",
-            "change": -0.4,
-            "changePercent": -6.2,
-            "currency": "USD",
-            "previousClose": 6.45
-          },
-          "evidenceIds": [
-            "E005"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "metrics",
-        "priceHistory"
-      ],
-      "evidenceIds": [
-        "E005"
-      ],
-      "supportingEvidenceIds": [
-        "E005"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-a171e79ea43608f87d6a",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "pony-ai",
-      "entityName": "小马智行",
-      "action": "updated",
-      "changedFields": [
-        "metrics",
-        "priceHistory",
-        "quote",
-        "sources"
-      ],
-      "summary": "小马智行 的 quote 发生变化。",
-      "importance": 48,
-      "before": {
-        "metrics": [
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "3.63美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.27美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.25美元"
-          },
-          {
-            "id": "marketCap",
-            "label": "总市值",
-            "value": "US$33.09亿"
-          },
-          {
-            "id": "netIncome",
-            "label": "净利润",
-            "value": "1.1亿美元"
-          },
-          {
-            "id": "revenue",
-            "label": "营业收入",
-            "value": "7047.00万美元"
-          },
-          "…另 3 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 7.52,
-            "date": "2026-08-27",
-            "high": 7.6,
-            "low": 7.29,
-            "open": 7.39,
-            "volume": 3084000.0
-          },
-          {
-            "close": 7.625,
-            "date": "2026-08-28",
-            "high": 7.695,
-            "low": 7.485,
-            "open": 7.55,
-            "volume": 1347060.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-28T17:06:02+00:00",
-          "change": -0.608,
-          "changePercent": -7.39,
-          "currency": "USD",
-          "previousClose": 8.23
-        },
-        "sources": {
-          "price": "https://query1.finance.yahoo.com/v8/finance/chart/PONY?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/PONY/",
-          "yahooFinance": "https://sg.finance.yahoo.com/quote/PONY/"
-        }
-      },
-      "after": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$1764.52万"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "3.63美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.27美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.25美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$26.78亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "3.53亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 7.28,
-            "date": "2026-08-26",
-            "high": 7.42,
-            "low": 7.18,
-            "open": 7.3,
-            "volume": 6503600.0
-          },
-          {
-            "close": 7.52,
-            "date": "2026-08-27",
-            "high": 7.6,
-            "low": 7.29,
-            "open": 7.39,
-            "volume": 3084000.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-28T20:00:00+00:00",
-          "change": -0.65,
-          "changePercent": -7.9,
-          "currency": "USD",
-          "previousClose": 8.23
-        },
-        "sources": {
-          "price": "https://query1.finance.yahoo.com/v8/finance/chart/PONY?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
-          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=105.PONY&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/PONY/",
-          "yahooFinance": "https://sg.finance.yahoo.com/quote/PONY/"
-        }
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "quote"
-      ],
-      "claimBindings": [
-        {
-          "field": "quote",
-          "before": {
-            "asOf": "2026-08-28T17:06:02+00:00",
-            "change": -0.608,
-            "changePercent": -7.39,
-            "currency": "USD",
-            "previousClose": 8.23
-          },
-          "after": {
-            "asOf": "2026-08-28T20:00:00+00:00",
-            "change": -0.65,
-            "changePercent": -7.9,
-            "currency": "USD",
-            "previousClose": 8.23
-          },
-          "evidenceIds": [
-            "E009"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "metrics",
-        "priceHistory"
-      ],
-      "evidenceIds": [
-        "E009"
-      ],
-      "supportingEvidenceIds": [
-        "E009"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-7910fda6dbe4653eb8f8",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "catl",
-      "entityName": "宁德时代",
-      "action": "updated",
-      "changedFields": [
-        "metrics",
-        "news",
-        "quote",
-        "sources"
-      ],
-      "summary": "宁德时代 的 news 发生变化。",
-      "importance": 48,
-      "before": {
-        "metrics": [
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "81.99元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "13.02元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "9.51元"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "42.60亿"
-          },
-          {
-            "id": "marketCap",
-            "label": "总市值",
-            "value": "¥1.71万亿"
-          },
-          {
-            "id": "netIncome",
-            "label": "净利润",
-            "value": "432.84亿元"
-          },
-          "…另 3 项"
-        ],
-        "news": [
-          {
-            "publishedAt": "2026-08-28T19:35:00+08:00",
-            "source": "新浪财经",
-            "title": "【投融资动态】酝电智能A轮融资，投资方为吴江创投",
-            "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002i3c0"
-          },
-          {
-            "publishedAt": "2026-08-29T00:06:00+08:00",
-            "source": "新浪财经",
-            "title": "中恒电气：8月28日召开业绩说明会，投资者参与",
-            "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002i3uu"
-          },
-          {
-            "publishedAt": "2026-08-28T19:33:00+08:00",
-            "source": "新浪财经",
-            "title": "A股已有780家公司中期分红，前十名拟分近千亿，中国移动一家就超500亿",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipwnxp9032507.shtml"
-          },
-          {
-            "publishedAt": "2026-08-28T21:02:00+08:00",
-            "source": "新浪财经",
-            "title": "公司是否与宁德时代有固态电池业务合作？志特新材回应",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipwtfm4369165.shtml"
-          },
-          {
-            "publishedAt": "2026-08-28T18:30:00+08:00",
-            "source": "新浪财经",
-            "title": "智通港股空仓持单统计|8月28日",
-            "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-08-28/doc-inipwnxp4432579.shtml"
-          },
-          {
-            "publishedAt": "2026-08-28T23:45:00+08:00",
-            "source": "新浪财经",
-            "title": "“我们不是汽车公司”——296 家汽车产业公司的年报改写运动",
-            "url": "https://finance.sina.com.cn/stock/t/2026-08-28/doc-inipwxpi4298584.shtml"
-          },
-          "…另 4 项"
-        ],
-        "quote": {
-          "asOf": "2026-08-28T15:35:15+08:00",
-          "change": -4.5,
-          "changePercent": -1.21,
-          "currency": "CNY",
-          "previousClose": 373.0
-        },
-        "sources": {
-          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz300750%2Cday%2C%2C%2C120%2Cqfq",
-          "sinaFinance": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/300750/"
-        }
-      },
-      "after": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "¥97.07亿"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "81.99元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "13.02元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "9.51元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "¥1.57万亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "42.60亿股"
-          },
-          "…另 8 项"
-        ],
-        "news": [
-          {
-            "publishedAt": "2026-08-29T03:52:00+08:00",
-            "source": "新浪财经",
-            "title": "一块电池如何影响车企利润表？宁德时代锁定半壁市场 车企重估电池自研与外采",
-            "url": "https://cj.sina.cn/articles/view/1650111241/625ab30902001hd5s"
-          },
-          {
-            "publishedAt": "2026-08-29T00:06:00+08:00",
-            "source": "新浪财经",
-            "title": "中恒电气：8月28日召开业绩说明会，投资者参与",
-            "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002i3uu"
-          },
-          {
-            "publishedAt": "2026-08-29T04:01:00+08:00",
-            "source": "新浪财经",
-            "title": "宁德时代新注册《动力锂电池运输安全防护装备智能设计平台V2.0》项目的软件著作权",
-            "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002i4t0"
-          },
-          {
-            "publishedAt": "2026-08-28T23:23:00+08:00",
-            "source": "新浪财经",
-            "title": "“我们不是汽车公司”——296 家汽车产业公司的年报改写运动",
-            "url": "https://cj.sina.cn/articles/view/7294209083/1b2c4cc3b00101vexs"
-          },
-          {
-            "publishedAt": "2026-08-28T21:02:00+08:00",
-            "source": "新浪财经",
-            "title": "公司是否与宁德时代有固态电池业务合作？志特新材回应",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipwtfm4369165.shtml"
-          },
-          {
-            "publishedAt": "2026-08-29T11:18:00+08:00",
-            "source": "新浪财经",
-            "title": "自称“20万级最强纯电轿跑”，全新一代智己L6究竟“强”在哪？",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-29/doc-inipxyyv8789952.shtml"
-          },
-          "…另 4 项"
-        ],
-        "quote": {
-          "asOf": "2026-08-28T16:29:15+08:00",
-          "change": -4.5,
-          "changePercent": -1.21,
-          "currency": "CNY",
-          "previousClose": 373.0
-        },
-        "sources": {
-          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz300750%2Cday%2C%2C%2C120%2Cqfq",
-          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=0.300750&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
-          "sinaFinance": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/300750/"
-        }
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "news"
-      ],
-      "claimBindings": [
-        {
-          "field": "news",
-          "before": [
-            {
-              "publishedAt": "2026-08-28T19:35:00+08:00",
-              "source": "新浪财经",
-              "title": "【投融资动态】酝电智能A轮融资，投资方为吴江创投",
-              "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002i3c0"
-            },
-            {
-              "publishedAt": "2026-08-29T00:06:00+08:00",
-              "source": "新浪财经",
-              "title": "中恒电气：8月28日召开业绩说明会，投资者参与",
-              "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002i3uu"
-            },
-            {
-              "publishedAt": "2026-08-28T19:33:00+08:00",
-              "source": "新浪财经",
-              "title": "A股已有780家公司中期分红，前十名拟分近千亿，中国移动一家就超500亿",
-              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipwnxp9032507.shtml"
-            },
-            {
-              "publishedAt": "2026-08-28T21:02:00+08:00",
-              "source": "新浪财经",
-              "title": "公司是否与宁德时代有固态电池业务合作？志特新材回应",
-              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipwtfm4369165.shtml"
-            },
-            {
-              "publishedAt": "2026-08-28T18:30:00+08:00",
-              "source": "新浪财经",
-              "title": "智通港股空仓持单统计|8月28日",
-              "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-08-28/doc-inipwnxp4432579.shtml"
-            },
-            {
-              "publishedAt": "2026-08-28T23:45:00+08:00",
-              "source": "新浪财经",
-              "title": "“我们不是汽车公司”——296 家汽车产业公司的年报改写运动",
-              "url": "https://finance.sina.com.cn/stock/t/2026-08-28/doc-inipwxpi4298584.shtml"
-            },
-            "…另 4 项"
-          ],
-          "after": [
-            {
-              "publishedAt": "2026-08-29T03:52:00+08:00",
-              "source": "新浪财经",
-              "title": "一块电池如何影响车企利润表？宁德时代锁定半壁市场 车企重估电池自研与外采",
-              "url": "https://cj.sina.cn/articles/view/1650111241/625ab30902001hd5s"
-            },
-            {
-              "publishedAt": "2026-08-29T00:06:00+08:00",
-              "source": "新浪财经",
-              "title": "中恒电气：8月28日召开业绩说明会，投资者参与",
-              "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002i3uu"
-            },
-            {
-              "publishedAt": "2026-08-29T04:01:00+08:00",
-              "source": "新浪财经",
-              "title": "宁德时代新注册《动力锂电池运输安全防护装备智能设计平台V2.0》项目的软件著作权",
-              "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002i4t0"
-            },
-            {
-              "publishedAt": "2026-08-28T23:23:00+08:00",
-              "source": "新浪财经",
-              "title": "“我们不是汽车公司”——296 家汽车产业公司的年报改写运动",
-              "url": "https://cj.sina.cn/articles/view/7294209083/1b2c4cc3b00101vexs"
-            },
-            {
-              "publishedAt": "2026-08-28T21:02:00+08:00",
-              "source": "新浪财经",
-              "title": "公司是否与宁德时代有固态电池业务合作？志特新材回应",
-              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipwtfm4369165.shtml"
-            },
-            {
-              "publishedAt": "2026-08-29T11:18:00+08:00",
-              "source": "新浪财经",
-              "title": "自称“20万级最强纯电轿跑”，全新一代智己L6究竟“强”在哪？",
-              "url": "https://finance.sina.com.cn/jjxw/2026-08-29/doc-inipxyyv8789952.shtml"
-            },
-            "…另 4 项"
-          ],
-          "evidenceIds": [
-            "E013",
-            "E014",
-            "E015",
-            "E016"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "metrics",
-        "quote"
-      ],
-      "evidenceIds": [
-        "E013",
-        "E014",
-        "E015",
-        "E016"
-      ],
-      "supportingEvidenceIds": [
-        "E013",
-        "E014",
-        "E015",
-        "E016"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 4,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-4a2ebf8082cdd2d5bf22",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "bgi-genomics",
-      "entityName": "华大基因",
-      "action": "updated",
-      "changedFields": [
-        "metrics",
-        "news",
-        "quote",
-        "sources"
-      ],
-      "summary": "华大基因 的 news 发生变化。",
-      "importance": 48,
-      "before": {
-        "metrics": [
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "20.36元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.66元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.11元"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "4.16亿"
-          },
-          {
-            "id": "marketCap",
-            "label": "总市值",
-            "value": "¥165.19亿"
-          },
-          {
-            "id": "netIncome",
-            "label": "净利润",
-            "value": "0.47亿元"
-          },
-          "…另 3 项"
-        ],
-        "news": [
-          {
-            "publishedAt": "2026-08-26T13:35:00+08:00",
-            "source": "新浪财经",
-            "title": "华大基因(300676)：1H26提质增效驱动净利率提升",
-            "url": "http://stock.finance.sina.com.cn/stock/go.php/vReport_Show/kind/search/rptid/841064563136/index.phtml"
-          },
-          {
-            "publishedAt": "2026-08-24T14:40:00+08:00",
-            "source": "新浪财经",
-            "title": "华大基因上半年经营现金流连负 易方达退出前10流通股东",
-            "url": "https://cj.sina.cn/articles/view/1663612603/6328b6bb020022tw2"
-          },
-          {
-            "publishedAt": "2026-08-27T03:35:00+08:00",
-            "source": "新浪财经",
-            "title": "华大基因新注册《基于blast比对结果绘制比较基因组圈图软件V1.0》项目的软件著作权",
-            "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002hv9g"
-          },
-          {
-            "publishedAt": "2026-08-24T13:44:00+08:00",
-            "source": "新浪财经",
-            "title": "华大基因2026年半年报：净利4740.46万元增718%，精准医学检测驱动盈利修复",
-            "url": "https://cj.sina.cn/articles/view/5617041192/14ecd3f2802001pas0"
-          },
-          {
-            "publishedAt": "2026-08-25T00:00:00+08:00",
-            "source": "新浪财经",
-            "title": "体外诊断公司深化AI技术布局",
-            "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e47059093ry4"
-          },
-          {
-            "publishedAt": "2026-08-28T00:00:00+08:00",
-            "source": "新浪财经",
-            "title": "中源协和聘任54岁杨帆为副总经理及财务总监",
-            "url": "https://finance.sina.com.cn/stock/aiassist/ggbd/2026-08-28/doc-inipuqhp5945138.shtml"
-          },
-          "…另 4 项"
-        ],
-        "quote": {
-          "asOf": "2026-08-28T15:35:15+08:00",
-          "change": -1.26,
-          "changePercent": -3.09,
-          "currency": "CNY",
-          "previousClose": 40.78
-        },
-        "sources": {
-          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz300676%2Cday%2C%2C%2C120%2Cqfq",
-          "sinaFinance": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/300676/"
-        }
-      },
-      "after": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "¥3.98亿"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "20.36元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.66元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.11元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "¥164.42亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "4.16亿股"
-          },
-          "…另 8 项"
-        ],
-        "news": [
-          {
-            "publishedAt": "2026-08-26T13:35:00+08:00",
-            "source": "新浪财经",
-            "title": "华大基因(300676)：1H26提质增效驱动净利率提升",
-            "url": "http://stock.finance.sina.com.cn/stock/go.php/vReport_Show/kind/search/rptid/841064563136/index.phtml"
-          },
-          {
-            "publishedAt": "2026-08-24T14:40:00+08:00",
-            "source": "新浪财经",
-            "title": "华大基因上半年经营现金流连负 易方达退出前10流通股东",
-            "url": "https://cj.sina.cn/articles/view/1663612603/6328b6bb020022tw2"
-          },
-          {
-            "publishedAt": "2026-08-27T03:35:00+08:00",
-            "source": "新浪财经",
-            "title": "华大基因新注册《基于blast比对结果绘制比较基因组圈图软件V1.0》项目的软件著作权",
-            "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002hv9g"
-          },
-          {
-            "publishedAt": "2026-08-24T13:44:00+08:00",
-            "source": "新浪财经",
-            "title": "华大基因2026年半年报：净利4740.46万元增718%，精准医学检测驱动盈利修复",
-            "url": "https://cj.sina.cn/articles/view/5617041192/14ecd3f2802001pas0"
-          },
-          {
-            "publishedAt": "2026-08-25T00:00:00+08:00",
-            "source": "新浪财经",
-            "title": "体外诊断公司深化AI技术布局",
-            "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e47059093ry4"
-          },
-          {
-            "publishedAt": "2026-08-24T07:40:00+08:00",
-            "source": "新浪财经",
-            "title": "华大基因上半年营收18亿：同比增10% 净利4740万，实现扭亏为盈",
-            "url": "https://cj.sina.cn/articles/view/7915963911/1d7d40607001017fq8"
-          },
-          "…另 4 项"
-        ],
-        "quote": {
-          "asOf": "2026-08-28T16:29:15+08:00",
-          "change": -1.26,
-          "changePercent": -3.09,
-          "currency": "CNY",
-          "previousClose": 40.78
-        },
-        "sources": {
-          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz300676%2Cday%2C%2C%2C120%2Cqfq",
-          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=0.300676&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
-          "sinaFinance": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/300676/"
-        }
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "news"
-      ],
-      "claimBindings": [
-        {
-          "field": "news",
-          "before": [
-            {
-              "publishedAt": "2026-08-26T13:35:00+08:00",
-              "source": "新浪财经",
-              "title": "华大基因(300676)：1H26提质增效驱动净利率提升",
-              "url": "http://stock.finance.sina.com.cn/stock/go.php/vReport_Show/kind/search/rptid/841064563136/index.phtml"
-            },
-            {
-              "publishedAt": "2026-08-24T14:40:00+08:00",
-              "source": "新浪财经",
-              "title": "华大基因上半年经营现金流连负 易方达退出前10流通股东",
-              "url": "https://cj.sina.cn/articles/view/1663612603/6328b6bb020022tw2"
-            },
-            {
-              "publishedAt": "2026-08-27T03:35:00+08:00",
-              "source": "新浪财经",
-              "title": "华大基因新注册《基于blast比对结果绘制比较基因组圈图软件V1.0》项目的软件著作权",
-              "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002hv9g"
-            },
-            {
-              "publishedAt": "2026-08-24T13:44:00+08:00",
-              "source": "新浪财经",
-              "title": "华大基因2026年半年报：净利4740.46万元增718%，精准医学检测驱动盈利修复",
-              "url": "https://cj.sina.cn/articles/view/5617041192/14ecd3f2802001pas0"
-            },
-            {
-              "publishedAt": "2026-08-25T00:00:00+08:00",
-              "source": "新浪财经",
-              "title": "体外诊断公司深化AI技术布局",
-              "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e47059093ry4"
-            },
-            {
-              "publishedAt": "2026-08-28T00:00:00+08:00",
-              "source": "新浪财经",
-              "title": "中源协和聘任54岁杨帆为副总经理及财务总监",
-              "url": "https://finance.sina.com.cn/stock/aiassist/ggbd/2026-08-28/doc-inipuqhp5945138.shtml"
-            },
-            "…另 4 项"
-          ],
-          "after": [
-            {
-              "publishedAt": "2026-08-26T13:35:00+08:00",
-              "source": "新浪财经",
-              "title": "华大基因(300676)：1H26提质增效驱动净利率提升",
-              "url": "http://stock.finance.sina.com.cn/stock/go.php/vReport_Show/kind/search/rptid/841064563136/index.phtml"
-            },
-            {
-              "publishedAt": "2026-08-24T14:40:00+08:00",
-              "source": "新浪财经",
-              "title": "华大基因上半年经营现金流连负 易方达退出前10流通股东",
-              "url": "https://cj.sina.cn/articles/view/1663612603/6328b6bb020022tw2"
-            },
-            {
-              "publishedAt": "2026-08-27T03:35:00+08:00",
-              "source": "新浪财经",
-              "title": "华大基因新注册《基于blast比对结果绘制比较基因组圈图软件V1.0》项目的软件著作权",
-              "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002hv9g"
-            },
-            {
-              "publishedAt": "2026-08-24T13:44:00+08:00",
-              "source": "新浪财经",
-              "title": "华大基因2026年半年报：净利4740.46万元增718%，精准医学检测驱动盈利修复",
-              "url": "https://cj.sina.cn/articles/view/5617041192/14ecd3f2802001pas0"
-            },
-            {
-              "publishedAt": "2026-08-25T00:00:00+08:00",
-              "source": "新浪财经",
-              "title": "体外诊断公司深化AI技术布局",
-              "url": "https://cj.sina.cn/articles/view/7517400647/1c0126e47059093ry4"
-            },
-            {
-              "publishedAt": "2026-08-24T07:40:00+08:00",
-              "source": "新浪财经",
-              "title": "华大基因上半年营收18亿：同比增10% 净利4740万，实现扭亏为盈",
-              "url": "https://cj.sina.cn/articles/view/7915963911/1d7d40607001017fq8"
-            },
-            "…另 4 项"
-          ],
-          "evidenceIds": [
-            "E017",
-            "E018",
-            "E019",
-            "E020"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "metrics",
-        "quote"
-      ],
-      "evidenceIds": [
-        "E017",
-        "E018",
-        "E019",
-        "E020"
-      ],
-      "supportingEvidenceIds": [
-        "E017",
-        "E018",
-        "E019",
-        "E020"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 4,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-e15e7840c923cf0e4420",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "cambricon",
-      "entityName": "中科寒武纪科技股份有限公司",
-      "action": "updated",
-      "changedFields": [
-        "metrics",
-        "news",
-        "sources"
-      ],
-      "summary": "中科寒武纪科技股份有限公司 的 news 发生变化。",
-      "importance": 48,
-      "before": {
-        "metrics": [
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "21.57元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.50元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "3.68元"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "6.28亿"
-          },
-          {
-            "id": "marketCap",
-            "label": "总市值",
-            "value": "¥6583.30亿"
-          },
-          {
-            "id": "netIncome",
-            "label": "净利润",
-            "value": "23.11亿元"
-          },
-          "…另 3 项"
-        ],
-        "news": [
-          {
-            "publishedAt": "2026-08-28T19:05:00+08:00",
-            "source": "新浪财经",
-            "title": "章建平夫妇现身亨通光电，章盟主二季度上演百亿大调仓",
-            "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002tolm"
-          },
-          {
-            "publishedAt": "2026-08-28T10:03:00+08:00",
-            "source": "新浪财经",
-            "title": "科创AIETF鹏华(589090)、科创创业人工智能ETF鹏华(588410)标的指数均涨超1.5%，软件板块迎来海内外利好催化",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4721256.shtml"
-          },
-          {
-            "publishedAt": "2026-08-28T10:16:00+08:00",
-            "source": "新浪财经",
-            "title": "算力需求向硬件上游传导，消费电子核心上游环节集体走强",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4727023.shtml"
-          },
-          {
-            "publishedAt": "2026-08-28T10:52:00+08:00",
-            "source": "新浪财经",
-            "title": "科创50ETF平安(589150)交投活跃，AI驱动PCB、软件等细分板块走强",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4746462.shtml"
-          },
-          {
-            "publishedAt": "2026-08-28T13:20:00+08:00",
-            "source": "新浪财经",
-            "title": "国产模型加速落地叠加算力需求爆发，国产AI芯片进入上升通道，重视下半年芯片设计机会",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzv4686253.shtml"
-          },
-          {
-            "publishedAt": "2026-08-28T13:23:00+08:00",
-            "source": "新浪财经",
-            "title": "商汤大装置为智谱GLM-5.3-Flash提供国产算力，头部大模型国产算力承接取得实质进展",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzx5800960.shtml"
-          },
-          "…另 4 项"
-        ],
-        "sources": {
-          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh688256%2Cday%2C%2C%2C120%2Cqfq",
-          "sinaFinance": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/688256/"
-        }
-      },
-      "after": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "¥116.37亿"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "21.57元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.50元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "3.68元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "¥6581.77亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "6.29亿股"
-          },
-          "…另 8 项"
-        ],
-        "news": [
-          {
-            "publishedAt": "2026-08-28T19:05:00+08:00",
-            "source": "新浪财经",
-            "title": "章建平夫妇现身亨通光电，章盟主二季度上演百亿大调仓",
-            "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002tolm"
-          },
-          {
-            "publishedAt": "2026-08-28T10:03:00+08:00",
-            "source": "新浪财经",
-            "title": "科创AIETF鹏华(589090)、科创创业人工智能ETF鹏华(588410)标的指数均涨超1.5%，软件板块迎来海内外利好催化",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4721256.shtml"
-          },
-          {
-            "publishedAt": "2026-08-28T10:16:00+08:00",
-            "source": "新浪财经",
-            "title": "算力需求向硬件上游传导，消费电子核心上游环节集体走强",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4727023.shtml"
-          },
-          {
-            "publishedAt": "2026-08-28T10:52:00+08:00",
-            "source": "新浪财经",
-            "title": "科创50ETF平安(589150)交投活跃，AI驱动PCB、软件等细分板块走强",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4746462.shtml"
-          },
-          {
-            "publishedAt": "2026-08-28T13:20:00+08:00",
-            "source": "新浪财经",
-            "title": "国产模型加速落地叠加算力需求爆发，国产AI芯片进入上升通道，重视下半年芯片设计机会",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzv4686253.shtml"
-          },
-          {
-            "publishedAt": "2026-08-28T13:23:00+08:00",
-            "source": "新浪财经",
-            "title": "商汤大装置为智谱GLM-5.3-Flash提供国产算力，头部大模型国产算力承接取得实质进展",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzx5800960.shtml"
-          },
-          "…另 4 项"
-        ],
-        "sources": {
-          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh688256%2Cday%2C%2C%2C120%2Cqfq",
-          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=1.688256&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
-          "sinaFinance": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/688256/"
-        }
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "news"
-      ],
-      "claimBindings": [
-        {
-          "field": "news",
-          "before": [
-            {
-              "publishedAt": "2026-08-28T19:05:00+08:00",
-              "source": "新浪财经",
-              "title": "章建平夫妇现身亨通光电，章盟主二季度上演百亿大调仓",
-              "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002tolm"
-            },
-            {
-              "publishedAt": "2026-08-28T10:03:00+08:00",
-              "source": "新浪财经",
-              "title": "科创AIETF鹏华(589090)、科创创业人工智能ETF鹏华(588410)标的指数均涨超1.5%，软件板块迎来海内外利好催化",
-              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4721256.shtml"
-            },
-            {
-              "publishedAt": "2026-08-28T10:16:00+08:00",
-              "source": "新浪财经",
-              "title": "算力需求向硬件上游传导，消费电子核心上游环节集体走强",
-              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4727023.shtml"
-            },
-            {
-              "publishedAt": "2026-08-28T10:52:00+08:00",
-              "source": "新浪财经",
-              "title": "科创50ETF平安(589150)交投活跃，AI驱动PCB、软件等细分板块走强",
-              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4746462.shtml"
-            },
-            {
-              "publishedAt": "2026-08-28T13:20:00+08:00",
-              "source": "新浪财经",
-              "title": "国产模型加速落地叠加算力需求爆发，国产AI芯片进入上升通道，重视下半年芯片设计机会",
-              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzv4686253.shtml"
-            },
-            {
-              "publishedAt": "2026-08-28T13:23:00+08:00",
-              "source": "新浪财经",
-              "title": "商汤大装置为智谱GLM-5.3-Flash提供国产算力，头部大模型国产算力承接取得实质进展",
-              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzx5800960.shtml"
-            },
-            "…另 4 项"
-          ],
-          "after": [
-            {
-              "publishedAt": "2026-08-28T19:05:00+08:00",
-              "source": "新浪财经",
-              "title": "章建平夫妇现身亨通光电，章盟主二季度上演百亿大调仓",
-              "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002tolm"
-            },
-            {
-              "publishedAt": "2026-08-28T10:03:00+08:00",
-              "source": "新浪财经",
-              "title": "科创AIETF鹏华(589090)、科创创业人工智能ETF鹏华(588410)标的指数均涨超1.5%，软件板块迎来海内外利好催化",
-              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4721256.shtml"
-            },
-            {
-              "publishedAt": "2026-08-28T10:16:00+08:00",
-              "source": "新浪财经",
-              "title": "算力需求向硬件上游传导，消费电子核心上游环节集体走强",
-              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4727023.shtml"
-            },
-            {
-              "publishedAt": "2026-08-28T10:52:00+08:00",
-              "source": "新浪财经",
-              "title": "科创50ETF平安(589150)交投活跃，AI驱动PCB、软件等细分板块走强",
-              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4746462.shtml"
-            },
-            {
-              "publishedAt": "2026-08-28T13:20:00+08:00",
-              "source": "新浪财经",
-              "title": "国产模型加速落地叠加算力需求爆发，国产AI芯片进入上升通道，重视下半年芯片设计机会",
-              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzv4686253.shtml"
-            },
-            {
-              "publishedAt": "2026-08-28T13:23:00+08:00",
-              "source": "新浪财经",
-              "title": "商汤大装置为智谱GLM-5.3-Flash提供国产算力，头部大模型国产算力承接取得实质进展",
-              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzx5800960.shtml"
-            },
-            "…另 4 项"
-          ],
-          "evidenceIds": [
-            "E021",
-            "E022",
-            "E023",
-            "E024"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "metrics"
-      ],
-      "evidenceIds": [
-        "E021",
-        "E022",
-        "E023",
-        "E024"
-      ],
-      "supportingEvidenceIds": [
-        "E021",
-        "E022",
-        "E023",
-        "E024"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 4,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-e7f7d6f3a276be2469a0",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "tempus-ai",
-      "entityName": "Tempus AI, Inc.",
-      "action": "updated",
-      "changedFields": [
-        "metrics",
-        "priceHistory",
-        "quote",
-        "sources"
-      ],
-      "summary": "Tempus AI, Inc. 的 quote 发生变化。",
-      "importance": 48,
-      "before": {
-        "metrics": [
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "2.47美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.45美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.67美元"
-          },
-          {
-            "id": "marketCap",
-            "label": "总市值",
-            "value": "US$116.39亿"
-          },
-          {
-            "id": "netIncome",
-            "label": "净利润",
-            "value": "1.2亿美元"
-          },
-          {
-            "id": "revenue",
-            "label": "营业收入",
-            "value": "7.31亿美元"
-          },
-          "…另 3 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 70.690002,
-            "date": "2026-08-27",
-            "high": 71.889999,
-            "low": 67.800003,
-            "open": 68.650002,
-            "volume": 6575700.0
-          },
-          {
-            "close": 64.660004,
-            "date": "2026-08-28",
-            "high": 70.899902,
-            "low": 64.540001,
-            "open": 68.997498,
-            "volume": 5434124.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-28T17:06:10+00:00",
-          "change": -8.04,
-          "changePercent": -11.06,
-          "currency": "USD",
-          "previousClose": 72.69
-        },
-        "sources": {
-          "price": "https://query1.finance.yahoo.com/v8/finance/chart/TEM?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/TEM/",
-          "yahooFinance": "https://sg.finance.yahoo.com/quote/TEM/"
-        }
-      },
-      "after": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$5.80亿"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "2.47美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.45美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.67美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$112.32亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "1.75亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 68.480003,
-            "date": "2026-08-26",
-            "high": 70.217003,
-            "low": 67.300003,
-            "open": 67.480003,
-            "volume": 5225800.0
-          },
-          {
-            "close": 70.690002,
-            "date": "2026-08-27",
-            "high": 71.889999,
-            "low": 67.800003,
-            "open": 68.650002,
-            "volume": 6588600.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-28T20:00:01+00:00",
-          "change": -8.65,
-          "changePercent": -11.9,
-          "currency": "USD",
-          "previousClose": 72.69
-        },
-        "sources": {
-          "price": "https://query1.finance.yahoo.com/v8/finance/chart/TEM?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
-          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=105.TEM&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/TEM/",
-          "yahooFinance": "https://sg.finance.yahoo.com/quote/TEM/"
-        }
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "quote"
-      ],
-      "claimBindings": [
-        {
-          "field": "quote",
-          "before": {
-            "asOf": "2026-08-28T17:06:10+00:00",
-            "change": -8.04,
-            "changePercent": -11.06,
-            "currency": "USD",
-            "previousClose": 72.69
-          },
-          "after": {
-            "asOf": "2026-08-28T20:00:01+00:00",
-            "change": -8.65,
-            "changePercent": -11.9,
-            "currency": "USD",
-            "previousClose": 72.69
-          },
-          "evidenceIds": [
-            "E025"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "metrics",
-        "priceHistory"
-      ],
-      "evidenceIds": [
-        "E025"
-      ],
-      "supportingEvidenceIds": [
-        "E025"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-1cbc17417e355db4707f",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "rocket-lab",
-      "entityName": "Rocket Lab Corporation",
-      "action": "updated",
-      "changedFields": [
-        "metrics",
-        "priceHistory",
-        "quote",
-        "sources"
-      ],
-      "summary": "Rocket Lab Corporation 的 quote 发生变化。",
-      "importance": 48,
-      "before": {
-        "metrics": [
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "5.84美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.22美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.15美元"
-          },
-          {
-            "id": "marketCap",
-            "label": "总市值",
-            "value": "US$381.42亿"
-          },
-          {
-            "id": "netIncome",
-            "label": "净利润",
-            "value": "9428万美元"
-          },
-          {
-            "id": "revenue",
-            "label": "营业收入",
-            "value": "4.34亿美元"
-          },
-          "…另 3 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 67.529999,
-            "date": "2026-08-27",
-            "high": 67.57,
-            "low": 65.419998,
-            "open": 66.910004,
-            "volume": 11397800.0
-          },
-          {
-            "close": 63.781898,
-            "date": "2026-08-28",
-            "high": 66.749901,
-            "low": 63.509998,
-            "open": 66.699997,
-            "volume": 11829530.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-28T17:05:59+00:00",
-          "change": -8.788,
-          "changePercent": -12.11,
-          "currency": "USD",
-          "previousClose": 72.57
-        },
-        "sources": {
-          "price": "https://query1.finance.yahoo.com/v8/finance/chart/RKLB?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/RKLB/",
-          "yahooFinance": "https://sg.finance.yahoo.com/quote/RKLB/"
-        }
-      },
-      "after": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$12.02亿"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "5.84美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.22美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.15美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$385.35亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "5.98亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 66.18,
-            "date": "2026-08-26",
-            "high": 67.675003,
-            "low": 65.800003,
-            "open": 66.400002,
-            "volume": 11166200.0
-          },
-          {
-            "close": 67.529999,
-            "date": "2026-08-27",
-            "high": 67.57,
-            "low": 65.419998,
-            "open": 66.910004,
-            "volume": 11492100.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-28T20:00:00+00:00",
-          "change": -8.18,
-          "changePercent": -11.27,
-          "currency": "USD",
-          "previousClose": 72.57
-        },
-        "sources": {
-          "price": "https://query1.finance.yahoo.com/v8/finance/chart/RKLB?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
-          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=105.RKLB&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/RKLB/",
-          "yahooFinance": "https://sg.finance.yahoo.com/quote/RKLB/"
-        }
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "quote"
-      ],
-      "claimBindings": [
-        {
-          "field": "quote",
-          "before": {
-            "asOf": "2026-08-28T17:05:59+00:00",
-            "change": -8.788,
-            "changePercent": -12.11,
-            "currency": "USD",
-            "previousClose": 72.57
-          },
-          "after": {
-            "asOf": "2026-08-28T20:00:00+00:00",
-            "change": -8.18,
-            "changePercent": -11.27,
-            "currency": "USD",
-            "previousClose": 72.57
-          },
-          "evidenceIds": [
-            "E029"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "metrics",
-        "priceHistory"
-      ],
-      "evidenceIds": [
-        "E029"
-      ],
-      "supportingEvidenceIds": [
-        "E029"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-0fc7d1c37e8bf4f1c515",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "rigetti",
-      "entityName": "Rigetti Computing, Inc.",
-      "action": "updated",
-      "changedFields": [
-        "metrics",
-        "priceHistory",
-        "quote",
-        "sources"
-      ],
-      "summary": "Rigetti Computing, Inc. 的 quote 发生变化。",
-      "importance": 48,
-      "before": {
-        "metrics": [
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "1.61美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.1美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.06美元"
-          },
-          {
-            "id": "marketCap",
-            "label": "总市值",
-            "value": "US$51.80亿"
-          },
-          {
-            "id": "netIncome",
-            "label": "净利润",
-            "value": "4359.2万美元"
-          },
-          {
-            "id": "revenue",
-            "label": "营业收入",
-            "value": "953.80万美元"
-          },
-          "…另 3 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 16.440001,
-            "date": "2026-08-27",
-            "high": 16.68,
-            "low": 16.01,
-            "open": 16.285,
-            "volume": 15112600.0
-          },
-          {
-            "close": 15.51,
-            "date": "2026-08-28",
-            "high": 16.360001,
-            "low": 15.475,
-            "open": 16.23,
-            "volume": 9130841.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-28T17:06:00+00:00",
-          "change": -2.395,
-          "changePercent": -13.37,
-          "currency": "USD",
-          "previousClose": 17.91
-        },
-        "sources": {
-          "price": "https://query1.finance.yahoo.com/v8/finance/chart/RGTI?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/RGTI/",
-          "yahooFinance": "https://sg.finance.yahoo.com/quote/RGTI/"
-        }
-      },
-      "after": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$2.30亿"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "1.61美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.1美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.06美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$52.03亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "3.34亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 15.94,
-            "date": "2026-08-26",
-            "high": 16.940001,
-            "low": 15.93,
-            "open": 16.700001,
-            "volume": 15413300.0
-          },
-          {
-            "close": 16.440001,
-            "date": "2026-08-27",
-            "high": 16.68,
-            "low": 16.01,
-            "open": 16.285,
-            "volume": 15148600.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-28T20:00:01+00:00",
-          "change": -2.32,
-          "changePercent": -12.95,
-          "currency": "USD",
-          "previousClose": 17.91
-        },
-        "sources": {
-          "price": "https://query1.finance.yahoo.com/v8/finance/chart/RGTI?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
-          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=105.RGTI&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/RGTI/",
-          "yahooFinance": "https://sg.finance.yahoo.com/quote/RGTI/"
-        }
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "quote"
-      ],
-      "claimBindings": [
-        {
-          "field": "quote",
-          "before": {
-            "asOf": "2026-08-28T17:06:00+00:00",
-            "change": -2.395,
-            "changePercent": -13.37,
-            "currency": "USD",
-            "previousClose": 17.91
-          },
-          "after": {
-            "asOf": "2026-08-28T20:00:01+00:00",
-            "change": -2.32,
-            "changePercent": -12.95,
-            "currency": "USD",
-            "previousClose": 17.91
-          },
-          "evidenceIds": [
-            "E033"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "metrics",
-        "priceHistory"
-      ],
-      "evidenceIds": [
-        "E033"
-      ],
-      "supportingEvidenceIds": [
-        "E033"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-a85bdd49dac9c0d6c5ee",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "recursion",
-      "entityName": "Recursion Pharmaceuticals, Inc.",
-      "action": "updated",
-      "changedFields": [
-        "metrics",
-        "priceHistory",
-        "quote",
-        "sources"
-      ],
-      "summary": "Recursion Pharmaceuticals, Inc. 的 quote 发生变化。",
-      "importance": 48,
-      "before": {
-        "metrics": [
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "1.71美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.35美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.47美元"
-          },
-          {
-            "id": "marketCap",
-            "label": "总市值",
-            "value": "US$17.87亿"
-          },
-          {
-            "id": "netIncome",
-            "label": "净利润",
-            "value": "2.49亿美元"
-          },
-          {
-            "id": "revenue",
-            "label": "营业收入",
-            "value": "1414.30万美元"
-          },
-          "…另 3 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 3.44,
-            "date": "2026-08-27",
-            "high": 3.55,
-            "low": 3.42,
-            "open": 3.515,
-            "volume": 10930100.0
-          },
-          {
-            "close": 3.3402,
-            "date": "2026-08-28",
-            "high": 3.45,
-            "low": 3.315,
-            "open": 3.4,
-            "volume": 6425428.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-28T17:06:07+00:00",
-          "change": -0.16,
-          "changePercent": -4.57,
-          "currency": "USD",
-          "previousClose": 3.5
-        },
-        "sources": {
-          "price": "https://query1.finance.yahoo.com/v8/finance/chart/RXRX?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/RXRX/",
-          "yahooFinance": "https://sg.finance.yahoo.com/quote/RXRX/"
-        }
-      },
-      "after": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$3548.59万"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "1.71美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.35美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.47美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$17.88亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "5.35亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 3.49,
-            "date": "2026-08-26",
-            "high": 3.55,
-            "low": 3.43,
-            "open": 3.51,
-            "volume": 12978400.0
-          },
-          {
-            "close": 3.44,
-            "date": "2026-08-27",
-            "high": 3.55,
-            "low": 3.42,
-            "open": 3.515,
-            "volume": 10986800.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-28T20:00:00+00:00",
-          "change": -0.16,
-          "changePercent": -4.57,
-          "currency": "USD",
-          "previousClose": 3.5
-        },
-        "sources": {
-          "price": "https://query1.finance.yahoo.com/v8/finance/chart/RXRX?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
-          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=105.RXRX&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/RXRX/",
-          "yahooFinance": "https://sg.finance.yahoo.com/quote/RXRX/"
-        }
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "quote"
-      ],
-      "claimBindings": [
-        {
-          "field": "quote",
-          "before": {
-            "asOf": "2026-08-28T17:06:07+00:00",
-            "change": -0.16,
-            "changePercent": -4.57,
-            "currency": "USD",
-            "previousClose": 3.5
-          },
-          "after": {
-            "asOf": "2026-08-28T20:00:00+00:00",
-            "change": -0.16,
-            "changePercent": -4.57,
-            "currency": "USD",
-            "previousClose": 3.5
-          },
-          "evidenceIds": [
-            "E037"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "metrics",
-        "priceHistory"
-      ],
-      "evidenceIds": [
-        "E037"
-      ],
-      "supportingEvidenceIds": [
-        "E037"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-9397e0d52b228cdf261d",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "mobileye",
-      "entityName": "Mobileye Global Inc.",
-      "action": "updated",
-      "changedFields": [
-        "metrics",
-        "priceHistory",
-        "quote",
-        "sources"
-      ],
-      "summary": "Mobileye Global Inc. 的 quote 发生变化。",
-      "importance": 48,
-      "before": {
-        "metrics": [
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "9.77美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.25美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "4.7美元"
-          },
-          {
-            "id": "marketCap",
-            "label": "总市值",
-            "value": "US$72.63亿"
-          },
-          {
-            "id": "netIncome",
-            "label": "净利润",
-            "value": "38.39亿美元"
-          },
-          {
-            "id": "revenue",
-            "label": "营业收入",
-            "value": "10.66亿美元"
-          },
-          "…另 3 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 8.61,
-            "date": "2026-08-27",
-            "high": 8.83,
-            "low": 8.56,
-            "open": 8.65,
-            "volume": 3027800.0
-          },
-          {
-            "close": 8.545,
-            "date": "2026-08-28",
-            "high": 8.83,
-            "low": 8.515,
-            "open": 8.65,
-            "volume": 1476104.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-28T17:06:10+00:00",
-          "change": -0.485,
-          "changePercent": -5.37,
-          "currency": "USD",
-          "previousClose": 9.03
-        },
-        "sources": {
-          "price": "https://query1.finance.yahoo.com/v8/finance/chart/MBLY?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/MBLY/",
-          "yahooFinance": "https://sg.finance.yahoo.com/quote/MBLY/"
-        }
-      },
-      "after": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$2748.11万"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "9.77美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.25美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "4.7美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$21.66亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "2.52亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 8.54,
-            "date": "2026-08-26",
-            "high": 8.75,
-            "low": 8.46,
-            "open": 8.66,
-            "volume": 2881100.0
-          },
-          {
-            "close": 8.61,
-            "date": "2026-08-27",
-            "high": 8.83,
-            "low": 8.56,
-            "open": 8.65,
-            "volume": 3041100.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-28T20:00:01+00:00",
-          "change": -0.45,
-          "changePercent": -4.98,
-          "currency": "USD",
-          "previousClose": 9.03
-        },
-        "sources": {
-          "price": "https://query1.finance.yahoo.com/v8/finance/chart/MBLY?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
-          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=105.MBLY&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/MBLY/",
-          "yahooFinance": "https://sg.finance.yahoo.com/quote/MBLY/"
-        }
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "quote"
-      ],
-      "claimBindings": [
-        {
-          "field": "quote",
-          "before": {
-            "asOf": "2026-08-28T17:06:10+00:00",
-            "change": -0.485,
-            "changePercent": -5.37,
-            "currency": "USD",
-            "previousClose": 9.03
-          },
-          "after": {
-            "asOf": "2026-08-28T20:00:01+00:00",
-            "change": -0.45,
-            "changePercent": -4.98,
-            "currency": "USD",
-            "previousClose": 9.03
-          },
-          "evidenceIds": [
-            "E041"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "metrics",
-        "priceHistory"
-      ],
-      "evidenceIds": [
-        "E041"
-      ],
-      "supportingEvidenceIds": [
-        "E041"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-6cc6dafeef7819615878",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "joby",
-      "entityName": "Joby Aviation, Inc.",
-      "action": "updated",
-      "changedFields": [
-        "metrics",
-        "priceHistory",
-        "quote",
-        "sources"
-      ],
-      "summary": "Joby Aviation, Inc. 的 quote 发生变化。",
-      "importance": 48,
-      "before": {
-        "metrics": [
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "1.79美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.32美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.37美元"
-          },
-          {
-            "id": "marketCap",
-            "label": "总市值",
-            "value": "US$68.69亿"
-          },
-          {
-            "id": "netIncome",
-            "label": "净利润",
-            "value": "3.55亿美元"
-          },
-          {
-            "id": "revenue",
-            "label": "营业收入",
-            "value": "6288.50万美元"
-          },
-          "…另 3 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 7.15,
-            "date": "2026-08-27",
-            "high": 7.29,
-            "low": 7.08,
-            "open": 7.26,
-            "volume": 15680000.0
-          },
-          {
-            "close": 6.945,
-            "date": "2026-08-28",
-            "high": 7.18,
-            "low": 6.94,
-            "open": 7.15,
-            "volume": 13275039.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-28T17:06:12+00:00",
-          "change": -0.584,
-          "changePercent": -7.76,
-          "currency": "USD",
-          "previousClose": 7.53
-        },
-        "sources": {
-          "price": "https://query1.finance.yahoo.com/v8/finance/chart/JOBY?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/JOBY/",
-          "yahooFinance": "https://sg.finance.yahoo.com/quote/JOBY/"
-        }
-      },
-      "after": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$1.89亿"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "1.79美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.32美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.37美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$69.04亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "9.89亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 7.14,
-            "date": "2026-08-26",
-            "high": 7.355,
-            "low": 7.11,
-            "open": 7.18,
-            "volume": 18210200.0
-          },
-          {
-            "close": 7.15,
-            "date": "2026-08-27",
-            "high": 7.29,
-            "low": 7.08,
-            "open": 7.26,
-            "volume": 15726900.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-28T20:00:02+00:00",
-          "change": -0.55,
-          "changePercent": -7.3,
-          "currency": "USD",
-          "previousClose": 7.53
-        },
-        "sources": {
-          "price": "https://query1.finance.yahoo.com/v8/finance/chart/JOBY?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
-          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=106.JOBY&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/JOBY/",
-          "yahooFinance": "https://sg.finance.yahoo.com/quote/JOBY/"
-        }
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "quote"
-      ],
-      "claimBindings": [
-        {
-          "field": "quote",
-          "before": {
-            "asOf": "2026-08-28T17:06:12+00:00",
-            "change": -0.584,
-            "changePercent": -7.76,
-            "currency": "USD",
-            "previousClose": 7.53
-          },
-          "after": {
-            "asOf": "2026-08-28T20:00:02+00:00",
-            "change": -0.55,
-            "changePercent": -7.3,
-            "currency": "USD",
-            "previousClose": 7.53
-          },
-          "evidenceIds": [
-            "E045"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "metrics",
-        "priceHistory"
-      ],
-      "evidenceIds": [
-        "E045"
-      ],
-      "supportingEvidenceIds": [
-        "E045"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-8df9372c99f6ad23869d",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "ionq",
-      "entityName": "IonQ, Inc.",
-      "action": "updated",
-      "changedFields": [
-        "metrics",
-        "priceHistory",
-        "quote",
-        "sources"
-      ],
-      "summary": "IonQ, Inc. 的 quote 发生变化。",
-      "importance": 48,
-      "before": {
-        "metrics": [
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "8.73美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.67美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "2.92美元"
-          },
-          {
-            "id": "marketCap",
-            "label": "总市值",
-            "value": "US$148.55亿"
-          },
-          {
-            "id": "netIncome",
-            "label": "净利润",
-            "value": "10.62亿美元"
-          },
-          {
-            "id": "revenue",
-            "label": "营业收入",
-            "value": "1.45亿美元"
-          },
-          "…另 3 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 42.459999,
-            "date": "2026-08-27",
-            "high": 42.939999,
-            "low": 40.759998,
-            "open": 41.029999,
-            "volume": 14816900.0
-          },
-          {
-            "close": 38.990002,
-            "date": "2026-08-28",
-            "high": 41.920502,
-            "low": 38.770302,
-            "open": 41.73,
-            "volume": 11979514.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-28T17:05:59+00:00",
-          "change": -5.87,
-          "changePercent": -13.09,
-          "currency": "USD",
-          "previousClose": 44.86
-        },
-        "sources": {
-          "price": "https://query1.finance.yahoo.com/v8/finance/chart/IONQ?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/IONQ/",
-          "yahooFinance": "https://sg.finance.yahoo.com/quote/IONQ/"
-        }
-      },
-      "after": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$7.95亿"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "8.73美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.67美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "2.92美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$149.35亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "3.81亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 40.029999,
-            "date": "2026-08-26",
-            "high": 41.91,
-            "low": 39.959999,
-            "open": 41.060001,
-            "volume": 13106100.0
-          },
-          {
-            "close": 42.459999,
-            "date": "2026-08-27",
-            "high": 42.939999,
-            "low": 40.759998,
-            "open": 41.029999,
-            "volume": 14880800.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-28T20:00:02+00:00",
-          "change": -5.66,
-          "changePercent": -12.62,
-          "currency": "USD",
-          "previousClose": 44.86
-        },
-        "sources": {
-          "price": "https://query1.finance.yahoo.com/v8/finance/chart/IONQ?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
-          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=106.IONQ&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/IONQ/",
-          "yahooFinance": "https://sg.finance.yahoo.com/quote/IONQ/"
-        }
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "quote"
-      ],
-      "claimBindings": [
-        {
-          "field": "quote",
-          "before": {
-            "asOf": "2026-08-28T17:05:59+00:00",
-            "change": -5.87,
-            "changePercent": -13.09,
-            "currency": "USD",
-            "previousClose": 44.86
-          },
-          "after": {
-            "asOf": "2026-08-28T20:00:02+00:00",
-            "change": -5.66,
-            "changePercent": -12.62,
-            "currency": "USD",
-            "previousClose": 44.86
-          },
-          "evidenceIds": [
-            "E049"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "metrics",
-        "priceHistory"
-      ],
-      "evidenceIds": [
-        "E049"
-      ],
-      "supportingEvidenceIds": [
-        "E049"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-3ea6b838e15951aabdd4",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "horizon-robotics",
-      "entityName": "Horizon Robotics",
-      "action": "updated",
-      "changedFields": [
-        "metrics",
-        "news",
-        "sources"
-      ],
-      "summary": "Horizon Robotics 的 news 发生变化。",
-      "importance": 48,
-      "before": {
-        "metrics": [
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "0.86元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.14元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.81元"
-          },
-          {
-            "id": "marketCap",
-            "label": "总市值",
-            "value": "HK$757.02亿"
-          },
-          {
-            "id": "netIncome",
-            "label": "净利润",
-            "value": "104.69亿元"
-          },
-          {
-            "id": "revenue",
-            "label": "营业收入",
-            "value": "37.58亿元"
-          },
-          "…另 2 项"
-        ],
-        "news": [
-          {
-            "publishedAt": "2026-08-28T19:38:00+08:00",
-            "source": "新浪财经",
-            "title": "更接地气的德味SUV 抢先体验一汽大众ID.AURA T6",
-            "url": "https://auto.sina.com.cn/newcar/2026-08-28/detail-inipwnxp9025857.shtml"
-          },
-          {
-            "publishedAt": "2026-08-28T08:24:00+08:00",
-            "source": "新浪财经",
-            "title": "比亚迪大汉EV开启预售，长安CS55蓝鲸超擎混动上市｜一周车闻",
-            "url": "https://cj.sina.cn/articles/view/1733360754/6750fc7202001i4as"
-          },
-          {
-            "publishedAt": "2026-08-27T10:30:00+08:00",
-            "source": "新浪财经",
-            "title": "把城市NOA打到10万元级，大众和地平线打响合资智驾反击战",
-            "url": "https://cj.sina.cn/articles/view/1750070171/684ff39b00101hp7c"
-          },
-          {
-            "publishedAt": "2026-08-28T17:14:00+08:00",
-            "source": "新浪财经",
-            "title": "一汽大众捷达M6首台量产车正式下线",
-            "url": "https://finance.sina.com.cn/7x24/2026-08-28/doc-inipwhrr9007553.shtml"
-          },
-          {
-            "publishedAt": "2026-08-27T18:13:00+08:00",
-            "source": "新浪财经",
-            "title": "智驾最舒服的十年，结束了",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-27/doc-inipucsr5279112.shtml"
-          },
-          {
-            "publishedAt": "2026-08-27T16:12:00+08:00",
-            "source": "新浪财经",
-            "title": "2026 年高端行李箱国货发展启示：立足国内出行场景，舒提啦（SHUTILA）打造本土化高端箱包",
-            "url": "https://finance.sina.com.cn/roll/2026-08-27/doc-iniptxkt5356944.shtml"
-          },
-          "…另 4 项"
-        ],
-        "sources": {
-          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=hk09660%2Cday%2C%2C%2C120%2Cqfq",
-          "sinaFinance": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/HK9660/",
-          "yahooFinance": "https://sg.finance.yahoo.com/quote/9660.HK/"
-        }
-      },
-      "after": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "HK$2.60亿"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "0.86元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.14元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.81元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "HK$652.95亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "137.61亿股"
-          },
-          "…另 7 项"
-        ],
-        "news": [
-          {
-            "publishedAt": "2026-08-28T19:38:00+08:00",
-            "source": "新浪财经",
-            "title": "更接地气的德味SUV 抢先体验一汽大众ID.AURA T6",
-            "url": "https://auto.sina.com.cn/newcar/2026-08-28/detail-inipwnxp9025857.shtml"
-          },
-          {
-            "publishedAt": "2026-08-28T08:24:00+08:00",
-            "source": "新浪财经",
-            "title": "比亚迪大汉EV开启预售，长安CS55蓝鲸超擎混动上市｜一周车闻",
-            "url": "https://cj.sina.cn/articles/view/1733360754/6750fc7202001i4as"
-          },
-          {
-            "publishedAt": "2026-08-28T17:14:00+08:00",
-            "source": "新浪财经",
-            "title": "一汽大众捷达M6首台量产车正式下线",
-            "url": "https://finance.sina.com.cn/7x24/2026-08-28/doc-inipwhrr9007553.shtml"
-          },
-          {
-            "publishedAt": "2026-08-27T18:13:00+08:00",
-            "source": "新浪财经",
-            "title": "智驾最舒服的十年，结束了",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-27/doc-inipucsr5279112.shtml"
-          },
-          {
-            "publishedAt": "2026-08-27T16:12:00+08:00",
-            "source": "新浪财经",
-            "title": "2026 年高端行李箱国货发展启示：立足国内出行场景，舒提啦（SHUTILA）打造本土化高端箱包",
-            "url": "https://finance.sina.com.cn/roll/2026-08-27/doc-iniptxkt5356944.shtml"
-          },
-          {
-            "publishedAt": "2026-08-28T07:41:00+08:00",
-            "source": "新浪财经",
-            "title": "极限竞速：地平线6PS5版或将延期，微软预告片已悄然移除PS5标识",
-            "url": "https://finance.sina.com.cn/roll/2026-08-28/doc-inipvrtx4693204.shtml"
-          },
-          "…另 4 项"
-        ],
-        "sources": {
-          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=hk09660%2Cday%2C%2C%2C120%2Cqfq",
-          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=116.09660&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
-          "sinaFinance": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/HK9660/",
-          "yahooFinance": "https://sg.finance.yahoo.com/quote/9660.HK/"
-        }
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "news"
-      ],
-      "claimBindings": [
-        {
-          "field": "news",
-          "before": [
-            {
-              "publishedAt": "2026-08-28T19:38:00+08:00",
-              "source": "新浪财经",
-              "title": "更接地气的德味SUV 抢先体验一汽大众ID.AURA T6",
-              "url": "https://auto.sina.com.cn/newcar/2026-08-28/detail-inipwnxp9025857.shtml"
-            },
-            {
-              "publishedAt": "2026-08-28T08:24:00+08:00",
-              "source": "新浪财经",
-              "title": "比亚迪大汉EV开启预售，长安CS55蓝鲸超擎混动上市｜一周车闻",
-              "url": "https://cj.sina.cn/articles/view/1733360754/6750fc7202001i4as"
-            },
-            {
-              "publishedAt": "2026-08-27T10:30:00+08:00",
-              "source": "新浪财经",
-              "title": "把城市NOA打到10万元级，大众和地平线打响合资智驾反击战",
-              "url": "https://cj.sina.cn/articles/view/1750070171/684ff39b00101hp7c"
-            },
-            {
-              "publishedAt": "2026-08-28T17:14:00+08:00",
-              "source": "新浪财经",
-              "title": "一汽大众捷达M6首台量产车正式下线",
-              "url": "https://finance.sina.com.cn/7x24/2026-08-28/doc-inipwhrr9007553.shtml"
-            },
-            {
-              "publishedAt": "2026-08-27T18:13:00+08:00",
-              "source": "新浪财经",
-              "title": "智驾最舒服的十年，结束了",
-              "url": "https://finance.sina.com.cn/jjxw/2026-08-27/doc-inipucsr5279112.shtml"
-            },
-            {
-              "publishedAt": "2026-08-27T16:12:00+08:00",
-              "source": "新浪财经",
-              "title": "2026 年高端行李箱国货发展启示：立足国内出行场景，舒提啦（SHUTILA）打造本土化高端箱包",
-              "url": "https://finance.sina.com.cn/roll/2026-08-27/doc-iniptxkt5356944.shtml"
-            },
-            "…另 4 项"
-          ],
-          "after": [
-            {
-              "publishedAt": "2026-08-28T19:38:00+08:00",
-              "source": "新浪财经",
-              "title": "更接地气的德味SUV 抢先体验一汽大众ID.AURA T6",
-              "url": "https://auto.sina.com.cn/newcar/2026-08-28/detail-inipwnxp9025857.shtml"
-            },
-            {
-              "publishedAt": "2026-08-28T08:24:00+08:00",
-              "source": "新浪财经",
-              "title": "比亚迪大汉EV开启预售，长安CS55蓝鲸超擎混动上市｜一周车闻",
-              "url": "https://cj.sina.cn/articles/view/1733360754/6750fc7202001i4as"
-            },
-            {
-              "publishedAt": "2026-08-28T17:14:00+08:00",
-              "source": "新浪财经",
-              "title": "一汽大众捷达M6首台量产车正式下线",
-              "url": "https://finance.sina.com.cn/7x24/2026-08-28/doc-inipwhrr9007553.shtml"
-            },
-            {
-              "publishedAt": "2026-08-27T18:13:00+08:00",
-              "source": "新浪财经",
-              "title": "智驾最舒服的十年，结束了",
-              "url": "https://finance.sina.com.cn/jjxw/2026-08-27/doc-inipucsr5279112.shtml"
-            },
-            {
-              "publishedAt": "2026-08-27T16:12:00+08:00",
-              "source": "新浪财经",
-              "title": "2026 年高端行李箱国货发展启示：立足国内出行场景，舒提啦（SHUTILA）打造本土化高端箱包",
-              "url": "https://finance.sina.com.cn/roll/2026-08-27/doc-iniptxkt5356944.shtml"
-            },
-            {
-              "publishedAt": "2026-08-28T07:41:00+08:00",
-              "source": "新浪财经",
-              "title": "极限竞速：地平线6PS5版或将延期，微软预告片已悄然移除PS5标识",
-              "url": "https://finance.sina.com.cn/roll/2026-08-28/doc-inipvrtx4693204.shtml"
-            },
-            "…另 4 项"
-          ],
-          "evidenceIds": [
-            "E053",
-            "E054",
-            "E055",
-            "E056"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "metrics"
-      ],
-      "evidenceIds": [
-        "E053",
-        "E054",
-        "E055",
-        "E056"
-      ],
-      "supportingEvidenceIds": [
-        "E053",
-        "E054",
-        "E055",
-        "E056"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 4,
-        "total": 4
-      },
-      "eligibleForKeyDevelopment": true
-    },
-    {
-      "id": "chg-9e6ac2ab8cd668928173",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "aurora",
-      "entityName": "Aurora Innovation, Inc.",
-      "action": "updated",
-      "changedFields": [
-        "metrics",
-        "priceHistory",
-        "quote",
-        "sources"
-      ],
-      "summary": "Aurora Innovation, Inc. 的 quote 发生变化。",
-      "importance": 48,
-      "before": {
-        "metrics": [
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "0.98美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.19美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.25美元"
-          },
-          {
-            "id": "marketCap",
-            "label": "总市值",
-            "value": "US$116.43亿"
-          },
-          {
-            "id": "netIncome",
-            "label": "净利润",
-            "value": "4.93亿美元"
-          },
-          {
-            "id": "revenue",
-            "label": "营业收入",
-            "value": "300.00万美元"
-          },
-          "…另 3 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 5.69,
-            "date": "2026-08-27",
-            "high": 5.93,
-            "low": 5.66,
-            "open": 5.925,
-            "volume": 25394500.0
-          },
-          {
-            "close": 5.8101,
-            "date": "2026-08-28",
-            "high": 5.86,
-            "low": 5.61,
-            "open": 5.705,
-            "volume": 14719660.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-28T17:06:02+00:00",
-          "change": -0.43,
-          "changePercent": -6.89,
-          "currency": "USD",
-          "previousClose": 6.24
-        },
-        "sources": {
-          "price": "https://query1.finance.yahoo.com/v8/finance/chart/AUR?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/AUR/",
-          "yahooFinance": "https://sg.finance.yahoo.com/quote/AUR/"
-        }
-      },
-      "after": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "US$1.81亿"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "0.98美元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.19美元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.25美元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "US$99.58亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "17.08亿股"
-          },
-          "…另 8 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 5.76,
-            "date": "2026-08-26",
-            "high": 5.88,
-            "low": 5.66,
-            "open": 5.77,
-            "volume": 19898600.0
-          },
-          {
-            "close": 5.69,
-            "date": "2026-08-27",
-            "high": 5.93,
-            "low": 5.66,
-            "open": 5.925,
-            "volume": 25421300.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-28T20:00:01+00:00",
-          "change": -0.41,
-          "changePercent": -6.57,
-          "currency": "USD",
-          "previousClose": 6.24
-        },
-        "sources": {
-          "price": "https://query1.finance.yahoo.com/v8/finance/chart/AUR?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
-          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=105.AUR&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
-          "tonghuashun": "https://stockpage.10jqka.com.cn/AUR/",
-          "yahooFinance": "https://sg.finance.yahoo.com/quote/AUR/"
-        }
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "quote"
-      ],
-      "claimBindings": [
-        {
-          "field": "quote",
-          "before": {
-            "asOf": "2026-08-28T17:06:02+00:00",
-            "change": -0.43,
-            "changePercent": -6.89,
-            "currency": "USD",
-            "previousClose": 6.24
-          },
-          "after": {
-            "asOf": "2026-08-28T20:00:01+00:00",
-            "change": -0.41,
-            "changePercent": -6.57,
-            "currency": "USD",
-            "previousClose": 6.24
-          },
-          "evidenceIds": [
-            "E057"
-          ]
-        }
-      ],
-      "unsupportedClaimFields": [
-        "metrics",
-        "priceHistory"
-      ],
-      "evidenceIds": [
-        "E057"
-      ],
-      "supportingEvidenceIds": [
-        "E057"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 4
       },
       "eligibleForKeyDevelopment": true
     }
@@ -3761,75 +596,16 @@
   "evidence": [
     {
       "id": "E001",
-      "changeId": "chg-323b1eefd24319746076",
-      "entityName": "OpenAI：因Cursor被SpaceX收购，将终止与其合作",
-      "claim": "新增高价值情报事件记录：OpenAI：因Cursor被SpaceX收购，将终止与其合作。",
-      "sourceName": "新浪财经",
-      "title": "OpenAI：因Cursor被SpaceX收购，将终止与其合作",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-08-29/doc-inipxusz5609695.shtml",
-      "publishedAt": "2026-08-29",
-      "evidenceGrade": "C",
+      "changeId": "chg-6d475ee553ecb41be66e",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 financing 发生变化。",
+      "sourceName": "CATL",
+      "title": "宁德时代·CATL",
+      "url": "https://www.catl.com/",
+      "publishedAt": "2026-08-20",
+      "evidenceGrade": "官方披露",
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E002",
-      "changeId": "chg-dc6f80d0c715bf5aa1da",
-      "entityName": "46枚、45枚、10枚、5枚，人形机器人运动会的奖牌数到底在测什么",
-      "claim": "新增高价值情报事件记录：46枚、45枚、10枚、5枚，人形机器人运动会的奖牌数到底在测什么。",
-      "sourceName": "钛媒体",
-      "title": "46枚、45枚、10枚、5枚，人形机器人运动会的奖牌数到底在测什么",
-      "url": "https://www.tmtpost.com/8120414.html",
-      "publishedAt": "2026-08-29",
-      "evidenceGrade": "C",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E003",
-      "changeId": "chg-d4b513be2065f489cd65",
-      "entityName": "Morefine launches new fanless mini PC with entry-level Alder Lake CPU and plenty of legacy I/O",
-      "claim": "新增高价值情报事件记录：Morefine launches new fanless mini PC with entry-level Alder Lake CPU and plenty of legacy I/O。",
-      "sourceName": "Notebookcheck",
-      "title": "Morefine launches new fanless mini PC with entry-level Alder Lake CPU and plenty of legacy I/O",
-      "url": "https://www.notebookcheck.net/Morefine-launches-new-fanless-mini-PC-with-entry-level-Alder-Lake-CPU-and-plenty-of-legacy-I-O.1382247.0.html",
-      "publishedAt": "2026-08-29",
-      "evidenceGrade": "C",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E004",
-      "changeId": "chg-2ecb24171c97d6826125",
-      "entityName": "Beyond answers: New Genie One features to turn insights into action",
-      "claim": "新增高价值情报事件记录：Beyond answers: New Genie One features to turn insights into action。",
-      "sourceName": "Databricks",
-      "title": "Beyond answers: New Genie One features to turn insights into action",
-      "url": "https://www.databricks.com/blog/beyond-answers-new-genie-one-features-turn-insights-action",
-      "publishedAt": "2026-08-28",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "financing"
       ],
       "qualityIssues": [],
       "qualityStatus": "passed",
@@ -3837,84 +613,16 @@
     },
     {
       "id": "E005",
-      "changeId": "chg-6c89afd343be86224f59",
-      "entityName": "文远知行",
-      "claim": "文远知行 的 quote 发生变化。",
-      "sourceName": "Yahoo财经",
-      "title": "Yahoo财经 行情数据",
-      "url": "https://sg.finance.yahoo.com/quote/WRD/",
-      "publishedAt": "2026-08-28T20:00:00+00:00",
-      "evidenceGrade": "市场数据",
+      "changeId": "chg-a803f83606b732d92db5",
+      "entityName": "SambaNova Systems",
+      "claim": "SambaNova Systems 的 financing 发生变化。",
+      "sourceName": "SambaNova",
+      "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
+      "url": "https://sambanova.ai/press/sambanova-completes-first-close-of-1b-financing-at-11b-valuation",
+      "publishedAt": "2026-07-08",
+      "evidenceGrade": "官方披露",
       "claimFields": [
-        "quote"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E009",
-      "changeId": "chg-a171e79ea43608f87d6a",
-      "entityName": "小马智行",
-      "claim": "小马智行 的 quote 发生变化。",
-      "sourceName": "Yahoo财经",
-      "title": "Yahoo财经 行情数据",
-      "url": "https://sg.finance.yahoo.com/quote/PONY/",
-      "publishedAt": "2026-08-28T20:00:00+00:00",
-      "evidenceGrade": "市场数据",
-      "claimFields": [
-        "quote"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E013",
-      "changeId": "chg-7910fda6dbe4653eb8f8",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 的 news 发生变化。",
-      "sourceName": "新浪财经",
-      "title": "一块电池如何影响车企利润表？宁德时代锁定半壁市场 车企重估电池自研与外采",
-      "url": "https://cj.sina.cn/articles/view/1650111241/625ab30902001hd5s",
-      "publishedAt": "2026-08-29T03:52:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E014",
-      "changeId": "chg-7910fda6dbe4653eb8f8",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 的 news 发生变化。",
-      "sourceName": "新浪财经",
-      "title": "中恒电气：8月28日召开业绩说明会，投资者参与",
-      "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002i3uu",
-      "publishedAt": "2026-08-29T00:06:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E015",
-      "changeId": "chg-7910fda6dbe4653eb8f8",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 的 news 发生变化。",
-      "sourceName": "新浪财经",
-      "title": "宁德时代新注册《动力锂电池运输安全防护装备智能设计平台V2.0》项目的软件著作权",
-      "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002i4t0",
-      "publishedAt": "2026-08-29T04:01:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
+        "financing"
       ],
       "qualityIssues": [],
       "qualityStatus": "passed",
@@ -3922,356 +630,55 @@
     },
     {
       "id": "E016",
-      "changeId": "chg-7910fda6dbe4653eb8f8",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 的 news 发生变化。",
-      "sourceName": "新浪财经",
-      "title": "“我们不是汽车公司”——296 家汽车产业公司的年报改写运动",
-      "url": "https://cj.sina.cn/articles/view/7294209083/1b2c4cc3b00101vexs",
-      "publishedAt": "2026-08-28T23:23:00+08:00",
-      "evidenceGrade": "媒体报道",
+      "changeId": "chg-d93083933adb00009cc0",
+      "entityName": "Joby Aviation",
+      "claim": "Joby Aviation 的 capitalMarkets、financing 发生变化。",
+      "sourceName": "Joby Aviation",
+      "title": "2025 Impact Report | Joby Aviation",
+      "url": "https://www.jobyaviation.com/news/2025-impact-report",
+      "publishedAt": "2026-07-16",
+      "evidenceGrade": "官方披露",
       "claimFields": [
-        "news"
+        "capitalMarkets",
+        "financing"
       ],
       "qualityIssues": [],
       "qualityStatus": "passed",
       "supportStatus": "supports"
     },
     {
-      "id": "E017",
-      "changeId": "chg-4a2ebf8082cdd2d5bf22",
-      "entityName": "华大基因",
-      "claim": "华大基因 的 news 发生变化。",
-      "sourceName": "新浪财经",
-      "title": "华大基因(300676)：1H26提质增效驱动净利率提升",
-      "url": "http://stock.finance.sina.com.cn/stock/go.php/vReport_Show/kind/search/rptid/841064563136/index.phtml",
-      "publishedAt": "2026-08-26T13:35:00+08:00",
-      "evidenceGrade": "媒体报道",
+      "id": "E026",
+      "changeId": "chg-9dfbfa33ca398304f7b2",
+      "entityName": "今年最好的机器人落地场景，可能在上海一家冰淇凌店",
+      "claim": "新增高价值情报事件记录：今年最好的机器人落地场景，可能在上海一家冰淇凌店。",
+      "sourceName": "钛媒体",
+      "title": "今年最好的机器人落地场景，可能在上海一家冰淇凌店",
+      "url": "https://www.tmtpost.com/8121421.html",
+      "publishedAt": "2026-08-29",
+      "evidenceGrade": "C",
       "claimFields": [
-        "news"
+        "publishedAt",
+        "summary",
+        "title"
       ],
       "qualityIssues": [],
       "qualityStatus": "passed",
       "supportStatus": "supports"
     },
     {
-      "id": "E018",
-      "changeId": "chg-4a2ebf8082cdd2d5bf22",
-      "entityName": "华大基因",
-      "claim": "华大基因 的 news 发生变化。",
-      "sourceName": "新浪财经",
-      "title": "华大基因上半年经营现金流连负 易方达退出前10流通股东",
-      "url": "https://cj.sina.cn/articles/view/1663612603/6328b6bb020022tw2",
-      "publishedAt": "2026-08-24T14:40:00+08:00",
-      "evidenceGrade": "媒体报道",
+      "id": "E027",
+      "changeId": "chg-014bc301baf5be52ab64",
+      "entityName": "Lenovo launches new budget LOQ gaming PC with up to Intel Core 7, 32GB RAM, and Nvidia RTX GPUs",
+      "claim": "新增高价值情报事件记录：Lenovo launches new budget LOQ gaming PC with up to Intel Core 7, 32GB RAM, and Nvidia RTX GPUs。",
+      "sourceName": "Notebookcheck",
+      "title": "Lenovo launches new budget LOQ gaming PC with up to Intel Core 7, 32GB RAM, and Nvidia RTX GPUs",
+      "url": "https://www.notebookcheck.net/Lenovo-launches-new-budget-LOQ-gaming-PC-with-up-to-Intel-Core-7-32GB-RAM-and-Nvidia-RTX-GPUs.1381901.0.html",
+      "publishedAt": "2026-08-29",
+      "evidenceGrade": "C",
       "claimFields": [
-        "news"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E019",
-      "changeId": "chg-4a2ebf8082cdd2d5bf22",
-      "entityName": "华大基因",
-      "claim": "华大基因 的 news 发生变化。",
-      "sourceName": "新浪财经",
-      "title": "华大基因新注册《基于blast比对结果绘制比较基因组圈图软件V1.0》项目的软件著作权",
-      "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002hv9g",
-      "publishedAt": "2026-08-27T03:35:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E020",
-      "changeId": "chg-4a2ebf8082cdd2d5bf22",
-      "entityName": "华大基因",
-      "claim": "华大基因 的 news 发生变化。",
-      "sourceName": "新浪财经",
-      "title": "华大基因2026年半年报：净利4740.46万元增718%，精准医学检测驱动盈利修复",
-      "url": "https://cj.sina.cn/articles/view/5617041192/14ecd3f2802001pas0",
-      "publishedAt": "2026-08-24T13:44:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E021",
-      "changeId": "chg-e15e7840c923cf0e4420",
-      "entityName": "中科寒武纪科技股份有限公司",
-      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
-      "sourceName": "新浪财经",
-      "title": "章建平夫妇现身亨通光电，章盟主二季度上演百亿大调仓",
-      "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002tolm",
-      "publishedAt": "2026-08-28T19:05:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E022",
-      "changeId": "chg-e15e7840c923cf0e4420",
-      "entityName": "中科寒武纪科技股份有限公司",
-      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
-      "sourceName": "新浪财经",
-      "title": "科创AIETF鹏华(589090)、科创创业人工智能ETF鹏华(588410)标的指数均涨超1.5%，软件板块迎来海内外利好催化",
-      "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4721256.shtml",
-      "publishedAt": "2026-08-28T10:03:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E023",
-      "changeId": "chg-e15e7840c923cf0e4420",
-      "entityName": "中科寒武纪科技股份有限公司",
-      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
-      "sourceName": "新浪财经",
-      "title": "算力需求向硬件上游传导，消费电子核心上游环节集体走强",
-      "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4727023.shtml",
-      "publishedAt": "2026-08-28T10:16:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E024",
-      "changeId": "chg-e15e7840c923cf0e4420",
-      "entityName": "中科寒武纪科技股份有限公司",
-      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
-      "sourceName": "新浪财经",
-      "title": "科创50ETF平安(589150)交投活跃，AI驱动PCB、软件等细分板块走强",
-      "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4746462.shtml",
-      "publishedAt": "2026-08-28T10:52:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E025",
-      "changeId": "chg-e7f7d6f3a276be2469a0",
-      "entityName": "Tempus AI, Inc.",
-      "claim": "Tempus AI, Inc. 的 quote 发生变化。",
-      "sourceName": "Yahoo财经",
-      "title": "Yahoo财经 行情数据",
-      "url": "https://sg.finance.yahoo.com/quote/TEM/",
-      "publishedAt": "2026-08-28T20:00:01+00:00",
-      "evidenceGrade": "市场数据",
-      "claimFields": [
-        "quote"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E029",
-      "changeId": "chg-1cbc17417e355db4707f",
-      "entityName": "Rocket Lab Corporation",
-      "claim": "Rocket Lab Corporation 的 quote 发生变化。",
-      "sourceName": "Yahoo财经",
-      "title": "Yahoo财经 行情数据",
-      "url": "https://sg.finance.yahoo.com/quote/RKLB/",
-      "publishedAt": "2026-08-28T20:00:00+00:00",
-      "evidenceGrade": "市场数据",
-      "claimFields": [
-        "quote"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E033",
-      "changeId": "chg-0fc7d1c37e8bf4f1c515",
-      "entityName": "Rigetti Computing, Inc.",
-      "claim": "Rigetti Computing, Inc. 的 quote 发生变化。",
-      "sourceName": "Yahoo财经",
-      "title": "Yahoo财经 行情数据",
-      "url": "https://sg.finance.yahoo.com/quote/RGTI/",
-      "publishedAt": "2026-08-28T20:00:01+00:00",
-      "evidenceGrade": "市场数据",
-      "claimFields": [
-        "quote"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E037",
-      "changeId": "chg-a85bdd49dac9c0d6c5ee",
-      "entityName": "Recursion Pharmaceuticals, Inc.",
-      "claim": "Recursion Pharmaceuticals, Inc. 的 quote 发生变化。",
-      "sourceName": "Yahoo财经",
-      "title": "Yahoo财经 行情数据",
-      "url": "https://sg.finance.yahoo.com/quote/RXRX/",
-      "publishedAt": "2026-08-28T20:00:00+00:00",
-      "evidenceGrade": "市场数据",
-      "claimFields": [
-        "quote"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E041",
-      "changeId": "chg-9397e0d52b228cdf261d",
-      "entityName": "Mobileye Global Inc.",
-      "claim": "Mobileye Global Inc. 的 quote 发生变化。",
-      "sourceName": "Yahoo财经",
-      "title": "Yahoo财经 行情数据",
-      "url": "https://sg.finance.yahoo.com/quote/MBLY/",
-      "publishedAt": "2026-08-28T20:00:01+00:00",
-      "evidenceGrade": "市场数据",
-      "claimFields": [
-        "quote"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E045",
-      "changeId": "chg-6cc6dafeef7819615878",
-      "entityName": "Joby Aviation, Inc.",
-      "claim": "Joby Aviation, Inc. 的 quote 发生变化。",
-      "sourceName": "Yahoo财经",
-      "title": "Yahoo财经 行情数据",
-      "url": "https://sg.finance.yahoo.com/quote/JOBY/",
-      "publishedAt": "2026-08-28T20:00:02+00:00",
-      "evidenceGrade": "市场数据",
-      "claimFields": [
-        "quote"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E049",
-      "changeId": "chg-8df9372c99f6ad23869d",
-      "entityName": "IonQ, Inc.",
-      "claim": "IonQ, Inc. 的 quote 发生变化。",
-      "sourceName": "Yahoo财经",
-      "title": "Yahoo财经 行情数据",
-      "url": "https://sg.finance.yahoo.com/quote/IONQ/",
-      "publishedAt": "2026-08-28T20:00:02+00:00",
-      "evidenceGrade": "市场数据",
-      "claimFields": [
-        "quote"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E053",
-      "changeId": "chg-3ea6b838e15951aabdd4",
-      "entityName": "Horizon Robotics",
-      "claim": "Horizon Robotics 的 news 发生变化。",
-      "sourceName": "新浪财经",
-      "title": "更接地气的德味SUV 抢先体验一汽大众ID.AURA T6",
-      "url": "https://auto.sina.com.cn/newcar/2026-08-28/detail-inipwnxp9025857.shtml",
-      "publishedAt": "2026-08-28T19:38:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E054",
-      "changeId": "chg-3ea6b838e15951aabdd4",
-      "entityName": "Horizon Robotics",
-      "claim": "Horizon Robotics 的 news 发生变化。",
-      "sourceName": "新浪财经",
-      "title": "比亚迪大汉EV开启预售，长安CS55蓝鲸超擎混动上市｜一周车闻",
-      "url": "https://cj.sina.cn/articles/view/1733360754/6750fc7202001i4as",
-      "publishedAt": "2026-08-28T08:24:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E055",
-      "changeId": "chg-3ea6b838e15951aabdd4",
-      "entityName": "Horizon Robotics",
-      "claim": "Horizon Robotics 的 news 发生变化。",
-      "sourceName": "新浪财经",
-      "title": "一汽大众捷达M6首台量产车正式下线",
-      "url": "https://finance.sina.com.cn/7x24/2026-08-28/doc-inipwhrr9007553.shtml",
-      "publishedAt": "2026-08-28T17:14:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E056",
-      "changeId": "chg-3ea6b838e15951aabdd4",
-      "entityName": "Horizon Robotics",
-      "claim": "Horizon Robotics 的 news 发生变化。",
-      "sourceName": "新浪财经",
-      "title": "智驾最舒服的十年，结束了",
-      "url": "https://finance.sina.com.cn/jjxw/2026-08-27/doc-inipucsr5279112.shtml",
-      "publishedAt": "2026-08-27T18:13:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E057",
-      "changeId": "chg-9e6ac2ab8cd668928173",
-      "entityName": "Aurora Innovation, Inc.",
-      "claim": "Aurora Innovation, Inc. 的 quote 发生变化。",
-      "sourceName": "Yahoo财经",
-      "title": "Yahoo财经 行情数据",
-      "url": "https://sg.finance.yahoo.com/quote/AUR/",
-      "publishedAt": "2026-08-28T20:00:01+00:00",
-      "evidenceGrade": "市场数据",
-      "claimFields": [
-        "quote"
+        "publishedAt",
+        "summary",
+        "title"
       ],
       "qualityIssues": [],
       "qualityStatus": "passed",
@@ -4289,7 +696,7 @@
       "LLM structured analysis",
       "evidence-ID validation"
     ],
-    "fallbackReason": "",
+    "fallbackReason": "SiliconFlowTimeoutError",
     "disclaimer": "信息仅供研究，不构成投资建议；关键事实应回溯原始信源。"
   },
   "history": [
@@ -4421,25 +828,27 @@
     },
     {
       "date": "2026-08-29",
-      "generatedAt": "2026-08-29T04:53:23+00:00",
-      "runStatus": "model",
-      "changeCount": 18,
-      "executiveSummary": "本证据包覆盖2026年8月28-29日多项科技与市场动态：OpenAI宣布因Cursor被SpaceX收购将终止合作；世界人形机器人运动会奖牌榜引发对行业实力评估的讨论；Morefine发布工业迷你PC；Databricks推出Genie One新功能；多只美股科技股（文远知行、小马智行、Tempus AI、Rocket Lab、Rigetti、IonQ等）出现较大跌幅；宁德时代、华大基因、寒武纪等公司新闻流更新。多数事件证据等级为C或媒体报道，需谨慎对待。"
+      "generatedAt": "2026-08-29T08:40:18+00:00",
+      "runStatus": "api-fallback",
+      "changeCount": 5,
+      "executiveSummary": "本期有 5 条外部事实候选通过基础证据质量门。当前为降级展示，仅列出字段变化，不提供模型研判或影响结论。"
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 18,
-    "eligibleCandidateCount": 18,
-    "rejectedCandidateCount": 0,
-    "rejectedByDataset": {},
-    "evidenceCount": 60,
-    "supportingEvidenceCount": 30,
-    "rejectedEvidenceCount": 3,
-    "passedButUnboundEvidenceCount": 27,
+    "candidateCount": 9,
+    "eligibleCandidateCount": 5,
+    "rejectedCandidateCount": 4,
+    "rejectedByDataset": {
+      "ventureCompany": 4
+    },
+    "evidenceCount": 27,
+    "supportingEvidenceCount": 5,
+    "rejectedEvidenceCount": 19,
+    "passedButUnboundEvidenceCount": 3,
     "rejectionReasons": {
-      "missing_published_at": 3,
-      "missing_title": 1,
-      "ungraded": 1
+      "missing_published_at": 13,
+      "ungraded": 6,
+      "missing_title": 1
     }
   },
   "researchScope": {
