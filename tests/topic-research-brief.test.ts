@@ -109,6 +109,38 @@ test("diversified robot companies require humanoid-specific evidence", () => {
   );
 });
 
+test("core brief excludes sources still awaiting cross-validation", () => {
+  const result = resolveTopicEvidence({
+    slug: "humanoid-robotics",
+    content,
+    events: [
+      event({
+        id: "pending-source",
+        title: "Humanoid robot reaches a deployment milestone",
+        source: {
+          name: "待核验来源",
+          url: "https://example.com/pending",
+          level: "待交叉验证",
+        },
+      }),
+      event({
+        id: "traceable-source",
+        title: "Humanoid robot expands factory deployment",
+        source: {
+          name: "公开媒体",
+          url: "https://example.com/traceable",
+          level: "媒体报道",
+        },
+      }),
+    ],
+  });
+
+  assert.deepEqual(
+    result.evidence.map(({ event: item }) => item.id),
+    ["traceable-source"],
+  );
+});
+
 test("duplicate headlines collapse to one traceable evidence item", () => {
   const result = resolveTopicEvidence({
     slug: "humanoid-robotics",
@@ -137,6 +169,41 @@ test("duplicate headlines collapse to one traceable evidence item", () => {
 
   assert.equal(result.evidence.length, 1);
   assert.equal(result.evidence[0]?.event.source.level, "官方披露");
+});
+
+test("AI capital report requires capital evidence even for tracked companies", () => {
+  const capitalContent: ReportContent = {
+    thesis: "AI 资本开支与融资研究",
+    points: [],
+    companySlugs: ["openai"],
+    eventSectors: ["AI / AGI"],
+    watchlist: ["资本开支"],
+  };
+  const result = resolveTopicEvidence({
+    slug: "ai-capital-2026",
+    content: capitalContent,
+    events: [
+      event({
+        id: "product",
+        title: "OpenAI launches a new model",
+        sector: "AI / AGI",
+        company: "OpenAI",
+        companySlug: "openai",
+      }),
+      event({
+        id: "capex",
+        title: "OpenAI announces new data center investment",
+        sector: "AI / AGI",
+        company: "OpenAI",
+        companySlug: "openai",
+      }),
+    ],
+  });
+
+  assert.deepEqual(
+    result.evidence.map(({ event: item }) => item.id),
+    ["capex"],
+  );
 });
 
 test("brief exposes reproducible coverage statistics", () => {
