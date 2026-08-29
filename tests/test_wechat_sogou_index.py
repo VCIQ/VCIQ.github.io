@@ -39,7 +39,7 @@ class WeChatSogouIndexTest(unittest.TestCase):
         url = sogou.build_search_url(spec)
         self.assertIn("weixin.sogou.com/weixin", url)
         self.assertIn("type=2", url)
-        self.assertIn("tsn=1", url)
+        self.assertIn("s_from=input", url)
         self.assertIn("%E9%87%8F%E5%AD%90%E4%BD%8D", url)
         self.assertIn("%E6%8E%A8%E7%90%86%E6%A8%A1%E5%9E%8B", url)
 
