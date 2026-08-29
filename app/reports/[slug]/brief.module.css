@@ -1,0 +1,225 @@
+.briefPanel {
+  border: 1px solid color-mix(in srgb, var(--line, #d8dde8) 82%, transparent);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--surface, #ffffff) 94%, #eef4ff 6%);
+  padding: clamp(20px, 3vw, 34px);
+  box-shadow: 0 18px 48px rgb(20 36 68 / 7%);
+}
+
+.briefHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid color-mix(in srgb, var(--line, #d8dde8) 72%, transparent);
+}
+
+.briefEyebrow {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.62;
+}
+
+.briefHeader h3 {
+  margin: 0;
+  font-size: clamp(22px, 3vw, 30px);
+  line-height: 1.2;
+}
+
+.metaRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.metaRow span,
+.matchBadge,
+.evidenceId {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+  background: color-mix(in srgb, var(--surface, #ffffff) 82%, transparent);
+  padding: 5px 9px;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.briefSummary {
+  display: grid;
+  gap: 10px;
+  padding: 22px 0 6px;
+}
+
+.briefSummary p {
+  margin: 0;
+  line-height: 1.75;
+}
+
+.briefSummary p:first-child {
+  font-size: 17px;
+  font-weight: 650;
+}
+
+.briefGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(250px, 0.8fr);
+  gap: clamp(22px, 4vw, 42px);
+  margin-top: 24px;
+}
+
+.briefGrid h3 {
+  margin: 0 0 14px;
+  font-size: 16px;
+}
+
+.signalList {
+  display: grid;
+  gap: 12px;
+}
+
+.signalCard {
+  scroll-margin-top: 96px;
+  border-top: 1px solid color-mix(in srgb, var(--line, #d8dde8) 65%, transparent);
+  padding-top: 14px;
+}
+
+.signalCard:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.signalTopline {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+
+.signalTopline time {
+  font-size: 12px;
+  opacity: 0.62;
+}
+
+.signalCard strong {
+  display: block;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.signalCard p {
+  margin: 7px 0 8px;
+  line-height: 1.65;
+  opacity: 0.84;
+}
+
+.signalCard a,
+.evidenceLink {
+  font-size: 13px;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.signalCard a:hover,
+.evidenceLink:hover {
+  text-decoration: underline;
+}
+
+.briefAside {
+  display: grid;
+  align-content: start;
+  gap: 22px;
+}
+
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.statCard {
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--surface, #ffffff) 76%, #eef3fb 24%);
+  padding: 13px;
+}
+
+.statCard strong {
+  display: block;
+  font-size: 20px;
+  line-height: 1.1;
+}
+
+.statCard span {
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+  opacity: 0.66;
+}
+
+.watchList {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.watchList li {
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+.methodNote {
+  margin: 0;
+  padding: 12px 14px;
+  border-left: 3px solid currentColor;
+  font-size: 12px;
+  line-height: 1.6;
+  opacity: 0.66;
+}
+
+.timelineMeta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 7px;
+}
+
+.matchBadge {
+  opacity: 0.72;
+}
+
+.evidenceId {
+  font-weight: 750;
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 820px) {
+  .briefHeader {
+    display: grid;
+  }
+
+  .metaRow {
+    justify-content: flex-start;
+  }
+
+  .briefGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media print {
+  .briefPanel {
+    box-shadow: none;
+    break-inside: avoid-page;
+  }
+
+  .signalCard a,
+  .evidenceLink {
+    color: inherit;
+  }
+}
