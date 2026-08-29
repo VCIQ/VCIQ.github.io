@@ -20,43 +20,36 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Inspect public metadata for original ids
+      - name: Compare Sogou discovery
         run: |
           python - <<'PY'
-          import re
-          from urllib.error import HTTPError
-          from urllib.request import HTTPRedirectHandler, Request, build_opener, urlopen
+          import json
+          from tools import wechat_sogou_index as sogou
 
-          UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36"
-          details = ["McBR6khl8D", "9IpnSXWyyd", "T2X1uYMP8k"]
-          patterns = [
-              r'__biz[^\"\'<>\s]{0,160}', r'\bbiz\b[^\"\'<>\s]{0,160}',
-              r'\bmid\b[^\"\'<>\s]{0,160}', r'\bidx\b[^\"\'<>\s]{0,160}',
-              r'\bsn\b[^\"\'<>\s]{0,200}', r'mp\.weixin\.qq\.com[^\"\'<>\s]{0,300}',
-              r'/t_snapshot/[A-Za-z0-9_-]+', r'original[^\n]{0,300}',
+          publishers = [
+              "高工机器人", "机器人大讲堂", "集微网", "半导体行业观察", "半导体技术",
+              "芯潮IC", "与非网", "高工锂电", "电池中国",
+              "量子位", "机器之心", "DeepTech深科技",
           ]
-          for token in details:
-              url = f"https://www.jintiankansha.com/t/{token}"
-              req = Request(url, headers={"User-Agent": UA, "Accept-Language": "zh-CN,zh;q=0.9"})
-              with urlopen(req, timeout=18) as response:
-                  body = response.read(1_500_000).decode(response.headers.get_content_charset() or "utf-8", errors="replace")
-              print(f"DETAIL_META token={token} bytes={len(body)}")
-              for pattern in patterns:
-                  values = re.findall(pattern, body, flags=re.I)
-                  if values:
-                      print(f"PATTERN {pattern!r} -> {values[:20]!r}")
-              for snapshot in [f"https://www.jintiankansha.com/t_snapshot/{token}"]:
-                  try:
-                      req = Request(snapshot, headers={"User-Agent": UA, "Accept-Language": "zh-CN,zh;q=0.9", "Referer": url})
-                      with urlopen(req, timeout=18) as response:
-                          snap = response.read(1_500_000).decode(response.headers.get_content_charset() or "utf-8", errors="replace")
-                          print(f"SNAPSHOT token={token} status={response.status} final={response.geturl()} bytes={len(snap)}")
-                          for pattern in patterns[:-2]:
-                              values = re.findall(pattern, snap, flags=re.I)
-                              if values:
-                                  print(f"SNAP_PATTERN {pattern!r} -> {values[:20]!r}")
-                  except HTTPError as exc:
-                      print(f"SNAPSHOT_HTTP_ERROR token={token} status={exc.code} location={exc.headers.get('Location')}")
-                  except Exception as exc:
-                      print(f"SNAPSHOT_EXCEPTION token={token} error={type(exc).__name__}: {exc}")
+          for publisher in publishers:
+              spec = {
+                  "name": publisher,
+                  "expectedAccounts": [publisher],
+                  "queryIdentity": publisher,
+                  "sector": "人工智能" if publisher in {"量子位", "机器之心", "DeepTech深科技"} else "半导体",
+                  "keywords": ["机器人", "芯片", "产业"],
+              }
+              try:
+                  rows, meta = sogou.discover(spec)
+                  print("SOGOU_META " + json.dumps({"publisher": publisher, **meta}, ensure_ascii=False, sort_keys=True))
+                  for row in rows[:3]:
+                      print("SOGOU_ROW " + json.dumps({
+                          "publisher": publisher,
+                          "title": row.get("title"),
+                          "account": row.get("account"),
+                          "resultUrl": row.get("url"),
+                          "directUrl": row.get("directUrl"),
+                      }, ensure_ascii=False, sort_keys=True))
+              except Exception as exc:
+                  print(f"SOGOU_EXCEPTION publisher={publisher} error={type(exc).__name__}: {exc}")
           PY
