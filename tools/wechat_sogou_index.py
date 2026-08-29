@@ -101,17 +101,20 @@ def _request(url: str, *, referer: str = "", timeout: int = 16) -> str:
         return body
 
 
-def _query_term(spec: dict[str, Any]) -> str:
+def _identity_term(spec: dict[str, Any]) -> str:
     expected = spec.get("expectedAccounts") or []
     sector = _clean(spec.get("sector"), 30)
     if spec.get("genericDiscovery"):
-        identity = _clean(spec.get("queryIdentity") or sector, 30)
-    else:
-        identity = _clean(
-            spec.get("queryIdentity")
-            or (expected[0] if expected else spec.get("name", "")),
-            30,
-        )
+        return _clean(spec.get("queryIdentity") or sector, 30)
+    return _clean(
+        spec.get("queryIdentity")
+        or (expected[0] if expected else spec.get("name", "")),
+        30,
+    )
+
+
+def _topic_term(spec: dict[str, Any], identity: str) -> str:
+    sector = _clean(spec.get("sector"), 30)
     keywords = [
         _clean(value, 30)
         for value in spec.get("keywords", [])
@@ -119,12 +122,57 @@ def _query_term(spec: dict[str, Any]) -> str:
         and len(_clean(value, 30)) >= 2
         and _clean(value, 30).casefold() != identity.casefold()
     ]
-    topic = keywords[0] if keywords else sector
+    return keywords[0] if keywords else sector
+
+
+def _query_term(spec: dict[str, Any]) -> str:
+    identity = _identity_term(spec)
+    topic = _topic_term(spec, identity)
+    sector = _clean(spec.get("sector"), 30)
     return _clean(f"{identity} {topic}", 38) or sector
 
 
-def build_search_url(spec: dict[str, Any], page: int = 1) -> str:
-    return f"https://weixin.sogou.com/weixin?type=2&query={quote(_query_term(spec))}&page={max(1, page)}&ie=utf8&tsn=1"
+def _query_terms(spec: dict[str, Any]) -> list[str]:
+    """Return conservative query fallbacks for an account-scoped source.
+
+    Generic discovery keeps a single query. Configured publishers try the
+    existing publisher+topic query first, then publisher+sector, and finally
+    publisher-only. Broader fallbacks run only when the previous query returns
+    zero server-rendered article rows; downstream account verification is
+    unchanged.
+    """
+
+    primary = _query_term(spec)
+    if spec.get("genericDiscovery"):
+        return [primary] if primary else []
+
+    identity = _identity_term(spec)
+    sector = _clean(spec.get("sector"), 30)
+    candidates = [
+        primary,
+        _clean(f"{identity} {sector}", 38) if identity and sector else "",
+        identity,
+    ]
+    result: list[str] = []
+    seen: set[str] = set()
+    for candidate in candidates:
+        candidate = _clean(candidate, 38)
+        key = candidate.casefold()
+        if not candidate or key in seen:
+            continue
+        seen.add(key)
+        result.append(candidate)
+    return result
+
+
+def build_search_url(
+    spec: dict[str, Any],
+    page: int = 1,
+    *,
+    query: str | None = None,
+) -> str:
+    term = _clean(query, 38) if query is not None else _query_term(spec)
+    return f"https://weixin.sogou.com/weixin?type=2&query={quote(term)}&page={max(1, page)}&ie=utf8&tsn=1"
 
 
 def _result_blocks(body: str) -> list[str]:
@@ -217,8 +265,21 @@ def resolve_result_url(result_url: str, search_url: str) -> str:
 
 
 def discover(spec: dict[str, Any]) -> tuple[list[dict[str, Any]], dict[str, Any]]:
-    search_url = build_search_url(spec)
-    rows = parse_search_results(_request(search_url), search_url)
+    query_attempts: list[dict[str, Any]] = []
+    rows: list[dict[str, Any]] = []
+    search_url = ""
+    query_used = ""
+
+    for query in _query_terms(spec):
+        candidate_url = build_search_url(spec, query=query)
+        candidate_rows = parse_search_results(_request(candidate_url), candidate_url)
+        query_attempts.append({"query": query, "scanned": len(candidate_rows)})
+        search_url = candidate_url
+        query_used = query
+        rows = candidate_rows
+        if rows:
+            break
+
     resolved = 0
     failures = 0
     for row in rows:
@@ -232,7 +293,9 @@ def discover(spec: dict[str, Any]) -> tuple[list[dict[str, Any]], dict[str, Any]
             resolved += 1
     return rows, {
         "provider": "sogou-weixin",
-        "query": _query_term(spec),
+        "query": query_used or _query_term(spec),
+        "queryAttempts": query_attempts,
+        "queryFallbackUsed": len(query_attempts) > 1,
         "scanned": len(rows),
         "resolved": resolved,
         "failed": failures,
