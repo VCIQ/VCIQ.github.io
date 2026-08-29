@@ -20,38 +20,37 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Inspect raw Sogou search response shape
+      - name: Validate Sogou query parameters
         run: |
           python - <<'PY'
           import html
           import re
+          from urllib.parse import quote
           from tools import wechat_sogou_index as sogou
 
-          for publisher in ["高工机器人", "量子位"]:
-              spec = {"name": publisher, "expectedAccounts": [publisher], "queryIdentity": publisher, "sector": "人工智能", "keywords": ["机器人"]}
-              url = sogou.build_search_url(spec, query=publisher)
+          publisher = "量子位"
+          variants = {
+              "current": f"https://weixin.sogou.com/weixin?type=2&query={quote(publisher)}&page=1&ie=utf8&tsn=1",
+              "form-min": f"https://weixin.sogou.com/weixin?type=2&s_from=input&query={quote(publisher)}&ie=utf8",
+              "form-full": f"https://weixin.sogou.com/weixin?ie=utf8&s_from=input&_sug_=n&_sug_type_=&type=2&query={quote(publisher)}",
+              "form-page": f"https://weixin.sogou.com/weixin?ie=utf8&s_from=input&_sug_=n&_sug_type_=&type=2&query={quote(publisher)}&page=1",
+          }
+          for label, url in variants.items():
               try:
                   body = sogou._request(url)
               except Exception as exc:
-                  print(f"RAW_REQUEST_ERROR publisher={publisher} error={type(exc).__name__}: {exc}")
+                  print(f"VARIANT_ERROR label={label} error={type(exc).__name__}: {exc}")
                   continue
-              lower = body.casefold()
-              print(f"RAW_PAGE publisher={publisher} bytes={len(body)} antispider={'antispider' in lower} captcha={'验证码' in body}")
-              print(f"LEGACY_MARKERS id={body.count('sogou_vr_11002601_title_')} uigs={body.count('article_title_')}")
               title = re.search(r'(?is)<title[^>]*>(.*?)</title>', body)
-              print("PAGE_TITLE " + (re.sub(r'\s+', ' ', html.unescape(title.group(1))).strip() if title else ''))
-              anchors = re.findall(r'(?is)<a\b([^>]*)>(.*?)</a>', body)
-              interesting = []
-              for attrs, inner in anchors:
-                  text = re.sub(r'(?is)<[^>]+>', ' ', inner)
-                  text = re.sub(r'\s+', ' ', html.unescape(text)).strip()
-                  href = re.search(r'''href\s*=\s*["']([^"']+)["']''', attrs, flags=re.I)
-                  if href and (publisher in text or '/link?' in href.group(1) or 'weixin' in href.group(1).lower() or 'article' in attrs.lower()):
-                      interesting.append((re.sub(r'\s+', ' ', attrs).strip()[:500], text[:220], html.unescape(href.group(1))[:500]))
-              print(f"ANCHOR_COUNT total={len(anchors)} interesting={len(interesting)}")
-              for attrs, text, href in interesting[:20]:
-                  print(f"ANCHOR attrs={attrs!r} text={text!r} href={href!r}")
-              for marker in ['news-box', 'txt-box', 'results', 'search_no_result', 'no-result', 'sogou_vr_11002601']:
-                  print(f"MARKER {marker} count={lower.count(marker.casefold())}")
-              print("BODY_HEAD " + repr(re.sub(r'\s+', ' ', body[:12000])[:5000]))
+              input_value = re.search(r'(?is)<input[^>]+(?:id|name)=["\']query["\'][^>]+value=["\']([^"\']*)', body)
+              parsed = sogou.parse_search_results(body, url)
+              print(
+                  f"VARIANT label={label} bytes={len(body)} "
+                  f"title={(re.sub(r'\\s+', ' ', html.unescape(title.group(1))).strip() if title else '')!r} "
+                  f"queryValue={(html.unescape(input_value.group(1)) if input_value else '')!r} "
+                  f"legacyId={body.count('sogou_vr_11002601_title_')} legacyUigs={body.count('article_title_')} "
+                  f"newsBox={body.casefold().count('news-box')} txtBox={body.casefold().count('txt-box')} parsed={len(parsed)}"
+              )
+              for row in parsed[:2]:
+                  print(f"ROW label={label} title={row.get('title')!r} account={row.get('account')!r} url={row.get('url')!r}")
           PY
