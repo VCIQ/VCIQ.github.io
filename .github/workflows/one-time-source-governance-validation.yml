@@ -20,7 +20,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Inspect redirect and search form
+      - name: Inspect public metadata for original ids
         run: |
           python - <<'PY'
           import re
@@ -28,33 +28,35 @@ jobs:
           from urllib.request import HTTPRedirectHandler, Request, build_opener, urlopen
 
           UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36"
-
-          class NoRedirect(HTTPRedirectHandler):
-              def redirect_request(self, req, fp, code, msg, headers, newurl):
-                  return None
-
-          opener = build_opener(NoRedirect)
-          for endpoint in [
-              "https://www.jintiankansha.com/t_original/McBR6khl8D",
-              "https://www.jintiankansha.com/t_original/9IpnSXWyyd",
-              "https://www.jintiankansha.com/t_original/T2X1uYMP8k",
-          ]:
-              req = Request(endpoint, headers={"User-Agent": UA, "Accept-Language": "zh-CN,zh;q=0.9", "Referer": endpoint.replace("/t_original/", "/t/")})
-              try:
-                  with opener.open(req, timeout=18) as response:
-                      body = response.read(200_000).decode(response.headers.get_content_charset() or "utf-8", errors="replace")
-                      print(f"ORIGINAL_RESPONSE endpoint={endpoint} status={response.status} final={response.geturl()} location={response.headers.get('Location')} bytes={len(body)}")
-                      print("ORIGINAL_BODY " + repr(body[:1200]))
-              except HTTPError as exc:
-                  body = exc.read(200_000).decode(exc.headers.get_content_charset() or "utf-8", errors="replace")
-                  print(f"ORIGINAL_HTTP_ERROR endpoint={endpoint} status={exc.code} location={exc.headers.get('Location')} bytes={len(body)}")
-                  print("ORIGINAL_ERROR_BODY " + repr(body[:1200]))
-              except Exception as exc:
-                  print(f"ORIGINAL_EXCEPTION endpoint={endpoint} error={type(exc).__name__}: {exc}")
-
-          root_req = Request("https://www.jintiankansha.com/", headers={"User-Agent": UA, "Accept-Language": "zh-CN,zh;q=0.9"})
-          with urlopen(root_req, timeout=18) as response:
-              root = response.read(500_000).decode(response.headers.get_content_charset() or "utf-8", errors="replace")
-          match = re.search(r'(<form\b[^>]*action=[\"\']/search[\"\'][\s\S]*?</form>)', root, flags=re.I)
-          print("SEARCH_FORM " + repr(match.group(1)[:3000] if match else ""))
+          details = ["McBR6khl8D", "9IpnSXWyyd", "T2X1uYMP8k"]
+          patterns = [
+              r'__biz[^\"\'<>\s]{0,160}', r'\bbiz\b[^\"\'<>\s]{0,160}',
+              r'\bmid\b[^\"\'<>\s]{0,160}', r'\bidx\b[^\"\'<>\s]{0,160}',
+              r'\bsn\b[^\"\'<>\s]{0,200}', r'mp\.weixin\.qq\.com[^\"\'<>\s]{0,300}',
+              r'/t_snapshot/[A-Za-z0-9_-]+', r'original[^\n]{0,300}',
+          ]
+          for token in details:
+              url = f"https://www.jintiankansha.com/t/{token}"
+              req = Request(url, headers={"User-Agent": UA, "Accept-Language": "zh-CN,zh;q=0.9"})
+              with urlopen(req, timeout=18) as response:
+                  body = response.read(1_500_000).decode(response.headers.get_content_charset() or "utf-8", errors="replace")
+              print(f"DETAIL_META token={token} bytes={len(body)}")
+              for pattern in patterns:
+                  values = re.findall(pattern, body, flags=re.I)
+                  if values:
+                      print(f"PATTERN {pattern!r} -> {values[:20]!r}")
+              for snapshot in [f"https://www.jintiankansha.com/t_snapshot/{token}"]:
+                  try:
+                      req = Request(snapshot, headers={"User-Agent": UA, "Accept-Language": "zh-CN,zh;q=0.9", "Referer": url})
+                      with urlopen(req, timeout=18) as response:
+                          snap = response.read(1_500_000).decode(response.headers.get_content_charset() or "utf-8", errors="replace")
+                          print(f"SNAPSHOT token={token} status={response.status} final={response.geturl()} bytes={len(snap)}")
+                          for pattern in patterns[:-2]:
+                              values = re.findall(pattern, snap, flags=re.I)
+                              if values:
+                                  print(f"SNAP_PATTERN {pattern!r} -> {values[:20]!r}")
+                  except HTTPError as exc:
+                      print(f"SNAPSHOT_HTTP_ERROR token={token} status={exc.code} location={exc.headers.get('Location')}")
+                  except Exception as exc:
+                      print(f"SNAPSHOT_EXCEPTION token={token} error={type(exc).__name__}: {exc}")
           PY
