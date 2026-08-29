@@ -20,7 +20,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Compare freshness-biased Sogou queries
+      - name: Validate one low-rate freshness-biased query per account
         run: |
           python - <<'PY'
           import json
@@ -30,8 +30,7 @@ jobs:
           base = app.base
           crawler = base.tracking.crawler
           app.http_policy_bridge.install(crawler)
-          app.wechat_sogou_redirect_compat.install(app.wechat_sogou_index)
-          app.wechat_sogou_link_compat.install(app.wechat_sogou_index)
+          app.wechat_registry_bridge.install(app.wechat_public_sources)
 
           tracking_config = base.tracking.load_tracking()
           tracks = base.tracking._enabled_tracks(tracking_config)
@@ -48,42 +47,27 @@ jobs:
               "user-track-wechat-semiconductor-technology-semiconductor",
           }
           selected = [s for s in specs if s.get("id") in targets]
+          print("SELECTED_COUNT", len(selected))
           now = datetime.now(UTC)
-          year = str(now.year)
-          month = str(now.month)
 
           for spec in selected:
               identity = str(spec.get("queryIdentity") or spec.get("name") or "")
-              topic = app.wechat_sogou_index._topic_term(spec, identity)
-              variants = [
-                  ("baseline", f"{identity} {topic}".strip()),
-                  ("year", f"{identity} {year}".strip()),
-                  ("year-topic", f"{identity} {topic} {year}".strip()),
-                  ("year-month", f"{identity} {year} {month}月".strip()),
-              ]
-              seen = set()
-              for label, query in variants:
-                  if query in seen:
-                      continue
-                  seen.add(query)
-                  url = app.wechat_sogou_index.build_search_url(spec, query=query)
-                  try:
-                      body = app.wechat_sogou_index._request(url)
-                      rows = app.wechat_sogou_index.parse_search_results(body, url)
-                  except Exception as exc:
-                      print("QUERY_ERROR " + json.dumps({
-                          "id": spec.get("id"), "name": spec.get("name"),
-                          "variant": label, "query": query,
-                          "error": f"{type(exc).__name__}: {exc}",
-                      }, ensure_ascii=False, sort_keys=True))
-                      continue
-                  print("QUERY_RESULT " + json.dumps({
+              query = f"{identity} {now.year} {now.month}月"
+              url = app.wechat_sogou_index.build_search_url(spec, query=query)
+              try:
+                  body = app.wechat_sogou_index._request(url)
+                  rows = app.wechat_sogou_index.parse_search_results(body, url)
+                  print("FRESH_QUERY " + json.dumps({
                       "id": spec.get("id"),
                       "name": spec.get("name"),
-                      "variant": label,
                       "query": query,
                       "count": len(rows),
                       "dates": [r.get("publishedAt") for r in rows],
-                      "titles": [r.get("title") for r in rows[:3]],
+                      "titles": [r.get("title") for r in rows[:5]],
+                  }, ensure_ascii=False, sort_keys=True))
+              except Exception as exc:
+                  print("FRESH_ERROR " + json.dumps({
+                      "id": spec.get("id"), "name": spec.get("name"),
+                      "query": query, "error": f"{type(exc).__name__}: {exc}",
                   }, ensure_ascii=False, sort_keys=True))
           PY
