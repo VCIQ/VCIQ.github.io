@@ -219,12 +219,19 @@
   gap: 5px;
 }
 
+.roleStatus,
 .lifecycleStatus,
 .healthStatus {
   border: 1px solid var(--border);
   padding: 3px 6px;
   font: 700 8px/1.2 Inter, sans-serif;
   letter-spacing: .06em;
+}
+
+.roleStatus {
+  border-color: color-mix(in srgb, var(--green) 35%, var(--border));
+  color: var(--green-bright);
+  background: color-mix(in srgb, var(--green) 7%, transparent);
 }
 
 .lifecycleStatus {

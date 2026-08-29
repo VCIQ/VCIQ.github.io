@@ -5,12 +5,13 @@ import {
   coreSourcesByKind,
   type CoreSourceKind,
   type SourceHealthStatus,
+  type SourceRole,
 } from "@/lib/core-sources";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "重点信源",
-  description: "将微信公众号、专业媒体、研究机构与官方原始来源作为第五类研究对象，并公开呈现实际采集健康与信源生命周期。",
+  description: "将微信公众号、专业媒体、公司官方来源、监管机构与原始材料作为第五类研究对象，并公开呈现角色、生命周期与采集健康。",
 };
 
 const groups: Array<{
@@ -21,21 +22,21 @@ const groups: Array<{
 }> = [
   {
     kind: "微信公众号",
-    eyebrow: "WECHAT PRECISION SOURCES",
+    eyebrow: "DISCOVERY SOURCES",
     title: "微信公众号",
-    description: "人工配置的中文科技与产业精确信源；采集健康与媒体本身分开评估，微信索引失效不等于 Publisher 失效。",
+    description: "中文科技与产业精确信源主要承担发现职责；采集健康与媒体本身分开评估，微信索引失效不等于 Publisher 失效。",
   },
   {
     kind: "官方 / 原始",
     eyebrow: "PRIMARY SOURCES",
     title: "官方与原始来源",
-    description: "公司、研究机构、监管或原始材料入口，优先承担事实核验和关键结论回溯。",
+    description: "直接读取已配置的公司官方来源与监管披露入口，优先承担事实核验和关键结论回溯；未配置稳定新闻入口的公司保留为 Candidate。",
   },
   {
     kind: "媒体 / 研究",
-    eyebrow: "MEDIA & RESEARCH SOURCES",
+    eyebrow: "CORROBORATION SOURCES",
     title: "专业媒体与研究来源",
-    description: "用于发现产业变化、融资、产品和研究进展；结论仍需结合独立来源与原始材料交叉验证。",
+    description: "用于发现与交叉验证产业变化、融资、产品和研究进展；关键结论仍回到 Primary Source 核验。",
   },
 ];
 
@@ -44,6 +45,12 @@ const healthLabels: Record<SourceHealthStatus, string> = {
   partial: "PARTIAL",
   error: "ERROR",
   unknown: "UNKNOWN",
+};
+
+const roleLabels: Record<SourceRole, string> = {
+  primary: "PRIMARY",
+  corroboration: "CORROBORATION",
+  discovery: "DISCOVERY",
 };
 
 function healthClass(status: SourceHealthStatus): string {
@@ -67,6 +74,7 @@ export default function SourcesPage() {
         <h1>重点信源</h1>
         <div className="hero-chips">
           <span>{coreSourceStats.total} 个已配置 Publisher</span>
+          <span>{coreSourceStats.primary} 个 Primary Source</span>
           <span>{coreSourceStats.healthy} 个当前健康</span>
           <span>{issueCount} 个存在采集异常</span>
           <span>{coreSourceStats.sectors} 个显式赛道覆盖</span>
@@ -97,6 +105,7 @@ export default function SourcesPage() {
                       <h3>{source.name}</h3>
                     </div>
                     <div className={styles.statusStack} aria-label="信源状态">
+                      <span className={styles.roleStatus}>{roleLabels[source.sourceRole]}</span>
                       <span className={styles.lifecycleStatus}>{source.lifecycle.toUpperCase()}</span>
                       <span className={`${styles.healthStatus} ${healthClass(source.healthStatus)}`}>
                         {healthLabels[source.healthStatus]}
@@ -175,7 +184,7 @@ export default function SourcesPage() {
                         原始入口 <ArrowUpRight size={12} />
                       </a>
                     ) : (
-                      <span>微信公众号精确信源</span>
+                      <span>暂无稳定公开入口</span>
                     )}
                   </div>
                 </article>
@@ -190,21 +199,21 @@ export default function SourcesPage() {
         <summary>
           <span>SOURCE LIFECYCLE</span>
           <strong>Candidate → Tracked → Core</strong>
-          <small>生命周期与采集健康是两个独立维度</small>
+          <small>生命周期、证据角色与采集健康相互独立</small>
         </summary>
         <div className={styles.lifecycleDetails}>
           <p>
-            当前 Publisher 的生命周期单独显示为 Candidate、Tracked 或 Core；OK / PARTIAL / ERROR 只描述采集通道健康，
-            不再用 TRACKED 掩盖 Collector 故障。
+            Candidate 表示已进入信源图但尚未建立稳定采集入口；Tracked 表示已配置持续采集；Core 只会在多期质量稳定并完成人工复核后产生。
+            PRIMARY / CORROBORATION / DISCOVERY 描述证据角色，OK / PARTIAL / ERROR 描述采集通道健康，三者不再混为一个状态。
           </p>
           <div className={styles.lifecycleFlow}>
             <div>
               <strong>Candidate</strong>
-              <p>由收藏、研究线索或自动发现提出。</p>
+              <p>已有明确 Publisher，但稳定采集入口或质量证据仍不足。</p>
             </div>
             <div>
               <strong>Tracked</strong>
-              <p>人工确认后进入持续抓取与质量观测。</p>
+              <p>已配置持续抓取与质量观测，尚不自动等价于核心信源。</p>
             </div>
             <div>
               <strong>Core</strong>
@@ -217,12 +226,12 @@ export default function SourcesPage() {
       <details className={styles.methodology}>
         <summary>
           <span>SOURCE RESEARCH METHOD</span>
-          <strong>信源频道说明</strong>
+          <strong>证据角色与信源频道说明</strong>
           <small>展开查看</small>
         </summary>
         <p>
-          信源是 VCIQ 的第五类研究对象。Publisher 表示媒体、机构或公司本身；Collection Endpoint 表示微信索引、官网、
-          RSS、公开网页等采集通道。同一个 Publisher 可以有多个 Endpoint，一个通道失败不再等价于整个信源失效。
+          Primary Source 包括公司官网、监管/交易所披露与原始材料；Corroboration Source 用于独立交叉验证；Discovery Source 负责高召回发现。
+          Publisher 表示媒体、机构或公司本身，Collection Endpoint 表示微信索引、官网、RSS、监管接口或公开网页等采集通道。
         </p>
       </details>
 
@@ -241,15 +250,15 @@ export default function SourcesPage() {
           </article>
           <article>
             <strong>Publisher ≠ Collection Endpoint</strong>
-            <p>同一 Publisher 的微信、官网、RSS 与公开镜像分别记录健康；只要可靠备用通道可用，就不把 Publisher 整体误判为失效。</p>
+            <p>同一 Publisher 的微信、官网、RSS 与公开镜像分别记录健康；可靠备用通道可用时，不把 Publisher 整体误判为失效。</p>
           </article>
           <article>
-            <strong>来源 × 赛道分别评估</strong>
-            <p>同一媒体可能在 AI 很强、在半导体很弱；质量权重按具体来源—赛道组合积累，而不是给媒体一个全局万能分数。</p>
+            <strong>发现 ≠ 事实确认</strong>
+            <p>微信公众号与媒体负责发现和交叉验证；重大公司、融资、监管和产品事实优先回溯公司官网、交易所、监管文件或原始材料。</p>
           </article>
           <article>
-            <strong>强证据可以绕过来源惩罚</strong>
-            <p>官方披露、原始材料、高置信公司匹配或人工规范纠错等强证据优先，不因历史来源噪声误伤关键事实。</p>
+            <strong>Core 必须经过质量门槛</strong>
+            <p>Tracked 不自动升级为 Core；持续可用性、有效产出、跨日稳定性和人工复核共同决定是否晋级。</p>
           </article>
         </div>
       </section>
