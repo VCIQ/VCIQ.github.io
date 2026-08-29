@@ -20,24 +20,18 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Isolate public-title to original WeChat recovery
+      - name: Test publisher-title recovery and index search discovery
         run: |
           python - <<'PY'
           import html
           import json
           import re
           from html.parser import HTMLParser
-          from urllib.parse import quote, urljoin
+          from urllib.parse import quote, urlencode, urljoin
           from tools import crawl_articles as crawler
           from tools import wechat_public_sources as wechat
           from tools import wechat_sogou_index as sogou
           from tools import wechat_source_registry as registry
-
-          cases = [
-              ("高工机器人", "https://www.jintiankansha.com/column/kusWRkBYTA"),
-              ("半导体行业观察", "https://www.jintiankansha.com/column/gsHCdSoSpq?type=recent"),
-              ("与非网", "https://www.jintiankansha.com/column/FoMbC3nnRr"),
-          ]
 
           def clean(value):
               return re.sub(r"\s+", " ", html.unescape(re.sub(r"(?is)<[^>]+>", " ", value or ""))).strip()
@@ -49,7 +43,6 @@ jobs:
                   self.rows = []
                   self.href = ""
                   self.parts = []
-
               def handle_starttag(self, tag, attrs):
                   if tag.casefold() != "a":
                       return
@@ -58,11 +51,9 @@ jobs:
                   if re.search(r"https?://(?:www\.)?jintiankansha\.(?:com|me)/t/[A-Za-z0-9_-]+", href):
                       self.href = href
                       self.parts = []
-
               def handle_data(self, data):
                   if self.href:
                       self.parts.append(data)
-
               def handle_endtag(self, tag):
                   if tag.casefold() != "a" or not self.href:
                       return
@@ -72,110 +63,95 @@ jobs:
                   self.href = ""
                   self.parts = []
 
-          for publisher, index_url in cases:
-              spec = {"expectedAccounts": [publisher]}
-              try:
-                  index_body = crawler.fetch_text(index_url, crawler.DEFAULT_USER_AGENT)
-              except Exception as exc:
-                  print("RAW_INDEX_ERROR " + json.dumps({"publisher": publisher, "error": f"{type(exc).__name__}: {exc}"}, ensure_ascii=False, sort_keys=True))
+          # 1) Inspect the site's public search form so publisher-column discovery
+          # can be driven from the live public contract rather than guessed URLs.
+          home = crawler.fetch_text("https://www.jintiankansha.com/", crawler.DEFAULT_USER_AGENT)
+          forms = re.findall(r"(?is)<form\b[^>]*>.*?</form>", home or "")
+          for form in forms:
+              if "搜索" not in clean(form) and "search" not in form.casefold():
                   continue
-
-              parser = DetailAnchorParser(index_url)
-              parser.feed(index_body or "")
-              deduped = []
-              seen = set()
-              for row in parser.rows:
-                  if row["url"] in seen:
-                      continue
-                  seen.add(row["url"])
-                  deduped.append(row)
-
-              print("RAW_INDEX_TITLES " + json.dumps({
-                  "publisher": publisher,
-                  "count": len(deduped),
-                  "titles": [row["title"] for row in deduped[:8]],
+              action = re.search(r'''(?is)\baction\s*=\s*["']?([^"' >]+)''', form)
+              method = re.search(r'''(?is)\bmethod\s*=\s*["']?([^"' >]+)''', form)
+              inputs = []
+              for raw in re.findall(r"(?is)<input\b[^>]*>", form):
+                  name = re.search(r'''(?is)\bname\s*=\s*["']?([^"' >]+)''', raw)
+                  placeholder = re.search(r'''(?is)\bplaceholder\s*=\s*["']([^"']*)''', raw)
+                  kind = re.search(r'''(?is)\btype\s*=\s*["']?([^"' >]+)''', raw)
+                  inputs.append({
+                      "name": name.group(1) if name else "",
+                      "placeholder": html.unescape(placeholder.group(1)) if placeholder else "",
+                      "type": kind.group(1) if kind else "",
+                  })
+              print("PUBLIC_SEARCH_FORM " + json.dumps({
+                  "action": action.group(1) if action else "",
+                  "method": (method.group(1) if method else "GET").upper(),
+                  "inputs": inputs,
               }, ensure_ascii=False, sort_keys=True))
 
-              recovered = False
-              for row in deduped[:5]:
-                  title = row["title"]
+          # 2) Test whether adding the publisher identity rescues 与非网's recent
+          # exact-title lookups while preserving search-side and final-page account checks.
+          publisher = "与非网"
+          index_url = "https://www.jintiankansha.com/column/FoMbC3nnRr"
+          index_body = crawler.fetch_text(index_url, crawler.DEFAULT_USER_AGENT)
+          parser = DetailAnchorParser(index_url)
+          parser.feed(index_body or "")
+          seen = set()
+          rows = []
+          for row in parser.rows:
+              if row["url"] in seen:
+                  continue
+              seen.add(row["url"])
+              rows.append(row)
+          spec = {"expectedAccounts": [publisher]}
+          recovered = False
+          for row in rows[:5]:
+              title = row["title"]
+              variants = [title, f"{publisher} {title}", f"{title} {publisher}"]
+              for variant in variants:
                   search_url = (
                       "https://weixin.sogou.com/weixin?"
-                      f"type=2&s_from=input&query={quote(title)}&page=1&ie=utf8"
+                      f"type=2&s_from=input&query={quote(variant)}&page=1&ie=utf8"
                   )
                   try:
-                      search_body = sogou._request(search_url)
+                      body = sogou._request(search_url)
                   except Exception as exc:
-                      print("EXACT_TITLE_SEARCH_ERROR " + json.dumps({"publisher": publisher, "title": title, "error": f"{type(exc).__name__}: {exc}"}, ensure_ascii=False, sort_keys=True))
+                      print("PUBLISHER_TITLE_ERROR " + json.dumps({"query": variant, "error": f"{type(exc).__name__}: {exc}"}, ensure_ascii=False, sort_keys=True))
                       continue
-
                   candidates = []
-                  for block in sogou._result_blocks(search_body):
-                      account = clean(sogou._first_match(
-                          r'<span[^>]*class="[^"]*all-time-y2[^"]*"[^>]*>(.*?)</span>', block
-                      ))
+                  for block in sogou._result_blocks(body):
+                      account = clean(sogou._first_match(r'<span[^>]*class="[^"]*all-time-y2[^"]*"[^>]*>(.*?)</span>', block))
                       if not account:
-                          account = clean(sogou._first_match(
-                              r'<a(?=[^>]*(?:class="[^"]*account[^"]*"|uigs="article_account_\d+"))[^>]*>(.*?)</a>', block
-                          ))
-                      href = sogou._first_match(
-                          r'<a(?=[^>]*(?:id="sogou_vr_11002601_title_\d+"|uigs="article_title_\d+"))[^>]*href="([^"]+)"[^>]*>', block
-                      )
-                      result_title = clean(sogou._first_match(
-                          r'<a(?=[^>]*(?:id="sogou_vr_11002601_title_\d+"|uigs="article_title_\d+"))[^>]*>(.*?)</a>', block
-                      ))
-                      if not href:
-                          continue
-                      candidates.append({
-                          "account": account,
-                          "title": result_title,
-                          "resultUrl": sogou._normalized_url(urljoin(search_url, sogou._url_entity_unescape(href))),
-                      })
-
-                  print("EXACT_TITLE_SEARCH " + json.dumps({
-                      "publisher": publisher,
-                      "queryTitle": title,
-                      "candidateCount": len(candidates),
-                      "candidateAccounts": [item["account"] for item in candidates],
-                      "candidateTitles": [item["title"] for item in candidates[:6]],
+                          account = clean(sogou._first_match(r'<a(?=[^>]*(?:class="[^"]*account[^"]*"|uigs="article_account_\d+"))[^>]*>(.*?)</a>', block))
+                      href = sogou._first_match(r'<a(?=[^>]*(?:id="sogou_vr_11002601_title_\d+"|uigs="article_title_\d+"))[^>]*href="([^"]+)"[^>]*>', block)
+                      result_title = clean(sogou._first_match(r'<a(?=[^>]*(?:id="sogou_vr_11002601_title_\d+"|uigs="article_title_\d+"))[^>]*>(.*?)</a>', block))
+                      if href:
+                          candidates.append({"account": account, "title": result_title, "url": sogou._normalized_url(urljoin(search_url, sogou._url_entity_unescape(href)))})
+                  print("PUBLISHER_TITLE_SEARCH " + json.dumps({
+                      "query": variant,
+                      "accounts": [c["account"] for c in candidates],
+                      "titles": [c["title"] for c in candidates[:5]],
                   }, ensure_ascii=False, sort_keys=True))
-
                   for candidate in candidates:
                       if not registry.account_matches(spec, candidate["account"]):
                           continue
                       try:
-                          direct = sogou.resolve_result_url(candidate["resultUrl"], search_url)
-                      except Exception as exc:
-                          print("EXACT_TITLE_RESOLVE_ERROR " + json.dumps({"publisher": publisher, "title": candidate["title"], "error": f"{type(exc).__name__}: {exc}"}, ensure_ascii=False, sort_keys=True))
-                          continue
-                      if not direct.startswith("https://mp.weixin.qq.com/s"):
-                          continue
-                      try:
-                          body = wechat.fetch_public_wechat_page(direct)
+                          direct = sogou.resolve_result_url(candidate["url"], search_url)
+                          page_body = wechat.fetch_public_wechat_page(direct)
                           page = wechat.WeChatPageParser()
-                          page.feed(body or "")
-                          observed = page.account or wechat._js_value(body or "", ("nickname", "profile_nickname", "account_name"))
-                          published = wechat._published_at(page, body or "", crawler)
-                          page_title = page.meta.get("og:title") or page.meta.get("twitter:title") or page.title or wechat._js_value(body or "", ("msg_title", "title"))
+                          page.feed(page_body or "")
+                          observed = page.account or wechat._js_value(page_body or "", ("nickname", "profile_nickname", "account_name"))
+                          published = wechat._published_at(page, page_body or "", crawler)
                       except Exception as exc:
-                          print("EXACT_TITLE_FETCH_ERROR " + json.dumps({"publisher": publisher, "direct": direct, "error": f"{type(exc).__name__}: {exc}"}, ensure_ascii=False, sort_keys=True))
+                          print("PUBLISHER_TITLE_DIRECT_ERROR " + json.dumps({"query": variant, "error": f"{type(exc).__name__}: {exc}"}, ensure_ascii=False, sort_keys=True))
                           continue
-                      matches = registry.account_matches(spec, observed)
-                      print("EXACT_TITLE_DIRECT " + json.dumps({
-                          "publisher": publisher,
-                          "queryTitle": title,
-                          "searchTitle": candidate["title"],
-                          "direct": direct,
-                          "observedAccount": observed,
-                          "publishedAt": published,
-                          "pageTitle": clean(page_title),
-                          "accountMatches": matches,
-                      }, ensure_ascii=False, sort_keys=True))
-                      if matches:
+                      ok = registry.account_matches(spec, observed)
+                      print("PUBLISHER_TITLE_DIRECT " + json.dumps({"query": variant, "direct": direct, "observedAccount": observed, "publishedAt": published, "accountMatches": ok}, ensure_ascii=False, sort_keys=True))
+                      if ok:
                           recovered = True
                           break
                   if recovered:
                       break
-
-              print("EXACT_TITLE_FINAL " + json.dumps({"publisher": publisher, "recovered": recovered}, ensure_ascii=False, sort_keys=True))
+              if recovered:
+                  break
+          print("PUBLISHER_TITLE_FINAL " + json.dumps({"publisher": publisher, "recovered": recovered}, ensure_ascii=False, sort_keys=True))
           PY
