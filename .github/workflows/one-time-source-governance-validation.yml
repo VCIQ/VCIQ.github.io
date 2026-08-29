@@ -20,61 +20,149 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Test recent publisher-only Sogou queries
+      - name: Test public-index title to original WeChat recovery
         run: |
           python - <<'PY'
           import html
           import json
           import re
-          from urllib.parse import quote
+          from tools import crawl_articles as crawler
+          from tools import wechat_public_sources as wechat
+          from tools import wechat_registry_bridge as bridge
           from tools import wechat_sogou_index as sogou
           from tools import wechat_source_registry as registry
 
-          publishers = ["高工机器人", "半导体技术", "电池中国"]
+          cases = [
+              ("高工机器人", "https://www.jintiankansha.com/column/kusWRkBYTA"),
+              ("半导体行业观察", "https://www.jintiankansha.com/column/gsHCdSoSpq?type=recent"),
+              ("与非网", "https://www.jintiankansha.com/column/FoMbC3nnRr"),
+          ]
 
           def clean(value):
               return re.sub(r"\s+", " ", html.unescape(re.sub(r"(?is)<[^>]+>", " ", value or ""))).strip()
 
-          for publisher in publishers:
-              spec = {"expectedAccounts": [publisher]}
-              variants = {
-                  "default": f"https://weixin.sogou.com/weixin?type=2&s_from=input&query={quote(publisher)}&ie=utf8&page=1",
-                  "recent": f"https://weixin.sogou.com/weixin?type=2&s_from=input&query={quote(publisher)}&ie=utf8&page=1&tsn=1",
+          for publisher, index_url in cases:
+              spec = {
+                  "id": "diagnostic-" + publisher,
+                  "name": publisher,
+                  "expectedAccounts": [publisher],
+                  "keywords": ["芯片", "机器人", "半导体", "产业", "技术"],
+                  "trackedCompanies": [],
+                  "trackedPeople": [],
               }
-              for label, url in variants.items():
+              try:
+                  index_body = crawler.fetch_text(index_url, crawler.DEFAULT_USER_AGENT)
+                  index_rows = bridge._extract_index_rows(
+                      index_body, index_url, spec, crawler, require_account_context=True
+                  )
+              except Exception as exc:
+                  print("TITLE_RECOVERY_INDEX_ERROR " + json.dumps({
+                      "publisher": publisher,
+                      "error": f"{type(exc).__name__}: {exc}",
+                  }, ensure_ascii=False, sort_keys=True))
+                  continue
+
+              print("TITLE_RECOVERY_INDEX " + json.dumps({
+                  "publisher": publisher,
+                  "rowCount": len(index_rows),
+                  "titles": [row.get("title") for row in index_rows[:4]],
+              }, ensure_ascii=False, sort_keys=True))
+
+              recovered = False
+              for index_row in index_rows[:3]:
+                  title = clean(index_row.get("title"))
+                  if not title:
+                      continue
+                  search_url = sogou.build_search_url(
+                      {"name": publisher, "queryIdentity": publisher}, query=title[:38]
+                  )
                   try:
-                      body = sogou._request(url)
+                      body = sogou._request(search_url)
                   except Exception as exc:
-                      print("RECENT_QUERY_ERROR " + json.dumps({
+                      print("TITLE_RECOVERY_SEARCH_ERROR " + json.dumps({
                           "publisher": publisher,
-                          "variant": label,
+                          "title": title,
                           "error": f"{type(exc).__name__}: {exc}",
                       }, ensure_ascii=False, sort_keys=True))
                       continue
-                  rows = []
-                  for index, block in enumerate(sogou._result_blocks(body)):
+
+                  candidates = []
+                  for block in sogou._result_blocks(body):
                       account = clean(sogou._first_match(
                           r'<span[^>]*class="[^"]*all-time-y2[^"]*"[^>]*>(.*?)</span>', block
                       ))
-                      title = clean(sogou._first_match(
+                      href = sogou._first_match(
+                          r'<a(?=[^>]*(?:id="sogou_vr_11002601_title_\d+"|uigs="article_title_\d+"))[^>]*href="([^"]+)"[^>]*>', block
+                      )
+                      result_title = clean(sogou._first_match(
                           r'<a(?=[^>]*(?:id="sogou_vr_11002601_title_\d+"|uigs="article_title_\d+"))[^>]*>(.*?)</a>', block
                       ))
-                      timestamp = (
-                          sogou._first_match(r"timeConvert\(\s*['\"]?(\d{10,13})['\"]?\s*\)", block)
-                          or sogou._first_match(r'\b(?:t|time)="(\d{10,13})"', block)
-                      )
-                      rows.append({
-                          "index": index,
-                          "title": title,
-                          "account": account,
-                          "matched": registry.account_matches(spec, account),
-                          "timestamp": timestamp,
-                      })
-                  print("RECENT_QUERY_SUMMARY " + json.dumps({
+                      if not href:
+                          continue
+                      candidates.append((account, result_title, sogou._normalized_url(sogou.urljoin(search_url, sogou._url_entity_unescape(href)))))
+
+                  print("TITLE_RECOVERY_SEARCH " + json.dumps({
                       "publisher": publisher,
-                      "variant": label,
-                      "resultCount": len(rows),
-                      "matchedCount": sum(row["matched"] for row in rows),
-                      "rows": rows,
+                      "queryTitle": title,
+                      "candidateCount": len(candidates),
+                      "candidateAccounts": [item[0] for item in candidates],
+                      "candidateTitles": [item[1] for item in candidates[:5]],
                   }, ensure_ascii=False, sort_keys=True))
+
+                  for account, result_title, result_url in candidates:
+                      if not registry.account_matches(spec, account):
+                          continue
+                      try:
+                          direct = sogou.resolve_result_url(result_url, search_url)
+                      except Exception as exc:
+                          print("TITLE_RECOVERY_RESOLVE_ERROR " + json.dumps({
+                              "publisher": publisher,
+                              "title": result_title,
+                              "error": f"{type(exc).__name__}: {exc}",
+                          }, ensure_ascii=False, sort_keys=True))
+                          continue
+                      if not direct.startswith("https://mp.weixin.qq.com/s"):
+                          continue
+                      try:
+                          direct_body = wechat.fetch_public_wechat_page(direct)
+                          parser = wechat.WeChatPageParser()
+                          parser.feed(direct_body or "")
+                          observed = parser.account or wechat._js_value(
+                              direct_body or "", ("nickname", "profile_nickname", "account_name")
+                          )
+                          published = wechat._published_at(parser, direct_body or "", crawler)
+                          page_title = (
+                              parser.meta.get("og:title")
+                              or parser.meta.get("twitter:title")
+                              or parser.title
+                              or wechat._js_value(direct_body or "", ("msg_title", "title"))
+                          )
+                      except Exception as exc:
+                          print("TITLE_RECOVERY_FETCH_ERROR " + json.dumps({
+                              "publisher": publisher,
+                              "direct": direct,
+                              "error": f"{type(exc).__name__}: {exc}",
+                          }, ensure_ascii=False, sort_keys=True))
+                          continue
+                      ok = registry.account_matches(spec, observed)
+                      print("TITLE_RECOVERY_DIRECT " + json.dumps({
+                          "publisher": publisher,
+                          "queryTitle": title,
+                          "searchTitle": result_title,
+                          "direct": direct,
+                          "observedAccount": observed,
+                          "publishedAt": published,
+                          "pageTitle": clean(page_title),
+                          "accountMatches": ok,
+                      }, ensure_ascii=False, sort_keys=True))
+                      if ok:
+                          recovered = True
+                          break
+                  if recovered:
+                      break
+
+              print("TITLE_RECOVERY_FINAL " + json.dumps({
+                  "publisher": publisher,
+                  "recovered": recovered,
+              }, ensure_ascii=False, sort_keys=True))
           PY
