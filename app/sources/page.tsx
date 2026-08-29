@@ -7,6 +7,7 @@ import {
   type SourceHealthStatus,
   type SourceRole,
 } from "@/lib/core-sources";
+import type { SourcePromotionState } from "@/lib/source-lifecycle";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -53,6 +54,14 @@ const roleLabels: Record<SourceRole, string> = {
   discovery: "DISCOVERY",
 };
 
+const promotionLabels: Record<SourcePromotionState, string> = {
+  candidate: "NOT ELIGIBLE",
+  evidence_pending: "EVIDENCE PENDING",
+  review_pending: "CORE READY / REVIEW",
+  blocked: "BLOCKED",
+  core: "CORE",
+};
+
 function healthClass(status: SourceHealthStatus): string {
   if (status === "ok") return styles.healthOk;
   if (status === "partial") return styles.healthPartial;
@@ -77,7 +86,8 @@ export default function SourcesPage() {
           <span>{coreSourceStats.primary} 个 Primary Source</span>
           <span>{coreSourceStats.healthy} 个当前健康</span>
           <span>{issueCount} 个存在采集异常</span>
-          <span>{coreSourceStats.sectors} 个显式赛道覆盖</span>
+          <span>{coreSourceStats.evidencePending} 个等待晋级证据</span>
+          <span>{coreSourceStats.reviewPending} 个 Core Ready</span>
         </div>
       </header>
 
@@ -118,6 +128,7 @@ export default function SourcesPage() {
                     {source.companies.length ? <span>{source.companies.length} 公司</span> : null}
                     {source.people.length ? <span>{source.people.length} 人物</span> : null}
                     <span>{source.endpoints.length} 采集通道</span>
+                    <span>Core readiness: {promotionLabels[source.promotion?.state ?? "candidate"]}</span>
                   </div>
 
                   {source.sectors.length ? (
@@ -152,6 +163,13 @@ export default function SourcesPage() {
                       ))}
                     </div>
                   </div>
+
+                  {source.promotion?.reasons.length ? (
+                    <div className={styles.signalBlock}>
+                      <span className={styles.signalLabel}>Core 晋级状态</span>
+                      <p>{source.promotion.reasons.slice(0, 2).join(" · ")}</p>
+                    </div>
+                  ) : null}
 
                   {source.keywords.length ? (
                     <div className={styles.signalBlock}>
@@ -199,12 +217,12 @@ export default function SourcesPage() {
         <summary>
           <span>SOURCE LIFECYCLE</span>
           <strong>Candidate → Tracked → Core</strong>
-          <small>生命周期、证据角色与采集健康相互独立</small>
+          <small>生命周期、晋级就绪度、证据角色与采集健康相互独立</small>
         </summary>
         <div className={styles.lifecycleDetails}>
           <p>
-            Candidate 表示已进入信源图但尚未建立稳定采集入口；Tracked 表示已配置持续采集；Core 只会在多期质量稳定并完成人工复核后产生。
-            PRIMARY / CORROBORATION / DISCOVERY 描述证据角色，OK / PARTIAL / ERROR 描述采集通道健康，三者不再混为一个状态。
+            Candidate 表示已进入信源图但尚未建立稳定采集入口；Tracked 表示已配置持续采集；Core 只会在滚动运行、跨日稳定性、可用率、有效产出、人工抽查全部达到版本化 Policy 后，再经过显式人工 Core 审批产生。
+            人工批准不能绕过量化证据门，量化门达标也不能绕过人工批准。PRIMARY / CORROBORATION / DISCOVERY 描述证据角色，OK / PARTIAL / ERROR 描述采集通道健康，三者不再混为一个状态。
           </p>
           <div className={styles.lifecycleFlow}>
             <div>
@@ -213,11 +231,11 @@ export default function SourcesPage() {
             </div>
             <div>
               <strong>Tracked</strong>
-              <p>已配置持续抓取与质量观测，尚不自动等价于核心信源。</p>
+              <p>已配置持续抓取与滚动质量观测；EVIDENCE PENDING 与 CORE READY 会继续区分证据成熟度。</p>
             </div>
             <div>
               <strong>Core</strong>
-              <p>多期证据稳定并完成人工复核后成为长期研究入口。</p>
+              <p>跨运行证据、人工抽查与显式审批全部满足后才成为长期研究入口。</p>
             </div>
           </div>
         </div>
@@ -258,7 +276,7 @@ export default function SourcesPage() {
           </article>
           <article>
             <strong>Core 必须经过质量门槛</strong>
-            <p>Tracked 不自动升级为 Core；持续可用性、有效产出、跨日稳定性和人工复核共同决定是否晋级。</p>
+            <p>Tracked 不自动升级为 Core；持续可用性、有效产出、跨日稳定性、人工抽查和显式人工批准共同决定是否晋级。</p>
           </article>
         </div>
       </section>

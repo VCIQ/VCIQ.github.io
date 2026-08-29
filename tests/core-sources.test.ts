@@ -14,11 +14,20 @@ test("source directory exposes configured publishers without duplicate identitie
   assert.equal(new Set(identities).size, identities.length);
 });
 
-test("source entries keep explicit lifecycle role health and safe metadata", () => {
+test("source entries keep explicit lifecycle role health promotion and safe metadata", () => {
   for (const source of coreSources) {
     assert.ok(["candidate", "tracked", "core"].includes(source.lifecycle));
     assert.ok(["primary", "corroboration", "discovery"].includes(source.sourceRole));
     assert.ok(["ok", "partial", "error", "unknown"].includes(source.healthStatus));
+    assert.ok(source.promotion);
+    assert.ok([
+      "candidate",
+      "evidence_pending",
+      "review_pending",
+      "blocked",
+      "core",
+    ].includes(source.promotion.state));
+    assert.equal(source.lifecycle, source.promotion.lifecycle);
     assert.ok(source.id);
     assert.ok(source.name);
     assert.ok(source.region);
@@ -39,6 +48,7 @@ test("homepage-only official companies remain candidates instead of pretending t
   for (const source of candidates) {
     assert.equal(source.kind, "官方 / 原始");
     assert.equal(source.sourceRole, "primary");
+    assert.equal(source.promotion?.state, "candidate");
   }
 });
 
@@ -48,4 +58,12 @@ test("configured regulator and company newsroom sources enter the primary layer"
   assert.ok(primary.some((source) => source.id.startsWith("official-company:")));
   assert.ok(primary.some((source) => source.id.startsWith("regulatory:")));
   assert.ok(primary.some((source) => source.lifecycle === "tracked"));
+});
+
+test("empty explicit Core review registry cannot silently promote a publisher", () => {
+  assert.equal(coreSourceStats.core, 0);
+  assert.equal(coreSources.some((source) => source.lifecycle === "core"), false);
+  for (const source of coreSources.filter((item) => item.lifecycle === "tracked")) {
+    assert.notEqual(source.promotion?.manualDecision, "approved");
+  }
 });
