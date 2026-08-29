@@ -1,0 +1,32 @@
+name: Cancel superseded refresh 33251202859
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/cancel-superseded-refresh-33251202859.yml
+
+permissions:
+  actions: write
+
+jobs:
+  cancel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel only the known superseded refresh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET_RUN_ID: "33251202859"
+        run: |
+          set -euo pipefail
+          status=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${TARGET_RUN_ID}" --jq .status)
+          echo "target run ${TARGET_RUN_ID} status=${status}"
+          case "$status" in
+            queued|pending|in_progress|waiting|requested)
+              gh api --method POST "repos/${GITHUB_REPOSITORY}/actions/runs/${TARGET_RUN_ID}/cancel"
+              echo "cancel requested for superseded run ${TARGET_RUN_ID}"
+              ;;
+            *)
+              echo "target run is already terminal; no action required"
+              ;;
+          esac
