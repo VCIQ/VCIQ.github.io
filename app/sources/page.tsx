@@ -4,12 +4,13 @@ import {
   coreSourceStats,
   coreSourcesByKind,
   type CoreSourceKind,
+  type SourceHealthStatus,
 } from "@/lib/core-sources";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
-  title: "核心信源",
-  description: "将微信公众号、专业媒体、研究机构与官方原始来源作为第五类研究对象，按赛道、人物、公司与技术覆盖持续评估。",
+  title: "重点信源",
+  description: "将微信公众号、专业媒体、研究机构与官方原始来源作为第五类研究对象，并公开呈现实际采集健康与信源生命周期。",
 };
 
 const groups: Array<{
@@ -22,7 +23,7 @@ const groups: Array<{
     kind: "微信公众号",
     eyebrow: "WECHAT PRECISION SOURCES",
     title: "微信公众号",
-    description: "人工配置的中文科技与产业精确信源；按赛道关键词、公司和人物增强微信公开索引发现。",
+    description: "人工配置的中文科技与产业精确信源；采集健康与媒体本身分开评估，微信索引失效不等于 Publisher 失效。",
   },
   {
     kind: "官方 / 原始",
@@ -38,16 +39,36 @@ const groups: Array<{
   },
 ];
 
+const healthLabels: Record<SourceHealthStatus, string> = {
+  ok: "OK",
+  partial: "PARTIAL",
+  error: "ERROR",
+  unknown: "UNKNOWN",
+};
+
+function healthClass(status: SourceHealthStatus): string {
+  if (status === "ok") return styles.healthOk;
+  if (status === "partial") return styles.healthPartial;
+  if (status === "error") return styles.healthError;
+  return styles.healthUnknown;
+}
+
+function compactDate(value?: string): string {
+  return value ? value.slice(0, 10) : "尚无成功记录";
+}
+
 export default function SourcesPage() {
+  const issueCount = coreSourceStats.partial + coreSourceStats.error;
+
   return (
     <main className="page-shell subpage">
       <header className={`page-header ${styles.channelHeader}`}>
-        <p className="eyebrow">05 / CORE SOURCES</p>
-        <h1>核心信源</h1>
+        <p className="eyebrow">05 / SOURCE GOVERNANCE</p>
+        <h1>重点信源</h1>
         <div className="hero-chips">
-          <span>{coreSourceStats.total} 个已配置重点信源</span>
-          <span>{coreSourceStats.wechat} 个微信公众号</span>
-          <span>{coreSourceStats.official} 个官方 / 原始来源</span>
+          <span>{coreSourceStats.total} 个已配置 Publisher</span>
+          <span>{coreSourceStats.healthy} 个当前健康</span>
+          <span>{issueCount} 个存在采集异常</span>
           <span>{coreSourceStats.sectors} 个显式赛道覆盖</span>
         </div>
       </header>
@@ -62,7 +83,7 @@ export default function SourcesPage() {
                 <span>{group.eyebrow}</span>
                 <h2>{group.title}</h2>
               </div>
-              <strong>{sources.length} 个已追踪</strong>
+              <strong>{sources.length} 个 Publisher</strong>
             </div>
 
             <div className={styles.grid}>
@@ -75,14 +96,19 @@ export default function SourcesPage() {
                       </div>
                       <h3>{source.name}</h3>
                     </div>
-                    <span className={styles.status}>TRACKED</span>
+                    <div className={styles.statusStack} aria-label="信源状态">
+                      <span className={styles.lifecycleStatus}>{source.lifecycle.toUpperCase()}</span>
+                      <span className={`${styles.healthStatus} ${healthClass(source.healthStatus)}`}>
+                        {healthLabels[source.healthStatus]}
+                      </span>
+                    </div>
                   </div>
 
                   <div className={styles.coverageRow} aria-label="覆盖摘要">
                     {source.sectors.length ? <span>{source.sectors.length} 赛道</span> : null}
                     {source.companies.length ? <span>{source.companies.length} 公司</span> : null}
                     {source.people.length ? <span>{source.people.length} 人物</span> : null}
-                    {source.keywords.length ? <span>{source.keywords.length} 发现词</span> : null}
+                    <span>{source.endpoints.length} 采集通道</span>
                   </div>
 
                   {source.sectors.length ? (
@@ -92,6 +118,31 @@ export default function SourcesPage() {
                       ))}
                     </div>
                   ) : null}
+
+                  <div className={styles.endpointBlock} aria-label="采集通道健康">
+                    <div className={styles.endpointHeader}>
+                      <span>COLLECTION ENDPOINTS</span>
+                      <small>Publisher 与采集通道分离</small>
+                    </div>
+                    <div className={styles.endpointList}>
+                      {source.endpoints.slice(0, 4).map((endpoint) => (
+                        <div className={styles.endpointRow} key={endpoint.id}>
+                          <div>
+                            <strong>{endpoint.label}</strong>
+                            <small>
+                              {endpoint.evidenceGrade ? `Grade ${endpoint.evidenceGrade} · ` : ""}
+                              扫描 {endpoint.scanned} · 接受 {endpoint.accepted}
+                            </small>
+                          </div>
+                          <div className={styles.endpointState}>
+                            <span className={`${styles.healthDot} ${healthClass(endpoint.status)}`} aria-hidden="true" />
+                            <strong>{healthLabels[endpoint.status]}</strong>
+                            <small>{compactDate(endpoint.lastSuccessAt)}</small>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
 
                   {source.keywords.length ? (
                     <div className={styles.signalBlock}>
@@ -115,7 +166,10 @@ export default function SourcesPage() {
                   ) : null}
 
                   <div className={styles.cardFooter}>
-                    <span><Radio size={11} aria-hidden="true" /> 持续追踪</span>
+                    <span>
+                      <Radio size={11} aria-hidden="true" />
+                      健康快照 {source.healthUpdatedAt?.slice(0, 10) || "不可用"}
+                    </span>
                     {source.url ? (
                       <a href={source.url} target="_blank" rel="noreferrer">
                         原始入口 <ArrowUpRight size={12} />
@@ -136,11 +190,12 @@ export default function SourcesPage() {
         <summary>
           <span>SOURCE LIFECYCLE</span>
           <strong>Candidate → Tracked → Core</strong>
-          <small>展开查看信源升级规则</small>
+          <small>生命周期与采集健康是两个独立维度</small>
         </summary>
         <div className={styles.lifecycleDetails}>
           <p>
-            单篇高价值文章只产生候选信号；持续命中率、直接证据比例、跨日稳定性与人工判断共同决定是否升级。
+            当前 Publisher 的生命周期单独显示为 Candidate、Tracked 或 Core；OK / PARTIAL / ERROR 只描述采集通道健康，
+            不再用 TRACKED 掩盖 Collector 故障。
           </p>
           <div className={styles.lifecycleFlow}>
             <div>
@@ -153,7 +208,7 @@ export default function SourcesPage() {
             </div>
             <div>
               <strong>Core</strong>
-              <p>多期证据稳定后成为长期研究入口。</p>
+              <p>多期证据稳定并完成人工复核后成为长期研究入口。</p>
             </div>
           </div>
         </div>
@@ -166,8 +221,8 @@ export default function SourcesPage() {
           <small>展开查看</small>
         </summary>
         <p>
-          信源是 VCIQ 的第五类研究对象。这里持续评估哪些公众号、专业媒体、研究机构和官方入口值得观察，
-          并把它们与赛道、技术、人物、公司及研究线索连接起来。
+          信源是 VCIQ 的第五类研究对象。Publisher 表示媒体、机构或公司本身；Collection Endpoint 表示微信索引、官网、
+          RSS、公开网页等采集通道。同一个 Publisher 可以有多个 Endpoint，一个通道失败不再等价于整个信源失效。
         </p>
       </details>
 
@@ -183,6 +238,10 @@ export default function SourcesPage() {
           <article>
             <strong>文章价值 ≠ 媒体价值</strong>
             <p>单篇优秀文章只产生候选信号；不因一次收藏就把整个公众号或媒体升级为核心信源。</p>
+          </article>
+          <article>
+            <strong>Publisher ≠ Collection Endpoint</strong>
+            <p>同一 Publisher 的微信、官网、RSS 与公开镜像分别记录健康；只要可靠备用通道可用，就不把 Publisher 整体误判为失效。</p>
           </article>
           <article>
             <strong>来源 × 赛道分别评估</strong>
