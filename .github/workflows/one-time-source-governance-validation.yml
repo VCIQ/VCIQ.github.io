@@ -20,138 +20,90 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Test publisher-title recovery and index search discovery
+      - name: Inspect public publisher search contract
         run: |
           python - <<'PY'
           import html
           import json
           import re
-          from html.parser import HTMLParser
-          from urllib.parse import quote, urlencode, urljoin
+          from urllib.parse import quote, urljoin
           from tools import crawl_articles as crawler
-          from tools import wechat_public_sources as wechat
-          from tools import wechat_sogou_index as sogou
-          from tools import wechat_source_registry as registry
+
+          ROOT = "https://www.jintiankansha.com/"
+          publishers = [
+              "高工机器人", "机器人大讲堂", "集微网", "半导体行业观察", "半导体技术",
+              "芯潮IC", "与非网", "高工锂电", "电池中国",
+          ]
 
           def clean(value):
               return re.sub(r"\s+", " ", html.unescape(re.sub(r"(?is)<[^>]+>", " ", value or ""))).strip()
 
-          class DetailAnchorParser(HTMLParser):
-              def __init__(self, base_url):
-                  super().__init__(convert_charrefs=True)
-                  self.base_url = base_url
-                  self.rows = []
-                  self.href = ""
-                  self.parts = []
-              def handle_starttag(self, tag, attrs):
-                  if tag.casefold() != "a":
-                      return
-                  values = {k.casefold(): v or "" for k, v in attrs}
-                  href = urljoin(self.base_url, values.get("href", ""))
-                  if re.search(r"https?://(?:www\.)?jintiankansha\.(?:com|me)/t/[A-Za-z0-9_-]+", href):
-                      self.href = href
-                      self.parts = []
-              def handle_data(self, data):
-                  if self.href:
-                      self.parts.append(data)
-              def handle_endtag(self, tag):
-                  if tag.casefold() != "a" or not self.href:
-                      return
-                  title = clean(" ".join(self.parts))
-                  if title:
-                      self.rows.append({"url": self.href, "title": title})
-                  self.href = ""
-                  self.parts = []
-
-          # 1) Inspect the site's public search form so publisher-column discovery
-          # can be driven from the live public contract rather than guessed URLs.
-          home = crawler.fetch_text("https://www.jintiankansha.com/", crawler.DEFAULT_USER_AGENT)
-          forms = re.findall(r"(?is)<form\b[^>]*>.*?</form>", home or "")
-          for form in forms:
-              if "搜索" not in clean(form) and "search" not in form.casefold():
-                  continue
-              action = re.search(r'''(?is)\baction\s*=\s*["']?([^"' >]+)''', form)
-              method = re.search(r'''(?is)\bmethod\s*=\s*["']?([^"' >]+)''', form)
+          home = crawler.fetch_text(ROOT, crawler.DEFAULT_USER_AGENT)
+          form = re.search(r'(?is)<form\b[^>]*action=["\']/search["\'][^>]*>.*?</form>', home or "")
+          if form:
+              raw = form.group(0)
               inputs = []
-              for raw in re.findall(r"(?is)<input\b[^>]*>", form):
-                  name = re.search(r'''(?is)\bname\s*=\s*["']?([^"' >]+)''', raw)
-                  placeholder = re.search(r'''(?is)\bplaceholder\s*=\s*["']([^"']*)''', raw)
-                  kind = re.search(r'''(?is)\btype\s*=\s*["']?([^"' >]+)''', raw)
+              for tag in re.findall(r"(?is)<input\b[^>]*>", raw):
+                  attrs = {}
+                  for key, _, quoted, bare in re.findall(r'''(?is)([\w:-]+)\s*=\s*(["'])(.*?)\2|([\w:-]+)\s*=\s*([^\s>]+)''', tag):
+                      pass
+                  def attr(name):
+                      m = re.search(rf'''(?is)\b{name}\s*=\s*(?:["']([^"']*)["']|([^\s>]+))''', tag)
+                      return (m.group(1) if m and m.group(1) is not None else m.group(2) if m else "")
                   inputs.append({
-                      "name": name.group(1) if name else "",
-                      "placeholder": html.unescape(placeholder.group(1)) if placeholder else "",
-                      "type": kind.group(1) if kind else "",
+                      "name": attr("name"),
+                      "type": attr("type"),
+                      "value": html.unescape(attr("value")),
+                      "placeholder": html.unescape(attr("placeholder")),
                   })
-              print("PUBLIC_SEARCH_FORM " + json.dumps({
-                  "action": action.group(1) if action else "",
-                  "method": (method.group(1) if method else "GET").upper(),
-                  "inputs": inputs,
-              }, ensure_ascii=False, sort_keys=True))
+              print("SEARCH_FORM_RAW " + json.dumps({"html": clean(raw)[:3000], "inputs": inputs}, ensure_ascii=False, sort_keys=True))
 
-          # 2) Test whether adding the publisher identity rescues 与非网's recent
-          # exact-title lookups while preserving search-side and final-page account checks.
-          publisher = "与非网"
-          index_url = "https://www.jintiankansha.com/column/FoMbC3nnRr"
-          index_body = crawler.fetch_text(index_url, crawler.DEFAULT_USER_AGENT)
-          parser = DetailAnchorParser(index_url)
-          parser.feed(index_body or "")
-          seen = set()
-          rows = []
-          for row in parser.rows:
-              if row["url"] in seen:
-                  continue
-              seen.add(row["url"])
-              rows.append(row)
-          spec = {"expectedAccounts": [publisher]}
-          recovered = False
-          for row in rows[:5]:
-              title = row["title"]
-              variants = [title, f"{publisher} {title}", f"{title} {publisher}"]
-              for variant in variants:
-                  search_url = (
-                      "https://weixin.sogou.com/weixin?"
-                      f"type=2&s_from=input&query={quote(variant)}&page=1&ie=utf8"
-                  )
+          variants = [
+              ("omitted", ""),
+              ("column", "column"),
+              ("article", "article"),
+              ("0", "0"),
+              ("1", "1"),
+              ("2", "2"),
+          ]
+
+          for publisher in publishers:
+              for label, search_type in variants:
+                  params = f"keyword={quote(publisher)}"
+                  if search_type:
+                      params += f"&search_type={quote(search_type)}"
+                  url = ROOT.rstrip("/") + "/search?" + params
                   try:
-                      body = sogou._request(search_url)
+                      body = crawler.fetch_text(url, crawler.DEFAULT_USER_AGENT)
                   except Exception as exc:
-                      print("PUBLISHER_TITLE_ERROR " + json.dumps({"query": variant, "error": f"{type(exc).__name__}: {exc}"}, ensure_ascii=False, sort_keys=True))
+                      print("SEARCH_ERROR " + json.dumps({"publisher": publisher, "variant": label, "error": f"{type(exc).__name__}: {exc}"}, ensure_ascii=False, sort_keys=True))
                       continue
-                  candidates = []
-                  for block in sogou._result_blocks(body):
-                      account = clean(sogou._first_match(r'<span[^>]*class="[^"]*all-time-y2[^"]*"[^>]*>(.*?)</span>', block))
-                      if not account:
-                          account = clean(sogou._first_match(r'<a(?=[^>]*(?:class="[^"]*account[^"]*"|uigs="article_account_\d+"))[^>]*>(.*?)</a>', block))
-                      href = sogou._first_match(r'<a(?=[^>]*(?:id="sogou_vr_11002601_title_\d+"|uigs="article_title_\d+"))[^>]*href="([^"]+)"[^>]*>', block)
-                      result_title = clean(sogou._first_match(r'<a(?=[^>]*(?:id="sogou_vr_11002601_title_\d+"|uigs="article_title_\d+"))[^>]*>(.*?)</a>', block))
-                      if href:
-                          candidates.append({"account": account, "title": result_title, "url": sogou._normalized_url(urljoin(search_url, sogou._url_entity_unescape(href)))})
-                  print("PUBLISHER_TITLE_SEARCH " + json.dumps({
-                      "query": variant,
-                      "accounts": [c["account"] for c in candidates],
-                      "titles": [c["title"] for c in candidates[:5]],
+
+                  columns = []
+                  for match in re.finditer(r'''(?is)<a\b([^>]*)href=["']([^"']*/column/[A-Za-z0-9_-]+[^"']*)["']([^>]*)>(.*?)</a>''', body or ""):
+                      href = urljoin(url, html.unescape(match.group(2)))
+                      text = clean(match.group(4))
+                      if href not in [item["url"] for item in columns]:
+                          columns.append({"url": href, "text": text})
+                  details = []
+                  for match in re.finditer(r'''(?is)<a\b([^>]*)href=["']([^"']*/t/[A-Za-z0-9_-]+[^"']*)["']([^>]*)>(.*?)</a>''', body or ""):
+                      href = urljoin(url, html.unescape(match.group(2)))
+                      text = clean(match.group(4))
+                      if href not in [item["url"] for item in details]:
+                          details.append({"url": href, "text": text})
+
+                  page_title = clean(re.search(r"(?is)<title[^>]*>(.*?)</title>", body).group(1)) if re.search(r"(?is)<title[^>]*>(.*?)</title>", body or "") else ""
+                  print("SEARCH_RESULT " + json.dumps({
+                      "publisher": publisher,
+                      "variant": label,
+                      "url": url,
+                      "bytes": len(body or ""),
+                      "pageTitle": page_title,
+                      "columnCount": len(columns),
+                      "columns": columns[:8],
+                      "detailCount": len(details),
+                      "details": details[:5],
                   }, ensure_ascii=False, sort_keys=True))
-                  for candidate in candidates:
-                      if not registry.account_matches(spec, candidate["account"]):
-                          continue
-                      try:
-                          direct = sogou.resolve_result_url(candidate["url"], search_url)
-                          page_body = wechat.fetch_public_wechat_page(direct)
-                          page = wechat.WeChatPageParser()
-                          page.feed(page_body or "")
-                          observed = page.account or wechat._js_value(page_body or "", ("nickname", "profile_nickname", "account_name"))
-                          published = wechat._published_at(page, page_body or "", crawler)
-                      except Exception as exc:
-                          print("PUBLISHER_TITLE_DIRECT_ERROR " + json.dumps({"query": variant, "error": f"{type(exc).__name__}: {exc}"}, ensure_ascii=False, sort_keys=True))
-                          continue
-                      ok = registry.account_matches(spec, observed)
-                      print("PUBLISHER_TITLE_DIRECT " + json.dumps({"query": variant, "direct": direct, "observedAccount": observed, "publishedAt": published, "accountMatches": ok}, ensure_ascii=False, sort_keys=True))
-                      if ok:
-                          recovered = True
-                          break
-                  if recovered:
+                  if columns:
                       break
-              if recovered:
-                  break
-          print("PUBLISHER_TITLE_FINAL " + json.dumps({"publisher": publisher, "recovered": recovered}, ensure_ascii=False, sort_keys=True))
           PY
