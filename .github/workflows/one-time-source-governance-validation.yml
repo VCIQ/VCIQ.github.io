@@ -20,36 +20,38 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Compare Sogou discovery
+      - name: Inspect raw Sogou search response shape
         run: |
           python - <<'PY'
-          import json
+          import html
+          import re
           from tools import wechat_sogou_index as sogou
 
-          publishers = [
-              "高工机器人", "机器人大讲堂", "集微网", "半导体行业观察", "半导体技术",
-              "芯潮IC", "与非网", "高工锂电", "电池中国",
-              "量子位", "机器之心", "DeepTech深科技",
-          ]
-          for publisher in publishers:
-              spec = {
-                  "name": publisher,
-                  "expectedAccounts": [publisher],
-                  "queryIdentity": publisher,
-                  "sector": "人工智能" if publisher in {"量子位", "机器之心", "DeepTech深科技"} else "半导体",
-                  "keywords": ["机器人", "芯片", "产业"],
-              }
+          for publisher in ["高工机器人", "量子位"]:
+              spec = {"name": publisher, "expectedAccounts": [publisher], "queryIdentity": publisher, "sector": "人工智能", "keywords": ["机器人"]}
+              url = sogou.build_search_url(spec, query=publisher)
               try:
-                  rows, meta = sogou.discover(spec)
-                  print("SOGOU_META " + json.dumps({"publisher": publisher, **meta}, ensure_ascii=False, sort_keys=True))
-                  for row in rows[:3]:
-                      print("SOGOU_ROW " + json.dumps({
-                          "publisher": publisher,
-                          "title": row.get("title"),
-                          "account": row.get("account"),
-                          "resultUrl": row.get("url"),
-                          "directUrl": row.get("directUrl"),
-                      }, ensure_ascii=False, sort_keys=True))
+                  body = sogou._request(url)
               except Exception as exc:
-                  print(f"SOGOU_EXCEPTION publisher={publisher} error={type(exc).__name__}: {exc}")
+                  print(f"RAW_REQUEST_ERROR publisher={publisher} error={type(exc).__name__}: {exc}")
+                  continue
+              lower = body.casefold()
+              print(f"RAW_PAGE publisher={publisher} bytes={len(body)} antispider={'antispider' in lower} captcha={'验证码' in body}")
+              print(f"LEGACY_MARKERS id={body.count('sogou_vr_11002601_title_')} uigs={body.count('article_title_')}")
+              title = re.search(r'(?is)<title[^>]*>(.*?)</title>', body)
+              print("PAGE_TITLE " + (re.sub(r'\s+', ' ', html.unescape(title.group(1))).strip() if title else ''))
+              anchors = re.findall(r'(?is)<a\b([^>]*)>(.*?)</a>', body)
+              interesting = []
+              for attrs, inner in anchors:
+                  text = re.sub(r'(?is)<[^>]+>', ' ', inner)
+                  text = re.sub(r'\s+', ' ', html.unescape(text)).strip()
+                  href = re.search(r'''href\s*=\s*["']([^"']+)["']''', attrs, flags=re.I)
+                  if href and (publisher in text or '/link?' in href.group(1) or 'weixin' in href.group(1).lower() or 'article' in attrs.lower()):
+                      interesting.append((re.sub(r'\s+', ' ', attrs).strip()[:500], text[:220], html.unescape(href.group(1))[:500]))
+              print(f"ANCHOR_COUNT total={len(anchors)} interesting={len(interesting)}")
+              for attrs, text, href in interesting[:20]:
+                  print(f"ANCHOR attrs={attrs!r} text={text!r} href={href!r}")
+              for marker in ['news-box', 'txt-box', 'results', 'search_no_result', 'no-result', 'sogou_vr_11002601']:
+                  print(f"MARKER {marker} count={lower.count(marker.casefold())}")
+              print("BODY_HEAD " + repr(re.sub(r'\s+', ' ', body[:12000])[:5000]))
           PY
