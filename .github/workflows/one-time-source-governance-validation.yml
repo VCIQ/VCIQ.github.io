@@ -20,74 +20,86 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Inspect Sogou result accounts against WeChat originals
+      - name: Inspect Sogou account-search result structure
         run: |
           python - <<'PY'
+          import html
           import json
-          from tools import crawl_articles as crawler
-          from tools import wechat_public_sources as wechat
+          import re
+          from urllib.parse import quote
           from tools import wechat_sogou_index as sogou
-          from tools import wechat_source_registry as registry
 
-          cases = [
-              {"name": "高工机器人", "sector": "机器人", "keywords": ["机器人", "具身智能"]},
-              {"name": "电池中国", "sector": "能源", "keywords": ["电池", "储能"]},
-              {"name": "量子位", "sector": "人工智能", "keywords": ["人工智能", "大模型"]},
-          ]
+          for publisher in ["高工机器人", "电池中国", "量子位"]:
+              url = (
+                  "https://weixin.sogou.com/weixin?"
+                  f"type=1&s_from=input&query={quote(publisher)}&ie=utf8"
+              )
+              try:
+                  body = sogou._request(url)
+              except Exception as exc:
+                  print(f"ACCOUNT_SEARCH_ERROR publisher={publisher} error={type(exc).__name__}: {exc}")
+                  continue
 
-          for case in cases:
-              spec = {
-                  "id": "diagnostic-" + case["name"],
-                  "name": case["name"],
-                  "expectedAccounts": [case["name"]],
-                  "queryIdentity": case["name"],
-                  "sector": case["sector"],
-                  "keywords": case["keywords"],
-                  "maxItems": 6,
-                  "maxArticleAgeDays": 45,
-              }
-              rows, meta = sogou.discover(spec)
-              print("CASE_META " + json.dumps({"name": case["name"], **meta}, ensure_ascii=False, sort_keys=True))
-              for index, row in enumerate(rows[:5]):
-                  direct = str(row.get("directUrl") or "")
-                  page_account = ""
-                  page_title = ""
-                  blocked = None
-                  fetch_error = None
-                  if direct:
-                      try:
-                          body = wechat.fetch_public_wechat_page(direct)
-                          parser = wechat.WeChatPageParser()
-                          parser.feed(body or "")
-                          page_account = parser.account or wechat._js_value(
-                              body or "", ("nickname", "profile_nickname", "account_name")
-                          )
-                          page_title = (
-                              parser.meta.get("og:title")
-                              or parser.meta.get("twitter:title")
-                              or parser.title
-                              or wechat._js_value(body or "", ("msg_title", "title"))
-                          )
-                          blocked = any(marker in body for marker in wechat.BLOCK_PAGE_MARKERS)
-                      except Exception as exc:
-                          fetch_error = f"{type(exc).__name__}: {exc}"
-                  print(
-                      "ROW_DIAGNOSTIC "
-                      + json.dumps(
-                          {
-                              "queryName": case["name"],
-                              "index": index,
-                              "searchTitle": row.get("title"),
-                              "searchAccount": row.get("account"),
-                              "directUrl": direct,
-                              "pageAccount": page_account,
-                              "pageTitle": page_title,
-                              "accountMatches": registry.account_matches(spec, page_account),
-                              "blocked": blocked,
-                              "fetchError": fetch_error,
-                          },
-                          ensure_ascii=False,
-                          sort_keys=True,
-                      )
+              title = re.search(r'(?is)<title[^>]*>(.*?)</title>', body)
+              print(
+                  "ACCOUNT_SEARCH_META "
+                  + json.dumps(
+                      {
+                          "publisher": publisher,
+                          "bytes": len(body),
+                          "title": re.sub(r"\s+", " ", html.unescape(title.group(1))).strip() if title else "",
+                          "antispider": "antispider" in body.casefold(),
+                          "captcha": "验证码" in body,
+                          "accountBoxes": len(re.findall(r"sogou_vr_11002301_box_\d+", body)),
+                          "articleLinks": len(re.findall(r"/link\?", body)),
+                      },
+                      ensure_ascii=False,
+                      sort_keys=True,
                   )
+              )
+
+              anchors = re.findall(r'(?is)<a\b([^>]*)>(.*?)</a>', body)
+              for attrs, inner in anchors:
+                  text = re.sub(r'(?is)<[^>]+>', ' ', inner)
+                  text = re.sub(r'\s+', ' ', html.unescape(text)).strip()
+                  href_match = re.search(r'''href\s*=\s*["']([^"']+)["']''', attrs, flags=re.I)
+                  href = html.unescape(href_match.group(1)) if href_match else ""
+                  hay = f"{attrs} {text} {href}"
+                  if (
+                      publisher in hay
+                      or "/link?" in href
+                      or "sogou_vr_11002301" in attrs
+                      or "account" in attrs.casefold()
+                  ):
+                      print(
+                          "ACCOUNT_ANCHOR "
+                          + json.dumps(
+                              {
+                                  "publisher": publisher,
+                                  "text": text[:300],
+                                  "href": href[:700],
+                                  "attrs": re.sub(r"\s+", " ", attrs).strip()[:700],
+                              },
+                              ensure_ascii=False,
+                              sort_keys=True,
+                          )
+                      )
+
+              for pattern in [
+                  r'(?is)<li[^>]+id="sogou_vr_11002301_box_\d+".*?</li>',
+                  r'(?is)<div[^>]+class="[^"]*txt-box[^"]*".*?</div>\s*</div>',
+              ]:
+                  blocks = re.findall(pattern, body)
+                  if blocks:
+                      print(
+                          "ACCOUNT_BLOCK "
+                          + json.dumps(
+                              {
+                                  "publisher": publisher,
+                                  "html": re.sub(r"\s+", " ", blocks[0])[:12000],
+                              },
+                              ensure_ascii=False,
+                          )
+                      )
+                      break
           PY
