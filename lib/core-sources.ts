@@ -4,10 +4,20 @@ import { join } from "node:path";
 import intelligenceSourcesConfig from "@/config/intelligence_sources.json";
 import listedCompanyDisclosureSourcesConfig from "@/config/listed_company_disclosure_sources.json";
 import officialCompanySourcesConfig from "@/config/official_company_sources.json";
+import sourceCoreReviewsConfig from "@/config/source_core_reviews.json";
+import sourceLifecyclePolicyConfig from "@/config/source_lifecycle_policy.json";
 import wechatSourcesConfig from "@/config/wechat_sources.json";
+import {
+  evaluateSourcePromotion,
+  type SourceCoreReview,
+  type SourceLifecycle,
+  type SourceLifecyclePolicy,
+  type SourcePromotionEvaluation,
+  type SourcePromotionMetrics,
+} from "@/lib/source-lifecycle";
 
 export type CoreSourceKind = "微信公众号" | "媒体 / 研究" | "官方 / 原始";
-export type SourceLifecycle = "candidate" | "tracked" | "core";
+export type { SourceLifecycle } from "@/lib/source-lifecycle";
 export type SourceHealthStatus = "ok" | "partial" | "error" | "unknown";
 export type SourceRole = "primary" | "corroboration" | "discovery";
 
@@ -39,6 +49,7 @@ export type CoreSource = {
   people: string[];
   url?: string;
   lifecycle: SourceLifecycle;
+  promotion?: SourcePromotionEvaluation;
   healthStatus: SourceHealthStatus;
   healthUpdatedAt?: string;
   endpoints: SourceEndpoint[];
@@ -133,9 +144,47 @@ function loadHealthContext(): HealthContext {
 }
 
 const healthContext = loadHealthContext();
+const lifecyclePolicy = sourceLifecyclePolicyConfig as SourceLifecyclePolicy;
+
+function loadCoreReviewIndex(): Map<string, SourceCoreReview> {
+  const payload = record(sourceCoreReviewsConfig);
+  const reviews = Array.isArray(payload.reviews) ? payload.reviews : [];
+  const result = new Map<string, SourceCoreReview>();
+  for (const raw of reviews) {
+    const review = record(raw);
+    const sourceId = text(review.sourceId, 180);
+    const decision = text(review.decision, 40);
+    const reviewedAt = text(review.reviewedAt, 80);
+    const reviewer = text(review.reviewer, 120);
+    const note = text(review.note, 600);
+    if (
+      !sourceId
+      || !reviewedAt
+      || !reviewer
+      || !note
+      || !["approve_core", "reject_core"].includes(decision)
+    ) continue;
+    const parsed: SourceCoreReview = {
+      sourceId,
+      decision: decision as SourceCoreReview["decision"],
+      reviewedAt,
+      reviewer,
+      note,
+    };
+    const previous = result.get(sourceId);
+    if (!previous || parsed.reviewedAt > previous.reviewedAt) result.set(sourceId, parsed);
+  }
+  return result;
+}
+
+const coreReviewIndex = loadCoreReviewIndex();
 
 function numberValue(value: unknown): number {
   return typeof value === "number" && Number.isFinite(value) ? value : 0;
+}
+
+function optionalNumber(value: unknown): number | undefined {
+  return typeof value === "number" && Number.isFinite(value) ? value : undefined;
 }
 
 function healthStatus(value: unknown): SourceHealthStatus {
@@ -190,14 +239,19 @@ function overallPublisherStatus(endpoints: SourceEndpoint[]): SourceHealthStatus
   return "unknown";
 }
 
-function activeHealthRows(
+function healthRows(
   matcher: (sourceId: string, item: UnknownRecord) => boolean,
 ): Array<{ sourceId: string; item: UnknownRecord }> {
   return Object.entries(healthContext.sources).flatMap(([sourceId, raw]) => {
     const item = record(raw);
-    if (item.missingFromCurrentRun === true || !matcher(sourceId, item)) return [];
-    return [{ sourceId, item }];
+    return matcher(sourceId, item) ? [{ sourceId, item }] : [];
   });
+}
+
+function activeHealthRows(
+  matcher: (sourceId: string, item: UnknownRecord) => boolean,
+): Array<{ sourceId: string; item: UnknownRecord }> {
+  return healthRows(matcher).filter(({ item }) => item.missingFromCurrentRun !== true);
 }
 
 function buildEndpoints(
@@ -273,16 +327,14 @@ function feedEndpoints(id: string, platform: string): SourceEndpoint[] {
   });
 }
 
-function publisherEndpoints(
+function publisherMatcher(
   id: string,
   name: string,
   aliases: string[],
-  fallbackLabel: string,
-  fallbackPlatform: string,
-): SourceEndpoint[] {
+): (sourceId: string, item: UnknownRecord) => boolean {
   const publisherKeys = [name, ...aliases].map(normalizedIdentity).filter(Boolean);
   const configKey = normalizedIdentity(id);
-  const rows = activeHealthRows((sourceId, item) => {
+  return (sourceId, item) => {
     const sourceIdKey = normalizedIdentity(sourceId);
     const observedNameKey = normalizedIdentity(item.name);
     const nameMatch = publisherKeys.some((key) =>
@@ -292,7 +344,17 @@ function publisherEndpoints(
     );
     const idMatch = Boolean(configKey && sourceIdKey.includes(configKey));
     return nameMatch || idMatch;
-  });
+  };
+}
+
+function publisherEndpoints(
+  id: string,
+  name: string,
+  aliases: string[],
+  fallbackLabel: string,
+  fallbackPlatform: string,
+): SourceEndpoint[] {
+  const rows = activeHealthRows(publisherMatcher(id, name, aliases));
   return buildEndpoints(rows, {
     id,
     label: fallbackLabel,
@@ -464,15 +526,89 @@ function sourceIdentity(source: CoreSource): string {
   return `${source.kind}\u0000${source.name}`.toLocaleLowerCase("zh-CN");
 }
 
+function promotionRows(source: CoreSource): Array<{ sourceId: string; item: UnknownRecord }> {
+  if (source.id.startsWith("feed:")) {
+    const runtimeId = source.id.slice("feed:".length);
+    return healthRows((sourceId) => sourceId === runtimeId);
+  }
+  return healthRows(publisherMatcher(source.id, source.name, source.companies));
+}
+
+function promotionMetricsFromRow(
+  row: { sourceId: string; item: UnknownRecord },
+): SourcePromotionMetrics | undefined {
+  const performance = record(row.item.performance);
+  if (!Object.keys(performance).length) return undefined;
+  const samples = Array.isArray(performance.samples) ? performance.samples.map(record) : [];
+  const observedDays = new Set(
+    samples
+      .map((sample) => text(sample.at, 80).slice(0, 10))
+      .filter(Boolean),
+  ).size;
+  const manualQuality = record(performance.manualQuality);
+  const collectionState = text(row.item.collectionState, 40);
+  return {
+    runs: optionalNumber(performance.runs),
+    observedDays,
+    scanned: optionalNumber(performance.scanned),
+    availabilityRate: optionalNumber(performance.availabilityRate),
+    validYieldRate: optionalNumber(performance.validYieldRate),
+    activeCollection: collectionState ? collectionState === "active" : undefined,
+    publicationEligible: typeof row.item.publicationEligible === "boolean"
+      ? row.item.publicationEligible
+      : undefined,
+    performanceReviewRequired: typeof performance.reviewRequired === "boolean"
+      ? performance.reviewRequired
+      : undefined,
+    reviewedRecords: optionalNumber(manualQuality.reviewedRecords),
+    misattributionRate: optionalNumber(manualQuality.misattributionRate),
+    evidenceSourceId: row.sourceId,
+  };
+}
+
+function promotionEvidenceScore(metrics: SourcePromotionMetrics): number {
+  return (metrics.activeCollection === true ? 1_000_000_000 : 0)
+    + (metrics.publicationEligible === true ? 100_000_000 : 0)
+    + (metrics.performanceReviewRequired === false ? 10_000_000 : 0)
+    + (metrics.observedDays ?? 0) * 100_000
+    + (metrics.runs ?? 0) * 10_000
+    + (metrics.reviewedRecords ?? 0) * 100
+    + (metrics.scanned ?? 0)
+    + Math.round((metrics.availabilityRate ?? 0) * 100)
+    + Math.round((metrics.validYieldRate ?? 0) * 100);
+}
+
+function bestPromotionEvidence(source: CoreSource): SourcePromotionMetrics | undefined {
+  return promotionRows(source)
+    .map(promotionMetricsFromRow)
+    .filter((value): value is SourcePromotionMetrics => Boolean(value))
+    .sort((left, right) => promotionEvidenceScore(right) - promotionEvidenceScore(left))[0];
+}
+
+function applyLifecyclePromotion(source: CoreSource): CoreSource {
+  const promotion = evaluateSourcePromotion({
+    trackingEligible: source.lifecycle !== "candidate",
+    metrics: bestPromotionEvidence(source),
+    review: coreReviewIndex.get(source.id),
+    policy: lifecyclePolicy,
+  });
+  return {
+    ...source,
+    lifecycle: promotion.lifecycle,
+    promotion,
+  };
+}
+
 export const coreSources: CoreSource[] = (() => {
   const seen = new Set<string>();
   const result: CoreSource[] = [];
-  for (const source of [
+  for (const rawSource of [
     ...buildWechatSources(),
     ...buildFeedSources(),
     ...buildOfficialCompanySources(),
     ...buildRegulatorySources(),
   ]) {
+    const source = applyLifecyclePromotion(rawSource);
     const identity = sourceIdentity(source);
     if (seen.has(identity)) continue;
     seen.add(identity);
@@ -502,6 +638,9 @@ export const coreSourceStats = {
   candidate: coreSources.filter((item) => item.lifecycle === "candidate").length,
   tracked: coreSources.filter((item) => item.lifecycle === "tracked").length,
   core: coreSources.filter((item) => item.lifecycle === "core").length,
+  evidencePending: coreSources.filter((item) => item.promotion?.state === "evidence_pending").length,
+  reviewPending: coreSources.filter((item) => item.promotion?.state === "review_pending").length,
+  blocked: coreSources.filter((item) => item.promotion?.state === "blocked").length,
 };
 
 export function coreSourcesByKind(kind: CoreSourceKind): CoreSource[] {
