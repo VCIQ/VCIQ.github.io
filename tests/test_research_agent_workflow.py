@@ -40,6 +40,32 @@ class ResearchAgentWorkflowTest(unittest.TestCase):
         self.assertIn("Research Agent 连续规则降级", text)
         self.assertIn("issues: write", text)
 
+    def test_daily_anomalies_warn_and_sync_a_separate_persistent_issue(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+
+        self.assertIn('rejection_reasons.get("entity_mismatch")', text)
+        self.assertIn('change_summary.get("possibleConflicts")', text)
+        self.assertIn('report.get("duplicatesSuppressed")', text)
+        self.assertIn('report.get("sourceClassificationWarnings")', text)
+        self.assertIn("::warning title=Research Agent data anomaly::", text)
+        self.assertIn("[自动告警] Research Agent 数据异常", text)
+        self.assertIn('if [ "${ANOMALY_COUNT:-0}" -gt 0 ]', text)
+        self.assertIn('elif [ "$ISSUE_STATE" = "OPEN" ]', text)
+        self.assertIn('gh issue close "$ISSUE_NUMBER" --reason completed', text)
+        self.assertIn("[自动告警] Research Agent 连续规则降级", text)
+        self.assertLess(
+            text.index("Detect Research Agent data anomalies"),
+            text.index("Validate published research contract"),
+        )
+
+    def test_publication_race_fails_instead_of_rebasing_a_stale_report(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+
+        self.assertIn("if ! git push origin HEAD:main; then", text)
+        self.assertIn("Refusing to rebase and publish stale research", text)
+        self.assertNotIn("git pull --rebase", text)
+        self.assertNotIn("for attempt in 1 2 3", text)
+
     def test_terminal_pages_deployment_dispatches_research(self) -> None:
         pages = PAGES_WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("run_research_after_deploy:", pages)
@@ -58,6 +84,7 @@ class ResearchAgentWorkflowTest(unittest.TestCase):
         self.assertIn("python -m unittest tests.test_research_agent_runtime", text)
         self.assertIn("python -m unittest tests.test_research_agent_evidence_policy", text)
         self.assertIn("python -m unittest tests.test_research_agent_article_events", text)
+        self.assertIn("python -m unittest tests.test_research_agent_event_history", text)
         self.assertIn("python -m unittest tests.test_research_agent_publication_handoff", text)
         self.assertIn("python tools/run_pipeline.py check", text)
 

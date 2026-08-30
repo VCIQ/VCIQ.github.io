@@ -22,6 +22,8 @@ QUALITY_ISSUE_LABELS: dict[str, str] = {
     "missing_published_at": "缺少发布时间",
     "future_published_at": "发布时间晚于本轮截止时间",
     "no_external_evidence": "缺少外部证据",
+    "discovery_only": "仅为发现线索，不能支持正式主张",
+    "entity_mismatch": "标题未直接匹配研究对象",
 }
 
 _ORIGINAL_BUILD_EVIDENCE_PACKAGE: Any = None
@@ -47,6 +49,30 @@ def _source_name(value: Mapping[str, Any]) -> str:
         or value.get("platform")
         or "原始信源"
     ).strip()
+
+
+def _explicit_source_metadata(value: Mapping[str, Any]) -> dict[str, str]:
+    """Copy explicit attribution fields without guessing from the page host."""
+
+    def text(*keys: str) -> str:
+        for key in keys:
+            candidate = value.get(key)
+            if isinstance(candidate, Mapping):
+                candidate = candidate.get("name") or candidate.get("publisher")
+            if isinstance(candidate, str) and candidate.strip():
+                return candidate.strip()
+        return ""
+
+    fields = {
+        "publisherName": text("publisherName", "publisher"),
+        "originalPublisherName": text(
+            "originalPublisherName", "originalPublisher"
+        ),
+        "platformName": text("platformName", "platform", "hostPlatform"),
+        "sourceType": text("sourceType"),
+        "sourceRole": text("sourceRole"),
+    }
+    return {key: item for key, item in fields.items() if item}
 
 
 def _context_grade(path: tuple[str, ...], explicit: str, inherited: str) -> str:
@@ -117,6 +143,7 @@ def walk_source_candidates(
                 "url": str(raw_url).strip(),
                 "publishedAt": published_at,
                 "evidenceGrade": grade,
+                **_explicit_source_metadata(value),
                 "_path": list(path),
                 "_section": str(value.get("section") or "").strip(),
             }
@@ -200,7 +227,60 @@ def _quality_diagnostics(
         "rejectionReasons": dict(
             sorted(reason_counts.items(), key=lambda item: (-item[1], item[0]))
         ),
+        "sourceClassificationWarnings": _source_classification_warnings(evidence),
     }
+
+
+def _source_classification_warnings(
+    evidence: Iterable[Mapping[str, Any]],
+) -> list[dict[str, str]]:
+    """Report contradictions in explicit source metadata without filling blanks."""
+
+    warnings: list[dict[str, str]] = []
+    for row in evidence:
+        source_type = str(row.get("sourceType") or "").strip()
+        if not source_type:
+            continue
+        folded_type = source_type.casefold()
+        role = str(row.get("sourceRole") or "").strip().casefold()
+        grade = str(row.get("evidenceGrade") or "").strip()
+        folded_grade = grade.casefold()
+        is_media_type = any(
+            marker in folded_type
+            for marker in ("media", "news", "publisher", "aggregation")
+        )
+        is_official_type = any(
+            marker in folded_type
+            for marker in ("company", "official", "regulatory", "exchange")
+        )
+        is_official_grade = any(
+            marker in folded_grade
+            for marker in ("官方", "监管", "交易所", "原始材料", "法定披露")
+        )
+        is_media_grade = any(
+            marker in folded_grade for marker in ("媒体", "新闻聚合", "转载")
+        )
+
+        reason = ""
+        if is_media_type and (role == "primary" or is_official_grade):
+            reason = "media_source_marked_primary"
+        elif is_official_type and (
+            role in {"corroboration", "discovery"} or is_media_grade
+        ):
+            reason = "official_source_marked_secondary"
+        if not reason:
+            continue
+        warnings.append(
+            {
+                "evidenceId": str(row.get("id") or ""),
+                "reason": reason,
+                "sourceName": str(row.get("sourceName") or ""),
+                "sourceType": source_type,
+                "sourceRole": str(row.get("sourceRole") or ""),
+                "evidenceGrade": grade,
+            }
+        )
+    return warnings
 
 
 def build_evidence_package(
@@ -316,6 +396,10 @@ def generate_report(*args: Any, **kwargs: Any) -> tuple[dict[str, Any], dict[str
 
     diagnostics = dict(_LAST_QUALITY_DIAGNOSTICS)
     report["qualityDiagnostics"] = diagnostics
+    warnings = diagnostics.get("sourceClassificationWarnings")
+    report["sourceClassificationWarnings"] = (
+        list(warnings) if isinstance(warnings, list) else []
+    )
     report["researchScope"] = _research_scope(snapshot)
 
     root_value = kwargs.get("root")

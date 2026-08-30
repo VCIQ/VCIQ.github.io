@@ -4,6 +4,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 from urllib.parse import parse_qs, urlparse
 
 from tools import expand_tracking_entities as expander
@@ -214,6 +215,57 @@ class ExpandTrackingEntitiesTests(unittest.TestCase):
         self.assertIn(("keywords", "灵巧手"), kinds)
         self.assertIn(("sampleCompanies", "宇树科技"), kinds)
         self.assertIn(("sources", "https://www.unitree.com/"), kinds)
+
+    def test_known_media_publisher_is_not_promoted_to_company_source(self) -> None:
+        config = self._base_config(keywords=["人形机器人整机", "双足机器人"])
+        config["sources"] = [
+            {
+                "id": "source-sina-news",
+                "name": "新浪新闻",
+                "url": "https://news.sina.com.cn/",
+                "sourceCategory": "media",
+                "company": "",
+                "sector": "AI语音",
+            }
+        ]
+        candidate = expander.Candidate(
+            "新浪网",
+            score=4.0,
+            evidence={"news-confirmed", "wikipedia-morelike"},
+        )
+        client = expander.PublicWebClient(0, fetch_text=lambda _url: "")
+
+        with patch.object(
+            expander,
+            "gather_candidates",
+            return_value={expander.normalize_term(candidate.value): candidate},
+        ), patch.object(
+            expander,
+            "wikidata_lookup",
+            return_value={
+                "kind": "company",
+                "website": "http://www.sina.com.cn",
+                "region": "中国",
+            },
+        ):
+            summary = expander.expand_track(
+                client,
+                config,
+                expander.empty_ledger(),
+                config["tracks"][0],
+                {"人形机器人"},
+                None,
+                False,
+            )
+
+        self.assertIn("新浪网", summary["added"]["sampleCompanies"])
+        self.assertEqual(summary["added"]["sources"], [])
+        self.assertTrue(
+            expander.is_known_media_publisher_website(
+                "http://www.sina.com.cn",
+                config,
+            )
+        )
 
     def test_seeds_keywords_for_brand_new_track(self) -> None:
         self._write_config(

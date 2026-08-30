@@ -1,5 +1,6 @@
 .queuePanel {
-  margin-bottom: 20px;
+  scroll-margin-top: 140px;
+  margin-bottom: 32px;
   padding: clamp(20px, 2.5vw, 34px);
   border: 1px solid var(--border);
   background: linear-gradient(145deg, var(--surface-2), var(--surface));
@@ -18,11 +19,13 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  color: var(--faint);
-  font-size: 10px;
+  color: var(--muted);
+  font-size: 12px;
 }
 .headingActions a {
-  padding-bottom: 2px;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
   border-bottom: 1px solid var(--border);
   color: var(--muted);
 }
@@ -30,32 +33,33 @@
 
 .queueIntro {
   max-width: 980px;
-  margin: 20px 0;
+  margin: 18px 0;
   color: var(--muted);
+  font-size: 13px;
 }
 
 .queueStats {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 10px;
 }
 .queueStats article {
-  min-height: 105px;
-  padding: 15px;
+  min-height: 84px;
+  padding: 12px 14px;
   border: 1px solid var(--border-soft);
   background: var(--surface);
 }
 .queueStats span,
 .queueStats small {
   display: block;
-  color: var(--faint);
-  font-size: 10px;
+  color: var(--muted);
+  font-size: 12px;
 }
 .queueStats strong {
   display: block;
-  margin: 7px 0;
-  font: 500 21px/1.2 "Noto Serif SC", serif;
+  margin: 3px 0;
+  font: 500 20px/1.2 "Noto Serif SC", serif;
 }
 
 .queueList { margin-top: 12px; }
@@ -76,10 +80,7 @@
   color: var(--green-bright);
   font: 600 12px/1 monospace;
 }
-.queueBody h3 {
-  margin: 8px 0;
-  font-size: 16px;
-}
+.queueBody h3 { margin: 8px 0; font-size: 16px; }
 .queueBody h3 a { color: var(--text); border-bottom: 1px solid var(--border); }
 .queueBody h3 span { color: var(--muted); font-weight: 400; }
 .queueBody > p { margin: 0 0 12px; color: var(--muted); }
@@ -90,10 +91,9 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 8px;
-  color: var(--faint);
-  font-size: 10px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: .04em;
 }
 
 .queueWhy,
@@ -108,21 +108,46 @@
   padding: 4px 7px;
   border: 1px solid var(--border-soft);
   background: var(--surface);
-  color: var(--faint);
-  font-size: 10px;
+  color: var(--muted);
+  font-size: 12px;
 }
-.queueWhy span { color: var(--muted); }
 
+.queueExecutionSummary,
 .queueExecution {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 8px 14px;
   margin-top: 13px;
-  color: var(--faint);
-  font-size: 11px;
+  color: var(--muted);
+  font-size: 12px;
 }
-.queueExecution svg { color: var(--green); }
+.queueExecutionSummary svg { color: var(--green); }
+
+.taskDetails { margin-top: 10px; }
+.taskDetails > summary,
+.remainingQueue > summary,
+.queueMethodology > summary {
+  min-height: 44px;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: var(--blue);
+  font-size: 12px;
+}
+.taskDetails > summary:focus-visible,
+.remainingQueue > summary:focus-visible,
+.queueMethodology > summary:focus-visible {
+  outline: 2px solid var(--green-bright);
+  outline-offset: 3px;
+}
+.taskDetailBody {
+  margin-top: 4px;
+  padding: 12px 14px;
+  border-left: 2px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+}
 
 .queueQuery {
   display: flex;
@@ -135,38 +160,48 @@
   color: var(--muted);
 }
 .queueQuery svg { flex: 0 0 auto; color: var(--green); }
-.queueQuery code {
-  overflow-wrap: anywhere;
-  white-space: normal;
-  font-size: 11px;
-}
+.queueQuery code { overflow-wrap: anywhere; white-space: normal; font-size: 12px; }
 
 .queueCriteria {
   display: flex;
   align-items: flex-start;
   gap: 7px;
   margin-top: 13px;
-  color: var(--faint);
+  color: var(--muted);
+  font-size: 12px;
 }
 .queueCriteria svg { flex: 0 0 auto; margin-top: 2px; color: var(--green); }
-.queueMethodology {
-  margin: 14px 0 0;
-  padding-top: 14px;
+
+.remainingQueue {
+  margin-top: 8px;
   border-top: 1px solid var(--border-soft);
-  color: var(--faint);
-  font-size: 11px;
 }
-.empty { color: var(--faint); padding: 22px 0 0; }
+.remainingQueue > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--border-soft); }
+.remainingQueue article { padding: 14px; background: var(--surface); }
+.remainingQueue article > span { color: var(--muted); font-size: 12px; }
+.remainingQueue h3 { margin: 4px 0; font-size: 14px; }
+.remainingQueue h3 a { border-bottom: 1px solid var(--border); }
+.remainingQueue p { margin: 0; color: var(--muted); font-size: 12px; }
+
+.queueMethodology {
+  margin-top: 14px;
+  padding-top: 4px;
+  border-top: 1px solid var(--border-soft);
+}
+.queueMethodology p { margin: 0; color: var(--muted); font-size: 12px; }
+.empty { color: var(--muted); padding: 22px 0 0; }
 
 @media (max-width: 900px) {
   .queueStats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 560px) {
-  .queuePanel { padding: 18px; }
-  .queueStats { grid-template-columns: 1fr; }
+  .queuePanel { scroll-margin-top: 132px; padding: 18px; }
+  .queueStats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .queueItem { grid-template-columns: 38px minmax(0, 1fr); gap: 11px; }
   .queueRank { width: 34px; height: 34px; }
   .sectionHeading { flex-direction: column; gap: 8px; }
   .headingActions { width: 100%; justify-content: space-between; }
+  .remainingQueue > div { grid-template-columns: 1fr; }
+  .taskDetailBody { padding: 10px; }
 }

@@ -75,6 +75,11 @@ class ResearchAgentEvidencePolicyTests(unittest.TestCase):
                         "url": "https://news.example.com/demo",
                         "publishedAt": "2026-08-24T06:00:00Z",
                         "source": "示例媒体",
+                        "publisherName": "示例通讯社",
+                        "originalPublisherName": "示例公司新闻室",
+                        "platformName": "聚合平台",
+                        "sourceType": "news-aggregation",
+                        "sourceRole": "corroboration",
                     }
                 ]
             },
@@ -88,6 +93,11 @@ class ResearchAgentEvidencePolicyTests(unittest.TestCase):
         self.assertEqual(evidence[0]["evidenceGrade"], "媒体报道")
         self.assertEqual(evidence[0]["qualityStatus"], "passed")
         self.assertIn("news", evidence[0]["claimFields"])
+        self.assertEqual(evidence[0]["publisherName"], "示例通讯社")
+        self.assertEqual(evidence[0]["originalPublisherName"], "示例公司新闻室")
+        self.assertEqual(evidence[0]["platformName"], "聚合平台")
+        self.assertEqual(evidence[0]["sourceType"], "news-aggregation")
+        self.assertEqual(evidence[0]["sourceRole"], "corroboration")
 
     def test_generic_ungraded_source_is_still_rejected(self) -> None:
         change = {
@@ -137,6 +147,48 @@ class ResearchAgentEvidencePolicyTests(unittest.TestCase):
         self.assertEqual(scope["ventureCompany"]["count"], 1)
         self.assertEqual(scope["technology"]["status"], "pending-artifact")
         self.assertIsNone(scope["technology"]["count"])
+
+    def test_explicit_source_classification_contradictions_are_reported(self) -> None:
+        warnings = policy._source_classification_warnings(
+            [
+                {
+                    "id": "E001",
+                    "sourceName": "媒体门户",
+                    "sourceType": "media",
+                    "sourceRole": "primary",
+                    "evidenceGrade": "官方披露",
+                },
+                {
+                    "id": "E002",
+                    "sourceName": "公司新闻室",
+                    "sourceType": "company",
+                    "sourceRole": "corroboration",
+                    "evidenceGrade": "媒体报道",
+                },
+                {
+                    "id": "E003",
+                    "sourceName": "聚合平台",
+                    "sourceType": "news-aggregation",
+                    "sourceRole": "corroboration",
+                    "evidenceGrade": "媒体报道",
+                },
+                {
+                    "id": "E004",
+                    "sourceName": "缺少显式类型",
+                    "sourceRole": "primary",
+                    "evidenceGrade": "官方披露",
+                },
+            ]
+        )
+
+        self.assertEqual(
+            [row["reason"] for row in warnings],
+            [
+                "media_source_marked_primary",
+                "official_source_marked_secondary",
+            ],
+        )
+        self.assertEqual([row["evidenceId"] for row in warnings], ["E001", "E002"])
 
 
 if __name__ == "__main__":

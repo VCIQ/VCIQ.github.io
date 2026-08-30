@@ -59,6 +59,7 @@ jobs:
           python -m unittest tests.test_research_agent_runtime
           python -m unittest tests.test_research_agent_evidence_policy
           python -m unittest tests.test_research_agent_article_events
+          python -m unittest tests.test_research_agent_event_history
           python -m unittest tests.test_research_agent_publication_handoff
           python -m unittest tests.test_pipeline_control
           python tools/run_pipeline.py check
@@ -137,6 +138,87 @@ jobs:
               )
           PY
 
+      - name: Detect Research Agent data anomalies
+        id: anomaly-status
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          report = json.loads(
+              Path("public/data/research_agent_daily.json").read_text(encoding="utf-8")
+          )
+
+          def signal_count(value: object) -> int:
+              if value is None:
+                  return 0
+              if isinstance(value, bool):
+                  return int(value)
+              if isinstance(value, (int, float)):
+                  return max(0, int(value))
+              if isinstance(value, (list, tuple, set, dict)):
+                  return len(value)
+              if isinstance(value, str):
+                  stripped = value.strip()
+                  if not stripped:
+                      return 0
+                  try:
+                      return max(0, int(float(stripped)))
+                  except ValueError:
+                      return 1
+              return 1
+
+          quality = report.get("qualityDiagnostics")
+          quality = quality if isinstance(quality, dict) else {}
+          rejection_reasons = quality.get("rejectionReasons")
+          rejection_reasons = (
+              rejection_reasons if isinstance(rejection_reasons, dict) else {}
+          )
+          change_summary = report.get("changeSummary")
+          change_summary = change_summary if isinstance(change_summary, dict) else {}
+
+          duplicates_suppressed = report.get("duplicatesSuppressed")
+          if duplicates_suppressed is None:
+              duplicates_suppressed = change_summary.get("duplicatesSuppressed")
+          classification_warnings = report.get("sourceClassificationWarnings")
+          if classification_warnings is None:
+              classification_warnings = quality.get("sourceClassificationWarnings")
+
+          signals = {
+              "entity_mismatch": signal_count(
+                  rejection_reasons.get("entity_mismatch")
+              ),
+              "possibleConflicts": signal_count(
+                  change_summary.get("possibleConflicts")
+              ),
+              "duplicatesSuppressed": signal_count(duplicates_suppressed),
+              "sourceClassificationWarnings": signal_count(
+                  classification_warnings
+              ),
+          }
+          active = {name: count for name, count in signals.items() if count > 0}
+          anomaly_count = sum(active.values())
+          anomaly_summary = (
+              ", ".join(f"{name}={count}" for name, count in active.items())
+              or "none"
+          )
+
+          print(
+              f"Research Agent anomalyCount={anomaly_count} "
+              f"signals={anomaly_summary}"
+          )
+          with Path(os.environ["GITHUB_OUTPUT"]).open("a", encoding="utf-8") as output:
+              output.write(f"anomaly_count={anomaly_count}\n")
+              output.write(f"anomaly_summary={anomaly_summary}\n")
+          if anomaly_count:
+              print(
+                  "::warning title=Research Agent data anomaly::"
+                  f"Detected {anomaly_count} anomaly signals: {anomaly_summary}"
+              )
+          PY
+
       - name: Validate published research contract
         run: python tools/research_agent.py --check
 
@@ -171,25 +253,51 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "${CONTROL_PATHS[@]}"
           git commit -m "data: publish daily research agent brief"
-          for attempt in 1 2 3; do
-            if git push origin HEAD:main; then
-              echo "changed=true" >> "$GITHUB_OUTPUT"
-              exit 0
+          if ! git push origin HEAD:main; then
+            echo "::error title=Research Agent publication race::origin/main advanced or the push failed after this report was generated. Refusing to rebase and publish stale research; a newer main-triggered run must regenerate it."
+            exit 1
+          fi
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Sync persistent Research Agent data anomaly issue
+        if: always() && steps.anomaly-status.outcome == 'success'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ANOMALY_COUNT: ${{ steps.anomaly-status.outputs.anomaly_count }}
+          ANOMALY_SUMMARY: ${{ steps.anomaly-status.outputs.anomaly_summary }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          TITLE='[自动告警] Research Agent 数据异常'
+          ISSUE_ROW=$(gh issue list \
+            --state all \
+            --search "$TITLE in:title" \
+            --limit 100 \
+            --json number,title,state \
+            --jq '.[] | select(.title == "[自动告警] Research Agent 数据异常") | "\(.number) \(.state)"' \
+            | head -n 1)
+          ISSUE_NUMBER=""
+          ISSUE_STATE=""
+          if [ -n "$ISSUE_ROW" ]; then
+            ISSUE_NUMBER="${ISSUE_ROW%% *}"
+            ISSUE_STATE="${ISSUE_ROW#* }"
+          fi
+
+          if [ "${ANOMALY_COUNT:-0}" -gt 0 ]; then
+            BODY="Research Agent 检测到 ${ANOMALY_COUNT} 项数据异常信号：${ANOMALY_SUMMARY:-unknown}。运行：${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+            if [ -n "$ISSUE_NUMBER" ]; then
+              if [ "$ISSUE_STATE" = "CLOSED" ]; then
+                gh issue reopen "$ISSUE_NUMBER"
+              fi
+              gh issue edit "$ISSUE_NUMBER" --body "$BODY"
+            else
+              gh issue create --title "$TITLE" --body "$BODY"
             fi
-            if [ "$attempt" -eq 3 ]; then
-              exit 1
-            fi
-            git pull --rebase -X theirs origin main
-            python tools/research_agent.py --check
-            python tools/run_pipeline.py finalize \
-              research-agent-daily \
-              --quality-gate passed \
-              --status "$RESEARCH_HEALTH_STATUS"
-            git add "${RESEARCH_PATHS[@]}" "${CONTROL_PATHS[@]}"
-            if ! git diff --cached --quiet; then
-              git commit --amend --no-edit
-            fi
-          done
+          elif [ "$ISSUE_STATE" = "OPEN" ]; then
+            gh issue comment "$ISSUE_NUMBER" --body '本轮未检测到数据异常，自动关闭告警。'
+            gh issue close "$ISSUE_NUMBER" --reason completed
+          fi
 
       - name: Sync persistent Research Agent degradation issue
         if: always() && steps.research-status.outcome == 'success'
