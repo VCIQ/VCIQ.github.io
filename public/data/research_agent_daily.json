@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-30T06:29:27+00:00",
+  "generatedAt": "2026-08-30T06:49:05+00:00",
   "asOfDate": "2026-08-30",
-  "runStatus": "no-material-change",
+  "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
   "baselineSource": "snapshot",
   "model": {
@@ -10,47 +10,378 @@
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": false,
-    "usage": {}
+    "used": true,
+    "usage": {
+      "prompt_tokens": 2229,
+      "completion_tokens": 4059,
+      "total_tokens": 6288,
+      "completion_tokens_details": {
+        "reasoning_tokens": 3240
+      },
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 2229
+    }
   },
   "changeSummary": {
-    "totalDetected": 0,
-    "total": 0,
-    "byDataset": {},
-    "byChangeType": {},
-    "externalCandidates": 0,
+    "totalDetected": 2,
+    "total": 1,
+    "byDataset": {
+      "ventureCompany": 1
+    },
+    "byChangeType": {
+      "external_event": 1,
+      "entity_reconciliation": 1
+    },
+    "externalCandidates": 1,
     "qualityRejected": 0,
-    "maintenanceExcluded": 0,
+    "maintenanceExcluded": 1,
     "aggregatedEvents": 0,
-    "highestImportance": 0,
-    "verifiedChangeTotal": 0,
+    "highestImportance": 88,
+    "verifiedChangeTotal": 1,
     "candidateTotal": 0,
     "auxiliaryLeadTotal": 0,
     "rejectedTotal": 0,
     "newEvents": 0,
     "reconfirmations": 0,
-    "updates": 0,
+    "updates": 1,
     "corrections": 0,
     "possibleConflicts": 0,
     "duplicatesSuppressed": 0
   },
   "analysis": {
-    "mode": "structured-change-only",
-    "isResearchJudgment": false,
-    "executiveSummary": "本轮未检测到新的外部事实候选。",
-    "keyDevelopments": [],
-    "thesisUpdates": [],
-    "watchlist": [],
-    "risks": [],
-    "methodologyNote": "结构化变化检查；本期无材料变化。未执行生成式研判。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
+    "mode": "model-analysis",
+    "isResearchJudgment": true,
+    "executiveSummary": "证据包显示 Form Energy 的融资记录发生变化，去除了重复条目。保留的融资记录显示公司于 2026 年 8 月 12 日宣布完成 7.5 亿美元 Series G 融资，由 T. Rowe Price 领投（该机构也曾领投 Series F）。该信息来自 Form Energy 官网，但证据为自动审核未人工复核，且记录中存在日期不一致（publishedAt 为 2020-03-04），需进一步验证。",
+    "keyDevelopments": [
+      {
+        "title": "Form Energy 融资记录更新：7.5 亿美元 Series G 融资",
+        "assessment": "根据证据包中的 change 记录，Form Energy 的 financing 字段被更新，保留的融资记录显示公司于 2026 年 8 月 12 日宣布 7.5 亿美元 Series G 融资，由 T. Rowe Price 领投，且该机构曾领投 Series F。但该证据来自自动审核的官网记录，且存在重复条目和日期不一致（publishedAt 为 2020-03-04），因此该融资事实的确定性为中等。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "Form Energy",
+          "T. Rowe Price"
+        ],
+        "evidenceIds": [
+          "E001"
+        ]
+      }
+    ],
+    "thesisUpdates": [
+      {
+        "entity": "Form Energy",
+        "direction": "positive",
+        "statement": "证据包显示 Form Energy 获得 7.5 亿美元 Series G 融资，由 T. Rowe Price 领投，表明投资者对其铁空气电池商业化前景的认可；但该证据为自动审核且存在日期不一致，需进一步确认。",
+        "evidenceIds": [
+          "E001"
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "item": "Form Energy Series G 融资的官方确认",
+        "reason": "当前证据为自动审核的官网记录，且 publishedAt 与融资日期不一致，需要官方新闻稿或可靠媒体报道确认融资细节。",
+        "nextEvidence": "Form Energy 官方新闻稿或 SEC 文件",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "item": "Form Energy 制造突破与商业部署进展",
+        "reason": "证据包中提及制造突破和新英格兰电网应用，但未提供具体细节，可能影响对融资用途和商业化进展的判断。",
+        "nextEvidence": "Form Energy 官网新闻或项目公告",
+        "evidenceIds": [
+          "E001"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "证据质量风险：融资记录为自动审核未人工复核，且存在重复条目和日期不一致，可能导致对 Form Energy 融资状态的误读。",
+        "reason": "证据包中 financing 记录包含 2020-03-04 和 2026-08-12 两个日期，且 before 中存在重复的 2026-08-12 记录，说明数据源可能存在清洗或录入错误。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "risk": "融资完成风险：证据仅显示官网记录，未提供投资协议或资金到账的独立验证，实际融资可能受条款或监管影响。",
+        "reason": "证据包中未包含投资者名单、金额确认或交易完成条件，仅有一条官网摘要。",
+        "evidenceIds": [
+          "E001"
+        ]
+      }
+    ],
+    "methodologyNote": "本分析仅基于证据包中的单一变更记录（E001），该记录来自 Form Energy 官网，但为自动审核未人工复核。证据包中融资记录存在重复和日期不一致，因此所有判断均标注为中等或低置信度，且不构成投资建议。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
   },
-  "changes": [],
-  "evidence": [],
+  "changes": [
+    {
+      "id": "chg-48764d57668400cd9f40",
+      "dataset": "ventureCompany",
+      "entityType": "创业公司",
+      "entityId": "form-energy",
+      "entityName": "Form Energy",
+      "action": "updated",
+      "changedFields": [
+        "financing"
+      ],
+      "summary": "Form Energy 的 financing 发生变化。",
+      "importance": 88,
+      "before": {
+        "financing": [
+          {
+            "amount": "$750M",
+            "date": "2020-03-04",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/",
+            "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
+            "type": "融资"
+          },
+          {
+            "date": "2026-08-12",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing",
+            "summary": "Weirton, WV – August 12, 2026 – Form Energy, Inc., an American technology company developing and commercializing a new class of cost-effective, multi-day energy storage systems, announced today a $750 million Series G financing round led by T. Rowe Price, which also led the company’s prior Series F round. This round brings Form Energy’s total […]",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+            "type": "融资"
+          },
+          {
+            "amount": "$750M",
+            "date": "2026-08-12",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+            "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+            "type": "融资"
+          }
+        ]
+      },
+      "after": {
+        "financing": [
+          {
+            "amount": "$750M",
+            "date": "2020-03-04",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/",
+            "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
+            "type": "融资"
+          },
+          {
+            "date": "2026-08-12",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing",
+            "summary": "Weirton, WV – August 12, 2026 – Form Energy, Inc., an American technology company developing and commercializing a new class of cost-effective, multi-day energy storage systems, announced today a $750 million Series G financing round led by T. Rowe Price, which also led the company’s prior Series F round. This round brings Form Energy’s total […]",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+            "type": "融资"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "financing"
+      ],
+      "claimBindings": [
+        {
+          "field": "financing",
+          "before": [
+            {
+              "amount": "$750M",
+              "date": "2020-03-04",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/",
+              "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
+              "type": "融资"
+            },
+            {
+              "date": "2026-08-12",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing",
+              "summary": "Weirton, WV – August 12, 2026 – Form Energy, Inc., an American technology company developing and commercializing a new class of cost-effective, multi-day energy storage systems, announced today a $750 million Series G financing round led by T. Rowe Price, which also led the company’s prior Series F round. This round brings Form Energy’s total […]",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+              "type": "融资"
+            },
+            {
+              "amount": "$750M",
+              "date": "2026-08-12",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+              "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+              "type": "融资"
+            }
+          ],
+          "after": [
+            {
+              "amount": "$750M",
+              "date": "2020-03-04",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/",
+              "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
+              "type": "融资"
+            },
+            {
+              "date": "2026-08-12",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing",
+              "summary": "Weirton, WV – August 12, 2026 – Form Energy, Inc., an American technology company developing and commercializing a new class of cost-effective, multi-day energy storage systems, announced today a $750 million Series G financing round led by T. Rowe Price, which also led the company’s prior Series F round. This round brings Form Energy’s total […]",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+              "type": "融资"
+            }
+          ],
+          "evidenceIds": [
+            "E001"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E001"
+      ],
+      "supportingEvidenceIds": [
+        "E001"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "verified_change",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-8be8280900881dcbec79"
+      ],
+      "eventLifecycles": {
+        "evt-8be8280900881dcbec79": "updated"
+      },
+      "eventId": "evt-8be8280900881dcbec79",
+      "lifecycle": "updated",
+      "firstSeenAt": "2026-08-30T06:20:27+00:00",
+      "lastSeenAt": "2026-08-30T06:49:05+00:00"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E001",
+      "changeId": "chg-48764d57668400cd9f40",
+      "entityName": "Form Energy",
+      "claim": "Form Energy 的 financing 发生变化。",
+      "publicationTier": "verified_change",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Form Energy",
+      "title": "Home",
+      "url": "https://formenergy.com/",
+      "publishedAt": "2020-03-04",
+      "evidenceGrade": "官方披露",
+      "claimFields": [
+        "financing"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    }
+  ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-08-30T06:29:27+00:00",
+    "generatedAt": "2026-08-30T06:49:05+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-8be8280900881dcbec79": {
+        "eventId": "evt-8be8280900881dcbec79",
+        "dataset": "ventureCompany",
+        "entityId": "form-energy",
+        "entityName": "Form Energy",
+        "title": "Home",
+        "titleAliases": [
+          "formenergysecures750minseriesgfinancingtoscaleironairbatterymanufacturingandacceleratecommercialdeployments",
+          "home",
+          "newsroom"
+        ],
+        "publishedDate": "2020-03-04",
+        "publishedDates": [
+          "2020-03-04",
+          "2026-08-12",
+          "2021-03-19"
+        ],
+        "entityKeys": [
+          "name:form energy",
+          "ventureCompany:form-energy"
+        ],
+        "typeKeys": [
+          "创业公司"
+        ],
+        "numericCues": [
+          "750"
+        ],
+        "sourceAliases": [
+          "evd-240d920c958998b9e698",
+          "evd-260ebca9594e10735828",
+          "evd-bbce94b49783f715f8ec",
+          "src-ae6596fda7c340d262d4",
+          "src-ce905be3bc5d52aa35cf",
+          "src-dc62ab01be9344185861"
+        ],
+        "evidenceFingerprints": [
+          "260ebca9594e10735828",
+          "240d920c958998b9e698",
+          "bbce94b49783f715f8ec"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Form Energy",
+            "title": "Home",
+            "url": "https://formenergy.com/",
+            "publishedAt": "2020-03-04",
+            "evidenceGrade": "官方披露"
+          },
+          {
+            "sourceName": "Form Energy",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+            "url": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+            "publishedAt": "2026-08-12",
+            "evidenceGrade": "官方披露"
+          },
+          {
+            "sourceName": "Form Energy",
+            "title": "Newsroom",
+            "url": "https://formenergy.com/newsroom/",
+            "publishedAt": "2021-03-19",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "fb674ef849e12bf7834c",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-30T06:20:27+00:00",
+        "lastSeenAt": "2026-08-30T06:49:05+00:00",
+        "lastPublishedAt": "2026-08-30T06:49:05+00:00",
+        "lastLifecycle": "updated",
+        "observationCount": 3,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-dbe725c126f3676c81ee": {
         "eventId": "evt-dbe725c126f3676c81ee",
         "dataset": "marketCompany",
@@ -154,84 +485,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-8be8280900881dcbec79": {
-        "eventId": "evt-8be8280900881dcbec79",
-        "dataset": "ventureCompany",
-        "entityId": "form-energy",
-        "entityName": "Form Energy",
-        "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
-        "titleAliases": [
-          "formenergysecures750minseriesgfinancingtoscaleironairbatterymanufacturingandacceleratecommercialdeployments",
-          "home",
-          "newsroom"
-        ],
-        "publishedDate": "2020-03-04",
-        "publishedDates": [
-          "2020-03-04",
-          "2026-08-12",
-          "2021-03-19"
-        ],
-        "entityKeys": [
-          "name:form energy",
-          "ventureCompany:form-energy"
-        ],
-        "typeKeys": [
-          "创业公司"
-        ],
-        "numericCues": [
-          "750"
-        ],
-        "sourceAliases": [
-          "evd-240d920c958998b9e698",
-          "evd-260ebca9594e10735828",
-          "evd-bbce94b49783f715f8ec",
-          "src-ae6596fda7c340d262d4",
-          "src-ce905be3bc5d52aa35cf",
-          "src-dc62ab01be9344185861"
-        ],
-        "evidenceFingerprints": [
-          "260ebca9594e10735828",
-          "240d920c958998b9e698",
-          "bbce94b49783f715f8ec"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Form Energy",
-            "title": "Home",
-            "url": "https://formenergy.com/",
-            "publishedAt": "2020-03-04",
-            "evidenceGrade": "官方披露"
-          },
-          {
-            "sourceName": "Form Energy",
-            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
-            "url": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
-            "publishedAt": "2026-08-12",
-            "evidenceGrade": "官方披露"
-          },
-          {
-            "sourceName": "Form Energy",
-            "title": "Newsroom",
-            "url": "https://formenergy.com/newsroom/",
-            "publishedAt": "2021-03-19",
-            "evidenceGrade": "官方披露"
-          }
-        ],
-        "claimFingerprint": "ab53829200fcf80ab3ce",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-30T06:20:27+00:00",
-        "lastSeenAt": "2026-08-30T06:20:27+00:00",
-        "lastPublishedAt": "2026-08-30T06:20:27+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 3,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 4,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -1250,11 +1503,11 @@
   "eventDiagnostics": {
     "newEvents": 0,
     "reconfirmations": 0,
-    "updates": 0,
+    "updates": 1,
     "corrections": 0,
     "possibleConflicts": 0,
     "duplicatesSuppressed": 0,
-    "observedEvents": 0,
+    "observedEvents": 1,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -1410,10 +1663,10 @@
     },
     {
       "date": "2026-08-30",
-      "generatedAt": "2026-08-30T06:29:27+00:00",
-      "runStatus": "no-material-change",
-      "changeCount": 5,
-      "executiveSummary": "本轮未检测到新的外部事实候选。",
+      "generatedAt": "2026-08-30T06:49:05+00:00",
+      "runStatus": "model",
+      "changeCount": 6,
+      "executiveSummary": "证据包显示 Form Energy 的融资记录发生变化，去除了重复条目。保留的融资记录显示公司于 2026 年 8 月 12 日宣布完成 7.5 亿美元 Series G 融资，由 T. Rowe Price 领投（该机构也曾领投 Series F）。该信息来自 Form Energy 官网，但证据为自动审核未人工复核，且记录中存在日期不一致（publishedAt 为 2020-03-04），需进一步验证。",
       "eventIds": [
         "evt-8be8280900881dcbec79",
         "evt-a097247d3a842940900c",
@@ -1425,7 +1678,7 @@
       "eventStates": [
         {
           "eventId": "evt-8be8280900881dcbec79",
-          "lifecycle": "first_seen"
+          "lifecycle": "updated"
         },
         {
           "eventId": "evt-a097247d3a842940900c",
@@ -1451,29 +1704,31 @@
       "eventSummary": {
         "newEvents": 6,
         "reconfirmations": 0,
-        "updates": 0,
+        "updates": 1,
         "corrections": 0,
         "possibleConflicts": 0,
         "duplicatesSuppressed": 0
       },
       "legacyChangeCount": 10,
       "metricsVersion": 2,
-      "verifiedChangeTotal": 1,
+      "verifiedChangeTotal": 2,
       "candidateTotal": 2,
       "auxiliaryLeadTotal": 2,
       "rejectedTotal": 12
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 0,
-    "eligibleCandidateCount": 0,
+    "candidateCount": 1,
+    "eligibleCandidateCount": 1,
     "rejectedCandidateCount": 0,
     "rejectedByDataset": {},
-    "evidenceCount": 0,
-    "supportingEvidenceCount": 0,
-    "rejectedEvidenceCount": 0,
+    "evidenceCount": 2,
+    "supportingEvidenceCount": 1,
+    "rejectedEvidenceCount": 1,
     "passedButUnboundEvidenceCount": 0,
-    "rejectionReasons": {},
+    "rejectionReasons": {
+      "ungraded": 1
+    },
     "sourceClassificationWarnings": []
   },
   "sourceClassificationWarnings": [],
