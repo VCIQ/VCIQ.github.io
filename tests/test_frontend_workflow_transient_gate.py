@@ -40,6 +40,11 @@ class FrontendWorkflowTransientGateTests(unittest.TestCase):
             self.web_test.index("Build Pages candidate or defer a main-only tracking refresh"),
         )
 
+    def test_pull_requests_require_the_committed_source_registry_to_be_normalized(self):
+        command = "python tools/tracking_source_governance.py --check"
+        self.assertIn(command, self.web_test)
+        self.assertLess(self.web_test.index(command), self.web_test.index("npm ci"))
+
     def test_frontend_and_pages_use_the_same_pending_refresh_signature(self):
         signature = "tracking configuration is newer than the article snapshot"
         companion = "missing crawler coverage record"

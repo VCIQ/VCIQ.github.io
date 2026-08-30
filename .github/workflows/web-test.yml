@@ -30,6 +30,8 @@ jobs:
             tests.test_manual_tracking_workflow \
             tests.test_tracking_manual_feedback \
             tests.test_expand_tracking_entities
+      - name: Require a normalized automatic source registry
+        run: python tools/tracking_source_governance.py --check
       - run: npm ci
       - run: npm run lint
       - name: Run unit tests
