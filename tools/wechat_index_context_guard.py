@@ -165,9 +165,39 @@ def extract_index_rows(
     title_only_index = (
         index_host in {"jintiankansha.com", "jintiankansha.me"}
         and index_parts.path.startswith("/column/")
+    ) or (
+        index_host == "gsi24.com"
+        and index_parts.path.rstrip("/") == ""
+    ) or (
+        index_host == "zhidx.com"
+        and index_parts.path.rstrip("/") == "/aichip001"
     )
     if title_only_index:
-        for hint in parser.title_hints:
+        title_hints = list(parser.title_hints)
+        if index_host in {"gsi24.com", "zhidx.com"}:
+            for link in parser.links:
+                link_parts = parser_module.urlsplit(str(link.get("url", "")))
+                is_article = (
+                    index_host == "gsi24.com"
+                    and parser_module.re.fullmatch(
+                        r"/a/[^/]+", link_parts.path.rstrip("/")
+                    )
+                    is not None
+                ) or (
+                    index_host == "zhidx.com"
+                    and parser_module.re.fullmatch(
+                        r"/p/\d+\.html", link_parts.path.rstrip("/")
+                    )
+                    is not None
+                )
+                if is_article and parser_module._usable_title(link.get("title")):
+                    title_hints.append(
+                        {
+                            "title": link.get("title"),
+                            "position": int(link.get("position", 0)),
+                        }
+                    )
+        for hint in title_hints:
             title = parser_module._clean(hint.get("title"), 260)
             title_key = title.casefold()
             position = int(hint.get("position", 0))
@@ -180,6 +210,7 @@ def extract_index_rows(
             )
             if (
                 require_account_context
+                and index_host not in {"gsi24.com", "zhidx.com"}
                 and not wechat_source_registry.account_matches(spec, context)
             ):
                 continue
