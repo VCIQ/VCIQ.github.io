@@ -369,25 +369,13 @@ function publisherEndpoints(
 }
 
 function wechatEndpoints(id: string, name: string): SourceEndpoint[] {
-  const endpoints = publisherEndpoints(
+  return publisherEndpoints(
     `wechat:${id}`,
     name,
     [],
     "微信公开索引",
     "微信",
   );
-  if (!endpoints.some((endpoint) => endpoint.label === "微信公开索引")) {
-    endpoints.unshift({
-      id: `wechat:${id}:wechat-index`,
-      label: "微信公开索引",
-      platform: "微信",
-      status: "unknown",
-      scanned: 0,
-      accepted: 0,
-      sourceIds: [],
-    });
-  }
-  return endpoints;
 }
 
 function buildFeedSources(): CoreSource[] {
