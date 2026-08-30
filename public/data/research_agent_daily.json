@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-30T13:30:47+00:00",
-  "asOfDate": "2026-08-30",
-  "runStatus": "no-material-change",
+  "generatedAt": "2026-08-30T17:39:58+00:00",
+  "asOfDate": "2026-08-31",
+  "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
   "baselineSource": "snapshot",
   "model": {
@@ -10,47 +10,720 @@
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": false,
-    "usage": {}
+    "used": true,
+    "usage": {
+      "prompt_tokens": 3061,
+      "completion_tokens": 3213,
+      "total_tokens": 6274,
+      "completion_tokens_details": {
+        "reasoning_tokens": 1826
+      },
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 3061
+    }
   },
   "changeSummary": {
-    "totalDetected": 0,
-    "total": 0,
-    "byDataset": {},
-    "byChangeType": {},
-    "externalCandidates": 0,
-    "qualityRejected": 0,
-    "maintenanceExcluded": 0,
+    "totalDetected": 24,
+    "total": 3,
+    "byDataset": {
+      "intelligenceEvent": 3
+    },
+    "byChangeType": {
+      "external_event": 7,
+      "data_maintenance": 7,
+      "source_refresh": 10
+    },
+    "externalCandidates": 7,
+    "qualityRejected": 3,
+    "maintenanceExcluded": 17,
     "aggregatedEvents": 0,
-    "highestImportance": 0,
+    "highestImportance": 91,
     "verifiedChangeTotal": 0,
     "candidateTotal": 0,
-    "auxiliaryLeadTotal": 0,
-    "rejectedTotal": 0,
-    "newEvents": 0,
+    "auxiliaryLeadTotal": 3,
+    "rejectedTotal": 3,
+    "newEvents": 3,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 0
+    "duplicatesSuppressed": 1
   },
   "analysis": {
-    "mode": "structured-change-only",
-    "isResearchJudgment": false,
-    "executiveSummary": "本轮未检测到新的外部事实候选。",
-    "keyDevelopments": [],
-    "thesisUpdates": [],
-    "watchlist": [],
-    "risks": [],
-    "methodologyNote": "结构化变化检查；本期无材料变化。未执行生成式研判。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
+    "mode": "model-analysis",
+    "isResearchJudgment": true,
+    "executiveSummary": "本证据包包含三条2026-08-30新增的高价值情报事件，均来自单一外部线索（证据等级C，automated_unreviewed），分别涉及：德州州长冻结Flock AI监控摄像头州资金、中塞合作机器人工厂投产、Mechrevo新款游戏本采用AMD非NPU APU。由于证据等级低且未经交叉验证，所有判断均视为待验证线索，不构成确定性事实或投资结论。 质量门诊断：缺少发布时间 3、仅为发现线索，不能支持正式主张 2、缺少标题 2、证据未分级 2、证据合格但未绑定变化字段 1。",
+    "keyDevelopments": [
+      {
+        "title": "Texas Governor Abbott blocks funding for more Flock cameras",
+        "assessment": "据The Verge报道，德州州长Greg Abbott在Texas Tribune调查披露州花费超3000万美元后，冻结了Flock AI监控摄像头的州资金。该事件若属实，可能反映美国公共部门对AI监控支出的政治阻力上升，但当前仅单一来源且证据等级为C，影响程度需进一步验证。",
+        "importance": 4,
+        "confidence": "low",
+        "entities": [
+          "Texas Governor Greg Abbott",
+          "Flock",
+          "Texas Tribune"
+        ],
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "title": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
+        "assessment": "据微信文章报道，塞尔维亚沙巴茨首座机器人工厂启动量产，由敏实集团、智元创新与塞尔维亚方面联合推进，一期投资2000万欧元，规划今年交付500台人形机器人。若属实，代表中国人形机器人企业尝试以欧洲本地化制造方式出海，但证据等级C且来源为自媒体，需官方公告或第三方报道验证。",
+        "importance": 4,
+        "confidence": "low",
+        "entities": [
+          "敏实集团",
+          "智元创新",
+          "塞尔维亚"
+        ],
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "title": "Slim Mechrevo laptop launches with unusual AMD Zen 5 APU and Nvidia RTX 5060",
+        "assessment": "据Notebookcheck报道，Mechrevo Phenom 15 Air 2026在中国发布，采用Ryzen 7 449（Gorgon Point系列，无NPU）与Nvidia RTX 5060，起价约1709美元。该产品显示AMD仍在扩展非NPU Zen 5 APU组合，但单一产品发布对行业叙事影响有限，且证据等级C。",
+        "importance": 2,
+        "confidence": "low",
+        "entities": [
+          "Mechrevo",
+          "AMD",
+          "Nvidia"
+        ],
+        "evidenceIds": [
+          "E004"
+        ]
+      }
+    ],
+    "thesisUpdates": [
+      {
+        "entity": "Flock（AI监控摄像头供应商）",
+        "direction": "negative",
+        "statement": "德州州长冻结州资金的事件若进一步扩散，可能削弱AI监控摄像头在公共部门的采购预期；但当前仅单一来源，影响程度待验证。",
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "entity": "中国人形机器人产业链",
+        "direction": "positive",
+        "statement": "中塞合作工厂投产若属实，显示国产人形机器人正尝试以欧洲本地化制造方式出海，可能提升产业链海外交付能力；但证据等级低，需更多验证。",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "entity": "AMD（非NPU APU产品线）",
+        "direction": "mixed",
+        "statement": "Mechrevo新机采用Ryzen 7 449（无NPU）显示AMD仍在扩展非NPU Zen 5 APU组合，但单一产品发布不足以改变整体AI PC叙事。",
+        "evidenceIds": [
+          "E004"
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "item": "德州Flock摄像头资金冻结的后续政策动向",
+        "reason": "E002为单一来源，需确认是否正式行政命令、涉及金额及对Flock业务的实际影响。",
+        "nextEvidence": "德州官方文件、Texas Tribune调查全文、Flock官方回应",
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "item": "塞尔维亚机器人工厂的实际量产与订单交付",
+        "reason": "E003来自微信自媒体，需核实工厂投资、产能、客户订单及敏实/智元官方公告。",
+        "nextEvidence": "敏实集团或智元创新官方公告、塞尔维亚政府新闻稿、第三方实地报道",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "item": "Mechrevo Phenom 15 Air 2026的销售与评测",
+        "reason": "E004为产品发布报道，需观察市场接受度、实际配置和AMD APU供应情况。",
+        "nextEvidence": "零售渠道价格、专业评测、AMD产品页面",
+        "evidenceIds": [
+          "E004"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "证据质量风险：所有事件均为C级单一来源，可能包含不准确或夸大信息。",
+        "reason": "E002/E003/E004均来自单一外部线索，未经官方或交叉验证，不能作为确定性事实。",
+        "evidenceIds": [
+          "E002",
+          "E003",
+          "E004"
+        ]
+      },
+      {
+        "risk": "AI监控政策风险：德州冻结资金可能预示美国公共部门对AI监控的审查加强，但反向也可能只是个别州行动。",
+        "reason": "E002显示州长在调查报道后冻结资金，但未提供政策细节。",
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "risk": "海外制造执行风险：中塞工厂的500台交付目标可能受产能爬坡、地缘政治或供应链影响。",
+        "reason": "E003为规划目标，非已实现交付。",
+        "evidenceIds": [
+          "E003"
+        ]
+      }
+    ],
+    "methodologyNote": "本分析仅基于证据包内提供的三条证据（E002、E003、E004），未补充外部事实。所有证据均为external_clue等级、automated_unreviewed状态，证据等级C，因此所有判断均标记为低置信度，属于待验证线索。输出中的事实描述严格来自证据摘要，推断与待验证事项已在各字段中明确区分。本报告不构成任何买入、卖出、目标价或收益承诺。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
   },
-  "changes": [],
-  "evidence": [],
+  "changes": [
+    {
+      "id": "chg-40cf16e483eaba03eae5",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-9d800107a411996d75",
+      "entityName": "Texas Governor Abbott blocks funding for more Flock cameras",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Texas Governor Abbott blocks funding for more Flock cameras。",
+      "importance": 91,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-30",
+        "summary": "As backlash grows over Flock's AI surveillance cameras, Texas Governor Greg Abbott has frozen state spending on them. The move came just ahead of the publication of a Texas Tribune investigation that revealed the state spent over $30 million on Flock cameras.…",
+        "title": "Texas Governor Abbott blocks funding for more Flock cameras"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-30",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "As backlash grows over Flock's AI surveillance cameras, Texas Governor Greg Abbott has frozen state spending on them. The move came just ahead of the publication of a Texas Tribune investigation that revealed the state spent over $30 million on Flock cameras.…",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Texas Governor Abbott blocks funding for more Flock cameras",
+          "evidenceIds": [
+            "E002"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E002"
+      ],
+      "supportingEvidenceIds": [
+        "E002"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-19a46ffa0d4299720a2f"
+      ],
+      "eventLifecycles": {
+        "evt-19a46ffa0d4299720a2f": "first_seen"
+      },
+      "eventId": "evt-19a46ffa0d4299720a2f",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-30T17:39:58+00:00",
+      "lastSeenAt": "2026-08-30T17:39:58+00:00"
+    },
+    {
+      "id": "chg-2068799923edaafc0372",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-1ccecb8d3f3b7ae25b",
+      "entityName": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-30",
+        "summary": "当地时间2026年8月29日，塞尔维亚沙巴茨，该国首座机器人工厂正式启动量产，项目由敏实集团、智元创新与塞尔维亚方面联合推进，也是欧洲地区人形机器人重要量产基地。 一、项目基础建设情况 工厂一期投资2000万欧元，厂区面积3000平方米，产线主要承担人形机器人、四足机器狗的整机组装、运动控制校准、整机性能测试工作 。 按照规划，今年将完成500台人形机器人交付，远期规划建设机器人产业园，同步布局无人机、电池配套产线，产品以塞尔维亚制造的身份面向欧洲市场输出。塞尔维亚政府为项目提供政策与财政层面的配套支持，产线落地…",
+        "title": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-30",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "当地时间2026年8月29日，塞尔维亚沙巴茨，该国首座机器人工厂正式启动量产，项目由敏实集团、智元创新与塞尔维亚方面联合推进，也是欧洲地区人形机器人重要量产基地。 一、项目基础建设情况 工厂一期投资2000万欧元，厂区面积3000平方米，产线主要承担人形机器人、四足机器狗的整机组装、运动控制校准、整机性能测试工作 。 按照规划，今年将完成500台人形机器人交付，远期规划建设机器人产业园，同步布局无人机、电池配套产线，产品以塞尔维亚制造的身份面向欧洲市场输出。塞尔维亚政府为项目提供政策与财政层面的配套支持，产线落地…",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
+          "evidenceIds": [
+            "E003"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E003"
+      ],
+      "supportingEvidenceIds": [
+        "E003"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-e0a2a000a640b6c568ef"
+      ],
+      "eventLifecycles": {
+        "evt-e0a2a000a640b6c568ef": "first_seen"
+      },
+      "eventId": "evt-e0a2a000a640b6c568ef",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-30T17:39:58+00:00",
+      "lastSeenAt": "2026-08-30T17:39:58+00:00"
+    },
+    {
+      "id": "chg-857da7fd9c6422d04090",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-9b366f8dbd909cd941",
+      "entityName": "Slim Mechrevo laptop launches with unusual AMD Zen 5 APU and Nvidia RTX 5060",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Slim Mechrevo laptop launches with unusual AMD Zen 5 APU and Nvidia RTX 5060。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-30",
+        "summary": "The Mechrevo Phenom 15 Air 2026 is a newly released gaming laptop in China, featuring the Ryzen 7 449, a non-NPU AMD APU in the Gorgon Point lineup. It's paired with the Nvidia RTX 5060, and the starting launch price is around $1,709.",
+        "title": "Slim Mechrevo laptop launches with unusual AMD Zen 5 APU and Nvidia RTX 5060"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-30",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "The Mechrevo Phenom 15 Air 2026 is a newly released gaming laptop in China, featuring the Ryzen 7 449, a non-NPU AMD APU in the Gorgon Point lineup. It's paired with the Nvidia RTX 5060, and the starting launch price is around $1,709.",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Slim Mechrevo laptop launches with unusual AMD Zen 5 APU and Nvidia RTX 5060",
+          "evidenceIds": [
+            "E004"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E004"
+      ],
+      "supportingEvidenceIds": [
+        "E004"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-dd0f111c95306d478437"
+      ],
+      "eventLifecycles": {
+        "evt-dd0f111c95306d478437": "first_seen"
+      },
+      "eventId": "evt-dd0f111c95306d478437",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-30T17:39:58+00:00",
+      "lastSeenAt": "2026-08-30T17:39:58+00:00"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E002",
+      "changeId": "chg-40cf16e483eaba03eae5",
+      "entityName": "Texas Governor Abbott blocks funding for more Flock cameras",
+      "claim": "新增高价值情报事件记录：Texas Governor Abbott blocks funding for more Flock cameras。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "The Verge",
+      "title": "Texas Governor Abbott blocks funding for more Flock cameras",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/986541/texas-governor-abbott-flock-cameras",
+      "publishedAt": "2026-08-30",
+      "evidenceGrade": "C",
+      "platformName": "The Verge",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E003",
+      "changeId": "chg-2068799923edaafc0372",
+      "entityName": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
+      "claim": "新增高价值情报事件记录：中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "老王-产业观察",
+      "title": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
+      "url": "https://mp.weixin.qq.com/s?new=1&signature=Lgr7DD9mjcwTjtRLyRQLoxvHTzeZDM9LXJkmS%2Ax-t38EE8Ih2JmCMHvYtLwuOxyyjWqGY1i8i67vBD%2AHWR-TB98d9vfkuJOStbtqFyO4MiQOQIgaQ5sJPK08PV%2ARIiMg&src=11&timestamp=1788106977&ver=6936",
+      "publishedAt": "2026-08-30",
+      "evidenceGrade": "C",
+      "platformName": "微信",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E004",
+      "changeId": "chg-857da7fd9c6422d04090",
+      "entityName": "Slim Mechrevo laptop launches with unusual AMD Zen 5 APU and Nvidia RTX 5060",
+      "claim": "新增高价值情报事件记录：Slim Mechrevo laptop launches with unusual AMD Zen 5 APU and Nvidia RTX 5060。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Notebookcheck",
+      "title": "Slim Mechrevo laptop launches with unusual AMD Zen 5 APU and Nvidia RTX 5060",
+      "url": "https://www.notebookcheck.net/Slim-Mechrevo-laptop-launches-with-unusual-AMD-Zen-5-APU-and-Nvidia-RTX-5060.1383213.0.html",
+      "publishedAt": "2026-08-30",
+      "evidenceGrade": "C",
+      "platformName": "Notebookcheck",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    }
+  ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-08-30T13:30:47+00:00",
+    "generatedAt": "2026-08-30T17:39:58+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-e0a2a000a640b6c568ef": {
+        "eventId": "evt-e0a2a000a640b6c568ef",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-1ccecb8d3f3b7ae25b",
+        "entityName": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
+        "title": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
+        "titleAliases": [
+          "中塞合作机器人工厂投产国产人形机器人落地欧洲本地化制造"
+        ],
+        "publishedDate": "2026-08-30",
+        "publishedDates": [
+          "2026-08-30"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-16b077d2d96a2e663e1b",
+          "record-9797c809ebbe7c465ba2",
+          "src-111f2c2cdc83e5f2ba27"
+        ],
+        "evidenceFingerprints": [
+          "16b077d2d96a2e663e1b"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "老王-产业观察",
+            "title": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=Lgr7DD9mjcwTjtRLyRQLoxvHTzeZDM9LXJkmS%2Ax-t38EE8Ih2JmCMHvYtLwuOxyyjWqGY1i8i67vBD%2AHWR-TB98d9vfkuJOStbtqFyO4MiQOQIgaQ5sJPK08PV%2ARIiMg&src=11&timestamp=1788106977&ver=6936",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "c86594e60cf287751052",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-30T17:39:58+00:00",
+        "lastSeenAt": "2026-08-30T17:39:58+00:00",
+        "lastPublishedAt": "2026-08-30T17:39:58+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-dd0f111c95306d478437": {
+        "eventId": "evt-dd0f111c95306d478437",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-9b366f8dbd909cd941",
+        "entityName": "Slim Mechrevo laptop launches with unusual AMD Zen 5 APU and Nvidia RTX 5060",
+        "title": "Slim Mechrevo laptop launches with unusual AMD Zen 5 APU and Nvidia RTX 5060",
+        "titleAliases": [
+          "slimmechrevolaptoplauncheswithunusualamdzen5apuandnvidiartx5060"
+        ],
+        "publishedDate": "2026-08-30",
+        "publishedDates": [
+          "2026-08-30"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "5",
+          "5060"
+        ],
+        "sourceAliases": [
+          "evd-5feb2dc29ded582a9b1d",
+          "record-62d3168ee0574851e9a4",
+          "src-67fe0b79d634e17fff9f"
+        ],
+        "evidenceFingerprints": [
+          "5feb2dc29ded582a9b1d"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Notebookcheck",
+            "title": "Slim Mechrevo laptop launches with unusual AMD Zen 5 APU and Nvidia RTX 5060",
+            "url": "https://www.notebookcheck.net/Slim-Mechrevo-laptop-launches-with-unusual-AMD-Zen-5-APU-and-Nvidia-RTX-5060.1383213.0.html",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "c2f0633a4b9bec342ffc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-30T17:39:58+00:00",
+        "lastSeenAt": "2026-08-30T17:39:58+00:00",
+        "lastPublishedAt": "2026-08-30T17:39:58+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-1d157f7c8668f15a8bc8": {
+        "eventId": "evt-1d157f7c8668f15a8bc8",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-8c9a6fbc5c57ae46eb",
+        "entityName": "小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速",
+        "title": "小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速",
+        "titleAliases": [
+          "小鹏机器人获超9亿美元融资中国通用人形机器人商业化加速"
+        ],
+        "publishedDate": "2026-08-30",
+        "publishedDates": [
+          "2026-08-30"
+        ],
+        "entityKeys": [
+          "mention:xpeng robotics",
+          "mention:事长兼首席",
+          "mention:资金规模吓"
+        ],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "9"
+        ],
+        "sourceAliases": [
+          "evd-f6caa73a6dea6f6b5fd1",
+          "record-6054b86ef89df28c8aa7",
+          "src-2b1c40f704e6d9f525c8",
+          "record-3673ca34f8e3e41aff72",
+          "src-e006891a5e676dba6288"
+        ],
+        "evidenceFingerprints": [
+          "f6caa73a6dea6f6b5fd1"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "真机智能",
+            "title": "小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=FQ22NnURIJq3aNjTV%2A5hP3mdM3MoxPvovzkcQ2cT4064FQ3Txmn%2ACkN4u84A6xTUBCqWwru0duUREIAXdAhEPv99CFwyhyB3gTKwr8ttrVzPz%2AYr1iF%2Akz7jWxrfWJ%2Aa&src=11&timestamp=1788092358&ver=6936",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "真机智能",
+            "title": "小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=FQ22NnURIJq3aNjTV%2A5hP3mdM3MoxPvovzkcQ2cT405FxdtxQg1WLciI7QYylAe-p2HGAwp48pEFkwqC%2Aij4I0mwyesqYA9UToEjVsyE2pqexP3jWOj7IfvGU7zH-KwI&src=11&timestamp=1788106977&ver=6936",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "c64651c09a62511e2a57",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-30T12:40:17+00:00",
+        "lastSeenAt": "2026-08-30T17:39:58+00:00",
+        "lastPublishedAt": "2026-08-30T12:40:17+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-19a46ffa0d4299720a2f": {
+        "eventId": "evt-19a46ffa0d4299720a2f",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-9d800107a411996d75",
+        "entityName": "Texas Governor Abbott blocks funding for more Flock cameras",
+        "title": "Texas Governor Abbott blocks funding for more Flock cameras",
+        "titleAliases": [
+          "texasgovernorabbottblocksfundingformoreflockcameras"
+        ],
+        "publishedDate": "2026-08-30",
+        "publishedDates": [
+          "2026-08-30"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-278da699e79527a7cbb6",
+          "record-6ad0bfb2d0e15394382d",
+          "src-a757cfe55143069aa0b5"
+        ],
+        "evidenceFingerprints": [
+          "278da699e79527a7cbb6"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "The Verge",
+            "title": "Texas Governor Abbott blocks funding for more Flock cameras",
+            "url": "https://www.theverge.com/ai-artificial-intelligence/986541/texas-governor-abbott-flock-cameras",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "f99c5b8260d5fe29498e",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-30T17:39:58+00:00",
+        "lastSeenAt": "2026-08-30T17:39:58+00:00",
+        "lastPublishedAt": "2026-08-30T17:39:58+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-f9a0d41fb1a21b2110b3": {
         "eventId": "evt-f9a0d41fb1a21b2110b3",
         "dataset": "institutionEvent",
@@ -1613,64 +2286,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-1d157f7c8668f15a8bc8": {
-        "eventId": "evt-1d157f7c8668f15a8bc8",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-8c9a6fbc5c57ae46eb",
-        "entityName": "小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速",
-        "title": "小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速",
-        "titleAliases": [
-          "小鹏机器人获超9亿美元融资中国通用人形机器人商业化加速"
-        ],
-        "publishedDate": "2026-08-30",
-        "publishedDates": [
-          "2026-08-30"
-        ],
-        "entityKeys": [
-          "mention:xpeng robotics",
-          "mention:事长兼首席",
-          "mention:资金规模吓"
-        ],
-        "typeKeys": [
-          "融资",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "9"
-        ],
-        "sourceAliases": [
-          "evd-f6caa73a6dea6f6b5fd1",
-          "record-6054b86ef89df28c8aa7",
-          "src-2b1c40f704e6d9f525c8"
-        ],
-        "evidenceFingerprints": [
-          "f6caa73a6dea6f6b5fd1"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "真机智能",
-            "title": "小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=FQ22NnURIJq3aNjTV%2A5hP3mdM3MoxPvovzkcQ2cT4064FQ3Txmn%2ACkN4u84A6xTUBCqWwru0duUREIAXdAhEPv99CFwyhyB3gTKwr8ttrVzPz%2AYr1iF%2Akz7jWxrfWJ%2Aa&src=11&timestamp=1788092358&ver=6936",
-            "publishedAt": "2026-08-30",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "c64651c09a62511e2a57",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-30T12:40:17+00:00",
-        "lastSeenAt": "2026-08-30T12:40:17+00:00",
-        "lastPublishedAt": "2026-08-30T12:40:17+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-17774ee02fd74a159e76": {
         "eventId": "evt-17774ee02fd74a159e76",
         "dataset": "institutionEvent",
@@ -2736,13 +3351,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 0,
+    "newEvents": 3,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 0,
-    "observedEvents": 0,
+    "duplicatesSuppressed": 1,
+    "observedEvents": 4,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -3090,18 +3705,65 @@
       "candidateTotal": 25,
       "auxiliaryLeadTotal": 8,
       "rejectedTotal": 15
+    },
+    {
+      "metricsVersion": 2,
+      "date": "2026-08-31",
+      "generatedAt": "2026-08-30T17:39:58+00:00",
+      "runStatus": "model",
+      "changeCount": 3,
+      "executiveSummary": "本证据包包含三条2026-08-30新增的高价值情报事件，均来自单一外部线索（证据等级C，automated_unreviewed），分别涉及：德州州长冻结Flock AI监控摄像头州资金、中塞合作机器人工厂投产、Mechrevo新款游戏本采用AMD非NPU APU。由于证据等级低且未经交叉验证，所有判断均视为待验证线索，不构成确定性事实或投资结论。",
+      "eventIds": [
+        "evt-19a46ffa0d4299720a2f",
+        "evt-e0a2a000a640b6c568ef",
+        "evt-dd0f111c95306d478437"
+      ],
+      "eventStates": [
+        {
+          "eventId": "evt-19a46ffa0d4299720a2f",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-e0a2a000a640b6c568ef",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-dd0f111c95306d478437",
+          "lifecycle": "first_seen"
+        }
+      ],
+      "verifiedChangeTotal": 0,
+      "candidateTotal": 0,
+      "auxiliaryLeadTotal": 3,
+      "rejectedTotal": 3,
+      "eventSummary": {
+        "newEvents": 3,
+        "reconfirmations": 0,
+        "updates": 0,
+        "corrections": 0,
+        "possibleConflicts": 0,
+        "duplicatesSuppressed": 1
+      }
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 0,
-    "eligibleCandidateCount": 0,
-    "rejectedCandidateCount": 0,
-    "rejectedByDataset": {},
-    "evidenceCount": 0,
-    "supportingEvidenceCount": 0,
-    "rejectedEvidenceCount": 0,
-    "passedButUnboundEvidenceCount": 0,
-    "rejectionReasons": {},
+    "candidateCount": 7,
+    "eligibleCandidateCount": 4,
+    "rejectedCandidateCount": 3,
+    "rejectedByDataset": {
+      "intelligenceEvent": 2,
+      "marketCompany": 1
+    },
+    "evidenceCount": 10,
+    "supportingEvidenceCount": 4,
+    "rejectedEvidenceCount": 5,
+    "passedButUnboundEvidenceCount": 1,
+    "rejectionReasons": {
+      "missing_published_at": 3,
+      "discovery_only": 2,
+      "missing_title": 2,
+      "ungraded": 2
+    },
     "sourceClassificationWarnings": []
   },
   "sourceClassificationWarnings": [],
