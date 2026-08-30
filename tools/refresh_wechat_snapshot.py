@@ -18,11 +18,14 @@ try:  # Imported by tests as tools.refresh_wechat_snapshot.
     from . import wechat_index_context_guard
     from . import wechat_index_record_fallback
     from . import wechat_original_redirect_bridge
+    from . import wechat_public_aggregator
+    from . import wechat_public_index_title_fallback
     from . import wechat_public_sources
     from . import wechat_registry_bridge
     from . import wechat_sogou_bridge
     from . import wechat_sogou_index
     from . import wechat_sogou_link_compat
+    from . import wechat_sogou_redirect_compat
     from . import wechat_snapshot_quality
 except ImportError:  # Executed directly with python tools/...
     import crawl_articles as crawler
@@ -31,11 +34,14 @@ except ImportError:  # Executed directly with python tools/...
     import wechat_index_context_guard
     import wechat_index_record_fallback
     import wechat_original_redirect_bridge
+    import wechat_public_aggregator
+    import wechat_public_index_title_fallback
     import wechat_public_sources
     import wechat_registry_bridge
     import wechat_sogou_bridge
     import wechat_sogou_index
     import wechat_sogou_link_compat
+    import wechat_sogou_redirect_compat
     import wechat_snapshot_quality
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -45,12 +51,22 @@ OUTPUT_PATH = ROOT / "public" / "data" / "articles.json"
 def install_wechat_pipeline() -> None:
     wechat_fetch_compat.install(wechat_public_sources)
     wechat_registry_bridge.install(wechat_public_sources)
+    wechat_original_redirect_bridge.install(
+        wechat_public_sources,
+        wechat_registry_bridge,
+    )
     wechat_index_context_guard.install(wechat_registry_bridge)
     wechat_index_record_fallback.install(
         wechat_public_sources,
         wechat_registry_bridge,
     )
+    wechat_sogou_redirect_compat.install(wechat_sogou_index)
     wechat_sogou_link_compat.install(wechat_sogou_index)
+    wechat_public_index_title_fallback.install(
+        wechat_registry_bridge,
+        wechat_sogou_index,
+    )
+    wechat_public_aggregator.install(wechat_sogou_index)
     wechat_sogou_bridge.install(wechat_public_sources)
 
 
@@ -88,6 +104,11 @@ def _publishable_article(article: dict[str, Any]) -> bool:
         return True
     source = article.get("source")
     source = source if isinstance(source, dict) else {}
+    source_kind = str(
+        article.get("sourceKind") or source.get("sourceKind") or ""
+    )
+    if source_kind in {"official-website", "official-crosspost"}:
+        return str(source.get("platform", "")) in {"官方网站", "搜狐号"}
     return (
         str(source.get("platform", "")) == "微信"
         and article.get("wechatContentMode") != "index-only"
@@ -114,8 +135,8 @@ def _normalize_statuses(
                 status["failed"] = max(1, int(status.get("failed", 0) or 0))
                 status["retainedPrevious"] = True
                 status["error"] = (
-                    "Discovery returned only proxy/index pages; no original "
-                    "mp.weixin.qq.com article was published"
+                    "Discovery returned no verified WeChat original or "
+                    "publisher-owned official copy"
                 )
         result.append(status)
     return result

@@ -1,46 +1,41 @@
 .filters {
   display: grid;
-  gap: 14px;
-  padding: 20px 24px 16px;
+  gap: 8px;
+  padding: 12px 20px 10px;
   border-bottom: 1px solid var(--border);
-  background: color-mix(in srgb, var(--surface-2) 72%, transparent);
+  background: color-mix(in srgb, var(--surface-2) 70%, transparent);
 }
 
-.filterGrid {
+.primaryFilters {
   display: grid;
-  grid-template-columns: repeat(4, minmax(132px, 1fr));
-  gap: 9px;
+  grid-template-columns: minmax(220px, 1.6fr) repeat(2, minmax(118px, .7fr));
+  gap: 8px;
+  align-items: center;
 }
 
-.filterGrid select,
+.primaryFilters select,
+.advancedGrid select,
 .search {
-  min-width: 0;
-  min-height: 40px;
+  min-height: 36px;
   border: 1px solid var(--border-soft);
-  border-radius: 2px;
   background: var(--surface);
   color: var(--text);
 }
 
-.filterGrid select {
-  padding: 0 10px;
+.primaryFilters select,
+.advancedGrid select {
+  min-width: 0;
+  padding: 0 9px;
   font-size: 11px;
 }
 
 .search {
   display: flex;
-  grid-column: span 2;
   align-items: center;
-  gap: 9px;
-  padding: 0 12px;
+  gap: 8px;
+  min-width: 0;
+  padding: 0 11px;
   color: var(--faint);
-}
-
-.search:focus-within,
-.filterGrid select:focus {
-  border-color: color-mix(in srgb, var(--green) 58%, var(--border));
-  outline: 2px solid color-mix(in srgb, var(--green) 18%, transparent);
-  outline-offset: 1px;
 }
 
 .search input {
@@ -55,120 +50,84 @@
 
 .filterMeta {
   display: flex;
-  min-width: 0;
-  align-items: center;
-  gap: 10px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 28px;
 }
 
-.filterMeta > strong {
-  flex: 0 0 auto;
-  color: var(--text);
-  font-size: 11px;
-  font-weight: 600;
-}
-
-.filterMeta > button {
-  display: inline-flex;
-  min-height: 30px;
-  flex: 0 0 auto;
-  align-items: center;
-  gap: 5px;
-  border: 1px solid var(--border-soft);
-  background: var(--surface);
-  color: var(--muted);
-  cursor: pointer;
-  font-size: 10px;
-}
-
-.filterMeta > button:hover {
-  border-color: color-mix(in srgb, var(--green) 44%, var(--border));
-  color: var(--text);
-}
-
-.activeFilters {
-  display: flex;
+.advancedFilters {
   min-width: 0;
   flex: 1 1 auto;
-  flex-wrap: wrap;
-  gap: 5px;
 }
 
-.activeFilters span {
-  overflow: hidden;
-  max-width: 210px;
-  padding: 3px 7px;
-  border: 1px solid var(--border-soft);
-  border-radius: 999px;
-  color: var(--faint);
-  font-size: 9px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.metricGuide {
-  border-top: 1px solid var(--border-soft);
-  padding-top: 11px;
-}
-
-.metricGuide summary {
-  width: max-content;
+.advancedFilters summary {
+  display: inline-flex;
+  min-height: 26px;
+  align-items: center;
   cursor: pointer;
-  color: var(--green-bright);
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+  padding: 0 9px;
+  color: var(--muted);
   font-size: 10px;
-  list-style-position: inside;
+  list-style: none;
+  user-select: none;
 }
 
-.metricGuide > div {
+.advancedFilters summary::-webkit-details-marker {
+  display: none;
+}
+
+.advancedFilters summary::after {
+  margin-left: 8px;
+  color: var(--green-bright);
+  content: "+";
+}
+
+.advancedFilters[open] summary::after {
+  content: "−";
+}
+
+.advancedGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  padding-top: 10px;
+  gap: 8px;
+  padding-top: 8px;
 }
 
-.metricGuide p {
-  margin: 0;
+.filterMeta > span {
+  flex: 0 0 auto;
+  padding-top: 7px;
   color: var(--faint);
   font-size: 10px;
-  line-height: 1.6;
-}
-
-.metricGuide strong {
-  display: block;
-  color: var(--muted);
-  font-weight: 600;
+  text-align: right;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  padding: 18px 24px 2px;
+  gap: 8px;
+  padding: 10px 20px 0;
 }
 
 .card {
   display: flex;
   min-width: 0;
-  min-height: 254px;
+  min-height: 228px;
   flex-direction: column;
-  padding: 16px;
+  padding: 12px;
   border: 1px solid var(--border-soft);
-  border-radius: 3px;
   background: color-mix(in srgb, var(--surface) 92%, transparent);
   color: inherit;
   text-decoration: none;
-  transition: border-color .18s ease, background .18s ease, transform .18s ease, box-shadow .18s ease;
+  transition: border-color .18s ease, background .18s ease, transform .18s ease;
 }
 
 .card:hover {
-  border-color: color-mix(in srgb, var(--green) 48%, var(--border));
+  border-color: color-mix(in srgb, var(--green) 45%, var(--border));
   background: var(--surface-2);
-  box-shadow: 0 10px 28px rgb(0 0 0 / 12%);
-  transform: translateY(-2px);
-}
-
-.card:focus-visible {
-  outline: 2px solid var(--green-bright);
-  outline-offset: 2px;
+  transform: translateY(-1px);
 }
 
 .cardTop {
@@ -178,8 +137,8 @@
   justify-content: space-between;
   gap: 8px;
   color: var(--faint);
-  font-size: 9px;
-  line-height: 1.4;
+  font-size: 8px;
+  line-height: 1.35;
 }
 
 .cardTop span,
@@ -200,22 +159,21 @@
 
 .titleRow {
   display: grid;
-  grid-template-columns: 36px minmax(0, 1fr) auto;
-  gap: 10px;
+  grid-template-columns: 32px minmax(0, 1fr) auto;
+  gap: 9px;
   align-items: center;
-  margin: 10px 0 8px;
+  margin: 8px 0 9px;
 }
 
 .titleRow i {
   display: grid;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   place-items: center;
   border: 1px solid var(--border-soft);
-  border-radius: 2px;
   background: var(--surface-3);
   color: var(--green-bright);
-  font-size: 10px;
+  font-size: 9px;
   font-style: normal;
 }
 
@@ -223,8 +181,8 @@
   overflow: hidden;
   margin: 0;
   color: var(--text);
-  font-size: 16px;
-  font-weight: 620;
+  font-size: 15px;
+  font-weight: 600;
   line-height: 1.25;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -232,95 +190,118 @@
 
 .titleRow p {
   overflow: hidden;
-  margin: 3px 0 0;
+  margin: 2px 0 0;
   color: var(--faint);
-  font-size: 9px;
+  font-size: 8px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .titleRow svg {
   color: var(--green-bright);
-  transition: transform .18s ease;
 }
 
-.card:hover .titleRow svg {
-  transform: translate(2px, -2px);
+.researchRows {
+  display: grid;
+  gap: 5px;
 }
 
-.positioning {
-  display: -webkit-box;
-  overflow: hidden;
-  min-height: 34px;
-  margin: 0 0 11px;
-  color: var(--muted);
-  font-size: 10px;
-  line-height: 1.7;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-
-.latestChange,
-.nextWatch {
+.researchRows > div {
   display: grid;
   grid-template-columns: 52px minmax(0, 1fr);
-  gap: 8px;
+  gap: 7px;
   align-items: start;
 }
 
-.latestChange {
-  padding: 9px 10px;
-  border-left: 2px solid color-mix(in srgb, var(--green) 55%, transparent);
-  background: color-mix(in srgb, var(--surface-3) 68%, transparent);
-}
-
-.nextWatch {
-  padding: 8px 10px 0;
-}
-
-.latestChange span,
-.nextWatch span {
+.researchRows strong {
   color: var(--green-bright);
   font-size: 8px;
   font-weight: 600;
   letter-spacing: .04em;
-  line-height: 1.55;
+  line-height: 1.45;
 }
 
-.latestChange p,
-.nextWatch p {
+.researchRows p {
   display: -webkit-box;
   overflow: hidden;
   margin: 0;
-  color: var(--text);
+  color: var(--muted);
   font-size: 9px;
-  line-height: 1.55;
+  line-height: 1.4;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
 }
 
-.nextWatch p {
-  color: var(--muted);
-  -webkit-line-clamp: 1;
+.researchRows > div:first-child p {
+  color: var(--text);
+  -webkit-line-clamp: 2;
 }
 
 .relationRow {
   display: flex;
-  min-height: 19px;
+  min-height: 16px;
   flex-wrap: nowrap;
-  gap: 5px;
+  gap: 4px;
   overflow: hidden;
-  margin: auto 0 8px;
-  padding-top: 9px;
+  margin: 7px 0 6px;
 }
 
 .relationRow span {
   flex: 0 0 auto;
   max-width: 150px;
   overflow: hidden;
-  padding: 2px 6px;
+  padding: 2px 5px;
   border: 1px solid var(--border-soft);
-  border-radius: 999px;
+  color: var(--faint);
+  font-size: 7px;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cardMetrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  margin: auto 0 0;
+  padding-top: 6px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.cardMetrics > div {
+  display: flex;
+  min-width: 0;
+  align-items: baseline;
+  gap: 4px;
+  padding: 0 6px;
+  border-left: 1px solid var(--border-soft);
+}
+
+.cardMetrics > div:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.cardMetrics dt {
+  flex: 0 0 auto;
+  color: var(--faint);
+  font-size: 7px;
+}
+
+.cardMetrics dd {
+  overflow: hidden;
+  margin: 0;
+  color: var(--text);
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cardFooter {
+  overflow: hidden;
+  margin-top: 6px;
   color: var(--faint);
   font-size: 7px;
   line-height: 1.4;
@@ -328,57 +309,13 @@
   white-space: nowrap;
 }
 
-.cardFooter {
-  display: flex;
-  min-width: 0;
-  flex-wrap: wrap;
-  gap: 5px 12px;
-  padding-top: 8px;
-  border-top: 1px solid var(--border-soft);
-  color: var(--faint);
-  font-size: 8px;
-  line-height: 1.45;
-}
-
-.cardFooter time {
-  margin-left: auto;
-}
-
-.pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  padding: 20px 24px 24px;
-  color: var(--faint);
-  font-size: 10px;
-}
-
-.pagination button {
-  min-width: 72px;
-  min-height: 34px;
-  border: 1px solid var(--border-soft);
-  background: var(--surface);
-  color: var(--muted);
-  cursor: pointer;
-}
-
-.pagination button:hover:not(:disabled) {
-  border-color: color-mix(in srgb, var(--green) 48%, var(--border));
-  color: var(--text);
-}
-
-.pagination button:disabled {
-  cursor: not-allowed;
-  opacity: .35;
-}
-
 .empty {
   display: grid;
-  min-height: 230px;
-  place-content: center;
   justify-items: center;
   gap: 8px;
+  margin: 16px 20px;
+  padding: 30px;
+  border: 1px dashed var(--border);
   color: var(--faint);
   text-align: center;
 }
@@ -393,91 +330,76 @@
   font-size: 10px;
 }
 
-@media (max-width: 920px) {
-  .filterGrid {
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 14px 0 18px;
+}
+
+.pagination button {
+  min-width: 72px;
+  min-height: 34px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.pagination button:disabled {
+  cursor: not-allowed;
+  opacity: .38;
+}
+
+.pagination span {
+  color: var(--faint);
+  font-size: 10px;
+}
+
+@media (max-width: 1120px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 860px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .grid {
+    grid-template-columns: 1fr;
+    padding: 8px 14px 0;
+  }
+
+  .filters {
+    padding: 12px 14px 10px;
+  }
+
+  .primaryFilters {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .search {
-    grid-column: span 2;
-  }
-
-  .grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
-@media (max-width: 640px) {
-  .filters {
-    gap: 12px;
-    padding: 14px;
-  }
-
-  .filterGrid {
-    gap: 7px;
-  }
-
-  .filterGrid select,
-  .search {
-    min-height: 44px;
-  }
-
-  .filterGrid select {
-    font-size: 10px;
+    grid-column: 1 / -1;
   }
 
   .filterMeta {
-    flex-wrap: wrap;
+    align-items: center;
   }
 
-  .activeFilters {
-    flex-basis: 100%;
+  .advancedGrid {
+    grid-template-columns: 1fr;
   }
 
-  .filterMeta > button {
-    min-height: 40px;
-  }
-
-  .metricGuide > div {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 8px;
-  }
-
-  .grid {
-    gap: 10px;
-    padding: 14px 14px 0;
+  .filterMeta > span {
+    padding-top: 0;
+    text-align: right;
   }
 
   .card {
     min-height: 0;
-    padding: 14px;
-  }
-
-  .cardTop {
-    align-items: flex-start;
-    font-size: 8px;
-  }
-
-  .latestChange,
-  .nextWatch {
-    grid-template-columns: 48px minmax(0, 1fr);
-  }
-
-  .relationRow {
-    flex-wrap: wrap;
-    max-height: 42px;
-  }
-
-  .cardFooter time {
-    width: 100%;
-    margin-left: 0;
-  }
-
-  .pagination {
-    padding: 18px 14px 22px;
-  }
-
-  .pagination button {
-    min-height: 44px;
   }
 }

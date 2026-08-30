@@ -7,11 +7,15 @@ preview, snapshot, and aggregation URLs must never become article sources.
 
 from __future__ import annotations
 
-import html
 import re
 from typing import Any
 from urllib.parse import urljoin, urlsplit
 from urllib.request import Request, urlopen
+
+try:
+    from . import wechat_url_compat
+except ImportError:
+    import wechat_url_compat
 
 WECHAT_HOST = "mp.weixin.qq.com"
 INDEX_HOSTS = {"jintiankansha.com", "jintiankansha.me"}
@@ -33,7 +37,11 @@ def is_direct_wechat_url(url: str) -> bool:
     parts = urlsplit(str(url or ""))
     host = (parts.hostname or "").casefold()
     path = parts.path.rstrip("/")
-    return host == WECHAT_HOST and (path == "/s" or path.startswith("/s/"))
+    return (
+        parts.scheme.casefold() == "https"
+        and host == WECHAT_HOST
+        and (path == "/s" or path.startswith("/s/"))
+    )
 
 
 def is_public_index_proxy_url(url: str) -> bool:
@@ -44,7 +52,7 @@ def is_public_index_proxy_url(url: str) -> bool:
 
 
 def _decode_candidate(value: str) -> str:
-    return html.unescape(str(value or "")).replace("\\/", "/").replace("\\x26", "&")
+    return wechat_url_compat.decode_public_url(value)
 
 
 def _direct_url_from_body(body: str) -> str:
@@ -57,7 +65,7 @@ def _direct_url_from_body(body: str) -> str:
 
 def _original_endpoint(detail_url: str, body: str) -> str:
     match = ORIGINAL_ENDPOINT_PATTERN.search(body or "")
-    return urljoin(detail_url, html.unescape(match.group(1))) if match else ""
+    return urljoin(detail_url, _decode_candidate(match.group(1))) if match else ""
 
 
 def _follow_original_endpoint(
@@ -76,7 +84,7 @@ def _follow_original_endpoint(
         },
     )
     with urlopen(request, timeout=timeout) as response:
-        final_url = str(response.geturl() or "")
+        final_url = _decode_candidate(str(response.geturl() or ""))
         if is_direct_wechat_url(final_url):
             return final_url
         charset = response.headers.get_content_charset() or "utf-8"

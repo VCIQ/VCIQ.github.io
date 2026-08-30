@@ -373,8 +373,27 @@ def clean_title(value: str) -> str:
     return clean_text(title)
 
 
+_URL_AMP_ENTITY = re.compile(
+    r"&(?:amp|#0*38|#x0*26);",
+    flags=re.IGNORECASE,
+)
+
+
+def _clean_url(value: str) -> str:
+    """Clean URL whitespace without permissive HTML entity decoding.
+
+    ``html.unescape`` treats the ``&times`` prefix in a legitimate
+    ``&timestamp`` query parameter as the multiplication-sign entity. Decode
+    only explicit ampersand entities here so signed URLs retain their query
+    boundaries.
+    """
+
+    text = re.sub(r"\s+", " ", str(value or "")).strip()
+    return _URL_AMP_ENTITY.sub("&", text)
+
+
 def normalize_url(url: str) -> str:
-    parts = urlsplit(clean_text(url))
+    parts = urlsplit(_clean_url(url))
     query = urlencode(
         sorted(
             (key, value)

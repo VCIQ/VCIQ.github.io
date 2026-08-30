@@ -162,17 +162,6 @@ const companyOverrides: Record<string, Partial<SectorLens>> = {
     commercialization: "城市运营、平台合作、整车前装与海外部署共同验证规模化能力。",
     technology: "关注端到端驾驶系统、多车型适配和跨地区运营验证。",
   },
-  joby: {
-    industryPosition: "以电动垂直起降飞行器连接航空器研发、适航认证与城市空中出行运营。",
-    commercialization: "适航取证、首批商业航线、机队交付与单位运营成本是主要商业化验证点。",
-    technology: "关注电推进系统、飞行安全、噪声控制、整机可靠性与规模制造能力。",
-    researchQuestions: [
-      "适航认证和首批商业运营节点能否按计划完成？",
-      "机队交付、航线利用率和单位运营成本能否形成可复制模型？",
-      "扩产投入与订单兑现节奏能否维持现金安全边际？",
-    ],
-    risks: ["适航认证与监管进度", "航空器量产和供应链", "早期航线需求与运营成本"],
-  },
 };
 
 export function getCompanyResearch(company: Company): SectorLens {

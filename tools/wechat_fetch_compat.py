@@ -41,7 +41,8 @@ def is_public_article_url(url: str) -> bool:
     parts = urlsplit(str(url or ""))
     path = parts.path.rstrip("/")
     return (
-        (parts.hostname or "").casefold() == "mp.weixin.qq.com"
+        parts.scheme.casefold() == "https"
+        and (parts.hostname or "").casefold() == "mp.weixin.qq.com"
         and (path == "/s" or path.startswith("/s/"))
     )
 

@@ -1,5 +1,4 @@
 import rawVentureProfiles from "@/public/data/venture_profiles.json";
-import { canonicalPublicHttpUrl } from "@/lib/public-url";
 
 export type VentureSource = {
   name: string;
@@ -294,24 +293,8 @@ function cleanList(values: unknown, limit = 20, itemLimit = 220) {
 }
 
 function validUrl(value: unknown) {
-  return canonicalPublicHttpUrl(clean(value, 1000));
-}
-
-function collapseRepeatedPersonName(value: string) {
-  const tokens = value.split(/\s+/u).filter(Boolean);
-  if (tokens.length >= 2 && tokens.length % 2 === 0) {
-    const middle = tokens.length / 2;
-    const left = tokens.slice(0, middle).join(" ");
-    const right = tokens.slice(middle).join(" ");
-    if (left.toLocaleLowerCase("en-US") === right.toLocaleLowerCase("en-US")) {
-      return left;
-    }
-  }
-  if (value.length >= 4 && value.length % 2 === 0) {
-    const middle = value.length / 2;
-    if (value.slice(0, middle) === value.slice(middle)) return value.slice(0, middle);
-  }
-  return value;
+  const text = clean(value, 1000);
+  return /^https?:\/\//iu.test(text) ? text : "";
 }
 
 function looksLikeNavigation(text: string) {
@@ -432,9 +415,7 @@ function normalizeTeam(values: unknown, aliases: string[] = []): VentureTeamMemb
   for (const raw of values) {
     if (!raw || typeof raw !== "object") continue;
     const row = raw as Record<string, unknown>;
-    const name = collapseRepeatedPersonName(
-      clean(row.name, 100).replace(/^[ ,，:：;；|｜-]+|[ ,，:：;；|｜-]+$/gu, ""),
-    );
+    const name = clean(row.name, 100).replace(/^[ ,，:：;；|｜-]+|[ ,，:：;；|｜-]+$/gu, "");
     const key = name.toLocaleLowerCase("zh-CN");
     if (!validPersonName(name) || matchesEntityAlias(name, aliases) || seen.has(key)) continue;
     result.push({

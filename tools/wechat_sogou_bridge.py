@@ -1,4 +1,10 @@
-"""Make Sogou the primary public discovery source for WeChat articles."""
+"""Use Sogou discovery only when no account-scoped public index is configured.
+
+Configured public indexes follow their own bounded route: detail resolver first,
+then at most two title lookups.  Running broad Sogou discovery ahead of that
+route used to spend up to ten redirect requests and could trip the shared CAPTCHA
+circuit breaker before the bounded compatibility layer was reached.
+"""
 
 from __future__ import annotations
 
@@ -57,6 +63,48 @@ def install(wechat: Any) -> None:
     def crawl_wechat_source(
         spec: dict[str, Any], user_agent: str, crawler: Any
     ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+        if spec.get("publicIndexUrls"):
+            try:
+                articles, original_status = original_crawl(
+                    spec,
+                    user_agent,
+                    crawler,
+                )
+            except Exception as exc:  # noqa: BLE001 - retain branch diagnostics.
+                articles = []
+                original_status = _status(
+                    spec,
+                    "error",
+                    0,
+                    0,
+                    1,
+                    error=f"{type(exc).__name__}: {exc}",
+                    provider="bing-or-public-index",
+                )
+            result = dict(original_status)
+            result.setdefault("discoveryProvider", "bing-or-public-index")
+            result["sogouPrimarySkipped"] = True
+            result["publicIndexTitleQueries"] = int(
+                spec.get("_publicIndexTitleSearchQueries", 0) or 0
+            )
+            result["publicIndexTitleRedirects"] = int(
+                spec.get("_publicIndexTitleRedirectAttempts", 0) or 0
+            )
+            result["publicIndexTitleFailureKinds"] = list(
+                spec.get("_publicIndexTitleFailureKinds", [])
+            )
+            if not articles:
+                result["status"] = "error"
+                result["accepted"] = 0
+                result["failed"] = max(1, int(result.get("failed", 0) or 0))
+                result["retainedPrevious"] = True
+                result.setdefault(
+                    "error",
+                    "No current-run public-index article passed original-page "
+                    "verification; previous snapshot retained",
+                )
+            return articles, result
+
         del user_agent
         accepted: list[dict[str, Any]] = []
         seen: set[str] = set()

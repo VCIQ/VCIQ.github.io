@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Run a bounded live acceptance check for WeChat and ByteDance/Toutiao.
+"""Run a bounded live acceptance check for media and ByteDance/Toutiao.
 
 This validator is intentionally separate from the full-source refresh. It proves
-that each route can reach an original publisher URL and produce a normal article
-record, while preserving the crawler's CAPTCHA and destination-host safeguards.
+that each route can reach a verified publisher-owned URL and produce a normal
+article record, while preserving destination-host and identity safeguards.
 """
 
 from __future__ import annotations
@@ -131,6 +131,7 @@ def _wechat_spec(account: dict[str, Any]) -> dict[str, Any]:
     sector = str(account.get("defaultSector") or "AI / AGI")
     keywords = list(account.get("sectorKeywords", {}).get(sector, []))
     expected = [account.get("name"), account.get("accountId")]
+    public_indexes = entry.wechat_registry_bridge._load_public_indexes()
     return {
         "id": f"live-wechat-{account['id']}",
         "name": account["name"],
@@ -148,6 +149,10 @@ def _wechat_spec(account: dict[str, Any]) -> dict[str, Any]:
         "strictTitleKeywords": False,
         "expectedAccounts": [value for value in expected if value],
         "accountConfigId": account.get("id"),
+        "publisherEntity": account.get("publisherEntity") or account.get("name"),
+        "acceptedSourceKinds": list(account.get("acceptedSourceKinds", [])),
+        "officialCrosspostHosts": list(account.get("officialCrosspostHosts", [])),
+        "publicIndexUrls": list(public_indexes.get(str(account.get("id")), [])),
         "queryIdentity": account.get("name"),
         "discoveryScope": "account",
         "genericDiscovery": False,
@@ -157,14 +162,13 @@ def _wechat_spec(account: dict[str, Any]) -> dict[str, Any]:
 
 def _wechat_probe(crawler: Any) -> dict[str, Any]:
     registry = wechat_source_registry.load_registry()
-    preferred = {"qbitai", "jiqizhixin", "aitopics", "aitechuang", "icbank"}
-    accounts = [
-        account
+    configured = {
+        str(account.get("id")): account
         for account in registry.get("accounts", [])
-        if isinstance(account, dict)
-        and account.get("enabled", True)
-        and account.get("id") in preferred
-    ]
+        if isinstance(account, dict) and account.get("enabled", True)
+    }
+    preferred = ["zhidx", "chipmaster", "icsmart", "qbitai", "icbank"]
+    accounts = [configured[account_id] for account_id in preferred if account_id in configured]
     attempts: list[dict[str, Any]] = []
     accepted_articles: list[dict[str, Any]] = []
     for account in accounts:
@@ -175,12 +179,28 @@ def _wechat_probe(crawler: Any) -> dict[str, Any]:
                 crawler.DEFAULT_USER_AGENT,
                 crawler,
             )
-            verified = [
-                article
-                for article in articles
-                if _original_host(article) == "mp.weixin.qq.com"
-                and article.get("wechatContentMode") != "index-only"
-            ]
+            allowed_hosts = {
+                str(host).casefold().removeprefix("www.")
+                for host in spec.get("officialCrosspostHosts", [])
+            }
+            verified = []
+            for article in articles:
+                host = _original_host(article).removeprefix("www.")
+                source = article.get("source")
+                source = source if isinstance(source, dict) else {}
+                source_kind = str(
+                    article.get("sourceKind") or source.get("sourceKind") or ""
+                )
+                is_wechat_original = (
+                    host == "mp.weixin.qq.com"
+                    and article.get("wechatContentMode") != "index-only"
+                )
+                is_publisher_copy = (
+                    source_kind in {"official-website", "official-crosspost"}
+                    and host in allowed_hosts
+                )
+                if is_wechat_original or is_publisher_copy:
+                    verified.append(article)
             attempts.append(
                 {
                     "account": account.get("name"),
@@ -214,7 +234,7 @@ def _wechat_probe(crawler: Any) -> dict[str, Any]:
         ],
         "error": None
         if accepted_articles
-        else "No original mp.weixin.qq.com article passed account and content checks",
+        else "No verified WeChat original or publisher-owned copy passed checks",
     }
 
 
@@ -241,7 +261,7 @@ def main() -> int:
     print(json.dumps(report, ensure_ascii=False, indent=2))
     if not report["ok"]:
         print(
-            "Focused live validation failed: both WeChat and Toutiao must produce original-domain articles",
+            "Focused live validation failed: media and Toutiao must produce verified publisher-domain articles",
             file=sys.stderr,
         )
         return 1

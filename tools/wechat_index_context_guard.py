@@ -13,7 +13,13 @@ except ImportError:
 def _bounded_context(parser: Any, position: int, next_position: int | None) -> str:
     start = max(0, position)
     natural_end = min(len(parser.text_parts), position + 14)
-    end = min(natural_end, next_position) if next_position is not None else natural_end
+    boundaries = [natural_end]
+    if next_position is not None:
+        boundaries.append(next_position)
+    item_end = parser_module._item_end(parser, position)
+    if item_end is not None:
+        boundaries.append(item_end)
+    end = min(boundaries)
     return parser_module._clean(" ".join(parser.text_parts[start:end]), 1200)
 
 
@@ -31,7 +37,13 @@ def _bounded_title(
         ):
             return title
     natural_end = min(len(parser.text_parts), position + 10)
-    end = min(natural_end, next_position) if next_position is not None else natural_end
+    boundaries = [natural_end]
+    if next_position is not None:
+        boundaries.append(next_position)
+    item_end = parser_module._item_end(parser, position)
+    if item_end is not None:
+        boundaries.append(item_end)
+    end = min(boundaries)
     for item in parser.text_parts[position:end]:
         candidate = parser_module._clean(item, 240)
         if (
@@ -88,12 +100,20 @@ def extract_index_rows(
 ) -> list[dict[str, str]]:
     parser = parser_module.PublicIndexParser(index_url)
     parser.feed(body or "")
+    profile_account_match = parser_module._profile_page_matches_account(
+        parser,
+        index_url,
+        spec,
+    )
     groups = _article_link_groups(parser, crawler)
     rows: list[dict[str, str]] = []
     seen: set[str] = set()
+    seen_titles: set[str] = set()
 
     for index, group in enumerate(groups):
         url = str(group["url"])
+        if not parser_module._detail_belongs_to_index(index_url, url):
+            continue
         position = int(group["position"])
         next_position = (
             int(groups[index + 1]["position"])
@@ -101,8 +121,10 @@ def extract_index_rows(
             else None
         )
         context = _bounded_context(parser, position, next_position)
-        if require_account_context and not wechat_source_registry.account_matches(
-            spec, context
+        if (
+            require_account_context
+            and not profile_account_match
+            and not wechat_source_registry.account_matches(spec, context)
         ):
             continue
         title = _bounded_title(
@@ -136,6 +158,94 @@ def extract_index_rows(
             }
         )
         seen.add(url)
+        seen_titles.add(parser_module._clean(title, 260).casefold())
+
+    index_parts = parser_module.urlsplit(index_url)
+    index_host = (index_parts.hostname or "").casefold().removeprefix("www.")
+    title_only_index = (
+        index_host in {"jintiankansha.com", "jintiankansha.me"}
+        and index_parts.path.startswith("/column/")
+    ) or (
+        index_host == "gsi24.com"
+        and index_parts.path.rstrip("/") == ""
+    ) or (
+        index_host == "zhidx.com"
+        and index_parts.path.rstrip("/") == "/aichip001"
+    )
+    if title_only_index:
+        title_hints = list(parser.title_hints)
+        official_title_urls: dict[tuple[str, int], str] = {}
+        if index_host in {"gsi24.com", "zhidx.com"}:
+            for link in parser.links:
+                link_parts = parser_module.urlsplit(str(link.get("url", "")))
+                is_article = (
+                    index_host == "gsi24.com"
+                    and parser_module.re.fullmatch(
+                        r"/a/[^/]+", link_parts.path.rstrip("/")
+                    )
+                    is not None
+                ) or (
+                    index_host == "zhidx.com"
+                    and parser_module.re.fullmatch(
+                        r"/p/\d+\.html", link_parts.path.rstrip("/")
+                    )
+                    is not None
+                )
+                if is_article and parser_module._usable_title(link.get("title")):
+                    hint_title = link.get("title")
+                    hint_position = int(link.get("position", 0))
+                    title_hints.append(
+                        {
+                            "title": hint_title,
+                            "position": hint_position,
+                        }
+                    )
+                    official_title_urls[
+                        (
+                            parser_module._clean(hint_title, 260).casefold(),
+                            hint_position,
+                        )
+                    ] = crawler.normalize_url(str(link.get("url", "")))
+        for hint in title_hints:
+            title = parser_module._clean(hint.get("title"), 260)
+            title_key = title.casefold()
+            position = int(hint.get("position", 0))
+            if not parser_module._usable_title(title) or title_key in seen_titles:
+                continue
+            context = _bounded_context(
+                parser,
+                position,
+                parser_module._item_end(parser, position),
+            )
+            if (
+                require_account_context
+                and index_host not in {"gsi24.com", "zhidx.com"}
+                and not wechat_source_registry.account_matches(spec, context)
+            ):
+                continue
+            companies, people, keywords = parser_module._WECHAT._relevance_entities(
+                title,
+                context,
+                "",
+                spec,
+                crawler,
+            )
+            if not (companies or people or keywords):
+                continue
+            rows.append(
+                {
+                    "url": official_title_urls.get((title_key, position), index_url),
+                    "title": title,
+                    "summary": context,
+                    "date": parser_module._date_from_context(context, crawler) or "",
+                    "kind": (
+                        "official"
+                        if (title_key, position) in official_title_urls
+                        else "title"
+                    ),
+                }
+            )
+            seen_titles.add(title_key)
     return rows
 
 

@@ -55,7 +55,7 @@ export function ChannelUpdateDirectoryClient({
   channel: ChannelUpdateKey;
   directory: ChannelUpdateDirectory;
   totalItemCount: number;
-  layout?: "default" | "split" | "workspace";
+  layout?: "default" | "split";
 }) {
   const eventTypeSelectId = useId();
   const classificationSelectId = useId();
@@ -245,7 +245,7 @@ export function ChannelUpdateDirectoryClient({
     <section
       className={styles.directory}
       aria-labelledby={`${channel}-updates-title`}
-      data-layout={layout === "default" ? undefined : layout}
+      data-layout={layout === "split" ? "split" : undefined}
     >
       <div className={styles.header}>
         <div className={styles.heading}>
@@ -270,11 +270,10 @@ export function ChannelUpdateDirectoryClient({
           {archiveError ? <small>完整目录暂时不可用；最新更新仍可正常浏览。</small> : null}
         </div>
         <div className={styles.snapshot}>
-          <span>{isTechnologyChannel ? "聚合事件库" : channel === "companies" ? "重要事件簇" : "滚动总库"}</span>
+          <span>{isTechnologyChannel ? "聚合事件库" : "滚动总库"}</span>
           <strong>{totalItemCount}</strong>
           <small title="首次收录按精确 firstSeenAt 计算；快照日事件按来源事件日期计算">
-            {fullArchiveLoaded ? `已加载全部 ${allItems.length}` : `当前展示 ${allItems.length} / 总库 ${totalItemCount}`}
-            {` · 今日新增 ${firstSeenItemCount} · 当日事件 ${snapshotDayItemCount}`}
+            当前载入 {allItems.length} · 今日首次收录 {firstSeenItemCount} · 快照日事件 {snapshotDayItemCount}
           </small>
         </div>
       </div>

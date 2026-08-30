@@ -33,63 +33,6 @@ function normalizeTitle(value: string) {
     .slice(0, 180);
 }
 
-function titleFeatures(value: string) {
-  const normalized = value.normalize("NFKC").toLocaleLowerCase("zh-CN");
-  const latin = new Set(
-    [...normalized.matchAll(/[a-z0-9](?:[a-z0-9.+-]*[a-z0-9])?/gu)]
-      .map((match) => match[0])
-      .filter((token) => token.length >= 2),
-  );
-  const cjk = new Set<string>();
-  for (const chunk of normalized.match(/[\u3400-\u9fff]{2,}/gu) ?? []) {
-    for (let index = 0; index < chunk.length - 1; index += 1) {
-      cjk.add(chunk.slice(index, index + 2));
-    }
-  }
-  return { latin, cjk };
-}
-
-function intersectionSize(left: Set<string>, right: Set<string>) {
-  let count = 0;
-  for (const value of left) if (right.has(value)) count += 1;
-  return count;
-}
-
-function titleSimilarity(left: string, right: string) {
-  const leftNormalized = normalizeTitle(left);
-  const rightNormalized = normalizeTitle(right);
-  if (!leftNormalized || !rightNormalized) return false;
-  if (leftNormalized === rightNormalized) return true;
-  if (
-    Math.min(leftNormalized.length, rightNormalized.length) >= 12 &&
-    (leftNormalized.includes(rightNormalized) || rightNormalized.includes(leftNormalized))
-  ) {
-    return true;
-  }
-
-  const leftFeatures = titleFeatures(left);
-  const rightFeatures = titleFeatures(right);
-  const sharedLatin = intersectionSize(leftFeatures.latin, rightFeatures.latin);
-  if (sharedLatin >= 3) return true;
-
-  const sharedCjk = intersectionSize(leftFeatures.cjk, rightFeatures.cjk);
-  const cjkUnion = new Set([...leftFeatures.cjk, ...rightFeatures.cjk]).size;
-  return sharedCjk >= 5 && cjkUnion > 0 && sharedCjk / cjkUnion >= 0.38;
-}
-
-function companyIdentity(item: ChannelUpdateItem) {
-  if (item.companySlugs?.length) return [...item.companySlugs].sort().join("|");
-  return normalizeTitle(item.context.split("·")[0] ?? item.context);
-}
-
-function sameCompanyEvent(left: ChannelUpdateItem, right: ChannelUpdateItem) {
-  if (left.eventClusterId && right.eventClusterId && left.eventClusterId === right.eventClusterId) return true;
-  if (left.label !== right.label) return false;
-  if (left.sortAt.slice(0, 10) !== right.sortAt.slice(0, 10)) return false;
-  if (companyIdentity(left) !== companyIdentity(right)) return false;
-  return titleSimilarity(left.title, right.title);
-}
-
 export function isActionableCompanySignal({
   title,
   summary,
@@ -156,16 +99,17 @@ function representative(items: ChannelUpdateItem[]) {
 }
 
 function aggregateCompanyUpdates(items: ChannelUpdateItem[]) {
-  const groups: ChannelUpdateItem[][] = [];
+  const groups = new Map<string, ChannelUpdateItem[]>();
   for (const item of items) {
-    const group = groups.find((candidate) =>
-      candidate.some((existing) => sameCompanyEvent(existing, item)),
-    );
-    if (group) group.push(item);
-    else groups.push([item]);
+    const key = item.eventClusterId?.trim()
+      ? `cluster:${item.eventClusterId}`
+      : `title:${normalizeTitle(item.context)}:${normalizeTitle(item.title)}`;
+    const group = groups.get(key) ?? [];
+    group.push(item);
+    groups.set(key, group);
   }
 
-  return groups.map((group) => {
+  return [...groups.values()].map((group) => {
     const selected = representative(group);
     if (!selected) throw new Error("company update group has no representative");
     const newest = [...group].sort((left, right) =>
@@ -181,9 +125,7 @@ function aggregateCompanyUpdates(items: ChannelUpdateItem[]) {
       datePrecision: newest?.datePrecision ?? selected.datePrecision,
       sortAt: newest?.sortAt ?? selected.sortAt,
       sources,
-      sourceCount: Math.max(sources.length, ...group.map((item) => item.sourceCount ?? 1)),
-      eventClusterId:
-        selected.eventClusterId || (group.length > 1 ? `company:${selected.id}` : undefined),
+      sourceCount: sources.length,
     } satisfies ChannelUpdateItem;
   });
 }

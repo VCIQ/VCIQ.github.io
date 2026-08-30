@@ -1,5 +1,4 @@
 import publicArticleData from "../public/data/articles.json";
-import { canonicalPublicHttpUrl } from "@/lib/public-url";
 
 export type Region = "中国" | "美国" | "全球";
 export type EventType =
@@ -109,13 +108,7 @@ export const snapshotDate =
 export const intelligenceEvents: IntelligenceEvent[] = Array.isArray(
   snapshot.articles,
 )
-  ? snapshot.articles.map((event) => ({
-      ...event,
-      source: {
-        ...event.source,
-        url: canonicalPublicHttpUrl(event.source?.url) || String(event.source?.url ?? "").trim(),
-      },
-    }))
+  ? snapshot.articles
   : [];
 
 export const companyFacts: Record<string, CompanyFactProfile> =

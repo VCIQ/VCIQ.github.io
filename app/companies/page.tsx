@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
-import { ChannelUpdateDirectory } from "@/components/channel-update-directory";
-import { CompanyChannelTabs } from "@/components/company-channel-tabs";
+import { Building2 } from "lucide-react";
+import { ChannelSplitLayout } from "@/components/channel-split-layout";
 import { CompanyDirectory } from "@/components/company-directory";
-import { ResearchSynergyStrip } from "@/components/research-synergy-strip";
 import { companies } from "@/lib/catalog-data";
-import { buildCompanyResearchSnapshot } from "@/lib/company-research";
-import { curateCompanyUpdateDirectory } from "@/lib/company-update-curation";
 import { getChannelUpdateDirectory } from "@/lib/channel-updates";
+import { researchSynergySummary } from "@/lib/research-relations";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -15,37 +13,35 @@ export const metadata: Metadata = {
 };
 
 export default function CompaniesPage() {
-  const companyUpdates = curateCompanyUpdateDirectory(getChannelUpdateDirectory("companies"));
-  const researchSnapshots = companies.map((company) => buildCompanyResearchSnapshot(company));
-  const asOf = Date.parse(companyUpdates.generatedAt);
-  const changedInSevenDays = researchSnapshots.filter((snapshot) => {
-    const changedAt = Date.parse(snapshot.latestChange?.date ?? "");
-    return Number.isFinite(asOf) && Number.isFinite(changedAt) && asOf - changedAt <= 7 * 86_400_000;
-  }).length;
-  const priorityCompanies = researchSnapshots.filter((snapshot) => snapshot.priority.level === "P1").length;
-  const evidenceGaps = researchSnapshots.filter((snapshot) => !snapshot.coverage.hasProfile || snapshot.coverage.score < 65).length;
+  const companyUpdates = getChannelUpdateDirectory("companies");
 
   return (
     <main className="page-shell subpage">
       <header className={`page-header ${styles.channelHeader}`}>
-        <p className="eyebrow">05 / CORE COMPANIES</p>
+        <p className="eyebrow">04 / CORE COMPANIES</p>
         <h1>核心公司</h1>
         <div className="hero-chips">
-          <span>{priorityCompanies} 家重点跟踪</span>
-          <span>{changedInSevenDays} 家近 7 天有变化</span>
-          <span>{companyUpdates.items.length} 个重要事件簇</span>
-          <span>{evidenceGaps} 家待补关键证据</span>
+          <span>{companies.length} 家已发布公司</span>
+          <span>{companyUpdates.items.length} 条当前重要事件</span>
+          <span>{researchSynergySummary.trackCount} 个核心赛道</span>
+          <span>{researchSynergySummary.companyPersonEdges} 条公司—人物显式关系</span>
         </div>
       </header>
 
-      <CompanyChannelTabs
-        companyCount={companies.length}
-        eventCount={companyUpdates.items.length}
-        directory={<CompanyDirectory pageSize={12} />}
-        events={<ChannelUpdateDirectory channel="companies" layout="workspace" />}
-      />
-
-      <ResearchSynergyStrip compactOnMobile />
+      <ChannelSplitLayout
+        channel="companies"
+        eyebrow="COMPANY RESEARCH DIRECTORY"
+        title="核心公司研究"
+        description="按研究优先级浏览公司摘要，并按地区、赛道、阶段、近期变化与证据覆盖筛选；公司卡片直接连接技术主题和关键人物。"
+        count={companies.length}
+        countLabel="已发布公司"
+        statusText="研究关系持续更新"
+        icon={<Building2 size={19} aria-hidden="true" />}
+        bodyClassName={styles.body}
+        directoryFirst
+      >
+        <CompanyDirectory pageSize={6} />
+      </ChannelSplitLayout>
 
       <details className={styles.methodology}>
         <summary>

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+from datetime import UTC, datetime
 
 from tools import crawl_articles
 from tools import wechat_public_sources as wechat
@@ -83,8 +84,14 @@ class WeChatRegistryBridgeTest(unittest.TestCase):
             crawl_articles,
         )
         self.assertIsNone(article)
+        self.assertEqual(
+            spec["_publicIndexArticleRejectKinds"],
+            ["original-account-mismatch"],
+        )
+        self.assertEqual(spec["_publicIndexObservedAccounts"], ["无关公众号"])
 
     def test_verified_account_keeps_media_level_and_entity_links(self) -> None:
+        today = datetime.now(UTC).date().isoformat()
         spec = {
             "id": "user-track-wechat-qbitai-ai",
             "name": "量子位",
@@ -97,11 +104,11 @@ class WeChatRegistryBridgeTest(unittest.TestCase):
             "expectedAccounts": ["量子位", "qbitai"],
             "accountConfigId": "qbitai",
         }
-        body = """
+        body = f"""
         <html><head>
           <meta property="og:title" content="OpenAI发布新推理模型" />
           <meta name="description" content="OpenAI发布新推理模型，Sam Altman介绍后续方向。" />
-          <meta property="article:published_time" content="2026-07-25" />
+          <meta property="article:published_time" content="{today}" />
         </head><body>
           <a id="js_name">量子位</a>
           <div id="js_content">OpenAI发布新推理模型，Sam Altman介绍后续方向。</div>
@@ -119,6 +126,460 @@ class WeChatRegistryBridgeTest(unittest.TestCase):
         self.assertEqual(article["wechatAccountConfigId"], "qbitai")
         self.assertIn("OpenAI", article["mentionedCompanies"])
         self.assertIn("Sam Altman", article["mentionedPeople"])
+
+    def test_nested_sohu_detail_can_expose_original_wechat_link(self) -> None:
+        spec = {
+            "expectedAccounts": ["半导体技术"],
+            "keywords": ["半导体", "芯片", "封装"],
+            "trackedCompanies": ["中芯国际"],
+            "trackedPeople": [],
+        }
+        body = """
+        <html><body>
+          <a href="https://mp.weixin.qq.com/s?__biz=abc&mid=1&idx=1&sn=good">
+            中芯国际发布半导体芯片封装测试进展
+          </a>
+        </body></html>
+        """
+
+        rows = bridge._extract_index_rows(
+            body,
+            "https://m.sohu.com/a/1065611950_120498874",
+            spec,
+            crawl_articles,
+            require_account_context=False,
+        )
+
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["kind"], "wechat")
+
+    def test_configured_account_rejects_discovery_date_without_original_date(self) -> None:
+        spec = {
+            "id": "user-track-wechat-qbitai-ai",
+            "name": "量子位",
+            "sector": "AI / AGI",
+            "keywords": ["大模型", "推理模型"],
+            "trackedCompanies": ["OpenAI"],
+            "trackedPeople": [],
+            "expectedAccounts": ["量子位", "qbitai"],
+        }
+        body = """
+        <html><head>
+          <meta property="og:title" content="OpenAI发布新推理模型" />
+          <meta name="description" content="OpenAI发布新推理模型并公布重要技术进展。" />
+        </head><body>
+          <a id="js_name">量子位</a>
+          <div id="js_content">OpenAI发布新推理模型并公布重要技术进展。</div>
+        </body></html>
+        """
+
+        article = wechat.parse_wechat_article(
+            spec,
+            "https://mp.weixin.qq.com/s/missing-original-date",
+            body,
+            crawl_articles,
+            fallback_date="2026-08-29",
+        )
+
+        self.assertIsNone(article)
+
+    def test_configured_account_rejects_stale_original_date(self) -> None:
+        spec = {
+            "id": "user-track-wechat-qbitai-ai",
+            "name": "量子位",
+            "sector": "AI / AGI",
+            "keywords": ["大模型", "推理模型"],
+            "trackedCompanies": ["OpenAI"],
+            "trackedPeople": [],
+            "expectedAccounts": ["量子位", "qbitai"],
+            "maxArticleAgeDays": 45,
+        }
+        body = """
+        <html><head>
+          <meta property="og:title" content="OpenAI发布新推理模型" />
+          <meta name="description" content="OpenAI发布新推理模型并公布重要技术进展。" />
+          <meta property="article:published_time" content="2020-01-01" />
+        </head><body>
+          <a id="js_name">量子位</a>
+          <div id="js_content">OpenAI发布新推理模型并公布重要技术进展。</div>
+        </body></html>
+        """
+
+        article = wechat.parse_wechat_article(
+            spec,
+            "https://mp.weixin.qq.com/s/stale-original-date",
+            body,
+            crawl_articles,
+        )
+
+        self.assertIsNone(article)
+
+    def test_account_scoped_sohu_profile_discovers_only_its_article_titles(self) -> None:
+        spec = {
+            "expectedAccounts": ["半导体技术"],
+            "keywords": ["半导体", "芯片", "封装"],
+            "trackedCompanies": ["中芯国际"],
+            "trackedPeople": [],
+        }
+        body = """
+        <html><body>
+          <h1>半导体技术</h1>
+          <a href="https://m.sohu.com/a/1065611950_120498874">
+            中芯国际发布半导体芯片封装测试进展
+          </a>
+          <div>昨天12:17 · 17阅读</div>
+          <a href="https://m.sohu.com/a/999999999_999999999">
+            其他作者的半导体热门文章
+          </a>
+        </body></html>
+        """
+
+        rows = bridge._extract_index_rows(
+            body,
+            "https://m.sohu.com/media/120498874",
+            spec,
+            crawl_articles,
+        )
+
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["kind"], "detail")
+        self.assertEqual(
+            rows[0]["url"],
+            "https://m.sohu.com/a/1065611950_120498874",
+        )
+
+    def test_sohu_profile_account_survives_large_leading_script(self) -> None:
+        spec = {
+            "expectedAccounts": ["半导体技术"],
+            "keywords": ["半导体", "芯片", "封装"],
+            "trackedCompanies": ["长江存储"],
+            "trackedPeople": [],
+        }
+        body = """
+        <html><head><script>{script}</script><title>半导体技术的个人主页</title></head>
+        <body>
+          <div class="author-name">半导体技术</div>
+          <a href="https://m.sohu.com/a/1069311167_120498874">
+            长江存储发布芯片良率技术进展
+          </a>
+        </body></html>
+        """.format(script="x" * 600)
+
+        rows = bridge._extract_index_rows(
+            body,
+            "https://m.sohu.com/media/120498874",
+            spec,
+            crawl_articles,
+        )
+
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["kind"], "detail")
+
+    def test_sohu_profile_title_is_bounded_account_evidence(self) -> None:
+        spec = {
+            "expectedAccounts": ["半导体技术"],
+            "keywords": ["半导体", "芯片", "封装"],
+            "trackedCompanies": ["长江存储"],
+            "trackedPeople": [],
+        }
+        leading = "".join(f"<p>导航节点{index}</p>" for index in range(140))
+        body = f"""
+        <html><head><title>半导体技术的个人主页</title></head><body>
+          {leading}
+          <a href="https://m.sohu.com/a/1069311167_120498874">
+            长江存储发布芯片良率技术进展
+          </a>
+        </body></html>
+        """
+
+        rows = bridge._extract_index_rows(
+            body,
+            "https://m.sohu.com/media/120498874",
+            spec,
+            crawl_articles,
+        )
+
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["kind"], "detail")
+
+    def test_gsi24_account_page_exposes_article_link_titles(self) -> None:
+        spec = {
+            "expectedAccounts": ["芯师爷", "Anxin-360ic"],
+            "keywords": ["半导体", "芯片", "封装"],
+            "trackedCompanies": ["长江存储"],
+            "trackedPeople": [],
+        }
+        body = """
+        <html><head><title>芯师爷 - 半导体产业媒体</title></head><body>
+          <a href="https://www.gsi24.com/a/3035.html">
+            长江存储完成先进芯片封装新进展
+          </a>
+        </body></html>
+        """
+
+        rows = bridge._extract_index_rows(
+            body,
+            "https://www.gsi24.com/",
+            spec,
+            crawl_articles,
+        )
+
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["kind"], "official")
+        self.assertEqual(rows[0]["url"], "https://www.gsi24.com/a/3035.html")
+        self.assertEqual(rows[0]["title"], "长江存储完成先进芯片封装新进展")
+
+    def test_zhidx_account_page_exposes_article_link_titles(self) -> None:
+        spec = {
+            "expectedAccounts": ["芯东西"],
+            "keywords": ["半导体", "芯片", "封装"],
+            "trackedCompanies": ["长江存储"],
+            "trackedPeople": [],
+        }
+        body = """
+        <html><head><title>芯东西 - 半导体产业媒体</title></head><body>
+          <a href="https://zhidx.com/p/588519.html">
+            长江存储完成先进芯片封装新进展
+          </a>
+        </body></html>
+        """
+
+        rows = bridge._extract_index_rows(
+            body,
+            "https://zhidx.com/aichip001",
+            spec,
+            crawl_articles,
+        )
+
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["kind"], "official")
+        self.assertEqual(rows[0]["url"], "https://zhidx.com/p/588519.html")
+
+    def test_context_guard_preserves_first_party_title_indexes(self) -> None:
+        from tools import wechat_index_context_guard as guard
+
+        original = bridge._extract_index_rows
+        try:
+            guard.install(bridge)
+            spec = {
+                "expectedAccounts": ["芯东西"],
+                "keywords": ["半导体", "芯片", "封装"],
+                "trackedCompanies": ["长江存储"],
+                "trackedPeople": [],
+            }
+            body = """
+            <html><head><title>芯东西 - 半导体产业媒体</title></head><body>
+              <a href="https://zhidx.com/p/588519.html">
+                长江存储完成先进芯片封装新进展
+              </a>
+            </body></html>
+            """
+
+            rows = bridge._extract_index_rows(
+                body,
+                "https://zhidx.com/aichip001",
+                spec,
+                crawl_articles,
+            )
+
+            self.assertEqual(len(rows), 1)
+            self.assertEqual(rows[0]["kind"], "official")
+        finally:
+            bridge._extract_index_rows = original
+
+    def test_official_website_copy_keeps_non_wechat_provenance(self) -> None:
+        today = datetime.now(UTC).date().isoformat()
+        spec = {
+            "id": "user-track-wechat-zhidx-semiconductor",
+            "name": "芯东西",
+            "publisherEntity": "芯东西",
+            "officialCrosspostHosts": ["zhidx.com"],
+            "sourceLevel": "媒体报道",
+            "sector": "半导体",
+            "region": "中国",
+            "keywords": ["半导体", "芯片"],
+            "trackedCompanies": ["长江存储"],
+            "trackedPeople": [],
+            "maxArticleAgeDays": 45,
+        }
+        row = {
+            "url": "https://zhidx.com/p/588519.html",
+            "title": "长江存储公布先进芯片封装进展",
+            "summary": "长江存储公布半导体先进芯片封装进展。",
+            "kind": "official",
+        }
+        body = f"""
+        <html><head>
+          <meta property="og:title" content="长江存储公布先进芯片封装进展" />
+          <meta property="og:description" content="长江存储公布半导体先进芯片封装进展。" />
+          <meta property="article:published_time" content="{today}" />
+        </head><body></body></html>
+        """
+
+        article = bridge._parse_official_crosspost(
+            spec, row, body, crawl_articles
+        )
+
+        self.assertIsNotNone(article)
+        assert article is not None
+        self.assertEqual(article["sourceKind"], "official-website")
+        self.assertEqual(article["source"]["platform"], "官方网站")
+        self.assertEqual(article["source"]["publisherEntity"], "芯东西")
+        self.assertNotIn("wechatAccount", article)
+
+    def test_unapproved_host_cannot_become_official_copy(self) -> None:
+        spec = {
+            "id": "user-track-wechat-zhidx-semiconductor",
+            "name": "芯东西",
+            "officialCrosspostHosts": ["zhidx.com"],
+        }
+        article = bridge._parse_official_crosspost(
+            spec,
+            {"url": "https://repost.example/article", "kind": "official"},
+            "<html><head><title>芯东西半导体文章</title></head></html>",
+            crawl_articles,
+        )
+        self.assertIsNone(article)
+
+    def test_verified_platform_detail_falls_back_to_official_copy(self) -> None:
+        spec = {
+            "name": "芯智讯",
+            "officialCrosspostHosts": ["m.sohu.com", "sohu.com"],
+        }
+        row = {
+            "url": "https://m.sohu.com/a/123456_128469",
+            "title": "芯智讯发布半导体芯片产业进展",
+            "summary": "芯智讯发布半导体芯片产业进展。",
+            "kind": "detail",
+        }
+        original_fetch = bridge._fetch_cached
+        original_extract = bridge._extract_index_rows
+        try:
+            bridge._fetch_cached = lambda *_args, **_kwargs: "<html></html>"
+            bridge._extract_index_rows = lambda *_args, **_kwargs: []
+            resolved = bridge._resolve_detail_row(
+                row, spec, "Mozilla/5.0", crawl_articles
+            )
+        finally:
+            bridge._fetch_cached = original_fetch
+            bridge._extract_index_rows = original_extract
+
+        self.assertEqual(resolved, [{**row, "kind": "official"}])
+
+    def test_eet_account_context_discovers_chiptrend_title(self) -> None:
+        spec = {
+            "expectedAccounts": ["芯潮IC"],
+            "keywords": ["半导体", "芯片", "集成电路"],
+            "trackedCompanies": [],
+            "trackedPeople": [],
+        }
+        body = """
+        <html><body>
+          <div>532296</div>
+          <a href="https://www.eet-china.com/mp/a520001.html">
+            <img src="cover.jpg" />
+          </a>
+          <a href="https://www.eet-china.com/mp/a520001.html">
+            半导体全链聚合，国际集成电路创新博览会举办
+          </a>
+          <a href="https://www.eet-china.com/mp/u4006642">芯潮IC</a>
+          <div>2026-08-07</div>
+          <a href="https://www.eet-china.com/mp/a510000.html">电子技术普及</a>
+        </body></html>
+        """
+
+        rows = bridge._extract_index_rows(
+            body,
+            "https://www.eet-china.com/mp/u4006642",
+            spec,
+            crawl_articles,
+        )
+
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["kind"], "detail")
+        self.assertEqual(rows[0]["date"], "2026-08-07")
+        self.assertEqual(
+            rows[0]["title"],
+            "半导体全链聚合，国际集成电路创新博览会举办",
+        )
+
+    def test_hidden_title_isolated_from_previous_index_item(self) -> None:
+        spec = {
+            "expectedAccounts": ["与非网"],
+            "keywords": ["芯片", "DDR5"],
+            "trackedCompanies": [],
+            "trackedPeople": [],
+        }
+        body = """
+        <html><body>
+          <div class="cell item">
+            <span class="item_title">
+              <a href="https://www.jintiankansha.com/t/linked">
+                WAIC释放强烈信号，HDD迎来第二春
+              </a>
+            </span>
+            <span>与非网eefocus · 公众号 · 1 月前</span>
+          </div>
+          <div class="cell item">
+            <span class="item_title">
+              <span class="hide-content">
+                澜起科技：DDR5 RCD芯片出货量显著增加
+              </span>
+            </span>
+            <span class="hide-content">与非网eefocus</span>
+            <span>公众号 · 1 月前</span>
+          </div>
+        </body></html>
+        """
+
+        rows = bridge._extract_index_rows(
+            body,
+            "https://www.jintiankansha.com/column/FoMbC3nnRr",
+            spec,
+            crawl_articles,
+        )
+
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["kind"], "title")
+        self.assertIn("澜起科技", rows[0]["title"])
+
+    def test_index_resolution_defers_later_titles_until_original_verifies(self) -> None:
+        spec = {"publicIndexUrls": ["https://index.example/account"]}
+        discovered = [
+            {"kind": "detail", "url": "https://index.example/first", "title": "第一篇芯片文章"},
+            {"kind": "detail", "url": "https://index.example/second", "title": "第二篇芯片文章"},
+        ]
+        original_fetch = bridge._fetch_cached
+        original_extract = bridge._extract_index_rows
+        original_resolve = bridge._resolve_detail_row
+        calls: list[str] = []
+
+        try:
+            bridge._fetch_cached = lambda *_args: "index"
+            bridge._extract_index_rows = lambda *_args, **_kwargs: discovered
+
+            def resolve(row, *_args):
+                calls.append(row["title"])
+                return [{**row, "kind": "wechat", "url": "https://mp.weixin.qq.com/s/first"}]
+
+            bridge._resolve_detail_row = resolve
+            rows, failures = bridge._fallback_index_rows(
+                spec,
+                "ua",
+                crawl_articles,
+            )
+        finally:
+            bridge._fetch_cached = original_fetch
+            bridge._extract_index_rows = original_extract
+            bridge._resolve_detail_row = original_resolve
+
+        self.assertEqual(failures, 0)
+        self.assertEqual(calls, ["第一篇芯片文章"])
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(
+            [row["title"] for row in spec["_publicIndexDeferredRows"]],
+            ["第二篇芯片文章"],
+        )
 
 
 if __name__ == "__main__":

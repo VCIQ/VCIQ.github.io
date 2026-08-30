@@ -105,7 +105,6 @@ def account_matches(spec: dict[str, Any], observed: str) -> bool:
         if expected_key and (
             expected_key == observed_key
             or expected_key in observed_key
-            or observed_key in expected_key
         ):
             return True
     return False
@@ -201,6 +200,13 @@ def _configured_spec(
         "strictTitleKeywords": False,
         "expectedAccounts": _unique(identity, 3),
         "accountConfigId": account.get("id"),
+        "publisherEntity": account.get("publisherEntity") or account.get("name"),
+        "acceptedSourceKinds": _unique(
+            account.get("acceptedSourceKinds", []), 4
+        ),
+        "officialCrosspostHosts": _unique(
+            account.get("officialCrosspostHosts", []), 6
+        ),
         "queryIdentity": account.get("name") or sector,
         "discoveryScope": "account",
         "genericDiscovery": False,

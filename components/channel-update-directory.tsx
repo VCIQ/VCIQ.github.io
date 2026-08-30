@@ -16,7 +16,7 @@ export function ChannelUpdateDirectory({
   layout = "default",
 }: {
   channel: ChannelUpdateKey;
-  layout?: "default" | "split" | "workspace";
+  layout?: "default" | "split";
 }) {
   const rawDirectory = getChannelUpdateDirectory(channel);
   const preparedDirectory =
@@ -27,7 +27,13 @@ export function ChannelUpdateDirectory({
     channel === "people"
       ? aggregatePeopleUpdateDirectory(preparedDirectory)
       : preparedDirectory;
-  const fullDirectory = aggregatedDirectory;
+  const fullDirectory =
+    channel === "companies"
+      ? {
+          ...aggregatedDirectory,
+          items: aggregatedDirectory.items.slice(0, COMPANY_CHANNEL_UPDATE_LIMIT),
+        }
+      : aggregatedDirectory;
   const initialItems = fullDirectory.items.slice(0, INITIAL_CHANNEL_UPDATE_LIMIT);
   const directory = {
     ...fullDirectory,
@@ -36,8 +42,6 @@ export function ChannelUpdateDirectory({
         ? initialItems.slice(0, TECHNOLOGY_CHANNEL_UPDATE_LIMIT)
         : channel === "people"
           ? initialItems.slice(0, PEOPLE_CHANNEL_UPDATE_LIMIT)
-          : channel === "companies"
-            ? initialItems.slice(0, COMPANY_CHANNEL_UPDATE_LIMIT)
           : initialItems,
   };
 

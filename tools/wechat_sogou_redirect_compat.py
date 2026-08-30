@@ -4,17 +4,32 @@ The base parser handles the historical ``url +=`` script. Current public result
 pages can expose the same destination through escaped article HTML, location
 assignments, JSON fields, or a meta refresh. This compatibility layer only accepts
 original ``mp.weixin.qq.com/s`` URLs and never attempts to bypass CAPTCHA pages.
+
+We deliberately avoid ``html.unescape`` on whole URLs. Python's permissive HTML
+entity decoder interprets the prefix of ``&timestamp`` as the legacy ``&times``
+entity, corrupting signed WeChat URLs into ``×tamp``. Only explicit URL-safe HTML
+entities are decoded here. Some current Sogou jump pages already expose that
+legacy-entity artifact in the returned markup, so the narrowly scoped WeChat URL
+repair converts only ``×tamp=`` / ``&times;tamp=`` back to ``&timestamp=``.
 """
 
 from __future__ import annotations
 
-import html
 import re
 from typing import Any, Iterable
-from urllib.parse import unquote, urljoin, urlsplit
+from urllib.parse import urljoin, urlsplit
+
+try:
+    from . import wechat_url_compat
+except ImportError:
+    import wechat_url_compat
 
 _DIRECT_PATTERN = re.compile(
     r"https?://mp\.weixin\.qq\.com/s(?:\?|/)[^'\"<>\s]+",
+    flags=re.IGNORECASE,
+)
+_LEGACY_CHUNK_PATTERN = re.compile(
+    r"(?:var\s+)?(?:url|jump_url)\s*\+=\s*['\"]",
     flags=re.IGNORECASE,
 )
 _PATTERNS = (
@@ -40,36 +55,20 @@ _PATTERNS = (
     ),
 )
 
+def _repair_wechat_timestamp_artifact(value: str) -> str:
+    return wechat_url_compat.decode_public_url(value)
+
 
 def _decode(value: str) -> str:
-    text = html.unescape(str(value or ""))
-    replacements = {
-        "\\/": "/",
-        "\\x26": "&",
-        "\\u0026": "&",
-        "\\u003d": "=",
-        "\\u003D": "=",
-        "\\u002f": "/",
-        "\\u002F": "/",
-        "\\u003a": ":",
-        "\\u003A": ":",
-        "\\u0025": "%",
-    }
-    for old, new in replacements.items():
-        text = text.replace(old, new)
-    for _ in range(2):
-        decoded = unquote(text)
-        if decoded == text:
-            break
-        text = decoded
-    return text.strip().strip("'\"")
+    return wechat_url_compat.decode_public_url(value).strip().strip("'\"")
 
 
 def _is_original(url: str) -> bool:
     parts = urlsplit(str(url or ""))
     path = parts.path.rstrip("/")
     return (
-        (parts.hostname or "").casefold() == "mp.weixin.qq.com"
+        parts.scheme.casefold() == "https"
+        and (parts.hostname or "").casefold() == "mp.weixin.qq.com"
         and (path == "/s" or path.startswith("/s/"))
     )
 
@@ -85,7 +84,7 @@ def _candidates(body: str) -> Iterable[str]:
 
 def resolve_current_redirect(body: str, base_url: str = "") -> str:
     for raw in _candidates(body or ""):
-        candidate = _decode(raw)
+        candidate = _repair_wechat_timestamp_artifact(_decode(raw))
         if candidate.startswith("//"):
             candidate = f"https:{candidate}"
         elif candidate.startswith("/") and base_url:
@@ -102,8 +101,24 @@ def install(index: Any) -> None:
     if getattr(original, "_current_sogou_redirects", False):
         return
 
+    def normalize_candidate(value: str) -> str:
+        candidate = _repair_wechat_timestamp_artifact(value)
+        if not candidate or not _is_original(candidate):
+            return ""
+        normalizer = getattr(index, "_normalized_url", None)
+        return normalizer(candidate) if callable(normalizer) else candidate
+
     def resolve_script_url(body: str) -> str:
-        return original(body) or resolve_current_redirect(body)
+        # The historical resolver is authoritative for its native ``url +=``
+        # chunks. A generic direct-URL regex would otherwise accept only the
+        # first (valid-looking but incomplete) chunk.
+        if _LEGACY_CHUNK_PATTERN.search(body or ""):
+            return normalize_candidate(original(body))
+
+        current = resolve_current_redirect(body)
+        if current:
+            return normalize_candidate(current)
+        return normalize_candidate(original(body))
 
     setattr(resolve_script_url, "_current_sogou_redirects", True)
     index.resolve_script_url = resolve_script_url

@@ -57,7 +57,7 @@ jobs:
             tests.test_wechat_public_aggregator \
             tests.test_wechat_sogou_redirect_compat \
             2>&1 | tee focused-unit-tests.log
-      - name: Require original WeChat and Toutiao articles
+      - name: Require verified media and Toutiao articles
         id: live
         continue-on-error: true
         shell: bash

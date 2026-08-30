@@ -1,6 +1,5 @@
 import rawRegistry from "@/config/company_registry.json";
 import type { Company } from "@/lib/catalog-data";
-import { canonicalPublicHttpUrl } from "@/lib/public-url";
 
 export type CompanyRegistryEntry = Company & {
   aliases: string[];
@@ -40,7 +39,8 @@ function unique(values: unknown, limit = 30) {
 }
 
 function publicUrl(value: unknown) {
-  return canonicalPublicHttpUrl(text(value, 2_000));
+  const url = text(value, 2_000);
+  return /^https?:\/\//iu.test(url) ? url : "";
 }
 
 function normalizeEntry(value: unknown): CompanyRegistryEntry | null {

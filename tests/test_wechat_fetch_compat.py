@@ -52,11 +52,14 @@ class WeChatFetchCompatTest(unittest.TestCase):
         self.assertEqual(captured["timeout"], 18)
 
     def test_rejects_proxy_page_before_request(self) -> None:
-        with self.assertRaises(ValueError):
-            fetcher.fetch_public_wechat_page(
-                "https://www.jintiankansha.com/t/example",
-                attempts=1,
-            )
+        rejected = (
+            "https://www.jintiankansha.com/t/example",
+            "http://mp.weixin.qq.com/s/insecure",
+            "ftp://mp.weixin.qq.com/s/wrong-scheme",
+        )
+        for url in rejected:
+            with self.subTest(url=url), self.assertRaises(ValueError):
+                fetcher.fetch_public_wechat_page(url, attempts=1)
 
     def test_verification_page_is_terminal(self) -> None:
         url = "https://mp.weixin.qq.com/s?__biz=test&mid=1&idx=1&sn=abc"

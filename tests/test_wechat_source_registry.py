@@ -99,6 +99,13 @@ class WeChatSourceRegistryTest(unittest.TestCase):
         spec = {"expectedAccounts": ["量子位", "qbitai"]}
         self.assertTrue(registry.account_matches(spec, "量子位"))
         self.assertTrue(registry.account_matches(spec, "量子位Pro"))
+        self.assertFalse(registry.account_matches(spec, "量子"))
+        self.assertFalse(
+            registry.account_matches(
+                {"expectedAccounts": ["芯潮IC"]},
+                "IC",
+            )
+        )
         self.assertFalse(registry.account_matches(spec, "无关科技媒体"))
         self.assertFalse(registry.account_matches(spec, ""))
 

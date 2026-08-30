@@ -1,11 +1,70 @@
 from __future__ import annotations
 
 import unittest
+from contextlib import ExitStack
+from unittest.mock import patch
 
 from tools import refresh_wechat_snapshot as refresh
 
 
 class RefreshWeChatSnapshotTest(unittest.TestCase):
+    def test_pipeline_installs_title_fallback_after_redirect_compat(self) -> None:
+        events: list[str] = []
+
+        def record(name: str):
+            return lambda *_args, **_kwargs: events.append(name)
+
+        installers = (
+            (refresh.wechat_fetch_compat, "fetch"),
+            (refresh.wechat_registry_bridge, "registry"),
+            (refresh.wechat_original_redirect_bridge, "original_redirect"),
+            (refresh.wechat_index_context_guard, "context"),
+            (refresh.wechat_index_record_fallback, "record_fallback"),
+            (refresh.wechat_sogou_redirect_compat, "sogou_redirect"),
+            (refresh.wechat_sogou_link_compat, "sogou_link"),
+            (refresh.wechat_public_index_title_fallback, "title_fallback"),
+            (refresh.wechat_public_aggregator, "public_aggregator"),
+            (refresh.wechat_sogou_bridge, "sogou_bridge"),
+        )
+        with ExitStack() as stack:
+            mocks = {
+                name: stack.enter_context(
+                    patch.object(module, "install", side_effect=record(name))
+                )
+                for module, name in installers
+            }
+            refresh.install_wechat_pipeline()
+
+        self.assertEqual(
+            events,
+            [
+                "fetch",
+                "registry",
+                "original_redirect",
+                "context",
+                "record_fallback",
+                "sogou_redirect",
+                "sogou_link",
+                "title_fallback",
+                "public_aggregator",
+                "sogou_bridge",
+            ],
+        )
+        mocks["original_redirect"].assert_called_once_with(
+            refresh.wechat_public_sources,
+            refresh.wechat_registry_bridge,
+        )
+        mocks["sogou_redirect"].assert_called_once_with(
+            refresh.wechat_sogou_index
+        )
+        mocks["title_fallback"].assert_called_once_with(
+            refresh.wechat_registry_bridge,
+            refresh.wechat_sogou_index,
+        )
+        mocks["public_aggregator"].assert_called_once_with(
+            refresh.wechat_sogou_index
+        )
+
     def _article(self, article_id: str, source_id: str, url: str) -> dict:
         return {
             "id": article_id,
