@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-30T04:33:06+00:00",
+  "generatedAt": "2026-08-30T06:20:27+00:00",
   "asOfDate": "2026-08-30",
-  "runStatus": "no-material-change",
+  "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
   "baselineSource": "snapshot",
   "model": {
@@ -10,26 +10,45 @@
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": false,
-    "usage": {}
+    "used": true,
+    "usage": {
+      "prompt_tokens": 5444,
+      "completion_tokens": 5211,
+      "total_tokens": 10655,
+      "completion_tokens_details": {
+        "reasoning_tokens": 3090
+      },
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 5444
+    }
   },
   "changeSummary": {
-    "totalDetected": 84,
-    "total": 0,
-    "byDataset": {},
-    "byChangeType": {
-      "data_maintenance": 84
+    "totalDetected": 46,
+    "total": 5,
+    "byDataset": {
+      "ventureCompany": 1,
+      "intelligenceEvent": 2,
+      "marketCompany": 2
     },
-    "externalCandidates": 0,
-    "qualityRejected": 0,
-    "maintenanceExcluded": 84,
+    "byChangeType": {
+      "external_event": 17,
+      "data_maintenance": 15,
+      "entity_reconciliation": 1,
+      "source_refresh": 13
+    },
+    "externalCandidates": 17,
+    "qualityRejected": 12,
+    "maintenanceExcluded": 29,
     "aggregatedEvents": 0,
-    "highestImportance": 0,
-    "verifiedChangeTotal": 0,
-    "candidateTotal": 0,
-    "auxiliaryLeadTotal": 0,
-    "rejectedTotal": 0,
-    "newEvents": 0,
+    "highestImportance": 88,
+    "verifiedChangeTotal": 1,
+    "candidateTotal": 2,
+    "auxiliaryLeadTotal": 2,
+    "rejectedTotal": 12,
+    "newEvents": 6,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
@@ -37,22 +56,1173 @@
     "duplicatesSuppressed": 0
   },
   "analysis": {
-    "mode": "structured-change-only",
-    "isResearchJudgment": false,
-    "executiveSummary": "本轮未检测到新的外部事实候选。",
-    "keyDevelopments": [],
-    "thesisUpdates": [],
-    "watchlist": [],
-    "risks": [],
-    "methodologyNote": "结构化变化检查；本期无材料变化。未执行生成式研判。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
+    "mode": "model-analysis",
+    "isResearchJudgment": true,
+    "executiveSummary": "证据包显示五个主要事件：Form Energy宣布完成7.5亿美元Series G融资（官方披露）；中坚科技拟投资12亿元建设智能机器人产业化项目（媒体报道）；多家银行推出“算力贷”专项贷款（媒体报道）；宁德时代据称获QFII二季度增持（媒体报道）；华大基因披露上半年营收增长9.59%、净利润4740万元及股东结构变化（媒体报道）。其中Form Energy融资为最高等级证据，其余多为外部线索或候选级证据，需进一步验证。 质量门诊断：缺少发布时间 36、证据未分级 27、缺少标题 23、证据合格但未绑定变化字段 14。",
+    "keyDevelopments": [
+      {
+        "title": "Form Energy完成7.5亿美元Series G融资，由T. Rowe Price领投",
+        "assessment": "事实：Form Energy于2026-08-12宣布完成7.5亿美元Series G融资，领投方为T. Rowe Price（曾领投其Series F），资金将用于扩大铁空气电池制造和加速商业部署。证据E006为官方新闻稿，E005和E007为官网页面，均支持该事件。注意E005的publishedAt显示2020-03-04，与E006的2026-08-12不一致，属于内部数据差异，应以官方新闻稿日期为准。推断：该融资表明机构投资者对长时储能技术商业化前景的认可，但具体产能扩张节奏和订单情况尚未披露。",
+        "importance": 5,
+        "confidence": "high",
+        "entities": [
+          "Form Energy"
+        ],
+        "evidenceIds": [
+          "E005",
+          "E006",
+          "E007"
+        ]
+      },
+      {
+        "title": "中坚科技拟投资12亿元建设智能机器人产业化项目",
+        "assessment": "事实：中坚科技（002779）公告，公司及控股子公司上海桦之坚科技有限公司拟投资12亿元建设智能机器人产业化项目。证据E009为新浪财经报道，属于C级外部线索。注意“拟投资”表示该计划尚未最终落地，存在审批、资金筹措等不确定性。推断：中坚科技正加码智能机器人赛道，但项目执行效果需后续跟踪。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "中坚科技"
+        ],
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "title": "银行创新“算力贷”破解科创企业预付费难题",
+        "assessment": "事实：多家银行近期推出“算力贷”专项贷款产品，针对AI产业链企业算力需求增长，银行逐步认可专利权、商标权等无形资产作为贷款依据，信用评价体系从“实物资产”向“无形资产”转变。证据E010为东方财富报道。推断：该产品有助于缓解科创企业算力预付费的资金压力，但具体贷款规模、利率和风控标准未披露。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "银行业"
+        ],
+        "evidenceIds": [
+          "E010"
+        ]
+      },
+      {
+        "title": "QFII二季度持仓超3000亿元聚焦硬科技，宁德时代获增持",
+        "assessment": "事实（基于标题）：QFII二季度持仓超3000亿元，聚焦硬科技，宁德时代、紫金矿业获增持。证据E019为新浪财经报道，仅有标题，未提供具体增持股数和持仓比例。推断：外资机构对宁德时代等硬科技龙头保持配置兴趣，但需更多数据验证。",
+        "importance": 3,
+        "confidence": "low",
+        "entities": [
+          "宁德时代"
+        ],
+        "evidenceIds": [
+          "E019"
+        ]
+      },
+      {
+        "title": "华大基因上半年营收同比增长9.59%，净利润达4740万元，股东结构生变",
+        "assessment": "事实：华大基因上半年营收同比增长9.59%，净利润达4740万元；同时十大流通股东格局变化，易方达创业板ETF等退出，北向资金增持，华宝中证医疗ETF等减持。证据E023和E024均为新浪财经报道。推断：营收增长但净利润规模相对较小，股东变动可能反映市场分歧，需关注后续财报。",
+        "importance": 2,
+        "confidence": "medium",
+        "entities": [
+          "华大基因"
+        ],
+        "evidenceIds": [
+          "E023",
+          "E024"
+        ]
+      }
+    ],
+    "thesisUpdates": [
+      {
+        "entity": "Form Energy",
+        "direction": "positive",
+        "statement": "7.5亿美元Series G融资由T. Rowe Price领投，资金将用于铁空气电池制造和商业部署，强化了Form Energy在长时储能领域的扩张能力。",
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "entity": "中坚科技",
+        "direction": "mixed",
+        "statement": "拟投资12亿元建设智能机器人产业化项目，显示公司战略加码机器人赛道，但项目尚处于“拟投资”阶段，存在执行不确定性和资金压力。",
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "entity": "宁德时代",
+        "direction": "positive",
+        "statement": "据媒体报道，宁德时代在二季度获QFII增持，反映外资对硬科技龙头的配置偏好，但具体增持数据待验证。",
+        "evidenceIds": [
+          "E019"
+        ]
+      },
+      {
+        "entity": "华大基因",
+        "direction": "mixed",
+        "statement": "上半年营收增长9.59%，但净利润仅4740万元，同时十大流通股东变动明显，北向资金增持与部分ETF减持并存，业绩和资金面信号分化。",
+        "evidenceIds": [
+          "E023",
+          "E024"
+        ]
+      },
+      {
+        "entity": "AI算力产业链",
+        "direction": "positive",
+        "statement": "银行推出“算力贷”专项贷款，以无形资产作为贷款依据，有助于缓解AI算力企业的预付费资金压力，改善产业链融资环境。",
+        "evidenceIds": [
+          "E010"
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "item": "Form Energy融资后的产能扩张与商业化订单",
+        "reason": "融资规模大，但资金使用效果需通过实际产能建设、客户合同和交付数据验证。",
+        "nextEvidence": "Form Energy制造基地进展公告、新客户合同或项目并网信息",
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "item": "中坚科技智能机器人项目的落地进展",
+        "reason": "12亿元投资尚属“拟投资”，需关注项目审批、资金来源、建设周期和实际投产情况。",
+        "nextEvidence": "中坚科技后续公告的项目可行性报告、董事会决议或开工信息",
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "item": "银行“算力贷”产品的实际投放规模与风控标准",
+        "reason": "媒体报道仅定性描述，缺乏贷款余额、利率、覆盖企业数量等量化数据。",
+        "nextEvidence": "银行披露的算力贷业务数据、典型案例或监管政策文件",
+        "evidenceIds": [
+          "E010"
+        ]
+      },
+      {
+        "item": "宁德时代QFII持仓变化的具体数据",
+        "reason": "当前仅有标题称获增持，缺少具体股数、比例和持仓变动明细。",
+        "nextEvidence": "基金二季度持仓报告、港交所披露或上市公司股东名册",
+        "evidenceIds": [
+          "E019"
+        ]
+      },
+      {
+        "item": "华大基因下半年业绩与股东结构后续变化",
+        "reason": "上半年营收增长但净利润规模较小，股东变动可能影响股价稳定性，需观察趋势。",
+        "nextEvidence": "华大基因三季度财报、股东增减持公告或机构调研纪要",
+        "evidenceIds": [
+          "E023",
+          "E024"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "证据内部日期不一致可能影响事实准确性",
+        "reason": "Form Energy的E005显示publishedAt为2020-03-04，而E006明确为2026-08-12，存在数据冲突，需以官方新闻稿为准，但自动化流程可能引入错误。",
+        "evidenceIds": [
+          "E005",
+          "E006"
+        ]
+      },
+      {
+        "risk": "中坚科技投资项目存在变更或取消风险",
+        "reason": "公告使用“拟投资”表述，项目尚未最终确定，可能因市场环境、审批或资金问题调整。",
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "risk": "“算力贷”依赖无形资产评估，政策或风控变化可能影响推广",
+        "reason": "银行对专利权、商标权等无形资产的估值和处置能力尚不成熟，若不良率上升或监管收紧，产品可持续性存疑。",
+        "evidenceIds": [
+          "E010"
+        ]
+      },
+      {
+        "risk": "QFII持仓报道可能不完整或存在滞后",
+        "reason": "E019仅为新闻标题，未提供具体数据，且QFII持仓为季度披露，可能无法反映最新持仓变化。",
+        "evidenceIds": [
+          "E019"
+        ]
+      },
+      {
+        "risk": "华大基因盈利能力可能承压",
+        "reason": "上半年营收增长但净利润仅4740万元，若成本或研发投入持续高企，利润增长可持续性需警惕。",
+        "evidenceIds": [
+          "E023"
+        ]
+      }
+    ],
+    "methodologyNote": "本分析仅基于证据包中的结构化证据，未补充外部事实。事实与推断已在各条目中明确区分：官方披露（E005-E007）作为高置信事实，媒体报道（E009、E010、E019、E023、E024）作为中低置信线索。证据内部存在日期不一致（E005 vs E006），已按官方新闻稿日期处理。所有投资相关表述均为事件描述，不构成买入、卖出、目标价或收益承诺。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
   },
-  "changes": [],
-  "evidence": [],
+  "changes": [
+    {
+      "id": "chg-54596ca5fe7f7ef6cba2",
+      "dataset": "ventureCompany",
+      "entityType": "创业公司",
+      "entityId": "form-energy",
+      "entityName": "Form Energy",
+      "action": "updated",
+      "changedFields": [
+        "financing"
+      ],
+      "summary": "Form Energy 的 financing 发生变化。",
+      "importance": 88,
+      "before": {
+        "financing": [
+          {
+            "date": "2026-08-12",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing",
+            "summary": "Weirton, WV – August 12, 2026 – Form Energy, Inc., an American technology company developing and commercializing a new class of cost-effective, multi-day energy storage systems, announced today a $750 million Series G financing round led by T. Rowe Price, which also led the company’s prior Series F round. This round brings Form Energy’s total […]",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+            "type": "融资"
+          }
+        ]
+      },
+      "after": {
+        "financing": [
+          {
+            "amount": "$750M",
+            "date": "2020-03-04",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/",
+            "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
+            "type": "融资"
+          },
+          {
+            "date": "2026-08-12",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing",
+            "summary": "Weirton, WV – August 12, 2026 – Form Energy, Inc., an American technology company developing and commercializing a new class of cost-effective, multi-day energy storage systems, announced today a $750 million Series G financing round led by T. Rowe Price, which also led the company’s prior Series F round. This round brings Form Energy’s total […]",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+            "type": "融资"
+          },
+          {
+            "amount": "$750M",
+            "date": "2026-08-12",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+            "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+            "type": "融资"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "financing"
+      ],
+      "claimBindings": [
+        {
+          "field": "financing",
+          "before": [
+            {
+              "date": "2026-08-12",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing",
+              "summary": "Weirton, WV – August 12, 2026 – Form Energy, Inc., an American technology company developing and commercializing a new class of cost-effective, multi-day energy storage systems, announced today a $750 million Series G financing round led by T. Rowe Price, which also led the company’s prior Series F round. This round brings Form Energy’s total […]",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+              "type": "融资"
+            }
+          ],
+          "after": [
+            {
+              "amount": "$750M",
+              "date": "2020-03-04",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/",
+              "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
+              "type": "融资"
+            },
+            {
+              "date": "2026-08-12",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing",
+              "summary": "Weirton, WV – August 12, 2026 – Form Energy, Inc., an American technology company developing and commercializing a new class of cost-effective, multi-day energy storage systems, announced today a $750 million Series G financing round led by T. Rowe Price, which also led the company’s prior Series F round. This round brings Form Energy’s total […]",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+              "type": "融资"
+            },
+            {
+              "amount": "$750M",
+              "date": "2026-08-12",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+              "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+              "type": "融资"
+            }
+          ],
+          "evidenceIds": [
+            "E005",
+            "E006",
+            "E007"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E005",
+        "E006",
+        "E007"
+      ],
+      "supportingEvidenceIds": [
+        "E005",
+        "E006",
+        "E007"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 3,
+        "total": 3
+      },
+      "publicationTier": "verified_change",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-8be8280900881dcbec79"
+      ],
+      "eventLifecycles": {
+        "evt-8be8280900881dcbec79": "first_seen"
+      },
+      "eventId": "evt-8be8280900881dcbec79",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-30T06:20:27+00:00",
+      "lastSeenAt": "2026-08-30T06:20:27+00:00"
+    },
+    {
+      "id": "chg-09d18e9c5d503f770b48",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-f3013b6c53b21e86ef",
+      "entityName": "投资12亿元！又一家A股公司，加码智能机器人！",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：投资12亿元！又一家A股公司，加码智能机器人！。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-30",
+        "summary": "中坚科技拟投资12亿元建设智能机器人产业化项目。 中坚科技（002779）日前公告，公司及控股子公司上海桦之坚科技有限公司（简称“上海桦之坚”）...",
+        "title": "投资12亿元！又一家A股公司，加码智能机器人！"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-30",
+          "evidenceIds": [
+            "E009"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "中坚科技拟投资12亿元建设智能机器人产业化项目。 中坚科技（002779）日前公告，公司及控股子公司上海桦之坚科技有限公司（简称“上海桦之坚”）...",
+          "evidenceIds": [
+            "E009"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "投资12亿元！又一家A股公司，加码智能机器人！",
+          "evidenceIds": [
+            "E009"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E009"
+      ],
+      "supportingEvidenceIds": [
+        "E009"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-a097247d3a842940900c"
+      ],
+      "eventLifecycles": {
+        "evt-a097247d3a842940900c": "first_seen"
+      },
+      "eventId": "evt-a097247d3a842940900c",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-30T06:20:27+00:00",
+      "lastSeenAt": "2026-08-30T06:20:27+00:00"
+    },
+    {
+      "id": "chg-6ac14f824a15a559d137",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-72d97022b8f4fd833b",
+      "entityName": "银行创新“算力贷” 破解科创企业预付费难题",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：银行创新“算力贷” 破解科创企业预付费难题。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-30",
+        "summary": "随着我国“ 人工智能 +”加快拓展，对算力的需求持续扩张。今年以来，相关产业链企业的资金需求明显增长。多家 银行 近期推出相应的专项贷款产品。业内人士认为，近年来，随着轻资产、高研发投入的科技型企业崛起， 银行 逐步降低了对抵押、担保等的依赖，专利权、商标权、著作权等无形资产被越来越多的 银行 认可，成为企业、个人申请贷款的依据，各家银行纷纷设立科技支行，更是加速了银行的信用评价体系从“实物资产”向“无形资产”转变。银行业布局“算力贷”，正是科技金融适配 人工智能 产业的一种探索。银行切入这一赛道，也有利于更早地…",
+        "title": "银行创新“算力贷” 破解科创企业预付费难题"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-30",
+          "evidenceIds": [
+            "E010"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "随着我国“ 人工智能 +”加快拓展，对算力的需求持续扩张。今年以来，相关产业链企业的资金需求明显增长。多家 银行 近期推出相应的专项贷款产品。业内人士认为，近年来，随着轻资产、高研发投入的科技型企业崛起， 银行 逐步降低了对抵押、担保等的依赖，专利权、商标权、著作权等无形资产被越来越多的 银行 认可，成为企业、个人申请贷款的依据，各家银行纷纷设立科技支行，更是加速了银行的信用评价体系从“实物资产”向“无形资产”转变。银行业布局“算力贷”，正是科技金融适配 人工智能 产业的一种探索。银行切入这一赛道，也有利于更早地…",
+          "evidenceIds": [
+            "E010"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "银行创新“算力贷” 破解科创企业预付费难题",
+          "evidenceIds": [
+            "E010"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E010"
+      ],
+      "supportingEvidenceIds": [
+        "E010"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-3aa5b48c876b8a5edafc"
+      ],
+      "eventLifecycles": {
+        "evt-3aa5b48c876b8a5edafc": "first_seen"
+      },
+      "eventId": "evt-3aa5b48c876b8a5edafc",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-30T06:20:27+00:00",
+      "lastSeenAt": "2026-08-30T06:20:27+00:00"
+    },
+    {
+      "id": "chg-6a04914e1a78d4d9804e",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "catl",
+      "entityName": "宁德时代",
+      "action": "updated",
+      "changedFields": [
+        "news"
+      ],
+      "summary": "宁德时代 的 news 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": []
+      },
+      "after": {
+        "news": [
+          {
+            "publishedAt": "2026-08-30T10:54:00+08:00",
+            "source": "新浪财经",
+            "title": "QFII二季度持仓超3000亿元聚焦硬科技，宁德时代、紫金矿业获增持",
+            "url": "https://finance.sina.com.cn/roll/2026-08-30/doc-iniqacxz8496856.shtml"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [],
+          "after": [
+            {
+              "publishedAt": "2026-08-30T10:54:00+08:00",
+              "source": "新浪财经",
+              "title": "QFII二季度持仓超3000亿元聚焦硬科技，宁德时代、紫金矿业获增持",
+              "url": "https://finance.sina.com.cn/roll/2026-08-30/doc-iniqacxz8496856.shtml"
+            }
+          ],
+          "evidenceIds": [
+            "E019"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E019"
+      ],
+      "supportingEvidenceIds": [
+        "E019"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-dbe725c126f3676c81ee"
+      ],
+      "eventLifecycles": {
+        "evt-dbe725c126f3676c81ee": "first_seen"
+      },
+      "eventId": "evt-dbe725c126f3676c81ee",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-30T06:20:27+00:00",
+      "lastSeenAt": "2026-08-30T06:20:27+00:00"
+    },
+    {
+      "id": "chg-8758023063bfbaf70c1b",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "bgi-genomics",
+      "entityName": "华大基因",
+      "action": "updated",
+      "changedFields": [
+        "news"
+      ],
+      "summary": "华大基因 的 news 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": []
+      },
+      "after": {
+        "news": [
+          {
+            "publishedAt": "2026-08-22T10:17:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因：上半年营收同比增长9.59%，净利润达4740万元",
+            "url": "https://cj.sina.cn/articles/view/7317133861/1b4229a2502001heee"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [],
+          "after": [
+            {
+              "publishedAt": "2026-08-22T10:17:00+08:00",
+              "source": "新浪财经",
+              "title": "华大基因：上半年营收同比增长9.59%，净利润达4740万元",
+              "url": "https://cj.sina.cn/articles/view/7317133861/1b4229a2502001heee"
+            }
+          ],
+          "evidenceIds": [
+            "E023",
+            "E024"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E023",
+        "E024"
+      ],
+      "supportingEvidenceIds": [
+        "E023",
+        "E024"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 2,
+        "total": 2
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-20f4826f82c486fab182",
+        "evt-165142de0daf3f88c2da"
+      ],
+      "eventLifecycles": {
+        "evt-20f4826f82c486fab182": "first_seen",
+        "evt-165142de0daf3f88c2da": "first_seen"
+      },
+      "lifecycle": "mixed",
+      "firstSeenAt": "2026-08-30T06:20:27+00:00",
+      "lastSeenAt": "2026-08-30T06:20:27+00:00"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E005",
+      "changeId": "chg-54596ca5fe7f7ef6cba2",
+      "entityName": "Form Energy",
+      "claim": "Form Energy 的 financing 发生变化。",
+      "publicationTier": "verified_change",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Form Energy",
+      "title": "Home",
+      "url": "https://formenergy.com/",
+      "publishedAt": "2020-03-04",
+      "evidenceGrade": "官方披露",
+      "claimFields": [
+        "financing"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E006",
+      "changeId": "chg-54596ca5fe7f7ef6cba2",
+      "entityName": "Form Energy",
+      "claim": "Form Energy 的 financing 发生变化。",
+      "publicationTier": "verified_change",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Form Energy",
+      "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+      "url": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+      "publishedAt": "2026-08-12",
+      "evidenceGrade": "官方披露",
+      "claimFields": [
+        "financing"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E007",
+      "changeId": "chg-54596ca5fe7f7ef6cba2",
+      "entityName": "Form Energy",
+      "claim": "Form Energy 的 financing 发生变化。",
+      "publicationTier": "verified_change",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Form Energy",
+      "title": "Newsroom",
+      "url": "https://formenergy.com/newsroom/",
+      "publishedAt": "2021-03-19",
+      "evidenceGrade": "官方披露",
+      "claimFields": [
+        "financing"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E009",
+      "changeId": "chg-09d18e9c5d503f770b48",
+      "entityName": "投资12亿元！又一家A股公司，加码智能机器人！",
+      "claim": "新增高价值情报事件记录：投资12亿元！又一家A股公司，加码智能机器人！。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "投资12亿元！又一家A股公司，加码智能机器人！",
+      "url": "https://finance.sina.com.cn/stock/2026-08-30/doc-iniqakfv5056766.shtml",
+      "publishedAt": "2026-08-30",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E010",
+      "changeId": "chg-6ac14f824a15a559d137",
+      "entityName": "银行创新“算力贷” 破解科创企业预付费难题",
+      "claim": "新增高价值情报事件记录：银行创新“算力贷” 破解科创企业预付费难题。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "东方财富",
+      "title": "银行创新“算力贷” 破解科创企业预付费难题",
+      "url": "https://finance.eastmoney.com/a/202608303859364956.html",
+      "publishedAt": "2026-08-30",
+      "evidenceGrade": "媒体报道",
+      "platformName": "东方财富",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E019",
+      "changeId": "chg-6a04914e1a78d4d9804e",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "QFII二季度持仓超3000亿元聚焦硬科技，宁德时代、紫金矿业获增持",
+      "url": "https://finance.sina.com.cn/roll/2026-08-30/doc-iniqacxz8496856.shtml",
+      "publishedAt": "2026-08-30T10:54:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E023",
+      "changeId": "chg-8758023063bfbaf70c1b",
+      "entityName": "华大基因",
+      "claim": "华大基因 的 news 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "华大基因：上半年营收同比增长9.59%，净利润达4740万元",
+      "url": "https://cj.sina.cn/articles/view/7317133861/1b4229a2502001heee",
+      "publishedAt": "2026-08-22T10:17:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E024",
+      "changeId": "chg-8758023063bfbaf70c1b",
+      "entityName": "华大基因",
+      "claim": "华大基因 的 news 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "华大基因十大流通股东格局生变：易方达创业板ETF等退出，北向资金增持，华宝中证医疗ETF等减持",
+      "url": "https://finance.sina.com.cn/stock/aiassist/sdltgdbh/2026-08-22/doc-inipeimp6080773.shtml",
+      "publishedAt": "2026-08-22T12:31:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    }
+  ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-08-30T04:33:06+00:00",
+    "generatedAt": "2026-08-30T06:20:27+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-dbe725c126f3676c81ee": {
+        "eventId": "evt-dbe725c126f3676c81ee",
+        "dataset": "marketCompany",
+        "entityId": "catl",
+        "entityName": "宁德时代",
+        "title": "QFII二季度持仓超3000亿元聚焦硬科技，宁德时代、紫金矿业获增持",
+        "titleAliases": [
+          "qfii二季度持仓超3000亿元聚焦硬科技宁德时代紫金矿业获增持"
+        ],
+        "publishedDate": "2026-08-30",
+        "publishedDates": [
+          "2026-08-30"
+        ],
+        "entityKeys": [
+          "marketCompany:catl",
+          "name:宁德时代"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "3000"
+        ],
+        "sourceAliases": [
+          "evd-ab9aca12fb70ab327398",
+          "src-2cd8ebe075296054f7bc"
+        ],
+        "evidenceFingerprints": [
+          "ab9aca12fb70ab327398"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "QFII二季度持仓超3000亿元聚焦硬科技，宁德时代、紫金矿业获增持",
+            "url": "https://finance.sina.com.cn/roll/2026-08-30/doc-iniqacxz8496856.shtml",
+            "publishedAt": "2026-08-30T10:54:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "1ac68e25f04388a47bb4",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-30T06:20:27+00:00",
+        "lastSeenAt": "2026-08-30T06:20:27+00:00",
+        "lastPublishedAt": "2026-08-30T06:20:27+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-a097247d3a842940900c": {
+        "eventId": "evt-a097247d3a842940900c",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-f3013b6c53b21e86ef",
+        "entityName": "投资12亿元！又一家A股公司，加码智能机器人！",
+        "title": "投资12亿元！又一家A股公司，加码智能机器人！",
+        "titleAliases": [
+          "投资12亿元又一家a股公司加码智能机器人"
+        ],
+        "publishedDate": "2026-08-30",
+        "publishedDates": [
+          "2026-08-30"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产业投资",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "12"
+        ],
+        "sourceAliases": [
+          "evd-21b0a5215af51b8d7866",
+          "record-c69b482917fde9d45da4",
+          "src-7d766d6c2100f67c1959"
+        ],
+        "evidenceFingerprints": [
+          "21b0a5215af51b8d7866"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "投资12亿元！又一家A股公司，加码智能机器人！",
+            "url": "https://finance.sina.com.cn/stock/2026-08-30/doc-iniqakfv5056766.shtml",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "ad336b28a2c4f82bf045",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-30T06:20:27+00:00",
+        "lastSeenAt": "2026-08-30T06:20:27+00:00",
+        "lastPublishedAt": "2026-08-30T06:20:27+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-8be8280900881dcbec79": {
+        "eventId": "evt-8be8280900881dcbec79",
+        "dataset": "ventureCompany",
+        "entityId": "form-energy",
+        "entityName": "Form Energy",
+        "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+        "titleAliases": [
+          "formenergysecures750minseriesgfinancingtoscaleironairbatterymanufacturingandacceleratecommercialdeployments",
+          "home",
+          "newsroom"
+        ],
+        "publishedDate": "2020-03-04",
+        "publishedDates": [
+          "2020-03-04",
+          "2026-08-12",
+          "2021-03-19"
+        ],
+        "entityKeys": [
+          "name:form energy",
+          "ventureCompany:form-energy"
+        ],
+        "typeKeys": [
+          "创业公司"
+        ],
+        "numericCues": [
+          "750"
+        ],
+        "sourceAliases": [
+          "evd-240d920c958998b9e698",
+          "evd-260ebca9594e10735828",
+          "evd-bbce94b49783f715f8ec",
+          "src-ae6596fda7c340d262d4",
+          "src-ce905be3bc5d52aa35cf",
+          "src-dc62ab01be9344185861"
+        ],
+        "evidenceFingerprints": [
+          "260ebca9594e10735828",
+          "240d920c958998b9e698",
+          "bbce94b49783f715f8ec"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Form Energy",
+            "title": "Home",
+            "url": "https://formenergy.com/",
+            "publishedAt": "2020-03-04",
+            "evidenceGrade": "官方披露"
+          },
+          {
+            "sourceName": "Form Energy",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+            "url": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+            "publishedAt": "2026-08-12",
+            "evidenceGrade": "官方披露"
+          },
+          {
+            "sourceName": "Form Energy",
+            "title": "Newsroom",
+            "url": "https://formenergy.com/newsroom/",
+            "publishedAt": "2021-03-19",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "ab53829200fcf80ab3ce",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-30T06:20:27+00:00",
+        "lastSeenAt": "2026-08-30T06:20:27+00:00",
+        "lastPublishedAt": "2026-08-30T06:20:27+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 3,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-3aa5b48c876b8a5edafc": {
+        "eventId": "evt-3aa5b48c876b8a5edafc",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-72d97022b8f4fd833b",
+        "entityName": "银行创新“算力贷” 破解科创企业预付费难题",
+        "title": "银行创新“算力贷” 破解科创企业预付费难题",
+        "titleAliases": [
+          "银行创新算力贷破解科创企业预付费难题"
+        ],
+        "publishedDate": "2026-08-30",
+        "publishedDates": [
+          "2026-08-30"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-31a5e64039e90750b223",
+          "record-221986599c2c0e80872a",
+          "src-03eaa3eb18111f6097ad"
+        ],
+        "evidenceFingerprints": [
+          "31a5e64039e90750b223"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "东方财富",
+            "title": "银行创新“算力贷” 破解科创企业预付费难题",
+            "url": "https://finance.eastmoney.com/a/202608303859364956.html",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "693ff917e2cb49e200dc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-30T06:20:27+00:00",
+        "lastSeenAt": "2026-08-30T06:20:27+00:00",
+        "lastPublishedAt": "2026-08-30T06:20:27+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-20f4826f82c486fab182": {
+        "eventId": "evt-20f4826f82c486fab182",
+        "dataset": "marketCompany",
+        "entityId": "bgi-genomics",
+        "entityName": "华大基因",
+        "title": "华大基因：上半年营收同比增长9.59%，净利润达4740万元",
+        "titleAliases": [
+          "华大基因上半年营收同比增长959净利润达4740万元"
+        ],
+        "publishedDate": "2026-08-22",
+        "publishedDates": [
+          "2026-08-22"
+        ],
+        "entityKeys": [
+          "marketCompany:bgi-genomics",
+          "name:华大基因"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "4740",
+          "9.59%"
+        ],
+        "sourceAliases": [
+          "evd-a0d77c3e9bae56baf655",
+          "src-a820615a5ff4a4aab46b"
+        ],
+        "evidenceFingerprints": [
+          "a0d77c3e9bae56baf655"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "华大基因：上半年营收同比增长9.59%，净利润达4740万元",
+            "url": "https://cj.sina.cn/articles/view/7317133861/1b4229a2502001heee",
+            "publishedAt": "2026-08-22T10:17:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "8db6e1b33516d01b2b39",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-30T06:20:27+00:00",
+        "lastSeenAt": "2026-08-30T06:20:27+00:00",
+        "lastPublishedAt": "2026-08-30T06:20:27+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-165142de0daf3f88c2da": {
+        "eventId": "evt-165142de0daf3f88c2da",
+        "dataset": "marketCompany",
+        "entityId": "bgi-genomics",
+        "entityName": "华大基因",
+        "title": "华大基因十大流通股东格局生变：易方达创业板ETF等退出，北向资金增持，华宝中证医疗ETF等减持",
+        "titleAliases": [
+          "华大基因十大流通股东格局生变易方达创业板etf等退出北向资金增持华宝中证医疗etf等减持"
+        ],
+        "publishedDate": "2026-08-22",
+        "publishedDates": [
+          "2026-08-22"
+        ],
+        "entityKeys": [
+          "marketCompany:bgi-genomics",
+          "name:华大基因"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-0b5c8a306615abd3b9a7",
+          "src-0df17ffa17ef98c219d3"
+        ],
+        "evidenceFingerprints": [
+          "0b5c8a306615abd3b9a7"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "华大基因十大流通股东格局生变：易方达创业板ETF等退出，北向资金增持，华宝中证医疗ETF等减持",
+            "url": "https://finance.sina.com.cn/stock/aiassist/sdltgdbh/2026-08-22/doc-inipeimp6080773.shtml",
+            "publishedAt": "2026-08-22T12:31:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "e630d932f30b1f73fcd4",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-30T06:20:27+00:00",
+        "lastSeenAt": "2026-08-30T06:20:27+00:00",
+        "lastPublishedAt": "2026-08-30T06:20:27+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-db5e2a83daa868977a7a": {
         "eventId": "evt-db5e2a83daa868977a7a",
         "dataset": "marketCompany",
@@ -906,13 +2076,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 0,
+    "newEvents": 6,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
     "duplicatesSuppressed": 0,
-    "observedEvents": 0,
+    "observedEvents": 6,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -1068,33 +2238,77 @@
     },
     {
       "date": "2026-08-30",
-      "generatedAt": "2026-08-30T04:33:06+00:00",
-      "runStatus": "no-material-change",
-      "changeCount": 10,
-      "executiveSummary": "本轮未检测到新的外部事实候选。",
-      "eventIds": [],
-      "eventStates": [],
+      "generatedAt": "2026-08-30T06:20:27+00:00",
+      "runStatus": "model",
+      "changeCount": 5,
+      "executiveSummary": "证据包显示五个主要事件：Form Energy宣布完成7.5亿美元Series G融资（官方披露）；中坚科技拟投资12亿元建设智能机器人产业化项目（媒体报道）；多家银行推出“算力贷”专项贷款（媒体报道）；宁德时代据称获QFII二季度增持（媒体报道）；华大基因披露上半年营收增长9.59%、净利润4740万元及股东结构变化（媒体报道）。其中Form Energy融资为最高等级证据，其余多为外部线索或候选级证据，需进一步验证。",
+      "eventIds": [
+        "evt-8be8280900881dcbec79",
+        "evt-a097247d3a842940900c",
+        "evt-3aa5b48c876b8a5edafc",
+        "evt-dbe725c126f3676c81ee",
+        "evt-20f4826f82c486fab182",
+        "evt-165142de0daf3f88c2da"
+      ],
+      "eventStates": [
+        {
+          "eventId": "evt-8be8280900881dcbec79",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-a097247d3a842940900c",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-3aa5b48c876b8a5edafc",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-dbe725c126f3676c81ee",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-20f4826f82c486fab182",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-165142de0daf3f88c2da",
+          "lifecycle": "first_seen"
+        }
+      ],
       "eventSummary": {
-        "newEvents": 0,
+        "newEvents": 6,
         "reconfirmations": 0,
         "updates": 0,
         "corrections": 0,
         "possibleConflicts": 0,
         "duplicatesSuppressed": 0
       },
-      "legacyChangeCount": 10
+      "legacyChangeCount": 10,
+      "metricsVersion": 2,
+      "verifiedChangeTotal": 1,
+      "candidateTotal": 2,
+      "auxiliaryLeadTotal": 2,
+      "rejectedTotal": 12
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 0,
-    "eligibleCandidateCount": 0,
-    "rejectedCandidateCount": 0,
-    "rejectedByDataset": {},
-    "evidenceCount": 0,
-    "supportingEvidenceCount": 0,
-    "rejectedEvidenceCount": 0,
-    "passedButUnboundEvidenceCount": 0,
-    "rejectionReasons": {},
+    "candidateCount": 17,
+    "eligibleCandidateCount": 5,
+    "rejectedCandidateCount": 12,
+    "rejectedByDataset": {
+      "marketCompany": 11,
+      "ventureCompany": 1
+    },
+    "evidenceCount": 62,
+    "supportingEvidenceCount": 8,
+    "rejectedEvidenceCount": 40,
+    "passedButUnboundEvidenceCount": 14,
+    "rejectionReasons": {
+      "missing_published_at": 36,
+      "ungraded": 27,
+      "missing_title": 23
+    },
     "sourceClassificationWarnings": []
   },
   "sourceClassificationWarnings": [],
