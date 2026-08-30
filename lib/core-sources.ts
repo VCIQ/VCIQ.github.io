@@ -213,8 +213,14 @@ function newestTimestamp(values: string[]): string | undefined {
 
 function channelLabel(sourceId: string, platform: string): string {
   const id = sourceId.toLocaleLowerCase("en-US");
-  if (id.includes("wechat") || platform === "微信") return "微信公开索引";
+  // A media entity can retain its historical `user-track-wechat-*` runtime
+  // id while the accepted article comes from a verified publisher-owned
+  // website or official cross-platform account. Explicit runtime provenance
+  // must win over the legacy id prefix in the source directory.
+  if (platform === "官方网站") return "官网文章";
+  if (platform === "搜狐号") return "官方同步稿 · 搜狐号";
   if (id.includes("sohu")) return "搜狐公开页";
+  if (id.includes("wechat") || platform === "微信") return "微信公开索引";
   if (id.includes("sec") || platform.includes("SEC")) return "监管披露";
   if (id.includes("cninfo") || platform.includes("巨潮")) return "交易所 / 公告平台";
   if (id.includes("auto-media")) return "公开网页";

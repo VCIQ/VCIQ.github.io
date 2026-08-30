@@ -67,3 +67,19 @@ test("empty explicit Core review registry cannot silently promote a publisher", 
     assert.notEqual(source.promotion?.manualDecision, "approved");
   }
 });
+
+test("publisher-owned copies keep their real endpoint labels", () => {
+  const expected = new Map([
+    ["芯智讯", "官方同步稿 · 搜狐号"],
+    ["芯东西", "官网文章"],
+    ["芯师爷", "官网文章"],
+  ]);
+  for (const [name, label] of expected) {
+    const source = coreSources.find((item) => item.name === name);
+    assert.ok(source, `${name} should be present`);
+    assert.equal(source.healthStatus, "ok");
+    assert.ok(source.endpoints.some((endpoint) => endpoint.label === label));
+    assert.ok(source.endpoints.some((endpoint) => endpoint.scanned > 0));
+    assert.ok(source.endpoints.some((endpoint) => endpoint.accepted > 0));
+  }
+});
