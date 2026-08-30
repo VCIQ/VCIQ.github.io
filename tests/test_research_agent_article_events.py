@@ -91,6 +91,13 @@ class ResearchAgentArticleEventsTest(unittest.TestCase):
                 ),
             ],
         }
+        payload["articles"][1]["source"].update(
+            {
+                "publisherName": "示例公司新闻室",
+                "platformName": "公司官网",
+                "sourceType": "official-newsroom",
+            }
+        )
 
         rows = article_events.build_event_rows(
             payload, "2026-08-27T10:00:00+00:00"
@@ -103,6 +110,11 @@ class ResearchAgentArticleEventsTest(unittest.TestCase):
         self.assertEqual(record["qualityScore"], 96)
         self.assertEqual(len(record["sources"]), 2)
         self.assertEqual(record["sources"][0]["level"], "官方披露")
+        self.assertEqual(
+            record["sources"][0]["publisherName"], "示例公司新闻室"
+        )
+        self.assertEqual(record["sources"][0]["platformName"], "公司官网")
+        self.assertEqual(record["sources"][0]["sourceType"], "official-newsroom")
         self.assertTrue(
             all(source["section"] == "summary" for source in record["sources"])
         )

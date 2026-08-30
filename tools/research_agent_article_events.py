@@ -223,7 +223,18 @@ def _eligible_article(article: Mapping[str, Any], generated_at: str) -> bool:
 
 def _source_row(article: Mapping[str, Any]) -> dict[str, Any]:
     source = _source(article)
-    return {
+
+    def explicit_text(*keys: str) -> str:
+        for key in keys:
+            value = source.get(key)
+            if isinstance(value, Mapping):
+                value = value.get("name") or value.get("publisher")
+            text = _clean(value)
+            if text:
+                return text
+        return ""
+
+    row = {
         "name": _clean(
             source.get("name")
             or source.get("publisher")
@@ -236,10 +247,25 @@ def _source_row(article: Mapping[str, Any]) -> dict[str, Any]:
         "title": _clean(article.get("title")),
         "publishedAt": _clean(article.get("publishedAt")),
         "level": _evidence_grade(article),
+        "sourceRole": _source_role(article),
         # Bind the source to the factual event summary under the existing field
         # evidence contract. Other fields remain context, not separate claims.
         "section": "summary",
     }
+    explicit_fields = {
+        "publisherName": explicit_text("publisherName", "publisher"),
+        "originalPublisherName": explicit_text(
+            "originalPublisherName", "originalPublisher"
+        ),
+        "platformName": explicit_text(
+            "platformName", "platform", "hostPlatform"
+        ),
+        "sourceType": explicit_text("sourceType"),
+    }
+    row.update(
+        {key: value for key, value in explicit_fields.items() if value}
+    )
+    return row
 
 
 def _event_id(key: str) -> str:

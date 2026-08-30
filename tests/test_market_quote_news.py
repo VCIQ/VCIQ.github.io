@@ -1,6 +1,6 @@
 import json
 import unittest
-from datetime import date
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 from tools import crawl_market_profiles as market
@@ -8,6 +8,7 @@ from tools import market_quote_news_sources as quote_news
 
 
 ROOT = Path(__file__).resolve().parents[1]
+AS_OF = datetime(2026, 8, 30, 12, 0, tzinfo=timezone.utc)
 
 YAHOO_QUOTE_BODY = json.dumps(
     {
@@ -230,6 +231,134 @@ class MergeTests(unittest.TestCase):
         self.assertEqual(len(quote_news.merge_news(many)), quote_news.MAX_NEWS_ITEMS)
 
 
+class EntityMatchTests(unittest.TestCase):
+    @staticmethod
+    def item(title, suffix):
+        return {
+            "title": title,
+            "url": f"https://finance.sina.com.cn/{suffix}.shtml",
+            "publishedAt": "2026-08-29T09:00:00+08:00",
+            "source": "新浪财经",
+        }
+
+    def test_legal_name_derives_cambricon_brand_alias(self):
+        self.assertIn(
+            "寒武纪",
+            quote_news._derived_name_aliases("中科寒武纪科技股份有限公司"),
+        )
+        identity = market.company_identity("A股", "688256", "cambricon")
+        aliases = quote_news.company_news_aliases(
+            identity,
+            {"company": {"name": "中科寒武纪科技股份有限公司"}},
+        )
+        self.assertIn("寒武纪", aliases)
+        self.assertTrue(
+            quote_news.title_matches_company("寒武纪发布新一代AI芯片", aliases)
+        )
+
+    def test_filter_requires_direct_catl_or_cambricon_entity_match(self):
+        catl = market.company_identity("A股", "300750", "catl")
+        catl_aliases = quote_news.company_news_aliases(
+            catl, {"company": {"name": "宁德时代"}}
+        )
+        catl_items = [
+            self.item("自称20万级最强纯电轿跑，智己L6究竟强在哪", "catl-1"),
+            self.item("QFII二季度持仓全景解析", "catl-2"),
+            self.item("宁德时代发布新一代电池", "catl-3"),
+        ]
+        self.assertEqual(
+            [
+                item["title"]
+                for item in quote_news.filter_company_news(catl_items, catl_aliases)
+            ],
+            ["宁德时代发布新一代电池"],
+        )
+
+        cambricon = market.company_identity("A股", "688256", "cambricon")
+        cambricon_aliases = quote_news.company_news_aliases(
+            cambricon,
+            {"company": {"name": "中科寒武纪科技股份有限公司"}},
+        )
+        cambricon_items = [
+            self.item("章建平夫妇现身亨通光电", "cambricon-1"),
+            self.item("科创50ETF交投活跃，软件板块走强", "cambricon-2"),
+            self.item("寒武纪融资余额升至180亿元", "cambricon-3"),
+        ]
+        self.assertEqual(
+            [
+                item["title"]
+                for item in quote_news.filter_company_news(
+                    cambricon_items, cambricon_aliases
+                )
+            ],
+            ["寒武纪融资余额升至180亿元"],
+        )
+
+    def test_english_alias_and_stock_code_are_direct_matches(self):
+        identity = market.company_identity("美股", "PONY", "pony-ai")
+        aliases = quote_news.company_news_aliases(
+            identity,
+            {"company": {"name": "小马智行", "englishName": "Pony Ai Inc."}},
+        )
+        self.assertTrue(quote_news.title_matches_company("Pony.ai expands fleet", aliases))
+        self.assertTrue(quote_news.title_matches_company("PONY shares rise 8%", aliases))
+        self.assertFalse(
+            quote_news.title_matches_company("Autonomous vehicle sector update", aliases)
+        )
+
+    def test_route_slug_and_previous_company_are_not_alias_authorities(self):
+        aurora = market.company_identity("美股", "AUR", "aurora")
+        aurora_aliases = quote_news.company_news_aliases(
+            aurora,
+            {"company": {"name": "Aurora Innovation, Inc."}},
+        )
+        self.assertFalse(
+            quote_news.title_matches_company(
+                "Aurora borealis forecast intensifies",
+                aurora_aliases,
+            )
+        )
+
+        recursion = market.company_identity("美股", "RXRX", "recursion")
+        recursion_aliases = quote_news.company_news_aliases(
+            recursion,
+            {"company": {"name": "Recursion Pharmaceuticals, Inc."}},
+        )
+        self.assertFalse(
+            quote_news.title_matches_company(
+                "Recursion algorithm breakthrough in Python",
+                recursion_aliases,
+            )
+        )
+
+        catl = market.company_identity("A股", "300750", "catl")
+        catl_aliases = quote_news.company_news_aliases(
+            catl,
+            {"company": {"name": "智己汽车"}},
+            {"company": {"name": "智己汽车"}},
+        )
+        self.assertFalse(
+            quote_news.title_matches_company("智己汽车发布新车型", catl_aliases)
+        )
+
+    def test_recent_news_filter_rejects_stale_or_invalid_dates(self):
+        items = [
+            self.item("宁德时代近期新闻", "recent"),
+            {
+                **self.item("宁德时代历史旧闻", "stale"),
+                "publishedAt": "2020-01-01T09:00:00+08:00",
+            },
+            {
+                **self.item("宁德时代日期异常", "invalid"),
+                "publishedAt": "unknown",
+            },
+        ]
+        self.assertEqual(
+            [item["title"] for item in quote_news.filter_recent_news(items, as_of=AS_OF)],
+            ["宁德时代近期新闻"],
+        )
+
+
 class EnrichmentTests(unittest.TestCase):
     def test_a_share_uses_sina_quote_and_news_with_referer(self):
         identity = market.company_identity("A股", "688256")
@@ -241,7 +370,16 @@ class EnrichmentTests(unittest.TestCase):
             },
             calls,
         )
-        profile = quote_news.enrich_quote_and_news(identity, {"sources": {}}, {}, fetcher)
+        profile = quote_news.enrich_quote_and_news(
+            identity,
+            {
+                "company": {"name": "中科寒武纪科技股份有限公司"},
+                "sources": {},
+            },
+            {},
+            fetcher,
+            as_of=AS_OF,
+        )
         self.assertEqual(profile["quote"]["price"], 781.55)
         self.assertEqual(profile["quote"]["source"]["name"], "新浪财经")
         self.assertEqual(
@@ -264,7 +402,13 @@ class EnrichmentTests(unittest.TestCase):
                 "feeds.finance.yahoo.com/rss/2.0/headline?s=PONY": YAHOO_RSS_BODY,
             }
         )
-        profile = quote_news.enrich_quote_and_news(identity, {}, {}, fetcher)
+        profile = quote_news.enrich_quote_and_news(
+            identity,
+            {"company": {"name": "小马智行", "englishName": "Pony Ai Inc."}},
+            {},
+            fetcher,
+            as_of=AS_OF,
+        )
         self.assertEqual(profile["quote"]["price"], 13.45)
         self.assertEqual(profile["quote"]["source"]["name"], "Yahoo财经")
         self.assertEqual(
@@ -272,7 +416,11 @@ class EnrichmentTests(unittest.TestCase):
             "https://sg.finance.yahoo.com/quote/PONY/",
         )
         self.assertNotIn("sinaFinance", profile["sources"])
-        self.assertEqual(len(profile["news"]), 2)
+        self.assertEqual(len(profile["news"]), 1)
+        self.assertEqual(
+            profile["news"][0]["title"],
+            "Pony AI expands robotaxi fleet in Singapore",
+        )
         self.assertTrue(all(item["source"] == "Yahoo财经" for item in profile["news"]))
 
     def test_hk_company_merges_both_sources_and_falls_back_to_yahoo_quote(self):
@@ -285,10 +433,21 @@ class EnrichmentTests(unittest.TestCase):
                 "CompanyNews/page/1/code/09660/": SINA_HK_NEWS_BODY,
             }
         )
-        profile = quote_news.enrich_quote_and_news(identity, {}, {}, fetcher)
+        profile = quote_news.enrich_quote_and_news(
+            identity,
+            {
+                "company": {
+                    "name": "Horizon Robotics",
+                    "aliases": ["地平线机器人"],
+                }
+            },
+            {},
+            fetcher,
+            as_of=AS_OF,
+        )
         self.assertEqual(profile["quote"]["source"]["name"], "Yahoo财经")
         news_sources = {item["source"] for item in profile["news"]}
-        self.assertEqual(news_sources, {"Yahoo财经", "新浪财经"})
+        self.assertEqual(news_sources, {"新浪财经"})
         self.assertIn("yahooFinance", profile["sources"])
         self.assertIn("sinaFinance", profile["sources"])
         self.assertTrue(
@@ -309,17 +468,126 @@ class EnrichmentTests(unittest.TestCase):
             },
             "news": [
                 {
-                    "title": "上一轮保留的标题",
+                    "title": "寒武纪上一轮保留的标题",
                     "url": "https://finance.sina.com.cn/doc-old.shtml",
                     "publishedAt": "2026-07-20T09:00:00+08:00",
                     "source": "新浪财经",
                 }
             ],
         }
-        profile = quote_news.enrich_quote_and_news(identity, {}, previous, always_fail)
+        profile = quote_news.enrich_quote_and_news(
+            identity,
+            {"company": {"name": "中科寒武纪科技股份有限公司"}},
+            previous,
+            always_fail,
+            as_of=AS_OF,
+        )
         self.assertEqual(profile["quote"], previous["quote"])
         self.assertEqual(profile["news"], previous["news"])
         self.assertTrue(any("保留上一轮" in warning for warning in profile["warnings"]))
+
+    def test_irrelevant_new_titles_preserve_only_previous_valid_news(self):
+        identity = market.company_identity("A股", "300750", "catl")
+        irrelevant_body = """
+        <div class="datelist"><ul>
+        2026-08-30 09:00 <a href='https://finance.sina.com.cn/zhiji.shtml'>智己L6发布全新车型</a><br>
+        2026-08-29 09:00 <a href='https://finance.sina.com.cn/qfii.shtml'>QFII持仓全景解析</a><br>
+        </ul></div>
+        """
+        fetcher = make_fetcher(
+            {
+                "hq.sinajs.cn/list=sz300750": sina_a_quote_body(),
+                "vCB_AllNewsStock/symbol/sz300750": irrelevant_body,
+            }
+        )
+        previous_valid = {
+            "title": "宁德时代上一轮有效新闻",
+            "url": "https://finance.sina.com.cn/catl-old.shtml",
+            "publishedAt": "2026-08-28T09:00:00+08:00",
+            "source": "新浪财经",
+        }
+        previous_invalid = {
+            "title": "亨通光电上一轮新闻",
+            "url": "https://finance.sina.com.cn/other-old.shtml",
+            "publishedAt": "2026-08-27T09:00:00+08:00",
+            "source": "新浪财经",
+        }
+        profile = quote_news.enrich_quote_and_news(
+            identity,
+            {"company": {"name": "宁德时代"}},
+            {"news": [previous_valid, previous_invalid]},
+            fetcher,
+            as_of=AS_OF,
+        )
+        self.assertEqual(profile["news"], [previous_valid])
+        self.assertTrue(
+            any("保留上一轮有效新闻" in warning for warning in profile["warnings"])
+        )
+
+    def test_partial_source_failure_keeps_fresh_news_from_failed_source(self):
+        identity = market.company_identity("港股", "09660", "horizon-robotics")
+        yahoo_news = """<?xml version="1.0" encoding="UTF-8"?>
+        <rss version="2.0"><channel><item>
+          <title>Horizon Robotics expands autonomous driving partnership</title>
+          <link>https://finance.yahoo.com/news/horizon-robotics-expands.html</link>
+          <pubDate>Sat, 29 Aug 2026 08:30:00 +0000</pubDate>
+        </item></channel></rss>
+        """
+        fetcher = make_fetcher(
+            {
+                "hq.sinajs.cn/list=rt_hk09660": RuntimeError("sina quote blocked"),
+                "query1.finance.yahoo.com/v8/finance/chart/9660.HK": YAHOO_QUOTE_BODY,
+                "feeds.finance.yahoo.com/rss/2.0/headline?s=9660.HK": yahoo_news,
+                "CompanyNews/page/1/code/09660/": RuntimeError("sina news blocked"),
+            }
+        )
+        previous_sina = {
+            "title": "地平线机器人上一轮有效新闻",
+            "url": "https://finance.sina.com.cn/horizon-old.shtml",
+            "publishedAt": "2026-08-20T09:00:00+08:00",
+            "source": "新浪财经",
+        }
+        profile = quote_news.enrich_quote_and_news(
+            identity,
+            {
+                "company": {
+                    "name": "Horizon Robotics",
+                    "aliases": ["地平线机器人"],
+                }
+            },
+            {"news": [previous_sina]},
+            fetcher,
+            as_of=AS_OF,
+        )
+        self.assertEqual(
+            {item["source"] for item in profile["news"]},
+            {"Yahoo财经", "新浪财经"},
+        )
+        self.assertTrue(
+            any("部分新闻源抓取失败" in warning for warning in profile["warnings"])
+        )
+
+    def test_total_failure_does_not_preserve_stale_previous_news(self):
+        identity = market.company_identity("A股", "300750", "catl")
+
+        def always_fail(url, referer=""):
+            raise RuntimeError("network unavailable")
+
+        stale = {
+            "title": "宁德时代历史旧闻",
+            "url": "https://finance.sina.com.cn/catl-stale.shtml",
+            "publishedAt": "2020-01-01T09:00:00+08:00",
+            "source": "新浪财经",
+        }
+        profile = quote_news.enrich_quote_and_news(
+            identity,
+            {"company": {"name": "宁德时代"}},
+            {"news": [stale]},
+            always_fail,
+            as_of=AS_OF,
+        )
+        self.assertNotIn("news", profile)
+        self.assertTrue(any("已移除1条" in warning for warning in profile["warnings"]))
 
     def test_failure_without_previous_data_never_fabricates(self):
         identity = market.company_identity("美股", "PONY")
@@ -327,7 +595,13 @@ class EnrichmentTests(unittest.TestCase):
         def always_fail(url, referer=""):
             raise RuntimeError("network unavailable")
 
-        profile = quote_news.enrich_quote_and_news(identity, {}, {}, always_fail)
+        profile = quote_news.enrich_quote_and_news(
+            identity,
+            {},
+            {},
+            always_fail,
+            as_of=AS_OF,
+        )
         self.assertNotIn("quote", profile)
         self.assertNotIn("news", profile)
         self.assertTrue(profile["warnings"])

@@ -276,9 +276,228 @@ class ResearchAgentTest(unittest.TestCase):
             [change], as_of="2026-01-03T00:00:00+00:00"
         )
         self.assertTrue(changes[0]["eligibleForKeyDevelopment"])
+        self.assertEqual(changes[0]["publicationTier"], "verified_change")
+        self.assertEqual(changes[0]["reviewStatus"], "automated_unreviewed")
         self.assertEqual(changes[0]["claimFields"], ["financing"])
         self.assertEqual(changes[0]["claimBindings"][0]["field"], "financing")
         self.assertTrue(any(row["supportStatus"] == "supports" for row in evidence))
+
+    def test_market_news_uses_only_new_entity_matched_rows(self) -> None:
+        old = {
+            "title": "中科寒武纪科技股份有限公司既有公告",
+            "url": "https://news.example.com/old",
+            "publishedAt": "2026-08-22T06:00:00Z",
+            "level": "媒体报道",
+        }
+        unrelated = {
+            "title": "章建平夫妇现身亨通光电",
+            "url": "https://news.example.com/unrelated",
+            "publishedAt": "2026-08-24T06:00:00Z",
+            "level": "媒体报道",
+        }
+        relevant = {
+            "title": "寒武纪发布新一代云端芯片",
+            "url": "https://news.example.com/relevant?utm_source=test",
+            "publishedAt": "2026-08-24T07:00:00Z",
+            "level": "媒体报道",
+        }
+        before_record = {
+            "company": {"name": "中科寒武纪科技股份有限公司"},
+            "ticker": "688256",
+            "news": [old],
+        }
+        after_record = {
+            **before_record,
+            "news": [old, unrelated, relevant],
+        }
+        change = {
+            "id": "chg-market-news",
+            "dataset": "marketCompany",
+            "entityType": "上市公司",
+            "entityId": "cambricon",
+            "entityName": "中科寒武纪科技股份有限公司",
+            "action": "updated",
+            "changedFields": ["news"],
+            "summary": "寒武纪新闻变化。",
+            "importance": 48,
+            "before": {"news": [old]},
+            "after": {"news": [old, unrelated, relevant]},
+            "_beforeRecord": before_record,
+            "record": after_record,
+            "changeType": "external_event",
+        }
+
+        changes, evidence = agent.build_evidence_package(
+            [change], as_of="2026-08-24T08:00:00+00:00"
+        )
+
+        self.assertNotIn("https://news.example.com/old", {row["url"] for row in evidence})
+        by_url = {row["url"].split("?")[0]: row for row in evidence}
+        self.assertEqual(
+            by_url["https://news.example.com/relevant"]["entityMatchStatus"],
+            "matched",
+        )
+        self.assertEqual(
+            by_url["https://news.example.com/relevant"]["supportStatus"],
+            "supports",
+        )
+        self.assertEqual(
+            by_url["https://news.example.com/unrelated"]["entityMatchStatus"],
+            "mismatched",
+        )
+        self.assertIn(
+            "entity_mismatch",
+            by_url["https://news.example.com/unrelated"]["qualityIssues"],
+        )
+        self.assertEqual(changes[0]["publicationTier"], "candidate")
+        self.assertTrue(changes[0]["eligibleForKeyDevelopment"])
+
+    def test_market_news_url_rotation_is_not_a_new_item(self) -> None:
+        before_news = [
+            {
+                "title": "宁德时代发布电池新品",
+                "source": "示例媒体",
+                "url": "https://old.example.com/story?id=1&utm_source=feed",
+                "publishedAt": "2026-08-24T06:00:00Z",
+            }
+        ]
+        after_news = [
+            {
+                "title": "宁德时代发布电池新品",
+                "source": "示例媒体",
+                "url": "https://new.example.com/rehosted/story?id=1&token=rotated",
+                "publishedAt": "2026-08-24T06:00:00Z",
+            }
+        ]
+        change = {
+            "id": "chg-market-url-rotation",
+            "dataset": "marketCompany",
+            "entityType": "上市公司",
+            "entityId": "catl",
+            "entityName": "宁德时代",
+            "action": "updated",
+            "changedFields": ["news"],
+            "summary": "宁德时代新闻变化。",
+            "importance": 48,
+            "before": {"news": before_news},
+            "after": {"news": after_news},
+            "_beforeRecord": {"news": before_news},
+            "record": {"company": {"name": "宁德时代"}, "news": after_news},
+            "changeType": "external_event",
+        }
+
+        changes, evidence = agent.build_evidence_package(
+            [change], as_of="2026-08-24T08:00:00+00:00"
+        )
+
+        self.assertFalse(changes[0]["eligibleForKeyDevelopment"])
+        self.assertEqual(changes[0]["publicationTier"], "rejected")
+        self.assertEqual(evidence[0]["qualityIssues"], ["no_external_evidence"])
+
+    def test_discovery_only_evidence_cannot_enter_formal_tier(self) -> None:
+        change = {
+            "id": "chg-discovery",
+            "dataset": "listedDisclosure",
+            "entityType": "上市公司公告",
+            "entityId": "d-discovery",
+            "entityName": "示例公司",
+            "action": "added",
+            "changedFields": ["title"],
+            "summary": "新增公告。",
+            "importance": 96,
+            "before": None,
+            "after": {"title": "示例公司公告"},
+            "record": {
+                "title": "示例公司公告",
+                "publishedAt": "2026-08-24T06:00:00Z",
+                "source": {
+                    "name": "搜索发现",
+                    "url": "https://example.com/discovery",
+                    "level": "D级线索",
+                    "sourceRole": "discovery",
+                },
+            },
+            "changeType": "external_event",
+        }
+
+        changes, evidence = agent.build_evidence_package(
+            [change], as_of="2026-08-24T08:00:00+00:00"
+        )
+
+        self.assertFalse(changes[0]["eligibleForKeyDevelopment"])
+        self.assertEqual(changes[0]["publicationTier"], "rejected")
+        self.assertEqual(evidence[0]["publicationTier"], "rejected")
+        self.assertIn("discovery_only", evidence[0]["qualityIssues"])
+
+    def test_core_media_only_change_remains_candidate(self) -> None:
+        change = {
+            "id": "chg-core-media",
+            "dataset": "ventureCompany",
+            "entityType": "创业公司",
+            "entityId": "demo",
+            "entityName": "示例公司",
+            "action": "updated",
+            "changedFields": ["financing"],
+            "summary": "示例公司融资变化。",
+            "importance": 88,
+            "before": {"financing": []},
+            "after": {"financing": [{"round": "A"}]},
+            "record": {
+                "financing": [{"round": "A"}],
+                "sources": [
+                    {
+                        "title": "示例公司完成融资",
+                        "url": "https://media.example.com/financing",
+                        "publishedAt": "2026-08-24T06:00:00Z",
+                        "level": "C",
+                        "section": "financing",
+                    }
+                ],
+            },
+            "changeType": "external_event",
+        }
+
+        changes, _ = agent.build_evidence_package(
+            [change], as_of="2026-08-24T08:00:00+00:00"
+        )
+
+        self.assertTrue(changes[0]["eligibleForKeyDevelopment"])
+        self.assertEqual(changes[0]["publicationTier"], "candidate")
+
+    def test_intelligence_events_are_external_clues(self) -> None:
+        change = {
+            "id": "chg-clue",
+            "dataset": "intelligenceEvent",
+            "entityType": "高价值情报事件",
+            "entityId": "event",
+            "entityName": "示例公司",
+            "action": "added",
+            "changedFields": ["summary"],
+            "summary": "示例公司发布产品。",
+            "importance": 88,
+            "before": None,
+            "after": {"summary": "示例公司发布产品。"},
+            "record": {
+                "summary": "示例公司发布产品。",
+                "sources": [
+                    {
+                        "title": "示例公司发布产品",
+                        "url": "https://example.com/clue",
+                        "publishedAt": "2026-08-24T06:00:00Z",
+                        "level": "媒体报道",
+                        "section": "summary",
+                    }
+                ],
+            },
+            "changeType": "external_event",
+        }
+
+        changes, evidence = agent.build_evidence_package(
+            [change], as_of="2026-08-24T08:00:00+00:00"
+        )
+
+        self.assertEqual(changes[0]["publicationTier"], "external_clue")
+        self.assertEqual(evidence[0]["publicationTier"], "external_clue")
 
     def test_same_company_disclosures_are_aggregated(self) -> None:
         changes = []
@@ -323,6 +542,7 @@ class ResearchAgentTest(unittest.TestCase):
         self.assertEqual(len(public_changes), 1)
         self.assertEqual(len(public_changes[0]["supportingEvidenceIds"]), 3)
         self.assertEqual(len(evidence), 3)
+        self.assertEqual(public_changes[0]["publicationTier"], "candidate")
 
     def test_model_analysis_drops_unknown_evidence_references(self) -> None:
         raw = {
@@ -360,6 +580,10 @@ class ResearchAgentTest(unittest.TestCase):
             )
             self.assertEqual(report["changeSummary"]["total"], 0)
             self.assertEqual(report["changeSummary"]["qualityRejected"], 1)
+            self.assertEqual(report["changeSummary"]["rejectedTotal"], 1)
+            self.assertEqual(report["changeSummary"]["verifiedChangeTotal"], 0)
+            self.assertEqual(report["changeSummary"]["candidateTotal"], 0)
+            self.assertEqual(report["changeSummary"]["auxiliaryLeadTotal"], 0)
             self.assertFalse(report["analysis"]["keyDevelopments"])
 
             # A newly ingested person profile is data maintenance, not a real-
@@ -407,7 +631,10 @@ class ResearchAgentTest(unittest.TestCase):
                 max_changes=36,
             )
             self.assertEqual(report["runStatus"], "offline-fallback")
+            self.assertEqual(report["reviewStatus"], "automated_unreviewed")
             self.assertGreater(report["changeSummary"]["total"], 0)
+            self.assertEqual(report["changeSummary"]["verifiedChangeTotal"], 0)
+            self.assertGreater(report["changeSummary"]["candidateTotal"], 0)
             self.assertEqual(report["analysis"]["mode"], "structured-change-only")
             self.assertFalse(report["analysis"]["isResearchJudgment"])
             self.assertIn("不提供模型研判", report["analysis"]["executiveSummary"])

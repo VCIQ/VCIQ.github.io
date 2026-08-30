@@ -68,6 +68,15 @@ def load_company_route_slugs(path: Path = COMPANY_ROUTES_PATH) -> set[str]:
     }
 
 
+def load_canonical_official_source_ids(
+    path: Path = COMPANY_ROUTES_PATH,
+) -> set[str]:
+    return {
+        f"official-{company_slug}"
+        for company_slug in load_company_route_slugs(path)
+    }
+
+
 def unlink_unknown_company_route(
     article: dict[str, Any],
     company_route_slugs: set[str] | None,
@@ -148,8 +157,23 @@ def build_non_company_index(tracking: dict[str, Any]) -> dict[str, dict[str, str
     }
 
 
-def article_category(article: dict[str, Any], index: dict[str, dict[str, str]]) -> str:
+def article_category(
+    article: dict[str, Any],
+    index: dict[str, dict[str, str]],
+    canonical_official_source_ids: set[str] | None = None,
+) -> str:
     source_id = clean(article.get("sourceId"), 160)
+    official_source_ids = (
+        load_canonical_official_source_ids()
+        if canonical_official_source_ids is None
+        else canonical_official_source_ids
+    )
+    # Only fixed sources present in the active official-company registry receive
+    # canonical precedence.  An arbitrary ``official-*`` prefix is not proof of
+    # first-party provenance, while ``official-user-*`` remains configurable for
+    # the legacy media/person migration below.
+    if source_id in official_source_ids:
+        return "company"
     if source_id in index["by_id"]:
         return index["by_id"][source_id]
     source = article.get("source") if isinstance(article.get("source"), dict) else {}
@@ -198,6 +222,7 @@ def migrate(
     remove_invalid_dates: bool = False,
 ) -> tuple[dict[str, Any], dict[str, int]]:
     index = build_non_company_index(tracking)
+    canonical_official_source_ids = load_canonical_official_source_ids()
     report = {
         "removedInvalidDates": 0,
         "removedUnknownCompanySlugs": 0,
@@ -220,7 +245,23 @@ def migrate(
             report["removedInvalidDates"] += 1
             continue
 
-        category = article_category(article, index)
+        source_id = clean(article.get("sourceId"), 160)
+        category = article_category(
+            article,
+            index,
+            canonical_official_source_ids,
+        )
+        if source_id in canonical_official_source_ids:
+            source = (
+                dict(article.get("source"))
+                if isinstance(article.get("source"), dict)
+                else {}
+            )
+            if source.get("level") == "媒体报道":
+                source["level"] = "官方披露"
+                source["platform"] = "官方网站"
+                article["source"] = source
+                report["relabelledSources"] += 1
         if category not in {"media", "person"}:
             if unlink_unknown_company_route(article, company_route_slugs):
                 report["removedUnknownCompanySlugs"] += 1

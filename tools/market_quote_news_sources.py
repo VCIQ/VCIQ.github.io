@@ -16,6 +16,7 @@ import html
 import json
 import math
 import re
+import unicodedata
 from datetime import date, datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from typing import Any, Callable
@@ -38,6 +39,42 @@ SINA_NEWS_HOST_SUFFIXES = ("sina.com.cn", "sina.cn")
 MAX_NEWS_PER_SOURCE = 6
 MAX_NEWS_ITEMS = 10
 MAX_TITLE_CHARS = 160
+NEWS_RETENTION_DAYS = 90
+
+_ALIAS_FIELDS = (
+    "name",
+    "shortName",
+    "companyName",
+    "legalName",
+    "englishName",
+    "alias",
+    "aliases",
+    "brand",
+    "brands",
+    "brandAliases",
+    "englishAliases",
+)
+_CHINESE_LEGAL_SUFFIXES = (
+    "集团股份有限公司",
+    "股份有限公司",
+    "集团有限公司",
+    "有限责任公司",
+    "有限公司",
+)
+_CHINESE_BUSINESS_SUFFIXES = (
+    "新能源科技",
+    "信息技术",
+    "网络科技",
+    "智能科技",
+    "生物科技",
+    "科技",
+    "控股",
+)
+_ENGLISH_LEGAL_SUFFIX = re.compile(
+    r"(?:[,\s]+(?:incorporated|inc|corporation|corp|limited|ltd|plc|holdings?))"
+    r"(?:\s+company)?\.?$",
+    re.IGNORECASE,
+)
 
 
 def host_allowed(url: str, suffixes: tuple[str, ...]) -> bool:
@@ -45,6 +82,198 @@ def host_allowed(url: str, suffixes: tuple[str, ...]) -> bool:
     return bool(hostname) and any(
         hostname == suffix or hostname.endswith(f".{suffix}") for suffix in suffixes
     )
+
+
+def _alias_values(value: Any) -> list[str]:
+    if isinstance(value, str):
+        cleaned = market.clean_value(value, MAX_TITLE_CHARS)
+        return [cleaned] if cleaned else []
+    if isinstance(value, (list, tuple, set)):
+        values: list[str] = []
+        for item in value:
+            values.extend(_alias_values(item))
+        return values
+    return []
+
+
+def _configured_aliases(identity: market.CompanyIdentity) -> list[str]:
+    """Return the reviewed display names attached to this configured listing."""
+
+    config = market.load_json(market.CONFIG_PATH, {})
+    records = config.get("listedCompanies", []) if isinstance(config, dict) else []
+    for raw in records:
+        if not isinstance(raw, dict) or raw.get("enabled") is False:
+            continue
+        if str(raw.get("market") or "") != identity.market:
+            continue
+        if market.normalize_ticker(identity.market, raw.get("ticker")) != identity.ticker:
+            continue
+        values: list[str] = []
+        for field in _ALIAS_FIELDS:
+            values.extend(_alias_values(raw.get(field)))
+        return values
+    return []
+
+
+def _derived_name_aliases(value: str) -> list[str]:
+    """Derive conservative brand forms from legal company names."""
+
+    normalized = market.clean_value(unicodedata.normalize("NFKC", value), MAX_TITLE_CHARS)
+    if not normalized:
+        return []
+    aliases = [normalized]
+
+    chinese_name = normalized
+    for suffix in _CHINESE_LEGAL_SUFFIXES:
+        if chinese_name.endswith(suffix):
+            chinese_name = chinese_name[: -len(suffix)].strip()
+            aliases.append(chinese_name)
+            break
+    for suffix in _CHINESE_BUSINESS_SUFFIXES:
+        if chinese_name.endswith(suffix) and len(chinese_name) > len(suffix) + 1:
+            chinese_name = chinese_name[: -len(suffix)].strip()
+            aliases.append(chinese_name)
+            break
+    # ``中科寒武纪科技股份有限公司`` is the common case that prompted this
+    # guard.  Require a three-character remainder so generic two-character
+    # words such as ``曙光`` are not invented as aliases.
+    if chinese_name.startswith("中科") and len(chinese_name[2:]) >= 3:
+        aliases.append(chinese_name[2:])
+
+    english_name = _ENGLISH_LEGAL_SUFFIX.sub("", normalized).strip(" ,.-")
+    if english_name and english_name != normalized:
+        aliases.append(english_name)
+    return [alias for alias in aliases if alias]
+
+
+def company_news_aliases(
+    identity: market.CompanyIdentity,
+    profile: dict[str, Any],
+    previous: dict[str, Any] | None = None,
+) -> tuple[str, ...]:
+    """Build direct-match aliases from reviewed/current metadata and stock code.
+
+    ``previous`` remains in the signature for call-site compatibility, but prior
+    crawl output is deliberately not an alias authority. Otherwise one bad
+    company binding can make unrelated headlines pass the gate forever.
+    Route slugs are also identifiers rather than reviewed entity aliases (for
+    example, ``aurora`` and ``recursion`` are ordinary English words).
+    """
+
+    configured_values = _configured_aliases(identity)
+    raw_values = list(configured_values)
+    company = profile.get("company") if isinstance(profile, dict) else None
+    if isinstance(company, dict):
+        for field in _ALIAS_FIELDS:
+            for candidate in _alias_values(company.get(field)):
+                candidate_key = _compact_match_text(candidate)
+                configured_keys = {
+                    _compact_match_text(alias)
+                    for value in configured_values
+                    for alias in _derived_name_aliases(value)
+                }
+                slug_key = _compact_match_text(identity.slug.replace("-", " "))
+                compatible_with_config = any(
+                    len(key) >= 3
+                    and (candidate_key in key or key in candidate_key)
+                    for key in configured_keys
+                )
+                compatible_with_slug = (
+                    len(slug_key) >= 5 and slug_key in candidate_key
+                )
+                if compatible_with_config or compatible_with_slug:
+                    raw_values.append(candidate)
+
+    raw_values.extend([identity.ticker])
+
+    aliases: list[str] = []
+    seen: set[str] = set()
+    for raw in raw_values:
+        for alias in _derived_name_aliases(raw):
+            key = unicodedata.normalize("NFKC", alias).casefold()
+            if key in seen:
+                continue
+            seen.add(key)
+            aliases.append(alias)
+    return tuple(sorted(aliases, key=lambda item: (-len(item), item.casefold())))
+
+
+def _compact_match_text(value: str) -> str:
+    normalized = unicodedata.normalize("NFKC", value).casefold()
+    return "".join(character for character in normalized if character.isalnum())
+
+
+def title_matches_company(title: str, aliases: tuple[str, ...]) -> bool:
+    """Require a direct company name, reviewed alias, English alias or ticker."""
+
+    normalized_title = unicodedata.normalize("NFKC", str(title or "")).casefold()
+    compact_title = _compact_match_text(normalized_title)
+    if not compact_title:
+        return False
+    for alias in aliases:
+        normalized_alias = unicodedata.normalize("NFKC", alias).casefold().strip()
+        compact_alias = _compact_match_text(normalized_alias)
+        if not compact_alias:
+            continue
+        if re.fullmatch(r"[a-z0-9]+", compact_alias):
+            tokens = re.findall(r"[a-z0-9]+", normalized_alias)
+            if not tokens:
+                continue
+            separator = r"[^a-z0-9]*"
+            pattern = separator.join(re.escape(token) for token in tokens)
+            if re.search(rf"(?<![a-z0-9]){pattern}(?![a-z0-9])", normalized_title):
+                return True
+            continue
+        if compact_alias in compact_title:
+            return True
+    return False
+
+
+def filter_company_news(
+    items: list[dict[str, Any]], aliases: tuple[str, ...]
+) -> list[dict[str, Any]]:
+    return [
+        item
+        for item in items
+        if isinstance(item, dict)
+        and title_matches_company(str(item.get("title") or ""), aliases)
+    ]
+
+
+def _news_datetime(item: dict[str, Any]) -> datetime | None:
+    raw = str(item.get("publishedAt") or "").strip()
+    if not raw:
+        return None
+    try:
+        parsed = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
+def filter_recent_news(
+    items: list[dict[str, Any]],
+    *,
+    as_of: datetime | None = None,
+    max_age_days: int = NEWS_RETENTION_DAYS,
+) -> list[dict[str, Any]]:
+    """Keep dated headlines inside the bounded current-news window."""
+
+    reference = as_of or datetime.now(timezone.utc)
+    if reference.tzinfo is None:
+        reference = reference.replace(tzinfo=timezone.utc)
+    reference = reference.astimezone(timezone.utc)
+    cutoff = reference - timedelta(days=max(1, max_age_days))
+    latest = reference + timedelta(days=1)
+    return [
+        item
+        for item in items
+        if isinstance(item, dict)
+        and (published_at := _news_datetime(item)) is not None
+        and cutoff <= published_at <= latest
+    ]
 
 
 def positive_number(value: Any) -> float | None:
@@ -410,9 +639,15 @@ def enrich_quote_and_news(
     profile: dict[str, Any],
     previous: dict[str, Any] | None = None,
     fetcher: FetchText = fetch_with_referer,
+    *,
+    as_of: datetime | None = None,
 ) -> dict[str, Any]:
     previous = previous if isinstance(previous, dict) else {}
     notes: list[str] = []
+    reference_time = as_of or datetime.now(timezone.utc)
+    if reference_time.tzinfo is None:
+        reference_time = reference_time.replace(tzinfo=timezone.utc)
+    reference_time = reference_time.astimezone(timezone.utc)
 
     quote: dict[str, Any] = {}
     for source_name, api_url, referer, page_url, parser in _quote_plans(identity):
@@ -427,20 +662,53 @@ def enrich_quote_and_news(
             break
         notes.append(f"{source_name}行情：公开报价暂无有效最新价")
 
-    news_groups: list[list[dict[str, Any]]] = []
+    raw_news_groups: list[tuple[str, list[dict[str, Any]]]] = []
+    attempted_news_sources: set[str] = set()
+    successful_news_sources: set[str] = set()
     symbol = yahoo_symbol(identity)
     if symbol:
+        attempted_news_sources.add(SOURCE_YAHOO)
         try:
-            news_groups.append(parse_yahoo_news(fetcher(yahoo_news_url(symbol), "")))
+            raw_news_groups.append(
+                (SOURCE_YAHOO, parse_yahoo_news(fetcher(yahoo_news_url(symbol), "")))
+            )
+            successful_news_sources.add(SOURCE_YAHOO)
         except Exception as exc:  # noqa: BLE001
             notes.append(f"{SOURCE_YAHOO}新闻：{type(exc).__name__}: {exc}")
     sina_list_url = sina_news_url(identity)
     if sina_list_url:
+        attempted_news_sources.add(SOURCE_SINA)
         try:
-            news_groups.append(parse_sina_news(fetcher(sina_list_url, SINA_REFERER)))
+            raw_news_groups.append(
+                (SOURCE_SINA, parse_sina_news(fetcher(sina_list_url, SINA_REFERER)))
+            )
+            successful_news_sources.add(SOURCE_SINA)
         except Exception as exc:  # noqa: BLE001
             notes.append(f"{SOURCE_SINA}新闻：{type(exc).__name__}: {exc}")
+
+    aliases = company_news_aliases(identity, profile, previous)
+    entity_news_groups = [
+        (source_name, filter_company_news(group, aliases))
+        for source_name, group in raw_news_groups
+    ]
+    news_groups = [
+        filter_recent_news(group, as_of=reference_time)
+        for _, group in entity_news_groups
+    ]
     news = merge_news(*news_groups)
+    raw_news_count = sum(len(group) for _, group in raw_news_groups)
+    entity_news_count = sum(len(group) for _, group in entity_news_groups)
+    recent_news_count = sum(len(group) for group in news_groups)
+    if raw_news_count > entity_news_count:
+        notes.append(
+            f"新闻实体匹配：已过滤{raw_news_count - entity_news_count}条"
+            "未直接提及该公司的标题"
+        )
+    if entity_news_count > recent_news_count:
+        notes.append(
+            f"新闻时效：已过滤{entity_news_count - recent_news_count}条"
+            f"超过{NEWS_RETENTION_DAYS}天或日期无效的标题"
+        )
 
     previous_quote = previous.get("quote") if isinstance(previous.get("quote"), dict) else None
     if quote:
@@ -449,12 +717,33 @@ def enrich_quote_and_news(
         profile["quote"] = previous_quote
         notes.append("本轮公开行情快照抓取失败，保留上一轮报价")
 
-    previous_news = previous.get("news") if isinstance(previous.get("news"), list) else None
+    previous_news = previous.get("news") if isinstance(previous.get("news"), list) else []
+    previous_news = filter_company_news(previous_news, aliases)
+    recent_previous_news = filter_recent_news(previous_news, as_of=reference_time)
+    if len(previous_news) > len(recent_previous_news):
+        notes.append(
+            f"上一轮新闻时效：已移除{len(previous_news) - len(recent_previous_news)}条"
+            f"超过{NEWS_RETENTION_DAYS}天或日期无效的标题"
+        )
+    previous_news = recent_previous_news
+    failed_news_sources = attempted_news_sources - successful_news_sources
+    retained_failed_source_news = [
+        item
+        for item in previous_news
+        if str(item.get("source") or "") in failed_news_sources
+    ]
     if news:
-        profile["news"] = news
+        profile["news"] = merge_news(news, retained_failed_source_news)
+        if retained_failed_source_news:
+            notes.append(
+                "部分新闻源抓取失败，保留"
+                f"{len(retained_failed_source_news)}条上一轮有效新闻标题"
+            )
     elif previous_news:
         profile["news"] = previous_news
-        notes.append("本轮公开新闻为空，保留上一轮新闻标题")
+        notes.append("本轮公开新闻无实体匹配标题，保留上一轮有效新闻标题")
+    else:
+        profile.pop("news", None)
 
     sources = profile.setdefault("sources", {})
     if symbol:

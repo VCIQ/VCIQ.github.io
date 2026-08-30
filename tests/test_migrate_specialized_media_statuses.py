@@ -59,6 +59,147 @@ def status(source_id: str = SOURCE_ID) -> dict:
 
 
 class SpecializedMediaStatusMigrationTests(unittest.TestCase):
+    def test_fixed_official_source_wins_over_media_host_fallback(self) -> None:
+        official = article(source_id="official-ionq")
+        official["id"] = "ionq-detail"
+        official["company"] = "IonQ"
+        official["source"] = {
+            "name": "IonQ",
+            "url": "https://ionq.com/news/technical-roadmap",
+            "level": "媒体报道",
+            "platform": "IonQ",
+        }
+        ionq_tracking = {
+            "sources": [
+                {
+                    "id": "source-ionq",
+                    "name": "IonQ 官方来源",
+                    "url": "https://ionq.com/",
+                    "sourceCategory": "media",
+                    "company": "",
+                }
+            ]
+        }
+
+        migrated, report = migrate(
+            {"articleCount": 1, "articles": [official], "sourceStatus": []},
+            ionq_tracking,
+        )
+
+        self.assertEqual(migrated["articles"][0]["source"]["level"], "官方披露")
+        self.assertEqual(migrated["articles"][0]["source"]["platform"], "官方网站")
+        self.assertEqual(report["relabelledSources"], 1)
+
+    def test_unknown_official_prefix_is_not_promoted_to_canonical_source(self) -> None:
+        unknown = article(source_id="official-sohu")
+        unknown["id"] = "unknown-official-detail"
+        unknown["source"] = {
+            "name": "搜狐网",
+            "url": "https://www.sohu.com/a/reposted-story",
+            "level": "媒体报道",
+            "platform": "搜狐网",
+        }
+        media_tracking = {
+            "sources": [
+                {
+                    "id": "source-sohu-media",
+                    "name": "搜狐网",
+                    "url": "https://www.sohu.com/",
+                    "sourceCategory": "media",
+                    "company": "",
+                }
+            ]
+        }
+
+        migrated, report = migrate(
+            {"articleCount": 1, "articles": [unknown], "sourceStatus": []},
+            media_tracking,
+        )
+        migrated_source = migrated["articles"][0]["source"]
+
+        self.assertEqual(migrated_source["level"], "媒体报道")
+        self.assertEqual(migrated_source["platform"], "搜狐网")
+        self.assertEqual(report["relabelledSources"], 0)
+
+    def test_official_user_media_source_keeps_legacy_identity_for_migration(self) -> None:
+        sina_tracking = {
+            "sources": [
+                {
+                    "id": "source-auto-item-ab941d7c",
+                    "name": "新浪网 官方网站",
+                    "url": "http://www.sina.com.cn",
+                    "sourceCategory": "media",
+                    # Keep this legacy company label so official-user-新浪网
+                    # remains addressable during the migration.
+                    "company": "新浪网",
+                }
+            ]
+        }
+        legacy = article(source_id="official-user-新浪网")
+        legacy["id"] = "sina-detail"
+        legacy["title"] = "人工智能行业发布新动态"
+        legacy["summary"] = "行业近期披露多项产品进展。"
+        legacy["company"] = "新浪网"
+        legacy["companySlug"] = "user-新浪网"
+        legacy["source"] = {
+            "name": "新浪网 官方网站",
+            "url": "https://news.sina.com.cn/tech/example.shtml",
+            "level": "官方披露",
+            "platform": "官方网站",
+        }
+
+        migrated, report = migrate(
+            {"articleCount": 1, "articles": [legacy], "sourceStatus": []},
+            sina_tracking,
+            company_route_slugs=set(),
+        )
+        migrated_article = migrated["articles"][0]
+
+        self.assertEqual(migrated_article["source"]["level"], "媒体报道")
+        self.assertEqual(migrated_article["company"], "科技产业")
+        self.assertNotIn("companySlug", migrated_article)
+        self.assertEqual(report["relabelledSources"], 1)
+        self.assertEqual(report["clearedFakeCompanies"], 1)
+
+    def test_tracked_sohu_portal_article_is_downgraded_to_media(self) -> None:
+        sohu_tracking = {
+            "sources": [
+                {
+                    "id": "source-auto-item-ca1e1423",
+                    "name": "搜狐网",
+                    "url": "https://www.sohu.com",
+                    "sourceCategory": "media",
+                    # Retain the old company label only as a migration alias.
+                    "company": "搜狐网",
+                }
+            ]
+        }
+        legacy = article(source_id="user-source-source-auto-item-ca1e1423")
+        legacy["id"] = "sohu-detail"
+        legacy["title"] = "SpaceX 官宣建设最大星际基地"
+        legacy["summary"] = "媒体报道商业航天项目进展。"
+        legacy["company"] = "搜狐网"
+        legacy["companySlug"] = "user-搜狐网"
+        legacy["source"] = {
+            "name": "搜狐网 官方网站",
+            "url": "https://www.sohu.com/a/example",
+            "level": "官方披露",
+            "platform": "官方网站",
+        }
+
+        migrated, report = migrate(
+            {"articleCount": 1, "articles": [legacy], "sourceStatus": []},
+            sohu_tracking,
+            company_route_slugs=set(),
+        )
+        migrated_article = migrated["articles"][0]
+
+        self.assertEqual(migrated_article["source"]["level"], "媒体报道")
+        self.assertEqual(migrated_article["company"], "科技产业")
+        self.assertNotIn("companySlug", migrated_article)
+        self.assertEqual(report["relabelledSources"], 1)
+        self.assertEqual(report["clearedFakeCompanies"], 1)
+
     def test_invalid_future_date_is_removed(self) -> None:
         future = datetime.now(ZoneInfo("Asia/Taipei")).date() + timedelta(days=1)
         invalid = article(source_id="official-anthropic")

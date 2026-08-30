@@ -417,6 +417,34 @@ def source_host(url: str) -> str:
     return canonical_source_host(url)
 
 
+def is_known_media_publisher_website(
+    website: str,
+    config: dict[str, Any],
+) -> bool:
+    """Return whether an alleged company website belongs to a configured publisher.
+
+    Publisher sections often live on subdomains while Wikidata points at the
+    apex website (``news.sina.com.cn`` versus ``www.sina.com.cn``).  Treat both
+    directions as the same publisher boundary, while avoiding looser suffix
+    matching that could confuse unrelated hosts.
+    """
+
+    candidate_host = source_host(website)
+    if not candidate_host:
+        return False
+    for raw in config.get("sources", []):
+        if not isinstance(raw, dict) or raw.get("sourceCategory") != "media":
+            continue
+        media_host = source_host(str(raw.get("url") or ""))
+        if media_host and (
+            candidate_host == media_host
+            or candidate_host.endswith(f".{media_host}")
+            or media_host.endswith(f".{candidate_host}")
+        ):
+            return True
+    return False
+
+
 def load_track_corpus() -> dict[str, dict[str, Any]]:
     payload = load_json(ARTICLES_PATH, None)
     articles = payload.get("articles") if isinstance(payload, dict) else None
@@ -1195,6 +1223,7 @@ def expand_track(
                 and caps["sources"] > len(added["sources"])
                 and not value_is_blocked(blocked["sources"], website)
                 and normalize_term(website) not in existing["sources"]
+                and not is_known_media_publisher_website(website, config)
             ):
                 added["sources"].append(
                     {
