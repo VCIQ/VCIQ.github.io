@@ -31,6 +31,42 @@ class _EmptyIndex:
 
 
 class WeChatPublicIndexTitleFallbackTests(unittest.TestCase):
+    def test_paraphrased_title_with_long_unique_segment_scores_safely(self) -> None:
+        expected = "半导体全链聚合，IICIE国际集成电路创新博览会9月深圳举办"
+        candidate = (
+            "重磅嘉宾官宣！IICIE国际集成电路创新博览会开幕式暨"
+            "集成电路创新高峰论坛，9月9日深圳启幕"
+        )
+        unrelated = "英伟达发布新一代Rubin架构与人工智能计算平台"
+
+        self.assertGreaterEqual(
+            fallback._title_score(expected, candidate, expected),
+            fallback.MIN_TITLE_SCORE,
+        )
+        self.assertLess(
+            fallback._title_score(expected, unrelated, expected),
+            fallback.MIN_TITLE_SCORE,
+        )
+
+    def test_short_variant_is_distinct_when_full_title_fits_query_limit(self) -> None:
+        title = "半导体全链聚合，IICIE国际集成电路创新博览会9月深圳举办"
+        variants = fallback._query_variants(title)
+
+        self.assertEqual(len(variants), 2)
+        self.assertNotEqual(
+            fallback._normalize_title(variants[0]),
+            fallback._normalize_title(variants[1]),
+        )
+        self.assertIn("IICIE", variants[1])
+
+    def test_acronym_fragment_keeps_high_signal_terms(self) -> None:
+        title = "WAIC 2026释放强烈信号，HDD迎来“第二春”"
+
+        self.assertEqual(
+            fallback._query_variants(title)[1],
+            "WAIC 2026 HDD",
+        )
+
     def test_original_detail_resolution_runs_before_title_lookup(self) -> None:
         events: list[str] = []
 
@@ -99,12 +135,15 @@ class WeChatPublicIndexTitleFallbackTests(unittest.TestCase):
                 _Crawler(),
             )
 
-        self.assertEqual(index.queries, fallback._query_variants(first_title))
+        self.assertEqual(index.queries, [
+            fallback._query_variants(titles[0])[0],
+            fallback._query_variants(titles[1])[-1],
+        ])
         self.assertEqual(
             spec["_publicIndexTitleSearchQueries"],
             fallback.MAX_SEARCH_QUERIES_PER_SOURCE,
         )
-        self.assertEqual(spec["_publicIndexTitleLookupTitles"], [first_title])
+        self.assertEqual(spec["_publicIndexTitleLookupTitles"], list(titles[:2]))
 
     def test_budget_is_isolated_between_sources(self) -> None:
         index = _EmptyIndex()
@@ -129,8 +168,8 @@ class WeChatPublicIndexTitleFallbackTests(unittest.TestCase):
         self.assertEqual(len(index.queries), 4)
         self.assertEqual(first["_publicIndexTitleSearchQueries"], 2)
         self.assertEqual(second["_publicIndexTitleSearchQueries"], 2)
-        self.assertEqual(len(first["_publicIndexTitleLookupTitles"]), 1)
-        self.assertEqual(len(second["_publicIndexTitleLookupTitles"]), 1)
+        self.assertEqual(len(first["_publicIndexTitleLookupTitles"]), 2)
+        self.assertEqual(len(second["_publicIndexTitleLookupTitles"]), 2)
 
     def test_duplicate_title_does_not_repeat_exact_or_fragment_lookup(self) -> None:
         index = _EmptyIndex()
@@ -147,11 +186,11 @@ class WeChatPublicIndexTitleFallbackTests(unittest.TestCase):
                 _Crawler(),
             )
 
-        self.assertEqual(index.queries, fallback._query_variants(title))
-        self.assertEqual(spec["_publicIndexTitleSearchQueries"], 2)
+        self.assertEqual(index.queries, [fallback._query_variants(title)[0]])
+        self.assertEqual(spec["_publicIndexTitleSearchQueries"], 1)
         self.assertEqual(spec["_publicIndexTitleLookupTitles"], [title])
 
-    def test_short_fragment_resolves_after_exact_candidate_redirect_fails(self) -> None:
+    def test_next_title_short_fragment_resolves_after_exact_redirect_fails(self) -> None:
         class FragmentIndex(_EmptyIndex):
             def __init__(self) -> None:
                 super().__init__()
@@ -179,7 +218,11 @@ class WeChatPublicIndexTitleFallbackTests(unittest.TestCase):
                             if len(self.queries) == 1
                             else "https://example.com/fragment"
                         ),
-                        "title": "腾讯芯片一号位离职创业投身AI CPU",
+                        "title": (
+                            "腾讯芯片一号位离职创业投身AI CPU"
+                            if len(self.queries) == 1
+                            else "具身机器人制造基地正式落地常州"
+                        ),
                         "publishedAt": "",
                     }
                 ]
@@ -196,7 +239,7 @@ class WeChatPublicIndexTitleFallbackTests(unittest.TestCase):
         spec: dict = {}
         title = "独家丨腾讯芯片一号位，离职创业，投身AI CPU"
 
-        resolved = bridge._resolve_detail_row(
+        exact = bridge._resolve_detail_row(
             {
                 "kind": "detail",
                 "title": title,
@@ -206,14 +249,25 @@ class WeChatPublicIndexTitleFallbackTests(unittest.TestCase):
             "ua",
             _Crawler(),
         )
+        next_title = "重磅丨具身机器人制造基地正式落地常州"
+        resolved = bridge._resolve_detail_row(
+            {"kind": "detail", "title": next_title, "date": ""},
+            spec,
+            "ua",
+            _Crawler(),
+        )
 
+        self.assertEqual(exact, [])
         self.assertEqual(len(resolved), 1)
         self.assertEqual(resolved[0]["kind"], "wechat")
         self.assertEqual(
             resolved[0]["url"],
             "https://mp.weixin.qq.com/s/resolved-fragment",
         )
-        self.assertEqual(index.queries, fallback._query_variants(title))
+        self.assertEqual(index.queries, [
+            fallback._query_variants(title)[0],
+            fallback._query_variants(next_title)[-1],
+        ])
         self.assertEqual(
             index.redirects,
             ["https://example.com/exact", "https://example.com/fragment"],
@@ -267,6 +321,106 @@ class WeChatPublicIndexTitleFallbackTests(unittest.TestCase):
         self.assertEqual(len(resolved), 1)
         self.assertEqual(index.queries, [fallback._query_variants(title)[0]])
         self.assertEqual(spec["_publicIndexTitleSearchQueries"], 1)
+        self.assertEqual(spec["_publicIndexTitleRedirectAttempts"], 1)
+
+    def test_first_direct_resolution_stops_later_title_lookups(self) -> None:
+        class ExactIndex(_EmptyIndex):
+            @staticmethod
+            def _normalized_url(value: str) -> str:
+                return value
+
+            @staticmethod
+            def _request(_url: str, *, referer: str = "") -> str:
+                return "jump" if referer else "search"
+
+            @staticmethod
+            def parse_search_results(_body: str, _search_url: str) -> list[dict]:
+                return [{
+                    "url": "https://example.com/exact",
+                    "title": "腾讯芯片一号位离职创业投身AI CPU",
+                    "publishedAt": "",
+                }]
+
+            @staticmethod
+            def resolve_script_url(_body: str) -> str:
+                return "https://mp.weixin.qq.com/s/resolved-exact"
+
+        index = ExactIndex()
+        bridge = SimpleNamespace(_resolve_detail_row=lambda *_args: [])
+        fallback.install(bridge, index)
+        spec: dict = {}
+
+        first = bridge._resolve_detail_row(
+            {"kind": "detail", "title": "腾讯芯片一号位离职创业投身AI CPU", "date": ""},
+            spec,
+            "ua",
+            _Crawler(),
+        )
+        second = bridge._resolve_detail_row(
+            {"kind": "detail", "title": "具身机器人制造基地正式落地常州", "date": ""},
+            spec,
+            "ua",
+            _Crawler(),
+        )
+
+        self.assertEqual(len(first), 1)
+        self.assertEqual(second, [])
+        self.assertEqual(len(index.queries), 1)
+        self.assertEqual(spec["_publicIndexTitleLookupTitles"], [
+            "腾讯芯片一号位离职创业投身AI CPU"
+        ])
+
+    def test_stale_exact_match_preserves_short_query_for_next_title(self) -> None:
+        class StaleThenFreshIndex(_EmptyIndex):
+            @staticmethod
+            def _normalized_url(value: str) -> str:
+                return value
+
+            def _request(self, url: str, *, referer: str = "") -> str:
+                return "jump" if referer else f"search-{len(self.queries)}"
+
+            def parse_search_results(self, _body: str, _search_url: str) -> list[dict]:
+                if len(self.queries) == 1:
+                    return [{
+                        "url": "https://example.com/stale",
+                        "title": "英伟达Rubin GPU芯片正式发布3360亿晶体管",
+                        "publishedAt": "2026-03-17",
+                    }]
+                return [{
+                    "url": "https://example.com/fresh",
+                    "title": "WAIC 2026释放强烈信号 HDD迎来第二春",
+                    "publishedAt": "2026-08-24",
+                }]
+
+            @staticmethod
+            def resolve_script_url(_body: str) -> str:
+                return "https://mp.weixin.qq.com/s/resolved-fresh"
+
+        index = StaleThenFreshIndex()
+        bridge = SimpleNamespace(_resolve_detail_row=lambda *_args: [])
+        fallback.install(bridge, index)
+        spec = {"maxArticleAgeDays": 45}
+        stale_title = "3360亿晶体管！英伟达Rubin GPU细节首曝：智能体AI性能提升10倍"
+        fresh_title = "WAIC 2026释放强烈信号，HDD迎来“第二春”"
+
+        stale = bridge._resolve_detail_row(
+            {"kind": "detail", "title": stale_title, "date": ""},
+            spec,
+            "ua",
+            _Crawler(),
+        )
+        fresh = bridge._resolve_detail_row(
+            {"kind": "detail", "title": fresh_title, "date": ""},
+            spec,
+            "ua",
+            _Crawler(),
+        )
+
+        self.assertEqual(stale, [])
+        self.assertEqual(len(fresh), 1)
+        self.assertEqual(index.queries[0], fallback._query_variants(stale_title)[0])
+        self.assertEqual(index.queries[1], fallback._query_variants(fresh_title)[-1])
+        self.assertEqual(spec["_publicIndexTitleSearchQueries"], 2)
         self.assertEqual(spec["_publicIndexTitleRedirectAttempts"], 1)
 
     def test_circuit_open_is_recorded_without_leaking_request_details(self) -> None:

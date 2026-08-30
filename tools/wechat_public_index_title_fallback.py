@@ -60,6 +60,14 @@ def _query_variants(title: str) -> list[str]:
     if cleaned:
         result.append(cleaned[:MAX_QUERY_LENGTH].strip())
 
+    distinctive_tokens = re.findall(
+        r"[A-Za-z][A-Za-z0-9.-]{1,}|\d{2,}",
+        title,
+    )
+    token_fragment = " ".join(distinctive_tokens[:5])
+    if len(distinctive_tokens) >= 2 and token_fragment:
+        result.append(token_fragment[:24].strip())
+
     pieces = [
         _clean(piece, 80)
         for piece in _SPLIT_PATTERN.split(title)
@@ -72,15 +80,15 @@ def _query_variants(title: str) -> list[str]:
         and len(_normalize_title(piece)) >= 4
     ]
     if informative:
-        combined: list[str] = []
-        for piece in informative:
-            candidate = " ".join([*combined, piece]).strip()
-            if len(candidate) > 32:
-                continue
-            combined.append(piece)
-        fragment = " ".join(combined).strip()
-        if not fragment:
-            fragment = max(informative, key=lambda value: len(_normalize_title(value)))[:32]
+        fragment = max(
+            informative,
+            key=lambda value: len(_normalize_title(value)),
+        )[:32]
+        if result and _normalize_title(fragment) == _normalize_title(result[0]):
+            fragment = max(
+                informative,
+                key=lambda value: len(_normalize_title(value)),
+            )[:32]
         if fragment and fragment not in result:
             result.append(fragment)
 
@@ -108,7 +116,7 @@ def _title_score(expected: str, candidate: str, query: str = "") -> float:
         return 1.0
 
     scores = [difflib.SequenceMatcher(None, wanted, observed).ratio()]
-    if query_key:
+    if len(query_key) >= 8:
         scores.append(difflib.SequenceMatcher(None, query_key, observed).ratio())
     for left, right in ((wanted, observed), (query_key, observed)):
         if not left or not right:
@@ -116,6 +124,11 @@ def _title_score(expected: str, candidate: str, query: str = "") -> float:
         shorter, longer = (left, right) if len(left) <= len(right) else (right, left)
         if len(shorter) >= 8 and shorter in longer:
             scores.append(min(0.98, 0.76 + 0.22 * len(shorter) / len(longer)))
+        match = difflib.SequenceMatcher(None, left, right).find_longest_match()
+        if match.size >= 10:
+            scores.append(
+                min(0.96, 0.58 + 0.38 * match.size / min(len(left), len(right)))
+            )
     return max(scores)
 
 
@@ -200,6 +213,8 @@ def _resolve_by_title(
     crawler: Any,
     index: Any,
 ) -> list[dict[str, str]]:
+    if spec.get("_publicIndexTitleDirectResolved"):
+        return []
     title = _clean(row.get("title"), 260)
     if not title or len(_normalize_title(title)) < 8:
         return []
@@ -209,6 +224,8 @@ def _resolve_by_title(
     variants = _query_variants(title)
     if not variants:
         return []
+    prefer_short = spec.pop("_publicIndexPreferShortTitleQuery", False)
+    query = variants[-1] if prefer_short and len(variants) > 1 else variants[0]
     title_key = _normalize_title(title)
     lookup_keys = spec.setdefault("_publicIndexTitleLookupKeys", [])
     lookup_query_keys = spec.setdefault("_publicIndexTitleLookupQueryKeys", [])
@@ -221,13 +238,11 @@ def _resolve_by_title(
     lookup_keys.append(title_key)
     spec.setdefault("_publicIndexTitleLookupTitles", []).append(title)
 
-    # Spend the two source-local searches on the same recent public-index title:
-    # first the bounded exact title, then its distinctive short fragment.  The
-    # fragment is important when Sogou has indexed a punctuation or subtitle
-    # variant of the public-index headline.  At most one redirect is followed
-    # per query so a bad exact-title candidate cannot consume the fragment's
-    # redirect chance.
-    for query in variants:
+    # Spend at most one query per discovered title: the first title receives a
+    # bounded exact query, and after a miss the next distinct title receives its
+    # short fragment. This preserves recency diversity while keeping the total
+    # source budget at two searches and one redirect candidate per search.
+    for query in [query]:
         query_key = _normalize_title(query)
         if not query_key or query_key in lookup_query_keys:
             continue
@@ -244,15 +259,38 @@ def _resolve_by_title(
             search_rows = index.parse_search_results(search_body, search_url)
         except Exception as exc:  # noqa: BLE001 - CAPTCHA/network errors stay terminal.
             _record_lookup_failure(spec, exc)
-            continue
+            spec["_publicIndexPreferShortTitleQuery"] = True
+            return []
 
-        for candidate in _ranked_rows(
+        ranked_rows = _ranked_rows(
             search_rows,
             title,
             query,
             spec,
             crawler,
-        )[:1]:
+        )
+        if not ranked_rows:
+            matching_rows = [
+                candidate
+                for candidate in search_rows
+                if _title_score(title, str(candidate.get("title") or ""), query)
+                >= MIN_TITLE_SCORE
+            ]
+            if matching_rows and not any(
+                _sogou_row_may_be_fresh(candidate, spec)
+                and _date_is_recent(candidate.get("publishedAt"), spec, crawler)
+                for candidate in matching_rows
+            ):
+                # The public index can retain an old headline after Sogou's
+                # original timestamp has aged out. Preserve the remaining query
+                # for the next discovered title and prefer that title's short,
+                # distinctive fragment instead of retrying this stale one.
+                spec["_publicIndexPreferShortTitleQuery"] = True
+                return []
+            spec["_publicIndexPreferShortTitleQuery"] = True
+            return []
+
+        for candidate in ranked_rows[:1]:
             if not _source_budget(
                 spec,
                 "_publicIndexTitleRedirectAttempts",
@@ -271,9 +309,12 @@ def _resolve_by_title(
                 direct = index.resolve_script_url(jump_body)
             except Exception as exc:  # noqa: BLE001 - never bypass Sogou/WeChat guards.
                 _record_lookup_failure(spec, exc)
-                continue
+                spec["_publicIndexPreferShortTitleQuery"] = True
+                return []
             if not _is_direct_wechat(direct):
-                continue
+                spec["_publicIndexPreferShortTitleQuery"] = True
+                return []
+            spec["_publicIndexTitleDirectResolved"] = True
             return [
                 {
                     **row,
@@ -289,6 +330,8 @@ def _resolve_by_title(
                     "sogouDiscoveryDate": _clean(candidate.get("publishedAt"), 40),
                 }
             ]
+        spec["_publicIndexPreferShortTitleQuery"] = True
+        return []
     return []
 
 
