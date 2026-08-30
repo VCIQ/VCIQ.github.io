@@ -291,7 +291,7 @@ def _is_resolvable_detail_url(url: str) -> bool:
         host in {"jintiankansha.com", "jintiankansha.me"}
         and parts.path.startswith("/t/")
     ) or (
-        host in {"m.sohu.com", "sohu.com"}
+        host in {"m.sohu.com", "mp.sohu.com", "sohu.com"}
         and re.fullmatch(r"/a/\d+_\d+", parts.path.rstrip("/")) is not None
     ) or (
         host == "eet-china.com"
@@ -305,7 +305,7 @@ def _detail_belongs_to_index(index_url: str, detail_url: str) -> bool:
     index_parts = urlsplit(index_url)
     detail_parts = urlsplit(detail_url)
     index_host = (index_parts.hostname or "").casefold().removeprefix("www.")
-    if index_host not in {"m.sohu.com", "sohu.com"}:
+    if index_host not in {"m.sohu.com", "mp.sohu.com", "sohu.com"}:
         return True
     profile = re.fullmatch(r"/media/(\d+)", index_parts.path.rstrip("/"))
     if not profile:
@@ -327,8 +327,9 @@ def _profile_page_matches_account(
 
     parts = urlsplit(index_url)
     host = (parts.hostname or "").casefold().removeprefix("www.")
-    is_sohu_profile = host in {"m.sohu.com", "sohu.com"} and re.fullmatch(
-        r"/media/\d+", parts.path.rstrip("/")
+    is_sohu_profile = host in {"m.sohu.com", "mp.sohu.com", "sohu.com"} and (
+        re.fullmatch(r"/media/\d+", parts.path.rstrip("/")) is not None
+        or parts.path.rstrip("/") == "/profile"
     )
     if not is_sohu_profile:
         return False

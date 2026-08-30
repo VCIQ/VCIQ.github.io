@@ -302,6 +302,31 @@ class WeChatRegistryBridgeTest(unittest.TestCase):
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["kind"], "detail")
 
+    def test_mp_sohu_profile_query_is_account_scoped(self) -> None:
+        spec = {
+            "expectedAccounts": ["芯师爷", "Anxin-360ic"],
+            "keywords": ["半导体", "芯片", "封装"],
+            "trackedCompanies": ["中芯国际"],
+            "trackedPeople": [],
+        }
+        body = """
+        <html><head><title>芯师爷的个人主页</title></head><body>
+          <a href="https://m.sohu.com/a/1069311167_120498874">
+            中芯国际发布半导体芯片封装进展
+          </a>
+        </body></html>
+        """
+
+        rows = bridge._extract_index_rows(
+            body,
+            "https://mp.sohu.com/profile?xpt=verified-account",
+            spec,
+            crawl_articles,
+        )
+
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["kind"], "detail")
+
     def test_eet_account_context_discovers_chiptrend_title(self) -> None:
         spec = {
             "expectedAccounts": ["芯潮IC"],
