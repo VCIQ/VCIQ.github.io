@@ -311,7 +311,7 @@ class WeChatRegistryBridgeTest(unittest.TestCase):
         }
         body = """
         <html><head><title>芯师爷 - 半导体产业媒体</title></head><body>
-          <a href="https://www.gsi24.com/news/verified.html">
+          <a href="https://www.gsi24.com/a/3035.html">
             长江存储完成先进芯片封装新进展
           </a>
         </body></html>
@@ -327,6 +327,31 @@ class WeChatRegistryBridgeTest(unittest.TestCase):
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["kind"], "title")
         self.assertEqual(rows[0]["title"], "长江存储完成先进芯片封装新进展")
+
+    def test_zhidx_account_page_exposes_article_link_titles(self) -> None:
+        spec = {
+            "expectedAccounts": ["芯东西"],
+            "keywords": ["半导体", "芯片", "封装"],
+            "trackedCompanies": ["长江存储"],
+            "trackedPeople": [],
+        }
+        body = """
+        <html><head><title>芯东西 - 半导体产业媒体</title></head><body>
+          <a href="https://zhidx.com/p/588519.html">
+            长江存储完成先进芯片封装新进展
+          </a>
+        </body></html>
+        """
+
+        rows = bridge._extract_index_rows(
+            body,
+            "https://zhidx.com/aichip001",
+            spec,
+            crawl_articles,
+        )
+
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["kind"], "title")
 
     def test_eet_account_context_discovers_chiptrend_title(self) -> None:
         spec = {

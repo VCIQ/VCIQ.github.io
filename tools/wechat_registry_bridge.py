@@ -447,6 +447,9 @@ def _extract_index_rows(
     ) or (
         index_host == "gsi24.com"
         and index_parts.path.rstrip("/") == ""
+    ) or (
+        index_host == "zhidx.com"
+        and index_parts.path.rstrip("/") == "/aichip001"
     )
     if title_only_index:
         title_hints = list(parser.title_hints)
@@ -459,9 +462,19 @@ def _extract_index_rows(
                 )
                 if title != _clean(text, 320):
                     title_hints.append({"title": title, "position": position})
-        if index_host == "gsi24.com" and profile_account_match:
+        if index_host in {"gsi24.com", "zhidx.com"}:
             for link in parser.links:
-                if _usable_title(link.get("title")):
+                link_parts = urlsplit(str(link.get("url", "")))
+                is_article = (
+                    index_host == "gsi24.com"
+                    and re.fullmatch(r"/a/[^/]+", link_parts.path.rstrip("/"))
+                    is not None
+                ) or (
+                    index_host == "zhidx.com"
+                    and re.fullmatch(r"/p/\d+\.html", link_parts.path.rstrip("/"))
+                    is not None
+                )
+                if is_article and _usable_title(link.get("title")):
                     title_hints.append(
                         {
                             "title": link.get("title"),
@@ -478,6 +491,7 @@ def _extract_index_rows(
             if (
                 require_account_context
                 and not profile_account_match
+                and index_host not in {"gsi24.com", "zhidx.com"}
                 and not wechat_source_registry.account_matches(spec, context)
             ):
                 continue
