@@ -399,7 +399,7 @@ class WeChatPublicIndexTitleFallbackTests(unittest.TestCase):
         self.assertEqual(spec["_publicIndexTitleSearchQueries"], 1)
         self.assertEqual(spec["_publicIndexTitleRedirectAttempts"], 1)
 
-    def test_two_equal_headlines_preserve_second_redirect_for_identity_gate(self) -> None:
+    def test_one_redirect_per_title_preserves_budget_for_title_diversity(self) -> None:
         class SyndicatedIndex(_EmptyIndex):
             @staticmethod
             def _normalized_url(value: str) -> str:
@@ -433,9 +433,9 @@ class WeChatPublicIndexTitleFallbackTests(unittest.TestCase):
             _Crawler(),
         )
 
-        self.assertEqual([row["titleLookupRank"] for row in resolved], ["1", "2"])
+        self.assertEqual([row["titleLookupRank"] for row in resolved], ["1"])
         self.assertEqual(spec["_publicIndexTitleSearchQueries"], 1)
-        self.assertEqual(spec["_publicIndexTitleRedirectAttempts"], 2)
+        self.assertEqual(spec["_publicIndexTitleRedirectAttempts"], 1)
 
     def test_first_direct_resolution_stops_later_title_lookups(self) -> None:
         class ExactIndex(_EmptyIndex):

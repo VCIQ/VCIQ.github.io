@@ -322,15 +322,13 @@ def _resolve_by_title(
             spec["_publicIndexPreferShortTitleQuery"] = True
             return []
 
-        resolved_rows: list[dict[str, str]] = []
-        seen_direct: set[str] = set()
-        for rank, candidate in enumerate(ranked_rows, 1):
+        for rank, candidate in enumerate(ranked_rows[:1], 1):
             if not _source_budget(
                 spec,
                 "_publicIndexTitleRedirectAttempts",
                 MAX_REDIRECT_ATTEMPTS_PER_SOURCE,
             ):
-                break
+                return []
             try:
                 result_url = wechat_sogou_link_compat.guarded_result_url(
                     str(candidate.get("url") or ""),
@@ -343,16 +341,18 @@ def _resolve_by_title(
                 direct = index.resolve_script_url(jump_body)
             except Exception as exc:  # noqa: BLE001 - never bypass Sogou/WeChat guards.
                 _record_lookup_failure(spec, exc)
-                continue
-            if not _is_direct_wechat(direct) or direct in seen_direct:
-                continue
-            seen_direct.add(direct)
+                spec["_publicIndexPreferShortTitleQuery"] = True
+                return []
+            if not _is_direct_wechat(direct):
+                spec["_publicIndexPreferShortTitleQuery"] = True
+                return []
             account = _clean(candidate.get("account"), 100)
             if account:
                 accounts = spec.setdefault("_publicIndexTitleCandidateAccounts", [])
                 if account not in accounts and len(accounts) < 4:
                     accounts.append(account)
-            resolved_rows.append(
+            spec["_publicIndexTitleDirectResolved"] = True
+            return [
                 {
                     **row,
                     "url": direct,
@@ -368,10 +368,7 @@ def _resolve_by_title(
                     "sogouDiscoveryDate": _clean(candidate.get("publishedAt"), 40),
                     "sogouDiscoveryAccount": account,
                 }
-            )
-        if resolved_rows:
-            spec["_publicIndexTitleDirectResolved"] = True
-            return resolved_rows
+            ]
         spec["_publicIndexPreferShortTitleQuery"] = True
         return []
     return []

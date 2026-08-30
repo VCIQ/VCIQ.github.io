@@ -379,6 +379,44 @@ class WeChatRegistryBridgeTest(unittest.TestCase):
         self.assertEqual(rows[0]["kind"], "title")
         self.assertIn("澜起科技", rows[0]["title"])
 
+    def test_index_resolution_defers_later_titles_until_original_verifies(self) -> None:
+        spec = {"publicIndexUrls": ["https://index.example/account"]}
+        discovered = [
+            {"kind": "detail", "url": "https://index.example/first", "title": "第一篇芯片文章"},
+            {"kind": "detail", "url": "https://index.example/second", "title": "第二篇芯片文章"},
+        ]
+        original_fetch = bridge._fetch_cached
+        original_extract = bridge._extract_index_rows
+        original_resolve = bridge._resolve_detail_row
+        calls: list[str] = []
+
+        try:
+            bridge._fetch_cached = lambda *_args: "index"
+            bridge._extract_index_rows = lambda *_args, **_kwargs: discovered
+
+            def resolve(row, *_args):
+                calls.append(row["title"])
+                return [{**row, "kind": "wechat", "url": "https://mp.weixin.qq.com/s/first"}]
+
+            bridge._resolve_detail_row = resolve
+            rows, failures = bridge._fallback_index_rows(
+                spec,
+                "ua",
+                crawl_articles,
+            )
+        finally:
+            bridge._fetch_cached = original_fetch
+            bridge._extract_index_rows = original_extract
+            bridge._resolve_detail_row = original_resolve
+
+        self.assertEqual(failures, 0)
+        self.assertEqual(calls, ["第一篇芯片文章"])
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(
+            [row["title"] for row in spec["_publicIndexDeferredRows"]],
+            ["第二篇芯片文章"],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

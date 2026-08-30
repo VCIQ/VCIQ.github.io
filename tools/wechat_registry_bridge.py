@@ -516,6 +516,7 @@ def _fallback_index_rows(
     spec: dict[str, Any], user_agent: str, crawler: Any
 ) -> tuple[list[dict[str, str]], int]:
     rows: list[dict[str, str]] = []
+    discovered_rows: list[dict[str, str]] = []
     failures = 0
     diagnostics = {
         "publicIndexPagesFetched": 0,
@@ -538,23 +539,33 @@ def _fallback_index_rows(
             continue
         diagnostics["publicIndexPagesFetched"] += 1
         diagnostics["publicIndexRowsDiscovered"] += len(discovered)
-        for row in discovered:
-            if row.get("kind") == "title":
-                diagnostics["publicIndexTitleHintsDiscovered"] += 1
-            resolved = _resolve_detail_row(row, spec, user_agent, crawler)
-            if row.get("kind") in {"detail", "title"}:
-                if resolved:
-                    if row.get("kind") == "detail":
-                        diagnostics["publicIndexDetailResolved"] += 1
-                    if any(item.get("titleLookupQuery") for item in resolved):
-                        diagnostics["publicIndexTitleResolved"] += 1
+        discovered_rows.extend(discovered)
+        diagnostics["publicIndexTitleHintsDiscovered"] += sum(
+            1 for row in discovered if row.get("kind") == "title"
+        )
+
+    for row_index, row in enumerate(discovered_rows):
+        resolved = _resolve_detail_row(row, spec, user_agent, crawler)
+        if row.get("kind") in {"detail", "title"}:
+            if resolved:
+                if row.get("kind") == "detail":
+                    diagnostics["publicIndexDetailResolved"] += 1
+                if any(item.get("titleLookupQuery") for item in resolved):
+                    diagnostics["publicIndexTitleResolved"] += 1
+            else:
+                if row.get("kind") == "detail":
+                    diagnostics["publicIndexDetailUnresolved"] += 1
                 else:
-                    if row.get("kind") == "detail":
-                        diagnostics["publicIndexDetailUnresolved"] += 1
-                    else:
-                        diagnostics["publicIndexTitleHintsUnresolved"] += 1
-                    failures += 1
-            rows.extend(resolved)
+                    diagnostics["publicIndexTitleHintsUnresolved"] += 1
+                failures += 1
+        rows.extend(resolved)
+        if resolved:
+            # Do not spend the second source-local query until the original
+            # page behind this first candidate has passed account/date/entity
+            # verification.  The crawl wrapper resumes these rows only after a
+            # rejection, preserving both request budget and title diversity.
+            spec["_publicIndexDeferredRows"] = discovered_rows[row_index + 1 :]
+            break
     deduped: list[dict[str, str]] = []
     seen: set[str] = set()
     for row in rows:
@@ -694,49 +705,75 @@ def install(wechat: Any) -> None:
         rows, index_failures = _fallback_index_rows(spec, user_agent, crawler)
         diagnostics = dict(spec.get("_publicIndexDiagnostics") or {})
         accepted: list[dict[str, Any]] = []
-        verified_title_queries: set[str] = set()
         failures = index_failures
+        attempted_rows = 0
         max_items = int(spec.get("maxItems", 6))
-        for row in rows[: max_items * 5]:
-            title_query = _clean(row.get("titleLookupQuery"), 260)
-            if title_query and title_query in verified_title_queries:
-                continue
-            try:
-                body = wechat.fetch_public_wechat_page(row["url"])
-                article = wechat.parse_wechat_article(
+
+        def verify_rows(candidate_rows: list[dict[str, str]]) -> None:
+            nonlocal attempted_rows, failures
+            for row in candidate_rows[: max_items * 5]:
+                attempted_rows += 1
+                try:
+                    body = wechat.fetch_public_wechat_page(row["url"])
+                    article = wechat.parse_wechat_article(
+                        spec,
+                        row["url"],
+                        body,
+                        crawler,
+                        fallback_title=row.get("title", ""),
+                        fallback_summary=row.get("summary", ""),
+                        fallback_date=row.get("date") or None,
+                    )
+                except Exception as exc:  # noqa: BLE001 - aggregated below.
+                    _record_diagnostic(
+                        spec,
+                        "_publicIndexOriginalFetchFailureKinds",
+                        _fetch_failure_kind(exc),
+                    )
+                    failures += 1
+                    continue
+                if article:
+                    accepted.append(article)
+                if len(accepted) >= max_items:
+                    break
+
+        verify_rows(rows)
+        if not accepted:
+            for deferred in list(spec.pop("_publicIndexDeferredRows", [])):
+                # A direct URL is a candidate, not proof. Re-open title lookup
+                # only after the original page rejected the earlier candidate.
+                spec.pop("_publicIndexTitleDirectResolved", None)
+                resolved = _resolve_detail_row(
+                    deferred,
                     spec,
-                    row["url"],
-                    body,
+                    user_agent,
                     crawler,
-                    fallback_title=row.get("title", ""),
-                    fallback_summary=row.get("summary", ""),
-                    fallback_date=row.get("date") or None,
                 )
-            except Exception as exc:  # noqa: BLE001 - aggregated below.
-                _record_diagnostic(
-                    spec,
-                    "_publicIndexOriginalFetchFailureKinds",
-                    _fetch_failure_kind(exc),
-                )
-                failures += 1
-                continue
-            if article:
-                accepted.append(article)
-                if title_query:
-                    # Multiple Sogou rows can share a syndicated headline. Once
-                    # one original page verifies, skip its lower-ranked siblings;
-                    # otherwise try the second bounded redirect after a wrong
-                    # publisher is rejected.
-                    verified_title_queries.add(title_query)
-            if len(accepted) >= max_items:
-                break
+                if not resolved:
+                    if deferred.get("kind") == "detail":
+                        diagnostics["publicIndexDetailUnresolved"] += 1
+                    elif deferred.get("kind") == "title":
+                        diagnostics["publicIndexTitleHintsUnresolved"] += 1
+                    failures += 1
+                    if int(spec.get("_publicIndexTitleSearchQueries", 0) or 0) >= 2:
+                        break
+                    continue
+                if deferred.get("kind") == "detail":
+                    diagnostics["publicIndexDetailResolved"] += 1
+                if any(item.get("titleLookupQuery") for item in resolved):
+                    diagnostics["publicIndexTitleResolved"] += 1
+                verify_rows(resolved)
+                if accepted:
+                    break
+
+        diagnostics["publicIndexDirectRows"] = attempted_rows
 
         if not accepted:
             result = crawler._status(
                 spec["id"],
                 spec["name"],
                 "error",
-                len(rows),
+                attempted_rows,
                 0,
                 failed=max(1, failures),
                 platform="微信",
@@ -752,7 +789,7 @@ def install(wechat: Any) -> None:
             spec["id"],
             spec["name"],
             "partial" if failures else "ok",
-            len(rows),
+            attempted_rows,
             len(accepted),
             failed=failures,
             platform="微信",
