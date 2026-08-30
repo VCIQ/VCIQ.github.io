@@ -1,0 +1,122 @@
+.workspace {
+  margin-bottom: 26px;
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--green) 7%, transparent), transparent 34%),
+    var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.tabList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface-2) 78%, transparent);
+}
+
+.tabList button {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  min-height: 74px;
+  border: 0;
+  border-right: 1px solid var(--border);
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  padding: 13px 18px 10px;
+  color: var(--muted);
+  text-align: left;
+  cursor: pointer;
+}
+
+.tabList button:last-child {
+  border-right: 0;
+}
+
+.tabList button[aria-selected="true"] {
+  border-bottom-color: var(--green-bright);
+  background: var(--surface);
+  color: var(--green-bright);
+}
+
+.tabList button:focus-visible {
+  outline: 2px solid var(--green-bright);
+  outline-offset: -3px;
+}
+
+.tabList button > span,
+.tabList button strong,
+.tabList button small {
+  display: block;
+  min-width: 0;
+}
+
+.tabList button strong {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.tabList button small {
+  overflow: hidden;
+  margin-top: 3px;
+  color: var(--faint);
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tabList button b {
+  color: var(--text);
+  font: 500 27px/1 "Noto Serif SC", "Songti SC", serif;
+}
+
+.panel[hidden] {
+  display: none;
+}
+
+.directoryHeader {
+  display: grid;
+  grid-template-columns: minmax(220px, .7fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: end;
+  padding: 20px 24px 17px;
+  border-bottom: 1px solid var(--border);
+}
+
+.directoryHeader h2 {
+  margin: 4px 0 0;
+  font: 500 24px/1.3 "Noto Serif SC", "Songti SC", serif;
+}
+
+.directoryHeader > p {
+  max-width: 680px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+@media (max-width: 720px) {
+  .tabList button {
+    min-height: 66px;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 8px;
+    padding: 10px 12px 8px;
+  }
+
+  .tabList button b {
+    display: none;
+  }
+
+  .tabList button small {
+    white-space: normal;
+  }
+
+  .directoryHeader {
+    grid-template-columns: 1fr;
+    gap: 7px;
+    padding: 17px 15px 14px;
+  }
+}

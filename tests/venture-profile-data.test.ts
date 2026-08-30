@@ -100,6 +100,13 @@ test("current snapshot is clean at the frontend boundary", () => {
     assert.doesNotMatch(anthropic.background, /Policy Commitments Learn News/u);
     assert.doesNotMatch(anthropic.technology, /Policy Commitments Learn News/u);
   }
+
+  const groq = companyVentureProfiles.groq;
+  if (groq) {
+    assert.ok(groq.team.some((member) => member.name === "Adam Winter"));
+    assert.ok(groq.team.some((member) => member.name === "Sinclair Schuller"));
+    assert.ok(groq.team.every((member) => !/^(.*?)\s+\1$/iu.test(member.name)));
+  }
 });
 
 test("research model v2 exposes the same structured fields for every entity", () => {

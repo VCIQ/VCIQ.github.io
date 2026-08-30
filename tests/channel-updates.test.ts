@@ -24,6 +24,7 @@ import { canonicalTracksForItem } from "../lib/canonical-sector-assignment";
 import {
   aggregateTechnologyEventUpdates,
   getChannelUpdateDirectory,
+  inferCompanyEventTrack,
   technologyEventHasResearchEvidence,
   type ChannelUpdateItem,
   type ChannelUpdateKey,
@@ -157,6 +158,49 @@ test("channel directories deduplicate repeated original links", () => {
       (item) => `${item.href.toLocaleLowerCase("en-US")}|${item.title.toLocaleLowerCase("zh-CN")}`,
     );
     assert.equal(new Set(keys).size, keys.length, `${channel} contains duplicate entries`);
+  }
+});
+
+test("company events infer their subject track instead of inheriting a mismatched raw sector", () => {
+  assert.equal(
+    inferCompanyEventTrack(
+      {
+        sector: "商业航天",
+        title: "OpenAI ends its Cursor partnership after the SpaceX acquisition",
+        summary: "Cursor will lose direct access to OpenAI models.",
+      },
+      ["openai"],
+    ),
+    "AI / AGI",
+  );
+  assert.equal(
+    inferCompanyEventTrack(
+      {
+        sector: "新能源",
+        title: "Anthropic 发布 AI 药物研发成果",
+        summary: "Claude 设计蛋白结合剂，用于药物靶点与临床前研究。",
+      },
+      ["anthropic"],
+    ),
+    "生物科技",
+  );
+
+  const publishedDrugEvent = getChannelUpdateDirectory("companies").items.find((item) =>
+    item.title.includes("AI制药到底该奖励什么"),
+  );
+  assert.ok(publishedDrugEvent);
+  assert.equal(publishedDrugEvent.track, "生物科技");
+});
+
+test("company event links and clustered sources are canonical public URLs", () => {
+  const items = getChannelUpdateDirectory("companies").items;
+  for (const item of items) {
+    assert.match(item.href, /^https?:\/\//u);
+    assert.doesNotMatch(item.href, /\\+$/u);
+    for (const source of item.sources ?? []) {
+      assert.match(source.href, /^https?:\/\//u);
+      assert.doesNotMatch(source.href, /\\+$/u);
+    }
   }
 });
 
