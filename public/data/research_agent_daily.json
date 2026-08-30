@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-29T21:28:24+00:00",
+  "generatedAt": "2026-08-30T01:26:42+00:00",
   "asOfDate": "2026-08-30",
   "runStatus": "model",
   "baselineSource": "snapshot",
@@ -11,90 +11,317 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 1258,
-      "completion_tokens": 2889,
-      "total_tokens": 4147,
+      "prompt_tokens": 13428,
+      "completion_tokens": 7518,
+      "total_tokens": 20946,
       "completion_tokens_details": {
-        "reasoning_tokens": 2417
+        "reasoning_tokens": 5041
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 1258
+      "prompt_cache_miss_tokens": 13428
     }
   },
   "changeSummary": {
-    "totalDetected": 1,
-    "total": 1,
+    "totalDetected": 62,
+    "total": 10,
     "byDataset": {
-      "intelligenceEvent": 1
+      "intelligenceEvent": 8,
+      "marketCompany": 2
     },
     "byChangeType": {
-      "external_event": 1
+      "external_event": 20,
+      "data_maintenance": 20,
+      "source_refresh": 22
     },
-    "externalCandidates": 1,
-    "qualityRejected": 0,
-    "maintenanceExcluded": 0,
+    "externalCandidates": 20,
+    "qualityRejected": 10,
+    "maintenanceExcluded": 42,
     "aggregatedEvents": 0,
-    "highestImportance": 82
+    "highestImportance": 84
   },
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "根据证据E001，2026-08-26有一篇新闻报道称OpenAI发布了适用于ChatGPT Work和Codex的Admin插件。该证据等级为D，来源为新闻聚合，未提供官方细节，因此仅作为初步信号，需进一步验证。",
+    "executiveSummary": "证据包覆盖2026年8月24日至30日的高价值情报与上市公司新闻更新。核心线索包括：英伟达财报超预期提振美股，市场焦点转向8月非农与博通财报；AI产业链热度延续，国产算力与AI芯片报道密集；OpenAI据称加速印度扩张（证据等级较低）；立讯精密上半年业绩增长并获密集调研；印度IT产业因AI冲击面临指数下跌与裁员；宁德时代、寒武纪等公司新闻更新。整体看，AI算力与硬件仍是市场主线，但部分证据为媒体标题级或低等级来源，需进一步验证。 质量门诊断：缺少发布时间 3、缺少标题 3、证据未分级 3、证据合格但未绑定变化字段 37。",
     "keyDevelopments": [
       {
-        "title": "OpenAI被报道发布Admin插件（适用于ChatGPT Work和Codex）",
-        "assessment": "事实：E001记录了一篇发布于2026-08-26的新闻报道，标题为“OpenAI发布适用于ChatGPT Work和Codex的Admin插件”。推断：OpenAI可能推出了面向企业管理的Admin插件，但标题中的“管理|额度|管理员|数据|群组”含义不明。待验证：具体功能、适用范围及官方确认。",
-        "importance": 3,
-        "confidence": "low",
+        "title": "英伟达财报超预期，美股周线收涨",
+        "assessment": "据东方财富报道，英伟达周三公布大超预期的季度财报，提振市场情绪；标普500指数周涨0.49%，纳指涨0.85%，道指涨0.53%，标普距8月13日历史高点约1%。该报道未提供具体财务数字，且为媒体来源，故置信度为中等。",
+        "importance": 4,
+        "confidence": "medium",
         "entities": [
-          "OpenAI"
+          "英伟达",
+          "标普500",
+          "纳斯达克"
         ],
         "evidenceIds": [
           "E001"
+        ]
+      },
+      {
+        "title": "下周聚焦美国8月非农数据与博通财报",
+        "assessment": "报道明确未来一周市场将重新聚焦美国劳动力市场，周五公布8月非农就业数据；博通财报接棒英伟达，成为AI硬件需求的下一个验证点。此为事件预告，非已发生事实。",
+        "importance": 4,
+        "confidence": "high",
+        "entities": [
+          "美国劳工部",
+          "博通"
+        ],
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "title": "立讯精密上半年营收增长40%，获268家机构调研",
+        "assessment": "据东方财富报道，立讯精密2026年上半年营收1745.04亿元，同比增长40.16%；归母净利润78.43亿元，同比增长18.04%；毛利率11.78%，同比提升0.17个百分点；公司预计前三季度归母净利润132.46亿至143.98亿元，同比增长15%至25%。数据具体，但需以公司正式公告为准。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "立讯精密"
+        ],
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "title": "印度IT产业遭AI冲击，Nifty IT指数较2024年高位近腰斩",
+        "assessment": "据东方财富报道，Nifty IT指数今年以来多次断崖式下跌，较2024年高位近乎腰斩，成为印度资本市场表现最差板块之一；行业龙头业绩承压、裁员消息不断。该报道为媒体分析，反映AI对传统IT外包模式的冲击趋势。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "印度IT产业",
+          "Nifty IT指数"
+        ],
+        "evidenceIds": [
+          "E007"
+        ]
+      },
+      {
+        "title": "OpenAI据称扩大印度市场：ChatGPT广告上线并聘请Meta高管",
+        "assessment": "来自Google News聚合的D级证据，标题声称OpenAI在印度推出ChatGPT广告并聘请Meta高管，但摘要未提供细节，来源可靠性低，仅作为待验证线索。",
+        "importance": 3,
+        "confidence": "low",
+        "entities": [
+          "OpenAI",
+          "Meta"
+        ],
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "title": "IonQ Skyloom在轨光学通信终端达84个",
+        "assessment": "IonQ官网新闻稿称，最新发射后Skyloom光学通信终端在轨安装数达到84个，标志着向SDA的PWSA架构迈出重要里程碑。该证据来自公司自身，且IonQ主业为量子计算，此进展属于其光学通信业务，需注意业务相关性。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "IonQ",
+          "Skyloom",
+          "SDA"
+        ],
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "title": "国产算力与AI芯片报道密集，商汤为智谱提供国产算力",
+        "assessment": "新浪财经多篇标题级报道提及国产模型加速落地、算力需求爆发、国产AI芯片进入上升通道，以及商汤大装置为智谱GLM-5.3-Flash提供国产算力。这些信息缺乏详细数据，且为媒体标题，置信度低。",
+        "importance": 3,
+        "confidence": "low",
+        "entities": [
+          "寒武纪",
+          "商汤",
+          "智谱"
+        ],
+        "evidenceIds": [
+          "E022",
+          "E024"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "OpenAI",
-        "direction": "neutral",
-        "statement": "新闻报道称OpenAI发布Admin插件，可能扩展企业级管理能力，但证据等级低，暂不改变对OpenAI的整体判断。",
+        "entity": "英伟达",
+        "direction": "positive",
+        "statement": "据媒体报道，英伟达季度财报大超预期，短期提振AI硬件市场情绪；但需关注后续财报指引及估值消化。",
         "evidenceIds": [
           "E001"
+        ]
+      },
+      {
+        "entity": "博通",
+        "direction": "neutral",
+        "statement": "博通财报将接棒英伟达成为下周焦点，但证据包中无具体业绩信息，方向待验证。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "entity": "OpenAI",
+        "direction": "mixed",
+        "statement": "据低等级证据，OpenAI在印度推出ChatGPT广告并聘请Meta高管，显示其国际化扩张意图，但细节未证实，需更可靠来源。",
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "entity": "立讯精密",
+        "direction": "positive",
+        "statement": "上半年营收和净利均实现增长，且前三季度指引继续增长，机构调研密集，显示市场关注度高。",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "entity": "印度IT产业",
+        "direction": "negative",
+        "statement": "AI冲击下Nifty IT指数大幅下跌，行业龙头业绩承压、裁员，传统外包模式面临挑战。",
+        "evidenceIds": [
+          "E007"
+        ]
+      },
+      {
+        "entity": "国产AI芯片/算力",
+        "direction": "positive",
+        "statement": "多篇报道称国产模型落地和算力需求爆发推动国产AI芯片进入上升通道，但证据为标题级，需订单和业绩验证。",
+        "evidenceIds": [
+          "E022",
+          "E024"
+        ]
+      },
+      {
+        "entity": "IonQ",
+        "direction": "neutral",
+        "statement": "Skyloom在轨终端达84个是业务里程碑，但属于光学通信而非量子计算主业，对IonQ整体影响需评估。",
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "entity": "宁德时代",
+        "direction": "neutral",
+        "statement": "新闻更新主要为捐赠和行业报道，无重大业务变化，维持中性。",
+        "evidenceIds": [
+          "E019"
         ]
       }
     ],
     "watchlist": [
       {
-        "item": "OpenAI Admin插件的官方公告与功能细节",
-        "reason": "E001仅提供新闻标题，未包含具体功能、定价或适用范围，需官方来源验证。",
-        "nextEvidence": "OpenAI官方博客或产品文档",
+        "item": "美国8月非农就业数据",
+        "reason": "将影响美联储利率路径和美股风险偏好，是下周最大宏观变量。",
+        "nextEvidence": "2026年9月初公布的官方非农数据及市场反应",
         "evidenceIds": [
           "E001"
+        ]
+      },
+      {
+        "item": "博通季度财报",
+        "reason": "作为AI硬件链重要公司，其业绩和指引将验证AI算力需求持续性。",
+        "nextEvidence": "博通财报发布及管理层指引",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "item": "OpenAI印度扩张细节",
+        "reason": "D级证据仅提供标题，需确认ChatGPT广告投放规模及Meta高管任命是否属实。",
+        "nextEvidence": "OpenAI官方公告或可靠媒体报道",
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "item": "立讯精密前三季度业绩",
+        "reason": "公司给出15%-25%净利增长指引，需跟踪实际兑现情况。",
+        "nextEvidence": "2026年三季报或业绩预告",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "item": "国产算力订单与智算工程",
+        "reason": "报道称国产算力芯片订单激增、智算超级工程获批，但缺乏具体数据，需验证。",
+        "nextEvidence": "相关公司订单公告、智算项目招标信息",
+        "evidenceIds": [
+          "E024"
+        ]
+      },
+      {
+        "item": "印度IT龙头财报与裁员",
+        "reason": "验证AI对印度IT外包的冲击程度，以及指数是否继续下行。",
+        "nextEvidence": "印度IT公司季度财报和就业数据",
+        "evidenceIds": [
+          "E007"
+        ]
+      },
+      {
+        "item": "IonQ/Skyloom后续发射与SDA合同",
+        "reason": "在轨终端数量是里程碑，但需跟踪后续部署节奏和合同收入确认。",
+        "nextEvidence": "IonQ季度财报或SDA项目进展公告",
+        "evidenceIds": [
+          "E006"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "基于低等级新闻证据可能误判产品发布状态",
-        "reason": "E001证据等级为D，来源为Google News聚合，标题可能不完整或存在误报，需谨慎对待。",
+        "risk": "证据质量参差不齐",
+        "reason": "部分证据为D级（如E002）或标题级媒体信息（如E022、E024），可能夸大或失真，基于这些信息形成的判断存在不确定性。",
+        "evidenceIds": [
+          "E002",
+          "E022",
+          "E024"
+        ]
+      },
+      {
+        "risk": "宏观数据引发市场波动",
+        "reason": "8月非农数据若大幅偏离预期，可能改变利率路径，导致美股和科技股波动。",
         "evidenceIds": [
           "E001"
         ]
+      },
+      {
+        "risk": "AI对传统IT外包的冲击可能加速",
+        "reason": "印度IT产业指数下跌和裁员可能只是开始，若AI替代效应超预期，相关服务商收入与就业将承压。",
+        "evidenceIds": [
+          "E007"
+        ]
+      },
+      {
+        "risk": "国产算力报道存在夸大风险",
+        "reason": "媒体标题称国产AI芯片进入上升通道，但缺乏订单和业绩支撑，需警惕预期过高。",
+        "evidenceIds": [
+          "E024"
+        ]
+      },
+      {
+        "risk": "公司新闻更新不完整",
+        "reason": "宁德时代、寒武纪的news变化仅提供标题，metrics字段未纳入证据，无法据此评估基本面变化。",
+        "evidenceIds": [
+          "E017",
+          "E018",
+          "E019",
+          "E020",
+          "E021",
+          "E022",
+          "E023",
+          "E024"
+        ]
       }
     ],
-    "methodologyNote": "本分析仅基于证据包中的E001，未补充外部事实。证据等级D，所有判断均为低置信度推断，不构成投资建议。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
+    "methodologyNote": "本分析仅基于证据包中提供的结构化证据，未补充外部事实。每个判断均引用至少一个evidenceIds。事实与推断分开表述：媒体报道中的具体数据作为“据媒体报道”的事实，但置信度根据证据等级调整；低等级或标题级证据仅作为待验证线索，不写成确定性重大事实。本报告不构成任何买入、卖出、目标价或收益承诺。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
   },
   "changes": [
     {
-      "id": "chg-1e351a5c7e968c6ba48f",
+      "id": "chg-864e9e23f2d333841277",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-f487221742d9b8fbc3",
-      "entityName": "OpenAI发布适用于ChatGPT Work和Codex的Admin插件|管理|额度|管理员|数据|群组_手机新浪网 - 新浪财经",
+      "entityId": "intelligence-event-a33c24b807479aa8da",
+      "entityName": "环球下周看点：8月非农数据重磅来袭 博通财报接棒英伟达",
       "action": "added",
       "changedFields": [
         "title",
@@ -102,28 +329,35 @@
         "type",
         "publishedAt",
         "company",
-        "companySlug",
         "sector",
         "region",
         "importance",
         "qualityScore",
-        "qualityStatus",
         "sources"
       ],
-      "summary": "新增高价值情报事件记录：OpenAI发布适用于ChatGPT Work和Codex的Admin插件|管理|额度|管理员|数据|群组_手机新浪网 - 新浪财经。",
-      "importance": 82,
+      "summary": "新增高价值情报事件记录：环球下周看点：8月非农数据重磅来袭 博通财报接棒英伟达。",
+      "importance": 84,
       "before": null,
       "after": {
-        "title": "OpenAI发布适用于ChatGPT Work和Codex的Admin插件|管理|额度|管理员|数据|群组_手机新浪网 - 新浪财经",
-        "summary": "OpenAI发布适用于ChatGPT Work和Codex的Admin插件|管理|额度|管理员|数据|群组_手机新浪网 新浪财经",
-        "type": "产品发布",
-        "publishedAt": "2026-08-26",
-        "company": "OpenAI",
-        "companySlug": "openai",
+        "title": "环球下周看点：8月非农数据重磅来袭 博通财报接棒英伟达",
+        "summary": "本周，美股三大指数周线均录得上涨，标普500指数累计上涨0.49%，纳指涨0.85%，道指涨0.53%。 标普500指数目前距离8月13日创下的历史高点仅略高于1%。 人工智能 （AI）龙头股 英伟达 周三公布了一份大超预期的季度财报，提振了市场情绪。此前，本月早些时候美债收益率上升曾对股市造成压力。 未来一周，市场将重新聚焦美国劳动力市场状况，尤其是将于周五公布的8月非农就业数据。",
+        "type": "财报",
+        "publishedAt": "2026-08-30",
+        "company": "科技产业",
         "sector": "AI / AGI",
-        "region": "中国",
-        "importance": 82,
-        "qualityScore": 52
+        "region": "全球",
+        "importance": 84,
+        "qualityScore": 0,
+        "sources": [
+          {
+            "name": "东方财富",
+            "url": "https://finance.eastmoney.com/a/202608303859334765.html",
+            "title": "环球下周看点：8月非农数据重磅来袭 博通财报接棒英伟达",
+            "publishedAt": "2026-08-30",
+            "level": "媒体报道",
+            "section": "summary"
+          }
+        ]
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -137,7 +371,7 @@
         {
           "field": "publishedAt",
           "before": null,
-          "after": "2026-08-26",
+          "after": "2026-08-30",
           "evidenceIds": [
             "E001"
           ]
@@ -145,7 +379,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "OpenAI发布适用于ChatGPT Work和Codex的Admin插件|管理|额度|管理员|数据|群组_手机新浪网 新浪财经",
+          "after": "本周，美股三大指数周线均录得上涨，标普500指数累计上涨0.49%，纳指涨0.85%，道指涨0.53%。 标普500指数目前距离8月13日创下的历史高点仅略高于1%。 人工智能 （AI）龙头股 英伟达 周三公布了一份大超预期的季度财报，提振了市场情绪。此前，本月早些时候美债收益率上升曾对股市造成压力。 未来一周，市场将重新聚焦美国劳动力市场状况，尤其是将于周五公布的8月非农就业数据。",
           "evidenceIds": [
             "E001"
           ]
@@ -153,7 +387,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "OpenAI发布适用于ChatGPT Work和Codex的Admin插件|管理|额度|管理员|数据|群组_手机新浪网 - 新浪财经",
+          "after": "环球下周看点：8月非农数据重磅来袭 博通财报接棒英伟达",
           "evidenceIds": [
             "E001"
           ]
@@ -161,10 +395,8 @@
       ],
       "unsupportedClaimFields": [
         "company",
-        "companySlug",
         "importance",
         "qualityScore",
-        "qualityStatus",
         "region",
         "sector",
         "type"
@@ -181,23 +413,1541 @@
         "total": 1
       },
       "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-b9d5407f50558d03fecc",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-fe9ed91c1f0dc32883",
+      "entityName": "OpenAI Expands India Push With ChatGPT Ads Launch And Senior Meta Executive Hire - AI Insider",
+      "action": "added",
+      "changedFields": [
+        "title",
+        "summary",
+        "type",
+        "publishedAt",
+        "company",
+        "companySlug",
+        "sector",
+        "region",
+        "importance",
+        "qualityScore",
+        "qualityStatus",
+        "sources"
+      ],
+      "summary": "新增高价值情报事件记录：OpenAI Expands India Push With ChatGPT Ads Launch And Senior Meta Executive Hire - AI Insider。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "title": "OpenAI Expands India Push With ChatGPT Ads Launch And Senior Meta Executive Hire - AI Insider",
+        "summary": "OpenAI Expands India Push With ChatGPT Ads Launch And Senior Meta Executive Hire AI Insider",
+        "type": "商业进展",
+        "publishedAt": "2026-08-28",
+        "company": "OpenAI",
+        "companySlug": "openai",
+        "sector": "AI / AGI",
+        "region": "美国",
+        "importance": 84,
+        "qualityScore": 52
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-28",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "OpenAI Expands India Push With ChatGPT Ads Launch And Senior Meta Executive Hire AI Insider",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "OpenAI Expands India Push With ChatGPT Ads Launch And Senior Meta Executive Hire - AI Insider",
+          "evidenceIds": [
+            "E002"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "company",
+        "companySlug",
+        "importance",
+        "qualityScore",
+        "qualityStatus",
+        "region",
+        "sector",
+        "type"
+      ],
+      "evidenceIds": [
+        "E002"
+      ],
+      "supportingEvidenceIds": [
+        "E002"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-4f61552de27f6dc0e00e",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-5950257dffc24200f5",
+      "entityName": "集齐CPO、人形机器人、汽车电子等热门题材 这只龙头股火了（附名单）",
+      "action": "added",
+      "changedFields": [
+        "title",
+        "summary",
+        "type",
+        "publishedAt",
+        "company",
+        "sector",
+        "region",
+        "importance",
+        "qualityScore",
+        "sources"
+      ],
+      "summary": "新增高价值情报事件记录：集齐CPO、人形机器人、汽车电子等热门题材 这只龙头股火了（附名单）。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "title": "集齐CPO、人形机器人、汽车电子等热门题材 这只龙头股火了（附名单）",
+        "summary": "近一周机构调研个股有540多只， 立讯精密 调研机构数最多。 立讯精密 （002475）有268家机构调研，包括60家基金公司、46家证券公司、65家私募等。2026年上半年，公司实现营业收入1745.04亿元，同比增长40.16%；实现归母净利润78.43亿元，同比增长18.04%；毛利率11.78%，较去年同期提升0.17个百分点。同时，公司预计2026年前三季度实现归母净利润132.46亿元至143.98亿元，同比增长15%至25%。 立讯精密 是 消费电子 龙头，集齐了CPO、人形 机器人 、 汽车 电子…",
+        "type": "公司动态",
+        "publishedAt": "2026-08-30",
+        "company": "科技产业",
+        "sector": "机器人",
+        "region": "全球",
+        "importance": 80,
+        "qualityScore": 0,
+        "sources": [
+          {
+            "name": "东方财富",
+            "url": "https://finance.eastmoney.com/a/202608303859339192.html",
+            "title": "集齐CPO、人形机器人、汽车电子等热门题材 这只龙头股火了（附名单）",
+            "publishedAt": "2026-08-30",
+            "level": "媒体报道",
+            "section": "summary"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-30",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "近一周机构调研个股有540多只， 立讯精密 调研机构数最多。 立讯精密 （002475）有268家机构调研，包括60家基金公司、46家证券公司、65家私募等。2026年上半年，公司实现营业收入1745.04亿元，同比增长40.16%；实现归母净利润78.43亿元，同比增长18.04%；毛利率11.78%，较去年同期提升0.17个百分点。同时，公司预计2026年前三季度实现归母净利润132.46亿元至143.98亿元，同比增长15%至25%。 立讯精密 是 消费电子 龙头，集齐了CPO、人形 机器人 、 汽车 电子…",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "集齐CPO、人形机器人、汽车电子等热门题材 这只龙头股火了（附名单）",
+          "evidenceIds": [
+            "E003"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "company",
+        "importance",
+        "qualityScore",
+        "region",
+        "sector",
+        "type"
+      ],
+      "evidenceIds": [
+        "E003"
+      ],
+      "supportingEvidenceIds": [
+        "E003"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-4e694c69093594f5c591",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-3a3b0af655a63d91e6",
+      "entityName": "日产汽车：未来技术布局，迈向更安全、更舒适的出行",
+      "action": "added",
+      "changedFields": [
+        "title",
+        "summary",
+        "type",
+        "publishedAt",
+        "company",
+        "sector",
+        "region",
+        "importance",
+        "qualityScore",
+        "sources"
+      ],
+      "summary": "新增高价值情报事件记录：日产汽车：未来技术布局，迈向更安全、更舒适的出行。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "title": "日产汽车：未来技术布局，迈向更安全、更舒适的出行",
+        "summary": "新浪网 发布“日产汽车：未来技术布局，迈向更安全、更舒适的出行”；完整事实、数据与附件见官方原文。",
+        "type": "公司动态",
+        "publishedAt": "2026-08-26",
+        "company": "新浪网",
+        "sector": "AI语音",
+        "region": "中国",
+        "importance": 80,
+        "qualityScore": 0,
+        "sources": [
+          {
+            "name": "新浪网",
+            "url": "https://auto.sina.com.cn/news/2026-08-26/detail-iniprytq2404259.shtml",
+            "title": "日产汽车：未来技术布局，迈向更安全、更舒适的出行",
+            "publishedAt": "2026-08-26",
+            "level": "官方披露",
+            "section": "summary"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-26",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "新浪网 发布“日产汽车：未来技术布局，迈向更安全、更舒适的出行”；完整事实、数据与附件见官方原文。",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "日产汽车：未来技术布局，迈向更安全、更舒适的出行",
+          "evidenceIds": [
+            "E004"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "company",
+        "importance",
+        "qualityScore",
+        "region",
+        "sector",
+        "type"
+      ],
+      "evidenceIds": [
+        "E004"
+      ],
+      "supportingEvidenceIds": [
+        "E004"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-7df8d606b4c5c206ecd9",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-5883af599b2ce41cbf",
+      "entityName": "“生于赛道 保时捷赛车运动75周年”主题展启幕",
+      "action": "added",
+      "changedFields": [
+        "title",
+        "summary",
+        "type",
+        "publishedAt",
+        "company",
+        "sector",
+        "region",
+        "importance",
+        "qualityScore",
+        "sources"
+      ],
+      "summary": "新增高价值情报事件记录：“生于赛道 保时捷赛车运动75周年”主题展启幕。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "title": "“生于赛道 保时捷赛车运动75周年”主题展启幕",
+        "summary": "8月28日，“生于赛道——保时捷赛车运动75周年”主题展览于北京启皓中心大堂正式启幕。同日，位于亮马河畔的保时捷品牌快闪空间亦完成主题焕新，以“生于赛道，驰于公路”为题，可视为本次展览的第五篇章，与启皓主展相呼应，共同讲述保时捷75年来从未被地形或时代所限定的冠军之路，以及将赛道精神融入每一位驾驶者日常生活的身边故事。",
+        "type": "公司动态",
+        "publishedAt": "2026-08-29",
+        "company": "新浪网",
+        "sector": "AI语音",
+        "region": "中国",
+        "importance": 80,
+        "qualityScore": 0,
+        "sources": [
+          {
+            "name": "新浪网",
+            "url": "https://auto.sina.com.cn/news/2026-08-29/detail-inipyfhv5529577.shtml",
+            "title": "“生于赛道 保时捷赛车运动75周年”主题展启幕",
+            "publishedAt": "2026-08-29",
+            "level": "官方披露",
+            "section": "summary"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-29",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "8月28日，“生于赛道——保时捷赛车运动75周年”主题展览于北京启皓中心大堂正式启幕。同日，位于亮马河畔的保时捷品牌快闪空间亦完成主题焕新，以“生于赛道，驰于公路”为题，可视为本次展览的第五篇章，与启皓主展相呼应，共同讲述保时捷75年来从未被地形或时代所限定的冠军之路，以及将赛道精神融入每一位驾驶者日常生活的身边故事。",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "“生于赛道 保时捷赛车运动75周年”主题展启幕",
+          "evidenceIds": [
+            "E005"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "company",
+        "importance",
+        "qualityScore",
+        "region",
+        "sector",
+        "type"
+      ],
+      "evidenceIds": [
+        "E005"
+      ],
+      "supportingEvidenceIds": [
+        "E005"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-1288a64618d49647f7b6",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-589dd26645c718b7cf",
+      "entityName": "IonQ | www.ionq.com/news/ionqs-skyloom-optical-communications-terminals-reach-84-on-orbit-installations-following-latest-launch",
+      "action": "added",
+      "changedFields": [
+        "title",
+        "summary",
+        "type",
+        "publishedAt",
+        "company",
+        "companySlug",
+        "sector",
+        "region",
+        "importance",
+        "qualityScore",
+        "qualityStatus",
+        "sources"
+      ],
+      "summary": "新增高价值情报事件记录：IonQ | www.ionq.com/news/ionqs-skyloom-optical-communications-terminals-reach-84-on-orbit-installations-following-latest-launch。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "title": "IonQ | www.ionq.com/news/ionqs-skyloom-optical-communications-terminals-reach-84-on-orbit-installations-following-latest-launch",
+        "summary": "Deployment of Additional OCTs Marks Major Milestone Toward SDA’s Proliferated Warfighter Space Architecture",
+        "type": "公司动态",
+        "publishedAt": "2026-08-24",
+        "company": "IonQ",
+        "companySlug": "ionq",
+        "sector": "量子计算",
+        "region": "美国",
+        "importance": 80,
+        "qualityScore": 47
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-24",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Deployment of Additional OCTs Marks Major Milestone Toward SDA’s Proliferated Warfighter Space Architecture",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "IonQ | www.ionq.com/news/ionqs-skyloom-optical-communications-terminals-reach-84-on-orbit-installations-following-latest-launch",
+          "evidenceIds": [
+            "E006"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "company",
+        "companySlug",
+        "importance",
+        "qualityScore",
+        "qualityStatus",
+        "region",
+        "sector",
+        "type"
+      ],
+      "evidenceIds": [
+        "E006"
+      ],
+      "supportingEvidenceIds": [
+        "E006"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-2c1b55d2b76621526673",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-93591ffcfcd1d09097",
+      "entityName": "IT旧地图找不到AI新大陆",
+      "action": "added",
+      "changedFields": [
+        "title",
+        "summary",
+        "type",
+        "publishedAt",
+        "company",
+        "sector",
+        "region",
+        "importance",
+        "qualityScore",
+        "sources"
+      ],
+      "summary": "新增高价值情报事件记录：IT旧地图找不到AI新大陆。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "title": "IT旧地图找不到AI新大陆",
+        "summary": "当全球都在热议 人工智能 （AI）红利时，印度却率先吞下了苦果。 今年以来，被视为印度信息技术（IT）行业风向标的Nifty IT指数多次断崖式下跌，较2024年高位如今已近乎腰斩，成为印度资本市场表现最差的板块之一。与此同时， 行业龙头 业绩承压，裁员消息不断，投资者信心下降……AI冲击下，印度IT产业遭遇巨大挑战。 印度IT产业以“外包”闻名世界。20世纪90年代以来，欧美跨国企业为降低 软件开发 和维护成本，将大量技术服务外包给印度。凭借庞大的程序员群体、低廉的人力成本以及普遍的英语语言能力等优势，印度承接…",
+        "type": "公司动态",
+        "publishedAt": "2026-08-30",
+        "company": "科技产业",
+        "sector": "AI / AGI",
+        "region": "全球",
+        "importance": 80,
+        "qualityScore": 0,
+        "sources": [
+          {
+            "name": "东方财富",
+            "url": "https://finance.eastmoney.com/a/202608303859335684.html",
+            "title": "IT旧地图找不到AI新大陆",
+            "publishedAt": "2026-08-30",
+            "level": "媒体报道",
+            "section": "summary"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-30",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "当全球都在热议 人工智能 （AI）红利时，印度却率先吞下了苦果。 今年以来，被视为印度信息技术（IT）行业风向标的Nifty IT指数多次断崖式下跌，较2024年高位如今已近乎腰斩，成为印度资本市场表现最差的板块之一。与此同时， 行业龙头 业绩承压，裁员消息不断，投资者信心下降……AI冲击下，印度IT产业遭遇巨大挑战。 印度IT产业以“外包”闻名世界。20世纪90年代以来，欧美跨国企业为降低 软件开发 和维护成本，将大量技术服务外包给印度。凭借庞大的程序员群体、低廉的人力成本以及普遍的英语语言能力等优势，印度承接…",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "IT旧地图找不到AI新大陆",
+          "evidenceIds": [
+            "E007"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "company",
+        "importance",
+        "qualityScore",
+        "region",
+        "sector",
+        "type"
+      ],
+      "evidenceIds": [
+        "E007"
+      ],
+      "supportingEvidenceIds": [
+        "E007"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-56baca6b9da2edadae56",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-7c818cd1a55e5b7056",
+      "entityName": "ALIF: Building AI Fluency, One Cohort at a Time",
+      "action": "added",
+      "changedFields": [
+        "title",
+        "summary",
+        "type",
+        "publishedAt",
+        "company",
+        "companySlug",
+        "sector",
+        "region",
+        "importance",
+        "qualityScore",
+        "sources"
+      ],
+      "summary": "新增高价值情报事件记录：ALIF: Building AI Fluency, One Cohort at a Time。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "title": "ALIF: Building AI Fluency, One Cohort at a Time",
+        "summary": "Most organizations pilot AI; few scale it. ALIF builds the workforce fluency and change management that turn isolated pilots into enterprise adoption.",
+        "type": "公司动态",
+        "publishedAt": "2026-08-25",
+        "company": "Scale AI",
+        "companySlug": "scale-ai",
+        "sector": "AI / AGI",
+        "region": "美国",
+        "importance": 80,
+        "qualityScore": 0
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-25",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Most organizations pilot AI; few scale it. ALIF builds the workforce fluency and change management that turn isolated pilots into enterprise adoption.",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "ALIF: Building AI Fluency, One Cohort at a Time",
+          "evidenceIds": [
+            "E008"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "company",
+        "companySlug",
+        "importance",
+        "qualityScore",
+        "region",
+        "sector",
+        "type"
+      ],
+      "evidenceIds": [
+        "E008"
+      ],
+      "supportingEvidenceIds": [
+        "E008"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-300587143250c2aaa71d",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "catl",
+      "entityName": "宁德时代",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "news",
+        "sources"
+      ],
+      "summary": "宁德时代 的 news 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "¥97.07亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "81.99元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "13.02元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "9.51元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "¥1.57万亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "42.60亿股"
+          },
+          "…另 8 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-08-29T03:52:00+08:00",
+            "source": "新浪财经",
+            "title": "一块电池如何影响车企利润表？宁德时代锁定半壁市场 车企重估电池自研与外采",
+            "url": "https://cj.sina.cn/articles/view/1650111241/625ab30902001hd5s"
+          },
+          {
+            "publishedAt": "2026-08-29T00:06:00+08:00",
+            "source": "新浪财经",
+            "title": "中恒电气：8月28日召开业绩说明会，投资者参与",
+            "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002i3uu"
+          },
+          {
+            "publishedAt": "2026-08-29T04:01:00+08:00",
+            "source": "新浪财经",
+            "title": "宁德时代新注册《动力锂电池运输安全防护装备智能设计平台V2.0》项目的软件著作权",
+            "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002i4t0"
+          },
+          {
+            "publishedAt": "2026-08-28T23:23:00+08:00",
+            "source": "新浪财经",
+            "title": "“我们不是汽车公司”——296 家汽车产业公司的年报改写运动",
+            "url": "https://cj.sina.cn/articles/view/7294209083/1b2c4cc3b00101vexs"
+          },
+          {
+            "publishedAt": "2026-08-28T21:02:00+08:00",
+            "source": "新浪财经",
+            "title": "公司是否与宁德时代有固态电池业务合作？志特新材回应",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipwtfm4369165.shtml"
+          },
+          {
+            "publishedAt": "2026-08-29T11:18:00+08:00",
+            "source": "新浪财经",
+            "title": "自称“20万级最强纯电轿跑”，全新一代智己L6究竟“强”在哪？",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-29/doc-inipxyyv8789952.shtml"
+          },
+          "…另 4 项"
+        ],
+        "sources": {
+          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz300750%2Cday%2C%2C%2C120%2Cqfq",
+          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=0.300750&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
+          "sinaFinance": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/300750/"
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "81.99元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "13.02元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "9.51元"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "42.60亿"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "¥1.71万亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "432.84亿元"
+          },
+          "…另 3 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-08-29T13:39:00+08:00",
+            "source": "新浪财经",
+            "title": "QFII二季度持仓全景解析！外资把筹码押向硬科技！",
+            "url": "https://cj.sina.cn/articles/view/1648948823/6248f6570270balec"
+          },
+          {
+            "publishedAt": "2026-08-29T23:53:00+08:00",
+            "source": "新浪财经",
+            "title": "动力与储能“双轨并行” 创业板新能源指数的产业链“引擎”",
+            "url": "https://cj.sina.cn/articles/view/6904572892/19b8b6bdc00101h5au"
+          },
+          {
+            "publishedAt": "2026-08-29T14:09:00+08:00",
+            "source": "新浪财经",
+            "title": "宁德时代：向西藏吉隆灾区捐赠1000万元，用于应急救援、群众过渡安置及灾后恢复重建。",
+            "url": "https://finance.sina.com.cn/7x24/2026-08-29/doc-inipyfht8782005.shtml"
+          },
+          {
+            "publishedAt": "2026-08-29T11:18:00+08:00",
+            "source": "新浪财经",
+            "title": "自称“20万级最强纯电轿跑”，全新一代智己L6究竟“强”在哪？",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-29/doc-inipxyyz9373119.shtml"
+          },
+          {
+            "publishedAt": "2026-08-29T17:40:00+08:00",
+            "source": "新浪财经",
+            "title": "东方财富、腾讯、阿里巴巴、滴滴、小米、比亚迪、宁德时代、中国黄金集团等集体出手，驰援西藏吉隆灾区",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-29/doc-inipyrwr5461515.shtml"
+          },
+          {
+            "publishedAt": "2026-08-29T04:16:00+08:00",
+            "source": "新浪财经",
+            "title": "河南明泰铝业股份有限公司关于2026年半年度业绩说明会召开情况的公告",
+            "url": "https://finance.sina.com.cn/roll/2026-08-29/doc-inipxkcc8881813.shtml"
+          },
+          "…另 4 项"
+        ],
+        "sources": {
+          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz300750%2Cday%2C%2C%2C120%2Cqfq",
+          "sinaFinance": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/300750/"
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [
+            {
+              "publishedAt": "2026-08-29T03:52:00+08:00",
+              "source": "新浪财经",
+              "title": "一块电池如何影响车企利润表？宁德时代锁定半壁市场 车企重估电池自研与外采",
+              "url": "https://cj.sina.cn/articles/view/1650111241/625ab30902001hd5s"
+            },
+            {
+              "publishedAt": "2026-08-29T00:06:00+08:00",
+              "source": "新浪财经",
+              "title": "中恒电气：8月28日召开业绩说明会，投资者参与",
+              "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002i3uu"
+            },
+            {
+              "publishedAt": "2026-08-29T04:01:00+08:00",
+              "source": "新浪财经",
+              "title": "宁德时代新注册《动力锂电池运输安全防护装备智能设计平台V2.0》项目的软件著作权",
+              "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002i4t0"
+            },
+            {
+              "publishedAt": "2026-08-28T23:23:00+08:00",
+              "source": "新浪财经",
+              "title": "“我们不是汽车公司”——296 家汽车产业公司的年报改写运动",
+              "url": "https://cj.sina.cn/articles/view/7294209083/1b2c4cc3b00101vexs"
+            },
+            {
+              "publishedAt": "2026-08-28T21:02:00+08:00",
+              "source": "新浪财经",
+              "title": "公司是否与宁德时代有固态电池业务合作？志特新材回应",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipwtfm4369165.shtml"
+            },
+            {
+              "publishedAt": "2026-08-29T11:18:00+08:00",
+              "source": "新浪财经",
+              "title": "自称“20万级最强纯电轿跑”，全新一代智己L6究竟“强”在哪？",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-29/doc-inipxyyv8789952.shtml"
+            },
+            "…另 4 项"
+          ],
+          "after": [
+            {
+              "publishedAt": "2026-08-29T13:39:00+08:00",
+              "source": "新浪财经",
+              "title": "QFII二季度持仓全景解析！外资把筹码押向硬科技！",
+              "url": "https://cj.sina.cn/articles/view/1648948823/6248f6570270balec"
+            },
+            {
+              "publishedAt": "2026-08-29T23:53:00+08:00",
+              "source": "新浪财经",
+              "title": "动力与储能“双轨并行” 创业板新能源指数的产业链“引擎”",
+              "url": "https://cj.sina.cn/articles/view/6904572892/19b8b6bdc00101h5au"
+            },
+            {
+              "publishedAt": "2026-08-29T14:09:00+08:00",
+              "source": "新浪财经",
+              "title": "宁德时代：向西藏吉隆灾区捐赠1000万元，用于应急救援、群众过渡安置及灾后恢复重建。",
+              "url": "https://finance.sina.com.cn/7x24/2026-08-29/doc-inipyfht8782005.shtml"
+            },
+            {
+              "publishedAt": "2026-08-29T11:18:00+08:00",
+              "source": "新浪财经",
+              "title": "自称“20万级最强纯电轿跑”，全新一代智己L6究竟“强”在哪？",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-29/doc-inipxyyz9373119.shtml"
+            },
+            {
+              "publishedAt": "2026-08-29T17:40:00+08:00",
+              "source": "新浪财经",
+              "title": "东方财富、腾讯、阿里巴巴、滴滴、小米、比亚迪、宁德时代、中国黄金集团等集体出手，驰援西藏吉隆灾区",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-29/doc-inipyrwr5461515.shtml"
+            },
+            {
+              "publishedAt": "2026-08-29T04:16:00+08:00",
+              "source": "新浪财经",
+              "title": "河南明泰铝业股份有限公司关于2026年半年度业绩说明会召开情况的公告",
+              "url": "https://finance.sina.com.cn/roll/2026-08-29/doc-inipxkcc8881813.shtml"
+            },
+            "…另 4 项"
+          ],
+          "evidenceIds": [
+            "E017",
+            "E018",
+            "E019",
+            "E020"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics"
+      ],
+      "evidenceIds": [
+        "E017",
+        "E018",
+        "E019",
+        "E020"
+      ],
+      "supportingEvidenceIds": [
+        "E017",
+        "E018",
+        "E019",
+        "E020"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 4,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
+    },
+    {
+      "id": "chg-dff75336d827410d1b1d",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "cambricon",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "news",
+        "sources"
+      ],
+      "summary": "中科寒武纪科技股份有限公司 的 news 发生变化。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "¥116.37亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "21.57元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.50元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "3.68元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "¥6581.77亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "6.29亿股"
+          },
+          "…另 8 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-08-28T19:05:00+08:00",
+            "source": "新浪财经",
+            "title": "章建平夫妇现身亨通光电，章盟主二季度上演百亿大调仓",
+            "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002tolm"
+          },
+          {
+            "publishedAt": "2026-08-28T10:03:00+08:00",
+            "source": "新浪财经",
+            "title": "科创AIETF鹏华(589090)、科创创业人工智能ETF鹏华(588410)标的指数均涨超1.5%，软件板块迎来海内外利好催化",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4721256.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T10:16:00+08:00",
+            "source": "新浪财经",
+            "title": "算力需求向硬件上游传导，消费电子核心上游环节集体走强",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4727023.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T10:52:00+08:00",
+            "source": "新浪财经",
+            "title": "科创50ETF平安(589150)交投活跃，AI驱动PCB、软件等细分板块走强",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4746462.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T13:20:00+08:00",
+            "source": "新浪财经",
+            "title": "国产模型加速落地叠加算力需求爆发，国产AI芯片进入上升通道，重视下半年芯片设计机会",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzv4686253.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T13:23:00+08:00",
+            "source": "新浪财经",
+            "title": "商汤大装置为智谱GLM-5.3-Flash提供国产算力，头部大模型国产算力承接取得实质进展",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzx5800960.shtml"
+          },
+          "…另 4 项"
+        ],
+        "sources": {
+          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh688256%2Cday%2C%2C%2C120%2Cqfq",
+          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=1.688256&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
+          "sinaFinance": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/688256/"
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "21.57元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.50元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "3.68元"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "6.28亿"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "¥6583.30亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "23.11亿元"
+          },
+          "…另 3 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-08-28T19:05:00+08:00",
+            "source": "新浪财经",
+            "title": "章建平夫妇现身亨通光电，章盟主二季度上演百亿大调仓",
+            "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002tolm"
+          },
+          {
+            "publishedAt": "2026-08-28T10:16:00+08:00",
+            "source": "新浪财经",
+            "title": "算力需求向硬件上游传导，消费电子核心上游环节集体走强",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4727023.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T10:52:00+08:00",
+            "source": "新浪财经",
+            "title": "科创50ETF平安(589150)交投活跃，AI驱动PCB、软件等细分板块走强",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4746462.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T13:20:00+08:00",
+            "source": "新浪财经",
+            "title": "国产模型加速落地叠加算力需求爆发，国产AI芯片进入上升通道，重视下半年芯片设计机会",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzv4686253.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T13:23:00+08:00",
+            "source": "新浪财经",
+            "title": "商汤大装置为智谱GLM-5.3-Flash提供国产算力，头部大模型国产算力承接取得实质进展",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzx5800960.shtml"
+          },
+          {
+            "publishedAt": "2026-08-28T13:45:00+08:00",
+            "source": "新浪财经",
+            "title": "国产算力芯片订单激增叠加智算超级工程获批，国产算力产业进入加速扩张期",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipwaiy0067552.shtml"
+          },
+          "…另 4 项"
+        ],
+        "sources": {
+          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh688256%2Cday%2C%2C%2C120%2Cqfq",
+          "sinaFinance": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/688256/"
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [
+            {
+              "publishedAt": "2026-08-28T19:05:00+08:00",
+              "source": "新浪财经",
+              "title": "章建平夫妇现身亨通光电，章盟主二季度上演百亿大调仓",
+              "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002tolm"
+            },
+            {
+              "publishedAt": "2026-08-28T10:03:00+08:00",
+              "source": "新浪财经",
+              "title": "科创AIETF鹏华(589090)、科创创业人工智能ETF鹏华(588410)标的指数均涨超1.5%，软件板块迎来海内外利好催化",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4721256.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T10:16:00+08:00",
+              "source": "新浪财经",
+              "title": "算力需求向硬件上游传导，消费电子核心上游环节集体走强",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4727023.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T10:52:00+08:00",
+              "source": "新浪财经",
+              "title": "科创50ETF平安(589150)交投活跃，AI驱动PCB、软件等细分板块走强",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4746462.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T13:20:00+08:00",
+              "source": "新浪财经",
+              "title": "国产模型加速落地叠加算力需求爆发，国产AI芯片进入上升通道，重视下半年芯片设计机会",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzv4686253.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T13:23:00+08:00",
+              "source": "新浪财经",
+              "title": "商汤大装置为智谱GLM-5.3-Flash提供国产算力，头部大模型国产算力承接取得实质进展",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzx5800960.shtml"
+            },
+            "…另 4 项"
+          ],
+          "after": [
+            {
+              "publishedAt": "2026-08-28T19:05:00+08:00",
+              "source": "新浪财经",
+              "title": "章建平夫妇现身亨通光电，章盟主二季度上演百亿大调仓",
+              "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002tolm"
+            },
+            {
+              "publishedAt": "2026-08-28T10:16:00+08:00",
+              "source": "新浪财经",
+              "title": "算力需求向硬件上游传导，消费电子核心上游环节集体走强",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4727023.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T10:52:00+08:00",
+              "source": "新浪财经",
+              "title": "科创50ETF平安(589150)交投活跃，AI驱动PCB、软件等细分板块走强",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4746462.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T13:20:00+08:00",
+              "source": "新浪财经",
+              "title": "国产模型加速落地叠加算力需求爆发，国产AI芯片进入上升通道，重视下半年芯片设计机会",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzv4686253.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T13:23:00+08:00",
+              "source": "新浪财经",
+              "title": "商汤大装置为智谱GLM-5.3-Flash提供国产算力，头部大模型国产算力承接取得实质进展",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzx5800960.shtml"
+            },
+            {
+              "publishedAt": "2026-08-28T13:45:00+08:00",
+              "source": "新浪财经",
+              "title": "国产算力芯片订单激增叠加智算超级工程获批，国产算力产业进入加速扩张期",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipwaiy0067552.shtml"
+            },
+            "…另 4 项"
+          ],
+          "evidenceIds": [
+            "E021",
+            "E022",
+            "E023",
+            "E024"
+          ]
+        }
+      ],
+      "unsupportedClaimFields": [
+        "metrics"
+      ],
+      "evidenceIds": [
+        "E021",
+        "E022",
+        "E023",
+        "E024"
+      ],
+      "supportingEvidenceIds": [
+        "E021",
+        "E022",
+        "E023",
+        "E024"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 4,
+        "total": 4
+      },
+      "eligibleForKeyDevelopment": true
     }
   ],
   "evidence": [
     {
       "id": "E001",
-      "changeId": "chg-1e351a5c7e968c6ba48f",
-      "entityName": "OpenAI发布适用于ChatGPT Work和Codex的Admin插件|管理|额度|管理员|数据|群组_手机新浪网 - 新浪财经",
-      "claim": "新增高价值情报事件记录：OpenAI发布适用于ChatGPT Work和Codex的Admin插件|管理|额度|管理员|数据|群组_手机新浪网 - 新浪财经。",
-      "sourceName": "GEO · Google News 中文",
-      "title": "OpenAI发布适用于ChatGPT Work和Codex的Admin插件|管理|额度|管理员|数据|群组_手机新浪网 - 新浪财经",
-      "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPT2pUUGJCRjNvcHo2MXplcFo0c3NobnlmYUt5bDZpQi1FVkN5Z0dUckJfRDM3ZmdVMWpvWExOeEltR0RvRW1mWFAySkhRclpWQ0FJZE95eGVzSEVmc2tiQW9yQTRFTm11N1cwa3VKWkltS3ZDZmRzNG5mQXRqaktSUmptei1oODJhejI5alRzVWdjQQ?oc=5",
-      "publishedAt": "2026-08-26",
+      "changeId": "chg-864e9e23f2d333841277",
+      "entityName": "环球下周看点：8月非农数据重磅来袭 博通财报接棒英伟达",
+      "claim": "新增高价值情报事件记录：环球下周看点：8月非农数据重磅来袭 博通财报接棒英伟达。",
+      "sourceName": "东方财富",
+      "title": "环球下周看点：8月非农数据重磅来袭 博通财报接棒英伟达",
+      "url": "https://finance.eastmoney.com/a/202608303859334765.html",
+      "publishedAt": "2026-08-30",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E002",
+      "changeId": "chg-b9d5407f50558d03fecc",
+      "entityName": "OpenAI Expands India Push With ChatGPT Ads Launch And Senior Meta Executive Hire - AI Insider",
+      "claim": "新增高价值情报事件记录：OpenAI Expands India Push With ChatGPT Ads Launch And Senior Meta Executive Hire - AI Insider。",
+      "sourceName": "GEO · Google News 英文",
+      "title": "OpenAI Expands India Push With ChatGPT Ads Launch And Senior Meta Executive Hire - AI Insider",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPckFkTkl5bUF4UmpPdGNMTzNfSk02VU1zMVdnZHgzcEFLY253a3VXY0JSZUYtZDRhSHEtRGw4YzdyWGxxZTZjUlRqNWs5MUEyNFFOa1dOV1RCeGxaMlFBSi0xX3V4bzdiUWtSSkNEUkNVOWVlNGRyakZkMDFZMktUZm1tMVlUZldDbWJHcE5NVktOcUVLbGQ1WE1nYjJCdnVGd0laOTZLeWpSZGFKS29fcEJJV3dKUklsMGc?oc=5",
+      "publishedAt": "2026-08-28",
       "evidenceGrade": "D",
       "claimFields": [
         "publishedAt",
         "summary",
         "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E003",
+      "changeId": "chg-4f61552de27f6dc0e00e",
+      "entityName": "集齐CPO、人形机器人、汽车电子等热门题材 这只龙头股火了（附名单）",
+      "claim": "新增高价值情报事件记录：集齐CPO、人形机器人、汽车电子等热门题材 这只龙头股火了（附名单）。",
+      "sourceName": "东方财富",
+      "title": "集齐CPO、人形机器人、汽车电子等热门题材 这只龙头股火了（附名单）",
+      "url": "https://finance.eastmoney.com/a/202608303859339192.html",
+      "publishedAt": "2026-08-30",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E004",
+      "changeId": "chg-4e694c69093594f5c591",
+      "entityName": "日产汽车：未来技术布局，迈向更安全、更舒适的出行",
+      "claim": "新增高价值情报事件记录：日产汽车：未来技术布局，迈向更安全、更舒适的出行。",
+      "sourceName": "新浪网",
+      "title": "日产汽车：未来技术布局，迈向更安全、更舒适的出行",
+      "url": "https://auto.sina.com.cn/news/2026-08-26/detail-iniprytq2404259.shtml",
+      "publishedAt": "2026-08-26",
+      "evidenceGrade": "官方披露",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E005",
+      "changeId": "chg-7df8d606b4c5c206ecd9",
+      "entityName": "“生于赛道 保时捷赛车运动75周年”主题展启幕",
+      "claim": "新增高价值情报事件记录：“生于赛道 保时捷赛车运动75周年”主题展启幕。",
+      "sourceName": "新浪网",
+      "title": "“生于赛道 保时捷赛车运动75周年”主题展启幕",
+      "url": "https://auto.sina.com.cn/news/2026-08-29/detail-inipyfhv5529577.shtml",
+      "publishedAt": "2026-08-29",
+      "evidenceGrade": "官方披露",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E006",
+      "changeId": "chg-1288a64618d49647f7b6",
+      "entityName": "IonQ | www.ionq.com/news/ionqs-skyloom-optical-communications-terminals-reach-84-on-orbit-installations-following-latest-launch",
+      "claim": "新增高价值情报事件记录：IonQ | www.ionq.com/news/ionqs-skyloom-optical-communications-terminals-reach-84-on-orbit-installations-following-latest-launch。",
+      "sourceName": "IonQ",
+      "title": "IonQ | www.ionq.com/news/ionqs-skyloom-optical-communications-terminals-reach-84-on-orbit-installations-following-latest-launch",
+      "url": "https://ionq.com/news/ionqs-skyloom-optical-communications-terminals-reach-84-on-orbit-installations-following-latest-launch",
+      "publishedAt": "2026-08-24",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E007",
+      "changeId": "chg-2c1b55d2b76621526673",
+      "entityName": "IT旧地图找不到AI新大陆",
+      "claim": "新增高价值情报事件记录：IT旧地图找不到AI新大陆。",
+      "sourceName": "东方财富",
+      "title": "IT旧地图找不到AI新大陆",
+      "url": "https://finance.eastmoney.com/a/202608303859335684.html",
+      "publishedAt": "2026-08-30",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E008",
+      "changeId": "chg-56baca6b9da2edadae56",
+      "entityName": "ALIF: Building AI Fluency, One Cohort at a Time",
+      "claim": "新增高价值情报事件记录：ALIF: Building AI Fluency, One Cohort at a Time。",
+      "sourceName": "Scale AI",
+      "title": "ALIF: Building AI Fluency, One Cohort at a Time",
+      "url": "https://scale.com/blog/alif-building-ai-fluency-one-cohort-at-a-time",
+      "publishedAt": "2026-08-25",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E017",
+      "changeId": "chg-300587143250c2aaa71d",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "QFII二季度持仓全景解析！外资把筹码押向硬科技！",
+      "url": "https://cj.sina.cn/articles/view/1648948823/6248f6570270balec",
+      "publishedAt": "2026-08-29T13:39:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E018",
+      "changeId": "chg-300587143250c2aaa71d",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "动力与储能“双轨并行” 创业板新能源指数的产业链“引擎”",
+      "url": "https://cj.sina.cn/articles/view/6904572892/19b8b6bdc00101h5au",
+      "publishedAt": "2026-08-29T23:53:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E019",
+      "changeId": "chg-300587143250c2aaa71d",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "宁德时代：向西藏吉隆灾区捐赠1000万元，用于应急救援、群众过渡安置及灾后恢复重建。",
+      "url": "https://finance.sina.com.cn/7x24/2026-08-29/doc-inipyfht8782005.shtml",
+      "publishedAt": "2026-08-29T14:09:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E020",
+      "changeId": "chg-300587143250c2aaa71d",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "自称“20万级最强纯电轿跑”，全新一代智己L6究竟“强”在哪？",
+      "url": "https://finance.sina.com.cn/jjxw/2026-08-29/doc-inipxyyz9373119.shtml",
+      "publishedAt": "2026-08-29T11:18:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E021",
+      "changeId": "chg-dff75336d827410d1b1d",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "章建平夫妇现身亨通光电，章盟主二季度上演百亿大调仓",
+      "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002tolm",
+      "publishedAt": "2026-08-28T19:05:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E022",
+      "changeId": "chg-dff75336d827410d1b1d",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "算力需求向硬件上游传导，消费电子核心上游环节集体走强",
+      "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4727023.shtml",
+      "publishedAt": "2026-08-28T10:16:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E023",
+      "changeId": "chg-dff75336d827410d1b1d",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "科创50ETF平安(589150)交投活跃，AI驱动PCB、软件等细分板块走强",
+      "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4746462.shtml",
+      "publishedAt": "2026-08-28T10:52:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E024",
+      "changeId": "chg-dff75336d827410d1b1d",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "国产模型加速落地叠加算力需求爆发，国产AI芯片进入上升通道，重视下半年芯片设计机会",
+      "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvvzv4686253.shtml",
+      "publishedAt": "2026-08-28T13:20:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
       ],
       "qualityIssues": [],
       "qualityStatus": "passed",
@@ -354,22 +2104,28 @@
     },
     {
       "date": "2026-08-30",
-      "generatedAt": "2026-08-29T21:28:24+00:00",
+      "generatedAt": "2026-08-30T01:26:42+00:00",
       "runStatus": "model",
-      "changeCount": 1,
-      "executiveSummary": "根据证据E001，2026-08-26有一篇新闻报道称OpenAI发布了适用于ChatGPT Work和Codex的Admin插件。该证据等级为D，来源为新闻聚合，未提供官方细节，因此仅作为初步信号，需进一步验证。"
+      "changeCount": 10,
+      "executiveSummary": "证据包覆盖2026年8月24日至30日的高价值情报与上市公司新闻更新。核心线索包括：英伟达财报超预期提振美股，市场焦点转向8月非农与博通财报；AI产业链热度延续，国产算力与AI芯片报道密集；OpenAI据称加速印度扩张（证据等级较低）；立讯精密上半年业绩增长并获密集调研；印度IT产业因AI冲击面临指数下跌与裁员；宁德时代、寒武纪等公司新闻更新。整体看，AI算力与硬件仍是市场主线，但部分证据为媒体标题级或低等级来源，需进一步验证。"
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 1,
-    "eligibleCandidateCount": 1,
-    "rejectedCandidateCount": 0,
-    "rejectedByDataset": {},
-    "evidenceCount": 1,
-    "supportingEvidenceCount": 1,
-    "rejectedEvidenceCount": 0,
-    "passedButUnboundEvidenceCount": 0,
-    "rejectionReasons": {}
+    "candidateCount": 20,
+    "eligibleCandidateCount": 10,
+    "rejectedCandidateCount": 10,
+    "rejectedByDataset": {
+      "marketCompany": 10
+    },
+    "evidenceCount": 56,
+    "supportingEvidenceCount": 16,
+    "rejectedEvidenceCount": 3,
+    "passedButUnboundEvidenceCount": 37,
+    "rejectionReasons": {
+      "missing_published_at": 3,
+      "missing_title": 3,
+      "ungraded": 3
+    }
   },
   "researchScope": {
     "technology": {
@@ -387,7 +2143,7 @@
     "person": {
       "label": "核心人物",
       "status": "active",
-      "count": 111,
+      "count": 112,
       "note": "已进入每日实体快照与变化检测。"
     },
     "ventureCompany": {
