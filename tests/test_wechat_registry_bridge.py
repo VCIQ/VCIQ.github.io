@@ -302,23 +302,24 @@ class WeChatRegistryBridgeTest(unittest.TestCase):
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["kind"], "detail")
 
-    def test_qnmlgb_account_page_exposes_visible_title_hints(self) -> None:
+    def test_gsi24_account_page_exposes_article_link_titles(self) -> None:
         spec = {
-            "expectedAccounts": ["芯榜", "icrankTech"],
+            "expectedAccounts": ["芯师爷", "Anxin-360ic"],
             "keywords": ["半导体", "芯片", "封装"],
             "trackedCompanies": ["长江存储"],
             "trackedPeople": [],
         }
         body = """
-        <html><head><title>芯榜 - 微信公众号</title></head><body>
-          <p>芯榜 — 中国芯片排行榜</p>
-          <p>^__^ • 8 / 29 长江存储完成先进芯片封装新进展</p>
+        <html><head><title>芯师爷 - 半导体产业媒体</title></head><body>
+          <a href="https://www.gsi24.com/news/verified.html">
+            长江存储完成先进芯片封装新进展
+          </a>
         </body></html>
         """
 
         rows = bridge._extract_index_rows(
             body,
-            "https://qnmlgb.tech/authors/5c8671e4497ff42ae0438c65",
+            "https://www.gsi24.com/",
             spec,
             crawl_articles,
         )

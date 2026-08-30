@@ -334,7 +334,8 @@ def _profile_page_matches_account(
         host == "qnmlgb.tech"
         and parts.path.rstrip("/").startswith("/authors/")
     )
-    if not (is_sohu_profile or is_qnmlgb_profile):
+    is_gsi24_profile = host == "gsi24.com" and parts.path.rstrip("/") == ""
+    if not (is_sohu_profile or is_qnmlgb_profile or is_gsi24_profile):
         return False
     if wechat_source_registry.account_matches(
         spec,
@@ -443,6 +444,9 @@ def _extract_index_rows(
     ) or (
         index_host == "qnmlgb.tech"
         and index_parts.path.startswith("/authors/")
+    ) or (
+        index_host == "gsi24.com"
+        and index_parts.path.rstrip("/") == ""
     )
     if title_only_index:
         title_hints = list(parser.title_hints)
@@ -455,6 +459,15 @@ def _extract_index_rows(
                 )
                 if title != _clean(text, 320):
                     title_hints.append({"title": title, "position": position})
+        if index_host == "gsi24.com" and profile_account_match:
+            for link in parser.links:
+                if _usable_title(link.get("title")):
+                    title_hints.append(
+                        {
+                            "title": link.get("title"),
+                            "position": int(link.get("position", 0)),
+                        }
+                    )
         for hint in title_hints:
             title = _clean(hint.get("title"), 260)
             title_key = title.casefold()
