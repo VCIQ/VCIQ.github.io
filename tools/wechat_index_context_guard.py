@@ -13,7 +13,13 @@ except ImportError:
 def _bounded_context(parser: Any, position: int, next_position: int | None) -> str:
     start = max(0, position)
     natural_end = min(len(parser.text_parts), position + 14)
-    end = min(natural_end, next_position) if next_position is not None else natural_end
+    boundaries = [natural_end]
+    if next_position is not None:
+        boundaries.append(next_position)
+    item_end = parser_module._item_end(parser, position)
+    if item_end is not None:
+        boundaries.append(item_end)
+    end = min(boundaries)
     return parser_module._clean(" ".join(parser.text_parts[start:end]), 1200)
 
 
@@ -31,7 +37,13 @@ def _bounded_title(
         ):
             return title
     natural_end = min(len(parser.text_parts), position + 10)
-    end = min(natural_end, next_position) if next_position is not None else natural_end
+    boundaries = [natural_end]
+    if next_position is not None:
+        boundaries.append(next_position)
+    item_end = parser_module._item_end(parser, position)
+    if item_end is not None:
+        boundaries.append(item_end)
+    end = min(boundaries)
     for item in parser.text_parts[position:end]:
         candidate = parser_module._clean(item, 240)
         if (
@@ -96,6 +108,7 @@ def extract_index_rows(
     groups = _article_link_groups(parser, crawler)
     rows: list[dict[str, str]] = []
     seen: set[str] = set()
+    seen_titles: set[str] = set()
 
     for index, group in enumerate(groups):
         url = str(group["url"])
@@ -145,6 +158,50 @@ def extract_index_rows(
             }
         )
         seen.add(url)
+        seen_titles.add(parser_module._clean(title, 260).casefold())
+
+    index_parts = parser_module.urlsplit(index_url)
+    index_host = (index_parts.hostname or "").casefold().removeprefix("www.")
+    title_only_index = (
+        index_host in {"jintiankansha.com", "jintiankansha.me"}
+        and index_parts.path.startswith("/column/")
+    )
+    if title_only_index:
+        for hint in parser.title_hints:
+            title = parser_module._clean(hint.get("title"), 260)
+            title_key = title.casefold()
+            position = int(hint.get("position", 0))
+            if not parser_module._usable_title(title) or title_key in seen_titles:
+                continue
+            context = _bounded_context(
+                parser,
+                position,
+                parser_module._item_end(parser, position),
+            )
+            if (
+                require_account_context
+                and not wechat_source_registry.account_matches(spec, context)
+            ):
+                continue
+            companies, people, keywords = parser_module._WECHAT._relevance_entities(
+                title,
+                context,
+                "",
+                spec,
+                crawler,
+            )
+            if not (companies or people or keywords):
+                continue
+            rows.append(
+                {
+                    "url": index_url,
+                    "title": title,
+                    "summary": context,
+                    "date": parser_module._date_from_context(context, crawler) or "",
+                    "kind": "title",
+                }
+            )
+            seen_titles.add(title_key)
     return rows
 
 

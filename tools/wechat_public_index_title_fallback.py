@@ -61,14 +61,6 @@ def _query_variants(title: str) -> list[str]:
     if cleaned:
         result.append(cleaned[:MAX_QUERY_LENGTH].strip())
 
-    distinctive_tokens = re.findall(
-        r"[A-Za-z][A-Za-z0-9.-]{1,}|\d{2,}",
-        title,
-    )
-    token_fragment = " ".join(distinctive_tokens[:5])
-    if len(distinctive_tokens) >= 2 and token_fragment:
-        result.append(token_fragment[:24].strip())
-
     pieces = [
         _clean(piece, 80)
         for piece in _SPLIT_PATTERN.split(title)
@@ -80,6 +72,30 @@ def _query_variants(title: str) -> list[str]:
         if piece.casefold() not in _GENERIC_SEGMENTS
         and len(_normalize_title(piece)) >= 4
     ]
+    distinctive_tokens = re.findall(
+        r"[A-Za-z][A-Za-z0-9.-]{1,}|\d{2,}",
+        title,
+    )
+    token_fragment = " ".join(distinctive_tokens[:5])
+    # Preserve a short publisher/entity phrase when an acronym-heavy title
+    # would otherwise degrade into a broad query such as ``60 DDR5 RCD``.
+    # This still keeps the compact acronym-only form for WAIC-style headlines.
+    lead = informative[0] if informative else ""
+    companion = (
+        max(informative[1:], key=lambda value: len(_normalize_title(value)))
+        if len(informative) > 1
+        else ""
+    )
+    if (
+        lead
+        and companion
+        and 4 <= len(_normalize_title(lead)) <= 12
+        and re.search(r"[\u3400-\u9fff]", lead)
+    ):
+        result.append(f"{lead} {companion}"[:32].strip())
+    elif len(distinctive_tokens) >= 2 and token_fragment:
+        result.append(token_fragment[:24].strip())
+
     if informative:
         fragment = max(
             informative,
@@ -331,6 +347,11 @@ def _resolve_by_title(
                 spec["_publicIndexPreferShortTitleQuery"] = True
                 return []
             spec["_publicIndexTitleDirectResolved"] = True
+            account = _clean(candidate.get("account"), 100)
+            if account:
+                accounts = spec.setdefault("_publicIndexTitleCandidateAccounts", [])
+                if account not in accounts and len(accounts) < 4:
+                    accounts.append(account)
             return [
                 {
                     **row,
@@ -344,6 +365,7 @@ def _resolve_by_title(
                     "titleLookupQuery": query,
                     "sogouDiscoveryTitle": _clean(candidate.get("title"), 260),
                     "sogouDiscoveryDate": _clean(candidate.get("publishedAt"), 40),
+                    "sogouDiscoveryAccount": account,
                 }
             ]
         spec["_publicIndexPreferShortTitleQuery"] = True
@@ -364,6 +386,9 @@ def install(bridge: Any, index: Any) -> None:
         user_agent: str,
         crawler: Any,
     ) -> list[dict[str, str]]:
+        if row.get("kind") == "title":
+            return _resolve_by_title(row, spec, crawler, index)
+
         # A public index remains a discovery surface. Preserve its direct-detail
         # resolver as the primary path and invoke Sogou only after that path has
         # actually failed for a detail row.

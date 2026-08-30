@@ -55,6 +55,46 @@ def _unique(values: Iterable[str], limit: int = 100) -> list[str]:
     return result
 
 
+def _record_diagnostic(spec: dict[str, Any], key: str, value: str) -> None:
+    values = spec.setdefault(key, [])
+    item = _clean(value, 100)
+    if item and item not in values and len(values) < 8:
+        values.append(item)
+
+
+def _fetch_failure_kind(exc: Exception) -> str:
+    message = str(exc).casefold()
+    if "verification or block page" in message:
+        return "wechat-block-page"
+    if "not a recognizable wechat article" in message:
+        return "wechat-not-article-page"
+    if "redirected outside" in message:
+        return "wechat-external-redirect"
+    if "exceeded size limit" in message:
+        return "wechat-response-too-large"
+    return type(exc).__name__
+
+
+def _runtime_diagnostics(spec: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "publicIndexOriginalFetchFailureKinds": list(
+            spec.get("_publicIndexOriginalFetchFailureKinds", [])
+        ),
+        "publicIndexArticleRejectKinds": list(
+            spec.get("_publicIndexArticleRejectKinds", [])
+        ),
+        "publicIndexObservedAccounts": list(
+            spec.get("_publicIndexObservedAccounts", [])
+        ),
+        "publicIndexSogouAccounts": list(
+            spec.get("_publicIndexTitleCandidateAccounts", [])
+        ),
+        "publicIndexTitleAccountMismatches": int(
+            spec.get("_publicIndexTitleAccountMismatches", 0) or 0
+        ),
+    }
+
+
 def _load_public_indexes(path: Path = PUBLIC_INDEX_PATH) -> dict[str, list[str]]:
     try:
         payload = json.loads(path.read_text(encoding="utf-8"))
@@ -85,16 +125,38 @@ class PublicIndexParser(HTMLParser):
         self.base_url = base_url
         self.text_parts: list[str] = []
         self.links: list[dict[str, Any]] = []
+        self.item_ranges: list[tuple[int, int]] = []
+        self.title_hints: list[dict[str, Any]] = []
         self._href = ""
         self._anchor_parts: list[str] = []
         self._anchor_position = 0
+        self._item_depth = 0
+        self._item_start = 0
+        self._title_span_depth = 0
+        self._title_parts: list[str] = []
+        self._title_position = 0
 
     def handle_starttag(
         self, tag: str, attrs: list[tuple[str, str | None]]
     ) -> None:
-        if tag.casefold() != "a":
-            return
+        tag_key = tag.casefold()
         values = {key.casefold(): value or "" for key, value in attrs}
+        classes = set(values.get("class", "").casefold().split())
+        if tag_key == "div":
+            if self._item_depth:
+                self._item_depth += 1
+            elif {"cell", "item"}.issubset(classes):
+                self._item_depth = 1
+                self._item_start = len(self.text_parts)
+        if tag_key == "span":
+            if self._title_span_depth:
+                self._title_span_depth += 1
+            elif "item_title" in classes:
+                self._title_span_depth = 1
+                self._title_parts = []
+                self._title_position = len(self.text_parts)
+        if tag_key != "a":
+            return
         self._href = urljoin(self.base_url, values.get("href", ""))
         self._anchor_parts = []
         self._anchor_position = len(self.text_parts)
@@ -106,19 +168,37 @@ class PublicIndexParser(HTMLParser):
         self.text_parts.append(value)
         if self._href:
             self._anchor_parts.append(value)
+        if self._title_span_depth:
+            self._title_parts.append(value)
 
     def handle_endtag(self, tag: str) -> None:
-        if tag.casefold() != "a" or not self._href:
-            return
-        self.links.append(
-            {
-                "url": self._href,
-                "title": _clean(" ".join(self._anchor_parts), 260),
-                "position": self._anchor_position,
-            }
-        )
-        self._href = ""
-        self._anchor_parts = []
+        tag_key = tag.casefold()
+        if tag_key == "a" and self._href:
+            self.links.append(
+                {
+                    "url": self._href,
+                    "title": _clean(" ".join(self._anchor_parts), 260),
+                    "position": self._anchor_position,
+                }
+            )
+            self._href = ""
+            self._anchor_parts = []
+        if tag_key == "span" and self._title_span_depth:
+            self._title_span_depth -= 1
+            if not self._title_span_depth:
+                self.title_hints.append(
+                    {
+                        "title": _clean(" ".join(self._title_parts), 260),
+                        "position": self._title_position,
+                    }
+                )
+                self._title_parts = []
+        if tag_key == "div" and self._item_depth:
+            self._item_depth -= 1
+            if not self._item_depth:
+                self.item_ranges.append(
+                    (self._item_start, len(self.text_parts))
+                )
 
 
 def _context(
@@ -130,6 +210,13 @@ def _context(
     natural_end = min(len(parser.text_parts), position + 10)
     end = min(natural_end, next_position) if next_position is not None else natural_end
     return _clean(" ".join(parser.text_parts[start:end]), 1200)
+
+
+def _item_end(parser: PublicIndexParser, position: int) -> int | None:
+    for start, end in parser.item_ranges:
+        if start <= position < end:
+            return end
+    return None
 
 
 def _fallback_title(
@@ -261,6 +348,7 @@ def _extract_index_rows(
     profile_account_match = _profile_page_matches_account(parser, index_url, spec)
     rows: list[dict[str, str]] = []
     seen: set[str] = set()
+    seen_titles: set[str] = set()
     for index, link in enumerate(parser.links):
         url = crawler.normalize_url(str(link.get("url", "")))
         if not (_is_wechat_article_url(url) or _is_resolvable_detail_url(url)):
@@ -288,6 +376,9 @@ def _extract_index_rows(
             ):
                 next_position = int(next_link.get("position", 0))
                 break
+        item_end = _item_end(parser, position)
+        if item_end is not None:
+            next_position = min(next_position, item_end) if next_position else item_end
         context = _context(parser, position, next_position)
         if (
             require_account_context
@@ -319,6 +410,52 @@ def _extract_index_rows(
             }
         )
         seen.add(url)
+        seen_titles.add(_clean(title, 260).casefold())
+
+    # Some Jintiankansha column pages expose recent article titles and account
+    # context while withholding the detail URL.  Keep those titles as
+    # discovery-only hints: the bounded Sogou fallback must still recover a
+    # direct mp.weixin URL, and the original page remains the only acceptance
+    # evidence.  Item boundaries prevent a following hidden title from making
+    # an unrelated linked headline appear sector-relevant.
+    index_parts = urlsplit(index_url)
+    index_host = (index_parts.hostname or "").casefold().removeprefix("www.")
+    title_only_index = (
+        index_host in {"jintiankansha.com", "jintiankansha.me"}
+        and index_parts.path.startswith("/column/")
+    )
+    if title_only_index:
+        for hint in parser.title_hints:
+            title = _clean(hint.get("title"), 260)
+            title_key = title.casefold()
+            position = int(hint.get("position", 0))
+            if not _usable_title(title) or title_key in seen_titles:
+                continue
+            context = _context(parser, position, _item_end(parser, position))
+            if (
+                require_account_context
+                and not wechat_source_registry.account_matches(spec, context)
+            ):
+                continue
+            companies, people, keywords = _WECHAT._relevance_entities(
+                title,
+                context,
+                "",
+                spec,
+                crawler,
+            )
+            if not (companies or people or keywords):
+                continue
+            rows.append(
+                {
+                    "url": index_url,
+                    "title": title,
+                    "summary": context,
+                    "date": _date_from_context(context, crawler) or "",
+                    "kind": "title",
+                }
+            )
+            seen_titles.add(title_key)
     return rows
 
 
@@ -374,6 +511,8 @@ def _fallback_index_rows(
         "publicIndexDetailResolved": 0,
         "publicIndexDetailUnresolved": 0,
         "publicIndexTitleResolved": 0,
+        "publicIndexTitleHintsDiscovered": 0,
+        "publicIndexTitleHintsUnresolved": 0,
         "publicIndexDirectRows": 0,
     }
     for index_url in spec.get("publicIndexUrls", []):
@@ -387,14 +526,20 @@ def _fallback_index_rows(
         diagnostics["publicIndexPagesFetched"] += 1
         diagnostics["publicIndexRowsDiscovered"] += len(discovered)
         for row in discovered:
+            if row.get("kind") == "title":
+                diagnostics["publicIndexTitleHintsDiscovered"] += 1
             resolved = _resolve_detail_row(row, spec, user_agent, crawler)
-            if row.get("kind") == "detail":
+            if row.get("kind") in {"detail", "title"}:
                 if resolved:
-                    diagnostics["publicIndexDetailResolved"] += 1
+                    if row.get("kind") == "detail":
+                        diagnostics["publicIndexDetailResolved"] += 1
                     if any(item.get("titleLookupQuery") for item in resolved):
                         diagnostics["publicIndexTitleResolved"] += 1
                 else:
-                    diagnostics["publicIndexDetailUnresolved"] += 1
+                    if row.get("kind") == "detail":
+                        diagnostics["publicIndexDetailUnresolved"] += 1
+                    else:
+                        diagnostics["publicIndexTitleHintsUnresolved"] += 1
                     failures += 1
             rows.extend(resolved)
     deduped: list[dict[str, str]] = []
@@ -439,15 +584,39 @@ def install(wechat: Any) -> None:
             **kwargs: Any,
         ) -> dict[str, Any] | None:
             if spec.get("expectedAccounts"):
+                if any(
+                    marker in (body or "")
+                    for marker in getattr(wechat, "BLOCK_PAGE_MARKERS", ())
+                ):
+                    _record_diagnostic(
+                        spec,
+                        "_publicIndexArticleRejectKinds",
+                        "original-block-page",
+                    )
+                    return None
                 parser = wechat.WeChatPageParser()
                 parser.feed(body or "")
                 observed_account = parser.account or wechat._js_value(
                     body or "",
                     ("nickname", "profile_nickname", "account_name"),
                 )
+                _record_diagnostic(
+                    spec,
+                    "_publicIndexObservedAccounts",
+                    str(observed_account or "(missing)"),
+                )
                 if not wechat_source_registry.account_matches(
                     spec, observed_account
                 ):
+                    _record_diagnostic(
+                        spec,
+                        "_publicIndexArticleRejectKinds",
+                        (
+                            "original-account-missing"
+                            if not observed_account
+                            else "original-account-mismatch"
+                        ),
+                    )
                     return None
 
                 # Discovery-page dates are never acceptance evidence for a
@@ -456,11 +625,22 @@ def install(wechat: Any) -> None:
                 kwargs.pop("fallback_date", None)
 
             article = original_parse(spec, url, body, crawler, **kwargs)
+            if not article and spec.get("expectedAccounts"):
+                _record_diagnostic(
+                    spec,
+                    "_publicIndexArticleRejectKinds",
+                    "original-parser-rejected",
+                )
             if article and spec.get("expectedAccounts") and not _article_date_is_recent(
                 article.get("publishedAt"),
                 spec,
                 crawler,
             ):
+                _record_diagnostic(
+                    spec,
+                    "_publicIndexArticleRejectKinds",
+                    "original-date-missing-or-stale",
+                )
                 return None
             if article and isinstance(article.get("source"), dict):
                 article["source"]["level"] = spec.get(
@@ -515,7 +695,12 @@ def install(wechat: Any) -> None:
                     fallback_summary=row.get("summary", ""),
                     fallback_date=row.get("date") or None,
                 )
-            except Exception:  # noqa: BLE001 - aggregated below.
+            except Exception as exc:  # noqa: BLE001 - aggregated below.
+                _record_diagnostic(
+                    spec,
+                    "_publicIndexOriginalFetchFailureKinds",
+                    _fetch_failure_kind(exc),
+                )
                 failures += 1
                 continue
             if article:
@@ -538,6 +723,7 @@ def install(wechat: Any) -> None:
                 ),
             )
             result.update(diagnostics)
+            result.update(_runtime_diagnostics(spec))
             return [], result
         result = crawler._status(
             spec["id"],
@@ -549,6 +735,7 @@ def install(wechat: Any) -> None:
             platform="微信",
         )
         result.update(diagnostics)
+        result.update(_runtime_diagnostics(spec))
         return accepted, result
 
     setattr(crawl_wechat_source, "_wechat_public_index_fallback", True)

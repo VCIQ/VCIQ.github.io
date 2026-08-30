@@ -107,6 +107,44 @@ class WeChatPublicIndexFallbackTest(unittest.TestCase):
             "https://m.sohu.com/a/1065611950_120498874",
         )
 
+    def test_installed_guard_keeps_hidden_title_in_its_own_card(self) -> None:
+        spec = {
+            "expectedAccounts": ["与非网"],
+            "keywords": ["芯片", "DDR5"],
+            "trackedCompanies": [],
+            "trackedPeople": [],
+        }
+        body = """
+        <html><body>
+          <div class="cell item">
+            <span class="item_title">
+              <a href="https://www.jintiankansha.com/t/linked">
+                WAIC释放强烈信号，HDD迎来第二春
+              </a>
+            </span>
+            <span>与非网eefocus · 公众号 · 1 月前</span>
+          </div>
+          <div class="cell item">
+            <span class="item_title"><span class="hide-content">
+              澜起科技：DDR5 RCD芯片出货量显著增加
+            </span></span>
+            <span class="hide-content">与非网eefocus</span>
+            <span>公众号 · 1 月前</span>
+          </div>
+        </body></html>
+        """
+
+        rows = bridge._extract_index_rows(
+            body,
+            "https://www.jintiankansha.com/column/FoMbC3nnRr",
+            spec,
+            crawl_articles,
+        )
+
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["kind"], "title")
+        self.assertIn("澜起科技", rows[0]["title"])
+
     def test_empty_bing_feed_recovers_from_public_index_and_original_page(self) -> None:
         spec = self._qbit_spec()
         today = datetime.now(UTC).date().isoformat()

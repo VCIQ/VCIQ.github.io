@@ -115,6 +115,15 @@ class WeChatPublicIndexTitleFallbackTests(unittest.TestCase):
             "WAIC 2026 HDD",
         )
 
+    def test_entity_prefix_stays_in_acronym_heavy_fragment(self) -> None:
+        title = "澜起科技：净利增长超60%，DDR5 RCD芯片出货量显著增加"
+
+        fragment = fallback._query_variants(title)[1]
+
+        self.assertIn("澜起科技", fragment)
+        self.assertIn("DDR5", fragment)
+        self.assertNotEqual(fragment, "60 DDR5 RCD")
+
     def test_original_detail_resolution_runs_before_title_lookup(self) -> None:
         events: list[str] = []
 
@@ -163,6 +172,25 @@ class WeChatPublicIndexTitleFallbackTests(unittest.TestCase):
 
         self.assertEqual(resolved, [row])
         title_lookup.assert_not_called()
+
+    def test_title_only_discovery_hint_enters_bounded_lookup(self) -> None:
+        row = {
+            "kind": "title",
+            "url": "https://www.jintiankansha.com/column/test",
+            "title": "澜起科技DDR5芯片出货量显著增加",
+            "date": "",
+        }
+        bridge = SimpleNamespace(_resolve_detail_row=lambda value, *_args: [value])
+        with patch.object(
+            fallback,
+            "_resolve_by_title",
+            return_value=[{"kind": "wechat", "url": "https://mp.weixin.qq.com/s/direct"}],
+        ) as title_lookup:
+            fallback.install(bridge, SimpleNamespace())
+            resolved = bridge._resolve_detail_row(row, {}, "ua", _Crawler())
+
+        self.assertEqual(resolved[0]["kind"], "wechat")
+        title_lookup.assert_called_once()
 
     def test_exact_then_fragment_budget_is_shared_across_rows(self) -> None:
         index = _EmptyIndex()

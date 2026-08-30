@@ -254,6 +254,11 @@ jobs:
                   "redirects": int(spec_by_id[source_id].get("_publicIndexTitleRedirectAttempts", 0) or 0),
                   "titles": list(spec_by_id[source_id].get("_publicIndexTitleLookupTitles", [])),
                   "failureKinds": list(spec_by_id[source_id].get("_publicIndexTitleFailureKinds", [])),
+                  "candidateAccounts": list(spec_by_id[source_id].get("_publicIndexTitleCandidateAccounts", [])),
+                  "accountMismatches": int(spec_by_id[source_id].get("_publicIndexTitleAccountMismatches", 0) or 0),
+                  "fetchFailureKinds": list(statuses[source_id].get("publicIndexOriginalFetchFailureKinds", [])),
+                  "articleRejectKinds": list(statuses[source_id].get("publicIndexArticleRejectKinds", [])),
+                  "observedAccounts": list(statuses[source_id].get("publicIndexObservedAccounts", [])),
               }
               for source_id in sorted(targets)
               if int(spec_by_id[source_id].get("_publicIndexTitleSearchQueries", 0) or 0) > 2
@@ -313,6 +318,11 @@ jobs:
                   "redirects": int(spec_by_id[source_id].get("_publicIndexTitleRedirectAttempts", 0) or 0),
                   "titles": list(spec_by_id[source_id].get("_publicIndexTitleLookupTitles", [])),
                   "failureKinds": list(spec_by_id[source_id].get("_publicIndexTitleFailureKinds", [])),
+                  "candidateAccounts": list(spec_by_id[source_id].get("_publicIndexTitleCandidateAccounts", [])),
+                  "accountMismatches": int(spec_by_id[source_id].get("_publicIndexTitleAccountMismatches", 0) or 0),
+                  "fetchFailureKinds": list(statuses[source_id].get("publicIndexOriginalFetchFailureKinds", [])),
+                  "articleRejectKinds": list(statuses[source_id].get("publicIndexArticleRejectKinds", [])),
+                  "observedAccounts": list(statuses[source_id].get("publicIndexObservedAccounts", [])),
               }
               for source_id in sorted(targets)
           }, ensure_ascii=False, sort_keys=True), flush=True)
