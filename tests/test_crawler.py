@@ -4,6 +4,7 @@ import unittest
 from dataclasses import replace
 from datetime import datetime, timedelta
 from pathlib import Path
+from urllib.parse import parse_qs, urlsplit
 from unittest.mock import patch
 from zoneinfo import ZoneInfo
 
@@ -70,6 +71,22 @@ class CrawlerTests(unittest.TestCase):
             normalize_url("HTTPS://Example.com/news/?utm_source=x&b=2&a=1#section"),
             "https://example.com/news?a=1&b=2",
         )
+
+    def test_normalize_url_preserves_signed_timestamp_query(self) -> None:
+        variants = (
+            "https://mp.weixin.qq.com/s?src=11&timestamp=1788018564&ver=6934&signature=a%2Ab",
+            "https://mp.weixin.qq.com/s?src=11&amp;timestamp=1788018564&amp;ver=6934&amp;signature=a%2Ab",
+        )
+        for value in variants:
+            with self.subTest(value=value):
+                normalized = normalize_url(value)
+                query = parse_qs(urlsplit(normalized).query, keep_blank_values=True)
+                self.assertEqual(query["src"], ["11"])
+                self.assertEqual(query["timestamp"], ["1788018564"])
+                self.assertEqual(query["ver"], ["6934"])
+                self.assertEqual(query["signature"], ["a*b"])
+                self.assertNotIn("×tamp", normalized)
+                self.assertNotIn("%C3%97", normalized.upper())
 
     def test_date_validation_rejects_malformed_and_future_dates(self) -> None:
         today = datetime.now(ZoneInfo("Asia/Taipei")).date()

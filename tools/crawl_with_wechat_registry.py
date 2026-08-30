@@ -23,6 +23,7 @@ try:  # Imported by tests as tools.crawl_with_wechat_registry.
     from . import wechat_index_record_fallback
     from . import wechat_original_redirect_bridge
     from . import wechat_public_aggregator
+    from . import wechat_public_index_title_fallback
     from . import wechat_public_sources
     from . import wechat_registry_bridge
     from . import wechat_sogou_bridge
@@ -48,6 +49,7 @@ except ImportError:  # Executed directly with python tools/...
     import wechat_index_record_fallback
     import wechat_original_redirect_bridge
     import wechat_public_aggregator
+    import wechat_public_index_title_fallback
     import wechat_public_sources
     import wechat_registry_bridge
     import wechat_sogou_bridge
@@ -233,6 +235,10 @@ def main() -> int:
     )
     wechat_sogou_redirect_compat.install(wechat_sogou_index)
     wechat_sogou_link_compat.install(wechat_sogou_index)
+    wechat_public_index_title_fallback.install(
+        wechat_registry_bridge,
+        wechat_sogou_index,
+    )
     wechat_public_aggregator.install(wechat_sogou_index)
     wechat_sogou_bridge.install(wechat_public_sources)
     toutiao_public_feed.install(base.tracking)

@@ -30,6 +30,9 @@ class CrawlWithWechatRegistryIntegrationTests(unittest.TestCase):
             stack.enter_context(
                 patch.object(target.wechat_sogou_link_compat, "install")
             )
+            title_fallback = stack.enter_context(
+                patch.object(target.wechat_public_index_title_fallback, "install")
+            )
             public_aggregator = stack.enter_context(
                 patch.object(target.wechat_public_aggregator, "install")
             )
@@ -38,6 +41,7 @@ class CrawlWithWechatRegistryIntegrationTests(unittest.TestCase):
                 patch.object(target.toutiao_public_feed, "install")
             )
             stack.enter_context(patch.object(target, "_install_professional_media"))
+            stack.enter_context(patch.object(target, "_install_source_governance"))
             stack.enter_context(patch.object(target, "_install_snapshot_quality"))
             base_main = stack.enter_context(
                 patch.object(target.base, "main", return_value=23)
@@ -52,6 +56,10 @@ class CrawlWithWechatRegistryIntegrationTests(unittest.TestCase):
             target.wechat_registry_bridge,
         )
         sogou_redirect.assert_called_once_with(target.wechat_sogou_index)
+        title_fallback.assert_called_once_with(
+            target.wechat_registry_bridge,
+            target.wechat_sogou_index,
+        )
         public_aggregator.assert_called_once_with(target.wechat_sogou_index)
         toutiao_feed.assert_called_once_with(target.base.tracking)
         base_main.assert_called_once_with()

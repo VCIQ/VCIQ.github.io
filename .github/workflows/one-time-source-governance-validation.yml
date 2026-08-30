@@ -1,11 +1,20 @@
-name: One-time source governance exact-title verification
+name: One-time source governance public-index title verification
 
 on:
   push:
     branches:
-      - main
+      - fix/wechat-public-index-title-fallback
     paths:
       - ".github/workflows/one-time-source-governance-validation.yml"
+      - "tools/crawl_articles.py"
+      - "tools/refresh_wechat_snapshot.py"
+      - "tools/wechat_public_index_title_fallback.py"
+      - "tools/wechat_sogou_redirect_compat.py"
+      - "tools/crawl_with_wechat_registry.py"
+      - "config/wechat_public_indexes.json"
+      - "tests/test_crawler.py"
+      - "tests/test_wechat_public_index_title_fallback.py"
+      - "tests/test_wechat_sogou_redirect_compat.py"
 
 permissions:
   contents: read
@@ -15,128 +24,171 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: main
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Resolve current public-index titles to verified WeChat originals
+      - name: Compile and validate title and URL helpers
+        run: |
+          python -m py_compile \
+            tools/crawl_articles.py \
+            tools/refresh_wechat_snapshot.py \
+            tools/wechat_public_index_title_fallback.py \
+            tools/wechat_sogou_redirect_compat.py \
+            tools/crawl_with_wechat_registry.py
+          python -m unittest \
+            tests.test_crawler.CrawlerTests.test_normalize_url_preserves_signed_timestamp_query \
+            tests.test_wechat_public_index_title_fallback \
+            tests.test_wechat_sogou_redirect_compat \
+            tests.test_refresh_wechat_snapshot \
+            tests.test_crawl_with_wechat_registry
+          python - <<'PY'
+          from urllib.parse import parse_qs, urlsplit
+
+          from tools import crawl_articles
+          from tools import wechat_public_index_title_fallback as fallback
+          from tools import wechat_sogou_redirect_compat as redirect
+
+          robot = "进击的微米级战场：手术机器人的国产化下半场，谁在“硬卡”我们的脖子？"
+          icbank = "独家丨腾讯芯片一号位，离职创业，投身AI CPU"
+          variants_robot = fallback._query_variants(robot)
+          variants_icbank = fallback._query_variants(icbank)
+          print("ROBOT_VARIANTS", variants_robot)
+          print("ICBANK_VARIANTS", variants_icbank)
+          assert len(variants_robot) == 2
+          assert any("手术机器人" in query for query in variants_robot)
+          assert len(variants_icbank) == 2
+          assert any("腾讯芯片" in query for query in variants_icbank)
+
+          expected = "投资10亿元的具身机器人制造基地落地常州；宇树发布9900元7轴力控臂；超150款新品WRC集中发布 | 市场观察"
+          sogou = "投资10亿元的具身机器人制造基地落地常州;宇树发布9900元7轴力控臂;超 1 50款新品WRC集中发布 | 市场观察"
+          false_match = "四万字详解：这家来自荷兰的企业，是如何拿捏芯片制造命脉的？"
+          good = fallback._title_score(expected, sogou, expected[:30])
+          bad = fallback._title_score(robot, false_match, variants_robot[-1])
+          print("TITLE_SCORES", {"good": good, "bad": bad})
+          assert good >= fallback.MIN_TITLE_SCORE
+          assert bad < fallback.MIN_TITLE_SCORE
+
+          signed = "https://mp.weixin.qq.com/s?src=11&timestamp=1788018564&ver=6934&signature=a%2Ab"
+          escaped = "https://mp.weixin.qq.com/s?src=11&amp;timestamp=1788018564&amp;ver=6934&amp;signature=a%2Ab"
+          decoded_signed = redirect._decode(signed)
+          decoded_escaped = redirect._decode(escaped)
+          normalized_signed = crawl_articles.normalize_url(decoded_signed)
+          normalized_escaped = crawl_articles.normalize_url(decoded_escaped)
+          print("SIGNED_URL", normalized_signed)
+          print("ESCAPED_URL", normalized_escaped)
+          for value in (normalized_signed, normalized_escaped):
+              query = parse_qs(urlsplit(value).query, keep_blank_values=True)
+              assert query["src"] == ["11"]
+              assert query["timestamp"] == ["1788018564"]
+              assert query["ver"] == ["6934"]
+              assert query["signature"] == ["a*b"]
+              assert "×tamp" not in value
+              assert "%C3%97" not in value.upper()
+          PY
+      - name: Require productive crawls for all nine WeChat endpoints
         run: |
           python - <<'PY'
           import json
-          import re
           from tools import crawl_with_wechat_registry as app
-          from tools import wechat_source_registry
 
           base = app.base
           crawler = base.tracking.crawler
           app.http_policy_bridge.install(crawler)
           app.wechat_fetch_compat.install(app.wechat_public_sources)
           app.wechat_registry_bridge.install(app.wechat_public_sources)
-          app.wechat_original_redirect_bridge.install(app.wechat_public_sources, app.wechat_registry_bridge)
+          app.wechat_original_redirect_bridge.install(
+              app.wechat_public_sources,
+              app.wechat_registry_bridge,
+          )
+          app.wechat_index_context_guard.install(app.wechat_registry_bridge)
+          app.wechat_index_record_fallback.install(
+              app.wechat_public_sources,
+              app.wechat_registry_bridge,
+          )
           app.wechat_sogou_redirect_compat.install(app.wechat_sogou_index)
           app.wechat_sogou_link_compat.install(app.wechat_sogou_index)
+          app.wechat_public_index_title_fallback.install(
+              app.wechat_registry_bridge,
+              app.wechat_sogou_index,
+          )
+          app.wechat_public_aggregator.install(app.wechat_sogou_index)
+          app.wechat_sogou_bridge.install(app.wechat_public_sources)
 
           tracking_config = base.tracking.load_tracking()
           tracks = base.tracking._enabled_tracks(tracking_config)
           specs = app.wechat_public_sources.generated_wechat_sources(tracks, base.tracking)
-          spec_by_id = {s.get("id"): s for s in specs}
+          targets = {
+              "user-track-wechat-robospeak-robotics",
+              "user-track-wechat-gg-robot-robotics",
+              "user-track-wechat-icbank-semiconductor",
+              "user-track-wechat-ijiwei-semiconductor",
+              "user-track-wechat-semiconductor-technology-semiconductor",
+              "user-track-wechat-chiptrend-ic-semiconductor",
+              "user-track-wechat-eefocus-semiconductor",
+              "user-track-wechat-gg-lithium-energy",
+              "user-track-wechat-cbea-battery-energy",
+          }
+          spec_by_id = {spec.get("id"): spec for spec in specs}
+          missing = sorted(targets - spec_by_id.keys())
+          assert not missing, f"Missing configured WeChat sources: {missing}"
 
-          cases = [
-              (
-                  "user-track-wechat-robospeak-robotics",
-                  "进击的微米级战场：手术机器人的国产化下半场，谁在“硬卡”我们的脖子？",
-              ),
-              (
-                  "user-track-wechat-icbank-semiconductor",
-                  "独家丨腾讯芯片一号位，离职创业，投身AI CPU",
-              ),
-              (
-                  "user-track-wechat-gg-robot-robotics",
-                  "投资10亿元的具身机器人制造基地落地常州；宇树发布9900元7轴力控臂；超150款新品WRC集中发布 | 市场观察",
-              ),
-          ]
-
-          def norm(value):
-              return re.sub(r"[\W_]+", "", str(value or ""), flags=re.UNICODE).casefold()
-
-          for source_id, title in cases:
+          statuses = {}
+          for source_id in sorted(targets):
               spec = spec_by_id[source_id]
-              search_url = app.wechat_sogou_index.build_search_url(spec, query=title)
               try:
-                  search_body = app.wechat_sogou_index._request(search_url)
-                  rows = app.wechat_sogou_index.parse_search_results(search_body, search_url)
+                  articles, status = app.wechat_public_sources.crawl_wechat_source(
+                      spec,
+                      crawler.DEFAULT_USER_AGENT,
+                      crawler,
+                  )
               except Exception as exc:
-                  print("EXACT_SEARCH_ERROR " + json.dumps({
-                      "id": source_id, "title": title,
+                  articles = []
+                  status = {
+                      "id": source_id,
+                      "name": spec.get("name"),
+                      "status": "error",
+                      "scanned": 0,
+                      "accepted": 0,
                       "error": f"{type(exc).__name__}: {exc}",
-                  }, ensure_ascii=False, sort_keys=True))
-                  continue
-
-              wanted = norm(title)
-              ranked = sorted(
-                  rows,
-                  key=lambda r: (wanted == norm(r.get("title")), wanted in norm(r.get("title"))),
-                  reverse=True,
-              )
-              print("EXACT_SEARCH " + json.dumps({
+                  }
+              statuses[source_id] = status
+              print("ENDPOINT_CRAWL " + json.dumps({
                   "id": source_id,
                   "name": spec.get("name"),
-                  "title": title,
-                  "count": len(rows),
-                  "results": [
-                      {"title": r.get("title"), "account": r.get("account"), "publishedAt": r.get("publishedAt")}
-                      for r in ranked[:5]
+                  "publicIndexUrls": spec.get("publicIndexUrls"),
+                  "status": status,
+                  "articles": [
+                      {
+                          "title": article.get("title"),
+                          "publishedAt": article.get("publishedAt"),
+                          "wechatAccount": article.get("wechatAccount"),
+                          "sourceUrl": (article.get("source") or {}).get("url"),
+                      }
+                      for article in articles[:3]
                   ],
               }, ensure_ascii=False, sort_keys=True))
 
-              verified = []
-              for row in ranked[:3]:
-                  similarity = wanted == norm(row.get("title")) or wanted in norm(row.get("title")) or norm(row.get("title")) in wanted
-                  if not similarity:
-                      continue
-                  try:
-                      result_url = app.wechat_sogou_link_compat.guarded_result_url(row["url"], search_body)
-                      jump_body = app.wechat_sogou_index._request(
-                          app.wechat_sogou_index._normalized_url(result_url), referer=search_url
-                      )
-                      direct = app.wechat_sogou_index.resolve_script_url(jump_body)
-                      if not direct:
-                          continue
-                      body = app.wechat_public_sources.fetch_public_wechat_page(direct)
-                      parser = app.wechat_public_sources.WeChatPageParser()
-                      parser.feed(body or "")
-                      observed = parser.account or app.wechat_public_sources._js_value(
-                          body or "", ("nickname", "profile_nickname", "account_name")
-                      )
-                      article = app.wechat_public_sources.parse_wechat_article(
-                          spec,
-                          direct,
-                          body,
-                          crawler,
-                          fallback_title=str(row.get("title") or title),
-                          fallback_summary=str(row.get("summary") or ""),
-                          fallback_date=None,
-                      )
-                      verified.append({
-                          "searchTitle": row.get("title"),
-                          "directUrl": direct,
-                          "observedAccount": observed,
-                          "accountMatch": wechat_source_registry.account_matches(spec, observed),
-                          "parsed": article is not None,
-                          "articleTitle": (article or {}).get("title"),
-                          "publishedAt": (article or {}).get("publishedAt"),
-                          "wechatAccount": (article or {}).get("wechatAccount"),
-                          "companies": (article or {}).get("companies"),
-                          "people": (article or {}).get("people"),
-                          "keywords": (article or {}).get("keywords"),
-                      })
-                  except Exception as exc:
-                      verified.append({
-                          "searchTitle": row.get("title"),
-                          "error": f"{type(exc).__name__}: {exc}",
-                      })
-              print("EXACT_VERIFIED " + json.dumps({
-                  "id": source_id, "name": spec.get("name"), "verified": verified,
-              }, ensure_ascii=False, sort_keys=True))
+          unhealthy = {
+              source_id: {
+                  "status": statuses[source_id].get("status"),
+                  "scanned": statuses[source_id].get("scanned", 0),
+                  "accepted": statuses[source_id].get("accepted", 0),
+                  "error": statuses[source_id].get("error"),
+              }
+              for source_id in sorted(targets)
+              if int(statuses[source_id].get("scanned", 0) or 0) <= 0
+              or int(statuses[source_id].get("accepted", 0) or 0) <= 0
+          }
+          print("NINE_ENDPOINT_HEALTH " + json.dumps({
+              source_id: {
+                  "scanned": statuses[source_id].get("scanned", 0),
+                  "accepted": statuses[source_id].get("accepted", 0),
+                  "status": statuses[source_id].get("status"),
+              }
+              for source_id in sorted(targets)
+          }, ensure_ascii=False, sort_keys=True))
+          assert not unhealthy, (
+              "Each target must satisfy scanned > 0 and accepted > 0: "
+              + json.dumps(unhealthy, ensure_ascii=False, sort_keys=True)
+          )
           PY

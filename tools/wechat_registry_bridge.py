@@ -135,13 +135,22 @@ def _fallback_title(
     parser: PublicIndexParser, position: int, anchor_title: str
 ) -> str:
     title = _clean(anchor_title, 240)
-    if title.casefold() not in _GENERIC_ANCHOR_TEXT and len(title) >= 6:
+    if _usable_title(title):
         return title
     for item in reversed(parser.text_parts[max(0, position - 5) : position]):
         candidate = _clean(item, 240)
-        if candidate.casefold() not in _GENERIC_ANCHOR_TEXT and len(candidate) >= 6:
+        if _usable_title(candidate):
             return candidate
     return ""
+
+
+def _usable_title(value: Any) -> bool:
+    title = _clean(value, 240)
+    return (
+        title.casefold() not in _GENERIC_ANCHOR_TEXT
+        and len(title) >= 6
+        and re.search(r"[A-Za-z\u3400-\u9fff]", title) is not None
+    )
 
 
 def _date_from_context(context: str, crawler: Any) -> str | None:
@@ -160,9 +169,47 @@ def _is_wechat_article_url(url: str) -> bool:
 def _is_resolvable_detail_url(url: str) -> bool:
     parts = urlsplit(url)
     host = (parts.hostname or "").casefold().removeprefix("www.")
-    return host in {"jintiankansha.com", "jintiankansha.me"} and parts.path.startswith(
-        "/t/"
+    return (
+        host in {"jintiankansha.com", "jintiankansha.me"}
+        and parts.path.startswith("/t/")
+    ) or (
+        host in {"m.sohu.com", "sohu.com"}
+        and re.fullmatch(r"/a/\d+_\d+", parts.path.rstrip("/")) is not None
+    ) or (
+        host == "eet-china.com"
+        and re.fullmatch(r"/mp/a\d+\.html", parts.path.rstrip("/")) is not None
     )
+
+
+def _detail_belongs_to_index(index_url: str, detail_url: str) -> bool:
+    """Exclude unrelated recommendation links on account profile pages."""
+
+    index_parts = urlsplit(index_url)
+    detail_parts = urlsplit(detail_url)
+    index_host = (index_parts.hostname or "").casefold().removeprefix("www.")
+    if index_host != "m.sohu.com":
+        return True
+    profile = re.fullmatch(r"/media/(\d+)", index_parts.path.rstrip("/"))
+    article = re.fullmatch(r"/a/\d+_(\d+)", detail_parts.path.rstrip("/"))
+    return bool(profile and article and profile.group(1) == article.group(1))
+
+
+def _profile_page_matches_account(
+    parser: PublicIndexParser,
+    index_url: str,
+    spec: dict[str, Any],
+) -> bool:
+    """Verify an account-scoped profile before using its article titles."""
+
+    parts = urlsplit(index_url)
+    host = (parts.hostname or "").casefold().removeprefix("www.")
+    is_sohu_profile = host == "m.sohu.com" and re.fullmatch(
+        r"/media/\d+", parts.path.rstrip("/")
+    )
+    if not is_sohu_profile:
+        return False
+    page_text = _clean(" ".join(parser.text_parts), 5000)
+    return wechat_source_registry.account_matches(spec, page_text)
 
 
 def _extract_index_rows(
@@ -175,21 +222,41 @@ def _extract_index_rows(
 ) -> list[dict[str, str]]:
     parser = PublicIndexParser(index_url)
     parser.feed(body or "")
+    profile_account_match = _profile_page_matches_account(parser, index_url, spec)
     rows: list[dict[str, str]] = []
     seen: set[str] = set()
     for index, link in enumerate(parser.links):
         url = crawler.normalize_url(str(link.get("url", "")))
         if not (_is_wechat_article_url(url) or _is_resolvable_detail_url(url)):
             continue
+        if not _detail_belongs_to_index(index_url, url):
+            continue
+        # Some profile pages render an empty image anchor immediately before a
+        # text anchor for the same article. Let the explicit title anchor win;
+        # otherwise fallback-title heuristics can mistake a page statistic for
+        # the article title and then block the real anchor through deduplication.
+        if not _usable_title(link.get("title")) and any(
+            crawler.normalize_url(str(next_link.get("url", ""))) == url
+            and _usable_title(next_link.get("title"))
+            for next_link in parser.links[index + 1 :]
+        ):
+            continue
         position = int(link.get("position", 0))
-        next_position = (
-            int(parser.links[index + 1].get("position", 0))
-            if index + 1 < len(parser.links)
-            else None
-        )
+        next_position = None
+        for next_link in parser.links[index + 1 :]:
+            next_url = crawler.normalize_url(str(next_link.get("url", "")))
+            if next_url == url:
+                continue
+            if _is_wechat_article_url(next_url) or _is_resolvable_detail_url(
+                next_url
+            ):
+                next_position = int(next_link.get("position", 0))
+                break
         context = _context(parser, position, next_position)
-        if require_account_context and not wechat_source_registry.account_matches(
-            spec, context
+        if (
+            require_account_context
+            and not profile_account_match
+            and not wechat_source_registry.account_matches(spec, context)
         ):
             continue
         title = _fallback_title(

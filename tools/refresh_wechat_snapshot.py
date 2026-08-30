@@ -18,11 +18,13 @@ try:  # Imported by tests as tools.refresh_wechat_snapshot.
     from . import wechat_index_context_guard
     from . import wechat_index_record_fallback
     from . import wechat_original_redirect_bridge
+    from . import wechat_public_index_title_fallback
     from . import wechat_public_sources
     from . import wechat_registry_bridge
     from . import wechat_sogou_bridge
     from . import wechat_sogou_index
     from . import wechat_sogou_link_compat
+    from . import wechat_sogou_redirect_compat
     from . import wechat_snapshot_quality
 except ImportError:  # Executed directly with python tools/...
     import crawl_articles as crawler
@@ -31,11 +33,13 @@ except ImportError:  # Executed directly with python tools/...
     import wechat_index_context_guard
     import wechat_index_record_fallback
     import wechat_original_redirect_bridge
+    import wechat_public_index_title_fallback
     import wechat_public_sources
     import wechat_registry_bridge
     import wechat_sogou_bridge
     import wechat_sogou_index
     import wechat_sogou_link_compat
+    import wechat_sogou_redirect_compat
     import wechat_snapshot_quality
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -45,12 +49,21 @@ OUTPUT_PATH = ROOT / "public" / "data" / "articles.json"
 def install_wechat_pipeline() -> None:
     wechat_fetch_compat.install(wechat_public_sources)
     wechat_registry_bridge.install(wechat_public_sources)
+    wechat_original_redirect_bridge.install(
+        wechat_public_sources,
+        wechat_registry_bridge,
+    )
     wechat_index_context_guard.install(wechat_registry_bridge)
     wechat_index_record_fallback.install(
         wechat_public_sources,
         wechat_registry_bridge,
     )
+    wechat_sogou_redirect_compat.install(wechat_sogou_index)
     wechat_sogou_link_compat.install(wechat_sogou_index)
+    wechat_public_index_title_fallback.install(
+        wechat_registry_bridge,
+        wechat_sogou_index,
+    )
     wechat_sogou_bridge.install(wechat_public_sources)
 
 

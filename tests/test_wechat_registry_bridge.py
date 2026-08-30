@@ -120,6 +120,77 @@ class WeChatRegistryBridgeTest(unittest.TestCase):
         self.assertIn("OpenAI", article["mentionedCompanies"])
         self.assertIn("Sam Altman", article["mentionedPeople"])
 
+    def test_account_scoped_sohu_profile_discovers_only_its_article_titles(self) -> None:
+        spec = {
+            "expectedAccounts": ["半导体技术"],
+            "keywords": ["半导体", "芯片", "封装"],
+            "trackedCompanies": ["中芯国际"],
+            "trackedPeople": [],
+        }
+        body = """
+        <html><body>
+          <h1>半导体技术</h1>
+          <a href="https://m.sohu.com/a/1065611950_120498874">
+            中芯国际发布半导体芯片封装测试进展
+          </a>
+          <div>昨天12:17 · 17阅读</div>
+          <a href="https://m.sohu.com/a/999999999_999999999">
+            其他作者的半导体热门文章
+          </a>
+        </body></html>
+        """
+
+        rows = bridge._extract_index_rows(
+            body,
+            "https://m.sohu.com/media/120498874",
+            spec,
+            crawl_articles,
+        )
+
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["kind"], "detail")
+        self.assertEqual(
+            rows[0]["url"],
+            "https://m.sohu.com/a/1065611950_120498874",
+        )
+
+    def test_eet_account_context_discovers_chiptrend_title(self) -> None:
+        spec = {
+            "expectedAccounts": ["芯潮IC"],
+            "keywords": ["半导体", "芯片", "集成电路"],
+            "trackedCompanies": [],
+            "trackedPeople": [],
+        }
+        body = """
+        <html><body>
+          <div>532296</div>
+          <a href="https://www.eet-china.com/mp/a520001.html">
+            <img src="cover.jpg" />
+          </a>
+          <a href="https://www.eet-china.com/mp/a520001.html">
+            半导体全链聚合，国际集成电路创新博览会举办
+          </a>
+          <a href="https://www.eet-china.com/mp/u4006642">芯潮IC</a>
+          <div>2026-08-07</div>
+          <a href="https://www.eet-china.com/mp/a510000.html">电子技术普及</a>
+        </body></html>
+        """
+
+        rows = bridge._extract_index_rows(
+            body,
+            "https://www.eet-china.com/mp/u4006642",
+            spec,
+            crawl_articles,
+        )
+
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["kind"], "detail")
+        self.assertEqual(rows[0]["date"], "2026-08-07")
+        self.assertEqual(
+            rows[0]["title"],
+            "半导体全链聚合，国际集成电路创新博览会举办",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
