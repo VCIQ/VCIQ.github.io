@@ -302,30 +302,30 @@ class WeChatRegistryBridgeTest(unittest.TestCase):
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["kind"], "detail")
 
-    def test_mp_sohu_profile_query_is_account_scoped(self) -> None:
+    def test_qnmlgb_account_page_exposes_visible_title_hints(self) -> None:
         spec = {
-            "expectedAccounts": ["芯师爷", "Anxin-360ic"],
+            "expectedAccounts": ["芯榜", "icrankTech"],
             "keywords": ["半导体", "芯片", "封装"],
-            "trackedCompanies": ["中芯国际"],
+            "trackedCompanies": ["长江存储"],
             "trackedPeople": [],
         }
         body = """
-        <html><head><title>芯师爷的个人主页</title></head><body>
-          <a href="https://m.sohu.com/a/1069311167_120498874">
-            中芯国际发布半导体芯片封装进展
-          </a>
+        <html><head><title>芯榜 - 微信公众号</title></head><body>
+          <p>芯榜 — 中国芯片排行榜</p>
+          <p>^__^ • 8 / 29 长江存储完成先进芯片封装新进展</p>
         </body></html>
         """
 
         rows = bridge._extract_index_rows(
             body,
-            "https://mp.sohu.com/profile?xpt=verified-account",
+            "https://qnmlgb.tech/authors/5c8671e4497ff42ae0438c65",
             spec,
             crawl_articles,
         )
 
         self.assertEqual(len(rows), 1)
-        self.assertEqual(rows[0]["kind"], "detail")
+        self.assertEqual(rows[0]["kind"], "title")
+        self.assertEqual(rows[0]["title"], "长江存储完成先进芯片封装新进展")
 
     def test_eet_account_context_discovers_chiptrend_title(self) -> None:
         spec = {

@@ -291,7 +291,7 @@ def _is_resolvable_detail_url(url: str) -> bool:
         host in {"jintiankansha.com", "jintiankansha.me"}
         and parts.path.startswith("/t/")
     ) or (
-        host in {"m.sohu.com", "mp.sohu.com", "sohu.com"}
+        host in {"m.sohu.com", "sohu.com"}
         and re.fullmatch(r"/a/\d+_\d+", parts.path.rstrip("/")) is not None
     ) or (
         host == "eet-china.com"
@@ -305,7 +305,7 @@ def _detail_belongs_to_index(index_url: str, detail_url: str) -> bool:
     index_parts = urlsplit(index_url)
     detail_parts = urlsplit(detail_url)
     index_host = (index_parts.hostname or "").casefold().removeprefix("www.")
-    if index_host not in {"m.sohu.com", "mp.sohu.com", "sohu.com"}:
+    if index_host not in {"m.sohu.com", "sohu.com"}:
         return True
     profile = re.fullmatch(r"/media/(\d+)", index_parts.path.rstrip("/"))
     if not profile:
@@ -327,11 +327,14 @@ def _profile_page_matches_account(
 
     parts = urlsplit(index_url)
     host = (parts.hostname or "").casefold().removeprefix("www.")
-    is_sohu_profile = host in {"m.sohu.com", "mp.sohu.com", "sohu.com"} and (
-        re.fullmatch(r"/media/\d+", parts.path.rstrip("/")) is not None
-        or parts.path.rstrip("/") == "/profile"
+    is_sohu_profile = host in {"m.sohu.com", "sohu.com"} and re.fullmatch(
+        r"/media/\d+", parts.path.rstrip("/")
     )
-    if not is_sohu_profile:
+    is_qnmlgb_profile = (
+        host == "qnmlgb.tech"
+        and parts.path.rstrip("/").startswith("/authors/")
+    )
+    if not (is_sohu_profile or is_qnmlgb_profile):
         return False
     if wechat_source_registry.account_matches(
         spec,
@@ -437,9 +440,22 @@ def _extract_index_rows(
     title_only_index = (
         index_host in {"jintiankansha.com", "jintiankansha.me"}
         and index_parts.path.startswith("/column/")
+    ) or (
+        index_host == "qnmlgb.tech"
+        and index_parts.path.startswith("/authors/")
     )
     if title_only_index:
-        for hint in parser.title_hints:
+        title_hints = list(parser.title_hints)
+        if index_host == "qnmlgb.tech" and profile_account_match:
+            for position, text in enumerate(parser.text_parts):
+                title = re.sub(
+                    r"^\s*\^__\^\s*[•·]\s*\d{1,2}\s*/\s*\d{1,2}\s*",
+                    "",
+                    _clean(text, 320),
+                )
+                if title != _clean(text, 320):
+                    title_hints.append({"title": title, "position": position})
+        for hint in title_hints:
             title = _clean(hint.get("title"), 260)
             title_key = title.casefold()
             position = int(hint.get("position", 0))
@@ -448,6 +464,7 @@ def _extract_index_rows(
             context = _context(parser, position, _item_end(parser, position))
             if (
                 require_account_context
+                and not profile_account_match
                 and not wechat_source_registry.account_matches(spec, context)
             ):
                 continue
