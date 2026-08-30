@@ -79,6 +79,10 @@ test("publisher-owned copies keep their real endpoint labels", () => {
     assert.ok(source, `${name} should be present`);
     assert.equal(source.healthStatus, "ok");
     assert.ok(source.endpoints.some((endpoint) => endpoint.label === label));
+    assert.equal(
+      source.endpoints.some((endpoint) => endpoint.label === "微信公开索引"),
+      false,
+    );
     assert.ok(source.endpoints.some((endpoint) => endpoint.scanned > 0));
     assert.ok(source.endpoints.some((endpoint) => endpoint.accepted > 0));
   }
