@@ -4,6 +4,7 @@ import rawResearchReports from "@/public/data/research_reports.json";
 import { canonicalTracksForItem } from "@/lib/canonical-sector-assignment";
 import { getChannelDocumentUpdateItems } from "@/lib/channel-documents";
 import { resolveArticleCompanyEntities } from "@/lib/company-entity-registry";
+import { companyRegistryEntry } from "@/lib/company-registry";
 import {
   normalizeChannelUpdateDate,
   type ChannelUpdateDatePrecision,
@@ -16,6 +17,7 @@ import {
 import { technologyTopicsForText } from "@/lib/technology-topic-matching";
 import { technologyTermMatchesText } from "@/lib/technology-term-matching";
 import { trackedSectors } from "@/lib/tracked-sectors";
+import { canonicalPublicHttpUrl } from "@/lib/public-url";
 
 export type ChannelUpdateKey =
   | "technology"
@@ -61,6 +63,7 @@ export type ChannelUpdateItem = {
   eventClusterId?: string;
   sources?: ChannelUpdateSource[];
   sourceCount?: number;
+  companySlugs?: string[];
 };
 
 export type ChannelUpdateDirectory = {
@@ -223,7 +226,7 @@ const technologyEventTrackAnchorTerms: Record<string, string[]> = {
   机器人: ["机器人", "robot", "robotics", "humanoid", "具身智能", "灵巧手"],
   半导体: ["半导体", "芯片", "晶圆", "wafer", "foundry", "封装", "光刻", "DRAM", "HBM"],
   新能源: ["新能源", "电池", "储能", "光伏", "风电", "电网", "battery", "energy storage", "solar", "wind"],
-  生物科技: ["生物科技", "biotech", "药物", "蛋白", "基因", "临床", "分子", "drug", "protein", "gene", "clinical"],
+  生物科技: ["生物科技", "制药", "药物", "蛋白", "基因", "临床", "疫苗", "分子", "biotech", "drug", "protein", "gene", "clinical", "vaccine", "mRNA"],
   量子计算: ["量子计算", "quantum computing", "qubit", "量子比特"],
   商业航天: ["商业航天", "火箭", "卫星", "轨道", "航天器", "rocket", "satellite", "orbit", "spacecraft"],
   Web3: ["Web3", "区块链", "blockchain", "加密货币", "cryptocurrency", "比特币", "Bitcoin", "Ethereum", "稳定币", "stablecoin", "RWA", "链上"],
@@ -401,12 +404,12 @@ export function technologyEventHasResearchEvidence(
 
 function uniqueSources(values: ChannelUpdateSource[]) {
   const seen = new Set<string>();
-  return values.filter((value) => {
-    const href = value.href.trim();
+  return values.flatMap((value) => {
+    const href = canonicalPublicHttpUrl(value.href);
     const key = href.toLocaleLowerCase("en-US");
-    if (!href || seen.has(key)) return false;
+    if (!href || seen.has(key)) return [];
     seen.add(key);
-    return true;
+    return [{ ...value, href }];
   });
 }
 
@@ -417,12 +420,12 @@ function articleSources(
   return uniqueSources([
     {
       name: article.source.platform || article.source.name,
-      href: article.source.url,
+      href: canonicalPublicHttpUrl(article.source.url),
       title: primaryTitle,
     },
     ...(article.relatedSources ?? []).map((source) => ({
       name: source.platform || source.name,
-      href: source.url,
+      href: canonicalPublicHttpUrl(source.url),
       title: source.title,
     })),
   ]);
@@ -463,7 +466,7 @@ function articleToUpdate(
     id: article.id,
     title: article.title,
     summary: article.summary,
-    href: article.source.url,
+    href: canonicalPublicHttpUrl(article.source.url),
     source: article.source.platform || article.source.name,
     label: article.type,
     context,
@@ -706,6 +709,43 @@ function technologyDirectory(): ChannelUpdateDirectory {
   };
 }
 
+export function inferCompanyEventTrack(
+  article: Pick<ArticleRecord, "sector" | "title" | "summary">,
+  companySlugs: string[],
+) {
+  const companyTracks = uniqueKeywords(
+    companySlugs
+      .map((slug) => companyRegistryEntry(slug)?.sector ?? "")
+      .map((track) => resolveCanonicalTrack(track) ?? track)
+      .filter(Boolean),
+  );
+  const observedTrack = resolveCanonicalTrack(article.sector) ?? article.sector.trim();
+  const candidates = uniqueKeywords([
+    ...companyTracks,
+    observedTrack,
+    ...Object.keys(technologyEventTrackAnchorTerms),
+  ]);
+
+  const scored = candidates
+    .map((track) => {
+      const titleAnchors = matchingTechnologyEventTrackAnchors(article.title, track);
+      const summaryAnchors = matchingTechnologyEventTrackAnchors(article.summary, track);
+      const distinctAnchors = new Set([...titleAnchors, ...summaryAnchors]).size;
+      return {
+        track,
+        score:
+          titleAnchors.length * 3 +
+          summaryAnchors.length * 1.5 +
+          Math.max(0, distinctAnchors - 1) +
+          (companyTracks.includes(track) ? 1 : 0),
+      };
+    })
+    .sort((left, right) => right.score - left.score || left.track.localeCompare(right.track, "zh-CN"));
+
+  if (scored[0] && scored[0].score >= 2) return scored[0].track;
+  return companyTracks[0] || observedTrack || "待分类";
+}
+
 function companiesDirectory(): ChannelUpdateDirectory {
   const items = articlesPayload.articles.flatMap((article) => {
     const matchedCompanies = resolveArticleCompanyEntities(article);
@@ -714,7 +754,18 @@ function companiesDirectory(): ChannelUpdateDirectory {
       .slice(0, 3)
       .map((company) => company.name)
       .join("、");
-    return [articleToUpdate(article, `${companyNames} · ${article.sector}`)];
+    const companySlugs = matchedCompanies.map((company) => company.slug);
+    const track = inferCompanyEventTrack(article, companySlugs);
+    const sources = articleSources(article);
+    return [{
+      ...articleToUpdate(article, `${companyNames} · ${track}`),
+      track,
+      publicTracks: [track],
+      eventClusterId: article.eventClusterId,
+      sources,
+      sourceCount: Math.max(sources.length || 1, article.duplicateCount ?? 1),
+      companySlugs,
+    }];
   });
   return {
     title: "公司更新目录",

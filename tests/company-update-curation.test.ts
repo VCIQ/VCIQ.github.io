@@ -30,6 +30,7 @@ function item(
     eventClusterId: overrides.eventClusterId,
     sources: overrides.sources,
     sourceCount: overrides.sourceCount,
+    companySlugs: overrides.companySlugs,
   };
 }
 
@@ -81,4 +82,50 @@ test("company update curation aggregates duplicate event titles and preserves so
     curated.items[0]?.sources?.map((source) => source.name).sort(),
     ["公司官网", "媒体"],
   );
+});
+
+test("company update curation clusters semantically similar reports even when raw cluster ids differ", () => {
+  const curated = curateCompanyUpdateDirectory(directory([
+    item({
+      id: "english",
+      title: "OpenAI ends its Cursor partnership after the acquisition by SpaceX.",
+      href: "https://openai.example.com/cursor",
+      label: "公司动态",
+      eventClusterId: "raw-english",
+      companySlugs: ["openai"],
+      sourceGrade: "B",
+    }),
+    item({
+      id: "chinese",
+      title: "OpenAI：因 Cursor 被 SpaceX 收购，将终止双方合作",
+      href: "https://media.example.com/openai-cursor",
+      label: "公司动态",
+      eventClusterId: "raw-chinese",
+      companySlugs: ["openai"],
+      sourceGrade: "C",
+    }),
+  ]));
+
+  assert.equal(curated.items.length, 1);
+  assert.equal(curated.items[0]?.sourceCount, 2);
+  assert.equal(curated.items[0]?.companySlugs?.[0], "openai");
+});
+
+test("company update curation keeps separate same-day events for one company", () => {
+  const curated = curateCompanyUpdateDirectory(directory([
+    item({
+      id: "product",
+      title: "测试公司发布新一代企业软件平台",
+      label: "产品发布",
+      companySlugs: ["test-company"],
+    }),
+    item({
+      id: "funding",
+      title: "测试公司宣布完成新一轮融资",
+      label: "融资",
+      companySlugs: ["test-company"],
+    }),
+  ]));
+
+  assert.equal(curated.items.length, 2);
 });

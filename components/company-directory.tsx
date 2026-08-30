@@ -15,6 +15,17 @@ function recentChange(date: string | undefined) {
   return asOf - changedAt <= 90 * 86_400_000;
 }
 
+function lifecycleStage(stage: string, status: string) {
+  if (status === "已上市") return "已上市";
+  if (stage === "Pre-IPO") return "Pre-IPO";
+  if (/^Series\s+/iu.test(stage) || stage === "成长期") return "成长期";
+  return stage || "待补充";
+}
+
+function latestFundingRound(stage: string) {
+  return /^Series\s+/iu.test(stage) ? stage : "未单列";
+}
+
 export function CompanyDirectory({ pageSize = 12 }: { pageSize?: number }) {
   const records: CompanyDirectoryRecord[] = companies.map((company) => {
     const research = buildCompanyResearchSnapshot(company);
@@ -30,13 +41,14 @@ export function CompanyDirectory({ pageSize = 12 }: { pageSize?: number }) {
       sector: company.sector,
       stage: company.stage,
       status: company.status,
-      whyImportant: research.whyImportant,
+      summary: company.summary,
+      lifecycleStage: lifecycleStage(company.stage, company.status),
+      fundingRound: latestFundingRound(company.stage),
       nextWatch: research.nextWatch,
       latestChange: research.latestChange
         ? {
             date: research.latestChange.date,
             title: research.latestChange.title,
-            type: research.latestChange.type,
           }
         : undefined,
       priorityScore: research.priority.score,

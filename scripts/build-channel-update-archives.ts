@@ -6,6 +6,7 @@ import {
   getChannelUpdateDirectory,
   type ChannelUpdateKey,
 } from "../lib/channel-updates";
+import { curateCompanyUpdateDirectory } from "../lib/company-update-curation";
 import { aggregatePeopleUpdateDirectory } from "../lib/people-event-updates";
 
 const ROOT = process.cwd();
@@ -20,6 +21,7 @@ const channels: ChannelUpdateKey[] = [
 
 function archivedDirectory(channel: ChannelUpdateKey) {
   const directory = getChannelUpdateDirectory(channel);
+  if (channel === "companies") return curateCompanyUpdateDirectory(directory);
   return channel === "people" ? aggregatePeopleUpdateDirectory(directory) : directory;
 }
 

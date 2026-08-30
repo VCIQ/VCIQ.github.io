@@ -57,9 +57,9 @@ test("people and company channel headers expose current signals before explanati
   );
   assertOrder(
     companies,
-    "<ChannelSplitLayout",
+    "<CompanyChannelTabs",
     "<details className={styles.methodology}>",
-    "company methodology must sit below the live directory and event panels",
+    "company methodology must sit below the tabbed directory and event workspace",
   );
 
   const peopleHeader = people.slice(
@@ -74,7 +74,7 @@ test("people and company channel headers expose current signals before explanati
   assert.doesNotMatch(companyHeader, /公司频道负责把赛道与技术变量/);
 });
 
-test("people and company cards lead with latest change and company secondary filters stay collapsed", async () => {
+test("people and company cards lead with latest change and company filters reflect research tasks", async () => {
   const people = await source("app/people/page.tsx");
   const companies = await source("components/company-directory-client.tsx");
   const companyCss = await source("components/company-directory.module.css");
@@ -87,35 +87,21 @@ test("people and company cards lead with latest change and company secondary fil
   );
   assertOrder(
     companies,
-    "<strong>最新变化</strong>",
-    "<strong>为什么重要</strong>",
-    "company cards must surface the latest verified change before static importance context",
+    "<span>最新变化</span>",
+    "<span>下一步</span>",
+    "company cards must surface the latest verified change before the next research question",
   );
 
-  const advancedStart = companies.indexOf("<details className={styles.advancedFilters}>");
-  const advancedEnd = companies.indexOf("</details>", advancedStart);
-  assert.ok(advancedStart >= 0 && advancedEnd > advancedStart, "missing collapsed secondary company filters");
-  const advancedFilters = companies.slice(advancedStart, advancedEnd);
-  assert.match(advancedFilters, /value=\{region\}/);
-  assert.match(advancedFilters, /value=\{sector\}/);
-  assert.match(advancedFilters, /value=\{stage\}/);
-  assert.doesNotMatch(advancedFilters, /value=\{signal\}|value=\{sortOrder\}/);
-  assertOrder(
-    companies,
-    "value={signal}",
-    "<details className={styles.advancedFilters}>",
-    "research signal must remain a primary company filter",
-  );
-  assertOrder(
-    companies,
-    "value={sortOrder}",
-    "<details className={styles.advancedFilters}>",
-    "sort order must remain a primary company control",
-  );
+  for (const control of ["region", "sector", "status", "lifecycle", "fundingRound", "signal", "sortOrder"]) {
+    assert.match(companies, new RegExp(`value=\\{${control}\\}`));
+  }
+  assert.match(companies, /<details className=\{styles\.metricGuide\}>/);
+  assert.match(companies, /<strong>研究优先级<\/strong>/);
+  assert.match(companies, /<strong>证据覆盖<\/strong>/);
+  assert.match(companies, /<strong>主体核验<\/strong>/);
 
-  assert.match(companyCss, /\.primaryFilters \{[\s\S]*grid-template-columns:\s*minmax\(220px, 1\.6fr\) repeat\(2, minmax\(118px, \.7fr\)\)/);
-  assert.match(companyCss, /\.advancedFilters summary \{/);
-  assert.match(companyCss, /\.advancedGrid \{[\s\S]*grid-template-columns:\s*repeat\(3, minmax\(0, 1fr\)\)/);
+  assert.match(companyCss, /\.filterGrid \{[\s\S]*grid-template-columns:\s*repeat\(4, minmax\(132px, 1fr\)\)/);
+  assert.match(companyCss, /\.metricGuide > div \{[\s\S]*grid-template-columns:\s*repeat\(3, minmax\(0, 1fr\)\)/);
 });
 
 test("people and company cards stay scan-dense without dropping research context", async () => {
@@ -124,19 +110,18 @@ test("people and company cards stay scan-dense without dropping research context
   const companies = await source("components/company-directory-client.tsx");
   const companyCss = await source("components/company-directory.module.css");
 
-  assert.match(companies, /className=\{styles\.cardMetrics\}/);
-  assert.match(companies, /<dt>阶段<\/dt>/);
-  assert.match(companies, /<dt>证据<\/dt>/);
-  assert.match(companies, /<dt>研究分<\/dt>/);
+  assert.match(companies, /className=\{styles\.cardFooter\}/);
+  assert.match(companies, /company\.lifecycleStage/);
+  assert.match(companies, /证据 \{company\.hasProfile/);
+  assert.match(companies, /研究分 \{company\.priorityScore\}/);
   assert.match(companies, /companyDirectoryRelationTags\(company\)/);
-  assert.match(companies, /company\.coverageLabel/);
   assert.match(companies, /company\.identityConfidence/);
   assert.match(companies, /company\.updatedAt/);
-  assert.match(companyCss, /\.card \{[\s\S]*min-height:\s*228px/);
-  assert.match(companyCss, /\.researchRows p \{[\s\S]*-webkit-line-clamp:\s*1/);
-  assert.match(companyCss, /\.researchRows > div:first-child p \{[\s\S]*-webkit-line-clamp:\s*2/);
+  assert.match(companyCss, /\.card \{[\s\S]*min-height:\s*254px/);
+  assert.match(companyCss, /\.positioning \{[\s\S]*-webkit-line-clamp:\s*2/);
+  assert.match(companyCss, /\.nextWatch p \{[\s\S]*-webkit-line-clamp:\s*1/);
   assert.match(companyCss, /\.relationRow \{[\s\S]*flex-wrap:\s*nowrap/);
-  assert.match(companyCss, /\.cardMetrics \{/);
+  assert.match(companyCss, /\.cardFooter \{/);
 
   assert.doesNotMatch(people, /styles\.personCard/);
   assert.match(people, /className=\{filterClass\}/);
