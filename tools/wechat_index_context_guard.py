@@ -174,6 +174,7 @@ def extract_index_rows(
     )
     if title_only_index:
         title_hints = list(parser.title_hints)
+        official_title_urls: dict[tuple[str, int], str] = {}
         if index_host in {"gsi24.com", "zhidx.com"}:
             for link in parser.links:
                 link_parts = parser_module.urlsplit(str(link.get("url", "")))
@@ -191,12 +192,20 @@ def extract_index_rows(
                     is not None
                 )
                 if is_article and parser_module._usable_title(link.get("title")):
+                    hint_title = link.get("title")
+                    hint_position = int(link.get("position", 0))
                     title_hints.append(
                         {
-                            "title": link.get("title"),
-                            "position": int(link.get("position", 0)),
+                            "title": hint_title,
+                            "position": hint_position,
                         }
                     )
+                    official_title_urls[
+                        (
+                            parser_module._clean(hint_title, 260).casefold(),
+                            hint_position,
+                        )
+                    ] = crawler.normalize_url(str(link.get("url", "")))
         for hint in title_hints:
             title = parser_module._clean(hint.get("title"), 260)
             title_key = title.casefold()
@@ -225,11 +234,15 @@ def extract_index_rows(
                 continue
             rows.append(
                 {
-                    "url": index_url,
+                    "url": official_title_urls.get((title_key, position), index_url),
                     "title": title,
                     "summary": context,
                     "date": parser_module._date_from_context(context, crawler) or "",
-                    "kind": "title",
+                    "kind": (
+                        "official"
+                        if (title_key, position) in official_title_urls
+                        else "title"
+                    ),
                 }
             )
             seen_titles.add(title_key)

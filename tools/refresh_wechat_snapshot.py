@@ -104,6 +104,11 @@ def _publishable_article(article: dict[str, Any]) -> bool:
         return True
     source = article.get("source")
     source = source if isinstance(source, dict) else {}
+    source_kind = str(
+        article.get("sourceKind") or source.get("sourceKind") or ""
+    )
+    if source_kind in {"official-website", "official-crosspost"}:
+        return str(source.get("platform", "")) in {"官方网站", "搜狐号"}
     return (
         str(source.get("platform", "")) == "微信"
         and article.get("wechatContentMode") != "index-only"
@@ -130,8 +135,8 @@ def _normalize_statuses(
                 status["failed"] = max(1, int(status.get("failed", 0) or 0))
                 status["retainedPrevious"] = True
                 status["error"] = (
-                    "Discovery returned only proxy/index pages; no original "
-                    "mp.weixin.qq.com article was published"
+                    "Discovery returned no verified WeChat original or "
+                    "publisher-owned official copy"
                 )
         result.append(status)
     return result

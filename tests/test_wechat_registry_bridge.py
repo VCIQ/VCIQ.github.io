@@ -325,7 +325,8 @@ class WeChatRegistryBridgeTest(unittest.TestCase):
         )
 
         self.assertEqual(len(rows), 1)
-        self.assertEqual(rows[0]["kind"], "title")
+        self.assertEqual(rows[0]["kind"], "official")
+        self.assertEqual(rows[0]["url"], "https://www.gsi24.com/a/3035.html")
         self.assertEqual(rows[0]["title"], "长江存储完成先进芯片封装新进展")
 
     def test_zhidx_account_page_exposes_article_link_titles(self) -> None:
@@ -351,7 +352,8 @@ class WeChatRegistryBridgeTest(unittest.TestCase):
         )
 
         self.assertEqual(len(rows), 1)
-        self.assertEqual(rows[0]["kind"], "title")
+        self.assertEqual(rows[0]["kind"], "official")
+        self.assertEqual(rows[0]["url"], "https://zhidx.com/p/588519.html")
 
     def test_context_guard_preserves_first_party_title_indexes(self) -> None:
         from tools import wechat_index_context_guard as guard
@@ -381,9 +383,88 @@ class WeChatRegistryBridgeTest(unittest.TestCase):
             )
 
             self.assertEqual(len(rows), 1)
-            self.assertEqual(rows[0]["kind"], "title")
+            self.assertEqual(rows[0]["kind"], "official")
         finally:
             bridge._extract_index_rows = original
+
+    def test_official_website_copy_keeps_non_wechat_provenance(self) -> None:
+        today = datetime.now(UTC).date().isoformat()
+        spec = {
+            "id": "user-track-wechat-zhidx-semiconductor",
+            "name": "芯东西",
+            "publisherEntity": "芯东西",
+            "officialCrosspostHosts": ["zhidx.com"],
+            "sourceLevel": "媒体报道",
+            "sector": "半导体",
+            "region": "中国",
+            "keywords": ["半导体", "芯片"],
+            "trackedCompanies": ["长江存储"],
+            "trackedPeople": [],
+            "maxArticleAgeDays": 45,
+        }
+        row = {
+            "url": "https://zhidx.com/p/588519.html",
+            "title": "长江存储公布先进芯片封装进展",
+            "summary": "长江存储公布半导体先进芯片封装进展。",
+            "kind": "official",
+        }
+        body = f"""
+        <html><head>
+          <meta property="og:title" content="长江存储公布先进芯片封装进展" />
+          <meta property="og:description" content="长江存储公布半导体先进芯片封装进展。" />
+          <meta property="article:published_time" content="{today}" />
+        </head><body></body></html>
+        """
+
+        article = bridge._parse_official_crosspost(
+            spec, row, body, crawl_articles
+        )
+
+        self.assertIsNotNone(article)
+        assert article is not None
+        self.assertEqual(article["sourceKind"], "official-website")
+        self.assertEqual(article["source"]["platform"], "官方网站")
+        self.assertEqual(article["source"]["publisherEntity"], "芯东西")
+        self.assertNotIn("wechatAccount", article)
+
+    def test_unapproved_host_cannot_become_official_copy(self) -> None:
+        spec = {
+            "id": "user-track-wechat-zhidx-semiconductor",
+            "name": "芯东西",
+            "officialCrosspostHosts": ["zhidx.com"],
+        }
+        article = bridge._parse_official_crosspost(
+            spec,
+            {"url": "https://repost.example/article", "kind": "official"},
+            "<html><head><title>芯东西半导体文章</title></head></html>",
+            crawl_articles,
+        )
+        self.assertIsNone(article)
+
+    def test_verified_platform_detail_falls_back_to_official_copy(self) -> None:
+        spec = {
+            "name": "芯智讯",
+            "officialCrosspostHosts": ["m.sohu.com", "sohu.com"],
+        }
+        row = {
+            "url": "https://m.sohu.com/a/123456_128469",
+            "title": "芯智讯发布半导体芯片产业进展",
+            "summary": "芯智讯发布半导体芯片产业进展。",
+            "kind": "detail",
+        }
+        original_fetch = bridge._fetch_cached
+        original_extract = bridge._extract_index_rows
+        try:
+            bridge._fetch_cached = lambda *_args, **_kwargs: "<html></html>"
+            bridge._extract_index_rows = lambda *_args, **_kwargs: []
+            resolved = bridge._resolve_detail_row(
+                row, spec, "Mozilla/5.0", crawl_articles
+            )
+        finally:
+            bridge._fetch_cached = original_fetch
+            bridge._extract_index_rows = original_extract
+
+        self.assertEqual(resolved, [{**row, "kind": "official"}])
 
     def test_eet_account_context_discovers_chiptrend_title(self) -> None:
         spec = {

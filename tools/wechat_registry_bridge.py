@@ -1,9 +1,8 @@
-"""Runtime bridge between the WeChat parser and the account registry.
+"""Runtime bridge between media identities and publication endpoints.
 
-Public aggregation pages are used only as link-discovery fallbacks. An item is
-accepted only after the original ``mp.weixin.qq.com`` page is fetched, the
-configured public-account name is verified, and the existing entity relevance
-rules pass.
+Public aggregation pages remain discovery-only. A verified publisher may opt
+in its own website or official cross-platform profile as acceptance evidence.
+Those records retain their actual provenance and are not called WeChat originals.
 """
 
 from __future__ import annotations
@@ -299,6 +298,101 @@ def _is_resolvable_detail_url(url: str) -> bool:
     )
 
 
+def _official_crosspost_host_allowed(spec: dict[str, Any], url: str) -> bool:
+    host = (urlsplit(url).hostname or "").casefold().removeprefix("www.")
+    allowed = {
+        str(value).casefold().removeprefix("www.")
+        for value in spec.get("officialCrosspostHosts", [])
+        if str(value).strip()
+    }
+    return bool(host and host in allowed)
+
+
+def _official_platform(url: str) -> str:
+    host = (urlsplit(url).hostname or "").casefold().removeprefix("www.")
+    return "搜狐号" if host in {"m.sohu.com", "sohu.com"} else "官方网站"
+
+
+def _parse_official_crosspost(
+    spec: dict[str, Any],
+    row: dict[str, str],
+    body: str,
+    crawler: Any,
+) -> dict[str, Any] | None:
+    """Parse a whitelisted publisher-owned copy without calling it WeChat."""
+
+    url = crawler.normalize_url(row.get("url", ""))
+    if not url or not _official_crosspost_host_allowed(spec, url):
+        return None
+    parser = _WECHAT.WeChatPageParser()
+    parser.feed(body or "")
+    page_parser = PublicIndexParser(url)
+    page_parser.feed(body or "")
+    title = crawler.clean_title(
+        parser.meta.get("og:title")
+        or parser.meta.get("twitter:title")
+        or parser.title
+        or " ".join(page_parser.page_title_parts)
+        or row.get("title", "")
+    )
+    # Some first-party sites expose the date in the visible article header
+    # rather than article:published_time. This remains acceptable only after
+    # the article host passed the explicit publisher whitelist above.
+    visible_text = _clean(" ".join(page_parser.text_parts), 20_000)
+    published_at = _WECHAT._published_at(
+        parser, body or "", crawler
+    ) or _date_from_context(visible_text[:3000], crawler)
+    content = parser.content or visible_text
+    summary = _clean(
+        parser.meta.get("description")
+        or parser.meta.get("og:description")
+        or parser.meta.get("twitter:description")
+        or content[:650]
+        or row.get("summary", ""),
+        500,
+    )
+    if (
+        not title
+        or len(title) < 6
+        or not summary
+        or not _article_date_is_recent(published_at, spec, crawler)
+    ):
+        return None
+    companies, people, keywords = _WECHAT._relevance_entities(
+        title, summary, content, spec, crawler
+    )
+    if not (companies or people or keywords):
+        return None
+    publisher = str(spec.get("publisherEntity") or spec.get("name") or "")
+    company, company_slug = _WECHAT._company_attribution(
+        title, content, publisher, companies, crawler
+    )
+    platform = _official_platform(url)
+    article = crawler._external_article(
+        spec,
+        title=title,
+        summary=summary,
+        url=url,
+        published_at=published_at,
+        source_name=publisher,
+        source_level=spec.get("sourceLevel", "媒体报道"),
+        platform=platform,
+        company=company,
+        company_slug=company_slug,
+    )
+    article["publisherEntity"] = publisher
+    article["sourceKind"] = (
+        "official-crosspost" if platform != "官方网站" else "official-website"
+    )
+    article["mentionedCompanies"] = companies
+    article["mentionedPeople"] = people
+    article["matchedTrackingTerms"] = keywords[:20]
+    if isinstance(article.get("source"), dict):
+        article["source"]["sourceKind"] = article["sourceKind"]
+        article["source"]["publisherEntity"] = publisher
+    return article
+
+
 def _detail_belongs_to_index(index_url: str, detail_url: str) -> bool:
     """Exclude unrelated recommendation links on account profile pages."""
 
@@ -462,6 +556,7 @@ def _extract_index_rows(
                 )
                 if title != _clean(text, 320):
                     title_hints.append({"title": title, "position": position})
+        official_title_urls: dict[tuple[str, int], str] = {}
         if index_host in {"gsi24.com", "zhidx.com"}:
             for link in parser.links:
                 link_parts = urlsplit(str(link.get("url", "")))
@@ -475,12 +570,17 @@ def _extract_index_rows(
                     is not None
                 )
                 if is_article and _usable_title(link.get("title")):
+                    hint_title = link.get("title")
+                    hint_position = int(link.get("position", 0))
                     title_hints.append(
                         {
-                            "title": link.get("title"),
-                            "position": int(link.get("position", 0)),
+                            "title": hint_title,
+                            "position": hint_position,
                         }
                     )
+                    official_title_urls[
+                        (_clean(hint_title, 260).casefold(), hint_position)
+                    ] = crawler.normalize_url(str(link.get("url", "")))
         for hint in title_hints:
             title = _clean(hint.get("title"), 260)
             title_key = title.casefold()
@@ -506,11 +606,15 @@ def _extract_index_rows(
                 continue
             rows.append(
                 {
-                    "url": index_url,
+                    "url": official_title_urls.get((title_key, position), index_url),
                     "title": title,
                     "summary": context,
                     "date": _date_from_context(context, crawler) or "",
-                    "kind": "title",
+                    "kind": (
+                        "official"
+                        if (title_key, position) in official_title_urls
+                        else "title"
+                    ),
                 }
             )
             seen_titles.add(title_key)
@@ -554,6 +658,11 @@ def _resolve_detail_row(
                 "date": item.get("date") or row.get("date", ""),
             }
         )
+    if not result and _official_crosspost_host_allowed(spec, row["url"]):
+        # The profile page already proved publisher ownership and scoped this
+        # detail URL to the same account. Prefer an embedded WeChat original,
+        # but retain the publisher-owned platform copy when that link is absent.
+        result.append({**row, "kind": "official"})
     return result
 
 
@@ -759,16 +868,20 @@ def install(wechat: Any) -> None:
             for row in candidate_rows[: max_items * 5]:
                 attempted_rows += 1
                 try:
-                    body = wechat.fetch_public_wechat_page(row["url"])
-                    article = wechat.parse_wechat_article(
-                        spec,
-                        row["url"],
-                        body,
-                        crawler,
-                        fallback_title=row.get("title", ""),
-                        fallback_summary=row.get("summary", ""),
-                        fallback_date=row.get("date") or None,
-                    )
+                    if row.get("kind") == "official":
+                        body = _fetch_cached(row["url"], user_agent, crawler)
+                        article = _parse_official_crosspost(spec, row, body, crawler)
+                    else:
+                        body = wechat.fetch_public_wechat_page(row["url"])
+                        article = wechat.parse_wechat_article(
+                            spec,
+                            row["url"],
+                            body,
+                            crawler,
+                            fallback_title=row.get("title", ""),
+                            fallback_summary=row.get("summary", ""),
+                            fallback_date=row.get("date") or None,
+                        )
                 except Exception as exc:  # noqa: BLE001 - aggregated below.
                     _record_diagnostic(
                         spec,
@@ -821,10 +934,10 @@ def install(wechat: Any) -> None:
                 attempted_rows,
                 0,
                 failed=max(1, failures),
-                platform="微信",
+                platform="媒体官方端点",
                 error=(
-                    "No verified public WeChat articles discovered from Bing or "
-                    "configured public indexes; previous snapshot retained"
+                    "No verified publisher article discovered from WeChat or "
+                    "configured official endpoints; previous snapshot retained"
                 ),
             )
             result.update(diagnostics)
@@ -837,7 +950,7 @@ def install(wechat: Any) -> None:
             attempted_rows,
             len(accepted),
             failed=failures,
-            platform="微信",
+            platform=accepted[0].get("source", {}).get("platform", "媒体官方端点"),
         )
         result.update(diagnostics)
         result.update(_runtime_diagnostics(spec))
