@@ -243,6 +243,33 @@ class WeChatRegistryBridgeTest(unittest.TestCase):
             "https://m.sohu.com/a/1065611950_120498874",
         )
 
+    def test_sohu_profile_account_survives_large_leading_script(self) -> None:
+        spec = {
+            "expectedAccounts": ["半导体技术"],
+            "keywords": ["半导体", "芯片", "封装"],
+            "trackedCompanies": ["长江存储"],
+            "trackedPeople": [],
+        }
+        body = """
+        <html><head><script>{script}</script><title>半导体技术的个人主页</title></head>
+        <body>
+          <div class="author-name">半导体技术</div>
+          <a href="https://m.sohu.com/a/1069311167_120498874">
+            长江存储发布芯片良率技术进展
+          </a>
+        </body></html>
+        """.format(script="x" * 600)
+
+        rows = bridge._extract_index_rows(
+            body,
+            "https://m.sohu.com/media/120498874",
+            spec,
+            crawl_articles,
+        )
+
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["kind"], "detail")
+
     def test_eet_account_context_discovers_chiptrend_title(self) -> None:
         spec = {
             "expectedAccounts": ["芯潮IC"],

@@ -237,8 +237,15 @@ def _profile_page_matches_account(
     )
     if not is_sohu_profile:
         return False
-    page_text = _clean(" ".join(parser.text_parts), 5000)
-    return wechat_source_registry.account_matches(spec, page_text)
+    # Match bounded visible nodes near the profile header independently. Passing
+    # the whole document to account_matches() lets large leading scripts consume
+    # its input limit before the author name is reached. Limiting the search to
+    # early nodes also avoids treating a recommended article's publisher name as
+    # proof that the profile itself belongs to the configured account.
+    return any(
+        wechat_source_registry.account_matches(spec, text)
+        for text in parser.text_parts[:60]
+    )
 
 
 def _extract_index_rows(

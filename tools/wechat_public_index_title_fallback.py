@@ -206,85 +206,89 @@ def _resolve_by_title(
     if not _date_is_recent(row.get("date"), spec, crawler):
         return []
 
-    # Treat the budget as two distinct title lookups, not two variants spent on
-    # the first row.  Public indexes often publish faster than Sogou indexes;
-    # giving a second discovered title one bounded chance is materially more
-    # useful than retrying the newest title immediately with near-identical
-    # terms.  The broad first variant has also been the stable exact-title route
-    # on the public Sogou result page.
     variants = _query_variants(title)
     if not variants:
         return []
     title_key = _normalize_title(title)
-    query = variants[0]
-    query_key = _normalize_title(query)
     lookup_keys = spec.setdefault("_publicIndexTitleLookupKeys", [])
     lookup_query_keys = spec.setdefault("_publicIndexTitleLookupQueryKeys", [])
-    if title_key in lookup_keys or query_key in lookup_query_keys:
+    if title_key in lookup_keys:
         return []
-    if not _source_budget(
-        spec,
-        "_publicIndexTitleSearchQueries",
-        MAX_SEARCH_QUERIES_PER_SOURCE,
+    if int(spec.get("_publicIndexTitleSearchQueries", 0) or 0) >= (
+        MAX_SEARCH_QUERIES_PER_SOURCE
     ):
         return []
     lookup_keys.append(title_key)
-    lookup_query_keys.append(query_key)
     spec.setdefault("_publicIndexTitleLookupTitles", []).append(title)
-    try:
-        search_url = index.build_search_url(spec, query=query)
-        search_body = index._request(search_url)
-        search_rows = index.parse_search_results(search_body, search_url)
-    except Exception as exc:  # noqa: BLE001 - CAPTCHA/network errors stay terminal.
-        _record_lookup_failure(spec, exc)
-        return []
 
-    # One redirect attempt per looked-up title keeps the two-title budget fair;
-    # downstream original-page verification is authoritative for the selected
-    # top-scoring candidate.
-    for candidate in _ranked_rows(
-        search_rows,
-        title,
-        query,
-        spec,
-        crawler,
-    )[:1]:
+    # Spend the two source-local searches on the same recent public-index title:
+    # first the bounded exact title, then its distinctive short fragment.  The
+    # fragment is important when Sogou has indexed a punctuation or subtitle
+    # variant of the public-index headline.  At most one redirect is followed
+    # per query so a bad exact-title candidate cannot consume the fragment's
+    # redirect chance.
+    for query in variants:
+        query_key = _normalize_title(query)
+        if not query_key or query_key in lookup_query_keys:
+            continue
         if not _source_budget(
             spec,
-            "_publicIndexTitleRedirectAttempts",
-            MAX_REDIRECT_ATTEMPTS_PER_SOURCE,
+            "_publicIndexTitleSearchQueries",
+            MAX_SEARCH_QUERIES_PER_SOURCE,
         ):
-            return []
+            break
+        lookup_query_keys.append(query_key)
         try:
-            result_url = wechat_sogou_link_compat.guarded_result_url(
-                str(candidate.get("url") or ""),
-                search_body,
-            )
-            jump_body = index._request(
-                index._normalized_url(result_url),
-                referer=search_url,
-            )
-            direct = index.resolve_script_url(jump_body)
-        except Exception as exc:  # noqa: BLE001 - never bypass Sogou/WeChat guards.
+            search_url = index.build_search_url(spec, query=query)
+            search_body = index._request(search_url)
+            search_rows = index.parse_search_results(search_body, search_url)
+        except Exception as exc:  # noqa: BLE001 - CAPTCHA/network errors stay terminal.
             _record_lookup_failure(spec, exc)
             continue
-        if not _is_direct_wechat(direct):
-            continue
-        return [
-            {
-                **row,
-                "url": direct,
-                "kind": "wechat",
-                # Never use public-index or Sogou dates as final evidence.
-                # The downstream original-page parser must recover the date
-                # directly from mp.weixin.qq.com.
-                "date": "",
-                "discoveryUrl": str(row.get("url") or ""),
-                "titleLookupQuery": query,
-                "sogouDiscoveryTitle": _clean(candidate.get("title"), 260),
-                "sogouDiscoveryDate": _clean(candidate.get("publishedAt"), 40),
-            }
-        ]
+
+        for candidate in _ranked_rows(
+            search_rows,
+            title,
+            query,
+            spec,
+            crawler,
+        )[:1]:
+            if not _source_budget(
+                spec,
+                "_publicIndexTitleRedirectAttempts",
+                MAX_REDIRECT_ATTEMPTS_PER_SOURCE,
+            ):
+                return []
+            try:
+                result_url = wechat_sogou_link_compat.guarded_result_url(
+                    str(candidate.get("url") or ""),
+                    search_body,
+                )
+                jump_body = index._request(
+                    index._normalized_url(result_url),
+                    referer=search_url,
+                )
+                direct = index.resolve_script_url(jump_body)
+            except Exception as exc:  # noqa: BLE001 - never bypass Sogou/WeChat guards.
+                _record_lookup_failure(spec, exc)
+                continue
+            if not _is_direct_wechat(direct):
+                continue
+            return [
+                {
+                    **row,
+                    "url": direct,
+                    "kind": "wechat",
+                    # Never use public-index or Sogou dates as final evidence.
+                    # The downstream original-page parser must recover the date
+                    # directly from mp.weixin.qq.com.
+                    "date": "",
+                    "discoveryUrl": str(row.get("url") or ""),
+                    "titleLookupQuery": query,
+                    "sogouDiscoveryTitle": _clean(candidate.get("title"), 260),
+                    "sogouDiscoveryDate": _clean(candidate.get("publishedAt"), 40),
+                }
+            ]
     return []
 
 
