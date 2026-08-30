@@ -399,6 +399,44 @@ class WeChatPublicIndexTitleFallbackTests(unittest.TestCase):
         self.assertEqual(spec["_publicIndexTitleSearchQueries"], 1)
         self.assertEqual(spec["_publicIndexTitleRedirectAttempts"], 1)
 
+    def test_two_equal_headlines_preserve_second_redirect_for_identity_gate(self) -> None:
+        class SyndicatedIndex(_EmptyIndex):
+            @staticmethod
+            def _normalized_url(value: str) -> str:
+                return value
+
+            def _request(self, url: str, *, referer: str = "") -> str:
+                return url if referer else "search"
+
+            @staticmethod
+            def parse_search_results(_body: str, _search_url: str) -> list[dict]:
+                title = "宁德时代钠电储能项目正式落地"
+                return [
+                    {"url": "https://example.com/copied", "title": title, "account": "", "publishedAt": ""},
+                    {"url": "https://example.com/original", "title": title, "account": "", "publishedAt": ""},
+                ]
+
+            @staticmethod
+            def resolve_script_url(body: str) -> str:
+                suffix = "copied" if body.endswith("/copied") else "original"
+                return f"https://mp.weixin.qq.com/s/{suffix}"
+
+        index = SyndicatedIndex()
+        bridge = SimpleNamespace(_resolve_detail_row=lambda *_args: [])
+        fallback.install(bridge, index)
+        spec = {"expectedAccounts": ["电池中国"]}
+
+        resolved = bridge._resolve_detail_row(
+            {"kind": "detail", "title": "宁德时代钠电储能项目正式落地", "date": ""},
+            spec,
+            "ua",
+            _Crawler(),
+        )
+
+        self.assertEqual([row["titleLookupRank"] for row in resolved], ["1", "2"])
+        self.assertEqual(spec["_publicIndexTitleSearchQueries"], 1)
+        self.assertEqual(spec["_publicIndexTitleRedirectAttempts"], 2)
+
     def test_first_direct_resolution_stops_later_title_lookups(self) -> None:
         class ExactIndex(_EmptyIndex):
             @staticmethod

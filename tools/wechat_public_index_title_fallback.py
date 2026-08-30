@@ -322,13 +322,15 @@ def _resolve_by_title(
             spec["_publicIndexPreferShortTitleQuery"] = True
             return []
 
-        for candidate in ranked_rows[:1]:
+        resolved_rows: list[dict[str, str]] = []
+        seen_direct: set[str] = set()
+        for rank, candidate in enumerate(ranked_rows, 1):
             if not _source_budget(
                 spec,
                 "_publicIndexTitleRedirectAttempts",
                 MAX_REDIRECT_ATTEMPTS_PER_SOURCE,
             ):
-                return []
+                break
             try:
                 result_url = wechat_sogou_link_compat.guarded_result_url(
                     str(candidate.get("url") or ""),
@@ -341,18 +343,16 @@ def _resolve_by_title(
                 direct = index.resolve_script_url(jump_body)
             except Exception as exc:  # noqa: BLE001 - never bypass Sogou/WeChat guards.
                 _record_lookup_failure(spec, exc)
-                spec["_publicIndexPreferShortTitleQuery"] = True
-                return []
-            if not _is_direct_wechat(direct):
-                spec["_publicIndexPreferShortTitleQuery"] = True
-                return []
-            spec["_publicIndexTitleDirectResolved"] = True
+                continue
+            if not _is_direct_wechat(direct) or direct in seen_direct:
+                continue
+            seen_direct.add(direct)
             account = _clean(candidate.get("account"), 100)
             if account:
                 accounts = spec.setdefault("_publicIndexTitleCandidateAccounts", [])
                 if account not in accounts and len(accounts) < 4:
                     accounts.append(account)
-            return [
+            resolved_rows.append(
                 {
                     **row,
                     "url": direct,
@@ -363,11 +363,15 @@ def _resolve_by_title(
                     "date": "",
                     "discoveryUrl": str(row.get("url") or ""),
                     "titleLookupQuery": query,
+                    "titleLookupRank": str(rank),
                     "sogouDiscoveryTitle": _clean(candidate.get("title"), 260),
                     "sogouDiscoveryDate": _clean(candidate.get("publishedAt"), 40),
                     "sogouDiscoveryAccount": account,
                 }
-            ]
+            )
+        if resolved_rows:
+            spec["_publicIndexTitleDirectResolved"] = True
+            return resolved_rows
         spec["_publicIndexPreferShortTitleQuery"] = True
         return []
     return []

@@ -127,6 +127,7 @@ class PublicIndexParser(HTMLParser):
         self.links: list[dict[str, Any]] = []
         self.item_ranges: list[tuple[int, int]] = []
         self.title_hints: list[dict[str, Any]] = []
+        self.page_title_parts: list[str] = []
         self._href = ""
         self._anchor_parts: list[str] = []
         self._anchor_position = 0
@@ -135,6 +136,7 @@ class PublicIndexParser(HTMLParser):
         self._title_span_depth = 0
         self._title_parts: list[str] = []
         self._title_position = 0
+        self._page_title_depth = 0
 
     def handle_starttag(
         self, tag: str, attrs: list[tuple[str, str | None]]
@@ -142,6 +144,8 @@ class PublicIndexParser(HTMLParser):
         tag_key = tag.casefold()
         values = {key.casefold(): value or "" for key, value in attrs}
         classes = set(values.get("class", "").casefold().split())
+        if tag_key == "title":
+            self._page_title_depth += 1
         if tag_key == "div":
             if self._item_depth:
                 self._item_depth += 1
@@ -170,9 +174,13 @@ class PublicIndexParser(HTMLParser):
             self._anchor_parts.append(value)
         if self._title_span_depth:
             self._title_parts.append(value)
+        if self._page_title_depth:
+            self.page_title_parts.append(value)
 
     def handle_endtag(self, tag: str) -> None:
         tag_key = tag.casefold()
+        if tag_key == "title" and self._page_title_depth:
+            self._page_title_depth -= 1
         if tag_key == "a" and self._href:
             self.links.append(
                 {
@@ -324,6 +332,11 @@ def _profile_page_matches_account(
     )
     if not is_sohu_profile:
         return False
+    if wechat_source_registry.account_matches(
+        spec,
+        " ".join(parser.page_title_parts),
+    ):
+        return True
     # Match bounded visible nodes near the profile header independently. Passing
     # the whole document to account_matches() lets large leading scripts consume
     # its input limit before the author name is reached. Limiting the search to
@@ -331,7 +344,7 @@ def _profile_page_matches_account(
     # proof that the profile itself belongs to the configured account.
     return any(
         wechat_source_registry.account_matches(spec, text)
-        for text in parser.text_parts[:60]
+        for text in parser.text_parts[:120]
     )
 
 
@@ -681,9 +694,13 @@ def install(wechat: Any) -> None:
         rows, index_failures = _fallback_index_rows(spec, user_agent, crawler)
         diagnostics = dict(spec.get("_publicIndexDiagnostics") or {})
         accepted: list[dict[str, Any]] = []
+        verified_title_queries: set[str] = set()
         failures = index_failures
         max_items = int(spec.get("maxItems", 6))
         for row in rows[: max_items * 5]:
+            title_query = _clean(row.get("titleLookupQuery"), 260)
+            if title_query and title_query in verified_title_queries:
+                continue
             try:
                 body = wechat.fetch_public_wechat_page(row["url"])
                 article = wechat.parse_wechat_article(
@@ -705,6 +722,12 @@ def install(wechat: Any) -> None:
                 continue
             if article:
                 accepted.append(article)
+                if title_query:
+                    # Multiple Sogou rows can share a syndicated headline. Once
+                    # one original page verifies, skip its lower-ranked siblings;
+                    # otherwise try the second bounded redirect after a wrong
+                    # publisher is rejected.
+                    verified_title_queries.add(title_query)
             if len(accepted) >= max_items:
                 break
 

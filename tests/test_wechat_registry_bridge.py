@@ -275,6 +275,33 @@ class WeChatRegistryBridgeTest(unittest.TestCase):
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["kind"], "detail")
 
+    def test_sohu_profile_title_is_bounded_account_evidence(self) -> None:
+        spec = {
+            "expectedAccounts": ["半导体技术"],
+            "keywords": ["半导体", "芯片", "封装"],
+            "trackedCompanies": ["长江存储"],
+            "trackedPeople": [],
+        }
+        leading = "".join(f"<p>导航节点{index}</p>" for index in range(140))
+        body = f"""
+        <html><head><title>半导体技术的个人主页</title></head><body>
+          {leading}
+          <a href="https://m.sohu.com/a/1069311167_120498874">
+            长江存储发布芯片良率技术进展
+          </a>
+        </body></html>
+        """
+
+        rows = bridge._extract_index_rows(
+            body,
+            "https://m.sohu.com/media/120498874",
+            spec,
+            crawl_articles,
+        )
+
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["kind"], "detail")
+
     def test_eet_account_context_discovers_chiptrend_title(self) -> None:
         spec = {
             "expectedAccounts": ["芯潮IC"],
