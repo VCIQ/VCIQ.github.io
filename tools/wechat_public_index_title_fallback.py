@@ -15,9 +15,10 @@ from typing import Any
 from urllib.parse import urlsplit
 
 try:
-    from . import wechat_sogou_link_compat
+    from . import wechat_sogou_link_compat, wechat_source_registry
 except ImportError:
     import wechat_sogou_link_compat
+    import wechat_source_registry
 
 MAX_QUERY_LENGTH = 38
 MAX_SEARCH_QUERIES_PER_SOURCE = 2
@@ -201,6 +202,21 @@ def _ranked_rows(
             continue
         score = _title_score(expected_title, str(row.get("title") or ""), query)
         if score < MIN_TITLE_SCORE:
+            continue
+        # A copied or syndicated headline can rank ahead of the configured
+        # publisher even when both titles are identical.  Sogou already exposes
+        # the public-account name, so reject an explicit mismatch before
+        # spending the redirect budget.  Empty account fields remain eligible
+        # because the original mp.weixin page is still the acceptance authority.
+        observed_account = _clean(row.get("account"), 100)
+        if (
+            spec.get("expectedAccounts")
+            and observed_account
+            and not wechat_source_registry.account_matches(spec, observed_account)
+        ):
+            spec["_publicIndexTitleAccountMismatches"] = int(
+                spec.get("_publicIndexTitleAccountMismatches", 0) or 0
+            ) + 1
             continue
         ranked.append((score, row))
     ranked.sort(key=lambda item: item[0], reverse=True)

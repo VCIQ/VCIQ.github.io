@@ -48,6 +48,54 @@ class WeChatPublicIndexTitleFallbackTests(unittest.TestCase):
             fallback.MIN_TITLE_SCORE,
         )
 
+    def test_explicit_wrong_sogou_account_is_rejected_before_redirect(self) -> None:
+        title = "中芯国际发布先进封装芯片量产进展"
+        rows = [
+            {
+                "url": "https://weixin.sogou.com/link?wrong",
+                "title": title,
+                "account": "转载观察",
+                "publishedAt": "",
+            },
+            {
+                "url": "https://weixin.sogou.com/link?right",
+                "title": title,
+                "account": "半导体技术",
+                "publishedAt": "",
+            },
+        ]
+        spec = {"expectedAccounts": ["半导体技术"]}
+
+        ranked = fallback._ranked_rows(
+            rows,
+            title,
+            title,
+            spec,
+            _Crawler(),
+        )
+
+        self.assertEqual([row["account"] for row in ranked], ["半导体技术"])
+        self.assertEqual(spec["_publicIndexTitleAccountMismatches"], 1)
+
+    def test_missing_sogou_account_defers_identity_check_to_original_page(self) -> None:
+        title = "中芯国际发布先进封装芯片量产进展"
+        rows = [{
+            "url": "https://weixin.sogou.com/link?unknown",
+            "title": title,
+            "account": "",
+            "publishedAt": "",
+        }]
+
+        ranked = fallback._ranked_rows(
+            rows,
+            title,
+            title,
+            {"expectedAccounts": ["半导体技术"]},
+            _Crawler(),
+        )
+
+        self.assertEqual(ranked, rows)
+
     def test_short_variant_is_distinct_when_full_title_fits_query_limit(self) -> None:
         title = "半导体全链聚合，IICIE国际集成电路创新博览会9月深圳举办"
         variants = fallback._query_variants(title)
