@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import re
+from datetime import UTC, datetime, timedelta
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any, Iterable
@@ -158,11 +159,33 @@ def _date_from_context(context: str, crawler: Any) -> str | None:
     return crawler.normalize_date(match.group(0)) if match else None
 
 
+def _article_date_is_recent(
+    value: Any,
+    spec: dict[str, Any],
+    crawler: Any,
+) -> bool:
+    """Require a parseable original-page date inside the source window."""
+
+    normalized = crawler.normalize_date(value)
+    if not normalized:
+        return False
+    try:
+        published = datetime.fromisoformat(normalized).date()
+    except ValueError:
+        return False
+    max_age_days = max(1, int(spec.get("maxArticleAgeDays", 45) or 45))
+    return published >= datetime.now(UTC).date() - timedelta(days=max_age_days)
+
+
 def _is_wechat_article_url(url: str) -> bool:
     parts = urlsplit(url)
     return (
-        (parts.hostname or "").casefold() == "mp.weixin.qq.com"
-        and parts.path.rstrip("/") == "/s"
+        parts.scheme.casefold() == "https"
+        and (parts.hostname or "").casefold() == "mp.weixin.qq.com"
+        and (
+            parts.path.rstrip("/") == "/s"
+            or parts.path.rstrip("/").startswith("/s/")
+        )
     )
 
 
@@ -187,11 +210,17 @@ def _detail_belongs_to_index(index_url: str, detail_url: str) -> bool:
     index_parts = urlsplit(index_url)
     detail_parts = urlsplit(detail_url)
     index_host = (index_parts.hostname or "").casefold().removeprefix("www.")
-    if index_host != "m.sohu.com":
+    if index_host not in {"m.sohu.com", "sohu.com"}:
         return True
     profile = re.fullmatch(r"/media/(\d+)", index_parts.path.rstrip("/"))
+    if not profile:
+        # Author-id scoping belongs to an account profile page only. Once a
+        # profile-owned article is being parsed as a nested detail page, its
+        # original WeChat link must be allowed through to the final account
+        # verification layer.
+        return True
     article = re.fullmatch(r"/a/\d+_(\d+)", detail_parts.path.rstrip("/"))
-    return bool(profile and article and profile.group(1) == article.group(1))
+    return bool(article and profile.group(1) == article.group(1))
 
 
 def _profile_page_matches_account(
@@ -203,7 +232,7 @@ def _profile_page_matches_account(
 
     parts = urlsplit(index_url)
     host = (parts.hostname or "").casefold().removeprefix("www.")
-    is_sohu_profile = host == "m.sohu.com" and re.fullmatch(
+    is_sohu_profile = host in {"m.sohu.com", "sohu.com"} and re.fullmatch(
         r"/media/\d+", parts.path.rstrip("/")
     )
     if not is_sohu_profile:
@@ -331,17 +360,35 @@ def _fallback_index_rows(
 ) -> tuple[list[dict[str, str]], int]:
     rows: list[dict[str, str]] = []
     failures = 0
+    diagnostics = {
+        "publicIndexPagesFetched": 0,
+        "publicIndexPagesFailed": 0,
+        "publicIndexRowsDiscovered": 0,
+        "publicIndexDetailResolved": 0,
+        "publicIndexDetailUnresolved": 0,
+        "publicIndexTitleResolved": 0,
+        "publicIndexDirectRows": 0,
+    }
     for index_url in spec.get("publicIndexUrls", []):
         try:
             body = _fetch_cached(index_url, user_agent, crawler)
             discovered = _extract_index_rows(body, index_url, spec, crawler)
         except Exception:  # noqa: BLE001 - reported through the source status.
             failures += 1
+            diagnostics["publicIndexPagesFailed"] += 1
             continue
+        diagnostics["publicIndexPagesFetched"] += 1
+        diagnostics["publicIndexRowsDiscovered"] += len(discovered)
         for row in discovered:
             resolved = _resolve_detail_row(row, spec, user_agent, crawler)
-            if row.get("kind") == "detail" and not resolved:
-                failures += 1
+            if row.get("kind") == "detail":
+                if resolved:
+                    diagnostics["publicIndexDetailResolved"] += 1
+                    if any(item.get("titleLookupQuery") for item in resolved):
+                        diagnostics["publicIndexTitleResolved"] += 1
+                else:
+                    diagnostics["publicIndexDetailUnresolved"] += 1
+                    failures += 1
             rows.extend(resolved)
     deduped: list[dict[str, str]] = []
     seen: set[str] = set()
@@ -351,6 +398,8 @@ def _fallback_index_rows(
             continue
         deduped.append({**row, "url": url})
         seen.add(url)
+    diagnostics["publicIndexDirectRows"] = len(deduped)
+    spec["_publicIndexDiagnostics"] = diagnostics
     return deduped, failures
 
 
@@ -394,7 +443,18 @@ def install(wechat: Any) -> None:
                 ):
                     return None
 
+                # Discovery-page dates are never acceptance evidence for a
+                # configured account.  The original mp.weixin page must expose
+                # its own date, which the wrapped parser then normalizes.
+                kwargs.pop("fallback_date", None)
+
             article = original_parse(spec, url, body, crawler, **kwargs)
+            if article and spec.get("expectedAccounts") and not _article_date_is_recent(
+                article.get("publishedAt"),
+                spec,
+                crawler,
+            ):
+                return None
             if article and isinstance(article.get("source"), dict):
                 article["source"]["level"] = spec.get(
                     "sourceLevel", "媒体报道"
@@ -432,6 +492,7 @@ def install(wechat: Any) -> None:
             return articles, status
 
         rows, index_failures = _fallback_index_rows(spec, user_agent, crawler)
+        diagnostics = dict(spec.get("_publicIndexDiagnostics") or {})
         accepted: list[dict[str, Any]] = []
         failures = index_failures
         max_items = int(spec.get("maxItems", 6))
@@ -456,7 +517,7 @@ def install(wechat: Any) -> None:
                 break
 
         if not accepted:
-            return [], crawler._status(
+            result = crawler._status(
                 spec["id"],
                 spec["name"],
                 "error",
@@ -469,7 +530,9 @@ def install(wechat: Any) -> None:
                     "configured public indexes; previous snapshot retained"
                 ),
             )
-        return accepted, crawler._status(
+            result.update(diagnostics)
+            return [], result
+        result = crawler._status(
             spec["id"],
             spec["name"],
             "partial" if failures else "ok",
@@ -478,6 +541,8 @@ def install(wechat: Any) -> None:
             failed=failures,
             platform="微信",
         )
+        result.update(diagnostics)
+        return accepted, result
 
     setattr(crawl_wechat_source, "_wechat_public_index_fallback", True)
     wechat.crawl_wechat_source = crawl_wechat_source

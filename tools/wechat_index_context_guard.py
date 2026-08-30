@@ -88,12 +88,19 @@ def extract_index_rows(
 ) -> list[dict[str, str]]:
     parser = parser_module.PublicIndexParser(index_url)
     parser.feed(body or "")
+    profile_account_match = parser_module._profile_page_matches_account(
+        parser,
+        index_url,
+        spec,
+    )
     groups = _article_link_groups(parser, crawler)
     rows: list[dict[str, str]] = []
     seen: set[str] = set()
 
     for index, group in enumerate(groups):
         url = str(group["url"])
+        if not parser_module._detail_belongs_to_index(index_url, url):
+            continue
         position = int(group["position"])
         next_position = (
             int(groups[index + 1]["position"])
@@ -101,8 +108,10 @@ def extract_index_rows(
             else None
         )
         context = _bounded_context(parser, position, next_position)
-        if require_account_context and not wechat_source_registry.account_matches(
-            spec, context
+        if (
+            require_account_context
+            and not profile_account_match
+            and not wechat_source_registry.account_matches(spec, context)
         ):
             continue
         title = _bounded_title(

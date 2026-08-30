@@ -17,7 +17,12 @@ from __future__ import annotations
 
 import re
 from typing import Any, Iterable
-from urllib.parse import unquote, urljoin, urlsplit
+from urllib.parse import urljoin, urlsplit
+
+try:
+    from . import wechat_url_compat
+except ImportError:
+    import wechat_url_compat
 
 _DIRECT_PATTERN = re.compile(
     r"https?://mp\.weixin\.qq\.com/s(?:\?|/)[^'\"<>\s]+",
@@ -25,10 +30,6 @@ _DIRECT_PATTERN = re.compile(
 )
 _LEGACY_CHUNK_PATTERN = re.compile(
     r"(?:var\s+)?(?:url|jump_url)\s*\+=\s*['\"]",
-    flags=re.IGNORECASE,
-)
-_TIMESTAMP_ARTIFACT_PATTERN = re.compile(
-    r"(?:&times;tamp|×tamp|%c3%97tamp|%26times%3btamp)(?:=|%3d)",
     flags=re.IGNORECASE,
 )
 _PATTERNS = (
@@ -54,65 +55,20 @@ _PATTERNS = (
     ),
 )
 
-_EXPLICIT_HTML_ENTITIES = {
-    "&amp;": "&",
-    "&#38;": "&",
-    "&#x26;": "&",
-    "&#X26;": "&",
-    "&quot;": '"',
-    "&#34;": '"',
-    "&#x22;": '"',
-    "&#X22;": '"',
-    "&apos;": "'",
-    "&#39;": "'",
-    "&#x27;": "'",
-    "&#X27;": "'",
-}
-
-
-def _explicit_html_unescape(value: str) -> str:
-    text = str(value or "")
-    for old, new in _EXPLICIT_HTML_ENTITIES.items():
-        text = text.replace(old, new)
-    return text
-
-
 def _repair_wechat_timestamp_artifact(value: str) -> str:
-    text = str(value or "")
-    # Apply only to the distinctive query-parameter artifact observed on Sogou
-    # redirect pages. The final host/path check still gates acceptance.
-    return _TIMESTAMP_ARTIFACT_PATTERN.sub("&timestamp=", text)
+    return wechat_url_compat.decode_public_url(value)
 
 
 def _decode(value: str) -> str:
-    text = _explicit_html_unescape(value)
-    replacements = {
-        "\\/": "/",
-        "\\x26": "&",
-        "\\u0026": "&",
-        "\\u003d": "=",
-        "\\u003D": "=",
-        "\\u002f": "/",
-        "\\u002F": "/",
-        "\\u003a": ":",
-        "\\u003A": ":",
-        "\\u0025": "%",
-    }
-    for old, new in replacements.items():
-        text = text.replace(old, new)
-    for _ in range(2):
-        decoded = unquote(text)
-        if decoded == text:
-            break
-        text = decoded
-    return _repair_wechat_timestamp_artifact(text).strip().strip("'\"")
+    return wechat_url_compat.decode_public_url(value).strip().strip("'\"")
 
 
 def _is_original(url: str) -> bool:
     parts = urlsplit(str(url or ""))
     path = parts.path.rstrip("/")
     return (
-        (parts.hostname or "").casefold() == "mp.weixin.qq.com"
+        parts.scheme.casefold() == "https"
+        and (parts.hostname or "").casefold() == "mp.weixin.qq.com"
         and (path == "/s" or path.startswith("/s/"))
     )
 
@@ -148,7 +104,7 @@ def install(index: Any) -> None:
     def normalize_candidate(value: str) -> str:
         candidate = _repair_wechat_timestamp_artifact(value)
         if not candidate or not _is_original(candidate):
-            return candidate
+            return ""
         normalizer = getattr(index, "_normalized_url", None)
         return normalizer(candidate) if callable(normalizer) else candidate
 
@@ -157,9 +113,7 @@ def install(index: Any) -> None:
         # chunks. A generic direct-URL regex would otherwise accept only the
         # first (valid-looking but incomplete) chunk.
         if _LEGACY_CHUNK_PATTERN.search(body or ""):
-            legacy = normalize_candidate(original(body))
-            if legacy:
-                return legacy
+            return normalize_candidate(original(body))
 
         current = resolve_current_redirect(body)
         if current:

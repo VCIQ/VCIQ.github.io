@@ -23,6 +23,7 @@ class RefreshWeChatSnapshotTest(unittest.TestCase):
             (refresh.wechat_sogou_redirect_compat, "sogou_redirect"),
             (refresh.wechat_sogou_link_compat, "sogou_link"),
             (refresh.wechat_public_index_title_fallback, "title_fallback"),
+            (refresh.wechat_public_aggregator, "public_aggregator"),
             (refresh.wechat_sogou_bridge, "sogou_bridge"),
         )
         with ExitStack() as stack:
@@ -45,6 +46,7 @@ class RefreshWeChatSnapshotTest(unittest.TestCase):
                 "sogou_redirect",
                 "sogou_link",
                 "title_fallback",
+                "public_aggregator",
                 "sogou_bridge",
             ],
         )
@@ -58,6 +60,9 @@ class RefreshWeChatSnapshotTest(unittest.TestCase):
         mocks["title_fallback"].assert_called_once_with(
             refresh.wechat_registry_bridge,
             refresh.wechat_sogou_index,
+        )
+        mocks["public_aggregator"].assert_called_once_with(
+            refresh.wechat_sogou_index
         )
 
     def _article(self, article_id: str, source_id: str, url: str) -> dict:

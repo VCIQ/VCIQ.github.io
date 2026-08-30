@@ -17,6 +17,11 @@ from typing import Any, Iterable
 from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 
+try:
+    from . import wechat_url_compat
+except ImportError:
+    import wechat_url_compat
+
 INDEX_URL = "https://weixin.imaseo.com/"
 MAX_RESPONSE_BYTES = 12 * 1024 * 1024
 REQUEST_TIMEOUT = 24
@@ -46,10 +51,11 @@ def _clean(value: Any, limit: int = 500) -> str:
 
 
 def _is_direct_wechat(url: str) -> bool:
-    parts = urlsplit(html.unescape(str(url or "")))
+    parts = urlsplit(wechat_url_compat.decode_public_url(url))
     path = parts.path.rstrip("/")
     return (
-        (parts.hostname or "").casefold() == "mp.weixin.qq.com"
+        parts.scheme.casefold() == "https"
+        and (parts.hostname or "").casefold() == "mp.weixin.qq.com"
         and (path == "/s" or path.startswith("/s/"))
     )
 
@@ -119,7 +125,7 @@ def parse_public_index(body: str, spec: dict[str, Any]) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     seen: set[str] = set()
     for match in _LINK_PATTERN.finditer(body or ""):
-        url = html.unescape(match.group(1)).replace("&amp;", "&")
+        url = wechat_url_compat.decode_public_url(match.group(1))
         if not _is_direct_wechat(url) or url in seen:
             continue
         title = _clean(match.group(2), 260)

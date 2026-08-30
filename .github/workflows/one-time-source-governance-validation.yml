@@ -9,12 +9,32 @@ on:
       - "tools/crawl_articles.py"
       - "tools/refresh_wechat_snapshot.py"
       - "tools/wechat_public_index_title_fallback.py"
+      - "tools/wechat_public_sources.py"
+      - "tools/wechat_fetch_compat.py"
+      - "tools/wechat_registry_bridge.py"
+      - "tools/wechat_source_registry.py"
+      - "tools/wechat_index_context_guard.py"
+      - "tools/wechat_original_redirect_bridge.py"
+      - "tools/wechat_public_aggregator.py"
+      - "tools/wechat_sogou_bridge.py"
+      - "tools/wechat_sogou_index.py"
+      - "tools/wechat_sogou_link_compat.py"
       - "tools/wechat_sogou_redirect_compat.py"
+      - "tools/wechat_url_compat.py"
       - "tools/crawl_with_wechat_registry.py"
       - "config/wechat_public_indexes.json"
       - "tests/test_crawler.py"
       - "tests/test_wechat_public_index_title_fallback.py"
+      - "tests/test_wechat_public_index_fallback.py"
+      - "tests/test_wechat_registry_bridge.py"
+      - "tests/test_wechat_original_redirect_bridge.py"
+      - "tests/test_wechat_public_aggregator.py"
+      - "tests/test_wechat_sogou_bridge.py"
       - "tests/test_wechat_sogou_redirect_compat.py"
+      - "tests/test_wechat_fetch_compat.py"
+      - "tests/test_wechat_source_registry.py"
+      - "tests/test_refresh_wechat_snapshot.py"
+      - "tests/test_crawl_with_wechat_registry.py"
 
 permissions:
   contents: read
@@ -32,13 +52,28 @@ jobs:
           python -m py_compile \
             tools/crawl_articles.py \
             tools/refresh_wechat_snapshot.py \
+            tools/wechat_fetch_compat.py \
+            tools/wechat_index_context_guard.py \
+            tools/wechat_original_redirect_bridge.py \
+            tools/wechat_public_aggregator.py \
             tools/wechat_public_index_title_fallback.py \
+            tools/wechat_registry_bridge.py \
+            tools/wechat_sogou_bridge.py \
+            tools/wechat_sogou_link_compat.py \
             tools/wechat_sogou_redirect_compat.py \
+            tools/wechat_url_compat.py \
             tools/crawl_with_wechat_registry.py
           python -m unittest \
             tests.test_crawler.CrawlerTests.test_normalize_url_preserves_signed_timestamp_query \
             tests.test_wechat_public_index_title_fallback \
+            tests.test_wechat_public_index_fallback \
+            tests.test_wechat_registry_bridge \
+            tests.test_wechat_original_redirect_bridge \
+            tests.test_wechat_public_aggregator \
+            tests.test_wechat_sogou_bridge \
             tests.test_wechat_sogou_redirect_compat \
+            tests.test_wechat_fetch_compat \
+            tests.test_wechat_source_registry \
             tests.test_refresh_wechat_snapshot \
             tests.test_crawl_with_wechat_registry
           python - <<'PY'
@@ -88,8 +123,25 @@ jobs:
       - name: Require productive crawls for all nine WeChat endpoints
         run: |
           python - <<'PY'
+          import hashlib
           import json
+          from datetime import UTC, datetime, timedelta
+          from urllib.parse import parse_qsl, urlsplit
+
           from tools import crawl_with_wechat_registry as app
+          from tools import wechat_source_registry
+
+          def safe_url(value):
+              raw = str(value or "")
+              parts = urlsplit(raw)
+              path = parts.path
+              if (parts.hostname or "").casefold() == "mp.weixin.qq.com" and path.startswith("/s/"):
+                  path = "/s/<redacted>"
+              return {
+                  "location": f"{parts.scheme}://{parts.netloc}{path}",
+                  "queryKeys": sorted({key for key, _value in parse_qsl(parts.query, keep_blank_values=True)}),
+                  "sha256": hashlib.sha256(raw.encode("utf-8")).hexdigest()[:12],
+              }
 
           base = app.base
           crawler = base.tracking.crawler
@@ -133,6 +185,7 @@ jobs:
           assert not missing, f"Missing configured WeChat sources: {missing}"
 
           statuses = {}
+          current_articles = {}
           for source_id in sorted(targets):
               spec = spec_by_id[source_id]
               try:
@@ -152,6 +205,7 @@ jobs:
                       "error": f"{type(exc).__name__}: {exc}",
                   }
               statuses[source_id] = status
+              current_articles[source_id] = articles
               print("ENDPOINT_CRAWL " + json.dumps({
                   "id": source_id,
                   "name": spec.get("name"),
@@ -162,11 +216,11 @@ jobs:
                           "title": article.get("title"),
                           "publishedAt": article.get("publishedAt"),
                           "wechatAccount": article.get("wechatAccount"),
-                          "sourceUrl": (article.get("source") or {}).get("url"),
+                          "sourceUrl": safe_url((article.get("source") or {}).get("url")),
                       }
                       for article in articles[:3]
                   ],
-              }, ensure_ascii=False, sort_keys=True))
+              }, ensure_ascii=False, sort_keys=True), flush=True)
 
           unhealthy = {
               source_id: {
@@ -179,6 +233,72 @@ jobs:
               if int(statuses[source_id].get("scanned", 0) or 0) <= 0
               or int(statuses[source_id].get("accepted", 0) or 0) <= 0
           }
+          contract_violations = {
+              source_id: {
+                  "articleCount": len(current_articles[source_id]),
+                  "status": statuses[source_id].get("status"),
+                  "scanned": statuses[source_id].get("scanned", 0),
+                  "accepted": statuses[source_id].get("accepted", 0),
+                  "retainedPrevious": bool(statuses[source_id].get("retainedPrevious")),
+              }
+              for source_id in sorted(targets)
+              if len(current_articles[source_id]) <= 0
+              or int(statuses[source_id].get("accepted", 0) or 0) != len(current_articles[source_id])
+              or int(statuses[source_id].get("scanned", 0) or 0) < int(statuses[source_id].get("accepted", 0) or 0)
+              or statuses[source_id].get("status") not in {"ok", "partial"}
+              or bool(statuses[source_id].get("retainedPrevious"))
+          }
+          budget_violations = {
+              source_id: {
+                  "queries": int(spec_by_id[source_id].get("_publicIndexTitleSearchQueries", 0) or 0),
+                  "redirects": int(spec_by_id[source_id].get("_publicIndexTitleRedirectAttempts", 0) or 0),
+                  "titles": list(spec_by_id[source_id].get("_publicIndexTitleLookupTitles", [])),
+                  "failureKinds": list(spec_by_id[source_id].get("_publicIndexTitleFailureKinds", [])),
+              }
+              for source_id in sorted(targets)
+              if int(spec_by_id[source_id].get("_publicIndexTitleSearchQueries", 0) or 0) > 2
+              or int(spec_by_id[source_id].get("_publicIndexTitleRedirectAttempts", 0) or 0) > 2
+          }
+          verification_violations = {}
+          today = datetime.now(UTC).date()
+          # Inspect only the current-run article lists captured above; retained
+          # snapshot data never participates in these acceptance assertions.
+          for source_id, articles in current_articles.items():
+              spec = spec_by_id[source_id]
+              max_age = max(1, int(spec.get("maxArticleAgeDays", 45) or 45))
+              reasons = []
+              for article in articles:
+                  source_url = str((article.get("source") or {}).get("url") or "")
+                  parts = urlsplit(source_url)
+                  path = parts.path.rstrip("/")
+                  if parts.scheme.casefold() != "https" or (parts.hostname or "").casefold() != "mp.weixin.qq.com" or not (
+                      path == "/s" or path.startswith("/s/")
+                  ):
+                      reasons.append("not_original_wechat_url")
+                  if article.get("wechatContentMode") != "original-page":
+                      reasons.append("not_original_page_content")
+                  try:
+                      published = datetime.fromisoformat(str(article.get("publishedAt") or "")).date()
+                  except ValueError:
+                      reasons.append("missing_original_date")
+                  else:
+                      if published < today - timedelta(days=max_age):
+                          reasons.append("stale_original_date")
+                      if published > today + timedelta(days=1):
+                          reasons.append("future_original_date")
+                  if not wechat_source_registry.account_matches(
+                      spec,
+                      str(article.get("wechatAccount") or ""),
+                  ):
+                      reasons.append("account_mismatch")
+                  if not (
+                      article.get("mentionedCompanies")
+                      or article.get("mentionedPeople")
+                      or article.get("matchedTrackingTerms")
+                  ):
+                      reasons.append("entity_irrelevant")
+              if reasons:
+                  verification_violations[source_id] = sorted(set(reasons))
           print("NINE_ENDPOINT_HEALTH " + json.dumps({
               source_id: {
                   "scanned": statuses[source_id].get("scanned", 0),
@@ -186,7 +306,28 @@ jobs:
                   "status": statuses[source_id].get("status"),
               }
               for source_id in sorted(targets)
-          }, ensure_ascii=False, sort_keys=True))
+          }, ensure_ascii=False, sort_keys=True), flush=True)
+          print("TITLE_LOOKUP_BUDGET " + json.dumps({
+              source_id: {
+                  "queries": int(spec_by_id[source_id].get("_publicIndexTitleSearchQueries", 0) or 0),
+                  "redirects": int(spec_by_id[source_id].get("_publicIndexTitleRedirectAttempts", 0) or 0),
+                  "titles": list(spec_by_id[source_id].get("_publicIndexTitleLookupTitles", [])),
+                  "failureKinds": list(spec_by_id[source_id].get("_publicIndexTitleFailureKinds", [])),
+              }
+              for source_id in sorted(targets)
+          }, ensure_ascii=False, sort_keys=True), flush=True)
+          assert not budget_violations, (
+              "Per-source title lookup and redirect budgets must stay <= 2: "
+              + json.dumps(budget_violations, ensure_ascii=False, sort_keys=True)
+          )
+          assert not contract_violations, (
+              "Current-run articles and crawl statuses must agree: "
+              + json.dumps(contract_violations, ensure_ascii=False, sort_keys=True)
+          )
+          assert not verification_violations, (
+              "Accepted rows must pass original URL/date/account/entity checks: "
+              + json.dumps(verification_violations, ensure_ascii=False, sort_keys=True)
+          )
           assert not unhealthy, (
               "Each target must satisfy scanned > 0 and accepted > 0: "
               + json.dumps(unhealthy, ensure_ascii=False, sort_keys=True)

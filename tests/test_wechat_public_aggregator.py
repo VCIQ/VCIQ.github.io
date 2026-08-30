@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import unittest
 from unittest.mock import patch
+from urllib.parse import parse_qs, urlsplit
 
 from tools import wechat_public_aggregator as aggregator
 
@@ -43,6 +44,46 @@ class WeChatPublicAggregatorTests(unittest.TestCase):
             },
         )
         self.assertEqual(rows, [])
+
+    def test_insecure_direct_article_is_rejected(self) -> None:
+        body = """
+        <a href="http://mp.weixin.qq.com/s/Insecure123">大模型推理效率取得新突破</a>
+        <div>AI 量子位 2026-08-29</div>
+        """
+        rows = aggregator.parse_public_index(
+            body,
+            {
+                "name": "量子位",
+                "expectedAccounts": ["量子位"],
+            },
+        )
+        self.assertEqual(rows, [])
+
+    def test_signed_timestamp_query_survives_index_parsing(self) -> None:
+        for separator in ("&timestamp=", "&amp;timestamp=", "×tamp="):
+            with self.subTest(separator=separator):
+                body = f"""
+                <a href="https://mp.weixin.qq.com/s?src=11{separator}1788018564&amp;ver=6934&amp;signature=a%2Ab">
+                  半导体芯片产业取得新突破
+                </a>
+                <div>半导体 半导体行业观察 2026-08-29</div>
+                """
+                rows = aggregator.parse_public_index(
+                    body,
+                    {
+                        "name": "半导体行业观察",
+                        "expectedAccounts": ["半导体行业观察"],
+                    },
+                )
+                self.assertEqual(len(rows), 1)
+                query = parse_qs(
+                    urlsplit(rows[0]["directUrl"]).query,
+                    keep_blank_values=True,
+                )
+                self.assertEqual(query["src"], ["11"])
+                self.assertEqual(query["timestamp"], ["1788018564"])
+                self.assertEqual(query["ver"], ["6934"])
+                self.assertEqual(query["signature"], ["a*b"])
 
     def test_primary_direct_results_win_over_fallback(self) -> None:
         class Index:

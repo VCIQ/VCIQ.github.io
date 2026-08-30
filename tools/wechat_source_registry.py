@@ -105,7 +105,6 @@ def account_matches(spec: dict[str, Any], observed: str) -> bool:
         if expected_key and (
             expected_key == observed_key
             or expected_key in observed_key
-            or observed_key in expected_key
         ):
             return True
     return False

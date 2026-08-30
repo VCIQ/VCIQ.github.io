@@ -18,6 +18,7 @@ try:  # Imported by tests as tools.refresh_wechat_snapshot.
     from . import wechat_index_context_guard
     from . import wechat_index_record_fallback
     from . import wechat_original_redirect_bridge
+    from . import wechat_public_aggregator
     from . import wechat_public_index_title_fallback
     from . import wechat_public_sources
     from . import wechat_registry_bridge
@@ -33,6 +34,7 @@ except ImportError:  # Executed directly with python tools/...
     import wechat_index_context_guard
     import wechat_index_record_fallback
     import wechat_original_redirect_bridge
+    import wechat_public_aggregator
     import wechat_public_index_title_fallback
     import wechat_public_sources
     import wechat_registry_bridge
@@ -64,6 +66,7 @@ def install_wechat_pipeline() -> None:
         wechat_registry_bridge,
         wechat_sogou_index,
     )
+    wechat_public_aggregator.install(wechat_sogou_index)
     wechat_sogou_bridge.install(wechat_public_sources)
 
 

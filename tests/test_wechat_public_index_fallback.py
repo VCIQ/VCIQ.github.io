@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+from datetime import UTC, datetime
 
 from tools import crawl_articles
 from tools import crawl_with_tracking
@@ -73,21 +74,55 @@ class WeChatPublicIndexFallbackTest(unittest.TestCase):
         self.assertIn("OpenAI发布新推理模型", rows[0]["title"])
         self.assertEqual(rows[0]["date"], "2026-07-25")
 
+    def test_installed_context_guard_preserves_sohu_profile_scope(self) -> None:
+        spec = {
+            "expectedAccounts": ["半导体技术"],
+            "keywords": ["半导体", "芯片", "封装"],
+            "trackedCompanies": ["中芯国际"],
+            "trackedPeople": [],
+        }
+        body = """
+        <html><body>
+          <h1>半导体技术</h1>
+          <a href="https://m.sohu.com/a/1065611950_120498874">
+            中芯国际发布半导体芯片封装测试进展
+          </a>
+          <div>昨天12:17 · 17阅读</div>
+          <a href="https://m.sohu.com/a/999999999_999999999">
+            其他作者的半导体热门文章
+          </a>
+        </body></html>
+        """
+
+        rows = bridge._extract_index_rows(
+            body,
+            "https://m.sohu.com/media/120498874",
+            spec,
+            crawl_articles,
+        )
+
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(
+            rows[0]["url"],
+            "https://m.sohu.com/a/1065611950_120498874",
+        )
+
     def test_empty_bing_feed_recovers_from_public_index_and_original_page(self) -> None:
         spec = self._qbit_spec()
-        index_html = """
+        today = datetime.now(UTC).date().isoformat()
+        index_html = f"""
         <html><body>
           <a href="https://mp.weixin.qq.com/s?__biz=abc&mid=1&idx=1&sn=verified">
             OpenAI发布新推理模型，Sam Altman介绍后续方向
           </a>
-          AI 量子位 2026-07-25 04:02:00 UTC
+          AI 量子位 {today} 04:02:00 UTC
         </body></html>
         """
-        original_page = """
+        original_page = f"""
         <html><head>
           <meta property="og:title" content="OpenAI发布新推理模型，Sam Altman介绍后续方向" />
           <meta name="description" content="OpenAI发布新推理模型，并介绍智能体和多模态能力。" />
-          <meta property="article:published_time" content="2026-07-25" />
+          <meta property="article:published_time" content="{today}" />
         </head><body>
           <a id="js_name">量子位</a>
           <div id="js_content">

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+from datetime import UTC, datetime
 
 from tools import crawl_articles
 from tools import wechat_public_sources as wechat
@@ -85,6 +86,7 @@ class WeChatRegistryBridgeTest(unittest.TestCase):
         self.assertIsNone(article)
 
     def test_verified_account_keeps_media_level_and_entity_links(self) -> None:
+        today = datetime.now(UTC).date().isoformat()
         spec = {
             "id": "user-track-wechat-qbitai-ai",
             "name": "量子位",
@@ -97,11 +99,11 @@ class WeChatRegistryBridgeTest(unittest.TestCase):
             "expectedAccounts": ["量子位", "qbitai"],
             "accountConfigId": "qbitai",
         }
-        body = """
+        body = f"""
         <html><head>
           <meta property="og:title" content="OpenAI发布新推理模型" />
           <meta name="description" content="OpenAI发布新推理模型，Sam Altman介绍后续方向。" />
-          <meta property="article:published_time" content="2026-07-25" />
+          <meta property="article:published_time" content="{today}" />
         </head><body>
           <a id="js_name">量子位</a>
           <div id="js_content">OpenAI发布新推理模型，Sam Altman介绍后续方向。</div>
@@ -119,6 +121,93 @@ class WeChatRegistryBridgeTest(unittest.TestCase):
         self.assertEqual(article["wechatAccountConfigId"], "qbitai")
         self.assertIn("OpenAI", article["mentionedCompanies"])
         self.assertIn("Sam Altman", article["mentionedPeople"])
+
+    def test_nested_sohu_detail_can_expose_original_wechat_link(self) -> None:
+        spec = {
+            "expectedAccounts": ["半导体技术"],
+            "keywords": ["半导体", "芯片", "封装"],
+            "trackedCompanies": ["中芯国际"],
+            "trackedPeople": [],
+        }
+        body = """
+        <html><body>
+          <a href="https://mp.weixin.qq.com/s?__biz=abc&mid=1&idx=1&sn=good">
+            中芯国际发布半导体芯片封装测试进展
+          </a>
+        </body></html>
+        """
+
+        rows = bridge._extract_index_rows(
+            body,
+            "https://m.sohu.com/a/1065611950_120498874",
+            spec,
+            crawl_articles,
+            require_account_context=False,
+        )
+
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["kind"], "wechat")
+
+    def test_configured_account_rejects_discovery_date_without_original_date(self) -> None:
+        spec = {
+            "id": "user-track-wechat-qbitai-ai",
+            "name": "量子位",
+            "sector": "AI / AGI",
+            "keywords": ["大模型", "推理模型"],
+            "trackedCompanies": ["OpenAI"],
+            "trackedPeople": [],
+            "expectedAccounts": ["量子位", "qbitai"],
+        }
+        body = """
+        <html><head>
+          <meta property="og:title" content="OpenAI发布新推理模型" />
+          <meta name="description" content="OpenAI发布新推理模型并公布重要技术进展。" />
+        </head><body>
+          <a id="js_name">量子位</a>
+          <div id="js_content">OpenAI发布新推理模型并公布重要技术进展。</div>
+        </body></html>
+        """
+
+        article = wechat.parse_wechat_article(
+            spec,
+            "https://mp.weixin.qq.com/s/missing-original-date",
+            body,
+            crawl_articles,
+            fallback_date="2026-08-29",
+        )
+
+        self.assertIsNone(article)
+
+    def test_configured_account_rejects_stale_original_date(self) -> None:
+        spec = {
+            "id": "user-track-wechat-qbitai-ai",
+            "name": "量子位",
+            "sector": "AI / AGI",
+            "keywords": ["大模型", "推理模型"],
+            "trackedCompanies": ["OpenAI"],
+            "trackedPeople": [],
+            "expectedAccounts": ["量子位", "qbitai"],
+            "maxArticleAgeDays": 45,
+        }
+        body = """
+        <html><head>
+          <meta property="og:title" content="OpenAI发布新推理模型" />
+          <meta name="description" content="OpenAI发布新推理模型并公布重要技术进展。" />
+          <meta property="article:published_time" content="2020-01-01" />
+        </head><body>
+          <a id="js_name">量子位</a>
+          <div id="js_content">OpenAI发布新推理模型并公布重要技术进展。</div>
+        </body></html>
+        """
+
+        article = wechat.parse_wechat_article(
+            spec,
+            "https://mp.weixin.qq.com/s/stale-original-date",
+            body,
+            crawl_articles,
+        )
+
+        self.assertIsNone(article)
 
     def test_account_scoped_sohu_profile_discovers_only_its_article_titles(self) -> None:
         spec = {
