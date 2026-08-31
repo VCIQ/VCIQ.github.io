@@ -208,6 +208,8 @@ class AdaptivePublicSourceTests(unittest.TestCase):
         self.assertEqual(status["adapter"], "adaptive-public-v1")
         self.assertEqual(status["profile"], "yahoo-tw")
         self.assertEqual(status["accepted"], 3)
+        self.assertGreaterEqual(status["scanned"], status["accepted"])
+        self.assertEqual(status["transportRequests"], 4)
         self.assertIn("structured-data", status["strategies"])
         self.assertEqual(status["canonicalSourceUrl"], "https://tw.yahoo.com/")
         self.assertEqual(
@@ -278,7 +280,8 @@ class AdaptivePublicSourceTests(unittest.TestCase):
             ["new-2", "new-1", "old-1"],
         )
         self.assertEqual(status["newAccepted"], 2)
-        self.assertEqual(status["accepted"], 3)
+        self.assertEqual(status["accepted"], 2)
+        self.assertEqual(status["retainedCount"], 3)
         self.assertEqual(status["retainedPreviousCount"], 1)
         self.assertTrue(status["retainedPrevious"])
 

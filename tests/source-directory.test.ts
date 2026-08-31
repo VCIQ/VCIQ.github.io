@@ -64,6 +64,16 @@ test("source directory statistics include papers and X without mutating core sou
   assert.ok(sourceDirectoryStats.primary >= coreSourceStats.primary + researchPaperSources.length);
 });
 
+test("health buckets close exactly over every Source Entity", () => {
+  assert.equal(
+    sourceDirectoryStats.healthy
+      + sourceDirectoryStats.partial
+      + sourceDirectoryStats.error
+      + sourceDirectoryStats.unknown,
+    sourceDirectoryStats.total,
+  );
+});
+
 test("new research and social source types participate in the same lifecycle gate", () => {
   for (const source of [...researchPaperSources, ...xDiscoverySources]) {
     assert.ok(source.promotion);

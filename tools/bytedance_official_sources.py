@@ -289,6 +289,35 @@ def parse_volcengine_page(
     return _deduplicate_and_limit(articles, spec.max_items)
 
 
+def _structured_record_count(slug: str, body: str) -> int:
+    """Count article records evaluated inside one structured transport payload."""
+
+    if slug == BYTEDANCE_SLUG:
+        payload = json.loads(body)
+        container = payload.get("data") if isinstance(payload, dict) else None
+        records = container.get("data", []) if isinstance(container, dict) else []
+        return sum(1 for record in records if isinstance(record, dict))
+    if slug == DOUBAO_SLUG:
+        router_data = extract_router_data(body)
+        loader_data = router_data.get("loaderData")
+        loader_data = loader_data if isinstance(loader_data, dict) else {}
+        page = loader_data.get("(locale$)/blog/page")
+        page = page if isinstance(page, dict) else {}
+        records = page.get("article_list")
+        records = records if isinstance(records, list) else []
+        return sum(1 for record in records if isinstance(record, dict))
+    if slug == VOLCENGINE_SLUG:
+        page = _volcengine_page(body)
+        banners = page.get("banner")
+        banners = banners if isinstance(banners, list) else []
+        online = page.get("listOnlineArticle")
+        online = online if isinstance(online, dict) else {}
+        records = online.get("List")
+        records = records if isinstance(records, list) else []
+        return sum(1 for record in (*banners, *records) if isinstance(record, dict))
+    return 0
+
+
 def _status(
     spec: Any,
     *,
@@ -296,9 +325,14 @@ def _status(
     scanned: int,
     failed: int,
     platform: str,
+    transport_requests: int = 1,
     error: str = "",
 ) -> dict[str, Any]:
     state = "ok" if accepted and not failed else "partial" if accepted else "empty"
+    # `scanned` and `accepted` are both record-level counters. The structured
+    # adapters fetch one transport payload that can contain many article records;
+    # keep that HTTP/request count separate so unlike units cannot be compared.
+    scanned_records = max(int(scanned), int(accepted))
     result: dict[str, Any] = {
         "id": spec.source_id,
         "name": f"{spec.name} 官方动态",
@@ -308,9 +342,10 @@ def _status(
         "status": state,
         "configuredIndexes": 1,
         "discovered": accepted,
-        "scanned": scanned,
+        "scanned": scanned_records,
         "accepted": accepted,
         "failed": failed,
+        "transportRequests": max(0, int(transport_requests)),
         "platform": platform,
     }
     if error:
@@ -343,18 +378,20 @@ def crawl_structured_company(
         return articles, _status(
             spec,
             accepted=len(articles),
-            scanned=1,
+            scanned=_structured_record_count(spec.slug, body),
             failed=0,
             platform=platform,
+            transport_requests=1,
             error="" if articles else "official structured payload returned no eligible articles",
         )
     except Exception as exc:
         return [], _status(
             spec,
             accepted=0,
-            scanned=1,
+            scanned=0,
             failed=1,
             platform=platform,
+            transport_requests=1,
             error=f"{type(exc).__name__}: {exc}",
         )
 

@@ -247,7 +247,8 @@ class ProfessionalMediaSourcesTest(unittest.TestCase):
         self.assertTrue(status["attempted"])
         self.assertEqual(status["adapter"], "professional-media-v1")
         self.assertEqual(status["accepted"], 1)
-        self.assertGreaterEqual(status["scanned"], 3)
+        self.assertEqual(status["scanned"], 1)
+        self.assertGreaterEqual(status["transportRequests"], 3)
         self.assertIn("original-site", status["strategies"])
         self.assertIn("original-articles", status["strategies"])
 

@@ -154,6 +154,7 @@ class ByteDanceOfficialSourcesTests(unittest.TestCase):
         )
 
         self.assertEqual(len(articles), 2)
+        self.assertEqual(target._structured_record_count("volcengine", body), 3)
         self.assertEqual(
             {article["source"]["url"] for article in articles},
             {
@@ -167,6 +168,21 @@ class ByteDanceOfficialSourcesTests(unittest.TestCase):
                 for article in articles
             )
         )
+
+    def test_status_keeps_transport_requests_separate_from_record_scan_counts(self) -> None:
+        status = target._status(
+            spec("volcengine", "火山引擎"),
+            accepted=8,
+            scanned=1,
+            failed=0,
+            platform="火山引擎发布中心",
+            transport_requests=1,
+        )
+
+        self.assertEqual(status["accepted"], 8)
+        self.assertEqual(status["scanned"], 8)
+        self.assertEqual(status["transportRequests"], 1)
+        self.assertLessEqual(status["accepted"], status["scanned"])
 
     def test_install_routes_only_supported_slugs(self) -> None:
         original = Mock(return_value=([{"id": "generic"}], {"status": "ok"}))

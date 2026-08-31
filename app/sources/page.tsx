@@ -85,6 +85,14 @@ function compactDate(value?: string): string {
   return value ? value.slice(0, 10) : "尚无成功记录";
 }
 
+function hasObservedEndpoint(
+  endpoints: Array<{ status: SourceHealthStatus; sourceIds: string[] }>,
+): boolean {
+  return endpoints.some(
+    (endpoint) => endpoint.sourceIds.length > 0 && endpoint.status !== "unknown",
+  );
+}
+
 export default function SourcesPage() {
   const issueCount = sourceDirectoryStats.partial + sourceDirectoryStats.error;
 
@@ -100,6 +108,7 @@ export default function SourcesPage() {
           <span>{sourceDirectoryStats.xProfiles} 个 X Discovery Source</span>
           <span>{sourceDirectoryStats.healthy} 个当前健康</span>
           <span>{issueCount} 个存在采集异常</span>
+          <span>{sourceDirectoryStats.unknown} 个 Unobserved / 未建立观测</span>
           <span>{sourceDirectoryStats.evidencePending} 个等待晋级证据</span>
           <span>{sourceDirectoryStats.reviewPending} 个 Core Ready</span>
         </div>
@@ -165,7 +174,7 @@ export default function SourcesPage() {
                             <strong>{endpoint.label}</strong>
                             <small>
                               {endpoint.evidenceGrade ? `Grade ${endpoint.evidenceGrade} · ` : ""}
-                              扫描 {endpoint.scanned} · 接受 {endpoint.accepted}
+                              本次刷新 · 扫描 {endpoint.scanned} · 接受 {endpoint.accepted}
                             </small>
                           </div>
                           <div className={styles.endpointState}>
@@ -215,8 +224,10 @@ export default function SourcesPage() {
                       <a href={source.url} target="_blank" rel="noreferrer">
                         原始入口 <ArrowUpRight size={12} />
                       </a>
+                    ) : hasObservedEndpoint(source.endpoints) ? (
+                      <span>采集端点已建立 · 未配置实体主页</span>
                     ) : (
-                      <span>暂无稳定公开入口</span>
+                      <span>未建立观测 / 无稳定公开入口</span>
                     )}
                   </div>
                 </article>
