@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import unittest
 from unittest.mock import patch
+from urllib.parse import parse_qs, urlsplit
 
 from tools import crawl_articles as crawler
 from tools import crawl_with_source_categories as categories
@@ -21,7 +22,7 @@ class LanguageAwareSourceTests(unittest.TestCase):
         self.assertIn("semiconductor", english)
         self.assertIn("funding", english)
 
-    def test_media_website_routes_to_generic_adapter_without_company_entity(self) -> None:
+    def test_media_website_routes_to_bounded_discovery_without_company_entity(self) -> None:
         tracks = [
             {
                 "slug": "ai",
@@ -52,10 +53,19 @@ class LanguageAwareSourceTests(unittest.TestCase):
             tracks,
         )
         self.assertEqual(sec, {})
-        self.assertEqual(runtime[0]["adapter"], "generic_web")
-        self.assertEqual(runtime[0]["sourceUrl"], "https://tw.yahoo.com/")
-        self.assertNotIn("company", runtime[0])
-        self.assertNotIn("companySlug", runtime[0])
+        spec = runtime[0]
+        query = parse_qs(urlsplit(spec["url"]).query)["q"][0]
+        self.assertEqual(spec["adapter"], "rss")
+        self.assertEqual(spec["platform"], "用户媒体来源")
+        self.assertEqual(spec["sourceLevel"], "待交叉验证")
+        self.assertEqual(spec["sourceUrl"], "https://tw.yahoo.com/")
+        self.assertEqual(spec["allowedHosts"], ["tw.yahoo.com"])
+        self.assertTrue(query.startswith("site:tw.yahoo.com "))
+        self.assertIn('"推理模型"', query)
+        self.assertIn("技术 OR technology", query)
+        self.assertIn("政策 OR policy", query)
+        self.assertNotIn("company", spec)
+        self.assertNotIn("companySlug", spec)
 
     def test_yahoo_subdomain_article_is_discovered_with_traditional_terms(self) -> None:
         source_url = "https://tw.yahoo.com/?p=us"
@@ -69,7 +79,7 @@ class LanguageAwareSourceTests(unittest.TestCase):
           <meta property="og:title" content="人工智慧新創完成新一輪融資">
           <meta property="og:description" content="公司將資金投入推理模型與多模態產品。">
           <meta property="article:published_time" content="2026-07-25T08:00:00+08:00">
-        </head><body><h1>人工智慧新創完成新一輪融資</h1></body></html>
+        </head><body><h1>人工智慧新創完成新一轮融資</h1></body></html>
         """
         spec = {
             "id": "user-source-yahoo",

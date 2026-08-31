@@ -33,12 +33,18 @@ class UserSourceCoverageTests(unittest.TestCase):
         config = {
             "schemaVersion": 1,
             "tracks": [],
-            "sources": [source("yahoo", "https://tw.yahoo.com/?p=us")],
+            "sources": [
+                source(
+                    "researcher",
+                    "https://researcher.example.com/",
+                    category="person",
+                )
+            ],
         }
         snapshot = {
             "sourceStatus": [
                 {
-                    "id": "user-source-yahoo",
+                    "id": "user-source-researcher",
                     "status": "ok",
                     "accepted": 3,
                     "adapter": "adaptive-public-v1",
@@ -51,9 +57,34 @@ class UserSourceCoverageTests(unittest.TestCase):
         self.assertTrue(report["passed"])
         self.assertEqual(report["attemptedRuntimeStatuses"], 1)
         self.assertEqual(report["productiveRuntimeStatuses"], 1)
+        self.assertEqual(report["runtimeContractViolations"], [])
         self.assertEqual(report["missingStatuses"], [])
         self.assertEqual(report["adapterMismatches"], [])
         self.assertEqual(report["missingHandoffs"], [])
+
+    def test_bounded_media_source_with_status_passes(self) -> None:
+        config = {
+            "schemaVersion": 1,
+            "tracks": [],
+            "sources": [source("media", "https://media.example.com/news")],
+        }
+        snapshot = {
+            "sourceStatus": [
+                {
+                    "id": "user-source-media",
+                    "status": "ok",
+                    "accepted": 2,
+                    "platform": "用户媒体来源",
+                }
+            ]
+        }
+
+        report = evaluate_coverage(config, snapshot)
+
+        self.assertTrue(report["passed"])
+        self.assertEqual(report["runtimeContractViolations"], [])
+        self.assertEqual(report["attemptedRuntimeStatuses"], 1)
+        self.assertEqual(report["productiveRuntimeStatuses"], 1)
 
     def test_missing_status_fails(self) -> None:
         config = {
@@ -71,7 +102,13 @@ class UserSourceCoverageTests(unittest.TestCase):
         config = {
             "schemaVersion": 1,
             "tracks": [],
-            "sources": [source("example", "https://example.com/news")],
+            "sources": [
+                source(
+                    "example",
+                    "https://example.com/news",
+                    category="person",
+                )
+            ],
         }
         snapshot = {
             "sourceStatus": [
@@ -87,6 +124,7 @@ class UserSourceCoverageTests(unittest.TestCase):
         report = evaluate_coverage(config, snapshot)
 
         self.assertFalse(report["passed"])
+        self.assertEqual(report["runtimeContractViolations"], [])
         self.assertEqual(report["adapterMismatches"][0]["actual"], "generic-web-v2")
 
     def test_handoff_without_strict_publisher_status_fails(self) -> None:
@@ -117,6 +155,7 @@ class UserSourceCoverageTests(unittest.TestCase):
         report = evaluate_coverage(config, snapshot)
 
         self.assertFalse(report["passed"])
+        self.assertEqual(report["runtimeContractViolations"], [])
         self.assertEqual(
             report["missingHandoffs"][0]["expectedStatusId"],
             "official-user-东方财富",
@@ -155,6 +194,7 @@ class UserSourceCoverageTests(unittest.TestCase):
         report = evaluate_coverage(config, snapshot)
 
         self.assertTrue(report["passed"])
+        self.assertEqual(report["runtimeContractViolations"], [])
         self.assertEqual(report["productiveRuntimeStatuses"], 1)
         self.assertEqual(report["missingHandoffs"], [])
 
@@ -180,6 +220,7 @@ class UserSourceCoverageTests(unittest.TestCase):
         report = evaluate_coverage(config, snapshot)
 
         self.assertTrue(report["passed"])
+        self.assertEqual(report["runtimeContractViolations"], [])
         self.assertEqual(report["attemptedRuntimeStatuses"], 1)
         self.assertEqual(report["productiveRuntimeStatuses"], 0)
 
@@ -202,7 +243,9 @@ class UserSourceCoverageTests(unittest.TestCase):
             ]
         }
 
-        self.assertTrue(evaluate_coverage(config, snapshot)["passed"])
+        report = evaluate_coverage(config, snapshot)
+        self.assertTrue(report["passed"])
+        self.assertEqual(report["runtimeContractViolations"], [])
 
     def test_invalid_enabled_url_is_unroutable(self) -> None:
         config = {
