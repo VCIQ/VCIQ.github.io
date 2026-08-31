@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-31T06:43:33+00:00",
+  "updatedAt": "2026-08-31T14:35:09+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -287,7 +287,7 @@
     {
       "id": "source-c5921a765bffdbd011b0",
       "kind": "source",
-      "name": "媒体报道 · 新浪 · 新浪财经",
+      "name": "新浪财经",
       "aliases": [
         "媒体报道 · 新浪 · 新浪财经",
         "新浪财经 · 新浪",
@@ -302,7 +302,7 @@
       "url": "https://finance.sina.com.cn/",
       "sourceType": "listing-search",
       "sourceCategory": "media",
-      "region": "全球"
+      "region": "中国"
     },
     {
       "id": "source-5ca3b06c441853199232",
@@ -7865,6 +7865,54 @@
       "resolutionStatus": "resolved",
       "createdAt": "2026-08-31T06:43:33+00:00",
       "createdBy": "VCIQ"
+    },
+    {
+      "id": "source-dbac08e331f1bd599165",
+      "kind": "source",
+      "name": "搜狐网",
+      "aliases": [],
+      "keywords": [],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-08-31T14:35:09+00:00",
+      "createdBy": "VCIQ",
+      "url": "https://sohu.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国"
+    },
+    {
+      "id": "source-4b26e947c245b52c87b4",
+      "kind": "source",
+      "name": "网易科技",
+      "aliases": [],
+      "keywords": [],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-08-31T14:35:09+00:00",
+      "createdBy": "VCIQ",
+      "url": "https://tech.163.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国"
+    },
+    {
+      "id": "source-1b4ea0fb14505b99c771",
+      "kind": "source",
+      "name": "虎嗅网",
+      "aliases": [],
+      "keywords": [],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-08-31T14:35:09+00:00",
+      "createdBy": "VCIQ",
+      "url": "https://www.huxiu.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国"
     }
   ],
   "memberships": [
@@ -35920,6 +35968,160 @@
             "融资机会"
           ],
           "note": ""
+        }
+      ]
+    },
+    {
+      "id": "membership-001162620918e46f91a4",
+      "trackId": "track:ai",
+      "entityId": "source-dbac08e331f1bd599165",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-2eb964b7d2d2dbee1768",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-08-31T14:35:09+00:00",
+          "evidenceUrl": "https://sohu.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "历史媒体候选回溯:搜狐域名累计 11 个独立 track 事件;现有 Tracking Source 仅补充审计确认的缺失赛道关系。"
+        }
+      ]
+    },
+    {
+      "id": "membership-efb3f58b8c89571fa9b1",
+      "trackId": "track:ai-4",
+      "entityId": "source-dbac08e331f1bd599165",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-2eb964b7d2d2dbee1768",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-08-31T14:35:09+00:00",
+          "evidenceUrl": "https://sohu.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "历史媒体候选回溯:搜狐域名累计 11 个独立 track 事件;现有 Tracking Source 仅补充审计确认的缺失赛道关系。"
+        }
+      ]
+    },
+    {
+      "id": "membership-8465e85bf9dd6fc4d036",
+      "trackId": "track:ai-4",
+      "entityId": "source-c5921a765bffdbd011b0",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-f256542068d539d1510b",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-08-31T14:35:09+00:00",
+          "evidenceUrl": "https://finance.sina.com.cn/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "历史媒体候选回溯:新浪财经累计 10 个独立 track 事件;现有 Tracking Source 仅补充审计确认的 AI网络通信关系。"
+        }
+      ]
+    },
+    {
+      "id": "membership-7f13a6d7659b2aa0a745",
+      "trackId": "track:ai",
+      "entityId": "source-4b26e947c245b52c87b4",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-e729db2592dd6ff74d18",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-08-31T14:35:09+00:00",
+          "evidenceUrl": "https://tech.163.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "历史媒体候选回溯:网易域名累计 5 个独立 track 事件;媒体质量复核通过,仅纳入网易科技频道,不纳入 163.com 全站。"
+        }
+      ]
+    },
+    {
+      "id": "membership-56d316444cf443350612",
+      "trackId": "track:ai-4",
+      "entityId": "source-4b26e947c245b52c87b4",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-e729db2592dd6ff74d18",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-08-31T14:35:09+00:00",
+          "evidenceUrl": "https://tech.163.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "历史媒体候选回溯:网易域名累计 5 个独立 track 事件;媒体质量复核通过,仅纳入网易科技频道,不纳入 163.com 全站。"
+        }
+      ]
+    },
+    {
+      "id": "membership-fc1b6f93f29537db1492",
+      "trackId": "track:ai",
+      "entityId": "source-1b4ea0fb14505b99c771",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-90858601a934e1a6567e",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-08-31T14:35:09+00:00",
+          "evidenceUrl": "https://www.huxiu.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "历史媒体候选回溯:虎嗅累计 3 个独立 track 事件;媒体质量复核通过,作为 discovery-only 专业媒体来源纳入。"
+        }
+      ]
+    },
+    {
+      "id": "membership-e5614d29c66258547a1d",
+      "trackId": "track:track-1ccjq49",
+      "entityId": "source-1b4ea0fb14505b99c771",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-90858601a934e1a6567e",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-08-31T14:35:09+00:00",
+          "evidenceUrl": "https://www.huxiu.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "历史媒体候选回溯:虎嗅累计 3 个独立 track 事件;媒体质量复核通过,作为 discovery-only 专业媒体来源纳入。"
         }
       ]
     }
