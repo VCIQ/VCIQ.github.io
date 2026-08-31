@@ -448,7 +448,8 @@ def merge_adaptive_history(
             for article in history
         )
         status["newAccepted"] = len(new_group)
-        status["accepted"] = len(history)
+        status["retainedCount"] = len(history)
+        status["accepted"] = len(new_group)
         if retained:
             status["retainedPrevious"] = True
             status["retainedPreviousCount"] = retained
@@ -512,7 +513,14 @@ def crawl_adaptive_source(
                 strategies.append(strategy)
 
     items = _dedupe_articles(all_items, crawler)[:max_items]
-    scanned = sum(int(status.get("scanned", 0) or 0) for status in statuses)
+    transport_requests = sum(
+        int(status.get("transportRequests", status.get("scanned", 0)) or 0)
+        for status in statuses
+    )
+    record_scanned = max(
+        len(items),
+        sum(int(status.get("accepted", 0) or 0) for status in statuses),
+    )
     failed = sum(int(status.get("failed", 0) or 0) for status in statuses)
     has_clean_attempt = any(status.get("status") in {"ok", "empty"} for status in statuses)
     status_name = (
@@ -528,7 +536,7 @@ def crawl_adaptive_source(
         spec["id"],
         generic.platform_name({**spec, "sourceUrl": canonical}),
         status_name,
-        scanned,
+        record_scanned,
         len(items),
         failed=failed,
         platform=generic.platform_name({**spec, "sourceUrl": canonical}),
@@ -551,6 +559,7 @@ def crawl_adaptive_source(
             "nativeSearchSeeds": profile_search_seeds,
             "strategies": strategies,
             "historyLimit": max(DEFAULT_HISTORY_LIMIT, max_items),
+            "transportRequests": transport_requests,
             "requestBudget": {
                 "timeoutSeconds": MAX_ADAPTIVE_TIMEOUT,
                 "attempts": MAX_ADAPTIVE_ATTEMPTS,

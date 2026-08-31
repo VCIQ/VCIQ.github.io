@@ -429,11 +429,13 @@ def crawl_professional_source(
     else:
         status_name = "empty"
 
+    transport_requests = scanned
+    record_scanned = max(len(collected), len(attributed))
     status = crawler._status(
         spec["id"],
         spec["name"],
         status_name,
-        scanned,
+        record_scanned,
         len(attributed),
         failed=failures,
         platform=spec["name"],
@@ -447,6 +449,7 @@ def crawl_professional_source(
             "discoveryUrl": str(spec.get("url") or ""),
             "strategies": strategies,
             "candidateArticles": len(collected),
+            "transportRequests": transport_requests,
             "rejectedOutsideRegistry": rejected,
             "requestBudget": {
                 "timeoutSeconds": timeout,
