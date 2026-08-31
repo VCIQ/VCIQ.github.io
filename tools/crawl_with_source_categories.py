@@ -127,6 +127,21 @@ def _display_name(raw_name: str, url: str, index: int) -> str:
     return host or f"用户来源 {index + 1}"
 
 
+def _direct_only_source_url(source_url: str) -> bool:
+    parts = urlsplit(source_url)
+    host = (parts.hostname or "").casefold()
+    return (
+        generic_web_sources.source_kind(source_url) == "x"
+        or (host.endswith("google.com") and parts.path.rstrip("/") == "/alerts")
+    )
+
+
+def _has_publisher_handoff(source_url: str) -> bool:
+    """Keep explicit strict-publisher pipelines ahead of generic site search."""
+
+    return bool(adaptive_public_sources.profile_for(source_url).publisher_handoff)
+
+
 def _custom_sources(
     tracking_config: dict[str, Any], tracks: list[dict[str, Any]]
 ) -> tuple[list[dict[str, Any]], dict[str, tuple[str, str, str, str]]]:
@@ -192,6 +207,8 @@ def _custom_sources(
             source_type == "listing-search"
             and category in {"company", "media"}
             and bool(host)
+            and not _direct_only_source_url(url)
+            and not _has_publisher_handoff(url)
         )
         if is_bounded_listing_search:
             if category == "media":
@@ -281,12 +298,7 @@ def _install_strict_tracking_validation() -> None:
 
 def _direct_only_generic_source(spec: dict[str, Any]) -> bool:
     source_url = str(spec.get("sourceUrl") or spec.get("url") or "")
-    parts = urlsplit(source_url)
-    host = (parts.hostname or "").casefold()
-    return (
-        generic_web_sources.source_kind(source_url) == "x"
-        or (host.endswith("google.com") and parts.path.rstrip("/") == "/alerts")
-    )
+    return _direct_only_source_url(source_url)
 
 
 def _install_generic_adapter() -> None:
