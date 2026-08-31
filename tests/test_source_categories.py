@@ -36,7 +36,7 @@ class SourceCategoryTests(unittest.TestCase):
             "media",
         )
 
-    def test_generic_router_keeps_all_public_website_categories(self) -> None:
+    def test_router_splits_bounded_search_from_adaptive_exceptions(self) -> None:
         tracking = {
             "sources": [
                 {
@@ -84,8 +84,10 @@ class SourceCategoryTests(unittest.TestCase):
                 "user-source-eastmoney",
             },
         )
-        for spec in specs_by_id.values():
-            self.assertEqual(spec["adapter"], "generic_web")
+        self.assertEqual(specs_by_id["user-source-company"]["adapter"], "rss")
+        self.assertEqual(specs_by_id["user-source-media"]["adapter"], "rss")
+        self.assertEqual(specs_by_id["user-source-person"]["adapter"], "generic_web")
+        self.assertEqual(specs_by_id["user-source-eastmoney"]["adapter"], "generic_web")
         self.assertEqual(
             specs_by_id["user-source-company"]["sourceCategory"],
             "company",
@@ -106,6 +108,21 @@ class SourceCategoryTests(unittest.TestCase):
             specs_by_id["user-source-eastmoney"]["sourceUrl"],
             "https://www.eastmoney.com/",
         )
+        self.assertTrue(
+            generic_categories._has_publisher_handoff(
+                specs_by_id["user-source-eastmoney"]["sourceUrl"]
+            )
+        )
+        self.assertEqual(
+            specs_by_id["user-source-company"]["allowedHosts"],
+            ["company.example"],
+        )
+        self.assertEqual(
+            specs_by_id["user-source-media"]["allowedHosts"],
+            ["media.example"],
+        )
+        self.assertNotIn("allowedHosts", specs_by_id["user-source-person"])
+        self.assertNotIn("allowedHosts", specs_by_id["user-source-eastmoney"])
         self.assertEqual(
             specs_by_id["user-source-company"]["company"],
             "Example Company",
