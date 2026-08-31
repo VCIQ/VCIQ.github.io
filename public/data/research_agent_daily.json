@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-31T19:33:38+00:00",
+  "generatedAt": "2026-08-31T20:23:12+00:00",
   "asOfDate": "2026-09-01",
-  "runStatus": "no-material-change",
+  "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
   "baselineSource": "snapshot",
   "model": {
@@ -10,47 +10,543 @@
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": false,
-    "usage": {}
+    "used": true,
+    "usage": {
+      "prompt_tokens": 2034,
+      "completion_tokens": 1832,
+      "total_tokens": 3866,
+      "completion_tokens_details": {
+        "reasoning_tokens": 749
+      },
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 2034
+    }
   },
   "changeSummary": {
-    "totalDetected": 0,
-    "total": 0,
-    "byDataset": {},
-    "byChangeType": {},
-    "externalCandidates": 0,
-    "qualityRejected": 0,
-    "maintenanceExcluded": 0,
+    "totalDetected": 12,
+    "total": 2,
+    "byDataset": {
+      "intelligenceEvent": 2
+    },
+    "byChangeType": {
+      "external_event": 4,
+      "data_maintenance": 8
+    },
+    "externalCandidates": 4,
+    "qualityRejected": 1,
+    "maintenanceExcluded": 8,
     "aggregatedEvents": 0,
-    "highestImportance": 0,
+    "highestImportance": 91,
     "verifiedChangeTotal": 0,
     "candidateTotal": 0,
-    "auxiliaryLeadTotal": 0,
-    "rejectedTotal": 0,
-    "newEvents": 0,
+    "auxiliaryLeadTotal": 2,
+    "rejectedTotal": 1,
+    "newEvents": 2,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 0
+    "duplicatesSuppressed": 1
   },
   "analysis": {
-    "mode": "structured-change-only",
-    "isResearchJudgment": false,
-    "executiveSummary": "本轮未检测到新的外部事实候选。",
-    "keyDevelopments": [],
-    "thesisUpdates": [],
-    "watchlist": [],
-    "risks": [],
-    "methodologyNote": "结构化变化检查；本期无材料变化。未执行生成式研判。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
+    "mode": "model-analysis",
+    "isResearchJudgment": true,
+    "executiveSummary": "证据包包含两条新增高价值情报事件：一是新浪财经报道Reframe完成新一轮融资并借鉴亚马逊机器人技术入局住宅建造行业（E001），但该证据的摘要内容与标题明显不符，且证据等级为C，可信度较低；二是PR Newswire新闻稿宣布GCW Agency推出面向AI平台的品牌可见度服务SignlLabs™（E003），证据等级为B，属于官方宣传性质。整体来看，两条事件均处于早期线索阶段，需进一步验证细节和实际影响。 质量门诊断：仅为发现线索，不能支持正式主张 1。",
+    "keyDevelopments": [
+      {
+        "title": "Reframe完成新一轮融资，借鉴亚马逊机器人技术入局住宅建造行业",
+        "assessment": "根据新浪财经报道，Reframe完成新一轮融资，并计划借鉴亚马逊机器人技术进入住宅建造行业。但该证据的摘要内容实际描述的是Hugging Face推出的机器人，与标题主题不一致，且证据等级为C，属于外部线索，尚未经过人工复核。因此该事件仅作为初步线索，具体融资金额、技术来源及业务模式均需进一步验证。",
+        "importance": 3,
+        "confidence": "low",
+        "entities": [
+          "Reframe"
+        ],
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "title": "GCW Agency推出SignlLabs™，面向AI平台的品牌信号实践",
+        "assessment": "根据PR Newswire新闻稿，GCW Agency推出SignlLabs™，旨在帮助品牌在ChatGPT、Gemini、Claude、Copilot和Perplexity等AI平台获得推荐，并声称该实践是专为AI设计而非从SEO改造。证据等级为B，来源为官方新闻稿，属于一手信息但带有宣传性质。该事件反映营销服务行业向AI平台优化延伸的趋势，但实际效果和客户案例尚未披露。",
+        "importance": 2,
+        "confidence": "medium",
+        "entities": [
+          "GCW Agency",
+          "SignlLabs™"
+        ],
+        "evidenceIds": [
+          "E003"
+        ]
+      }
+    ],
+    "thesisUpdates": [
+      {
+        "entity": "Reframe",
+        "direction": "mixed",
+        "statement": "Reframe完成新一轮融资并计划借鉴亚马逊机器人技术进入住宅建造行业，但证据质量低且摘要与标题矛盾，无法确认融资规模、技术合作方及业务进展，暂不构成明确的方向性判断。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "entity": "GCW Agency",
+        "direction": "neutral",
+        "statement": "GCW Agency推出SignlLabs™是营销服务领域的新产品发布，表明AI平台推荐优化成为新的服务方向，但该事件属于公司自身宣传，未提供客户验证或市场反馈，对行业格局的影响尚不明确。",
+        "evidenceIds": [
+          "E003"
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "item": "Reframe融资细节及技术来源",
+        "reason": "E001标题提及Reframe融资和亚马逊机器人技术，但摘要内容不匹配，且证据等级为C。需要后续证据确认融资金额、投资方、技术授权或合作方式，以及住宅建造业务的实际进展。",
+        "nextEvidence": "Reframe官方公告、行业媒体报道或融资数据库记录",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "item": "SignlLabs™的客户案例与可衡量效果",
+        "reason": "E003为官方新闻稿，声称能帮助品牌在AI平台获得推荐，但缺乏第三方验证或具体案例数据。需要观察后续客户采用情况、效果指标或独立评测。",
+        "nextEvidence": "GCW Agency后续发布、客户案例研究或第三方评测报告",
+        "evidenceIds": [
+          "E003"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "E001证据内容不一致，存在信息错误风险",
+        "reason": "E001的标题与摘要描述完全不同的主题（标题为Reframe融资，摘要为Hugging Face机器人），可能为抓取错误或标题与正文不匹配，导致基于该事件的分析存在偏差。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "risk": "新闻稿宣传可能夸大实际效果",
+        "reason": "E003来自PR Newswire官方新闻稿，属于企业自我宣传，声称SignlLabs™为AI平台提供可衡量的品牌可见度路径，但未提供独立验证或客户成功案例，实际效果可能低于宣传。",
+        "evidenceIds": [
+          "E003"
+        ]
+      }
+    ],
+    "methodologyNote": "本分析仅基于证据包中提供的E001和E003两条证据，未补充任何外部事实。所有判断均引用证据编号，并严格区分事实、推断与待验证事项。E001证据等级为C且存在内容不一致，故相关判断置信度设为low；E003为官方新闻稿，等级为B，但属于宣传性质，置信度设为medium。未提供任何投资建议或收益承诺。 数据管线提示：机构证据层重建=stale、科创板招股书投资者证据刷新=stale、月度信源效能审查=unknown。"
   },
-  "changes": [],
-  "evidence": [],
+  "changes": [
+    {
+      "id": "chg-129fc527658aebd1e444",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-b43a03fb1275554b80",
+      "entityName": "Reframe完成新一轮融资，借鉴亚马逊机器人技术入局住宅建造行业",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Reframe完成新一轮融资，借鉴亚马逊机器人技术入局住宅建造行业。",
+      "importance": 91,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "尽管市面上大量讨论人形机器人，但接下来走入普通家庭的机器人外形或许更像一只鸭子。开源模型平台 Hugging Face 推出的这款机器人，周四上线首日销量火爆。",
+        "title": "Reframe完成新一轮融资，借鉴亚马逊机器人技术入局住宅建造行业"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "尽管市面上大量讨论人形机器人，但接下来走入普通家庭的机器人外形或许更像一只鸭子。开源模型平台 Hugging Face 推出的这款机器人，周四上线首日销量火爆。",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Reframe完成新一轮融资，借鉴亚马逊机器人技术入局住宅建造行业",
+          "evidenceIds": [
+            "E001"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E001"
+      ],
+      "supportingEvidenceIds": [
+        "E001"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-046383c69db5aa54effb"
+      ],
+      "eventLifecycles": {
+        "evt-046383c69db5aa54effb": "first_seen"
+      },
+      "eventId": "evt-046383c69db5aa54effb",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T20:23:12+00:00",
+      "lastSeenAt": "2026-08-31T20:23:12+00:00"
+    },
+    {
+      "id": "chg-3f4bd7075f0f62ebc2db",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-45ae4fe28a1d89c2a6",
+      "entityName": "GCW Agency Launches SignlLabs™, A Proprietary A.I. Signaling Practice Built to Earn Brand Visibility Across Artificial Intelligence (AI) Platforms",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：GCW Agency Launches SignlLabs™, A Proprietary A.I. Signaling Practice Built to Earn Brand Visibility Across Artificial Intelligence (AI) Platforms。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "New practice gives clients a measurable path to being recommended by ChatGPT, Gemini, Claude, Copilot, and Perplexity, and it is built for AI, not retrofitted from SEO NEW YORK, Aug. 31, 2026 /PRNewswire/ -- Global Communication Works (GCW), the strategic pub…",
+        "title": "GCW Agency Launches SignlLabs™, A Proprietary A.I. Signaling Practice Built to Earn Brand Visibility Across Artificial Intelligence (AI) Platforms"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "New practice gives clients a measurable path to being recommended by ChatGPT, Gemini, Claude, Copilot, and Perplexity, and it is built for AI, not retrofitted from SEO NEW YORK, Aug. 31, 2026 /PRNewswire/ -- Global Communication Works (GCW), the strategic pub…",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "GCW Agency Launches SignlLabs™, A Proprietary A.I. Signaling Practice Built to Earn Brand Visibility Across Artificial Intelligence (AI) Platforms",
+          "evidenceIds": [
+            "E003"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E003"
+      ],
+      "supportingEvidenceIds": [
+        "E003"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-8f9ce88dd8bb2899259d"
+      ],
+      "eventLifecycles": {
+        "evt-8f9ce88dd8bb2899259d": "first_seen"
+      },
+      "eventId": "evt-8f9ce88dd8bb2899259d",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T20:23:12+00:00",
+      "lastSeenAt": "2026-08-31T20:23:12+00:00"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E001",
+      "changeId": "chg-129fc527658aebd1e444",
+      "entityName": "Reframe完成新一轮融资，借鉴亚马逊机器人技术入局住宅建造行业",
+      "claim": "新增高价值情报事件记录：Reframe完成新一轮融资，借鉴亚马逊机器人技术入局住宅建造行业。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "Reframe完成新一轮融资，借鉴亚马逊机器人技术入局住宅建造行业",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-01/doc-iniqfuym8668296.shtml",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E003",
+      "changeId": "chg-3f4bd7075f0f62ebc2db",
+      "entityName": "GCW Agency Launches SignlLabs™, A Proprietary A.I. Signaling Practice Built to Earn Brand Visibility Across Artificial Intelligence (AI) Platforms",
+      "claim": "新增高价值情报事件记录：GCW Agency Launches SignlLabs™, A Proprietary A.I. Signaling Practice Built to Earn Brand Visibility Across Artificial Intelligence (AI) Platforms。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "GCW Agency Launches SignlLabs™, A Proprietary A.I. Signaling Practice Built to Earn Brand Visibility Across Artificial Intelligence (AI) Platforms",
+      "url": "https://www.prnewswire.com/news-releases/gcw-agency-launches-signllabs-a-proprietary-ai-signaling-practice-built-to-earn-brand-visibility-across-artificial-intelligence-ai-platforms-302865257.html",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "B",
+      "platformName": "新闻稿",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    }
+  ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-08-31T19:33:38+00:00",
+    "generatedAt": "2026-08-31T20:23:12+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-8f9ce88dd8bb2899259d": {
+        "eventId": "evt-8f9ce88dd8bb2899259d",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-45ae4fe28a1d89c2a6",
+        "entityName": "GCW Agency Launches SignlLabs™, A Proprietary A.I. Signaling Practice Built to Earn Brand Visibility Across Artificial Intelligence (AI) Platforms",
+        "title": "GCW Agency Launches SignlLabs™, A Proprietary A.I. Signaling Practice Built to Earn Brand Visibility Across Artificial Intelligence (AI) Platforms",
+        "titleAliases": [
+          "gcwagencylaunchessignllabstmaproprietaryaisignalingpracticebuilttoearnbrandvisibilityacrossartificialintelligenceaiplatforms"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-78105a94ae4a9c9192c7",
+          "record-debcab97ff32ec20f3e8",
+          "src-62f43b9565f05932cdad"
+        ],
+        "evidenceFingerprints": [
+          "78105a94ae4a9c9192c7"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "GCW Agency Launches SignlLabs™, A Proprietary A.I. Signaling Practice Built to Earn Brand Visibility Across Artificial Intelligence (AI) Platforms",
+            "url": "https://www.prnewswire.com/news-releases/gcw-agency-launches-signllabs-a-proprietary-ai-signaling-practice-built-to-earn-brand-visibility-across-artificial-intelligence-ai-platforms-302865257.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "32e7de29f381e07ec9ce",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T20:23:12+00:00",
+        "lastSeenAt": "2026-08-31T20:23:12+00:00",
+        "lastPublishedAt": "2026-08-31T20:23:12+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-8a7d6f3a518950509176": {
+        "eventId": "evt-8a7d6f3a518950509176",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-1f7fb16b98004f7036",
+        "entityName": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+        "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+        "titleAliases": [
+          "中国机器人海外走红竞速破纪录人形机器人商业化离我们还有多远"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-67d6fe8916958e2b2c3e",
+          "record-08291d169bf7eccc7f61",
+          "src-1863802593a1c57dc8ee",
+          "record-25189f76b185092e05fb",
+          "src-a084bc9330aec136a593",
+          "record-0de5e3cc49606d7c44bc",
+          "src-22f5edca620cd4a0ca9d",
+          "record-5d29c2c33095d8b68b8f",
+          "src-5af75d0c72e76198c8fc",
+          "record-932e54213895406ba036",
+          "src-f1b46135dcec9fbb8baf"
+        ],
+        "evidenceFingerprints": [
+          "67d6fe8916958e2b2c3e"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "蔡抠脚",
+            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=irv%2ARSEwxbFxsxTtQhOpES%2ApoK9Sjwoc78u69xaVZwMmFQYVrtgpBVuB6YR4bLdZltLe%2AlP0vhnlBN6wWf2MJb6nJOrustZRAGIZwFR1sucLx9EAxQIUCC6M4TuiKZTd&src=11&timestamp=1788165603&ver=6937",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "蔡抠脚",
+            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56d%2A-MlZWT-n4gxZEQlRqx1mOnRMuyRx52eBC9B9pZlTQzP5vyK9mYeWTU3JcXqdXbz9vkIdY2CGQpom5VGwuVjT&src=11&timestamp=1788175922&ver=6938",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "蔡抠脚",
+            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56fPSrDk9w4svsyb50NItMF6Os3a1j7hCC6-3Bp-qTmx-9RJ0S0VkaJG%2AtPkN4J3cw3o2-Cp3ucRfaq1QoasbqMm&src=11&timestamp=1788186068&ver=6938",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "蔡抠脚",
+            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56eQSV06JzK6XkacgpCmD4Bl4MMmA4vlSiEaGSxgybPDEsgkhi6OSNE1pjt5DoyzoQxvRQL25oUyKUESR7ulBYbm&src=11&timestamp=1788195641&ver=6938",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "蔡抠脚",
+            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56fdihXCIYv8ih1n5YKa5sShb%2AgoSYIFfMxm9GW%2Aw-u4bvZEtGGuWUYrSnpgS9PBHu9%2A9F5RvgLsPYI-Tvfzk62k&src=11&timestamp=1788207190&ver=6938",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "c9f1110f497c23b6b84c",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T09:08:35+00:00",
+        "lastSeenAt": "2026-08-31T20:23:12+00:00",
+        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-046383c69db5aa54effb": {
+        "eventId": "evt-046383c69db5aa54effb",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-b43a03fb1275554b80",
+        "entityName": "Reframe完成新一轮融资，借鉴亚马逊机器人技术入局住宅建造行业",
+        "title": "Reframe完成新一轮融资，借鉴亚马逊机器人技术入局住宅建造行业",
+        "titleAliases": [
+          "reframe完成新一轮融资借鉴亚马逊机器人技术入局住宅建造行业"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-0400306120adddf1f166",
+          "record-07ea76eff5694bfd7429",
+          "src-397c349c124486e569a3"
+        ],
+        "evidenceFingerprints": [
+          "0400306120adddf1f166"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "Reframe完成新一轮融资，借鉴亚马逊机器人技术入局住宅建造行业",
+            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-01/doc-iniqfuym8668296.shtml",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "d67543689df2186e1edb",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T20:23:12+00:00",
+        "lastSeenAt": "2026-08-31T20:23:12+00:00",
+        "lastPublishedAt": "2026-08-31T20:23:12+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-ea30894062d975829591": {
         "eventId": "evt-ea30894062d975829591",
         "dataset": "marketCompany",
@@ -308,88 +804,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-8a7d6f3a518950509176": {
-        "eventId": "evt-8a7d6f3a518950509176",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-1f7fb16b98004f7036",
-        "entityName": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-        "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-        "titleAliases": [
-          "中国机器人海外走红竞速破纪录人形机器人商业化离我们还有多远"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "商业进展",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-67d6fe8916958e2b2c3e",
-          "record-08291d169bf7eccc7f61",
-          "src-1863802593a1c57dc8ee",
-          "record-25189f76b185092e05fb",
-          "src-a084bc9330aec136a593",
-          "record-0de5e3cc49606d7c44bc",
-          "src-22f5edca620cd4a0ca9d",
-          "record-5d29c2c33095d8b68b8f",
-          "src-5af75d0c72e76198c8fc"
-        ],
-        "evidenceFingerprints": [
-          "67d6fe8916958e2b2c3e"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "蔡抠脚",
-            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=irv%2ARSEwxbFxsxTtQhOpES%2ApoK9Sjwoc78u69xaVZwMmFQYVrtgpBVuB6YR4bLdZltLe%2AlP0vhnlBN6wWf2MJb6nJOrustZRAGIZwFR1sucLx9EAxQIUCC6M4TuiKZTd&src=11&timestamp=1788165603&ver=6937",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "蔡抠脚",
-            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56d%2A-MlZWT-n4gxZEQlRqx1mOnRMuyRx52eBC9B9pZlTQzP5vyK9mYeWTU3JcXqdXbz9vkIdY2CGQpom5VGwuVjT&src=11&timestamp=1788175922&ver=6938",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "蔡抠脚",
-            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56fPSrDk9w4svsyb50NItMF6Os3a1j7hCC6-3Bp-qTmx-9RJ0S0VkaJG%2AtPkN4J3cw3o2-Cp3ucRfaq1QoasbqMm&src=11&timestamp=1788186068&ver=6938",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "蔡抠脚",
-            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56eQSV06JzK6XkacgpCmD4Bl4MMmA4vlSiEaGSxgybPDEsgkhi6OSNE1pjt5DoyzoQxvRQL25oUyKUESR7ulBYbm&src=11&timestamp=1788195641&ver=6938",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "c9f1110f497c23b6b84c",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -7818,13 +8232,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 0,
+    "newEvents": 2,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 0,
-    "observedEvents": 0,
+    "duplicatesSuppressed": 1,
+    "observedEvents": 3,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -8590,10 +9004,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-01",
-      "generatedAt": "2026-08-31T19:33:38+00:00",
-      "runStatus": "no-material-change",
-      "changeCount": 14,
-      "executiveSummary": "本轮未检测到新的外部事实候选。",
+      "generatedAt": "2026-08-31T20:23:12+00:00",
+      "runStatus": "model",
+      "changeCount": 16,
+      "executiveSummary": "证据包包含两条新增高价值情报事件：一是新浪财经报道Reframe完成新一轮融资并借鉴亚马逊机器人技术入局住宅建造行业（E001），但该证据的摘要内容与标题明显不符，且证据等级为C，可信度较低；二是PR Newswire新闻稿宣布GCW Agency推出面向AI平台的品牌可见度服务SignlLabs™（E003），证据等级为B，属于官方宣传性质。整体来看，两条事件均处于早期线索阶段，需进一步验证细节和实际影响。",
       "eventIds": [
         "evt-e5c92bf165cb34866cb4",
         "evt-ad50e31282afed394c23",
@@ -8608,7 +9022,9 @@
         "evt-ea30894062d975829591",
         "evt-17ed32f8b6d304c6cfee",
         "evt-4d7e79896211eaa35f75",
-        "evt-1257d630ab9467d64f5b"
+        "evt-1257d630ab9467d64f5b",
+        "evt-046383c69db5aa54effb",
+        "evt-8f9ce88dd8bb2899259d"
       ],
       "eventStates": [
         {
@@ -8666,32 +9082,44 @@
         {
           "eventId": "evt-1257d630ab9467d64f5b",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-046383c69db5aa54effb",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-8f9ce88dd8bb2899259d",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 0,
       "candidateTotal": 11,
-      "auxiliaryLeadTotal": 3,
-      "rejectedTotal": 2,
+      "auxiliaryLeadTotal": 5,
+      "rejectedTotal": 3,
       "eventSummary": {
-        "newEvents": 14,
+        "newEvents": 16,
         "reconfirmations": 0,
         "updates": 0,
         "corrections": 0,
         "possibleConflicts": 0,
-        "duplicatesSuppressed": 1
+        "duplicatesSuppressed": 2
       }
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 0,
-    "eligibleCandidateCount": 0,
-    "rejectedCandidateCount": 0,
-    "rejectedByDataset": {},
-    "evidenceCount": 0,
-    "supportingEvidenceCount": 0,
-    "rejectedEvidenceCount": 0,
+    "candidateCount": 4,
+    "eligibleCandidateCount": 3,
+    "rejectedCandidateCount": 1,
+    "rejectedByDataset": {
+      "intelligenceEvent": 1
+    },
+    "evidenceCount": 4,
+    "supportingEvidenceCount": 3,
+    "rejectedEvidenceCount": 1,
     "passedButUnboundEvidenceCount": 0,
-    "rejectionReasons": {},
+    "rejectionReasons": {
+      "discovery_only": 1
+    },
     "sourceClassificationWarnings": []
   },
   "sourceClassificationWarnings": [],
@@ -8723,7 +9151,7 @@
   },
   "pipelineHealth": {
     "overallStatus": "stale",
-    "healthyJobs": 7,
+    "healthyJobs": 6,
     "jobCount": 9,
     "issueJobs": [
       {
@@ -8731,6 +9159,12 @@
         "name": "机构证据层重建",
         "status": "stale",
         "lastCompletedAt": "2026-08-31T03:04:16Z"
+      },
+      {
+        "jobId": "star-market-investor-refresh",
+        "name": "科创板招股书投资者证据刷新",
+        "status": "stale",
+        "lastCompletedAt": "2026-08-23T19:58:13Z"
       },
       {
         "jobId": "source-performance-review",
