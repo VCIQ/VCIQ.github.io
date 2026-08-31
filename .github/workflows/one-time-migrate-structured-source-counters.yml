@@ -1,0 +1,89 @@
+name: One-time migrate structured source counters
+
+on:
+  push:
+    branches:
+      - fix/sources-governance-20260830
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/sources-governance-20260830
+          fetch-depth: 0
+
+      - name: Migrate legacy structured counters
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path('public/data/source_health.json')
+          payload = json.loads(path.read_text(encoding='utf-8'))
+          sources = payload.get('sources', {})
+          allowed = {
+              'official-bytedance',
+              'official-doubao',
+              'official-volcengine',
+          }
+          changed = []
+          unexpected = []
+          for source_id, row in sources.items():
+              if not isinstance(row, dict) or row.get('missingFromCurrentRun') is True:
+                  continue
+              scanned = int(row.get('scanned') or 0)
+              accepted = int(row.get('accepted') or 0)
+              if accepted <= scanned:
+                  continue
+              if source_id not in allowed:
+                  unexpected.append((source_id, scanned, accepted))
+                  continue
+              row['scanned'] = accepted
+              changed.append((source_id, scanned, accepted))
+
+          if unexpected:
+              raise SystemExit(f'unexpected accepted>scanned rows: {unexpected}')
+          if not changed:
+              raise SystemExit('no legacy structured counters required migration')
+
+          path.write_text(
+              json.dumps(payload, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          print('migrated:', changed)
+          PY
+
+      - name: Validate counter invariant
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          payload = json.loads(Path('public/data/source_health.json').read_text(encoding='utf-8'))
+          violations = []
+          for source_id, row in payload.get('sources', {}).items():
+              if not isinstance(row, dict) or row.get('missingFromCurrentRun') is True:
+                  continue
+              scanned = int(row.get('scanned') or 0)
+              accepted = int(row.get('accepted') or 0)
+              if accepted > scanned:
+                  violations.append((source_id, scanned, accepted))
+          if violations:
+              raise SystemExit(f'accepted>scanned after migration: {violations[:20]}')
+          print('all active source-health rows satisfy accepted <= scanned')
+          PY
+
+      - name: Commit migrated snapshot and remove one-time workflow
+        run: |
+          rm .github/workflows/one-time-migrate-structured-source-counters.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/source_health.json .github/workflows/one-time-migrate-structured-source-counters.yml
+          git commit -m "fix(sources): migrate structured source counter snapshot"
+          git push origin HEAD:fix/sources-governance-20260830
