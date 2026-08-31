@@ -18,6 +18,7 @@ from __future__ import annotations
 import json
 import re
 from typing import Any
+from urllib.parse import parse_qs, urlsplit
 
 try:
     from . import crawl_articles as crawler
@@ -62,6 +63,95 @@ def _deferred_official_source_report(
     ]
 
 
+def _runtime_contract_violation(
+    raw: dict[str, Any], spec: dict[str, Any]
+) -> dict[str, str] | None:
+    """Verify the source-category routing contract before checking live status."""
+
+    source_type = tracking._clean(raw.get("sourceType"), 30) or "listing-search"
+    if source_type != "listing-search":
+        return None
+
+    category = categories.source_category(raw, source_type)
+    source_url = str(spec.get("sourceUrl") or raw.get("url") or "")
+    host = (urlsplit(source_url).hostname or "").casefold().removeprefix("www.")
+    source_id = str(spec.get("id") or raw.get("id") or "unknown")
+
+    if category == "person":
+        if spec.get("adapter") != "generic_web":
+            return {
+                "id": source_id,
+                "reason": "person listing-search must remain on generic/adaptive routing",
+            }
+        return None
+
+    if category not in {"company", "media"} or not host:
+        return None
+
+    if categories._direct_only_source_url(source_url) or categories._has_publisher_handoff(
+        source_url
+    ):
+        if spec.get("adapter") != "generic_web":
+            return {
+                "id": source_id,
+                "reason": "direct-only or strict-publisher source must preserve generic/adaptive routing",
+            }
+        return None
+
+    if spec.get("adapter") != "rss":
+        return {
+            "id": source_id,
+            "reason": f"{category} listing-search must use bounded RSS search",
+        }
+    if spec.get("allowedHosts") != [host]:
+        return {
+            "id": source_id,
+            "reason": f"bounded listing-search must restrict allowedHosts to {host}",
+        }
+
+    query = parse_qs(urlsplit(str(spec.get("url") or "")).query).get("q", [""])[0]
+    if f"site:{host}" not in query:
+        return {
+            "id": source_id,
+            "reason": f"bounded listing-search query must include site:{host}",
+        }
+
+    if category == "media":
+        if spec.get("platform") != "用户媒体来源":
+            return {
+                "id": source_id,
+                "reason": "media listing-search must use 用户媒体来源 platform",
+            }
+        if spec.get("sourceLevel") != "待交叉验证":
+            return {
+                "id": source_id,
+                "reason": "media listing-search must remain 待交叉验证",
+            }
+        if "company" in spec or "companySlug" in spec:
+            return {
+                "id": source_id,
+                "reason": "media listing-search must not inherit company attribution",
+            }
+        if tracking.MEDIA_SOURCE_EVENT_TERMS not in query:
+            return {
+                "id": source_id,
+                "reason": "media listing-search query is missing broad intelligence event terms",
+            }
+    else:
+        if spec.get("platform") != "用户公司来源":
+            return {
+                "id": source_id,
+                "reason": "company listing-search must use 用户公司来源 platform",
+            }
+        if tracking.COMPANY_SOURCE_EVENT_TERMS not in query:
+            return {
+                "id": source_id,
+                "reason": "company listing-search query is missing filing/earnings event terms",
+            }
+
+    return None
+
+
 def evaluate_coverage(
     tracking_config: dict[str, Any],
     snapshot: dict[str, Any],
@@ -92,6 +182,7 @@ def evaluate_coverage(
     expected_ids: list[str] = []
     missing_statuses: list[str] = []
     unroutable_sources: list[dict[str, str]] = []
+    runtime_contract_violations: list[dict[str, str]] = []
     adapter_mismatches: list[dict[str, str]] = []
     missing_handoffs: list[dict[str, str]] = []
     attempted = 0
@@ -119,13 +210,18 @@ def evaluate_coverage(
                 }
             )
             continue
-        if source_id not in runtime_by_id:
+        spec = runtime_by_id.get(source_id)
+        if spec is None:
             unroutable_sources.append(
                 {
                     "id": str(raw.get("id") or index),
                     "reason": "enabled source did not produce a runtime adapter spec",
                 }
             )
+            continue
+        violation = _runtime_contract_violation(raw, spec)
+        if violation:
+            runtime_contract_violations.append(violation)
 
     for spec in runtime_specs:
         source_id = str(spec.get("id") or "")
@@ -181,10 +277,12 @@ def evaluate_coverage(
     errors: list[str] = []
     if unroutable_sources:
         errors.append("enabled sources could not be converted into runtime adapters")
+    if runtime_contract_violations:
+        errors.append("enabled sources violate category-aware runtime routing contracts")
     if missing_statuses:
         errors.append("enabled sources missing sourceStatus records")
     if adapter_mismatches:
-        errors.append("public websites bypassed the adaptive adapter")
+        errors.append("adaptive public websites bypassed the adaptive adapter")
     if missing_handoffs:
         errors.append("adaptive discovery handoffs lack strict publisher statuses")
     if duplicates:
@@ -201,6 +299,7 @@ def evaluate_coverage(
         "attemptedRuntimeStatuses": attempted,
         "productiveRuntimeStatuses": productive,
         "unroutableSources": unroutable_sources,
+        "runtimeContractViolations": runtime_contract_violations,
         "missingStatuses": sorted(set(missing_statuses)),
         "adapterMismatches": adapter_mismatches,
         "missingHandoffs": missing_handoffs,
