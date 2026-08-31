@@ -1,0 +1,75 @@
+name: One-time reviewed historical media backfill
+
+# One-time migration generated from the read-only Feedback Ledger audit.
+# This workflow is orchestration-only: it never edits or stages tracking data.
+# The reviewed manual-tracking-batch workflow remains the sole writer.
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/historical-media-backfill-20260831.yml"
+
+permissions: {}
+
+jobs:
+  backfill:
+    name: Delegate four reviewed media actions to governed batch writer
+    uses: ./.github/workflows/manual-tracking-batch.yml
+    permissions:
+      contents: write
+      actions: write
+    with:
+      operation: apply
+      invalid_policy: strict
+      caller_id: historical-media-backfill-20260831
+      batch_json: >-
+        [
+          {
+            "objectType": "source",
+            "name": "搜狐网",
+            "targetTracks": ["AI / AGI", "AI网络通信"],
+            "keywords": [],
+            "sourceUrl": "https://sohu.com/",
+            "sourceCategory": "media",
+            "region": "中国",
+            "reasons": ["个人研究兴趣"],
+            "note": "历史媒体候选回溯：搜狐域名累计 11 个独立 track 事件；现有 Tracking Source 仅补充审计确认的缺失赛道关系。",
+            "origin": "manual"
+          },
+          {
+            "objectType": "source",
+            "name": "新浪财经",
+            "targetTracks": ["AI网络通信"],
+            "keywords": [],
+            "sourceUrl": "https://finance.sina.com.cn/",
+            "sourceCategory": "media",
+            "region": "中国",
+            "reasons": ["个人研究兴趣"],
+            "note": "历史媒体候选回溯：新浪财经累计 10 个独立 track 事件；现有 Tracking Source 仅补充审计确认的 AI网络通信关系。",
+            "origin": "manual"
+          },
+          {
+            "objectType": "source",
+            "name": "网易科技",
+            "targetTracks": ["AI / AGI", "AI网络通信"],
+            "keywords": [],
+            "sourceUrl": "https://tech.163.com/",
+            "sourceCategory": "media",
+            "region": "中国",
+            "reasons": ["个人研究兴趣"],
+            "note": "历史媒体候选回溯：网易域名累计 5 个独立 track 事件；媒体质量复核通过，仅纳入网易科技频道，不纳入 163.com 全站。",
+            "origin": "manual"
+          },
+          {
+            "objectType": "source",
+            "name": "虎嗅网",
+            "targetTracks": ["AI / AGI", "风险投资"],
+            "keywords": [],
+            "sourceUrl": "https://www.huxiu.com/",
+            "sourceCategory": "media",
+            "region": "中国",
+            "reasons": ["个人研究兴趣"],
+            "note": "历史媒体候选回溯：虎嗅累计 3 个独立 track 事件；媒体质量复核通过，作为 discovery-only 专业媒体来源纳入。",
+            "origin": "manual"
+          }
+        ]
