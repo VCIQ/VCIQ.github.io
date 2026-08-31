@@ -27,6 +27,16 @@ except ImportError:  # Executed directly with ``python tools/...``.
 
 TRACKING_PATH = crawler.ROOT / "config" / "user_tracking.json"
 USER_SOURCE_PREFIXES = ("user-source-", "user-track-", "user-x-")
+COMPANY_SOURCE_EVENT_TERMS = (
+    "IPO OR listing OR filing OR earnings OR 上市 OR 公告 OR 财报 OR 融资"
+)
+MEDIA_SOURCE_EVENT_TERMS = (
+    "技术 OR technology OR 投资 OR investment OR 融资 OR funding OR "
+    "政策 OR policy OR 监管 OR regulation OR regulatory OR 法规 OR "
+    "产品 OR product OR 发布 OR launch OR 科研 OR research OR 论文 OR paper OR "
+    "专利 OR patent OR 突破 OR breakthrough OR 并购 OR acquisition OR "
+    "合作 OR partnership OR 市场 OR market"
+)
 GENERIC_PERSON_LABELS = {
     "人物",
     "专家",
@@ -303,6 +313,10 @@ def _custom_sources(
             continue
         name = _clean(raw.get("name"), 80)
         source_type = _clean(raw.get("sourceType"), 30) or "listing-search"
+        source_category = _clean(raw.get("sourceCategory"), 30).casefold()
+        if source_category not in {"media", "company", "person"}:
+            source_category = "company"
+        is_media_source = source_category == "media"
         company = _clean(raw.get("company"), 80) or name
         ticker = _clean(raw.get("ticker"), 30).upper()
         region = _clean(raw.get("region"), 20)
@@ -322,19 +336,27 @@ def _custom_sources(
         keywords = _source_keywords(raw, track_by_name)
         if source_type == "rss":
             feed_url = url
-            platform = "用户 RSS"
+            platform = "用户媒体来源" if is_media_source else "用户 RSS"
             allowed_hosts: list[str] = []
         else:
             host = (urlsplit(url).hostname or "").lower().removeprefix("www.")
             if not host:
                 continue
-            identity_terms = _unique([company, ticker, *keywords], 16)
-            query = (
-                f"site:{host} ({_quoted_or_query(identity_terms)}) "
-                "(IPO OR listing OR filing OR earnings OR 上市 OR 公告 OR 财报 OR 融资)"
-            )
+            if is_media_source:
+                discovery_terms = keywords or [sector]
+                query = (
+                    f"site:{host} ({_quoted_or_query(discovery_terms)}) "
+                    f"({MEDIA_SOURCE_EVENT_TERMS})"
+                )
+                platform = "用户媒体来源"
+            else:
+                identity_terms = _unique([company, ticker, *keywords], 16)
+                query = (
+                    f"site:{host} ({_quoted_or_query(identity_terms)}) "
+                    f"({COMPANY_SOURCE_EVENT_TERMS})"
+                )
+                platform = "用户公司来源"
             feed_url = _bing_rss(query)
-            platform = "用户公司来源"
             allowed_hosts = [host]
         spec: dict[str, Any] = {
             "id": source_id,
@@ -343,15 +365,17 @@ def _custom_sources(
             "adapter": "rss",
             "platform": platform,
             "sourceLevel": "待交叉验证",
+            "sourceCategory": source_category,
             "region": region,
             "sector": sector,
-            "company": company,
-            "companySlug": _slug(company),
             "maxItems": 10,
             "keywords": keywords,
             "strictTitleKeywords": False,
             "enabled": True,
         }
+        if not is_media_source:
+            spec["company"] = company
+            spec["companySlug"] = _slug(company)
         if allowed_hosts:
             spec["allowedHosts"] = allowed_hosts
         feed_specs.append(spec)
