@@ -14,6 +14,8 @@ on:
       - tests/test_toutiao_public_feed.py
       - tests/test_wechat_public_aggregator.py
       - tests/test_wechat_sogou_redirect_compat.py
+      - tests/test_wechat_official_index_bridge.py
+      - tests/test_wechat_crossplatform_registry.py
       - config/wechat_sources.json
       - config/wechat_public_indexes.json
       - .github/workflows/validate-wechat-toutiao.yml
@@ -42,6 +44,7 @@ jobs:
             tools/toutiao_public_feed.py \
             tools/wechat_public_aggregator.py \
             tools/wechat_sogou_redirect_compat.py \
+            tools/wechat_official_index_bridge.py \
             tools/crawl_with_wechat_registry.py \
             tools/validate_wechat_toutiao_live.py
       - name: Run focused unit tests
@@ -56,6 +59,8 @@ jobs:
             tests.test_toutiao_public_feed \
             tests.test_wechat_public_aggregator \
             tests.test_wechat_sogou_redirect_compat \
+            tests.test_wechat_official_index_bridge \
+            tests.test_wechat_crossplatform_registry \
             2>&1 | tee focused-unit-tests.log
       - name: Require verified media and Toutiao articles
         id: live

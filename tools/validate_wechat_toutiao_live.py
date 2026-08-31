@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Run a bounded live acceptance check for media and ByteDance/Toutiao.
+"""Run bounded live acceptance checks for WeChat cross-platform routes and Toutiao.
 
-This validator is intentionally separate from the full-source refresh. It proves
-that each route can reach a verified publisher-owned URL and produce a normal
-article record, while preserving destination-host and identity safeguards.
+The WeChat portion is intentionally strict: every enabled configured publisher
+must produce at least one recent article from an explicitly whitelisted
+publisher-owned or certified cross-platform endpoint. A WeChat original may
+still be accepted by the production crawler, but it does not satisfy this
+cross-platform endpoint validation.
 """
 
 from __future__ import annotations
@@ -33,6 +35,7 @@ def _install_adapters() -> Any:
     entry.search_index_feed_redirects.install(crawler)
     entry.wechat_fetch_compat.install(entry.wechat_public_sources)
     entry.wechat_registry_bridge.install(entry.wechat_public_sources)
+    entry.wechat_official_index_bridge.install(entry.wechat_registry_bridge)
     entry.wechat_original_redirect_bridge.install(
         entry.wechat_public_sources,
         entry.wechat_registry_bridge,
@@ -61,6 +64,7 @@ def _article_summary(article: dict[str, Any]) -> dict[str, Any]:
         "publishedAt": article.get("publishedAt"),
         "sourceId": article.get("sourceId"),
         "platform": source.get("platform"),
+        "sourceKind": article.get("sourceKind") or source.get("sourceKind"),
         "sourceName": source.get("name"),
         "url": source.get("url"),
         "company": article.get("company"),
@@ -86,8 +90,6 @@ def _toutiao_probe(crawler: Any) -> dict[str, Any]:
         "sector": "AI / AGI",
         "maxItems": 6,
         "categories": ["news_tech", "__all__"],
-        # Route validation must not depend on whether a ByteDance-specific story
-        # happens to be in the current hot-feed window.
         "keywords": [],
         "allowedHosts": ["toutiao.com"],
         "enabled": True,
@@ -111,9 +113,7 @@ def _toutiao_probe(crawler: Any) -> dict[str, Any]:
             "status": status.get("status"),
             "byteDanceMatches": sum(_contains_byte_term(article) for article in verified),
             "articles": [_article_summary(article) for article in verified[:6]],
-            "error": status.get("error")
-            if not verified
-            else None,
+            "error": status.get("error") if not verified else None,
         }
     except Exception as exc:  # noqa: BLE001 - serialized for CI diagnostics.
         return {
@@ -143,7 +143,7 @@ def _wechat_spec(account: dict[str, Any]) -> dict[str, Any]:
         "sector": sector,
         "maxItems": 2,
         "maxArticleAgeDays": 180,
-        "keywords": [*keywords, *BYTE_TERMS],
+        "keywords": keywords,
         "trackedCompanies": list(account.get("companies", [])),
         "trackedPeople": list(account.get("people", [])),
         "strictTitleKeywords": False,
@@ -160,81 +160,98 @@ def _wechat_spec(account: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _is_verified_crossplatform_copy(
+    article: dict[str, Any], allowed_hosts: set[str]
+) -> bool:
+    host = _original_host(article).removeprefix("www.")
+    source = article.get("source")
+    source = source if isinstance(source, dict) else {}
+    source_kind = str(article.get("sourceKind") or source.get("sourceKind") or "")
+    return (
+        source_kind in {"official-website", "official-crosspost"}
+        and host in allowed_hosts
+    )
+
+
 def _wechat_probe(crawler: Any) -> dict[str, Any]:
     registry = wechat_source_registry.load_registry()
-    configured = {
-        str(account.get("id")): account
+    accounts = [
+        account
         for account in registry.get("accounts", [])
-        if isinstance(account, dict) and account.get("enabled", True)
-    }
-    preferred = ["zhidx", "chipmaster", "icsmart", "qbitai", "icbank"]
-    accounts = [configured[account_id] for account_id in preferred if account_id in configured]
+        if isinstance(account, dict) and account.get("enabled", True) is not False
+    ]
     attempts: list[dict[str, Any]] = []
     accepted_articles: list[dict[str, Any]] = []
+
     for account in accounts:
         spec = _wechat_spec(account)
+        allowed_hosts = {
+            str(host).casefold().removeprefix("www.")
+            for host in spec.get("officialCrosspostHosts", [])
+        }
         try:
             articles, status = entry.wechat_public_sources.crawl_wechat_source(
                 spec,
                 crawler.DEFAULT_USER_AGENT,
                 crawler,
             )
-            allowed_hosts = {
-                str(host).casefold().removeprefix("www.")
-                for host in spec.get("officialCrosspostHosts", [])
-            }
-            verified = []
-            for article in articles:
-                host = _original_host(article).removeprefix("www.")
-                source = article.get("source")
-                source = source if isinstance(source, dict) else {}
-                source_kind = str(
-                    article.get("sourceKind") or source.get("sourceKind") or ""
-                )
-                is_wechat_original = (
-                    host == "mp.weixin.qq.com"
-                    and article.get("wechatContentMode") != "index-only"
-                )
-                is_publisher_copy = (
-                    source_kind in {"official-website", "official-crosspost"}
-                    and host in allowed_hosts
-                )
-                if is_wechat_original or is_publisher_copy:
-                    verified.append(article)
+            verified = [
+                article
+                for article in articles
+                if _is_verified_crossplatform_copy(article, allowed_hosts)
+            ]
             attempts.append(
                 {
+                    "accountId": account.get("id"),
                     "account": account.get("name"),
+                    "ok": bool(verified),
                     "status": status.get("status"),
                     "accepted": len(verified),
                     "scanned": status.get("scanned", 0),
+                    "allowedHosts": sorted(allowed_hosts),
+                    "acceptedSourceKinds": spec.get("acceptedSourceKinds", []),
                     "provider": status.get("discoveryProvider"),
-                    "error": status.get("error"),
+                    "error": status.get("error") if not verified else None,
+                    "articles": [_article_summary(article) for article in verified[:2]],
                 }
             )
             accepted_articles.extend(verified)
-            if verified:
-                break
-        except Exception as exc:  # noqa: BLE001 - continue across bounded fallbacks.
+        except Exception as exc:  # noqa: BLE001 - continue through all entities.
             attempts.append(
                 {
+                    "accountId": account.get("id"),
                     "account": account.get("name"),
+                    "ok": False,
                     "status": "error",
                     "accepted": 0,
                     "scanned": 0,
+                    "allowedHosts": sorted(allowed_hosts),
+                    "acceptedSourceKinds": spec.get("acceptedSourceKinds", []),
                     "provider": None,
                     "error": f"{type(exc).__name__}: {exc}",
+                    "articles": [],
                 }
             )
+
+    failed_accounts = [
+        str(attempt.get("account")) for attempt in attempts if not attempt.get("ok")
+    ]
     return {
-        "ok": bool(accepted_articles),
+        "ok": len(accounts) == 13 and not failed_accounts,
+        "configuredAccounts": len(accounts),
+        "passedAccounts": sum(bool(attempt.get("ok")) for attempt in attempts),
+        "failedAccounts": failed_accounts,
         "accepted": len(accepted_articles),
         "attempts": attempts,
-        "articles": [
-            _article_summary(article) for article in accepted_articles[:4]
-        ],
-        "error": None
-        if accepted_articles
-        else "No verified WeChat original or publisher-owned copy passed checks",
+        "articles": [_article_summary(article) for article in accepted_articles[:13]],
+        "error": (
+            None
+            if not failed_accounts and len(accounts) == 13
+            else (
+                "Cross-platform endpoint validation failed for: "
+                + ", ".join(failed_accounts or [f"configured={len(accounts)}"])
+            )
+        ),
     }
 
 
@@ -261,7 +278,7 @@ def main() -> int:
     print(json.dumps(report, ensure_ascii=False, indent=2))
     if not report["ok"]:
         print(
-            "Focused live validation failed: media and Toutiao must produce verified publisher-domain articles",
+            "Focused live validation failed: all 13 configured WeChat publishers must produce a verified whitelisted cross-platform article and Toutiao must remain healthy",
             file=sys.stderr,
         )
         return 1
