@@ -3,8 +3,9 @@
 
 This module wraps ``crawl_with_tracking`` and replaces only the browser-managed
 source conversion and runtime adapter dispatch. RSS and SEC retain their native
-adapters; arbitrary public websites use one adaptive multi-stage crawler with
-bounded fallbacks and small domain profiles.
+adapters; company/media listing-search sources use host-bounded keyword search,
+and remaining arbitrary public websites use one adaptive multi-stage crawler
+with bounded fallbacks and small domain profiles.
 """
 
 from __future__ import annotations
@@ -129,7 +130,7 @@ def _display_name(raw_name: str, url: str, index: int) -> str:
 def _custom_sources(
     tracking_config: dict[str, Any], tracks: list[dict[str, Any]]
 ) -> tuple[list[dict[str, Any]], dict[str, tuple[str, str, str, str]]]:
-    """Route every enabled user source to RSS, SEC, or adaptive website crawling."""
+    """Route every enabled user source to RSS, SEC, site search or adaptive crawling."""
 
     runtime_specs: list[dict[str, Any]] = []
     sec_specs: dict[str, tuple[str, str, str, str]] = {}
@@ -186,14 +187,35 @@ def _custom_sources(
             continue
 
         keywords = _category_keywords(raw, category, track_by_name)
-        adapter = "rss" if source_type == "rss" else "generic_web"
-        spec: dict[str, Any] = {
-            "id": source_id,
-            "name": name,
-            "url": url,
-            "sourceUrl": url,
-            "adapter": adapter,
-            "platform": (
+        host = (urlsplit(url).hostname or "").casefold().removeprefix("www.")
+        is_bounded_listing_search = (
+            source_type == "listing-search"
+            and category in {"company", "media"}
+            and bool(host)
+        )
+        if is_bounded_listing_search:
+            if category == "media":
+                discovery_terms = keywords or [sector]
+                query = (
+                    f"site:{host} ({tracking._quoted_or_query(discovery_terms)}) "
+                    f"({tracking.MEDIA_SOURCE_EVENT_TERMS})"
+                )
+                platform = "用户媒体来源"
+                source_level = "待交叉验证"
+            else:
+                identity_terms = tracking._unique([company, ticker, *keywords], 16)
+                query = (
+                    f"site:{host} ({tracking._quoted_or_query(identity_terms)}) "
+                    f"({tracking.COMPANY_SOURCE_EVENT_TERMS})"
+                )
+                platform = "用户公司来源"
+                source_level = _source_level(category, source_type)
+            crawl_url = tracking._bing_rss(query)
+            adapter = "rss"
+        else:
+            crawl_url = url
+            adapter = "rss" if source_type == "rss" else "generic_web"
+            platform = (
                 {
                     "company": "用户公司 RSS",
                     "media": "用户媒体 RSS",
@@ -201,9 +223,18 @@ def _custom_sources(
                 }[category]
                 if source_type == "rss"
                 else name
-            ),
+            )
+            source_level = _source_level(category, source_type)
+
+        spec: dict[str, Any] = {
+            "id": source_id,
+            "name": name,
+            "url": crawl_url,
+            "sourceUrl": url,
+            "adapter": adapter,
+            "platform": platform,
             "sourceCategory": category,
-            "sourceLevel": _source_level(category, source_type),
+            "sourceLevel": source_level,
             "region": region,
             "sector": sector,
             "maxItems": 10,
@@ -211,6 +242,8 @@ def _custom_sources(
             "strictTitleKeywords": False,
             "enabled": True,
         }
+        if is_bounded_listing_search:
+            spec["allowedHosts"] = [host]
         source_language = tracking._clean(raw.get("sourceLanguage"), 20)
         if source_language:
             spec["sourceLanguage"] = source_language
