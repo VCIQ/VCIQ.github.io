@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-31T14:32:12+00:00",
-  "asOfDate": "2026-08-31",
+  "generatedAt": "2026-08-31T17:42:45+00:00",
+  "asOfDate": "2026-09-01",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
   "baselineSource": "snapshot",
@@ -12,39 +12,41 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 8300,
-      "completion_tokens": 6552,
-      "total_tokens": 14852,
+      "prompt_tokens": 10855,
+      "completion_tokens": 6526,
+      "total_tokens": 17381,
       "completion_tokens_details": {
-        "reasoning_tokens": 4292
+        "reasoning_tokens": 4329
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 8300
+      "prompt_cache_miss_tokens": 10855
     }
   },
   "changeSummary": {
-    "totalDetected": 18,
-    "total": 10,
+    "totalDetected": 37,
+    "total": 14,
     "byDataset": {
-      "intelligenceEvent": 10
+      "intelligenceEvent": 3,
+      "marketCompany": 11
     },
     "byChangeType": {
-      "external_event": 11,
-      "data_maintenance": 7
+      "external_event": 17,
+      "data_maintenance": 12,
+      "source_refresh": 8
     },
-    "externalCandidates": 11,
-    "qualityRejected": 0,
-    "maintenanceExcluded": 7,
+    "externalCandidates": 17,
+    "qualityRejected": 2,
+    "maintenanceExcluded": 20,
     "aggregatedEvents": 0,
     "highestImportance": 84,
     "verifiedChangeTotal": 0,
-    "candidateTotal": 0,
-    "auxiliaryLeadTotal": 10,
-    "rejectedTotal": 0,
-    "newEvents": 10,
+    "candidateTotal": 11,
+    "auxiliaryLeadTotal": 3,
+    "rejectedTotal": 2,
+    "newEvents": 14,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
@@ -54,322 +56,273 @@
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "证据包显示，英伟达在AI硬件和开源平台领域出现大规模投资与收购报道（E001、E002），同时多家公司推出AI基础设施和产品（E004、E006、E008、E011），腾讯混元Hy4 preview上线（E005），另有营销事件和个人言论（E007、E010）。整体看，AI产业链整合与竞争加速，但关键事件多来自C级媒体或公司新闻稿，需进一步验证。",
+    "executiveSummary": "证据包显示四类主要动态：1) 据InfoWorld报道，OpenAI计划自11月12日起终止向Cursor提供模型，背景是SpaceX收购Cursor母公司Anysphere，但该事件仅单一来源且证据等级为C，需官方确认；2) Anyon Systems与Matrix Group旗下KMT Technologies宣布量子计算战略合作，来源为公司新闻稿，属公司自述；3) 东方财富报道国产算力芯片“爆单”及GPU四小龙聚首，行业高景气判断需订单数据验证；4) 宁德时代披露回购将在股东会审议通过后12个月内实施。此外，多只科技股单日下跌，Recursion逆势上涨。整体上，高影响事件多为低等级证据，应作为待验证线索而非确定性事实。 质量门诊断：缺少发布时间 15、缺少标题 8、证据未分级 8、标题未直接匹配研究对象 3、证据合格但未绑定变化字段 21。",
     "keyDevelopments": [
       {
-        "title": "英伟达拟向联发科投资35亿美元",
-        "assessment": "据新浪财经报道，英伟达将向联发科投资35亿美元，以深化合作并推动更多公司开发接入其数据中心生态系统的芯片。该事件若属实，将强化英伟达在AI硬件产业链的核心地位。但证据等级为C，仅单一来源，需进一步验证。",
-        "importance": 5,
+        "title": "OpenAI将终止向Cursor提供模型，涉及SpaceX收购Anysphere",
+        "assessment": "据InfoWorld报道，OpenAI已通知SpaceX，计划从11月12日起终止向Cursor提供OpenAI模型，背景是SpaceX收购了Cursor母公司Anysphere。此为单一外部线索（证据等级C），尚未获得OpenAI或SpaceX官方确认，应视为待验证事件。若属实，将影响Cursor用户对OpenAI编码模型的访问，并反映AI模型供应格局变化。",
+        "importance": 4,
         "confidence": "low",
         "entities": [
-          "英伟达",
-          "联发科"
-        ],
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "title": "英伟达收购Hugging Face",
-        "assessment": "据钛媒体报道，英伟达收购Hugging Face，标题称129亿（币种未明确），摘要称价值867亿人民币，且此前Hugging Face曾拒绝5亿美元投资。若属实，将显著影响开源AI平台生态。但证据等级为C，且标题与摘要数字单位存在不一致，需验证。",
-        "importance": 5,
-        "confidence": "low",
-        "entities": [
-          "英伟达",
-          "Hugging Face"
+          "OpenAI",
+          "Cursor",
+          "Anysphere",
+          "SpaceX"
         ],
         "evidenceIds": [
           "E002"
         ]
       },
       {
-        "title": "腾讯混元Hy4 preview上线即排队",
-        "assessment": "据钛媒体报道，混元Hy4 preview上线即排队，摘要称“混元追上来一截，腾讯的船还在漏水”，显示腾讯在AI领域虽有进展但焦虑未消。证据等级为C，具体性能与市场反响需进一步观察。",
-        "importance": 4,
-        "confidence": "low",
-        "entities": [
-          "腾讯",
-          "混元"
-        ],
-        "evidenceIds": [
-          "E005"
-        ]
-      },
-      {
-        "title": "HUMAIN与MinIO宣布战略合作构建AI数据架构",
-        "assessment": "据PR Newswire新闻稿，HUMAIN（PIF旗下公司）与MinIO在LEAP 2026宣布战略合作，旨在加速沙特及全球的HUMAIN AI采用。该合作显示中东主权基金在AI基础设施领域的布局。证据等级为B，但属于公司新闻稿，需关注后续落地。",
+        "title": "Anyon Systems与Matrix Group宣布量子计算战略合作",
+        "assessment": "Anyon Systems（加拿大超导量子计算系统开发商）与Matrix Group旗下KMT Technologies宣布战略合作，以加速量子计算国际部署。信息来源为公司新闻稿（证据等级B），属于公司自述，合作的实际范围和商业影响有待后续披露。",
         "importance": 3,
         "confidence": "medium",
         "entities": [
-          "HUMAIN",
-          "MinIO",
-          "沙特"
+          "Anyon Systems",
+          "Matrix Group",
+          "KMT Technologies"
+        ],
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "title": "国产算力芯片“爆单”报道，GPU四小龙本周聚首",
+        "assessment": "东方财富报道称国产芯片板块受多重消息催化，GPU四小龙本周聚首，行业高景气周期有望拉长。该报道同时提及A股市场上涨。作为媒体报道（证据等级未明确），内容包含行业景气判断，需以公司订单和业绩数据验证。",
+        "importance": 3,
+        "confidence": "low",
+        "entities": [
+          "国产算力芯片",
+          "GPU四小龙"
         ],
         "evidenceIds": [
           "E004"
         ]
       },
       {
-        "title": "Think推出Think Grid™，提供超大规模云AI计算的替代方案",
-        "assessment": "据PR Newswire新闻稿，Think Grid提供对Think Fabric高能效AI基础设施的云化访问，无需前期资本投入，全包费率比同类方案低至27%。该产品可能对超大规模云厂商构成竞争，但证据来自公司新闻稿，需验证实际性能与市场接受度。",
-        "importance": 3,
+        "title": "宁德时代披露回购实施时间窗口",
+        "assessment": "新浪财经三条新闻均显示，宁德时代回购将在股东会审议通过后12个月内实施。三条来源一致，但均为媒体报道，未提供回购金额等细节。该信息属于公司资本运作安排，对基本面影响中性偏正面。",
+        "importance": 2,
         "confidence": "medium",
         "entities": [
-          "Think",
-          "Think Grid"
+          "宁德时代"
         ],
         "evidenceIds": [
-          "E006"
+          "E013",
+          "E014",
+          "E015"
         ]
       },
       {
-        "title": "Google DeepMind推出Gemini Omni 1.1 Flash",
-        "assessment": "据Google DeepMind官方X账号，Gemini Omni 1.1 Flash正在推出，旨在使生成式视频高度可控、迭代更快、更适用于生产级使用。这是生成式视频领域的重要进展，但具体能力需实际测试。证据等级为B，来自官方账号。",
-        "importance": 3,
-        "confidence": "medium",
+        "title": "多只科技股单日下跌，Recursion逆势上涨",
+        "assessment": "根据Yahoo财经行情数据，Rocket Lab下跌6.65%、小马智行下跌5.56%、Rigetti下跌4.0%、文远知行下跌3.02%、Tempus AI下跌2.78%、Aurora下跌2.99%、Joby下跌3.55%、IonQ下跌1.85%、Mobileye下跌1.16%；Recursion上涨3.63%。这些为市场数据，反映单日价格变动，不构成对公司基本面的判断。",
+        "importance": 2,
+        "confidence": "high",
         "entities": [
-          "Google DeepMind",
-          "Gemini"
+          "Rocket Lab",
+          "小马智行",
+          "Rigetti",
+          "文远知行",
+          "Tempus AI",
+          "Aurora",
+          "Joby",
+          "IonQ"
         ],
         "evidenceIds": [
-          "E011"
+          "E025",
+          "E009",
+          "E029",
+          "E005",
+          "E021",
+          "E053",
+          "E041",
+          "E045"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "英伟达",
-        "direction": "positive",
-        "statement": "英伟达通过投资联发科（E001）和收购Hugging Face（E002）的报道，显示其正从芯片向AI开源平台和更广泛硬件生态扩张，若交易完成将强化其产业链主导地位。但两项证据均为C级，需官方确认。",
+        "entity": "OpenAI模型分发渠道",
+        "direction": "negative",
+        "statement": "若OpenAI终止向Cursor提供模型，将减少其编码场景的分发渠道，并可能强化OpenAI与竞争对手的隔离。",
         "evidenceIds": [
-          "E001",
           "E002"
         ]
       },
       {
-        "entity": "腾讯",
-        "direction": "mixed",
-        "statement": "混元Hy4 preview上线即排队，显示腾讯在基础模型上有所追赶，但摘要称“船还在漏水”，表明其AI战略仍面临压力（E005）。",
+        "entity": "Cursor/Anysphere",
+        "direction": "negative",
+        "statement": "Cursor用户将失去OpenAI模型访问，可能影响产品竞争力，需关注替代模型供应。",
         "evidenceIds": [
-          "E005"
+          "E002"
         ]
       },
       {
-        "entity": "AI基础设施市场",
-        "direction": "mixed",
-        "statement": "Think Grid以更低全包费率提供专用AI算力（E006），HUMAIN与MinIO合作构建AI数据架构（E004），显示超大规模云之外的新兴替代方案正在出现，可能加剧竞争，但两者均为公司新闻稿，实际影响待观察。",
+        "entity": "Anyon Systems",
+        "direction": "positive",
+        "statement": "与Matrix Group合作有望加速其量子计算系统国际部署，但合作尚处宣布阶段。",
         "evidenceIds": [
-          "E006",
+          "E003"
+        ]
+      },
+      {
+        "entity": "国产算力芯片行业",
+        "direction": "positive",
+        "statement": "媒体报道称国产算力芯片“爆单”，行业高景气周期有望拉长，但需订单数据验证。",
+        "evidenceIds": [
           "E004"
         ]
       },
       {
-        "entity": "开源AI生态",
-        "direction": "negative",
-        "statement": "据钛媒体报道，Hugging Face被英伟达收购，此前曾拒绝5亿美元投资（E002），若属实，开源AI平台的独立性可能受到削弱，社区反应值得关注。",
+        "entity": "宁德时代",
+        "direction": "neutral",
+        "statement": "回购将在股东会审议通过后12个月内实施，属于既定计划的时间安排，无新增金额信息。",
         "evidenceIds": [
-          "E002"
+          "E013",
+          "E014",
+          "E015"
         ]
       },
       {
-        "entity": "生成式视频",
-        "direction": "positive",
-        "statement": "Google DeepMind推出Gemini Omni 1.1 Flash，强调可控性和生产级使用（E011），显示生成式视频工具正走向更成熟的工业化应用。",
+        "entity": "Rocket Lab",
+        "direction": "negative",
+        "statement": "单日股价下跌6.65%，延续近期跌势，但无证据显示基本面变化。",
         "evidenceIds": [
-          "E011"
+          "E025"
+        ]
+      },
+      {
+        "entity": "小马智行",
+        "direction": "negative",
+        "statement": "单日股价下跌5.56%，市场表现疲弱。",
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "entity": "Recursion Pharmaceuticals",
+        "direction": "positive",
+        "statement": "单日股价上涨3.63%，在科技股普跌中逆势走强。",
+        "evidenceIds": [
+          "E033"
         ]
       }
     ],
     "watchlist": [
       {
-        "item": "英伟达-联发科投资交易进展",
-        "reason": "E001为单一C级来源，需官方公告或更多独立报道确认交易金额、股权比例及合作细节。",
-        "nextEvidence": "英伟达或联发科的官方公告、SEC文件、权威财经媒体后续报道",
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "item": "英伟达收购Hugging Face的细节与监管",
-        "reason": "E002标题与摘要数字单位不一致，且为C级来源，需核实交易金额、是否完成、监管审批及对开源社区的影响。",
-        "nextEvidence": "交易双方官方声明、监管文件、开源社区反应",
+        "item": "OpenAI终止Cursor访问的官方确认与后续安排",
+        "reason": "当前仅有单一媒体报道，需OpenAI或SpaceX官方声明验证；若属实，需关注Cursor替代模型、用户补偿及合同细节。",
+        "nextEvidence": "OpenAI或SpaceX官方公告、Cursor官方博客、后续新闻报道",
         "evidenceIds": [
           "E002"
         ]
       },
       {
-        "item": "腾讯混元Hy4的实际性能与商业化",
-        "reason": "E005仅提供标题和摘要，缺乏具体性能数据，需观察用户反馈、评测结果及对腾讯AI业务的实际带动。",
-        "nextEvidence": "混元Hy4技术报告、第三方评测、腾讯财报或官方披露",
+        "item": "Anyon Systems与Matrix Group合作的实际落地",
+        "reason": "新闻稿未提供具体订单、金额或时间表，需跟踪合作进展。",
+        "nextEvidence": "双方后续公告、项目合同、财报中的收入确认",
         "evidenceIds": [
-          "E005"
+          "E003"
         ]
       },
       {
-        "item": "Think Grid的客户采用与定价竞争力",
-        "reason": "E006为新闻稿，声称费率低27%，需验证实际部署案例、性能对比及对超大规模云厂商的冲击。",
-        "nextEvidence": "Think Grid客户案例、独立基准测试、行业分析报告",
-        "evidenceIds": [
-          "E006"
-        ]
-      },
-      {
-        "item": "HUMAIN与MinIO合作落地",
-        "reason": "E004为新闻稿，需关注合作是否转化为实际产品、沙特市场采用情况以及全球扩展计划。",
-        "nextEvidence": "HUMAIN或MinIO的产品发布、客户公告、后续新闻",
+        "item": "国产算力芯片订单与业绩兑现",
+        "reason": "媒体报道称“爆单”，但缺乏具体公司订单数据，需验证高景气持续性。",
+        "nextEvidence": "GPU四小龙公司公告、行业出货量数据、财报",
         "evidenceIds": [
           "E004"
         ]
       },
       {
-        "item": "Gemini Omni 1.1 Flash的可用性与效果",
-        "reason": "E011为官方X帖子，需实际测试生成视频的质量、控制能力和生产环境表现。",
-        "nextEvidence": "Google DeepMind官方文档、用户评测、Flow by Google中的实际体验",
+        "item": "宁德时代回购实施进展",
+        "reason": "回购时间窗口已披露，但需关注股东会审议结果及实际回购执行。",
+        "nextEvidence": "股东会决议公告、回购进展公告",
         "evidenceIds": [
-          "E011"
+          "E013",
+          "E014",
+          "E015"
+        ]
+      },
+      {
+        "item": "科技股持续下跌是否反映系统性风险",
+        "reason": "多只科技股单日下跌，但缺乏共同原因证据，需观察后续行情及宏观因素。",
+        "nextEvidence": "后续交易日行情、宏观数据、公司新闻",
+        "evidenceIds": [
+          "E025",
+          "E009",
+          "E029",
+          "E005",
+          "E021",
+          "E053",
+          "E041",
+          "E045"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "关键事件证据等级低，存在不实或夸大风险",
-        "reason": "英伟达投资联发科（E001）和收购Hugging Face（E002）均仅来自单一C级媒体来源，未经官方确认，可能为传闻或误报。",
+        "risk": "证据可靠性风险",
+        "reason": "E002为单一来源且证据等级C，E003为公司新闻稿，E004为媒体报道，均可能包含不准确或宣传性内容。",
         "evidenceIds": [
-          "E001",
-          "E002"
-        ]
-      },
-      {
-        "risk": "英伟达大规模收购可能面临反垄断或监管审查",
-        "reason": "若E002收购Hugging Face属实，英伟达在AI芯片和开源平台领域的双重主导可能引发监管关注，交易存在不确定性。",
-        "evidenceIds": [
-          "E002"
-        ]
-      },
-      {
-        "risk": "腾讯AI竞争力不足的风险",
-        "reason": "E005摘要称“腾讯的船还在漏水”，暗示混元虽进步但未能完全解决腾讯的AI焦虑，若产品体验不佳，可能影响其市场地位。",
-        "evidenceIds": [
-          "E005"
-        ]
-      },
-      {
-        "risk": "新兴AI基础设施替代方案的实际效果存疑",
-        "reason": "E006和E004均为公司新闻稿，可能夸大优势，Think Grid的27%成本优势及HUMAIN合作的实际成效需独立验证。",
-        "evidenceIds": [
-          "E006",
+          "E002",
+          "E003",
           "E004"
         ]
       },
       {
-        "risk": "开源社区对Hugging Face被收购的反弹",
-        "reason": "E002显示Hugging Face此前拒绝投资，若被英伟达收购，可能引发开源社区对平台中立性的担忧，导致用户流失。",
+        "risk": "事件不落地风险",
+        "reason": "OpenAI终止Cursor访问尚未官方确认；Anyon合作可能停留在意向；国产芯片高景气可能被证伪。",
+        "evidenceIds": [
+          "E002",
+          "E003",
+          "E004"
+        ]
+      },
+      {
+        "risk": "市场波动风险",
+        "reason": "多只科技股单日下跌，若延续可能影响相关公司融资和估值，但证据仅限单日行情。",
+        "evidenceIds": [
+          "E025",
+          "E009",
+          "E029",
+          "E005",
+          "E021",
+          "E053",
+          "E041",
+          "E045"
+        ]
+      },
+      {
+        "risk": "依赖风险",
+        "reason": "Cursor用户依赖OpenAI模型，若访问终止且无替代方案，可能导致用户流失。",
         "evidenceIds": [
           "E002"
         ]
       }
     ],
-    "methodologyNote": "本分析仅基于证据包中的证据，不补充外部事实。证据等级分为B级（公司新闻稿或官方账号）和C级（外部媒体线索），均未经独立核实。分析中区分了报道内容（事实）、基于摘要的推断（推断）和需更多证据确认的事项（待验证）。所有判断均引用至少一个证据编号。本输出不构成任何投资建议。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
+    "methodologyNote": "本分析仅基于提供的证据包，未补充外部事实。证据等级包括外部线索（C）、新闻稿（B）、媒体报道和市场数据。事实与推断已尽量区分：行情数据为事实，但公司行为报道和行业景气判断需进一步验证。所有判断均引用证据编号。本报告不构成投资建议，不提供买入、卖出或目标价。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
   },
   "changes": [
     {
-      "id": "chg-95aeb7778e53194dc723",
+      "id": "chg-4fec932c07c6e761a29e",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-6ee3d66c0e43e6ad20",
-      "entityName": "英伟达将向联发科投资35亿美元 强化AI硬件产业链核心地位",
+      "entityId": "intelligence-event-5a4d72d4e54e58e303",
+      "entityName": "Cursor customers will lose access to OpenAI coding models in November",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：英伟达将向联发科投资35亿美元 强化AI硬件产业链核心地位。",
+      "summary": "新增高价值情报事件记录：Cursor customers will lose access to OpenAI coding models in November。",
       "importance": 84,
       "before": null,
       "after": {
         "publishedAt": "2026-08-31",
-        "summary": "英伟达将向联发科投资35亿美元，进一步深化与其合作。英伟达正试图说服更多公司开发能够接入其主导的数据中心生态系统的芯片。",
-        "title": "英伟达将向联发科投资35亿美元 强化AI硬件产业链核心地位"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-08-31",
-          "evidenceIds": [
-            "E001"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "英伟达将向联发科投资35亿美元，进一步深化与其合作。英伟达正试图说服更多公司开发能够接入其主导的数据中心生态系统的芯片。",
-          "evidenceIds": [
-            "E001"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "英伟达将向联发科投资35亿美元 强化AI硬件产业链核心地位",
-          "evidenceIds": [
-            "E001"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E001"
-      ],
-      "supportingEvidenceIds": [
-        "E001"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-f61d0c6810186ce656f6"
-      ],
-      "eventLifecycles": {
-        "evt-f61d0c6810186ce656f6": "first_seen"
-      },
-      "eventId": "evt-f61d0c6810186ce656f6",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-08-31T14:32:12+00:00",
-      "lastSeenAt": "2026-08-31T14:32:12+00:00"
-    },
-    {
-      "id": "chg-2425ffb8996aa7718082",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-4167ceb3038a537641",
-      "entityName": "英伟达129亿买下Hugging Face：拒绝5亿投资后，开源AI童话结束了",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：英伟达129亿买下Hugging Face：拒绝5亿投资后，开源AI童话结束了。",
-      "importance": 84,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-08-31",
-        "summary": "Hugging Face被英伟达收购，价值867亿人民币，而此前曾拒绝其5亿美元投资，体现AI开源平台与大厂博弈的激烈。",
-        "title": "英伟达129亿买下Hugging Face：拒绝5亿投资后，开源AI童话结束了"
+        "summary": "OpenAI will stop AI coding platform Cursor from accessing its models from November 12, following the acquisition of Cursor parent Anysphere by Elon Musk ‘s SpaceX. “Today, we notified SpaceX that we intend to wind down our contract providing OpenAI models to…",
+        "title": "Cursor customers will lose access to OpenAI coding models in November"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -391,7 +344,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "Hugging Face被英伟达收购，价值867亿人民币，而此前曾拒绝其5亿美元投资，体现AI开源平台与大厂博弈的激烈。",
+          "after": "OpenAI will stop AI coding platform Cursor from accessing its models from November 12, following the acquisition of Cursor parent Anysphere by Elon Musk ‘s SpaceX. “Today, we notified SpaceX that we intend to wind down our contract providing OpenAI models to…",
           "evidenceIds": [
             "E002"
           ]
@@ -399,7 +352,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "英伟达129亿买下Hugging Face：拒绝5亿投资后，开源AI童话结束了",
+          "after": "Cursor customers will lose access to OpenAI coding models in November",
           "evidenceIds": [
             "E002"
           ]
@@ -420,35 +373,114 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-c76261e54ca1b6a8f1ba"
+        "evt-e5c92bf165cb34866cb4"
       ],
       "eventLifecycles": {
-        "evt-c76261e54ca1b6a8f1ba": "first_seen"
+        "evt-e5c92bf165cb34866cb4": "first_seen"
       },
-      "eventId": "evt-c76261e54ca1b6a8f1ba",
+      "eventId": "evt-e5c92bf165cb34866cb4",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-08-31T14:32:12+00:00",
-      "lastSeenAt": "2026-08-31T14:32:12+00:00"
+      "firstSeenAt": "2026-08-31T17:42:45+00:00",
+      "lastSeenAt": "2026-08-31T17:42:45+00:00"
     },
     {
-      "id": "chg-27c37d698ef0ad897c25",
+      "id": "chg-7a8d9e7a480f4605bac0",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-108a726a86e722f87e",
-      "entityName": "HUMAIN and MinIO Announce Strategic Partnership to Build AI Data Fabric",
+      "entityId": "intelligence-event-b256dd30a31e5cf780",
+      "entityName": "Anyon Systems and Matrix Group Announce Strategic Partnership to Accelerate International Deployment of Quantum Computing",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：HUMAIN and MinIO Announce Strategic Partnership to Build AI Data Fabric。",
+      "summary": "新增高价值情报事件记录：Anyon Systems and Matrix Group Announce Strategic Partnership to Accelerate International Deployment of Quantum Computing。",
       "importance": 84,
       "before": null,
       "after": {
         "publishedAt": "2026-08-31",
-        "summary": "Strategic collaboration announced at LEAP 2026 expected to accelerate the adoption of HUMAIN AI in Saudi Arabia and around the world RIYADH, Saudi Arabia, Aug. 31, 2026 /PRNewswire/ -- HUMAIN, a PIF company delivering full-stack artificial intelligence capabi…",
-        "title": "HUMAIN and MinIO Announce Strategic Partnership to Build AI Data Fabric"
+        "summary": "MONTRÉAL and TEL AVIV, Israel, Aug. 31, 2026 /PRNewswire/ -- Anyon Systems Inc., a Canadian developer and manufacturer of full-stack superconducting quantum computing systems, and KMT Technologies Ltd., a Matrix Group company, today announced a strategic part…",
+        "title": "Anyon Systems and Matrix Group Announce Strategic Partnership to Accelerate International Deployment of Quantum Computing"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "MONTRÉAL and TEL AVIV, Israel, Aug. 31, 2026 /PRNewswire/ -- Anyon Systems Inc., a Canadian developer and manufacturer of full-stack superconducting quantum computing systems, and KMT Technologies Ltd., a Matrix Group company, today announced a strategic part…",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Anyon Systems and Matrix Group Announce Strategic Partnership to Accelerate International Deployment of Quantum Computing",
+          "evidenceIds": [
+            "E003"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E003"
+      ],
+      "supportingEvidenceIds": [
+        "E003"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-ad50e31282afed394c23"
+      ],
+      "eventLifecycles": {
+        "evt-ad50e31282afed394c23": "first_seen"
+      },
+      "eventId": "evt-ad50e31282afed394c23",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T17:42:45+00:00",
+      "lastSeenAt": "2026-08-31T17:42:45+00:00"
+    },
+    {
+      "id": "chg-725a11c02bfdf00150a6",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-a994272d14e0793b1d",
+      "entityName": "【风口研报】国产算力芯片“爆单”！GPU四小龙本周聚首 行业高景气周期有望拉长",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：【风口研报】国产算力芯片“爆单”！GPU四小龙本周聚首 行业高景气周期有望拉长。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "A股三大指数今日集体上涨，截止收盘，沪指涨0.86%，收报3986.30点；深证成指涨0.44%，收报14015.00点；创业板指涨0.42%，收报3438.68点。沪深京三市成交额2.15万亿，较上一交易日小幅放量278亿。行业板块涨多跌少，影视 院线 、 传媒 、 广告营销 、装修装饰、 元件 、 消费电子 、 军工 电子 板块涨幅居前， 饰品 、 贵金属 、 光伏设备 、 生物制品 板块跌幅居前。个股方面，上涨股票数量接近3200只，近90只股票涨停。 近期 国产芯片 板块迎多重消息催化。据央视财经日前报道…",
+        "title": "【风口研报】国产算力芯片“爆单”！GPU四小龙本周聚首 行业高景气周期有望拉长"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -470,7 +502,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "Strategic collaboration announced at LEAP 2026 expected to accelerate the adoption of HUMAIN AI in Saudi Arabia and around the world RIYADH, Saudi Arabia, Aug. 31, 2026 /PRNewswire/ -- HUMAIN, a PIF company delivering full-stack artificial intelligence capabi…",
+          "after": "A股三大指数今日集体上涨，截止收盘，沪指涨0.86%，收报3986.30点；深证成指涨0.44%，收报14015.00点；创业板指涨0.42%，收报3438.68点。沪深京三市成交额2.15万亿，较上一交易日小幅放量278亿。行业板块涨多跌少，影视 院线 、 传媒 、 广告营销 、装修装饰、 元件 、 消费电子 、 军工 电子 板块涨幅居前， 饰品 、 贵金属 、 光伏设备 、 生物制品 板块跌幅居前。个股方面，上涨股票数量接近3200只，近90只股票涨停。 近期 国产芯片 板块迎多重消息催化。据央视财经日前报道…",
           "evidenceIds": [
             "E004"
           ]
@@ -478,7 +510,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "HUMAIN and MinIO Announce Strategic Partnership to Build AI Data Fabric",
+          "after": "【风口研报】国产算力芯片“爆单”！GPU四小龙本周聚首 行业高景气周期有望拉长",
           "evidenceIds": [
             "E004"
           ]
@@ -499,65 +531,69 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-62c946340f15b42a4460"
+        "evt-101d88213d8d7f28d691"
       ],
       "eventLifecycles": {
-        "evt-62c946340f15b42a4460": "first_seen"
+        "evt-101d88213d8d7f28d691": "first_seen"
       },
-      "eventId": "evt-62c946340f15b42a4460",
+      "eventId": "evt-101d88213d8d7f28d691",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-08-31T14:32:12+00:00",
-      "lastSeenAt": "2026-08-31T14:32:12+00:00"
+      "firstSeenAt": "2026-08-31T17:42:45+00:00",
+      "lastSeenAt": "2026-08-31T17:42:45+00:00"
     },
     {
-      "id": "chg-c9fb396ab82929262bac",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-b5d77ddac9ae835438",
-      "entityName": "混元Hy4 preview上线即排队，能消解腾讯的AI焦虑吗？",
-      "action": "added",
+      "id": "chg-df5968d4e9d939fa75c3",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "weride",
+      "entityName": "文远知行",
+      "action": "updated",
       "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "quote"
       ],
-      "summary": "新增高价值情报事件记录：混元Hy4 preview上线即排队，能消解腾讯的AI焦虑吗？。",
-      "importance": 82,
-      "before": null,
+      "summary": "文远知行 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "quote": {
+          "asOf": "2026-08-28T20:00:00+00:00",
+          "change": -0.4,
+          "changePercent": -6.2,
+          "currency": "USD",
+          "previousClose": 6.45
+        }
+      },
       "after": {
-        "publishedAt": "2026-08-31",
-        "summary": "混元追上来一截，腾讯的船还在“漏水”。",
-        "title": "混元Hy4 preview上线即排队，能消解腾讯的AI焦虑吗？"
+        "quote": {
+          "asOf": "2026-08-31T17:11:01+00:00",
+          "change": -0.18,
+          "changePercent": -3.02,
+          "currency": "USD",
+          "previousClose": 5.97
+        }
       },
       "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
       "isResearchCandidate": true,
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "quote"
       ],
       "claimBindings": [
         {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-08-31",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "混元追上来一截，腾讯的船还在“漏水”。",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "混元Hy4 preview上线即排队，能消解腾讯的AI焦虑吗？",
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-28T20:00:00+00:00",
+            "change": -0.4,
+            "changePercent": -6.2,
+            "currency": "USD",
+            "previousClose": 6.45
+          },
+          "after": {
+            "asOf": "2026-08-31T17:11:01+00:00",
+            "change": -0.18,
+            "changePercent": -3.02,
+            "currency": "USD",
+            "previousClose": 5.97
+          },
           "evidenceIds": [
             "E005"
           ]
@@ -574,306 +610,73 @@
         "supporting": 1,
         "total": 1
       },
-      "publicationTier": "external_clue",
+      "publicationTier": "candidate",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-503fb43c526bbf156da0"
+        "evt-da20967dbfd246ac57ff"
       ],
       "eventLifecycles": {
-        "evt-503fb43c526bbf156da0": "first_seen"
+        "evt-da20967dbfd246ac57ff": "first_seen"
       },
-      "eventId": "evt-503fb43c526bbf156da0",
+      "eventId": "evt-da20967dbfd246ac57ff",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-08-31T14:32:12+00:00",
-      "lastSeenAt": "2026-08-31T14:32:12+00:00"
+      "firstSeenAt": "2026-08-31T17:42:45+00:00",
+      "lastSeenAt": "2026-08-31T17:42:45+00:00"
     },
     {
-      "id": "chg-a7c9c53b86f03b9037b7",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-ce65d90bc45a14a83f",
-      "entityName": "Think launches Think Grid™, a new alternative to hyperscaler AI compute",
-      "action": "added",
+      "id": "chg-043d52b197551674e3f4",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "pony-ai",
+      "entityName": "小马智行",
+      "action": "updated",
       "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "quote"
       ],
-      "summary": "新增高价值情报事件记录：Think launches Think Grid™, a new alternative to hyperscaler AI compute。",
-      "importance": 82,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-08-31",
-        "summary": "Think Grid provides cloud-like access to Think Fabric's high-efficiency AI infrastructure, without the upfront capital investment of deploying dedicated infrastructure Think Grid offers dedicated AI compute at an all-inclusive rate up to 27% lower than compar…",
-        "title": "Think launches Think Grid™, a new alternative to hyperscaler AI compute"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-08-31",
-          "evidenceIds": [
-            "E006"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Think Grid provides cloud-like access to Think Fabric's high-efficiency AI infrastructure, without the upfront capital investment of deploying dedicated infrastructure Think Grid offers dedicated AI compute at an all-inclusive rate up to 27% lower than compar…",
-          "evidenceIds": [
-            "E006"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Think launches Think Grid™, a new alternative to hyperscaler AI compute",
-          "evidenceIds": [
-            "E006"
-          ]
+      "summary": "小马智行 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "quote": {
+          "asOf": "2026-08-28T20:00:00+00:00",
+          "change": -0.65,
+          "changePercent": -7.9,
+          "currency": "USD",
+          "previousClose": 8.23
         }
-      ],
-      "evidenceIds": [
-        "E006"
-      ],
-      "supportingEvidenceIds": [
-        "E006"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
       },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-2317e2494e68d4484339"
-      ],
-      "eventLifecycles": {
-        "evt-2317e2494e68d4484339": "first_seen"
-      },
-      "eventId": "evt-2317e2494e68d4484339",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-08-31T14:32:12+00:00",
-      "lastSeenAt": "2026-08-31T14:32:12+00:00"
-    },
-    {
-      "id": "chg-6fa6944d1e2d95e022b7",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-31cc62518a032293b4",
-      "entityName": "SNICKERS® Launches the World's First Digital Candy Bar for when AI Acts \"Hungry\"",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：SNICKERS® Launches the World's First Digital Candy Bar for when AI Acts \"Hungry\"。",
-      "importance": 82,
-      "before": null,
       "after": {
-        "publishedAt": "2026-08-31",
-        "summary": "By translating the iconic \"You're Not You When You're Hungry\" platform into the AI era, SNICKERS invites fans to \"feed\" their out-of-sorts AI assistant a digital candy bar KEY POINTS: From being too agreeable to generating unsatisfactory or incorrect response…",
-        "title": "SNICKERS® Launches the World's First Digital Candy Bar for when AI Acts \"Hungry\""
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-08-31",
-          "evidenceIds": [
-            "E007"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "By translating the iconic \"You're Not You When You're Hungry\" platform into the AI era, SNICKERS invites fans to \"feed\" their out-of-sorts AI assistant a digital candy bar KEY POINTS: From being too agreeable to generating unsatisfactory or incorrect response…",
-          "evidenceIds": [
-            "E007"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "SNICKERS® Launches the World's First Digital Candy Bar for when AI Acts \"Hungry\"",
-          "evidenceIds": [
-            "E007"
-          ]
+        "quote": {
+          "asOf": "2026-08-31T17:11:53+00:00",
+          "change": -0.42,
+          "changePercent": -5.56,
+          "currency": "USD",
+          "previousClose": 7.555
         }
-      ],
-      "evidenceIds": [
-        "E007"
-      ],
-      "supportingEvidenceIds": [
-        "E007"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-9fda528803f492aebe32"
-      ],
-      "eventLifecycles": {
-        "evt-9fda528803f492aebe32": "first_seen"
-      },
-      "eventId": "evt-9fda528803f492aebe32",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-08-31T14:32:12+00:00",
-      "lastSeenAt": "2026-08-31T14:32:12+00:00"
-    },
-    {
-      "id": "chg-d6b812f6a6aa2d32a0dd",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-dfddb25994411024d5",
-      "entityName": "Asus launches new 14-inch laptop globally with 1,600-nit OLED display, Nvidia RTX Spark and 128 GB RAM",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Asus launches new 14-inch laptop globally with 1,600-nit OLED display, Nvidia RTX Spark and 128 GB RAM。",
-      "importance": 82,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-08-31",
-        "summary": "Asus has finally revealed new details about its first 14-inch laptop with an Nvidia RTX Spark chipset. Also packing up to 128 GB of RAM and a 90 Wh battery inside a 1.48 kg housing, the ProArt P14 will be available with a 120 Hz VRR OLED display that reaches…",
-        "title": "Asus launches new 14-inch laptop globally with 1,600-nit OLED display, Nvidia RTX Spark and 128 GB RAM"
       },
       "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
       "isResearchCandidate": true,
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "quote"
       ],
       "claimBindings": [
         {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-08-31",
-          "evidenceIds": [
-            "E008"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Asus has finally revealed new details about its first 14-inch laptop with an Nvidia RTX Spark chipset. Also packing up to 128 GB of RAM and a 90 Wh battery inside a 1.48 kg housing, the ProArt P14 will be available with a 120 Hz VRR OLED display that reaches…",
-          "evidenceIds": [
-            "E008"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Asus launches new 14-inch laptop globally with 1,600-nit OLED display, Nvidia RTX Spark and 128 GB RAM",
-          "evidenceIds": [
-            "E008"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E008"
-      ],
-      "supportingEvidenceIds": [
-        "E008"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-6b0e94e00cb99f0bb0b3"
-      ],
-      "eventLifecycles": {
-        "evt-6b0e94e00cb99f0bb0b3": "first_seen"
-      },
-      "eventId": "evt-6b0e94e00cb99f0bb0b3",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-08-31T14:32:12+00:00",
-      "lastSeenAt": "2026-08-31T14:32:12+00:00"
-    },
-    {
-      "id": "chg-48f46e9d5cc5993bb383",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-0e5d3b34187ad5c3ca",
-      "entityName": "Ai Global Solutions Launches Financial Services Practice",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Ai Global Solutions Launches Financial Services Practice。",
-      "importance": 82,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-08-31",
-        "summary": "Dedicated practice combines AI consulting, intelligent automation, document processing, and platform modernization to help financial services organizations securely deploy Claude, GPT, and other advanced AI models TAMPA, Fla., Aug. 31, 2026 /PRNewswire/ -- Ai…",
-        "title": "Ai Global Solutions Launches Financial Services Practice"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-08-31",
-          "evidenceIds": [
-            "E009"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Dedicated practice combines AI consulting, intelligent automation, document processing, and platform modernization to help financial services organizations securely deploy Claude, GPT, and other advanced AI models TAMPA, Fla., Aug. 31, 2026 /PRNewswire/ -- Ai…",
-          "evidenceIds": [
-            "E009"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Ai Global Solutions Launches Financial Services Practice",
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-28T20:00:00+00:00",
+            "change": -0.65,
+            "changePercent": -7.9,
+            "currency": "USD",
+            "previousClose": 8.23
+          },
+          "after": {
+            "asOf": "2026-08-31T17:11:53+00:00",
+            "change": -0.42,
+            "changePercent": -5.56,
+            "currency": "USD",
+            "previousClose": 7.555
+          },
           "evidenceIds": [
             "E009"
           ]
@@ -890,193 +693,802 @@
         "supporting": 1,
         "total": 1
       },
-      "publicationTier": "external_clue",
+      "publicationTier": "candidate",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-573dea02032cd0a60bac"
+        "evt-0c22629c6006a87d8c3f"
       ],
       "eventLifecycles": {
-        "evt-573dea02032cd0a60bac": "first_seen"
+        "evt-0c22629c6006a87d8c3f": "first_seen"
       },
-      "eventId": "evt-573dea02032cd0a60bac",
+      "eventId": "evt-0c22629c6006a87d8c3f",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-08-31T14:32:12+00:00",
-      "lastSeenAt": "2026-08-31T14:32:12+00:00"
+      "firstSeenAt": "2026-08-31T17:42:45+00:00",
+      "lastSeenAt": "2026-08-31T17:42:45+00:00"
     },
     {
-      "id": "chg-4d66cb2daf505ac19f85",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-e7a9e19bb834a64ae3",
-      "entityName": "埃隆·马斯克：Extending consciousness beyond Earth, ultimately to the stars, is a fundamentally good goal",
-      "action": "added",
+      "id": "chg-5e33725b49738d6b61cc",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "catl",
+      "entityName": "宁德时代",
+      "action": "updated",
       "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "news"
       ],
-      "summary": "新增高价值情报事件记录：埃隆·马斯克：Extending consciousness beyond Earth, ultimately to the stars, is a fundamentally good goal。",
-      "importance": 81,
-      "before": null,
+      "summary": "宁德时代 的 news 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": []
+      },
       "after": {
-        "publishedAt": "2026-08-30",
-        "summary": "Extending consciousness beyond Earth, ultimately to the stars, is a fundamentally good goal",
-        "title": "埃隆·马斯克：Extending consciousness beyond Earth, ultimately to the stars, is a fundamentally good goal"
+        "news": [
+          {
+            "publishedAt": "2026-08-31T20:46:00+08:00",
+            "source": "新浪财经",
+            "title": "宁德时代：回购将在股东会审议通过后12个月内实施",
+            "url": "https://finance.sina.com.cn/stock/relnews/dongmiqa/2026-08-31/doc-iniqfkkm4676411.shtml"
+          },
+          {
+            "publishedAt": "2026-08-31T20:46:00+08:00",
+            "source": "新浪财经",
+            "title": "宁德时代：回购将在方案审议通过之日起12个月内进行",
+            "url": "https://finance.sina.com.cn/stock/relnews/dongmiqa/2026-08-31/doc-iniqfkkp7246659.shtml"
+          },
+          {
+            "publishedAt": "2026-08-31T20:46:00+08:00",
+            "source": "新浪财经",
+            "title": "宁德时代：回购将在股东会审议通过方案之日起12个月内进行",
+            "url": "https://finance.sina.com.cn/stock/relnews/dongmiqa/2026-08-31/doc-iniqfkkr8850244.shtml"
+          }
+        ]
       },
       "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
       "isResearchCandidate": true,
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "news"
       ],
       "claimBindings": [
         {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-08-30",
+          "field": "news",
+          "before": [],
+          "after": [
+            {
+              "publishedAt": "2026-08-31T20:46:00+08:00",
+              "source": "新浪财经",
+              "title": "宁德时代：回购将在股东会审议通过后12个月内实施",
+              "url": "https://finance.sina.com.cn/stock/relnews/dongmiqa/2026-08-31/doc-iniqfkkm4676411.shtml"
+            },
+            {
+              "publishedAt": "2026-08-31T20:46:00+08:00",
+              "source": "新浪财经",
+              "title": "宁德时代：回购将在方案审议通过之日起12个月内进行",
+              "url": "https://finance.sina.com.cn/stock/relnews/dongmiqa/2026-08-31/doc-iniqfkkp7246659.shtml"
+            },
+            {
+              "publishedAt": "2026-08-31T20:46:00+08:00",
+              "source": "新浪财经",
+              "title": "宁德时代：回购将在股东会审议通过方案之日起12个月内进行",
+              "url": "https://finance.sina.com.cn/stock/relnews/dongmiqa/2026-08-31/doc-iniqfkkr8850244.shtml"
+            }
+          ],
           "evidenceIds": [
-            "E010"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Extending consciousness beyond Earth, ultimately to the stars, is a fundamentally good goal",
-          "evidenceIds": [
-            "E010"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "埃隆·马斯克：Extending consciousness beyond Earth, ultimately to the stars, is a fundamentally good goal",
-          "evidenceIds": [
-            "E010"
+            "E013",
+            "E014",
+            "E015"
           ]
         }
       ],
       "evidenceIds": [
-        "E010"
+        "E013",
+        "E014",
+        "E015"
       ],
       "supportingEvidenceIds": [
-        "E010"
+        "E013",
+        "E014",
+        "E015"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 3,
+        "total": 3
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-76d945ca5f1a05df7f92"
+      ],
+      "eventLifecycles": {
+        "evt-76d945ca5f1a05df7f92": "first_seen"
+      },
+      "eventId": "evt-76d945ca5f1a05df7f92",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T17:42:45+00:00",
+      "lastSeenAt": "2026-08-31T17:42:45+00:00"
+    },
+    {
+      "id": "chg-ba361e0f0f8fed58bacc",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "tempus-ai",
+      "entityName": "Tempus AI, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "quote"
+      ],
+      "summary": "Tempus AI, Inc. 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "quote": {
+          "asOf": "2026-08-28T20:00:01+00:00",
+          "change": -8.65,
+          "changePercent": -11.9,
+          "currency": "USD",
+          "previousClose": 72.69
+        }
+      },
+      "after": {
+        "quote": {
+          "asOf": "2026-08-31T17:12:02+00:00",
+          "change": -1.84,
+          "changePercent": -2.78,
+          "currency": "USD",
+          "previousClose": 66.17
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-28T20:00:01+00:00",
+            "change": -8.65,
+            "changePercent": -11.9,
+            "currency": "USD",
+            "previousClose": 72.69
+          },
+          "after": {
+            "asOf": "2026-08-31T17:12:02+00:00",
+            "change": -1.84,
+            "changePercent": -2.78,
+            "currency": "USD",
+            "previousClose": 66.17
+          },
+          "evidenceIds": [
+            "E021"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E021"
+      ],
+      "supportingEvidenceIds": [
+        "E021"
       ],
       "evidenceQuality": {
         "status": "passed",
         "supporting": 1,
         "total": 1
       },
-      "publicationTier": "external_clue",
+      "publicationTier": "candidate",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-60d372872adc232847f7"
+        "evt-8e039dfb25f1f995402e"
       ],
       "eventLifecycles": {
-        "evt-60d372872adc232847f7": "first_seen"
+        "evt-8e039dfb25f1f995402e": "first_seen"
       },
-      "eventId": "evt-60d372872adc232847f7",
+      "eventId": "evt-8e039dfb25f1f995402e",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-08-31T14:32:12+00:00",
-      "lastSeenAt": "2026-08-31T14:32:12+00:00"
+      "firstSeenAt": "2026-08-31T17:42:45+00:00",
+      "lastSeenAt": "2026-08-31T17:42:45+00:00"
     },
     {
-      "id": "chg-6730aade4db5ca14569f",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-4e936f1484a97de1b8",
-      "entityName": "Google DeepMind：We’re rolling out Gemini Omni 1.1 Flash to make generative video highly controllable, faster to iterate on, and more polished for production-grade use",
-      "action": "added",
+      "id": "chg-ad8b2e03711cda3a8a77",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "rocket-lab",
+      "entityName": "Rocket Lab Corporation",
+      "action": "updated",
       "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "quote"
       ],
-      "summary": "新增高价值情报事件记录：Google DeepMind：We’re rolling out Gemini Omni 1.1 Flash to make generative video highly controllable, faster to iterate on, and more polished for production-grade use。",
-      "importance": 81,
-      "before": null,
+      "summary": "Rocket Lab Corporation 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "quote": {
+          "asOf": "2026-08-28T20:00:00+00:00",
+          "change": -8.18,
+          "changePercent": -11.27,
+          "currency": "USD",
+          "previousClose": 72.57
+        }
+      },
       "after": {
-        "publishedAt": "2026-08-28",
-        "summary": "We’re rolling out Gemini Omni 1.1 Flash to make generative video highly controllable, faster to iterate on, and more polished for production-grade use. Here’s how you can try it in @FlowbyGoogle and more → https://t.co/BFHMropoby https://t.co/uCB46FHOs3",
-        "title": "Google DeepMind：We’re rolling out Gemini Omni 1.1 Flash to make generative video highly controllable, faster to iterate on, and more polished for production-grade use"
+        "quote": {
+          "asOf": "2026-08-31T17:11:55+00:00",
+          "change": -4.54,
+          "changePercent": -6.65,
+          "currency": "USD",
+          "previousClose": 68.28
+        }
       },
       "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
       "isResearchCandidate": true,
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "quote"
       ],
       "claimBindings": [
         {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-08-28",
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-28T20:00:00+00:00",
+            "change": -8.18,
+            "changePercent": -11.27,
+            "currency": "USD",
+            "previousClose": 72.57
+          },
+          "after": {
+            "asOf": "2026-08-31T17:11:55+00:00",
+            "change": -4.54,
+            "changePercent": -6.65,
+            "currency": "USD",
+            "previousClose": 68.28
+          },
           "evidenceIds": [
-            "E011"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "We’re rolling out Gemini Omni 1.1 Flash to make generative video highly controllable, faster to iterate on, and more polished for production-grade use. Here’s how you can try it in @FlowbyGoogle and more → https://t.co/BFHMropoby https://t.co/uCB46FHOs3",
-          "evidenceIds": [
-            "E011"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Google DeepMind：We’re rolling out Gemini Omni 1.1 Flash to make generative video highly controllable, faster to iterate on, and more polished for production-grade use",
-          "evidenceIds": [
-            "E011"
+            "E025"
           ]
         }
       ],
       "evidenceIds": [
-        "E011"
+        "E025"
       ],
       "supportingEvidenceIds": [
-        "E011"
+        "E025"
       ],
       "evidenceQuality": {
         "status": "passed",
         "supporting": 1,
         "total": 1
       },
-      "publicationTier": "external_clue",
+      "publicationTier": "candidate",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-7007445af03dfa6d151f"
+        "evt-153774159d0350838a72"
       ],
       "eventLifecycles": {
-        "evt-7007445af03dfa6d151f": "first_seen"
+        "evt-153774159d0350838a72": "first_seen"
       },
-      "eventId": "evt-7007445af03dfa6d151f",
+      "eventId": "evt-153774159d0350838a72",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-08-31T14:32:12+00:00",
-      "lastSeenAt": "2026-08-31T14:32:12+00:00"
+      "firstSeenAt": "2026-08-31T17:42:45+00:00",
+      "lastSeenAt": "2026-08-31T17:42:45+00:00"
+    },
+    {
+      "id": "chg-cba650fbc3de9c771477",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "rigetti",
+      "entityName": "Rigetti Computing, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "quote"
+      ],
+      "summary": "Rigetti Computing, Inc. 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "quote": {
+          "asOf": "2026-08-28T20:00:01+00:00",
+          "change": -2.32,
+          "changePercent": -12.95,
+          "currency": "USD",
+          "previousClose": 17.91
+        }
+      },
+      "after": {
+        "quote": {
+          "asOf": "2026-08-31T17:11:52+00:00",
+          "change": -0.655,
+          "changePercent": -4.0,
+          "currency": "USD",
+          "previousClose": 16.37
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-28T20:00:01+00:00",
+            "change": -2.32,
+            "changePercent": -12.95,
+            "currency": "USD",
+            "previousClose": 17.91
+          },
+          "after": {
+            "asOf": "2026-08-31T17:11:52+00:00",
+            "change": -0.655,
+            "changePercent": -4.0,
+            "currency": "USD",
+            "previousClose": 16.37
+          },
+          "evidenceIds": [
+            "E029"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E029"
+      ],
+      "supportingEvidenceIds": [
+        "E029"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-67891a2b291c8ba3f656"
+      ],
+      "eventLifecycles": {
+        "evt-67891a2b291c8ba3f656": "first_seen"
+      },
+      "eventId": "evt-67891a2b291c8ba3f656",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T17:42:45+00:00",
+      "lastSeenAt": "2026-08-31T17:42:45+00:00"
+    },
+    {
+      "id": "chg-3bbcc2d226d11325b073",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "recursion",
+      "entityName": "Recursion Pharmaceuticals, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "quote"
+      ],
+      "summary": "Recursion Pharmaceuticals, Inc. 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "quote": {
+          "asOf": "2026-08-28T20:00:00+00:00",
+          "change": -0.16,
+          "changePercent": -4.57,
+          "currency": "USD",
+          "previousClose": 3.5
+        }
+      },
+      "after": {
+        "quote": {
+          "asOf": "2026-08-31T17:11:50+00:00",
+          "change": 0.118,
+          "changePercent": 3.63,
+          "currency": "USD",
+          "previousClose": 3.25
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-28T20:00:00+00:00",
+            "change": -0.16,
+            "changePercent": -4.57,
+            "currency": "USD",
+            "previousClose": 3.5
+          },
+          "after": {
+            "asOf": "2026-08-31T17:11:50+00:00",
+            "change": 0.118,
+            "changePercent": 3.63,
+            "currency": "USD",
+            "previousClose": 3.25
+          },
+          "evidenceIds": [
+            "E033"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E033"
+      ],
+      "supportingEvidenceIds": [
+        "E033"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-525fb7f3040be79dc57b"
+      ],
+      "eventLifecycles": {
+        "evt-525fb7f3040be79dc57b": "first_seen"
+      },
+      "eventId": "evt-525fb7f3040be79dc57b",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T17:42:45+00:00",
+      "lastSeenAt": "2026-08-31T17:42:45+00:00"
+    },
+    {
+      "id": "chg-c4032f30943fa5461bfd",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "mobileye",
+      "entityName": "Mobileye Global Inc.",
+      "action": "updated",
+      "changedFields": [
+        "quote"
+      ],
+      "summary": "Mobileye Global Inc. 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "quote": {
+          "asOf": "2026-08-28T20:00:01+00:00",
+          "change": -0.45,
+          "changePercent": -4.98,
+          "currency": "USD",
+          "previousClose": 9.03
+        }
+      },
+      "after": {
+        "quote": {
+          "asOf": "2026-08-31T17:12:00+00:00",
+          "change": -0.1,
+          "changePercent": -1.16,
+          "currency": "USD",
+          "previousClose": 8.64
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-28T20:00:01+00:00",
+            "change": -0.45,
+            "changePercent": -4.98,
+            "currency": "USD",
+            "previousClose": 9.03
+          },
+          "after": {
+            "asOf": "2026-08-31T17:12:00+00:00",
+            "change": -0.1,
+            "changePercent": -1.16,
+            "currency": "USD",
+            "previousClose": 8.64
+          },
+          "evidenceIds": [
+            "E037"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E037"
+      ],
+      "supportingEvidenceIds": [
+        "E037"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-ea30894062d975829591"
+      ],
+      "eventLifecycles": {
+        "evt-ea30894062d975829591": "first_seen"
+      },
+      "eventId": "evt-ea30894062d975829591",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T17:42:45+00:00",
+      "lastSeenAt": "2026-08-31T17:42:45+00:00"
+    },
+    {
+      "id": "chg-d2101662aae5f84b4f0e",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "joby",
+      "entityName": "Joby Aviation, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "quote"
+      ],
+      "summary": "Joby Aviation, Inc. 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "quote": {
+          "asOf": "2026-08-28T20:00:02+00:00",
+          "change": -0.55,
+          "changePercent": -7.3,
+          "currency": "USD",
+          "previousClose": 7.53
+        }
+      },
+      "after": {
+        "quote": {
+          "asOf": "2026-08-31T17:12:02+00:00",
+          "change": -0.255,
+          "changePercent": -3.55,
+          "currency": "USD",
+          "previousClose": 7.19
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-28T20:00:02+00:00",
+            "change": -0.55,
+            "changePercent": -7.3,
+            "currency": "USD",
+            "previousClose": 7.53
+          },
+          "after": {
+            "asOf": "2026-08-31T17:12:02+00:00",
+            "change": -0.255,
+            "changePercent": -3.55,
+            "currency": "USD",
+            "previousClose": 7.19
+          },
+          "evidenceIds": [
+            "E041"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E041"
+      ],
+      "supportingEvidenceIds": [
+        "E041"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-17ed32f8b6d304c6cfee"
+      ],
+      "eventLifecycles": {
+        "evt-17ed32f8b6d304c6cfee": "first_seen"
+      },
+      "eventId": "evt-17ed32f8b6d304c6cfee",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T17:42:45+00:00",
+      "lastSeenAt": "2026-08-31T17:42:45+00:00"
+    },
+    {
+      "id": "chg-de54defbff373bbf9ab3",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "ionq",
+      "entityName": "IonQ, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "quote"
+      ],
+      "summary": "IonQ, Inc. 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "quote": {
+          "asOf": "2026-08-28T20:00:02+00:00",
+          "change": -5.66,
+          "changePercent": -12.62,
+          "currency": "USD",
+          "previousClose": 44.86
+        }
+      },
+      "after": {
+        "quote": {
+          "asOf": "2026-08-31T17:11:55+00:00",
+          "change": -0.76,
+          "changePercent": -1.85,
+          "currency": "USD",
+          "previousClose": 41.06
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-28T20:00:02+00:00",
+            "change": -5.66,
+            "changePercent": -12.62,
+            "currency": "USD",
+            "previousClose": 44.86
+          },
+          "after": {
+            "asOf": "2026-08-31T17:11:55+00:00",
+            "change": -0.76,
+            "changePercent": -1.85,
+            "currency": "USD",
+            "previousClose": 41.06
+          },
+          "evidenceIds": [
+            "E045"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E045"
+      ],
+      "supportingEvidenceIds": [
+        "E045"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-4d7e79896211eaa35f75"
+      ],
+      "eventLifecycles": {
+        "evt-4d7e79896211eaa35f75": "first_seen"
+      },
+      "eventId": "evt-4d7e79896211eaa35f75",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T17:42:45+00:00",
+      "lastSeenAt": "2026-08-31T17:42:45+00:00"
+    },
+    {
+      "id": "chg-3779f5a600019ebc9020",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "aurora",
+      "entityName": "Aurora Innovation, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "quote"
+      ],
+      "summary": "Aurora Innovation, Inc. 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "quote": {
+          "asOf": "2026-08-28T20:00:01+00:00",
+          "change": -0.41,
+          "changePercent": -6.57,
+          "currency": "USD",
+          "previousClose": 6.24
+        }
+      },
+      "after": {
+        "quote": {
+          "asOf": "2026-08-31T17:12:00+00:00",
+          "change": -0.17,
+          "changePercent": -2.99,
+          "currency": "USD",
+          "previousClose": 5.69
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-28T20:00:01+00:00",
+            "change": -0.41,
+            "changePercent": -6.57,
+            "currency": "USD",
+            "previousClose": 6.24
+          },
+          "after": {
+            "asOf": "2026-08-31T17:12:00+00:00",
+            "change": -0.17,
+            "changePercent": -2.99,
+            "currency": "USD",
+            "previousClose": 5.69
+          },
+          "evidenceIds": [
+            "E053"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E053"
+      ],
+      "supportingEvidenceIds": [
+        "E053"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-1257d630ab9467d64f5b"
+      ],
+      "eventLifecycles": {
+        "evt-1257d630ab9467d64f5b": "first_seen"
+      },
+      "eventId": "evt-1257d630ab9467d64f5b",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T17:42:45+00:00",
+      "lastSeenAt": "2026-08-31T17:42:45+00:00"
     }
   ],
   "evidence": [
     {
-      "id": "E001",
-      "changeId": "chg-95aeb7778e53194dc723",
-      "entityName": "英伟达将向联发科投资35亿美元 强化AI硬件产业链核心地位",
-      "claim": "新增高价值情报事件记录：英伟达将向联发科投资35亿美元 强化AI硬件产业链核心地位。",
+      "id": "E002",
+      "changeId": "chg-4fec932c07c6e761a29e",
+      "entityName": "Cursor customers will lose access to OpenAI coding models in November",
+      "claim": "新增高价值情报事件记录：Cursor customers will lose access to OpenAI coding models in November。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "英伟达将向联发科投资35亿美元 强化AI硬件产业链核心地位",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-08-31/doc-iniqfkkr8851875.shtml",
+      "sourceName": "InfoWorld",
+      "title": "Cursor customers will lose access to OpenAI coding models in November",
+      "url": "https://www.infoworld.com/article/4216503/cursor-customers-will-lose-access-to-openai-coding-models-in-november.html",
       "publishedAt": "2026-08-31",
       "evidenceGrade": "C",
-      "platformName": "新浪",
+      "platformName": "InfoWorld",
       "sourceRole": "corroboration",
       "claimFields": [
         "publishedAt",
@@ -1089,19 +1501,19 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E002",
-      "changeId": "chg-2425ffb8996aa7718082",
-      "entityName": "英伟达129亿买下Hugging Face：拒绝5亿投资后，开源AI童话结束了",
-      "claim": "新增高价值情报事件记录：英伟达129亿买下Hugging Face：拒绝5亿投资后，开源AI童话结束了。",
+      "id": "E003",
+      "changeId": "chg-7a8d9e7a480f4605bac0",
+      "entityName": "Anyon Systems and Matrix Group Announce Strategic Partnership to Accelerate International Deployment of Quantum Computing",
+      "claim": "新增高价值情报事件记录：Anyon Systems and Matrix Group Announce Strategic Partnership to Accelerate International Deployment of Quantum Computing。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "钛媒体",
-      "title": "英伟达129亿买下Hugging Face：拒绝5亿投资后，开源AI童话结束了",
-      "url": "https://www.tmtpost.com/8122952.html",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "Anyon Systems and Matrix Group Announce Strategic Partnership to Accelerate International Deployment of Quantum Computing",
+      "url": "https://www.prnewswire.com/news-releases/anyon-systems-and-matrix-group-announce-strategic-partnership-to-accelerate-international-deployment-of-quantum-computing-302865069.html",
       "publishedAt": "2026-08-31",
-      "evidenceGrade": "C",
-      "platformName": "专业媒体",
-      "sourceRole": "corroboration",
+      "evidenceGrade": "B",
+      "platformName": "新闻稿",
+      "sourceRole": "primary",
       "claimFields": [
         "publishedAt",
         "summary",
@@ -1114,18 +1526,17 @@
     },
     {
       "id": "E004",
-      "changeId": "chg-27c37d698ef0ad897c25",
-      "entityName": "HUMAIN and MinIO Announce Strategic Partnership to Build AI Data Fabric",
-      "claim": "新增高价值情报事件记录：HUMAIN and MinIO Announce Strategic Partnership to Build AI Data Fabric。",
+      "changeId": "chg-725a11c02bfdf00150a6",
+      "entityName": "【风口研报】国产算力芯片“爆单”！GPU四小龙本周聚首 行业高景气周期有望拉长",
+      "claim": "新增高价值情报事件记录：【风口研报】国产算力芯片“爆单”！GPU四小龙本周聚首 行业高景气周期有望拉长。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "PR Newswire Consumer Technology",
-      "title": "HUMAIN and MinIO Announce Strategic Partnership to Build AI Data Fabric",
-      "url": "https://www.prnewswire.com/news-releases/humain-and-minio-announce-strategic-partnership-to-build-ai-data-fabric-302865004.html",
+      "sourceName": "东方财富",
+      "title": "【风口研报】国产算力芯片“爆单”！GPU四小龙本周聚首 行业高景气周期有望拉长",
+      "url": "https://finance.eastmoney.com/a/202608313860060265.html",
       "publishedAt": "2026-08-31",
-      "evidenceGrade": "B",
-      "platformName": "新闻稿",
-      "sourceRole": "primary",
+      "evidenceGrade": "媒体报道",
+      "platformName": "东方财富",
       "claimFields": [
         "publishedAt",
         "summary",
@@ -1138,94 +1549,18 @@
     },
     {
       "id": "E005",
-      "changeId": "chg-c9fb396ab82929262bac",
-      "entityName": "混元Hy4 preview上线即排队，能消解腾讯的AI焦虑吗？",
-      "claim": "新增高价值情报事件记录：混元Hy4 preview上线即排队，能消解腾讯的AI焦虑吗？。",
-      "publicationTier": "external_clue",
+      "changeId": "chg-df5968d4e9d939fa75c3",
+      "entityName": "文远知行",
+      "claim": "文远知行 的 quote 发生变化。",
+      "publicationTier": "candidate",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "钛媒体",
-      "title": "混元Hy4 preview上线即排队，能消解腾讯的AI焦虑吗？",
-      "url": "https://www.tmtpost.com/8123051.html",
-      "publishedAt": "2026-08-31",
-      "evidenceGrade": "C",
-      "platformName": "专业媒体",
-      "sourceRole": "corroboration",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/WRD/",
+      "publishedAt": "2026-08-31T17:11:01+00:00",
+      "evidenceGrade": "市场数据",
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E006",
-      "changeId": "chg-a7c9c53b86f03b9037b7",
-      "entityName": "Think launches Think Grid™, a new alternative to hyperscaler AI compute",
-      "claim": "新增高价值情报事件记录：Think launches Think Grid™, a new alternative to hyperscaler AI compute。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "PR Newswire Consumer Technology",
-      "title": "Think launches Think Grid™, a new alternative to hyperscaler AI compute",
-      "url": "https://www.prnewswire.com/news-releases/think-launches-think-grid-a-new-alternative-to-hyperscaler-ai-compute-302864578.html",
-      "publishedAt": "2026-08-31",
-      "evidenceGrade": "B",
-      "platformName": "新闻稿",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E007",
-      "changeId": "chg-6fa6944d1e2d95e022b7",
-      "entityName": "SNICKERS® Launches the World's First Digital Candy Bar for when AI Acts \"Hungry\"",
-      "claim": "新增高价值情报事件记录：SNICKERS® Launches the World's First Digital Candy Bar for when AI Acts \"Hungry\"。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "PR Newswire Consumer Technology",
-      "title": "SNICKERS® Launches the World's First Digital Candy Bar for when AI Acts \"Hungry\"",
-      "url": "https://www.prnewswire.com/news-releases/snickers-launches-the-worlds-first-digital-candy-bar-for-when-ai-acts-hungry-302863014.html",
-      "publishedAt": "2026-08-31",
-      "evidenceGrade": "B",
-      "platformName": "新闻稿",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E008",
-      "changeId": "chg-d6b812f6a6aa2d32a0dd",
-      "entityName": "Asus launches new 14-inch laptop globally with 1,600-nit OLED display, Nvidia RTX Spark and 128 GB RAM",
-      "claim": "新增高价值情报事件记录：Asus launches new 14-inch laptop globally with 1,600-nit OLED display, Nvidia RTX Spark and 128 GB RAM。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Notebookcheck",
-      "title": "Asus launches new 14-inch laptop globally with 1,600-nit OLED display, Nvidia RTX Spark and 128 GB RAM",
-      "url": "https://www.notebookcheck.net/Asus-launches-new-14-inch-laptop-globally-with-1-600-nit-OLED-display-Nvidia-RTX-Spark-and-128-GB-RAM.1383588.0.html",
-      "publishedAt": "2026-08-31",
-      "evidenceGrade": "C",
-      "platformName": "Notebookcheck",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "quote"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
@@ -1234,22 +1569,18 @@
     },
     {
       "id": "E009",
-      "changeId": "chg-48f46e9d5cc5993bb383",
-      "entityName": "Ai Global Solutions Launches Financial Services Practice",
-      "claim": "新增高价值情报事件记录：Ai Global Solutions Launches Financial Services Practice。",
-      "publicationTier": "external_clue",
+      "changeId": "chg-043d52b197551674e3f4",
+      "entityName": "小马智行",
+      "claim": "小马智行 的 quote 发生变化。",
+      "publicationTier": "candidate",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "PR Newswire Consumer Technology",
-      "title": "Ai Global Solutions Launches Financial Services Practice",
-      "url": "https://www.prnewswire.com/news-releases/ai-global-solutions-launches-financial-services-practice-302864989.html",
-      "publishedAt": "2026-08-31",
-      "evidenceGrade": "B",
-      "platformName": "新闻稿",
-      "sourceRole": "primary",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/PONY/",
+      "publishedAt": "2026-08-31T17:11:53+00:00",
+      "evidenceGrade": "市场数据",
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "quote"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
@@ -1257,23 +1588,79 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E010",
-      "changeId": "chg-4d66cb2daf505ac19f85",
-      "entityName": "埃隆·马斯克：Extending consciousness beyond Earth, ultimately to the stars, is a fundamentally good goal",
-      "claim": "新增高价值情报事件记录：埃隆·马斯克：Extending consciousness beyond Earth, ultimately to the stars, is a fundamentally good goal。",
-      "publicationTier": "external_clue",
+      "id": "E013",
+      "changeId": "chg-5e33725b49738d6b61cc",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "publicationTier": "candidate",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "埃隆·马斯克 on X",
-      "title": "埃隆·马斯克：Extending consciousness beyond Earth, ultimately to the stars, is a fundamentally good goal",
-      "url": "https://x.com/elonmusk/status/2094130588047266206",
-      "publishedAt": "2026-08-30",
-      "evidenceGrade": "B",
-      "platformName": "X",
-      "sourceRole": "primary",
+      "sourceName": "新浪财经",
+      "title": "宁德时代：回购将在股东会审议通过后12个月内实施",
+      "url": "https://finance.sina.com.cn/stock/relnews/dongmiqa/2026-08-31/doc-iniqfkkm4676411.shtml",
+      "publishedAt": "2026-08-31T20:46:00+08:00",
+      "evidenceGrade": "媒体报道",
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E014",
+      "changeId": "chg-5e33725b49738d6b61cc",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "宁德时代：回购将在方案审议通过之日起12个月内进行",
+      "url": "https://finance.sina.com.cn/stock/relnews/dongmiqa/2026-08-31/doc-iniqfkkp7246659.shtml",
+      "publishedAt": "2026-08-31T20:46:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E015",
+      "changeId": "chg-5e33725b49738d6b61cc",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "宁德时代：回购将在股东会审议通过方案之日起12个月内进行",
+      "url": "https://finance.sina.com.cn/stock/relnews/dongmiqa/2026-08-31/doc-iniqfkkr8850244.shtml",
+      "publishedAt": "2026-08-31T20:46:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E021",
+      "changeId": "chg-ba361e0f0f8fed58bacc",
+      "entityName": "Tempus AI, Inc.",
+      "claim": "Tempus AI, Inc. 的 quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/TEM/",
+      "publishedAt": "2026-08-31T17:12:02+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
@@ -1281,23 +1668,139 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E011",
-      "changeId": "chg-6730aade4db5ca14569f",
-      "entityName": "Google DeepMind：We’re rolling out Gemini Omni 1.1 Flash to make generative video highly controllable, faster to iterate on, and more polished for production-grade use",
-      "claim": "新增高价值情报事件记录：Google DeepMind：We’re rolling out Gemini Omni 1.1 Flash to make generative video highly controllable, faster to iterate on, and more polished for production-grade use。",
-      "publicationTier": "external_clue",
+      "id": "E025",
+      "changeId": "chg-ad8b2e03711cda3a8a77",
+      "entityName": "Rocket Lab Corporation",
+      "claim": "Rocket Lab Corporation 的 quote 发生变化。",
+      "publicationTier": "candidate",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "Google DeepMind on X",
-      "title": "Google DeepMind：We’re rolling out Gemini Omni 1.1 Flash to make generative video highly controllable, faster to iterate on, and more polished for production-grade use",
-      "url": "https://x.com/GoogleDeepMind/status/2093338200580256172",
-      "publishedAt": "2026-08-28",
-      "evidenceGrade": "B",
-      "platformName": "X",
-      "sourceRole": "primary",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/RKLB/",
+      "publishedAt": "2026-08-31T17:11:55+00:00",
+      "evidenceGrade": "市场数据",
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "quote"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E029",
+      "changeId": "chg-cba650fbc3de9c771477",
+      "entityName": "Rigetti Computing, Inc.",
+      "claim": "Rigetti Computing, Inc. 的 quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/RGTI/",
+      "publishedAt": "2026-08-31T17:11:52+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E033",
+      "changeId": "chg-3bbcc2d226d11325b073",
+      "entityName": "Recursion Pharmaceuticals, Inc.",
+      "claim": "Recursion Pharmaceuticals, Inc. 的 quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/RXRX/",
+      "publishedAt": "2026-08-31T17:11:50+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E037",
+      "changeId": "chg-c4032f30943fa5461bfd",
+      "entityName": "Mobileye Global Inc.",
+      "claim": "Mobileye Global Inc. 的 quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/MBLY/",
+      "publishedAt": "2026-08-31T17:12:00+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E041",
+      "changeId": "chg-d2101662aae5f84b4f0e",
+      "entityName": "Joby Aviation, Inc.",
+      "claim": "Joby Aviation, Inc. 的 quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/JOBY/",
+      "publishedAt": "2026-08-31T17:12:02+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E045",
+      "changeId": "chg-de54defbff373bbf9ab3",
+      "entityName": "IonQ, Inc.",
+      "claim": "IonQ, Inc. 的 quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/IONQ/",
+      "publishedAt": "2026-08-31T17:11:55+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E053",
+      "changeId": "chg-3779f5a600019ebc9020",
+      "entityName": "Aurora Innovation, Inc.",
+      "claim": "Aurora Innovation, Inc. 的 quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Yahoo财经",
+      "title": "Yahoo财经 行情数据",
+      "url": "https://sg.finance.yahoo.com/quote/AUR/",
+      "publishedAt": "2026-08-31T17:12:00+00:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
@@ -1307,9 +1810,844 @@
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-08-31T14:32:12+00:00",
+    "generatedAt": "2026-08-31T17:42:45+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-ea30894062d975829591": {
+        "eventId": "evt-ea30894062d975829591",
+        "dataset": "marketCompany",
+        "entityId": "mobileye",
+        "entityName": "Mobileye Global Inc.",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:mobileye",
+          "name:mobileye global inc."
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-4784366ca17ad9d0f78c",
+          "src-af6cdb5675017fa99563"
+        ],
+        "evidenceFingerprints": [
+          "4784366ca17ad9d0f78c"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/MBLY/",
+            "publishedAt": "2026-08-31T17:12:00+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-e5c92bf165cb34866cb4": {
+        "eventId": "evt-e5c92bf165cb34866cb4",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-5a4d72d4e54e58e303",
+        "entityName": "Cursor customers will lose access to OpenAI coding models in November",
+        "title": "Cursor customers will lose access to OpenAI coding models in November",
+        "titleAliases": [
+          "cursorcustomerswillloseaccesstoopenaicodingmodelsinnovember"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "company:openai"
+        ],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-8b8d37c41993645dc2c7",
+          "record-deb84845a0ac73802eac",
+          "src-01adb2c4aad26b8661b7"
+        ],
+        "evidenceFingerprints": [
+          "8b8d37c41993645dc2c7"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "InfoWorld",
+            "title": "Cursor customers will lose access to OpenAI coding models in November",
+            "url": "https://www.infoworld.com/article/4216503/cursor-customers-will-lose-access-to-openai-coding-models-in-november.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "87eb79275f7a18b345d6",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-da20967dbfd246ac57ff": {
+        "eventId": "evt-da20967dbfd246ac57ff",
+        "dataset": "marketCompany",
+        "entityId": "weride",
+        "entityName": "文远知行",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:weride",
+          "name:文远知行"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-fc434613bdf0e91f35f6",
+          "src-104aee3ac7413e1c6dba"
+        ],
+        "evidenceFingerprints": [
+          "fc434613bdf0e91f35f6"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/WRD/",
+            "publishedAt": "2026-08-31T17:11:01+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-ad50e31282afed394c23": {
+        "eventId": "evt-ad50e31282afed394c23",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-b256dd30a31e5cf780",
+        "entityName": "Anyon Systems and Matrix Group Announce Strategic Partnership to Accelerate International Deployment of Quantum Computing",
+        "title": "Anyon Systems and Matrix Group Announce Strategic Partnership to Accelerate International Deployment of Quantum Computing",
+        "titleAliases": [
+          "anyonsystemsandmatrixgroupannouncestrategicpartnershiptoaccelerateinternationaldeploymentofquantumcomputing"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-5116401176ea42145fe7",
+          "record-36adba98e7173eacb83d",
+          "src-a0f7db184d417df01357"
+        ],
+        "evidenceFingerprints": [
+          "5116401176ea42145fe7"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "Anyon Systems and Matrix Group Announce Strategic Partnership to Accelerate International Deployment of Quantum Computing",
+            "url": "https://www.prnewswire.com/news-releases/anyon-systems-and-matrix-group-announce-strategic-partnership-to-accelerate-international-deployment-of-quantum-computing-302865069.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "49dad07cc5319e2be306",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-8e039dfb25f1f995402e": {
+        "eventId": "evt-8e039dfb25f1f995402e",
+        "dataset": "marketCompany",
+        "entityId": "tempus-ai",
+        "entityName": "Tempus AI, Inc.",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:tempus-ai",
+          "name:tempus ai, inc."
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-29214bb33e07646a122a",
+          "src-2e90f0632a883088f19a"
+        ],
+        "evidenceFingerprints": [
+          "29214bb33e07646a122a"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/TEM/",
+            "publishedAt": "2026-08-31T17:12:02+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-8a7d6f3a518950509176": {
+        "eventId": "evt-8a7d6f3a518950509176",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-1f7fb16b98004f7036",
+        "entityName": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+        "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+        "titleAliases": [
+          "中国机器人海外走红竞速破纪录人形机器人商业化离我们还有多远"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-67d6fe8916958e2b2c3e",
+          "record-08291d169bf7eccc7f61",
+          "src-1863802593a1c57dc8ee",
+          "record-25189f76b185092e05fb",
+          "src-a084bc9330aec136a593",
+          "record-0de5e3cc49606d7c44bc",
+          "src-22f5edca620cd4a0ca9d",
+          "record-5d29c2c33095d8b68b8f",
+          "src-5af75d0c72e76198c8fc"
+        ],
+        "evidenceFingerprints": [
+          "67d6fe8916958e2b2c3e"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "蔡抠脚",
+            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=irv%2ARSEwxbFxsxTtQhOpES%2ApoK9Sjwoc78u69xaVZwMmFQYVrtgpBVuB6YR4bLdZltLe%2AlP0vhnlBN6wWf2MJb6nJOrustZRAGIZwFR1sucLx9EAxQIUCC6M4TuiKZTd&src=11&timestamp=1788165603&ver=6937",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "蔡抠脚",
+            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56d%2A-MlZWT-n4gxZEQlRqx1mOnRMuyRx52eBC9B9pZlTQzP5vyK9mYeWTU3JcXqdXbz9vkIdY2CGQpom5VGwuVjT&src=11&timestamp=1788175922&ver=6938",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "蔡抠脚",
+            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56fPSrDk9w4svsyb50NItMF6Os3a1j7hCC6-3Bp-qTmx-9RJ0S0VkaJG%2AtPkN4J3cw3o2-Cp3ucRfaq1QoasbqMm&src=11&timestamp=1788186068&ver=6938",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "蔡抠脚",
+            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56eQSV06JzK6XkacgpCmD4Bl4MMmA4vlSiEaGSxgybPDEsgkhi6OSNE1pjt5DoyzoQxvRQL25oUyKUESR7ulBYbm&src=11&timestamp=1788195641&ver=6938",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "c9f1110f497c23b6b84c",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T09:08:35+00:00",
+        "lastSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-76d945ca5f1a05df7f92": {
+        "eventId": "evt-76d945ca5f1a05df7f92",
+        "dataset": "marketCompany",
+        "entityId": "catl",
+        "entityName": "宁德时代",
+        "title": "宁德时代：回购将在方案审议通过之日起12个月内进行",
+        "titleAliases": [
+          "宁德时代回购将在方案审议通过之日起12个月内进行",
+          "宁德时代回购将在股东会审议通过后12个月内实施",
+          "宁德时代回购将在股东会审议通过方案之日起12个月内进行"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:catl",
+          "name:宁德时代"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "12"
+        ],
+        "sourceAliases": [
+          "evd-e403db4111589d6a0d75",
+          "src-00363e93b6b003630102",
+          "evd-02def57e4f6f59b7ced0",
+          "src-e6c11d91dfcfcda95a12",
+          "evd-6312d67a60bdcbc87d44",
+          "src-cb92e7884f08740e7917"
+        ],
+        "evidenceFingerprints": [
+          "e403db4111589d6a0d75",
+          "02def57e4f6f59b7ced0",
+          "6312d67a60bdcbc87d44"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "宁德时代：回购将在方案审议通过之日起12个月内进行",
+            "url": "https://finance.sina.com.cn/stock/relnews/dongmiqa/2026-08-31/doc-iniqfkkp7246659.shtml",
+            "publishedAt": "2026-08-31T20:46:00+08:00",
+            "evidenceGrade": "媒体报道"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "宁德时代：回购将在股东会审议通过后12个月内实施",
+            "url": "https://finance.sina.com.cn/stock/relnews/dongmiqa/2026-08-31/doc-iniqfkkm4676411.shtml",
+            "publishedAt": "2026-08-31T20:46:00+08:00",
+            "evidenceGrade": "媒体报道"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "宁德时代：回购将在股东会审议通过方案之日起12个月内进行",
+            "url": "https://finance.sina.com.cn/stock/relnews/dongmiqa/2026-08-31/doc-iniqfkkr8850244.shtml",
+            "publishedAt": "2026-08-31T20:46:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "009454ab4c4a8c38299b",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 3,
+        "confirmationCount": 2,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-67891a2b291c8ba3f656": {
+        "eventId": "evt-67891a2b291c8ba3f656",
+        "dataset": "marketCompany",
+        "entityId": "rigetti",
+        "entityName": "Rigetti Computing, Inc.",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:rigetti",
+          "name:rigetti computing, inc."
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-ae33f3e191afc018e6c3",
+          "src-db581944fea092040261"
+        ],
+        "evidenceFingerprints": [
+          "ae33f3e191afc018e6c3"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/RGTI/",
+            "publishedAt": "2026-08-31T17:11:52+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-525fb7f3040be79dc57b": {
+        "eventId": "evt-525fb7f3040be79dc57b",
+        "dataset": "marketCompany",
+        "entityId": "recursion",
+        "entityName": "Recursion Pharmaceuticals, Inc.",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:recursion",
+          "name:recursion pharmaceuticals, inc."
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-72d7b892c69400a60051",
+          "src-1333fbc4f3cd46bece14"
+        ],
+        "evidenceFingerprints": [
+          "72d7b892c69400a60051"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/RXRX/",
+            "publishedAt": "2026-08-31T17:11:50+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-4d7e79896211eaa35f75": {
+        "eventId": "evt-4d7e79896211eaa35f75",
+        "dataset": "marketCompany",
+        "entityId": "ionq",
+        "entityName": "IonQ, Inc.",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:ionq",
+          "name:ionq, inc."
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-e2ad63d49f3c4e0640fe",
+          "src-c5ea30cc0aba5ccc9996"
+        ],
+        "evidenceFingerprints": [
+          "e2ad63d49f3c4e0640fe"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/IONQ/",
+            "publishedAt": "2026-08-31T17:11:55+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-17ed32f8b6d304c6cfee": {
+        "eventId": "evt-17ed32f8b6d304c6cfee",
+        "dataset": "marketCompany",
+        "entityId": "joby",
+        "entityName": "Joby Aviation, Inc.",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:joby",
+          "name:joby aviation, inc."
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-ca3597f4aa9d85387cbd",
+          "src-c5d415a4154403078940"
+        ],
+        "evidenceFingerprints": [
+          "ca3597f4aa9d85387cbd"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/JOBY/",
+            "publishedAt": "2026-08-31T17:12:02+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-153774159d0350838a72": {
+        "eventId": "evt-153774159d0350838a72",
+        "dataset": "marketCompany",
+        "entityId": "rocket-lab",
+        "entityName": "Rocket Lab Corporation",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:rocket-lab",
+          "name:rocket lab corporation"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-ed6c8a35c6aecbfc7101",
+          "src-53bc3b93ef8ddcc14d0b"
+        ],
+        "evidenceFingerprints": [
+          "ed6c8a35c6aecbfc7101"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/RKLB/",
+            "publishedAt": "2026-08-31T17:11:55+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-1257d630ab9467d64f5b": {
+        "eventId": "evt-1257d630ab9467d64f5b",
+        "dataset": "marketCompany",
+        "entityId": "aurora",
+        "entityName": "Aurora Innovation, Inc.",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:aurora",
+          "name:aurora innovation, inc."
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-9037f472fcf35b6b30e5",
+          "src-17f30948990caae50a84"
+        ],
+        "evidenceFingerprints": [
+          "9037f472fcf35b6b30e5"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/AUR/",
+            "publishedAt": "2026-08-31T17:12:00+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-101d88213d8d7f28d691": {
+        "eventId": "evt-101d88213d8d7f28d691",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-a994272d14e0793b1d",
+        "entityName": "【风口研报】国产算力芯片“爆单”！GPU四小龙本周聚首 行业高景气周期有望拉长",
+        "title": "【风口研报】国产算力芯片“爆单”！GPU四小龙本周聚首 行业高景气周期有望拉长",
+        "titleAliases": [
+          "风口研报国产算力芯片爆单gpu四小龙本周聚首行业高景气周期有望拉长"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-6331878698d8d195d5b0",
+          "record-5e304e669102219c8597",
+          "src-49b155629716066ab833"
+        ],
+        "evidenceFingerprints": [
+          "6331878698d8d195d5b0"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "东方财富",
+            "title": "【风口研报】国产算力芯片“爆单”！GPU四小龙本周聚首 行业高景气周期有望拉长",
+            "url": "https://finance.eastmoney.com/a/202608313860060265.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "e486511ab3676d919ca9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-0c22629c6006a87d8c3f": {
+        "eventId": "evt-0c22629c6006a87d8c3f",
+        "dataset": "marketCompany",
+        "entityId": "pony-ai",
+        "entityName": "小马智行",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:pony-ai",
+          "name:小马智行"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-9cf13fc7b4e0308209e5",
+          "src-a4f80386a85c9af7acd1"
+        ],
+        "evidenceFingerprints": [
+          "9cf13fc7b4e0308209e5"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/PONY/",
+            "publishedAt": "2026-08-31T17:11:53+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-f61d0c6810186ce656f6": {
         "eventId": "evt-f61d0c6810186ce656f6",
         "dataset": "intelligenceEvent",
@@ -1466,78 +2804,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 4,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-8a7d6f3a518950509176": {
-        "eventId": "evt-8a7d6f3a518950509176",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-1f7fb16b98004f7036",
-        "entityName": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-        "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-        "titleAliases": [
-          "中国机器人海外走红竞速破纪录人形机器人商业化离我们还有多远"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "商业进展",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-67d6fe8916958e2b2c3e",
-          "record-08291d169bf7eccc7f61",
-          "src-1863802593a1c57dc8ee",
-          "record-25189f76b185092e05fb",
-          "src-a084bc9330aec136a593",
-          "record-0de5e3cc49606d7c44bc",
-          "src-22f5edca620cd4a0ca9d"
-        ],
-        "evidenceFingerprints": [
-          "67d6fe8916958e2b2c3e"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "蔡抠脚",
-            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=irv%2ARSEwxbFxsxTtQhOpES%2ApoK9Sjwoc78u69xaVZwMmFQYVrtgpBVuB6YR4bLdZltLe%2AlP0vhnlBN6wWf2MJb6nJOrustZRAGIZwFR1sucLx9EAxQIUCC6M4TuiKZTd&src=11&timestamp=1788165603&ver=6937",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "蔡抠脚",
-            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56d%2A-MlZWT-n4gxZEQlRqx1mOnRMuyRx52eBC9B9pZlTQzP5vyK9mYeWTU3JcXqdXbz9vkIdY2CGQpom5VGwuVjT&src=11&timestamp=1788175922&ver=6938",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "蔡抠脚",
-            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56fPSrDk9w4svsyb50NItMF6Os3a1j7hCC6-3Bp-qTmx-9RJ0S0VkaJG%2AtPkN4J3cw3o2-Cp3ucRfaq1QoasbqMm&src=11&timestamp=1788186068&ver=6938",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "c9f1110f497c23b6b84c",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastSeenAt": "2026-08-31T14:32:12+00:00",
-        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -8314,13 +9580,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 10,
+    "newEvents": 14,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
     "duplicatesSuppressed": 1,
-    "observedEvents": 11,
+    "observedEvents": 15,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -9082,18 +10348,119 @@
         "possibleConflicts": 0,
         "duplicatesSuppressed": 11
       }
+    },
+    {
+      "metricsVersion": 2,
+      "date": "2026-09-01",
+      "generatedAt": "2026-08-31T17:42:45+00:00",
+      "runStatus": "model",
+      "changeCount": 14,
+      "executiveSummary": "证据包显示四类主要动态：1) 据InfoWorld报道，OpenAI计划自11月12日起终止向Cursor提供模型，背景是SpaceX收购Cursor母公司Anysphere，但该事件仅单一来源且证据等级为C，需官方确认；2) Anyon Systems与Matrix Group旗下KMT Technologies宣布量子计算战略合作，来源为公司新闻稿，属公司自述；3) 东方财富报道国产算力芯片“爆单”及GPU四小龙聚首，行业高景气判断需订单数据验证；4) 宁德时代披露回购将在股东会审议通过后12个月内实施。此外，多只科技股单日下跌，Recursion逆势上涨。整体上，高影响事件多为低等级证据，应作为待验证线索而非确定性事实。",
+      "eventIds": [
+        "evt-e5c92bf165cb34866cb4",
+        "evt-ad50e31282afed394c23",
+        "evt-101d88213d8d7f28d691",
+        "evt-da20967dbfd246ac57ff",
+        "evt-0c22629c6006a87d8c3f",
+        "evt-76d945ca5f1a05df7f92",
+        "evt-8e039dfb25f1f995402e",
+        "evt-153774159d0350838a72",
+        "evt-67891a2b291c8ba3f656",
+        "evt-525fb7f3040be79dc57b",
+        "evt-ea30894062d975829591",
+        "evt-17ed32f8b6d304c6cfee",
+        "evt-4d7e79896211eaa35f75",
+        "evt-1257d630ab9467d64f5b"
+      ],
+      "eventStates": [
+        {
+          "eventId": "evt-e5c92bf165cb34866cb4",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-ad50e31282afed394c23",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-101d88213d8d7f28d691",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-da20967dbfd246ac57ff",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-0c22629c6006a87d8c3f",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-76d945ca5f1a05df7f92",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-8e039dfb25f1f995402e",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-153774159d0350838a72",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-67891a2b291c8ba3f656",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-525fb7f3040be79dc57b",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-ea30894062d975829591",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-17ed32f8b6d304c6cfee",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-4d7e79896211eaa35f75",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-1257d630ab9467d64f5b",
+          "lifecycle": "first_seen"
+        }
+      ],
+      "verifiedChangeTotal": 0,
+      "candidateTotal": 11,
+      "auxiliaryLeadTotal": 3,
+      "rejectedTotal": 2,
+      "eventSummary": {
+        "newEvents": 14,
+        "reconfirmations": 0,
+        "updates": 0,
+        "corrections": 0,
+        "possibleConflicts": 0,
+        "duplicatesSuppressed": 1
+      }
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 11,
-    "eligibleCandidateCount": 11,
-    "rejectedCandidateCount": 0,
-    "rejectedByDataset": {},
-    "evidenceCount": 11,
-    "supportingEvidenceCount": 11,
-    "rejectedEvidenceCount": 0,
-    "passedButUnboundEvidenceCount": 0,
-    "rejectionReasons": {},
+    "candidateCount": 17,
+    "eligibleCandidateCount": 15,
+    "rejectedCandidateCount": 2,
+    "rejectedByDataset": {
+      "marketCompany": 2
+    },
+    "evidenceCount": 56,
+    "supportingEvidenceCount": 17,
+    "rejectedEvidenceCount": 18,
+    "passedButUnboundEvidenceCount": 21,
+    "rejectionReasons": {
+      "missing_published_at": 15,
+      "missing_title": 8,
+      "ungraded": 8,
+      "entity_mismatch": 3
+    },
     "sourceClassificationWarnings": []
   },
   "sourceClassificationWarnings": [],
