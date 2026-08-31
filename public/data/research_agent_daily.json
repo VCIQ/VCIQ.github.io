@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-31T09:15:04+00:00",
+  "generatedAt": "2026-08-31T11:54:48+00:00",
   "asOfDate": "2026-08-31",
-  "runStatus": "no-material-change",
+  "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
   "baselineSource": "snapshot",
   "model": {
@@ -10,47 +10,2427 @@
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": false,
-    "usage": {}
+    "used": true,
+    "usage": {
+      "prompt_tokens": 9485,
+      "completion_tokens": 4850,
+      "total_tokens": 14335,
+      "completion_tokens_details": {
+        "reasoning_tokens": 2602
+      },
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 9485
+    }
   },
   "changeSummary": {
-    "totalDetected": 0,
-    "total": 0,
-    "byDataset": {},
-    "byChangeType": {},
-    "externalCandidates": 0,
+    "totalDetected": 31,
+    "total": 11,
+    "byDataset": {
+      "intelligenceEvent": 7,
+      "marketCompany": 4
+    },
+    "byChangeType": {
+      "external_event": 13,
+      "data_maintenance": 8,
+      "source_refresh": 10
+    },
+    "externalCandidates": 13,
     "qualityRejected": 0,
-    "maintenanceExcluded": 0,
+    "maintenanceExcluded": 18,
     "aggregatedEvents": 0,
-    "highestImportance": 0,
+    "highestImportance": 86,
     "verifiedChangeTotal": 0,
-    "candidateTotal": 0,
-    "auxiliaryLeadTotal": 0,
+    "candidateTotal": 4,
+    "auxiliaryLeadTotal": 7,
     "rejectedTotal": 0,
-    "newEvents": 0,
+    "newEvents": 14,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 0
+    "duplicatesSuppressed": 2
   },
   "analysis": {
-    "mode": "structured-change-only",
-    "isResearchJudgment": false,
-    "executiveSummary": "本轮未检测到新的外部事实候选。",
-    "keyDevelopments": [],
-    "thesisUpdates": [],
-    "watchlist": [],
-    "risks": [],
-    "methodologyNote": "结构化变化检查；本期无材料变化。未执行生成式研判。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown、每日证据约束研究摘要=degraded。"
+    "mode": "model-analysis",
+    "isResearchJudgment": true,
+    "executiveSummary": "本证据包覆盖2026年8月31日前后多项AI与科技产业动态。核心信号包括：字节跳动豆包2.2推迟发布并重点补强编程/Agent能力；日本经产省寻求490亿美元预算加速AI与半导体投资；地平线机器人中期业绩扭亏为盈且自主品牌ADAS份额首破50%；Data Dynamics发布数据层治理产品；另有AI治理方法论文章、AI技能追踪报告、中熔电气可转债融资及多家公司市场新闻。整体显示AI竞争从模型能力向工程化、治理与行业落地延伸，但多数证据为单一来源或媒体报道，需后续验证。",
+    "keyDevelopments": [
+      {
+        "title": "字节豆包2.2推迟发布，重点攻坚Coding与Agent能力",
+        "assessment": "据钛媒体及白鲸实验室报道，字节跳动原定8月推出的豆包大模型2.2版本将推迟，核心目的是开展更充分预训练与后训练，补强编程、工具调用及Agent能力。该信息来自媒体“曝”与“多位接近字节的人士”，尚未获官方确认，但若属实，反映头部大模型厂商将编程/Agent能力视为下一阶段竞争焦点。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "字节跳动",
+          "豆包"
+        ],
+        "evidenceIds": [
+          "E006",
+          "E007"
+        ]
+      },
+      {
+        "title": "日本经产省寻求490亿美元预算加速AI等产业投资",
+        "assessment": "据新浪财经报道，日本经济产业省寻求7.8万亿日元（约490亿美元）预算，用于半导体、AI及首相高市早苗促增长计划中的核心战略产业。该预算规模“前所未有”，显示日本以国家资金推动AI与半导体产业投资的意图。证据为单一媒体来源，具体预算能否获批及投向需跟踪。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "日本经济产业省",
+          "日本政府"
+        ],
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "title": "地平线机器人中期业绩扭亏为盈，自主品牌ADAS份额首破50%",
+        "assessment": "据新浪财经报道，地平线机器人-W发布中期业绩，净利润37.84亿元，同比扭亏为盈，自主品牌ADAS份额首次突破50%。该数据来自媒体报道，未提供原始财报链接，但标题明确，若属实表明其智驾业务商业化加速。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "地平线机器人"
+        ],
+        "evidenceIds": [
+          "E022"
+        ]
+      },
+      {
+        "title": "Data Dynamics发布Enterprise 2.0.5，将治理下沉至数据层",
+        "assessment": "据公司新闻稿，Data Dynamics在LEAP 2026发布Enterprise 2.0.5，声称60%的AI项目因数据整理与AI就绪度停滞，该产品将治理置于数据本身。此为厂商自述，需独立验证。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "Data Dynamics"
+        ],
+        "evidenceIds": [
+          "E008"
+        ]
+      },
+      {
+        "title": "AI治理方法论文章：将政策转化为可执行控制",
+        "assessment": "InfoWorld文章提出将AI治理视为工程工作，目标是系统在政策范围内每日运行。属于观点性内容，反映行业对AI治理工程化的关注，但无具体产品/公司事实。",
+        "importance": 2,
+        "confidence": "low",
+        "entities": [
+          "AI治理"
+        ],
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "title": "CompTIA发布首份AI Skills Tracker报告",
+        "assessment": "ITWeb报道CompTIA发布首份AI技能追踪报告，建立个人层面技能建设趋势基线。报告内容未在证据中详述，仅作为行业信号。",
+        "importance": 2,
+        "confidence": "medium",
+        "entities": [
+          "CompTIA"
+        ],
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "title": "中熔电气拟发行不超8亿元可转债",
+        "assessment": "据东方财富报道，中熔电气公告拟发行不超过8亿元可转债，用于新能源科技园、电路保护元器件扩产及补流。属于公司融资计划，需关注后续审批与发行进展。",
+        "importance": 2,
+        "confidence": "medium",
+        "entities": [
+          "中熔电气"
+        ],
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "title": "宁德时代、寒武纪、华大基因等市场新闻",
+        "assessment": "证据包包含宁德时代大宗交易及利润报道、寒武纪涨超4%、华大基因跌1.62%等市场信息，均为单日交易或媒体解读，未形成重大基本面变化。",
+        "importance": 1,
+        "confidence": "medium",
+        "entities": [
+          "宁德时代",
+          "寒武纪",
+          "华大基因"
+        ],
+        "evidenceIds": [
+          "E010",
+          "E011",
+          "E012",
+          "E013",
+          "E018",
+          "E014"
+        ]
+      }
+    ],
+    "thesisUpdates": [
+      {
+        "entity": "字节跳动",
+        "direction": "mixed",
+        "statement": "豆包2.2推迟发布，短期产品节奏延后，但若补强Coding/Agent能力成功，可能提升长期竞争力。",
+        "evidenceIds": [
+          "E006",
+          "E007"
+        ]
+      },
+      {
+        "entity": "日本AI与半导体产业",
+        "direction": "positive",
+        "statement": "日本经产省寻求490亿美元预算，若获批将显著加速AI与半导体产业投资，利好相关生态。",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "entity": "地平线机器人",
+        "direction": "positive",
+        "statement": "中期业绩扭亏为盈且自主品牌ADAS份额首破50%，显示智驾业务商业化取得阶段性验证。",
+        "evidenceIds": [
+          "E022"
+        ]
+      },
+      {
+        "entity": "Data Dynamics",
+        "direction": "positive",
+        "statement": "发布数据层治理产品，切入AI治理与数据就绪度市场，但效果需客户案例验证。",
+        "evidenceIds": [
+          "E008"
+        ]
+      },
+      {
+        "entity": "AI治理行业",
+        "direction": "neutral",
+        "statement": "治理工程化方法论文章出现，反映行业关注度提升，但尚无具体落地证据。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "entity": "中熔电气",
+        "direction": "neutral",
+        "statement": "拟发行可转债用于扩产，属于常规融资计划，对基本面影响待观察。",
+        "evidenceIds": [
+          "E009"
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "item": "字节豆包2.2正式发布时间及Coding能力评测结果",
+        "reason": "推迟发布是否带来能力实质性提升，需第三方评测验证。",
+        "nextEvidence": "字节官方发布或权威评测",
+        "evidenceIds": [
+          "E006",
+          "E007"
+        ]
+      },
+      {
+        "item": "日本490亿美元预算的国会审批及具体投向",
+        "reason": "预算规模空前，但能否落地及对半导体/AI产业链的实际拉动需跟踪。",
+        "nextEvidence": "日本政府预算案文件或审批新闻",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "item": "地平线机器人后续财报及ADAS份额持续性",
+        "reason": "扭亏为盈是否可持续，份额突破50%后能否维持。",
+        "nextEvidence": "下一季度财报及行业份额数据",
+        "evidenceIds": [
+          "E022"
+        ]
+      },
+      {
+        "item": "Data Dynamics Enterprise 2.0.5客户采用案例",
+        "reason": "厂商自述需独立验证，关注实际部署与效果。",
+        "nextEvidence": "客户案例或第三方评测",
+        "evidenceIds": [
+          "E008"
+        ]
+      },
+      {
+        "item": "CompTIA AI Skills Tracker后续季度数据",
+        "reason": "首份基线建立后，后续趋势数据可反映AI技能需求变化。",
+        "nextEvidence": "下一期报告",
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "item": "中熔电气可转债发行进展",
+        "reason": "融资计划需经审批，关注发行结果及项目落地。",
+        "nextEvidence": "证监会批复或发行公告",
+        "evidenceIds": [
+          "E009"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "证据质量风险",
+        "reason": "多数证据为单一媒体来源或公司新闻稿，证据等级C或B，存在信息不准确或夸大可能。",
+        "evidenceIds": [
+          "E003",
+          "E006",
+          "E007",
+          "E008"
+        ]
+      },
+      {
+        "risk": "字节豆包推迟可能反映技术瓶颈",
+        "reason": "若补课不及预期，可能影响字节AI产品竞争力。",
+        "evidenceIds": [
+          "E006",
+          "E007"
+        ]
+      },
+      {
+        "risk": "日本巨额预算执行风险",
+        "reason": "预算可能面临财政压力或政策变动，实际执行不及预期。",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "risk": "地平线业绩可持续性风险",
+        "reason": "扭亏为盈可能包含非经常性项目，需警惕可持续性。",
+        "evidenceIds": [
+          "E022"
+        ]
+      },
+      {
+        "risk": "AI治理产品市场尚早期",
+        "reason": "厂商宣称的“60%项目停滞”等数据需独立验证，市场接受度未知。",
+        "evidenceIds": [
+          "E008"
+        ]
+      }
+    ],
+    "methodologyNote": "本分析仅基于证据包内提供的结构化证据，不补充外部事实。事实、推断与待验证事项已分开表达；每条判断均引用至少一个evidenceIds中的证据编号。证据等级为C或B、来源为单一媒体或公司自述的内容，均以“据媒体报道”“据公司新闻稿”等措辞标注，不写成确定性重大事实。本输出不构成任何买入、卖出、目标价或收益承诺。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
   },
-  "changes": [],
-  "evidence": [],
+  "changes": [
+    {
+      "id": "chg-7cbb50f99e0138fcf0c9",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-346d16e11d44b44000",
+      "entityName": "Governance by design: Turning AI policy into executable controls",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Governance by design: Turning AI policy into executable controls。",
+      "importance": 86,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "Governance determines whether a generative AI program remains a set of pilots or becomes a durable capability. I treat governance as engineering work. The goal stays simple. The system should behave within policy, every day, under change. I define governance…",
+        "title": "Governance by design: Turning AI policy into executable controls"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Governance determines whether a generative AI program remains a set of pilots or becomes a durable capability. I treat governance as engineering work. The goal stays simple. The system should behave within policy, every day, under change. I define governance…",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Governance by design: Turning AI policy into executable controls",
+          "evidenceIds": [
+            "E001"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E001"
+      ],
+      "supportingEvidenceIds": [
+        "E001"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-3430e2e1e4c4040e01d0"
+      ],
+      "eventLifecycles": {
+        "evt-3430e2e1e4c4040e01d0": "first_seen"
+      },
+      "eventId": "evt-3430e2e1e4c4040e01d0",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T11:54:48+00:00",
+      "lastSeenAt": "2026-08-31T11:54:48+00:00"
+    },
+    {
+      "id": "chg-d31a826874a8ed23ce57",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-1311866a698ebfb7da",
+      "entityName": "Research report: AI Skills Tracker",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Research report: AI Skills Tracker。",
+      "importance": 85,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-25",
+        "summary": "CompTIA’s inaugural AI Skills Tracker establishes a baseline for understanding skills-building trends at an individual level.",
+        "title": "Research report: AI Skills Tracker"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-25",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "CompTIA’s inaugural AI Skills Tracker establishes a baseline for understanding skills-building trends at an individual level.",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Research report: AI Skills Tracker",
+          "evidenceIds": [
+            "E002"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E002"
+      ],
+      "supportingEvidenceIds": [
+        "E002"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-4109e15129be2a0d45a7"
+      ],
+      "eventLifecycles": {
+        "evt-4109e15129be2a0d45a7": "first_seen"
+      },
+      "eventId": "evt-4109e15129be2a0d45a7",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T11:54:48+00:00",
+      "lastSeenAt": "2026-08-31T11:54:48+00:00"
+    },
+    {
+      "id": "chg-66899a2eaddbcec42773",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-231e68a6ee5350e171",
+      "entityName": "日本经产省寻求规模空前的490亿美元预算 以期加速AI等产业投资",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：日本经产省寻求规模空前的490亿美元预算 以期加速AI等产业投资。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "日本经济产业省寻求一项前所未有的7.8万亿日元（490亿美元）预算，以加速投资半导体、AI和首相高市早苗促增长计划中的其他核心战略产业投资。",
+        "title": "日本经产省寻求规模空前的490亿美元预算 以期加速AI等产业投资"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "日本经济产业省寻求一项前所未有的7.8万亿日元（490亿美元）预算，以加速投资半导体、AI和首相高市早苗促增长计划中的其他核心战略产业投资。",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "日本经产省寻求规模空前的490亿美元预算 以期加速AI等产业投资",
+          "evidenceIds": [
+            "E003"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E003"
+      ],
+      "supportingEvidenceIds": [
+        "E003"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-886eda7b8d528aea613d"
+      ],
+      "eventLifecycles": {
+        "evt-886eda7b8d528aea613d": "first_seen"
+      },
+      "eventId": "evt-886eda7b8d528aea613d",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T11:54:48+00:00",
+      "lastSeenAt": "2026-08-31T11:54:48+00:00"
+    },
+    {
+      "id": "chg-d92baf7de127df3ee89a",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-b095afa3e11d3716ee",
+      "entityName": "独家｜字节豆包2.2推迟发布，Coding疯狂补课",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：独家｜字节豆包2.2推迟发布，Coding疯狂补课。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "Coding疯狂补课",
+        "title": "独家｜字节豆包2.2推迟发布，Coding疯狂补课"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Coding疯狂补课",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "独家｜字节豆包2.2推迟发布，Coding疯狂补课",
+          "evidenceIds": [
+            "E006"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E006"
+      ],
+      "supportingEvidenceIds": [
+        "E006"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-6988665c97b0f344346f"
+      ],
+      "eventLifecycles": {
+        "evt-6988665c97b0f344346f": "first_seen"
+      },
+      "eventId": "evt-6988665c97b0f344346f",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T11:54:48+00:00",
+      "lastSeenAt": "2026-08-31T11:54:48+00:00"
+    },
+    {
+      "id": "chg-b5a6154ed7b5111b1c76",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-c070ba728354db25f7",
+      "entityName": "曝字节豆包2.2推迟发布：正全力攻坚Coding相关能力",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：曝字节豆包2.2推迟发布：正全力攻坚Coding相关能力。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "【CNMO科技消息】近日，CNMO科技从“白鲸实验室”获悉，字节跳动原定8月推出的豆包大模型2.2版本将推迟发布。豆包据报道，多位接近字节的人士透露，此次延期核心目的是开展更充分的预训练与后训练工作，重点补强编程、工具调用以及Agent相关能力，以更长研发周期换取能力实质性提升。",
+        "title": "曝字节豆包2.2推迟发布：正全力攻坚Coding相关能力"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "【CNMO科技消息】近日，CNMO科技从“白鲸实验室”获悉，字节跳动原定8月推出的豆包大模型2.2版本将推迟发布。豆包据报道，多位接近字节的人士透露，此次延期核心目的是开展更充分的预训练与后训练工作，重点补强编程、工具调用以及Agent相关能力，以更长研发周期换取能力实质性提升。",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "曝字节豆包2.2推迟发布：正全力攻坚Coding相关能力",
+          "evidenceIds": [
+            "E007"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E007"
+      ],
+      "supportingEvidenceIds": [
+        "E007"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-23a07dcc7d99ca76d5f7"
+      ],
+      "eventLifecycles": {
+        "evt-23a07dcc7d99ca76d5f7": "first_seen"
+      },
+      "eventId": "evt-23a07dcc7d99ca76d5f7",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T11:54:48+00:00",
+      "lastSeenAt": "2026-08-31T11:54:48+00:00"
+    },
+    {
+      "id": "chg-c23e912112c78d1cb393",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-f30aaf6fd06cfa5626",
+      "entityName": "Data Dynamics Launches Enterprise 2.0.5 at LEAP 2026, Bringing Governed AI to the Data Layer",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Data Dynamics Launches Enterprise 2.0.5 at LEAP 2026, Bringing Governed AI to the Data Layer。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "With 60% of AI projects stalled due to data curation and AI readiness, Enterprise 2.0.5 puts governance where it's actually enforceable, at the data itself. RIYADH, Saudi Arabia, Aug. 31, 2026 /PRNewswire/ -- Data Dynamics, a global leader in data management,…",
+        "title": "Data Dynamics Launches Enterprise 2.0.5 at LEAP 2026, Bringing Governed AI to the Data Layer"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "With 60% of AI projects stalled due to data curation and AI readiness, Enterprise 2.0.5 puts governance where it's actually enforceable, at the data itself. RIYADH, Saudi Arabia, Aug. 31, 2026 /PRNewswire/ -- Data Dynamics, a global leader in data management,…",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Data Dynamics Launches Enterprise 2.0.5 at LEAP 2026, Bringing Governed AI to the Data Layer",
+          "evidenceIds": [
+            "E008"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E008"
+      ],
+      "supportingEvidenceIds": [
+        "E008"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-4311b2fbdc68f80cab39"
+      ],
+      "eventLifecycles": {
+        "evt-4311b2fbdc68f80cab39": "first_seen"
+      },
+      "eventId": "evt-4311b2fbdc68f80cab39",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T11:54:48+00:00",
+      "lastSeenAt": "2026-08-31T11:54:48+00:00"
+    },
+    {
+      "id": "chg-40c830149021c4fad320",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-59feec2f9a9df81170",
+      "entityName": "中熔电气：拟发行不超8亿元可转债用于新能源科技园等项目",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：中熔电气：拟发行不超8亿元可转债用于新能源科技园等项目。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "8月31日， 中熔电气 (301031.SZ)公告称，公司拟向不特定对象发行可转换公司债券，募集资金总额不超过8亿元，扣除发行费用后用于赛诺克 新能源 科技园项目、电路保护元器件系列产品扩产建设项目及补充流动资金。",
+        "title": "中熔电气：拟发行不超8亿元可转债用于新能源科技园等项目"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E009"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "8月31日， 中熔电气 (301031.SZ)公告称，公司拟向不特定对象发行可转换公司债券，募集资金总额不超过8亿元，扣除发行费用后用于赛诺克 新能源 科技园项目、电路保护元器件系列产品扩产建设项目及补充流动资金。",
+          "evidenceIds": [
+            "E009"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "中熔电气：拟发行不超8亿元可转债用于新能源科技园等项目",
+          "evidenceIds": [
+            "E009"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E009"
+      ],
+      "supportingEvidenceIds": [
+        "E009"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-fd733c24fb061aa0a82b"
+      ],
+      "eventLifecycles": {
+        "evt-fd733c24fb061aa0a82b": "first_seen"
+      },
+      "eventId": "evt-fd733c24fb061aa0a82b",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T11:54:48+00:00",
+      "lastSeenAt": "2026-08-31T11:54:48+00:00"
+    },
+    {
+      "id": "chg-08eb0b9f2f4dc55630b3",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "catl",
+      "entityName": "宁德时代",
+      "action": "updated",
+      "changedFields": [
+        "news"
+      ],
+      "summary": "宁德时代 的 news 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": []
+      },
+      "after": {
+        "news": [
+          {
+            "publishedAt": "2026-08-31T17:10:00+08:00",
+            "source": "新浪财经",
+            "title": "车企价格战压利润，宁德时代凭什么赚433亿",
+            "url": "https://cj.sina.cn/articles/view/3684007222/db957d360010289s8"
+          },
+          {
+            "publishedAt": "2026-08-31T16:40:00+08:00",
+            "source": "新浪财经",
+            "title": "宁德时代今日大宗交易平价成交1.4万股，成交额508.97万元",
+            "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002j3x6"
+          },
+          {
+            "publishedAt": "2026-08-31T15:32:00+08:00",
+            "source": "新浪财经",
+            "title": "天华新能被问询与宁德时代有没有利益输送 总经理刘德广如何应对？",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-31/doc-iniqexup7882664.shtml"
+          },
+          {
+            "publishedAt": "2026-08-31T17:00:00+08:00",
+            "source": "新浪财经",
+            "title": "宁德时代8月31日现1笔大宗交易 总成交金额508.97万元 其中机构买入508.97万元 溢价率为0.00%",
+            "url": "https://finance.sina.com.cn/stock/ggzz/2026-08-31/doc-iniqfeam7828536.shtml"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [],
+          "after": [
+            {
+              "publishedAt": "2026-08-31T17:10:00+08:00",
+              "source": "新浪财经",
+              "title": "车企价格战压利润，宁德时代凭什么赚433亿",
+              "url": "https://cj.sina.cn/articles/view/3684007222/db957d360010289s8"
+            },
+            {
+              "publishedAt": "2026-08-31T16:40:00+08:00",
+              "source": "新浪财经",
+              "title": "宁德时代今日大宗交易平价成交1.4万股，成交额508.97万元",
+              "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002j3x6"
+            },
+            {
+              "publishedAt": "2026-08-31T15:32:00+08:00",
+              "source": "新浪财经",
+              "title": "天华新能被问询与宁德时代有没有利益输送 总经理刘德广如何应对？",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-31/doc-iniqexup7882664.shtml"
+            },
+            {
+              "publishedAt": "2026-08-31T17:00:00+08:00",
+              "source": "新浪财经",
+              "title": "宁德时代8月31日现1笔大宗交易 总成交金额508.97万元 其中机构买入508.97万元 溢价率为0.00%",
+              "url": "https://finance.sina.com.cn/stock/ggzz/2026-08-31/doc-iniqfeam7828536.shtml"
+            }
+          ],
+          "evidenceIds": [
+            "E010",
+            "E011",
+            "E012",
+            "E013"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E010",
+        "E011",
+        "E012",
+        "E013"
+      ],
+      "supportingEvidenceIds": [
+        "E010",
+        "E011",
+        "E012",
+        "E013"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 4,
+        "total": 4
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-11ae7a6f86e3b465993f",
+        "evt-f488904ab30412499a29",
+        "evt-443bc6b12a68a0ae6162",
+        "evt-e2f6235599f6539655bb"
+      ],
+      "eventLifecycles": {
+        "evt-11ae7a6f86e3b465993f": "first_seen",
+        "evt-f488904ab30412499a29": "first_seen",
+        "evt-443bc6b12a68a0ae6162": "first_seen",
+        "evt-e2f6235599f6539655bb": "first_seen"
+      },
+      "lifecycle": "mixed",
+      "firstSeenAt": "2026-08-31T11:54:48+00:00",
+      "lastSeenAt": "2026-08-31T11:54:48+00:00"
+    },
+    {
+      "id": "chg-851fc50799dfba802d10",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "bgi-genomics",
+      "entityName": "华大基因",
+      "action": "updated",
+      "changedFields": [
+        "news"
+      ],
+      "summary": "华大基因 的 news 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": []
+      },
+      "after": {
+        "news": [
+          {
+            "publishedAt": "2026-08-31T15:51:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因跌1.62%，成交额2.97亿元，近5日主力净流入-3774.57万",
+            "url": "https://finance.sina.com.cn/stock/aiassist/ggsp/2026-08-31/doc-iniqexur4660442.shtml"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [],
+          "after": [
+            {
+              "publishedAt": "2026-08-31T15:51:00+08:00",
+              "source": "新浪财经",
+              "title": "华大基因跌1.62%，成交额2.97亿元，近5日主力净流入-3774.57万",
+              "url": "https://finance.sina.com.cn/stock/aiassist/ggsp/2026-08-31/doc-iniqexur4660442.shtml"
+            }
+          ],
+          "evidenceIds": [
+            "E014"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E014"
+      ],
+      "supportingEvidenceIds": [
+        "E014"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-9e1ce990ae9b856ca4a2"
+      ],
+      "eventLifecycles": {
+        "evt-9e1ce990ae9b856ca4a2": "first_seen"
+      },
+      "eventId": "evt-9e1ce990ae9b856ca4a2",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T11:54:48+00:00",
+      "lastSeenAt": "2026-08-31T11:54:48+00:00"
+    },
+    {
+      "id": "chg-b370bfd43b42a45d4d25",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "cambricon",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "action": "updated",
+      "changedFields": [
+        "news"
+      ],
+      "summary": "中科寒武纪科技股份有限公司 的 news 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": []
+      },
+      "after": {
+        "news": [
+          {
+            "publishedAt": "2026-08-31T13:32:00+08:00",
+            "source": "新浪财经",
+            "title": "A股半导体股回升，博通集成封涨停板，寒武纪涨超4%",
+            "url": "https://cj.sina.cn/articles/view/5115326071/130e5ae77020030brq"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [],
+          "after": [
+            {
+              "publishedAt": "2026-08-31T13:32:00+08:00",
+              "source": "新浪财经",
+              "title": "A股半导体股回升，博通集成封涨停板，寒武纪涨超4%",
+              "url": "https://cj.sina.cn/articles/view/5115326071/130e5ae77020030brq"
+            }
+          ],
+          "evidenceIds": [
+            "E018"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E018"
+      ],
+      "supportingEvidenceIds": [
+        "E018"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-5243298382c4e72e59c4"
+      ],
+      "eventLifecycles": {
+        "evt-5243298382c4e72e59c4": "first_seen"
+      },
+      "eventId": "evt-5243298382c4e72e59c4",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T11:54:48+00:00",
+      "lastSeenAt": "2026-08-31T11:54:48+00:00"
+    },
+    {
+      "id": "chg-79a3824ff2796004539e",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "horizon-robotics",
+      "entityName": "Horizon Robotics",
+      "action": "updated",
+      "changedFields": [
+        "news"
+      ],
+      "summary": "Horizon Robotics 的 news 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": null
+      },
+      "after": {
+        "news": [
+          {
+            "publishedAt": "2026-08-31T17:33:00+08:00",
+            "source": "新浪财经",
+            "title": "地平线机器人-W(09660)发布中期业绩 净利润37.84亿元 同比扭亏为盈 自主品牌ADAS份额首破50%",
+            "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-08-31/doc-iniqfeap4639357.shtml"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": null,
+          "after": [
+            {
+              "publishedAt": "2026-08-31T17:33:00+08:00",
+              "source": "新浪财经",
+              "title": "地平线机器人-W(09660)发布中期业绩 净利润37.84亿元 同比扭亏为盈 自主品牌ADAS份额首破50%",
+              "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-08-31/doc-iniqfeap4639357.shtml"
+            }
+          ],
+          "evidenceIds": [
+            "E022"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E022"
+      ],
+      "supportingEvidenceIds": [
+        "E022"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-149902138618cc01a7a8"
+      ],
+      "eventLifecycles": {
+        "evt-149902138618cc01a7a8": "first_seen"
+      },
+      "eventId": "evt-149902138618cc01a7a8",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T11:54:48+00:00",
+      "lastSeenAt": "2026-08-31T11:54:48+00:00"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E001",
+      "changeId": "chg-7cbb50f99e0138fcf0c9",
+      "entityName": "Governance by design: Turning AI policy into executable controls",
+      "claim": "新增高价值情报事件记录：Governance by design: Turning AI policy into executable controls。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "InfoWorld",
+      "title": "Governance by design: Turning AI policy into executable controls",
+      "url": "https://www.infoworld.com/article/4209953/governance-by-design-turning-ai-policy-into-executable-controls.html",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "C",
+      "platformName": "InfoWorld",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E002",
+      "changeId": "chg-d31a826874a8ed23ce57",
+      "entityName": "Research report: AI Skills Tracker",
+      "claim": "新增高价值情报事件记录：Research report: AI Skills Tracker。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "ITWeb",
+      "title": "Research report: AI Skills Tracker",
+      "url": "https://www.itweb.co.za/article/research-report-ai-skills-tracker/RgeVDqPRk5x7KJN3",
+      "publishedAt": "2026-08-25",
+      "evidenceGrade": "C",
+      "platformName": "ITWeb",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E003",
+      "changeId": "chg-66899a2eaddbcec42773",
+      "entityName": "日本经产省寻求规模空前的490亿美元预算 以期加速AI等产业投资",
+      "claim": "新增高价值情报事件记录：日本经产省寻求规模空前的490亿美元预算 以期加速AI等产业投资。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "日本经产省寻求规模空前的490亿美元预算 以期加速AI等产业投资",
+      "url": "https://finance.sina.com.cn/world/2026-08-31/doc-iniqfeap4607661.shtml",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E006",
+      "changeId": "chg-d92baf7de127df3ee89a",
+      "entityName": "独家｜字节豆包2.2推迟发布，Coding疯狂补课",
+      "claim": "新增高价值情报事件记录：独家｜字节豆包2.2推迟发布，Coding疯狂补课。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "钛媒体",
+      "title": "独家｜字节豆包2.2推迟发布，Coding疯狂补课",
+      "url": "https://www.tmtpost.com/8122882.html",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E007",
+      "changeId": "chg-b5a6154ed7b5111b1c76",
+      "entityName": "曝字节豆包2.2推迟发布：正全力攻坚Coding相关能力",
+      "claim": "新增高价值情报事件记录：曝字节豆包2.2推迟发布：正全力攻坚Coding相关能力。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "原始信源",
+      "title": "曝字节豆包2.2推迟发布：正全力攻坚Coding相关能力",
+      "url": "https://www.toutiao.com/group/7680132431671837193",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "C",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E008",
+      "changeId": "chg-c23e912112c78d1cb393",
+      "entityName": "Data Dynamics Launches Enterprise 2.0.5 at LEAP 2026, Bringing Governed AI to the Data Layer",
+      "claim": "新增高价值情报事件记录：Data Dynamics Launches Enterprise 2.0.5 at LEAP 2026, Bringing Governed AI to the Data Layer。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "Data Dynamics Launches Enterprise 2.0.5 at LEAP 2026, Bringing Governed AI to the Data Layer",
+      "url": "https://www.prnewswire.com/news-releases/data-dynamics-launches-enterprise-2-0-5-at-leap-2026--bringing-governed-ai-to-the-data-layer-302864847.html",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "B",
+      "platformName": "新闻稿",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E009",
+      "changeId": "chg-40c830149021c4fad320",
+      "entityName": "中熔电气：拟发行不超8亿元可转债用于新能源科技园等项目",
+      "claim": "新增高价值情报事件记录：中熔电气：拟发行不超8亿元可转债用于新能源科技园等项目。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "东方财富",
+      "title": "中熔电气：拟发行不超8亿元可转债用于新能源科技园等项目",
+      "url": "https://finance.eastmoney.com/a/202608313860237761.html",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "媒体报道",
+      "platformName": "东方财富",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E010",
+      "changeId": "chg-08eb0b9f2f4dc55630b3",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "车企价格战压利润，宁德时代凭什么赚433亿",
+      "url": "https://cj.sina.cn/articles/view/3684007222/db957d360010289s8",
+      "publishedAt": "2026-08-31T17:10:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E011",
+      "changeId": "chg-08eb0b9f2f4dc55630b3",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "宁德时代今日大宗交易平价成交1.4万股，成交额508.97万元",
+      "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002j3x6",
+      "publishedAt": "2026-08-31T16:40:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E012",
+      "changeId": "chg-08eb0b9f2f4dc55630b3",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "天华新能被问询与宁德时代有没有利益输送 总经理刘德广如何应对？",
+      "url": "https://finance.sina.com.cn/jjxw/2026-08-31/doc-iniqexup7882664.shtml",
+      "publishedAt": "2026-08-31T15:32:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E013",
+      "changeId": "chg-08eb0b9f2f4dc55630b3",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "宁德时代8月31日现1笔大宗交易 总成交金额508.97万元 其中机构买入508.97万元 溢价率为0.00%",
+      "url": "https://finance.sina.com.cn/stock/ggzz/2026-08-31/doc-iniqfeam7828536.shtml",
+      "publishedAt": "2026-08-31T17:00:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E014",
+      "changeId": "chg-851fc50799dfba802d10",
+      "entityName": "华大基因",
+      "claim": "华大基因 的 news 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "华大基因跌1.62%，成交额2.97亿元，近5日主力净流入-3774.57万",
+      "url": "https://finance.sina.com.cn/stock/aiassist/ggsp/2026-08-31/doc-iniqexur4660442.shtml",
+      "publishedAt": "2026-08-31T15:51:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E018",
+      "changeId": "chg-b370bfd43b42a45d4d25",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "A股半导体股回升，博通集成封涨停板，寒武纪涨超4%",
+      "url": "https://cj.sina.cn/articles/view/5115326071/130e5ae77020030brq",
+      "publishedAt": "2026-08-31T13:32:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E022",
+      "changeId": "chg-79a3824ff2796004539e",
+      "entityName": "Horizon Robotics",
+      "claim": "Horizon Robotics 的 news 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "地平线机器人-W(09660)发布中期业绩 净利润37.84亿元 同比扭亏为盈 自主品牌ADAS份额首破50%",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-08-31/doc-iniqfeap4639357.shtml",
+      "publishedAt": "2026-08-31T17:33:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    }
+  ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-08-31T09:15:04+00:00",
+    "generatedAt": "2026-08-31T11:54:48+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-fd733c24fb061aa0a82b": {
+        "eventId": "evt-fd733c24fb061aa0a82b",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-59feec2f9a9df81170",
+        "entityName": "中熔电气：拟发行不超8亿元可转债用于新能源科技园等项目",
+        "title": "中熔电气：拟发行不超8亿元可转债用于新能源科技园等项目",
+        "titleAliases": [
+          "中熔电气拟发行不超8亿元可转债用于新能源科技园等项目"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "8"
+        ],
+        "sourceAliases": [
+          "evd-d3f3eae751f8a57789ac",
+          "record-fe0723b3d7ae0359e56d",
+          "src-d63a9d7a62a1e3c5187b"
+        ],
+        "evidenceFingerprints": [
+          "d3f3eae751f8a57789ac"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "东方财富",
+            "title": "中熔电气：拟发行不超8亿元可转债用于新能源科技园等项目",
+            "url": "https://finance.eastmoney.com/a/202608313860237761.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "8659e7de96a1ed4d055c",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastPublishedAt": "2026-08-31T11:54:48+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-f488904ab30412499a29": {
+        "eventId": "evt-f488904ab30412499a29",
+        "dataset": "marketCompany",
+        "entityId": "catl",
+        "entityName": "宁德时代",
+        "title": "宁德时代8月31日现1笔大宗交易 总成交金额508.97万元 其中机构买入508.97万元 溢价率为0.00%",
+        "titleAliases": [
+          "宁德时代8月31日现1笔大宗交易总成交金额50897万元其中机构买入50897万元溢价率为000"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:catl",
+          "name:宁德时代"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "0.00%",
+          "1",
+          "31",
+          "508.97",
+          "8"
+        ],
+        "sourceAliases": [
+          "evd-a7844d874a75c7d8ac23",
+          "src-20bfe456ba08a5ec2656"
+        ],
+        "evidenceFingerprints": [
+          "a7844d874a75c7d8ac23"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "宁德时代8月31日现1笔大宗交易 总成交金额508.97万元 其中机构买入508.97万元 溢价率为0.00%",
+            "url": "https://finance.sina.com.cn/stock/ggzz/2026-08-31/doc-iniqfeam7828536.shtml",
+            "publishedAt": "2026-08-31T17:00:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "31bd9abd739b9febb4fa",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastPublishedAt": "2026-08-31T11:54:48+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-e2f6235599f6539655bb": {
+        "eventId": "evt-e2f6235599f6539655bb",
+        "dataset": "marketCompany",
+        "entityId": "catl",
+        "entityName": "宁德时代",
+        "title": "车企价格战压利润，宁德时代凭什么赚433亿",
+        "titleAliases": [
+          "车企价格战压利润宁德时代凭什么赚433亿"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:catl",
+          "name:宁德时代"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "433"
+        ],
+        "sourceAliases": [
+          "evd-8dc59c7411688c368c65",
+          "src-cfb0c35aa24d4b47a2f0"
+        ],
+        "evidenceFingerprints": [
+          "8dc59c7411688c368c65"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "车企价格战压利润，宁德时代凭什么赚433亿",
+            "url": "https://cj.sina.cn/articles/view/3684007222/db957d360010289s8",
+            "publishedAt": "2026-08-31T17:10:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "2361ac66a6853d8d218d",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastPublishedAt": "2026-08-31T11:54:48+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-e0a2a000a640b6c568ef": {
+        "eventId": "evt-e0a2a000a640b6c568ef",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-1ccecb8d3f3b7ae25b",
+        "entityName": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
+        "title": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
+        "titleAliases": [
+          "中塞合作机器人工厂投产国产人形机器人落地欧洲本地化制造"
+        ],
+        "publishedDate": "2026-08-30",
+        "publishedDates": [
+          "2026-08-30"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-16b077d2d96a2e663e1b",
+          "record-9797c809ebbe7c465ba2",
+          "src-111f2c2cdc83e5f2ba27",
+          "record-9e20f093562ebaf1d333",
+          "src-3c47c57eb2afcc99018f",
+          "record-4ba0cff8506df3a42e57",
+          "src-4e40bdff771d264777c3",
+          "record-022a5d8511dc83709020",
+          "src-865f34c40fcf7dd35619"
+        ],
+        "evidenceFingerprints": [
+          "16b077d2d96a2e663e1b"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "老王-产业观察",
+            "title": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=Lgr7DD9mjcwTjtRLyRQLoxvHTzeZDM9LXJkmS%2Ax-t38EE8Ih2JmCMHvYtLwuOxyyjWqGY1i8i67vBD%2AHWR-TB98d9vfkuJOStbtqFyO4MiQOQIgaQ5sJPK08PV%2ARIiMg&src=11&timestamp=1788106977&ver=6936",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "老王-产业观察",
+            "title": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=j7zWV4nv-lDd9V3elHG45tQesWMRy6ZAdKPwujWKYT86FxDcF3VikWyYs8OUWqM-popubuqsreCmAB8HzE4gxxqUeHq9pfvQi8sgHIzX8Q5Hz5slq%2AynS%2AbjJZuE8Ljl&src=11&timestamp=1788146817&ver=6937",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "老王-产业观察",
+            "title": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=j7zWV4nv-lDd9V3elHG45tQesWMRy6ZAdKPwujWKYT%2APd9uq-8caWOnnPom%2AfblsytCr%2AlqHWwkwF4H8GikYmODtuaeMiXo-qhceFNPxDVmBPaodt99MnB53eb20cZ7z&src=11&timestamp=1788165603&ver=6937",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "老王-产业观察",
+            "title": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=H4th8I2v087DrRiW2%2ASgZU0ozTVyXWE4Eh6oFR3AVzjTCdPape5b9CrMyn8hZdrusD40Me3qYu9suC5ZCKsW2v9yS86r1bdhu9AZxoSPPuvPn3xmQMKJlm2HFs3iFHhe&src=11&timestamp=1788175922&ver=6938",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "c86594e60cf287751052",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-30T17:39:58+00:00",
+        "lastSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastPublishedAt": "2026-08-30T17:39:58+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-9e1ce990ae9b856ca4a2": {
+        "eventId": "evt-9e1ce990ae9b856ca4a2",
+        "dataset": "marketCompany",
+        "entityId": "bgi-genomics",
+        "entityName": "华大基因",
+        "title": "华大基因跌1.62%，成交额2.97亿元，近5日主力净流入-3774.57万",
+        "titleAliases": [
+          "华大基因跌162成交额297亿元近5日主力净流入377457万"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:bgi-genomics",
+          "name:华大基因"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "1.62%",
+          "2.97",
+          "3774.57",
+          "5"
+        ],
+        "sourceAliases": [
+          "evd-a3d9dcd9610ff72c69ca",
+          "src-ae436750dfaeb92f4494"
+        ],
+        "evidenceFingerprints": [
+          "a3d9dcd9610ff72c69ca"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "华大基因跌1.62%，成交额2.97亿元，近5日主力净流入-3774.57万",
+            "url": "https://finance.sina.com.cn/stock/aiassist/ggsp/2026-08-31/doc-iniqexur4660442.shtml",
+            "publishedAt": "2026-08-31T15:51:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "540a1037a56171e4e404",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastPublishedAt": "2026-08-31T11:54:48+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-8a7d6f3a518950509176": {
+        "eventId": "evt-8a7d6f3a518950509176",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-1f7fb16b98004f7036",
+        "entityName": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+        "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+        "titleAliases": [
+          "中国机器人海外走红竞速破纪录人形机器人商业化离我们还有多远"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-67d6fe8916958e2b2c3e",
+          "record-08291d169bf7eccc7f61",
+          "src-1863802593a1c57dc8ee",
+          "record-25189f76b185092e05fb",
+          "src-a084bc9330aec136a593"
+        ],
+        "evidenceFingerprints": [
+          "67d6fe8916958e2b2c3e"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "蔡抠脚",
+            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=irv%2ARSEwxbFxsxTtQhOpES%2ApoK9Sjwoc78u69xaVZwMmFQYVrtgpBVuB6YR4bLdZltLe%2AlP0vhnlBN6wWf2MJb6nJOrustZRAGIZwFR1sucLx9EAxQIUCC6M4TuiKZTd&src=11&timestamp=1788165603&ver=6937",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "蔡抠脚",
+            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56d%2A-MlZWT-n4gxZEQlRqx1mOnRMuyRx52eBC9B9pZlTQzP5vyK9mYeWTU3JcXqdXbz9vkIdY2CGQpom5VGwuVjT&src=11&timestamp=1788175922&ver=6938",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "c9f1110f497c23b6b84c",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T09:08:35+00:00",
+        "lastSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-886eda7b8d528aea613d": {
+        "eventId": "evt-886eda7b8d528aea613d",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-231e68a6ee5350e171",
+        "entityName": "日本经产省寻求规模空前的490亿美元预算 以期加速AI等产业投资",
+        "title": "日本经产省寻求规模空前的490亿美元预算 以期加速AI等产业投资",
+        "titleAliases": [
+          "日本经产省寻求规模空前的490亿美元预算以期加速ai等产业投资"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产业投资",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "490"
+        ],
+        "sourceAliases": [
+          "evd-ead84d7e973cfc4327a1",
+          "record-c1a772012a77357ac4a4",
+          "src-5f17a6b6b8be2b4389e6"
+        ],
+        "evidenceFingerprints": [
+          "ead84d7e973cfc4327a1"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "日本经产省寻求规模空前的490亿美元预算 以期加速AI等产业投资",
+            "url": "https://finance.sina.com.cn/world/2026-08-31/doc-iniqfeap4607661.shtml",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "36acf4f3f3a6e3e84956",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastPublishedAt": "2026-08-31T11:54:48+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-6988665c97b0f344346f": {
+        "eventId": "evt-6988665c97b0f344346f",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-b095afa3e11d3716ee",
+        "entityName": "独家｜字节豆包2.2推迟发布，Coding疯狂补课",
+        "title": "独家｜字节豆包2.2推迟发布，Coding疯狂补课",
+        "titleAliases": [
+          "独家"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "company:bytedance",
+          "company:字节跳动"
+        ],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "2.2"
+        ],
+        "sourceAliases": [
+          "evd-3aca90a5f1548ff6a613",
+          "record-16ec567a27ee99f7a184",
+          "src-24ff90c031fcc11a1834"
+        ],
+        "evidenceFingerprints": [
+          "3aca90a5f1548ff6a613"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "钛媒体",
+            "title": "独家｜字节豆包2.2推迟发布，Coding疯狂补课",
+            "url": "https://www.tmtpost.com/8122882.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "f4db592d3cbdb23e1783",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastPublishedAt": "2026-08-31T11:54:48+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-5243298382c4e72e59c4": {
+        "eventId": "evt-5243298382c4e72e59c4",
+        "dataset": "marketCompany",
+        "entityId": "cambricon",
+        "entityName": "中科寒武纪科技股份有限公司",
+        "title": "A股半导体股回升，博通集成封涨停板，寒武纪涨超4%",
+        "titleAliases": [
+          "a股半导体股回升博通集成封涨停板寒武纪涨超4"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:cambricon",
+          "name:中科寒武纪科技股份有限公司"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "4%"
+        ],
+        "sourceAliases": [
+          "evd-830e6b7944bec3327adb",
+          "src-bd5295f7b50c8ac97cd4"
+        ],
+        "evidenceFingerprints": [
+          "830e6b7944bec3327adb"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "A股半导体股回升，博通集成封涨停板，寒武纪涨超4%",
+            "url": "https://cj.sina.cn/articles/view/5115326071/130e5ae77020030brq",
+            "publishedAt": "2026-08-31T13:32:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "91683d2dafd3644a2c0d",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastPublishedAt": "2026-08-31T11:54:48+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-443bc6b12a68a0ae6162": {
+        "eventId": "evt-443bc6b12a68a0ae6162",
+        "dataset": "marketCompany",
+        "entityId": "catl",
+        "entityName": "宁德时代",
+        "title": "宁德时代今日大宗交易平价成交1.4万股，成交额508.97万元",
+        "titleAliases": [
+          "宁德时代今日大宗交易平价成交14万股成交额50897万元"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:catl",
+          "name:宁德时代"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "1.4",
+          "508.97"
+        ],
+        "sourceAliases": [
+          "evd-ca72bc29c212ba45aaf4",
+          "src-cec4e3f4298eb25d06ed"
+        ],
+        "evidenceFingerprints": [
+          "ca72bc29c212ba45aaf4"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "宁德时代今日大宗交易平价成交1.4万股，成交额508.97万元",
+            "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002j3x6",
+            "publishedAt": "2026-08-31T16:40:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "a03c789b2f6d0c0c7a74",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastPublishedAt": "2026-08-31T11:54:48+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-4311b2fbdc68f80cab39": {
+        "eventId": "evt-4311b2fbdc68f80cab39",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-f30aaf6fd06cfa5626",
+        "entityName": "Data Dynamics Launches Enterprise 2.0.5 at LEAP 2026, Bringing Governed AI to the Data Layer",
+        "title": "Data Dynamics Launches Enterprise 2.0.5 at LEAP 2026, Bringing Governed AI to the Data Layer",
+        "titleAliases": [
+          "datadynamicslaunchesenterprise205atleap2026bringinggovernedaitothedatalayer"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "2.0",
+          "5"
+        ],
+        "sourceAliases": [
+          "evd-f02afa76adedcd69d399",
+          "record-e4181cb02fcfecc451a1",
+          "src-b258e4b4f72624c4420c"
+        ],
+        "evidenceFingerprints": [
+          "f02afa76adedcd69d399"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "Data Dynamics Launches Enterprise 2.0.5 at LEAP 2026, Bringing Governed AI to the Data Layer",
+            "url": "https://www.prnewswire.com/news-releases/data-dynamics-launches-enterprise-2-0-5-at-leap-2026--bringing-governed-ai-to-the-data-layer-302864847.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "fb33cb67219d5ecf0694",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastPublishedAt": "2026-08-31T11:54:48+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-4109e15129be2a0d45a7": {
+        "eventId": "evt-4109e15129be2a0d45a7",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-1311866a698ebfb7da",
+        "entityName": "Research report: AI Skills Tracker",
+        "title": "Research report: AI Skills Tracker",
+        "titleAliases": [
+          "researchreportaiskillstracker"
+        ],
+        "publishedDate": "2026-08-25",
+        "publishedDates": [
+          "2026-08-25"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-851763124014a4005795",
+          "record-614268e487085f123343",
+          "src-bc040d81a943ddc60797"
+        ],
+        "evidenceFingerprints": [
+          "851763124014a4005795"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "ITWeb",
+            "title": "Research report: AI Skills Tracker",
+            "url": "https://www.itweb.co.za/article/research-report-ai-skills-tracker/RgeVDqPRk5x7KJN3",
+            "publishedAt": "2026-08-25",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "17d5cfe30b105deb197d",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastPublishedAt": "2026-08-31T11:54:48+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-3430e2e1e4c4040e01d0": {
+        "eventId": "evt-3430e2e1e4c4040e01d0",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-346d16e11d44b44000",
+        "entityName": "Governance by design: Turning AI policy into executable controls",
+        "title": "Governance by design: Turning AI policy into executable controls",
+        "titleAliases": [
+          "governancebydesignturningaipolicyintoexecutablecontrols"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "政策",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-9bc8314cfeecea2c41f4",
+          "record-321881724c4646f3ed19",
+          "src-9626f7c606778a45ae08"
+        ],
+        "evidenceFingerprints": [
+          "9bc8314cfeecea2c41f4"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "InfoWorld",
+            "title": "Governance by design: Turning AI policy into executable controls",
+            "url": "https://www.infoworld.com/article/4209953/governance-by-design-turning-ai-policy-into-executable-controls.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "99007cb88cd1828f27e1",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastPublishedAt": "2026-08-31T11:54:48+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-23a07dcc7d99ca76d5f7": {
+        "eventId": "evt-23a07dcc7d99ca76d5f7",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-c070ba728354db25f7",
+        "entityName": "曝字节豆包2.2推迟发布：正全力攻坚Coding相关能力",
+        "title": "曝字节豆包2.2推迟发布：正全力攻坚Coding相关能力",
+        "titleAliases": [
+          "曝字节豆包22推迟发布正全力攻坚coding相关能力"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "company:bytedance",
+          "company:字节跳动"
+        ],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "2.2"
+        ],
+        "sourceAliases": [
+          "evd-7509a13e69d69fe21bce",
+          "record-431288fb025d7fe9e971",
+          "src-747c3eaaa57393ef8703"
+        ],
+        "evidenceFingerprints": [
+          "7509a13e69d69fe21bce"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "原始信源",
+            "title": "曝字节豆包2.2推迟发布：正全力攻坚Coding相关能力",
+            "url": "https://www.toutiao.com/group/7680132431671837193",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "e33bbd5bc619e7fa64cc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastPublishedAt": "2026-08-31T11:54:48+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-149902138618cc01a7a8": {
+        "eventId": "evt-149902138618cc01a7a8",
+        "dataset": "marketCompany",
+        "entityId": "horizon-robotics",
+        "entityName": "Horizon Robotics",
+        "title": "地平线机器人-W(09660)发布中期业绩 净利润37.84亿元 同比扭亏为盈 自主品牌ADAS份额首破50%",
+        "titleAliases": [
+          "地平线机器人w09660发布中期业绩净利润3784亿元同比扭亏为盈自主品牌adas份额首破50"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:horizon-robotics",
+          "name:horizon robotics"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "09660",
+          "37.84",
+          "50%"
+        ],
+        "sourceAliases": [
+          "evd-5c0e57f5241497d3be5d",
+          "src-ed8f8180a17310a3cde6"
+        ],
+        "evidenceFingerprints": [
+          "5c0e57f5241497d3be5d"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "地平线机器人-W(09660)发布中期业绩 净利润37.84亿元 同比扭亏为盈 自主品牌ADAS份额首破50%",
+            "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-08-31/doc-iniqfeap4639357.shtml",
+            "publishedAt": "2026-08-31T17:33:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "3ba0019ee532f8ae873c",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastPublishedAt": "2026-08-31T11:54:48+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-11ae7a6f86e3b465993f": {
+        "eventId": "evt-11ae7a6f86e3b465993f",
+        "dataset": "marketCompany",
+        "entityId": "catl",
+        "entityName": "宁德时代",
+        "title": "天华新能被问询与宁德时代有没有利益输送 总经理刘德广如何应对？",
+        "titleAliases": [
+          "天华新能被问询与宁德时代有没有利益输送总经理刘德广如何应对"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:catl",
+          "name:宁德时代"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-6ae1518aa6138ea13286",
+          "src-b9b9db14164985503ac8"
+        ],
+        "evidenceFingerprints": [
+          "6ae1518aa6138ea13286"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "天华新能被问询与宁德时代有没有利益输送 总经理刘德广如何应对？",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-31/doc-iniqexup7882664.shtml",
+            "publishedAt": "2026-08-31T15:32:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "ac113d8f1cab2aaef19f",
+        "scalarClaims": {},
+        "ipoStage": [
+          "inquiry",
+          4
+        ],
+        "firstSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastSeenAt": "2026-08-31T11:54:48+00:00",
+        "lastPublishedAt": "2026-08-31T11:54:48+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-f13c3a4c880c1ec07c4c": {
         "eventId": "evt-f13c3a4c880c1ec07c4c",
         "dataset": "intelligenceEvent",
@@ -152,78 +2532,6 @@
         "lastSeenAt": "2026-08-31T09:08:35+00:00",
         "lastPublishedAt": "2026-08-31T09:08:35+00:00",
         "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-e0a2a000a640b6c568ef": {
-        "eventId": "evt-e0a2a000a640b6c568ef",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-1ccecb8d3f3b7ae25b",
-        "entityName": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
-        "title": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
-        "titleAliases": [
-          "中塞合作机器人工厂投产国产人形机器人落地欧洲本地化制造"
-        ],
-        "publishedDate": "2026-08-30",
-        "publishedDates": [
-          "2026-08-30"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "商业进展",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-16b077d2d96a2e663e1b",
-          "record-9797c809ebbe7c465ba2",
-          "src-111f2c2cdc83e5f2ba27",
-          "record-9e20f093562ebaf1d333",
-          "src-3c47c57eb2afcc99018f",
-          "record-4ba0cff8506df3a42e57",
-          "src-4e40bdff771d264777c3"
-        ],
-        "evidenceFingerprints": [
-          "16b077d2d96a2e663e1b"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "老王-产业观察",
-            "title": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=Lgr7DD9mjcwTjtRLyRQLoxvHTzeZDM9LXJkmS%2Ax-t38EE8Ih2JmCMHvYtLwuOxyyjWqGY1i8i67vBD%2AHWR-TB98d9vfkuJOStbtqFyO4MiQOQIgaQ5sJPK08PV%2ARIiMg&src=11&timestamp=1788106977&ver=6936",
-            "publishedAt": "2026-08-30",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "老王-产业观察",
-            "title": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=j7zWV4nv-lDd9V3elHG45tQesWMRy6ZAdKPwujWKYT86FxDcF3VikWyYs8OUWqM-popubuqsreCmAB8HzE4gxxqUeHq9pfvQi8sgHIzX8Q5Hz5slq%2AynS%2AbjJZuE8Ljl&src=11&timestamp=1788146817&ver=6937",
-            "publishedAt": "2026-08-30",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "老王-产业观察",
-            "title": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=j7zWV4nv-lDd9V3elHG45tQesWMRy6ZAdKPwujWKYT%2APd9uq-8caWOnnPom%2AfblsytCr%2AlqHWwkwF4H8GikYmODtuaeMiXo-qhceFNPxDVmBPaodt99MnB53eb20cZ7z&src=11&timestamp=1788165603&ver=6937",
-            "publishedAt": "2026-08-30",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "c86594e60cf287751052",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-30T17:39:58+00:00",
-        "lastSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastPublishedAt": "2026-08-30T17:39:58+00:00",
-        "lastLifecycle": "duplicate",
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 2,
@@ -795,58 +3103,6 @@
         "observationCount": 3,
         "confirmationCount": 0,
         "bestEvidenceStrength": 4,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-8a7d6f3a518950509176": {
-        "eventId": "evt-8a7d6f3a518950509176",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-1f7fb16b98004f7036",
-        "entityName": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-        "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-        "titleAliases": [
-          "中国机器人海外走红竞速破纪录人形机器人商业化离我们还有多远"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "商业进展",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-67d6fe8916958e2b2c3e",
-          "record-08291d169bf7eccc7f61",
-          "src-1863802593a1c57dc8ee"
-        ],
-        "evidenceFingerprints": [
-          "67d6fe8916958e2b2c3e"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "蔡抠脚",
-            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=irv%2ARSEwxbFxsxTtQhOpES%2ApoK9Sjwoc78u69xaVZwMmFQYVrtgpBVuB6YR4bLdZltLe%2AlP0vhnlBN6wWf2MJb6nJOrustZRAGIZwFR1sucLx9EAxQIUCC6M4TuiKZTd&src=11&timestamp=1788165603&ver=6937",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "c9f1110f497c23b6b84c",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -5719,13 +7975,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 0,
+    "newEvents": 14,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 0,
-    "observedEvents": 0,
+    "duplicatesSuppressed": 2,
+    "observedEvents": 16,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -6077,10 +8333,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-08-31",
-      "generatedAt": "2026-08-31T09:15:04+00:00",
-      "runStatus": "no-material-change",
-      "changeCount": 54,
-      "executiveSummary": "本轮未检测到新的外部事实候选。",
+      "generatedAt": "2026-08-31T11:54:48+00:00",
+      "runStatus": "model",
+      "changeCount": 68,
+      "executiveSummary": "本证据包覆盖2026年8月31日前后多项AI与科技产业动态。核心信号包括：字节跳动豆包2.2推迟发布并重点补强编程/Agent能力；日本经产省寻求490亿美元预算加速AI与半导体投资；地平线机器人中期业绩扭亏为盈且自主品牌ADAS份额首破50%；Data Dynamics发布数据层治理产品；另有AI治理方法论文章、AI技能追踪报告、中熔电气可转债融资及多家公司市场新闻。整体显示AI竞争从模型能力向工程化、治理与行业落地延伸，但多数证据为单一来源或媒体报道，需后续验证。",
       "eventIds": [
         "evt-19a46ffa0d4299720a2f",
         "evt-e0a2a000a640b6c568ef",
@@ -6135,7 +8391,21 @@
         "evt-8db87c53775fe3de094f",
         "evt-7fb8322e91461f043742",
         "evt-a98de8af7340c111110a",
-        "evt-0377f8c47ba30963df0e"
+        "evt-0377f8c47ba30963df0e",
+        "evt-3430e2e1e4c4040e01d0",
+        "evt-4109e15129be2a0d45a7",
+        "evt-886eda7b8d528aea613d",
+        "evt-6988665c97b0f344346f",
+        "evt-23a07dcc7d99ca76d5f7",
+        "evt-4311b2fbdc68f80cab39",
+        "evt-fd733c24fb061aa0a82b",
+        "evt-11ae7a6f86e3b465993f",
+        "evt-f488904ab30412499a29",
+        "evt-443bc6b12a68a0ae6162",
+        "evt-e2f6235599f6539655bb",
+        "evt-9e1ce990ae9b856ca4a2",
+        "evt-5243298382c4e72e59c4",
+        "evt-149902138618cc01a7a8"
       ],
       "eventStates": [
         {
@@ -6353,32 +8623,93 @@
         {
           "eventId": "evt-0377f8c47ba30963df0e",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-3430e2e1e4c4040e01d0",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-4109e15129be2a0d45a7",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-886eda7b8d528aea613d",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-6988665c97b0f344346f",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-23a07dcc7d99ca76d5f7",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-4311b2fbdc68f80cab39",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-fd733c24fb061aa0a82b",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-11ae7a6f86e3b465993f",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-f488904ab30412499a29",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-443bc6b12a68a0ae6162",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-e2f6235599f6539655bb",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-9e1ce990ae9b856ca4a2",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-5243298382c4e72e59c4",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-149902138618cc01a7a8",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 2,
-      "candidateTotal": 9,
-      "auxiliaryLeadTotal": 34,
+      "candidateTotal": 13,
+      "auxiliaryLeadTotal": 41,
       "rejectedTotal": 10,
       "eventSummary": {
-        "newEvents": 54,
+        "newEvents": 68,
         "reconfirmations": 2,
         "updates": 0,
         "corrections": 0,
         "possibleConflicts": 0,
-        "duplicatesSuppressed": 8
+        "duplicatesSuppressed": 10
       }
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 0,
-    "eligibleCandidateCount": 0,
+    "candidateCount": 13,
+    "eligibleCandidateCount": 13,
     "rejectedCandidateCount": 0,
     "rejectedByDataset": {},
-    "evidenceCount": 0,
-    "supportingEvidenceCount": 0,
-    "rejectedEvidenceCount": 0,
-    "passedButUnboundEvidenceCount": 0,
-    "rejectionReasons": {},
+    "evidenceCount": 25,
+    "supportingEvidenceCount": 16,
+    "rejectedEvidenceCount": 6,
+    "passedButUnboundEvidenceCount": 3,
+    "rejectionReasons": {
+      "missing_published_at": 4,
+      "entity_mismatch": 2,
+      "missing_title": 2,
+      "ungraded": 2
+    },
     "sourceClassificationWarnings": []
   },
   "sourceClassificationWarnings": [],
@@ -6409,8 +8740,8 @@
     }
   },
   "pipelineHealth": {
-    "overallStatus": "degraded",
-    "healthyJobs": 6,
+    "overallStatus": "stale",
+    "healthyJobs": 7,
     "jobCount": 9,
     "issueJobs": [
       {
@@ -6424,12 +8755,6 @@
         "name": "月度信源效能审查",
         "status": "unknown",
         "lastCompletedAt": null
-      },
-      {
-        "jobId": "research-agent-daily",
-        "name": "每日证据约束研究摘要",
-        "status": "degraded",
-        "lastCompletedAt": "2026-08-31T09:14:39Z"
       }
     ]
   }
