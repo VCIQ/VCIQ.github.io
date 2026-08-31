@@ -22,30 +22,11 @@ on:
         description: "JSON array of up to 20 normalized manual tracking requests"
         required: true
         type: string
-  workflow_call:
-    inputs:
-      operation:
-        description: "Governed operation requested by an allowlisted caller"
-        required: true
-        type: string
-      invalid_policy:
-        description: "Batch invalid-row policy"
-        required: true
-        type: string
-      batch_json:
-        description: "JSON array of normalized manual tracking requests"
-        required: true
-        type: string
-      caller_id:
-        description: "Public identifier for an explicitly reviewed reusable-workflow caller"
-        required: true
-        type: string
 
 permissions: {}
 
 env:
   EXPECTED_REPOSITORY: VCIQ/VCIQ.github.io
-  REVIEWED_REUSABLE_CALLER: historical-media-backfill-20260831
 
 jobs:
   authorize:
@@ -55,25 +36,17 @@ jobs:
     permissions:
       contents: read
     steps:
-      - name: Require the canonical repository and an approved entry path
+      - name: Require the canonical repository and main branch
         env:
           ACTUAL_REPOSITORY: ${{ github.repository }}
           ACTUAL_REF: ${{ github.ref }}
           ACTUAL_EVENT: ${{ github.event_name }}
-          CALLER_ID: ${{ inputs.caller_id }}
         shell: bash
         run: |
           set -euo pipefail
           test "$ACTUAL_REPOSITORY" = "$EXPECTED_REPOSITORY"
           test "$ACTUAL_REF" = "refs/heads/main"
-          if [ "$ACTUAL_EVENT" = "workflow_dispatch" ]; then
-            test -z "$CALLER_ID"
-          elif [ "$ACTUAL_EVENT" = "push" ] || [ "$ACTUAL_EVENT" = "workflow_call" ]; then
-            test "$CALLER_ID" = "$REVIEWED_REUSABLE_CALLER"
-          else
-            echo "unsupported manual tracking batch event: $ACTUAL_EVENT"
-            exit 1
-          fi
+          test "$ACTUAL_EVENT" = "workflow_dispatch"
 
       - uses: actions/checkout@v7
         with:
