@@ -39,6 +39,22 @@ test("source entries keep explicit lifecycle role health promotion and safe meta
   }
 });
 
+test("current-run endpoint counters satisfy accepted <= scanned", () => {
+  for (const source of coreSources) {
+    for (const endpoint of source.endpoints) {
+      assert.ok(
+        endpoint.accepted <= endpoint.scanned,
+        `${source.name} / ${endpoint.label}: accepted ${endpoint.accepted} > scanned ${endpoint.scanned}`,
+      );
+    }
+  }
+});
+
+test("invalid RoboSpeak publisher is removed from the active source directory", () => {
+  assert.equal(coreSources.some((source) => source.name === "机器人大讲堂"), false);
+  assert.equal(coreSources.some((source) => source.id === "wechat:robospeak"), false);
+});
+
 test("homepage-only official companies remain candidates instead of pretending to be tracked", () => {
   const candidates = coreSources.filter(
     (source) => source.sourceRole === "primary" && source.lifecycle === "candidate",
