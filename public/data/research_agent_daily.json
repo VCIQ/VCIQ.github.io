@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-30T17:39:58+00:00",
+  "generatedAt": "2026-08-31T03:41:22+00:00",
   "asOfDate": "2026-08-31",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
@@ -12,88 +12,152 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 3061,
-      "completion_tokens": 3213,
-      "total_tokens": 6274,
+      "prompt_tokens": 14572,
+      "completion_tokens": 8397,
+      "total_tokens": 22969,
       "completion_tokens_details": {
-        "reasoning_tokens": 1826
+        "reasoning_tokens": 6084
       },
       "prompt_tokens_details": {
-        "cached_tokens": 0
+        "cached_tokens": 14336
       },
-      "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 3061
+      "prompt_cache_hit_tokens": 14336,
+      "prompt_cache_miss_tokens": 236
     }
   },
   "changeSummary": {
-    "totalDetected": 24,
-    "total": 3,
+    "totalDetected": 57,
+    "total": 19,
     "byDataset": {
-      "intelligenceEvent": 3
+      "intelligenceEvent": 13,
+      "institutionEvent": 1,
+      "marketCompany": 5
     },
     "byChangeType": {
-      "external_event": 7,
-      "data_maintenance": 7,
-      "source_refresh": 10
+      "external_event": 26,
+      "data_maintenance": 10,
+      "source_refresh": 21
     },
-    "externalCandidates": 7,
-    "qualityRejected": 3,
-    "maintenanceExcluded": 17,
+    "externalCandidates": 26,
+    "qualityRejected": 2,
+    "maintenanceExcluded": 31,
     "aggregatedEvents": 0,
     "highestImportance": 91,
     "verifiedChangeTotal": 0,
-    "candidateTotal": 0,
-    "auxiliaryLeadTotal": 3,
-    "rejectedTotal": 3,
-    "newEvents": 3,
-    "reconfirmations": 0,
+    "candidateTotal": 6,
+    "auxiliaryLeadTotal": 13,
+    "rejectedTotal": 2,
+    "newEvents": 23,
+    "reconfirmations": 2,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 1
+    "duplicatesSuppressed": 2
   },
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "本证据包包含三条2026-08-30新增的高价值情报事件，均来自单一外部线索（证据等级C，automated_unreviewed），分别涉及：德州州长冻结Flock AI监控摄像头州资金、中塞合作机器人工厂投产、Mechrevo新款游戏本采用AMD非NPU APU。由于证据等级低且未经交叉验证，所有判断均视为待验证线索，不构成确定性事实或投资结论。 质量门诊断：缺少发布时间 3、仅为发现线索，不能支持正式主张 2、缺少标题 2、证据未分级 2、证据合格但未绑定变化字段 1。",
+    "executiveSummary": "截至2026-08-31证据包显示，AI基础设施扩张（AWS计划采购200万Nvidia GPU）、国产GPU业绩改善（沐曦股份扭亏为盈、燧原科技启动申购）、机器人融资（小鹏机器人获超9亿美元）是主要动向；同时DLSS 5 mod在旧GPU上性能不佳、OpenAI拟终止向Cursor提供模型服务、字节豆包2.2推迟发布等事件提示技术迭代与生态调整风险。多数证据为C级媒体线索，需进一步验证。 质量门诊断：证据未分级 10、缺少发布时间 8、缺少标题 8、证据合格但未绑定变化字段 3。",
     "keyDevelopments": [
       {
-        "title": "Texas Governor Abbott blocks funding for more Flock cameras",
-        "assessment": "据The Verge报道，德州州长Greg Abbott在Texas Tribune调查披露州花费超3000万美元后，冻结了Flock AI监控摄像头的州资金。该事件若属实，可能反映美国公共部门对AI监控支出的政治阻力上升，但当前仅单一来源且证据等级为C，影响程度需进一步验证。",
-        "importance": 4,
-        "confidence": "low",
+        "title": "AWS计划2027-2028年新增200万Nvidia GPU",
+        "assessment": "据TechRadar报道，AWS计划在2027至2028年间新增200万Nvidia GPU，此前已有超100万芯片承诺，并采用Vera CPU支持AI负载。若属实，将强化Nvidia数据中心业务和AWS AI算力供给，但证据为C级媒体线索，需官方确认。",
+        "importance": 5,
+        "confidence": "medium",
         "entities": [
-          "Texas Governor Greg Abbott",
-          "Flock",
-          "Texas Tribune"
+          "Amazon",
+          "AWS",
+          "Nvidia"
+        ],
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "title": "沐曦股份2026上半年扭亏为盈",
+        "assessment": "据东方财富报道，沐曦股份上半年营收13.24亿元，同比增长44.67%，归母净利润6.12亿元，实现扭亏；Q2归母净利润7.11亿元，同比增长1425.76%。显示国产GPU出货量提升带动业绩改善，但媒体报道需结合财报原文验证。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "沐曦股份"
+        ],
+        "evidenceIds": [
+          "E014"
+        ]
+      },
+      {
+        "title": "DLSS 5 mod在旧Ampere GPU上帧率表现糟糕",
+        "assessment": "据Tom's Hardware报道，社区将DLSS 5预发布DLL用于RTX 50系列及旧Ampere GPU，多数游戏帧率跌至个位数，高端GPU部分场景可达40 FPS。该事件显示下一代神经渲染技术对旧硬件兼容性有限，但属于非官方mod，不能代表正式产品表现。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "Nvidia",
+          "DLSS",
+          "Ampere GPU"
         ],
         "evidenceIds": [
           "E002"
         ]
       },
       {
-        "title": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
-        "assessment": "据微信文章报道，塞尔维亚沙巴茨首座机器人工厂启动量产，由敏实集团、智元创新与塞尔维亚方面联合推进，一期投资2000万欧元，规划今年交付500台人形机器人。若属实，代表中国人形机器人企业尝试以欧洲本地化制造方式出海，但证据等级C且来源为自媒体，需官方公告或第三方报道验证。",
+        "title": "小鹏机器人获超9亿美元融资",
+        "assessment": "据微信来源真机智能报道，小鹏机器人获得超9亿美元融资，中国通用人形机器人商业化加速。该证据为C级且来源为微信公众号，需验证融资细节和投资方。",
         "importance": 4,
         "confidence": "low",
         "entities": [
-          "敏实集团",
-          "智元创新",
-          "塞尔维亚"
+          "小鹏机器人",
+          "人形机器人"
+        ],
+        "evidenceIds": [
+          "E017"
+        ]
+      },
+      {
+        "title": "OpenAI拟终止向Cursor提供模型服务",
+        "assessment": "据钛媒体晨报标题提及，OpenAI将终止向Cursor提供模型服务，马斯克回应。该事件可能影响AI编程工具生态，但证据仅为标题摘要，缺乏细节，需进一步确认。",
+        "importance": 4,
+        "confidence": "low",
+        "entities": [
+          "OpenAI",
+          "Cursor"
         ],
         "evidenceIds": [
           "E003"
         ]
       },
       {
-        "title": "Slim Mechrevo laptop launches with unusual AMD Zen 5 APU and Nvidia RTX 5060",
-        "assessment": "据Notebookcheck报道，Mechrevo Phenom 15 Air 2026在中国发布，采用Ryzen 7 449（Gorgon Point系列，无NPU）与Nvidia RTX 5060，起价约1709美元。该产品显示AMD仍在扩展非NPU Zen 5 APU组合，但单一产品发布对行业叙事影响有限，且证据等级C。",
-        "importance": 2,
-        "confidence": "low",
+        "title": "燧原科技启动新股申购",
+        "assessment": "据东方财富报道，燧原科技于9月2日启动网上申购，发行689万股，申购上限0.65万股。作为国产AI芯片企业上市，可能受到市场关注，但发行定价和估值需进一步观察。",
+        "importance": 3,
+        "confidence": "medium",
         "entities": [
-          "Mechrevo",
-          "AMD",
-          "Nvidia"
+          "燧原科技"
+        ],
+        "evidenceIds": [
+          "E015"
+        ]
+      },
+      {
+        "title": "宁德时代AH股齐跌",
+        "assessment": "据新浪财经报道，宁德时代A股跌超3%，H股跌超4%；行情数据显示A股跌2.8%。同时今年来超1000个回购方案实施完毕，宁德时代回购金额居前。股价波动与回购并存，市场情绪复杂。",
+        "importance": 3,
+        "confidence": "high",
+        "entities": [
+          "宁德时代"
+        ],
+        "evidenceIds": [
+          "E026",
+          "E028"
+        ]
+      },
+      {
+        "title": "私募人士对投资主线观点分歧",
+        "assessment": "据东方财富报道，但斌、段永平等私募人士对AI、券商、创新药等方向看法不一，市场处于温和博弈阶段，投资主线或正在酝酿。反映机构配置分歧加大。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "私募基金",
+          "A股"
         ],
         "evidenceIds": [
           "E004"
@@ -102,103 +166,196 @@
     ],
     "thesisUpdates": [
       {
-        "entity": "Flock（AI监控摄像头供应商）",
-        "direction": "negative",
-        "statement": "德州州长冻结州资金的事件若进一步扩散，可能削弱AI监控摄像头在公共部门的采购预期；但当前仅单一来源，影响程度待验证。",
+        "entity": "Nvidia",
+        "direction": "mixed",
+        "statement": "AWS计划采购200万GPU强化数据中心需求，但DLSS 5 mod在旧GPU上帧率糟糕可能影响消费者升级意愿，整体影响需观察正式产品表现。",
         "evidenceIds": [
+          "E009",
           "E002"
         ]
       },
       {
-        "entity": "中国人形机器人产业链",
+        "entity": "沐曦股份",
         "direction": "positive",
-        "statement": "中塞合作工厂投产若属实，显示国产人形机器人正尝试以欧洲本地化制造方式出海，可能提升产业链海外交付能力；但证据等级低，需更多验证。",
+        "statement": "上市后首份半年报扭亏为盈，营收和毛利率提升，显示国产GPU商业化进展，但盈利可持续性待验证。",
+        "evidenceIds": [
+          "E014"
+        ]
+      },
+      {
+        "entity": "燧原科技",
+        "direction": "positive",
+        "statement": "启动新股申购，国产AI芯片阵营扩大，但上市后估值和市场竞争待观察。",
+        "evidenceIds": [
+          "E015"
+        ]
+      },
+      {
+        "entity": "小鹏机器人",
+        "direction": "positive",
+        "statement": "获超9亿美元融资，人形机器人商业化加速，但证据来源等级低，需官方确认。",
+        "evidenceIds": [
+          "E017"
+        ]
+      },
+      {
+        "entity": "OpenAI/Cursor生态",
+        "direction": "negative",
+        "statement": "OpenAI拟终止向Cursor提供模型服务，可能重塑AI编程工具竞争格局，但细节待确认。",
         "evidenceIds": [
           "E003"
         ]
       },
       {
-        "entity": "AMD（非NPU APU产品线）",
-        "direction": "mixed",
-        "statement": "Mechrevo新机采用Ryzen 7 449（无NPU）显示AMD仍在扩展非NPU Zen 5 APU组合，但单一产品发布不足以改变整体AI PC叙事。",
+        "entity": "字节跳动",
+        "direction": "negative",
+        "statement": "豆包大模型2.2推迟发布，可能影响市场预期，具体原因未明。",
         "evidenceIds": [
-          "E004"
+          "E011"
+        ]
+      },
+      {
+        "entity": "宁德时代",
+        "direction": "mixed",
+        "statement": "股价下跌但回购金额居前，短期市场情绪与公司回购行为并存。",
+        "evidenceIds": [
+          "E026",
+          "E027",
+          "E028"
         ]
       }
     ],
     "watchlist": [
       {
-        "item": "德州Flock摄像头资金冻结的后续政策动向",
-        "reason": "E002为单一来源，需确认是否正式行政命令、涉及金额及对Flock业务的实际影响。",
-        "nextEvidence": "德州官方文件、Texas Tribune调查全文、Flock官方回应",
+        "item": "AWS 200万GPU采购官方确认",
+        "reason": "C级媒体线索，需官方公告验证",
+        "nextEvidence": "AWS或Nvidia官方声明、供应链订单数据",
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "item": "DLSS 5正式版性能",
+        "reason": "mod在旧GPU上表现糟糕，正式版是否优化未知",
+        "nextEvidence": "Nvidia官方发布材料、第三方基准测试",
         "evidenceIds": [
           "E002"
         ]
       },
       {
-        "item": "塞尔维亚机器人工厂的实际量产与订单交付",
-        "reason": "E003来自微信自媒体，需核实工厂投资、产能、客户订单及敏实/智元官方公告。",
-        "nextEvidence": "敏实集团或智元创新官方公告、塞尔维亚政府新闻稿、第三方实地报道",
+        "item": "沐曦股份下半年盈利",
+        "reason": "Q2扣非净利润仅0.54亿元，需观察持续性",
+        "nextEvidence": "后续季度财报、出货量数据",
+        "evidenceIds": [
+          "E014"
+        ]
+      },
+      {
+        "item": "燧原科技上市表现",
+        "reason": "新股申购启动，市场关注国产AI芯片估值",
+        "nextEvidence": "发行结果、上市首日行情",
+        "evidenceIds": [
+          "E015"
+        ]
+      },
+      {
+        "item": "小鹏机器人融资细节",
+        "reason": "融资额超9亿美元但来源为微信公众号",
+        "nextEvidence": "官方公告、投资方名单",
+        "evidenceIds": [
+          "E017"
+        ]
+      },
+      {
+        "item": "OpenAI与Cursor关系",
+        "reason": "可能影响AI编程工具市场，但证据仅标题",
+        "nextEvidence": "OpenAI官方声明、Cursor回应",
         "evidenceIds": [
           "E003"
         ]
       },
       {
-        "item": "Mechrevo Phenom 15 Air 2026的销售与评测",
-        "reason": "E004为产品发布报道，需观察市场接受度、实际配置和AMD APU供应情况。",
-        "nextEvidence": "零售渠道价格、专业评测、AMD产品页面",
+        "item": "豆包2.2新发布时间",
+        "reason": "推迟原因和影响待明确",
+        "nextEvidence": "字节跳动官方公告",
         "evidenceIds": [
-          "E004"
+          "E011"
+        ]
+      },
+      {
+        "item": "宁德时代回购与股价",
+        "reason": "回购金额居前但股价下跌",
+        "nextEvidence": "回购公告、股价数据",
+        "evidenceIds": [
+          "E026",
+          "E027",
+          "E028"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "证据质量风险：所有事件均为C级单一来源，可能包含不准确或夸大信息。",
-        "reason": "E002/E003/E004均来自单一外部线索，未经官方或交叉验证，不能作为确定性事实。",
+        "risk": "关键事件证据等级偏低",
+        "reason": "AWS GPU采购、OpenAI终止Cursor服务、小鹏融资等均为C级媒体线索，可能不准确",
         "evidenceIds": [
-          "E002",
+          "E009",
           "E003",
+          "E017"
+        ]
+      },
+      {
+        "risk": "AI基础设施投资过热",
+        "reason": "AWS大规模采购GPU，且报告称AI公司收入近40%流向云巨头，资本开支可能超出实际需求",
+        "evidenceIds": [
+          "E009",
+          "E003"
+        ]
+      },
+      {
+        "risk": "国产GPU竞争加剧",
+        "reason": "沐曦扭亏、燧原上市，国产AI芯片供给增加，但技术差距和盈利压力仍存",
+        "evidenceIds": [
+          "E014",
+          "E015"
+        ]
+      },
+      {
+        "risk": "市场主线不明",
+        "reason": "私募对AI、券商、创新药等方向看法不一，市场处于温和博弈阶段，可能加剧波动",
+        "evidenceIds": [
           "E004"
         ]
       },
       {
-        "risk": "AI监控政策风险：德州冻结资金可能预示美国公共部门对AI监控的审查加强，但反向也可能只是个别州行动。",
-        "reason": "E002显示州长在调查报道后冻结资金，但未提供政策细节。",
+        "risk": "技术性能不达预期",
+        "reason": "DLSS 5 mod在旧GPU上帧率个位数，若正式版优化不足，可能影响用户升级意愿",
         "evidenceIds": [
           "E002"
         ]
-      },
-      {
-        "risk": "海外制造执行风险：中塞工厂的500台交付目标可能受产能爬坡、地缘政治或供应链影响。",
-        "reason": "E003为规划目标，非已实现交付。",
-        "evidenceIds": [
-          "E003"
-        ]
       }
     ],
-    "methodologyNote": "本分析仅基于证据包内提供的三条证据（E002、E003、E004），未补充外部事实。所有证据均为external_clue等级、automated_unreviewed状态，证据等级C，因此所有判断均标记为低置信度，属于待验证线索。输出中的事实描述严格来自证据摘要，推断与待验证事项已在各字段中明确区分。本报告不构成任何买入、卖出、目标价或收益承诺。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
+    "methodologyNote": "本报告仅基于提供的证据包（asOf 2026-08-31）进行分析，未补充外部事实。证据等级包括B/C级及市场数据，其中C级媒体线索和微信公众号来源置信度较低，相关判断应视为待验证事项。本报告不构成任何买入、卖出、目标价或收益承诺。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
   },
   "changes": [
     {
-      "id": "chg-40cf16e483eaba03eae5",
+      "id": "chg-4b61d45719d04e110094",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-9d800107a411996d75",
-      "entityName": "Texas Governor Abbott blocks funding for more Flock cameras",
+      "entityId": "intelligence-event-49056d0807d7bed606",
+      "entityName": "DLSS 5 mod brings next-gen tech to old Ampere GPUs, but frame rates are horrible — most games tank to single digits, high-end GPUs can hit up to 40 FPS in some cases",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：Texas Governor Abbott blocks funding for more Flock cameras。",
+      "summary": "新增高价值情报事件记录：DLSS 5 mod brings next-gen tech to old Ampere GPUs, but frame rates are horrible — most games tank to single digits, high-end GPUs can hit up to 40 FPS in some cases。",
       "importance": 91,
       "before": null,
       "after": {
         "publishedAt": "2026-08-30",
-        "summary": "As backlash grows over Flock's AI surveillance cameras, Texas Governor Greg Abbott has frozen state spending on them. The move came just ahead of the publication of a Texas Tribune investigation that revealed the state spent over $30 million on Flock cameras.…",
-        "title": "Texas Governor Abbott blocks funding for more Flock cameras"
+        "summary": "Nvidia's upcoming DLSS 5 neural rendering tech leaked earlier this week through a pre-release version of the DLL inside NBA 2K27 (which is in early access). The community quickly got it working on RTX 50-series GPUs , some of the best graphics cards , but mod…",
+        "title": "DLSS 5 mod brings next-gen tech to old Ampere GPUs, but frame rates are horrible — most games tank to single digits, high-end GPUs can hit up to 40 FPS in some cases"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -220,7 +377,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "As backlash grows over Flock's AI surveillance cameras, Texas Governor Greg Abbott has frozen state spending on them. The move came just ahead of the publication of a Texas Tribune investigation that revealed the state spent over $30 million on Flock cameras.…",
+          "after": "Nvidia's upcoming DLSS 5 neural rendering tech leaked earlier this week through a pre-release version of the DLL inside NBA 2K27 (which is in early access). The community quickly got it working on RTX 50-series GPUs , some of the best graphics cards , but mod…",
           "evidenceIds": [
             "E002"
           ]
@@ -228,7 +385,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "Texas Governor Abbott blocks funding for more Flock cameras",
+          "after": "DLSS 5 mod brings next-gen tech to old Ampere GPUs, but frame rates are horrible — most games tank to single digits, high-end GPUs can hit up to 40 FPS in some cases",
           "evidenceIds": [
             "E002"
           ]
@@ -249,35 +406,430 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-19a46ffa0d4299720a2f"
+        "evt-e067263d2f75b8b54f32"
       ],
       "eventLifecycles": {
-        "evt-19a46ffa0d4299720a2f": "first_seen"
+        "evt-e067263d2f75b8b54f32": "first_seen"
       },
-      "eventId": "evt-19a46ffa0d4299720a2f",
+      "eventId": "evt-e067263d2f75b8b54f32",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-08-30T17:39:58+00:00",
-      "lastSeenAt": "2026-08-30T17:39:58+00:00"
+      "firstSeenAt": "2026-08-31T03:41:22+00:00",
+      "lastSeenAt": "2026-08-31T03:41:22+00:00"
     },
     {
-      "id": "chg-2068799923edaafc0372",
+      "id": "chg-8a8f265c2f0df6d31559",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-1ccecb8d3f3b7ae25b",
-      "entityName": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
+      "entityId": "intelligence-event-f5f58a6a9536d36937",
+      "entityName": "【钛晨报】个人住房贷款政策有大变化，个人房贷期限延至最长40年；OpenAI将终止向Cursor提供模型服务，马斯克回应；报告称AI公司每赚100美元近40美元流向云巨头",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造。",
+      "summary": "新增高价值情报事件记录：【钛晨报】个人住房贷款政策有大变化，个人房贷期限延至最长40年；OpenAI将终止向Cursor提供模型服务，马斯克回应；报告称AI公司每赚100美元近40美元流向云巨头。",
+      "importance": 86,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "追觅起诉小红书；硅谷知名风投a16z成立11亿美元基金，布局芯片、内存与机器人；国家数据局局长刘烈宏：要围绕国民经济重大场景，研究探索词元增值订阅、按效付费等商业模式；沪市公司半年报交卷：扣非后净利润增速创2022年以来新高；多家液冷企业订单排至年底",
+        "title": "【钛晨报】个人住房贷款政策有大变化，个人房贷期限延至最长40年；OpenAI将终止向Cursor提供模型服务，马斯克回应；报告称AI公司每赚100美元近40美元流向云巨头"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "追觅起诉小红书；硅谷知名风投a16z成立11亿美元基金，布局芯片、内存与机器人；国家数据局局长刘烈宏：要围绕国民经济重大场景，研究探索词元增值订阅、按效付费等商业模式；沪市公司半年报交卷：扣非后净利润增速创2022年以来新高；多家液冷企业订单排至年底",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "【钛晨报】个人住房贷款政策有大变化，个人房贷期限延至最长40年；OpenAI将终止向Cursor提供模型服务，马斯克回应；报告称AI公司每赚100美元近40美元流向云巨头",
+          "evidenceIds": [
+            "E003"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E003"
+      ],
+      "supportingEvidenceIds": [
+        "E003"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-538db42b38026da8868a"
+      ],
+      "eventLifecycles": {
+        "evt-538db42b38026da8868a": "first_seen"
+      },
+      "eventId": "evt-538db42b38026da8868a",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T03:41:22+00:00",
+      "lastSeenAt": "2026-08-31T03:41:22+00:00"
+    },
+    {
+      "id": "chg-0f4d96aa93a25ebbd46a",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-a78c95aa16d5e534fc",
+      "entityName": "私募人士观点现分歧 投资主线或正在酝酿",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：私募人士观点现分歧 投资主线或正在酝酿。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "近日，东方港湾创始人但斌、日斗投资创始人王文、神农投资创始人陈宇、知名投资人段永平等私募人士，公开发布了最新投资观点和感悟。可以看到，私募人士之间的观点分歧，不仅涉及科技领域的机会甄别，更关乎市场投资主线的判断。对于AI、券商、 创新药 、龙头 白酒 、保险等方向，私募人士看法不一。 7月以来，私募之间的配置分歧愈发明显。部分机构坚持重仓AI基础设施方向，部分机构均衡持仓，还有机构谨慎看待科技板块，“在便宜的地方找机会”。用业内人士的话来说，市场正处于温和博弈阶段，投资主线或正在酝酿中。 近日，段永平的“十年之约…",
+        "title": "私募人士观点现分歧 投资主线或正在酝酿"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "近日，东方港湾创始人但斌、日斗投资创始人王文、神农投资创始人陈宇、知名投资人段永平等私募人士，公开发布了最新投资观点和感悟。可以看到，私募人士之间的观点分歧，不仅涉及科技领域的机会甄别，更关乎市场投资主线的判断。对于AI、券商、 创新药 、龙头 白酒 、保险等方向，私募人士看法不一。 7月以来，私募之间的配置分歧愈发明显。部分机构坚持重仓AI基础设施方向，部分机构均衡持仓，还有机构谨慎看待科技板块，“在便宜的地方找机会”。用业内人士的话来说，市场正处于温和博弈阶段，投资主线或正在酝酿中。 近日，段永平的“十年之约…",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "私募人士观点现分歧 投资主线或正在酝酿",
+          "evidenceIds": [
+            "E004"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E004"
+      ],
+      "supportingEvidenceIds": [
+        "E004"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-d6b3e826186edbd219c3"
+      ],
+      "eventLifecycles": {
+        "evt-d6b3e826186edbd219c3": "first_seen"
+      },
+      "eventId": "evt-d6b3e826186edbd219c3",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T03:41:22+00:00",
+      "lastSeenAt": "2026-08-31T03:41:22+00:00"
+    },
+    {
+      "id": "chg-f483f50633182e0ee1de",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-6e9b13fd5bc68b8785",
+      "entityName": "价值判断：涨停板的投资机会和风险提示（8月28日）｜上市公司观察",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：价值判断：涨停板的投资机会和风险提示（8月28日）｜上市公司观察。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "8月28日A股指数冲高回落小幅收跌，市场成交额维持2万亿以上的高位水平，题材股依旧活跃，大小盘分化格局延续。海德股份、时代出版、林洋能源三只低位首板标的均处于深度低估区间，上涨分别依托业绩爆发、AI文化转型、储能新能源赛道逻辑，估值修复安全边际更高。",
+        "title": "价值判断：涨停板的投资机会和风险提示（8月28日）｜上市公司观察"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "8月28日A股指数冲高回落小幅收跌，市场成交额维持2万亿以上的高位水平，题材股依旧活跃，大小盘分化格局延续。海德股份、时代出版、林洋能源三只低位首板标的均处于深度低估区间，上涨分别依托业绩爆发、AI文化转型、储能新能源赛道逻辑，估值修复安全边际更高。",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "价值判断：涨停板的投资机会和风险提示（8月28日）｜上市公司观察",
+          "evidenceIds": [
+            "E005"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E005"
+      ],
+      "supportingEvidenceIds": [
+        "E005"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-ca7415f11ab8c137a800"
+      ],
+      "eventLifecycles": {
+        "evt-ca7415f11ab8c137a800": "first_seen"
+      },
+      "eventId": "evt-ca7415f11ab8c137a800",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T03:41:22+00:00",
+      "lastSeenAt": "2026-08-31T03:41:22+00:00"
+    },
+    {
+      "id": "chg-bf80f094c593b262ebc7",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-1e31334e6e1a403cf1",
+      "entityName": "Fujita freeness for projectivized toric vector bundles",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Fujita freeness for projectivized toric vector bundles。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-28",
+        "summary": "Let $X$ be a smooth projective toric variety of dimension $n\\geq1$ over an algebraically closed field of characteristic zero, let $\\mathcal E$ be a toric vector bundle of rank $r\\geq2$, and let $π\\colon Y=\\mathbb P_X(\\mathcal E)\\to X$ be the projective bundle…",
+        "title": "Fujita freeness for projectivized toric vector bundles"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-28",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Let $X$ be a smooth projective toric variety of dimension $n\\geq1$ over an algebraically closed field of characteristic zero, let $\\mathcal E$ be a toric vector bundle of rank $r\\geq2$, and let $π\\colon Y=\\mathbb P_X(\\mathcal E)\\to X$ be the projective bundle…",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Fujita freeness for projectivized toric vector bundles",
+          "evidenceIds": [
+            "E007"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E007"
+      ],
+      "supportingEvidenceIds": [
+        "E007"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-3d520788450682e1894a"
+      ],
+      "eventLifecycles": {
+        "evt-3d520788450682e1894a": "first_seen"
+      },
+      "eventId": "evt-3d520788450682e1894a",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T03:41:22+00:00",
+      "lastSeenAt": "2026-08-31T03:41:22+00:00"
+    },
+    {
+      "id": "chg-7812759f5f0b9a14f1d7",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-5e9fcb5663b83ac82b",
+      "entityName": "Explainable Uncertainty Estimation for Reliable Medical AI",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Explainable Uncertainty Estimation for Reliable Medical AI。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-28",
+        "summary": "Artificial intelligence has strong potential to support clinical decision-making, yet its adoption in healthcare remains limited due to a lack of trust. Uncertainty estimation can signal unreliable predictions, and explainable AI (XAI) can clarify how predict…",
+        "title": "Explainable Uncertainty Estimation for Reliable Medical AI"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-28",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Artificial intelligence has strong potential to support clinical decision-making, yet its adoption in healthcare remains limited due to a lack of trust. Uncertainty estimation can signal unreliable predictions, and explainable AI (XAI) can clarify how predict…",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Explainable Uncertainty Estimation for Reliable Medical AI",
+          "evidenceIds": [
+            "E008"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E008"
+      ],
+      "supportingEvidenceIds": [
+        "E008"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-92405966c1efe9db0e8d"
+      ],
+      "eventLifecycles": {
+        "evt-92405966c1efe9db0e8d": "first_seen"
+      },
+      "eventId": "evt-92405966c1efe9db0e8d",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T03:41:22+00:00",
+      "lastSeenAt": "2026-08-31T03:41:22+00:00"
+    },
+    {
+      "id": "chg-d650142f95d09800556e",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-142fbe90f982ed820d",
+      "entityName": "Amazon is buying 2 million Nvidia GPUs for AWS data center expansion",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Amazon is buying 2 million Nvidia GPUs for AWS data center expansion。",
       "importance": 84,
       "before": null,
       "after": {
         "publishedAt": "2026-08-30",
-        "summary": "当地时间2026年8月29日，塞尔维亚沙巴茨，该国首座机器人工厂正式启动量产，项目由敏实集团、智元创新与塞尔维亚方面联合推进，也是欧洲地区人形机器人重要量产基地。 一、项目基础建设情况 工厂一期投资2000万欧元，厂区面积3000平方米，产线主要承担人形机器人、四足机器狗的整机组装、运动控制校准、整机性能测试工作 。 按照规划，今年将完成500台人形机器人交付，远期规划建设机器人产业园，同步布局无人机、电池配套产线，产品以塞尔维亚制造的身份面向欧洲市场输出。塞尔维亚政府为项目提供政策与财政层面的配套支持，产线落地…",
-        "title": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造"
+        "summary": "AWS plans to add 2 million Nvidia GPUs between 2027 and 2028 The expanded deployment follows an earlier commitment exceeding one million chips New Vera-based CPUs will support increasingly demanding artificial intelligence workloads Amazon Web Services and Nv…",
+        "title": "Amazon is buying 2 million Nvidia GPUs for AWS data center expansion"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -293,31 +845,31 @@
           "before": null,
           "after": "2026-08-30",
           "evidenceIds": [
-            "E003"
+            "E009"
           ]
         },
         {
           "field": "summary",
           "before": null,
-          "after": "当地时间2026年8月29日，塞尔维亚沙巴茨，该国首座机器人工厂正式启动量产，项目由敏实集团、智元创新与塞尔维亚方面联合推进，也是欧洲地区人形机器人重要量产基地。 一、项目基础建设情况 工厂一期投资2000万欧元，厂区面积3000平方米，产线主要承担人形机器人、四足机器狗的整机组装、运动控制校准、整机性能测试工作 。 按照规划，今年将完成500台人形机器人交付，远期规划建设机器人产业园，同步布局无人机、电池配套产线，产品以塞尔维亚制造的身份面向欧洲市场输出。塞尔维亚政府为项目提供政策与财政层面的配套支持，产线落地…",
+          "after": "AWS plans to add 2 million Nvidia GPUs between 2027 and 2028 The expanded deployment follows an earlier commitment exceeding one million chips New Vera-based CPUs will support increasingly demanding artificial intelligence workloads Amazon Web Services and Nv…",
           "evidenceIds": [
-            "E003"
+            "E009"
           ]
         },
         {
           "field": "title",
           "before": null,
-          "after": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
+          "after": "Amazon is buying 2 million Nvidia GPUs for AWS data center expansion",
           "evidenceIds": [
-            "E003"
+            "E009"
           ]
         }
       ],
       "evidenceIds": [
-        "E003"
+        "E009"
       ],
       "supportingEvidenceIds": [
-        "E003"
+        "E009"
       ],
       "evidenceQuality": {
         "status": "passed",
@@ -328,35 +880,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-e0a2a000a640b6c568ef"
+        "evt-100906959e2e7ce3e663"
       ],
       "eventLifecycles": {
-        "evt-e0a2a000a640b6c568ef": "first_seen"
+        "evt-100906959e2e7ce3e663": "first_seen"
       },
-      "eventId": "evt-e0a2a000a640b6c568ef",
+      "eventId": "evt-100906959e2e7ce3e663",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-08-30T17:39:58+00:00",
-      "lastSeenAt": "2026-08-30T17:39:58+00:00"
+      "firstSeenAt": "2026-08-31T03:41:22+00:00",
+      "lastSeenAt": "2026-08-31T03:41:22+00:00"
     },
     {
-      "id": "chg-857da7fd9c6422d04090",
+      "id": "chg-593311066c27ce7b7c54",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-9b366f8dbd909cd941",
-      "entityName": "Slim Mechrevo laptop launches with unusual AMD Zen 5 APU and Nvidia RTX 5060",
+      "entityId": "intelligence-event-b31ed11f53abea934b",
+      "entityName": "Actionable CBFI: Integrating Structural Decomposition and Causal Counterfactual Recourse for Tabular Machine Learning",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：Slim Mechrevo laptop launches with unusual AMD Zen 5 APU and Nvidia RTX 5060。",
-      "importance": 82,
+      "summary": "新增高价值情报事件记录：Actionable CBFI: Integrating Structural Decomposition and Causal Counterfactual Recourse for Tabular Machine Learning。",
+      "importance": 84,
       "before": null,
       "after": {
-        "publishedAt": "2026-08-30",
-        "summary": "The Mechrevo Phenom 15 Air 2026 is a newly released gaming laptop in China, featuring the Ryzen 7 449, a non-NPU AMD APU in the Gorgon Point lineup. It's paired with the Nvidia RTX 5060, and the starting launch price is around $1,709.",
-        "title": "Slim Mechrevo laptop launches with unusual AMD Zen 5 APU and Nvidia RTX 5060"
+        "publishedAt": "2026-08-28",
+        "summary": "Explainable artificial intelligence (XAI) increasingly calls for actionable counterfactual recourse, yet current methodologies face challenges related to causal invalidity, excessive cognitive burden, and predictive failure. Exhaustive causal search algorithm…",
+        "title": "Actionable CBFI: Integrating Structural Decomposition and Causal Counterfactual Recourse for Tabular Machine Learning"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -370,33 +922,33 @@
         {
           "field": "publishedAt",
           "before": null,
-          "after": "2026-08-30",
+          "after": "2026-08-28",
           "evidenceIds": [
-            "E004"
+            "E010"
           ]
         },
         {
           "field": "summary",
           "before": null,
-          "after": "The Mechrevo Phenom 15 Air 2026 is a newly released gaming laptop in China, featuring the Ryzen 7 449, a non-NPU AMD APU in the Gorgon Point lineup. It's paired with the Nvidia RTX 5060, and the starting launch price is around $1,709.",
+          "after": "Explainable artificial intelligence (XAI) increasingly calls for actionable counterfactual recourse, yet current methodologies face challenges related to causal invalidity, excessive cognitive burden, and predictive failure. Exhaustive causal search algorithm…",
           "evidenceIds": [
-            "E004"
+            "E010"
           ]
         },
         {
           "field": "title",
           "before": null,
-          "after": "Slim Mechrevo laptop launches with unusual AMD Zen 5 APU and Nvidia RTX 5060",
+          "after": "Actionable CBFI: Integrating Structural Decomposition and Causal Counterfactual Recourse for Tabular Machine Learning",
           "evidenceIds": [
-            "E004"
+            "E010"
           ]
         }
       ],
       "evidenceIds": [
-        "E004"
+        "E010"
       ],
       "supportingEvidenceIds": [
-        "E004"
+        "E010"
       ],
       "evidenceQuality": {
         "status": "passed",
@@ -407,31 +959,988 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-dd0f111c95306d478437"
+        "evt-4443506f58a334606d3c"
       ],
       "eventLifecycles": {
-        "evt-dd0f111c95306d478437": "first_seen"
+        "evt-4443506f58a334606d3c": "first_seen"
       },
-      "eventId": "evt-dd0f111c95306d478437",
+      "eventId": "evt-4443506f58a334606d3c",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-08-30T17:39:58+00:00",
-      "lastSeenAt": "2026-08-30T17:39:58+00:00"
+      "firstSeenAt": "2026-08-31T03:41:22+00:00",
+      "lastSeenAt": "2026-08-31T03:41:22+00:00"
+    },
+    {
+      "id": "chg-2b0e72a91c9fd32c2fe5",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-dc762c98fe31f013b0",
+      "entityName": "真香！特斯拉在港澳推出更便宜的Model 3，起售价不足18万元；字节豆包大模型2.2将推迟发布，原计划8月推出；官方回应「网友呼吁取消ETC」",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：真香！特斯拉在港澳推出更便宜的Model 3，起售价不足18万元；字节豆包大模型2.2将推迟发布，原计划8月推出；官方回应「网友呼吁取消ETC」。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "要闻提示 1.特斯拉在港澳推出更便宜的Model 3，起售价不足18万元！ 2.奔驰回应星宇劝退应届生：严重道德和劳动失当行为 3.月薪1万到手仅5千？曝浪潮云强制推行“五五开”绩效 4.官方回应“网友呼吁取消ETC”！博主也给出看法：车牌识别存在不少漏洞 5.字节跳动豆包大模型 2.2 将推迟发布，原计划 8 月推出 6.雷军祝贺长鑫实现LPDDR6内存量产：非常了不起，相信还会有更多中国科技企业能够出人头地 7.网友反馈上海电信发生大面积断网故障，宽带及手机信号均受影响 8.刚花600亿美元收购Cursor两…",
+        "title": "真香！特斯拉在港澳推出更便宜的Model 3，起售价不足18万元；字节豆包大模型2.2将推迟发布，原计划8月推出；官方回应「网友呼吁取消ETC」"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E011"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "要闻提示 1.特斯拉在港澳推出更便宜的Model 3，起售价不足18万元！ 2.奔驰回应星宇劝退应届生：严重道德和劳动失当行为 3.月薪1万到手仅5千？曝浪潮云强制推行“五五开”绩效 4.官方回应“网友呼吁取消ETC”！博主也给出看法：车牌识别存在不少漏洞 5.字节跳动豆包大模型 2.2 将推迟发布，原计划 8 月推出 6.雷军祝贺长鑫实现LPDDR6内存量产：非常了不起，相信还会有更多中国科技企业能够出人头地 7.网友反馈上海电信发生大面积断网故障，宽带及手机信号均受影响 8.刚花600亿美元收购Cursor两…",
+          "evidenceIds": [
+            "E011"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "真香！特斯拉在港澳推出更便宜的Model 3，起售价不足18万元；字节豆包大模型2.2将推迟发布，原计划8月推出；官方回应「网友呼吁取消ETC」",
+          "evidenceIds": [
+            "E011"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E011"
+      ],
+      "supportingEvidenceIds": [
+        "E011"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-95ed2c17f682d31a0034"
+      ],
+      "eventLifecycles": {
+        "evt-95ed2c17f682d31a0034": "first_seen"
+      },
+      "eventId": "evt-95ed2c17f682d31a0034",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T03:41:22+00:00",
+      "lastSeenAt": "2026-08-31T03:41:22+00:00"
+    },
+    {
+      "id": "chg-bac8719bbf661070f920",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-e3d6e7a0996da02352",
+      "entityName": "LG ELECTRONICS UNVEILS THE NEXT EVOLUTION OF AI HOME AT IFA 2026",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：LG ELECTRONICS UNVEILS THE NEXT EVOLUTION OF AI HOME AT IFA 2026。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "Introducing ThinQ Claw and Expanded AI Home Experiences Powered by Contextual Intelligence News Summary LG unveils the next evolution of AI Home at IFA 2026, leveraging upgraded contextual intelligence to recommend relevant actions, coordinate connected devic…",
+        "title": "LG ELECTRONICS UNVEILS THE NEXT EVOLUTION OF AI HOME AT IFA 2026"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E012"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Introducing ThinQ Claw and Expanded AI Home Experiences Powered by Contextual Intelligence News Summary LG unveils the next evolution of AI Home at IFA 2026, leveraging upgraded contextual intelligence to recommend relevant actions, coordinate connected devic…",
+          "evidenceIds": [
+            "E012"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "LG ELECTRONICS UNVEILS THE NEXT EVOLUTION OF AI HOME AT IFA 2026",
+          "evidenceIds": [
+            "E012"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E012"
+      ],
+      "supportingEvidenceIds": [
+        "E012"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-d1225648fc4d26779afa"
+      ],
+      "eventLifecycles": {
+        "evt-d1225648fc4d26779afa": "first_seen"
+      },
+      "eventId": "evt-d1225648fc4d26779afa",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T03:41:22+00:00",
+      "lastSeenAt": "2026-08-31T03:41:22+00:00"
+    },
+    {
+      "id": "chg-fb154cdee1b1289e1c4f",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-419228672349bc301e",
+      "entityName": "Alibaba Launches AI Song Generator HappyShrimp, Echoing Old Xiami Brand",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Alibaba Launches AI Song Generator HappyShrimp, Echoing Old Xiami Brand。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "Alibaba has released HappyShrimp 1.0, an AI model that converts natural-language prompts into complete songs, and paired the launch with a partnership involving Taihe Music Group. The product draws on branding linked to the former Xiami streaming service, whi…",
+        "title": "Alibaba Launches AI Song Generator HappyShrimp, Echoing Old Xiami Brand"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E013"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Alibaba has released HappyShrimp 1.0, an AI model that converts natural-language prompts into complete songs, and paired the launch with a partnership involving Taihe Music Group. The product draws on branding linked to the former Xiami streaming service, whi…",
+          "evidenceIds": [
+            "E013"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Alibaba Launches AI Song Generator HappyShrimp, Echoing Old Xiami Brand",
+          "evidenceIds": [
+            "E013"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E013"
+      ],
+      "supportingEvidenceIds": [
+        "E013"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-6f655d8a700acb048ba9"
+      ],
+      "eventLifecycles": {
+        "evt-6f655d8a700acb048ba9": "first_seen"
+      },
+      "eventId": "evt-6f655d8a700acb048ba9",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T03:41:22+00:00",
+      "lastSeenAt": "2026-08-31T03:41:22+00:00"
+    },
+    {
+      "id": "chg-2ca3d4381fefe9b5da20",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-570445736c7e36255e",
+      "entityName": "沐曦股份上市后首份半年报出炉：同比扭亏为盈 GPU产品出货量显著提升",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：沐曦股份上市后首份半年报出炉：同比扭亏为盈 GPU产品出货量显著提升。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "8月30日，国产GPU龙头沐曦股份披露2026年半年报。也是该公司自2025年12月登陆科创板以来，披露的首份半年报。 财报显示，沐曦股份今年上半年实现营业收入13.24亿元，同比增长44.67%；归母净利润6.12亿元， 实现扭亏。 上半年毛利率57.2%，同比提升1.1个百分点。 分季度看，该公司今年第二季度实现收入7.62亿元，同比增长28.12%；归母净利润7.11亿元，同比增长1425.76%。其单季扣非归母净利润0.54亿元， 环比亦由亏转盈。",
+        "title": "沐曦股份上市后首份半年报出炉：同比扭亏为盈 GPU产品出货量显著提升"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E014"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "8月30日，国产GPU龙头沐曦股份披露2026年半年报。也是该公司自2025年12月登陆科创板以来，披露的首份半年报。 财报显示，沐曦股份今年上半年实现营业收入13.24亿元，同比增长44.67%；归母净利润6.12亿元， 实现扭亏。 上半年毛利率57.2%，同比提升1.1个百分点。 分季度看，该公司今年第二季度实现收入7.62亿元，同比增长28.12%；归母净利润7.11亿元，同比增长1425.76%。其单季扣非归母净利润0.54亿元， 环比亦由亏转盈。",
+          "evidenceIds": [
+            "E014"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "沐曦股份上市后首份半年报出炉：同比扭亏为盈 GPU产品出货量显著提升",
+          "evidenceIds": [
+            "E014"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E014"
+      ],
+      "supportingEvidenceIds": [
+        "E014"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-27468b7bbd55cb372877"
+      ],
+      "eventLifecycles": {
+        "evt-27468b7bbd55cb372877": "first_seen"
+      },
+      "eventId": "evt-27468b7bbd55cb372877",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T03:41:22+00:00",
+      "lastSeenAt": "2026-08-31T03:41:22+00:00"
+    },
+    {
+      "id": "chg-b607440c486aa949bc75",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-5b569d7e9127526eb7",
+      "entityName": "国产AI芯片龙头来了！本周3只新股申购",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：国产AI芯片龙头来了！本周3只新股申购。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "据目前安排，若无变化本周（8月31日到9月4日）有3只新股申购。其中科创板2只，北交所1只。 截至发稿，本周网上发行1只新股披露发行价。北交所新股 百迈科 发行价为17.1元，发行市盈率14.99倍。 9月2日启动申购的 燧原科技 本次网上发行股票数量为689万股，网上发行申购上限为0.65万股，顶格申购需配沪市市值6.5万元。",
+        "title": "国产AI芯片龙头来了！本周3只新股申购"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E015"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "据目前安排，若无变化本周（8月31日到9月4日）有3只新股申购。其中科创板2只，北交所1只。 截至发稿，本周网上发行1只新股披露发行价。北交所新股 百迈科 发行价为17.1元，发行市盈率14.99倍。 9月2日启动申购的 燧原科技 本次网上发行股票数量为689万股，网上发行申购上限为0.65万股，顶格申购需配沪市市值6.5万元。",
+          "evidenceIds": [
+            "E015"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "国产AI芯片龙头来了！本周3只新股申购",
+          "evidenceIds": [
+            "E015"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E015"
+      ],
+      "supportingEvidenceIds": [
+        "E015"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-8b478881ba056b5fc3ab"
+      ],
+      "eventLifecycles": {
+        "evt-8b478881ba056b5fc3ab": "first_seen"
+      },
+      "eventId": "evt-8b478881ba056b5fc3ab",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T03:41:22+00:00",
+      "lastSeenAt": "2026-08-31T03:41:22+00:00"
+    },
+    {
+      "id": "chg-5001b022724934acf81a",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-track-wechat-robotics-c8aa401624971e82",
+      "entityName": "小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速",
+      "action": "added",
+      "changedFields": [
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速。",
+      "importance": 70,
+      "before": null,
+      "after": {},
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E017"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E017"
+      ],
+      "supportingEvidenceIds": [
+        "E017"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-7e0df9b4c30dedbedd48"
+      ],
+      "eventLifecycles": {
+        "evt-7e0df9b4c30dedbedd48": "first_seen"
+      },
+      "eventId": "evt-7e0df9b4c30dedbedd48",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T03:41:22+00:00",
+      "lastSeenAt": "2026-08-31T03:41:22+00:00"
+    },
+    {
+      "id": "chg-35985106cc7593dfcdc5",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "xtalpi",
+      "entityName": "晶泰控股有限公司",
+      "action": "updated",
+      "changedFields": [
+        "quote"
+      ],
+      "summary": "晶泰控股有限公司 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "quote": {
+          "asOf": "2026-08-28T16:08:36+08:00",
+          "change": 0.14,
+          "changePercent": 1.88,
+          "currency": "HKD",
+          "previousClose": 7.46
+        }
+      },
+      "after": {
+        "quote": {
+          "asOf": "2026-08-31T11:38:37+08:00",
+          "change": -0.335,
+          "changePercent": -4.41,
+          "currency": "HKD",
+          "previousClose": 7.6
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-28T16:08:36+08:00",
+            "change": 0.14,
+            "changePercent": 1.88,
+            "currency": "HKD",
+            "previousClose": 7.46
+          },
+          "after": {
+            "asOf": "2026-08-31T11:38:37+08:00",
+            "change": -0.335,
+            "changePercent": -4.41,
+            "currency": "HKD",
+            "previousClose": 7.6
+          },
+          "evidenceIds": [
+            "E022"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E022"
+      ],
+      "supportingEvidenceIds": [
+        "E022"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-107c31a86fb2bd117eed"
+      ],
+      "eventLifecycles": {
+        "evt-107c31a86fb2bd117eed": "first_seen"
+      },
+      "eventId": "evt-107c31a86fb2bd117eed",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T03:41:22+00:00",
+      "lastSeenAt": "2026-08-31T03:41:22+00:00"
+    },
+    {
+      "id": "chg-23192ecf82a77b63cbab",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "catl",
+      "entityName": "宁德时代",
+      "action": "updated",
+      "changedFields": [
+        "news",
+        "quote"
+      ],
+      "summary": "宁德时代 的 news、quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": [],
+        "quote": {
+          "asOf": "2026-08-28T16:29:15+08:00",
+          "change": -4.5,
+          "changePercent": -1.21,
+          "currency": "CNY",
+          "previousClose": 373.0
+        }
+      },
+      "after": {
+        "news": [
+          {
+            "publishedAt": "2026-08-31T09:52:00+08:00",
+            "source": "新浪财经",
+            "title": "宁德时代AH股齐跌，A股跌超3%，H股跌超4%。",
+            "url": "https://finance.sina.com.cn/7x24/2026-08-31/doc-iniqehwx4730592.shtml"
+          },
+          {
+            "publishedAt": "2026-08-31T08:11:00+08:00",
+            "source": "新浪财经",
+            "title": "今年来超1000个回购方案实施完毕，顺丰控股、京东方A、宁德时代回购金额居前",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-31/doc-iniqehxc9194147.shtml"
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-31T11:30:00+08:00",
+          "change": -10.33,
+          "changePercent": -2.8,
+          "currency": "CNY",
+          "previousClose": 368.5
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news",
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [],
+          "after": [
+            {
+              "publishedAt": "2026-08-31T09:52:00+08:00",
+              "source": "新浪财经",
+              "title": "宁德时代AH股齐跌，A股跌超3%，H股跌超4%。",
+              "url": "https://finance.sina.com.cn/7x24/2026-08-31/doc-iniqehwx4730592.shtml"
+            },
+            {
+              "publishedAt": "2026-08-31T08:11:00+08:00",
+              "source": "新浪财经",
+              "title": "今年来超1000个回购方案实施完毕，顺丰控股、京东方A、宁德时代回购金额居前",
+              "url": "https://finance.sina.com.cn/jjxw/2026-08-31/doc-iniqehxc9194147.shtml"
+            }
+          ],
+          "evidenceIds": [
+            "E026",
+            "E027"
+          ]
+        },
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-28T16:29:15+08:00",
+            "change": -4.5,
+            "changePercent": -1.21,
+            "currency": "CNY",
+            "previousClose": 373.0
+          },
+          "after": {
+            "asOf": "2026-08-31T11:30:00+08:00",
+            "change": -10.33,
+            "changePercent": -2.8,
+            "currency": "CNY",
+            "previousClose": 368.5
+          },
+          "evidenceIds": [
+            "E028"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E026",
+        "E027",
+        "E028"
+      ],
+      "supportingEvidenceIds": [
+        "E026",
+        "E027",
+        "E028"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 3,
+        "total": 3
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-44c9fc2f3b146c40d924",
+        "evt-a9b2b0742ac0fc195658",
+        "evt-91ac8f2272f5626d42e3"
+      ],
+      "eventLifecycles": {
+        "evt-44c9fc2f3b146c40d924": "first_seen",
+        "evt-a9b2b0742ac0fc195658": "first_seen",
+        "evt-91ac8f2272f5626d42e3": "first_seen"
+      },
+      "lifecycle": "mixed",
+      "firstSeenAt": "2026-08-31T03:41:22+00:00",
+      "lastSeenAt": "2026-08-31T03:41:22+00:00"
+    },
+    {
+      "id": "chg-90616ee2d5f121e5c79a",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "bgi-genomics",
+      "entityName": "华大基因",
+      "action": "updated",
+      "changedFields": [
+        "quote"
+      ],
+      "summary": "华大基因 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "quote": {
+          "asOf": "2026-08-28T16:29:15+08:00",
+          "change": -1.26,
+          "changePercent": -3.09,
+          "currency": "CNY",
+          "previousClose": 40.78
+        }
+      },
+      "after": {
+        "quote": {
+          "asOf": "2026-08-31T11:30:00+08:00",
+          "change": -1.09,
+          "changePercent": -2.76,
+          "currency": "CNY",
+          "previousClose": 39.52
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-28T16:29:15+08:00",
+            "change": -1.26,
+            "changePercent": -3.09,
+            "currency": "CNY",
+            "previousClose": 40.78
+          },
+          "after": {
+            "asOf": "2026-08-31T11:30:00+08:00",
+            "change": -1.09,
+            "changePercent": -2.76,
+            "currency": "CNY",
+            "previousClose": 39.52
+          },
+          "evidenceIds": [
+            "E030"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E030"
+      ],
+      "supportingEvidenceIds": [
+        "E030"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-ad5d2a8a6decad76795f"
+      ],
+      "eventLifecycles": {
+        "evt-ad5d2a8a6decad76795f": "first_seen"
+      },
+      "eventId": "evt-ad5d2a8a6decad76795f",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T03:41:22+00:00",
+      "lastSeenAt": "2026-08-31T03:41:22+00:00"
+    },
+    {
+      "id": "chg-a872b875f334ea0834c4",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "cambricon",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "action": "updated",
+      "changedFields": [
+        "news",
+        "quote"
+      ],
+      "summary": "中科寒武纪科技股份有限公司 的 news、quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": [],
+        "quote": {
+          "asOf": "2026-08-28T15:34:58+08:00",
+          "change": -1.37,
+          "changePercent": -0.13,
+          "currency": "CNY",
+          "previousClose": 1048.0
+        }
+      },
+      "after": {
+        "news": [
+          {
+            "publishedAt": "2026-08-31T10:32:00+08:00",
+            "source": "新浪财经",
+            "title": "行业财报 | 长鑫科技、中芯国际、北方华创、长电科技、豪威集团、寒武纪等中国30家半导体企业2026年上半年业绩汇总",
+            "url": "https://cj.sina.cn/articles/view/7207652843/1ad9c0deb02001v2tc"
+          },
+          {
+            "publishedAt": "2026-08-31T05:06:00+08:00",
+            "source": "新浪财经",
+            "title": "寒武纪股权激励兑现：124名员工人均获557万元市值，新一轮覆盖85%员工",
+            "url": "https://finance.sina.com.cn/roll/2026-08-31/doc-iniqcwif7800565.shtml"
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-31T11:30:00+08:00",
+          "change": 20.97,
+          "changePercent": 2.0,
+          "currency": "CNY",
+          "previousClose": 1046.63
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news",
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [],
+          "after": [
+            {
+              "publishedAt": "2026-08-31T10:32:00+08:00",
+              "source": "新浪财经",
+              "title": "行业财报 | 长鑫科技、中芯国际、北方华创、长电科技、豪威集团、寒武纪等中国30家半导体企业2026年上半年业绩汇总",
+              "url": "https://cj.sina.cn/articles/view/7207652843/1ad9c0deb02001v2tc"
+            },
+            {
+              "publishedAt": "2026-08-31T05:06:00+08:00",
+              "source": "新浪财经",
+              "title": "寒武纪股权激励兑现：124名员工人均获557万元市值，新一轮覆盖85%员工",
+              "url": "https://finance.sina.com.cn/roll/2026-08-31/doc-iniqcwif7800565.shtml"
+            }
+          ],
+          "evidenceIds": [
+            "E034",
+            "E036"
+          ]
+        },
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-28T15:34:58+08:00",
+            "change": -1.37,
+            "changePercent": -0.13,
+            "currency": "CNY",
+            "previousClose": 1048.0
+          },
+          "after": {
+            "asOf": "2026-08-31T11:30:00+08:00",
+            "change": 20.97,
+            "changePercent": 2.0,
+            "currency": "CNY",
+            "previousClose": 1046.63
+          },
+          "evidenceIds": [
+            "E035"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E034",
+        "E035",
+        "E036"
+      ],
+      "supportingEvidenceIds": [
+        "E034",
+        "E035",
+        "E036"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 3,
+        "total": 3
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-96d0e56daecf63a4d0df",
+        "evt-236d3dfdcbf781c61260",
+        "evt-61a14928170a8c6c84f2"
+      ],
+      "eventLifecycles": {
+        "evt-96d0e56daecf63a4d0df": "first_seen",
+        "evt-236d3dfdcbf781c61260": "first_seen",
+        "evt-61a14928170a8c6c84f2": "first_seen"
+      },
+      "lifecycle": "mixed",
+      "firstSeenAt": "2026-08-31T03:41:22+00:00",
+      "lastSeenAt": "2026-08-31T03:41:22+00:00"
+    },
+    {
+      "id": "chg-39e7795f0a349926e1a8",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "horizon-robotics",
+      "entityName": "Horizon Robotics",
+      "action": "updated",
+      "changedFields": [
+        "quote"
+      ],
+      "summary": "Horizon Robotics 的 quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "quote": {
+          "asOf": "2026-08-28T16:08:36+08:00",
+          "change": -0.0,
+          "changePercent": -0.0,
+          "currency": "HKD",
+          "previousClose": 4.745
+        }
+      },
+      "after": {
+        "quote": {
+          "asOf": "2026-08-31T11:38:37+08:00",
+          "change": -0.12,
+          "changePercent": -2.53,
+          "currency": "HKD",
+          "previousClose": 4.745
+        }
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "quote"
+      ],
+      "claimBindings": [
+        {
+          "field": "quote",
+          "before": {
+            "asOf": "2026-08-28T16:08:36+08:00",
+            "change": -0.0,
+            "changePercent": -0.0,
+            "currency": "HKD",
+            "previousClose": 4.745
+          },
+          "after": {
+            "asOf": "2026-08-31T11:38:37+08:00",
+            "change": -0.12,
+            "changePercent": -2.53,
+            "currency": "HKD",
+            "previousClose": 4.745
+          },
+          "evidenceIds": [
+            "E038"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E038"
+      ],
+      "supportingEvidenceIds": [
+        "E038"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-09cacf02606d9838e6f2"
+      ],
+      "eventLifecycles": {
+        "evt-09cacf02606d9838e6f2": "first_seen"
+      },
+      "eventId": "evt-09cacf02606d9838e6f2",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T03:41:22+00:00",
+      "lastSeenAt": "2026-08-31T03:41:22+00:00"
     }
   ],
   "evidence": [
     {
       "id": "E002",
-      "changeId": "chg-40cf16e483eaba03eae5",
-      "entityName": "Texas Governor Abbott blocks funding for more Flock cameras",
-      "claim": "新增高价值情报事件记录：Texas Governor Abbott blocks funding for more Flock cameras。",
+      "changeId": "chg-4b61d45719d04e110094",
+      "entityName": "DLSS 5 mod brings next-gen tech to old Ampere GPUs, but frame rates are horrible — most games tank to single digits, high-end GPUs can hit up to 40 FPS in some cases",
+      "claim": "新增高价值情报事件记录：DLSS 5 mod brings next-gen tech to old Ampere GPUs, but frame rates are horrible — most games tank to single digits, high-end GPUs can hit up to 40 FPS in some cases。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "The Verge",
-      "title": "Texas Governor Abbott blocks funding for more Flock cameras",
-      "url": "https://www.theverge.com/ai-artificial-intelligence/986541/texas-governor-abbott-flock-cameras",
+      "sourceName": "Tom's Hardware",
+      "title": "DLSS 5 mod brings next-gen tech to old Ampere GPUs, but frame rates are horrible — most games tank to single digits, high-end GPUs can hit up to 40 FPS in some cases",
+      "url": "https://www.tomshardware.com/pc-components/gpus/dlss-5-mod-brings-next-gen-tech-to-old-ampere-gpus-but-frame-rates-are-horrible-most-games-tank-to-single-digits-high-end-gpus-can-hit-up-to-40-fps-in-some-cases",
       "publishedAt": "2026-08-30",
       "evidenceGrade": "C",
-      "platformName": "The Verge",
+      "platformName": "Tom's Hardware",
       "sourceRole": "corroboration",
       "claimFields": [
         "publishedAt",
@@ -445,17 +1954,17 @@
     },
     {
       "id": "E003",
-      "changeId": "chg-2068799923edaafc0372",
-      "entityName": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
-      "claim": "新增高价值情报事件记录：中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造。",
+      "changeId": "chg-8a8f265c2f0df6d31559",
+      "entityName": "【钛晨报】个人住房贷款政策有大变化，个人房贷期限延至最长40年；OpenAI将终止向Cursor提供模型服务，马斯克回应；报告称AI公司每赚100美元近40美元流向云巨头",
+      "claim": "新增高价值情报事件记录：【钛晨报】个人住房贷款政策有大变化，个人房贷期限延至最长40年；OpenAI将终止向Cursor提供模型服务，马斯克回应；报告称AI公司每赚100美元近40美元流向云巨头。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "老王-产业观察",
-      "title": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
-      "url": "https://mp.weixin.qq.com/s?new=1&signature=Lgr7DD9mjcwTjtRLyRQLoxvHTzeZDM9LXJkmS%2Ax-t38EE8Ih2JmCMHvYtLwuOxyyjWqGY1i8i67vBD%2AHWR-TB98d9vfkuJOStbtqFyO4MiQOQIgaQ5sJPK08PV%2ARIiMg&src=11&timestamp=1788106977&ver=6936",
-      "publishedAt": "2026-08-30",
+      "sourceName": "钛媒体",
+      "title": "【钛晨报】个人住房贷款政策有大变化，个人房贷期限延至最长40年；OpenAI将终止向Cursor提供模型服务，马斯克回应；报告称AI公司每赚100美元近40美元流向云巨头",
+      "url": "https://www.tmtpost.com/8122212.html",
+      "publishedAt": "2026-08-31",
       "evidenceGrade": "C",
-      "platformName": "微信",
+      "platformName": "专业媒体",
       "sourceRole": "corroboration",
       "claimFields": [
         "publishedAt",
@@ -469,17 +1978,40 @@
     },
     {
       "id": "E004",
-      "changeId": "chg-857da7fd9c6422d04090",
-      "entityName": "Slim Mechrevo laptop launches with unusual AMD Zen 5 APU and Nvidia RTX 5060",
-      "claim": "新增高价值情报事件记录：Slim Mechrevo laptop launches with unusual AMD Zen 5 APU and Nvidia RTX 5060。",
+      "changeId": "chg-0f4d96aa93a25ebbd46a",
+      "entityName": "私募人士观点现分歧 投资主线或正在酝酿",
+      "claim": "新增高价值情报事件记录：私募人士观点现分歧 投资主线或正在酝酿。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "Notebookcheck",
-      "title": "Slim Mechrevo laptop launches with unusual AMD Zen 5 APU and Nvidia RTX 5060",
-      "url": "https://www.notebookcheck.net/Slim-Mechrevo-laptop-launches-with-unusual-AMD-Zen-5-APU-and-Nvidia-RTX-5060.1383213.0.html",
-      "publishedAt": "2026-08-30",
+      "sourceName": "东方财富",
+      "title": "私募人士观点现分歧 投资主线或正在酝酿",
+      "url": "https://finance.eastmoney.com/a/202608313859539058.html",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "媒体报道",
+      "platformName": "东方财富",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E005",
+      "changeId": "chg-f483f50633182e0ee1de",
+      "entityName": "价值判断：涨停板的投资机会和风险提示（8月28日）｜上市公司观察",
+      "claim": "新增高价值情报事件记录：价值判断：涨停板的投资机会和风险提示（8月28日）｜上市公司观察。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "钛媒体",
+      "title": "价值判断：涨停板的投资机会和风险提示（8月28日）｜上市公司观察",
+      "url": "https://www.tmtpost.com/8122386.html",
+      "publishedAt": "2026-08-31",
       "evidenceGrade": "C",
-      "platformName": "Notebookcheck",
+      "platformName": "专业媒体",
       "sourceRole": "corroboration",
       "claimFields": [
         "publishedAt",
@@ -490,11 +2022,426 @@
       "qualityIssues": [],
       "qualityStatus": "passed",
       "supportStatus": "supports"
+    },
+    {
+      "id": "E007",
+      "changeId": "chg-bf80f094c593b262ebc7",
+      "entityName": "Fujita freeness for projectivized toric vector bundles",
+      "claim": "新增高价值情报事件记录：Fujita freeness for projectivized toric vector bundles。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "arXiv · Core AI companies",
+      "title": "Fujita freeness for projectivized toric vector bundles",
+      "url": "https://arxiv.org/abs/2608.28438v1",
+      "publishedAt": "2026-08-28",
+      "evidenceGrade": "B",
+      "platformName": "arXiv",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E008",
+      "changeId": "chg-7812759f5f0b9a14f1d7",
+      "entityName": "Explainable Uncertainty Estimation for Reliable Medical AI",
+      "claim": "新增高价值情报事件记录：Explainable Uncertainty Estimation for Reliable Medical AI。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "arXiv · Core AI companies",
+      "title": "Explainable Uncertainty Estimation for Reliable Medical AI",
+      "url": "https://arxiv.org/abs/2608.28052v1",
+      "publishedAt": "2026-08-28",
+      "evidenceGrade": "B",
+      "platformName": "arXiv",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E009",
+      "changeId": "chg-d650142f95d09800556e",
+      "entityName": "Amazon is buying 2 million Nvidia GPUs for AWS data center expansion",
+      "claim": "新增高价值情报事件记录：Amazon is buying 2 million Nvidia GPUs for AWS data center expansion。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "TechRadar",
+      "title": "Amazon is buying 2 million Nvidia GPUs for AWS data center expansion",
+      "url": "https://www.techradar.com/pro/amazon-is-buying-2-million-nvidia-gpus-for-aws-data-center-expansion",
+      "publishedAt": "2026-08-30",
+      "evidenceGrade": "C",
+      "platformName": "TechRadar",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E010",
+      "changeId": "chg-593311066c27ce7b7c54",
+      "entityName": "Actionable CBFI: Integrating Structural Decomposition and Causal Counterfactual Recourse for Tabular Machine Learning",
+      "claim": "新增高价值情报事件记录：Actionable CBFI: Integrating Structural Decomposition and Causal Counterfactual Recourse for Tabular Machine Learning。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "arXiv · Core AI companies",
+      "title": "Actionable CBFI: Integrating Structural Decomposition and Causal Counterfactual Recourse for Tabular Machine Learning",
+      "url": "https://arxiv.org/abs/2608.27821v1",
+      "publishedAt": "2026-08-28",
+      "evidenceGrade": "B",
+      "platformName": "arXiv",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E011",
+      "changeId": "chg-2b0e72a91c9fd32c2fe5",
+      "entityName": "真香！特斯拉在港澳推出更便宜的Model 3，起售价不足18万元；字节豆包大模型2.2将推迟发布，原计划8月推出；官方回应「网友呼吁取消ETC」",
+      "claim": "新增高价值情报事件记录：真香！特斯拉在港澳推出更便宜的Model 3，起售价不足18万元；字节豆包大模型2.2将推迟发布，原计划8月推出；官方回应「网友呼吁取消ETC」。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "雷峰网",
+      "title": "真香！特斯拉在港澳推出更便宜的Model 3，起售价不足18万元；字节豆包大模型2.2将推迟发布，原计划8月推出；官方回应「网友呼吁取消ETC」",
+      "url": "https://www.leiphone.com/category/zaobao/3X5Iht5o0zblV5d9.html",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E012",
+      "changeId": "chg-bac8719bbf661070f920",
+      "entityName": "LG ELECTRONICS UNVEILS THE NEXT EVOLUTION OF AI HOME AT IFA 2026",
+      "claim": "新增高价值情报事件记录：LG ELECTRONICS UNVEILS THE NEXT EVOLUTION OF AI HOME AT IFA 2026。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "LG ELECTRONICS UNVEILS THE NEXT EVOLUTION OF AI HOME AT IFA 2026",
+      "url": "https://www.prnewswire.com/news-releases/lg-electronics-unveils-the-next-evolution-of-ai-home-at-ifa-2026-302864368.html",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "B",
+      "platformName": "新闻稿",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E013",
+      "changeId": "chg-fb154cdee1b1289e1c4f",
+      "entityName": "Alibaba Launches AI Song Generator HappyShrimp, Echoing Old Xiami Brand",
+      "claim": "新增高价值情报事件记录：Alibaba Launches AI Song Generator HappyShrimp, Echoing Old Xiami Brand。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "钛媒体",
+      "title": "Alibaba Launches AI Song Generator HappyShrimp, Echoing Old Xiami Brand",
+      "url": "https://www.tmtpost.com/8122395.html",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E014",
+      "changeId": "chg-2ca3d4381fefe9b5da20",
+      "entityName": "沐曦股份上市后首份半年报出炉：同比扭亏为盈 GPU产品出货量显著提升",
+      "claim": "新增高价值情报事件记录：沐曦股份上市后首份半年报出炉：同比扭亏为盈 GPU产品出货量显著提升。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "东方财富",
+      "title": "沐曦股份上市后首份半年报出炉：同比扭亏为盈 GPU产品出货量显著提升",
+      "url": "https://finance.eastmoney.com/a/202608303859503869.html",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "媒体报道",
+      "platformName": "东方财富",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E015",
+      "changeId": "chg-b607440c486aa949bc75",
+      "entityName": "国产AI芯片龙头来了！本周3只新股申购",
+      "claim": "新增高价值情报事件记录：国产AI芯片龙头来了！本周3只新股申购。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "东方财富",
+      "title": "国产AI芯片龙头来了！本周3只新股申购",
+      "url": "https://finance.eastmoney.com/a/202608313859567918.html",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "媒体报道",
+      "platformName": "东方财富",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E017",
+      "changeId": "chg-5001b022724934acf81a",
+      "entityName": "小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速",
+      "claim": "新增机构/资本事件记录：小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "真机智能",
+      "title": "小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速",
+      "url": "https://mp.weixin.qq.com/s?src=11&timestamp=1788138655&ver=6937&signature=sHyWSbiT8tfTFfTgpS%2ApBujYt-TIA8AKPsvXY4IA-Vqcfj%2AF7ryAKtAgCALN5meMlDZXlgfYoYyLKitrxUsvTfttSn6Yq0TydUs4zA98MS7NMvgfn2Ofje-6SAprh373&new=1",
+      "publishedAt": "2026-08-30",
+      "evidenceGrade": "C",
+      "platformName": "微信",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E022",
+      "changeId": "chg-35985106cc7593dfcdc5",
+      "entityName": "晶泰控股有限公司",
+      "claim": "晶泰控股有限公司 的 quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "新浪财经 行情数据",
+      "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
+      "publishedAt": "2026-08-31T11:38:37+08:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E026",
+      "changeId": "chg-23192ecf82a77b63cbab",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news、quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "宁德时代AH股齐跌，A股跌超3%，H股跌超4%。",
+      "url": "https://finance.sina.com.cn/7x24/2026-08-31/doc-iniqehwx4730592.shtml",
+      "publishedAt": "2026-08-31T09:52:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E027",
+      "changeId": "chg-23192ecf82a77b63cbab",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news、quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "今年来超1000个回购方案实施完毕，顺丰控股、京东方A、宁德时代回购金额居前",
+      "url": "https://finance.sina.com.cn/jjxw/2026-08-31/doc-iniqehxc9194147.shtml",
+      "publishedAt": "2026-08-31T08:11:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E028",
+      "changeId": "chg-23192ecf82a77b63cbab",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news、quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "新浪财经 行情数据",
+      "url": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml",
+      "publishedAt": "2026-08-31T11:30:00+08:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E030",
+      "changeId": "chg-90616ee2d5f121e5c79a",
+      "entityName": "华大基因",
+      "claim": "华大基因 的 quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "新浪财经 行情数据",
+      "url": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml",
+      "publishedAt": "2026-08-31T11:30:00+08:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E034",
+      "changeId": "chg-a872b875f334ea0834c4",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "claim": "中科寒武纪科技股份有限公司 的 news、quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "行业财报 | 长鑫科技、中芯国际、北方华创、长电科技、豪威集团、寒武纪等中国30家半导体企业2026年上半年业绩汇总",
+      "url": "https://cj.sina.cn/articles/view/7207652843/1ad9c0deb02001v2tc",
+      "publishedAt": "2026-08-31T10:32:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E035",
+      "changeId": "chg-a872b875f334ea0834c4",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "claim": "中科寒武纪科技股份有限公司 的 news、quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "新浪财经 行情数据",
+      "url": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
+      "publishedAt": "2026-08-31T11:30:00+08:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E036",
+      "changeId": "chg-a872b875f334ea0834c4",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "claim": "中科寒武纪科技股份有限公司 的 news、quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "寒武纪股权激励兑现：124名员工人均获557万元市值，新一轮覆盖85%员工",
+      "url": "https://finance.sina.com.cn/roll/2026-08-31/doc-iniqcwif7800565.shtml",
+      "publishedAt": "2026-08-31T05:06:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E038",
+      "changeId": "chg-39e7795f0a349926e1a8",
+      "entityName": "Horizon Robotics",
+      "claim": "Horizon Robotics 的 quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "新浪财经 行情数据",
+      "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+      "publishedAt": "2026-08-31T11:38:37+08:00",
+      "evidenceGrade": "市场数据",
+      "claimFields": [
+        "quote"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
     }
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-08-30T17:39:58+00:00",
+    "generatedAt": "2026-08-31T03:41:22+00:00",
     "retentionDays": 180,
     "events": {
       "evt-e0a2a000a640b6c568ef": {
@@ -519,7 +2466,9 @@
         "sourceAliases": [
           "evd-16b077d2d96a2e663e1b",
           "record-9797c809ebbe7c465ba2",
-          "src-111f2c2cdc83e5f2ba27"
+          "src-111f2c2cdc83e5f2ba27",
+          "record-9e20f093562ebaf1d333",
+          "src-3c47c57eb2afcc99018f"
         ],
         "evidenceFingerprints": [
           "16b077d2d96a2e663e1b"
@@ -532,18 +2481,1456 @@
             "publishedAt": "2026-08-30",
             "evidenceGrade": "C",
             "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "老王-产业观察",
+            "title": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=j7zWV4nv-lDd9V3elHG45tQesWMRy6ZAdKPwujWKYT86FxDcF3VikWyYs8OUWqM-popubuqsreCmAB8HzE4gxxqUeHq9pfvQi8sgHIzX8Q5Hz5slq%2AynS%2AbjJZuE8Ljl&src=11&timestamp=1788146817&ver=6937",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
           }
         ],
         "claimFingerprint": "c86594e60cf287751052",
         "scalarClaims": {},
         "ipoStage": null,
         "firstSeenAt": "2026-08-30T17:39:58+00:00",
-        "lastSeenAt": "2026-08-30T17:39:58+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
         "lastPublishedAt": "2026-08-30T17:39:58+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-e067263d2f75b8b54f32": {
+        "eventId": "evt-e067263d2f75b8b54f32",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-49056d0807d7bed606",
+        "entityName": "DLSS 5 mod brings next-gen tech to old Ampere GPUs, but frame rates are horrible — most games tank to single digits, high-end GPUs can hit up to 40 FPS in some cases",
+        "title": "DLSS 5 mod brings next-gen tech to old Ampere GPUs, but frame rates are horrible — most games tank to single digits, high-end GPUs can hit up to 40 FPS in some cases",
+        "titleAliases": [
+          "dlss5modbringsnextgentechtooldamperegpusbutframeratesarehorriblemostgamestanktosingledigitshighendgpuscanhitupto40fpsinsomecases"
+        ],
+        "publishedDate": "2026-08-30",
+        "publishedDates": [
+          "2026-08-30"
+        ],
+        "entityKeys": [
+          "institutionEvent:professional-media-tom-s-hardware-b813b03a176ea864",
+          "name:dlss 5 mod brings next-gen tech to old ampere gpus, but frame rates are horrible — most games tank to single digits, high-end gpus can hit up to 40 fps in some cases"
+        ],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件",
+          "机构/资本事件"
+        ],
+        "numericCues": [
+          "40",
+          "5"
+        ],
+        "sourceAliases": [
+          "evd-befdaf7d121ddfbcb7f0",
+          "record-10a677ed23dfa1c3eaab",
+          "src-471f9d22f7ce545c0cdf",
+          "evd-e683b46a8ae087255c2a",
+          "record-8d768e6393a52f05da22"
+        ],
+        "evidenceFingerprints": [
+          "befdaf7d121ddfbcb7f0",
+          "e683b46a8ae087255c2a"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Tom's Hardware",
+            "title": "DLSS 5 mod brings next-gen tech to old Ampere GPUs, but frame rates are horrible — most games tank to single digits, high-end GPUs can hit up to 40 FPS in some cases",
+            "url": "https://www.tomshardware.com/pc-components/gpus/dlss-5-mod-brings-next-gen-tech-to-old-ampere-gpus-but-frame-rates-are-horrible-most-games-tank-to-single-digits-high-end-gpus-can-hit-up-to-40-fps-in-some-cases",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "2ef4808f2dec5e259b49",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-d6b3e826186edbd219c3": {
+        "eventId": "evt-d6b3e826186edbd219c3",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-a78c95aa16d5e534fc",
+        "entityName": "私募人士观点现分歧 投资主线或正在酝酿",
+        "title": "私募人士观点现分歧 投资主线或正在酝酿",
+        "titleAliases": [
+          "私募人士观点现分歧投资主线或正在酝酿"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产业投资",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-3169c7e33d6c0bf25e3e",
+          "record-c03eade2c613d637a244",
+          "src-e21391f557e385d8aa51"
+        ],
+        "evidenceFingerprints": [
+          "3169c7e33d6c0bf25e3e"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "东方财富",
+            "title": "私募人士观点现分歧 投资主线或正在酝酿",
+            "url": "https://finance.eastmoney.com/a/202608313859539058.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "b351aaed345724db0dfe",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
         "lastLifecycle": "first_seen",
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-d1225648fc4d26779afa": {
+        "eventId": "evt-d1225648fc4d26779afa",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-e3d6e7a0996da02352",
+        "entityName": "LG ELECTRONICS UNVEILS THE NEXT EVOLUTION OF AI HOME AT IFA 2026",
+        "title": "LG ELECTRONICS UNVEILS THE NEXT EVOLUTION OF AI HOME AT IFA 2026",
+        "titleAliases": [
+          "lgelectronicsunveilsthenextevolutionofaihomeatifa2026"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-c045c017a17b3f61f983",
+          "record-d354982edb1da759d466",
+          "src-d858d3a0a17b9b115e5a"
+        ],
+        "evidenceFingerprints": [
+          "c045c017a17b3f61f983"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "LG ELECTRONICS UNVEILS THE NEXT EVOLUTION OF AI HOME AT IFA 2026",
+            "url": "https://www.prnewswire.com/news-releases/lg-electronics-unveils-the-next-evolution-of-ai-home-at-ifa-2026-302864368.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "cb720a2092b704a8eae8",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-ca7415f11ab8c137a800": {
+        "eventId": "evt-ca7415f11ab8c137a800",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-6e9b13fd5bc68b8785",
+        "entityName": "价值判断：涨停板的投资机会和风险提示（8月28日）｜上市公司观察",
+        "title": "价值判断：涨停板的投资机会和风险提示（8月28日）｜上市公司观察",
+        "titleAliases": [
+          "价值判断涨停板的投资机会和风险提示8月28日"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产业投资",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "28",
+          "8"
+        ],
+        "sourceAliases": [
+          "evd-af267cff0f69c0a65bbc",
+          "record-eb84ad05733fe53e8f4d",
+          "src-dd3ce9216c7cec88f8f9"
+        ],
+        "evidenceFingerprints": [
+          "af267cff0f69c0a65bbc"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "钛媒体",
+            "title": "价值判断：涨停板的投资机会和风险提示（8月28日）｜上市公司观察",
+            "url": "https://www.tmtpost.com/8122386.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "85e855432718143ebef9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-ad5d2a8a6decad76795f": {
+        "eventId": "evt-ad5d2a8a6decad76795f",
+        "dataset": "marketCompany",
+        "entityId": "bgi-genomics",
+        "entityName": "华大基因",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:bgi-genomics",
+          "name:华大基因"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-4429ffb50bc66a93f9b0",
+          "src-f91830ef0c450da85176"
+        ],
+        "evidenceFingerprints": [
+          "4429ffb50bc66a93f9b0"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml",
+            "publishedAt": "2026-08-31T11:30:00+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-a9b2b0742ac0fc195658": {
+        "eventId": "evt-a9b2b0742ac0fc195658",
+        "dataset": "marketCompany",
+        "entityId": "catl",
+        "entityName": "宁德时代",
+        "title": "宁德时代AH股齐跌，A股跌超3%，H股跌超4%。",
+        "titleAliases": [
+          "宁德时代ah股齐跌a股跌超3h股跌超4"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:catl",
+          "name:宁德时代"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "3%",
+          "4%"
+        ],
+        "sourceAliases": [
+          "evd-fb669a8983aaeaa9e296",
+          "src-46eb43a3b9465e4189d3"
+        ],
+        "evidenceFingerprints": [
+          "fb669a8983aaeaa9e296"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "宁德时代AH股齐跌，A股跌超3%，H股跌超4%。",
+            "url": "https://finance.sina.com.cn/7x24/2026-08-31/doc-iniqehwx4730592.shtml",
+            "publishedAt": "2026-08-31T09:52:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "7a894b37ad8fc77273e8",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-96d0e56daecf63a4d0df": {
+        "eventId": "evt-96d0e56daecf63a4d0df",
+        "dataset": "marketCompany",
+        "entityId": "cambricon",
+        "entityName": "中科寒武纪科技股份有限公司",
+        "title": "寒武纪股权激励兑现：124名员工人均获557万元市值，新一轮覆盖85%员工",
+        "titleAliases": [
+          "寒武纪股权激励兑现124名员工人均获557万元市值新一轮覆盖85员工"
+        ],
+        "publishedDate": "2026-08-30",
+        "publishedDates": [
+          "2026-08-30"
+        ],
+        "entityKeys": [
+          "marketCompany:cambricon",
+          "name:中科寒武纪科技股份有限公司"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "124",
+          "557",
+          "85%"
+        ],
+        "sourceAliases": [
+          "evd-4b8e25716e4a513c2b89",
+          "src-59d4604f2ec4a5295858"
+        ],
+        "evidenceFingerprints": [
+          "4b8e25716e4a513c2b89"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "寒武纪股权激励兑现：124名员工人均获557万元市值，新一轮覆盖85%员工",
+            "url": "https://finance.sina.com.cn/roll/2026-08-31/doc-iniqcwif7800565.shtml",
+            "publishedAt": "2026-08-31T05:06:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "fa9489728dcac4b1248c",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-95ed2c17f682d31a0034": {
+        "eventId": "evt-95ed2c17f682d31a0034",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-dc762c98fe31f013b0",
+        "entityName": "真香！特斯拉在港澳推出更便宜的Model 3，起售价不足18万元；字节豆包大模型2.2将推迟发布，原计划8月推出；官方回应「网友呼吁取消ETC」",
+        "title": "真香！特斯拉在港澳推出更便宜的Model 3，起售价不足18万元；字节豆包大模型2.2将推迟发布，原计划8月推出；官方回应「网友呼吁取消ETC」",
+        "titleAliases": [
+          "真香特斯拉在港澳推出更便宜的model3起售价不足18万元字节豆包大模型22将推迟发布原计划8月推出官方回应网友呼吁取消etc"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "company:bytedance",
+          "company:字节跳动"
+        ],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "18",
+          "2.2",
+          "3",
+          "8"
+        ],
+        "sourceAliases": [
+          "evd-cd5baa71ce92bb244e25",
+          "record-b56de14cb02486d5c484",
+          "src-a27193636dd9c0420c8c"
+        ],
+        "evidenceFingerprints": [
+          "cd5baa71ce92bb244e25"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "真香！特斯拉在港澳推出更便宜的Model 3，起售价不足18万元；字节豆包大模型2.2将推迟发布，原计划8月推出；官方回应「网友呼吁取消ETC」",
+            "url": "https://www.leiphone.com/category/zaobao/3X5Iht5o0zblV5d9.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "cadb9ce08edacb7d0366",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-92405966c1efe9db0e8d": {
+        "eventId": "evt-92405966c1efe9db0e8d",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-5e9fcb5663b83ac82b",
+        "entityName": "Explainable Uncertainty Estimation for Reliable Medical AI",
+        "title": "Explainable Uncertainty Estimation for Reliable Medical AI",
+        "titleAliases": [
+          "explainableuncertaintyestimationforreliablemedicalai"
+        ],
+        "publishedDate": "2026-08-28",
+        "publishedDates": [
+          "2026-08-28"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "论文",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-9fe7d75c534f9af0dca3",
+          "record-2a06f74d2f42c702064a",
+          "src-76fba4a9cec2fd77a29c"
+        ],
+        "evidenceFingerprints": [
+          "9fe7d75c534f9af0dca3"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "arXiv · Core AI companies",
+            "title": "Explainable Uncertainty Estimation for Reliable Medical AI",
+            "url": "https://arxiv.org/abs/2608.28052v1",
+            "publishedAt": "2026-08-28",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "678dfa8b3b473c8c221e",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-91ac8f2272f5626d42e3": {
+        "eventId": "evt-91ac8f2272f5626d42e3",
+        "dataset": "marketCompany",
+        "entityId": "catl",
+        "entityName": "宁德时代",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:catl",
+          "name:宁德时代"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-bf8095d2b1bad9122cb4",
+          "src-3fce98d95cf38a30749c"
+        ],
+        "evidenceFingerprints": [
+          "bf8095d2b1bad9122cb4"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml",
+            "publishedAt": "2026-08-31T11:30:00+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-8b478881ba056b5fc3ab": {
+        "eventId": "evt-8b478881ba056b5fc3ab",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-5b569d7e9127526eb7",
+        "entityName": "国产AI芯片龙头来了！本周3只新股申购",
+        "title": "国产AI芯片龙头来了！本周3只新股申购",
+        "titleAliases": [
+          "国产ai芯片龙头来了本周3只新股申购"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "3"
+        ],
+        "sourceAliases": [
+          "evd-271db554a2269d44854c",
+          "record-6fb8cc02e86d4636684a",
+          "src-c72038b7284c82920e82"
+        ],
+        "evidenceFingerprints": [
+          "271db554a2269d44854c"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "东方财富",
+            "title": "国产AI芯片龙头来了！本周3只新股申购",
+            "url": "https://finance.eastmoney.com/a/202608313859567918.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "c2740334707fa621cdc3",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-8455418dc47f2d55e4d4": {
+        "eventId": "evt-8455418dc47f2d55e4d4",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-364fe23ef3963b8d3c",
+        "entityName": "给AI板块算算账本：抛售是估值调整 还是投资逻辑失效？",
+        "title": "给AI板块算算账本：抛售是估值调整 还是投资逻辑失效？",
+        "titleAliases": [
+          "给ai板块算算账本抛售是估值调整还是投资逻辑失效"
+        ],
+        "publishedDate": "2026-08-29",
+        "publishedDates": [
+          "2026-08-29"
+        ],
+        "entityKeys": [
+          "institutionEvent:official-user-东方财富-半导体信源-56ebd7b2882efe45",
+          "name:给ai板块算算账本:抛售是估值调整 还是投资逻辑失效?"
+        ],
+        "typeKeys": [
+          "产业投资",
+          "高价值情报事件",
+          "机构/资本事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-8455ac1f4d9cc127fe5d",
+          "record-2240005c042d79336d59",
+          "src-5fdb230e52fa12581d8a",
+          "evd-d752fb645869d619493f",
+          "record-79db022a8215faa97265"
+        ],
+        "evidenceFingerprints": [
+          "8455ac1f4d9cc127fe5d",
+          "d752fb645869d619493f"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "东方财富",
+            "title": "给AI板块算算账本：抛售是估值调整 还是投资逻辑失效？",
+            "url": "https://finance.eastmoney.com/a/202608293859147361.html",
+            "publishedAt": "2026-08-29",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "3f40bdecad171a860584",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-30T12:40:17+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-30T12:40:17+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-7e0df9b4c30dedbedd48": {
+        "eventId": "evt-7e0df9b4c30dedbedd48",
+        "dataset": "institutionEvent",
+        "entityId": "user-track-wechat-robotics-c8aa401624971e82",
+        "entityName": "小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速",
+        "title": "小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速",
+        "titleAliases": [
+          "小鹏机器人获超9亿美元融资中国通用人形机器人商业化加速"
+        ],
+        "publishedDate": "2026-08-30",
+        "publishedDates": [
+          "2026-08-30"
+        ],
+        "entityKeys": [
+          "institutionEvent:user-track-wechat-robotics-c8aa401624971e82",
+          "name:小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速"
+        ],
+        "typeKeys": [
+          "机构/资本事件"
+        ],
+        "numericCues": [
+          "9"
+        ],
+        "sourceAliases": [
+          "evd-531df5714abf4badac57",
+          "record-6773029ecb14f29a3cf0",
+          "src-657997a449b12d720c15"
+        ],
+        "evidenceFingerprints": [
+          "531df5714abf4badac57"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "真机智能",
+            "title": "小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速",
+            "url": "https://mp.weixin.qq.com/s?src=11&timestamp=1788138655&ver=6937&signature=sHyWSbiT8tfTFfTgpS%2ApBujYt-TIA8AKPsvXY4IA-Vqcfj%2AF7ryAKtAgCALN5meMlDZXlgfYoYyLKitrxUsvTfttSn6Yq0TydUs4zA98MS7NMvgfn2Ofje-6SAprh373&new=1",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "c64651c09a62511e2a57",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-6f655d8a700acb048ba9": {
+        "eventId": "evt-6f655d8a700acb048ba9",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-419228672349bc301e",
+        "entityName": "Alibaba Launches AI Song Generator HappyShrimp, Echoing Old Xiami Brand",
+        "title": "Alibaba Launches AI Song Generator HappyShrimp, Echoing Old Xiami Brand",
+        "titleAliases": [
+          "alibabalaunchesaisonggeneratorhappyshrimpechoingoldxiamibrand"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-bc9a6b810b1e7930c782",
+          "record-60be241858e98385aeae",
+          "src-13e095b2cf03313d2415"
+        ],
+        "evidenceFingerprints": [
+          "bc9a6b810b1e7930c782"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "钛媒体",
+            "title": "Alibaba Launches AI Song Generator HappyShrimp, Echoing Old Xiami Brand",
+            "url": "https://www.tmtpost.com/8122395.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "38288b45c6614440ddc7",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-61a14928170a8c6c84f2": {
+        "eventId": "evt-61a14928170a8c6c84f2",
+        "dataset": "marketCompany",
+        "entityId": "cambricon",
+        "entityName": "中科寒武纪科技股份有限公司",
+        "title": "行业财报 | 长鑫科技、中芯国际、北方华创、长电科技、豪威集团、寒武纪等中国30家半导体企业2026年上半年业绩汇总",
+        "titleAliases": [
+          "行业财报"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:cambricon",
+          "name:中科寒武纪科技股份有限公司"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "30"
+        ],
+        "sourceAliases": [
+          "evd-7a06387549c731c41f2d",
+          "src-48810a1abb996f035e37"
+        ],
+        "evidenceFingerprints": [
+          "7a06387549c731c41f2d"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "行业财报 | 长鑫科技、中芯国际、北方华创、长电科技、豪威集团、寒武纪等中国30家半导体企业2026年上半年业绩汇总",
+            "url": "https://cj.sina.cn/articles/view/7207652843/1ad9c0deb02001v2tc",
+            "publishedAt": "2026-08-31T10:32:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "270139a6c3f276431730",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-538db42b38026da8868a": {
+        "eventId": "evt-538db42b38026da8868a",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-f5f58a6a9536d36937",
+        "entityName": "【钛晨报】个人住房贷款政策有大变化，个人房贷期限延至最长40年；OpenAI将终止向Cursor提供模型服务，马斯克回应；报告称AI公司每赚100美元近40美元流向云巨头",
+        "title": "【钛晨报】个人住房贷款政策有大变化，个人房贷期限延至最长40年；OpenAI将终止向Cursor提供模型服务，马斯克回应；报告称AI公司每赚100美元近40美元流向云巨头",
+        "titleAliases": [
+          "钛晨报个人住房贷款政策有大变化个人房贷期限延至最长40年openai将终止向cursor提供模型服务马斯克回应报告称ai公司每赚100美元近40美元流向云巨头"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "company:openai"
+        ],
+        "typeKeys": [
+          "政策",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "100",
+          "40"
+        ],
+        "sourceAliases": [
+          "evd-1d806c3f15ac5ba0d182",
+          "record-4ba69f84b9d94a5067d4",
+          "src-f8c0b1d55a5b5cabbf70"
+        ],
+        "evidenceFingerprints": [
+          "1d806c3f15ac5ba0d182"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "钛媒体",
+            "title": "【钛晨报】个人住房贷款政策有大变化，个人房贷期限延至最长40年；OpenAI将终止向Cursor提供模型服务，马斯克回应；报告称AI公司每赚100美元近40美元流向云巨头",
+            "url": "https://www.tmtpost.com/8122212.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "9e4e7abc2af828c55998",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-44c9fc2f3b146c40d924": {
+        "eventId": "evt-44c9fc2f3b146c40d924",
+        "dataset": "marketCompany",
+        "entityId": "catl",
+        "entityName": "宁德时代",
+        "title": "今年来超1000个回购方案实施完毕，顺丰控股、京东方A、宁德时代回购金额居前",
+        "titleAliases": [
+          "今年来超1000个回购方案实施完毕顺丰控股京东方a宁德时代回购金额居前"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:catl",
+          "name:宁德时代"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "1000"
+        ],
+        "sourceAliases": [
+          "evd-555056e04dfc14cbda8b",
+          "src-f770eaa04adfa902dc42"
+        ],
+        "evidenceFingerprints": [
+          "555056e04dfc14cbda8b"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "今年来超1000个回购方案实施完毕，顺丰控股、京东方A、宁德时代回购金额居前",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-31/doc-iniqehxc9194147.shtml",
+            "publishedAt": "2026-08-31T08:11:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "e17c6bc8ef68c77743a8",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-4443506f58a334606d3c": {
+        "eventId": "evt-4443506f58a334606d3c",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-b31ed11f53abea934b",
+        "entityName": "Actionable CBFI: Integrating Structural Decomposition and Causal Counterfactual Recourse for Tabular Machine Learning",
+        "title": "Actionable CBFI: Integrating Structural Decomposition and Causal Counterfactual Recourse for Tabular Machine Learning",
+        "titleAliases": [
+          "actionablecbfiintegratingstructuraldecompositionandcausalcounterfactualrecoursefortabularmachinelearning"
+        ],
+        "publishedDate": "2026-08-28",
+        "publishedDates": [
+          "2026-08-28"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "论文",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-d0de6879b675273233df",
+          "record-dddbb0e863a16dc8f7fd",
+          "src-953b0baba4b610805f51"
+        ],
+        "evidenceFingerprints": [
+          "d0de6879b675273233df"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "arXiv · Core AI companies",
+            "title": "Actionable CBFI: Integrating Structural Decomposition and Causal Counterfactual Recourse for Tabular Machine Learning",
+            "url": "https://arxiv.org/abs/2608.27821v1",
+            "publishedAt": "2026-08-28",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "b4c91481992557e5ea44",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-3d520788450682e1894a": {
+        "eventId": "evt-3d520788450682e1894a",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-1e31334e6e1a403cf1",
+        "entityName": "Fujita freeness for projectivized toric vector bundles",
+        "title": "Fujita freeness for projectivized toric vector bundles",
+        "titleAliases": [
+          "fujitafreenessforprojectivizedtoricvectorbundles"
+        ],
+        "publishedDate": "2026-08-28",
+        "publishedDates": [
+          "2026-08-28"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "论文",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-c36754d3bf81e53a0d6f",
+          "record-2b11a2a3f9b324388ab7",
+          "src-d49612e2d71cb5e206d5"
+        ],
+        "evidenceFingerprints": [
+          "c36754d3bf81e53a0d6f"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "arXiv · Core AI companies",
+            "title": "Fujita freeness for projectivized toric vector bundles",
+            "url": "https://arxiv.org/abs/2608.28438v1",
+            "publishedAt": "2026-08-28",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "d5d5853e4978277fe345",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-27468b7bbd55cb372877": {
+        "eventId": "evt-27468b7bbd55cb372877",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-570445736c7e36255e",
+        "entityName": "沐曦股份上市后首份半年报出炉：同比扭亏为盈 GPU产品出货量显著提升",
+        "title": "沐曦股份上市后首份半年报出炉：同比扭亏为盈 GPU产品出货量显著提升",
+        "titleAliases": [
+          "沐曦股份上市后首份半年报出炉同比扭亏为盈gpu产品出货量显著提升"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-cb3b1e60103371e489b7",
+          "record-667f159068c51ad9631b",
+          "src-1da9d4c8cfc6a4e3a391"
+        ],
+        "evidenceFingerprints": [
+          "cb3b1e60103371e489b7"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "东方财富",
+            "title": "沐曦股份上市后首份半年报出炉：同比扭亏为盈 GPU产品出货量显著提升",
+            "url": "https://finance.eastmoney.com/a/202608303859503869.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "5983c6496fd5ac0d0fc2",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-236d3dfdcbf781c61260": {
+        "eventId": "evt-236d3dfdcbf781c61260",
+        "dataset": "marketCompany",
+        "entityId": "cambricon",
+        "entityName": "中科寒武纪科技股份有限公司",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:cambricon",
+          "name:中科寒武纪科技股份有限公司"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-66c0983b9ff21071f1c6",
+          "src-e95e9990c90226e17b22"
+        ],
+        "evidenceFingerprints": [
+          "66c0983b9ff21071f1c6"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
+            "publishedAt": "2026-08-31T11:30:00+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-1d157f7c8668f15a8bc8": {
+        "eventId": "evt-1d157f7c8668f15a8bc8",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-8c9a6fbc5c57ae46eb",
+        "entityName": "小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速",
+        "title": "小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速",
+        "titleAliases": [
+          "小鹏机器人获超9亿美元融资中国通用人形机器人商业化加速"
+        ],
+        "publishedDate": "2026-08-30",
+        "publishedDates": [
+          "2026-08-30"
+        ],
+        "entityKeys": [
+          "mention:xpeng robotics",
+          "mention:事长兼首席",
+          "mention:资金规模吓"
+        ],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "9"
+        ],
+        "sourceAliases": [
+          "evd-f6caa73a6dea6f6b5fd1",
+          "record-6054b86ef89df28c8aa7",
+          "src-2b1c40f704e6d9f525c8",
+          "record-3673ca34f8e3e41aff72",
+          "src-e006891a5e676dba6288",
+          "record-2878c9814f1122270717",
+          "src-aebb85910dbd3a317788"
+        ],
+        "evidenceFingerprints": [
+          "f6caa73a6dea6f6b5fd1"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "真机智能",
+            "title": "小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=FQ22NnURIJq3aNjTV%2A5hP3mdM3MoxPvovzkcQ2cT4064FQ3Txmn%2ACkN4u84A6xTUBCqWwru0duUREIAXdAhEPv99CFwyhyB3gTKwr8ttrVzPz%2AYr1iF%2Akz7jWxrfWJ%2Aa&src=11&timestamp=1788092358&ver=6936",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "真机智能",
+            "title": "小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=FQ22NnURIJq3aNjTV%2A5hP3mdM3MoxPvovzkcQ2cT405FxdtxQg1WLciI7QYylAe-p2HGAwp48pEFkwqC%2Aij4I0mwyesqYA9UToEjVsyE2pqexP3jWOj7IfvGU7zH-KwI&src=11&timestamp=1788106977&ver=6936",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "真机智能",
+            "title": "小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=sHyWSbiT8tfTFfTgpS%2ApBujYt-TIA8AKPsvXY4IA-Voj413Kw0gurKMZ43Sv-Qvt-kK%2ApWb-6GNU7Nc%2Ay5Ob4ozQFERfj8eqzEvkjy33cZhyELeZautTIXQmFPddFYe4&src=11&timestamp=1788146817&ver=6937",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "c64651c09a62511e2a57",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-30T12:40:17+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-30T12:40:17+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-19a46ffa0d4299720a2f": {
+        "eventId": "evt-19a46ffa0d4299720a2f",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-9d800107a411996d75",
+        "entityName": "Texas Governor Abbott blocks funding for more Flock cameras",
+        "title": "Texas Governor Abbott blocks funding for more Flock cameras",
+        "titleAliases": [
+          "texasgovernorabbottblocksfundingformoreflockcameras"
+        ],
+        "publishedDate": "2026-08-30",
+        "publishedDates": [
+          "2026-08-30"
+        ],
+        "entityKeys": [
+          "institutionEvent:professional-media-the-verge-6bfed2ab471f8cf4",
+          "name:texas governor abbott blocks funding for more flock cameras"
+        ],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件",
+          "机构/资本事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-278da699e79527a7cbb6",
+          "record-6ad0bfb2d0e15394382d",
+          "src-a757cfe55143069aa0b5",
+          "evd-031f5ad32dbc4b905412",
+          "record-7e8589f2b59de5b1b6fd"
+        ],
+        "evidenceFingerprints": [
+          "278da699e79527a7cbb6",
+          "031f5ad32dbc4b905412"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "The Verge",
+            "title": "Texas Governor Abbott blocks funding for more Flock cameras",
+            "url": "https://www.theverge.com/ai-artificial-intelligence/986541/texas-governor-abbott-flock-cameras",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "f99c5b8260d5fe29498e",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-30T17:39:58+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-30T17:39:58+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-107c31a86fb2bd117eed": {
+        "eventId": "evt-107c31a86fb2bd117eed",
+        "dataset": "marketCompany",
+        "entityId": "xtalpi",
+        "entityName": "晶泰控股有限公司",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:xtalpi",
+          "name:晶泰控股有限公司"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-5fa1601b8d57d2004e8f",
+          "src-de35f484ecf44f83c49b"
+        ],
+        "evidenceFingerprints": [
+          "5fa1601b8d57d2004e8f"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
+            "publishedAt": "2026-08-31T11:38:37+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-100906959e2e7ce3e663": {
+        "eventId": "evt-100906959e2e7ce3e663",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-142fbe90f982ed820d",
+        "entityName": "Amazon is buying 2 million Nvidia GPUs for AWS data center expansion",
+        "title": "Amazon is buying 2 million Nvidia GPUs for AWS data center expansion",
+        "titleAliases": [
+          "amazonisbuying2millionnvidiagpusforawsdatacenterexpansion"
+        ],
+        "publishedDate": "2026-08-30",
+        "publishedDates": [
+          "2026-08-30"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "2"
+        ],
+        "sourceAliases": [
+          "evd-52fb4912debaeea7202c",
+          "record-fd09213db96022c8adcf",
+          "src-ef8b5098b4d0b2f7077c"
+        ],
+        "evidenceFingerprints": [
+          "52fb4912debaeea7202c"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "TechRadar",
+            "title": "Amazon is buying 2 million Nvidia GPUs for AWS data center expansion",
+            "url": "https://www.techradar.com/pro/amazon-is-buying-2-million-nvidia-gpus-for-aws-data-center-expansion",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "e033ca4c49279b064448",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-09cacf02606d9838e6f2": {
+        "eventId": "evt-09cacf02606d9838e6f2",
+        "dataset": "marketCompany",
+        "entityId": "horizon-robotics",
+        "entityName": "Horizon Robotics",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:horizon-robotics",
+          "name:horizon robotics"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-b9931d767f7fdda9a522",
+          "src-2902bb7afee990ec31f7"
+        ],
+        "evidenceFingerprints": [
+          "b9931d767f7fdda9a522"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+            "publishedAt": "2026-08-31T11:38:37+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -590,126 +3977,6 @@
           }
         ],
         "claimFingerprint": "c2f0633a4b9bec342ffc",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-30T17:39:58+00:00",
-        "lastSeenAt": "2026-08-30T17:39:58+00:00",
-        "lastPublishedAt": "2026-08-30T17:39:58+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-1d157f7c8668f15a8bc8": {
-        "eventId": "evt-1d157f7c8668f15a8bc8",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-8c9a6fbc5c57ae46eb",
-        "entityName": "小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速",
-        "title": "小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速",
-        "titleAliases": [
-          "小鹏机器人获超9亿美元融资中国通用人形机器人商业化加速"
-        ],
-        "publishedDate": "2026-08-30",
-        "publishedDates": [
-          "2026-08-30"
-        ],
-        "entityKeys": [
-          "mention:xpeng robotics",
-          "mention:事长兼首席",
-          "mention:资金规模吓"
-        ],
-        "typeKeys": [
-          "融资",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "9"
-        ],
-        "sourceAliases": [
-          "evd-f6caa73a6dea6f6b5fd1",
-          "record-6054b86ef89df28c8aa7",
-          "src-2b1c40f704e6d9f525c8",
-          "record-3673ca34f8e3e41aff72",
-          "src-e006891a5e676dba6288"
-        ],
-        "evidenceFingerprints": [
-          "f6caa73a6dea6f6b5fd1"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "真机智能",
-            "title": "小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=FQ22NnURIJq3aNjTV%2A5hP3mdM3MoxPvovzkcQ2cT4064FQ3Txmn%2ACkN4u84A6xTUBCqWwru0duUREIAXdAhEPv99CFwyhyB3gTKwr8ttrVzPz%2AYr1iF%2Akz7jWxrfWJ%2Aa&src=11&timestamp=1788092358&ver=6936",
-            "publishedAt": "2026-08-30",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "真机智能",
-            "title": "小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=FQ22NnURIJq3aNjTV%2A5hP3mdM3MoxPvovzkcQ2cT405FxdtxQg1WLciI7QYylAe-p2HGAwp48pEFkwqC%2Aij4I0mwyesqYA9UToEjVsyE2pqexP3jWOj7IfvGU7zH-KwI&src=11&timestamp=1788106977&ver=6936",
-            "publishedAt": "2026-08-30",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "c64651c09a62511e2a57",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-30T12:40:17+00:00",
-        "lastSeenAt": "2026-08-30T17:39:58+00:00",
-        "lastPublishedAt": "2026-08-30T12:40:17+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-19a46ffa0d4299720a2f": {
-        "eventId": "evt-19a46ffa0d4299720a2f",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-9d800107a411996d75",
-        "entityName": "Texas Governor Abbott blocks funding for more Flock cameras",
-        "title": "Texas Governor Abbott blocks funding for more Flock cameras",
-        "titleAliases": [
-          "texasgovernorabbottblocksfundingformoreflockcameras"
-        ],
-        "publishedDate": "2026-08-30",
-        "publishedDates": [
-          "2026-08-30"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "融资",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-278da699e79527a7cbb6",
-          "record-6ad0bfb2d0e15394382d",
-          "src-a757cfe55143069aa0b5"
-        ],
-        "evidenceFingerprints": [
-          "278da699e79527a7cbb6"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "The Verge",
-            "title": "Texas Governor Abbott blocks funding for more Flock cameras",
-            "url": "https://www.theverge.com/ai-artificial-intelligence/986541/texas-governor-abbott-flock-cameras",
-            "publishedAt": "2026-08-30",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "f99c5b8260d5fe29498e",
         "scalarClaims": {},
         "ipoStage": null,
         "firstSeenAt": "2026-08-30T17:39:58+00:00",
@@ -1569,57 +4836,6 @@
           }
         ],
         "claimFingerprint": "0ad269698b234be7bd1d",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-30T12:40:17+00:00",
-        "lastSeenAt": "2026-08-30T12:40:17+00:00",
-        "lastPublishedAt": "2026-08-30T12:40:17+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-8455418dc47f2d55e4d4": {
-        "eventId": "evt-8455418dc47f2d55e4d4",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-364fe23ef3963b8d3c",
-        "entityName": "给AI板块算算账本：抛售是估值调整 还是投资逻辑失效？",
-        "title": "给AI板块算算账本：抛售是估值调整 还是投资逻辑失效？",
-        "titleAliases": [
-          "给ai板块算算账本抛售是估值调整还是投资逻辑失效"
-        ],
-        "publishedDate": "2026-08-29",
-        "publishedDates": [
-          "2026-08-29"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "产业投资",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-8455ac1f4d9cc127fe5d",
-          "record-2240005c042d79336d59",
-          "src-5fdb230e52fa12581d8a"
-        ],
-        "evidenceFingerprints": [
-          "8455ac1f4d9cc127fe5d"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "东方财富",
-            "title": "给AI板块算算账本：抛售是估值调整 还是投资逻辑失效？",
-            "url": "https://finance.eastmoney.com/a/202608293859147361.html",
-            "publishedAt": "2026-08-29",
-            "evidenceGrade": "媒体报道"
-          }
-        ],
-        "claimFingerprint": "3f40bdecad171a860584",
         "scalarClaims": {},
         "ipoStage": null,
         "firstSeenAt": "2026-08-30T12:40:17+00:00",
@@ -3351,13 +6567,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 3,
-    "reconfirmations": 0,
+    "newEvents": 23,
+    "reconfirmations": 2,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 1,
-    "observedEvents": 4,
+    "duplicatesSuppressed": 2,
+    "observedEvents": 27,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -3709,14 +6925,37 @@
     {
       "metricsVersion": 2,
       "date": "2026-08-31",
-      "generatedAt": "2026-08-30T17:39:58+00:00",
+      "generatedAt": "2026-08-31T03:41:22+00:00",
       "runStatus": "model",
-      "changeCount": 3,
-      "executiveSummary": "本证据包包含三条2026-08-30新增的高价值情报事件，均来自单一外部线索（证据等级C，automated_unreviewed），分别涉及：德州州长冻结Flock AI监控摄像头州资金、中塞合作机器人工厂投产、Mechrevo新款游戏本采用AMD非NPU APU。由于证据等级低且未经交叉验证，所有判断均视为待验证线索，不构成确定性事实或投资结论。",
+      "changeCount": 26,
+      "executiveSummary": "截至2026-08-31证据包显示，AI基础设施扩张（AWS计划采购200万Nvidia GPU）、国产GPU业绩改善（沐曦股份扭亏为盈、燧原科技启动申购）、机器人融资（小鹏机器人获超9亿美元）是主要动向；同时DLSS 5 mod在旧GPU上性能不佳、OpenAI拟终止向Cursor提供模型服务、字节豆包2.2推迟发布等事件提示技术迭代与生态调整风险。多数证据为C级媒体线索，需进一步验证。",
       "eventIds": [
         "evt-19a46ffa0d4299720a2f",
         "evt-e0a2a000a640b6c568ef",
-        "evt-dd0f111c95306d478437"
+        "evt-dd0f111c95306d478437",
+        "evt-e067263d2f75b8b54f32",
+        "evt-538db42b38026da8868a",
+        "evt-d6b3e826186edbd219c3",
+        "evt-ca7415f11ab8c137a800",
+        "evt-3d520788450682e1894a",
+        "evt-92405966c1efe9db0e8d",
+        "evt-100906959e2e7ce3e663",
+        "evt-4443506f58a334606d3c",
+        "evt-95ed2c17f682d31a0034",
+        "evt-d1225648fc4d26779afa",
+        "evt-6f655d8a700acb048ba9",
+        "evt-27468b7bbd55cb372877",
+        "evt-8b478881ba056b5fc3ab",
+        "evt-7e0df9b4c30dedbedd48",
+        "evt-107c31a86fb2bd117eed",
+        "evt-44c9fc2f3b146c40d924",
+        "evt-a9b2b0742ac0fc195658",
+        "evt-91ac8f2272f5626d42e3",
+        "evt-ad5d2a8a6decad76795f",
+        "evt-96d0e56daecf63a4d0df",
+        "evt-236d3dfdcbf781c61260",
+        "evt-61a14928170a8c6c84f2",
+        "evt-09cacf02606d9838e6f2"
       ],
       "eventStates": [
         {
@@ -3730,39 +6969,129 @@
         {
           "eventId": "evt-dd0f111c95306d478437",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-e067263d2f75b8b54f32",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-538db42b38026da8868a",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-d6b3e826186edbd219c3",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-ca7415f11ab8c137a800",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-3d520788450682e1894a",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-92405966c1efe9db0e8d",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-100906959e2e7ce3e663",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-4443506f58a334606d3c",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-95ed2c17f682d31a0034",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-d1225648fc4d26779afa",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-6f655d8a700acb048ba9",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-27468b7bbd55cb372877",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-8b478881ba056b5fc3ab",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-7e0df9b4c30dedbedd48",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-107c31a86fb2bd117eed",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-44c9fc2f3b146c40d924",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-a9b2b0742ac0fc195658",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-91ac8f2272f5626d42e3",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-ad5d2a8a6decad76795f",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-96d0e56daecf63a4d0df",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-236d3dfdcbf781c61260",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-61a14928170a8c6c84f2",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-09cacf02606d9838e6f2",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 0,
-      "candidateTotal": 0,
-      "auxiliaryLeadTotal": 3,
-      "rejectedTotal": 3,
+      "candidateTotal": 6,
+      "auxiliaryLeadTotal": 16,
+      "rejectedTotal": 5,
       "eventSummary": {
-        "newEvents": 3,
-        "reconfirmations": 0,
+        "newEvents": 26,
+        "reconfirmations": 2,
         "updates": 0,
         "corrections": 0,
         "possibleConflicts": 0,
-        "duplicatesSuppressed": 1
+        "duplicatesSuppressed": 3
       }
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 7,
-    "eligibleCandidateCount": 4,
-    "rejectedCandidateCount": 3,
+    "candidateCount": 26,
+    "eligibleCandidateCount": 24,
+    "rejectedCandidateCount": 2,
     "rejectedByDataset": {
-      "intelligenceEvent": 2,
-      "marketCompany": 1
+      "institutionEvent": 2
     },
-    "evidenceCount": 10,
-    "supportingEvidenceCount": 4,
-    "rejectedEvidenceCount": 5,
-    "passedButUnboundEvidenceCount": 1,
+    "evidenceCount": 41,
+    "supportingEvidenceCount": 28,
+    "rejectedEvidenceCount": 10,
+    "passedButUnboundEvidenceCount": 3,
     "rejectionReasons": {
-      "missing_published_at": 3,
-      "discovery_only": 2,
-      "missing_title": 2,
-      "ungraded": 2
+      "ungraded": 10,
+      "missing_published_at": 8,
+      "missing_title": 8
     },
     "sourceClassificationWarnings": []
   },
@@ -3802,7 +7131,7 @@
         "jobId": "institution-data-layers",
         "name": "机构证据层重建",
         "status": "stale",
-        "lastCompletedAt": "2026-08-30T11:51:48Z"
+        "lastCompletedAt": "2026-08-31T03:04:16Z"
       },
       {
         "jobId": "source-performance-review",
