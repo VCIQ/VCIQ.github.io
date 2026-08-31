@@ -243,7 +243,11 @@ export type ResearchAgentReport = {
   }[];
 };
 
-const typedRawResearchAgentReport = rawResearchAgentReport as ResearchAgentReport;
+// Generated JSON contains heterogeneous record-key maps. TypeScript infers a
+// closed union with optional `undefined` keys across those objects, even though
+// the published JSON contract is a runtime string map. Treat the generated
+// artifact as an external data boundary before applying the stable report type.
+const typedRawResearchAgentReport = rawResearchAgentReport as unknown as ResearchAgentReport;
 
 // Preserve the published JSON contract: `changeSummary.byDataset` is this-run
 // change volume, while tracked-object coverage lives only in `researchScope`.
