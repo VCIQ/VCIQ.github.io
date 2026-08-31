@@ -1,4 +1,4 @@
-name: One-time migrate structured source counters
+name: One-time normalize source counter semantics
 
 on:
   push:
@@ -18,72 +18,233 @@ jobs:
           ref: fix/sources-governance-20260830
           fetch-depth: 0
 
-      - name: Migrate legacy structured counters
+      - name: Patch shared source counter producers
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          def replace_once(path: str, old: str, new: str) -> None:
+              file = Path(path)
+              text = file.read_text(encoding='utf-8')
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{path}: expected one replacement, found {count}')
+              file.write_text(text.replace(old, new, 1), encoding='utf-8')
+
+          # Professional-media: the old local `scanned` variable counts HTTP/feed/page
+          # requests. Preserve it as transport telemetry and publish record-level scan
+          # counts in the public status contract.
+          replace_once(
+              'tools/professional_media_sources.py',
+              '''    status = crawler._status(\n        spec["id"],\n        spec["name"],\n        status_name,\n        scanned,\n        len(attributed),\n''',
+              '''    transport_requests = scanned\n    record_scanned = max(len(collected), len(attributed))\n    status = crawler._status(\n        spec["id"],\n        spec["name"],\n        status_name,\n        record_scanned,\n        len(attributed),\n''',
+          )
+          replace_once(
+              'tools/professional_media_sources.py',
+              '''            "candidateArticles": len(collected),\n            "rejectedOutsideRegistry": rejected,\n''',
+              '''            "candidateArticles": len(collected),\n            "transportRequests": transport_requests,\n            "rejectedOutsideRegistry": rejected,\n''',
+          )
+
+          # Adaptive-public: aggregate record-level accepted candidates across seeds;
+          # keep lower-level request counts in a separate transport field.
+          replace_once(
+              'tools/adaptive_public_sources.py',
+              '''    items = _dedupe_articles(all_items, crawler)[:max_items]\n    scanned = sum(int(status.get("scanned", 0) or 0) for status in statuses)\n    failed = sum(int(status.get("failed", 0) or 0) for status in statuses)\n''',
+              '''    items = _dedupe_articles(all_items, crawler)[:max_items]\n    transport_requests = sum(\n        int(status.get("transportRequests", status.get("scanned", 0)) or 0)\n        for status in statuses\n    )\n    record_scanned = max(\n        len(items),\n        sum(int(status.get("accepted", 0) or 0) for status in statuses),\n    )\n    failed = sum(int(status.get("failed", 0) or 0) for status in statuses)\n''',
+          )
+          replace_once(
+              'tools/adaptive_public_sources.py',
+              '''        scanned,\n        len(items),\n        failed=failed,\n''',
+              '''        record_scanned,\n        len(items),\n        failed=failed,\n''',
+          )
+          replace_once(
+              'tools/adaptive_public_sources.py',
+              '''            "historyLimit": max(DEFAULT_HISTORY_LIMIT, max_items),\n            "requestBudget": {\n''',
+              '''            "historyLimit": max(DEFAULT_HISTORY_LIMIT, max_items),\n            "transportRequests": transport_requests,\n            "requestBudget": {\n''',
+          )
+          replace_once(
+              'tools/adaptive_public_sources.py',
+              '''        status["newAccepted"] = len(new_group)\n        status["accepted"] = len(history)\n        if retained:\n''',
+              '''        status["newAccepted"] = len(new_group)\n        status["retainedCount"] = len(history)\n        status["accepted"] = len(new_group)\n        if retained:\n''',
+          )
+
+          # Regression expectations now distinguish record counters from transport
+          # request telemetry.
+          replace_once(
+              'tests/test_adaptive_public_sources.py',
+              '''        self.assertEqual(status["newAccepted"], 2)\n        self.assertEqual(status["accepted"], 3)\n        self.assertEqual(status["retainedPreviousCount"], 1)\n''',
+              '''        self.assertEqual(status["newAccepted"], 2)\n        self.assertEqual(status["accepted"], 2)\n        self.assertEqual(status["retainedCount"], 3)\n        self.assertEqual(status["retainedPreviousCount"], 1)\n''',
+          )
+          replace_once(
+              'tests/test_adaptive_public_sources.py',
+              '''        self.assertEqual(status["accepted"], 3)\n        self.assertIn("structured-data", status["strategies"])\n''',
+              '''        self.assertEqual(status["accepted"], 3)\n        self.assertGreaterEqual(status["scanned"], status["accepted"])\n        self.assertEqual(status["transportRequests"], 4)\n        self.assertIn("structured-data", status["strategies"])\n''',
+          )
+          replace_once(
+              'tests/test_professional_media_sources.py',
+              '''        self.assertEqual(status["accepted"], 1)\n        self.assertGreaterEqual(status["scanned"], 3)\n        self.assertIn("original-site", status["strategies"])\n''',
+              '''        self.assertEqual(status["accepted"], 1)\n        self.assertEqual(status["scanned"], 1)\n        self.assertGreaterEqual(status["transportRequests"], 3)\n        self.assertIn("original-site", status["strategies"])\n''',
+          )
+          PY
+
+      - name: Migrate checked-in current-refresh snapshots
         run: |
           python3 - <<'PY'
           import json
           from pathlib import Path
 
-          path = Path('public/data/source_health.json')
-          payload = json.loads(path.read_text(encoding='utf-8'))
-          sources = payload.get('sources', {})
-          allowed = {
+          articles_path = Path('public/data/articles.json')
+          health_path = Path('public/data/source_health.json')
+          articles = json.loads(articles_path.read_text(encoding='utf-8'))
+          health = json.loads(health_path.read_text(encoding='utf-8'))
+
+          structured_ids = {
               'official-bytedance',
               'official-doubao',
               'official-volcengine',
           }
-          changed = []
+          patched_status_ids = set()
+
+          for status in articles.get('sourceStatus', []):
+              if not isinstance(status, dict):
+                  continue
+              source_id = str(status.get('id') or '')
+              adapter = str(status.get('adapter') or '')
+              old_scanned = int(status.get('scanned') or 0)
+              old_accepted = int(status.get('accepted') or 0)
+
+              if source_id in structured_ids:
+                  status['transportRequests'] = max(
+                      int(status.get('transportRequests') or 0), old_scanned
+                  )
+                  status['scanned'] = old_accepted
+                  patched_status_ids.add(source_id)
+                  continue
+
+              if source_id.startswith('professional-media-'):
+                  status['transportRequests'] = max(
+                      int(status.get('transportRequests') or 0), old_scanned
+                  )
+                  status['scanned'] = max(
+                      int(status.get('candidateArticles') or 0), old_accepted
+                  )
+                  patched_status_ids.add(source_id)
+                  continue
+
+              if source_id.startswith('user-source-') and adapter == 'adaptive-public-v1':
+                  current_accepted = int(
+                      status.get('newAccepted')
+                      if status.get('newAccepted') is not None
+                      else old_accepted
+                  )
+                  status['transportRequests'] = max(
+                      int(status.get('transportRequests') or 0), old_scanned
+                  )
+                  status['retainedCount'] = max(
+                      int(status.get('retainedCount') or 0), old_accepted
+                  )
+                  status['newAccepted'] = current_accepted
+                  status['accepted'] = current_accepted
+                  status['scanned'] = current_accepted
+                  patched_status_ids.add(source_id)
+
+          status_index = {
+              str(status.get('id') or ''): status
+              for status in articles.get('sourceStatus', [])
+              if isinstance(status, dict) and status.get('id')
+          }
+
           unexpected = []
-          for source_id, row in sources.items():
+          migrated_health = []
+          for source_id, row in health.get('sources', {}).items():
               if not isinstance(row, dict) or row.get('missingFromCurrentRun') is True:
                   continue
               scanned = int(row.get('scanned') or 0)
               accepted = int(row.get('accepted') or 0)
               if accepted <= scanned:
                   continue
-              if source_id not in allowed:
+              eligible = (
+                  source_id in structured_ids
+                  or source_id.startswith('professional-media-')
+                  or source_id.startswith('user-source-')
+              )
+              if not eligible:
                   unexpected.append((source_id, scanned, accepted))
                   continue
-              row['scanned'] = accepted
-              changed.append((source_id, scanned, accepted))
+              status = status_index.get(source_id, {})
+              patched_scanned = int(status.get('scanned') or 0)
+              row['scanned'] = max(accepted, patched_scanned)
+              migrated_health.append((source_id, scanned, accepted, row['scanned']))
 
           if unexpected:
               raise SystemExit(f'unexpected accepted>scanned rows: {unexpected}')
-          if not changed:
-              raise SystemExit('no legacy structured counters required migration')
 
-          path.write_text(
-              json.dumps(payload, ensure_ascii=False, indent=2) + '\n',
+          articles_path.write_text(
+              json.dumps(articles, ensure_ascii=False, indent=2) + '\n',
               encoding='utf-8',
           )
-          print('migrated:', changed)
+          health_path.write_text(
+              json.dumps(health, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          print(f'patched sourceStatus rows: {len(patched_status_ids)}')
+          print(f'migrated health violations: {len(migrated_health)}')
+          print('health migrations:', migrated_health)
           PY
 
-      - name: Validate counter invariant
+      - name: Validate source counter invariants
         run: |
           python3 - <<'PY'
           import json
           from pathlib import Path
 
-          payload = json.loads(Path('public/data/source_health.json').read_text(encoding='utf-8'))
-          violations = []
-          for source_id, row in payload.get('sources', {}).items():
+          article_payload = json.loads(Path('public/data/articles.json').read_text(encoding='utf-8'))
+          health_payload = json.loads(Path('public/data/source_health.json').read_text(encoding='utf-8'))
+
+          status_violations = []
+          for row in article_payload.get('sourceStatus', []):
+              if not isinstance(row, dict):
+                  continue
+              scanned = int(row.get('scanned') or 0)
+              accepted = int(row.get('accepted') or 0)
+              if accepted > scanned:
+                  status_violations.append((row.get('id'), row.get('adapter'), scanned, accepted))
+
+          health_violations = []
+          for source_id, row in health_payload.get('sources', {}).items():
               if not isinstance(row, dict) or row.get('missingFromCurrentRun') is True:
                   continue
               scanned = int(row.get('scanned') or 0)
               accepted = int(row.get('accepted') or 0)
               if accepted > scanned:
-                  violations.append((source_id, scanned, accepted))
-          if violations:
-              raise SystemExit(f'accepted>scanned after migration: {violations[:20]}')
-          print('all active source-health rows satisfy accepted <= scanned')
+                  health_violations.append((source_id, scanned, accepted))
+
+          if status_violations:
+              raise SystemExit(f'sourceStatus accepted>scanned: {status_violations[:40]}')
+          if health_violations:
+              raise SystemExit(f'source_health accepted>scanned: {health_violations[:40]}')
+          print('all current sourceStatus and active source_health rows satisfy accepted <= scanned')
           PY
 
-      - name: Commit migrated snapshot and remove one-time workflow
+      - name: Run focused source tests
         run: |
-          rm .github/workflows/one-time-migrate-structured-source-counters.yml
+          python3 -m unittest \
+            tests.test_bytedance_official_sources \
+            tests.test_adaptive_public_sources \
+            tests.test_professional_media_sources \
+            tests.test_source_health
+
+      - name: Commit normalized producers and snapshots
+        run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/data/source_health.json .github/workflows/one-time-migrate-structured-source-counters.yml
-          git commit -m "fix(sources): migrate structured source counter snapshot"
+          git add \
+            tools/professional_media_sources.py \
+            tools/adaptive_public_sources.py \
+            tests/test_adaptive_public_sources.py \
+            tests/test_professional_media_sources.py \
+            public/data/articles.json \
+            public/data/source_health.json
+          git diff --cached --quiet && { echo 'no changes to commit'; exit 1; }
+          git commit -m "fix(sources): normalize current-refresh counter semantics"
           git push origin HEAD:fix/sources-governance-20260830
