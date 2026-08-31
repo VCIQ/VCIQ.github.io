@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-31T11:54:48+00:00",
+  "generatedAt": "2026-08-31T14:32:12+00:00",
   "asOfDate": "2026-08-31",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
@@ -12,482 +12,285 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 9485,
-      "completion_tokens": 4850,
-      "total_tokens": 14335,
+      "prompt_tokens": 8300,
+      "completion_tokens": 6552,
+      "total_tokens": 14852,
       "completion_tokens_details": {
-        "reasoning_tokens": 2602
+        "reasoning_tokens": 4292
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 9485
+      "prompt_cache_miss_tokens": 8300
     }
   },
   "changeSummary": {
-    "totalDetected": 31,
-    "total": 11,
+    "totalDetected": 18,
+    "total": 10,
     "byDataset": {
-      "intelligenceEvent": 7,
-      "marketCompany": 4
+      "intelligenceEvent": 10
     },
     "byChangeType": {
-      "external_event": 13,
-      "data_maintenance": 8,
-      "source_refresh": 10
+      "external_event": 11,
+      "data_maintenance": 7
     },
-    "externalCandidates": 13,
+    "externalCandidates": 11,
     "qualityRejected": 0,
-    "maintenanceExcluded": 18,
+    "maintenanceExcluded": 7,
     "aggregatedEvents": 0,
-    "highestImportance": 86,
+    "highestImportance": 84,
     "verifiedChangeTotal": 0,
-    "candidateTotal": 4,
-    "auxiliaryLeadTotal": 7,
+    "candidateTotal": 0,
+    "auxiliaryLeadTotal": 10,
     "rejectedTotal": 0,
-    "newEvents": 14,
+    "newEvents": 10,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 2
+    "duplicatesSuppressed": 1
   },
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "本证据包覆盖2026年8月31日前后多项AI与科技产业动态。核心信号包括：字节跳动豆包2.2推迟发布并重点补强编程/Agent能力；日本经产省寻求490亿美元预算加速AI与半导体投资；地平线机器人中期业绩扭亏为盈且自主品牌ADAS份额首破50%；Data Dynamics发布数据层治理产品；另有AI治理方法论文章、AI技能追踪报告、中熔电气可转债融资及多家公司市场新闻。整体显示AI竞争从模型能力向工程化、治理与行业落地延伸，但多数证据为单一来源或媒体报道，需后续验证。",
+    "executiveSummary": "证据包显示，英伟达在AI硬件和开源平台领域出现大规模投资与收购报道（E001、E002），同时多家公司推出AI基础设施和产品（E004、E006、E008、E011），腾讯混元Hy4 preview上线（E005），另有营销事件和个人言论（E007、E010）。整体看，AI产业链整合与竞争加速，但关键事件多来自C级媒体或公司新闻稿，需进一步验证。",
     "keyDevelopments": [
       {
-        "title": "字节豆包2.2推迟发布，重点攻坚Coding与Agent能力",
-        "assessment": "据钛媒体及白鲸实验室报道，字节跳动原定8月推出的豆包大模型2.2版本将推迟，核心目的是开展更充分预训练与后训练，补强编程、工具调用及Agent能力。该信息来自媒体“曝”与“多位接近字节的人士”，尚未获官方确认，但若属实，反映头部大模型厂商将编程/Agent能力视为下一阶段竞争焦点。",
-        "importance": 4,
-        "confidence": "medium",
-        "entities": [
-          "字节跳动",
-          "豆包"
-        ],
-        "evidenceIds": [
-          "E006",
-          "E007"
-        ]
-      },
-      {
-        "title": "日本经产省寻求490亿美元预算加速AI等产业投资",
-        "assessment": "据新浪财经报道，日本经济产业省寻求7.8万亿日元（约490亿美元）预算，用于半导体、AI及首相高市早苗促增长计划中的核心战略产业。该预算规模“前所未有”，显示日本以国家资金推动AI与半导体产业投资的意图。证据为单一媒体来源，具体预算能否获批及投向需跟踪。",
-        "importance": 4,
-        "confidence": "medium",
-        "entities": [
-          "日本经济产业省",
-          "日本政府"
-        ],
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "title": "地平线机器人中期业绩扭亏为盈，自主品牌ADAS份额首破50%",
-        "assessment": "据新浪财经报道，地平线机器人-W发布中期业绩，净利润37.84亿元，同比扭亏为盈，自主品牌ADAS份额首次突破50%。该数据来自媒体报道，未提供原始财报链接，但标题明确，若属实表明其智驾业务商业化加速。",
-        "importance": 4,
-        "confidence": "medium",
-        "entities": [
-          "地平线机器人"
-        ],
-        "evidenceIds": [
-          "E022"
-        ]
-      },
-      {
-        "title": "Data Dynamics发布Enterprise 2.0.5，将治理下沉至数据层",
-        "assessment": "据公司新闻稿，Data Dynamics在LEAP 2026发布Enterprise 2.0.5，声称60%的AI项目因数据整理与AI就绪度停滞，该产品将治理置于数据本身。此为厂商自述，需独立验证。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "Data Dynamics"
-        ],
-        "evidenceIds": [
-          "E008"
-        ]
-      },
-      {
-        "title": "AI治理方法论文章：将政策转化为可执行控制",
-        "assessment": "InfoWorld文章提出将AI治理视为工程工作，目标是系统在政策范围内每日运行。属于观点性内容，反映行业对AI治理工程化的关注，但无具体产品/公司事实。",
-        "importance": 2,
+        "title": "英伟达拟向联发科投资35亿美元",
+        "assessment": "据新浪财经报道，英伟达将向联发科投资35亿美元，以深化合作并推动更多公司开发接入其数据中心生态系统的芯片。该事件若属实，将强化英伟达在AI硬件产业链的核心地位。但证据等级为C，仅单一来源，需进一步验证。",
+        "importance": 5,
         "confidence": "low",
         "entities": [
-          "AI治理"
+          "英伟达",
+          "联发科"
         ],
         "evidenceIds": [
           "E001"
         ]
       },
       {
-        "title": "CompTIA发布首份AI Skills Tracker报告",
-        "assessment": "ITWeb报道CompTIA发布首份AI技能追踪报告，建立个人层面技能建设趋势基线。报告内容未在证据中详述，仅作为行业信号。",
-        "importance": 2,
-        "confidence": "medium",
+        "title": "英伟达收购Hugging Face",
+        "assessment": "据钛媒体报道，英伟达收购Hugging Face，标题称129亿（币种未明确），摘要称价值867亿人民币，且此前Hugging Face曾拒绝5亿美元投资。若属实，将显著影响开源AI平台生态。但证据等级为C，且标题与摘要数字单位存在不一致，需验证。",
+        "importance": 5,
+        "confidence": "low",
         "entities": [
-          "CompTIA"
+          "英伟达",
+          "Hugging Face"
         ],
         "evidenceIds": [
           "E002"
         ]
       },
       {
-        "title": "中熔电气拟发行不超8亿元可转债",
-        "assessment": "据东方财富报道，中熔电气公告拟发行不超过8亿元可转债，用于新能源科技园、电路保护元器件扩产及补流。属于公司融资计划，需关注后续审批与发行进展。",
-        "importance": 2,
-        "confidence": "medium",
+        "title": "腾讯混元Hy4 preview上线即排队",
+        "assessment": "据钛媒体报道，混元Hy4 preview上线即排队，摘要称“混元追上来一截，腾讯的船还在漏水”，显示腾讯在AI领域虽有进展但焦虑未消。证据等级为C，具体性能与市场反响需进一步观察。",
+        "importance": 4,
+        "confidence": "low",
         "entities": [
-          "中熔电气"
+          "腾讯",
+          "混元"
         ],
         "evidenceIds": [
-          "E009"
+          "E005"
         ]
       },
       {
-        "title": "宁德时代、寒武纪、华大基因等市场新闻",
-        "assessment": "证据包包含宁德时代大宗交易及利润报道、寒武纪涨超4%、华大基因跌1.62%等市场信息，均为单日交易或媒体解读，未形成重大基本面变化。",
-        "importance": 1,
+        "title": "HUMAIN与MinIO宣布战略合作构建AI数据架构",
+        "assessment": "据PR Newswire新闻稿，HUMAIN（PIF旗下公司）与MinIO在LEAP 2026宣布战略合作，旨在加速沙特及全球的HUMAIN AI采用。该合作显示中东主权基金在AI基础设施领域的布局。证据等级为B，但属于公司新闻稿，需关注后续落地。",
+        "importance": 3,
         "confidence": "medium",
         "entities": [
-          "宁德时代",
-          "寒武纪",
-          "华大基因"
+          "HUMAIN",
+          "MinIO",
+          "沙特"
         ],
         "evidenceIds": [
-          "E010",
-          "E011",
-          "E012",
-          "E013",
-          "E018",
-          "E014"
+          "E004"
+        ]
+      },
+      {
+        "title": "Think推出Think Grid™，提供超大规模云AI计算的替代方案",
+        "assessment": "据PR Newswire新闻稿，Think Grid提供对Think Fabric高能效AI基础设施的云化访问，无需前期资本投入，全包费率比同类方案低至27%。该产品可能对超大规模云厂商构成竞争，但证据来自公司新闻稿，需验证实际性能与市场接受度。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "Think",
+          "Think Grid"
+        ],
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "title": "Google DeepMind推出Gemini Omni 1.1 Flash",
+        "assessment": "据Google DeepMind官方X账号，Gemini Omni 1.1 Flash正在推出，旨在使生成式视频高度可控、迭代更快、更适用于生产级使用。这是生成式视频领域的重要进展，但具体能力需实际测试。证据等级为B，来自官方账号。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "Google DeepMind",
+          "Gemini"
+        ],
+        "evidenceIds": [
+          "E011"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "字节跳动",
+        "entity": "英伟达",
+        "direction": "positive",
+        "statement": "英伟达通过投资联发科（E001）和收购Hugging Face（E002）的报道，显示其正从芯片向AI开源平台和更广泛硬件生态扩张，若交易完成将强化其产业链主导地位。但两项证据均为C级，需官方确认。",
+        "evidenceIds": [
+          "E001",
+          "E002"
+        ]
+      },
+      {
+        "entity": "腾讯",
         "direction": "mixed",
-        "statement": "豆包2.2推迟发布，短期产品节奏延后，但若补强Coding/Agent能力成功，可能提升长期竞争力。",
+        "statement": "混元Hy4 preview上线即排队，显示腾讯在基础模型上有所追赶，但摘要称“船还在漏水”，表明其AI战略仍面临压力（E005）。",
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "entity": "AI基础设施市场",
+        "direction": "mixed",
+        "statement": "Think Grid以更低全包费率提供专用AI算力（E006），HUMAIN与MinIO合作构建AI数据架构（E004），显示超大规模云之外的新兴替代方案正在出现，可能加剧竞争，但两者均为公司新闻稿，实际影响待观察。",
         "evidenceIds": [
           "E006",
-          "E007"
+          "E004"
         ]
       },
       {
-        "entity": "日本AI与半导体产业",
-        "direction": "positive",
-        "statement": "日本经产省寻求490亿美元预算，若获批将显著加速AI与半导体产业投资，利好相关生态。",
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "entity": "地平线机器人",
-        "direction": "positive",
-        "statement": "中期业绩扭亏为盈且自主品牌ADAS份额首破50%，显示智驾业务商业化取得阶段性验证。",
-        "evidenceIds": [
-          "E022"
-        ]
-      },
-      {
-        "entity": "Data Dynamics",
-        "direction": "positive",
-        "statement": "发布数据层治理产品，切入AI治理与数据就绪度市场，但效果需客户案例验证。",
-        "evidenceIds": [
-          "E008"
-        ]
-      },
-      {
-        "entity": "AI治理行业",
-        "direction": "neutral",
-        "statement": "治理工程化方法论文章出现，反映行业关注度提升，但尚无具体落地证据。",
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "entity": "中熔电气",
-        "direction": "neutral",
-        "statement": "拟发行可转债用于扩产，属于常规融资计划，对基本面影响待观察。",
-        "evidenceIds": [
-          "E009"
-        ]
-      }
-    ],
-    "watchlist": [
-      {
-        "item": "字节豆包2.2正式发布时间及Coding能力评测结果",
-        "reason": "推迟发布是否带来能力实质性提升，需第三方评测验证。",
-        "nextEvidence": "字节官方发布或权威评测",
-        "evidenceIds": [
-          "E006",
-          "E007"
-        ]
-      },
-      {
-        "item": "日本490亿美元预算的国会审批及具体投向",
-        "reason": "预算规模空前，但能否落地及对半导体/AI产业链的实际拉动需跟踪。",
-        "nextEvidence": "日本政府预算案文件或审批新闻",
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "item": "地平线机器人后续财报及ADAS份额持续性",
-        "reason": "扭亏为盈是否可持续，份额突破50%后能否维持。",
-        "nextEvidence": "下一季度财报及行业份额数据",
-        "evidenceIds": [
-          "E022"
-        ]
-      },
-      {
-        "item": "Data Dynamics Enterprise 2.0.5客户采用案例",
-        "reason": "厂商自述需独立验证，关注实际部署与效果。",
-        "nextEvidence": "客户案例或第三方评测",
-        "evidenceIds": [
-          "E008"
-        ]
-      },
-      {
-        "item": "CompTIA AI Skills Tracker后续季度数据",
-        "reason": "首份基线建立后，后续趋势数据可反映AI技能需求变化。",
-        "nextEvidence": "下一期报告",
+        "entity": "开源AI生态",
+        "direction": "negative",
+        "statement": "据钛媒体报道，Hugging Face被英伟达收购，此前曾拒绝5亿美元投资（E002），若属实，开源AI平台的独立性可能受到削弱，社区反应值得关注。",
         "evidenceIds": [
           "E002"
         ]
       },
       {
-        "item": "中熔电气可转债发行进展",
-        "reason": "融资计划需经审批，关注发行结果及项目落地。",
-        "nextEvidence": "证监会批复或发行公告",
+        "entity": "生成式视频",
+        "direction": "positive",
+        "statement": "Google DeepMind推出Gemini Omni 1.1 Flash，强调可控性和生产级使用（E011），显示生成式视频工具正走向更成熟的工业化应用。",
         "evidenceIds": [
-          "E009"
+          "E011"
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "item": "英伟达-联发科投资交易进展",
+        "reason": "E001为单一C级来源，需官方公告或更多独立报道确认交易金额、股权比例及合作细节。",
+        "nextEvidence": "英伟达或联发科的官方公告、SEC文件、权威财经媒体后续报道",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "item": "英伟达收购Hugging Face的细节与监管",
+        "reason": "E002标题与摘要数字单位不一致，且为C级来源，需核实交易金额、是否完成、监管审批及对开源社区的影响。",
+        "nextEvidence": "交易双方官方声明、监管文件、开源社区反应",
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "item": "腾讯混元Hy4的实际性能与商业化",
+        "reason": "E005仅提供标题和摘要，缺乏具体性能数据，需观察用户反馈、评测结果及对腾讯AI业务的实际带动。",
+        "nextEvidence": "混元Hy4技术报告、第三方评测、腾讯财报或官方披露",
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "item": "Think Grid的客户采用与定价竞争力",
+        "reason": "E006为新闻稿，声称费率低27%，需验证实际部署案例、性能对比及对超大规模云厂商的冲击。",
+        "nextEvidence": "Think Grid客户案例、独立基准测试、行业分析报告",
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "item": "HUMAIN与MinIO合作落地",
+        "reason": "E004为新闻稿，需关注合作是否转化为实际产品、沙特市场采用情况以及全球扩展计划。",
+        "nextEvidence": "HUMAIN或MinIO的产品发布、客户公告、后续新闻",
+        "evidenceIds": [
+          "E004"
+        ]
+      },
+      {
+        "item": "Gemini Omni 1.1 Flash的可用性与效果",
+        "reason": "E011为官方X帖子，需实际测试生成视频的质量、控制能力和生产环境表现。",
+        "nextEvidence": "Google DeepMind官方文档、用户评测、Flow by Google中的实际体验",
+        "evidenceIds": [
+          "E011"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "证据质量风险",
-        "reason": "多数证据为单一媒体来源或公司新闻稿，证据等级C或B，存在信息不准确或夸大可能。",
+        "risk": "关键事件证据等级低，存在不实或夸大风险",
+        "reason": "英伟达投资联发科（E001）和收购Hugging Face（E002）均仅来自单一C级媒体来源，未经官方确认，可能为传闻或误报。",
         "evidenceIds": [
-          "E003",
+          "E001",
+          "E002"
+        ]
+      },
+      {
+        "risk": "英伟达大规模收购可能面临反垄断或监管审查",
+        "reason": "若E002收购Hugging Face属实，英伟达在AI芯片和开源平台领域的双重主导可能引发监管关注，交易存在不确定性。",
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "risk": "腾讯AI竞争力不足的风险",
+        "reason": "E005摘要称“腾讯的船还在漏水”，暗示混元虽进步但未能完全解决腾讯的AI焦虑，若产品体验不佳，可能影响其市场地位。",
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "risk": "新兴AI基础设施替代方案的实际效果存疑",
+        "reason": "E006和E004均为公司新闻稿，可能夸大优势，Think Grid的27%成本优势及HUMAIN合作的实际成效需独立验证。",
+        "evidenceIds": [
           "E006",
-          "E007",
-          "E008"
+          "E004"
         ]
       },
       {
-        "risk": "字节豆包推迟可能反映技术瓶颈",
-        "reason": "若补课不及预期，可能影响字节AI产品竞争力。",
+        "risk": "开源社区对Hugging Face被收购的反弹",
+        "reason": "E002显示Hugging Face此前拒绝投资，若被英伟达收购，可能引发开源社区对平台中立性的担忧，导致用户流失。",
         "evidenceIds": [
-          "E006",
-          "E007"
-        ]
-      },
-      {
-        "risk": "日本巨额预算执行风险",
-        "reason": "预算可能面临财政压力或政策变动，实际执行不及预期。",
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "risk": "地平线业绩可持续性风险",
-        "reason": "扭亏为盈可能包含非经常性项目，需警惕可持续性。",
-        "evidenceIds": [
-          "E022"
-        ]
-      },
-      {
-        "risk": "AI治理产品市场尚早期",
-        "reason": "厂商宣称的“60%项目停滞”等数据需独立验证，市场接受度未知。",
-        "evidenceIds": [
-          "E008"
+          "E002"
         ]
       }
     ],
-    "methodologyNote": "本分析仅基于证据包内提供的结构化证据，不补充外部事实。事实、推断与待验证事项已分开表达；每条判断均引用至少一个evidenceIds中的证据编号。证据等级为C或B、来源为单一媒体或公司自述的内容，均以“据媒体报道”“据公司新闻稿”等措辞标注，不写成确定性重大事实。本输出不构成任何买入、卖出、目标价或收益承诺。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
+    "methodologyNote": "本分析仅基于证据包中的证据，不补充外部事实。证据等级分为B级（公司新闻稿或官方账号）和C级（外部媒体线索），均未经独立核实。分析中区分了报道内容（事实）、基于摘要的推断（推断）和需更多证据确认的事项（待验证）。所有判断均引用至少一个证据编号。本输出不构成任何投资建议。 数据管线提示：机构证据层重建=stale、月度信源效能审查=unknown。"
   },
   "changes": [
     {
-      "id": "chg-7cbb50f99e0138fcf0c9",
+      "id": "chg-95aeb7778e53194dc723",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-346d16e11d44b44000",
-      "entityName": "Governance by design: Turning AI policy into executable controls",
+      "entityId": "intelligence-event-6ee3d66c0e43e6ad20",
+      "entityName": "英伟达将向联发科投资35亿美元 强化AI硬件产业链核心地位",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：Governance by design: Turning AI policy into executable controls。",
-      "importance": 86,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-08-31",
-        "summary": "Governance determines whether a generative AI program remains a set of pilots or becomes a durable capability. I treat governance as engineering work. The goal stays simple. The system should behave within policy, every day, under change. I define governance…",
-        "title": "Governance by design: Turning AI policy into executable controls"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-08-31",
-          "evidenceIds": [
-            "E001"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Governance determines whether a generative AI program remains a set of pilots or becomes a durable capability. I treat governance as engineering work. The goal stays simple. The system should behave within policy, every day, under change. I define governance…",
-          "evidenceIds": [
-            "E001"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Governance by design: Turning AI policy into executable controls",
-          "evidenceIds": [
-            "E001"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E001"
-      ],
-      "supportingEvidenceIds": [
-        "E001"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-3430e2e1e4c4040e01d0"
-      ],
-      "eventLifecycles": {
-        "evt-3430e2e1e4c4040e01d0": "first_seen"
-      },
-      "eventId": "evt-3430e2e1e4c4040e01d0",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-08-31T11:54:48+00:00",
-      "lastSeenAt": "2026-08-31T11:54:48+00:00"
-    },
-    {
-      "id": "chg-d31a826874a8ed23ce57",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-1311866a698ebfb7da",
-      "entityName": "Research report: AI Skills Tracker",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Research report: AI Skills Tracker。",
-      "importance": 85,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-08-25",
-        "summary": "CompTIA’s inaugural AI Skills Tracker establishes a baseline for understanding skills-building trends at an individual level.",
-        "title": "Research report: AI Skills Tracker"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-08-25",
-          "evidenceIds": [
-            "E002"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "CompTIA’s inaugural AI Skills Tracker establishes a baseline for understanding skills-building trends at an individual level.",
-          "evidenceIds": [
-            "E002"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Research report: AI Skills Tracker",
-          "evidenceIds": [
-            "E002"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E002"
-      ],
-      "supportingEvidenceIds": [
-        "E002"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-4109e15129be2a0d45a7"
-      ],
-      "eventLifecycles": {
-        "evt-4109e15129be2a0d45a7": "first_seen"
-      },
-      "eventId": "evt-4109e15129be2a0d45a7",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-08-31T11:54:48+00:00",
-      "lastSeenAt": "2026-08-31T11:54:48+00:00"
-    },
-    {
-      "id": "chg-66899a2eaddbcec42773",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-231e68a6ee5350e171",
-      "entityName": "日本经产省寻求规模空前的490亿美元预算 以期加速AI等产业投资",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：日本经产省寻求规模空前的490亿美元预算 以期加速AI等产业投资。",
+      "summary": "新增高价值情报事件记录：英伟达将向联发科投资35亿美元 强化AI硬件产业链核心地位。",
       "importance": 84,
       "before": null,
       "after": {
         "publishedAt": "2026-08-31",
-        "summary": "日本经济产业省寻求一项前所未有的7.8万亿日元（490亿美元）预算，以加速投资半导体、AI和首相高市早苗促增长计划中的其他核心战略产业投资。",
-        "title": "日本经产省寻求规模空前的490亿美元预算 以期加速AI等产业投资"
+        "summary": "英伟达将向联发科投资35亿美元，进一步深化与其合作。英伟达正试图说服更多公司开发能够接入其主导的数据中心生态系统的芯片。",
+        "title": "英伟达将向联发科投资35亿美元 强化AI硬件产业链核心地位"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -503,31 +306,31 @@
           "before": null,
           "after": "2026-08-31",
           "evidenceIds": [
-            "E003"
+            "E001"
           ]
         },
         {
           "field": "summary",
           "before": null,
-          "after": "日本经济产业省寻求一项前所未有的7.8万亿日元（490亿美元）预算，以加速投资半导体、AI和首相高市早苗促增长计划中的其他核心战略产业投资。",
+          "after": "英伟达将向联发科投资35亿美元，进一步深化与其合作。英伟达正试图说服更多公司开发能够接入其主导的数据中心生态系统的芯片。",
           "evidenceIds": [
-            "E003"
+            "E001"
           ]
         },
         {
           "field": "title",
           "before": null,
-          "after": "日本经产省寻求规模空前的490亿美元预算 以期加速AI等产业投资",
+          "after": "英伟达将向联发科投资35亿美元 强化AI硬件产业链核心地位",
           "evidenceIds": [
-            "E003"
+            "E001"
           ]
         }
       ],
       "evidenceIds": [
-        "E003"
+        "E001"
       ],
       "supportingEvidenceIds": [
-        "E003"
+        "E001"
       ],
       "evidenceQuality": {
         "status": "passed",
@@ -538,35 +341,272 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-886eda7b8d528aea613d"
+        "evt-f61d0c6810186ce656f6"
       ],
       "eventLifecycles": {
-        "evt-886eda7b8d528aea613d": "first_seen"
+        "evt-f61d0c6810186ce656f6": "first_seen"
       },
-      "eventId": "evt-886eda7b8d528aea613d",
+      "eventId": "evt-f61d0c6810186ce656f6",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-08-31T11:54:48+00:00",
-      "lastSeenAt": "2026-08-31T11:54:48+00:00"
+      "firstSeenAt": "2026-08-31T14:32:12+00:00",
+      "lastSeenAt": "2026-08-31T14:32:12+00:00"
     },
     {
-      "id": "chg-d92baf7de127df3ee89a",
+      "id": "chg-2425ffb8996aa7718082",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-b095afa3e11d3716ee",
-      "entityName": "独家｜字节豆包2.2推迟发布，Coding疯狂补课",
+      "entityId": "intelligence-event-4167ceb3038a537641",
+      "entityName": "英伟达129亿买下Hugging Face：拒绝5亿投资后，开源AI童话结束了",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：独家｜字节豆包2.2推迟发布，Coding疯狂补课。",
+      "summary": "新增高价值情报事件记录：英伟达129亿买下Hugging Face：拒绝5亿投资后，开源AI童话结束了。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "Hugging Face被英伟达收购，价值867亿人民币，而此前曾拒绝其5亿美元投资，体现AI开源平台与大厂博弈的激烈。",
+        "title": "英伟达129亿买下Hugging Face：拒绝5亿投资后，开源AI童话结束了"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Hugging Face被英伟达收购，价值867亿人民币，而此前曾拒绝其5亿美元投资，体现AI开源平台与大厂博弈的激烈。",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "英伟达129亿买下Hugging Face：拒绝5亿投资后，开源AI童话结束了",
+          "evidenceIds": [
+            "E002"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E002"
+      ],
+      "supportingEvidenceIds": [
+        "E002"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-c76261e54ca1b6a8f1ba"
+      ],
+      "eventLifecycles": {
+        "evt-c76261e54ca1b6a8f1ba": "first_seen"
+      },
+      "eventId": "evt-c76261e54ca1b6a8f1ba",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T14:32:12+00:00",
+      "lastSeenAt": "2026-08-31T14:32:12+00:00"
+    },
+    {
+      "id": "chg-27c37d698ef0ad897c25",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-108a726a86e722f87e",
+      "entityName": "HUMAIN and MinIO Announce Strategic Partnership to Build AI Data Fabric",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：HUMAIN and MinIO Announce Strategic Partnership to Build AI Data Fabric。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "Strategic collaboration announced at LEAP 2026 expected to accelerate the adoption of HUMAIN AI in Saudi Arabia and around the world RIYADH, Saudi Arabia, Aug. 31, 2026 /PRNewswire/ -- HUMAIN, a PIF company delivering full-stack artificial intelligence capabi…",
+        "title": "HUMAIN and MinIO Announce Strategic Partnership to Build AI Data Fabric"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Strategic collaboration announced at LEAP 2026 expected to accelerate the adoption of HUMAIN AI in Saudi Arabia and around the world RIYADH, Saudi Arabia, Aug. 31, 2026 /PRNewswire/ -- HUMAIN, a PIF company delivering full-stack artificial intelligence capabi…",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "HUMAIN and MinIO Announce Strategic Partnership to Build AI Data Fabric",
+          "evidenceIds": [
+            "E004"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E004"
+      ],
+      "supportingEvidenceIds": [
+        "E004"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-62c946340f15b42a4460"
+      ],
+      "eventLifecycles": {
+        "evt-62c946340f15b42a4460": "first_seen"
+      },
+      "eventId": "evt-62c946340f15b42a4460",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T14:32:12+00:00",
+      "lastSeenAt": "2026-08-31T14:32:12+00:00"
+    },
+    {
+      "id": "chg-c9fb396ab82929262bac",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-b5d77ddac9ae835438",
+      "entityName": "混元Hy4 preview上线即排队，能消解腾讯的AI焦虑吗？",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：混元Hy4 preview上线即排队，能消解腾讯的AI焦虑吗？。",
       "importance": 82,
       "before": null,
       "after": {
         "publishedAt": "2026-08-31",
-        "summary": "Coding疯狂补课",
-        "title": "独家｜字节豆包2.2推迟发布，Coding疯狂补课"
+        "summary": "混元追上来一截，腾讯的船还在“漏水”。",
+        "title": "混元Hy4 preview上线即排队，能消解腾讯的AI焦虑吗？"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "混元追上来一截，腾讯的船还在“漏水”。",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "混元Hy4 preview上线即排队，能消解腾讯的AI焦虑吗？",
+          "evidenceIds": [
+            "E005"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E005"
+      ],
+      "supportingEvidenceIds": [
+        "E005"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-503fb43c526bbf156da0"
+      ],
+      "eventLifecycles": {
+        "evt-503fb43c526bbf156da0": "first_seen"
+      },
+      "eventId": "evt-503fb43c526bbf156da0",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T14:32:12+00:00",
+      "lastSeenAt": "2026-08-31T14:32:12+00:00"
+    },
+    {
+      "id": "chg-a7c9c53b86f03b9037b7",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-ce65d90bc45a14a83f",
+      "entityName": "Think launches Think Grid™, a new alternative to hyperscaler AI compute",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Think launches Think Grid™, a new alternative to hyperscaler AI compute。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "Think Grid provides cloud-like access to Think Fabric's high-efficiency AI infrastructure, without the upfront capital investment of deploying dedicated infrastructure Think Grid offers dedicated AI compute at an all-inclusive rate up to 27% lower than compar…",
+        "title": "Think launches Think Grid™, a new alternative to hyperscaler AI compute"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -588,7 +628,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "Coding疯狂补课",
+          "after": "Think Grid provides cloud-like access to Think Fabric's high-efficiency AI infrastructure, without the upfront capital investment of deploying dedicated infrastructure Think Grid offers dedicated AI compute at an all-inclusive rate up to 27% lower than compar…",
           "evidenceIds": [
             "E006"
           ]
@@ -596,7 +636,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "独家｜字节豆包2.2推迟发布，Coding疯狂补课",
+          "after": "Think launches Think Grid™, a new alternative to hyperscaler AI compute",
           "evidenceIds": [
             "E006"
           ]
@@ -617,35 +657,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-6988665c97b0f344346f"
+        "evt-2317e2494e68d4484339"
       ],
       "eventLifecycles": {
-        "evt-6988665c97b0f344346f": "first_seen"
+        "evt-2317e2494e68d4484339": "first_seen"
       },
-      "eventId": "evt-6988665c97b0f344346f",
+      "eventId": "evt-2317e2494e68d4484339",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-08-31T11:54:48+00:00",
-      "lastSeenAt": "2026-08-31T11:54:48+00:00"
+      "firstSeenAt": "2026-08-31T14:32:12+00:00",
+      "lastSeenAt": "2026-08-31T14:32:12+00:00"
     },
     {
-      "id": "chg-b5a6154ed7b5111b1c76",
+      "id": "chg-6fa6944d1e2d95e022b7",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-c070ba728354db25f7",
-      "entityName": "曝字节豆包2.2推迟发布：正全力攻坚Coding相关能力",
+      "entityId": "intelligence-event-31cc62518a032293b4",
+      "entityName": "SNICKERS® Launches the World's First Digital Candy Bar for when AI Acts \"Hungry\"",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：曝字节豆包2.2推迟发布：正全力攻坚Coding相关能力。",
+      "summary": "新增高价值情报事件记录：SNICKERS® Launches the World's First Digital Candy Bar for when AI Acts \"Hungry\"。",
       "importance": 82,
       "before": null,
       "after": {
         "publishedAt": "2026-08-31",
-        "summary": "【CNMO科技消息】近日，CNMO科技从“白鲸实验室”获悉，字节跳动原定8月推出的豆包大模型2.2版本将推迟发布。豆包据报道，多位接近字节的人士透露，此次延期核心目的是开展更充分的预训练与后训练工作，重点补强编程、工具调用以及Agent相关能力，以更长研发周期换取能力实质性提升。",
-        "title": "曝字节豆包2.2推迟发布：正全力攻坚Coding相关能力"
+        "summary": "By translating the iconic \"You're Not You When You're Hungry\" platform into the AI era, SNICKERS invites fans to \"feed\" their out-of-sorts AI assistant a digital candy bar KEY POINTS: From being too agreeable to generating unsatisfactory or incorrect response…",
+        "title": "SNICKERS® Launches the World's First Digital Candy Bar for when AI Acts \"Hungry\""
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -667,7 +707,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "【CNMO科技消息】近日，CNMO科技从“白鲸实验室”获悉，字节跳动原定8月推出的豆包大模型2.2版本将推迟发布。豆包据报道，多位接近字节的人士透露，此次延期核心目的是开展更充分的预训练与后训练工作，重点补强编程、工具调用以及Agent相关能力，以更长研发周期换取能力实质性提升。",
+          "after": "By translating the iconic \"You're Not You When You're Hungry\" platform into the AI era, SNICKERS invites fans to \"feed\" their out-of-sorts AI assistant a digital candy bar KEY POINTS: From being too agreeable to generating unsatisfactory or incorrect response…",
           "evidenceIds": [
             "E007"
           ]
@@ -675,7 +715,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "曝字节豆包2.2推迟发布：正全力攻坚Coding相关能力",
+          "after": "SNICKERS® Launches the World's First Digital Candy Bar for when AI Acts \"Hungry\"",
           "evidenceIds": [
             "E007"
           ]
@@ -696,35 +736,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-23a07dcc7d99ca76d5f7"
+        "evt-9fda528803f492aebe32"
       ],
       "eventLifecycles": {
-        "evt-23a07dcc7d99ca76d5f7": "first_seen"
+        "evt-9fda528803f492aebe32": "first_seen"
       },
-      "eventId": "evt-23a07dcc7d99ca76d5f7",
+      "eventId": "evt-9fda528803f492aebe32",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-08-31T11:54:48+00:00",
-      "lastSeenAt": "2026-08-31T11:54:48+00:00"
+      "firstSeenAt": "2026-08-31T14:32:12+00:00",
+      "lastSeenAt": "2026-08-31T14:32:12+00:00"
     },
     {
-      "id": "chg-c23e912112c78d1cb393",
+      "id": "chg-d6b812f6a6aa2d32a0dd",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-f30aaf6fd06cfa5626",
-      "entityName": "Data Dynamics Launches Enterprise 2.0.5 at LEAP 2026, Bringing Governed AI to the Data Layer",
+      "entityId": "intelligence-event-dfddb25994411024d5",
+      "entityName": "Asus launches new 14-inch laptop globally with 1,600-nit OLED display, Nvidia RTX Spark and 128 GB RAM",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：Data Dynamics Launches Enterprise 2.0.5 at LEAP 2026, Bringing Governed AI to the Data Layer。",
+      "summary": "新增高价值情报事件记录：Asus launches new 14-inch laptop globally with 1,600-nit OLED display, Nvidia RTX Spark and 128 GB RAM。",
       "importance": 82,
       "before": null,
       "after": {
         "publishedAt": "2026-08-31",
-        "summary": "With 60% of AI projects stalled due to data curation and AI readiness, Enterprise 2.0.5 puts governance where it's actually enforceable, at the data itself. RIYADH, Saudi Arabia, Aug. 31, 2026 /PRNewswire/ -- Data Dynamics, a global leader in data management,…",
-        "title": "Data Dynamics Launches Enterprise 2.0.5 at LEAP 2026, Bringing Governed AI to the Data Layer"
+        "summary": "Asus has finally revealed new details about its first 14-inch laptop with an Nvidia RTX Spark chipset. Also packing up to 128 GB of RAM and a 90 Wh battery inside a 1.48 kg housing, the ProArt P14 will be available with a 120 Hz VRR OLED display that reaches…",
+        "title": "Asus launches new 14-inch laptop globally with 1,600-nit OLED display, Nvidia RTX Spark and 128 GB RAM"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -746,7 +786,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "With 60% of AI projects stalled due to data curation and AI readiness, Enterprise 2.0.5 puts governance where it's actually enforceable, at the data itself. RIYADH, Saudi Arabia, Aug. 31, 2026 /PRNewswire/ -- Data Dynamics, a global leader in data management,…",
+          "after": "Asus has finally revealed new details about its first 14-inch laptop with an Nvidia RTX Spark chipset. Also packing up to 128 GB of RAM and a 90 Wh battery inside a 1.48 kg housing, the ProArt P14 will be available with a 120 Hz VRR OLED display that reaches…",
           "evidenceIds": [
             "E008"
           ]
@@ -754,7 +794,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "Data Dynamics Launches Enterprise 2.0.5 at LEAP 2026, Bringing Governed AI to the Data Layer",
+          "after": "Asus launches new 14-inch laptop globally with 1,600-nit OLED display, Nvidia RTX Spark and 128 GB RAM",
           "evidenceIds": [
             "E008"
           ]
@@ -775,35 +815,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-4311b2fbdc68f80cab39"
+        "evt-6b0e94e00cb99f0bb0b3"
       ],
       "eventLifecycles": {
-        "evt-4311b2fbdc68f80cab39": "first_seen"
+        "evt-6b0e94e00cb99f0bb0b3": "first_seen"
       },
-      "eventId": "evt-4311b2fbdc68f80cab39",
+      "eventId": "evt-6b0e94e00cb99f0bb0b3",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-08-31T11:54:48+00:00",
-      "lastSeenAt": "2026-08-31T11:54:48+00:00"
+      "firstSeenAt": "2026-08-31T14:32:12+00:00",
+      "lastSeenAt": "2026-08-31T14:32:12+00:00"
     },
     {
-      "id": "chg-40c830149021c4fad320",
+      "id": "chg-48f46e9d5cc5993bb383",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-59feec2f9a9df81170",
-      "entityName": "中熔电气：拟发行不超8亿元可转债用于新能源科技园等项目",
+      "entityId": "intelligence-event-0e5d3b34187ad5c3ca",
+      "entityName": "Ai Global Solutions Launches Financial Services Practice",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：中熔电气：拟发行不超8亿元可转债用于新能源科技园等项目。",
-      "importance": 80,
+      "summary": "新增高价值情报事件记录：Ai Global Solutions Launches Financial Services Practice。",
+      "importance": 82,
       "before": null,
       "after": {
         "publishedAt": "2026-08-31",
-        "summary": "8月31日， 中熔电气 (301031.SZ)公告称，公司拟向不特定对象发行可转换公司债券，募集资金总额不超过8亿元，扣除发行费用后用于赛诺克 新能源 科技园项目、电路保护元器件系列产品扩产建设项目及补充流动资金。",
-        "title": "中熔电气：拟发行不超8亿元可转债用于新能源科技园等项目"
+        "summary": "Dedicated practice combines AI consulting, intelligent automation, document processing, and platform modernization to help financial services organizations securely deploy Claude, GPT, and other advanced AI models TAMPA, Fla., Aug. 31, 2026 /PRNewswire/ -- Ai…",
+        "title": "Ai Global Solutions Launches Financial Services Practice"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -825,7 +865,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "8月31日， 中熔电气 (301031.SZ)公告称，公司拟向不特定对象发行可转换公司债券，募集资金总额不超过8亿元，扣除发行费用后用于赛诺克 新能源 科技园项目、电路保护元器件系列产品扩产建设项目及补充流动资金。",
+          "after": "Dedicated practice combines AI consulting, intelligent automation, document processing, and platform modernization to help financial services organizations securely deploy Claude, GPT, and other advanced AI models TAMPA, Fla., Aug. 31, 2026 /PRNewswire/ -- Ai…",
           "evidenceIds": [
             "E009"
           ]
@@ -833,7 +873,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "中熔电气：拟发行不超8亿元可转债用于新能源科技园等项目",
+          "after": "Ai Global Solutions Launches Financial Services Practice",
           "evidenceIds": [
             "E009"
           ]
@@ -854,418 +894,186 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-fd733c24fb061aa0a82b"
+        "evt-573dea02032cd0a60bac"
       ],
       "eventLifecycles": {
-        "evt-fd733c24fb061aa0a82b": "first_seen"
+        "evt-573dea02032cd0a60bac": "first_seen"
       },
-      "eventId": "evt-fd733c24fb061aa0a82b",
+      "eventId": "evt-573dea02032cd0a60bac",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-08-31T11:54:48+00:00",
-      "lastSeenAt": "2026-08-31T11:54:48+00:00"
+      "firstSeenAt": "2026-08-31T14:32:12+00:00",
+      "lastSeenAt": "2026-08-31T14:32:12+00:00"
     },
     {
-      "id": "chg-08eb0b9f2f4dc55630b3",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "catl",
-      "entityName": "宁德时代",
-      "action": "updated",
+      "id": "chg-4d66cb2daf505ac19f85",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-e7a9e19bb834a64ae3",
+      "entityName": "埃隆·马斯克：Extending consciousness beyond Earth, ultimately to the stars, is a fundamentally good goal",
+      "action": "added",
       "changedFields": [
-        "news"
+        "publishedAt",
+        "summary",
+        "title"
       ],
-      "summary": "宁德时代 的 news 发生变化。",
-      "importance": 48,
-      "before": {
-        "news": []
-      },
+      "summary": "新增高价值情报事件记录：埃隆·马斯克：Extending consciousness beyond Earth, ultimately to the stars, is a fundamentally good goal。",
+      "importance": 81,
+      "before": null,
       "after": {
-        "news": [
-          {
-            "publishedAt": "2026-08-31T17:10:00+08:00",
-            "source": "新浪财经",
-            "title": "车企价格战压利润，宁德时代凭什么赚433亿",
-            "url": "https://cj.sina.cn/articles/view/3684007222/db957d360010289s8"
-          },
-          {
-            "publishedAt": "2026-08-31T16:40:00+08:00",
-            "source": "新浪财经",
-            "title": "宁德时代今日大宗交易平价成交1.4万股，成交额508.97万元",
-            "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002j3x6"
-          },
-          {
-            "publishedAt": "2026-08-31T15:32:00+08:00",
-            "source": "新浪财经",
-            "title": "天华新能被问询与宁德时代有没有利益输送 总经理刘德广如何应对？",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-31/doc-iniqexup7882664.shtml"
-          },
-          {
-            "publishedAt": "2026-08-31T17:00:00+08:00",
-            "source": "新浪财经",
-            "title": "宁德时代8月31日现1笔大宗交易 总成交金额508.97万元 其中机构买入508.97万元 溢价率为0.00%",
-            "url": "https://finance.sina.com.cn/stock/ggzz/2026-08-31/doc-iniqfeam7828536.shtml"
-          }
-        ]
+        "publishedAt": "2026-08-30",
+        "summary": "Extending consciousness beyond Earth, ultimately to the stars, is a fundamentally good goal",
+        "title": "埃隆·马斯克：Extending consciousness beyond Earth, ultimately to the stars, is a fundamentally good goal"
       },
       "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
       "isResearchCandidate": true,
       "claimFields": [
-        "news"
+        "publishedAt",
+        "summary",
+        "title"
       ],
       "claimBindings": [
         {
-          "field": "news",
-          "before": [],
-          "after": [
-            {
-              "publishedAt": "2026-08-31T17:10:00+08:00",
-              "source": "新浪财经",
-              "title": "车企价格战压利润，宁德时代凭什么赚433亿",
-              "url": "https://cj.sina.cn/articles/view/3684007222/db957d360010289s8"
-            },
-            {
-              "publishedAt": "2026-08-31T16:40:00+08:00",
-              "source": "新浪财经",
-              "title": "宁德时代今日大宗交易平价成交1.4万股，成交额508.97万元",
-              "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002j3x6"
-            },
-            {
-              "publishedAt": "2026-08-31T15:32:00+08:00",
-              "source": "新浪财经",
-              "title": "天华新能被问询与宁德时代有没有利益输送 总经理刘德广如何应对？",
-              "url": "https://finance.sina.com.cn/jjxw/2026-08-31/doc-iniqexup7882664.shtml"
-            },
-            {
-              "publishedAt": "2026-08-31T17:00:00+08:00",
-              "source": "新浪财经",
-              "title": "宁德时代8月31日现1笔大宗交易 总成交金额508.97万元 其中机构买入508.97万元 溢价率为0.00%",
-              "url": "https://finance.sina.com.cn/stock/ggzz/2026-08-31/doc-iniqfeam7828536.shtml"
-            }
-          ],
-          "evidenceIds": [
-            "E010",
-            "E011",
-            "E012",
-            "E013"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E010",
-        "E011",
-        "E012",
-        "E013"
-      ],
-      "supportingEvidenceIds": [
-        "E010",
-        "E011",
-        "E012",
-        "E013"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 4,
-        "total": 4
-      },
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-11ae7a6f86e3b465993f",
-        "evt-f488904ab30412499a29",
-        "evt-443bc6b12a68a0ae6162",
-        "evt-e2f6235599f6539655bb"
-      ],
-      "eventLifecycles": {
-        "evt-11ae7a6f86e3b465993f": "first_seen",
-        "evt-f488904ab30412499a29": "first_seen",
-        "evt-443bc6b12a68a0ae6162": "first_seen",
-        "evt-e2f6235599f6539655bb": "first_seen"
-      },
-      "lifecycle": "mixed",
-      "firstSeenAt": "2026-08-31T11:54:48+00:00",
-      "lastSeenAt": "2026-08-31T11:54:48+00:00"
-    },
-    {
-      "id": "chg-851fc50799dfba802d10",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "bgi-genomics",
-      "entityName": "华大基因",
-      "action": "updated",
-      "changedFields": [
-        "news"
-      ],
-      "summary": "华大基因 的 news 发生变化。",
-      "importance": 48,
-      "before": {
-        "news": []
-      },
-      "after": {
-        "news": [
-          {
-            "publishedAt": "2026-08-31T15:51:00+08:00",
-            "source": "新浪财经",
-            "title": "华大基因跌1.62%，成交额2.97亿元，近5日主力净流入-3774.57万",
-            "url": "https://finance.sina.com.cn/stock/aiassist/ggsp/2026-08-31/doc-iniqexur4660442.shtml"
-          }
-        ]
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "news"
-      ],
-      "claimBindings": [
-        {
-          "field": "news",
-          "before": [],
-          "after": [
-            {
-              "publishedAt": "2026-08-31T15:51:00+08:00",
-              "source": "新浪财经",
-              "title": "华大基因跌1.62%，成交额2.97亿元，近5日主力净流入-3774.57万",
-              "url": "https://finance.sina.com.cn/stock/aiassist/ggsp/2026-08-31/doc-iniqexur4660442.shtml"
-            }
-          ],
-          "evidenceIds": [
-            "E014"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E014"
-      ],
-      "supportingEvidenceIds": [
-        "E014"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-9e1ce990ae9b856ca4a2"
-      ],
-      "eventLifecycles": {
-        "evt-9e1ce990ae9b856ca4a2": "first_seen"
-      },
-      "eventId": "evt-9e1ce990ae9b856ca4a2",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-08-31T11:54:48+00:00",
-      "lastSeenAt": "2026-08-31T11:54:48+00:00"
-    },
-    {
-      "id": "chg-b370bfd43b42a45d4d25",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "cambricon",
-      "entityName": "中科寒武纪科技股份有限公司",
-      "action": "updated",
-      "changedFields": [
-        "news"
-      ],
-      "summary": "中科寒武纪科技股份有限公司 的 news 发生变化。",
-      "importance": 48,
-      "before": {
-        "news": []
-      },
-      "after": {
-        "news": [
-          {
-            "publishedAt": "2026-08-31T13:32:00+08:00",
-            "source": "新浪财经",
-            "title": "A股半导体股回升，博通集成封涨停板，寒武纪涨超4%",
-            "url": "https://cj.sina.cn/articles/view/5115326071/130e5ae77020030brq"
-          }
-        ]
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "news"
-      ],
-      "claimBindings": [
-        {
-          "field": "news",
-          "before": [],
-          "after": [
-            {
-              "publishedAt": "2026-08-31T13:32:00+08:00",
-              "source": "新浪财经",
-              "title": "A股半导体股回升，博通集成封涨停板，寒武纪涨超4%",
-              "url": "https://cj.sina.cn/articles/view/5115326071/130e5ae77020030brq"
-            }
-          ],
-          "evidenceIds": [
-            "E018"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E018"
-      ],
-      "supportingEvidenceIds": [
-        "E018"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-5243298382c4e72e59c4"
-      ],
-      "eventLifecycles": {
-        "evt-5243298382c4e72e59c4": "first_seen"
-      },
-      "eventId": "evt-5243298382c4e72e59c4",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-08-31T11:54:48+00:00",
-      "lastSeenAt": "2026-08-31T11:54:48+00:00"
-    },
-    {
-      "id": "chg-79a3824ff2796004539e",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "horizon-robotics",
-      "entityName": "Horizon Robotics",
-      "action": "updated",
-      "changedFields": [
-        "news"
-      ],
-      "summary": "Horizon Robotics 的 news 发生变化。",
-      "importance": 48,
-      "before": {
-        "news": null
-      },
-      "after": {
-        "news": [
-          {
-            "publishedAt": "2026-08-31T17:33:00+08:00",
-            "source": "新浪财经",
-            "title": "地平线机器人-W(09660)发布中期业绩 净利润37.84亿元 同比扭亏为盈 自主品牌ADAS份额首破50%",
-            "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-08-31/doc-iniqfeap4639357.shtml"
-          }
-        ]
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "news"
-      ],
-      "claimBindings": [
-        {
-          "field": "news",
+          "field": "publishedAt",
           "before": null,
-          "after": [
-            {
-              "publishedAt": "2026-08-31T17:33:00+08:00",
-              "source": "新浪财经",
-              "title": "地平线机器人-W(09660)发布中期业绩 净利润37.84亿元 同比扭亏为盈 自主品牌ADAS份额首破50%",
-              "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-08-31/doc-iniqfeap4639357.shtml"
-            }
-          ],
+          "after": "2026-08-30",
           "evidenceIds": [
-            "E022"
+            "E010"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Extending consciousness beyond Earth, ultimately to the stars, is a fundamentally good goal",
+          "evidenceIds": [
+            "E010"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "埃隆·马斯克：Extending consciousness beyond Earth, ultimately to the stars, is a fundamentally good goal",
+          "evidenceIds": [
+            "E010"
           ]
         }
       ],
       "evidenceIds": [
-        "E022"
+        "E010"
       ],
       "supportingEvidenceIds": [
-        "E022"
+        "E010"
       ],
       "evidenceQuality": {
         "status": "passed",
         "supporting": 1,
         "total": 1
       },
-      "publicationTier": "candidate",
+      "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-149902138618cc01a7a8"
+        "evt-60d372872adc232847f7"
       ],
       "eventLifecycles": {
-        "evt-149902138618cc01a7a8": "first_seen"
+        "evt-60d372872adc232847f7": "first_seen"
       },
-      "eventId": "evt-149902138618cc01a7a8",
+      "eventId": "evt-60d372872adc232847f7",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-08-31T11:54:48+00:00",
-      "lastSeenAt": "2026-08-31T11:54:48+00:00"
+      "firstSeenAt": "2026-08-31T14:32:12+00:00",
+      "lastSeenAt": "2026-08-31T14:32:12+00:00"
+    },
+    {
+      "id": "chg-6730aade4db5ca14569f",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-4e936f1484a97de1b8",
+      "entityName": "Google DeepMind：We’re rolling out Gemini Omni 1.1 Flash to make generative video highly controllable, faster to iterate on, and more polished for production-grade use",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Google DeepMind：We’re rolling out Gemini Omni 1.1 Flash to make generative video highly controllable, faster to iterate on, and more polished for production-grade use。",
+      "importance": 81,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-28",
+        "summary": "We’re rolling out Gemini Omni 1.1 Flash to make generative video highly controllable, faster to iterate on, and more polished for production-grade use. Here’s how you can try it in @FlowbyGoogle and more → https://t.co/BFHMropoby https://t.co/uCB46FHOs3",
+        "title": "Google DeepMind：We’re rolling out Gemini Omni 1.1 Flash to make generative video highly controllable, faster to iterate on, and more polished for production-grade use"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-28",
+          "evidenceIds": [
+            "E011"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "We’re rolling out Gemini Omni 1.1 Flash to make generative video highly controllable, faster to iterate on, and more polished for production-grade use. Here’s how you can try it in @FlowbyGoogle and more → https://t.co/BFHMropoby https://t.co/uCB46FHOs3",
+          "evidenceIds": [
+            "E011"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Google DeepMind：We’re rolling out Gemini Omni 1.1 Flash to make generative video highly controllable, faster to iterate on, and more polished for production-grade use",
+          "evidenceIds": [
+            "E011"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E011"
+      ],
+      "supportingEvidenceIds": [
+        "E011"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-7007445af03dfa6d151f"
+      ],
+      "eventLifecycles": {
+        "evt-7007445af03dfa6d151f": "first_seen"
+      },
+      "eventId": "evt-7007445af03dfa6d151f",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-08-31T14:32:12+00:00",
+      "lastSeenAt": "2026-08-31T14:32:12+00:00"
     }
   ],
   "evidence": [
     {
       "id": "E001",
-      "changeId": "chg-7cbb50f99e0138fcf0c9",
-      "entityName": "Governance by design: Turning AI policy into executable controls",
-      "claim": "新增高价值情报事件记录：Governance by design: Turning AI policy into executable controls。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "InfoWorld",
-      "title": "Governance by design: Turning AI policy into executable controls",
-      "url": "https://www.infoworld.com/article/4209953/governance-by-design-turning-ai-policy-into-executable-controls.html",
-      "publishedAt": "2026-08-31",
-      "evidenceGrade": "C",
-      "platformName": "InfoWorld",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E002",
-      "changeId": "chg-d31a826874a8ed23ce57",
-      "entityName": "Research report: AI Skills Tracker",
-      "claim": "新增高价值情报事件记录：Research report: AI Skills Tracker。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "ITWeb",
-      "title": "Research report: AI Skills Tracker",
-      "url": "https://www.itweb.co.za/article/research-report-ai-skills-tracker/RgeVDqPRk5x7KJN3",
-      "publishedAt": "2026-08-25",
-      "evidenceGrade": "C",
-      "platformName": "ITWeb",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E003",
-      "changeId": "chg-66899a2eaddbcec42773",
-      "entityName": "日本经产省寻求规模空前的490亿美元预算 以期加速AI等产业投资",
-      "claim": "新增高价值情报事件记录：日本经产省寻求规模空前的490亿美元预算 以期加速AI等产业投资。",
+      "changeId": "chg-95aeb7778e53194dc723",
+      "entityName": "英伟达将向联发科投资35亿美元 强化AI硬件产业链核心地位",
+      "claim": "新增高价值情报事件记录：英伟达将向联发科投资35亿美元 强化AI硬件产业链核心地位。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "sourceName": "新浪财经",
-      "title": "日本经产省寻求规模空前的490亿美元预算 以期加速AI等产业投资",
-      "url": "https://finance.sina.com.cn/world/2026-08-31/doc-iniqfeap4607661.shtml",
+      "title": "英伟达将向联发科投资35亿美元 强化AI硬件产业链核心地位",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-08-31/doc-iniqfkkr8851875.shtml",
       "publishedAt": "2026-08-31",
       "evidenceGrade": "C",
       "platformName": "新浪",
@@ -1281,15 +1089,15 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E006",
-      "changeId": "chg-d92baf7de127df3ee89a",
-      "entityName": "独家｜字节豆包2.2推迟发布，Coding疯狂补课",
-      "claim": "新增高价值情报事件记录：独家｜字节豆包2.2推迟发布，Coding疯狂补课。",
+      "id": "E002",
+      "changeId": "chg-2425ffb8996aa7718082",
+      "entityName": "英伟达129亿买下Hugging Face：拒绝5亿投资后，开源AI童话结束了",
+      "claim": "新增高价值情报事件记录：英伟达129亿买下Hugging Face：拒绝5亿投资后，开源AI童话结束了。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "sourceName": "钛媒体",
-      "title": "独家｜字节豆包2.2推迟发布，Coding疯狂补课",
-      "url": "https://www.tmtpost.com/8122882.html",
+      "title": "英伟达129亿买下Hugging Face：拒绝5亿投资后，开源AI童话结束了",
+      "url": "https://www.tmtpost.com/8122952.html",
       "publishedAt": "2026-08-31",
       "evidenceGrade": "C",
       "platformName": "专业媒体",
@@ -1305,37 +1113,15 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E007",
-      "changeId": "chg-b5a6154ed7b5111b1c76",
-      "entityName": "曝字节豆包2.2推迟发布：正全力攻坚Coding相关能力",
-      "claim": "新增高价值情报事件记录：曝字节豆包2.2推迟发布：正全力攻坚Coding相关能力。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "原始信源",
-      "title": "曝字节豆包2.2推迟发布：正全力攻坚Coding相关能力",
-      "url": "https://www.toutiao.com/group/7680132431671837193",
-      "publishedAt": "2026-08-31",
-      "evidenceGrade": "C",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E008",
-      "changeId": "chg-c23e912112c78d1cb393",
-      "entityName": "Data Dynamics Launches Enterprise 2.0.5 at LEAP 2026, Bringing Governed AI to the Data Layer",
-      "claim": "新增高价值情报事件记录：Data Dynamics Launches Enterprise 2.0.5 at LEAP 2026, Bringing Governed AI to the Data Layer。",
+      "id": "E004",
+      "changeId": "chg-27c37d698ef0ad897c25",
+      "entityName": "HUMAIN and MinIO Announce Strategic Partnership to Build AI Data Fabric",
+      "claim": "新增高价值情报事件记录：HUMAIN and MinIO Announce Strategic Partnership to Build AI Data Fabric。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "sourceName": "PR Newswire Consumer Technology",
-      "title": "Data Dynamics Launches Enterprise 2.0.5 at LEAP 2026, Bringing Governed AI to the Data Layer",
-      "url": "https://www.prnewswire.com/news-releases/data-dynamics-launches-enterprise-2-0-5-at-leap-2026--bringing-governed-ai-to-the-data-layer-302864847.html",
+      "title": "HUMAIN and MinIO Announce Strategic Partnership to Build AI Data Fabric",
+      "url": "https://www.prnewswire.com/news-releases/humain-and-minio-announce-strategic-partnership-to-build-ai-data-fabric-302865004.html",
       "publishedAt": "2026-08-31",
       "evidenceGrade": "B",
       "platformName": "新闻稿",
@@ -1351,18 +1137,115 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E009",
-      "changeId": "chg-40c830149021c4fad320",
-      "entityName": "中熔电气：拟发行不超8亿元可转债用于新能源科技园等项目",
-      "claim": "新增高价值情报事件记录：中熔电气：拟发行不超8亿元可转债用于新能源科技园等项目。",
+      "id": "E005",
+      "changeId": "chg-c9fb396ab82929262bac",
+      "entityName": "混元Hy4 preview上线即排队，能消解腾讯的AI焦虑吗？",
+      "claim": "新增高价值情报事件记录：混元Hy4 preview上线即排队，能消解腾讯的AI焦虑吗？。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "中熔电气：拟发行不超8亿元可转债用于新能源科技园等项目",
-      "url": "https://finance.eastmoney.com/a/202608313860237761.html",
+      "sourceName": "钛媒体",
+      "title": "混元Hy4 preview上线即排队，能消解腾讯的AI焦虑吗？",
+      "url": "https://www.tmtpost.com/8123051.html",
       "publishedAt": "2026-08-31",
-      "evidenceGrade": "媒体报道",
-      "platformName": "东方财富",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E006",
+      "changeId": "chg-a7c9c53b86f03b9037b7",
+      "entityName": "Think launches Think Grid™, a new alternative to hyperscaler AI compute",
+      "claim": "新增高价值情报事件记录：Think launches Think Grid™, a new alternative to hyperscaler AI compute。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "Think launches Think Grid™, a new alternative to hyperscaler AI compute",
+      "url": "https://www.prnewswire.com/news-releases/think-launches-think-grid-a-new-alternative-to-hyperscaler-ai-compute-302864578.html",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "B",
+      "platformName": "新闻稿",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E007",
+      "changeId": "chg-6fa6944d1e2d95e022b7",
+      "entityName": "SNICKERS® Launches the World's First Digital Candy Bar for when AI Acts \"Hungry\"",
+      "claim": "新增高价值情报事件记录：SNICKERS® Launches the World's First Digital Candy Bar for when AI Acts \"Hungry\"。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "SNICKERS® Launches the World's First Digital Candy Bar for when AI Acts \"Hungry\"",
+      "url": "https://www.prnewswire.com/news-releases/snickers-launches-the-worlds-first-digital-candy-bar-for-when-ai-acts-hungry-302863014.html",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "B",
+      "platformName": "新闻稿",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E008",
+      "changeId": "chg-d6b812f6a6aa2d32a0dd",
+      "entityName": "Asus launches new 14-inch laptop globally with 1,600-nit OLED display, Nvidia RTX Spark and 128 GB RAM",
+      "claim": "新增高价值情报事件记录：Asus launches new 14-inch laptop globally with 1,600-nit OLED display, Nvidia RTX Spark and 128 GB RAM。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Notebookcheck",
+      "title": "Asus launches new 14-inch laptop globally with 1,600-nit OLED display, Nvidia RTX Spark and 128 GB RAM",
+      "url": "https://www.notebookcheck.net/Asus-launches-new-14-inch-laptop-globally-with-1-600-nit-OLED-display-Nvidia-RTX-Spark-and-128-GB-RAM.1383588.0.html",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "C",
+      "platformName": "Notebookcheck",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E009",
+      "changeId": "chg-48f46e9d5cc5993bb383",
+      "entityName": "Ai Global Solutions Launches Financial Services Practice",
+      "claim": "新增高价值情报事件记录：Ai Global Solutions Launches Financial Services Practice。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "Ai Global Solutions Launches Financial Services Practice",
+      "url": "https://www.prnewswire.com/news-releases/ai-global-solutions-launches-financial-services-practice-302864989.html",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "B",
+      "platformName": "新闻稿",
+      "sourceRole": "primary",
       "claimFields": [
         "publishedAt",
         "summary",
@@ -1375,140 +1258,48 @@
     },
     {
       "id": "E010",
-      "changeId": "chg-08eb0b9f2f4dc55630b3",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 的 news 发生变化。",
-      "publicationTier": "candidate",
+      "changeId": "chg-4d66cb2daf505ac19f85",
+      "entityName": "埃隆·马斯克：Extending consciousness beyond Earth, ultimately to the stars, is a fundamentally good goal",
+      "claim": "新增高价值情报事件记录：埃隆·马斯克：Extending consciousness beyond Earth, ultimately to the stars, is a fundamentally good goal。",
+      "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "车企价格战压利润，宁德时代凭什么赚433亿",
-      "url": "https://cj.sina.cn/articles/view/3684007222/db957d360010289s8",
-      "publishedAt": "2026-08-31T17:10:00+08:00",
-      "evidenceGrade": "媒体报道",
+      "sourceName": "埃隆·马斯克 on X",
+      "title": "埃隆·马斯克：Extending consciousness beyond Earth, ultimately to the stars, is a fundamentally good goal",
+      "url": "https://x.com/elonmusk/status/2094130588047266206",
+      "publishedAt": "2026-08-30",
+      "evidenceGrade": "B",
+      "platformName": "X",
+      "sourceRole": "primary",
       "claimFields": [
-        "news"
+        "publishedAt",
+        "summary",
+        "title"
       ],
-      "entityMatchStatus": "matched",
+      "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
       "qualityStatus": "passed",
       "supportStatus": "supports"
     },
     {
       "id": "E011",
-      "changeId": "chg-08eb0b9f2f4dc55630b3",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 的 news 发生变化。",
-      "publicationTier": "candidate",
+      "changeId": "chg-6730aade4db5ca14569f",
+      "entityName": "Google DeepMind：We’re rolling out Gemini Omni 1.1 Flash to make generative video highly controllable, faster to iterate on, and more polished for production-grade use",
+      "claim": "新增高价值情报事件记录：Google DeepMind：We’re rolling out Gemini Omni 1.1 Flash to make generative video highly controllable, faster to iterate on, and more polished for production-grade use。",
+      "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "宁德时代今日大宗交易平价成交1.4万股，成交额508.97万元",
-      "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002j3x6",
-      "publishedAt": "2026-08-31T16:40:00+08:00",
-      "evidenceGrade": "媒体报道",
+      "sourceName": "Google DeepMind on X",
+      "title": "Google DeepMind：We’re rolling out Gemini Omni 1.1 Flash to make generative video highly controllable, faster to iterate on, and more polished for production-grade use",
+      "url": "https://x.com/GoogleDeepMind/status/2093338200580256172",
+      "publishedAt": "2026-08-28",
+      "evidenceGrade": "B",
+      "platformName": "X",
+      "sourceRole": "primary",
       "claimFields": [
-        "news"
+        "publishedAt",
+        "summary",
+        "title"
       ],
-      "entityMatchStatus": "matched",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E012",
-      "changeId": "chg-08eb0b9f2f4dc55630b3",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 的 news 发生变化。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "天华新能被问询与宁德时代有没有利益输送 总经理刘德广如何应对？",
-      "url": "https://finance.sina.com.cn/jjxw/2026-08-31/doc-iniqexup7882664.shtml",
-      "publishedAt": "2026-08-31T15:32:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "entityMatchStatus": "matched",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E013",
-      "changeId": "chg-08eb0b9f2f4dc55630b3",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 的 news 发生变化。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "宁德时代8月31日现1笔大宗交易 总成交金额508.97万元 其中机构买入508.97万元 溢价率为0.00%",
-      "url": "https://finance.sina.com.cn/stock/ggzz/2026-08-31/doc-iniqfeam7828536.shtml",
-      "publishedAt": "2026-08-31T17:00:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "entityMatchStatus": "matched",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E014",
-      "changeId": "chg-851fc50799dfba802d10",
-      "entityName": "华大基因",
-      "claim": "华大基因 的 news 发生变化。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "华大基因跌1.62%，成交额2.97亿元，近5日主力净流入-3774.57万",
-      "url": "https://finance.sina.com.cn/stock/aiassist/ggsp/2026-08-31/doc-iniqexur4660442.shtml",
-      "publishedAt": "2026-08-31T15:51:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "entityMatchStatus": "matched",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E018",
-      "changeId": "chg-b370bfd43b42a45d4d25",
-      "entityName": "中科寒武纪科技股份有限公司",
-      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "A股半导体股回升，博通集成封涨停板，寒武纪涨超4%",
-      "url": "https://cj.sina.cn/articles/view/5115326071/130e5ae77020030brq",
-      "publishedAt": "2026-08-31T13:32:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "entityMatchStatus": "matched",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E022",
-      "changeId": "chg-79a3824ff2796004539e",
-      "entityName": "Horizon Robotics",
-      "claim": "Horizon Robotics 的 news 发生变化。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "地平线机器人-W(09660)发布中期业绩 净利润37.84亿元 同比扭亏为盈 自主品牌ADAS份额首破50%",
-      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-08-31/doc-iniqfeap4639357.shtml",
-      "publishedAt": "2026-08-31T17:33:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "entityMatchStatus": "matched",
+      "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
       "qualityStatus": "passed",
       "supportStatus": "supports"
@@ -1516,9 +1307,619 @@
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-08-31T11:54:48+00:00",
+    "generatedAt": "2026-08-31T14:32:12+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-f61d0c6810186ce656f6": {
+        "eventId": "evt-f61d0c6810186ce656f6",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-6ee3d66c0e43e6ad20",
+        "entityName": "英伟达将向联发科投资35亿美元 强化AI硬件产业链核心地位",
+        "title": "英伟达将向联发科投资35亿美元 强化AI硬件产业链核心地位",
+        "titleAliases": [
+          "英伟达将向联发科投资35亿美元强化ai硬件产业链核心地位"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产业投资",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "35"
+        ],
+        "sourceAliases": [
+          "evd-ec359d55bea801fa9cdb",
+          "record-413dbc18c2ebcdf3df4f",
+          "src-59101140345628a85749"
+        ],
+        "evidenceFingerprints": [
+          "ec359d55bea801fa9cdb"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "英伟达将向联发科投资35亿美元 强化AI硬件产业链核心地位",
+            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-08-31/doc-iniqfkkr8851875.shtml",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "91152a8598ffd20e509a",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T14:32:12+00:00",
+        "lastSeenAt": "2026-08-31T14:32:12+00:00",
+        "lastPublishedAt": "2026-08-31T14:32:12+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-c76261e54ca1b6a8f1ba": {
+        "eventId": "evt-c76261e54ca1b6a8f1ba",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-4167ceb3038a537641",
+        "entityName": "英伟达129亿买下Hugging Face：拒绝5亿投资后，开源AI童话结束了",
+        "title": "英伟达129亿买下Hugging Face：拒绝5亿投资后，开源AI童话结束了",
+        "titleAliases": [
+          "英伟达129亿买下huggingface拒绝5亿投资后开源ai童话结束了"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产业投资",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "129",
+          "5"
+        ],
+        "sourceAliases": [
+          "evd-d9b4e57cf82061c9b7fc",
+          "record-35d7647145b1ca8e0869",
+          "src-6211240938ae5f08ec59"
+        ],
+        "evidenceFingerprints": [
+          "d9b4e57cf82061c9b7fc"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "钛媒体",
+            "title": "英伟达129亿买下Hugging Face：拒绝5亿投资后，开源AI童话结束了",
+            "url": "https://www.tmtpost.com/8122952.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "b88a587f41b6cb925c94",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T14:32:12+00:00",
+        "lastSeenAt": "2026-08-31T14:32:12+00:00",
+        "lastPublishedAt": "2026-08-31T14:32:12+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-9fda528803f492aebe32": {
+        "eventId": "evt-9fda528803f492aebe32",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-31cc62518a032293b4",
+        "entityName": "SNICKERS® Launches the World's First Digital Candy Bar for when AI Acts \"Hungry\"",
+        "title": "SNICKERS® Launches the World's First Digital Candy Bar for when AI Acts \"Hungry\"",
+        "titleAliases": [
+          "snickerslaunchestheworldsfirstdigitalcandybarforwhenaiactshungry"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-a26a907a14f2df638f0e",
+          "record-72559e0dc632940009dc",
+          "src-44185ebcc46b95d67dff"
+        ],
+        "evidenceFingerprints": [
+          "a26a907a14f2df638f0e"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "SNICKERS® Launches the World's First Digital Candy Bar for when AI Acts \"Hungry\"",
+            "url": "https://www.prnewswire.com/news-releases/snickers-launches-the-worlds-first-digital-candy-bar-for-when-ai-acts-hungry-302863014.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "1ca3d56df5c8febff9fa",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T14:32:12+00:00",
+        "lastSeenAt": "2026-08-31T14:32:12+00:00",
+        "lastPublishedAt": "2026-08-31T14:32:12+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-8a7d6f3a518950509176": {
+        "eventId": "evt-8a7d6f3a518950509176",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-1f7fb16b98004f7036",
+        "entityName": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+        "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+        "titleAliases": [
+          "中国机器人海外走红竞速破纪录人形机器人商业化离我们还有多远"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-67d6fe8916958e2b2c3e",
+          "record-08291d169bf7eccc7f61",
+          "src-1863802593a1c57dc8ee",
+          "record-25189f76b185092e05fb",
+          "src-a084bc9330aec136a593",
+          "record-0de5e3cc49606d7c44bc",
+          "src-22f5edca620cd4a0ca9d"
+        ],
+        "evidenceFingerprints": [
+          "67d6fe8916958e2b2c3e"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "蔡抠脚",
+            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=irv%2ARSEwxbFxsxTtQhOpES%2ApoK9Sjwoc78u69xaVZwMmFQYVrtgpBVuB6YR4bLdZltLe%2AlP0vhnlBN6wWf2MJb6nJOrustZRAGIZwFR1sucLx9EAxQIUCC6M4TuiKZTd&src=11&timestamp=1788165603&ver=6937",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "蔡抠脚",
+            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56d%2A-MlZWT-n4gxZEQlRqx1mOnRMuyRx52eBC9B9pZlTQzP5vyK9mYeWTU3JcXqdXbz9vkIdY2CGQpom5VGwuVjT&src=11&timestamp=1788175922&ver=6938",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "蔡抠脚",
+            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56fPSrDk9w4svsyb50NItMF6Os3a1j7hCC6-3Bp-qTmx-9RJ0S0VkaJG%2AtPkN4J3cw3o2-Cp3ucRfaq1QoasbqMm&src=11&timestamp=1788186068&ver=6938",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "c9f1110f497c23b6b84c",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T09:08:35+00:00",
+        "lastSeenAt": "2026-08-31T14:32:12+00:00",
+        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-7007445af03dfa6d151f": {
+        "eventId": "evt-7007445af03dfa6d151f",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-4e936f1484a97de1b8",
+        "entityName": "Google DeepMind：We’re rolling out Gemini Omni 1.1 Flash to make generative video highly controllable, faster to iterate on, and more polished for production-grade use",
+        "title": "Google DeepMind：We’re rolling out Gemini Omni 1.1 Flash to make generative video highly controllable, faster to iterate on, and more polished for production-grade use",
+        "titleAliases": [
+          "googledeepmindwererollingoutgeminiomni11flashtomakegenerativevideohighlycontrollablefastertoiterateonandmorepolishedforproductiongradeuse"
+        ],
+        "publishedDate": "2026-08-28",
+        "publishedDates": [
+          "2026-08-28"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "人物观点",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "1.1"
+        ],
+        "sourceAliases": [
+          "evd-074dc528ca87ecf8f459",
+          "record-32d6004b6a40148d47be",
+          "src-3d5629bae2af3d2899bb"
+        ],
+        "evidenceFingerprints": [
+          "074dc528ca87ecf8f459"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Google DeepMind on X",
+            "title": "Google DeepMind：We’re rolling out Gemini Omni 1.1 Flash to make generative video highly controllable, faster to iterate on, and more polished for production-grade use",
+            "url": "https://x.com/GoogleDeepMind/status/2093338200580256172",
+            "publishedAt": "2026-08-28",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "d56688645ff5b80c8ded",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T14:32:12+00:00",
+        "lastSeenAt": "2026-08-31T14:32:12+00:00",
+        "lastPublishedAt": "2026-08-31T14:32:12+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-6b0e94e00cb99f0bb0b3": {
+        "eventId": "evt-6b0e94e00cb99f0bb0b3",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-dfddb25994411024d5",
+        "entityName": "Asus launches new 14-inch laptop globally with 1,600-nit OLED display, Nvidia RTX Spark and 128 GB RAM",
+        "title": "Asus launches new 14-inch laptop globally with 1,600-nit OLED display, Nvidia RTX Spark and 128 GB RAM",
+        "titleAliases": [
+          "asuslaunchesnew14inchlaptopgloballywith1600nitoleddisplaynvidiartxsparkand128gbram"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "1",
+          "128",
+          "14",
+          "600"
+        ],
+        "sourceAliases": [
+          "evd-bfad4b8e96d7d40cf37d",
+          "record-4777f2b4decc96676dcc",
+          "src-d55d928c797486edbf3f"
+        ],
+        "evidenceFingerprints": [
+          "bfad4b8e96d7d40cf37d"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Notebookcheck",
+            "title": "Asus launches new 14-inch laptop globally with 1,600-nit OLED display, Nvidia RTX Spark and 128 GB RAM",
+            "url": "https://www.notebookcheck.net/Asus-launches-new-14-inch-laptop-globally-with-1-600-nit-OLED-display-Nvidia-RTX-Spark-and-128-GB-RAM.1383588.0.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "96db1061d8789f495348",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T14:32:12+00:00",
+        "lastSeenAt": "2026-08-31T14:32:12+00:00",
+        "lastPublishedAt": "2026-08-31T14:32:12+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-62c946340f15b42a4460": {
+        "eventId": "evt-62c946340f15b42a4460",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-108a726a86e722f87e",
+        "entityName": "HUMAIN and MinIO Announce Strategic Partnership to Build AI Data Fabric",
+        "title": "HUMAIN and MinIO Announce Strategic Partnership to Build AI Data Fabric",
+        "titleAliases": [
+          "humainandminioannouncestrategicpartnershiptobuildaidatafabric"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-0b37777a21ebe29342a6",
+          "record-13236551870147eccce2",
+          "src-b5833cb81dcb02368bb0"
+        ],
+        "evidenceFingerprints": [
+          "0b37777a21ebe29342a6"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "HUMAIN and MinIO Announce Strategic Partnership to Build AI Data Fabric",
+            "url": "https://www.prnewswire.com/news-releases/humain-and-minio-announce-strategic-partnership-to-build-ai-data-fabric-302865004.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "d6b68fea8aafd738676e",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T14:32:12+00:00",
+        "lastSeenAt": "2026-08-31T14:32:12+00:00",
+        "lastPublishedAt": "2026-08-31T14:32:12+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-60d372872adc232847f7": {
+        "eventId": "evt-60d372872adc232847f7",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-e7a9e19bb834a64ae3",
+        "entityName": "埃隆·马斯克：Extending consciousness beyond Earth, ultimately to the stars, is a fundamentally good goal",
+        "title": "埃隆·马斯克：Extending consciousness beyond Earth, ultimately to the stars, is a fundamentally good goal",
+        "titleAliases": [
+          "埃隆马斯克extendingconsciousnessbeyondearthultimatelytothestarsisafundamentallygoodgoal"
+        ],
+        "publishedDate": "2026-08-30",
+        "publishedDates": [
+          "2026-08-30"
+        ],
+        "entityKeys": [
+          "company:埃隆·马斯克"
+        ],
+        "typeKeys": [
+          "人物观点",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-2a92c656903ba8b50738",
+          "record-473a8a698643dd47e112",
+          "src-057eabf74797f3832ecc"
+        ],
+        "evidenceFingerprints": [
+          "2a92c656903ba8b50738"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "埃隆·马斯克 on X",
+            "title": "埃隆·马斯克：Extending consciousness beyond Earth, ultimately to the stars, is a fundamentally good goal",
+            "url": "https://x.com/elonmusk/status/2094130588047266206",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "b7d8aaba5a4e29225430",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T14:32:12+00:00",
+        "lastSeenAt": "2026-08-31T14:32:12+00:00",
+        "lastPublishedAt": "2026-08-31T14:32:12+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-573dea02032cd0a60bac": {
+        "eventId": "evt-573dea02032cd0a60bac",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-0e5d3b34187ad5c3ca",
+        "entityName": "Ai Global Solutions Launches Financial Services Practice",
+        "title": "Ai Global Solutions Launches Financial Services Practice",
+        "titleAliases": [
+          "aiglobalsolutionslaunchesfinancialservicespractice"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-395261d2b8ca02b8d7c9",
+          "record-354287f3b98dd46daa95",
+          "src-985ae9427a41979d8086"
+        ],
+        "evidenceFingerprints": [
+          "395261d2b8ca02b8d7c9"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "Ai Global Solutions Launches Financial Services Practice",
+            "url": "https://www.prnewswire.com/news-releases/ai-global-solutions-launches-financial-services-practice-302864989.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "70900885e1e9d6830f6d",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T14:32:12+00:00",
+        "lastSeenAt": "2026-08-31T14:32:12+00:00",
+        "lastPublishedAt": "2026-08-31T14:32:12+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-503fb43c526bbf156da0": {
+        "eventId": "evt-503fb43c526bbf156da0",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-b5d77ddac9ae835438",
+        "entityName": "混元Hy4 preview上线即排队，能消解腾讯的AI焦虑吗？",
+        "title": "混元Hy4 preview上线即排队，能消解腾讯的AI焦虑吗？",
+        "titleAliases": [
+          "混元hy4preview上线即排队能消解腾讯的ai焦虑吗"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "company:腾讯 / 元宝"
+        ],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "4"
+        ],
+        "sourceAliases": [
+          "evd-f5e29e1da6114ef2f995",
+          "record-1fe9fe407b3905361768",
+          "src-87e1928e5ea89752cdfe"
+        ],
+        "evidenceFingerprints": [
+          "f5e29e1da6114ef2f995"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "钛媒体",
+            "title": "混元Hy4 preview上线即排队，能消解腾讯的AI焦虑吗？",
+            "url": "https://www.tmtpost.com/8123051.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "4cfdc83fbb86213ec623",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T14:32:12+00:00",
+        "lastSeenAt": "2026-08-31T14:32:12+00:00",
+        "lastPublishedAt": "2026-08-31T14:32:12+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-2317e2494e68d4484339": {
+        "eventId": "evt-2317e2494e68d4484339",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-ce65d90bc45a14a83f",
+        "entityName": "Think launches Think Grid™, a new alternative to hyperscaler AI compute",
+        "title": "Think launches Think Grid™, a new alternative to hyperscaler AI compute",
+        "titleAliases": [
+          "thinklaunchesthinkgridtmanewalternativetohyperscaleraicompute"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-62c1cfe2b123e030f9a1",
+          "record-fc836ba5deb7671cc126",
+          "src-a5dfa579239139f1b3a7"
+        ],
+        "evidenceFingerprints": [
+          "62c1cfe2b123e030f9a1"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "Think launches Think Grid™, a new alternative to hyperscaler AI compute",
+            "url": "https://www.prnewswire.com/news-releases/think-launches-think-grid-a-new-alternative-to-hyperscaler-ai-compute-302864578.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "c14dff241fe0e0a9a12c",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T14:32:12+00:00",
+        "lastSeenAt": "2026-08-31T14:32:12+00:00",
+        "lastPublishedAt": "2026-08-31T14:32:12+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-fd733c24fb061aa0a82b": {
         "eventId": "evt-fd733c24fb061aa0a82b",
         "dataset": "intelligenceEvent",
@@ -1815,68 +2216,6 @@
         "lastSeenAt": "2026-08-31T11:54:48+00:00",
         "lastPublishedAt": "2026-08-31T11:54:48+00:00",
         "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-8a7d6f3a518950509176": {
-        "eventId": "evt-8a7d6f3a518950509176",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-1f7fb16b98004f7036",
-        "entityName": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-        "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-        "titleAliases": [
-          "中国机器人海外走红竞速破纪录人形机器人商业化离我们还有多远"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "商业进展",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-67d6fe8916958e2b2c3e",
-          "record-08291d169bf7eccc7f61",
-          "src-1863802593a1c57dc8ee",
-          "record-25189f76b185092e05fb",
-          "src-a084bc9330aec136a593"
-        ],
-        "evidenceFingerprints": [
-          "67d6fe8916958e2b2c3e"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "蔡抠脚",
-            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=irv%2ARSEwxbFxsxTtQhOpES%2ApoK9Sjwoc78u69xaVZwMmFQYVrtgpBVuB6YR4bLdZltLe%2AlP0vhnlBN6wWf2MJb6nJOrustZRAGIZwFR1sucLx9EAxQIUCC6M4TuiKZTd&src=11&timestamp=1788165603&ver=6937",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "蔡抠脚",
-            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56d%2A-MlZWT-n4gxZEQlRqx1mOnRMuyRx52eBC9B9pZlTQzP5vyK9mYeWTU3JcXqdXbz9vkIdY2CGQpom5VGwuVjT&src=11&timestamp=1788175922&ver=6938",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "c9f1110f497c23b6b84c",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastSeenAt": "2026-08-31T11:54:48+00:00",
-        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
-        "lastLifecycle": "duplicate",
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 2,
@@ -7975,13 +8314,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 14,
+    "newEvents": 10,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 2,
-    "observedEvents": 16,
+    "duplicatesSuppressed": 1,
+    "observedEvents": 11,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -8333,10 +8672,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-08-31",
-      "generatedAt": "2026-08-31T11:54:48+00:00",
+      "generatedAt": "2026-08-31T14:32:12+00:00",
       "runStatus": "model",
-      "changeCount": 68,
-      "executiveSummary": "本证据包覆盖2026年8月31日前后多项AI与科技产业动态。核心信号包括：字节跳动豆包2.2推迟发布并重点补强编程/Agent能力；日本经产省寻求490亿美元预算加速AI与半导体投资；地平线机器人中期业绩扭亏为盈且自主品牌ADAS份额首破50%；Data Dynamics发布数据层治理产品；另有AI治理方法论文章、AI技能追踪报告、中熔电气可转债融资及多家公司市场新闻。整体显示AI竞争从模型能力向工程化、治理与行业落地延伸，但多数证据为单一来源或媒体报道，需后续验证。",
+      "changeCount": 78,
+      "executiveSummary": "证据包显示，英伟达在AI硬件和开源平台领域出现大规模投资与收购报道（E001、E002），同时多家公司推出AI基础设施和产品（E004、E006、E008、E011），腾讯混元Hy4 preview上线（E005），另有营销事件和个人言论（E007、E010）。整体看，AI产业链整合与竞争加速，但关键事件多来自C级媒体或公司新闻稿，需进一步验证。",
       "eventIds": [
         "evt-19a46ffa0d4299720a2f",
         "evt-e0a2a000a640b6c568ef",
@@ -8405,7 +8744,17 @@
         "evt-e2f6235599f6539655bb",
         "evt-9e1ce990ae9b856ca4a2",
         "evt-5243298382c4e72e59c4",
-        "evt-149902138618cc01a7a8"
+        "evt-149902138618cc01a7a8",
+        "evt-f61d0c6810186ce656f6",
+        "evt-c76261e54ca1b6a8f1ba",
+        "evt-62c946340f15b42a4460",
+        "evt-503fb43c526bbf156da0",
+        "evt-2317e2494e68d4484339",
+        "evt-9fda528803f492aebe32",
+        "evt-6b0e94e00cb99f0bb0b3",
+        "evt-573dea02032cd0a60bac",
+        "evt-60d372872adc232847f7",
+        "evt-7007445af03dfa6d151f"
       ],
       "eventStates": [
         {
@@ -8679,37 +9028,72 @@
         {
           "eventId": "evt-149902138618cc01a7a8",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-f61d0c6810186ce656f6",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-c76261e54ca1b6a8f1ba",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-62c946340f15b42a4460",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-503fb43c526bbf156da0",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-2317e2494e68d4484339",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-9fda528803f492aebe32",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-6b0e94e00cb99f0bb0b3",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-573dea02032cd0a60bac",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-60d372872adc232847f7",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-7007445af03dfa6d151f",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 2,
       "candidateTotal": 13,
-      "auxiliaryLeadTotal": 41,
+      "auxiliaryLeadTotal": 51,
       "rejectedTotal": 10,
       "eventSummary": {
-        "newEvents": 68,
+        "newEvents": 78,
         "reconfirmations": 2,
         "updates": 0,
         "corrections": 0,
         "possibleConflicts": 0,
-        "duplicatesSuppressed": 10
+        "duplicatesSuppressed": 11
       }
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 13,
-    "eligibleCandidateCount": 13,
+    "candidateCount": 11,
+    "eligibleCandidateCount": 11,
     "rejectedCandidateCount": 0,
     "rejectedByDataset": {},
-    "evidenceCount": 25,
-    "supportingEvidenceCount": 16,
-    "rejectedEvidenceCount": 6,
-    "passedButUnboundEvidenceCount": 3,
-    "rejectionReasons": {
-      "missing_published_at": 4,
-      "entity_mismatch": 2,
-      "missing_title": 2,
-      "ungraded": 2
-    },
+    "evidenceCount": 11,
+    "supportingEvidenceCount": 11,
+    "rejectedEvidenceCount": 0,
+    "passedButUnboundEvidenceCount": 0,
+    "rejectionReasons": {},
     "sourceClassificationWarnings": []
   },
   "sourceClassificationWarnings": [],
