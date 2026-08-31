@@ -21,6 +21,7 @@ try:  # Imported by tests as tools.crawl_with_wechat_registry.
     from . import wechat_fetch_compat
     from . import wechat_index_context_guard
     from . import wechat_index_record_fallback
+    from . import wechat_official_index_bridge
     from . import wechat_original_redirect_bridge
     from . import wechat_public_aggregator
     from . import wechat_public_index_title_fallback
@@ -47,6 +48,7 @@ except ImportError:  # Executed directly with python tools/...
     import wechat_fetch_compat
     import wechat_index_context_guard
     import wechat_index_record_fallback
+    import wechat_official_index_bridge
     import wechat_original_redirect_bridge
     import wechat_public_aggregator
     import wechat_public_index_title_fallback
@@ -224,6 +226,7 @@ def main() -> int:
     search_index_feed_redirects.install(base.tracking.crawler)
     wechat_fetch_compat.install(wechat_public_sources)
     wechat_registry_bridge.install(wechat_public_sources)
+    wechat_official_index_bridge.install(wechat_registry_bridge)
     wechat_original_redirect_bridge.install(
         wechat_public_sources,
         wechat_registry_bridge,

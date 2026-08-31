@@ -85,7 +85,8 @@ class WeChatOfficialIndexBridgeTests(unittest.TestCase):
         labels = target._platform_labels()
         # This assertion becomes active when the cross-platform registry patch is
         # applied; Sohu remains handled by the legacy bridge itself.
-        self.assertIsInstance(labels, dict)
+        self.assertEqual(labels.get("leiphone.com"), "雷峰网认证作者页")
+        self.assertEqual(labels.get("m.leiphone.com"), "雷峰网认证作者页")
 
 
 if __name__ == "__main__":
