@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-09-01T01:43:32+00:00",
+  "generatedAt": "2026-09-01T06:52:43+00:00",
   "researchDate": "2026-09-01",
   "limits": {
     "people": 10,
@@ -8,9 +8,9 @@
     "tasksPerPerson": 2,
     "activeQuerySlots": 10
   },
-  "candidateTaskCount": 249,
+  "candidateTaskCount": 250,
   "selectedPeopleCount": 10,
-  "selectedTaskCount": 14,
+  "selectedTaskCount": 13,
   "allocatedQuerySlots": 1,
   "outcomeMemoryAttemptCount": 35,
   "queue": [
@@ -69,6 +69,58 @@
       "queryBudget": 1
     },
     {
+      "personSlug": "fei-fei-li",
+      "personName": "李飞飞",
+      "taskId": "person-research-f59d0473307e",
+      "taskType": "execution_verification",
+      "priority": "P1",
+      "status": "open",
+      "target": "Stanford University · 机器人",
+      "question": "李飞飞 的最新公开事件涉及“机器人”后，Stanford University 是否出现独立的产品、技术、组织或商业执行证据？",
+      "successCriteria": "至少存在 1 条独立于人物表述、且 URL 不与人物证据重合的一手/官方组织来源，同时直接命中组织与目标技术/产品；第三方报道或同一来源复用只能形成 candidate_found。",
+      "executor": "cross_channel",
+      "searchQueries": [],
+      "queryStrategy": "generic",
+      "queryStrategyLabel": "通用检索",
+      "strategySampleSize": 0,
+      "costSampleSize": 0,
+      "expectedSuccessRate": 0.5,
+      "expectedEvidenceYield": 0.5,
+      "queryUnitCost": 1.0,
+      "expectedYieldPerCost": 0.5,
+      "allocationUtility": 95.0,
+      "averageQueryDurationMs": 0,
+      "topHistoricalSourceType": "",
+      "topHistoricalSourceTypeLabel": "",
+      "evidenceBasisCount": 1,
+      "candidateEvidenceCount": 0,
+      "score": 95,
+      "scoreBreakdown": {
+        "priority": 28,
+        "taskType": 20,
+        "status": 5,
+        "evidenceGap": 8,
+        "recency": 16,
+        "crossValidation": 15,
+        "queryReadiness": 3,
+        "researchOutcomeMemory": 0,
+        "researchStrategyROI": 0,
+        "researchCostEfficiency": 0
+      },
+      "whyNow": [
+        "P1 研究任务",
+        "人物表达尚缺独立组织执行证据",
+        "近 7 天存在人物事件/材料",
+        "近 30 天有 28 条可定期资料",
+        "需要人物频道与公司/技术执行证据交叉验证",
+        "可进入官方来源/跨频道核验"
+      ],
+      "cooldownUntil": "",
+      "personRoute": "/people/fei-fei-li/",
+      "rank": 2,
+      "queryBudget": 0
+    },
+    {
       "personSlug": "jeff-dean",
       "personName": "Jeff Dean",
       "taskId": "person-research-b756fbcc490e",
@@ -120,7 +172,7 @@
       ],
       "cooldownUntil": "",
       "personRoute": "/people/jeff-dean/",
-      "rank": 2,
+      "rank": 3,
       "queryBudget": 0
     },
     {
@@ -175,7 +227,7 @@
       ],
       "cooldownUntil": "",
       "personRoute": "/people/jensen-huang/",
-      "rank": 3,
+      "rank": 4,
       "queryBudget": 0
     },
     {
@@ -230,7 +282,7 @@
       ],
       "cooldownUntil": "",
       "personRoute": "/people/person-3e3e9375ab/",
-      "rank": 4,
+      "rank": 5,
       "queryBudget": 0
     },
     {
@@ -285,7 +337,7 @@
       ],
       "cooldownUntil": "",
       "personRoute": "/people/person-5a4999f041/",
-      "rank": 5,
+      "rank": 6,
       "queryBudget": 0
     },
     {
@@ -337,7 +389,7 @@
       ],
       "cooldownUntil": "",
       "personRoute": "/people/li-zexiang/",
-      "rank": 6,
+      "rank": 7,
       "queryBudget": 0
     },
     {
@@ -392,7 +444,7 @@
       ],
       "cooldownUntil": "",
       "personRoute": "/people/person-80d5a740b7/",
-      "rank": 7,
+      "rank": 8,
       "queryBudget": 0
     },
     {
@@ -447,7 +499,7 @@
       ],
       "cooldownUntil": "",
       "personRoute": "/people/person-d113a8954b/",
-      "rank": 8,
+      "rank": 9,
       "queryBudget": 0
     },
     {
@@ -501,60 +553,6 @@
       ],
       "cooldownUntil": "",
       "personRoute": "/people/person-709e41c3ad/",
-      "rank": 9,
-      "queryBudget": 0
-    },
-    {
-      "personSlug": "person-ee1a0f51d4",
-      "personName": "周跃峰",
-      "taskId": "person-research-94248338e7d8",
-      "taskType": "identity_verification",
-      "priority": "P0",
-      "status": "open",
-      "target": "身份与任职",
-      "question": "周跃峰 当前公开身份、任职机构和角色能否由本人、机构官网或监管/学术档案独立核验？",
-      "successCriteria": "至少取得 1 条可直接归因于本人或任职机构的公开来源，同时明确姓名与当前角色。",
-      "executor": "official_source",
-      "searchQueries": [
-        "周跃峰 official profile",
-        "周跃峰 个人主页",
-        "周跃峰 任职 官方"
-      ],
-      "queryStrategy": "official_profile",
-      "queryStrategyLabel": "官方人物页",
-      "strategySampleSize": 0,
-      "costSampleSize": 0,
-      "expectedSuccessRate": 0.5,
-      "expectedEvidenceYield": 0.5,
-      "queryUnitCost": 1.0,
-      "expectedYieldPerCost": 0.5,
-      "allocationUtility": 86.0,
-      "averageQueryDurationMs": 0,
-      "topHistoricalSourceType": "",
-      "topHistoricalSourceTypeLabel": "",
-      "evidenceBasisCount": 0,
-      "candidateEvidenceCount": 0,
-      "score": 86,
-      "scoreBreakdown": {
-        "priority": 40,
-        "taskType": 14,
-        "status": 5,
-        "evidenceGap": 14,
-        "recency": 10,
-        "crossValidation": 0,
-        "queryReadiness": 3,
-        "researchOutcomeMemory": 0,
-        "researchStrategyROI": 0,
-        "researchCostEfficiency": 0
-      },
-      "whyNow": [
-        "P0 研究任务",
-        "身份/任职仍缺独立官方证据",
-        "近 7 天存在人物事件/材料",
-        "可进入官方来源/跨频道核验"
-      ],
-      "cooldownUntil": "",
-      "personRoute": "/people/person-ee1a0f51d4/",
       "rank": 10,
       "queryBudget": 0
     },
@@ -715,58 +713,6 @@
       "cooldownUntil": "2026-09-02",
       "personRoute": "/people/person-709e41c3ad/",
       "rank": 13,
-      "queryBudget": 0
-    },
-    {
-      "personSlug": "person-ee1a0f51d4",
-      "personName": "周跃峰",
-      "taskId": "person-research-0ec8c5a3e191",
-      "taskType": "first_party_evidence",
-      "priority": "P1",
-      "status": "open",
-      "target": "AI / AGI",
-      "question": "能否找到 周跃峰 围绕“AI / AGI”的本人演讲、访谈、论文、公开发文或官方文件？",
-      "successCriteria": "人物档案至少补齐到 2 条可直接归因于本人的独立公开材料；若用于观点演进，仍需形成跨时间的同主题证据点。",
-      "executor": "person_video",
-      "searchQueries": [],
-      "queryStrategy": "topic_speech",
-      "queryStrategyLabel": "主题演讲",
-      "strategySampleSize": 35,
-      "costSampleSize": 35,
-      "expectedSuccessRate": 0.351,
-      "expectedEvidenceYield": 0.441,
-      "queryUnitCost": 1.0,
-      "expectedYieldPerCost": 0.441,
-      "allocationUtility": 49.873,
-      "averageQueryDurationMs": 1885,
-      "topHistoricalSourceType": "video_platform",
-      "topHistoricalSourceTypeLabel": "视频平台",
-      "evidenceBasisCount": 1,
-      "candidateEvidenceCount": 0,
-      "score": 53,
-      "scoreBreakdown": {
-        "priority": 28,
-        "taskType": 12,
-        "status": 5,
-        "evidenceGap": 8,
-        "recency": 10,
-        "crossValidation": 0,
-        "queryReadiness": 6,
-        "researchOutcomeMemory": -18,
-        "researchStrategyROI": 0,
-        "researchCostEfficiency": 2
-      },
-      "whyNow": [
-        "P1 研究任务",
-        "一手材料仍未达到关闭标准",
-        "近 7 天存在人物事件/材料",
-        "已有绑定人物身份的可执行检索词",
-        "近期主动检索零产出，进入短期冷却避免重复消耗预算",
-        "主题演讲 历史 35 次，平滑候选命中率 35%"
-      ],
-      "cooldownUntil": "2026-09-04",
-      "personRoute": "/people/person-ee1a0f51d4/",
-      "rank": 14,
       "queryBudget": 0
     }
   ],
