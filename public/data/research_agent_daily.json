@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-01T17:22:36+00:00",
+  "generatedAt": "2026-09-01T21:19:36+00:00",
   "asOfDate": "2026-09-02",
-  "runStatus": "no-material-change",
+  "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
   "baselineSource": "snapshot",
   "model": {
@@ -10,47 +10,1278 @@
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": false,
-    "usage": {}
+    "used": true,
+    "usage": {
+      "prompt_tokens": 5164,
+      "completion_tokens": 4289,
+      "total_tokens": 9453,
+      "completion_tokens_details": {
+        "reasoning_tokens": 2145
+      },
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 5164
+    }
   },
   "changeSummary": {
-    "totalDetected": 0,
-    "total": 0,
-    "byDataset": {},
-    "byChangeType": {},
-    "externalCandidates": 0,
-    "qualityRejected": 0,
+    "totalDetected": 8,
+    "total": 6,
+    "byDataset": {
+      "intelligenceEvent": 6
+    },
+    "byChangeType": {
+      "external_event": 8
+    },
+    "externalCandidates": 8,
+    "qualityRejected": 1,
     "maintenanceExcluded": 0,
     "aggregatedEvents": 0,
-    "highestImportance": 0,
+    "highestImportance": 89,
     "verifiedChangeTotal": 0,
     "candidateTotal": 0,
-    "auxiliaryLeadTotal": 0,
-    "rejectedTotal": 0,
-    "newEvents": 0,
+    "auxiliaryLeadTotal": 6,
+    "rejectedTotal": 1,
+    "newEvents": 6,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 0
+    "duplicatesSuppressed": 1
   },
   "analysis": {
-    "mode": "structured-change-only",
-    "isResearchJudgment": false,
-    "executiveSummary": "本轮未检测到新的外部事实候选。",
-    "keyDevelopments": [],
-    "thesisUpdates": [],
-    "watchlist": [],
-    "risks": [],
-    "methodologyNote": "结构化变化检查；本期无材料变化。未执行生成式研判。"
+    "mode": "model-analysis",
+    "isResearchJudgment": true,
+    "executiveSummary": "证据包记录了2026年9月1日六项高价值情报事件，集中在AI基础设施、模型竞争与监管方向，另有一项机场资产收购。OpenAI发布自研Jalapeño芯片基准测试，声称能效与延迟优于Nvidia GB200/GB300，但证据等级为C且为厂商自述，需独立验证。Anthropic推出Fable 5.1与Mythos 5.1，强调安全改进并降低费用，但安全事件背景与具体定价细节尚待确认。美国在G20论坛反对设立AI监管机构，属政策信号，影响需观察。Google DeepMind发布Gemini智能体视频理解功能，官方来源但细节有限。ASUR完成对Motiva多国机场权益收购，属公司事件，与AI主线无关。整体证据多为单一来源、自动未审阅，结论置信度受限。 质量门诊断：仅为发现线索，不能支持正式主张 1。",
+    "keyDevelopments": [
+      {
+        "title": "OpenAI发布自研Jalapeño芯片基准，声称优于Nvidia GB300",
+        "assessment": "OpenAI在Hot Chips公布Jalapeño芯片首批基准，声称每千瓦吞吐量较Nvidia GB200/GB300高1.5至1.9倍，延迟低至3.6倍，功耗约700W。此为厂商自述且证据等级C，属推断性重大事实，需第三方验证。若属实，将强化OpenAI在AI算力供应链的自主性，并对Nvidia高端推理市场构成潜在竞争压力。",
+        "importance": 5,
+        "confidence": "medium",
+        "entities": [
+          "OpenAI",
+          "Nvidia"
+        ],
+        "evidenceIds": [
+          "E004"
+        ]
+      },
+      {
+        "title": "Anthropic发布Fable 5.1与Mythos 5.1，主打安全与性价比",
+        "assessment": "Anthropic推出Fable 5.1新版本，称编程与科研任务表现更好且费用更低，同时发布Mythos 5.1并强调安全改进。发布背景是AI智能体安全事件引发关注。费用降低与能力提升若获验证，可能加剧模型层价格竞争；安全改进声明需结合后续安全评估证据。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "Anthropic"
+        ],
+        "evidenceIds": [
+          "E007",
+          "E008"
+        ]
+      },
+      {
+        "title": "美国在G20论坛反对设立AI监管机构",
+        "assessment": "特朗普政府的AI负责人称设立美国AI监管机构将是“灾难”，在G20技术论坛上推动放松监管立场。这是政策信号而非已成文法规，影响取决于后续立法与多边协调。对AI企业短期偏正面（监管不确定性降低），但长期治理风险上升。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "美国政府",
+          "G20"
+        ],
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "title": "Google DeepMind推出Gemini智能体视频理解功能",
+        "assessment": "Google DeepMind官方发布Gemini的智能体视频理解能力，但证据摘要仅说明发布本身，未提供技术细节、能力边界或商用时间表。官方来源等级B，但信息量有限，暂列为产品能力演进信号。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "Google DeepMind",
+          "Gemini"
+        ],
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "title": "ASUR完成收购Motiva在巴西、厄瓜多尔、哥斯达黎加与库拉索机场权益",
+        "assessment": "ASUR宣布完成对Motiva在上述四地机场权益的收购，所有先决条件已满足。证据为PR Newswire新闻稿，等级B，属公司公告事实。该事件与AI主线无关，对机场运营与拉美基建投资有影响，但证据未披露交易金额与资产明细。",
+        "importance": 2,
+        "confidence": "high",
+        "entities": [
+          "ASUR",
+          "Motiva"
+        ],
+        "evidenceIds": [
+          "E002"
+        ]
+      }
+    ],
+    "thesisUpdates": [
+      {
+        "entity": "OpenAI",
+        "direction": "positive",
+        "statement": "自研芯片基准发布显示OpenAI在算力自主化上取得进展，若第三方验证通过，将降低对Nvidia的依赖并改善推理成本结构。",
+        "evidenceIds": [
+          "E004"
+        ]
+      },
+      {
+        "entity": "Anthropic",
+        "direction": "positive",
+        "statement": "Fable 5.1以更低费用提供更强编程与科研能力，叠加安全改进声明，产品竞争力与商业化吸引力有望提升，但需验证实际性能与安全效果。",
+        "evidenceIds": [
+          "E007",
+          "E008"
+        ]
+      },
+      {
+        "entity": "美国AI监管环境",
+        "direction": "positive",
+        "statement": "美国在G20明确反对设立AI监管机构，短期降低AI企业合规成本与监管不确定性，但长期政策稳定性存疑。",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "entity": "Google DeepMind",
+        "direction": "positive",
+        "statement": "Gemini新增智能体视频理解能力，扩展多模态智能体应用场景，但证据细节有限，暂视为产品路线图进展。",
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "entity": "Nvidia",
+        "direction": "negative",
+        "statement": "OpenAI自研芯片声称在能效与延迟上超越GB200/GB300，若被证实，可能削弱Nvidia在AI推理芯片市场的主导地位。",
+        "evidenceIds": [
+          "E004"
+        ]
+      },
+      {
+        "entity": "ASUR",
+        "direction": "positive",
+        "statement": "完成对Motiva四国机场权益收购，扩大拉美与加勒比机场资产组合，但交易财务条款未披露，影响程度待评估。",
+        "evidenceIds": [
+          "E002"
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "item": "Jalapeño芯片第三方基准验证与量产时间表",
+        "reason": "当前基准为OpenAI自述，证据等级C，需独立测试确认能效与延迟优势，并观察实际部署与客户采用情况。",
+        "nextEvidence": "第三方基准测试报告、OpenAI数据中心部署公告或Nvidia回应",
+        "evidenceIds": [
+          "E004"
+        ]
+      },
+      {
+        "item": "Fable 5.1实际定价、性能评测与安全事件后续",
+        "reason": "费用更低与能力更强的声明需通过公开定价表和独立评测验证；AI智能体安全事件可能引发监管或客户审查。",
+        "nextEvidence": "Anthropic官方定价页、独立模型评测、安全事件调查报告",
+        "evidenceIds": [
+          "E007",
+          "E008"
+        ]
+      },
+      {
+        "item": "美国AI监管立法的后续动向",
+        "reason": "G20表态是行政层面信号，国会立法与各州监管仍可能推进，需跟踪政策落地情况。",
+        "nextEvidence": "美国国会AI法案进展、行政命令或机构指导文件",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "item": "Gemini智能体视频理解的技术细节与商用进展",
+        "reason": "官方发布未提供能力边界、API可用性与性能指标，需补充技术文档与客户案例。",
+        "nextEvidence": "Google DeepMind技术报告、Gemini API更新日志或开发者文档",
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "item": "ASUR收购交易的财务条款与资产运营数据",
+        "reason": "新闻稿未披露交易金额、融资方式与标的资产盈利情况，需通过后续财报或公告确认。",
+        "nextEvidence": "ASUR季报、交易交割公告补充披露或Motiva相关文件",
+        "evidenceIds": [
+          "E002"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "Jalapeño芯片性能声明可能被第三方证伪或延迟量产",
+        "reason": "证据等级C且为厂商自述，基准测试条件未披露，存在营销夸大或工程样品与量产差异风险。",
+        "evidenceIds": [
+          "E004"
+        ]
+      },
+      {
+        "risk": "Anthropic安全改进声明可能不足以应对智能体安全事件",
+        "reason": "发布背景是AI智能体安全事件引发关注，安全声明缺乏独立验证，若后续事件曝光可能损害信任。",
+        "evidenceIds": [
+          "E008"
+        ]
+      },
+      {
+        "risk": "美国反对AI监管可能加剧国际监管碎片化",
+        "reason": "美国在G20的放松监管立场与其他国家监管路径可能分歧，增加跨国AI企业合规复杂度。",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "risk": "Gemini新功能发布信息不完整，存在预期落差",
+        "reason": "证据摘要仅确认发布，未提供能力边界与可用性，市场可能高估短期影响。",
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "risk": "ASUR跨境收购面临整合与监管风险",
+        "reason": "涉及巴西、厄瓜多尔、哥斯达黎加与库拉索多司法辖区，整合执行与当地监管变化可能影响资产表现。",
+        "evidenceIds": [
+          "E002"
+        ]
+      }
+    ],
+    "methodologyNote": "本分析仅基于证据包内六条证据（E002-E008），全部为2026年9月1日新增的高价值情报事件，均通过质量门但处于automated_unreviewed状态，证据等级以B和C为主。所有判断均标注证据编号；厂商自述性能、政策表态等按推断处理，未作为确定性事实。不构成投资建议。"
   },
-  "changes": [],
-  "evidence": [],
+  "changes": [
+    {
+      "id": "chg-e9769bd27de538dd5967",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-462379f3f4a0579777",
+      "entityName": "ASUR CLOSES ACQUISITION OF MOTIVA'S INTERESTS IN AIRPORTS IN BRAZIL, ECUADOR, COSTA RICA AND CURAÇAO",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：ASUR CLOSES ACQUISITION OF MOTIVA'S INTERESTS IN AIRPORTS IN BRAZIL, ECUADOR, COSTA RICA AND CURAÇAO。",
+      "importance": 89,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-01",
+        "summary": "MEXICO CITY, Sept. 1, 2026 /PRNewswire/ -- Grupo Aeroportuario del Sureste, S.A.B. de C.V. (NYSE: ASR; BMV: ASUR) (\"ASUR\") and Motiva Infraestrutura de Mobilidade S.A. (B3: MOTV3) (\"Motiva\") announced today that, following the satisfaction of all conditions p…",
+        "title": "ASUR CLOSES ACQUISITION OF MOTIVA'S INTERESTS IN AIRPORTS IN BRAZIL, ECUADOR, COSTA RICA AND CURAÇAO"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-01",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "MEXICO CITY, Sept. 1, 2026 /PRNewswire/ -- Grupo Aeroportuario del Sureste, S.A.B. de C.V. (NYSE: ASR; BMV: ASUR) (\"ASUR\") and Motiva Infraestrutura de Mobilidade S.A. (B3: MOTV3) (\"Motiva\") announced today that, following the satisfaction of all conditions p…",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "ASUR CLOSES ACQUISITION OF MOTIVA'S INTERESTS IN AIRPORTS IN BRAZIL, ECUADOR, COSTA RICA AND CURAÇAO",
+          "evidenceIds": [
+            "E002"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E002"
+      ],
+      "supportingEvidenceIds": [
+        "E002"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-5a01a296d6caa5b088b8"
+      ],
+      "eventLifecycles": {
+        "evt-5a01a296d6caa5b088b8": "first_seen"
+      },
+      "eventId": "evt-5a01a296d6caa5b088b8",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T21:19:36+00:00",
+      "lastSeenAt": "2026-09-01T21:19:36+00:00"
+    },
+    {
+      "id": "chg-42c325ebc764dc188595",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-d6b1a652ce919c9850",
+      "entityName": "No ‘DMV for AI’: US Pushes Against AI Regulations at Global Forum",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：No ‘DMV for AI’: US Pushes Against AI Regulations at Global Forum。",
+      "importance": 86,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-01",
+        "summary": "A US regulatory agency for AI would be a “disaster,” Trump’s AI czar said during a G20 forum on technology.",
+        "title": "No ‘DMV for AI’: US Pushes Against AI Regulations at Global Forum"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-01",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "A US regulatory agency for AI would be a “disaster,” Trump’s AI czar said during a G20 forum on technology.",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "No ‘DMV for AI’: US Pushes Against AI Regulations at Global Forum",
+          "evidenceIds": [
+            "E003"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E003"
+      ],
+      "supportingEvidenceIds": [
+        "E003"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-82bcd7b1d1660b20507c"
+      ],
+      "eventLifecycles": {
+        "evt-82bcd7b1d1660b20507c": "first_seen"
+      },
+      "eventId": "evt-82bcd7b1d1660b20507c",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T21:19:36+00:00",
+      "lastSeenAt": "2026-09-01T21:19:36+00:00"
+    },
+    {
+      "id": "chg-414f55b873a14eba8dc7",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-0e722539562488e9e2",
+      "entityName": "OpenAI lifts the lid on its in-house Jalapeño chip - with benchmarks claiming it beats Nvidia's GB300",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：OpenAI lifts the lid on its in-house Jalapeño chip - with benchmarks claiming it beats Nvidia's GB300。",
+      "importance": 85,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-01",
+        "summary": "OpenAI published the first Jalapeño benchmarks at Hot Chips, claiming 1.5 to 1.9x more throughput per kilowatt and up to 3.6x lower latency than Nvidia's GB200 and GB300 rack systems The chip's purported gains are at a reported 700W power draw and center arou…",
+        "title": "OpenAI lifts the lid on its in-house Jalapeño chip - with benchmarks claiming it beats Nvidia's GB300"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-01",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "OpenAI published the first Jalapeño benchmarks at Hot Chips, claiming 1.5 to 1.9x more throughput per kilowatt and up to 3.6x lower latency than Nvidia's GB200 and GB300 rack systems The chip's purported gains are at a reported 700W power draw and center arou…",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "OpenAI lifts the lid on its in-house Jalapeño chip - with benchmarks claiming it beats Nvidia's GB300",
+          "evidenceIds": [
+            "E004"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E004"
+      ],
+      "supportingEvidenceIds": [
+        "E004"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-cf24c19507ef109f570e"
+      ],
+      "eventLifecycles": {
+        "evt-cf24c19507ef109f570e": "first_seen"
+      },
+      "eventId": "evt-cf24c19507ef109f570e",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T21:19:36+00:00",
+      "lastSeenAt": "2026-09-01T21:19:36+00:00"
+    },
+    {
+      "id": "chg-0215cbbfbc6036de8291",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-4a5f5eb0ff4ce0a4cb",
+      "entityName": "Introducing agentic video understanding with Gemini",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Introducing agentic video understanding with Gemini。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-01",
+        "summary": "Google DeepMind 发布相关公开信息，完整内容见原文。",
+        "title": "Introducing agentic video understanding with Gemini"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-01",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Google DeepMind 发布相关公开信息，完整内容见原文。",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Introducing agentic video understanding with Gemini",
+          "evidenceIds": [
+            "E006"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E006"
+      ],
+      "supportingEvidenceIds": [
+        "E006"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-4e9f27a1e31f8482fda1"
+      ],
+      "eventLifecycles": {
+        "evt-4e9f27a1e31f8482fda1": "first_seen"
+      },
+      "eventId": "evt-4e9f27a1e31f8482fda1",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T21:19:36+00:00",
+      "lastSeenAt": "2026-09-01T21:19:36+00:00"
+    },
+    {
+      "id": "chg-f9c7e1037386af636f9a",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-cfa8b157c5ad018e3c",
+      "entityName": "Anthropic将推出人工智能模型Fable新版本 收费更便宜而编程能力更强",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Anthropic将推出人工智能模型Fable新版本 收费更便宜而编程能力更强。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-01",
+        "summary": "Anthropic PBC将发布其强大人工智能模型Fable的新版本。公司称，Fable 5.1在编程和科研任务方面表现更好，同时费用也更低，这些调整均是根据客户反馈作出的。",
+        "title": "Anthropic将推出人工智能模型Fable新版本 收费更便宜而编程能力更强"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-01",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Anthropic PBC将发布其强大人工智能模型Fable的新版本。公司称，Fable 5.1在编程和科研任务方面表现更好，同时费用也更低，这些调整均是根据客户反馈作出的。",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Anthropic将推出人工智能模型Fable新版本 收费更便宜而编程能力更强",
+          "evidenceIds": [
+            "E007"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E007"
+      ],
+      "supportingEvidenceIds": [
+        "E007"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-f7197d0fcd59cafd45b3"
+      ],
+      "eventLifecycles": {
+        "evt-f7197d0fcd59cafd45b3": "first_seen"
+      },
+      "eventId": "evt-f7197d0fcd59cafd45b3",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T21:19:36+00:00",
+      "lastSeenAt": "2026-09-01T21:19:36+00:00"
+    },
+    {
+      "id": "chg-064cb809397f6d477e7d",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-5791dd42e712adc57f",
+      "entityName": "Anthropic launches Fable 5.1 as AI security worries mount",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Anthropic launches Fable 5.1 as AI security worries mount。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-01",
+        "summary": "Anthropic launches Claude Fable 5.1 and Mythos 5.1, touting safety gains as AI agent security incidents draw scrutiny",
+        "title": "Anthropic launches Fable 5.1 as AI security worries mount"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-01",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Anthropic launches Claude Fable 5.1 and Mythos 5.1, touting safety gains as AI agent security incidents draw scrutiny",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Anthropic launches Fable 5.1 as AI security worries mount",
+          "evidenceIds": [
+            "E008"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E008"
+      ],
+      "supportingEvidenceIds": [
+        "E008"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-b323033e0bb919e08ee6"
+      ],
+      "eventLifecycles": {
+        "evt-b323033e0bb919e08ee6": "first_seen"
+      },
+      "eventId": "evt-b323033e0bb919e08ee6",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T21:19:36+00:00",
+      "lastSeenAt": "2026-09-01T21:19:36+00:00"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E002",
+      "changeId": "chg-e9769bd27de538dd5967",
+      "entityName": "ASUR CLOSES ACQUISITION OF MOTIVA'S INTERESTS IN AIRPORTS IN BRAZIL, ECUADOR, COSTA RICA AND CURAÇAO",
+      "claim": "新增高价值情报事件记录：ASUR CLOSES ACQUISITION OF MOTIVA'S INTERESTS IN AIRPORTS IN BRAZIL, ECUADOR, COSTA RICA AND CURAÇAO。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "ASUR CLOSES ACQUISITION OF MOTIVA'S INTERESTS IN AIRPORTS IN BRAZIL, ECUADOR, COSTA RICA AND CURAÇAO",
+      "url": "https://www.prnewswire.com/news-releases/asur-closes-acquisition-of-motivas-interests-in-airports-in-brazil-ecuador-costa-rica-and-curacao-302866774.html",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "B",
+      "platformName": "新闻稿",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E003",
+      "changeId": "chg-42c325ebc764dc188595",
+      "entityName": "No ‘DMV for AI’: US Pushes Against AI Regulations at Global Forum",
+      "claim": "新增高价值情报事件记录：No ‘DMV for AI’: US Pushes Against AI Regulations at Global Forum。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "CNET",
+      "title": "No ‘DMV for AI’: US Pushes Against AI Regulations at Global Forum",
+      "url": "https://www.cnet.com/tech/services-and-software/g20-innovation-ministerial-ai-regulation-us-news",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "C",
+      "platformName": "CNET",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E004",
+      "changeId": "chg-414f55b873a14eba8dc7",
+      "entityName": "OpenAI lifts the lid on its in-house Jalapeño chip - with benchmarks claiming it beats Nvidia's GB300",
+      "claim": "新增高价值情报事件记录：OpenAI lifts the lid on its in-house Jalapeño chip - with benchmarks claiming it beats Nvidia's GB300。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "TechRadar",
+      "title": "OpenAI lifts the lid on its in-house Jalapeño chip - with benchmarks claiming it beats Nvidia's GB300",
+      "url": "https://www.techradar.com/pro/openai-lifts-the-lid-on-its-in-house-jalapeno-chip-with-benchmarks-claiming-it-beats-nvidias-gb300",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "C",
+      "platformName": "TechRadar",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E006",
+      "changeId": "chg-0215cbbfbc6036de8291",
+      "entityName": "Introducing agentic video understanding with Gemini",
+      "claim": "新增高价值情报事件记录：Introducing agentic video understanding with Gemini。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Google DeepMind",
+      "title": "Introducing agentic video understanding with Gemini",
+      "url": "https://deepmind.google/blog/introducing-agentic-video-in-gemini",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "B",
+      "platformName": "官方网站",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E007",
+      "changeId": "chg-f9c7e1037386af636f9a",
+      "entityName": "Anthropic将推出人工智能模型Fable新版本 收费更便宜而编程能力更强",
+      "claim": "新增高价值情报事件记录：Anthropic将推出人工智能模型Fable新版本 收费更便宜而编程能力更强。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "Anthropic将推出人工智能模型Fable新版本 收费更便宜而编程能力更强",
+      "url": "https://finance.sina.com.cn/world/2026-09-02/doc-iniqkkpk1423231.shtml",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E008",
+      "changeId": "chg-064cb809397f6d477e7d",
+      "entityName": "Anthropic launches Fable 5.1 as AI security worries mount",
+      "claim": "新增高价值情报事件记录：Anthropic launches Fable 5.1 as AI security worries mount。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Mashable",
+      "title": "Anthropic launches Fable 5.1 as AI security worries mount",
+      "url": "https://mashable.com/tech/anthropic-fable-5-1-launch-announcment",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "C",
+      "platformName": "Mashable",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    }
+  ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-01T17:22:36+00:00",
+    "generatedAt": "2026-09-01T21:19:36+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-f7197d0fcd59cafd45b3": {
+        "eventId": "evt-f7197d0fcd59cafd45b3",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-cfa8b157c5ad018e3c",
+        "entityName": "Anthropic将推出人工智能模型Fable新版本 收费更便宜而编程能力更强",
+        "title": "Anthropic将推出人工智能模型Fable新版本 收费更便宜而编程能力更强",
+        "titleAliases": [
+          "anthropic将推出人工智能模型fable新版本收费更便宜而编程能力更强"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "company:anthropic"
+        ],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-8f74ddd53f3a7b2da025",
+          "record-5c0680c2778fd90e83ca",
+          "src-11208b36c6d4c0cfe46a"
+        ],
+        "evidenceFingerprints": [
+          "8f74ddd53f3a7b2da025"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "Anthropic将推出人工智能模型Fable新版本 收费更便宜而编程能力更强",
+            "url": "https://finance.sina.com.cn/world/2026-09-02/doc-iniqkkpk1423231.shtml",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "02414186ac4e552a6820",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T21:19:36+00:00",
+        "lastSeenAt": "2026-09-01T21:19:36+00:00",
+        "lastPublishedAt": "2026-09-01T21:19:36+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-cf24c19507ef109f570e": {
+        "eventId": "evt-cf24c19507ef109f570e",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-0e722539562488e9e2",
+        "entityName": "OpenAI lifts the lid on its in-house Jalapeño chip - with benchmarks claiming it beats Nvidia's GB300",
+        "title": "OpenAI lifts the lid on its in-house Jalapeño chip - with benchmarks claiming it beats Nvidia's GB300",
+        "titleAliases": [
+          "openailiftsthelidonitsinhousejalapeochipwithbenchmarksclaimingitbeatsnvidiasgb300"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "company:openai"
+        ],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "300"
+        ],
+        "sourceAliases": [
+          "evd-dd03c8ba81dc5636bb18",
+          "record-568c9e38497535a9eed3",
+          "src-debf09f0d5aca0c56e59"
+        ],
+        "evidenceFingerprints": [
+          "dd03c8ba81dc5636bb18"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "TechRadar",
+            "title": "OpenAI lifts the lid on its in-house Jalapeño chip - with benchmarks claiming it beats Nvidia's GB300",
+            "url": "https://www.techradar.com/pro/openai-lifts-the-lid-on-its-in-house-jalapeno-chip-with-benchmarks-claiming-it-beats-nvidias-gb300",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "afcca0ee61dd70c6be7e",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T21:19:36+00:00",
+        "lastSeenAt": "2026-09-01T21:19:36+00:00",
+        "lastPublishedAt": "2026-09-01T21:19:36+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-b323033e0bb919e08ee6": {
+        "eventId": "evt-b323033e0bb919e08ee6",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-5791dd42e712adc57f",
+        "entityName": "Anthropic launches Fable 5.1 as AI security worries mount",
+        "title": "Anthropic launches Fable 5.1 as AI security worries mount",
+        "titleAliases": [
+          "anthropiclaunchesfable51asaisecurityworriesmount"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "company:anthropic"
+        ],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "5.1"
+        ],
+        "sourceAliases": [
+          "evd-f060a64375b73ed359ad",
+          "record-0dd0898ad7ba3420898a",
+          "src-5ff812e3229538f52d72"
+        ],
+        "evidenceFingerprints": [
+          "f060a64375b73ed359ad"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Mashable",
+            "title": "Anthropic launches Fable 5.1 as AI security worries mount",
+            "url": "https://mashable.com/tech/anthropic-fable-5-1-launch-announcment",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "6d7f589ce19b919ad132",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T21:19:36+00:00",
+        "lastSeenAt": "2026-09-01T21:19:36+00:00",
+        "lastPublishedAt": "2026-09-01T21:19:36+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-82bcd7b1d1660b20507c": {
+        "eventId": "evt-82bcd7b1d1660b20507c",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-d6b1a652ce919c9850",
+        "entityName": "No ‘DMV for AI’: US Pushes Against AI Regulations at Global Forum",
+        "title": "No ‘DMV for AI’: US Pushes Against AI Regulations at Global Forum",
+        "titleAliases": [
+          "nodmvforaiuspushesagainstairegulationsatglobalforum"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "政策",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-22d7aa267299d43da199",
+          "record-a9c67b7bc540f726aa9f",
+          "src-9c0f43260d57460707ef"
+        ],
+        "evidenceFingerprints": [
+          "22d7aa267299d43da199"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "CNET",
+            "title": "No ‘DMV for AI’: US Pushes Against AI Regulations at Global Forum",
+            "url": "https://www.cnet.com/tech/services-and-software/g20-innovation-ministerial-ai-regulation-us-news",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "2414de9be2fea8da2ec3",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T21:19:36+00:00",
+        "lastSeenAt": "2026-09-01T21:19:36+00:00",
+        "lastPublishedAt": "2026-09-01T21:19:36+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-5a01a296d6caa5b088b8": {
+        "eventId": "evt-5a01a296d6caa5b088b8",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-462379f3f4a0579777",
+        "entityName": "ASUR CLOSES ACQUISITION OF MOTIVA'S INTERESTS IN AIRPORTS IN BRAZIL, ECUADOR, COSTA RICA AND CURAÇAO",
+        "title": "ASUR CLOSES ACQUISITION OF MOTIVA'S INTERESTS IN AIRPORTS IN BRAZIL, ECUADOR, COSTA RICA AND CURAÇAO",
+        "titleAliases": [
+          "asurclosesacquisitionofmotivasinterestsinairportsinbrazilecuadorcostaricaandcuraao"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "并购",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-14cb5e61828ff060afba",
+          "record-21085aeb336bfbcdb9ce",
+          "src-af467ec42095a39e2fc3"
+        ],
+        "evidenceFingerprints": [
+          "14cb5e61828ff060afba"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "ASUR CLOSES ACQUISITION OF MOTIVA'S INTERESTS IN AIRPORTS IN BRAZIL, ECUADOR, COSTA RICA AND CURAÇAO",
+            "url": "https://www.prnewswire.com/news-releases/asur-closes-acquisition-of-motivas-interests-in-airports-in-brazil-ecuador-costa-rica-and-curacao-302866774.html",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "592f8b9102c2b2ac4492",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T21:19:36+00:00",
+        "lastSeenAt": "2026-09-01T21:19:36+00:00",
+        "lastPublishedAt": "2026-09-01T21:19:36+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-4e9f27a1e31f8482fda1": {
+        "eventId": "evt-4e9f27a1e31f8482fda1",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-4a5f5eb0ff4ce0a4cb",
+        "entityName": "Introducing agentic video understanding with Gemini",
+        "title": "Introducing agentic video understanding with Gemini",
+        "titleAliases": [
+          "introducingagenticvideounderstandingwithgemini"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "company:google"
+        ],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-2e5a29158b8b82895bb7",
+          "record-1c2200da3db0858df5b6",
+          "src-bb47a285f9124bca1244"
+        ],
+        "evidenceFingerprints": [
+          "2e5a29158b8b82895bb7"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Google DeepMind",
+            "title": "Introducing agentic video understanding with Gemini",
+            "url": "https://deepmind.google/blog/introducing-agentic-video-in-gemini",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "4fcb9e77d6d7fc4b4b9d",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T21:19:36+00:00",
+        "lastSeenAt": "2026-09-01T21:19:36+00:00",
+        "lastPublishedAt": "2026-09-01T21:19:36+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-3b7d475c36a3a738f707": {
+        "eventId": "evt-3b7d475c36a3a738f707",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-84df9d987b2c40eb92",
+        "entityName": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
+        "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
+        "titleAliases": [
+          "真正能干活的机器人不到两成人形机器人量产元年迎来大考"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "company:catl",
+          "mention:宁德时代",
+          "mention:小鹏",
+          "mention:银河通用"
+        ],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-90204b224f661c03e393",
+          "record-44f41cf41ea3089fc678",
+          "src-aa4fa1c89949d229947a",
+          "record-1ef5939d607e99023f39",
+          "src-a136f4504626308b4d2f",
+          "record-d99f02dc6837da839bdb",
+          "src-6c7183b9d49c41e5a33f"
+        ],
+        "evidenceFingerprints": [
+          "90204b224f661c03e393"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "机器人与智能制造",
+            "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=9aQuL3BGUq2yNAlNo5wm2jRzzeI-wbtLfd3uQcZk6f%2AreFOCBGwWg9Hb-Sd3kVKQvwm-ha1UBvgMxxGuSvGsqwVnh9rknou9sCVYJNzayRKk-owoVTzPR4UwkfhpQ2WP&src=11&timestamp=1788264547&ver=6940",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "机器人与智能制造",
+            "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=9aQuL3BGUq2yNAlNo5wm2jRzzeI-wbtLfd3uQcZk6f8t91XWxV61hVccwcX3G%2AdTqcWabm4P9jP3K30XjRMhwEQaGLQQ4tRbwqxdP0-sBIZ2tRlz3LigfFhZWzmM-k07&src=11&timestamp=1788282125&ver=6940",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "机器人与智能制造",
+            "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=o1WhXUpDcTDrSwZQ54abFEjJcD4TgOmn6YMDnU5pbgb6HQPfMepugeRsQVe5Ve%2Atq5m2p1DSSSRSQ4xy9Shh%2AhnpaMMWWMKoNAFYIPaQi%2A7Ygtke7Y95rzG4a3tCTsQL&src=11&timestamp=1788296994&ver=6941",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "751d6c02190b8129a812",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T12:24:14+00:00",
+        "lastSeenAt": "2026-09-01T21:19:36+00:00",
+        "lastPublishedAt": "2026-09-01T12:24:14+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-b791546189599634677d": {
         "eventId": "evt-b791546189599634677d",
         "dataset": "intelligenceEvent",
@@ -419,73 +1650,6 @@
         "lastSeenAt": "2026-09-01T17:18:19+00:00",
         "lastPublishedAt": "2026-09-01T17:18:19+00:00",
         "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-3b7d475c36a3a738f707": {
-        "eventId": "evt-3b7d475c36a3a738f707",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-84df9d987b2c40eb92",
-        "entityName": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
-        "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
-        "titleAliases": [
-          "真正能干活的机器人不到两成人形机器人量产元年迎来大考"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [
-          "company:catl",
-          "mention:宁德时代",
-          "mention:小鹏",
-          "mention:银河通用"
-        ],
-        "typeKeys": [
-          "融资",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-90204b224f661c03e393",
-          "record-44f41cf41ea3089fc678",
-          "src-aa4fa1c89949d229947a",
-          "record-1ef5939d607e99023f39",
-          "src-a136f4504626308b4d2f"
-        ],
-        "evidenceFingerprints": [
-          "90204b224f661c03e393"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "机器人与智能制造",
-            "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=9aQuL3BGUq2yNAlNo5wm2jRzzeI-wbtLfd3uQcZk6f%2AreFOCBGwWg9Hb-Sd3kVKQvwm-ha1UBvgMxxGuSvGsqwVnh9rknou9sCVYJNzayRKk-owoVTzPR4UwkfhpQ2WP&src=11&timestamp=1788264547&ver=6940",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "机器人与智能制造",
-            "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=9aQuL3BGUq2yNAlNo5wm2jRzzeI-wbtLfd3uQcZk6f8t91XWxV61hVccwcX3G%2AdTqcWabm4P9jP3K30XjRMhwEQaGLQQ4tRbwqxdP0-sBIZ2tRlz3LigfFhZWzmM-k07&src=11&timestamp=1788282125&ver=6940",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "751d6c02190b8129a812",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T12:24:14+00:00",
-        "lastSeenAt": "2026-09-01T17:18:19+00:00",
-        "lastPublishedAt": "2026-09-01T12:24:14+00:00",
-        "lastLifecycle": "duplicate",
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 2,
@@ -12282,13 +13446,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 0,
+    "newEvents": 6,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 0,
-    "observedEvents": 0,
+    "duplicatesSuppressed": 1,
+    "observedEvents": 7,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -13508,10 +14672,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-02",
-      "generatedAt": "2026-09-01T17:22:36+00:00",
-      "runStatus": "no-material-change",
-      "changeCount": 9,
-      "executiveSummary": "本轮未检测到新的外部事实候选。",
+      "generatedAt": "2026-09-01T21:19:36+00:00",
+      "runStatus": "model",
+      "changeCount": 15,
+      "executiveSummary": "证据包记录了2026年9月1日六项高价值情报事件，集中在AI基础设施、模型竞争与监管方向，另有一项机场资产收购。OpenAI发布自研Jalapeño芯片基准测试，声称能效与延迟优于Nvidia GB200/GB300，但证据等级为C且为厂商自述，需独立验证。Anthropic推出Fable 5.1与Mythos 5.1，强调安全改进并降低费用，但安全事件背景与具体定价细节尚待确认。美国在G20论坛反对设立AI监管机构，属政策信号，影响需观察。Google DeepMind发布Gemini智能体视频理解功能，官方来源但细节有限。ASUR完成对Motiva多国机场权益收购，属公司事件，与AI主线无关。整体证据多为单一来源、自动未审阅，结论置信度受限。",
       "eventIds": [
         "evt-973f579139dc001e0d59",
         "evt-90802cef087749b92580",
@@ -13521,7 +14685,13 @@
         "evt-8521bc308e57723579c3",
         "evt-b791546189599634677d",
         "evt-956da7ac42d6cbb98c53",
-        "evt-adadd02ad12c1797d8b5"
+        "evt-adadd02ad12c1797d8b5",
+        "evt-5a01a296d6caa5b088b8",
+        "evt-82bcd7b1d1660b20507c",
+        "evt-cf24c19507ef109f570e",
+        "evt-4e9f27a1e31f8482fda1",
+        "evt-f7197d0fcd59cafd45b3",
+        "evt-b323033e0bb919e08ee6"
       ],
       "eventStates": [
         {
@@ -13559,32 +14729,60 @@
         {
           "eventId": "evt-adadd02ad12c1797d8b5",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-5a01a296d6caa5b088b8",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-82bcd7b1d1660b20507c",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-cf24c19507ef109f570e",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-4e9f27a1e31f8482fda1",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-f7197d0fcd59cafd45b3",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-b323033e0bb919e08ee6",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 0,
       "candidateTotal": 0,
-      "auxiliaryLeadTotal": 9,
-      "rejectedTotal": 0,
+      "auxiliaryLeadTotal": 15,
+      "rejectedTotal": 1,
       "eventSummary": {
-        "newEvents": 9,
+        "newEvents": 15,
         "reconfirmations": 0,
         "updates": 0,
         "corrections": 0,
         "possibleConflicts": 0,
-        "duplicatesSuppressed": 1
+        "duplicatesSuppressed": 2
       }
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 0,
-    "eligibleCandidateCount": 0,
-    "rejectedCandidateCount": 0,
-    "rejectedByDataset": {},
-    "evidenceCount": 0,
-    "supportingEvidenceCount": 0,
-    "rejectedEvidenceCount": 0,
+    "candidateCount": 8,
+    "eligibleCandidateCount": 7,
+    "rejectedCandidateCount": 1,
+    "rejectedByDataset": {
+      "intelligenceEvent": 1
+    },
+    "evidenceCount": 8,
+    "supportingEvidenceCount": 7,
+    "rejectedEvidenceCount": 1,
     "passedButUnboundEvidenceCount": 0,
-    "rejectionReasons": {},
+    "rejectionReasons": {
+      "discovery_only": 1
+    },
     "sourceClassificationWarnings": []
   },
   "sourceClassificationWarnings": [],
