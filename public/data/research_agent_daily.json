@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-01T06:25:42+00:00",
+  "generatedAt": "2026-09-01T07:52:47+00:00",
   "asOfDate": "2026-09-01",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
@@ -12,360 +12,912 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 3031,
-      "completion_tokens": 2355,
-      "total_tokens": 5386,
+      "prompt_tokens": 13616,
+      "completion_tokens": 6137,
+      "total_tokens": 19753,
       "completion_tokens_details": {
-        "reasoning_tokens": 997
+        "reasoning_tokens": 3930
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 3031
+      "prompt_cache_miss_tokens": 13616
     }
   },
   "changeSummary": {
-    "totalDetected": 16,
-    "total": 3,
+    "totalDetected": 76,
+    "total": 23,
     "byDataset": {
-      "ventureCompany": 3
+      "intelligenceEvent": 12,
+      "institutionEvent": 7,
+      "marketCompany": 4
     },
     "byChangeType": {
-      "external_event": 13,
-      "source_refresh": 2,
-      "entity_reconciliation": 1
+      "external_event": 42,
+      "data_maintenance": 19,
+      "source_refresh": 15
     },
-    "externalCandidates": 13,
-    "qualityRejected": 8,
-    "maintenanceExcluded": 3,
+    "externalCandidates": 42,
+    "qualityRejected": 13,
+    "maintenanceExcluded": 34,
     "aggregatedEvents": 0,
-    "highestImportance": 88,
-    "verifiedChangeTotal": 3,
-    "candidateTotal": 0,
-    "auxiliaryLeadTotal": 0,
-    "rejectedTotal": 8,
-    "newEvents": 3,
-    "reconfirmations": 0,
+    "highestImportance": 91,
+    "verifiedChangeTotal": 0,
+    "candidateTotal": 11,
+    "auxiliaryLeadTotal": 12,
+    "rejectedTotal": 13,
+    "newEvents": 23,
+    "reconfirmations": 4,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 2
+    "duplicatesSuppressed": 6
   },
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "证据包显示三项外部变化：晶泰科技官网将其标记为已上市公司，并将产品与技术描述简化为“智能药物研发平台”与“自动化实验室”；宁德时代数据集中的一条融资记录被移除；Rigetti Computing官网出现“Quantum Systems”担任President的团队条目。所有证据均来自官方披露，但均未经人工复核，且部分信息存在解析或时效性疑问，需谨慎对待。 质量门诊断：缺少发布时间 35、缺少标题 3、证据未分级 3、证据合格但未绑定变化字段 8。",
+    "executiveSummary": "本证据包覆盖2026年8月下旬至9月初的科技与创投动态，核心包括：预测市场平台Polymarket完成10亿美元融资、估值达210亿美元（E001）；国产GPU企业壁仞科技披露2026年中期业绩，营收同比大增约1997.6%且亏损显著收窄（E008）；启明创投披露两笔独家早期投资（E004、E005）；晶泰科技4家孵化企业获HICOOL 2026大奖（E006）；以及具身智能、AI基础设施、无人机AI平台等方向的新进展（E014、E003、E002）。整体显示AI与硬科技领域资本活跃，但部分事件证据等级较低，需持续验证。 质量门诊断：缺少发布时间 19、证据未分级 12、缺少标题 9、标题未直接匹配研究对象 1、证据合格但未绑定变化字段 30。",
     "keyDevelopments": [
       {
-        "title": "晶泰科技官网更新为已上市，产品与技术描述简化",
-        "assessment": "晶泰科技官网首页将其标记为已上市公司，并继续通过交易所、监管文件和公司公告跟踪上市后表现；同时产品列表从多个细分平台（如AI自主实验平台、Ailux抗体药物发现平台等）简化为“智能药物研发平台”与“自动化实验室”，技术描述也相应简化。该变化可能反映官网改版或业务聚焦，但不能据此推断实际产品线缩减。",
+        "title": "Polymarket完成10亿美元融资，估值升至210亿美元",
+        "assessment": "据新浪财经报道，预测市场平台Polymarket完成新一轮10亿美元融资，由小唐纳德·特朗普旗下1789 Capital领投，投后估值210亿美元。该事件显示政治关联资本进入预测市场赛道，但证据为单一媒体来源（C级），具体条款和资金用途尚未披露。",
+        "importance": 5,
+        "confidence": "medium",
+        "entities": [
+          "Polymarket",
+          "1789 Capital",
+          "小唐纳德·特朗普"
+        ],
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "title": "壁仞科技2026年上半年营收同比增长约1997.6%，亏损大幅收窄",
+        "assessment": "据雷峰网报道，壁仞科技（06082.HK）2026年上半年营收12.36亿元，同比增长约1997.6%；期内亏损收窄至3.77亿元，同比减亏76.4%；经调整亏损3.37亿元，同比减亏38.9%。数据来自媒体转述，未附财报原文，但具体数字可追踪验证。",
         "importance": 4,
         "confidence": "medium",
         "entities": [
-          "晶泰科技"
+          "壁仞科技"
         ],
         "evidenceIds": [
-          "E001",
-          "E002",
-          "E003"
+          "E008"
         ]
       },
       {
-        "title": "宁德时代数据集中的融资记录被移除",
-        "assessment": "证据包显示宁德时代此前有一条关于Quinbrook Supernode项目融资的新闻记录（2026-08-14），更新后该记录从融资字段中消失。由于证据仅来自CATL官网，且移除原因可能是官网内容更新、数据清理或项目状态变化，无法确定是否代表实际融资事件取消或失败。",
+        "title": "启明创投连续披露两笔独家早期投资",
+        "assessment": "启明创投官网披露，芯光界完成亿元天使轮融资、安澜德健完成近亿元A轮融资，均为启明创投独家投资。官方披露等级较高，显示其在硬科技与医疗健康领域的布局。",
         "importance": 3,
-        "confidence": "low",
+        "confidence": "high",
         "entities": [
-          "宁德时代"
+          "启明创投",
+          "芯光界",
+          "安澜德健"
         ],
         "evidenceIds": [
-          "E009"
+          "E004",
+          "E005"
         ]
       },
       {
-        "title": "Rigetti Computing官网出现“Quantum Systems”任President的团队条目",
-        "assessment": "Rigetti官网关于页面新增一条团队信息，将“Quantum Systems”列为President。该名称更像部门或系统名称而非个人姓名，且来源页面标注日期为2020-06-30，存在数据解析错误或信息过时的可能，需进一步核实。",
-        "importance": 2,
-        "confidence": "low",
+        "title": "晶泰科技4家孵化企业获HICOOL 2026全球创业大奖",
+        "assessment": "晶泰科技官方披露，其孵化的耀速科技获一等奖，无界进化、忆衡生物获二等奖，Authera Medicine获三等奖。该事件验证了晶泰科技AI4S平台的孵化能力，但获奖不等同于商业成功。",
+        "importance": 3,
+        "confidence": "high",
         "entities": [
-          "Rigetti Computing"
+          "晶泰科技",
+          "耀速科技",
+          "无界进化",
+          "忆衡生物",
+          "Authera Medicine"
         ],
         "evidenceIds": [
-          "E033"
+          "E006"
+        ]
+      },
+      {
+        "title": "Inturai Ventures完成DomeCommand收购",
+        "assessment": "PR Newswire新闻稿显示，Inturai Ventures完成对DomeCommand的收购，获得AI驱动的无人机指挥控制（C2）平台知识产权。该交易表明AI+国防/无人机领域整合持续，但交易金额和整合细节未披露。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "Inturai Ventures",
+          "DomeCommand"
+        ],
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "title": "Ropedia发布HOMIE Gen2，聚焦具身智能经验学习",
+        "assessment": "据雷峰网报道，Ropedia发布HOMIE Gen2，旨在为具身智能补充物理世界经验。该报道引用南洋理工大学副教授刘子纬观点，但产品具体性能与客户验证尚未披露。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "Ropedia",
+          "刘子纬"
+        ],
+        "evidenceIds": [
+          "E014"
+        ]
+      },
+      {
+        "title": "阶跃星辰朱亦博：Agent时代AI基础设施需综合最优",
+        "assessment": "启明创投官网发布WAIC 2026内容，阶跃星辰朱亦博提出AI基础设施需实现智能、速度与成本的综合最优。该观点反映行业方向，但属于观点性内容。",
+        "importance": 2,
+        "confidence": "high",
+        "entities": [
+          "阶跃星辰",
+          "朱亦博"
+        ],
+        "evidenceIds": [
+          "E003"
         ]
       }
     ],
     "thesisUpdates": [
       {
+        "entity": "Polymarket",
+        "direction": "positive",
+        "statement": "巨额融资和估值提升显示资本看好预测市场，但需关注监管风险。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "entity": "壁仞科技",
+        "direction": "positive",
+        "statement": "营收爆发式增长和亏损收窄表明国产GPU商业化加速，但持续性待观察。",
+        "evidenceIds": [
+          "E008"
+        ]
+      },
+      {
+        "entity": "启明创投",
+        "direction": "positive",
+        "statement": "连续独家投资早期项目，显示其在硬科技和医疗领域的活跃布局。",
+        "evidenceIds": [
+          "E004",
+          "E005"
+        ]
+      },
+      {
         "entity": "晶泰科技",
-        "direction": "mixed",
-        "statement": "晶泰科技已进入公开市场，资本市场可见度提升；但产品与技术描述从多个细分平台简化为两个大类，可能反映官网信息架构调整，也可能意味着业务聚焦，需结合后续披露验证。",
+        "direction": "positive",
+        "statement": "孵化企业获奖验证AI4S平台生态价值，但商业转化仍需跟踪。",
         "evidenceIds": [
-          "E001",
-          "E002",
-          "E003"
+          "E006"
         ]
       },
       {
-        "entity": "宁德时代",
-        "direction": "neutral",
-        "statement": "融资记录从数据集中移除，但证据不足以判断该融资事件是否发生实质变化，暂维持中性观察。",
+        "entity": "Inturai Ventures",
+        "direction": "positive",
+        "statement": "收购DomeCommand扩展AI无人机C2能力，整合效果待验证。",
         "evidenceIds": [
-          "E009"
+          "E002"
         ]
       },
       {
-        "entity": "Rigetti Computing",
-        "direction": "neutral",
-        "statement": "团队信息出现异常条目，可能为数据解析问题，暂不构成对管理层或公司治理的实质性判断。",
+        "entity": "具身智能（Ropedia）",
+        "direction": "positive",
+        "statement": "HOMIE Gen2发布显示具身智能从感知向经验学习演进，但成熟度有限。",
         "evidenceIds": [
-          "E033"
+          "E014"
         ]
       }
     ],
     "watchlist": [
       {
-        "item": "晶泰科技上市后的定期报告与产品线实际范围",
-        "reason": "官网已标记为上市公司，但产品列表简化，需通过交易所文件或公司公告确认产品组合是否发生实质变化。",
-        "nextEvidence": "晶泰科技后续财报、产品发布或官网产品页更新",
+        "item": "Polymarket融资资金用途与监管动态",
+        "reason": "融资规模大且涉及政治关联资本，需跟踪资金使用及美国监管态度。",
+        "nextEvidence": "Polymarket官方公告或监管文件",
         "evidenceIds": [
-          "E001",
-          "E002",
-          "E003"
+          "E001"
         ]
       },
       {
-        "item": "宁德时代融资记录移除的原因",
-        "reason": "融资字段从有到无，可能反映官网内容更新或项目状态变化，需确认Supernode项目Stage 3融资是否仍有效。",
-        "nextEvidence": "CATL官网新闻页或Quinbrook官方公告",
+        "item": "壁仞科技下半年业绩与毛利率",
+        "reason": "上半年高增长能否持续，以及亏损收窄趋势是否延续。",
+        "nextEvidence": "2026年年度业绩或后续季度报告",
         "evidenceIds": [
-          "E009"
+          "E008"
         ]
       },
       {
-        "item": "Rigetti Computing管理层信息核实",
-        "reason": "“Quantum Systems”作为President的条目不符合常规人名格式，需确认是否为数据解析错误或实际任命。",
-        "nextEvidence": "Rigetti官网关于页面更新或SEC文件",
+        "item": "芯光界与安澜德健的后续融资及产品进展",
+        "reason": "早期项目需验证技术落地和商业化能力。",
+        "nextEvidence": "公司官方披露或新一轮融资公告",
         "evidenceIds": [
-          "E033"
+          "E004",
+          "E005"
+        ]
+      },
+      {
+        "item": "晶泰科技孵化企业的商业化里程碑",
+        "reason": "获奖是认可，但需观察订单、合作等实质进展。",
+        "nextEvidence": "晶泰科技或孵化企业官方公告",
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "item": "Ropedia HOMIE Gen2的实际部署案例",
+        "reason": "产品发布后需验证在真实场景中的性能。",
+        "nextEvidence": "客户案例或技术评测",
+        "evidenceIds": [
+          "E014"
+        ]
+      },
+      {
+        "item": "Inturai Ventures与DomeCommand整合进展",
+        "reason": "收购后产品集成和市场拓展情况。",
+        "nextEvidence": "公司后续新闻稿或产品发布",
+        "evidenceIds": [
+          "E002"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "证据均来自公司官网，可能带有宣传性质，且未经人工复核",
-        "reason": "所有证据的reviewStatus均为automated_unreviewed，官方披露内容可能经过选择性呈现，不能作为独立第三方验证。",
+        "risk": "Polymarket面临监管不确定性",
+        "reason": "预测市场在美国可能受到监管审查，政治关联资本可能加剧关注。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "risk": "壁仞科技业绩数据依赖单一媒体来源",
+        "reason": "E008为雷峰网报道，未附财报原文，数字可能存在偏差。",
+        "evidenceIds": [
+          "E008"
+        ]
+      },
+      {
+        "risk": "早期投资失败风险",
+        "reason": "芯光界和安澜德健均为早期项目，技术、市场均存在不确定性。",
+        "evidenceIds": [
+          "E004",
+          "E005"
+        ]
+      },
+      {
+        "risk": "孵化企业获奖不等于商业成功",
+        "reason": "HICOOL奖项是赛事认可，不代表收入或盈利。",
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "risk": "具身智能技术尚未成熟",
+        "reason": "HOMIE Gen2发布属于产品迭代，但物理世界泛化能力仍是行业难题。",
+        "evidenceIds": [
+          "E014"
+        ]
+      },
+      {
+        "risk": "低质量证据可能影响判断",
+        "reason": "部分事件（如E001）为C级单一来源，需交叉验证。",
         "evidenceIds": [
           "E001",
-          "E002",
-          "E003",
-          "E009",
-          "E033"
-        ]
-      },
-      {
-        "risk": "产品列表简化可能被误读为业务收缩",
-        "reason": "晶泰科技产品字段从多个细分平台变为两个大类，但证据未说明原因，可能仅为官网改版或信息架构调整。",
-        "evidenceIds": [
-          "E001",
-          "E002",
-          "E003"
-        ]
-      },
-      {
-        "risk": "融资记录移除可能被误读为融资失败",
-        "reason": "宁德时代融资字段变化仅反映数据集更新，证据未提供任何关于融资取消或项目终止的说明。",
-        "evidenceIds": [
-          "E009"
-        ]
-      },
-      {
-        "risk": "Rigetti团队信息可能存在解析错误",
-        "reason": "“Quantum Systems”作为President的条目不符合常规人事信息，且来源页面日期较早，可能为数据抓取或字段映射错误。",
-        "evidenceIds": [
-          "E033"
+          "E007",
+          "E008",
+          "E014"
         ]
       }
     ],
-    "methodologyNote": "本分析仅基于证据包中的结构化变化和官方披露证据，不补充外部事实。所有判断均区分事实、推断与待验证事项：事实直接引用证据字段；推断基于证据变化方向但明确标注不确定性；待验证事项列入watchlist。证据等级均为官方披露，但reviewStatus为automated_unreviewed，因此置信度最高为medium，涉及异常或移除类变化时降为low。未提供任何投资建议或收益承诺。 数据管线提示：机构证据层重建=stale、科创板招股书投资者证据刷新=stale。"
+    "methodologyNote": "本分析仅基于证据包内提供的17条证据（E001-E017），其中E015和E017因内容相关性低未纳入主要分析。证据等级从官方披露到C级媒体不等，高等级证据（如启明创投官网、晶泰科技官网）作为事实基础，低等级证据（如新浪财经、雷峰网）仅作为线索，相关判断标注为medium或low confidence。所有推断均与事实分开表述，待验证事项列入watchlist。未提供任何投资建议。"
   },
   "changes": [
     {
-      "id": "chg-fea94a74a8a2af2ceaf5",
-      "dataset": "ventureCompany",
-      "entityType": "创业公司",
-      "entityId": "xtalpi",
-      "entityName": "晶泰科技",
-      "action": "updated",
+      "id": "chg-920ca7488f0d15193f65",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-853619775f9af368fc",
+      "entityName": "小特朗普旗下风投领投Polymarket 10亿美元融资 估值升至210亿美元",
+      "action": "added",
       "changedFields": [
-        "capitalMarkets",
-        "products",
-        "technology"
+        "publishedAt",
+        "summary",
+        "title"
       ],
-      "summary": "晶泰科技 的 capitalMarkets、products、technology 发生变化。",
-      "importance": 88,
-      "before": {
-        "capitalMarkets": [],
-        "products": [
-          "AI 自主实验平台",
-          "Ailux 抗体药物发现平台",
-          "PatSight 药物专利挖掘平台",
-          "XFEP 自由能微扰亲和力预测平台",
-          "XMolGen 自由能微扰亲和力预测平台",
-          "小分子药物发现平台",
-          "…另 4 项"
-        ],
-        "technology": "、技术平台、智能自主实验平台、AI 自主实验平台、小分子药物发现平台、Ailux 抗体药物发现平台、PatSight 药物专利挖掘平台、XFEP 自由能微扰亲和力预测平台"
-      },
+      "summary": "新增高价值情报事件记录：小特朗普旗下风投领投Polymarket 10亿美元融资 估值升至210亿美元。",
+      "importance": 91,
+      "before": null,
       "after": {
-        "capitalMarkets": [
-          {
-            "investors": [],
-            "round": "已上市",
-            "sourceUrl": "https://www.xtalpi.com/",
-            "summary": "目录将晶泰科技标记为已上市公司；页面继续通过交易所、监管文件和公司公告跟踪上市后的经营与资本市场表现。",
-            "title": "晶泰科技已进入公开市场",
-            "type": "上市"
-          }
-        ],
-        "products": [
-          "智能药物研发平台",
-          "自动化实验室"
-        ],
-        "technology": "核心技术与产品包括智能药物研发平台与自动化实验室"
+        "publishedAt": "2026-09-01",
+        "summary": "预测市场平台Polymarket近日完成新一轮10亿美元融资，由小唐纳德·特朗普旗下的1789 Capital领投，投后估值达210亿美元。该公司发言人证实...",
+        "title": "小特朗普旗下风投领投Polymarket 10亿美元融资 估值升至210亿美元"
       },
       "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
       "isResearchCandidate": true,
       "claimFields": [
-        "capitalMarkets",
-        "products",
-        "technology"
+        "publishedAt",
+        "summary",
+        "title"
       ],
       "claimBindings": [
         {
-          "field": "capitalMarkets",
-          "before": [],
-          "after": [
-            {
-              "investors": [],
-              "round": "已上市",
-              "sourceUrl": "https://www.xtalpi.com/",
-              "summary": "目录将晶泰科技标记为已上市公司；页面继续通过交易所、监管文件和公司公告跟踪上市后的经营与资本市场表现。",
-              "title": "晶泰科技已进入公开市场",
-              "type": "上市"
-            }
-          ],
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-01",
           "evidenceIds": [
             "E001"
           ]
         },
         {
-          "field": "products",
-          "before": [
-            "AI 自主实验平台",
-            "Ailux 抗体药物发现平台",
-            "PatSight 药物专利挖掘平台",
-            "XFEP 自由能微扰亲和力预测平台",
-            "XMolGen 自由能微扰亲和力预测平台",
-            "小分子药物发现平台",
-            "…另 4 项"
-          ],
-          "after": [
-            "智能药物研发平台",
-            "自动化实验室"
-          ],
+          "field": "summary",
+          "before": null,
+          "after": "预测市场平台Polymarket近日完成新一轮10亿美元融资，由小唐纳德·特朗普旗下的1789 Capital领投，投后估值达210亿美元。该公司发言人证实...",
           "evidenceIds": [
-            "E003"
+            "E001"
           ]
         },
         {
-          "field": "technology",
-          "before": "、技术平台、智能自主实验平台、AI 自主实验平台、小分子药物发现平台、Ailux 抗体药物发现平台、PatSight 药物专利挖掘平台、XFEP 自由能微扰亲和力预测平台",
-          "after": "核心技术与产品包括智能药物研发平台与自动化实验室",
+          "field": "title",
+          "before": null,
+          "after": "小特朗普旗下风投领投Polymarket 10亿美元融资 估值升至210亿美元",
           "evidenceIds": [
-            "E001",
+            "E001"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E001"
+      ],
+      "supportingEvidenceIds": [
+        "E001"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-a072facae0a9236207a4"
+      ],
+      "eventLifecycles": {
+        "evt-a072facae0a9236207a4": "first_seen"
+      },
+      "eventId": "evt-a072facae0a9236207a4",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T07:52:47+00:00",
+      "lastSeenAt": "2026-09-01T07:52:47+00:00"
+    },
+    {
+      "id": "chg-35895c85e0f81f39da4a",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-0e9051322febb8c8e0",
+      "entityName": "INTURAI VENTURES COMPLETES DOMECOMMAND ACQUISITION",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：INTURAI VENTURES COMPLETES DOMECOMMAND ACQUISITION。",
+      "importance": 89,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-01",
+        "summary": "(CSE: URAI / OTC: URAIF / FSE: 3QG0) investor@inturai.com Highlights The Company has completed its previously announced acquisition of the DomeCommand domecommand.ai. intellectual property, an AI-driven command-and-control (C2) platform for autonomous drone s…",
+        "title": "INTURAI VENTURES COMPLETES DOMECOMMAND ACQUISITION"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-01",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "(CSE: URAI / OTC: URAIF / FSE: 3QG0) investor@inturai.com Highlights The Company has completed its previously announced acquisition of the DomeCommand domecommand.ai. intellectual property, an AI-driven command-and-control (C2) platform for autonomous drone s…",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "INTURAI VENTURES COMPLETES DOMECOMMAND ACQUISITION",
+          "evidenceIds": [
             "E002"
           ]
         }
       ],
       "evidenceIds": [
-        "E001",
-        "E002",
+        "E002"
+      ],
+      "supportingEvidenceIds": [
+        "E002"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-8464a744362e1f322ed3"
+      ],
+      "eventLifecycles": {
+        "evt-8464a744362e1f322ed3": "first_seen"
+      },
+      "eventId": "evt-8464a744362e1f322ed3",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T07:52:47+00:00",
+      "lastSeenAt": "2026-09-01T07:52:47+00:00"
+    },
+    {
+      "id": "chg-123d8a75309da4a4df3f",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-auto-institution-team-131095855545-9591c82e9cd8e74e",
+      "entityName": "启明星 | 阶跃星辰朱亦博：进入Agent时代，AI基础设施要实现智能、速度与成本的综合最优 | WAIC 2026 | 启明创投",
+      "action": "added",
+      "changedFields": [
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：启明星 | 阶跃星辰朱亦博：进入Agent时代，AI基础设施要实现智能、速度与成本的综合最优 | WAIC 2026 | 启明创投。",
+      "importance": 86,
+      "before": null,
+      "after": {},
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E003"
+          ]
+        }
+      ],
+      "evidenceIds": [
         "E003"
       ],
       "supportingEvidenceIds": [
-        "E001",
-        "E002",
         "E003"
       ],
       "evidenceQuality": {
         "status": "passed",
-        "supporting": 3,
-        "total": 3
+        "supporting": 1,
+        "total": 1
       },
-      "publicationTier": "verified_change",
+      "publicationTier": "candidate",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-98fe814c09da08febb68"
+        "evt-2958e224d35def0c76b4"
       ],
       "eventLifecycles": {
-        "evt-98fe814c09da08febb68": "first_seen"
+        "evt-2958e224d35def0c76b4": "first_seen"
       },
-      "eventId": "evt-98fe814c09da08febb68",
+      "eventId": "evt-2958e224d35def0c76b4",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T06:25:42+00:00",
-      "lastSeenAt": "2026-09-01T06:25:42+00:00"
+      "firstSeenAt": "2026-09-01T07:52:47+00:00",
+      "lastSeenAt": "2026-09-01T07:52:47+00:00"
     },
     {
-      "id": "chg-f0a2e9692eddf94cdec2",
-      "dataset": "ventureCompany",
-      "entityType": "创业公司",
-      "entityId": "catl",
-      "entityName": "宁德时代",
-      "action": "updated",
+      "id": "chg-e6c1a67494611f47b938",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-auto-institution-team-131095855545-7b5da7a1fb11c00b",
+      "entityName": "启明星 | 芯光界完成亿元天使轮融资，启明创投独家投资 | 启明创投",
+      "action": "added",
       "changedFields": [
-        "financing"
+        "publishedAt"
       ],
-      "summary": "宁德时代 的 financing 发生变化。",
-      "importance": 88,
-      "before": {
-        "financing": [
-          {
-            "date": "2026-08-14",
-            "investors": [],
-            "sourceUrl": "https://www.catl.com/en/news/6951.html",
-            "summary": "Brisbane, Australia | 14 August 2026 — Quinbrook's Supernode battery energy storage project has completed Stage 2 commercial operation and reached financial close on A$469 million financing for Stage 3, marking a further milestone in the phased development of Australia's largest operational BESS campus.With planned capacity expected to exceed 3 GWh, Supernode is supported by CATL as its core energy storage system supplier for all three stContemporary Amperex Technology Co., Limited (CATL) is a g",
-            "title": "CATL and Quinbrook Build on Supernode Partnership Following Stage 2 and Stage 3 Major Milestones",
-            "type": "融资"
-          }
-        ]
-      },
-      "after": {
-        "financing": []
-      },
+      "summary": "新增机构/资本事件记录：启明星 | 芯光界完成亿元天使轮融资，启明创投独家投资 | 启明创投。",
+      "importance": 86,
+      "before": null,
+      "after": {},
       "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "classificationReason": "新增事件型记录",
       "isResearchCandidate": true,
       "claimFields": [
-        "financing"
+        "publishedAt"
       ],
       "claimBindings": [
         {
-          "field": "financing",
-          "before": [
-            {
-              "date": "2026-08-14",
-              "investors": [],
-              "sourceUrl": "https://www.catl.com/en/news/6951.html",
-              "summary": "Brisbane, Australia | 14 August 2026 — Quinbrook's Supernode battery energy storage project has completed Stage 2 commercial operation and reached financial close on A$469 million financing for Stage 3, marking a further milestone in the phased development of Australia's largest operational BESS campus.With planned capacity expected to exceed 3 GWh, Supernode is supported by CATL as its core energy storage system supplier for all three stContemporary Amperex Technology Co., Limited (CATL) is a g",
-              "title": "CATL and Quinbrook Build on Supernode Partnership Following Stage 2 and Stage 3 Major Milestones",
-              "type": "融资"
-            }
-          ],
-          "after": [],
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E004"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E004"
+      ],
+      "supportingEvidenceIds": [
+        "E004"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-c625362f4c70ea68bbef"
+      ],
+      "eventLifecycles": {
+        "evt-c625362f4c70ea68bbef": "first_seen"
+      },
+      "eventId": "evt-c625362f4c70ea68bbef",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T07:52:47+00:00",
+      "lastSeenAt": "2026-09-01T07:52:47+00:00"
+    },
+    {
+      "id": "chg-9e5eeda2cafe2aacce6e",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-auto-institution-team-131095855545-b2da53704a160472",
+      "entityName": "启明星 | 安澜德健完成近亿元A轮融资，启明创投独家投资 | 启明创投",
+      "action": "added",
+      "changedFields": [
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：启明星 | 安澜德健完成近亿元A轮融资，启明创投独家投资 | 启明创投。",
+      "importance": 86,
+      "before": null,
+      "after": {},
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E005"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E005"
+      ],
+      "supportingEvidenceIds": [
+        "E005"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-6758725ec7a4eb59c9d1"
+      ],
+      "eventLifecycles": {
+        "evt-6758725ec7a4eb59c9d1": "first_seen"
+      },
+      "eventId": "evt-6758725ec7a4eb59c9d1",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T07:52:47+00:00",
+      "lastSeenAt": "2026-09-01T07:52:47+00:00"
+    },
+    {
+      "id": "chg-2220c5db8a9f070ab2cb",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-40de145d17853f5f57",
+      "entityName": "晶泰科技4家孵化企业荣获HICOOL 2026全球创业大奖，AI4S底层平台持续驱动源头创新",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：晶泰科技4家孵化企业荣获HICOOL 2026全球创业大奖，AI4S底层平台持续驱动源头创新。",
+      "importance": 85,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-27",
+        "summary": "2026年8月26日晚，HICOOL 2026 全球创业大赛获奖名单正式揭晓，晶泰科技（2228.HK）四家孵化企业共同上榜：耀速科技获大赛一等奖，无界进化、忆衡生物获二等奖，Authera Medicine 获三等奖。HICOOL 是北京市重点打造的全球顶尖创业赛事，长期被视为一级市场高成长企业的风向标，智谱华章、MiniMax 等前沿创新上市企业均曾获此荣誉。",
+        "title": "晶泰科技4家孵化企业荣获HICOOL 2026全球创业大奖，AI4S底层平台持续驱动源头创新"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-27",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "2026年8月26日晚，HICOOL 2026 全球创业大赛获奖名单正式揭晓，晶泰科技（2228.HK）四家孵化企业共同上榜：耀速科技获大赛一等奖，无界进化、忆衡生物获二等奖，Authera Medicine 获三等奖。HICOOL 是北京市重点打造的全球顶尖创业赛事，长期被视为一级市场高成长企业的风向标，智谱华章、MiniMax 等前沿创新上市企业均曾获此荣誉。",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "晶泰科技4家孵化企业荣获HICOOL 2026全球创业大奖，AI4S底层平台持续驱动源头创新",
+          "evidenceIds": [
+            "E006"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E006"
+      ],
+      "supportingEvidenceIds": [
+        "E006"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-203ee8baf2df3bcfc5e8"
+      ],
+      "eventLifecycles": {
+        "evt-203ee8baf2df3bcfc5e8": "first_seen"
+      },
+      "eventId": "evt-203ee8baf2df3bcfc5e8",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T07:52:47+00:00",
+      "lastSeenAt": "2026-09-01T07:52:47+00:00"
+    },
+    {
+      "id": "chg-a8e76ca5c595289b9d55",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-23d998896b70bd9a7b",
+      "entityName": "百丽十二年数智化复盘：先把企业工程化，再让AI 读懂它丨2026 ITValue Summit 前瞻：AI系统落地系列直播③",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：百丽十二年数智化复盘：先把企业工程化，再让AI 读懂它丨2026 ITValue Summit 前瞻：AI系统落地系列直播③。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-01",
+        "summary": "企业首先应该谈的是业务如何运营、如何管理。你把业务标准化、数据标准化，体系做出来之后，模型和算力其实只是底座。",
+        "title": "百丽十二年数智化复盘：先把企业工程化，再让AI 读懂它丨2026 ITValue Summit 前瞻：AI系统落地系列直播③"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-01",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "企业首先应该谈的是业务如何运营、如何管理。你把业务标准化、数据标准化，体系做出来之后，模型和算力其实只是底座。",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "百丽十二年数智化复盘：先把企业工程化，再让AI 读懂它丨2026 ITValue Summit 前瞻：AI系统落地系列直播③",
+          "evidenceIds": [
+            "E007"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E007"
+      ],
+      "supportingEvidenceIds": [
+        "E007"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-693455c87b5fc3646de5"
+      ],
+      "eventLifecycles": {
+        "evt-693455c87b5fc3646de5": "first_seen"
+      },
+      "eventId": "evt-693455c87b5fc3646de5",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T07:52:47+00:00",
+      "lastSeenAt": "2026-09-01T07:52:47+00:00"
+    },
+    {
+      "id": "chg-7f99e2406f8d9911fa57",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-3e775b38bcb42b2ee4",
+      "entityName": "业绩连跳20级，这家芯片公司做对了什么？",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：业绩连跳20级，这家芯片公司做对了什么？。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-01",
+        "summary": "8月28日晚间，国产GPU企业壁仞科技（06082.HK）披露2026年中期业绩。2026年上半年，壁仞科技实现营业收入12.36亿元，较上年同期增长约1997.6%；期内亏损大幅收窄至3.77亿元，同比大幅减亏76.4%；经调整期内亏损（非国际财务报告准则计量）收窄至3.37亿元，同比减亏38.9%，亏损收窄速度明显加快。 作为国内领先的通用智能计算解决方案提供商，壁仞科技围绕“芯片－软件－系统－供应链”全栈体系快速发展，在商业拓展、产品迭代、软硬协同与量产能力建设上均取得显著进展。展望未来，壁仞科技将持续加速…",
+        "title": "业绩连跳20级，这家芯片公司做对了什么？"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-01",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "8月28日晚间，国产GPU企业壁仞科技（06082.HK）披露2026年中期业绩。2026年上半年，壁仞科技实现营业收入12.36亿元，较上年同期增长约1997.6%；期内亏损大幅收窄至3.77亿元，同比大幅减亏76.4%；经调整期内亏损（非国际财务报告准则计量）收窄至3.37亿元，同比减亏38.9%，亏损收窄速度明显加快。 作为国内领先的通用智能计算解决方案提供商，壁仞科技围绕“芯片－软件－系统－供应链”全栈体系快速发展，在商业拓展、产品迭代、软硬协同与量产能力建设上均取得显著进展。展望未来，壁仞科技将持续加速…",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "业绩连跳20级，这家芯片公司做对了什么？",
+          "evidenceIds": [
+            "E008"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E008"
+      ],
+      "supportingEvidenceIds": [
+        "E008"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-d4f844768d2dd9d4f54b"
+      ],
+      "eventLifecycles": {
+        "evt-d4f844768d2dd9d4f54b": "first_seen"
+      },
+      "eventId": "evt-d4f844768d2dd9d4f54b",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T07:52:47+00:00",
+      "lastSeenAt": "2026-09-01T07:52:47+00:00"
+    },
+    {
+      "id": "chg-1a7637a10fe4c13787cc",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-764fa03c8057e2375e",
+      "entityName": "XAI2CSI: Interpreting CSI with eXplainable AI for Human Activity Recognition",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：XAI2CSI: Interpreting CSI with eXplainable AI for Human Activity Recognition。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "Wi-Fi Channel State Information (CSI) has emerged as a key enabler for device-free Human Activity Recognition (HAR), enabling low-cost, unobtrusive sensing using existing communication infrastructure. However, Deep Learning (DL) models trained on CSI data oft…",
+        "title": "XAI2CSI: Interpreting CSI with eXplainable AI for Human Activity Recognition"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E009"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Wi-Fi Channel State Information (CSI) has emerged as a key enabler for device-free Human Activity Recognition (HAR), enabling low-cost, unobtrusive sensing using existing communication infrastructure. However, Deep Learning (DL) models trained on CSI data oft…",
+          "evidenceIds": [
+            "E009"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "XAI2CSI: Interpreting CSI with eXplainable AI for Human Activity Recognition",
           "evidenceIds": [
             "E009"
           ]
@@ -382,41 +934,736 @@
         "supporting": 1,
         "total": 1
       },
-      "publicationTier": "verified_change",
+      "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-44f4881cf6dcb57371f7"
+        "evt-2cd78ecdc660ea9faed4"
       ],
       "eventLifecycles": {
-        "evt-44f4881cf6dcb57371f7": "first_seen"
+        "evt-2cd78ecdc660ea9faed4": "first_seen"
       },
-      "eventId": "evt-44f4881cf6dcb57371f7",
+      "eventId": "evt-2cd78ecdc660ea9faed4",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T06:25:42+00:00",
-      "lastSeenAt": "2026-09-01T06:25:42+00:00"
+      "firstSeenAt": "2026-09-01T07:52:47+00:00",
+      "lastSeenAt": "2026-09-01T07:52:47+00:00"
     },
     {
-      "id": "chg-6d581874af986e2c2cb1",
-      "dataset": "ventureCompany",
-      "entityType": "创业公司",
-      "entityId": "rigetti",
-      "entityName": "Rigetti Computing",
+      "id": "chg-2db9974214539a101ae7",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-c3a3c391c5c87ea269",
+      "entityName": "Token Counts Are Not Model Lineage: A Frozen-Threshold Holdout Study of Black-Box LLM API Fingerprinting",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Token Counts Are Not Model Lineage: A Frozen-Threshold Holdout Study of Black-Box LLM API Fingerprinting。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-30",
+        "summary": "Black-box model attribution is increasingly relevant when large language models (LLMs) are served through relay and reseller APIs. A tempting low-cost signal is the prompt-token count returned by an OpenAI-compatible endpoint: two models that share a tokenize…",
+        "title": "Token Counts Are Not Model Lineage: A Frozen-Threshold Holdout Study of Black-Box LLM API Fingerprinting"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-30",
+          "evidenceIds": [
+            "E010"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Black-box model attribution is increasingly relevant when large language models (LLMs) are served through relay and reseller APIs. A tempting low-cost signal is the prompt-token count returned by an OpenAI-compatible endpoint: two models that share a tokenize…",
+          "evidenceIds": [
+            "E010"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Token Counts Are Not Model Lineage: A Frozen-Threshold Holdout Study of Black-Box LLM API Fingerprinting",
+          "evidenceIds": [
+            "E010"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E010"
+      ],
+      "supportingEvidenceIds": [
+        "E010"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-47f876846f37b5814ddd"
+      ],
+      "eventLifecycles": {
+        "evt-47f876846f37b5814ddd": "first_seen"
+      },
+      "eventId": "evt-47f876846f37b5814ddd",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T07:52:47+00:00",
+      "lastSeenAt": "2026-09-01T07:52:47+00:00"
+    },
+    {
+      "id": "chg-5ef9373cbaf4b2f40046",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-ea7b554c26da985a86",
+      "entityName": "The Language of the Question Selects the Market: Query Language and Exit IP as Separable Factors in Commercial Recommendations from a Generative Search Interface",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：The Language of the Question Selects the Market: Query Language and Exit IP as Separable Factors in Commercial Recommendations from a Generative Search Interface。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-30",
+        "summary": "When a generative search interface answers a commercial question, which market's products it names is decided before the model reasons about the products. We report a controlled probe of 234 runs against the logged-out ChatGPT web interface and the OpenAI API…",
+        "title": "The Language of the Question Selects the Market: Query Language and Exit IP as Separable Factors in Commercial Recommendations from a Generative Search Interface"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-30",
+          "evidenceIds": [
+            "E011"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "When a generative search interface answers a commercial question, which market's products it names is decided before the model reasons about the products. We report a controlled probe of 234 runs against the logged-out ChatGPT web interface and the OpenAI API…",
+          "evidenceIds": [
+            "E011"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "The Language of the Question Selects the Market: Query Language and Exit IP as Separable Factors in Commercial Recommendations from a Generative Search Interface",
+          "evidenceIds": [
+            "E011"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E011"
+      ],
+      "supportingEvidenceIds": [
+        "E011"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-c059227ed970e764272c"
+      ],
+      "eventLifecycles": {
+        "evt-c059227ed970e764272c": "first_seen"
+      },
+      "eventId": "evt-c059227ed970e764272c",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T07:52:47+00:00",
+      "lastSeenAt": "2026-09-01T07:52:47+00:00"
+    },
+    {
+      "id": "chg-d8d663afecc493456ea6",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-d3f4b9eaa0b646f409",
+      "entityName": "Cubic-Root Gaussian Approximation under Unrestricted Covariance",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Cubic-Root Gaussian Approximation under Unrestricted Covariance。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "For Gaussian approximation over high-dimensional rectangles under unrestricted covariance, Chernozhukov et al. (2023b) conjectured that the $n^{-1/4}$ rate, up to logarithmic factors, is near-optimal. We show that, under the coordinatewise subexponential cond…",
+        "title": "Cubic-Root Gaussian Approximation under Unrestricted Covariance"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E012"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "For Gaussian approximation over high-dimensional rectangles under unrestricted covariance, Chernozhukov et al. (2023b) conjectured that the $n^{-1/4}$ rate, up to logarithmic factors, is near-optimal. We show that, under the coordinatewise subexponential cond…",
+          "evidenceIds": [
+            "E012"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Cubic-Root Gaussian Approximation under Unrestricted Covariance",
+          "evidenceIds": [
+            "E012"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E012"
+      ],
+      "supportingEvidenceIds": [
+        "E012"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-612d779f703b27e4f45a"
+      ],
+      "eventLifecycles": {
+        "evt-612d779f703b27e4f45a": "first_seen"
+      },
+      "eventId": "evt-612d779f703b27e4f45a",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T07:52:47+00:00",
+      "lastSeenAt": "2026-09-01T07:52:47+00:00"
+    },
+    {
+      "id": "chg-02e68d058130bcf88faf",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-bf7c9697654027f3a6",
+      "entityName": "Haut.AI Launches AI-Powered Hair Analysis for Beauty Brands Worldwide",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Haut.AI Launches AI-Powered Hair Analysis for Beauty Brands Worldwide。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-01",
+        "summary": "New technology turns a smartphone selfie and short questionnaire into personalized hair profiles and product recommendations for beauty brands and retailers NEW YORK, Sept. 1, 2026 /PRNewswire/ -- Haut.AI, a SaaS technology company specializing in AI-powered…",
+        "title": "Haut.AI Launches AI-Powered Hair Analysis for Beauty Brands Worldwide"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-01",
+          "evidenceIds": [
+            "E013"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "New technology turns a smartphone selfie and short questionnaire into personalized hair profiles and product recommendations for beauty brands and retailers NEW YORK, Sept. 1, 2026 /PRNewswire/ -- Haut.AI, a SaaS technology company specializing in AI-powered…",
+          "evidenceIds": [
+            "E013"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Haut.AI Launches AI-Powered Hair Analysis for Beauty Brands Worldwide",
+          "evidenceIds": [
+            "E013"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E013"
+      ],
+      "supportingEvidenceIds": [
+        "E013"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-1bdad5125829846354cc"
+      ],
+      "eventLifecycles": {
+        "evt-1bdad5125829846354cc": "first_seen"
+      },
+      "eventId": "evt-1bdad5125829846354cc",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T07:52:47+00:00",
+      "lastSeenAt": "2026-09-01T07:52:47+00:00"
+    },
+    {
+      "id": "chg-fc11ce7e77c39cf1c195",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-afee1ee9f38225a0da",
+      "entityName": "AI 读过一切，却没经历过任何事：Ropedia 发布 HOMIE Gen2，给具身智能补「经验」这一课",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：AI 读过一切，却没经历过任何事：Ropedia 发布 HOMIE Gen2，给具身智能补「经验」这一课。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-01",
+        "summary": "8 月中旬，新加坡的一场公开演讲上，南洋理工大学副教授、Ropedia 首席科学家刘子纬抛出了一个问题：为什么读过整个互联网的 AI，进了物理世界，却连一杯咖啡都冲不好？ 他的回答是：“AI 读过一切，却几乎没有经历过任何事情。它从未真正冲过一杯咖啡，自然也不知道该怎么做。” 刘子纬教授在新加坡演讲的现场照片 这种分裂在今天的 AI 身上随处可见：感知模型能把冲咖啡的教程讲得头头是道，生成式模型能合成一段以假乱真的冲咖啡视频；可一旦真的伸出机械臂，同样的智能常常连一次可靠的抓取都完成不了。能听懂，能想象，就是做不…",
+        "title": "AI 读过一切，却没经历过任何事：Ropedia 发布 HOMIE Gen2，给具身智能补「经验」这一课"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-01",
+          "evidenceIds": [
+            "E014"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "8 月中旬，新加坡的一场公开演讲上，南洋理工大学副教授、Ropedia 首席科学家刘子纬抛出了一个问题：为什么读过整个互联网的 AI，进了物理世界，却连一杯咖啡都冲不好？ 他的回答是：“AI 读过一切，却几乎没有经历过任何事情。它从未真正冲过一杯咖啡，自然也不知道该怎么做。” 刘子纬教授在新加坡演讲的现场照片 这种分裂在今天的 AI 身上随处可见：感知模型能把冲咖啡的教程讲得头头是道，生成式模型能合成一段以假乱真的冲咖啡视频；可一旦真的伸出机械臂，同样的智能常常连一次可靠的抓取都完成不了。能听懂，能想象，就是做不…",
+          "evidenceIds": [
+            "E014"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "AI 读过一切，却没经历过任何事：Ropedia 发布 HOMIE Gen2，给具身智能补「经验」这一课",
+          "evidenceIds": [
+            "E014"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E014"
+      ],
+      "supportingEvidenceIds": [
+        "E014"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-7fe31f0e39554205db4c"
+      ],
+      "eventLifecycles": {
+        "evt-7fe31f0e39554205db4c": "first_seen"
+      },
+      "eventId": "evt-7fe31f0e39554205db4c",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T07:52:47+00:00",
+      "lastSeenAt": "2026-09-01T07:52:47+00:00"
+    },
+    {
+      "id": "chg-bed95e725e79128b9da8",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-52d3b3e7a60e3b22aa",
+      "entityName": "Precio Bajo Alibaba en Español Tamaño Compacto y Discreto | Alibaba. com",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Precio Bajo Alibaba en Español Tamaño Compacto y Discreto | Alibaba. com。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "Precio Bajo Alibaba en Español Tamaño Compacto y Discreto | Alibaba. com",
+        "title": "Precio Bajo Alibaba en Español Tamaño Compacto y Discreto | Alibaba. com"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E015"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Precio Bajo Alibaba en Español Tamaño Compacto y Discreto | Alibaba. com",
+          "evidenceIds": [
+            "E015"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Precio Bajo Alibaba en Español Tamaño Compacto y Discreto | Alibaba. com",
+          "evidenceIds": [
+            "E015"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E015"
+      ],
+      "supportingEvidenceIds": [
+        "E015"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-b5895ef372a3e9ba9dbf"
+      ],
+      "eventLifecycles": {
+        "evt-b5895ef372a3e9ba9dbf": "first_seen"
+      },
+      "eventId": "evt-b5895ef372a3e9ba9dbf",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T07:52:47+00:00",
+      "lastSeenAt": "2026-09-01T07:52:47+00:00"
+    },
+    {
+      "id": "chg-3467461966e0c7bb1ea6",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "leiphone-6b55946f6ddb4765",
+      "entityName": "年假30天！东方甄选前CEO孙东旭宣布新公司福利，网友：还缺人吗；曝某上市公司高管被解除职务，疑似私德有亏；库克最后一封CEO内部信曝光",
+      "action": "added",
+      "changedFields": [
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：年假30天！东方甄选前CEO孙东旭宣布新公司福利，网友：还缺人吗；曝某上市公司高管被解除职务，疑似私德有亏；库克最后一封CEO内部信曝光。",
+      "importance": 70,
+      "before": null,
+      "after": {},
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E017"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E017"
+      ],
+      "supportingEvidenceIds": [
+        "E017"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-37ba16b32f6f8104cdc4"
+      ],
+      "eventLifecycles": {
+        "evt-37ba16b32f6f8104cdc4": "first_seen"
+      },
+      "eventId": "evt-37ba16b32f6f8104cdc4",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T07:52:47+00:00",
+      "lastSeenAt": "2026-09-01T07:52:47+00:00"
+    },
+    {
+      "id": "chg-f14da639ce242a4b67a9",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "professional-media-itpro-ebd79f7f19956beb",
+      "entityName": "Top security teams use AI agents, says Hack The Box",
+      "action": "added",
+      "changedFields": [
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：Top security teams use AI agents, says Hack The Box。",
+      "importance": 70,
+      "before": null,
+      "after": {},
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E020"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E020"
+      ],
+      "supportingEvidenceIds": [
+        "E020"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-e84b99ddab59d27fb1bc"
+      ],
+      "eventLifecycles": {
+        "evt-e84b99ddab59d27fb1bc": "first_seen"
+      },
+      "eventId": "evt-e84b99ddab59d27fb1bc",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T07:52:47+00:00",
+      "lastSeenAt": "2026-09-01T07:52:47+00:00"
+    },
+    {
+      "id": "chg-218dcc718883e21c8af9",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-petapixel-592e712b07562185",
+      "entityName": "Former DJI Engineers Raise $250,000 for ‘World’s First Robotic Extreme Zoom Camera’",
+      "action": "added",
+      "changedFields": [
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：Former DJI Engineers Raise $250,000 for ‘World’s First Robotic Extreme Zoom Camera’。",
+      "importance": 70,
+      "before": null,
+      "after": {},
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E023"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E023"
+      ],
+      "supportingEvidenceIds": [
+        "E023"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-8db79b27d8b9b021a906"
+      ],
+      "eventLifecycles": {
+        "evt-8db79b27d8b9b021a906": "first_seen"
+      },
+      "eventId": "evt-8db79b27d8b9b021a906",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T07:52:47+00:00",
+      "lastSeenAt": "2026-09-01T07:52:47+00:00"
+    },
+    {
+      "id": "chg-dba986193b512e06c36e",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "techcrunch-venture-6ad5b66a6858c8a9",
+      "entityName": "A group funded by Andreessen, Horowitz, and Brockman plans data center ads to sway midterms",
+      "action": "added",
+      "changedFields": [
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：A group funded by Andreessen, Horowitz, and Brockman plans data center ads to sway midterms。",
+      "importance": 70,
+      "before": null,
+      "after": {},
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E024"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E024"
+      ],
+      "supportingEvidenceIds": [
+        "E024"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-fb663043de0216db0fcf"
+      ],
+      "eventLifecycles": {
+        "evt-fb663043de0216db0fcf": "first_seen"
+      },
+      "eventId": "evt-fb663043de0216db0fcf",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T07:52:47+00:00",
+      "lastSeenAt": "2026-09-01T07:52:47+00:00"
+    },
+    {
+      "id": "chg-baeebc902c93ea105f20",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "catl",
+      "entityName": "宁德时代",
       "action": "updated",
       "changedFields": [
-        "team"
+        "news"
       ],
-      "summary": "Rigetti Computing 的 team 发生变化。",
-      "importance": 76,
+      "summary": "宁德时代 的 news、quote 发生变化。",
+      "importance": 48,
       "before": {
-        "team": []
+        "news": []
       },
       "after": {
-        "team": [
+        "news": [
           {
-            "name": "Quantum Systems",
-            "role": "President",
-            "sourceUrl": "https://www.rigetti.com/about-rigetti-computing"
+            "publishedAt": "2026-09-01T12:27:00+08:00",
+            "source": "新浪财经",
+            "title": "宁德时代年内债券发行规模超历年总和",
+            "url": "https://finance.sina.com.cn/7x24/2026-09-01/doc-iniqhwna1587906.shtml"
           }
         ]
       },
@@ -424,66 +1671,275 @@
       "classificationReason": "包含可形成外部事实主张的字段变化",
       "isResearchCandidate": true,
       "claimFields": [
-        "team"
+        "news"
       ],
       "claimBindings": [
         {
-          "field": "team",
+          "field": "news",
           "before": [],
           "after": [
             {
-              "name": "Quantum Systems",
-              "role": "President",
-              "sourceUrl": "https://www.rigetti.com/about-rigetti-computing"
+              "publishedAt": "2026-09-01T12:27:00+08:00",
+              "source": "新浪财经",
+              "title": "宁德时代年内债券发行规模超历年总和",
+              "url": "https://finance.sina.com.cn/7x24/2026-09-01/doc-iniqhwna1587906.shtml"
             }
           ],
           "evidenceIds": [
-            "E033"
+            "E040"
           ]
         }
       ],
       "evidenceIds": [
-        "E033"
+        "E040"
       ],
       "supportingEvidenceIds": [
-        "E033"
+        "E040"
       ],
       "evidenceQuality": {
         "status": "passed",
         "supporting": 1,
         "total": 1
       },
-      "publicationTier": "verified_change",
+      "publicationTier": "candidate",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-3da5ba479acee83e5cce"
+        "evt-182243beb39a40db296e"
       ],
       "eventLifecycles": {
-        "evt-3da5ba479acee83e5cce": "first_seen"
+        "evt-182243beb39a40db296e": "first_seen"
       },
-      "eventId": "evt-3da5ba479acee83e5cce",
+      "eventId": "evt-182243beb39a40db296e",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T06:25:42+00:00",
-      "lastSeenAt": "2026-09-01T06:25:42+00:00"
+      "firstSeenAt": "2026-09-01T07:52:47+00:00",
+      "lastSeenAt": "2026-09-01T07:52:47+00:00"
+    },
+    {
+      "id": "chg-f123f854fcdd56d1a4d3",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "bgi-genomics",
+      "entityName": "华大基因",
+      "action": "updated",
+      "changedFields": [
+        "news"
+      ],
+      "summary": "华大基因 的 news、quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": []
+      },
+      "after": {
+        "news": []
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [],
+          "after": [],
+          "evidenceIds": [
+            "E046"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E046"
+      ],
+      "supportingEvidenceIds": [
+        "E046"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-e5862a7ed22ebe40eec2"
+      ],
+      "eventLifecycles": {
+        "evt-e5862a7ed22ebe40eec2": "first_seen"
+      },
+      "eventId": "evt-e5862a7ed22ebe40eec2",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T07:52:47+00:00",
+      "lastSeenAt": "2026-09-01T07:52:47+00:00"
+    },
+    {
+      "id": "chg-ba4bd26f35d112b597d9",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "cambricon",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "action": "updated",
+      "changedFields": [
+        "news"
+      ],
+      "summary": "中科寒武纪科技股份有限公司 的 news、quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": []
+      },
+      "after": {
+        "news": [
+          {
+            "publishedAt": "2026-09-01T11:41:00+08:00",
+            "source": "新浪财经",
+            "title": "2026年中报被动基金全部持股前三大重仓股分别为中际旭创、新易盛和寒武纪",
+            "url": "https://finance.sina.com.cn/7x24/2026-09-01/doc-iniqhwna1539125.shtml"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [],
+          "after": [
+            {
+              "publishedAt": "2026-09-01T11:41:00+08:00",
+              "source": "新浪财经",
+              "title": "2026年中报被动基金全部持股前三大重仓股分别为中际旭创、新易盛和寒武纪",
+              "url": "https://finance.sina.com.cn/7x24/2026-09-01/doc-iniqhwna1539125.shtml"
+            }
+          ],
+          "evidenceIds": [
+            "E048"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E048"
+      ],
+      "supportingEvidenceIds": [
+        "E048"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-d2919213e956050bd225"
+      ],
+      "eventLifecycles": {
+        "evt-d2919213e956050bd225": "first_seen"
+      },
+      "eventId": "evt-d2919213e956050bd225",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T07:52:47+00:00",
+      "lastSeenAt": "2026-09-01T07:52:47+00:00"
+    },
+    {
+      "id": "chg-488e0d4024af01af19d4",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "horizon-robotics",
+      "entityName": "Horizon Robotics",
+      "action": "updated",
+      "changedFields": [
+        "news"
+      ],
+      "summary": "Horizon Robotics 的 news、quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": []
+      },
+      "after": {
+        "news": [
+          {
+            "publishedAt": "2026-09-01T11:10:00+08:00",
+            "source": "新浪财经",
+            "title": "地平线（09660）中报里的价值线索：“Arm+Android”模式打开长期增长空间",
+            "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-09-01/doc-iniqhwmv6631490.shtml"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [],
+          "after": [
+            {
+              "publishedAt": "2026-09-01T11:10:00+08:00",
+              "source": "新浪财经",
+              "title": "地平线（09660）中报里的价值线索：“Arm+Android”模式打开长期增长空间",
+              "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-09-01/doc-iniqhwmv6631490.shtml"
+            }
+          ],
+          "evidenceIds": [
+            "E080"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E080"
+      ],
+      "supportingEvidenceIds": [
+        "E080"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-98902c6ee1fe1cb0b6f4"
+      ],
+      "eventLifecycles": {
+        "evt-98902c6ee1fe1cb0b6f4": "first_seen"
+      },
+      "eventId": "evt-98902c6ee1fe1cb0b6f4",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T07:52:47+00:00",
+      "lastSeenAt": "2026-09-01T07:52:47+00:00"
     }
   ],
   "evidence": [
     {
       "id": "E001",
-      "changeId": "chg-fea94a74a8a2af2ceaf5",
-      "entityName": "晶泰科技",
-      "claim": "晶泰科技 的 capitalMarkets、products、technology 发生变化。",
-      "publicationTier": "verified_change",
+      "changeId": "chg-920ca7488f0d15193f65",
+      "entityName": "小特朗普旗下风投领投Polymarket 10亿美元融资 估值升至210亿美元",
+      "claim": "新增高价值情报事件记录：小特朗普旗下风投领投Polymarket 10亿美元融资 估值升至210亿美元。",
+      "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "晶泰科技",
-      "title": "首页",
-      "url": "https://www.xtalpi.com/",
-      "publishedAt": "2024-08-29",
-      "evidenceGrade": "官方披露",
+      "sourceName": "新浪财经",
+      "title": "小特朗普旗下风投领投Polymarket 10亿美元融资 估值升至210亿美元",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-01/doc-iniqiaty1546172.shtml",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
       "claimFields": [
-        "capitalMarkets",
-        "technology"
+        "publishedAt",
+        "summary",
+        "title"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
@@ -492,18 +1948,22 @@
     },
     {
       "id": "E002",
-      "changeId": "chg-fea94a74a8a2af2ceaf5",
-      "entityName": "晶泰科技",
-      "claim": "晶泰科技 的 capitalMarkets、products、technology 发生变化。",
-      "publicationTier": "verified_change",
+      "changeId": "chg-35895c85e0f81f39da4a",
+      "entityName": "INTURAI VENTURES COMPLETES DOMECOMMAND ACQUISITION",
+      "claim": "新增高价值情报事件记录：INTURAI VENTURES COMPLETES DOMECOMMAND ACQUISITION。",
+      "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "晶泰科技",
-      "title": "AI for Science距离“自主发现”有多远？晶泰科技提出五级分级体系",
-      "url": "https://www.xtalpi.com/ai-for-science%e8%b7%9d%e7%a6%bb%e8%87%aa%e4%b8%bb%e5%8f%91%e7%8e%b0%e6%9c%89%e5%a4%9a%e8%bf%9c%ef%bc%9f%e6%99%b6%e6%b3%b0%e7%a7%91%e6%8a%80%e6%8f%90%e5%87%ba%e4%ba%94%e7%ba%a7/",
-      "publishedAt": "2026-08-14",
-      "evidenceGrade": "官方披露",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "INTURAI VENTURES COMPLETES DOMECOMMAND ACQUISITION",
+      "url": "https://www.prnewswire.com/news-releases/inturai-ventures-completes-domecommand-acquisition-302865569.html",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "B",
+      "platformName": "新闻稿",
+      "sourceRole": "primary",
       "claimFields": [
-        "technology"
+        "publishedAt",
+        "summary",
+        "title"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
@@ -512,18 +1972,132 @@
     },
     {
       "id": "E003",
-      "changeId": "chg-fea94a74a8a2af2ceaf5",
-      "entityName": "晶泰科技",
-      "claim": "晶泰科技 的 capitalMarkets、products、technology 发生变化。",
-      "publicationTier": "verified_change",
+      "changeId": "chg-123d8a75309da4a4df3f",
+      "entityName": "启明星 | 阶跃星辰朱亦博：进入Agent时代，AI基础设施要实现智能、速度与成本的综合最优 | WAIC 2026 | 启明创投",
+      "claim": "新增机构/资本事件记录：启明星 | 阶跃星辰朱亦博：进入Agent时代，AI基础设施要实现智能、速度与成本的综合最优 | WAIC 2026 | 启明创投。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "启明创投 · 核心团队页",
+      "title": "启明星 | 阶跃星辰朱亦博：进入Agent时代，AI基础设施要实现智能、速度与成本的综合最优 | WAIC 2026 | 启明创投",
+      "url": "https://www.qimingvc.com/cn/news/%E5%90%AF%E6%98%8E%E6%98%9F-%E9%98%B6%E8%B7%83%E6%98%9F%E8%BE%B0%E6%9C%B1%E4%BA%A6%E5%8D%9A%EF%BC%9A%E8%BF%9B%E5%85%A5agent%E6%97%B6%E4%BB%A3%EF%BC%8Cai%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%E8%A6%81%E5%AE%9E%E7%8E%B0%E6%99%BA%E8%83%BD%E3%80%81%E9%80%9F%E5%BA%A6%E4%B8%8E%E6%88%90%E6%9C%AC%E7%9A%84%E7%BB%BC%E5%90%88%E6%9C%80%E4%BC%98-waic-2026",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "B",
+      "platformName": "启明创投 · 核心团队页",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E004",
+      "changeId": "chg-e6c1a67494611f47b938",
+      "entityName": "启明星 | 芯光界完成亿元天使轮融资，启明创投独家投资 | 启明创投",
+      "claim": "新增机构/资本事件记录：启明星 | 芯光界完成亿元天使轮融资，启明创投独家投资 | 启明创投。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "启明创投 · 核心团队页",
+      "title": "启明星 | 芯光界完成亿元天使轮融资，启明创投独家投资 | 启明创投",
+      "url": "https://www.qimingvc.com/cn/news/%E5%90%AF%E6%98%8E%E6%98%9F-%E8%8A%AF%E5%85%89%E7%95%8C%E5%AE%8C%E6%88%90%E4%BA%BF%E5%85%83%E5%A4%A9%E4%BD%BF%E8%BD%AE%E8%9E%8D%E8%B5%84%EF%BC%8C%E5%90%AF%E6%98%8E%E5%88%9B%E6%8A%95%E7%8B%AC%E5%AE%B6%E6%8A%95%E8%B5%84",
+      "publishedAt": "2026-08-25",
+      "evidenceGrade": "B",
+      "platformName": "启明创投 · 核心团队页",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E005",
+      "changeId": "chg-9e5eeda2cafe2aacce6e",
+      "entityName": "启明星 | 安澜德健完成近亿元A轮融资，启明创投独家投资 | 启明创投",
+      "claim": "新增机构/资本事件记录：启明星 | 安澜德健完成近亿元A轮融资，启明创投独家投资 | 启明创投。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "启明创投 · 核心团队页",
+      "title": "启明星 | 安澜德健完成近亿元A轮融资，启明创投独家投资 | 启明创投",
+      "url": "https://www.qimingvc.com/cn/news/%E5%90%AF%E6%98%8E%E6%98%9F-%E5%AE%89%E6%BE%9C%E5%BE%B7%E5%81%A5%E5%AE%8C%E6%88%90%E8%BF%91%E4%BA%BF%E5%85%83a%E8%BD%AE%E8%9E%8D%E8%B5%84%EF%BC%8C%E5%90%AF%E6%98%8E%E5%88%9B%E6%8A%95%E7%8B%AC%E5%AE%B6%E6%8A%95%E8%B5%84",
+      "publishedAt": "2026-08-18",
+      "evidenceGrade": "B",
+      "platformName": "启明创投 · 核心团队页",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E006",
+      "changeId": "chg-2220c5db8a9f070ab2cb",
+      "entityName": "晶泰科技4家孵化企业荣获HICOOL 2026全球创业大奖，AI4S底层平台持续驱动源头创新",
+      "claim": "新增高价值情报事件记录：晶泰科技4家孵化企业荣获HICOOL 2026全球创业大奖，AI4S底层平台持续驱动源头创新。",
+      "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "sourceName": "晶泰科技",
-      "title": "首页",
-      "url": "https://www.xtalpi.com/solid-state-chemistry-computation-services/",
-      "publishedAt": "2024-08-29",
+      "title": "晶泰科技4家孵化企业荣获HICOOL 2026全球创业大奖，AI4S底层平台持续驱动源头创新",
+      "url": "https://www.xtalpi.com/晶泰科技4家孵化企业荣获hicool-2026全球创业大奖，ai4s底层",
+      "publishedAt": "2026-08-27",
       "evidenceGrade": "官方披露",
+      "platformName": "官方网站",
       "claimFields": [
-        "products"
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E007",
+      "changeId": "chg-a8e76ca5c595289b9d55",
+      "entityName": "百丽十二年数智化复盘：先把企业工程化，再让AI 读懂它丨2026 ITValue Summit 前瞻：AI系统落地系列直播③",
+      "claim": "新增高价值情报事件记录：百丽十二年数智化复盘：先把企业工程化，再让AI 读懂它丨2026 ITValue Summit 前瞻：AI系统落地系列直播③。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "钛媒体",
+      "title": "百丽十二年数智化复盘：先把企业工程化，再让AI 读懂它丨2026 ITValue Summit 前瞻：AI系统落地系列直播③",
+      "url": "https://www.tmtpost.com/8123419.html",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E008",
+      "changeId": "chg-7f99e2406f8d9911fa57",
+      "entityName": "业绩连跳20级，这家芯片公司做对了什么？",
+      "claim": "新增高价值情报事件记录：业绩连跳20级，这家芯片公司做对了什么？。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "雷峰网",
+      "title": "业绩连跳20级，这家芯片公司做对了什么？",
+      "url": "https://www.leiphone.com/category/chips/toaKlXrYMYi6MRsq.html",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
@@ -532,18 +2106,22 @@
     },
     {
       "id": "E009",
-      "changeId": "chg-f0a2e9692eddf94cdec2",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 的 financing 发生变化。",
-      "publicationTier": "verified_change",
+      "changeId": "chg-1a7637a10fe4c13787cc",
+      "entityName": "XAI2CSI: Interpreting CSI with eXplainable AI for Human Activity Recognition",
+      "claim": "新增高价值情报事件记录：XAI2CSI: Interpreting CSI with eXplainable AI for Human Activity Recognition。",
+      "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "CATL",
-      "title": "宁德时代·CATL",
-      "url": "https://www.catl.com/",
-      "publishedAt": "2026-08-20",
-      "evidenceGrade": "官方披露",
+      "sourceName": "arXiv · Core AI companies",
+      "title": "XAI2CSI: Interpreting CSI with eXplainable AI for Human Activity Recognition",
+      "url": "https://arxiv.org/abs/2608.31034v1",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "B",
+      "platformName": "arXiv",
+      "sourceRole": "primary",
       "claimFields": [
-        "financing"
+        "publishedAt",
+        "summary",
+        "title"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
@@ -551,21 +2129,308 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E033",
-      "changeId": "chg-6d581874af986e2c2cb1",
-      "entityName": "Rigetti Computing",
-      "claim": "Rigetti Computing 的 team 发生变化。",
-      "publicationTier": "verified_change",
+      "id": "E010",
+      "changeId": "chg-2db9974214539a101ae7",
+      "entityName": "Token Counts Are Not Model Lineage: A Frozen-Threshold Holdout Study of Black-Box LLM API Fingerprinting",
+      "claim": "新增高价值情报事件记录：Token Counts Are Not Model Lineage: A Frozen-Threshold Holdout Study of Black-Box LLM API Fingerprinting。",
+      "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "Rigetti",
-      "title": "About Rigetti Computing",
-      "url": "https://www.rigetti.com/about-rigetti-computing",
-      "publishedAt": "2020-06-30",
-      "evidenceGrade": "官方披露",
+      "sourceName": "arXiv · Core AI companies",
+      "title": "Token Counts Are Not Model Lineage: A Frozen-Threshold Holdout Study of Black-Box LLM API Fingerprinting",
+      "url": "https://arxiv.org/abs/2608.29930v1",
+      "publishedAt": "2026-08-30",
+      "evidenceGrade": "B",
+      "platformName": "arXiv",
+      "sourceRole": "primary",
       "claimFields": [
-        "team"
+        "publishedAt",
+        "summary",
+        "title"
       ],
       "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E011",
+      "changeId": "chg-5ef9373cbaf4b2f40046",
+      "entityName": "The Language of the Question Selects the Market: Query Language and Exit IP as Separable Factors in Commercial Recommendations from a Generative Search Interface",
+      "claim": "新增高价值情报事件记录：The Language of the Question Selects the Market: Query Language and Exit IP as Separable Factors in Commercial Recommendations from a Generative Search Interface。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "arXiv · Core AI companies",
+      "title": "The Language of the Question Selects the Market: Query Language and Exit IP as Separable Factors in Commercial Recommendations from a Generative Search Interface",
+      "url": "https://arxiv.org/abs/2608.30052v1",
+      "publishedAt": "2026-08-30",
+      "evidenceGrade": "B",
+      "platformName": "arXiv",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E012",
+      "changeId": "chg-d8d663afecc493456ea6",
+      "entityName": "Cubic-Root Gaussian Approximation under Unrestricted Covariance",
+      "claim": "新增高价值情报事件记录：Cubic-Root Gaussian Approximation under Unrestricted Covariance。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "arXiv · Core AI companies",
+      "title": "Cubic-Root Gaussian Approximation under Unrestricted Covariance",
+      "url": "https://arxiv.org/abs/2608.30221v1",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "B",
+      "platformName": "arXiv",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E013",
+      "changeId": "chg-02e68d058130bcf88faf",
+      "entityName": "Haut.AI Launches AI-Powered Hair Analysis for Beauty Brands Worldwide",
+      "claim": "新增高价值情报事件记录：Haut.AI Launches AI-Powered Hair Analysis for Beauty Brands Worldwide。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "Haut.AI Launches AI-Powered Hair Analysis for Beauty Brands Worldwide",
+      "url": "https://www.prnewswire.com/news-releases/hautai-launches-ai-powered-hair-analysis-for-beauty-brands-worldwide-302865372.html",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "B",
+      "platformName": "新闻稿",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E014",
+      "changeId": "chg-fc11ce7e77c39cf1c195",
+      "entityName": "AI 读过一切，却没经历过任何事：Ropedia 发布 HOMIE Gen2，给具身智能补「经验」这一课",
+      "claim": "新增高价值情报事件记录：AI 读过一切，却没经历过任何事：Ropedia 发布 HOMIE Gen2，给具身智能补「经验」这一课。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "雷峰网",
+      "title": "AI 读过一切，却没经历过任何事：Ropedia 发布 HOMIE Gen2，给具身智能补「经验」这一课",
+      "url": "https://www.leiphone.com/category/ai/ztrF1BywGGvrxQHt.html",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E015",
+      "changeId": "chg-bed95e725e79128b9da8",
+      "entityName": "Precio Bajo Alibaba en Español Tamaño Compacto y Discreto | Alibaba. com",
+      "claim": "新增高价值情报事件记录：Precio Bajo Alibaba en Español Tamaño Compacto y Discreto | Alibaba. com。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Alibaba Group",
+      "title": "Precio Bajo Alibaba en Español Tamaño Compacto y Discreto | Alibaba. com",
+      "url": "https://spanish.alibaba.com/g/alibaba-in-spanish.html",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "官方披露",
+      "platformName": "官方网站",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E017",
+      "changeId": "chg-3467461966e0c7bb1ea6",
+      "entityName": "年假30天！东方甄选前CEO孙东旭宣布新公司福利，网友：还缺人吗；曝某上市公司高管被解除职务，疑似私德有亏；库克最后一封CEO内部信曝光",
+      "claim": "新增机构/资本事件记录：年假30天！东方甄选前CEO孙东旭宣布新公司福利，网友：还缺人吗；曝某上市公司高管被解除职务，疑似私德有亏；库克最后一封CEO内部信曝光。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "雷峰网",
+      "title": "年假30天！东方甄选前CEO孙东旭宣布新公司福利，网友：还缺人吗；曝某上市公司高管被解除职务，疑似私德有亏；库克最后一封CEO内部信曝光",
+      "url": "https://www.leiphone.com/category/zaobao/qhrlw42SDriTpAfv.html",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E020",
+      "changeId": "chg-f14da639ce242a4b67a9",
+      "entityName": "Top security teams use AI agents, says Hack The Box",
+      "claim": "新增机构/资本事件记录：Top security teams use AI agents, says Hack The Box。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "ITPro",
+      "title": "Top security teams use AI agents, says Hack The Box",
+      "url": "https://www.itpro.com/security/top-security-teams-use-ai-agents-says-hack-the-box",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "C",
+      "platformName": "ITPro",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E023",
+      "changeId": "chg-218dcc718883e21c8af9",
+      "entityName": "Former DJI Engineers Raise $250,000 for ‘World’s First Robotic Extreme Zoom Camera’",
+      "claim": "新增机构/资本事件记录：Former DJI Engineers Raise $250,000 for ‘World’s First Robotic Extreme Zoom Camera’。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "PetaPixel",
+      "title": "Former DJI Engineers Raise $250,000 for ‘World’s First Robotic Extreme Zoom Camera’",
+      "url": "https://petapixel.com/2026/08/31/former-dji-engineers-raise-250000-for-worlds-first-robotic-extreme-zoom-camera",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "C",
+      "platformName": "PetaPixel",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E024",
+      "changeId": "chg-dba986193b512e06c36e",
+      "entityName": "A group funded by Andreessen, Horowitz, and Brockman plans data center ads to sway midterms",
+      "claim": "新增机构/资本事件记录：A group funded by Andreessen, Horowitz, and Brockman plans data center ads to sway midterms。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "TechCrunch Venture",
+      "title": "A group funded by Andreessen, Horowitz, and Brockman plans data center ads to sway midterms",
+      "url": "https://techcrunch.com/2026/08/31/a-group-funded-by-andreessen-horowitz-and-brockman-plan-data-center-ads-to-sway-midterms",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E040",
+      "changeId": "chg-baeebc902c93ea105f20",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news、quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "宁德时代年内债券发行规模超历年总和",
+      "url": "https://finance.sina.com.cn/7x24/2026-09-01/doc-iniqhwna1587906.shtml",
+      "publishedAt": "2026-09-01T12:27:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E046",
+      "changeId": "chg-f123f854fcdd56d1a4d3",
+      "entityName": "华大基因",
+      "claim": "华大基因 的 news、quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "华大基因：8月31日获融资买入3876.05万元，融资余额8.31亿元占流通市值比例5.11%，低于近一年20%分位水平",
+      "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-09-01/doc-iniqhsee1512739.shtml",
+      "publishedAt": "2026-09-01T09:51:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E048",
+      "changeId": "chg-ba4bd26f35d112b597d9",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "claim": "中科寒武纪科技股份有限公司 的 news、quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "2026年中报被动基金全部持股前三大重仓股分别为中际旭创、新易盛和寒武纪",
+      "url": "https://finance.sina.com.cn/7x24/2026-09-01/doc-iniqhwna1539125.shtml",
+      "publishedAt": "2026-09-01T11:41:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E080",
+      "changeId": "chg-488e0d4024af01af19d4",
+      "entityName": "Horizon Robotics",
+      "claim": "Horizon Robotics 的 news、quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "地平线（09660）中报里的价值线索：“Arm+Android”模式打开长期增长空间",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-09-01/doc-iniqhwmv6631490.shtml",
+      "publishedAt": "2026-09-01T11:10:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
       "qualityIssues": [],
       "qualityStatus": "passed",
       "supportStatus": "supports"
@@ -573,9 +2438,1851 @@
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-01T06:25:42+00:00",
+    "generatedAt": "2026-09-01T07:52:47+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-fb663043de0216db0fcf": {
+        "eventId": "evt-fb663043de0216db0fcf",
+        "dataset": "institutionEvent",
+        "entityId": "techcrunch-venture-6ad5b66a6858c8a9",
+        "entityName": "A group funded by Andreessen, Horowitz, and Brockman plans data center ads to sway midterms",
+        "title": "A group funded by Andreessen, Horowitz, and Brockman plans data center ads to sway midterms",
+        "titleAliases": [
+          "agroupfundedbyandreessenhorowitzandbrockmanplansdatacenteradstoswaymidterms"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "institutionEvent:techcrunch-venture-6ad5b66a6858c8a9",
+          "name:a group funded by andreessen, horowitz, and brockman plans data center ads to sway midterms"
+        ],
+        "typeKeys": [
+          "机构/资本事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-f3f58cbda48cbdc61f74",
+          "record-90361d93287694b2cdf2",
+          "src-261a6d18dcd54650c4c7"
+        ],
+        "evidenceFingerprints": [
+          "f3f58cbda48cbdc61f74"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "TechCrunch Venture",
+            "title": "A group funded by Andreessen, Horowitz, and Brockman plans data center ads to sway midterms",
+            "url": "https://techcrunch.com/2026/08/31/a-group-funded-by-andreessen-horowitz-and-brockman-plan-data-center-ads-to-sway-midterms",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "02c4071161cdc53ce3b7",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-e84b99ddab59d27fb1bc": {
+        "eventId": "evt-e84b99ddab59d27fb1bc",
+        "dataset": "institutionEvent",
+        "entityId": "professional-media-itpro-ebd79f7f19956beb",
+        "entityName": "Top security teams use AI agents, says Hack The Box",
+        "title": "Top security teams use AI agents, says Hack The Box",
+        "titleAliases": [
+          "topsecurityteamsuseaiagentssayshackthebox"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "institutionEvent:professional-media-itpro-ebd79f7f19956beb",
+          "name:top security teams use ai agents, says hack the box"
+        ],
+        "typeKeys": [
+          "机构/资本事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-6ab798cd23a447f60637",
+          "record-c05f200d674ce8a5cf88",
+          "src-952cb430fbe7bddfd4df"
+        ],
+        "evidenceFingerprints": [
+          "6ab798cd23a447f60637"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "ITPro",
+            "title": "Top security teams use AI agents, says Hack The Box",
+            "url": "https://www.itpro.com/security/top-security-teams-use-ai-agents-says-hack-the-box",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "1e40212eb461555c78a1",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-e5862a7ed22ebe40eec2": {
+        "eventId": "evt-e5862a7ed22ebe40eec2",
+        "dataset": "marketCompany",
+        "entityId": "bgi-genomics",
+        "entityName": "华大基因",
+        "title": "华大基因：8月31日获融资买入3876.05万元，融资余额8.31亿元占流通市值比例5.11%，低于近一年20%分位水平",
+        "titleAliases": [
+          "华大基因8月31日获融资买入387605万元融资余额831亿元占流通市值比例511低于近一年20分位水平"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:bgi-genomics",
+          "name:华大基因"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "20%",
+          "31",
+          "3876.05",
+          "5.11%",
+          "8",
+          "8.31"
+        ],
+        "sourceAliases": [
+          "evd-6d99b626c7fabce32c99",
+          "src-1c1564937d5a35f83eae"
+        ],
+        "evidenceFingerprints": [
+          "6d99b626c7fabce32c99"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "华大基因：8月31日获融资买入3876.05万元，融资余额8.31亿元占流通市值比例5.11%，低于近一年20%分位水平",
+            "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-09-01/doc-iniqhsee1512739.shtml",
+            "publishedAt": "2026-09-01T09:51:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "7b9223784489f0353d3e",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-d4f844768d2dd9d4f54b": {
+        "eventId": "evt-d4f844768d2dd9d4f54b",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-3e775b38bcb42b2ee4",
+        "entityName": "业绩连跳20级，这家芯片公司做对了什么？",
+        "title": "业绩连跳20级，这家芯片公司做对了什么？",
+        "titleAliases": [
+          "业绩连跳20级这家芯片公司做对了什么"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "财报",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "20"
+        ],
+        "sourceAliases": [
+          "evd-b4f83a5a4ea4b5571c38",
+          "record-3b2d590bd58881580a8d",
+          "src-bb2072c49bce654541d5"
+        ],
+        "evidenceFingerprints": [
+          "b4f83a5a4ea4b5571c38"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "业绩连跳20级，这家芯片公司做对了什么？",
+            "url": "https://www.leiphone.com/category/chips/toaKlXrYMYi6MRsq.html",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "73439be2c0a7e45ec049",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-d2919213e956050bd225": {
+        "eventId": "evt-d2919213e956050bd225",
+        "dataset": "marketCompany",
+        "entityId": "cambricon",
+        "entityName": "中科寒武纪科技股份有限公司",
+        "title": "2026年中报被动基金全部持股前三大重仓股分别为中际旭创、新易盛和寒武纪",
+        "titleAliases": [
+          "2026年中报被动基金全部持股前三大重仓股分别为中际旭创新易盛和寒武纪"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:cambricon",
+          "name:中科寒武纪科技股份有限公司"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-6374ccaf99727cea8622",
+          "src-d3f130d0371e156cebea"
+        ],
+        "evidenceFingerprints": [
+          "6374ccaf99727cea8622"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "2026年中报被动基金全部持股前三大重仓股分别为中际旭创、新易盛和寒武纪",
+            "url": "https://finance.sina.com.cn/7x24/2026-09-01/doc-iniqhwna1539125.shtml",
+            "publishedAt": "2026-09-01T11:41:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "2a88a573ab64549f32b6",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-c625362f4c70ea68bbef": {
+        "eventId": "evt-c625362f4c70ea68bbef",
+        "dataset": "institutionEvent",
+        "entityId": "user-source-source-auto-institution-team-131095855545-7b5da7a1fb11c00b",
+        "entityName": "启明星 | 芯光界完成亿元天使轮融资，启明创投独家投资 | 启明创投",
+        "title": "启明星 | 芯光界完成亿元天使轮融资，启明创投独家投资 | 启明创投",
+        "titleAliases": [
+          "启明星"
+        ],
+        "publishedDate": "2026-08-25",
+        "publishedDates": [
+          "2026-08-25"
+        ],
+        "entityKeys": [
+          "institutionEvent:user-source-source-auto-institution-team-131095855545-7b5da7a1fb11c00b",
+          "name:启明星 | 芯光界完成亿元天使轮融资,启明创投独家投资 | 启明创投"
+        ],
+        "typeKeys": [
+          "机构/资本事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-5f3030ceb585332e7b06",
+          "record-a9e7498405a54fbed862",
+          "src-0bcc16431f9637a98334"
+        ],
+        "evidenceFingerprints": [
+          "5f3030ceb585332e7b06"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "启明创投 · 核心团队页",
+            "title": "启明星 | 芯光界完成亿元天使轮融资，启明创投独家投资 | 启明创投",
+            "url": "https://www.qimingvc.com/cn/news/%E5%90%AF%E6%98%8E%E6%98%9F-%E8%8A%AF%E5%85%89%E7%95%8C%E5%AE%8C%E6%88%90%E4%BA%BF%E5%85%83%E5%A4%A9%E4%BD%BF%E8%BD%AE%E8%9E%8D%E8%B5%84%EF%BC%8C%E5%90%AF%E6%98%8E%E5%88%9B%E6%8A%95%E7%8B%AC%E5%AE%B6%E6%8A%95%E8%B5%84",
+            "publishedAt": "2026-08-25",
+            "evidenceGrade": "B"
+          }
+        ],
+        "claimFingerprint": "1b9f0802db629cd054ec",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-c059227ed970e764272c": {
+        "eventId": "evt-c059227ed970e764272c",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-ea7b554c26da985a86",
+        "entityName": "The Language of the Question Selects the Market: Query Language and Exit IP as Separable Factors in Commercial Recommendations from a Generative Search Interface",
+        "title": "The Language of the Question Selects the Market: Query Language and Exit IP as Separable Factors in Commercial Recommendations from a Generative Search Interface",
+        "titleAliases": [
+          "thelanguageofthequestionselectsthemarketquerylanguageandexitipasseparablefactorsincommercialrecommendationsfromagenerativesearchinterface"
+        ],
+        "publishedDate": "2026-08-30",
+        "publishedDates": [
+          "2026-08-30"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "论文",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-7fd3d0a5c05c798c08d2",
+          "record-69aa95dfd03e4be075f8",
+          "src-e3537197e2f82cb49283"
+        ],
+        "evidenceFingerprints": [
+          "7fd3d0a5c05c798c08d2"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "arXiv · Core AI companies",
+            "title": "The Language of the Question Selects the Market: Query Language and Exit IP as Separable Factors in Commercial Recommendations from a Generative Search Interface",
+            "url": "https://arxiv.org/abs/2608.30052v1",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "88fe2c950760ee77e6cd",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-b5895ef372a3e9ba9dbf": {
+        "eventId": "evt-b5895ef372a3e9ba9dbf",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-52d3b3e7a60e3b22aa",
+        "entityName": "Precio Bajo Alibaba en Español Tamaño Compacto y Discreto | Alibaba. com",
+        "title": "Precio Bajo Alibaba en Español Tamaño Compacto y Discreto | Alibaba. com",
+        "titleAliases": [
+          "preciobajoalibabaenespaoltamaocompactoydiscreto"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "company:alibaba group"
+        ],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-ead033b79104f3e472d0",
+          "record-6bded8e0bfa34074a489",
+          "src-55a1fe7971f5dcdc4f2d"
+        ],
+        "evidenceFingerprints": [
+          "ead033b79104f3e472d0"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Alibaba Group",
+            "title": "Precio Bajo Alibaba en Español Tamaño Compacto y Discreto | Alibaba. com",
+            "url": "https://spanish.alibaba.com/g/alibaba-in-spanish.html",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "2d78314e65e5b8ecdd90",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-ad5d2a8a6decad76795f": {
+        "eventId": "evt-ad5d2a8a6decad76795f",
+        "dataset": "marketCompany",
+        "entityId": "bgi-genomics",
+        "entityName": "华大基因",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:bgi-genomics",
+          "name:华大基因"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-4429ffb50bc66a93f9b0",
+          "src-f91830ef0c450da85176",
+          "evd-72aaeec3a50cc91b4d66"
+        ],
+        "evidenceFingerprints": [
+          "4429ffb50bc66a93f9b0",
+          "72aaeec3a50cc91b4d66"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml",
+            "publishedAt": "2026-08-31T15:35:15+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml",
+            "publishedAt": "2026-09-01T15:35:15+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-a072facae0a9236207a4": {
+        "eventId": "evt-a072facae0a9236207a4",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-853619775f9af368fc",
+        "entityName": "小特朗普旗下风投领投Polymarket 10亿美元融资 估值升至210亿美元",
+        "title": "小特朗普旗下风投领投Polymarket 10亿美元融资 估值升至210亿美元",
+        "titleAliases": [
+          "小特朗普旗下风投领投polymarket10亿美元融资估值升至210亿美元"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "institutionEvent:sina-finance-78662c5e61e5f479",
+          "name:小特朗普旗下风投领投polymarket 10亿美元融资 估值升至210亿美元"
+        ],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件",
+          "机构/资本事件"
+        ],
+        "numericCues": [
+          "10",
+          "210"
+        ],
+        "sourceAliases": [
+          "evd-67a7c79a020a88a2563f",
+          "record-0c2e5f020b48fdbefff4",
+          "src-c0659d153a6294dc35e0",
+          "evd-42ce29480e0828a74158",
+          "record-5fb66bb81d495355cb50"
+        ],
+        "evidenceFingerprints": [
+          "67a7c79a020a88a2563f",
+          "42ce29480e0828a74158"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "小特朗普旗下风投领投Polymarket 10亿美元融资 估值升至210亿美元",
+            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-01/doc-iniqiaty1546172.shtml",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "69078e20fcc4b6c7539b",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-98902c6ee1fe1cb0b6f4": {
+        "eventId": "evt-98902c6ee1fe1cb0b6f4",
+        "dataset": "marketCompany",
+        "entityId": "horizon-robotics",
+        "entityName": "Horizon Robotics",
+        "title": "地平线（09660）中报里的价值线索：“Arm+Android”模式打开长期增长空间",
+        "titleAliases": [
+          "地平线09660中报里的价值线索armandroid模式打开长期增长空间"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:horizon-robotics",
+          "name:horizon robotics"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "09660"
+        ],
+        "sourceAliases": [
+          "evd-9ee09d474af0c2d1fc2e",
+          "src-8f38a8b93d0df2eda68e"
+        ],
+        "evidenceFingerprints": [
+          "9ee09d474af0c2d1fc2e"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "地平线（09660）中报里的价值线索：“Arm+Android”模式打开长期增长空间",
+            "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-09-01/doc-iniqhwmv6631490.shtml",
+            "publishedAt": "2026-09-01T11:10:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "c3397433e5bba99a7e61",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-91ac8f2272f5626d42e3": {
+        "eventId": "evt-91ac8f2272f5626d42e3",
+        "dataset": "marketCompany",
+        "entityId": "catl",
+        "entityName": "宁德时代",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:catl",
+          "name:宁德时代"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-bf8095d2b1bad9122cb4",
+          "src-3fce98d95cf38a30749c",
+          "evd-bb04df96e1dc541577eb"
+        ],
+        "evidenceFingerprints": [
+          "bf8095d2b1bad9122cb4",
+          "bb04df96e1dc541577eb"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml",
+            "publishedAt": "2026-08-31T15:35:15+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml",
+            "publishedAt": "2026-09-01T15:35:15+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-8db79b27d8b9b021a906": {
+        "eventId": "evt-8db79b27d8b9b021a906",
+        "dataset": "institutionEvent",
+        "entityId": "user-source-source-petapixel-592e712b07562185",
+        "entityName": "Former DJI Engineers Raise $250,000 for ‘World’s First Robotic Extreme Zoom Camera’",
+        "title": "Former DJI Engineers Raise $250,000 for ‘World’s First Robotic Extreme Zoom Camera’",
+        "titleAliases": [
+          "formerdjiengineersraise250000forworldsfirstroboticextremezoomcamera"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "institutionEvent:user-source-source-petapixel-592e712b07562185",
+          "name:former dji engineers raise $250,000 for ‘world’s first robotic extreme zoom camera’"
+        ],
+        "typeKeys": [
+          "机构/资本事件"
+        ],
+        "numericCues": [
+          "000",
+          "250"
+        ],
+        "sourceAliases": [
+          "evd-3f93c661ebcc36cf964a",
+          "record-4d08ec57891527bff78e",
+          "src-5e6a0eb4b9aa330f30d1"
+        ],
+        "evidenceFingerprints": [
+          "3f93c661ebcc36cf964a"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PetaPixel",
+            "title": "Former DJI Engineers Raise $250,000 for ‘World’s First Robotic Extreme Zoom Camera’",
+            "url": "https://petapixel.com/2026/08/31/former-dji-engineers-raise-250000-for-worlds-first-robotic-extreme-zoom-camera",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "5e35b0674d50c59e3543",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-8464a744362e1f322ed3": {
+        "eventId": "evt-8464a744362e1f322ed3",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-0e9051322febb8c8e0",
+        "entityName": "INTURAI VENTURES COMPLETES DOMECOMMAND ACQUISITION",
+        "title": "INTURAI VENTURES COMPLETES DOMECOMMAND ACQUISITION",
+        "titleAliases": [
+          "inturaiventurescompletesdomecommandacquisition"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "并购",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-f32801c127c47f511b06",
+          "record-929fe28204091a038aab",
+          "src-40e74410d35812f9874d"
+        ],
+        "evidenceFingerprints": [
+          "f32801c127c47f511b06"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "INTURAI VENTURES COMPLETES DOMECOMMAND ACQUISITION",
+            "url": "https://www.prnewswire.com/news-releases/inturai-ventures-completes-domecommand-acquisition-302865569.html",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "6c82d7b72679fe4f6bbd",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-7fe31f0e39554205db4c": {
+        "eventId": "evt-7fe31f0e39554205db4c",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-afee1ee9f38225a0da",
+        "entityName": "AI 读过一切，却没经历过任何事：Ropedia 发布 HOMIE Gen2，给具身智能补「经验」这一课",
+        "title": "AI 读过一切，却没经历过任何事：Ropedia 发布 HOMIE Gen2，给具身智能补「经验」这一课",
+        "titleAliases": [
+          "ai读过一切却没经历过任何事ropedia发布homiegen2给具身智能补经验这一课"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "2"
+        ],
+        "sourceAliases": [
+          "evd-381d8496873fd96ca272",
+          "record-1e1fe849857989dd6a10",
+          "src-e78e11d9966ffd2a9f38"
+        ],
+        "evidenceFingerprints": [
+          "381d8496873fd96ca272"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "AI 读过一切，却没经历过任何事：Ropedia 发布 HOMIE Gen2，给具身智能补「经验」这一课",
+            "url": "https://www.leiphone.com/category/ai/ztrF1BywGGvrxQHt.html",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "d0bd85293089cfb8e674",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-693455c87b5fc3646de5": {
+        "eventId": "evt-693455c87b5fc3646de5",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-23d998896b70bd9a7b",
+        "entityName": "百丽十二年数智化复盘：先把企业工程化，再让AI 读懂它丨2026 ITValue Summit 前瞻：AI系统落地系列直播③",
+        "title": "百丽十二年数智化复盘：先把企业工程化，再让AI 读懂它丨2026 ITValue Summit 前瞻：AI系统落地系列直播③",
+        "titleAliases": [
+          "百丽十二年数智化复盘先把企业工程化再让ai读懂它丨2026itvaluesummit前瞻ai系统落地系列直播3"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "3"
+        ],
+        "sourceAliases": [
+          "evd-5ac7119d10dffabca82a",
+          "record-f47cd304bce0da4c699a",
+          "src-e3f4f9d96878fead1dfa"
+        ],
+        "evidenceFingerprints": [
+          "5ac7119d10dffabca82a"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "钛媒体",
+            "title": "百丽十二年数智化复盘：先把企业工程化，再让AI 读懂它丨2026 ITValue Summit 前瞻：AI系统落地系列直播③",
+            "url": "https://www.tmtpost.com/8123419.html",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "691a7bf38d346807c1ac",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-6758725ec7a4eb59c9d1": {
+        "eventId": "evt-6758725ec7a4eb59c9d1",
+        "dataset": "institutionEvent",
+        "entityId": "user-source-source-auto-institution-team-131095855545-b2da53704a160472",
+        "entityName": "启明星 | 安澜德健完成近亿元A轮融资，启明创投独家投资 | 启明创投",
+        "title": "启明星 | 安澜德健完成近亿元A轮融资，启明创投独家投资 | 启明创投",
+        "titleAliases": [
+          "启明星"
+        ],
+        "publishedDate": "2026-08-18",
+        "publishedDates": [
+          "2026-08-18"
+        ],
+        "entityKeys": [
+          "institutionEvent:user-source-source-auto-institution-team-131095855545-b2da53704a160472",
+          "name:启明星 | 安澜德健完成近亿元a轮融资,启明创投独家投资 | 启明创投"
+        ],
+        "typeKeys": [
+          "机构/资本事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-695d47e46c548f0f0d81",
+          "record-7c8e024ffeb80d0bf1b1",
+          "src-935289a2f4f2408a3b48"
+        ],
+        "evidenceFingerprints": [
+          "695d47e46c548f0f0d81"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "启明创投 · 核心团队页",
+            "title": "启明星 | 安澜德健完成近亿元A轮融资，启明创投独家投资 | 启明创投",
+            "url": "https://www.qimingvc.com/cn/news/%E5%90%AF%E6%98%8E%E6%98%9F-%E5%AE%89%E6%BE%9C%E5%BE%B7%E5%81%A5%E5%AE%8C%E6%88%90%E8%BF%91%E4%BA%BF%E5%85%83a%E8%BD%AE%E8%9E%8D%E8%B5%84%EF%BC%8C%E5%90%AF%E6%98%8E%E5%88%9B%E6%8A%95%E7%8B%AC%E5%AE%B6%E6%8A%95%E8%B5%84",
+            "publishedAt": "2026-08-18",
+            "evidenceGrade": "B"
+          }
+        ],
+        "claimFingerprint": "1b9f0802db629cd054ec",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-671eaea20164af0d6ccf": {
+        "eventId": "evt-671eaea20164af0d6ccf",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-64bfd916a1477a1a06",
+        "entityName": "The Motorola Edge 70 Pro is a case of style over substance, with middling performance and battery benchmarks",
+        "title": "The Motorola Edge 70 Pro is a case of style over substance, with middling performance and battery benchmarks",
+        "titleAliases": [
+          "themotorolaedge70proisacaseofstyleoversubstancewithmiddlingperformanceandbatterybenchmarks"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "institutionEvent:user-source-source-manual-76b0382a190f001d-f5334708f1e240d4",
+          "name:the motorola edge 70 pro is a case of style over substance, with middling performance and battery benchmarks"
+        ],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件",
+          "机构/资本事件"
+        ],
+        "numericCues": [
+          "70"
+        ],
+        "sourceAliases": [
+          "evd-8047cb974feac46d57e2",
+          "record-6e6cee473ec95ce9c04f",
+          "src-e5f4199a63481612ced5",
+          "evd-1c4590297729bc7fbfd1",
+          "record-ddc346dd5a419e5d1d42"
+        ],
+        "evidenceFingerprints": [
+          "8047cb974feac46d57e2",
+          "1c4590297729bc7fbfd1"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "IT Pro",
+            "title": "The Motorola Edge 70 Pro is a case of style over substance, with middling performance and battery benchmarks",
+            "url": "https://www.itpro.com/hardware/mobile-phones/the-motorola-edge-70-pro-is-a-case-of-style-over-substance-with-middling-performance-and-battery-benchmarks",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "c424284e6af8aa99a1b4",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T09:08:35+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-612d779f703b27e4f45a": {
+        "eventId": "evt-612d779f703b27e4f45a",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-d3f4b9eaa0b646f409",
+        "entityName": "Cubic-Root Gaussian Approximation under Unrestricted Covariance",
+        "title": "Cubic-Root Gaussian Approximation under Unrestricted Covariance",
+        "titleAliases": [
+          "cubicrootgaussianapproximationunderunrestrictedcovariance"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "论文",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-f28e7db8d2d3c488c02e",
+          "record-d891da12d4d0a0c0e166",
+          "src-5a1863e76981ee757ec9"
+        ],
+        "evidenceFingerprints": [
+          "f28e7db8d2d3c488c02e"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "arXiv · Core AI companies",
+            "title": "Cubic-Root Gaussian Approximation under Unrestricted Covariance",
+            "url": "https://arxiv.org/abs/2608.30221v1",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "641a5d26a9a3d4dad23b",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-47f876846f37b5814ddd": {
+        "eventId": "evt-47f876846f37b5814ddd",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-c3a3c391c5c87ea269",
+        "entityName": "Token Counts Are Not Model Lineage: A Frozen-Threshold Holdout Study of Black-Box LLM API Fingerprinting",
+        "title": "Token Counts Are Not Model Lineage: A Frozen-Threshold Holdout Study of Black-Box LLM API Fingerprinting",
+        "titleAliases": [
+          "tokencountsarenotmodellineageafrozenthresholdholdoutstudyofblackboxllmapifingerprinting"
+        ],
+        "publishedDate": "2026-08-30",
+        "publishedDates": [
+          "2026-08-30"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "论文",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-c9814819ab84e8db8a2f",
+          "record-bdecf712f492b1803f90",
+          "src-29414ff3a68a7c6c92cb"
+        ],
+        "evidenceFingerprints": [
+          "c9814819ab84e8db8a2f"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "arXiv · Core AI companies",
+            "title": "Token Counts Are Not Model Lineage: A Frozen-Threshold Holdout Study of Black-Box LLM API Fingerprinting",
+            "url": "https://arxiv.org/abs/2608.29930v1",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "4070064bb8828bd94526",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-37ba16b32f6f8104cdc4": {
+        "eventId": "evt-37ba16b32f6f8104cdc4",
+        "dataset": "institutionEvent",
+        "entityId": "leiphone-6b55946f6ddb4765",
+        "entityName": "年假30天！东方甄选前CEO孙东旭宣布新公司福利，网友：还缺人吗；曝某上市公司高管被解除职务，疑似私德有亏；库克最后一封CEO内部信曝光",
+        "title": "年假30天！东方甄选前CEO孙东旭宣布新公司福利，网友：还缺人吗；曝某上市公司高管被解除职务，疑似私德有亏；库克最后一封CEO内部信曝光",
+        "titleAliases": [
+          "年假30天东方甄选前ceo孙东旭宣布新公司福利网友还缺人吗曝某上市公司高管被解除职务疑似私德有亏库克最后一封ceo内部信曝光"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "institutionEvent:leiphone-6b55946f6ddb4765",
+          "name:年假30天!东方甄选前ceo孙东旭宣布新公司福利,网友:还缺人吗;曝某上市公司高管被解除职务,疑似私德有亏;库克最后一封ceo内部信曝光"
+        ],
+        "typeKeys": [
+          "机构/资本事件"
+        ],
+        "numericCues": [
+          "30"
+        ],
+        "sourceAliases": [
+          "evd-e359155e65ec5eb55c15",
+          "record-15ef6ffc8fe8094e9a3a",
+          "src-f5b2ab390f0ff019e6e2"
+        ],
+        "evidenceFingerprints": [
+          "e359155e65ec5eb55c15"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "年假30天！东方甄选前CEO孙东旭宣布新公司福利，网友：还缺人吗；曝某上市公司高管被解除职务，疑似私德有亏；库克最后一封CEO内部信曝光",
+            "url": "https://www.leiphone.com/category/zaobao/qhrlw42SDriTpAfv.html",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "e54b72be89b83136ae14",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-2f53b27a36dbe326af91": {
+        "eventId": "evt-2f53b27a36dbe326af91",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-d2112403d306a36473",
+        "entityName": "Nasuni expands unstructured data platform with DryvIQ acquisition",
+        "title": "Nasuni expands unstructured data platform with DryvIQ acquisition",
+        "titleAliases": [
+          "nasuniexpandsunstructureddataplatformwithdryviqacquisition"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "institutionEvent:professional-media-itpro-5dec35e2cd57b2dc",
+          "name:nasuni expands unstructured data platform with dryviq acquisition"
+        ],
+        "typeKeys": [
+          "并购",
+          "高价值情报事件",
+          "机构/资本事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-7b667bbf91e6bd9537f0",
+          "record-593b500144bb9b65f1ae",
+          "src-d3242eb8e0ec3c54baff",
+          "evd-0128dc4a4e28561c9aa4",
+          "record-8879341148e2015a7d12"
+        ],
+        "evidenceFingerprints": [
+          "7b667bbf91e6bd9537f0",
+          "0128dc4a4e28561c9aa4"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "ITPro",
+            "title": "Nasuni expands unstructured data platform with DryvIQ acquisition",
+            "url": "https://www.itpro.com/business/acquisition/nasuni-expands-unstructured-data-platform-with-dryviq-acquisition",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "a5b36bf0ea17d1a95d00",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T09:08:35+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-2cd78ecdc660ea9faed4": {
+        "eventId": "evt-2cd78ecdc660ea9faed4",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-764fa03c8057e2375e",
+        "entityName": "XAI2CSI: Interpreting CSI with eXplainable AI for Human Activity Recognition",
+        "title": "XAI2CSI: Interpreting CSI with eXplainable AI for Human Activity Recognition",
+        "titleAliases": [
+          "xai2csiinterpretingcsiwithexplainableaiforhumanactivityrecognition"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "论文",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "2"
+        ],
+        "sourceAliases": [
+          "evd-f7e8443e6b8d78c2078d",
+          "record-9520ff3fb3f3373f4e29",
+          "src-43f9d55ed8647c53d03f"
+        ],
+        "evidenceFingerprints": [
+          "f7e8443e6b8d78c2078d"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "arXiv · Core AI companies",
+            "title": "XAI2CSI: Interpreting CSI with eXplainable AI for Human Activity Recognition",
+            "url": "https://arxiv.org/abs/2608.31034v1",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "842f5fae5eab05cad642",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-2958e224d35def0c76b4": {
+        "eventId": "evt-2958e224d35def0c76b4",
+        "dataset": "institutionEvent",
+        "entityId": "user-source-source-auto-institution-team-131095855545-9591c82e9cd8e74e",
+        "entityName": "启明星 | 阶跃星辰朱亦博：进入Agent时代，AI基础设施要实现智能、速度与成本的综合最优 | WAIC 2026 | 启明创投",
+        "title": "启明星 | 阶跃星辰朱亦博：进入Agent时代，AI基础设施要实现智能、速度与成本的综合最优 | WAIC 2026 | 启明创投",
+        "titleAliases": [
+          "启明星"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "institutionEvent:user-source-source-auto-institution-team-131095855545-9591c82e9cd8e74e",
+          "name:启明星 | 阶跃星辰朱亦博:进入agent时代,ai基础设施要实现智能、速度与成本的综合最优 | waic 2026 | 启明创投"
+        ],
+        "typeKeys": [
+          "机构/资本事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-436a713c970091c5fb8e",
+          "record-2f85d6e698b0e01b2b67",
+          "src-a656b07b1a5af07c3e2d"
+        ],
+        "evidenceFingerprints": [
+          "436a713c970091c5fb8e"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "启明创投 · 核心团队页",
+            "title": "启明星 | 阶跃星辰朱亦博：进入Agent时代，AI基础设施要实现智能、速度与成本的综合最优 | WAIC 2026 | 启明创投",
+            "url": "https://www.qimingvc.com/cn/news/%E5%90%AF%E6%98%8E%E6%98%9F-%E9%98%B6%E8%B7%83%E6%98%9F%E8%BE%B0%E6%9C%B1%E4%BA%A6%E5%8D%9A%EF%BC%9A%E8%BF%9B%E5%85%A5agent%E6%97%B6%E4%BB%A3%EF%BC%8Cai%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%E8%A6%81%E5%AE%9E%E7%8E%B0%E6%99%BA%E8%83%BD%E3%80%81%E9%80%9F%E5%BA%A6%E4%B8%8E%E6%88%90%E6%9C%AC%E7%9A%84%E7%BB%BC%E5%90%88%E6%9C%80%E4%BC%98-waic-2026",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "B"
+          }
+        ],
+        "claimFingerprint": "1b9f0802db629cd054ec",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-236d3dfdcbf781c61260": {
+        "eventId": "evt-236d3dfdcbf781c61260",
+        "dataset": "marketCompany",
+        "entityId": "cambricon",
+        "entityName": "中科寒武纪科技股份有限公司",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:cambricon",
+          "name:中科寒武纪科技股份有限公司"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-66c0983b9ff21071f1c6",
+          "src-e95e9990c90226e17b22",
+          "evd-ed4ff3c7c588239b8a6d"
+        ],
+        "evidenceFingerprints": [
+          "66c0983b9ff21071f1c6",
+          "ed4ff3c7c588239b8a6d"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
+            "publishedAt": "2026-08-31T11:30:00+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
+            "publishedAt": "2026-09-01T15:34:59+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-233bf3375397146b5637": {
+        "eventId": "evt-233bf3375397146b5637",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-9f3eed549b938bbc7a",
+        "entityName": "a16z brings growth fund to $8.5B days after launching new $1.1B fund",
+        "title": "a16z brings growth fund to $8.5B days after launching new $1.1B fund",
+        "titleAliases": [
+          "a16zbringsgrowthfundto85bdaysafterlaunchingnew11bfund"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "institutionEvent:techcrunch-venture-7e39878846b3c45e",
+          "name:a16z brings growth fund to $8.5b days after launching new $1.1b fund"
+        ],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件",
+          "机构/资本事件"
+        ],
+        "numericCues": [
+          "1.1",
+          "16",
+          "8.5"
+        ],
+        "sourceAliases": [
+          "evd-71ce9910dee7bbcefece",
+          "record-160395ba3e471c97b9e2",
+          "src-32efe57bc727d55d4ca1",
+          "evd-d9ef46d3b949e240e61c",
+          "record-b0cb1acee62095ac9b64"
+        ],
+        "evidenceFingerprints": [
+          "71ce9910dee7bbcefece",
+          "d9ef46d3b949e240e61c"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "TechCrunch Venture",
+            "title": "a16z brings growth fund to $8.5B days after launching new $1.1B fund",
+            "url": "https://techcrunch.com/2026/08/31/a16z-brings-growth-fund-to-8-5b-days-after-launching-new-1-1b-fund",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "66374ada7d4d2fda8a2a",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T00:07:31+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T00:07:31+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-20f4826f82c486fab182": {
+        "eventId": "evt-20f4826f82c486fab182",
+        "dataset": "marketCompany",
+        "entityId": "bgi-genomics",
+        "entityName": "华大基因",
+        "title": "华大基因：上半年营收同比增长9.59%，净利润达4740万元",
+        "titleAliases": [
+          "华大基因上半年营收同比增长959净利润达4740万元"
+        ],
+        "publishedDate": "2026-08-22",
+        "publishedDates": [
+          "2026-08-22"
+        ],
+        "entityKeys": [
+          "marketCompany:bgi-genomics",
+          "name:华大基因"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "4740",
+          "9.59%"
+        ],
+        "sourceAliases": [
+          "evd-a0d77c3e9bae56baf655",
+          "src-a820615a5ff4a4aab46b"
+        ],
+        "evidenceFingerprints": [
+          "a0d77c3e9bae56baf655"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "华大基因：上半年营收同比增长9.59%，净利润达4740万元",
+            "url": "https://cj.sina.cn/articles/view/7317133861/1b4229a2502001heee",
+            "publishedAt": "2026-08-22T10:17:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "8db6e1b33516d01b2b39",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-30T12:40:17+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-08-30T12:40:17+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-203ee8baf2df3bcfc5e8": {
+        "eventId": "evt-203ee8baf2df3bcfc5e8",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-40de145d17853f5f57",
+        "entityName": "晶泰科技4家孵化企业荣获HICOOL 2026全球创业大奖，AI4S底层平台持续驱动源头创新",
+        "title": "晶泰科技4家孵化企业荣获HICOOL 2026全球创业大奖，AI4S底层平台持续驱动源头创新",
+        "titleAliases": [
+          "晶泰科技4家孵化企业荣获hicool2026全球创业大奖ai4s底层平台持续驱动源头创新"
+        ],
+        "publishedDate": "2026-08-27",
+        "publishedDates": [
+          "2026-08-27"
+        ],
+        "entityKeys": [
+          "company:xtalpi",
+          "company:晶泰科技"
+        ],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "4"
+        ],
+        "sourceAliases": [
+          "evd-9d66400b08f2f454a9de",
+          "record-16b1a4aa76f579aecb64",
+          "src-eb6433a33fb8d37ffb13"
+        ],
+        "evidenceFingerprints": [
+          "9d66400b08f2f454a9de"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "晶泰科技",
+            "title": "晶泰科技4家孵化企业荣获HICOOL 2026全球创业大奖，AI4S底层平台持续驱动源头创新",
+            "url": "https://www.xtalpi.com/晶泰科技4家孵化企业荣获hicool-2026全球创业大奖，ai4s底层",
+            "publishedAt": "2026-08-27",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "11391a5e4a91f4aa7b2f",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-2025eb9ad2c7a8cf8ac3": {
+        "eventId": "evt-2025eb9ad2c7a8cf8ac3",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-c2f69dada34078dd76",
+        "entityName": "独家丨地瓜机器人扩招NPU研发团队，或将强化下一代芯片布局",
+        "title": "独家丨地瓜机器人扩招NPU研发团队，或将强化下一代芯片布局",
+        "titleAliases": [
+          "独家丨地瓜机器人扩招npu研发团队或将强化下一代芯片布局"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "institutionEvent:leiphone-72335e1a975a03a2",
+          "name:独家丨地瓜机器人扩招npu研发团队,或将强化下一代芯片布局"
+        ],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件",
+          "机构/资本事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-1dd51b5df8176b9f77b9",
+          "record-79b86e1b77dc86ba03ff",
+          "src-52e263711e76ffcbe4a8",
+          "evd-b000fb7d6170f664c86a",
+          "record-8664a91cc70c28319a91"
+        ],
+        "evidenceFingerprints": [
+          "1dd51b5df8176b9f77b9",
+          "b000fb7d6170f664c86a"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "独家丨地瓜机器人扩招NPU研发团队，或将强化下一代芯片布局",
+            "url": "https://www.leiphone.com/category/yanxishe/lCoT3AFJymcnxZVR.html",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "b09976008c6a18257f67",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T05:29:31+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T05:29:31+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-1bdad5125829846354cc": {
+        "eventId": "evt-1bdad5125829846354cc",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-bf7c9697654027f3a6",
+        "entityName": "Haut.AI Launches AI-Powered Hair Analysis for Beauty Brands Worldwide",
+        "title": "Haut.AI Launches AI-Powered Hair Analysis for Beauty Brands Worldwide",
+        "titleAliases": [
+          "hautailaunchesaipoweredhairanalysisforbeautybrandsworldwide"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-26adfb9a49b68fddfe73",
+          "record-04afded9f28eecdeee3e",
+          "src-f98eac1a99d8173a0dff"
+        ],
+        "evidenceFingerprints": [
+          "26adfb9a49b68fddfe73"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "Haut.AI Launches AI-Powered Hair Analysis for Beauty Brands Worldwide",
+            "url": "https://www.prnewswire.com/news-releases/hautai-launches-ai-powered-hair-analysis-for-beauty-brands-worldwide-302865372.html",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "31142800cdc8e280f054",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-182243beb39a40db296e": {
+        "eventId": "evt-182243beb39a40db296e",
+        "dataset": "marketCompany",
+        "entityId": "catl",
+        "entityName": "宁德时代",
+        "title": "宁德时代年内债券发行规模超历年总和",
+        "titleAliases": [
+          "宁德时代年内债券发行规模超历年总和"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:catl",
+          "name:宁德时代"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-69fa9c9030cea3d53f4d",
+          "src-02a33a5080bc8170d363"
+        ],
+        "evidenceFingerprints": [
+          "69fa9c9030cea3d53f4d"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "宁德时代年内债券发行规模超历年总和",
+            "url": "https://finance.sina.com.cn/7x24/2026-09-01/doc-iniqhwna1587906.shtml",
+            "publishedAt": "2026-09-01T12:27:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "096ed1063ec6a5174eb0",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-107c31a86fb2bd117eed": {
+        "eventId": "evt-107c31a86fb2bd117eed",
+        "dataset": "marketCompany",
+        "entityId": "xtalpi",
+        "entityName": "晶泰控股有限公司",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:xtalpi",
+          "name:晶泰控股有限公司"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-5fa1601b8d57d2004e8f",
+          "src-de35f484ecf44f83c49b",
+          "evd-f5f505b12de280e836e7"
+        ],
+        "evidenceFingerprints": [
+          "5fa1601b8d57d2004e8f",
+          "f5f505b12de280e836e7"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
+            "publishedAt": "2026-08-31T16:08:50+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
+            "publishedAt": "2026-09-01T15:49:53+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-09cacf02606d9838e6f2": {
+        "eventId": "evt-09cacf02606d9838e6f2",
+        "dataset": "marketCompany",
+        "entityId": "horizon-robotics",
+        "entityName": "Horizon Robotics",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:horizon-robotics",
+          "name:horizon robotics"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-b9931d767f7fdda9a522",
+          "src-2902bb7afee990ec31f7",
+          "evd-f9eda82d60279aa18d50"
+        ],
+        "evidenceFingerprints": [
+          "b9931d767f7fdda9a522",
+          "f9eda82d60279aa18d50"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+            "publishedAt": "2026-08-31T16:08:50+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+            "publishedAt": "2026-09-01T15:49:56+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-09-01T07:52:47+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-98fe814c09da08febb68": {
         "eventId": "evt-98fe814c09da08febb68",
         "dataset": "ventureCompany",
@@ -1098,58 +4805,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-2025eb9ad2c7a8cf8ac3": {
-        "eventId": "evt-2025eb9ad2c7a8cf8ac3",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-c2f69dada34078dd76",
-        "entityName": "独家丨地瓜机器人扩招NPU研发团队，或将强化下一代芯片布局",
-        "title": "独家丨地瓜机器人扩招NPU研发团队，或将强化下一代芯片布局",
-        "titleAliases": [
-          "独家丨地瓜机器人扩招npu研发团队或将强化下一代芯片布局"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "融资",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-1dd51b5df8176b9f77b9",
-          "record-79b86e1b77dc86ba03ff",
-          "src-52e263711e76ffcbe4a8"
-        ],
-        "evidenceFingerprints": [
-          "1dd51b5df8176b9f77b9"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "雷峰网",
-            "title": "独家丨地瓜机器人扩招NPU研发团队，或将强化下一代芯片布局",
-            "url": "https://www.leiphone.com/category/yanxishe/lCoT3AFJymcnxZVR.html",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "b09976008c6a18257f67",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T05:29:31+00:00",
-        "lastSeenAt": "2026-09-01T05:29:31+00:00",
-        "lastPublishedAt": "2026-09-01T05:29:31+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-f054d74103ea4371099a": {
         "eventId": "evt-f054d74103ea4371099a",
         "dataset": "intelligenceEvent",
@@ -1408,68 +5063,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-ad5d2a8a6decad76795f": {
-        "eventId": "evt-ad5d2a8a6decad76795f",
-        "dataset": "marketCompany",
-        "entityId": "bgi-genomics",
-        "entityName": "华大基因",
-        "title": "新浪财经 行情数据",
-        "titleAliases": [
-          "新浪财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31",
-          "2026-09-01"
-        ],
-        "entityKeys": [
-          "marketCompany:bgi-genomics",
-          "name:华大基因"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-4429ffb50bc66a93f9b0",
-          "src-f91830ef0c450da85176",
-          "evd-72aaeec3a50cc91b4d66"
-        ],
-        "evidenceFingerprints": [
-          "4429ffb50bc66a93f9b0",
-          "72aaeec3a50cc91b4d66"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml",
-            "publishedAt": "2026-08-31T15:35:15+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml",
-            "publishedAt": "2026-09-01T09:41:06+08:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "cc3711a9494cf1e2f7a9",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T03:41:22+00:00",
-        "lastSeenAt": "2026-09-01T01:56:14+00:00",
-        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
-        "lastLifecycle": "reconfirmed",
-        "observationCount": 2,
-        "confirmationCount": 1,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-935efe99e3fec15819ef": {
         "eventId": "evt-935efe99e3fec15819ef",
         "dataset": "marketCompany",
@@ -1524,68 +5117,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-91ac8f2272f5626d42e3": {
-        "eventId": "evt-91ac8f2272f5626d42e3",
-        "dataset": "marketCompany",
-        "entityId": "catl",
-        "entityName": "宁德时代",
-        "title": "新浪财经 行情数据",
-        "titleAliases": [
-          "新浪财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31",
-          "2026-09-01"
-        ],
-        "entityKeys": [
-          "marketCompany:catl",
-          "name:宁德时代"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-bf8095d2b1bad9122cb4",
-          "src-3fce98d95cf38a30749c",
-          "evd-bb04df96e1dc541577eb"
-        ],
-        "evidenceFingerprints": [
-          "bf8095d2b1bad9122cb4",
-          "bb04df96e1dc541577eb"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml",
-            "publishedAt": "2026-08-31T15:35:15+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml",
-            "publishedAt": "2026-09-01T09:41:21+08:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "cc3711a9494cf1e2f7a9",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T03:41:22+00:00",
-        "lastSeenAt": "2026-09-01T01:56:14+00:00",
-        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
-        "lastLifecycle": "reconfirmed",
-        "observationCount": 2,
-        "confirmationCount": 1,
-        "bestEvidenceStrength": 0,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -2170,68 +5701,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-236d3dfdcbf781c61260": {
-        "eventId": "evt-236d3dfdcbf781c61260",
-        "dataset": "marketCompany",
-        "entityId": "cambricon",
-        "entityName": "中科寒武纪科技股份有限公司",
-        "title": "新浪财经 行情数据",
-        "titleAliases": [
-          "新浪财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31",
-          "2026-09-01"
-        ],
-        "entityKeys": [
-          "marketCompany:cambricon",
-          "name:中科寒武纪科技股份有限公司"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-66c0983b9ff21071f1c6",
-          "src-e95e9990c90226e17b22",
-          "evd-ed4ff3c7c588239b8a6d"
-        ],
-        "evidenceFingerprints": [
-          "66c0983b9ff21071f1c6",
-          "ed4ff3c7c588239b8a6d"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
-            "publishedAt": "2026-08-31T11:30:00+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
-            "publishedAt": "2026-09-01T09:41:19+08:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "cc3711a9494cf1e2f7a9",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T03:41:22+00:00",
-        "lastSeenAt": "2026-09-01T01:56:14+00:00",
-        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
-        "lastLifecycle": "reconfirmed",
-        "observationCount": 2,
-        "confirmationCount": 1,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-1d27e3f7c80bac43836f": {
         "eventId": "evt-1d27e3f7c80bac43836f",
         "dataset": "intelligenceEvent",
@@ -2439,68 +5908,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-107c31a86fb2bd117eed": {
-        "eventId": "evt-107c31a86fb2bd117eed",
-        "dataset": "marketCompany",
-        "entityId": "xtalpi",
-        "entityName": "晶泰控股有限公司",
-        "title": "新浪财经 行情数据",
-        "titleAliases": [
-          "新浪财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31",
-          "2026-09-01"
-        ],
-        "entityKeys": [
-          "marketCompany:xtalpi",
-          "name:晶泰控股有限公司"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-5fa1601b8d57d2004e8f",
-          "src-de35f484ecf44f83c49b",
-          "evd-f5f505b12de280e836e7"
-        ],
-        "evidenceFingerprints": [
-          "5fa1601b8d57d2004e8f",
-          "f5f505b12de280e836e7"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
-            "publishedAt": "2026-08-31T16:08:50+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
-            "publishedAt": "2026-09-01T09:41:02+08:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "cc3711a9494cf1e2f7a9",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T03:41:22+00:00",
-        "lastSeenAt": "2026-09-01T01:56:14+00:00",
-        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
-        "lastLifecycle": "reconfirmed",
-        "observationCount": 2,
-        "confirmationCount": 1,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-0dcabc4fc8aaf0a2e36c": {
         "eventId": "evt-0dcabc4fc8aaf0a2e36c",
         "dataset": "intelligenceEvent",
@@ -2652,68 +6059,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-09cacf02606d9838e6f2": {
-        "eventId": "evt-09cacf02606d9838e6f2",
-        "dataset": "marketCompany",
-        "entityId": "horizon-robotics",
-        "entityName": "Horizon Robotics",
-        "title": "新浪财经 行情数据",
-        "titleAliases": [
-          "新浪财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31",
-          "2026-09-01"
-        ],
-        "entityKeys": [
-          "marketCompany:horizon-robotics",
-          "name:horizon robotics"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-b9931d767f7fdda9a522",
-          "src-2902bb7afee990ec31f7",
-          "evd-f9eda82d60279aa18d50"
-        ],
-        "evidenceFingerprints": [
-          "b9931d767f7fdda9a522",
-          "f9eda82d60279aa18d50"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
-            "publishedAt": "2026-08-31T16:08:50+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
-            "publishedAt": "2026-09-01T09:41:41+08:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "cc3711a9494cf1e2f7a9",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T03:41:22+00:00",
-        "lastSeenAt": "2026-09-01T01:56:14+00:00",
-        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
-        "lastLifecycle": "reconfirmed",
-        "observationCount": 2,
-        "confirmationCount": 1,
-        "bestEvidenceStrength": 0,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -3084,62 +6429,6 @@
           }
         ],
         "claimFingerprint": "664ff80268d615b1b0dc",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T00:07:31+00:00",
-        "lastSeenAt": "2026-09-01T00:07:31+00:00",
-        "lastPublishedAt": "2026-09-01T00:07:31+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-233bf3375397146b5637": {
-        "eventId": "evt-233bf3375397146b5637",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-9f3eed549b938bbc7a",
-        "entityName": "a16z brings growth fund to $8.5B days after launching new $1.1B fund",
-        "title": "a16z brings growth fund to $8.5B days after launching new $1.1B fund",
-        "titleAliases": [
-          "a16zbringsgrowthfundto85bdaysafterlaunchingnew11bfund"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "产品发布",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "1.1",
-          "16",
-          "8.5"
-        ],
-        "sourceAliases": [
-          "evd-71ce9910dee7bbcefece",
-          "record-160395ba3e471c97b9e2",
-          "src-32efe57bc727d55d4ca1"
-        ],
-        "evidenceFingerprints": [
-          "71ce9910dee7bbcefece"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "TechCrunch Venture",
-            "title": "a16z brings growth fund to $8.5B days after launching new $1.1B fund",
-            "url": "https://techcrunch.com/2026/08/31/a16z-brings-growth-fund-to-8-5b-days-after-launching-new-1-1b-fund",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "66374ada7d4d2fda8a2a",
         "scalarClaims": {},
         "ipoStage": null,
         "firstSeenAt": "2026-09-01T00:07:31+00:00",
@@ -5584,60 +8873,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-671eaea20164af0d6ccf": {
-        "eventId": "evt-671eaea20164af0d6ccf",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-64bfd916a1477a1a06",
-        "entityName": "The Motorola Edge 70 Pro is a case of style over substance, with middling performance and battery benchmarks",
-        "title": "The Motorola Edge 70 Pro is a case of style over substance, with middling performance and battery benchmarks",
-        "titleAliases": [
-          "themotorolaedge70proisacaseofstyleoversubstancewithmiddlingperformanceandbatterybenchmarks"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "技术突破",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "70"
-        ],
-        "sourceAliases": [
-          "evd-8047cb974feac46d57e2",
-          "record-6e6cee473ec95ce9c04f",
-          "src-e5f4199a63481612ced5"
-        ],
-        "evidenceFingerprints": [
-          "8047cb974feac46d57e2"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "IT Pro",
-            "title": "The Motorola Edge 70 Pro is a case of style over substance, with middling performance and battery benchmarks",
-            "url": "https://www.itpro.com/hardware/mobile-phones/the-motorola-edge-70-pro-is-a-case-of-style-over-substance-with-middling-performance-and-battery-benchmarks",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "c424284e6af8aa99a1b4",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-66f3127d12598e2c3f2e": {
         "eventId": "evt-66f3127d12598e2c3f2e",
         "dataset": "intelligenceEvent",
@@ -5783,58 +9018,6 @@
           }
         ],
         "claimFingerprint": "cb9fc76b41d2e0c2f18e",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-2f53b27a36dbe326af91": {
-        "eventId": "evt-2f53b27a36dbe326af91",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-d2112403d306a36473",
-        "entityName": "Nasuni expands unstructured data platform with DryvIQ acquisition",
-        "title": "Nasuni expands unstructured data platform with DryvIQ acquisition",
-        "titleAliases": [
-          "nasuniexpandsunstructureddataplatformwithdryviqacquisition"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "并购",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-7b667bbf91e6bd9537f0",
-          "record-593b500144bb9b65f1ae",
-          "src-d3242eb8e0ec3c54baff"
-        ],
-        "evidenceFingerprints": [
-          "7b667bbf91e6bd9537f0"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "ITPro",
-            "title": "Nasuni expands unstructured data platform with DryvIQ acquisition",
-            "url": "https://www.itpro.com/business/acquisition/nasuni-expands-unstructured-data-platform-with-dryviq-acquisition",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "a5b36bf0ea17d1a95d00",
         "scalarClaims": {},
         "ipoStage": null,
         "firstSeenAt": "2026-08-31T09:08:35+00:00",
@@ -8856,61 +12039,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-20f4826f82c486fab182": {
-        "eventId": "evt-20f4826f82c486fab182",
-        "dataset": "marketCompany",
-        "entityId": "bgi-genomics",
-        "entityName": "华大基因",
-        "title": "华大基因：上半年营收同比增长9.59%，净利润达4740万元",
-        "titleAliases": [
-          "华大基因上半年营收同比增长959净利润达4740万元"
-        ],
-        "publishedDate": "2026-08-22",
-        "publishedDates": [
-          "2026-08-22"
-        ],
-        "entityKeys": [
-          "marketCompany:bgi-genomics",
-          "name:华大基因"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [
-          "4740",
-          "9.59%"
-        ],
-        "sourceAliases": [
-          "evd-a0d77c3e9bae56baf655",
-          "src-a820615a5ff4a4aab46b"
-        ],
-        "evidenceFingerprints": [
-          "a0d77c3e9bae56baf655"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "华大基因：上半年营收同比增长9.59%，净利润达4740万元",
-            "url": "https://cj.sina.cn/articles/view/7317133861/1b4229a2502001heee",
-            "publishedAt": "2026-08-22T10:17:00+08:00",
-            "evidenceGrade": "媒体报道"
-          }
-        ],
-        "claimFingerprint": "8db6e1b33516d01b2b39",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-30T12:40:17+00:00",
-        "lastSeenAt": "2026-08-30T12:40:17+00:00",
-        "lastPublishedAt": "2026-08-30T12:40:17+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-17774ee02fd74a159e76": {
         "eventId": "evt-17774ee02fd74a159e76",
         "dataset": "institutionEvent",
@@ -9976,13 +13104,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 3,
-    "reconfirmations": 0,
+    "newEvents": 23,
+    "reconfirmations": 4,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 2,
-    "observedEvents": 5,
+    "duplicatesSuppressed": 6,
+    "observedEvents": 33,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -10748,10 +13876,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-01",
-      "generatedAt": "2026-09-01T06:25:42+00:00",
+      "generatedAt": "2026-09-01T07:52:47+00:00",
       "runStatus": "model",
-      "changeCount": 43,
-      "executiveSummary": "证据包显示三项外部变化：晶泰科技官网将其标记为已上市公司，并将产品与技术描述简化为“智能药物研发平台”与“自动化实验室”；宁德时代数据集中的一条融资记录被移除；Rigetti Computing官网出现“Quantum Systems”担任President的团队条目。所有证据均来自官方披露，但均未经人工复核，且部分信息存在解析或时效性疑问，需谨慎对待。",
+      "changeCount": 66,
+      "executiveSummary": "本证据包覆盖2026年8月下旬至9月初的科技与创投动态，核心包括：预测市场平台Polymarket完成10亿美元融资、估值达210亿美元（E001）；国产GPU企业壁仞科技披露2026年中期业绩，营收同比大增约1997.6%且亏损显著收窄（E008）；启明创投披露两笔独家早期投资（E004、E005）；晶泰科技4家孵化企业获HICOOL 2026大奖（E006）；以及具身智能、AI基础设施、无人机AI平台等方向的新进展（E014、E003、E002）。整体显示AI与硬科技领域资本活跃，但部分事件证据等级较低，需持续验证。",
       "eventIds": [
         "evt-e5c92bf165cb34866cb4",
         "evt-ad50e31282afed394c23",
@@ -10795,7 +13923,30 @@
         "evt-4a372a16c2366a0b264b",
         "evt-98fe814c09da08febb68",
         "evt-44f4881cf6dcb57371f7",
-        "evt-3da5ba479acee83e5cce"
+        "evt-3da5ba479acee83e5cce",
+        "evt-a072facae0a9236207a4",
+        "evt-8464a744362e1f322ed3",
+        "evt-2958e224d35def0c76b4",
+        "evt-c625362f4c70ea68bbef",
+        "evt-6758725ec7a4eb59c9d1",
+        "evt-203ee8baf2df3bcfc5e8",
+        "evt-693455c87b5fc3646de5",
+        "evt-d4f844768d2dd9d4f54b",
+        "evt-2cd78ecdc660ea9faed4",
+        "evt-47f876846f37b5814ddd",
+        "evt-c059227ed970e764272c",
+        "evt-612d779f703b27e4f45a",
+        "evt-1bdad5125829846354cc",
+        "evt-7fe31f0e39554205db4c",
+        "evt-b5895ef372a3e9ba9dbf",
+        "evt-37ba16b32f6f8104cdc4",
+        "evt-e84b99ddab59d27fb1bc",
+        "evt-8db79b27d8b9b021a906",
+        "evt-fb663043de0216db0fcf",
+        "evt-182243beb39a40db296e",
+        "evt-e5862a7ed22ebe40eec2",
+        "evt-d2919213e956050bd225",
+        "evt-98902c6ee1fe1cb0b6f4"
       ],
       "eventStates": [
         {
@@ -10969,37 +14120,131 @@
         {
           "eventId": "evt-3da5ba479acee83e5cce",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-a072facae0a9236207a4",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-8464a744362e1f322ed3",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-2958e224d35def0c76b4",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-c625362f4c70ea68bbef",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-6758725ec7a4eb59c9d1",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-203ee8baf2df3bcfc5e8",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-693455c87b5fc3646de5",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-d4f844768d2dd9d4f54b",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-2cd78ecdc660ea9faed4",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-47f876846f37b5814ddd",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-c059227ed970e764272c",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-612d779f703b27e4f45a",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-1bdad5125829846354cc",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-7fe31f0e39554205db4c",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-b5895ef372a3e9ba9dbf",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-37ba16b32f6f8104cdc4",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-e84b99ddab59d27fb1bc",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-8db79b27d8b9b021a906",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-fb663043de0216db0fcf",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-182243beb39a40db296e",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-e5862a7ed22ebe40eec2",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-d2919213e956050bd225",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-98902c6ee1fe1cb0b6f4",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 3,
-      "candidateTotal": 13,
-      "auxiliaryLeadTotal": 27,
-      "rejectedTotal": 12,
+      "candidateTotal": 24,
+      "auxiliaryLeadTotal": 39,
+      "rejectedTotal": 25,
       "eventSummary": {
-        "newEvents": 43,
-        "reconfirmations": 5,
+        "newEvents": 66,
+        "reconfirmations": 9,
         "updates": 0,
         "corrections": 0,
         "possibleConflicts": 0,
-        "duplicatesSuppressed": 17
+        "duplicatesSuppressed": 23
       }
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 13,
-    "eligibleCandidateCount": 5,
-    "rejectedCandidateCount": 8,
+    "candidateCount": 42,
+    "eligibleCandidateCount": 29,
+    "rejectedCandidateCount": 13,
     "rejectedByDataset": {
-      "ventureCompany": 8
+      "institutionEvent": 3,
+      "marketCompany": 10
     },
-    "evidenceCount": 52,
-    "supportingEvidenceCount": 9,
-    "rejectedEvidenceCount": 35,
-    "passedButUnboundEvidenceCount": 8,
+    "evidenceCount": 87,
+    "supportingEvidenceCount": 34,
+    "rejectedEvidenceCount": 23,
+    "passedButUnboundEvidenceCount": 30,
     "rejectionReasons": {
-      "missing_published_at": 35,
-      "missing_title": 3,
-      "ungraded": 3
+      "missing_published_at": 19,
+      "ungraded": 12,
+      "missing_title": 9,
+      "entity_mismatch": 1
     },
     "sourceClassificationWarnings": []
   },
@@ -11031,22 +14276,9 @@
     }
   },
   "pipelineHealth": {
-    "overallStatus": "stale",
-    "healthyJobs": 7,
+    "overallStatus": "healthy",
+    "healthyJobs": 9,
     "jobCount": 9,
-    "issueJobs": [
-      {
-        "jobId": "institution-data-layers",
-        "name": "机构证据层重建",
-        "status": "stale",
-        "lastCompletedAt": "2026-08-31T03:04:16Z"
-      },
-      {
-        "jobId": "star-market-investor-refresh",
-        "name": "科创板招股书投资者证据刷新",
-        "status": "stale",
-        "lastCompletedAt": "2026-08-23T19:58:13Z"
-      }
-    ]
+    "issueJobs": []
   }
 }
