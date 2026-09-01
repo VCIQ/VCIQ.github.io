@@ -5,6 +5,11 @@ Pending candidates may receive one immutable human identity decision. Candidates
 already accepted may later receive a verified-homepage *hint* without changing
 the original identity decision. The hint is not a publication override: the
 onboarding workflow still fetches the page and verifies identity + sector.
+
+Repeated delivery of the same final identity decision is intentionally
+idempotent. A browser retry, restored tab, or duplicate queued workflow must not
+turn a decision that already reached the canonical queue into a false failure.
+Conflicting decisions still fail closed.
 """
 
 from __future__ import annotations
@@ -20,6 +25,58 @@ try:
     from . import company_candidate_review_decision as review
 except ImportError:  # pragma: no cover
     import company_candidate_review_decision as review  # type: ignore
+
+
+def _matching_final_decision(
+    root: Mapping[str, Any],
+    key: str,
+    candidate_status: str,
+    request: Mapping[str, str],
+) -> tuple[str, dict[str, Any]] | None:
+    """Return the persisted decision when this request is an exact retry."""
+
+    existing = review.decision_index(root).get(key)
+    if not existing:
+        return None
+    row = existing[1]
+    existing_status = review.clean(row.get("status"), 30)
+    requested = request["decision"]
+
+    # Publication is a downstream state of an accepted identity decision. A
+    # retry of the original "accepted" action therefore remains a no-op after
+    # publication as long as it is not trying to attach a new homepage hint.
+    if (
+        requested == "accepted"
+        and candidate_status in {"accepted", "published"}
+        and existing_status in {"accepted", "published"}
+        and not request.get("homepageHint")
+    ):
+        return existing
+
+    if requested == "rejected" and candidate_status == "rejected" and existing_status == "rejected":
+        return existing
+
+    if requested == "merged" and candidate_status == "merged" and existing_status == "merged":
+        if review.clean(row.get("mergedSlug"), 120) == request["mergedSlug"]:
+            return existing
+
+    return None
+
+
+def _already_applied_report(
+    candidate: Mapping[str, Any],
+    request: Mapping[str, str],
+) -> dict[str, Any]:
+    return {
+        "ok": True,
+        "changed": False,
+        "candidateKey": request["candidateKey"],
+        "name": review.clean(candidate.get("name"), 240),
+        "decision": request["decision"],
+        "mergedSlug": request.get("mergedSlug", ""),
+        "message": "candidate already has the requested final review decision",
+        "requiresOnboarding": False,
+    }
 
 
 def apply_batch(
@@ -61,6 +118,8 @@ def apply_batch(
             if not existing or review.clean(existing[1].get("status"), 30) != "accepted":
                 raise review.ReviewDecisionError(f"candidate {key} lacks an immutable accepted decision")
             continue
+        if _matching_final_decision(root, key, status, request):
+            continue
         raise review.ReviewDecisionError(f"candidate {key} is no longer eligible for this review action")
 
     reports: list[dict[str, Any]] = []
@@ -79,6 +138,12 @@ def apply_batch(
             reports.append(report)
             continue
 
+        if _matching_final_decision(root, key, status, request):
+            reports.append(_already_applied_report(candidate, request))
+            continue
+
+        # The only remaining allowed non-pending action after preflight is an
+        # accepted candidate receiving a verified-homepage hint.
         existing = review.decision_index(root)[key]
         raw_key, row = existing
         next_row = copy.deepcopy(row)
