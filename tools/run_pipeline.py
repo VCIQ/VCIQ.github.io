@@ -23,7 +23,6 @@ try:
     from .build_pipeline_health import (
         ROOT,
         atomic_write_json,
-        build_snapshots,
         isoformat,
         load_json,
         load_registry,
@@ -31,13 +30,12 @@ try:
         relative_path,
         validate_health_snapshot,
         validate_lineage_snapshot,
-        write_snapshots,
     )
+    from .pipeline_health_runtime import build_snapshots, write_snapshots
 except ImportError:
     from build_pipeline_health import (  # type: ignore
         ROOT,
         atomic_write_json,
-        build_snapshots,
         isoformat,
         load_json,
         load_registry,
@@ -45,8 +43,8 @@ except ImportError:
         relative_path,
         validate_health_snapshot,
         validate_lineage_snapshot,
-        write_snapshots,
     )
+    from pipeline_health_runtime import build_snapshots, write_snapshots  # type: ignore
 
 
 def utc_now() -> datetime:
