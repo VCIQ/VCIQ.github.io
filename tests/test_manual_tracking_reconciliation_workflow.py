@@ -60,7 +60,7 @@ class ManualTrackingReconciliationWorkflowTests(unittest.TestCase):
             "company-candidate-onboarding.yml",
         ):
             self.assertIn(workflow, text)
-        self.assertIn("--status queued", text)
+        self.assertIn("for status in queued in_progress", text)
         self.assertIn("--status \"$status\"", text)
         self.assertIn("Heavy writer busy", text)
 
