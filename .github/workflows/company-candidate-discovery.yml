@@ -187,17 +187,12 @@ jobs:
           fi
 
           if [ "${CANDIDATE_CHANGED:-false}" = "true" ]; then
-            if [ "$tracking_refresh_required" = "true" ]; then
-              echo "Candidate and tracking state changed; onboard first, then run a lightweight refresh from the committed company state."
-              gh workflow run company-candidate-onboarding.yml --ref main \
-                -f post_onboarding_handoff=refresh
-            elif [ "${PUBLISH_AFTER_RECONCILIATION:-false}" = "true" ]; then
+            if [ "${PUBLISH_AFTER_RECONCILIATION:-false}" = "true" ]; then
               echo "Candidate state changed at the terminal fixed point; onboard before terminal Pages and research."
               gh workflow run company-candidate-onboarding.yml --ref main \
                 -f post_onboarding_handoff=publish-with-research
             else
-              echo "Private candidate state changed; continue verified onboarding."
-              gh workflow run company-candidate-onboarding.yml --ref main
+              echo "Candidate queue was committed; its push trigger starts one onboarding pass. Avoid a duplicate explicit onboarding dispatch."
             fi
           elif [ "$tracking_refresh_required" = "true" ]; then
             echo "Tracking inputs changed; use the lightweight public refresh instead of a full crawl."
