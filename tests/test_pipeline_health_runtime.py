@@ -6,6 +6,7 @@ import unittest
 from datetime import UTC, datetime
 from pathlib import Path
 
+from tools.build_pipeline_health import validate_health_snapshot
 from tools.pipeline_health_runtime import build_snapshots
 
 
@@ -92,7 +93,7 @@ class PipelineRuntimeHealthTests(unittest.TestCase):
             )
 
             artifact = lineage["artifacts"]["public/data/out.json"]
-            job = health["jobs"]["alpha-job"]
+            job = next(row for row in health["jobs"] if row["jobId"] == "alpha-job")
 
             self.assertEqual(artifact["status"], "stale")
             self.assertEqual(artifact["freshnessStatus"], "stale")
@@ -105,6 +106,7 @@ class PipelineRuntimeHealthTests(unittest.TestCase):
             self.assertEqual(health["summary"]["freshnessWarningJobs"], 1)
             self.assertEqual(health["summary"]["staleArtifacts"], 1)
             self.assertEqual(health["overallStatus"], "healthy")
+            validate_health_snapshot(health, registry)
 
 
 if __name__ == "__main__":
