@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-01T05:29:31+00:00",
+  "generatedAt": "2026-09-01T06:25:42+00:00",
   "asOfDate": "2026-09-01",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
@@ -12,427 +12,478 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 3093,
-      "completion_tokens": 4161,
-      "total_tokens": 7254,
+      "prompt_tokens": 3031,
+      "completion_tokens": 2355,
+      "total_tokens": 5386,
       "completion_tokens_details": {
-        "reasoning_tokens": 3003
+        "reasoning_tokens": 997
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 3093
+      "prompt_cache_miss_tokens": 3031
     }
   },
   "changeSummary": {
-    "totalDetected": 13,
+    "totalDetected": 16,
     "total": 3,
     "byDataset": {
-      "intelligenceEvent": 3
+      "ventureCompany": 3
     },
     "byChangeType": {
-      "external_event": 5,
-      "data_maintenance": 8
+      "external_event": 13,
+      "source_refresh": 2,
+      "entity_reconciliation": 1
     },
-    "externalCandidates": 5,
-    "qualityRejected": 1,
-    "maintenanceExcluded": 8,
+    "externalCandidates": 13,
+    "qualityRejected": 8,
+    "maintenanceExcluded": 3,
     "aggregatedEvents": 0,
-    "highestImportance": 91,
-    "verifiedChangeTotal": 0,
+    "highestImportance": 88,
+    "verifiedChangeTotal": 3,
     "candidateTotal": 0,
-    "auxiliaryLeadTotal": 3,
-    "rejectedTotal": 1,
+    "auxiliaryLeadTotal": 0,
+    "rejectedTotal": 8,
     "newEvents": 3,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 1
+    "duplicatesSuppressed": 2
   },
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "证据包包含三篇2026年9月1日发布的专业媒体报道：地瓜机器人扩招NPU研发团队、存储成为AI落地最大变量、无界动力以真实咖啡厅展现物理AI落地。三篇均为单一来源且证据等级为C，未经人工复核，因此仅作为初步线索。整体看，机器人芯片自研、AI存储瓶颈、物理AI垂直场景落地是值得关注的三个方向，但均需更多证据验证。 质量门诊断：仅为发现线索，不能支持正式主张 1。",
+    "executiveSummary": "证据包显示三项外部变化：晶泰科技官网将其标记为已上市公司，并将产品与技术描述简化为“智能药物研发平台”与“自动化实验室”；宁德时代数据集中的一条融资记录被移除；Rigetti Computing官网出现“Quantum Systems”担任President的团队条目。所有证据均来自官方披露，但均未经人工复核，且部分信息存在解析或时效性疑问，需谨慎对待。 质量门诊断：缺少发布时间 35、缺少标题 3、证据未分级 3、证据合格但未绑定变化字段 8。",
     "keyDevelopments": [
       {
-        "title": "地瓜机器人扩招NPU研发团队，或强化下一代芯片布局",
-        "assessment": "据雷峰网独家报道，地瓜机器人近期积极招聘芯片人才，补齐自研NPU能力，招聘平台可见大量信息。报道还梳理了CEO王丛的履历及地瓜机器人从地平线独立的过程。但该信息为单一来源，且标题中“或将强化”属于推测，需等待官方确认或产品发布。",
+        "title": "晶泰科技官网更新为已上市，产品与技术描述简化",
+        "assessment": "晶泰科技官网首页将其标记为已上市公司，并继续通过交易所、监管文件和公司公告跟踪上市后表现；同时产品列表从多个细分平台（如AI自主实验平台、Ailux抗体药物发现平台等）简化为“智能药物研发平台”与“自动化实验室”，技术描述也相应简化。该变化可能反映官网改版或业务聚焦，但不能据此推断实际产品线缩减。",
         "importance": 4,
         "confidence": "medium",
         "entities": [
-          "地瓜机器人",
-          "王丛",
-          "地平线"
+          "晶泰科技"
         ],
         "evidenceIds": [
-          "E001"
+          "E001",
+          "E002",
+          "E003"
         ]
       },
       {
-        "title": "存储被指为AI落地最大变量",
-        "assessment": "钛媒体文章提出“推理已经成为吞噬算力的黑洞”，并将存储视为AI落地最大变量。但证据包仅包含标题和摘要，缺乏具体数据、案例和解决方案，无法评估其论证强度。",
+        "title": "宁德时代数据集中的融资记录被移除",
+        "assessment": "证据包显示宁德时代此前有一条关于Quinbrook Supernode项目融资的新闻记录（2026-08-14），更新后该记录从融资字段中消失。由于证据仅来自CATL官网，且移除原因可能是官网内容更新、数据清理或项目状态变化，无法确定是否代表实际融资事件取消或失败。",
         "importance": 3,
         "confidence": "low",
         "entities": [
-          "AI基础设施",
-          "存储"
+          "宁德时代"
         ],
         "evidenceIds": [
-          "E002"
+          "E009"
         ]
       },
       {
-        "title": "无界动力用真实咖啡厅展现物理AI落地",
-        "assessment": "雷峰网报道，2026世界机器人大会出现更多垂直场景机器人，无界动力以真实咖啡厅展示物理AI落地，并称MWA™霸榜全球第一。但“霸榜全球第一”未提供具体榜单和评测依据，且为单一来源，需谨慎对待。",
-        "importance": 3,
+        "title": "Rigetti Computing官网出现“Quantum Systems”任President的团队条目",
+        "assessment": "Rigetti官网关于页面新增一条团队信息，将“Quantum Systems”列为President。该名称更像部门或系统名称而非个人姓名，且来源页面标注日期为2020-06-30，存在数据解析错误或信息过时的可能，需进一步核实。",
+        "importance": 2,
         "confidence": "low",
         "entities": [
-          "无界动力",
-          "MWA™",
-          "物理AI"
+          "Rigetti Computing"
         ],
         "evidenceIds": [
-          "E004"
+          "E033"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "地瓜机器人",
-        "direction": "positive",
-        "statement": "地瓜机器人积极招聘NPU研发人才，可能强化下一代芯片自研能力，但尚未有产品落地证据，需持续跟踪。",
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "entity": "AI存储基础设施",
+        "entity": "晶泰科技",
         "direction": "mixed",
-        "statement": "存储被视为AI落地最大变量，推理算力消耗加剧存储压力，既可能推动存储技术升级，也可能成为AI落地的瓶颈。",
+        "statement": "晶泰科技已进入公开市场，资本市场可见度提升；但产品与技术描述从多个细分平台简化为两个大类，可能反映官网信息架构调整，也可能意味着业务聚焦，需结合后续披露验证。",
         "evidenceIds": [
-          "E002"
+          "E001",
+          "E002",
+          "E003"
         ]
       },
       {
-        "entity": "物理AI/机器人应用",
-        "direction": "positive",
-        "statement": "2026世界机器人大会显示垂直场景机器人增多，无界动力以真实咖啡厅展示物理AI落地，表明物理AI正从展示走向实际场景。",
+        "entity": "宁德时代",
+        "direction": "neutral",
+        "statement": "融资记录从数据集中移除，但证据不足以判断该融资事件是否发生实质变化，暂维持中性观察。",
         "evidenceIds": [
-          "E004"
+          "E009"
+        ]
+      },
+      {
+        "entity": "Rigetti Computing",
+        "direction": "neutral",
+        "statement": "团队信息出现异常条目，可能为数据解析问题，暂不构成对管理层或公司治理的实质性判断。",
+        "evidenceIds": [
+          "E033"
         ]
       }
     ],
     "watchlist": [
       {
-        "item": "地瓜机器人下一代芯片产品发布",
-        "reason": "扩招NPU团队可能预示新产品，但尚无官方确认。",
-        "nextEvidence": "地瓜机器人官方公告、产品发布或芯片流片信息",
+        "item": "晶泰科技上市后的定期报告与产品线实际范围",
+        "reason": "官网已标记为上市公司，但产品列表简化，需通过交易所文件或公司公告确认产品组合是否发生实质变化。",
+        "nextEvidence": "晶泰科技后续财报、产品发布或官网产品页更新",
         "evidenceIds": [
-          "E001"
+          "E001",
+          "E002",
+          "E003"
         ]
       },
       {
-        "item": "存储技术如何应对AI推理需求",
-        "reason": "文章提出存储是AI落地最大变量，但缺乏具体方案和数据。",
-        "nextEvidence": "存储厂商的技术方案、行业报告或客户案例",
+        "item": "宁德时代融资记录移除的原因",
+        "reason": "融资字段从有到无，可能反映官网内容更新或项目状态变化，需确认Supernode项目Stage 3融资是否仍有效。",
+        "nextEvidence": "CATL官网新闻页或Quinbrook官方公告",
         "evidenceIds": [
-          "E002"
+          "E009"
         ]
       },
       {
-        "item": "无界动力MWA™的榜单依据及商业化进展",
-        "reason": "标题称霸榜全球第一，但未提供榜单细节，需验证其真实性和商业落地情况。",
-        "nextEvidence": "具体榜单名称、评测数据、客户案例或营收信息",
+        "item": "Rigetti Computing管理层信息核实",
+        "reason": "“Quantum Systems”作为President的条目不符合常规人名格式，需确认是否为数据解析错误或实际任命。",
+        "nextEvidence": "Rigetti官网关于页面更新或SEC文件",
         "evidenceIds": [
-          "E004"
+          "E033"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "单一来源风险",
-        "reason": "地瓜机器人扩招NPU团队仅雷峰网独家报道，未经官方确认，可能夸大或误读。",
+        "risk": "证据均来自公司官网，可能带有宣传性质，且未经人工复核",
+        "reason": "所有证据的reviewStatus均为automated_unreviewed，官方披露内容可能经过选择性呈现，不能作为独立第三方验证。",
         "evidenceIds": [
-          "E001"
+          "E001",
+          "E002",
+          "E003",
+          "E009",
+          "E033"
         ]
       },
       {
-        "risk": "信息不完整风险",
-        "reason": "存储文章仅有标题和摘要，无法验证其核心论点，可能以偏概全。",
+        "risk": "产品列表简化可能被误读为业务收缩",
+        "reason": "晶泰科技产品字段从多个细分平台变为两个大类，但证据未说明原因，可能仅为官网改版或信息架构调整。",
         "evidenceIds": [
-          "E002"
+          "E001",
+          "E002",
+          "E003"
         ]
       },
       {
-        "risk": "宣传口径风险",
-        "reason": "无界动力“霸榜全球第一”缺乏具体榜单信息，可能为营销表述。",
+        "risk": "融资记录移除可能被误读为融资失败",
+        "reason": "宁德时代融资字段变化仅反映数据集更新，证据未提供任何关于融资取消或项目终止的说明。",
         "evidenceIds": [
-          "E004"
+          "E009"
+        ]
+      },
+      {
+        "risk": "Rigetti团队信息可能存在解析错误",
+        "reason": "“Quantum Systems”作为President的条目不符合常规人事信息，且来源页面日期较早，可能为数据抓取或字段映射错误。",
+        "evidenceIds": [
+          "E033"
         ]
       }
     ],
-    "methodologyNote": "本分析仅基于证据包中的三篇公开文章快照（E001、E002、E004），所有证据等级为C，来源为专业媒体，但reviewStatus为automated_unreviewed，未经人工复核。因此，所有判断均为初步推断，事实、推断和待验证事项已在各条目中区分。未补充任何外部事实，不构成投资建议。 数据管线提示：机构证据层重建=stale、科创板招股书投资者证据刷新=stale。"
+    "methodologyNote": "本分析仅基于证据包中的结构化变化和官方披露证据，不补充外部事实。所有判断均区分事实、推断与待验证事项：事实直接引用证据字段；推断基于证据变化方向但明确标注不确定性；待验证事项列入watchlist。证据等级均为官方披露，但reviewStatus为automated_unreviewed，因此置信度最高为medium，涉及异常或移除类变化时降为low。未提供任何投资建议或收益承诺。 数据管线提示：机构证据层重建=stale、科创板招股书投资者证据刷新=stale。"
   },
   "changes": [
     {
-      "id": "chg-423e5c9d7ee70f6b5fec",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-c2f69dada34078dd76",
-      "entityName": "独家丨地瓜机器人扩招NPU研发团队，或将强化下一代芯片布局",
-      "action": "added",
+      "id": "chg-fea94a74a8a2af2ceaf5",
+      "dataset": "ventureCompany",
+      "entityType": "创业公司",
+      "entityId": "xtalpi",
+      "entityName": "晶泰科技",
+      "action": "updated",
       "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "capitalMarkets",
+        "products",
+        "technology"
       ],
-      "summary": "新增高价值情报事件记录：独家丨地瓜机器人扩招NPU研发团队，或将强化下一代芯片布局。",
-      "importance": 91,
-      "before": null,
+      "summary": "晶泰科技 的 capitalMarkets、products、technology 发生变化。",
+      "importance": 88,
+      "before": {
+        "capitalMarkets": [],
+        "products": [
+          "AI 自主实验平台",
+          "Ailux 抗体药物发现平台",
+          "PatSight 药物专利挖掘平台",
+          "XFEP 自由能微扰亲和力预测平台",
+          "XMolGen 自由能微扰亲和力预测平台",
+          "小分子药物发现平台",
+          "…另 4 项"
+        ],
+        "technology": "、技术平台、智能自主实验平台、AI 自主实验平台、小分子药物发现平台、Ailux 抗体药物发现平台、PatSight 药物专利挖掘平台、XFEP 自由能微扰亲和力预测平台"
+      },
       "after": {
-        "publishedAt": "2026-09-01",
-        "summary": "雷峰网独家获悉，机器人通用底座厂商地瓜机器人近期积极招聘芯片人才，全面补齐自研NPU芯片研发能力，在猎聘等招聘软件搜索地瓜机器人芯片关键词，亦可查询到大量招聘信息。 地瓜机器人的发展与CEO王丛深度绑定。公开履历显示，王丛本科毕业于北京工业大学，后赴美取得莱特州立大学博士学位；职业初期入职阿里巴巴，随后联合创办文因互联。2018年王丛正式加入地平线，2022年，王丛带领团队切入尚处蓝海的机器人赛道，原AIoT部门升级为机器人事业部，王丛出任事业部总经理；2024年该业务板块完成独立拆分，地瓜机器人正式独立运营。…",
-        "title": "独家丨地瓜机器人扩招NPU研发团队，或将强化下一代芯片布局"
+        "capitalMarkets": [
+          {
+            "investors": [],
+            "round": "已上市",
+            "sourceUrl": "https://www.xtalpi.com/",
+            "summary": "目录将晶泰科技标记为已上市公司；页面继续通过交易所、监管文件和公司公告跟踪上市后的经营与资本市场表现。",
+            "title": "晶泰科技已进入公开市场",
+            "type": "上市"
+          }
+        ],
+        "products": [
+          "智能药物研发平台",
+          "自动化实验室"
+        ],
+        "technology": "核心技术与产品包括智能药物研发平台与自动化实验室"
       },
       "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
       "isResearchCandidate": true,
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "capitalMarkets",
+        "products",
+        "technology"
       ],
       "claimBindings": [
         {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-01",
+          "field": "capitalMarkets",
+          "before": [],
+          "after": [
+            {
+              "investors": [],
+              "round": "已上市",
+              "sourceUrl": "https://www.xtalpi.com/",
+              "summary": "目录将晶泰科技标记为已上市公司；页面继续通过交易所、监管文件和公司公告跟踪上市后的经营与资本市场表现。",
+              "title": "晶泰科技已进入公开市场",
+              "type": "上市"
+            }
+          ],
           "evidenceIds": [
             "E001"
           ]
         },
         {
-          "field": "summary",
-          "before": null,
-          "after": "雷峰网独家获悉，机器人通用底座厂商地瓜机器人近期积极招聘芯片人才，全面补齐自研NPU芯片研发能力，在猎聘等招聘软件搜索地瓜机器人芯片关键词，亦可查询到大量招聘信息。 地瓜机器人的发展与CEO王丛深度绑定。公开履历显示，王丛本科毕业于北京工业大学，后赴美取得莱特州立大学博士学位；职业初期入职阿里巴巴，随后联合创办文因互联。2018年王丛正式加入地平线，2022年，王丛带领团队切入尚处蓝海的机器人赛道，原AIoT部门升级为机器人事业部，王丛出任事业部总经理；2024年该业务板块完成独立拆分，地瓜机器人正式独立运营。…",
+          "field": "products",
+          "before": [
+            "AI 自主实验平台",
+            "Ailux 抗体药物发现平台",
+            "PatSight 药物专利挖掘平台",
+            "XFEP 自由能微扰亲和力预测平台",
+            "XMolGen 自由能微扰亲和力预测平台",
+            "小分子药物发现平台",
+            "…另 4 项"
+          ],
+          "after": [
+            "智能药物研发平台",
+            "自动化实验室"
+          ],
           "evidenceIds": [
-            "E001"
+            "E003"
           ]
         },
         {
-          "field": "title",
-          "before": null,
-          "after": "独家丨地瓜机器人扩招NPU研发团队，或将强化下一代芯片布局",
+          "field": "technology",
+          "before": "、技术平台、智能自主实验平台、AI 自主实验平台、小分子药物发现平台、Ailux 抗体药物发现平台、PatSight 药物专利挖掘平台、XFEP 自由能微扰亲和力预测平台",
+          "after": "核心技术与产品包括智能药物研发平台与自动化实验室",
           "evidenceIds": [
-            "E001"
+            "E001",
+            "E002"
           ]
         }
       ],
       "evidenceIds": [
-        "E001"
+        "E001",
+        "E002",
+        "E003"
       ],
       "supportingEvidenceIds": [
-        "E001"
+        "E001",
+        "E002",
+        "E003"
       ],
       "evidenceQuality": {
         "status": "passed",
-        "supporting": 1,
-        "total": 1
+        "supporting": 3,
+        "total": 3
       },
-      "publicationTier": "external_clue",
+      "publicationTier": "verified_change",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-2025eb9ad2c7a8cf8ac3"
+        "evt-98fe814c09da08febb68"
       ],
       "eventLifecycles": {
-        "evt-2025eb9ad2c7a8cf8ac3": "first_seen"
+        "evt-98fe814c09da08febb68": "first_seen"
       },
-      "eventId": "evt-2025eb9ad2c7a8cf8ac3",
+      "eventId": "evt-98fe814c09da08febb68",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T05:29:31+00:00",
-      "lastSeenAt": "2026-09-01T05:29:31+00:00"
+      "firstSeenAt": "2026-09-01T06:25:42+00:00",
+      "lastSeenAt": "2026-09-01T06:25:42+00:00"
     },
     {
-      "id": "chg-33d946c00c8eb1dcec54",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-57b8fa8987d9b3d024",
-      "entityName": "存储成了AI落地最大变量，企业如何打破阻碍？丨ToB产业观察",
-      "action": "added",
+      "id": "chg-f0a2e9692eddf94cdec2",
+      "dataset": "ventureCompany",
+      "entityType": "创业公司",
+      "entityId": "catl",
+      "entityName": "宁德时代",
+      "action": "updated",
       "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "financing"
       ],
-      "summary": "新增高价值情报事件记录：存储成了AI落地最大变量，企业如何打破阻碍？丨ToB产业观察。",
-      "importance": 84,
-      "before": null,
+      "summary": "宁德时代 的 financing 发生变化。",
+      "importance": 88,
+      "before": {
+        "financing": [
+          {
+            "date": "2026-08-14",
+            "investors": [],
+            "sourceUrl": "https://www.catl.com/en/news/6951.html",
+            "summary": "Brisbane, Australia | 14 August 2026 — Quinbrook's Supernode battery energy storage project has completed Stage 2 commercial operation and reached financial close on A$469 million financing for Stage 3, marking a further milestone in the phased development of Australia's largest operational BESS campus.With planned capacity expected to exceed 3 GWh, Supernode is supported by CATL as its core energy storage system supplier for all three stContemporary Amperex Technology Co., Limited (CATL) is a g",
+            "title": "CATL and Quinbrook Build on Supernode Partnership Following Stage 2 and Stage 3 Major Milestones",
+            "type": "融资"
+          }
+        ]
+      },
       "after": {
-        "publishedAt": "2026-09-01",
-        "summary": "推理已经成为吞噬算力的黑洞。",
-        "title": "存储成了AI落地最大变量，企业如何打破阻碍？丨ToB产业观察"
+        "financing": []
       },
       "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
       "isResearchCandidate": true,
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "financing"
       ],
       "claimBindings": [
         {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-01",
+          "field": "financing",
+          "before": [
+            {
+              "date": "2026-08-14",
+              "investors": [],
+              "sourceUrl": "https://www.catl.com/en/news/6951.html",
+              "summary": "Brisbane, Australia | 14 August 2026 — Quinbrook's Supernode battery energy storage project has completed Stage 2 commercial operation and reached financial close on A$469 million financing for Stage 3, marking a further milestone in the phased development of Australia's largest operational BESS campus.With planned capacity expected to exceed 3 GWh, Supernode is supported by CATL as its core energy storage system supplier for all three stContemporary Amperex Technology Co., Limited (CATL) is a g",
+              "title": "CATL and Quinbrook Build on Supernode Partnership Following Stage 2 and Stage 3 Major Milestones",
+              "type": "融资"
+            }
+          ],
+          "after": [],
           "evidenceIds": [
-            "E002"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "推理已经成为吞噬算力的黑洞。",
-          "evidenceIds": [
-            "E002"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "存储成了AI落地最大变量，企业如何打破阻碍？丨ToB产业观察",
-          "evidenceIds": [
-            "E002"
+            "E009"
           ]
         }
       ],
       "evidenceIds": [
-        "E002"
+        "E009"
       ],
       "supportingEvidenceIds": [
-        "E002"
+        "E009"
       ],
       "evidenceQuality": {
         "status": "passed",
         "supporting": 1,
         "total": 1
       },
-      "publicationTier": "external_clue",
+      "publicationTier": "verified_change",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-47fdb8b8aaba42d7d6db"
+        "evt-44f4881cf6dcb57371f7"
       ],
       "eventLifecycles": {
-        "evt-47fdb8b8aaba42d7d6db": "first_seen"
+        "evt-44f4881cf6dcb57371f7": "first_seen"
       },
-      "eventId": "evt-47fdb8b8aaba42d7d6db",
+      "eventId": "evt-44f4881cf6dcb57371f7",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T05:29:31+00:00",
-      "lastSeenAt": "2026-09-01T05:29:31+00:00"
+      "firstSeenAt": "2026-09-01T06:25:42+00:00",
+      "lastSeenAt": "2026-09-01T06:25:42+00:00"
     },
     {
-      "id": "chg-8af5d937a85017d670fe",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-cc897af356269311ed",
-      "entityName": "MWA™霸榜全球第一后：无界动力用真实咖啡厅展现物理AI的落地之径",
-      "action": "added",
+      "id": "chg-6d581874af986e2c2cb1",
+      "dataset": "ventureCompany",
+      "entityType": "创业公司",
+      "entityId": "rigetti",
+      "entityName": "Rigetti Computing",
+      "action": "updated",
       "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "team"
       ],
-      "summary": "新增高价值情报事件记录：MWA™霸榜全球第一后：无界动力用真实咖啡厅展现物理AI的落地之径。",
-      "importance": 84,
-      "before": null,
+      "summary": "Rigetti Computing 的 team 发生变化。",
+      "importance": 76,
+      "before": {
+        "team": []
+      },
       "after": {
-        "publishedAt": "2026-09-01",
-        "summary": "从 “出片”到“出海”，无界动力即将奔赴下一个考场。 作者丨郭 思 编辑丨董子博 没有刻意的社交氛围，一人静坐或几个好友相聚，手捧一杯咖啡，在音乐与咖啡的交汇中，暂时剥离工作与生活的琐碎，获得片刻放松与灵感回响。这是平日里我们对于休闲时刻美好画面的印象， 也是 2026世界机器人大会现场最反差的一幕。 与去年以及今年上半年以来出现争奇斗艳、跳舞翻跟头的喧闹不同，今年 WRC，记者探展一圈发现，展会上出现了很多垂直场景的机器人，有专门针对人的心脑血管做手术的医疗机器人，也有分拣物品进行归类的各种家庭机器人，还有一些…",
-        "title": "MWA™霸榜全球第一后：无界动力用真实咖啡厅展现物理AI的落地之径"
+        "team": [
+          {
+            "name": "Quantum Systems",
+            "role": "President",
+            "sourceUrl": "https://www.rigetti.com/about-rigetti-computing"
+          }
+        ]
       },
       "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
       "isResearchCandidate": true,
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "team"
       ],
       "claimBindings": [
         {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-01",
+          "field": "team",
+          "before": [],
+          "after": [
+            {
+              "name": "Quantum Systems",
+              "role": "President",
+              "sourceUrl": "https://www.rigetti.com/about-rigetti-computing"
+            }
+          ],
           "evidenceIds": [
-            "E004"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "从 “出片”到“出海”，无界动力即将奔赴下一个考场。 作者丨郭 思 编辑丨董子博 没有刻意的社交氛围，一人静坐或几个好友相聚，手捧一杯咖啡，在音乐与咖啡的交汇中，暂时剥离工作与生活的琐碎，获得片刻放松与灵感回响。这是平日里我们对于休闲时刻美好画面的印象， 也是 2026世界机器人大会现场最反差的一幕。 与去年以及今年上半年以来出现争奇斗艳、跳舞翻跟头的喧闹不同，今年 WRC，记者探展一圈发现，展会上出现了很多垂直场景的机器人，有专门针对人的心脑血管做手术的医疗机器人，也有分拣物品进行归类的各种家庭机器人，还有一些…",
-          "evidenceIds": [
-            "E004"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "MWA™霸榜全球第一后：无界动力用真实咖啡厅展现物理AI的落地之径",
-          "evidenceIds": [
-            "E004"
+            "E033"
           ]
         }
       ],
       "evidenceIds": [
-        "E004"
+        "E033"
       ],
       "supportingEvidenceIds": [
-        "E004"
+        "E033"
       ],
       "evidenceQuality": {
         "status": "passed",
         "supporting": 1,
         "total": 1
       },
-      "publicationTier": "external_clue",
+      "publicationTier": "verified_change",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-4a372a16c2366a0b264b"
+        "evt-3da5ba479acee83e5cce"
       ],
       "eventLifecycles": {
-        "evt-4a372a16c2366a0b264b": "first_seen"
+        "evt-3da5ba479acee83e5cce": "first_seen"
       },
-      "eventId": "evt-4a372a16c2366a0b264b",
+      "eventId": "evt-3da5ba479acee83e5cce",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T05:29:31+00:00",
-      "lastSeenAt": "2026-09-01T05:29:31+00:00"
+      "firstSeenAt": "2026-09-01T06:25:42+00:00",
+      "lastSeenAt": "2026-09-01T06:25:42+00:00"
     }
   ],
   "evidence": [
     {
       "id": "E001",
-      "changeId": "chg-423e5c9d7ee70f6b5fec",
-      "entityName": "独家丨地瓜机器人扩招NPU研发团队，或将强化下一代芯片布局",
-      "claim": "新增高价值情报事件记录：独家丨地瓜机器人扩招NPU研发团队，或将强化下一代芯片布局。",
-      "publicationTier": "external_clue",
+      "changeId": "chg-fea94a74a8a2af2ceaf5",
+      "entityName": "晶泰科技",
+      "claim": "晶泰科技 的 capitalMarkets、products、technology 发生变化。",
+      "publicationTier": "verified_change",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "雷峰网",
-      "title": "独家丨地瓜机器人扩招NPU研发团队，或将强化下一代芯片布局",
-      "url": "https://www.leiphone.com/category/yanxishe/lCoT3AFJymcnxZVR.html",
-      "publishedAt": "2026-09-01",
-      "evidenceGrade": "C",
-      "platformName": "专业媒体",
-      "sourceRole": "corroboration",
+      "sourceName": "晶泰科技",
+      "title": "首页",
+      "url": "https://www.xtalpi.com/",
+      "publishedAt": "2024-08-29",
+      "evidenceGrade": "官方披露",
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "capitalMarkets",
+        "technology"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
@@ -441,22 +492,18 @@
     },
     {
       "id": "E002",
-      "changeId": "chg-33d946c00c8eb1dcec54",
-      "entityName": "存储成了AI落地最大变量，企业如何打破阻碍？丨ToB产业观察",
-      "claim": "新增高价值情报事件记录：存储成了AI落地最大变量，企业如何打破阻碍？丨ToB产业观察。",
-      "publicationTier": "external_clue",
+      "changeId": "chg-fea94a74a8a2af2ceaf5",
+      "entityName": "晶泰科技",
+      "claim": "晶泰科技 的 capitalMarkets、products、technology 发生变化。",
+      "publicationTier": "verified_change",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "钛媒体",
-      "title": "存储成了AI落地最大变量，企业如何打破阻碍？丨ToB产业观察",
-      "url": "https://www.tmtpost.com/8124068.html",
-      "publishedAt": "2026-09-01",
-      "evidenceGrade": "C",
-      "platformName": "专业媒体",
-      "sourceRole": "corroboration",
+      "sourceName": "晶泰科技",
+      "title": "AI for Science距离“自主发现”有多远？晶泰科技提出五级分级体系",
+      "url": "https://www.xtalpi.com/ai-for-science%e8%b7%9d%e7%a6%bb%e8%87%aa%e4%b8%bb%e5%8f%91%e7%8e%b0%e6%9c%89%e5%a4%9a%e8%bf%9c%ef%bc%9f%e6%99%b6%e6%b3%b0%e7%a7%91%e6%8a%80%e6%8f%90%e5%87%ba%e4%ba%94%e7%ba%a7/",
+      "publishedAt": "2026-08-14",
+      "evidenceGrade": "官方披露",
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "technology"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
@@ -464,23 +511,59 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E004",
-      "changeId": "chg-8af5d937a85017d670fe",
-      "entityName": "MWA™霸榜全球第一后：无界动力用真实咖啡厅展现物理AI的落地之径",
-      "claim": "新增高价值情报事件记录：MWA™霸榜全球第一后：无界动力用真实咖啡厅展现物理AI的落地之径。",
-      "publicationTier": "external_clue",
+      "id": "E003",
+      "changeId": "chg-fea94a74a8a2af2ceaf5",
+      "entityName": "晶泰科技",
+      "claim": "晶泰科技 的 capitalMarkets、products、technology 发生变化。",
+      "publicationTier": "verified_change",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "雷峰网",
-      "title": "MWA™霸榜全球第一后：无界动力用真实咖啡厅展现物理AI的落地之径",
-      "url": "https://www.leiphone.com/category/robot/vHAwtD32AVVe2W9V.html",
-      "publishedAt": "2026-09-01",
-      "evidenceGrade": "C",
-      "platformName": "专业媒体",
-      "sourceRole": "corroboration",
+      "sourceName": "晶泰科技",
+      "title": "首页",
+      "url": "https://www.xtalpi.com/solid-state-chemistry-computation-services/",
+      "publishedAt": "2024-08-29",
+      "evidenceGrade": "官方披露",
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "products"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E009",
+      "changeId": "chg-f0a2e9692eddf94cdec2",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 financing 发生变化。",
+      "publicationTier": "verified_change",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "CATL",
+      "title": "宁德时代·CATL",
+      "url": "https://www.catl.com/",
+      "publishedAt": "2026-08-20",
+      "evidenceGrade": "官方披露",
+      "claimFields": [
+        "financing"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E033",
+      "changeId": "chg-6d581874af986e2c2cb1",
+      "entityName": "Rigetti Computing",
+      "claim": "Rigetti Computing 的 team 发生变化。",
+      "publicationTier": "verified_change",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Rigetti",
+      "title": "About Rigetti Computing",
+      "url": "https://www.rigetti.com/about-rigetti-computing",
+      "publishedAt": "2020-06-30",
+      "evidenceGrade": "官方披露",
+      "claimFields": [
+        "team"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
@@ -490,9 +573,315 @@
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-01T05:29:31+00:00",
+    "generatedAt": "2026-09-01T06:25:42+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-98fe814c09da08febb68": {
+        "eventId": "evt-98fe814c09da08febb68",
+        "dataset": "ventureCompany",
+        "entityId": "xtalpi",
+        "entityName": "晶泰科技",
+        "title": "AI for Science距离“自主发现”有多远？晶泰科技提出五级分级体系",
+        "titleAliases": [
+          "aiforscience距离自主发现有多远晶泰科技提出五级分级体系",
+          "首页"
+        ],
+        "publishedDate": "2024-08-29",
+        "publishedDates": [
+          "2024-08-29",
+          "2026-08-14"
+        ],
+        "entityKeys": [
+          "name:晶泰科技",
+          "ventureCompany:xtalpi"
+        ],
+        "typeKeys": [
+          "创业公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-51ecb44c7d44ee6852b3",
+          "evd-a7058ece2467ce73f8b7",
+          "src-5b850b0455c4267a2067",
+          "src-ae10558c9fa0b67f51a0",
+          "src-e48e4366b433bc8bc06f"
+        ],
+        "evidenceFingerprints": [
+          "a7058ece2467ce73f8b7",
+          "51ecb44c7d44ee6852b3"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "晶泰科技",
+            "title": "首页",
+            "url": "https://www.xtalpi.com/",
+            "publishedAt": "2024-08-29",
+            "evidenceGrade": "官方披露"
+          },
+          {
+            "sourceName": "晶泰科技",
+            "title": "AI for Science距离“自主发现”有多远？晶泰科技提出五级分级体系",
+            "url": "https://www.xtalpi.com/ai-for-science%e8%b7%9d%e7%a6%bb%e8%87%aa%e4%b8%bb%e5%8f%91%e7%8e%b0%e6%9c%89%e5%a4%9a%e8%bf%9c%ef%bc%9f%e6%99%b6%e6%b3%b0%e7%a7%91%e6%8a%80%e6%8f%90%e5%87%ba%e4%ba%94%e7%ba%a7/",
+            "publishedAt": "2026-08-14",
+            "evidenceGrade": "官方披露"
+          },
+          {
+            "sourceName": "晶泰科技",
+            "title": "首页",
+            "url": "https://www.xtalpi.com/solid-state-chemistry-computation-services/",
+            "publishedAt": "2024-08-29",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "b6f9f896553567c53938",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T06:25:42+00:00",
+        "lastSeenAt": "2026-09-01T06:25:42+00:00",
+        "lastPublishedAt": "2026-09-01T06:25:42+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 2,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-8be8280900881dcbec79": {
+        "eventId": "evt-8be8280900881dcbec79",
+        "dataset": "ventureCompany",
+        "entityId": "form-energy",
+        "entityName": "Form Energy",
+        "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+        "titleAliases": [
+          "formenergysecures750minseriesgfinancingtoscaleironairbatterymanufacturingandacceleratecommercialdeployments",
+          "home",
+          "newsroom"
+        ],
+        "publishedDate": "2020-03-04",
+        "publishedDates": [
+          "2020-03-04",
+          "2026-08-12",
+          "2021-03-19"
+        ],
+        "entityKeys": [
+          "name:form energy",
+          "ventureCompany:form-energy"
+        ],
+        "typeKeys": [
+          "创业公司"
+        ],
+        "numericCues": [
+          "750"
+        ],
+        "sourceAliases": [
+          "evd-240d920c958998b9e698",
+          "evd-260ebca9594e10735828",
+          "evd-bbce94b49783f715f8ec",
+          "src-ae6596fda7c340d262d4",
+          "src-ce905be3bc5d52aa35cf",
+          "src-dc62ab01be9344185861"
+        ],
+        "evidenceFingerprints": [
+          "260ebca9594e10735828",
+          "240d920c958998b9e698",
+          "bbce94b49783f715f8ec"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Form Energy",
+            "title": "Home",
+            "url": "https://formenergy.com/",
+            "publishedAt": "2020-03-04",
+            "evidenceGrade": "官方披露"
+          },
+          {
+            "sourceName": "Form Energy",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+            "url": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+            "publishedAt": "2026-08-12",
+            "evidenceGrade": "官方披露"
+          },
+          {
+            "sourceName": "Form Energy",
+            "title": "Newsroom",
+            "url": "https://formenergy.com/newsroom/",
+            "publishedAt": "2021-03-19",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "ab53829200fcf80ab3ce",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T09:08:35+00:00",
+        "lastSeenAt": "2026-09-01T06:25:42+00:00",
+        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 3,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-6d0d17f79898a08012a6": {
+        "eventId": "evt-6d0d17f79898a08012a6",
+        "dataset": "ventureCompany",
+        "entityId": "joby",
+        "entityName": "Joby Aviation",
+        "title": "2025 Impact Report | Joby Aviation",
+        "titleAliases": [
+          "2025impactreport"
+        ],
+        "publishedDate": "2026-07-16",
+        "publishedDates": [
+          "2026-07-16"
+        ],
+        "entityKeys": [
+          "name:joby aviation",
+          "ventureCompany:joby"
+        ],
+        "typeKeys": [
+          "创业公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-23994f7a5a56f142cced",
+          "src-669a587c662ca12eb4c8"
+        ],
+        "evidenceFingerprints": [
+          "23994f7a5a56f142cced"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Joby Aviation",
+            "title": "2025 Impact Report | Joby Aviation",
+            "url": "https://www.jobyaviation.com/news/2025-impact-report",
+            "publishedAt": "2026-07-16",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "0b0ccadef2c34b240e44",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T09:08:35+00:00",
+        "lastSeenAt": "2026-09-01T06:25:42+00:00",
+        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-44f4881cf6dcb57371f7": {
+        "eventId": "evt-44f4881cf6dcb57371f7",
+        "dataset": "ventureCompany",
+        "entityId": "catl",
+        "entityName": "宁德时代",
+        "title": "宁德时代·CATL",
+        "titleAliases": [
+          "宁德时代catl"
+        ],
+        "publishedDate": "2026-08-20",
+        "publishedDates": [
+          "2026-08-20"
+        ],
+        "entityKeys": [
+          "name:宁德时代",
+          "ventureCompany:catl"
+        ],
+        "typeKeys": [
+          "创业公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-313b826fd58260afe0b1",
+          "src-c236152feafbcab8ee18"
+        ],
+        "evidenceFingerprints": [
+          "313b826fd58260afe0b1"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "CATL",
+            "title": "宁德时代·CATL",
+            "url": "https://www.catl.com/",
+            "publishedAt": "2026-08-20",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "b294a95a6b444c0c1946",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T06:25:42+00:00",
+        "lastSeenAt": "2026-09-01T06:25:42+00:00",
+        "lastPublishedAt": "2026-09-01T06:25:42+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-3da5ba479acee83e5cce": {
+        "eventId": "evt-3da5ba479acee83e5cce",
+        "dataset": "ventureCompany",
+        "entityId": "rigetti",
+        "entityName": "Rigetti Computing",
+        "title": "About Rigetti Computing",
+        "titleAliases": [
+          "aboutrigetticomputing"
+        ],
+        "publishedDate": "2020-06-30",
+        "publishedDates": [
+          "2020-06-30"
+        ],
+        "entityKeys": [
+          "name:rigetti computing",
+          "ventureCompany:rigetti"
+        ],
+        "typeKeys": [
+          "创业公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-1188e984c18ba801ca00",
+          "src-c82c98c83cf358645939"
+        ],
+        "evidenceFingerprints": [
+          "1188e984c18ba801ca00"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Rigetti",
+            "title": "About Rigetti Computing",
+            "url": "https://www.rigetti.com/about-rigetti-computing",
+            "publishedAt": "2020-06-30",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "1a274a367359f1831647",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T06:25:42+00:00",
+        "lastSeenAt": "2026-09-01T06:25:42+00:00",
+        "lastPublishedAt": "2026-09-01T06:25:42+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-8a7d6f3a518950509176": {
         "eventId": "evt-8a7d6f3a518950509176",
         "dataset": "intelligenceEvent",
@@ -4985,84 +5374,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-8be8280900881dcbec79": {
-        "eventId": "evt-8be8280900881dcbec79",
-        "dataset": "ventureCompany",
-        "entityId": "form-energy",
-        "entityName": "Form Energy",
-        "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
-        "titleAliases": [
-          "formenergysecures750minseriesgfinancingtoscaleironairbatterymanufacturingandacceleratecommercialdeployments",
-          "home",
-          "newsroom"
-        ],
-        "publishedDate": "2020-03-04",
-        "publishedDates": [
-          "2020-03-04",
-          "2026-08-12",
-          "2021-03-19"
-        ],
-        "entityKeys": [
-          "name:form energy",
-          "ventureCompany:form-energy"
-        ],
-        "typeKeys": [
-          "创业公司"
-        ],
-        "numericCues": [
-          "750"
-        ],
-        "sourceAliases": [
-          "evd-240d920c958998b9e698",
-          "evd-260ebca9594e10735828",
-          "evd-bbce94b49783f715f8ec",
-          "src-ae6596fda7c340d262d4",
-          "src-ce905be3bc5d52aa35cf",
-          "src-dc62ab01be9344185861"
-        ],
-        "evidenceFingerprints": [
-          "260ebca9594e10735828",
-          "240d920c958998b9e698",
-          "bbce94b49783f715f8ec"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Form Energy",
-            "title": "Home",
-            "url": "https://formenergy.com/",
-            "publishedAt": "2020-03-04",
-            "evidenceGrade": "官方披露"
-          },
-          {
-            "sourceName": "Form Energy",
-            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
-            "url": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
-            "publishedAt": "2026-08-12",
-            "evidenceGrade": "官方披露"
-          },
-          {
-            "sourceName": "Form Energy",
-            "title": "Newsroom",
-            "url": "https://formenergy.com/newsroom/",
-            "publishedAt": "2021-03-19",
-            "evidenceGrade": "官方披露"
-          }
-        ],
-        "claimFingerprint": "ab53829200fcf80ab3ce",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 3,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 4,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-8a0215333bb4123ec920": {
         "eventId": "evt-8a0215333bb4123ec920",
         "dataset": "intelligenceEvent",
@@ -5216,58 +5527,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-6d0d17f79898a08012a6": {
-        "eventId": "evt-6d0d17f79898a08012a6",
-        "dataset": "ventureCompany",
-        "entityId": "joby",
-        "entityName": "Joby Aviation",
-        "title": "2025 Impact Report | Joby Aviation",
-        "titleAliases": [
-          "2025impactreport"
-        ],
-        "publishedDate": "2026-07-16",
-        "publishedDates": [
-          "2026-07-16"
-        ],
-        "entityKeys": [
-          "name:joby aviation",
-          "ventureCompany:joby"
-        ],
-        "typeKeys": [
-          "创业公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-23994f7a5a56f142cced",
-          "src-669a587c662ca12eb4c8"
-        ],
-        "evidenceFingerprints": [
-          "23994f7a5a56f142cced"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Joby Aviation",
-            "title": "2025 Impact Report | Joby Aviation",
-            "url": "https://www.jobyaviation.com/news/2025-impact-report",
-            "publishedAt": "2026-07-16",
-            "evidenceGrade": "官方披露"
-          }
-        ],
-        "claimFingerprint": "0b0ccadef2c34b240e44",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 4,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -9722,8 +9981,8 @@
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 1,
-    "observedEvents": 4,
+    "duplicatesSuppressed": 2,
+    "observedEvents": 5,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -10489,10 +10748,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-01",
-      "generatedAt": "2026-09-01T05:29:31+00:00",
+      "generatedAt": "2026-09-01T06:25:42+00:00",
       "runStatus": "model",
-      "changeCount": 40,
-      "executiveSummary": "证据包包含三篇2026年9月1日发布的专业媒体报道：地瓜机器人扩招NPU研发团队、存储成为AI落地最大变量、无界动力以真实咖啡厅展现物理AI落地。三篇均为单一来源且证据等级为C，未经人工复核，因此仅作为初步线索。整体看，机器人芯片自研、AI存储瓶颈、物理AI垂直场景落地是值得关注的三个方向，但均需更多证据验证。",
+      "changeCount": 43,
+      "executiveSummary": "证据包显示三项外部变化：晶泰科技官网将其标记为已上市公司，并将产品与技术描述简化为“智能药物研发平台”与“自动化实验室”；宁德时代数据集中的一条融资记录被移除；Rigetti Computing官网出现“Quantum Systems”担任President的团队条目。所有证据均来自官方披露，但均未经人工复核，且部分信息存在解析或时效性疑问，需谨慎对待。",
       "eventIds": [
         "evt-e5c92bf165cb34866cb4",
         "evt-ad50e31282afed394c23",
@@ -10533,7 +10792,10 @@
         "evt-935efe99e3fec15819ef",
         "evt-2025eb9ad2c7a8cf8ac3",
         "evt-47fdb8b8aaba42d7d6db",
-        "evt-4a372a16c2366a0b264b"
+        "evt-4a372a16c2366a0b264b",
+        "evt-98fe814c09da08febb68",
+        "evt-44f4881cf6dcb57371f7",
+        "evt-3da5ba479acee83e5cce"
       ],
       "eventStates": [
         {
@@ -10695,35 +10957,49 @@
         {
           "eventId": "evt-4a372a16c2366a0b264b",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-98fe814c09da08febb68",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-44f4881cf6dcb57371f7",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-3da5ba479acee83e5cce",
+          "lifecycle": "first_seen"
         }
       ],
-      "verifiedChangeTotal": 0,
+      "verifiedChangeTotal": 3,
       "candidateTotal": 13,
       "auxiliaryLeadTotal": 27,
-      "rejectedTotal": 4,
+      "rejectedTotal": 12,
       "eventSummary": {
-        "newEvents": 40,
+        "newEvents": 43,
         "reconfirmations": 5,
         "updates": 0,
         "corrections": 0,
         "possibleConflicts": 0,
-        "duplicatesSuppressed": 15
+        "duplicatesSuppressed": 17
       }
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 5,
-    "eligibleCandidateCount": 4,
-    "rejectedCandidateCount": 1,
+    "candidateCount": 13,
+    "eligibleCandidateCount": 5,
+    "rejectedCandidateCount": 8,
     "rejectedByDataset": {
-      "intelligenceEvent": 1
+      "ventureCompany": 8
     },
-    "evidenceCount": 5,
-    "supportingEvidenceCount": 4,
-    "rejectedEvidenceCount": 1,
-    "passedButUnboundEvidenceCount": 0,
+    "evidenceCount": 52,
+    "supportingEvidenceCount": 9,
+    "rejectedEvidenceCount": 35,
+    "passedButUnboundEvidenceCount": 8,
     "rejectionReasons": {
-      "discovery_only": 1
+      "missing_published_at": 35,
+      "missing_title": 3,
+      "ungraded": 3
     },
     "sourceClassificationWarnings": []
   },
