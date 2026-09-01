@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-01T00:07:31+00:00",
+  "generatedAt": "2026-09-01T01:56:14+00:00",
   "asOfDate": "2026-09-01",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
@@ -12,336 +12,397 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 6989,
-      "completion_tokens": 16502,
-      "total_tokens": 23491,
+      "prompt_tokens": 11026,
+      "completion_tokens": 14790,
+      "total_tokens": 25816,
       "completion_tokens_details": {
-        "reasoning_tokens": 13610
+        "reasoning_tokens": 11824
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 6989
+      "prompt_cache_miss_tokens": 11026
     }
   },
   "changeSummary": {
-    "totalDetected": 8,
-    "total": 7,
+    "totalDetected": 52,
+    "total": 14,
     "byDataset": {
-      "intelligenceEvent": 7
+      "intelligenceEvent": 12,
+      "marketCompany": 2
     },
     "byChangeType": {
-      "external_event": 8
+      "external_event": 28,
+      "data_maintenance": 6,
+      "source_refresh": 18
     },
-    "externalCandidates": 8,
+    "externalCandidates": 28,
     "qualityRejected": 0,
-    "maintenanceExcluded": 0,
+    "maintenanceExcluded": 24,
     "aggregatedEvents": 0,
-    "highestImportance": 91,
+    "highestImportance": 84,
     "verifiedChangeTotal": 0,
-    "candidateTotal": 0,
-    "auxiliaryLeadTotal": 7,
+    "candidateTotal": 2,
+    "auxiliaryLeadTotal": 12,
     "rejectedTotal": 0,
-    "newEvents": 7,
-    "reconfirmations": 0,
+    "newEvents": 14,
+    "reconfirmations": 5,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 1
+    "duplicatesSuppressed": 11
   },
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "证据包显示，2026年8月31日前后，具身智能、医疗AI、家庭AI终端、风险投资、宏观上市公司业绩及消费电子领域均有重要动态。核心矛盾集中在具身智能行业：融资热度极高（6-7月国内超70起），但商业化落地仍处早期，物流仓储是唯一被报告指为跨过付费部署门槛的场景，大量落地被指停留在POC。此外，瑞金医院与华为云发布病理大模型RuiPath 2.0，海信发布家庭AIOS JUOS，a16z扩大基金规模，中上协数据显示上市公司上半年盈利增速回升，Asus发布新款创作者笔记本。所有证据均为外部线索（evidenceGrade C），未经独立核实，需谨慎对待。本总结基于证据E001、E002、E004、E005、E006、E007、E008。",
+    "executiveSummary": "证据包显示，2026年8月底至9月初，AI产业政策、公司重大事件与学术研究密集出现。工信部启动AI应用服务商培育专项行动，明确2026年底服务商资源池突破2000家，标志AI产业政策从模型竞赛转向商业化验证（E008）。苹果完成CEO交接，约翰·特努斯接任，AI成为新管理层头号考题（E009）。微创机器人-B因租赁安排交易对手方关系待厘清而延迟刊发中期业绩（E002），宁德时代匈牙利工厂被罚款（E027）。学术方面，arXiv多篇论文关注AI数学发现、安全公平性、扩散模型所有权验证与计算病理学可解释性（E004-E007），Google试点双盲AI评估（E012），Databricks发布数据库自动扩展功能（E013）。整体上，AI商业化与治理合规并进，但部分公司事件存在不确定性，需持续跟踪。",
     "keyDevelopments": [
       {
-        "title": "人形机器人商业化报告：物流仓储成为唯一跨过付费部署门槛的场景",
-        "assessment": "据水清木华研究中心报告，2026年6-7月国内具身智能融资事件超70起，智平方完成近50亿元融资，星动纪元两个月累计融资25亿元，Agility Robotics计划SPAC上市估值25亿美元；报告对20家主要本体厂商梳理后称，物流仓储是唯一已跨过付费商业部署门槛的场景。此为报告观点，具体厂商名单和付费数据未在证据中披露，需进一步验证。推断：其他场景可能仍以POC或试点为主。",
+        "title": "工信部启动AI应用服务商培育专项行动",
+        "assessment": "工信部办公厅发布《关于开展人工智能应用服务商培育专项行动的通知》，明确2026年底全国服务商资源池突破2000家，系国内首部以AI应用服务商为主体的国家级专项政策。媒体报道称AI产业投资逻辑正从“模型竞赛”转向“商业化验证”，B端应用厂商迎来关键窗口期。政策目标明确，但实际执行效果和商业化兑现仍需观察。",
         "importance": 5,
-        "confidence": "low",
+        "confidence": "medium",
         "entities": [
-          "人形机器人",
-          "物流仓储",
-          "智平方",
-          "星动纪元",
-          "Agility Robotics"
+          "工信部",
+          "AI应用服务商"
         ],
         "evidenceIds": [
-          "E001"
+          "E008"
         ]
       },
       {
-        "title": "具身智能落地被指大量停留在POC阶段，鹿明发布NexCore试图打通全套系统",
-        "assessment": "雷峰网报道，鹿明发布NexCore，旨在打通具身落地全套系统；报道援引产业方说法称，大量所谓落地还停留在友情合作POC阶段，产线持续运行的机器人屈指可数。此为媒体转述，未提供具体客户或运行数据，待验证。",
-        "importance": 4,
-        "confidence": "low",
+        "title": "苹果完成CEO交接，特努斯接任",
+        "assessment": "据媒体报道，9月1日苹果正式完成权力交接，硬件工程高级副总裁约翰·特努斯接替蒂姆·库克出任CEO，库克转任执行董事长。AI被列为新管理层“头号考题”，但具体战略方向尚未披露。事件本身明确，但后续影响待验证。",
+        "importance": 5,
+        "confidence": "medium",
         "entities": [
-          "鹿明",
-          "NexCore",
-          "具身智能"
+          "苹果",
+          "约翰·特努斯",
+          "蒂姆·库克"
+        ],
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "title": "微创机器人-B延迟刊发2026年中期业绩",
+        "assessment": "微创机器人-B发布公告，就报告期内一项租赁安排需要更多时间确认交易对手方与集团的关系，截至公告日期事项尚待厘清，故延迟刊发中期业绩。这构成财务披露不确定性，需关注后续澄清和业绩发布。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "微创机器人-B"
         ],
         "evidenceIds": [
           "E002"
         ]
       },
       {
-        "title": "中上协：上半年上市公司营收净利增速回升，净利润同比增长19.5%",
-        "assessment": "中上协报告显示，上半年全市场5557家上市公司实现营业收入37.76万亿元，同比增长7.6%；净利润3.58万亿元，同比增长19.5%，增速较上年全年提升16.7个百分点。数据来自新浪财经转载，原始报告未在证据包中，需以官方发布为准。",
+        "title": "宁德时代匈牙利工厂被罚款",
+        "assessment": "新浪财经报道宁德时代匈牙利工厂被罚款，但证据仅提供标题，未包含罚款原因、金额及对公司的影响。该事件可能反映海外运营合规风险，但细节待验证。",
         "importance": 4,
         "confidence": "low",
         "entities": [
-          "境内上市公司"
+          "宁德时代"
+        ],
+        "evidenceIds": [
+          "E027"
+        ]
+      },
+      {
+        "title": "AI模型产生Erdős单位距离猜想反例并获人类验证",
+        "assessment": "arXiv论文报告，2026年5月OpenAI模型产生Erdős单位距离猜想反例，五名数学家同日发布人工验证版本，结果数周内进入文献。该事件显示AI在数学发现中的潜力，但论文为预印本，结果仍需同行评审确认。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "OpenAI",
+          "数学研究"
         ],
         "evidenceIds": [
           "E004"
         ]
       },
       {
-        "title": "瑞金医院联合华为云发布瑞智病理大模型RuiPath 2.0",
-        "assessment": "雷峰网报道，8月30日瑞金医院联合华为云发布RuiPath 2.0，宣称在性能、诊断能力、病理诊断可解释性、罕见病种数据训练、轻量化部署五大方面升级，并计划通过云边协同服务基层医疗。此为发布口径，临床效果和部署规模待验证。",
+        "title": "Google试点全球首个双盲AI评估",
+        "assessment": "Google官方博客披露，正在试点全球首个双盲AI评估，利用密码学安全环境建立对专有模型基准的信任。这是AI评估方法的重要进展，官方披露置信度较高。",
         "importance": 4,
-        "confidence": "low",
+        "confidence": "high",
         "entities": [
-          "瑞金医院",
-          "华为云",
-          "RuiPath"
+          "Google",
+          "AI评估"
+        ],
+        "evidenceIds": [
+          "E012"
+        ]
+      },
+      {
+        "title": "研究揭示文本到图像安全管道存在方言偏见",
+        "assessment": "arXiv论文评估23,080对提示词，覆盖五种英语方言，发现文本到图像安全护栏对非标准方言无法公平泛化，存在“方言惩罚”。该研究指出AI安全系统需提升公平性，但具体影响范围待进一步验证。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "文本到图像模型",
+          "AI安全"
         ],
         "evidenceIds": [
           "E005"
         ]
       },
       {
-        "title": "海信发布家庭智能伴侣级AIOS——JUOS",
-        "assessment": "雷峰网报道，海信发布JUOS，宣称是行业首个家庭智能伴侣级AIOS，搭载自研星海大模型，面向电视、闺蜜机、投影、智能家电等多终端，实现从被动响应到主动服务全家需求。“行业首个”为厂商表述，实际生态和用户接受度待观察。",
-        "importance": 4,
-        "confidence": "low",
+        "title": "年内业绩十强基金隐形重仓股多元防守",
+        "assessment": "媒体报道，2026年公募基金半年报披露完毕，年内主动权益基金业绩十强产品在隐形重仓股上开启多元布局，多位基金经理强调风格走向均衡。这反映市场防守心态，但具体持仓变化需以基金报告为准。",
+        "importance": 3,
+        "confidence": "medium",
         "entities": [
-          "海信",
-          "JUOS",
-          "星海大模型"
+          "主动权益基金",
+          "基金经理"
+        ],
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "title": "Databricks发布Autoscaling Lakebase Postgres",
+        "assessment": "Databricks官方博客宣布Lakebase Postgres自动扩展功能，面向计算浪费不可接受的工作负载。官方披露，产品功能明确，但市场影响待观察。",
+        "importance": 3,
+        "confidence": "high",
+        "entities": [
+          "Databricks",
+          "Postgres"
+        ],
+        "evidenceIds": [
+          "E013"
+        ]
+      },
+      {
+        "title": "扩散模型所有权验证框架提出",
+        "assessment": "arXiv论文提出基于成员关系的扩散模型所有权验证框架，应对大规模扩散模型被滥用和资源消耗问题。该框架的有效性仍需进一步验证，但指向AI知识产权保护的重要方向。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "扩散模型",
+          "AI知识产权"
         ],
         "evidenceIds": [
           "E006"
-        ]
-      },
-      {
-        "title": "a16z增长基金扩至85亿美元，并新设11亿美元基金",
-        "assessment": "TechCrunch报道，a16z将增长基金规模扩大至85亿美元，并在数日前推出新的11亿美元基金。具体基金结构、投资策略和出资人未在证据中披露。",
-        "importance": 4,
-        "confidence": "low",
-        "entities": [
-          "a16z"
-        ],
-        "evidenceIds": [
-          "E007"
-        ]
-      },
-      {
-        "title": "Asus ProArt P16发布：1600尼特Tandem OLED、128GB RAM、Nvidia RTX Spark",
-        "assessment": "Notebookcheck报道，Asus ProArt P16将于2026年底前发布，配备4K Tandem OLED显示屏（1600尼特）、最高128GB RAM、20核Nvidia RTX Spark处理器、99Wh电池和240W充电。产品尚未上市，实际性能与定价待评测。",
-        "importance": 3,
-        "confidence": "low",
-        "entities": [
-          "Asus",
-          "ProArt P16",
-          "Nvidia"
-        ],
-        "evidenceIds": [
-          "E008"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "具身智能/人形机器人行业",
+        "entity": "AI产业政策与商业化",
+        "direction": "positive",
+        "statement": "工信部专项行动推动AI应用服务商培育，AI产业投资逻辑从模型竞赛转向商业化验证，B端应用厂商迎来窗口期。",
+        "evidenceIds": [
+          "E008"
+        ]
+      },
+      {
+        "entity": "苹果",
         "direction": "mixed",
-        "statement": "资本热度与商业化落地存在显著落差：融资事件密集（6-7月国内超70起），但真实付费劳动场景仍集中在物流仓储，大量落地被指停留在POC阶段。行业处于从技术验证向付费部署过渡的早期，场景分化将决定下一阶段竞争格局。",
+        "statement": "CEO更替后AI成为头号考题，但新管理层战略方向尚未明确，增长点待观察。",
         "evidenceIds": [
-          "E001",
+          "E009"
+        ]
+      },
+      {
+        "entity": "微创机器人-B",
+        "direction": "negative",
+        "statement": "延迟刊发中期业绩，因租赁安排交易对手方关系待厘清，财务披露存在不确定性。",
+        "evidenceIds": [
           "E002"
         ]
       },
       {
-        "entity": "鹿明",
-        "direction": "positive",
-        "statement": "鹿明发布NexCore，试图打通具身落地全套系统，若其系统能解决“进得了厂却站不住脚”的痛点，有望在规模化落地中占据位置；但当前证据仅为媒体发布，无客户验证。",
+        "entity": "宁德时代",
+        "direction": "negative",
+        "statement": "匈牙利工厂被罚款，海外运营合规风险显现，但具体影响待验证。",
         "evidenceIds": [
-          "E002"
+          "E027"
         ]
       },
       {
-        "entity": "医疗AI（病理诊断）",
-        "direction": "positive",
-        "statement": "瑞金医院与华为云发布RuiPath 2.0，聚焦病理诊断可解释性与罕见病数据训练，并强调云边协同服务基层，方向符合医疗资源下沉趋势；但临床效果和实际部署待验证。",
+        "entity": "AI安全与公平性",
+        "direction": "mixed",
+        "statement": "研究显示T2I安全管道存在方言偏见，同时Google试点双盲AI评估以提升基准可信度，安全治理进入精细化阶段。",
         "evidenceIds": [
-          "E005"
+          "E005",
+          "E012"
         ]
       },
       {
-        "entity": "家庭AI终端",
+        "entity": "AI数学研究",
         "direction": "positive",
-        "statement": "海信发布JUOS，将家庭AI从被动响应推向主动服务，填补家庭场景AIOS空白；但“行业首个”和生态竞争力需市场检验。",
-        "evidenceIds": [
-          "E006"
-        ]
-      },
-      {
-        "entity": "境内上市公司整体",
-        "direction": "positive",
-        "statement": "中上协数据显示上半年营收净利增速回升，净利润增速较上年全年提升16.7个百分点，显示企业盈利改善；但需注意数据为半年度，且创新投入结构待细看。",
+        "statement": "OpenAI模型产生Erdős单位距离猜想反例并获人类验证，AI在数学发现中的潜力得到展示。",
         "evidenceIds": [
           "E004"
         ]
       },
       {
-        "entity": "风险投资市场",
+        "entity": "Databricks",
         "direction": "positive",
-        "statement": "a16z将增长基金扩至85亿美元并新设11亿美元基金，显示头部VC募资活跃，可能加大科技领域投资；但基金募集不等于投资回报。",
+        "statement": "Lakebase Postgres自动扩展功能发布，提升数据库弹性与计算效率。",
         "evidenceIds": [
-          "E007"
+          "E013"
         ]
       },
       {
-        "entity": "高端笔记本电脑",
+        "entity": "主动权益基金",
         "direction": "neutral",
-        "statement": "Asus ProArt P16以高规格硬件（Tandem OLED、128GB RAM、RTX Spark）进入创作者笔记本市场，但尚未上市，竞争格局待观察。",
+        "statement": "十强基金隐形重仓股多元防守，基金经理强调风格均衡，市场风格可能趋于分散。",
         "evidenceIds": [
-          "E008"
+          "E003"
+        ]
+      },
+      {
+        "entity": "扩散模型知识产权",
+        "direction": "mixed",
+        "statement": "论文提出所有权验证框架，但有效性待验证，AI生成内容所有权纠纷风险仍存。",
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "entity": "计算病理学AI",
+        "direction": "positive",
+        "statement": "XAI研究提出定义、分类和推荐，有望推动计算病理学临床采用，但落地仍需验证。",
+        "evidenceIds": [
+          "E007"
         ]
       }
     ],
     "watchlist": [
       {
-        "item": "人形机器人在物流仓储之外的付费部署场景",
-        "reason": "E001称物流仓储是唯一跨过付费商业部署门槛的场景，其他场景是否出现付费订单是判断行业拐点的关键。",
-        "nextEvidence": "主要本体厂商的客户合同、部署数量或收入披露",
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "item": "鹿明NexCore的实际产线运行案例",
-        "reason": "E002称大量落地停留在POC，NexCore若真能打通全套系统，需要产线持续运行的客户证据。",
-        "nextEvidence": "鹿明或其客户的公开案例、运行时长、故障率数据",
+        "item": "微创机器人-B中期业绩刊发",
+        "reason": "延迟刊发涉及租赁安排交易对手方关系，可能影响财务披露和投资者信心。",
+        "nextEvidence": "公司后续公告或正式中期业绩",
         "evidenceIds": [
           "E002"
         ]
       },
       {
-        "item": "RuiPath 2.0在基层医院的部署进展",
-        "reason": "E005强调云边协同服务基层，但发布口径未提供部署规模，需观察后续落地。",
-        "nextEvidence": "瑞金医院/华为云关于合作医院数量、诊断量、准确率的公告",
+        "item": "宁德时代匈牙利工厂罚款详情",
+        "reason": "目前仅有标题，缺乏原因、金额和影响。",
+        "nextEvidence": "宁德时代官方声明或权威媒体报道",
+        "evidenceIds": [
+          "E027"
+        ]
+      },
+      {
+        "item": "苹果新CEO AI战略",
+        "reason": "特努斯上任后AI成头号考题，但具体产品路线未披露。",
+        "nextEvidence": "苹果新品发布会或财报电话会",
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "item": "工信部AI应用服务商专项行动执行",
+        "reason": "政策目标2000家服务商，但落地效果待观察。",
+        "nextEvidence": "工信部后续名单或实施细则",
+        "evidenceIds": [
+          "E008"
+        ]
+      },
+      {
+        "item": "AI安全方言偏见研究后续",
+        "reason": "研究指出T2I安全管道不公平，可能引发监管或模型改进。",
+        "nextEvidence": "论文正式发表或模型更新",
         "evidenceIds": [
           "E005"
         ]
       },
       {
-        "item": "海信JUOS的装机量与生态伙伴",
-        "reason": "E006宣称行业首个家庭AIOS，但家庭AI生态需要多终端适配和开发者支持，装机量是关键指标。",
-        "nextEvidence": "海信官方销量数据、第三方评测、开发者生态公告",
+        "item": "Google双盲AI评估试点结果",
+        "reason": "首个双盲评估，可能影响行业基准标准。",
+        "nextEvidence": "试点报告或后续扩展",
+        "evidenceIds": [
+          "E012"
+        ]
+      },
+      {
+        "item": "寒武纪融资余额变化",
+        "reason": "融资余额占流通市值比例较高，反映杠杆资金情绪。",
+        "nextEvidence": "后续融资数据或股价表现",
+        "evidenceIds": [
+          "E035"
+        ]
+      },
+      {
+        "item": "扩散模型所有权验证框架应用",
+        "reason": "论文提出框架但有效性待验证，可能影响AI知识产权保护。",
+        "nextEvidence": "论文后续验证或行业采用",
         "evidenceIds": [
           "E006"
-        ]
-      },
-      {
-        "item": "a16z新基金的投资方向",
-        "reason": "E007显示a16z募资规模扩大，但未披露投资策略，后续投资标的可反映其对AI/科技赛道的判断。",
-        "nextEvidence": "a16z后续投资公告或基金备案文件",
-        "evidenceIds": [
-          "E007"
-        ]
-      },
-      {
-        "item": "上市公司创新投入的行业分布",
-        "reason": "E004标题提及创新投入持续加码，但摘要未给出行业明细，需细看研发投入增长来自哪些行业。",
-        "nextEvidence": "中上协完整报告或上市公司半年报研发费用数据",
-        "evidenceIds": [
-          "E004"
-        ]
-      },
-      {
-        "item": "Asus ProArt P16上市后的实际性能与定价",
-        "reason": "E008披露了规格但未上市，Tandem OLED和RTX Spark的实际表现及定价影响市场接受度。",
-        "nextEvidence": "正式发布、评测、销售数据",
-        "evidenceIds": [
-          "E008"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "具身智能行业估值回调风险",
-        "reason": "E001显示融资热度高（6-7月超70起），但E002指出大量落地停留在POC，真实产线运行少，资本热度与商业化落差可能引发估值修正。",
+        "risk": "微创机器人-B财务披露风险",
+        "reason": "延迟刊发中期业绩，租赁安排交易对手方关系待厘清，可能引发监管问询或投资者担忧。",
         "evidenceIds": [
-          "E001",
           "E002"
         ]
       },
       {
-        "risk": "证据等级不足导致误判",
-        "reason": "本证据包所有条目均为外部线索（evidenceGrade C），且未经官方确认，关键数据（如融资额、部署场景）可能不准确或夸大。",
+        "risk": "宁德时代海外运营合规风险",
+        "reason": "匈牙利工厂被罚款，显示海外监管合规挑战，但细节不明。",
         "evidenceIds": [
-          "E001",
-          "E002",
-          "E004",
-          "E005",
-          "E006",
-          "E007",
-          "E008"
+          "E027"
         ]
       },
       {
-        "risk": "医疗AI临床可靠性风险",
-        "reason": "E005中RuiPath 2.0宣称五大升级，但病理诊断涉及患者安全，可解释性和罕见病数据训练效果需真实临床验证，若误诊风险未控可能影响推广。",
+        "risk": "AI安全系统公平性风险",
+        "reason": "研究显示T2I安全管道对非标准方言存在偏见，可能导致特定群体被错误过滤，引发声誉和监管风险。",
         "evidenceIds": [
           "E005"
         ]
       },
       {
-        "risk": "家庭AIOS生态失败风险",
-        "reason": "E006中JUOS宣称行业首个，但家庭AIOS需要跨品牌设备协同和用户习惯培养，若生态封闭或体验不佳，可能沦为概念产品。",
+        "risk": "AI生成内容所有权纠纷风险",
+        "reason": "扩散模型广泛应用但所有权验证困难，论文提出框架但有效性待验证，知识产权纠纷可能增加。",
         "evidenceIds": [
           "E006"
         ]
       },
       {
-        "risk": "宏观数据可持续性风险",
-        "reason": "E004显示上半年净利润增速19.5%，但增速较上年全年提升16.7个百分点，可能受低基数或一次性因素影响，下半年能否持续待观察。",
+        "risk": "苹果战略转型不确定性",
+        "reason": "CEO更替后AI战略未明确，执行风险和市场预期波动。",
         "evidenceIds": [
-          "E004"
+          "E009"
         ]
       },
       {
-        "risk": "VC募资与投资回报脱节风险",
-        "reason": "E007显示a16z基金规模扩大，但大规模募资可能推高资产价格，且基金业绩需多年验证，不能视为行业景气度的直接证据。",
+        "risk": "政策执行不及预期",
+        "reason": "工信部专项行动目标2000家服务商，但实际培育效果和商业化兑现存在不确定性。",
         "evidenceIds": [
-          "E007"
+          "E008"
         ]
       }
     ],
-    "methodologyNote": "本分析仅基于证据包中的7条外部线索（evidenceGrade C，publicationTier external_clue），所有事件均未经独立核实。分析中区分了报告/媒体陈述的事实、基于这些陈述的推断以及待验证事项。证据等级较低，因此所有判断的置信度设为low，不构成投资建议，不提供买卖或目标价。输出JSON符合指定结构。 数据管线提示：机构证据层重建=stale、科创板招股书投资者证据刷新=stale、月度信源效能审查=unknown。"
+    "methodologyNote": "本分析仅基于证据包中的14条证据，未补充外部事实。证据等级包括官方披露（E012、E013）、arXiv预印本（E004-E007）和媒体报道（E001-E003、E008-E010、E027、E035）。对于低等级证据，判断以medium或low confidence表达，并明确标注待验证事项。所有判断均引用证据编号。本报告不构成投资建议，不提供买入、卖出、目标价或收益承诺。 数据管线提示：机构证据层重建=stale、科创板招股书投资者证据刷新=stale。"
   },
   "changes": [
     {
-      "id": "chg-88a2b634ca9402685e78",
+      "id": "chg-bb7644b08c610ee5e47d",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-ad00ac6f1bee27897a",
-      "entityName": "具身智能机器人产业进展与商业化研究：人形机器人在哪些场景真正上岗了？",
+      "entityId": "intelligence-event-e3bf2e5ffc3f847558",
+      "entityName": "零售电商行业的AI落地困境",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：具身智能机器人产业进展与商业化研究：人形机器人在哪些场景真正上岗了？。",
-      "importance": 91,
+      "summary": "新增高价值情报事件记录：零售电商行业的AI落地困境。",
+      "importance": 84,
       "before": null,
       "after": {
-        "publishedAt": "2026-08-31",
-        "summary": "《 2026 年人形机器人产业进展与商业化研究报告 》发布。 2026年，具身智能行业的融资和发布密度仍在加速。仅今年6月和7月，国内披露的融资事件就超过70起，智平方完成近50亿元融资，星动纪元两个月累计融资25亿元，Agility Robotics计划通过SPAC上市，交易估值25亿美元。但与资本热度形成对照的是另一个问题：这些机器人到底在哪些场景中产生了真实的付费劳动？ 根据对国内外20家主要本体厂商落地情况的梳理，当前人形机器人的商业化进展呈现出明显的场景分化：物流仓储是唯一已经跨过付费商业部署门槛的场景…",
-        "title": "具身智能机器人产业进展与商业化研究：人形机器人在哪些场景真正上岗了？"
+        "publishedAt": "2026-09-01",
+        "summary": "AI只是工具，业务才是目的。",
+        "title": "零售电商行业的AI落地困境"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -355,7 +416,7 @@
         {
           "field": "publishedAt",
           "before": null,
-          "after": "2026-08-31",
+          "after": "2026-09-01",
           "evidenceIds": [
             "E001"
           ]
@@ -363,7 +424,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "《 2026 年人形机器人产业进展与商业化研究报告 》发布。 2026年，具身智能行业的融资和发布密度仍在加速。仅今年6月和7月，国内披露的融资事件就超过70起，智平方完成近50亿元融资，星动纪元两个月累计融资25亿元，Agility Robotics计划通过SPAC上市，交易估值25亿美元。但与资本热度形成对照的是另一个问题：这些机器人到底在哪些场景中产生了真实的付费劳动？ 根据对国内外20家主要本体厂商落地情况的梳理，当前人形机器人的商业化进展呈现出明显的场景分化：物流仓储是唯一已经跨过付费商业部署门槛的场景…",
+          "after": "AI只是工具，业务才是目的。",
           "evidenceIds": [
             "E001"
           ]
@@ -371,7 +432,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "具身智能机器人产业进展与商业化研究：人形机器人在哪些场景真正上岗了？",
+          "after": "零售电商行业的AI落地困境",
           "evidenceIds": [
             "E001"
           ]
@@ -392,35 +453,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-c947e6da5a8b74ea9ed2"
+        "evt-06d4a5ab3868f010215a"
       ],
       "eventLifecycles": {
-        "evt-c947e6da5a8b74ea9ed2": "first_seen"
+        "evt-06d4a5ab3868f010215a": "first_seen"
       },
-      "eventId": "evt-c947e6da5a8b74ea9ed2",
+      "eventId": "evt-06d4a5ab3868f010215a",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T00:07:31+00:00",
-      "lastSeenAt": "2026-09-01T00:07:31+00:00"
+      "firstSeenAt": "2026-09-01T01:56:14+00:00",
+      "lastSeenAt": "2026-09-01T01:56:14+00:00"
     },
     {
-      "id": "chg-5b6772cc00704cc21f19",
+      "id": "chg-f18893806deb0f39c240",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-3f3e92d46aaac91d78",
-      "entityName": "具身智能规模化落地的解法，鹿明摸索出来了",
+      "entityId": "intelligence-event-947e4408a413604e36",
+      "entityName": "微创机器人-B：延迟刊发2026年中期业绩",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：具身智能规模化落地的解法，鹿明摸索出来了。",
+      "summary": "新增高价值情报事件记录：微创机器人-B：延迟刊发2026年中期业绩。",
       "importance": 84,
       "before": null,
       "after": {
-        "publishedAt": "2026-08-31",
-        "summary": "鹿明发布NexCore，要把具身落地的全套系统打通。 作者丨 向 欣 编辑丨董子博 今年具身智能行业的热度，用「烈火烹油」来形容毫不为过。融资一笔接一笔，模型榜单隔三差五刷新。但如果剥开这些热闹去看一个最朴素的指标：有多少机器人在产线上持续运行？答案屈指可数。 不少产业方透露，大量所谓的「落地」，还停留在友情合作的 POC 阶段，视频拍得漂亮，产线上是另一回事。机器人进得了厂，却站不住脚。 这是一个值得深思的悖论：技术进步的速度肉眼可见，但距离真实生产力输出的鸿沟似乎并没有缩短。今年各家本体的硬件参数越来越接近，…",
-        "title": "具身智能规模化落地的解法，鹿明摸索出来了"
+        "publishedAt": "2026-09-01",
+        "summary": "微创机器人-B（02252）发布公告，就集团于报告期内的一项租赁安排，公司需要更多时间去进一步确认交易对手方与集团的关系，而截至本公告日期，由于上述事项尚待厘清...",
+        "title": "微创机器人-B：延迟刊发2026年中期业绩"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -434,7 +495,7 @@
         {
           "field": "publishedAt",
           "before": null,
-          "after": "2026-08-31",
+          "after": "2026-09-01",
           "evidenceIds": [
             "E002"
           ]
@@ -442,7 +503,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "鹿明发布NexCore，要把具身落地的全套系统打通。 作者丨 向 欣 编辑丨董子博 今年具身智能行业的热度，用「烈火烹油」来形容毫不为过。融资一笔接一笔，模型榜单隔三差五刷新。但如果剥开这些热闹去看一个最朴素的指标：有多少机器人在产线上持续运行？答案屈指可数。 不少产业方透露，大量所谓的「落地」，还停留在友情合作的 POC 阶段，视频拍得漂亮，产线上是另一回事。机器人进得了厂，却站不住脚。 这是一个值得深思的悖论：技术进步的速度肉眼可见，但距离真实生产力输出的鸿沟似乎并没有缩短。今年各家本体的硬件参数越来越接近，…",
+          "after": "微创机器人-B（02252）发布公告，就集团于报告期内的一项租赁安排，公司需要更多时间去进一步确认交易对手方与集团的关系，而截至本公告日期，由于上述事项尚待厘清...",
           "evidenceIds": [
             "E002"
           ]
@@ -450,7 +511,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "具身智能规模化落地的解法，鹿明摸索出来了",
+          "after": "微创机器人-B：延迟刊发2026年中期业绩",
           "evidenceIds": [
             "E002"
           ]
@@ -471,35 +532,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-a7aa39fb7de0a781d23a"
+        "evt-89b141ca64c7cbd22d59"
       ],
       "eventLifecycles": {
-        "evt-a7aa39fb7de0a781d23a": "first_seen"
+        "evt-89b141ca64c7cbd22d59": "first_seen"
       },
-      "eventId": "evt-a7aa39fb7de0a781d23a",
+      "eventId": "evt-89b141ca64c7cbd22d59",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T00:07:31+00:00",
-      "lastSeenAt": "2026-09-01T00:07:31+00:00"
+      "firstSeenAt": "2026-09-01T01:56:14+00:00",
+      "lastSeenAt": "2026-09-01T01:56:14+00:00"
     },
     {
-      "id": "chg-500c3b59f3e57f56e671",
+      "id": "chg-4fb8dd154a0a7be90acc",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-123fb3d4bfc017c050",
-      "entityName": "中上协发布境内上市公司半年度经营业绩报告 营收净利增速回升 创新投入持续加码",
+      "entityId": "intelligence-event-688951b3f600bad5bf",
+      "entityName": "年内业绩十强基金因何而强 隐形重仓股透露多元防守布局",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：中上协发布境内上市公司半年度经营业绩报告 营收净利增速回升 创新投入持续加码。",
+      "summary": "新增高价值情报事件记录：年内业绩十强基金因何而强 隐形重仓股透露多元防守布局。",
       "importance": 84,
       "before": null,
       "after": {
-        "publishedAt": "2026-08-31",
-        "summary": "□ 上半年，全市场5557家上市公司实现营业收入37.76万亿元，同比增长7.6%；实现净利润3.58万亿元，同比增长19.5%，增速较上年全年提升16.7个百分点",
-        "title": "中上协发布境内上市公司半年度经营业绩报告 营收净利增速回升 创新投入持续加码"
+        "publishedAt": "2026-09-01",
+        "summary": "随着2026年公募基金半年报披露完毕，年内主动权益基金业绩十强产品的股票持仓明细也浮出水面。截至8月31日，易方达供给改革、易方达产业机遇、东方 人工智能 主题、汇安趋势动力、诺安创新驱动等年内业绩十强基金均已披露全部持仓，这些基金在隐形重仓股上大多开启多元布局，多位基金经理也在半年度报告强调风格或将走向均衡，下阶段持仓须拓宽股票范围。 根据主动权益基金十强产品披露的半年度数据，明星选手几乎清一色开启左手进攻（前十大重仓股）、右手多元防守（隐形重仓股）的布局思路。证券时报记者注意到，当前冠军基金经理杨宗昌管理的易…",
+        "title": "年内业绩十强基金因何而强 隐形重仓股透露多元防守布局"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -513,7 +574,86 @@
         {
           "field": "publishedAt",
           "before": null,
-          "after": "2026-08-31",
+          "after": "2026-09-01",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "随着2026年公募基金半年报披露完毕，年内主动权益基金业绩十强产品的股票持仓明细也浮出水面。截至8月31日，易方达供给改革、易方达产业机遇、东方 人工智能 主题、汇安趋势动力、诺安创新驱动等年内业绩十强基金均已披露全部持仓，这些基金在隐形重仓股上大多开启多元布局，多位基金经理也在半年度报告强调风格或将走向均衡，下阶段持仓须拓宽股票范围。 根据主动权益基金十强产品披露的半年度数据，明星选手几乎清一色开启左手进攻（前十大重仓股）、右手多元防守（隐形重仓股）的布局思路。证券时报记者注意到，当前冠军基金经理杨宗昌管理的易…",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "年内业绩十强基金因何而强 隐形重仓股透露多元防守布局",
+          "evidenceIds": [
+            "E003"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E003"
+      ],
+      "supportingEvidenceIds": [
+        "E003"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-5bdb8c4019a7ed2d1bb8"
+      ],
+      "eventLifecycles": {
+        "evt-5bdb8c4019a7ed2d1bb8": "first_seen"
+      },
+      "eventId": "evt-5bdb8c4019a7ed2d1bb8",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T01:56:14+00:00",
+      "lastSeenAt": "2026-09-01T01:56:14+00:00"
+    },
+    {
+      "id": "chg-ba0b3df6ee90d5f277be",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-31c54b3f6892dcad29",
+      "entityName": "Verification abundance, adjudication scarcity: what happens to mathematical knowledge when proof checking becomes free",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Verification abundance, adjudication scarcity: what happens to mathematical knowledge when proof checking becomes free。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-29",
+        "summary": "In May 2026 an OpenAI model produced a counterexample to the Erdős unit distance conjecture. Five mathematicians published a human-verified version the same day, and the result entered the literature within weeks. In August 2026 the same laboratory published…",
+        "title": "Verification abundance, adjudication scarcity: what happens to mathematical knowledge when proof checking becomes free"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-29",
           "evidenceIds": [
             "E004"
           ]
@@ -521,7 +661,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "□ 上半年，全市场5557家上市公司实现营业收入37.76万亿元，同比增长7.6%；实现净利润3.58万亿元，同比增长19.5%，增速较上年全年提升16.7个百分点",
+          "after": "In May 2026 an OpenAI model produced a counterexample to the Erdős unit distance conjecture. Five mathematicians published a human-verified version the same day, and the result entered the literature within weeks. In August 2026 the same laboratory published…",
           "evidenceIds": [
             "E004"
           ]
@@ -529,7 +669,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "中上协发布境内上市公司半年度经营业绩报告 营收净利增速回升 创新投入持续加码",
+          "after": "Verification abundance, adjudication scarcity: what happens to mathematical knowledge when proof checking becomes free",
           "evidenceIds": [
             "E004"
           ]
@@ -550,35 +690,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-4b6892c95aa2d493b111"
+        "evt-b2bfc09b7df2f007bc8e"
       ],
       "eventLifecycles": {
-        "evt-4b6892c95aa2d493b111": "first_seen"
+        "evt-b2bfc09b7df2f007bc8e": "first_seen"
       },
-      "eventId": "evt-4b6892c95aa2d493b111",
+      "eventId": "evt-b2bfc09b7df2f007bc8e",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T00:07:31+00:00",
-      "lastSeenAt": "2026-09-01T00:07:31+00:00"
+      "firstSeenAt": "2026-09-01T01:56:14+00:00",
+      "lastSeenAt": "2026-09-01T01:56:14+00:00"
     },
     {
-      "id": "chg-72671191c77f2736a9dc",
+      "id": "chg-30972c54b77ae26800c8",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-4963bb9e547f356394",
-      "entityName": "瑞金医院联合华为云发布瑞智病理大模型RuiPath 2.0",
+      "entityId": "intelligence-event-e27f7796bcd1e84c1a",
+      "entityName": "Not Safe for All: Auditing the Dialect Penalty in Text-to-Image Safety Pipelines",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：瑞金医院联合华为云发布瑞智病理大模型RuiPath 2.0。",
-      "importance": 82,
+      "summary": "新增高价值情报事件记录：Not Safe for All: Auditing the Dialect Penalty in Text-to-Image Safety Pipelines。",
+      "importance": 84,
       "before": null,
       "after": {
-        "publishedAt": "2026-08-31",
-        "summary": "8月30日，“数智共生·云惠病理”2026医疗人工智能创新论坛在上海召开。瑞金医院联合华为云正式发布瑞智病理大模型RuiPath 2.0，在性能、诊断能力、病理诊断可解释性、罕见病种数据训练、轻量化部署方面带来五大重磅升级。 瑞金医院联合华为云发布瑞智病理大模型RuiPath 2.0 中国工程院院士、上海交通大学医学院附属瑞金医院院长宁光指出，优质医疗资源的匮乏和分布不均，是我们面临的真实痛点。构建病理大模型不是为了在三甲医院建起一座技术的“高墙”，而是为了修筑一条通往基层的“高速公路”，通过云边协同等模式，把瑞…",
-        "title": "瑞金医院联合华为云发布瑞智病理大模型RuiPath 2.0"
+        "publishedAt": "2026-08-30",
+        "summary": "Text-to-image (T2I) safety guardrails fail to generalize equitably to non-standard dialects. Evaluating 23,080 paired prompts across five English dialects, we formalize this failure as the dialect penalty, where filters trigger based on linguistic surface fea…",
+        "title": "Not Safe for All: Auditing the Dialect Penalty in Text-to-Image Safety Pipelines"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -592,7 +732,7 @@
         {
           "field": "publishedAt",
           "before": null,
-          "after": "2026-08-31",
+          "after": "2026-08-30",
           "evidenceIds": [
             "E005"
           ]
@@ -600,7 +740,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "8月30日，“数智共生·云惠病理”2026医疗人工智能创新论坛在上海召开。瑞金医院联合华为云正式发布瑞智病理大模型RuiPath 2.0，在性能、诊断能力、病理诊断可解释性、罕见病种数据训练、轻量化部署方面带来五大重磅升级。 瑞金医院联合华为云发布瑞智病理大模型RuiPath 2.0 中国工程院院士、上海交通大学医学院附属瑞金医院院长宁光指出，优质医疗资源的匮乏和分布不均，是我们面临的真实痛点。构建病理大模型不是为了在三甲医院建起一座技术的“高墙”，而是为了修筑一条通往基层的“高速公路”，通过云边协同等模式，把瑞…",
+          "after": "Text-to-image (T2I) safety guardrails fail to generalize equitably to non-standard dialects. Evaluating 23,080 paired prompts across five English dialects, we formalize this failure as the dialect penalty, where filters trigger based on linguistic surface fea…",
           "evidenceIds": [
             "E005"
           ]
@@ -608,7 +748,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "瑞金医院联合华为云发布瑞智病理大模型RuiPath 2.0",
+          "after": "Not Safe for All: Auditing the Dialect Penalty in Text-to-Image Safety Pipelines",
           "evidenceIds": [
             "E005"
           ]
@@ -629,35 +769,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-d399b2cc1d84937dddb6"
+        "evt-6c5434f9fff212a0e0d7"
       ],
       "eventLifecycles": {
-        "evt-d399b2cc1d84937dddb6": "first_seen"
+        "evt-6c5434f9fff212a0e0d7": "first_seen"
       },
-      "eventId": "evt-d399b2cc1d84937dddb6",
+      "eventId": "evt-6c5434f9fff212a0e0d7",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T00:07:31+00:00",
-      "lastSeenAt": "2026-09-01T00:07:31+00:00"
+      "firstSeenAt": "2026-09-01T01:56:14+00:00",
+      "lastSeenAt": "2026-09-01T01:56:14+00:00"
     },
     {
-      "id": "chg-2af0554ad4b205186ba3",
+      "id": "chg-4526e644b56c6d225241",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-e39e9865479401075e",
-      "entityName": "海信JUOS发布！行业首个家庭智能伴侣级AIOS，家庭AI从“被动响应”走向“主动懂家”",
+      "entityId": "intelligence-event-921bcefef41247bce0",
+      "entityName": "Membership is Ownership: A Robust Ownership Verification Framework for Diffusion Models",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：海信JUOS发布！行业首个家庭智能伴侣级AIOS，家庭AI从“被动响应”走向“主动懂家”。",
-      "importance": 82,
+      "summary": "新增高价值情报事件记录：Membership is Ownership: A Robust Ownership Verification Framework for Diffusion Models。",
+      "importance": 84,
       "before": null,
       "after": {
-        "publishedAt": "2026-08-31",
-        "summary": "8月31日，海信正式发布行业首个家庭智能伴侣级AIOS——海信JUOS。该系统面向家庭全场景，原生适配电视、闺蜜机、投影、智能家电等多终端，搭载自研星海大模型与四大原生引擎，以“超级小聚”为系统级AI载体，完成家庭AI交互底层重构，实现从被动响应个体指令到主动服务全家需求的代际跃迁。 以“一家人”为设计原点，海信JUOS完成家庭AI系统底层重构 当前手机、车载OS已发展成熟，但真正以“一家人”为设计原点、面向家庭场景的AIOS系统，仍是行业空白。在开创并全球率先量产RGB-MiniLED电视，推动显示迈入原生真彩…",
-        "title": "海信JUOS发布！行业首个家庭智能伴侣级AIOS，家庭AI从“被动响应”走向“主动懂家”"
+        "publishedAt": "2026-08-28",
+        "summary": "Large-scale diffusion models have fueled numerous profitable downstream applications for AI-related businesses, including visual editing and content creation. Meanwhile, due to the huge amount of resource consumption (e.g., computation and high-quality data)…",
+        "title": "Membership is Ownership: A Robust Ownership Verification Framework for Diffusion Models"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -671,7 +811,7 @@
         {
           "field": "publishedAt",
           "before": null,
-          "after": "2026-08-31",
+          "after": "2026-08-28",
           "evidenceIds": [
             "E006"
           ]
@@ -679,7 +819,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "8月31日，海信正式发布行业首个家庭智能伴侣级AIOS——海信JUOS。该系统面向家庭全场景，原生适配电视、闺蜜机、投影、智能家电等多终端，搭载自研星海大模型与四大原生引擎，以“超级小聚”为系统级AI载体，完成家庭AI交互底层重构，实现从被动响应个体指令到主动服务全家需求的代际跃迁。 以“一家人”为设计原点，海信JUOS完成家庭AI系统底层重构 当前手机、车载OS已发展成熟，但真正以“一家人”为设计原点、面向家庭场景的AIOS系统，仍是行业空白。在开创并全球率先量产RGB-MiniLED电视，推动显示迈入原生真彩…",
+          "after": "Large-scale diffusion models have fueled numerous profitable downstream applications for AI-related businesses, including visual editing and content creation. Meanwhile, due to the huge amount of resource consumption (e.g., computation and high-quality data)…",
           "evidenceIds": [
             "E006"
           ]
@@ -687,7 +827,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "海信JUOS发布！行业首个家庭智能伴侣级AIOS，家庭AI从“被动响应”走向“主动懂家”",
+          "after": "Membership is Ownership: A Robust Ownership Verification Framework for Diffusion Models",
           "evidenceIds": [
             "E006"
           ]
@@ -708,35 +848,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-bb12f975662614486f41"
+        "evt-0dcabc4fc8aaf0a2e36c"
       ],
       "eventLifecycles": {
-        "evt-bb12f975662614486f41": "first_seen"
+        "evt-0dcabc4fc8aaf0a2e36c": "first_seen"
       },
-      "eventId": "evt-bb12f975662614486f41",
+      "eventId": "evt-0dcabc4fc8aaf0a2e36c",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T00:07:31+00:00",
-      "lastSeenAt": "2026-09-01T00:07:31+00:00"
+      "firstSeenAt": "2026-09-01T01:56:14+00:00",
+      "lastSeenAt": "2026-09-01T01:56:14+00:00"
     },
     {
-      "id": "chg-f54116627fe36563b39d",
+      "id": "chg-22cb71bb1525c80f59c7",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-9f3eed549b938bbc7a",
-      "entityName": "a16z brings growth fund to $8.5B days after launching new $1.1B fund",
+      "entityId": "intelligence-event-cfb387eb474e4e8f41",
+      "entityName": "Explainable Artificial Intelligence (XAI) in Computational Pathology: Definitions, Taxonomy, and Recommendations",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：a16z brings growth fund to $8.5B days after launching new $1.1B fund。",
-      "importance": 82,
+      "summary": "新增高价值情报事件记录：Explainable Artificial Intelligence (XAI) in Computational Pathology: Definitions, Taxonomy, and Recommendations。",
+      "importance": 84,
       "before": null,
       "after": {
-        "publishedAt": "2026-08-31",
-        "summary": "Andreessen Horowitz held out its hand and returned with billions more in new funds to invest in startups.",
-        "title": "a16z brings growth fund to $8.5B days after launching new $1.1B fund"
+        "publishedAt": "2026-08-28",
+        "summary": "Computational pathology (CompPath) is transforming medicine by leveraging artificial intelligence (AI) algorithms to support diagnosis, prognosis, and treatment prediction from gigapixel whole-slide images. Clinical adoption is progressing, but is constrained…",
+        "title": "Explainable Artificial Intelligence (XAI) in Computational Pathology: Definitions, Taxonomy, and Recommendations"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -750,7 +890,7 @@
         {
           "field": "publishedAt",
           "before": null,
-          "after": "2026-08-31",
+          "after": "2026-08-28",
           "evidenceIds": [
             "E007"
           ]
@@ -758,7 +898,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "Andreessen Horowitz held out its hand and returned with billions more in new funds to invest in startups.",
+          "after": "Computational pathology (CompPath) is transforming medicine by leveraging artificial intelligence (AI) algorithms to support diagnosis, prognosis, and treatment prediction from gigapixel whole-slide images. Clinical adoption is progressing, but is constrained…",
           "evidenceIds": [
             "E007"
           ]
@@ -766,7 +906,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "a16z brings growth fund to $8.5B days after launching new $1.1B fund",
+          "after": "Explainable Artificial Intelligence (XAI) in Computational Pathology: Definitions, Taxonomy, and Recommendations",
           "evidenceIds": [
             "E007"
           ]
@@ -787,35 +927,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-233bf3375397146b5637"
+        "evt-28b70ff575f371968b8b"
       ],
       "eventLifecycles": {
-        "evt-233bf3375397146b5637": "first_seen"
+        "evt-28b70ff575f371968b8b": "first_seen"
       },
-      "eventId": "evt-233bf3375397146b5637",
+      "eventId": "evt-28b70ff575f371968b8b",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T00:07:31+00:00",
-      "lastSeenAt": "2026-09-01T00:07:31+00:00"
+      "firstSeenAt": "2026-09-01T01:56:14+00:00",
+      "lastSeenAt": "2026-09-01T01:56:14+00:00"
     },
     {
-      "id": "chg-3d520f4165c6731d21c1",
+      "id": "chg-d63a2432075b31fe8838",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-9bead125713b3e9828",
-      "entityName": "Asus ProArt P16 launching with 1,600 nit Tandem OLED display, 128 GB RAM and Nvidia RTX Spark",
+      "entityId": "intelligence-event-e5a05dc4b849db9cce",
+      "entityName": "AI应用服务商培育专项行动落地！行业加速迈向商业化兑现拐点(附股)",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：Asus ProArt P16 launching with 1,600 nit Tandem OLED display, 128 GB RAM and Nvidia RTX Spark。",
-      "importance": 82,
+      "summary": "新增高价值情报事件记录：AI应用服务商培育专项行动落地！行业加速迈向商业化兑现拐点(附股)。",
+      "importance": 84,
       "before": null,
       "after": {
-        "publishedAt": "2026-08-31",
-        "summary": "Asus has revealed more details about its next MacBook Pro 16 rival. Launching before the end of 2026, the new ProArt P16 combines a 99 Wh battery, 240 W charging, a 4K Tandem OLED display, up to 128 GB RAM and a 20-core Nvidia RTX Spark processor.",
-        "title": "Asus ProArt P16 launching with 1,600 nit Tandem OLED display, 128 GB RAM and Nvidia RTX Spark"
+        "publishedAt": "2026-09-01",
+        "summary": "工信部启动 AI应用 服务商培育专项行动，明确2026年底全国服务商资源池突破2000家。机构认为，AI产业投资逻辑正从“模型竞赛”转向“商业化验证”，B端应用厂商迎来关键窗口期。 8月31日，工信部办公厅发布《关于开展 人工智能 应用服务商培育专项行动的通知》，这是国内首部以“ 人工智能 应用服务商”为主体的国家级专项政策。 根据通知， 人工智能 应用服务商是指围绕用户单位智能化需求，提供人工智能解决方案咨询规划、交付实施、运营管理、安全治理等服务的企业或机构。",
+        "title": "AI应用服务商培育专项行动落地！行业加速迈向商业化兑现拐点(附股)"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -829,7 +969,7 @@
         {
           "field": "publishedAt",
           "before": null,
-          "after": "2026-08-31",
+          "after": "2026-09-01",
           "evidenceIds": [
             "E008"
           ]
@@ -837,7 +977,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "Asus has revealed more details about its next MacBook Pro 16 rival. Launching before the end of 2026, the new ProArt P16 combines a 99 Wh battery, 240 W charging, a 4K Tandem OLED display, up to 128 GB RAM and a 20-core Nvidia RTX Spark processor.",
+          "after": "工信部启动 AI应用 服务商培育专项行动，明确2026年底全国服务商资源池突破2000家。机构认为，AI产业投资逻辑正从“模型竞赛”转向“商业化验证”，B端应用厂商迎来关键窗口期。 8月31日，工信部办公厅发布《关于开展 人工智能 应用服务商培育专项行动的通知》，这是国内首部以“ 人工智能 应用服务商”为主体的国家级专项政策。 根据通知， 人工智能 应用服务商是指围绕用户单位智能化需求，提供人工智能解决方案咨询规划、交付实施、运营管理、安全治理等服务的企业或机构。",
           "evidenceIds": [
             "E008"
           ]
@@ -845,7 +985,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "Asus ProArt P16 launching with 1,600 nit Tandem OLED display, 128 GB RAM and Nvidia RTX Spark",
+          "after": "AI应用服务商培育专项行动落地！行业加速迈向商业化兑现拐点(附股)",
           "evidenceIds": [
             "E008"
           ]
@@ -866,53 +1006,491 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-a06bc4b9b94172b5a62e"
+        "evt-1d27e3f7c80bac43836f"
       ],
       "eventLifecycles": {
-        "evt-a06bc4b9b94172b5a62e": "first_seen"
+        "evt-1d27e3f7c80bac43836f": "first_seen"
       },
-      "eventId": "evt-a06bc4b9b94172b5a62e",
+      "eventId": "evt-1d27e3f7c80bac43836f",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T00:07:31+00:00",
-      "lastSeenAt": "2026-09-01T00:07:31+00:00"
+      "firstSeenAt": "2026-09-01T01:56:14+00:00",
+      "lastSeenAt": "2026-09-01T01:56:14+00:00"
+    },
+    {
+      "id": "chg-a43a5de92e2231982b28",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-2482615b14c327e9e7",
+      "entityName": "苹果开启特努斯时代：AI成“头号考题” 下一个增长点在哪？",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：苹果开启特努斯时代：AI成“头号考题” 下一个增长点在哪？。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-01",
+        "summary": "9月1日， 苹果 正式完成权力交接。硬件工程高级副总裁约翰·特努斯接替蒂姆·库克，出任 苹果 新一任CEO，执掌这家市值4.6万亿美元的 消费电子 巨头。 库克并未完全退休，而是转任执行董事长，未来将协助处理公司部分事务，包括与全球政策制定者沟通。 15年前，库克从乔布斯手中接管公司，搭上 消费电子 超级周期，凭借运营能力将 苹果 带到新高度。",
+        "title": "苹果开启特努斯时代：AI成“头号考题” 下一个增长点在哪？"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-01",
+          "evidenceIds": [
+            "E009"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "9月1日， 苹果 正式完成权力交接。硬件工程高级副总裁约翰·特努斯接替蒂姆·库克，出任 苹果 新一任CEO，执掌这家市值4.6万亿美元的 消费电子 巨头。 库克并未完全退休，而是转任执行董事长，未来将协助处理公司部分事务，包括与全球政策制定者沟通。 15年前，库克从乔布斯手中接管公司，搭上 消费电子 超级周期，凭借运营能力将 苹果 带到新高度。",
+          "evidenceIds": [
+            "E009"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "苹果开启特努斯时代：AI成“头号考题” 下一个增长点在哪？",
+          "evidenceIds": [
+            "E009"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E009"
+      ],
+      "supportingEvidenceIds": [
+        "E009"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-e0514d8636ed71fb0d80"
+      ],
+      "eventLifecycles": {
+        "evt-e0514d8636ed71fb0d80": "first_seen"
+      },
+      "eventId": "evt-e0514d8636ed71fb0d80",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T01:56:14+00:00",
+      "lastSeenAt": "2026-09-01T01:56:14+00:00"
+    },
+    {
+      "id": "chg-5584134550892dbe2ad2",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-2ac8ca04512688a0f6",
+      "entityName": "优必选在天津成立机器人公司 含多项AI业务",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：优必选在天津成立机器人公司 含多项AI业务。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-01",
+        "summary": "企查查APP显示，近日，天津 优必选 机器人 有限公司成立，经营范围包含智能 机器人 的研发；智能 机器人 销售； 人工智能 理论与算法 软件开发 ； 人工智能 行业应用系统集成服务； 人工智能 应用 软件开发 等。企查查股权穿透显示，该公司由 优必选 全资持股。",
+        "title": "优必选在天津成立机器人公司 含多项AI业务"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-01",
+          "evidenceIds": [
+            "E010"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "企查查APP显示，近日，天津 优必选 机器人 有限公司成立，经营范围包含智能 机器人 的研发；智能 机器人 销售； 人工智能 理论与算法 软件开发 ； 人工智能 行业应用系统集成服务； 人工智能 应用 软件开发 等。企查查股权穿透显示，该公司由 优必选 全资持股。",
+          "evidenceIds": [
+            "E010"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "优必选在天津成立机器人公司 含多项AI业务",
+          "evidenceIds": [
+            "E010"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E010"
+      ],
+      "supportingEvidenceIds": [
+        "E010"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-f054d74103ea4371099a"
+      ],
+      "eventLifecycles": {
+        "evt-f054d74103ea4371099a": "first_seen"
+      },
+      "eventId": "evt-f054d74103ea4371099a",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T01:56:14+00:00",
+      "lastSeenAt": "2026-09-01T01:56:14+00:00"
+    },
+    {
+      "id": "chg-934feb94eba429dad628",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-2b3c683e95e1902152",
+      "entityName": "Piloting the world's first double-blind AI evaluations",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Piloting the world's first double-blind AI evaluations。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-27",
+        "summary": "Building trust in proprietary model benchmarks using cryptographically secure environments",
+        "title": "Piloting the world's first double-blind AI evaluations"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-27",
+          "evidenceIds": [
+            "E012"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Building trust in proprietary model benchmarks using cryptographically secure environments",
+          "evidenceIds": [
+            "E012"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Piloting the world's first double-blind AI evaluations",
+          "evidenceIds": [
+            "E012"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E012"
+      ],
+      "supportingEvidenceIds": [
+        "E012"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-40665b58084cc6b5bacb"
+      ],
+      "eventLifecycles": {
+        "evt-40665b58084cc6b5bacb": "first_seen"
+      },
+      "eventId": "evt-40665b58084cc6b5bacb",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T01:56:14+00:00",
+      "lastSeenAt": "2026-09-01T01:56:14+00:00"
+    },
+    {
+      "id": "chg-6284cb9713b707c8d73a",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-7c90a5f93033bbe0ca",
+      "entityName": "Autoscaling Lakebase Postgres",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Autoscaling Lakebase Postgres。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-08-31",
+        "summary": "Autoscaling prepares Postgres for workloads where wasted compute is not an option.",
+        "title": "Autoscaling Lakebase Postgres"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-08-31",
+          "evidenceIds": [
+            "E013"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Autoscaling prepares Postgres for workloads where wasted compute is not an option.",
+          "evidenceIds": [
+            "E013"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Autoscaling Lakebase Postgres",
+          "evidenceIds": [
+            "E013"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E013"
+      ],
+      "supportingEvidenceIds": [
+        "E013"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-39dfeedbac464b617b9b"
+      ],
+      "eventLifecycles": {
+        "evt-39dfeedbac464b617b9b": "first_seen"
+      },
+      "eventId": "evt-39dfeedbac464b617b9b",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T01:56:14+00:00",
+      "lastSeenAt": "2026-09-01T01:56:14+00:00"
+    },
+    {
+      "id": "chg-0b48ed95a209accd2b08",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "catl",
+      "entityName": "宁德时代",
+      "action": "updated",
+      "changedFields": [
+        "news"
+      ],
+      "summary": "宁德时代 的 news、quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": []
+      },
+      "after": {
+        "news": [
+          {
+            "publishedAt": "2026-09-01T08:50:00+08:00",
+            "source": "新浪财经",
+            "title": "宁德时代匈牙利工厂被罚款",
+            "url": "https://finance.sina.com.cn/roll/2026-09-01/doc-iniqhscz8309632.shtml"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [],
+          "after": [
+            {
+              "publishedAt": "2026-09-01T08:50:00+08:00",
+              "source": "新浪财经",
+              "title": "宁德时代匈牙利工厂被罚款",
+              "url": "https://finance.sina.com.cn/roll/2026-09-01/doc-iniqhscz8309632.shtml"
+            }
+          ],
+          "evidenceIds": [
+            "E027"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E027"
+      ],
+      "supportingEvidenceIds": [
+        "E027"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-0a4c2871cdc00b3ff51d"
+      ],
+      "eventLifecycles": {
+        "evt-0a4c2871cdc00b3ff51d": "first_seen"
+      },
+      "eventId": "evt-0a4c2871cdc00b3ff51d",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T01:56:14+00:00",
+      "lastSeenAt": "2026-09-01T01:56:14+00:00"
+    },
+    {
+      "id": "chg-a32da9e7d1c60f5c9f1e",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "cambricon",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "action": "updated",
+      "changedFields": [
+        "news"
+      ],
+      "summary": "中科寒武纪科技股份有限公司 的 news、quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": []
+      },
+      "after": {
+        "news": [
+          {
+            "publishedAt": "2026-09-01T08:13:00+08:00",
+            "source": "新浪财经",
+            "title": "寒武纪：8月31日获融资买入10.02亿元，融资余额178.25亿元占流通市值比例2.55%，超过近一年60%分位水平",
+            "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-09-01/doc-iniqhmwh1550740.shtml"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [],
+          "after": [
+            {
+              "publishedAt": "2026-09-01T08:13:00+08:00",
+              "source": "新浪财经",
+              "title": "寒武纪：8月31日获融资买入10.02亿元，融资余额178.25亿元占流通市值比例2.55%，超过近一年60%分位水平",
+              "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-09-01/doc-iniqhmwh1550740.shtml"
+            }
+          ],
+          "evidenceIds": [
+            "E035"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E035"
+      ],
+      "supportingEvidenceIds": [
+        "E035"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-935efe99e3fec15819ef"
+      ],
+      "eventLifecycles": {
+        "evt-935efe99e3fec15819ef": "first_seen"
+      },
+      "eventId": "evt-935efe99e3fec15819ef",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-01T01:56:14+00:00",
+      "lastSeenAt": "2026-09-01T01:56:14+00:00"
     }
   ],
   "evidence": [
     {
       "id": "E001",
-      "changeId": "chg-88a2b634ca9402685e78",
-      "entityName": "具身智能机器人产业进展与商业化研究：人形机器人在哪些场景真正上岗了？",
-      "claim": "新增高价值情报事件记录：具身智能机器人产业进展与商业化研究：人形机器人在哪些场景真正上岗了？。",
+      "changeId": "chg-bb7644b08c610ee5e47d",
+      "entityName": "零售电商行业的AI落地困境",
+      "claim": "新增高价值情报事件记录：零售电商行业的AI落地困境。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "水清木华研究中心",
-      "title": "具身智能机器人产业进展与商业化研究：人形机器人在哪些场景真正上岗了？",
-      "url": "https://mp.weixin.qq.com/s?new=1&signature=zpxNyC1P9%2AFavFDOwTzuaViPfnuaGpjTSZsFfGlLs4cv9%2AOEraIG5fki94%2AxUqIoa8xd7G3xF2z9X8LtBcXF0nYn%2AFfd8bl9pzI4dK7qBeUPjILsme6t0lI6QJB5A2nR&src=11&timestamp=1788220620&ver=6939",
-      "publishedAt": "2026-08-31",
-      "evidenceGrade": "C",
-      "platformName": "微信",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E002",
-      "changeId": "chg-5b6772cc00704cc21f19",
-      "entityName": "具身智能规模化落地的解法，鹿明摸索出来了",
-      "claim": "新增高价值情报事件记录：具身智能规模化落地的解法，鹿明摸索出来了。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "雷峰网",
-      "title": "具身智能规模化落地的解法，鹿明摸索出来了",
-      "url": "https://www.leiphone.com/category/robot/aDmmeg0GHDOQc0yR.html",
-      "publishedAt": "2026-08-31",
+      "sourceName": "钛媒体",
+      "title": "零售电商行业的AI落地困境",
+      "url": "https://www.tmtpost.com/8123378.html",
+      "publishedAt": "2026-09-01",
       "evidenceGrade": "C",
       "platformName": "专业媒体",
       "sourceRole": "corroboration",
@@ -927,16 +1505,16 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E004",
-      "changeId": "chg-500c3b59f3e57f56e671",
-      "entityName": "中上协发布境内上市公司半年度经营业绩报告 营收净利增速回升 创新投入持续加码",
-      "claim": "新增高价值情报事件记录：中上协发布境内上市公司半年度经营业绩报告 营收净利增速回升 创新投入持续加码。",
+      "id": "E002",
+      "changeId": "chg-f18893806deb0f39c240",
+      "entityName": "微创机器人-B：延迟刊发2026年中期业绩",
+      "claim": "新增高价值情报事件记录：微创机器人-B：延迟刊发2026年中期业绩。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "sourceName": "新浪财经",
-      "title": "中上协发布境内上市公司半年度经营业绩报告 营收净利增速回升 创新投入持续加码",
-      "url": "https://finance.sina.com.cn/roll/2026-09-01/doc-iniqfzhf6980812.shtml",
-      "publishedAt": "2026-08-31",
+      "title": "微创机器人-B：延迟刊发2026年中期业绩",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-09-01/doc-iniqhscx6702515.shtml",
+      "publishedAt": "2026-09-01",
       "evidenceGrade": "C",
       "platformName": "新浪",
       "sourceRole": "corroboration",
@@ -951,19 +1529,66 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E005",
-      "changeId": "chg-72671191c77f2736a9dc",
-      "entityName": "瑞金医院联合华为云发布瑞智病理大模型RuiPath 2.0",
-      "claim": "新增高价值情报事件记录：瑞金医院联合华为云发布瑞智病理大模型RuiPath 2.0。",
+      "id": "E003",
+      "changeId": "chg-4fb8dd154a0a7be90acc",
+      "entityName": "年内业绩十强基金因何而强 隐形重仓股透露多元防守布局",
+      "claim": "新增高价值情报事件记录：年内业绩十强基金因何而强 隐形重仓股透露多元防守布局。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "雷峰网",
-      "title": "瑞金医院联合华为云发布瑞智病理大模型RuiPath 2.0",
-      "url": "https://www.leiphone.com/category/aihealth/MSsFF8sisQuWPkHG.html",
-      "publishedAt": "2026-08-31",
-      "evidenceGrade": "C",
-      "platformName": "专业媒体",
-      "sourceRole": "corroboration",
+      "sourceName": "东方财富",
+      "title": "年内业绩十强基金因何而强 隐形重仓股透露多元防守布局",
+      "url": "https://finance.eastmoney.com/a/202609013860529718.html",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "媒体报道",
+      "platformName": "东方财富",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E004",
+      "changeId": "chg-ba0b3df6ee90d5f277be",
+      "entityName": "Verification abundance, adjudication scarcity: what happens to mathematical knowledge when proof checking becomes free",
+      "claim": "新增高价值情报事件记录：Verification abundance, adjudication scarcity: what happens to mathematical knowledge when proof checking becomes free。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "arXiv · Core AI companies",
+      "title": "Verification abundance, adjudication scarcity: what happens to mathematical knowledge when proof checking becomes free",
+      "url": "https://arxiv.org/abs/2608.28997v1",
+      "publishedAt": "2026-08-29",
+      "evidenceGrade": "B",
+      "platformName": "arXiv",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E005",
+      "changeId": "chg-30972c54b77ae26800c8",
+      "entityName": "Not Safe for All: Auditing the Dialect Penalty in Text-to-Image Safety Pipelines",
+      "claim": "新增高价值情报事件记录：Not Safe for All: Auditing the Dialect Penalty in Text-to-Image Safety Pipelines。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "arXiv · Core AI companies",
+      "title": "Not Safe for All: Auditing the Dialect Penalty in Text-to-Image Safety Pipelines",
+      "url": "https://arxiv.org/abs/2608.29589v1",
+      "publishedAt": "2026-08-30",
+      "evidenceGrade": "B",
+      "platformName": "arXiv",
+      "sourceRole": "primary",
       "claimFields": [
         "publishedAt",
         "summary",
@@ -976,18 +1601,18 @@
     },
     {
       "id": "E006",
-      "changeId": "chg-2af0554ad4b205186ba3",
-      "entityName": "海信JUOS发布！行业首个家庭智能伴侣级AIOS，家庭AI从“被动响应”走向“主动懂家”",
-      "claim": "新增高价值情报事件记录：海信JUOS发布！行业首个家庭智能伴侣级AIOS，家庭AI从“被动响应”走向“主动懂家”。",
+      "changeId": "chg-4526e644b56c6d225241",
+      "entityName": "Membership is Ownership: A Robust Ownership Verification Framework for Diffusion Models",
+      "claim": "新增高价值情报事件记录：Membership is Ownership: A Robust Ownership Verification Framework for Diffusion Models。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "雷峰网",
-      "title": "海信JUOS发布！行业首个家庭智能伴侣级AIOS，家庭AI从“被动响应”走向“主动懂家”",
-      "url": "https://www.leiphone.com/category/smarthome/ZVheiCG6BlrsIMUP.html",
-      "publishedAt": "2026-08-31",
-      "evidenceGrade": "C",
-      "platformName": "专业媒体",
-      "sourceRole": "corroboration",
+      "sourceName": "arXiv · Core AI companies",
+      "title": "Membership is Ownership: A Robust Ownership Verification Framework for Diffusion Models",
+      "url": "https://arxiv.org/abs/2608.28929v1",
+      "publishedAt": "2026-08-28",
+      "evidenceGrade": "B",
+      "platformName": "arXiv",
+      "sourceRole": "primary",
       "claimFields": [
         "publishedAt",
         "summary",
@@ -1000,18 +1625,18 @@
     },
     {
       "id": "E007",
-      "changeId": "chg-f54116627fe36563b39d",
-      "entityName": "a16z brings growth fund to $8.5B days after launching new $1.1B fund",
-      "claim": "新增高价值情报事件记录：a16z brings growth fund to $8.5B days after launching new $1.1B fund。",
+      "changeId": "chg-22cb71bb1525c80f59c7",
+      "entityName": "Explainable Artificial Intelligence (XAI) in Computational Pathology: Definitions, Taxonomy, and Recommendations",
+      "claim": "新增高价值情报事件记录：Explainable Artificial Intelligence (XAI) in Computational Pathology: Definitions, Taxonomy, and Recommendations。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "TechCrunch Venture",
-      "title": "a16z brings growth fund to $8.5B days after launching new $1.1B fund",
-      "url": "https://techcrunch.com/2026/08/31/a16z-brings-growth-fund-to-8-5b-days-after-launching-new-1-1b-fund",
-      "publishedAt": "2026-08-31",
-      "evidenceGrade": "C",
-      "platformName": "专业媒体",
-      "sourceRole": "corroboration",
+      "sourceName": "arXiv · Core AI companies",
+      "title": "Explainable Artificial Intelligence (XAI) in Computational Pathology: Definitions, Taxonomy, and Recommendations",
+      "url": "https://arxiv.org/abs/2608.28820v1",
+      "publishedAt": "2026-08-28",
+      "evidenceGrade": "B",
+      "platformName": "arXiv",
+      "sourceRole": "primary",
       "claimFields": [
         "publishedAt",
         "summary",
@@ -1024,18 +1649,17 @@
     },
     {
       "id": "E008",
-      "changeId": "chg-3d520f4165c6731d21c1",
-      "entityName": "Asus ProArt P16 launching with 1,600 nit Tandem OLED display, 128 GB RAM and Nvidia RTX Spark",
-      "claim": "新增高价值情报事件记录：Asus ProArt P16 launching with 1,600 nit Tandem OLED display, 128 GB RAM and Nvidia RTX Spark。",
+      "changeId": "chg-d63a2432075b31fe8838",
+      "entityName": "AI应用服务商培育专项行动落地！行业加速迈向商业化兑现拐点(附股)",
+      "claim": "新增高价值情报事件记录：AI应用服务商培育专项行动落地！行业加速迈向商业化兑现拐点(附股)。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "Notebookcheck",
-      "title": "Asus ProArt P16 launching with 1,600 nit Tandem OLED display, 128 GB RAM and Nvidia RTX Spark",
-      "url": "https://www.notebookcheck.net/Asus-ProArt-P16-launching-with-1-600-nit-Tandem-OLED-display-128-GB-RAM-and-Nvidia-RTX-Spark.1384089.0.html",
-      "publishedAt": "2026-08-31",
-      "evidenceGrade": "C",
-      "platformName": "Notebookcheck",
-      "sourceRole": "corroboration",
+      "sourceName": "东方财富",
+      "title": "AI应用服务商培育专项行动落地！行业加速迈向商业化兑现拐点(附股)",
+      "url": "https://finance.eastmoney.com/a/202609013860731632.html",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "媒体报道",
+      "platformName": "东方财富",
       "claimFields": [
         "publishedAt",
         "summary",
@@ -1045,13 +1669,1767 @@
       "qualityIssues": [],
       "qualityStatus": "passed",
       "supportStatus": "supports"
+    },
+    {
+      "id": "E009",
+      "changeId": "chg-a43a5de92e2231982b28",
+      "entityName": "苹果开启特努斯时代：AI成“头号考题” 下一个增长点在哪？",
+      "claim": "新增高价值情报事件记录：苹果开启特努斯时代：AI成“头号考题” 下一个增长点在哪？。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "东方财富",
+      "title": "苹果开启特努斯时代：AI成“头号考题” 下一个增长点在哪？",
+      "url": "https://finance.eastmoney.com/a/202609013860570587.html",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "媒体报道",
+      "platformName": "东方财富",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E010",
+      "changeId": "chg-5584134550892dbe2ad2",
+      "entityName": "优必选在天津成立机器人公司 含多项AI业务",
+      "claim": "新增高价值情报事件记录：优必选在天津成立机器人公司 含多项AI业务。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "东方财富",
+      "title": "优必选在天津成立机器人公司 含多项AI业务",
+      "url": "https://finance.eastmoney.com/a/202609013861005717.html",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "媒体报道",
+      "platformName": "东方财富",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E012",
+      "changeId": "chg-934feb94eba429dad628",
+      "entityName": "Piloting the world's first double-blind AI evaluations",
+      "claim": "新增高价值情报事件记录：Piloting the world's first double-blind AI evaluations。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Google",
+      "title": "Piloting the world's first double-blind AI evaluations",
+      "url": "https://deepmind.google/blog/piloting-the-worlds-first-double-blind-ai-evaluations",
+      "publishedAt": "2026-08-27",
+      "evidenceGrade": "官方披露",
+      "platformName": "官方网站",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E013",
+      "changeId": "chg-6284cb9713b707c8d73a",
+      "entityName": "Autoscaling Lakebase Postgres",
+      "claim": "新增高价值情报事件记录：Autoscaling Lakebase Postgres。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Databricks",
+      "title": "Autoscaling Lakebase Postgres",
+      "url": "https://www.databricks.com/blog/autoscaling-lakebase-postgres",
+      "publishedAt": "2026-08-31",
+      "evidenceGrade": "官方披露",
+      "platformName": "官方网站",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E027",
+      "changeId": "chg-0b48ed95a209accd2b08",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news、quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "宁德时代匈牙利工厂被罚款",
+      "url": "https://finance.sina.com.cn/roll/2026-09-01/doc-iniqhscz8309632.shtml",
+      "publishedAt": "2026-09-01T08:50:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E035",
+      "changeId": "chg-a32da9e7d1c60f5c9f1e",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "claim": "中科寒武纪科技股份有限公司 的 news、quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "寒武纪：8月31日获融资买入10.02亿元，融资余额178.25亿元占流通市值比例2.55%，超过近一年60%分位水平",
+      "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-09-01/doc-iniqhmwh1550740.shtml",
+      "publishedAt": "2026-09-01T08:13:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
     }
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-01T00:07:31+00:00",
+    "generatedAt": "2026-09-01T01:56:14+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-f054d74103ea4371099a": {
+        "eventId": "evt-f054d74103ea4371099a",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-2ac8ca04512688a0f6",
+        "entityName": "优必选在天津成立机器人公司 含多项AI业务",
+        "title": "优必选在天津成立机器人公司 含多项AI业务",
+        "titleAliases": [
+          "优必选在天津成立机器人公司含多项ai业务"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-1833b9e3ac9abdab5d86",
+          "record-d2cdd023bc4b157d71fa",
+          "src-884e87212bdd972c8564"
+        ],
+        "evidenceFingerprints": [
+          "1833b9e3ac9abdab5d86"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "东方财富",
+            "title": "优必选在天津成立机器人公司 含多项AI业务",
+            "url": "https://finance.eastmoney.com/a/202609013861005717.html",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "65830e78977b1686dfbe",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-09-01T01:56:14+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-ea30894062d975829591": {
+        "eventId": "evt-ea30894062d975829591",
+        "dataset": "marketCompany",
+        "entityId": "mobileye",
+        "entityName": "Mobileye Global Inc.",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:mobileye",
+          "name:mobileye global inc."
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-4784366ca17ad9d0f78c",
+          "src-af6cdb5675017fa99563"
+        ],
+        "evidenceFingerprints": [
+          "4784366ca17ad9d0f78c"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/MBLY/",
+            "publishedAt": "2026-08-31T20:00:01+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-e0514d8636ed71fb0d80": {
+        "eventId": "evt-e0514d8636ed71fb0d80",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-2482615b14c327e9e7",
+        "entityName": "苹果开启特努斯时代：AI成“头号考题” 下一个增长点在哪？",
+        "title": "苹果开启特努斯时代：AI成“头号考题” 下一个增长点在哪？",
+        "titleAliases": [
+          "苹果开启特努斯时代ai成头号考题下一个增长点在哪"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-281c5468cc3a9f8b8026",
+          "record-dca6cd5c406a2d154c16",
+          "src-9d9cac3a61f59176c070"
+        ],
+        "evidenceFingerprints": [
+          "281c5468cc3a9f8b8026"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "东方财富",
+            "title": "苹果开启特努斯时代：AI成“头号考题” 下一个增长点在哪？",
+            "url": "https://finance.eastmoney.com/a/202609013860570587.html",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "7795399c0a0066f36f06",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-09-01T01:56:14+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-da20967dbfd246ac57ff": {
+        "eventId": "evt-da20967dbfd246ac57ff",
+        "dataset": "marketCompany",
+        "entityId": "weride",
+        "entityName": "文远知行",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:weride",
+          "name:文远知行"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-fc434613bdf0e91f35f6",
+          "src-104aee3ac7413e1c6dba"
+        ],
+        "evidenceFingerprints": [
+          "fc434613bdf0e91f35f6"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/WRD/",
+            "publishedAt": "2026-08-31T20:00:01+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-b2bfc09b7df2f007bc8e": {
+        "eventId": "evt-b2bfc09b7df2f007bc8e",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-31c54b3f6892dcad29",
+        "entityName": "Verification abundance, adjudication scarcity: what happens to mathematical knowledge when proof checking becomes free",
+        "title": "Verification abundance, adjudication scarcity: what happens to mathematical knowledge when proof checking becomes free",
+        "titleAliases": [
+          "verificationabundanceadjudicationscarcitywhathappenstomathematicalknowledgewhenproofcheckingbecomesfree"
+        ],
+        "publishedDate": "2026-08-29",
+        "publishedDates": [
+          "2026-08-29"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "论文",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-3a571f288eca337a8b3f",
+          "record-5af9f360f90f0d03cda9",
+          "src-d37bd1cd542e6fad2c9a"
+        ],
+        "evidenceFingerprints": [
+          "3a571f288eca337a8b3f"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "arXiv · Core AI companies",
+            "title": "Verification abundance, adjudication scarcity: what happens to mathematical knowledge when proof checking becomes free",
+            "url": "https://arxiv.org/abs/2608.28997v1",
+            "publishedAt": "2026-08-29",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "22f0d0b477a5c82a0fe9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-09-01T01:56:14+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-ad5d2a8a6decad76795f": {
+        "eventId": "evt-ad5d2a8a6decad76795f",
+        "dataset": "marketCompany",
+        "entityId": "bgi-genomics",
+        "entityName": "华大基因",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:bgi-genomics",
+          "name:华大基因"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-4429ffb50bc66a93f9b0",
+          "src-f91830ef0c450da85176",
+          "evd-72aaeec3a50cc91b4d66"
+        ],
+        "evidenceFingerprints": [
+          "4429ffb50bc66a93f9b0",
+          "72aaeec3a50cc91b4d66"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml",
+            "publishedAt": "2026-08-31T15:35:15+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml",
+            "publishedAt": "2026-09-01T09:41:06+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-935efe99e3fec15819ef": {
+        "eventId": "evt-935efe99e3fec15819ef",
+        "dataset": "marketCompany",
+        "entityId": "cambricon",
+        "entityName": "中科寒武纪科技股份有限公司",
+        "title": "寒武纪：8月31日获融资买入10.02亿元，融资余额178.25亿元占流通市值比例2.55%，超过近一年60%分位水平",
+        "titleAliases": [
+          "寒武纪8月31日获融资买入1002亿元融资余额17825亿元占流通市值比例255超近一年60分位水平"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:cambricon",
+          "name:中科寒武纪科技股份有限公司"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "10.02",
+          "178.25",
+          "2.55%",
+          "31",
+          "60%",
+          "8"
+        ],
+        "sourceAliases": [
+          "evd-41a615f6324bbaef5400",
+          "src-36ed4b51c31451ba1da4"
+        ],
+        "evidenceFingerprints": [
+          "41a615f6324bbaef5400"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "寒武纪：8月31日获融资买入10.02亿元，融资余额178.25亿元占流通市值比例2.55%，超过近一年60%分位水平",
+            "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-09-01/doc-iniqhmwh1550740.shtml",
+            "publishedAt": "2026-09-01T08:13:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "a8d8132780fe21a4e996",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-09-01T01:56:14+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-91ac8f2272f5626d42e3": {
+        "eventId": "evt-91ac8f2272f5626d42e3",
+        "dataset": "marketCompany",
+        "entityId": "catl",
+        "entityName": "宁德时代",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:catl",
+          "name:宁德时代"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-bf8095d2b1bad9122cb4",
+          "src-3fce98d95cf38a30749c",
+          "evd-bb04df96e1dc541577eb"
+        ],
+        "evidenceFingerprints": [
+          "bf8095d2b1bad9122cb4",
+          "bb04df96e1dc541577eb"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml",
+            "publishedAt": "2026-08-31T15:35:15+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml",
+            "publishedAt": "2026-09-01T09:41:21+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-8e039dfb25f1f995402e": {
+        "eventId": "evt-8e039dfb25f1f995402e",
+        "dataset": "marketCompany",
+        "entityId": "tempus-ai",
+        "entityName": "Tempus AI, Inc.",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:tempus-ai",
+          "name:tempus ai, inc."
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-29214bb33e07646a122a",
+          "src-2e90f0632a883088f19a"
+        ],
+        "evidenceFingerprints": [
+          "29214bb33e07646a122a"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/TEM/",
+            "publishedAt": "2026-08-31T20:00:01+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-89b141ca64c7cbd22d59": {
+        "eventId": "evt-89b141ca64c7cbd22d59",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-947e4408a413604e36",
+        "entityName": "微创机器人-B：延迟刊发2026年中期业绩",
+        "title": "微创机器人-B：延迟刊发2026年中期业绩",
+        "titleAliases": [
+          "微创机器人b延迟刊发2026年中期业绩"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "财报",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-2e5258eb6ecefe547337",
+          "record-6dd352d61b454bbc069f",
+          "src-5745f0c7e2322b739ba8"
+        ],
+        "evidenceFingerprints": [
+          "2e5258eb6ecefe547337"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "微创机器人-B：延迟刊发2026年中期业绩",
+            "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-09-01/doc-iniqhscx6702515.shtml",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "7e9dc937517a6abd4e43",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-09-01T01:56:14+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-6c5434f9fff212a0e0d7": {
+        "eventId": "evt-6c5434f9fff212a0e0d7",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-e27f7796bcd1e84c1a",
+        "entityName": "Not Safe for All: Auditing the Dialect Penalty in Text-to-Image Safety Pipelines",
+        "title": "Not Safe for All: Auditing the Dialect Penalty in Text-to-Image Safety Pipelines",
+        "titleAliases": [
+          "notsafeforallauditingthedialectpenaltyintexttoimagesafetypipelines"
+        ],
+        "publishedDate": "2026-08-30",
+        "publishedDates": [
+          "2026-08-30"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "论文",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-1a290d0253e2d64aa147",
+          "record-3fab2dde73f628a0e504",
+          "src-0e6a06c6987b52fc6171"
+        ],
+        "evidenceFingerprints": [
+          "1a290d0253e2d64aa147"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "arXiv · Core AI companies",
+            "title": "Not Safe for All: Auditing the Dialect Penalty in Text-to-Image Safety Pipelines",
+            "url": "https://arxiv.org/abs/2608.29589v1",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "a7537a5580bb41949b23",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-09-01T01:56:14+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-67891a2b291c8ba3f656": {
+        "eventId": "evt-67891a2b291c8ba3f656",
+        "dataset": "marketCompany",
+        "entityId": "rigetti",
+        "entityName": "Rigetti Computing, Inc.",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:rigetti",
+          "name:rigetti computing, inc."
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-ae33f3e191afc018e6c3",
+          "src-db581944fea092040261"
+        ],
+        "evidenceFingerprints": [
+          "ae33f3e191afc018e6c3"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/RGTI/",
+            "publishedAt": "2026-08-31T20:00:01+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-5fca7f13cf16ed40f9f9": {
+        "eventId": "evt-5fca7f13cf16ed40f9f9",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-29b7d180a2b859d95b",
+        "entityName": "WeRide Included in HKEX Tech 100 Index Following September 2026 Quarterly Review | WeRide Inc.",
+        "title": "WeRide Included in HKEX Tech 100 Index Following September 2026 Quarterly Review | WeRide Inc.",
+        "titleAliases": [
+          "werideincludedinhkextech100indexfollowingseptember2026quarterlyreview"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "company:weride",
+          "company:文远知行"
+        ],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "100"
+        ],
+        "sourceAliases": [
+          "evd-2f06863c3a2b003931af",
+          "record-71b2bbe28449936b788b",
+          "src-aebd66adc9eefe51a2e8"
+        ],
+        "evidenceFingerprints": [
+          "2f06863c3a2b003931af"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "文远知行",
+            "title": "WeRide Included in HKEX Tech 100 Index Following September 2026 Quarterly Review | WeRide Inc.",
+            "url": "https://ir.weride.ai/news-releases/news-release-details/weride-included-hkex-tech-100-index-following-september-2026",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "官方披露",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "50c5dccc1c275213fc79",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T09:08:35+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-5bdb8c4019a7ed2d1bb8": {
+        "eventId": "evt-5bdb8c4019a7ed2d1bb8",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-688951b3f600bad5bf",
+        "entityName": "年内业绩十强基金因何而强 隐形重仓股透露多元防守布局",
+        "title": "年内业绩十强基金因何而强 隐形重仓股透露多元防守布局",
+        "titleAliases": [
+          "年内业绩十强基金因何而强隐形重仓股透露多元防守布局"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "财报",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-0f2606cfedede3cec9a7",
+          "record-905d2bf96b55b7959d00",
+          "src-f0b6d69b3ed246aa23ab"
+        ],
+        "evidenceFingerprints": [
+          "0f2606cfedede3cec9a7"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "东方财富",
+            "title": "年内业绩十强基金因何而强 隐形重仓股透露多元防守布局",
+            "url": "https://finance.eastmoney.com/a/202609013860529718.html",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "bd3e72c50ff219d0148b",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-09-01T01:56:14+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-525fb7f3040be79dc57b": {
+        "eventId": "evt-525fb7f3040be79dc57b",
+        "dataset": "marketCompany",
+        "entityId": "recursion",
+        "entityName": "Recursion Pharmaceuticals, Inc.",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:recursion",
+          "name:recursion pharmaceuticals, inc."
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-72d7b892c69400a60051",
+          "src-1333fbc4f3cd46bece14"
+        ],
+        "evidenceFingerprints": [
+          "72d7b892c69400a60051"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/RXRX/",
+            "publishedAt": "2026-08-31T20:00:00+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-4d7e79896211eaa35f75": {
+        "eventId": "evt-4d7e79896211eaa35f75",
+        "dataset": "marketCompany",
+        "entityId": "ionq",
+        "entityName": "IonQ, Inc.",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:ionq",
+          "name:ionq, inc."
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-e2ad63d49f3c4e0640fe",
+          "src-c5ea30cc0aba5ccc9996"
+        ],
+        "evidenceFingerprints": [
+          "e2ad63d49f3c4e0640fe"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/IONQ/",
+            "publishedAt": "2026-08-31T20:00:03+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-40665b58084cc6b5bacb": {
+        "eventId": "evt-40665b58084cc6b5bacb",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-2b3c683e95e1902152",
+        "entityName": "Piloting the world's first double-blind AI evaluations",
+        "title": "Piloting the world's first double-blind AI evaluations",
+        "titleAliases": [
+          "pilotingtheworldsfirstdoubleblindaievaluations"
+        ],
+        "publishedDate": "2026-08-27",
+        "publishedDates": [
+          "2026-08-27"
+        ],
+        "entityKeys": [
+          "company:google"
+        ],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-21f9099a57e5ff739012",
+          "record-23929a84a5ca512062fd",
+          "src-614c2d112d7f1790d9bf"
+        ],
+        "evidenceFingerprints": [
+          "21f9099a57e5ff739012"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Google",
+            "title": "Piloting the world's first double-blind AI evaluations",
+            "url": "https://deepmind.google/blog/piloting-the-worlds-first-double-blind-ai-evaluations",
+            "publishedAt": "2026-08-27",
+            "evidenceGrade": "官方披露",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "4587a6a595defe79fcf8",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-09-01T01:56:14+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-39dfeedbac464b617b9b": {
+        "eventId": "evt-39dfeedbac464b617b9b",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-7c90a5f93033bbe0ca",
+        "entityName": "Autoscaling Lakebase Postgres",
+        "title": "Autoscaling Lakebase Postgres",
+        "titleAliases": [
+          "autoscalinglakebasepostgres"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "company:databricks"
+        ],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-fd755454499b2ed4f741",
+          "record-cdecf57e709c932d6332",
+          "src-68a40966e484162bffa6"
+        ],
+        "evidenceFingerprints": [
+          "fd755454499b2ed4f741"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Databricks",
+            "title": "Autoscaling Lakebase Postgres",
+            "url": "https://www.databricks.com/blog/autoscaling-lakebase-postgres",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "a3eab094ffa2b66f48b2",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-09-01T01:56:14+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-28b70ff575f371968b8b": {
+        "eventId": "evt-28b70ff575f371968b8b",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-cfb387eb474e4e8f41",
+        "entityName": "Explainable Artificial Intelligence (XAI) in Computational Pathology: Definitions, Taxonomy, and Recommendations",
+        "title": "Explainable Artificial Intelligence (XAI) in Computational Pathology: Definitions, Taxonomy, and Recommendations",
+        "titleAliases": [
+          "explainableartificialintelligencexaiincomputationalpathologydefinitionstaxonomyandrecommendations"
+        ],
+        "publishedDate": "2026-08-28",
+        "publishedDates": [
+          "2026-08-28"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "论文",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-e9a765fe9e30d529e5f7",
+          "record-419740105df0a093faf1",
+          "src-a638d7b61796391c9414"
+        ],
+        "evidenceFingerprints": [
+          "e9a765fe9e30d529e5f7"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "arXiv · Core AI companies",
+            "title": "Explainable Artificial Intelligence (XAI) in Computational Pathology: Definitions, Taxonomy, and Recommendations",
+            "url": "https://arxiv.org/abs/2608.28820v1",
+            "publishedAt": "2026-08-28",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "98ed3a7b025881fdadce",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-09-01T01:56:14+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-236d3dfdcbf781c61260": {
+        "eventId": "evt-236d3dfdcbf781c61260",
+        "dataset": "marketCompany",
+        "entityId": "cambricon",
+        "entityName": "中科寒武纪科技股份有限公司",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:cambricon",
+          "name:中科寒武纪科技股份有限公司"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-66c0983b9ff21071f1c6",
+          "src-e95e9990c90226e17b22",
+          "evd-ed4ff3c7c588239b8a6d"
+        ],
+        "evidenceFingerprints": [
+          "66c0983b9ff21071f1c6",
+          "ed4ff3c7c588239b8a6d"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
+            "publishedAt": "2026-08-31T11:30:00+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
+            "publishedAt": "2026-09-01T09:41:19+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-1d27e3f7c80bac43836f": {
+        "eventId": "evt-1d27e3f7c80bac43836f",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-e5a05dc4b849db9cce",
+        "entityName": "AI应用服务商培育专项行动落地！行业加速迈向商业化兑现拐点(附股)",
+        "title": "AI应用服务商培育专项行动落地！行业加速迈向商业化兑现拐点(附股)",
+        "titleAliases": [
+          "ai应用服务商培育专项行动落地行业加速迈向商业化兑现拐点附股"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-21df55825f6ae07b4c8d",
+          "record-4d035106376325eda76d",
+          "src-43425ae487a499f2ef81"
+        ],
+        "evidenceFingerprints": [
+          "21df55825f6ae07b4c8d"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "东方财富",
+            "title": "AI应用服务商培育专项行动落地！行业加速迈向商业化兑现拐点(附股)",
+            "url": "https://finance.eastmoney.com/a/202609013860731632.html",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "8378ef80fa661ce15ada",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-09-01T01:56:14+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-17ed32f8b6d304c6cfee": {
+        "eventId": "evt-17ed32f8b6d304c6cfee",
+        "dataset": "marketCompany",
+        "entityId": "joby",
+        "entityName": "Joby Aviation, Inc.",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:joby",
+          "name:joby aviation, inc."
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-ca3597f4aa9d85387cbd",
+          "src-c5d415a4154403078940"
+        ],
+        "evidenceFingerprints": [
+          "ca3597f4aa9d85387cbd"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/JOBY/",
+            "publishedAt": "2026-08-31T20:00:03+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-153774159d0350838a72": {
+        "eventId": "evt-153774159d0350838a72",
+        "dataset": "marketCompany",
+        "entityId": "rocket-lab",
+        "entityName": "Rocket Lab Corporation",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:rocket-lab",
+          "name:rocket lab corporation"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-ed6c8a35c6aecbfc7101",
+          "src-53bc3b93ef8ddcc14d0b"
+        ],
+        "evidenceFingerprints": [
+          "ed6c8a35c6aecbfc7101"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/RKLB/",
+            "publishedAt": "2026-08-31T20:00:00+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-1257d630ab9467d64f5b": {
+        "eventId": "evt-1257d630ab9467d64f5b",
+        "dataset": "marketCompany",
+        "entityId": "aurora",
+        "entityName": "Aurora Innovation, Inc.",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:aurora",
+          "name:aurora innovation, inc."
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-9037f472fcf35b6b30e5",
+          "src-17f30948990caae50a84"
+        ],
+        "evidenceFingerprints": [
+          "9037f472fcf35b6b30e5"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/AUR/",
+            "publishedAt": "2026-08-31T20:00:01+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-107c31a86fb2bd117eed": {
+        "eventId": "evt-107c31a86fb2bd117eed",
+        "dataset": "marketCompany",
+        "entityId": "xtalpi",
+        "entityName": "晶泰控股有限公司",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:xtalpi",
+          "name:晶泰控股有限公司"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-5fa1601b8d57d2004e8f",
+          "src-de35f484ecf44f83c49b",
+          "evd-f5f505b12de280e836e7"
+        ],
+        "evidenceFingerprints": [
+          "5fa1601b8d57d2004e8f",
+          "f5f505b12de280e836e7"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
+            "publishedAt": "2026-08-31T16:08:50+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
+            "publishedAt": "2026-09-01T09:41:02+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-0dcabc4fc8aaf0a2e36c": {
+        "eventId": "evt-0dcabc4fc8aaf0a2e36c",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-921bcefef41247bce0",
+        "entityName": "Membership is Ownership: A Robust Ownership Verification Framework for Diffusion Models",
+        "title": "Membership is Ownership: A Robust Ownership Verification Framework for Diffusion Models",
+        "titleAliases": [
+          "membershipisownershiparobustownershipverificationframeworkfordiffusionmodels"
+        ],
+        "publishedDate": "2026-08-28",
+        "publishedDates": [
+          "2026-08-28"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "论文",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-5545ddfab183d3733840",
+          "record-b8371b99c6cd5043aff5",
+          "src-f0eee311d57f45d4f777"
+        ],
+        "evidenceFingerprints": [
+          "5545ddfab183d3733840"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "arXiv · Core AI companies",
+            "title": "Membership is Ownership: A Robust Ownership Verification Framework for Diffusion Models",
+            "url": "https://arxiv.org/abs/2608.28929v1",
+            "publishedAt": "2026-08-28",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "1044b2474316948cc1df",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-09-01T01:56:14+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-0c22629c6006a87d8c3f": {
+        "eventId": "evt-0c22629c6006a87d8c3f",
+        "dataset": "marketCompany",
+        "entityId": "pony-ai",
+        "entityName": "小马智行",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "marketCompany:pony-ai",
+          "name:小马智行"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-9cf13fc7b4e0308209e5",
+          "src-a4f80386a85c9af7acd1"
+        ],
+        "evidenceFingerprints": [
+          "9cf13fc7b4e0308209e5"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/PONY/",
+            "publishedAt": "2026-08-31T20:00:01+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-0a4c2871cdc00b3ff51d": {
+        "eventId": "evt-0a4c2871cdc00b3ff51d",
+        "dataset": "marketCompany",
+        "entityId": "catl",
+        "entityName": "宁德时代",
+        "title": "宁德时代匈牙利工厂被罚款",
+        "titleAliases": [
+          "宁德时代匈牙利工厂被罚款"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:catl",
+          "name:宁德时代"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-d24a00f1545ae9e52d58",
+          "src-d5fd4b4dd7c372258589"
+        ],
+        "evidenceFingerprints": [
+          "d24a00f1545ae9e52d58"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "宁德时代匈牙利工厂被罚款",
+            "url": "https://finance.sina.com.cn/roll/2026-09-01/doc-iniqhscz8309632.shtml",
+            "publishedAt": "2026-09-01T08:50:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "5022c437b828c0f26f5d",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-09-01T01:56:14+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-09cacf02606d9838e6f2": {
+        "eventId": "evt-09cacf02606d9838e6f2",
+        "dataset": "marketCompany",
+        "entityId": "horizon-robotics",
+        "entityName": "Horizon Robotics",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:horizon-robotics",
+          "name:horizon robotics"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-b9931d767f7fdda9a522",
+          "src-2902bb7afee990ec31f7",
+          "evd-f9eda82d60279aa18d50"
+        ],
+        "evidenceFingerprints": [
+          "b9931d767f7fdda9a522",
+          "f9eda82d60279aa18d50"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+            "publishedAt": "2026-08-31T16:08:50+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+            "publishedAt": "2026-09-01T09:41:41+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-06d4a5ab3868f010215a": {
+        "eventId": "evt-06d4a5ab3868f010215a",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-e3bf2e5ffc3f847558",
+        "entityName": "零售电商行业的AI落地困境",
+        "title": "零售电商行业的AI落地困境",
+        "titleAliases": [
+          "零售电商行业的ai落地困境"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-2ad9eb682bc64dd5380a",
+          "record-7149e7fbce90a60f55f7",
+          "src-4f9ca15b4562d67244bc"
+        ],
+        "evidenceFingerprints": [
+          "2ad9eb682bc64dd5380a"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "钛媒体",
+            "title": "零售电商行业的AI落地困境",
+            "url": "https://www.tmtpost.com/8123378.html",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "a157a137464c74b0fbe7",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastPublishedAt": "2026-09-01T01:56:14+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-d399b2cc1d84937dddb6": {
         "eventId": "evt-d399b2cc1d84937dddb6",
         "dataset": "intelligenceEvent",
@@ -1641,58 +4019,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-ea30894062d975829591": {
-        "eventId": "evt-ea30894062d975829591",
-        "dataset": "marketCompany",
-        "entityId": "mobileye",
-        "entityName": "Mobileye Global Inc.",
-        "title": "Yahoo财经 行情数据",
-        "titleAliases": [
-          "yahoo财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:mobileye",
-          "name:mobileye global inc."
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-4784366ca17ad9d0f78c",
-          "src-af6cdb5675017fa99563"
-        ],
-        "evidenceFingerprints": [
-          "4784366ca17ad9d0f78c"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Yahoo财经",
-            "title": "Yahoo财经 行情数据",
-            "url": "https://sg.finance.yahoo.com/quote/MBLY/",
-            "publishedAt": "2026-08-31T17:12:00+00:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "2d46b9f63d858cd458fc",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-e5c92bf165cb34866cb4": {
         "eventId": "evt-e5c92bf165cb34866cb4",
         "dataset": "intelligenceEvent",
@@ -1747,58 +4073,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-da20967dbfd246ac57ff": {
-        "eventId": "evt-da20967dbfd246ac57ff",
-        "dataset": "marketCompany",
-        "entityId": "weride",
-        "entityName": "文远知行",
-        "title": "Yahoo财经 行情数据",
-        "titleAliases": [
-          "yahoo财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:weride",
-          "name:文远知行"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-fc434613bdf0e91f35f6",
-          "src-104aee3ac7413e1c6dba"
-        ],
-        "evidenceFingerprints": [
-          "fc434613bdf0e91f35f6"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Yahoo财经",
-            "title": "Yahoo财经 行情数据",
-            "url": "https://sg.finance.yahoo.com/quote/WRD/",
-            "publishedAt": "2026-08-31T17:11:01+00:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "2d46b9f63d858cd458fc",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-ad50e31282afed394c23": {
         "eventId": "evt-ad50e31282afed394c23",
         "dataset": "intelligenceEvent",
@@ -1846,58 +4120,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 4,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-8e039dfb25f1f995402e": {
-        "eventId": "evt-8e039dfb25f1f995402e",
-        "dataset": "marketCompany",
-        "entityId": "tempus-ai",
-        "entityName": "Tempus AI, Inc.",
-        "title": "Yahoo财经 行情数据",
-        "titleAliases": [
-          "yahoo财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:tempus-ai",
-          "name:tempus ai, inc."
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-29214bb33e07646a122a",
-          "src-2e90f0632a883088f19a"
-        ],
-        "evidenceFingerprints": [
-          "29214bb33e07646a122a"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Yahoo财经",
-            "title": "Yahoo财经 行情数据",
-            "url": "https://sg.finance.yahoo.com/quote/TEM/",
-            "publishedAt": "2026-08-31T17:12:02+00:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "2d46b9f63d858cd458fc",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -1979,318 +4201,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-67891a2b291c8ba3f656": {
-        "eventId": "evt-67891a2b291c8ba3f656",
-        "dataset": "marketCompany",
-        "entityId": "rigetti",
-        "entityName": "Rigetti Computing, Inc.",
-        "title": "Yahoo财经 行情数据",
-        "titleAliases": [
-          "yahoo财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:rigetti",
-          "name:rigetti computing, inc."
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-ae33f3e191afc018e6c3",
-          "src-db581944fea092040261"
-        ],
-        "evidenceFingerprints": [
-          "ae33f3e191afc018e6c3"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Yahoo财经",
-            "title": "Yahoo财经 行情数据",
-            "url": "https://sg.finance.yahoo.com/quote/RGTI/",
-            "publishedAt": "2026-08-31T17:11:52+00:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "2d46b9f63d858cd458fc",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-525fb7f3040be79dc57b": {
-        "eventId": "evt-525fb7f3040be79dc57b",
-        "dataset": "marketCompany",
-        "entityId": "recursion",
-        "entityName": "Recursion Pharmaceuticals, Inc.",
-        "title": "Yahoo财经 行情数据",
-        "titleAliases": [
-          "yahoo财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:recursion",
-          "name:recursion pharmaceuticals, inc."
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-72d7b892c69400a60051",
-          "src-1333fbc4f3cd46bece14"
-        ],
-        "evidenceFingerprints": [
-          "72d7b892c69400a60051"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Yahoo财经",
-            "title": "Yahoo财经 行情数据",
-            "url": "https://sg.finance.yahoo.com/quote/RXRX/",
-            "publishedAt": "2026-08-31T17:11:50+00:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "2d46b9f63d858cd458fc",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-4d7e79896211eaa35f75": {
-        "eventId": "evt-4d7e79896211eaa35f75",
-        "dataset": "marketCompany",
-        "entityId": "ionq",
-        "entityName": "IonQ, Inc.",
-        "title": "Yahoo财经 行情数据",
-        "titleAliases": [
-          "yahoo财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:ionq",
-          "name:ionq, inc."
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-e2ad63d49f3c4e0640fe",
-          "src-c5ea30cc0aba5ccc9996"
-        ],
-        "evidenceFingerprints": [
-          "e2ad63d49f3c4e0640fe"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Yahoo财经",
-            "title": "Yahoo财经 行情数据",
-            "url": "https://sg.finance.yahoo.com/quote/IONQ/",
-            "publishedAt": "2026-08-31T17:11:55+00:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "2d46b9f63d858cd458fc",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-17ed32f8b6d304c6cfee": {
-        "eventId": "evt-17ed32f8b6d304c6cfee",
-        "dataset": "marketCompany",
-        "entityId": "joby",
-        "entityName": "Joby Aviation, Inc.",
-        "title": "Yahoo财经 行情数据",
-        "titleAliases": [
-          "yahoo财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:joby",
-          "name:joby aviation, inc."
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-ca3597f4aa9d85387cbd",
-          "src-c5d415a4154403078940"
-        ],
-        "evidenceFingerprints": [
-          "ca3597f4aa9d85387cbd"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Yahoo财经",
-            "title": "Yahoo财经 行情数据",
-            "url": "https://sg.finance.yahoo.com/quote/JOBY/",
-            "publishedAt": "2026-08-31T17:12:02+00:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "2d46b9f63d858cd458fc",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-153774159d0350838a72": {
-        "eventId": "evt-153774159d0350838a72",
-        "dataset": "marketCompany",
-        "entityId": "rocket-lab",
-        "entityName": "Rocket Lab Corporation",
-        "title": "Yahoo财经 行情数据",
-        "titleAliases": [
-          "yahoo财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:rocket-lab",
-          "name:rocket lab corporation"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-ed6c8a35c6aecbfc7101",
-          "src-53bc3b93ef8ddcc14d0b"
-        ],
-        "evidenceFingerprints": [
-          "ed6c8a35c6aecbfc7101"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Yahoo财经",
-            "title": "Yahoo财经 行情数据",
-            "url": "https://sg.finance.yahoo.com/quote/RKLB/",
-            "publishedAt": "2026-08-31T17:11:55+00:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "2d46b9f63d858cd458fc",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-1257d630ab9467d64f5b": {
-        "eventId": "evt-1257d630ab9467d64f5b",
-        "dataset": "marketCompany",
-        "entityId": "aurora",
-        "entityName": "Aurora Innovation, Inc.",
-        "title": "Yahoo财经 行情数据",
-        "titleAliases": [
-          "yahoo财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:aurora",
-          "name:aurora innovation, inc."
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-9037f472fcf35b6b30e5",
-          "src-17f30948990caae50a84"
-        ],
-        "evidenceFingerprints": [
-          "9037f472fcf35b6b30e5"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Yahoo财经",
-            "title": "Yahoo财经 行情数据",
-            "url": "https://sg.finance.yahoo.com/quote/AUR/",
-            "publishedAt": "2026-08-31T17:12:00+00:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "2d46b9f63d858cd458fc",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-101d88213d8d7f28d691": {
         "eventId": "evt-101d88213d8d7f28d691",
         "dataset": "intelligenceEvent",
@@ -2337,58 +4247,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-0c22629c6006a87d8c3f": {
-        "eventId": "evt-0c22629c6006a87d8c3f",
-        "dataset": "marketCompany",
-        "entityId": "pony-ai",
-        "entityName": "小马智行",
-        "title": "Yahoo财经 行情数据",
-        "titleAliases": [
-          "yahoo财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:pony-ai",
-          "name:小马智行"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-9cf13fc7b4e0308209e5",
-          "src-a4f80386a85c9af7acd1"
-        ],
-        "evidenceFingerprints": [
-          "9cf13fc7b4e0308209e5"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Yahoo财经",
-            "title": "Yahoo财经 行情数据",
-            "url": "https://sg.finance.yahoo.com/quote/PONY/",
-            "publishedAt": "2026-08-31T17:11:53+00:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "2d46b9f63d858cd458fc",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -4166,58 +6024,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-ad5d2a8a6decad76795f": {
-        "eventId": "evt-ad5d2a8a6decad76795f",
-        "dataset": "marketCompany",
-        "entityId": "bgi-genomics",
-        "entityName": "华大基因",
-        "title": "新浪财经 行情数据",
-        "titleAliases": [
-          "新浪财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:bgi-genomics",
-          "name:华大基因"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-4429ffb50bc66a93f9b0",
-          "src-f91830ef0c450da85176"
-        ],
-        "evidenceFingerprints": [
-          "4429ffb50bc66a93f9b0"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml",
-            "publishedAt": "2026-08-31T15:35:15+08:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "cc3711a9494cf1e2f7a9",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T03:41:22+00:00",
-        "lastSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-a98de8af7340c111110a": {
         "eventId": "evt-a98de8af7340c111110a",
         "dataset": "marketCompany",
@@ -4269,58 +6075,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-91ac8f2272f5626d42e3": {
-        "eventId": "evt-91ac8f2272f5626d42e3",
-        "dataset": "marketCompany",
-        "entityId": "catl",
-        "entityName": "宁德时代",
-        "title": "新浪财经 行情数据",
-        "titleAliases": [
-          "新浪财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:catl",
-          "name:宁德时代"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-bf8095d2b1bad9122cb4",
-          "src-3fce98d95cf38a30749c"
-        ],
-        "evidenceFingerprints": [
-          "bf8095d2b1bad9122cb4"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml",
-            "publishedAt": "2026-08-31T15:35:15+08:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "cc3711a9494cf1e2f7a9",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T03:41:22+00:00",
-        "lastSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -4827,63 +6581,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-5fca7f13cf16ed40f9f9": {
-        "eventId": "evt-5fca7f13cf16ed40f9f9",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-29b7d180a2b859d95b",
-        "entityName": "WeRide Included in HKEX Tech 100 Index Following September 2026 Quarterly Review | WeRide Inc.",
-        "title": "WeRide Included in HKEX Tech 100 Index Following September 2026 Quarterly Review | WeRide Inc.",
-        "titleAliases": [
-          "werideincludedinhkextech100indexfollowingseptember2026quarterlyreview"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "company:weride",
-          "company:文远知行"
-        ],
-        "typeKeys": [
-          "公司动态",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "100"
-        ],
-        "sourceAliases": [
-          "evd-2f06863c3a2b003931af",
-          "record-71b2bbe28449936b788b",
-          "src-aebd66adc9eefe51a2e8"
-        ],
-        "evidenceFingerprints": [
-          "2f06863c3a2b003931af"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "文远知行",
-            "title": "WeRide Included in HKEX Tech 100 Index Following September 2026 Quarterly Review | WeRide Inc.",
-            "url": "https://ir.weride.ai/news-releases/news-release-details/weride-included-hkex-tech-100-index-following-september-2026",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "官方披露",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "50c5dccc1c275213fc79",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 4,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-5936d77b58c4d26bc7b8": {
         "eventId": "evt-5936d77b58c4d26bc7b8",
         "dataset": "intelligenceEvent",
@@ -5154,58 +6851,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-107c31a86fb2bd117eed": {
-        "eventId": "evt-107c31a86fb2bd117eed",
-        "dataset": "marketCompany",
-        "entityId": "xtalpi",
-        "entityName": "晶泰控股有限公司",
-        "title": "新浪财经 行情数据",
-        "titleAliases": [
-          "新浪财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:xtalpi",
-          "name:晶泰控股有限公司"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-5fa1601b8d57d2004e8f",
-          "src-de35f484ecf44f83c49b"
-        ],
-        "evidenceFingerprints": [
-          "5fa1601b8d57d2004e8f"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
-            "publishedAt": "2026-08-31T16:08:50+08:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "cc3711a9494cf1e2f7a9",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T03:41:22+00:00",
-        "lastSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-0c534d49628a69a4afee": {
         "eventId": "evt-0c534d49628a69a4afee",
         "dataset": "intelligenceEvent",
@@ -5308,58 +6953,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-09cacf02606d9838e6f2": {
-        "eventId": "evt-09cacf02606d9838e6f2",
-        "dataset": "marketCompany",
-        "entityId": "horizon-robotics",
-        "entityName": "Horizon Robotics",
-        "title": "新浪财经 行情数据",
-        "titleAliases": [
-          "新浪财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:horizon-robotics",
-          "name:horizon robotics"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-b9931d767f7fdda9a522",
-          "src-2902bb7afee990ec31f7"
-        ],
-        "evidenceFingerprints": [
-          "b9931d767f7fdda9a522"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
-            "publishedAt": "2026-08-31T16:08:50+08:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "cc3711a9494cf1e2f7a9",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T03:41:22+00:00",
-        "lastSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -6448,58 +8041,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-236d3dfdcbf781c61260": {
-        "eventId": "evt-236d3dfdcbf781c61260",
-        "dataset": "marketCompany",
-        "entityId": "cambricon",
-        "entityName": "中科寒武纪科技股份有限公司",
-        "title": "新浪财经 行情数据",
-        "titleAliases": [
-          "新浪财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:cambricon",
-          "name:中科寒武纪科技股份有限公司"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-66c0983b9ff21071f1c6",
-          "src-e95e9990c90226e17b22"
-        ],
-        "evidenceFingerprints": [
-          "66c0983b9ff21071f1c6"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
-            "publishedAt": "2026-08-31T11:30:00+08:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "cc3711a9494cf1e2f7a9",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T03:41:22+00:00",
-        "lastSeenAt": "2026-08-31T03:41:22+00:00",
-        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -9326,13 +10867,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 7,
-    "reconfirmations": 0,
+    "newEvents": 14,
+    "reconfirmations": 5,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 1,
-    "observedEvents": 8,
+    "duplicatesSuppressed": 11,
+    "observedEvents": 30,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -10098,10 +11639,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-01",
-      "generatedAt": "2026-09-01T00:07:31+00:00",
+      "generatedAt": "2026-09-01T01:56:14+00:00",
       "runStatus": "model",
-      "changeCount": 23,
-      "executiveSummary": "证据包显示，2026年8月31日前后，具身智能、医疗AI、家庭AI终端、风险投资、宏观上市公司业绩及消费电子领域均有重要动态。核心矛盾集中在具身智能行业：融资热度极高（6-7月国内超70起），但商业化落地仍处早期，物流仓储是唯一被报告指为跨过付费部署门槛的场景，大量落地被指停留在POC。此外，瑞金医院与华为云发布病理大模型RuiPath 2.0，海信发布家庭AIOS JUOS，a16z扩大基金规模，中上协数据显示上市公司上半年盈利增速回升，Asus发布新款创作者笔记本。所有证据均为外部线索（evidenceGrade C），未经独立核实，需谨慎对待。本总结基于证据E001、E002、E004、E005、E006、E007、E008。",
+      "changeCount": 37,
+      "executiveSummary": "证据包显示，2026年8月底至9月初，AI产业政策、公司重大事件与学术研究密集出现。工信部启动AI应用服务商培育专项行动，明确2026年底服务商资源池突破2000家，标志AI产业政策从模型竞赛转向商业化验证（E008）。苹果完成CEO交接，约翰·特努斯接任，AI成为新管理层头号考题（E009）。微创机器人-B因租赁安排交易对手方关系待厘清而延迟刊发中期业绩（E002），宁德时代匈牙利工厂被罚款（E027）。学术方面，arXiv多篇论文关注AI数学发现、安全公平性、扩散模型所有权验证与计算病理学可解释性（E004-E007），Google试点双盲AI评估（E012），Databricks发布数据库自动扩展功能（E013）。整体上，AI商业化与治理合规并进，但部分公司事件存在不确定性，需持续跟踪。",
       "eventIds": [
         "evt-e5c92bf165cb34866cb4",
         "evt-ad50e31282afed394c23",
@@ -10125,7 +11666,21 @@
         "evt-d399b2cc1d84937dddb6",
         "evt-bb12f975662614486f41",
         "evt-233bf3375397146b5637",
-        "evt-a06bc4b9b94172b5a62e"
+        "evt-a06bc4b9b94172b5a62e",
+        "evt-06d4a5ab3868f010215a",
+        "evt-89b141ca64c7cbd22d59",
+        "evt-5bdb8c4019a7ed2d1bb8",
+        "evt-b2bfc09b7df2f007bc8e",
+        "evt-6c5434f9fff212a0e0d7",
+        "evt-0dcabc4fc8aaf0a2e36c",
+        "evt-28b70ff575f371968b8b",
+        "evt-1d27e3f7c80bac43836f",
+        "evt-e0514d8636ed71fb0d80",
+        "evt-f054d74103ea4371099a",
+        "evt-40665b58084cc6b5bacb",
+        "evt-39dfeedbac464b617b9b",
+        "evt-0a4c2871cdc00b3ff51d",
+        "evt-935efe99e3fec15819ef"
       ],
       "eventStates": [
         {
@@ -10219,32 +11774,94 @@
         {
           "eventId": "evt-a06bc4b9b94172b5a62e",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-06d4a5ab3868f010215a",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-89b141ca64c7cbd22d59",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-5bdb8c4019a7ed2d1bb8",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-b2bfc09b7df2f007bc8e",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-6c5434f9fff212a0e0d7",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-0dcabc4fc8aaf0a2e36c",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-28b70ff575f371968b8b",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-1d27e3f7c80bac43836f",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-e0514d8636ed71fb0d80",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-f054d74103ea4371099a",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-40665b58084cc6b5bacb",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-39dfeedbac464b617b9b",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-0a4c2871cdc00b3ff51d",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-935efe99e3fec15819ef",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 0,
-      "candidateTotal": 11,
-      "auxiliaryLeadTotal": 12,
+      "candidateTotal": 13,
+      "auxiliaryLeadTotal": 24,
       "rejectedTotal": 3,
       "eventSummary": {
-        "newEvents": 23,
-        "reconfirmations": 0,
+        "newEvents": 37,
+        "reconfirmations": 5,
         "updates": 0,
         "corrections": 0,
         "possibleConflicts": 0,
-        "duplicatesSuppressed": 3
+        "duplicatesSuppressed": 14
       }
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 8,
-    "eligibleCandidateCount": 8,
+    "candidateCount": 28,
+    "eligibleCandidateCount": 28,
     "rejectedCandidateCount": 0,
     "rejectedByDataset": {},
-    "evidenceCount": 8,
-    "supportingEvidenceCount": 8,
-    "rejectedEvidenceCount": 0,
-    "passedButUnboundEvidenceCount": 0,
-    "rejectionReasons": {},
+    "evidenceCount": 73,
+    "supportingEvidenceCount": 30,
+    "rejectedEvidenceCount": 20,
+    "passedButUnboundEvidenceCount": 23,
+    "rejectionReasons": {
+      "missing_published_at": 19,
+      "missing_title": 14,
+      "ungraded": 14,
+      "entity_mismatch": 1,
+      "missing_or_invalid_url": 1
+    },
     "sourceClassificationWarnings": []
   },
   "sourceClassificationWarnings": [],
@@ -10276,7 +11893,7 @@
   },
   "pipelineHealth": {
     "overallStatus": "stale",
-    "healthyJobs": 6,
+    "healthyJobs": 7,
     "jobCount": 9,
     "issueJobs": [
       {
@@ -10290,12 +11907,6 @@
         "name": "科创板招股书投资者证据刷新",
         "status": "stale",
         "lastCompletedAt": "2026-08-23T19:58:13Z"
-      },
-      {
-        "jobId": "source-performance-review",
-        "name": "月度信源效能审查",
-        "status": "unknown",
-        "lastCompletedAt": null
       }
     ]
   }
