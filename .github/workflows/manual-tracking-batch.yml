@@ -19,7 +19,7 @@ on:
         type: choice
         options: [strict, skip]
       batch_json:
-        description: "JSON array of up to 20 normalized manual tracking requests"
+        description: "Up to 20 normalized requests per atomic writer transaction; background reconciliation is separate"
         required: true
         type: string
 
@@ -78,7 +78,7 @@ jobs:
           }
           denied = [label for label, actor in checked.items() if actor.casefold() not in allowed]
           if denied:
-              raise SystemExit("manual tracking actor is not allowlisted: " + ", ".join(denied))
+            raise SystemExit("manual tracking actor is not allowlisted: " + ", ".join(denied))
           print("authorized actors: " + ", ".join(checked.values()))
           PY
 
@@ -291,29 +291,21 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
   handoff:
-    name: Continue tracking reconciliation
+    name: Defer heavy tracking reconciliation
     needs: apply
     if: needs.apply.outputs.changed == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    permissions:
-      actions: write
-    env:
-      GH_TOKEN: ${{ github.token }}
-      GH_REPO: ${{ github.repository }}
-      CONFIG_CHANGED: ${{ needs.apply.outputs.config_changed }}
-      REVIEW_QUEUED: ${{ needs.apply.outputs.review_queued }}
-      INTENTS_CHANGED: ${{ needs.apply.outputs.intents_changed }}
-      HAS_COMPANY: ${{ needs.apply.outputs.has_company }}
+    permissions: {}
     steps:
-      - name: Start the explicit downstream workflow
+      - name: Record deferred reconciliation policy
         shell: bash
         run: |
-          set -euo pipefail
-          if [ "$CONFIG_CHANGED" = "true" ]; then
-            gh workflow run scheduled-sync.yml --ref main
-          elif [ "$REVIEW_QUEUED" = "true" ] && [ "$HAS_COMPANY" = "true" ]; then
-            gh workflow run company-candidate-discovery.yml --ref main
-          elif [ "$REVIEW_QUEUED" = "true" ] || [ "$INTENTS_CHANGED" = "true" ]; then
-            gh workflow run tracking-discovery.yml --ref main -f mode=full
-          fi
+          {
+            echo "## Deferred tracking reconciliation"
+            echo
+            echo "The atomic batch write is complete."
+            echo "Heavy discovery and full refresh are intentionally not started from this interactive workflow."
+            echo "Multiple manual batches can accumulate and are coalesced by the low-priority reconciliation workflow."
+            echo "The 20-object limit remains a per-transaction safety boundary, not a background throughput limit."
+          } >> "$GITHUB_STEP_SUMMARY"
