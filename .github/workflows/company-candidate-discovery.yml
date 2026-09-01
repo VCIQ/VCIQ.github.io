@@ -187,12 +187,20 @@ jobs:
           fi
 
           if [ "${CANDIDATE_CHANGED:-false}" = "true" ]; then
-            if [ "${PUBLISH_AFTER_RECONCILIATION:-false}" = "true" ]; then
+            # Commits pushed with GITHUB_TOKEN do not recursively start another
+            # workflow. Explicitly hand off exactly once after the repository
+            # transaction has completed, preserving onboarding-before-refresh.
+            if [ "$tracking_refresh_required" = "true" ]; then
+              echo "Candidate and tracking state changed; onboard first, then run one lightweight refresh."
+              gh workflow run company-candidate-onboarding.yml --ref main \
+                -f post_onboarding_handoff=refresh
+            elif [ "${PUBLISH_AFTER_RECONCILIATION:-false}" = "true" ]; then
               echo "Candidate state changed at the terminal fixed point; onboard before terminal Pages and research."
               gh workflow run company-candidate-onboarding.yml --ref main \
                 -f post_onboarding_handoff=publish-with-research
             else
-              echo "Candidate queue was committed; its push trigger starts one onboarding pass. Avoid a duplicate explicit onboarding dispatch."
+              echo "Candidate state changed; start one verified onboarding pass."
+              gh workflow run company-candidate-onboarding.yml --ref main
             fi
           elif [ "$tracking_refresh_required" = "true" ]; then
             echo "Tracking inputs changed; use the lightweight public refresh instead of a full crawl."
