@@ -83,7 +83,10 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "data: refresh audited institution layers"
           for attempt in 1 2 3; do
-            git pull --rebase origin main
+            # During rebase, "ours" is the current upstream/main side. Keep the
+            # newest shared control-plane snapshot, then regenerate this job's
+            # institution artifacts and heartbeat against that state below.
+            git pull --rebase -X ours origin main
             node --import tsx scripts/build-institution-data-layers.ts
             node --import tsx --test \
               tests/institution-entity-registry.test.ts \
