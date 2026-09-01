@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-01T01:56:14+00:00",
+  "generatedAt": "2026-09-01T05:29:31+00:00",
   "asOfDate": "2026-09-01",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
@@ -12,397 +12,189 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 11026,
-      "completion_tokens": 14790,
-      "total_tokens": 25816,
+      "prompt_tokens": 3093,
+      "completion_tokens": 4161,
+      "total_tokens": 7254,
       "completion_tokens_details": {
-        "reasoning_tokens": 11824
+        "reasoning_tokens": 3003
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 11026
+      "prompt_cache_miss_tokens": 3093
     }
   },
   "changeSummary": {
-    "totalDetected": 52,
-    "total": 14,
+    "totalDetected": 13,
+    "total": 3,
     "byDataset": {
-      "intelligenceEvent": 12,
-      "marketCompany": 2
+      "intelligenceEvent": 3
     },
     "byChangeType": {
-      "external_event": 28,
-      "data_maintenance": 6,
-      "source_refresh": 18
+      "external_event": 5,
+      "data_maintenance": 8
     },
-    "externalCandidates": 28,
-    "qualityRejected": 0,
-    "maintenanceExcluded": 24,
+    "externalCandidates": 5,
+    "qualityRejected": 1,
+    "maintenanceExcluded": 8,
     "aggregatedEvents": 0,
-    "highestImportance": 84,
+    "highestImportance": 91,
     "verifiedChangeTotal": 0,
-    "candidateTotal": 2,
-    "auxiliaryLeadTotal": 12,
-    "rejectedTotal": 0,
-    "newEvents": 14,
-    "reconfirmations": 5,
+    "candidateTotal": 0,
+    "auxiliaryLeadTotal": 3,
+    "rejectedTotal": 1,
+    "newEvents": 3,
+    "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 11
+    "duplicatesSuppressed": 1
   },
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "证据包显示，2026年8月底至9月初，AI产业政策、公司重大事件与学术研究密集出现。工信部启动AI应用服务商培育专项行动，明确2026年底服务商资源池突破2000家，标志AI产业政策从模型竞赛转向商业化验证（E008）。苹果完成CEO交接，约翰·特努斯接任，AI成为新管理层头号考题（E009）。微创机器人-B因租赁安排交易对手方关系待厘清而延迟刊发中期业绩（E002），宁德时代匈牙利工厂被罚款（E027）。学术方面，arXiv多篇论文关注AI数学发现、安全公平性、扩散模型所有权验证与计算病理学可解释性（E004-E007），Google试点双盲AI评估（E012），Databricks发布数据库自动扩展功能（E013）。整体上，AI商业化与治理合规并进，但部分公司事件存在不确定性，需持续跟踪。",
+    "executiveSummary": "证据包包含三篇2026年9月1日发布的专业媒体报道：地瓜机器人扩招NPU研发团队、存储成为AI落地最大变量、无界动力以真实咖啡厅展现物理AI落地。三篇均为单一来源且证据等级为C，未经人工复核，因此仅作为初步线索。整体看，机器人芯片自研、AI存储瓶颈、物理AI垂直场景落地是值得关注的三个方向，但均需更多证据验证。 质量门诊断：仅为发现线索，不能支持正式主张 1。",
     "keyDevelopments": [
       {
-        "title": "工信部启动AI应用服务商培育专项行动",
-        "assessment": "工信部办公厅发布《关于开展人工智能应用服务商培育专项行动的通知》，明确2026年底全国服务商资源池突破2000家，系国内首部以AI应用服务商为主体的国家级专项政策。媒体报道称AI产业投资逻辑正从“模型竞赛”转向“商业化验证”，B端应用厂商迎来关键窗口期。政策目标明确，但实际执行效果和商业化兑现仍需观察。",
-        "importance": 5,
-        "confidence": "medium",
-        "entities": [
-          "工信部",
-          "AI应用服务商"
-        ],
-        "evidenceIds": [
-          "E008"
-        ]
-      },
-      {
-        "title": "苹果完成CEO交接，特努斯接任",
-        "assessment": "据媒体报道，9月1日苹果正式完成权力交接，硬件工程高级副总裁约翰·特努斯接替蒂姆·库克出任CEO，库克转任执行董事长。AI被列为新管理层“头号考题”，但具体战略方向尚未披露。事件本身明确，但后续影响待验证。",
-        "importance": 5,
-        "confidence": "medium",
-        "entities": [
-          "苹果",
-          "约翰·特努斯",
-          "蒂姆·库克"
-        ],
-        "evidenceIds": [
-          "E009"
-        ]
-      },
-      {
-        "title": "微创机器人-B延迟刊发2026年中期业绩",
-        "assessment": "微创机器人-B发布公告，就报告期内一项租赁安排需要更多时间确认交易对手方与集团的关系，截至公告日期事项尚待厘清，故延迟刊发中期业绩。这构成财务披露不确定性，需关注后续澄清和业绩发布。",
+        "title": "地瓜机器人扩招NPU研发团队，或强化下一代芯片布局",
+        "assessment": "据雷峰网独家报道，地瓜机器人近期积极招聘芯片人才，补齐自研NPU能力，招聘平台可见大量信息。报道还梳理了CEO王丛的履历及地瓜机器人从地平线独立的过程。但该信息为单一来源，且标题中“或将强化”属于推测，需等待官方确认或产品发布。",
         "importance": 4,
         "confidence": "medium",
         "entities": [
-          "微创机器人-B"
+          "地瓜机器人",
+          "王丛",
+          "地平线"
+        ],
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "title": "存储被指为AI落地最大变量",
+        "assessment": "钛媒体文章提出“推理已经成为吞噬算力的黑洞”，并将存储视为AI落地最大变量。但证据包仅包含标题和摘要，缺乏具体数据、案例和解决方案，无法评估其论证强度。",
+        "importance": 3,
+        "confidence": "low",
+        "entities": [
+          "AI基础设施",
+          "存储"
         ],
         "evidenceIds": [
           "E002"
         ]
       },
       {
-        "title": "宁德时代匈牙利工厂被罚款",
-        "assessment": "新浪财经报道宁德时代匈牙利工厂被罚款，但证据仅提供标题，未包含罚款原因、金额及对公司的影响。该事件可能反映海外运营合规风险，但细节待验证。",
-        "importance": 4,
+        "title": "无界动力用真实咖啡厅展现物理AI落地",
+        "assessment": "雷峰网报道，2026世界机器人大会出现更多垂直场景机器人，无界动力以真实咖啡厅展示物理AI落地，并称MWA™霸榜全球第一。但“霸榜全球第一”未提供具体榜单和评测依据，且为单一来源，需谨慎对待。",
+        "importance": 3,
         "confidence": "low",
         "entities": [
-          "宁德时代"
-        ],
-        "evidenceIds": [
-          "E027"
-        ]
-      },
-      {
-        "title": "AI模型产生Erdős单位距离猜想反例并获人类验证",
-        "assessment": "arXiv论文报告，2026年5月OpenAI模型产生Erdős单位距离猜想反例，五名数学家同日发布人工验证版本，结果数周内进入文献。该事件显示AI在数学发现中的潜力，但论文为预印本，结果仍需同行评审确认。",
-        "importance": 4,
-        "confidence": "medium",
-        "entities": [
-          "OpenAI",
-          "数学研究"
+          "无界动力",
+          "MWA™",
+          "物理AI"
         ],
         "evidenceIds": [
           "E004"
-        ]
-      },
-      {
-        "title": "Google试点全球首个双盲AI评估",
-        "assessment": "Google官方博客披露，正在试点全球首个双盲AI评估，利用密码学安全环境建立对专有模型基准的信任。这是AI评估方法的重要进展，官方披露置信度较高。",
-        "importance": 4,
-        "confidence": "high",
-        "entities": [
-          "Google",
-          "AI评估"
-        ],
-        "evidenceIds": [
-          "E012"
-        ]
-      },
-      {
-        "title": "研究揭示文本到图像安全管道存在方言偏见",
-        "assessment": "arXiv论文评估23,080对提示词，覆盖五种英语方言，发现文本到图像安全护栏对非标准方言无法公平泛化，存在“方言惩罚”。该研究指出AI安全系统需提升公平性，但具体影响范围待进一步验证。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "文本到图像模型",
-          "AI安全"
-        ],
-        "evidenceIds": [
-          "E005"
-        ]
-      },
-      {
-        "title": "年内业绩十强基金隐形重仓股多元防守",
-        "assessment": "媒体报道，2026年公募基金半年报披露完毕，年内主动权益基金业绩十强产品在隐形重仓股上开启多元布局，多位基金经理强调风格走向均衡。这反映市场防守心态，但具体持仓变化需以基金报告为准。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "主动权益基金",
-          "基金经理"
-        ],
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "title": "Databricks发布Autoscaling Lakebase Postgres",
-        "assessment": "Databricks官方博客宣布Lakebase Postgres自动扩展功能，面向计算浪费不可接受的工作负载。官方披露，产品功能明确，但市场影响待观察。",
-        "importance": 3,
-        "confidence": "high",
-        "entities": [
-          "Databricks",
-          "Postgres"
-        ],
-        "evidenceIds": [
-          "E013"
-        ]
-      },
-      {
-        "title": "扩散模型所有权验证框架提出",
-        "assessment": "arXiv论文提出基于成员关系的扩散模型所有权验证框架，应对大规模扩散模型被滥用和资源消耗问题。该框架的有效性仍需进一步验证，但指向AI知识产权保护的重要方向。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "扩散模型",
-          "AI知识产权"
-        ],
-        "evidenceIds": [
-          "E006"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "AI产业政策与商业化",
+        "entity": "地瓜机器人",
         "direction": "positive",
-        "statement": "工信部专项行动推动AI应用服务商培育，AI产业投资逻辑从模型竞赛转向商业化验证，B端应用厂商迎来窗口期。",
+        "statement": "地瓜机器人积极招聘NPU研发人才，可能强化下一代芯片自研能力，但尚未有产品落地证据，需持续跟踪。",
         "evidenceIds": [
-          "E008"
+          "E001"
         ]
       },
       {
-        "entity": "苹果",
+        "entity": "AI存储基础设施",
         "direction": "mixed",
-        "statement": "CEO更替后AI成为头号考题，但新管理层战略方向尚未明确，增长点待观察。",
-        "evidenceIds": [
-          "E009"
-        ]
-      },
-      {
-        "entity": "微创机器人-B",
-        "direction": "negative",
-        "statement": "延迟刊发中期业绩，因租赁安排交易对手方关系待厘清，财务披露存在不确定性。",
+        "statement": "存储被视为AI落地最大变量，推理算力消耗加剧存储压力，既可能推动存储技术升级，也可能成为AI落地的瓶颈。",
         "evidenceIds": [
           "E002"
         ]
       },
       {
-        "entity": "宁德时代",
-        "direction": "negative",
-        "statement": "匈牙利工厂被罚款，海外运营合规风险显现，但具体影响待验证。",
-        "evidenceIds": [
-          "E027"
-        ]
-      },
-      {
-        "entity": "AI安全与公平性",
-        "direction": "mixed",
-        "statement": "研究显示T2I安全管道存在方言偏见，同时Google试点双盲AI评估以提升基准可信度，安全治理进入精细化阶段。",
-        "evidenceIds": [
-          "E005",
-          "E012"
-        ]
-      },
-      {
-        "entity": "AI数学研究",
+        "entity": "物理AI/机器人应用",
         "direction": "positive",
-        "statement": "OpenAI模型产生Erdős单位距离猜想反例并获人类验证，AI在数学发现中的潜力得到展示。",
+        "statement": "2026世界机器人大会显示垂直场景机器人增多，无界动力以真实咖啡厅展示物理AI落地，表明物理AI正从展示走向实际场景。",
         "evidenceIds": [
           "E004"
-        ]
-      },
-      {
-        "entity": "Databricks",
-        "direction": "positive",
-        "statement": "Lakebase Postgres自动扩展功能发布，提升数据库弹性与计算效率。",
-        "evidenceIds": [
-          "E013"
-        ]
-      },
-      {
-        "entity": "主动权益基金",
-        "direction": "neutral",
-        "statement": "十强基金隐形重仓股多元防守，基金经理强调风格均衡，市场风格可能趋于分散。",
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "entity": "扩散模型知识产权",
-        "direction": "mixed",
-        "statement": "论文提出所有权验证框架，但有效性待验证，AI生成内容所有权纠纷风险仍存。",
-        "evidenceIds": [
-          "E006"
-        ]
-      },
-      {
-        "entity": "计算病理学AI",
-        "direction": "positive",
-        "statement": "XAI研究提出定义、分类和推荐，有望推动计算病理学临床采用，但落地仍需验证。",
-        "evidenceIds": [
-          "E007"
         ]
       }
     ],
     "watchlist": [
       {
-        "item": "微创机器人-B中期业绩刊发",
-        "reason": "延迟刊发涉及租赁安排交易对手方关系，可能影响财务披露和投资者信心。",
-        "nextEvidence": "公司后续公告或正式中期业绩",
+        "item": "地瓜机器人下一代芯片产品发布",
+        "reason": "扩招NPU团队可能预示新产品，但尚无官方确认。",
+        "nextEvidence": "地瓜机器人官方公告、产品发布或芯片流片信息",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "item": "存储技术如何应对AI推理需求",
+        "reason": "文章提出存储是AI落地最大变量，但缺乏具体方案和数据。",
+        "nextEvidence": "存储厂商的技术方案、行业报告或客户案例",
         "evidenceIds": [
           "E002"
         ]
       },
       {
-        "item": "宁德时代匈牙利工厂罚款详情",
-        "reason": "目前仅有标题，缺乏原因、金额和影响。",
-        "nextEvidence": "宁德时代官方声明或权威媒体报道",
+        "item": "无界动力MWA™的榜单依据及商业化进展",
+        "reason": "标题称霸榜全球第一，但未提供榜单细节，需验证其真实性和商业落地情况。",
+        "nextEvidence": "具体榜单名称、评测数据、客户案例或营收信息",
         "evidenceIds": [
-          "E027"
-        ]
-      },
-      {
-        "item": "苹果新CEO AI战略",
-        "reason": "特努斯上任后AI成头号考题，但具体产品路线未披露。",
-        "nextEvidence": "苹果新品发布会或财报电话会",
-        "evidenceIds": [
-          "E009"
-        ]
-      },
-      {
-        "item": "工信部AI应用服务商专项行动执行",
-        "reason": "政策目标2000家服务商，但落地效果待观察。",
-        "nextEvidence": "工信部后续名单或实施细则",
-        "evidenceIds": [
-          "E008"
-        ]
-      },
-      {
-        "item": "AI安全方言偏见研究后续",
-        "reason": "研究指出T2I安全管道不公平，可能引发监管或模型改进。",
-        "nextEvidence": "论文正式发表或模型更新",
-        "evidenceIds": [
-          "E005"
-        ]
-      },
-      {
-        "item": "Google双盲AI评估试点结果",
-        "reason": "首个双盲评估，可能影响行业基准标准。",
-        "nextEvidence": "试点报告或后续扩展",
-        "evidenceIds": [
-          "E012"
-        ]
-      },
-      {
-        "item": "寒武纪融资余额变化",
-        "reason": "融资余额占流通市值比例较高，反映杠杆资金情绪。",
-        "nextEvidence": "后续融资数据或股价表现",
-        "evidenceIds": [
-          "E035"
-        ]
-      },
-      {
-        "item": "扩散模型所有权验证框架应用",
-        "reason": "论文提出框架但有效性待验证，可能影响AI知识产权保护。",
-        "nextEvidence": "论文后续验证或行业采用",
-        "evidenceIds": [
-          "E006"
+          "E004"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "微创机器人-B财务披露风险",
-        "reason": "延迟刊发中期业绩，租赁安排交易对手方关系待厘清，可能引发监管问询或投资者担忧。",
+        "risk": "单一来源风险",
+        "reason": "地瓜机器人扩招NPU团队仅雷峰网独家报道，未经官方确认，可能夸大或误读。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "risk": "信息不完整风险",
+        "reason": "存储文章仅有标题和摘要，无法验证其核心论点，可能以偏概全。",
         "evidenceIds": [
           "E002"
         ]
       },
       {
-        "risk": "宁德时代海外运营合规风险",
-        "reason": "匈牙利工厂被罚款，显示海外监管合规挑战，但细节不明。",
+        "risk": "宣传口径风险",
+        "reason": "无界动力“霸榜全球第一”缺乏具体榜单信息，可能为营销表述。",
         "evidenceIds": [
-          "E027"
-        ]
-      },
-      {
-        "risk": "AI安全系统公平性风险",
-        "reason": "研究显示T2I安全管道对非标准方言存在偏见，可能导致特定群体被错误过滤，引发声誉和监管风险。",
-        "evidenceIds": [
-          "E005"
-        ]
-      },
-      {
-        "risk": "AI生成内容所有权纠纷风险",
-        "reason": "扩散模型广泛应用但所有权验证困难，论文提出框架但有效性待验证，知识产权纠纷可能增加。",
-        "evidenceIds": [
-          "E006"
-        ]
-      },
-      {
-        "risk": "苹果战略转型不确定性",
-        "reason": "CEO更替后AI战略未明确，执行风险和市场预期波动。",
-        "evidenceIds": [
-          "E009"
-        ]
-      },
-      {
-        "risk": "政策执行不及预期",
-        "reason": "工信部专项行动目标2000家服务商，但实际培育效果和商业化兑现存在不确定性。",
-        "evidenceIds": [
-          "E008"
+          "E004"
         ]
       }
     ],
-    "methodologyNote": "本分析仅基于证据包中的14条证据，未补充外部事实。证据等级包括官方披露（E012、E013）、arXiv预印本（E004-E007）和媒体报道（E001-E003、E008-E010、E027、E035）。对于低等级证据，判断以medium或low confidence表达，并明确标注待验证事项。所有判断均引用证据编号。本报告不构成投资建议，不提供买入、卖出、目标价或收益承诺。 数据管线提示：机构证据层重建=stale、科创板招股书投资者证据刷新=stale。"
+    "methodologyNote": "本分析仅基于证据包中的三篇公开文章快照（E001、E002、E004），所有证据等级为C，来源为专业媒体，但reviewStatus为automated_unreviewed，未经人工复核。因此，所有判断均为初步推断，事实、推断和待验证事项已在各条目中区分。未补充任何外部事实，不构成投资建议。 数据管线提示：机构证据层重建=stale、科创板招股书投资者证据刷新=stale。"
   },
   "changes": [
     {
-      "id": "chg-bb7644b08c610ee5e47d",
+      "id": "chg-423e5c9d7ee70f6b5fec",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-e3bf2e5ffc3f847558",
-      "entityName": "零售电商行业的AI落地困境",
+      "entityId": "intelligence-event-c2f69dada34078dd76",
+      "entityName": "独家丨地瓜机器人扩招NPU研发团队，或将强化下一代芯片布局",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：零售电商行业的AI落地困境。",
-      "importance": 84,
+      "summary": "新增高价值情报事件记录：独家丨地瓜机器人扩招NPU研发团队，或将强化下一代芯片布局。",
+      "importance": 91,
       "before": null,
       "after": {
         "publishedAt": "2026-09-01",
-        "summary": "AI只是工具，业务才是目的。",
-        "title": "零售电商行业的AI落地困境"
+        "summary": "雷峰网独家获悉，机器人通用底座厂商地瓜机器人近期积极招聘芯片人才，全面补齐自研NPU芯片研发能力，在猎聘等招聘软件搜索地瓜机器人芯片关键词，亦可查询到大量招聘信息。 地瓜机器人的发展与CEO王丛深度绑定。公开履历显示，王丛本科毕业于北京工业大学，后赴美取得莱特州立大学博士学位；职业初期入职阿里巴巴，随后联合创办文因互联。2018年王丛正式加入地平线，2022年，王丛带领团队切入尚处蓝海的机器人赛道，原AIoT部门升级为机器人事业部，王丛出任事业部总经理；2024年该业务板块完成独立拆分，地瓜机器人正式独立运营。…",
+        "title": "独家丨地瓜机器人扩招NPU研发团队，或将强化下一代芯片布局"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -424,7 +216,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "AI只是工具，业务才是目的。",
+          "after": "雷峰网独家获悉，机器人通用底座厂商地瓜机器人近期积极招聘芯片人才，全面补齐自研NPU芯片研发能力，在猎聘等招聘软件搜索地瓜机器人芯片关键词，亦可查询到大量招聘信息。 地瓜机器人的发展与CEO王丛深度绑定。公开履历显示，王丛本科毕业于北京工业大学，后赴美取得莱特州立大学博士学位；职业初期入职阿里巴巴，随后联合创办文因互联。2018年王丛正式加入地平线，2022年，王丛带领团队切入尚处蓝海的机器人赛道，原AIoT部门升级为机器人事业部，王丛出任事业部总经理；2024年该业务板块完成独立拆分，地瓜机器人正式独立运营。…",
           "evidenceIds": [
             "E001"
           ]
@@ -432,7 +224,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "零售电商行业的AI落地困境",
+          "after": "独家丨地瓜机器人扩招NPU研发团队，或将强化下一代芯片布局",
           "evidenceIds": [
             "E001"
           ]
@@ -453,35 +245,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-06d4a5ab3868f010215a"
+        "evt-2025eb9ad2c7a8cf8ac3"
       ],
       "eventLifecycles": {
-        "evt-06d4a5ab3868f010215a": "first_seen"
+        "evt-2025eb9ad2c7a8cf8ac3": "first_seen"
       },
-      "eventId": "evt-06d4a5ab3868f010215a",
+      "eventId": "evt-2025eb9ad2c7a8cf8ac3",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T01:56:14+00:00",
-      "lastSeenAt": "2026-09-01T01:56:14+00:00"
+      "firstSeenAt": "2026-09-01T05:29:31+00:00",
+      "lastSeenAt": "2026-09-01T05:29:31+00:00"
     },
     {
-      "id": "chg-f18893806deb0f39c240",
+      "id": "chg-33d946c00c8eb1dcec54",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-947e4408a413604e36",
-      "entityName": "微创机器人-B：延迟刊发2026年中期业绩",
+      "entityId": "intelligence-event-57b8fa8987d9b3d024",
+      "entityName": "存储成了AI落地最大变量，企业如何打破阻碍？丨ToB产业观察",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：微创机器人-B：延迟刊发2026年中期业绩。",
+      "summary": "新增高价值情报事件记录：存储成了AI落地最大变量，企业如何打破阻碍？丨ToB产业观察。",
       "importance": 84,
       "before": null,
       "after": {
         "publishedAt": "2026-09-01",
-        "summary": "微创机器人-B（02252）发布公告，就集团于报告期内的一项租赁安排，公司需要更多时间去进一步确认交易对手方与集团的关系，而截至本公告日期，由于上述事项尚待厘清...",
-        "title": "微创机器人-B：延迟刊发2026年中期业绩"
+        "summary": "推理已经成为吞噬算力的黑洞。",
+        "title": "存储成了AI落地最大变量，企业如何打破阻碍？丨ToB产业观察"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -503,7 +295,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "微创机器人-B（02252）发布公告，就集团于报告期内的一项租赁安排，公司需要更多时间去进一步确认交易对手方与集团的关系，而截至本公告日期，由于上述事项尚待厘清...",
+          "after": "推理已经成为吞噬算力的黑洞。",
           "evidenceIds": [
             "E002"
           ]
@@ -511,7 +303,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "微创机器人-B：延迟刊发2026年中期业绩",
+          "after": "存储成了AI落地最大变量，企业如何打破阻碍？丨ToB产业观察",
           "evidenceIds": [
             "E002"
           ]
@@ -532,35 +324,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-89b141ca64c7cbd22d59"
+        "evt-47fdb8b8aaba42d7d6db"
       ],
       "eventLifecycles": {
-        "evt-89b141ca64c7cbd22d59": "first_seen"
+        "evt-47fdb8b8aaba42d7d6db": "first_seen"
       },
-      "eventId": "evt-89b141ca64c7cbd22d59",
+      "eventId": "evt-47fdb8b8aaba42d7d6db",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T01:56:14+00:00",
-      "lastSeenAt": "2026-09-01T01:56:14+00:00"
+      "firstSeenAt": "2026-09-01T05:29:31+00:00",
+      "lastSeenAt": "2026-09-01T05:29:31+00:00"
     },
     {
-      "id": "chg-4fb8dd154a0a7be90acc",
+      "id": "chg-8af5d937a85017d670fe",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-688951b3f600bad5bf",
-      "entityName": "年内业绩十强基金因何而强 隐形重仓股透露多元防守布局",
+      "entityId": "intelligence-event-cc897af356269311ed",
+      "entityName": "MWA™霸榜全球第一后：无界动力用真实咖啡厅展现物理AI的落地之径",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：年内业绩十强基金因何而强 隐形重仓股透露多元防守布局。",
+      "summary": "新增高价值情报事件记录：MWA™霸榜全球第一后：无界动力用真实咖啡厅展现物理AI的落地之径。",
       "importance": 84,
       "before": null,
       "after": {
         "publishedAt": "2026-09-01",
-        "summary": "随着2026年公募基金半年报披露完毕，年内主动权益基金业绩十强产品的股票持仓明细也浮出水面。截至8月31日，易方达供给改革、易方达产业机遇、东方 人工智能 主题、汇安趋势动力、诺安创新驱动等年内业绩十强基金均已披露全部持仓，这些基金在隐形重仓股上大多开启多元布局，多位基金经理也在半年度报告强调风格或将走向均衡，下阶段持仓须拓宽股票范围。 根据主动权益基金十强产品披露的半年度数据，明星选手几乎清一色开启左手进攻（前十大重仓股）、右手多元防守（隐形重仓股）的布局思路。证券时报记者注意到，当前冠军基金经理杨宗昌管理的易…",
-        "title": "年内业绩十强基金因何而强 隐形重仓股透露多元防守布局"
+        "summary": "从 “出片”到“出海”，无界动力即将奔赴下一个考场。 作者丨郭 思 编辑丨董子博 没有刻意的社交氛围，一人静坐或几个好友相聚，手捧一杯咖啡，在音乐与咖啡的交汇中，暂时剥离工作与生活的琐碎，获得片刻放松与灵感回响。这是平日里我们对于休闲时刻美好画面的印象， 也是 2026世界机器人大会现场最反差的一幕。 与去年以及今年上半年以来出现争奇斗艳、跳舞翻跟头的喧闹不同，今年 WRC，记者探展一圈发现，展会上出现了很多垂直场景的机器人，有专门针对人的心脑血管做手术的医疗机器人，也有分拣物品进行归类的各种家庭机器人，还有一些…",
+        "title": "MWA™霸榜全球第一后：无界动力用真实咖啡厅展现物理AI的落地之径"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -576,92 +368,13 @@
           "before": null,
           "after": "2026-09-01",
           "evidenceIds": [
-            "E003"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "随着2026年公募基金半年报披露完毕，年内主动权益基金业绩十强产品的股票持仓明细也浮出水面。截至8月31日，易方达供给改革、易方达产业机遇、东方 人工智能 主题、汇安趋势动力、诺安创新驱动等年内业绩十强基金均已披露全部持仓，这些基金在隐形重仓股上大多开启多元布局，多位基金经理也在半年度报告强调风格或将走向均衡，下阶段持仓须拓宽股票范围。 根据主动权益基金十强产品披露的半年度数据，明星选手几乎清一色开启左手进攻（前十大重仓股）、右手多元防守（隐形重仓股）的布局思路。证券时报记者注意到，当前冠军基金经理杨宗昌管理的易…",
-          "evidenceIds": [
-            "E003"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "年内业绩十强基金因何而强 隐形重仓股透露多元防守布局",
-          "evidenceIds": [
-            "E003"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E003"
-      ],
-      "supportingEvidenceIds": [
-        "E003"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-5bdb8c4019a7ed2d1bb8"
-      ],
-      "eventLifecycles": {
-        "evt-5bdb8c4019a7ed2d1bb8": "first_seen"
-      },
-      "eventId": "evt-5bdb8c4019a7ed2d1bb8",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T01:56:14+00:00",
-      "lastSeenAt": "2026-09-01T01:56:14+00:00"
-    },
-    {
-      "id": "chg-ba0b3df6ee90d5f277be",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-31c54b3f6892dcad29",
-      "entityName": "Verification abundance, adjudication scarcity: what happens to mathematical knowledge when proof checking becomes free",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Verification abundance, adjudication scarcity: what happens to mathematical knowledge when proof checking becomes free。",
-      "importance": 84,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-08-29",
-        "summary": "In May 2026 an OpenAI model produced a counterexample to the Erdős unit distance conjecture. Five mathematicians published a human-verified version the same day, and the result entered the literature within weeks. In August 2026 the same laboratory published…",
-        "title": "Verification abundance, adjudication scarcity: what happens to mathematical knowledge when proof checking becomes free"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-08-29",
-          "evidenceIds": [
             "E004"
           ]
         },
         {
           "field": "summary",
           "before": null,
-          "after": "In May 2026 an OpenAI model produced a counterexample to the Erdős unit distance conjecture. Five mathematicians published a human-verified version the same day, and the result entered the literature within weeks. In August 2026 the same laboratory published…",
+          "after": "从 “出片”到“出海”，无界动力即将奔赴下一个考场。 作者丨郭 思 编辑丨董子博 没有刻意的社交氛围，一人静坐或几个好友相聚，手捧一杯咖啡，在音乐与咖啡的交汇中，暂时剥离工作与生活的琐碎，获得片刻放松与灵感回响。这是平日里我们对于休闲时刻美好画面的印象， 也是 2026世界机器人大会现场最反差的一幕。 与去年以及今年上半年以来出现争奇斗艳、跳舞翻跟头的喧闹不同，今年 WRC，记者探展一圈发现，展会上出现了很多垂直场景的机器人，有专门针对人的心脑血管做手术的医疗机器人，也有分拣物品进行归类的各种家庭机器人，还有一些…",
           "evidenceIds": [
             "E004"
           ]
@@ -669,7 +382,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "Verification abundance, adjudication scarcity: what happens to mathematical knowledge when proof checking becomes free",
+          "after": "MWA™霸榜全球第一后：无界动力用真实咖啡厅展现物理AI的落地之径",
           "evidenceIds": [
             "E004"
           ]
@@ -690,806 +403,28 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-b2bfc09b7df2f007bc8e"
+        "evt-4a372a16c2366a0b264b"
       ],
       "eventLifecycles": {
-        "evt-b2bfc09b7df2f007bc8e": "first_seen"
+        "evt-4a372a16c2366a0b264b": "first_seen"
       },
-      "eventId": "evt-b2bfc09b7df2f007bc8e",
+      "eventId": "evt-4a372a16c2366a0b264b",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T01:56:14+00:00",
-      "lastSeenAt": "2026-09-01T01:56:14+00:00"
-    },
-    {
-      "id": "chg-30972c54b77ae26800c8",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-e27f7796bcd1e84c1a",
-      "entityName": "Not Safe for All: Auditing the Dialect Penalty in Text-to-Image Safety Pipelines",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Not Safe for All: Auditing the Dialect Penalty in Text-to-Image Safety Pipelines。",
-      "importance": 84,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-08-30",
-        "summary": "Text-to-image (T2I) safety guardrails fail to generalize equitably to non-standard dialects. Evaluating 23,080 paired prompts across five English dialects, we formalize this failure as the dialect penalty, where filters trigger based on linguistic surface fea…",
-        "title": "Not Safe for All: Auditing the Dialect Penalty in Text-to-Image Safety Pipelines"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-08-30",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Text-to-image (T2I) safety guardrails fail to generalize equitably to non-standard dialects. Evaluating 23,080 paired prompts across five English dialects, we formalize this failure as the dialect penalty, where filters trigger based on linguistic surface fea…",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Not Safe for All: Auditing the Dialect Penalty in Text-to-Image Safety Pipelines",
-          "evidenceIds": [
-            "E005"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E005"
-      ],
-      "supportingEvidenceIds": [
-        "E005"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-6c5434f9fff212a0e0d7"
-      ],
-      "eventLifecycles": {
-        "evt-6c5434f9fff212a0e0d7": "first_seen"
-      },
-      "eventId": "evt-6c5434f9fff212a0e0d7",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T01:56:14+00:00",
-      "lastSeenAt": "2026-09-01T01:56:14+00:00"
-    },
-    {
-      "id": "chg-4526e644b56c6d225241",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-921bcefef41247bce0",
-      "entityName": "Membership is Ownership: A Robust Ownership Verification Framework for Diffusion Models",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Membership is Ownership: A Robust Ownership Verification Framework for Diffusion Models。",
-      "importance": 84,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-08-28",
-        "summary": "Large-scale diffusion models have fueled numerous profitable downstream applications for AI-related businesses, including visual editing and content creation. Meanwhile, due to the huge amount of resource consumption (e.g., computation and high-quality data)…",
-        "title": "Membership is Ownership: A Robust Ownership Verification Framework for Diffusion Models"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-08-28",
-          "evidenceIds": [
-            "E006"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Large-scale diffusion models have fueled numerous profitable downstream applications for AI-related businesses, including visual editing and content creation. Meanwhile, due to the huge amount of resource consumption (e.g., computation and high-quality data)…",
-          "evidenceIds": [
-            "E006"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Membership is Ownership: A Robust Ownership Verification Framework for Diffusion Models",
-          "evidenceIds": [
-            "E006"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E006"
-      ],
-      "supportingEvidenceIds": [
-        "E006"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-0dcabc4fc8aaf0a2e36c"
-      ],
-      "eventLifecycles": {
-        "evt-0dcabc4fc8aaf0a2e36c": "first_seen"
-      },
-      "eventId": "evt-0dcabc4fc8aaf0a2e36c",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T01:56:14+00:00",
-      "lastSeenAt": "2026-09-01T01:56:14+00:00"
-    },
-    {
-      "id": "chg-22cb71bb1525c80f59c7",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-cfb387eb474e4e8f41",
-      "entityName": "Explainable Artificial Intelligence (XAI) in Computational Pathology: Definitions, Taxonomy, and Recommendations",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Explainable Artificial Intelligence (XAI) in Computational Pathology: Definitions, Taxonomy, and Recommendations。",
-      "importance": 84,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-08-28",
-        "summary": "Computational pathology (CompPath) is transforming medicine by leveraging artificial intelligence (AI) algorithms to support diagnosis, prognosis, and treatment prediction from gigapixel whole-slide images. Clinical adoption is progressing, but is constrained…",
-        "title": "Explainable Artificial Intelligence (XAI) in Computational Pathology: Definitions, Taxonomy, and Recommendations"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-08-28",
-          "evidenceIds": [
-            "E007"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Computational pathology (CompPath) is transforming medicine by leveraging artificial intelligence (AI) algorithms to support diagnosis, prognosis, and treatment prediction from gigapixel whole-slide images. Clinical adoption is progressing, but is constrained…",
-          "evidenceIds": [
-            "E007"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Explainable Artificial Intelligence (XAI) in Computational Pathology: Definitions, Taxonomy, and Recommendations",
-          "evidenceIds": [
-            "E007"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E007"
-      ],
-      "supportingEvidenceIds": [
-        "E007"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-28b70ff575f371968b8b"
-      ],
-      "eventLifecycles": {
-        "evt-28b70ff575f371968b8b": "first_seen"
-      },
-      "eventId": "evt-28b70ff575f371968b8b",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T01:56:14+00:00",
-      "lastSeenAt": "2026-09-01T01:56:14+00:00"
-    },
-    {
-      "id": "chg-d63a2432075b31fe8838",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-e5a05dc4b849db9cce",
-      "entityName": "AI应用服务商培育专项行动落地！行业加速迈向商业化兑现拐点(附股)",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：AI应用服务商培育专项行动落地！行业加速迈向商业化兑现拐点(附股)。",
-      "importance": 84,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-01",
-        "summary": "工信部启动 AI应用 服务商培育专项行动，明确2026年底全国服务商资源池突破2000家。机构认为，AI产业投资逻辑正从“模型竞赛”转向“商业化验证”，B端应用厂商迎来关键窗口期。 8月31日，工信部办公厅发布《关于开展 人工智能 应用服务商培育专项行动的通知》，这是国内首部以“ 人工智能 应用服务商”为主体的国家级专项政策。 根据通知， 人工智能 应用服务商是指围绕用户单位智能化需求，提供人工智能解决方案咨询规划、交付实施、运营管理、安全治理等服务的企业或机构。",
-        "title": "AI应用服务商培育专项行动落地！行业加速迈向商业化兑现拐点(附股)"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-01",
-          "evidenceIds": [
-            "E008"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "工信部启动 AI应用 服务商培育专项行动，明确2026年底全国服务商资源池突破2000家。机构认为，AI产业投资逻辑正从“模型竞赛”转向“商业化验证”，B端应用厂商迎来关键窗口期。 8月31日，工信部办公厅发布《关于开展 人工智能 应用服务商培育专项行动的通知》，这是国内首部以“ 人工智能 应用服务商”为主体的国家级专项政策。 根据通知， 人工智能 应用服务商是指围绕用户单位智能化需求，提供人工智能解决方案咨询规划、交付实施、运营管理、安全治理等服务的企业或机构。",
-          "evidenceIds": [
-            "E008"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "AI应用服务商培育专项行动落地！行业加速迈向商业化兑现拐点(附股)",
-          "evidenceIds": [
-            "E008"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E008"
-      ],
-      "supportingEvidenceIds": [
-        "E008"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-1d27e3f7c80bac43836f"
-      ],
-      "eventLifecycles": {
-        "evt-1d27e3f7c80bac43836f": "first_seen"
-      },
-      "eventId": "evt-1d27e3f7c80bac43836f",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T01:56:14+00:00",
-      "lastSeenAt": "2026-09-01T01:56:14+00:00"
-    },
-    {
-      "id": "chg-a43a5de92e2231982b28",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-2482615b14c327e9e7",
-      "entityName": "苹果开启特努斯时代：AI成“头号考题” 下一个增长点在哪？",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：苹果开启特努斯时代：AI成“头号考题” 下一个增长点在哪？。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-01",
-        "summary": "9月1日， 苹果 正式完成权力交接。硬件工程高级副总裁约翰·特努斯接替蒂姆·库克，出任 苹果 新一任CEO，执掌这家市值4.6万亿美元的 消费电子 巨头。 库克并未完全退休，而是转任执行董事长，未来将协助处理公司部分事务，包括与全球政策制定者沟通。 15年前，库克从乔布斯手中接管公司，搭上 消费电子 超级周期，凭借运营能力将 苹果 带到新高度。",
-        "title": "苹果开启特努斯时代：AI成“头号考题” 下一个增长点在哪？"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-01",
-          "evidenceIds": [
-            "E009"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "9月1日， 苹果 正式完成权力交接。硬件工程高级副总裁约翰·特努斯接替蒂姆·库克，出任 苹果 新一任CEO，执掌这家市值4.6万亿美元的 消费电子 巨头。 库克并未完全退休，而是转任执行董事长，未来将协助处理公司部分事务，包括与全球政策制定者沟通。 15年前，库克从乔布斯手中接管公司，搭上 消费电子 超级周期，凭借运营能力将 苹果 带到新高度。",
-          "evidenceIds": [
-            "E009"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "苹果开启特努斯时代：AI成“头号考题” 下一个增长点在哪？",
-          "evidenceIds": [
-            "E009"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E009"
-      ],
-      "supportingEvidenceIds": [
-        "E009"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-e0514d8636ed71fb0d80"
-      ],
-      "eventLifecycles": {
-        "evt-e0514d8636ed71fb0d80": "first_seen"
-      },
-      "eventId": "evt-e0514d8636ed71fb0d80",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T01:56:14+00:00",
-      "lastSeenAt": "2026-09-01T01:56:14+00:00"
-    },
-    {
-      "id": "chg-5584134550892dbe2ad2",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-2ac8ca04512688a0f6",
-      "entityName": "优必选在天津成立机器人公司 含多项AI业务",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：优必选在天津成立机器人公司 含多项AI业务。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-01",
-        "summary": "企查查APP显示，近日，天津 优必选 机器人 有限公司成立，经营范围包含智能 机器人 的研发；智能 机器人 销售； 人工智能 理论与算法 软件开发 ； 人工智能 行业应用系统集成服务； 人工智能 应用 软件开发 等。企查查股权穿透显示，该公司由 优必选 全资持股。",
-        "title": "优必选在天津成立机器人公司 含多项AI业务"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-01",
-          "evidenceIds": [
-            "E010"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "企查查APP显示，近日，天津 优必选 机器人 有限公司成立，经营范围包含智能 机器人 的研发；智能 机器人 销售； 人工智能 理论与算法 软件开发 ； 人工智能 行业应用系统集成服务； 人工智能 应用 软件开发 等。企查查股权穿透显示，该公司由 优必选 全资持股。",
-          "evidenceIds": [
-            "E010"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "优必选在天津成立机器人公司 含多项AI业务",
-          "evidenceIds": [
-            "E010"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E010"
-      ],
-      "supportingEvidenceIds": [
-        "E010"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-f054d74103ea4371099a"
-      ],
-      "eventLifecycles": {
-        "evt-f054d74103ea4371099a": "first_seen"
-      },
-      "eventId": "evt-f054d74103ea4371099a",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T01:56:14+00:00",
-      "lastSeenAt": "2026-09-01T01:56:14+00:00"
-    },
-    {
-      "id": "chg-934feb94eba429dad628",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-2b3c683e95e1902152",
-      "entityName": "Piloting the world's first double-blind AI evaluations",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Piloting the world's first double-blind AI evaluations。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-08-27",
-        "summary": "Building trust in proprietary model benchmarks using cryptographically secure environments",
-        "title": "Piloting the world's first double-blind AI evaluations"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-08-27",
-          "evidenceIds": [
-            "E012"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Building trust in proprietary model benchmarks using cryptographically secure environments",
-          "evidenceIds": [
-            "E012"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Piloting the world's first double-blind AI evaluations",
-          "evidenceIds": [
-            "E012"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E012"
-      ],
-      "supportingEvidenceIds": [
-        "E012"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-40665b58084cc6b5bacb"
-      ],
-      "eventLifecycles": {
-        "evt-40665b58084cc6b5bacb": "first_seen"
-      },
-      "eventId": "evt-40665b58084cc6b5bacb",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T01:56:14+00:00",
-      "lastSeenAt": "2026-09-01T01:56:14+00:00"
-    },
-    {
-      "id": "chg-6284cb9713b707c8d73a",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-7c90a5f93033bbe0ca",
-      "entityName": "Autoscaling Lakebase Postgres",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Autoscaling Lakebase Postgres。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-08-31",
-        "summary": "Autoscaling prepares Postgres for workloads where wasted compute is not an option.",
-        "title": "Autoscaling Lakebase Postgres"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-08-31",
-          "evidenceIds": [
-            "E013"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Autoscaling prepares Postgres for workloads where wasted compute is not an option.",
-          "evidenceIds": [
-            "E013"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Autoscaling Lakebase Postgres",
-          "evidenceIds": [
-            "E013"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E013"
-      ],
-      "supportingEvidenceIds": [
-        "E013"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-39dfeedbac464b617b9b"
-      ],
-      "eventLifecycles": {
-        "evt-39dfeedbac464b617b9b": "first_seen"
-      },
-      "eventId": "evt-39dfeedbac464b617b9b",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T01:56:14+00:00",
-      "lastSeenAt": "2026-09-01T01:56:14+00:00"
-    },
-    {
-      "id": "chg-0b48ed95a209accd2b08",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "catl",
-      "entityName": "宁德时代",
-      "action": "updated",
-      "changedFields": [
-        "news"
-      ],
-      "summary": "宁德时代 的 news、quote 发生变化。",
-      "importance": 48,
-      "before": {
-        "news": []
-      },
-      "after": {
-        "news": [
-          {
-            "publishedAt": "2026-09-01T08:50:00+08:00",
-            "source": "新浪财经",
-            "title": "宁德时代匈牙利工厂被罚款",
-            "url": "https://finance.sina.com.cn/roll/2026-09-01/doc-iniqhscz8309632.shtml"
-          }
-        ]
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "news"
-      ],
-      "claimBindings": [
-        {
-          "field": "news",
-          "before": [],
-          "after": [
-            {
-              "publishedAt": "2026-09-01T08:50:00+08:00",
-              "source": "新浪财经",
-              "title": "宁德时代匈牙利工厂被罚款",
-              "url": "https://finance.sina.com.cn/roll/2026-09-01/doc-iniqhscz8309632.shtml"
-            }
-          ],
-          "evidenceIds": [
-            "E027"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E027"
-      ],
-      "supportingEvidenceIds": [
-        "E027"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-0a4c2871cdc00b3ff51d"
-      ],
-      "eventLifecycles": {
-        "evt-0a4c2871cdc00b3ff51d": "first_seen"
-      },
-      "eventId": "evt-0a4c2871cdc00b3ff51d",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T01:56:14+00:00",
-      "lastSeenAt": "2026-09-01T01:56:14+00:00"
-    },
-    {
-      "id": "chg-a32da9e7d1c60f5c9f1e",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "cambricon",
-      "entityName": "中科寒武纪科技股份有限公司",
-      "action": "updated",
-      "changedFields": [
-        "news"
-      ],
-      "summary": "中科寒武纪科技股份有限公司 的 news、quote 发生变化。",
-      "importance": 48,
-      "before": {
-        "news": []
-      },
-      "after": {
-        "news": [
-          {
-            "publishedAt": "2026-09-01T08:13:00+08:00",
-            "source": "新浪财经",
-            "title": "寒武纪：8月31日获融资买入10.02亿元，融资余额178.25亿元占流通市值比例2.55%，超过近一年60%分位水平",
-            "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-09-01/doc-iniqhmwh1550740.shtml"
-          }
-        ]
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "news"
-      ],
-      "claimBindings": [
-        {
-          "field": "news",
-          "before": [],
-          "after": [
-            {
-              "publishedAt": "2026-09-01T08:13:00+08:00",
-              "source": "新浪财经",
-              "title": "寒武纪：8月31日获融资买入10.02亿元，融资余额178.25亿元占流通市值比例2.55%，超过近一年60%分位水平",
-              "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-09-01/doc-iniqhmwh1550740.shtml"
-            }
-          ],
-          "evidenceIds": [
-            "E035"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E035"
-      ],
-      "supportingEvidenceIds": [
-        "E035"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-935efe99e3fec15819ef"
-      ],
-      "eventLifecycles": {
-        "evt-935efe99e3fec15819ef": "first_seen"
-      },
-      "eventId": "evt-935efe99e3fec15819ef",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T01:56:14+00:00",
-      "lastSeenAt": "2026-09-01T01:56:14+00:00"
+      "firstSeenAt": "2026-09-01T05:29:31+00:00",
+      "lastSeenAt": "2026-09-01T05:29:31+00:00"
     }
   ],
   "evidence": [
     {
       "id": "E001",
-      "changeId": "chg-bb7644b08c610ee5e47d",
-      "entityName": "零售电商行业的AI落地困境",
-      "claim": "新增高价值情报事件记录：零售电商行业的AI落地困境。",
+      "changeId": "chg-423e5c9d7ee70f6b5fec",
+      "entityName": "独家丨地瓜机器人扩招NPU研发团队，或将强化下一代芯片布局",
+      "claim": "新增高价值情报事件记录：独家丨地瓜机器人扩招NPU研发团队，或将强化下一代芯片布局。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "钛媒体",
-      "title": "零售电商行业的AI落地困境",
-      "url": "https://www.tmtpost.com/8123378.html",
+      "sourceName": "雷峰网",
+      "title": "独家丨地瓜机器人扩招NPU研发团队，或将强化下一代芯片布局",
+      "url": "https://www.leiphone.com/category/yanxishe/lCoT3AFJymcnxZVR.html",
       "publishedAt": "2026-09-01",
       "evidenceGrade": "C",
       "platformName": "专业媒体",
@@ -1506,17 +441,17 @@
     },
     {
       "id": "E002",
-      "changeId": "chg-f18893806deb0f39c240",
-      "entityName": "微创机器人-B：延迟刊发2026年中期业绩",
-      "claim": "新增高价值情报事件记录：微创机器人-B：延迟刊发2026年中期业绩。",
+      "changeId": "chg-33d946c00c8eb1dcec54",
+      "entityName": "存储成了AI落地最大变量，企业如何打破阻碍？丨ToB产业观察",
+      "claim": "新增高价值情报事件记录：存储成了AI落地最大变量，企业如何打破阻碍？丨ToB产业观察。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "微创机器人-B：延迟刊发2026年中期业绩",
-      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-09-01/doc-iniqhscx6702515.shtml",
+      "sourceName": "钛媒体",
+      "title": "存储成了AI落地最大变量，企业如何打破阻碍？丨ToB产业观察",
+      "url": "https://www.tmtpost.com/8124068.html",
       "publishedAt": "2026-09-01",
       "evidenceGrade": "C",
-      "platformName": "新浪",
+      "platformName": "专业媒体",
       "sourceRole": "corroboration",
       "claimFields": [
         "publishedAt",
@@ -1529,276 +464,25 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E003",
-      "changeId": "chg-4fb8dd154a0a7be90acc",
-      "entityName": "年内业绩十强基金因何而强 隐形重仓股透露多元防守布局",
-      "claim": "新增高价值情报事件记录：年内业绩十强基金因何而强 隐形重仓股透露多元防守布局。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "年内业绩十强基金因何而强 隐形重仓股透露多元防守布局",
-      "url": "https://finance.eastmoney.com/a/202609013860529718.html",
-      "publishedAt": "2026-09-01",
-      "evidenceGrade": "媒体报道",
-      "platformName": "东方财富",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
       "id": "E004",
-      "changeId": "chg-ba0b3df6ee90d5f277be",
-      "entityName": "Verification abundance, adjudication scarcity: what happens to mathematical knowledge when proof checking becomes free",
-      "claim": "新增高价值情报事件记录：Verification abundance, adjudication scarcity: what happens to mathematical knowledge when proof checking becomes free。",
+      "changeId": "chg-8af5d937a85017d670fe",
+      "entityName": "MWA™霸榜全球第一后：无界动力用真实咖啡厅展现物理AI的落地之径",
+      "claim": "新增高价值情报事件记录：MWA™霸榜全球第一后：无界动力用真实咖啡厅展现物理AI的落地之径。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "arXiv · Core AI companies",
-      "title": "Verification abundance, adjudication scarcity: what happens to mathematical knowledge when proof checking becomes free",
-      "url": "https://arxiv.org/abs/2608.28997v1",
-      "publishedAt": "2026-08-29",
-      "evidenceGrade": "B",
-      "platformName": "arXiv",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E005",
-      "changeId": "chg-30972c54b77ae26800c8",
-      "entityName": "Not Safe for All: Auditing the Dialect Penalty in Text-to-Image Safety Pipelines",
-      "claim": "新增高价值情报事件记录：Not Safe for All: Auditing the Dialect Penalty in Text-to-Image Safety Pipelines。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "arXiv · Core AI companies",
-      "title": "Not Safe for All: Auditing the Dialect Penalty in Text-to-Image Safety Pipelines",
-      "url": "https://arxiv.org/abs/2608.29589v1",
-      "publishedAt": "2026-08-30",
-      "evidenceGrade": "B",
-      "platformName": "arXiv",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E006",
-      "changeId": "chg-4526e644b56c6d225241",
-      "entityName": "Membership is Ownership: A Robust Ownership Verification Framework for Diffusion Models",
-      "claim": "新增高价值情报事件记录：Membership is Ownership: A Robust Ownership Verification Framework for Diffusion Models。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "arXiv · Core AI companies",
-      "title": "Membership is Ownership: A Robust Ownership Verification Framework for Diffusion Models",
-      "url": "https://arxiv.org/abs/2608.28929v1",
-      "publishedAt": "2026-08-28",
-      "evidenceGrade": "B",
-      "platformName": "arXiv",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E007",
-      "changeId": "chg-22cb71bb1525c80f59c7",
-      "entityName": "Explainable Artificial Intelligence (XAI) in Computational Pathology: Definitions, Taxonomy, and Recommendations",
-      "claim": "新增高价值情报事件记录：Explainable Artificial Intelligence (XAI) in Computational Pathology: Definitions, Taxonomy, and Recommendations。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "arXiv · Core AI companies",
-      "title": "Explainable Artificial Intelligence (XAI) in Computational Pathology: Definitions, Taxonomy, and Recommendations",
-      "url": "https://arxiv.org/abs/2608.28820v1",
-      "publishedAt": "2026-08-28",
-      "evidenceGrade": "B",
-      "platformName": "arXiv",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E008",
-      "changeId": "chg-d63a2432075b31fe8838",
-      "entityName": "AI应用服务商培育专项行动落地！行业加速迈向商业化兑现拐点(附股)",
-      "claim": "新增高价值情报事件记录：AI应用服务商培育专项行动落地！行业加速迈向商业化兑现拐点(附股)。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "AI应用服务商培育专项行动落地！行业加速迈向商业化兑现拐点(附股)",
-      "url": "https://finance.eastmoney.com/a/202609013860731632.html",
+      "sourceName": "雷峰网",
+      "title": "MWA™霸榜全球第一后：无界动力用真实咖啡厅展现物理AI的落地之径",
+      "url": "https://www.leiphone.com/category/robot/vHAwtD32AVVe2W9V.html",
       "publishedAt": "2026-09-01",
-      "evidenceGrade": "媒体报道",
-      "platformName": "东方财富",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
       "claimFields": [
         "publishedAt",
         "summary",
         "title"
       ],
       "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E009",
-      "changeId": "chg-a43a5de92e2231982b28",
-      "entityName": "苹果开启特努斯时代：AI成“头号考题” 下一个增长点在哪？",
-      "claim": "新增高价值情报事件记录：苹果开启特努斯时代：AI成“头号考题” 下一个增长点在哪？。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "苹果开启特努斯时代：AI成“头号考题” 下一个增长点在哪？",
-      "url": "https://finance.eastmoney.com/a/202609013860570587.html",
-      "publishedAt": "2026-09-01",
-      "evidenceGrade": "媒体报道",
-      "platformName": "东方财富",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E010",
-      "changeId": "chg-5584134550892dbe2ad2",
-      "entityName": "优必选在天津成立机器人公司 含多项AI业务",
-      "claim": "新增高价值情报事件记录：优必选在天津成立机器人公司 含多项AI业务。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "优必选在天津成立机器人公司 含多项AI业务",
-      "url": "https://finance.eastmoney.com/a/202609013861005717.html",
-      "publishedAt": "2026-09-01",
-      "evidenceGrade": "媒体报道",
-      "platformName": "东方财富",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E012",
-      "changeId": "chg-934feb94eba429dad628",
-      "entityName": "Piloting the world's first double-blind AI evaluations",
-      "claim": "新增高价值情报事件记录：Piloting the world's first double-blind AI evaluations。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Google",
-      "title": "Piloting the world's first double-blind AI evaluations",
-      "url": "https://deepmind.google/blog/piloting-the-worlds-first-double-blind-ai-evaluations",
-      "publishedAt": "2026-08-27",
-      "evidenceGrade": "官方披露",
-      "platformName": "官方网站",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E013",
-      "changeId": "chg-6284cb9713b707c8d73a",
-      "entityName": "Autoscaling Lakebase Postgres",
-      "claim": "新增高价值情报事件记录：Autoscaling Lakebase Postgres。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Databricks",
-      "title": "Autoscaling Lakebase Postgres",
-      "url": "https://www.databricks.com/blog/autoscaling-lakebase-postgres",
-      "publishedAt": "2026-08-31",
-      "evidenceGrade": "官方披露",
-      "platformName": "官方网站",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E027",
-      "changeId": "chg-0b48ed95a209accd2b08",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 的 news、quote 发生变化。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "宁德时代匈牙利工厂被罚款",
-      "url": "https://finance.sina.com.cn/roll/2026-09-01/doc-iniqhscz8309632.shtml",
-      "publishedAt": "2026-09-01T08:50:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "entityMatchStatus": "matched",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E035",
-      "changeId": "chg-a32da9e7d1c60f5c9f1e",
-      "entityName": "中科寒武纪科技股份有限公司",
-      "claim": "中科寒武纪科技股份有限公司 的 news、quote 发生变化。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "寒武纪：8月31日获融资买入10.02亿元，融资余额178.25亿元占流通市值比例2.55%，超过近一年60%分位水平",
-      "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-09-01/doc-iniqhmwh1550740.shtml",
-      "publishedAt": "2026-09-01T08:13:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "entityMatchStatus": "matched",
       "qualityIssues": [],
       "qualityStatus": "passed",
       "supportStatus": "supports"
@@ -1806,9 +490,277 @@
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-01T01:56:14+00:00",
+    "generatedAt": "2026-09-01T05:29:31+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-8a7d6f3a518950509176": {
+        "eventId": "evt-8a7d6f3a518950509176",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-1f7fb16b98004f7036",
+        "entityName": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+        "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+        "titleAliases": [
+          "中国机器人海外走红竞速破纪录人形机器人商业化离我们还有多远"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-67d6fe8916958e2b2c3e",
+          "record-08291d169bf7eccc7f61",
+          "src-1863802593a1c57dc8ee",
+          "record-25189f76b185092e05fb",
+          "src-a084bc9330aec136a593",
+          "record-0de5e3cc49606d7c44bc",
+          "src-22f5edca620cd4a0ca9d",
+          "record-5d29c2c33095d8b68b8f",
+          "src-5af75d0c72e76198c8fc",
+          "record-932e54213895406ba036",
+          "src-f1b46135dcec9fbb8baf",
+          "record-ea5d58f53fa5b796b432",
+          "src-3df99c6e7e2c4a7d55bb",
+          "record-7d23f0f6458784123ab5",
+          "src-da0c2560a3179bce9bf2"
+        ],
+        "evidenceFingerprints": [
+          "67d6fe8916958e2b2c3e"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "蔡抠脚",
+            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=irv%2ARSEwxbFxsxTtQhOpES%2ApoK9Sjwoc78u69xaVZwMmFQYVrtgpBVuB6YR4bLdZltLe%2AlP0vhnlBN6wWf2MJb6nJOrustZRAGIZwFR1sucLx9EAxQIUCC6M4TuiKZTd&src=11&timestamp=1788165603&ver=6937",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "蔡抠脚",
+            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56d%2A-MlZWT-n4gxZEQlRqx1mOnRMuyRx52eBC9B9pZlTQzP5vyK9mYeWTU3JcXqdXbz9vkIdY2CGQpom5VGwuVjT&src=11&timestamp=1788175922&ver=6938",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "蔡抠脚",
+            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56fPSrDk9w4svsyb50NItMF6Os3a1j7hCC6-3Bp-qTmx-9RJ0S0VkaJG%2AtPkN4J3cw3o2-Cp3ucRfaq1QoasbqMm&src=11&timestamp=1788186068&ver=6938",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "蔡抠脚",
+            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56eQSV06JzK6XkacgpCmD4Bl4MMmA4vlSiEaGSxgybPDEsgkhi6OSNE1pjt5DoyzoQxvRQL25oUyKUESR7ulBYbm&src=11&timestamp=1788195641&ver=6938",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "蔡抠脚",
+            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56fdihXCIYv8ih1n5YKa5sShb%2AgoSYIFfMxm9GW%2Aw-u4bvZEtGGuWUYrSnpgS9PBHu9%2A9F5RvgLsPYI-Tvfzk62k&src=11&timestamp=1788207190&ver=6938",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "蔡抠脚",
+            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=NK5sbh3ieygdiNi68SYxFbQgsJ1t4EqCPAhbLNj70NWtyZfQfGgO%2ArPSKCmoe9LL1iPrf0mp4P2aP88tFOijVFSa1hRZsdMjg%2A-nYq2dXkF1olhU%2Az2-7FZOUo0BO0W4&src=11&timestamp=1788220620&ver=6939",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "蔡抠脚",
+            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=NK5sbh3ieygdiNi68SYxFbQgsJ1t4EqCPAhbLNj70NUivFm-GjxEYvyNhEh7POxZ-YglrGz%2A4sbONyk1JNxGJnfC6kBimg6EGvujbGPZbtaRLk4CBCJ5Y5MNjhsJUBlU&src=11&timestamp=1788239906&ver=6939",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "c9f1110f497c23b6b84c",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T09:08:35+00:00",
+        "lastSeenAt": "2026-09-01T05:29:31+00:00",
+        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-4a372a16c2366a0b264b": {
+        "eventId": "evt-4a372a16c2366a0b264b",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-cc897af356269311ed",
+        "entityName": "MWA™霸榜全球第一后：无界动力用真实咖啡厅展现物理AI的落地之径",
+        "title": "MWA™霸榜全球第一后：无界动力用真实咖啡厅展现物理AI的落地之径",
+        "titleAliases": [
+          "mwatm霸榜全球第一后无界动力用真实咖啡厅展现物理ai的落地之径"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-0c328c7424fa325ffe72",
+          "record-db55dd6795921f1faa75",
+          "src-9be66908f91001d31a16"
+        ],
+        "evidenceFingerprints": [
+          "0c328c7424fa325ffe72"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "MWA™霸榜全球第一后：无界动力用真实咖啡厅展现物理AI的落地之径",
+            "url": "https://www.leiphone.com/category/robot/vHAwtD32AVVe2W9V.html",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "ab56249c625d96e5e168",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T05:29:31+00:00",
+        "lastSeenAt": "2026-09-01T05:29:31+00:00",
+        "lastPublishedAt": "2026-09-01T05:29:31+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-47fdb8b8aaba42d7d6db": {
+        "eventId": "evt-47fdb8b8aaba42d7d6db",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-57b8fa8987d9b3d024",
+        "entityName": "存储成了AI落地最大变量，企业如何打破阻碍？丨ToB产业观察",
+        "title": "存储成了AI落地最大变量，企业如何打破阻碍？丨ToB产业观察",
+        "titleAliases": [
+          "存储成了ai落地最大变量企业如何打破阻碍丨tob产业观察"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-238d489209deae243976",
+          "record-cca5818655c7e1b26aa4",
+          "src-d08e4a546ca11225761b"
+        ],
+        "evidenceFingerprints": [
+          "238d489209deae243976"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "钛媒体",
+            "title": "存储成了AI落地最大变量，企业如何打破阻碍？丨ToB产业观察",
+            "url": "https://www.tmtpost.com/8124068.html",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "62e9daf2b65dcc606b8d",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T05:29:31+00:00",
+        "lastSeenAt": "2026-09-01T05:29:31+00:00",
+        "lastPublishedAt": "2026-09-01T05:29:31+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-2025eb9ad2c7a8cf8ac3": {
+        "eventId": "evt-2025eb9ad2c7a8cf8ac3",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-c2f69dada34078dd76",
+        "entityName": "独家丨地瓜机器人扩招NPU研发团队，或将强化下一代芯片布局",
+        "title": "独家丨地瓜机器人扩招NPU研发团队，或将强化下一代芯片布局",
+        "titleAliases": [
+          "独家丨地瓜机器人扩招npu研发团队或将强化下一代芯片布局"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-1dd51b5df8176b9f77b9",
+          "record-79b86e1b77dc86ba03ff",
+          "src-52e263711e76ffcbe4a8"
+        ],
+        "evidenceFingerprints": [
+          "1dd51b5df8176b9f77b9"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "独家丨地瓜机器人扩招NPU研发团队，或将强化下一代芯片布局",
+            "url": "https://www.leiphone.com/category/yanxishe/lCoT3AFJymcnxZVR.html",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "b09976008c6a18257f67",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T05:29:31+00:00",
+        "lastSeenAt": "2026-09-01T05:29:31+00:00",
+        "lastPublishedAt": "2026-09-01T05:29:31+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-f054d74103ea4371099a": {
         "eventId": "evt-f054d74103ea4371099a",
         "dataset": "intelligenceEvent",
@@ -3697,108 +2649,6 @@
         "lastSeenAt": "2026-09-01T00:07:31+00:00",
         "lastPublishedAt": "2026-09-01T00:07:31+00:00",
         "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-8a7d6f3a518950509176": {
-        "eventId": "evt-8a7d6f3a518950509176",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-1f7fb16b98004f7036",
-        "entityName": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-        "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-        "titleAliases": [
-          "中国机器人海外走红竞速破纪录人形机器人商业化离我们还有多远"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "商业进展",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-67d6fe8916958e2b2c3e",
-          "record-08291d169bf7eccc7f61",
-          "src-1863802593a1c57dc8ee",
-          "record-25189f76b185092e05fb",
-          "src-a084bc9330aec136a593",
-          "record-0de5e3cc49606d7c44bc",
-          "src-22f5edca620cd4a0ca9d",
-          "record-5d29c2c33095d8b68b8f",
-          "src-5af75d0c72e76198c8fc",
-          "record-932e54213895406ba036",
-          "src-f1b46135dcec9fbb8baf",
-          "record-ea5d58f53fa5b796b432",
-          "src-3df99c6e7e2c4a7d55bb"
-        ],
-        "evidenceFingerprints": [
-          "67d6fe8916958e2b2c3e"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "蔡抠脚",
-            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=irv%2ARSEwxbFxsxTtQhOpES%2ApoK9Sjwoc78u69xaVZwMmFQYVrtgpBVuB6YR4bLdZltLe%2AlP0vhnlBN6wWf2MJb6nJOrustZRAGIZwFR1sucLx9EAxQIUCC6M4TuiKZTd&src=11&timestamp=1788165603&ver=6937",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "蔡抠脚",
-            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56d%2A-MlZWT-n4gxZEQlRqx1mOnRMuyRx52eBC9B9pZlTQzP5vyK9mYeWTU3JcXqdXbz9vkIdY2CGQpom5VGwuVjT&src=11&timestamp=1788175922&ver=6938",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "蔡抠脚",
-            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56fPSrDk9w4svsyb50NItMF6Os3a1j7hCC6-3Bp-qTmx-9RJ0S0VkaJG%2AtPkN4J3cw3o2-Cp3ucRfaq1QoasbqMm&src=11&timestamp=1788186068&ver=6938",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "蔡抠脚",
-            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56eQSV06JzK6XkacgpCmD4Bl4MMmA4vlSiEaGSxgybPDEsgkhi6OSNE1pjt5DoyzoQxvRQL25oUyKUESR7ulBYbm&src=11&timestamp=1788195641&ver=6938",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "蔡抠脚",
-            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=Oo9%2AN5SNnlsTA-derDBTGf8K80RIGanGId8TJEgI56fdihXCIYv8ih1n5YKa5sShb%2AgoSYIFfMxm9GW%2Aw-u4bvZEtGGuWUYrSnpgS9PBHu9%2A9F5RvgLsPYI-Tvfzk62k&src=11&timestamp=1788207190&ver=6938",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "蔡抠脚",
-            "title": "中国机器人海外走红、竞速破纪录：人形机器人商业化离我们还有多远？",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=NK5sbh3ieygdiNi68SYxFbQgsJ1t4EqCPAhbLNj70NWtyZfQfGgO%2ArPSKCmoe9LL1iPrf0mp4P2aP88tFOijVFSa1hRZsdMjg%2A-nYq2dXkF1olhU%2Az2-7FZOUo0BO0W4&src=11&timestamp=1788220620&ver=6939",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "c9f1110f497c23b6b84c",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastSeenAt": "2026-09-01T00:07:31+00:00",
-        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
-        "lastLifecycle": "duplicate",
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 2,
@@ -10867,13 +9717,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 14,
-    "reconfirmations": 5,
+    "newEvents": 3,
+    "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 11,
-    "observedEvents": 30,
+    "duplicatesSuppressed": 1,
+    "observedEvents": 4,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -11639,10 +10489,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-01",
-      "generatedAt": "2026-09-01T01:56:14+00:00",
+      "generatedAt": "2026-09-01T05:29:31+00:00",
       "runStatus": "model",
-      "changeCount": 37,
-      "executiveSummary": "证据包显示，2026年8月底至9月初，AI产业政策、公司重大事件与学术研究密集出现。工信部启动AI应用服务商培育专项行动，明确2026年底服务商资源池突破2000家，标志AI产业政策从模型竞赛转向商业化验证（E008）。苹果完成CEO交接，约翰·特努斯接任，AI成为新管理层头号考题（E009）。微创机器人-B因租赁安排交易对手方关系待厘清而延迟刊发中期业绩（E002），宁德时代匈牙利工厂被罚款（E027）。学术方面，arXiv多篇论文关注AI数学发现、安全公平性、扩散模型所有权验证与计算病理学可解释性（E004-E007），Google试点双盲AI评估（E012），Databricks发布数据库自动扩展功能（E013）。整体上，AI商业化与治理合规并进，但部分公司事件存在不确定性，需持续跟踪。",
+      "changeCount": 40,
+      "executiveSummary": "证据包包含三篇2026年9月1日发布的专业媒体报道：地瓜机器人扩招NPU研发团队、存储成为AI落地最大变量、无界动力以真实咖啡厅展现物理AI落地。三篇均为单一来源且证据等级为C，未经人工复核，因此仅作为初步线索。整体看，机器人芯片自研、AI存储瓶颈、物理AI垂直场景落地是值得关注的三个方向，但均需更多证据验证。",
       "eventIds": [
         "evt-e5c92bf165cb34866cb4",
         "evt-ad50e31282afed394c23",
@@ -11680,7 +10530,10 @@
         "evt-40665b58084cc6b5bacb",
         "evt-39dfeedbac464b617b9b",
         "evt-0a4c2871cdc00b3ff51d",
-        "evt-935efe99e3fec15819ef"
+        "evt-935efe99e3fec15819ef",
+        "evt-2025eb9ad2c7a8cf8ac3",
+        "evt-47fdb8b8aaba42d7d6db",
+        "evt-4a372a16c2366a0b264b"
       ],
       "eventStates": [
         {
@@ -11830,37 +10683,47 @@
         {
           "eventId": "evt-935efe99e3fec15819ef",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-2025eb9ad2c7a8cf8ac3",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-47fdb8b8aaba42d7d6db",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-4a372a16c2366a0b264b",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 0,
       "candidateTotal": 13,
-      "auxiliaryLeadTotal": 24,
-      "rejectedTotal": 3,
+      "auxiliaryLeadTotal": 27,
+      "rejectedTotal": 4,
       "eventSummary": {
-        "newEvents": 37,
+        "newEvents": 40,
         "reconfirmations": 5,
         "updates": 0,
         "corrections": 0,
         "possibleConflicts": 0,
-        "duplicatesSuppressed": 14
+        "duplicatesSuppressed": 15
       }
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 28,
-    "eligibleCandidateCount": 28,
-    "rejectedCandidateCount": 0,
-    "rejectedByDataset": {},
-    "evidenceCount": 73,
-    "supportingEvidenceCount": 30,
-    "rejectedEvidenceCount": 20,
-    "passedButUnboundEvidenceCount": 23,
+    "candidateCount": 5,
+    "eligibleCandidateCount": 4,
+    "rejectedCandidateCount": 1,
+    "rejectedByDataset": {
+      "intelligenceEvent": 1
+    },
+    "evidenceCount": 5,
+    "supportingEvidenceCount": 4,
+    "rejectedEvidenceCount": 1,
+    "passedButUnboundEvidenceCount": 0,
     "rejectionReasons": {
-      "missing_published_at": 19,
-      "missing_title": 14,
-      "ungraded": 14,
-      "entity_mismatch": 1,
-      "missing_or_invalid_url": 1
+      "discovery_only": 1
     },
     "sourceClassificationWarnings": []
   },
