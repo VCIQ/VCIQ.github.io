@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
-"""Runtime-health semantics layered on top of the artifact freshness snapshot.
+"""Derive producer runtime health without conflating it with data freshness.
 
-The legacy control-plane builder intentionally treats an artifact's embedded data
- timestamp as its freshness signal.  That is useful for evidence age, but it is
-not the same thing as producer health: a successful scheduled check may find no
-new domain data and therefore leave the artifact timestamp unchanged.
-
-This module preserves artifact freshness while deriving job health from the most
-recent successful producer heartbeat.  It is imported by ``run_pipeline.py`` so
-all producer finalization and refresh operations use the corrected semantics.
+``build_pipeline_health`` remains responsible for artifact lineage and freshness.
+This module overlays runtime semantics on that snapshot while preserving the
+public JSON schema shape (``health.jobs`` stays a list).  Producer health is
+based on the most recent successful/degraded heartbeat; stale business data is
+reported separately through ``freshnessStatus``.
 """
 
 from __future__ import annotations
@@ -31,14 +28,11 @@ def _age_hours(value: datetime | None, now: datetime) -> float | None:
 
 def _freshness_status(outputs: list[Mapping[str, Any]]) -> str:
     if any(
-        bool(output.get("required")) and output.get("status") == "missing"
+        bool(output.get("required", True)) and output.get("status") == "missing"
         for output in outputs
     ):
         return "missing"
-    statuses = [
-        str(output.get("freshnessStatus") or output.get("status") or "unknown")
-        for output in outputs
-    ]
+    statuses = [str(output.get("status") or "unknown") for output in outputs]
     if "stale" in statuses:
         return "stale"
     if "degraded" in statuses:
@@ -56,39 +50,51 @@ def _previous_health(root: Path) -> dict[str, Any]:
     return legacy.load_json(root / "public/data/pipeline_health.json", required=False)
 
 
+def _jobs_by_id(health: Mapping[str, Any]) -> dict[str, Mapping[str, Any]]:
+    jobs = health.get("jobs")
+    if not isinstance(jobs, list):
+        return {}
+    return {
+        str(row.get("jobId")): row
+        for row in jobs
+        if isinstance(row, Mapping) and row.get("jobId")
+    }
+
+
 def _successful_run_candidates(
     *,
     job_id: str,
     outputs: list[Mapping[str, Any]],
     previous_job: Mapping[str, Any] | None,
     current_run: Mapping[str, Any] | None,
-) -> tuple[list[datetime], bool]:
-    candidates: list[datetime] = []
-    degraded = False
+) -> list[tuple[datetime, str]]:
+    candidates: list[tuple[datetime, str]] = []
 
     if isinstance(previous_job, Mapping):
         previous = legacy.parse_datetime(
             previous_job.get("lastSuccessfulRunAt") or previous_job.get("lastCompletedAt")
         )
         if previous:
-            candidates.append(previous)
-        if previous_job.get("status") == "degraded":
-            degraded = True
+            # lastSuccessfulRunAt is an operational heartbeat even if the row has
+            # since become stale because no newer run arrived.
+            previous_status = (
+                "degraded" if previous_job.get("status") == "degraded" else "success"
+            )
+            candidates.append((previous, previous_status))
 
     if isinstance(current_run, Mapping) and current_run.get("jobId") == job_id:
         current_status = str(current_run.get("status") or "")
         if current_status in {"success", "degraded"}:
             completed = legacy.parse_datetime(current_run.get("completedAt"))
             if completed:
-                candidates.append(completed)
-            degraded = current_status == "degraded"
+                candidates.append((completed, current_status))
 
     for output in outputs:
         producer = output.get("producer")
         if not isinstance(producer, Mapping):
             continue
-        # A shared artifact may most recently have been written by another job.
-        # Do not use that producer as a heartbeat for this job.
+        # A shared artifact may most recently have been written by another job;
+        # that is not a heartbeat for this job.
         if producer.get("jobId") != job_id:
             continue
         producer_status = str(producer.get("status") or "")
@@ -96,19 +102,45 @@ def _successful_run_candidates(
             continue
         completed = legacy.parse_datetime(producer.get("completedAt"))
         if completed:
-            candidates.append(completed)
-        if producer_status == "degraded":
-            degraded = True
+            candidates.append((completed, producer_status))
 
-    # Backward-compatibility bootstrap for snapshots written before explicit
-    # heartbeats existed.  Once a heartbeat is available it always wins.
+    # Bootstrap snapshots that predate explicit heartbeats.  This fallback is
+    # used only until the first real producer heartbeat is recorded.
     if not candidates:
         for output in outputs:
             data_time = legacy.parse_datetime(output.get("dataTimestamp"))
             if data_time:
-                candidates.append(data_time)
+                candidates.append((data_time, "success"))
 
-    return candidates, degraded
+    return candidates
+
+
+def _runtime_status(
+    *,
+    job: Mapping[str, Any],
+    outputs: list[Mapping[str, Any]],
+    candidates: list[tuple[datetime, str]],
+    generated: datetime,
+) -> tuple[str, datetime | None, float | None]:
+    if any(
+        bool(output.get("required", True)) and output.get("status") == "missing"
+        for output in outputs
+    ):
+        last = max((time for time, _ in candidates), default=None)
+        return "missing", last, _age_hours(last, generated)
+
+    if not candidates:
+        return "unknown", None, None
+
+    last, last_result = max(candidates, key=lambda item: item[0])
+    run_age = _age_hours(last, generated)
+    if last_result == "degraded":
+        return "degraded", last, run_age
+    if run_age is None:
+        return "unknown", last, None
+    if run_age > float(job.get("freshnessSlaHours") or 0):
+        return "stale", last, run_age
+    return "healthy", last, run_age
 
 
 def _apply_runtime_semantics(
@@ -125,111 +157,98 @@ def _apply_runtime_semantics(
     if not isinstance(artifacts, dict):
         artifacts = {}
 
-    # Keep the existing artifact status for compatibility, but make its meaning
-    # explicit for new consumers.
+    # Artifact status continues to mean business-data freshness for backwards
+    # compatibility.  New consumers can use the explicit alias.
     for artifact in artifacts.values():
         if isinstance(artifact, dict):
             artifact["freshnessStatus"] = str(artifact.get("status") or "unknown")
 
-    previous_jobs = previous_health.get("jobs")
-    if not isinstance(previous_jobs, dict):
-        previous_jobs = {}
+    jobs = health.get("jobs")
+    if not isinstance(jobs, list):
+        raise ValueError("pipeline health jobs must remain a list")
 
+    rows_by_id = {
+        str(row.get("jobId")): row
+        for row in jobs
+        if isinstance(row, dict) and row.get("jobId")
+    }
+    previous_jobs = _jobs_by_id(previous_health)
     registry_jobs = {
         str(job.get("id")): job
         for job in registry.get("jobs", [])
         if isinstance(job, Mapping) and job.get("id")
     }
-    jobs = health.get("jobs")
-    if not isinstance(jobs, dict):
-        jobs = {}
-        health["jobs"] = jobs
 
     for job_id, job in registry_jobs.items():
-        row = jobs.get(job_id)
+        row = rows_by_id.get(job_id)
         if not isinstance(row, dict):
             continue
+        output_paths = [
+            str(output.get("path"))
+            for output in job.get("outputs", [])
+            if isinstance(output, Mapping)
+            and output.get("public", True)
+            and output.get("path")
+        ]
         output_rows = [
             artifacts[path]
-            for path in row.get("outputs", [])
+            for path in output_paths
             if path in artifacts and isinstance(artifacts[path], dict)
         ]
         row["freshnessStatus"] = (
             _freshness_status(output_rows) if output_rows else "unknown"
         )
 
-        if not output_rows:
-            # Dependency-only jobs are finalized below after producer jobs have
-            # their corrected runtime status.
-            row["lastSuccessfulRunAt"] = row.get("lastCompletedAt")
-            row["runAgeHours"] = _age_hours(
-                legacy.parse_datetime(row.get("lastCompletedAt")), generated
-            )
+        # Dependency-derived jobs are resolved in a second pass.
+        if job.get("healthMode") == "dependencies":
             continue
 
-        required_missing = any(
-            bool(output.get("required")) and output.get("status") == "missing"
-            for output in output_rows
-        )
-        candidates, degraded = _successful_run_candidates(
+        candidates = _successful_run_candidates(
             job_id=job_id,
             outputs=output_rows,
-            previous_job=(
-                previous_jobs.get(job_id)
-                if isinstance(previous_jobs.get(job_id), Mapping)
-                else None
-            ),
+            previous_job=previous_jobs.get(job_id),
             current_run=current_run,
         )
-        last_successful = max(candidates) if candidates else None
-        run_age = _age_hours(last_successful, generated)
-
-        if required_missing:
-            runtime_status = "missing"
-        elif degraded:
-            runtime_status = "degraded"
-        elif run_age is None:
-            runtime_status = "unknown"
-        elif run_age > float(job.get("freshnessSlaHours") or 0):
-            runtime_status = "stale"
-        else:
-            runtime_status = "healthy"
-
+        runtime_status, last_successful, run_age = _runtime_status(
+            job=job,
+            outputs=output_rows,
+            candidates=candidates,
+            generated=generated,
+        )
         row["status"] = runtime_status
         row["lastSuccessfulRunAt"] = (
             legacy.isoformat(last_successful) if last_successful else None
         )
-        # Preserve the old field for existing UI/consumers, but give it the new
-        # operational meaning rather than mixing in dataTimestamp.
+        # Keep the legacy field so existing UI continues to work, but it now
+        # represents execution completion rather than data age.
         row["lastCompletedAt"] = row["lastSuccessfulRunAt"]
         row["runAgeHours"] = run_age
 
-    # Resolve dependency-only jobs after producer statuses are corrected.
+    # Preserve the registry's dependency health semantics, now using corrected
+    # runtime status for dependencies and separate freshness status for warnings.
     for job_id, job in registry_jobs.items():
-        row = jobs.get(job_id)
-        if not isinstance(row, dict) or row.get("outputs"):
+        if job.get("healthMode") != "dependencies":
+            continue
+        row = rows_by_id.get(job_id)
+        if not isinstance(row, dict):
             continue
         dependencies = [
-            jobs[dependency]
+            rows_by_id[dependency]
             for dependency in job.get("dependencies", [])
-            if dependency in jobs and isinstance(jobs[dependency], dict)
+            if dependency in rows_by_id
         ]
-        if not dependencies:
-            continue
-
         runtime_statuses = [str(dep.get("status") or "unknown") for dep in dependencies]
-        if any(value in {"missing", "stale"} for value in runtime_statuses):
-            row["status"] = "stale"
-        elif any(value == "degraded" for value in runtime_statuses):
+        if any(value in {"missing", "degraded"} for value in runtime_statuses):
             row["status"] = "degraded"
+        elif any(value == "stale" for value in runtime_statuses):
+            row["status"] = "stale"
         elif runtime_statuses and all(value == "healthy" for value in runtime_statuses):
             row["status"] = "healthy"
         else:
             row["status"] = "unknown"
 
         freshness_statuses = [
-            str(dep.get("freshnessStatus") or dep.get("status") or "unknown")
-            for dep in dependencies
+            str(dep.get("freshnessStatus") or "unknown") for dep in dependencies
         ]
         if any(value in {"missing", "stale"} for value in freshness_statuses):
             row["freshnessStatus"] = "stale"
@@ -253,11 +272,11 @@ def _apply_runtime_semantics(
 
     allowed = legacy.ALLOWED_JOB_STATUSES
     counts = {
-        status: sum(1 for row in jobs.values() if row.get("status") == status)
+        status: sum(1 for row in jobs if row.get("status") == status)
         for status in allowed
     }
     freshness_warning_jobs = sum(
-        1 for row in jobs.values() if row.get("freshnessStatus") == "stale"
+        1 for row in jobs if row.get("freshnessStatus") == "stale"
     )
     stale_artifacts = sum(
         1
@@ -269,21 +288,34 @@ def _apply_runtime_semantics(
     summary = health.setdefault("summary", {})
     summary.update(
         {
-            "totalJobs": len(jobs),
+            "jobCount": len(jobs),
             "healthyJobs": counts["healthy"],
             "staleJobs": counts["stale"],
             "missingJobs": counts["missing"],
             "unknownJobs": counts["unknown"],
             "degradedJobs": counts["degraded"],
+            "artifactCount": len(artifacts),
             "freshnessWarningJobs": freshness_warning_jobs,
             "staleArtifacts": stale_artifacts,
         }
     )
-    health["overallStatus"] = (
-        "degraded"
-        if counts["missing"] or counts["stale"] or counts["degraded"]
-        else "healthy"
-    )
+
+    non_advisory_statuses = [
+        str(rows_by_id[job_id].get("status") or "unknown")
+        for job_id, job in registry_jobs.items()
+        if job.get("failurePolicy") != "advisory-only" and job_id in rows_by_id
+    ]
+    if any(value in {"missing", "degraded"} for value in non_advisory_statuses):
+        health["overallStatus"] = "degraded"
+    elif any(value == "stale" for value in non_advisory_statuses):
+        health["overallStatus"] = "stale"
+    elif non_advisory_statuses and all(
+        value == "healthy" for value in non_advisory_statuses
+    ):
+        health["overallStatus"] = "healthy"
+    else:
+        health["overallStatus"] = "unknown"
+
     return lineage, health
 
 
