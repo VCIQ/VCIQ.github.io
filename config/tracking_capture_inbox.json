@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-01T15:21:57+00:00",
+  "generatedAt": "2026-09-01T16:49:56+00:00",
   "records": [
     {
       "id": "capture-8ff11883e0647a59",
@@ -48,10 +48,10 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "科创板",
-        "targetId": "technology-ca136e9b075fdaec6ce8",
+        "targetId": "topic:科创板",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "科创板",
         "reclassified": false
       }
@@ -84,8 +84,12 @@
       },
       "capturedAt": "2026-09-01T15:20:36+00:00",
       "capturedBy": "VCIQ",
-      "status": "queued",
-      "appliedTo": [],
+      "status": "applied",
+      "appliedTo": [
+        "semiconductor:sampleCompanies",
+        "materials:sampleCompanies",
+        "ai:sampleCompanies"
+      ],
       "reasons": [
         "个人研究兴趣"
       ],
@@ -100,94 +104,6 @@
         "source": "source-context",
         "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
         "decisionKey": "上海芯光界智能科技有限公司",
-        "reclassified": false
-      }
-    },
-    {
-      "id": "capture-d015d8c8dfffa097",
-      "entityType": "topic",
-      "canonicalName": "OpusOneTM",
-      "rawSelection": "OpusOneTM",
-      "aliases": [],
-      "trackSlugs": [
-        "ai"
-      ],
-      "trackNames": [
-        "AI / AGI"
-      ],
-      "source": {
-        "articleId": "",
-        "title": "OpusOneTM",
-        "url": "https://www.qimingvc.com/cn/news/%E5%90%AF%E6%98%8E%E6%98%9F-%E5%AE%89%E6%BE%9C%E5%BE%B7%E5%81%A5%E5%AE%8C%E6%88%90%E8%BF%91%E4%BA%BF%E5%85%83a%E8%BD%AE%E8%9E%8D%E8%B5%84%EF%BC%8C%E5%90%AF%E6%98%8E%E5%88%9B%E6%8A%95%E7%8B%AC%E5%AE%B6%E6%8A%95%E8%B5%84",
-        "summary": "",
-        "sourceName": "GitHub Actions · 内部手动追踪",
-        "channel": "manual-tracking",
-        "channelLabel": "内部管理",
-        "eventType": "人工追踪"
-      },
-      "capturedAt": "2026-09-01T15:19:32+00:00",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "ai:keywords"
-      ],
-      "reasons": [
-        "个人研究兴趣"
-      ],
-      "note": "",
-      "resolution": {
-        "status": "resolved",
-        "requestedType": "topic",
-        "entityType": "topic",
-        "canonicalName": "OpusOneTM",
-        "targetId": "technology-3813f7c4ad983af63221",
-        "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
-        "decisionKey": "opusonetm",
-        "reclassified": false
-      }
-    },
-    {
-      "id": "capture-8d4b67b14518c2fc",
-      "entityType": "company",
-      "canonicalName": "启明创投",
-      "rawSelection": "启明创投",
-      "aliases": [],
-      "trackSlugs": [
-        "track-1ccjq49"
-      ],
-      "trackNames": [
-        "风险投资"
-      ],
-      "source": {
-        "articleId": "",
-        "title": "启明创投",
-        "url": "https://www.qimingvc.com/cn/news/%E5%90%AF%E6%98%8E%E6%98%9F-%E5%AE%89%E6%BE%9C%E5%BE%B7%E5%81%A5%E5%AE%8C%E6%88%90%E8%BF%91%E4%BA%BF%E5%85%83a%E8%BD%AE%E8%9E%8D%E8%B5%84%EF%BC%8C%E5%90%AF%E6%98%8E%E5%88%9B%E6%8A%95%E7%8B%AC%E5%AE%B6%E6%8A%95%E8%B5%84",
-        "summary": "",
-        "sourceName": "GitHub Actions · 内部手动追踪",
-        "channel": "manual-tracking",
-        "channelLabel": "内部管理",
-        "eventType": "人工追踪"
-      },
-      "capturedAt": "2026-09-01T15:19:32+00:00",
-      "capturedBy": "VCIQ",
-      "status": "queued",
-      "appliedTo": [],
-      "reasons": [
-        "个人研究兴趣"
-      ],
-      "note": "",
-      "resolution": {
-        "status": "resolved",
-        "requestedType": "company",
-        "entityType": "company",
-        "canonicalName": "启明创投",
-        "targetId": "company-candidate:启明创投",
-        "confidence": "medium",
-        "source": "source-context",
-        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
-        "decisionKey": "启明创投",
         "reclassified": false
       }
     },
@@ -237,8 +153,98 @@
       }
     },
     {
-      "id": "capture-38491af44ddb2b59",
+      "id": "capture-8d4b67b14518c2fc",
       "entityType": "company",
+      "canonicalName": "启明创投",
+      "rawSelection": "启明创投",
+      "aliases": [],
+      "trackSlugs": [
+        "track-1ccjq49"
+      ],
+      "trackNames": [
+        "风险投资"
+      ],
+      "source": {
+        "articleId": "",
+        "title": "启明创投",
+        "url": "https://www.qimingvc.com/cn/news/%E5%90%AF%E6%98%8E%E6%98%9F-%E5%AE%89%E6%BE%9C%E5%BE%B7%E5%81%A5%E5%AE%8C%E6%88%90%E8%BF%91%E4%BA%BF%E5%85%83a%E8%BD%AE%E8%9E%8D%E8%B5%84%EF%BC%8C%E5%90%AF%E6%98%8E%E5%88%9B%E6%8A%95%E7%8B%AC%E5%AE%B6%E6%8A%95%E8%B5%84",
+        "summary": "",
+        "sourceName": "GitHub Actions · 内部手动追踪",
+        "channel": "manual-tracking",
+        "channelLabel": "内部管理",
+        "eventType": "人工追踪"
+      },
+      "capturedAt": "2026-09-01T15:19:32+00:00",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "track-1ccjq49:sampleCompanies"
+      ],
+      "reasons": [
+        "个人研究兴趣"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "启明创投",
+        "targetId": "company-candidate:启明创投",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "启明创投",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-d015d8c8dfffa097",
+      "entityType": "topic",
+      "canonicalName": "OpusOneTM",
+      "rawSelection": "OpusOneTM",
+      "aliases": [],
+      "trackSlugs": [
+        "ai"
+      ],
+      "trackNames": [
+        "AI / AGI"
+      ],
+      "source": {
+        "articleId": "",
+        "title": "OpusOneTM",
+        "url": "https://www.qimingvc.com/cn/news/%E5%90%AF%E6%98%8E%E6%98%9F-%E5%AE%89%E6%BE%9C%E5%BE%B7%E5%81%A5%E5%AE%8C%E6%88%90%E8%BF%91%E4%BA%BF%E5%85%83a%E8%BD%AE%E8%9E%8D%E8%B5%84%EF%BC%8C%E5%90%AF%E6%98%8E%E5%88%9B%E6%8A%95%E7%8B%AC%E5%AE%B6%E6%8A%95%E8%B5%84",
+        "summary": "",
+        "sourceName": "GitHub Actions · 内部手动追踪",
+        "channel": "manual-tracking",
+        "channelLabel": "内部管理",
+        "eventType": "人工追踪"
+      },
+      "capturedAt": "2026-09-01T15:19:32+00:00",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "ai:keywords"
+      ],
+      "reasons": [
+        "个人研究兴趣"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "OpusOneTM",
+        "targetId": "topic:opusonetm",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "opusonetm",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-38491af44ddb2b59",
+      "entityType": "topic",
       "canonicalName": "Nvidia",
       "rawSelection": "NVIDIA",
       "aliases": [],
@@ -262,8 +268,11 @@
       },
       "capturedAt": "2026-09-01T15:04:09+00:00",
       "capturedBy": "VCIQ",
-      "status": "queued",
-      "appliedTo": [],
+      "status": "applied",
+      "appliedTo": [
+        "semiconductor:keywords",
+        "ai:keywords"
+      ],
       "reasons": [
         "个人研究兴趣"
       ],
@@ -321,56 +330,11 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "Grok Bot",
-        "targetId": "technology-6cb784e0f985cba22d06",
+        "targetId": "topic:grokbot",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "grokbot",
-        "reclassified": false
-      }
-    },
-    {
-      "id": "capture-5f1af437478e57be",
-      "entityType": "company",
-      "canonicalName": "Atreides",
-      "rawSelection": "Atreides",
-      "aliases": [],
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ],
-      "trackNames": [
-        "AI / AGI",
-        "风险投资"
-      ],
-      "source": {
-        "articleId": "",
-        "title": "Atreides",
-        "url": "https://mp.weixin.qq.com/mp/wappoc_appmsgcaptcha?poc_token=HOPjlmqjnkK-nmD9chJgxal10w051yGUpsf8PZcm&target_url=https%3A%2F%2Fmp.weixin.qq.com%2Fs%3Fnew%3D1%26signature%3DDsYR5ab%252AiVISetIAxDH-NMw6cwdZk%252AgGdndMu9SQ%252AnwvlMyi-RnqRkonTlM8ykBQAXH1knw%252AscZ6BCbNNzdY0WqghXVeL2JSOTyoSv4gDOkhQzDumi7pjOY6DZEaHxgb%26src%3D11%26timestamp%3D1788264582%26ver%3D6940",
-        "summary": "",
-        "sourceName": "GitHub Actions · 内部手动追踪",
-        "channel": "manual-tracking",
-        "channelLabel": "内部管理",
-        "eventType": "人工追踪"
-      },
-      "capturedAt": "2026-09-01T14:43:38+00:00",
-      "capturedBy": "VCIQ",
-      "status": "queued",
-      "appliedTo": [],
-      "reasons": [
-        "个人研究兴趣"
-      ],
-      "note": "",
-      "resolution": {
-        "status": "review",
-        "requestedType": "company",
-        "entityType": "company",
-        "canonicalName": "Atreides",
-        "targetId": "",
-        "confidence": "low",
-        "source": "unresolved",
-        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
-        "decisionKey": "atreides",
         "reclassified": false
       }
     },
@@ -423,6 +387,51 @@
       }
     },
     {
+      "id": "capture-5f1af437478e57be",
+      "entityType": "company",
+      "canonicalName": "Atreides",
+      "rawSelection": "Atreides",
+      "aliases": [],
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
+      ],
+      "trackNames": [
+        "AI / AGI",
+        "风险投资"
+      ],
+      "source": {
+        "articleId": "",
+        "title": "Atreides",
+        "url": "https://mp.weixin.qq.com/mp/wappoc_appmsgcaptcha?poc_token=HOPjlmqjnkK-nmD9chJgxal10w051yGUpsf8PZcm&target_url=https%3A%2F%2Fmp.weixin.qq.com%2Fs%3Fnew%3D1%26signature%3DDsYR5ab%252AiVISetIAxDH-NMw6cwdZk%252AgGdndMu9SQ%252AnwvlMyi-RnqRkonTlM8ykBQAXH1knw%252AscZ6BCbNNzdY0WqghXVeL2JSOTyoSv4gDOkhQzDumi7pjOY6DZEaHxgb%26src%3D11%26timestamp%3D1788264582%26ver%3D6940",
+        "summary": "",
+        "sourceName": "GitHub Actions · 内部手动追踪",
+        "channel": "manual-tracking",
+        "channelLabel": "内部管理",
+        "eventType": "人工追踪"
+      },
+      "capturedAt": "2026-09-01T14:43:38+00:00",
+      "capturedBy": "VCIQ",
+      "status": "queued",
+      "appliedTo": [],
+      "reasons": [
+        "个人研究兴趣"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Atreides",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "atreides",
+        "reclassified": false
+      }
+    },
+    {
       "id": "capture-b1f7655497721808",
       "entityType": "topic",
       "canonicalName": "钓鱼邮件检测大模型",
@@ -464,10 +473,10 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "钓鱼邮件检测大模型",
-        "targetId": "technology-f611ebfee99dc73183bf",
+        "targetId": "topic:钓鱼邮件检测大模型",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "钓鱼邮件检测大模型",
         "reclassified": false
       }
@@ -559,10 +568,10 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "大模型安全网关",
-        "targetId": "technology-bbbb1a639b2f217a6d07",
+        "targetId": "topic:大模型安全网关",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "大模型安全网关",
         "reclassified": false
       }
