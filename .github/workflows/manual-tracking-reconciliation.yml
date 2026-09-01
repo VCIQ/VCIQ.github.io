@@ -1,0 +1,190 @@
+name: Reconcile deferred manual tracking
+
+on:
+  schedule:
+    # Cheap coordinator only. Multiple interactive submissions accumulate in the
+    # durable tracking state and are collapsed into at most one heavy handoff per pass.
+    - cron: "47 * * * *"
+      timezone: "Asia/Taipei"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: vciq-manual-tracking-reconciliation
+  queue: single
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Inspect accumulated deferred tracking state
+        id: pending
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          PENDING_STATES = {"queued", "review", "pending"}
+
+          def load(path):
+              payload = json.loads(Path(path).read_text(encoding="utf-8"))
+              return payload if isinstance(payload, dict) else {}
+
+          def mapping(value):
+              return value if isinstance(value, dict) else {}
+
+          def state_of(row):
+              resolution = mapping(row.get("resolution"))
+              for value in (
+                  row.get("status"),
+                  row.get("state"),
+                  resolution.get("status"),
+              ):
+                  state = str(value or "").strip().casefold()
+                  if state in PENDING_STATES:
+                      return state
+              return ""
+
+          def kind_of(row):
+              resolution = mapping(row.get("resolution"))
+              values = (
+                  row.get("kind"),
+                  row.get("objectType"),
+                  row.get("entityType"),
+                  resolution.get("entityType"),
+              )
+              for value in values:
+                  kind = str(value or "").strip().casefold()
+                  if kind:
+                      return kind
+              entity_id = str(row.get("entityId") or row.get("id") or "").strip().casefold()
+              return "company" if entity_id.startswith("company:") else ""
+
+          inbox = load("config/tracking_capture_inbox.json")
+          intents = load("config/tracking_intents.json")
+          pending = []
+
+          for row in inbox.get("records", []):
+              if isinstance(row, dict) and state_of(row):
+                  pending.append(row)
+
+          for field in ("entities", "memberships"):
+              for row in intents.get(field, []):
+                  if isinstance(row, dict) and state_of(row):
+                      pending.append(row)
+
+          # Stable IDs keep the coordinator from double-counting the same logical
+          # pending object if it is represented in both inbox and intent state.
+          unique = {}
+          for index, row in enumerate(pending):
+              key = str(
+                  row.get("id")
+                  or row.get("entityId")
+                  or row.get("membershipId")
+                  or f"row:{index}"
+              )
+              unique.setdefault(key, row)
+
+          rows = list(unique.values())
+          has_company = any(kind_of(row) == "company" for row in rows)
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              output.write(f"count={len(rows)}\n")
+              output.write(f"pending={str(bool(rows)).lower()}\n")
+              output.write(f"company_pending={str(has_company).lower()}\n")
+
+          print(json.dumps({
+              "pendingCount": len(rows),
+              "companyPending": has_company,
+          }, ensure_ascii=False))
+          PY
+
+      - name: Protect the full-refresh window
+        id: window
+        if: steps.pending.outputs.pending == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          hour=$(TZ=Asia/Taipei date +%H)
+          if [ "$hour" = "05" ] || [ "$hour" = "06" ] || [ "$hour" = "07" ]; then
+            echo "blocked=true" >> "$GITHUB_OUTPUT"
+            echo "Deferred reconciliation stays idle around the 06:30 full-refresh window."
+          else
+            echo "blocked=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Check whether a heavy writer is already active
+        id: busy
+        if: steps.pending.outputs.pending == 'true' && steps.window.outputs.blocked != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          busy=false
+          for workflow in \
+            scheduled-sync.yml \
+            frequent-intelligence-refresh.yml \
+            tracking-discovery.yml \
+            company-candidate-discovery.yml \
+            company-candidate-onboarding.yml; do
+            for status in queued in_progress; do
+              count=$(gh run list \
+                --workflow "$workflow" \
+                --status "$status" \
+                --limit 1 \
+                --json databaseId \
+                --jq 'length')
+              if [ "$count" -gt 0 ]; then
+                echo "Busy: $workflow has a $status run."
+                busy=true
+              fi
+            done
+          done
+          echo "busy=$busy" >> "$GITHUB_OUTPUT"
+
+      - name: Dispatch one coalesced reconciliation
+        if: steps.pending.outputs.pending == 'true' && steps.window.outputs.blocked != 'true' && steps.busy.outputs.busy != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMPANY_PENDING: ${{ steps.pending.outputs.company_pending }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "$COMPANY_PENDING" = "true" ]; then
+            echo "Accumulated state includes company review; dispatch one company reconciliation pass."
+            gh workflow run company-candidate-discovery.yml --ref main
+          else
+            echo "Accumulated state needs non-company reconciliation; dispatch one tracking discovery pass."
+            gh workflow run tracking-discovery.yml --ref main -f mode=full
+          fi
+
+      - name: Summarize coordinator decision
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "## Deferred manual tracking reconciliation"
+            echo
+            echo "Pending objects: ${{ steps.pending.outputs.count || '0' }}"
+            echo "Company pending: ${{ steps.pending.outputs.company_pending || 'false' }}"
+            echo "Protected full-refresh window: ${{ steps.window.outputs.blocked || 'false' }}"
+            echo "Heavy writer busy: ${{ steps.busy.outputs.busy || 'false' }}"
+            echo
+            echo "Interactive Apply never waits for this workflow. Repeated submissions are coalesced here; if the backend is busy, the next hourly pass retries without adding another heavy run."
+          } >> "$GITHUB_STEP_SUMMARY"
