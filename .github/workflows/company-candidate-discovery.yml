@@ -25,8 +25,6 @@ on:
       - config/company_candidate_decisions.json
       - config/entity_resolution_decisions.json
       - config/official_company_sources.json
-      - config/tracking_capture_inbox.json
-      - config/user_tracking.json
       - tests/test_company_candidates.py
       - tests/test_manual_company_trust.py
       - tests/test_entity_resolution.py
@@ -90,8 +88,6 @@ jobs:
           set -euo pipefail
           tracking_inputs_changed=false
           if git diff --name-only "$BEFORE_SHA" "$AFTER_SHA" -- \
-            config/user_tracking.json \
-            config/tracking_capture_inbox.json \
             config/official_company_sources.json \
             | grep -q .; then
             tracking_inputs_changed=true
@@ -192,7 +188,7 @@ jobs:
 
           if [ "${CANDIDATE_CHANGED:-false}" = "true" ]; then
             if [ "$tracking_refresh_required" = "true" ]; then
-              echo "Candidate and tracking state changed; onboard first, then refresh from the committed company state."
+              echo "Candidate and tracking state changed; onboard first, then run a lightweight refresh from the committed company state."
               gh workflow run company-candidate-onboarding.yml --ref main \
                 -f post_onboarding_handoff=refresh
             elif [ "${PUBLISH_AFTER_RECONCILIATION:-false}" = "true" ]; then
@@ -204,8 +200,8 @@ jobs:
               gh workflow run company-candidate-onboarding.yml --ref main
             fi
           elif [ "$tracking_refresh_required" = "true" ]; then
-            echo "Tracking inputs changed; rebuild the public article snapshot before Pages."
-            gh workflow run scheduled-sync.yml --ref main
+            echo "Tracking inputs changed; use the lightweight public refresh instead of a full crawl."
+            gh workflow run frequent-intelligence-refresh.yml --ref main
           elif [ "${PUBLISH_AFTER_RECONCILIATION:-false}" = "true" ]; then
             echo "Entity reconciliation reached a fixed point; publish first, then generate research from that terminal snapshot."
             gh workflow run pages.yml --ref main \
