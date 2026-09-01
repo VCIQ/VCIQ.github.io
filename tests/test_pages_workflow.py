@@ -6,6 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW_PATH = ROOT / ".github" / "workflows" / "pages.yml"
 CONTROL_PLANE_PATH = ROOT / "tools" / "run_pipeline.py"
 REFRESH_WORKFLOW_PATH = ROOT / ".github" / "workflows" / "scheduled-sync.yml"
+LIGHT_REFRESH_WORKFLOW_PATH = ROOT / ".github" / "workflows" / "frequent-intelligence-refresh.yml"
 TRACKING_VALIDATOR_PATH = ROOT / "scripts" / "validate-tracking-snapshot.mjs"
 
 
@@ -14,6 +15,7 @@ class PagesWorkflowTests(unittest.TestCase):
     def setUpClass(cls):
         cls.workflow = WORKFLOW_PATH.read_text(encoding="utf-8")
         cls.refresh_workflow = REFRESH_WORKFLOW_PATH.read_text(encoding="utf-8")
+        cls.light_refresh_workflow = LIGHT_REFRESH_WORKFLOW_PATH.read_text(encoding="utf-8")
         cls.tracking_validator = TRACKING_VALIDATOR_PATH.read_text(encoding="utf-8")
         cls.control_plane = CONTROL_PLANE_PATH.read_text(encoding="utf-8")
         cls.lines = [line.strip() for line in cls.workflow.splitlines()]
@@ -82,13 +84,17 @@ class PagesWorkflowTests(unittest.TestCase):
             9,
         )
 
-    def test_tracking_config_is_refreshed_before_pages_can_publish_it(self):
-        self.assertIn("      - config/user_tracking.json", self.refresh_workflow)
+    def test_tracking_config_waits_for_light_refresh_instead_of_starting_full_refresh(self):
+        refresh_trigger = self.refresh_workflow.split("  schedule:", 1)[0]
+        self.assertNotIn("      - config/user_tracking.json", refresh_trigger)
         self.assertIn("      - config/user_tracking.json", self.workflow)
         self.assertIn(
             "Pages must wait for that workflow to commit the matching public snapshot",
             self.workflow,
         )
+        self.assertIn("workflow_dispatch:", self.light_refresh_workflow)
+        self.assertIn("python tools/enrich_tracking_snapshot.py", self.light_refresh_workflow)
+        self.assertIn("-f publish_after_reconciliation=true", self.light_refresh_workflow)
         self.assertIn("-f publish_after_reconciliation=true", self.refresh_workflow)
         self.assertIn("run: npm run build:pages", self.workflow)
         self.assertNotIn("ALLOW_INCOMPLETE_TRACKING_COVERAGE", self.workflow)
