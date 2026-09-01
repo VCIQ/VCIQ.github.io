@@ -39,7 +39,8 @@ class ManualTrackingWorkflowTests(unittest.TestCase):
         handoff = apply.split("\n  handoff:\n", 1)[1]
         self.assertIn("permissions:\n      contents: write", apply_job)
         self.assertNotIn("actions: write", apply_job)
-        self.assertIn("permissions:\n      actions: write", handoff)
+        self.assertIn("permissions: {}", handoff)
+        self.assertNotIn("actions: write", handoff)
         self.assertNotIn("contents: write", handoff)
         self.assertIn("--mode validate", validate)
         self.assertNotIn("git push", validate)
@@ -153,18 +154,17 @@ class ManualTrackingWorkflowTests(unittest.TestCase):
         for unsafe in ("--force", "pull --rebase", "rebase origin", "reset --hard"):
             self.assertNotIn(unsafe, commit)
 
-    def test_robot_push_has_explicit_downstream_handoffs(self) -> None:
-        self.assertIn("actions: write", self.text)
-        self.assertIn("GH_REPO: ${{ github.repository }}", self.text)
-        self.assertIn("gh workflow run scheduled-sync.yml --ref main", self.text)
-        self.assertIn(
-            "gh workflow run company-candidate-discovery.yml --ref main",
-            self.text,
-        )
-        self.assertIn(
-            "gh workflow run tracking-discovery.yml --ref main -f mode=full",
-            self.text,
-        )
+    def test_apply_defers_all_heavy_downstream_work(self) -> None:
+        handoff = self.text.split("\n  handoff:\n", 1)[1]
+        self.assertIn("Defer heavy tracking reconciliation", handoff)
+        self.assertIn("coalesced", handoff)
+        self.assertNotIn("gh workflow run", handoff)
+        for workflow in (
+            "scheduled-sync.yml",
+            "company-candidate-discovery.yml",
+            "tracking-discovery.yml",
+        ):
+            self.assertNotIn(f"gh workflow run {workflow}", self.text)
 
     def test_public_repository_confidentiality_warning_is_prominent(self) -> None:
         self.assertIn("repository is public", self.text)

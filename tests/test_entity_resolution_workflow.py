@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CANDIDATE_WORKFLOW = ROOT / ".github" / "workflows" / "company-candidate-discovery.yml"
 ONBOARDING_WORKFLOW = ROOT / ".github" / "workflows" / "company-candidate-onboarding.yml"
 REFRESH_WORKFLOW = ROOT / ".github" / "workflows" / "scheduled-sync.yml"
+LIGHT_REFRESH_WORKFLOW = ROOT / ".github" / "workflows" / "frequent-intelligence-refresh.yml"
 PAGES_WORKFLOW = ROOT / ".github" / "workflows" / "pages.yml"
 RESEARCH_WORKFLOW = ROOT / ".github" / "workflows" / "research-agent-v1.yml"
 
@@ -36,7 +37,7 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
             text,
         )
 
-    def test_candidate_and_tracking_changes_serialize_onboarding_before_refresh(self) -> None:
+    def test_candidate_and_tracking_changes_serialize_onboarding_before_light_refresh(self) -> None:
         candidate = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
         onboarding = ONBOARDING_WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("CANDIDATE_CHANGED: ${{ steps.publish.outputs.candidate_changed }}", candidate)
@@ -47,7 +48,8 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
         self.assertIn('elif [ "$tracking_refresh_required" = "true" ]; then', candidate)
         self.assertIn("post_onboarding_handoff:", onboarding)
         self.assertIn("POST_ONBOARDING_HANDOFF: ${{ inputs.post_onboarding_handoff }}", onboarding)
-        self.assertIn("gh workflow run scheduled-sync.yml --ref main", onboarding)
+        self.assertIn("gh workflow run frequent-intelligence-refresh.yml --ref main", onboarding)
+        self.assertNotIn("gh workflow run scheduled-sync.yml --ref main", onboarding)
         self.assertIn("gh workflow run pages.yml --ref main", onboarding)
         self.assertIn("-f run_research_after_deploy=true", onboarding)
         self.assertIn('handoff="${POST_ONBOARDING_HANDOFF:-none}"', onboarding)
@@ -72,7 +74,7 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
         none_block = text.split('none|"")', 1)[1].split(";;", 1)[0]
         self.assertIn("-f run_research_after_deploy=true", none_block)
 
-    def test_private_candidate_changes_handoff_to_onboarding_before_any_optional_pages_publish(self) -> None:
+    def test_private_candidate_changes_handoff_to_onboarding_before_any_optional_publication(self) -> None:
         text = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("publish_after_reconciliation:", text)
         self.assertIn(
@@ -80,32 +82,38 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
             text,
         )
         self.assertIn("gh workflow run company-candidate-onboarding.yml --ref main", text)
-        self.assertIn("gh workflow run scheduled-sync.yml --ref main", text)
+        self.assertIn("gh workflow run frequent-intelligence-refresh.yml --ref main", text)
+        self.assertNotIn("gh workflow run scheduled-sync.yml --ref main", text)
         self.assertIn("gh workflow run pages.yml --ref main", text)
         self.assertIn("-f run_research_after_deploy=true", text)
         onboarding = text.index("gh workflow run company-candidate-onboarding.yml --ref main")
-        tracking_refresh = text.index("gh workflow run scheduled-sync.yml --ref main")
+        tracking_refresh = text.index("gh workflow run frequent-intelligence-refresh.yml --ref main")
         pages = text.index("gh workflow run pages.yml --ref main")
         self.assertLess(onboarding, tracking_refresh)
         self.assertLess(tracking_refresh, pages)
 
-    def test_tracking_changes_refresh_snapshot_before_publication(self) -> None:
+    def test_tracking_changes_use_light_refresh_before_publication(self) -> None:
         text = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
         pages = PAGES_WORKFLOW.read_text(encoding="utf-8")
         refresh = REFRESH_WORKFLOW.read_text(encoding="utf-8")
+        light = LIGHT_REFRESH_WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("TRACKING_CHANGED: ${{ steps.publish.outputs.tracking_changed }}", text)
         self.assertIn(
             "PUSH_TRACKING_INPUTS_CHANGED: ${{ steps.push-inputs.outputs.changed }}",
             text,
         )
         self.assertIn("Detect pushed tracking inputs", text)
-        self.assertIn("gh workflow run scheduled-sync.yml --ref main", text)
-        self.assertIn("      - config/user_tracking.json", refresh)
+        self.assertIn("gh workflow run frequent-intelligence-refresh.yml --ref main", text)
+        refresh_trigger = refresh.split("  schedule:", 1)[0]
+        self.assertNotIn("      - config/user_tracking.json", refresh_trigger)
         self.assertIn("      - config/user_tracking.json", pages)
         self.assertIn(
             "Pages must wait for that workflow to commit the matching public snapshot",
             pages,
         )
+        self.assertIn("workflow_dispatch:", light)
+        self.assertIn("python tools/enrich_tracking_snapshot.py", light)
+        self.assertIn("-f publish_after_reconciliation=true", light)
 
     def test_full_refresh_explicitly_hands_off_to_reconciliation_pages_then_research(self) -> None:
         refresh = REFRESH_WORKFLOW.read_text(encoding="utf-8")

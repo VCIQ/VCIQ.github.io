@@ -29,9 +29,11 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
         self.assertIn('timezone: "Asia/Taipei"', text)
         self.assertNotIn("4-22/2", text)
 
-    def test_tracking_config_changes_start_one_full_refresh(self) -> None:
+    def test_manual_tracking_config_changes_do_not_start_immediate_full_refresh(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
-        self.assertIn("      - config/user_tracking.json", text)
+        trigger = text.split("  schedule:", 1)[0]
+        self.assertNotIn("      - config/user_tracking.json", trigger)
+        self.assertIn("            config/user_tracking.json", text)
 
     def test_source_portfolio_runtime_changes_start_one_full_refresh(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
@@ -185,7 +187,6 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
         self.assertIn("tools/refresh_article_quality_gate.py", text)
         self.assertIn("tests.test_refresh_article_quality_gate", text)
 
-
     def test_person_research_plan_and_outcome_memory_are_staged_before_rebase(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
         commit_block = text.split(
@@ -216,6 +217,7 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
             commit_block.index("UNCOMMITTED=$(git status --short)"),
             commit_block.index("git pull --rebase -X theirs origin main"),
         )
+
 
 if __name__ == "__main__":
     unittest.main()

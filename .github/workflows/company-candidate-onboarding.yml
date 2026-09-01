@@ -8,7 +8,6 @@ on:
       - config/company_candidate_review_queue.json
       - config/company_registry.json
       - config/official_company_sources.json
-      - config/tracking_capture_inbox.json
       - tools/company_official_source_discovery.py
       - tools/prepare_company_candidate_onboarding.py
       - tools/prepare_company_candidate_onboarding_v2.py
@@ -298,8 +297,8 @@ jobs:
           handoff="${POST_ONBOARDING_HANDOFF:-none}"
           case "$handoff" in
             refresh)
-              echo "Verified onboarding finished; refresh the public snapshot from the committed company state."
-              gh workflow run scheduled-sync.yml --ref main
+              echo "Verified onboarding finished; run the lightweight public refresh from the committed company state."
+              gh workflow run frequent-intelligence-refresh.yml --ref main
               ;;
             publish-with-research)
               echo "Verified onboarding finished at the terminal fixed point; publish Pages, then generate research."

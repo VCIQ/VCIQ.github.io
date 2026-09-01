@@ -345,29 +345,21 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
   handoff:
-    name: Continue tracking reconciliation
+    name: Defer heavy tracking reconciliation
     needs: apply
     if: needs.apply.outputs.changed == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    permissions:
-      actions: write
-    env:
-      GH_TOKEN: ${{ github.token }}
-      GH_REPO: ${{ github.repository }}
-      CONFIG_CHANGED: ${{ needs.apply.outputs.config_changed }}
-      REVIEW_QUEUED: ${{ needs.apply.outputs.review_queued }}
-      INTENTS_CHANGED: ${{ needs.apply.outputs.intents_changed }}
-      OBJECT_TYPE: ${{ inputs.object_type }}
+    permissions: {}
     steps:
-      - name: Start the explicit downstream workflow
+      - name: Record deferred reconciliation policy
         shell: bash
         run: |
-          set -euo pipefail
-          if [ "$CONFIG_CHANGED" = "true" ]; then
-            gh workflow run scheduled-sync.yml --ref main
-          elif [ "$REVIEW_QUEUED" = "true" ] && [ "$OBJECT_TYPE" = "company" ]; then
-            gh workflow run company-candidate-discovery.yml --ref main
-          elif [ "$REVIEW_QUEUED" = "true" ] || [ "$INTENTS_CHANGED" = "true" ]; then
-            gh workflow run tracking-discovery.yml --ref main -f mode=full
-          fi
+          {
+            echo "## Deferred tracking reconciliation"
+            echo
+            echo "The authenticated tracking write is complete."
+            echo "Heavy discovery and full refresh are intentionally not started from this interactive workflow."
+            echo "Pending review/intents are coalesced by the low-priority manual-tracking reconciliation workflow."
+            echo "Applied tracking configuration is consumed by the regular lightweight/daily refresh cadence."
+          } >> "$GITHUB_STEP_SUMMARY"
