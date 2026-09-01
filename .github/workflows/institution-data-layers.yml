@@ -59,7 +59,10 @@ jobs:
           npx tsc --noEmit
           npm run lint
 
-      - name: Commit changed institution layers
+      - name: Finalize automation control plane
+        run: python tools/run_pipeline.py finalize institution-data-layers
+
+      - name: Commit institution layers and heartbeat
         shell: bash
         run: |
           set -euo pipefail
@@ -67,10 +70,12 @@ jobs:
             public/data/institution_entities.json
             public/data/institution_events.json
             public/data/institution_equity_relationships.json
+            public/data/data_lineage.json
+            public/data/pipeline_health.json
           )
           git add "${DATA_PATHS[@]}"
           if git diff --cached --quiet; then
-            echo "No institution data layer changes."
+            echo "No institution data or control-plane changes."
             exit 0
           fi
 
@@ -83,6 +88,7 @@ jobs:
             node --import tsx --test \
               tests/institution-entity-registry.test.ts \
               tests/institution-data-layers.test.ts
+            python tools/run_pipeline.py finalize institution-data-layers
             git add "${DATA_PATHS[@]}"
             if ! git diff --cached --quiet; then
               git commit --amend --no-edit
