@@ -29,6 +29,13 @@ class FrequentRefreshWorkflowTests(unittest.TestCase):
         self.assertNotIn('audit.get("completedAt") or payload.get("generatedAt")', text)
         self.assertIn("ref: main", text)
 
+    def test_dispatch_requires_explicit_force_to_bypass_freshness(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("force_crawl:", text)
+        self.assertIn("type: boolean", text)
+        self.assertIn("default: false", text)
+        self.assertIn("FORCE_CRAWL: ${{ inputs.force_crawl || 'false' }}", text)
+
     def test_lightweight_refresh_has_room_to_finish_a_real_crawl(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("timeout-minutes: 60", text)
