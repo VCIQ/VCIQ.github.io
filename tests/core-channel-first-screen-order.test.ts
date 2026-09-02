@@ -155,26 +155,29 @@ test("people and company cards stay scan-dense without dropping research context
   assert.match(peopleCss, /\.researchRow:first-child p \{[\s\S]*-webkit-line-clamp:\s*2/);
 });
 
-test("sources render tracked source cards before lifecycle and governance explanations", async () => {
+test("sources render the live decision dashboard before lifecycle and governance explanations", async () => {
   const sources = await source("app/sources/page.tsx");
+  const operations = await source("app/sources/source-operations-client.tsx");
 
+  assert.match(operations, /SOURCE DECISION CONTROL PLANE/);
+  assert.match(operations, /SOURCE ENTITIES/);
   assertOrder(
     sources,
-    "{groups.map((group) => {",
+    "<SourceOperationsClient",
     "<details className={styles.lifecycle}>",
-    "tracked source groups must render before Source Lifecycle methodology",
+    "live source decisions must render before Source Lifecycle methodology",
   );
   assertOrder(
     sources,
-    "<div className={styles.grid}>",
-    "<p className=\"intro-copy\">{group.description}</p>",
-    "source cards must render before per-group explanatory copy",
+    "<SourceOperationsClient",
+    "aria-label=\"信源治理原则\"",
+    "source governance must remain below live source data",
   );
   assertOrder(
     sources,
     "<details className={styles.lifecycle}>",
     "aria-label=\"信源治理原则\"",
-    "source governance must remain below tracked source data",
+    "source governance must remain below lifecycle methodology",
   );
 });
 
