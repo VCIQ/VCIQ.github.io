@@ -26,6 +26,7 @@ function source(input: {
   misattributionRate?: number;
   reasons: string[];
   healthStatus?: SourceDirectoryEntry["healthStatus"];
+  sourceRole?: SourceDirectoryEntry["sourceRole"];
 }): SourceDirectoryEntry {
   return {
     id: input.id,
@@ -33,7 +34,7 @@ function source(input: {
     kind: "媒体 / 研究",
     platform: "Web",
     sourceLevel: "待交叉验证",
-    sourceRole: "corroboration",
+    sourceRole: input.sourceRole ?? "corroboration",
     region: "全球",
     sectors: ["AI / AGI"],
     keywords: [],
@@ -115,7 +116,28 @@ test("sources without QA evidence gaps are excluded from the queue", () => {
   assert.equal(rows.length, 0);
 });
 
-test("Sources page renders QA queue before lifecycle methodology", async () => {
+test("Discovery-only sources never consume Core QA budget", () => {
+  const rows = buildSourceQaQueue([
+    source({
+      id: "discovery",
+      name: "Discovery",
+      sourceRole: "discovery",
+      reviewedRecords: 0,
+      reasons: ["人工抽查样本不足（0/20）", "人工误归属率尚无可审计数据"],
+    }),
+    source({
+      id: "primary",
+      name: "Primary",
+      sourceRole: "primary",
+      reviewedRecords: 0,
+      reasons: ["人工抽查样本不足（0/20）", "人工误归属率尚无可审计数据"],
+    }),
+  ], policy);
+
+  assert.deepEqual(rows.map((row) => row.sourceId), ["primary"]);
+});
+
+test("Sources page renders Core-candidate QA queue before lifecycle methodology", async () => {
   const page = await readFile(new URL("../app/sources/page.tsx", import.meta.url), "utf8");
   const qa = await readFile(new URL("../app/sources/source-qa-queue.tsx", import.meta.url), "utf8");
 
@@ -123,6 +145,7 @@ test("Sources page renders QA queue before lifecycle methodology", async () => {
   assert.ok(page.indexOf("<SourceQaQueue") < page.indexOf("<details className={styles.lifecycle}>") );
   assert.match(qa, /SOURCE QA QUEUE/);
   assert.match(qa, /人工抽查目标/);
+  assert.match(qa, /Discovery-only 不消耗 Core QA 预算/);
   assert.match(qa, /MISATTRIBUTION/);
   assert.match(qa, /OTHER GATES/);
   assert.match(qa, /NOW/);

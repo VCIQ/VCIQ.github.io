@@ -44,14 +44,18 @@ export default function SourceQaQueue({ sources }: { sources: SourceDirectoryEnt
           <h2>优先审核最可能因人工抽查而接近 Core Ready 的 Source。</h2>
           <p>
             队列不创造新的分数：只读取现有 Core Gate、人工抽查数量与误归属审计证据。
-            非 QA Gate 较多或采集不健康的 Source 会自动下沉，避免把人工预算花在尚未成熟的对象上。
+            仅纳入默认可晋级 Core 的 Primary / Corroboration；Discovery-only 不消耗 Core QA 预算。
+            非 QA Gate 较多或采集不健康的 Source 会自动下沉。
           </p>
         </div>
-        <small>人工抽查目标 {policy.coreMinReviewedRecords} 条 / Source · 误归属率上限 {Math.round(policy.coreMaxMisattributionRate * 100)}%</small>
+        <small>
+          人工抽查目标 {policy.coreMinReviewedRecords} 条 / Source ·
+          误归属率上限 {Math.round(policy.coreMaxMisattributionRate * 100)}%
+        </small>
       </div>
 
       <div className={styles.summary}>
-        <article><small>需要 QA</small><b>{summary.total}</b><span>存在抽查 / 误归属证据缺口</span></article>
+        <article><small>需要 QA</small><b>{summary.total}</b><span>Core 候选存在抽查 / 误归属证据缺口</span></article>
         <article><small>现在审核</small><b>{summary.now}</b><span>QA 是主要或唯一量化阻塞</span></article>
         <article><small>下一批</small><b>{summary.next}</b><span>只剩少量其他 Gate</span></article>
         <article><small>暂缓</small><b>{summary.deferred}</b><span>先处理采集 / 样本 / 质量问题</span></article>
@@ -94,7 +98,7 @@ export default function SourceQaQueue({ sources }: { sources: SourceDirectoryEnt
             </article>
           );
         })}
-        {!visible.length ? <p className={styles.empty}>当前没有需要人工 QA 的 Evidence Pending Source。</p> : null}
+        {!visible.length ? <p className={styles.empty}>当前没有需要人工 QA 的 Core 候选 Source。</p> : null}
       </div>
 
       {rows.length > visible.length ? (

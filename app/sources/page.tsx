@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import { ShieldCheck } from "lucide-react";
-import { sourceDirectory, sourceDirectoryStats } from "@/lib/source-directory";
+import {
+  sourceDirectory,
+  sourceDirectoryStats,
+} from "@/lib/source-directory";
+import {
+  sourceNeedsEvidence,
+} from "@/lib/source-decision-dashboard";
+import { sourceCoreEligible } from "@/lib/source-governance";
 import SourceOperationsClient from "./source-operations-client";
 import SourceQaQueue from "./source-qa-queue";
 import styles from "./page.module.css";
@@ -12,6 +19,11 @@ export const metadata: Metadata = {
 
 export default function SourcesPage() {
   const issueCount = sourceDirectoryStats.partial + sourceDirectoryStats.error;
+  const coreEvidencePending = sourceDirectory.filter(sourceNeedsEvidence).length;
+  const discoveryOnly = sourceDirectory.filter((source) => !sourceCoreEligible(source)).length;
+  const coreReady = sourceDirectory.filter(
+    (source) => sourceCoreEligible(source) && source.promotion?.state === "review_pending",
+  ).length;
   const snapshotAt = new Date().toISOString();
 
   return (
@@ -27,8 +39,9 @@ export default function SourcesPage() {
           <span>{sourceDirectoryStats.healthy} 个当前健康</span>
           <span>{issueCount} 个存在采集异常</span>
           <span>{sourceDirectoryStats.unknown} 个 Unobserved / 未建立观测</span>
-          <span>{sourceDirectoryStats.evidencePending} 个等待晋级证据</span>
-          <span>{sourceDirectoryStats.reviewPending} 个 Core Ready</span>
+          <span>{coreEvidencePending} 个 Core 候选等待证据</span>
+          <span>{discoveryOnly} 个 Discovery-only</span>
+          <span>{coreReady} 个 Core Ready</span>
         </div>
       </header>
 
@@ -44,7 +57,8 @@ export default function SourcesPage() {
         <div className={styles.lifecycleDetails}>
           <p>
             Candidate 表示已进入信源图但尚未建立稳定采集入口；Tracked 表示已配置持续采集；Core 只会在滚动运行、跨日稳定性、可用率、有效产出、人工抽查全部达到版本化 Policy 后，再经过显式人工 Core 审批产生。
-            人工批准不能绕过量化证据门，量化门达标也不能绕过人工批准。PRIMARY / CORROBORATION / DISCOVERY 描述证据角色，OK / PARTIAL / ERROR 描述采集通道健康，三者不再混为一个状态。
+            人工批准不能绕过量化证据门，量化门达标也不能绕过人工批准。Primary / Corroboration 默认可进入 Core 候选流程；微信公众号与 X Profiles 默认 Discovery-only，不进入 Core 晋级或 Core QA 队列。
+            Evidence Role、Lifecycle 与 Collector Health 分轴展示，不再压缩成一个“需要处理”状态。
           </p>
           <div className={styles.lifecycleFlow}>
             <div>
@@ -53,11 +67,11 @@ export default function SourcesPage() {
             </div>
             <div>
               <strong>Tracked</strong>
-              <p>已配置持续抓取与滚动质量观测；EVIDENCE PENDING 与 CORE READY 会继续区分证据成熟度。</p>
+              <p>已配置持续抓取与滚动质量观测；Core 候选继续区分 EVIDENCE PENDING 与 CORE READY，Discovery-only 保持发现角色。</p>
             </div>
             <div>
               <strong>Core</strong>
-              <p>跨运行证据、人工抽查与显式审批全部满足后才成为长期研究入口。</p>
+              <p>默认可晋级角色在跨运行证据、人工抽查与显式审批全部满足后，才成为长期研究入口。</p>
             </div>
           </div>
         </div>
@@ -94,7 +108,7 @@ export default function SourcesPage() {
           </article>
           <article>
             <strong>发现 ≠ 事实确认</strong>
-            <p>微信公众号、X Profiles 与媒体负责发现和交叉验证；重大公司、融资、监管、产品和研究结论优先回溯公司官网、论文、交易所、监管文件或其他原始材料。</p>
+            <p>微信公众号与 X Profiles 默认只负责发现；重大公司、融资、监管、产品和研究结论必须回溯公司官网、论文、交易所、监管文件或其他原始材料。</p>
           </article>
           <article>
             <strong>Core 必须经过质量门槛</strong>
