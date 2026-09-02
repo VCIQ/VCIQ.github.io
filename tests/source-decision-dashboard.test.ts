@@ -153,7 +153,8 @@ test("Sources v2 renders decision queues and separates evidence role from collec
   assert.match(client, /EVIDENCE ROLE/);
   assert.match(client, /COLLECTOR HEALTH/);
   assert.match(client, /CORE READINESS/);
-  assert.match(client, /Fresh < .*Aging .*Stale/);
+  assert.match(client, /SOURCE_FRESHNESS_POLICY\.freshHours/);
+  assert.match(client, /SOURCE_FRESHNESS_POLICY\.staleHours/);
   assert.match(page, /SourceOperationsClient/);
   assert.doesNotMatch(page, /groups\.map/);
 });
