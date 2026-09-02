@@ -31,6 +31,10 @@ def _parse_timestamp(value: Any) -> datetime | None:
     return parsed.astimezone(UTC)
 
 
+def _env_flag(name: str) -> bool:
+    return os.environ.get(name, "").strip().lower() in {"1", "true", "yes", "on"}
+
+
 def last_news_crawl_at(payload: dict[str, Any]) -> str:
     audit = payload.get("refreshAudit")
     if not isinstance(audit, dict):
@@ -93,6 +97,7 @@ def evaluate_due(
     payload: dict[str, Any],
     *,
     event_name: str,
+    force: bool = False,
     now: datetime | None = None,
     min_age_minutes: int = MIN_CRAWL_AGE_MINUTES,
 ) -> dict[str, Any]:
@@ -100,13 +105,16 @@ def evaluate_due(
     full_raw = last_full_refresh_at(payload)
     current = (now or datetime.now(UTC)).astimezone(UTC)
 
-    if event_name == "workflow_dispatch":
+    # workflow_dispatch is also used by automatic workflow handoffs. It must
+    # not imply a forced crawl by itself; only the explicit force input may
+    # bypass the shared reservation and freshness gates.
+    if force:
         return {
             "due": True,
             "ageMinutes": 0,
             "lastNewsCrawlAt": raw,
             "lastFullRefreshAt": full_raw,
-            "reason": "manual-dispatch",
+            "reason": "forced-dispatch",
         }
 
     if _awaiting_daily_full_refresh(payload, current):
@@ -142,7 +150,11 @@ def main() -> int:
     payload = json.loads(ARTICLES_PATH.read_text(encoding="utf-8"))
     if not isinstance(payload, dict):
         raise SystemExit("article snapshot must be an object")
-    result = evaluate_due(payload, event_name=os.environ.get("EVENT_NAME", ""))
+    result = evaluate_due(
+        payload,
+        event_name=os.environ.get("EVENT_NAME", ""),
+        force=_env_flag("FORCE_CRAWL"),
+    )
     print(json.dumps(result, ensure_ascii=False))
     output_path = os.environ.get("GITHUB_OUTPUT")
     if output_path:
