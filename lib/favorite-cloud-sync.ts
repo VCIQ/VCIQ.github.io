@@ -19,7 +19,6 @@ const CLOUD_SYNC_SUCCESS_KEY = "vciq:favorites-cloud:last-success:v1";
 const CLOUD_SYNC_ATTEMPT_KEY = "vciq:favorites-cloud:last-attempt:v1";
 const CLOUD_SYNC_INTERVAL_MS = 5 * 60_000;
 const CLOUD_RETRY_INTERVAL_MS = 60_000;
-const MAX_FAVORITES = 300;
 
 export type FavoriteCloudSyncStatus =
   | {
@@ -83,8 +82,7 @@ export function mergeFavoriteCloudRecords(
   }
 
   const items = [...next.values()]
-    .sort((left, right) => right.savedAt.localeCompare(left.savedAt))
-    .slice(0, MAX_FAVORITES);
+    .sort((left, right) => right.savedAt.localeCompare(left.savedAt));
   return { items, restored, removed };
 }
 
