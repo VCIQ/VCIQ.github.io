@@ -4,8 +4,7 @@ const PENDING_FAVORITE_SYNC_KEY = "vciq:favorites-cloud:pending:v1";
 const SYNC_TIMEOUT_MS = 5_000;
 const BOOTSTRAP_TIMEOUT_MS = 8_000;
 const READ_TIMEOUT_MS = 8_000;
-const MAX_BOOTSTRAP_FAVORITES = 200;
-const MAX_PENDING_FAVORITES = 300;
+const BOOTSTRAP_BATCH_SIZE = 200;
 
 export type FavoritePreferenceSyncAction = "save" | "remove";
 
@@ -124,7 +123,7 @@ function readPendingFavoriteSyncs(): PendingFavoriteSync[] {
   try {
     const parsed = JSON.parse(storage.getItem(PENDING_FAVORITE_SYNC_KEY) ?? "[]") as unknown;
     return Array.isArray(parsed)
-      ? parsed.filter(validPendingFavoriteSync).slice(0, MAX_PENDING_FAVORITES)
+      ? parsed.filter(validPendingFavoriteSync)
       : [];
   } catch {
     return [];
@@ -135,7 +134,7 @@ function writePendingFavoriteSyncs(items: PendingFavoriteSync[]) {
   const storage = browserStorage();
   if (!storage) return;
   try {
-    storage.setItem(PENDING_FAVORITE_SYNC_KEY, JSON.stringify(items.slice(0, MAX_PENDING_FAVORITES)));
+    storage.setItem(PENDING_FAVORITE_SYNC_KEY, JSON.stringify(items));
   } catch {}
 }
 
@@ -299,19 +298,32 @@ export async function bootstrapFavoritePreferenceHistory(
   const origin = browserOrigin();
   if (!origin || !Array.isArray(items) || items.length === 0) return false;
   const normalizedItems = items
-    .slice(0, MAX_BOOTSTRAP_FAVORITES)
     .map((item) => buildFavoritePreferenceSyncPayload("save", item, origin)?.item ?? null)
     .filter((item): item is NonNullable<typeof item> => Boolean(item));
   if (!normalizedItems.length) return false;
 
-  // A historical import can exceed the browser keepalive body budget, so it is
-  // sent once per concurrent page bootstrap. Individual future Favorite actions
-  // continue to use the small keepalive request above.
-  const request = postPreferencePayload(
-    { bootstrap: true, items: normalizedItems },
-    BOOTSTRAP_TIMEOUT_MS,
-    false,
-  );
+  // The private API intentionally bounds each bootstrap request. Send the full
+  // historical collection in sequential batches while retaining one shared
+  // in-flight promise for concurrent page bootstraps.
+  const request = (async () => {
+    for (
+      let index = 0;
+      index < normalizedItems.length;
+      index += BOOTSTRAP_BATCH_SIZE
+    ) {
+      const batch = normalizedItems.slice(index, index + BOOTSTRAP_BATCH_SIZE);
+      if (
+        !(await postPreferencePayload(
+          { bootstrap: true, items: batch },
+          BOOTSTRAP_TIMEOUT_MS,
+          false,
+        ))
+      ) {
+        return false;
+      }
+    }
+    return true;
+  })();
   bootstrapInFlight = request;
   try {
     return await request;
