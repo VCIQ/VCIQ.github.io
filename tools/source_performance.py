@@ -534,6 +534,32 @@ def performance_recommendation(
     return "monitor", reasons
 
 
+def _observed_dates(
+    previous: dict[str, Any],
+    samples: list[dict[str, Any]],
+) -> list[str]:
+    """Persist cross-day lifecycle evidence independently from the run window.
+
+    Existing snapshots are bootstrapped from the still-retained samples. Once
+    ``observedDates`` exists, future runs keep extending that date set even as
+    old performance samples roll out of ``performanceWindowRuns``.
+    """
+
+    observed: set[str] = set()
+    persisted = previous.get("observedDates", [])
+    if isinstance(persisted, list):
+        for value in persisted:
+            parsed = _parse_date(value)
+            if parsed is not None:
+                observed.add(parsed.isoformat())
+
+    for item in samples:
+        parsed = _parse_date(item.get("at"))
+        if parsed is not None:
+            observed.add(parsed.isoformat())
+    return sorted(observed)
+
+
 def update_source_performance(
     previous: dict[str, Any] | None,
     status: dict[str, Any],
@@ -554,6 +580,7 @@ def update_source_performance(
     if sample is not None:
         samples.append(sample)
 
+    observed_dates = _observed_dates(previous, samples)
     window_size = max(
         1,
         _integer(
@@ -576,6 +603,7 @@ def update_source_performance(
     return {
         "windowRuns": window_size,
         "samples": samples,
+        "observedDates": observed_dates,
         **metrics,
         "reviewState": state,
         "reviewRequired": state not in {"retain", "insufficient-data"},
