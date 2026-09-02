@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import unittest
 
 from tools import crawl_listed_company_disclosures as disclosures
@@ -9,12 +10,38 @@ class ListedCompanyDisclosureTest(unittest.TestCase):
     def test_enabled_a_share_and_hk_listings_are_registered(self) -> None:
         listings = disclosures.load_listings()
         identities = {(row.catalog_slug, row.market, row.ticker) for row in listings}
+
+        tracking = json.loads(disclosures.TRACKING_PATH.read_text(encoding="utf-8"))
+        disclosure_config = disclosures.load_config()
+        configured_rows = [
+            row
+            for row in tracking.get("listedCompanies", [])
+            if isinstance(row, dict)
+            and row.get("enabled", True) is not False
+            and row.get("market") in disclosures.SUPPORTED_MARKETS
+        ]
+        configured_rows.extend(
+            row
+            for row in disclosure_config.get("extraListings", [])
+            if isinstance(row, dict)
+            and row.get("enabled", True) is not False
+            and row.get("market") in disclosures.SUPPORTED_MARKETS
+        )
+        expected = {
+            (
+                str(row.get("catalogSlug") or "").strip(),
+                str(row.get("market") or "").strip(),
+                disclosures.normalize_ticker(row.get("market"), row.get("ticker")),
+            )
+            for row in configured_rows
+        }
+
+        self.assertEqual(identities, expected)
         self.assertIn(("cambricon", "A股", "688256"), identities)
         self.assertIn(("catl", "A股", "300750"), identities)
         self.assertIn(("catl", "港股", "03750"), identities)
         self.assertIn(("horizon-robotics", "港股", "09660"), identities)
         self.assertIn(("xtalpi", "港股", "02228"), identities)
-        self.assertEqual(len(identities), 6)
 
     def test_exchange_routing_uses_official_hosts(self) -> None:
         sse = disclosures.Listing("cambricon", "寒武纪", "A股", "688256", "半导体")
