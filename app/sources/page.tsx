@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ShieldCheck } from "lucide-react";
 import { sourceDirectory, sourceDirectoryStats } from "@/lib/source-directory";
 import SourceOperationsClient from "./source-operations-client";
+import SourceQaQueue from "./source-qa-queue";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -32,6 +33,7 @@ export default function SourcesPage() {
       </header>
 
       <SourceOperationsClient sources={sourceDirectory} snapshotAt={snapshotAt} />
+      <SourceQaQueue sources={sourceDirectory} />
 
       <details className={styles.lifecycle}>
         <summary>
