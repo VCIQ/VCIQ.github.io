@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-02T14:56:41+00:00",
-  "asOfDate": "2026-09-02",
+  "generatedAt": "2026-09-02T16:51:57+00:00",
+  "asOfDate": "2026-09-03",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
   "baselineSource": "snapshot",
@@ -12,41 +12,40 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 7507,
-      "completion_tokens": 5981,
-      "total_tokens": 13488,
+      "prompt_tokens": 7511,
+      "completion_tokens": 5483,
+      "total_tokens": 12994,
       "completion_tokens_details": {
-        "reasoning_tokens": 2991
+        "reasoning_tokens": 2742
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 7507
+      "prompt_cache_miss_tokens": 7511
     }
   },
   "changeSummary": {
-    "totalDetected": 72,
+    "totalDetected": 26,
     "total": 9,
     "byDataset": {
       "intelligenceEvent": 9
     },
     "byChangeType": {
-      "external_event": 21,
-      "data_maintenance": 10,
-      "source_refresh": 41
+      "external_event": 10,
+      "data_maintenance": 16
     },
-    "externalCandidates": 21,
-    "qualityRejected": 2,
-    "maintenanceExcluded": 51,
+    "externalCandidates": 10,
+    "qualityRejected": 1,
+    "maintenanceExcluded": 16,
     "aggregatedEvents": 0,
-    "highestImportance": 85,
+    "highestImportance": 91,
     "verifiedChangeTotal": 0,
     "candidateTotal": 0,
     "auxiliaryLeadTotal": 9,
-    "rejectedTotal": 2,
+    "rejectedTotal": 1,
     "newEvents": 9,
-    "reconfirmations": 10,
+    "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
@@ -55,310 +54,284 @@
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "2026-09-02证据包共收录9条高价值情报事件，覆盖AI招聘、AI群体智能、AI奖项、特斯拉自动驾驶、半导体生态、AI推理基础设施、东盟AI落地、商业航天和法律AI多智能体系统。整体看，AI应用层信号密集：招聘场景中人际互动仍主导关键决策（E001），东盟市场落地强调人的因素（E007），法律AI转向多智能体架构（E010）；基础设施侧Equinix联合英伟达与Together AI推出推理交换平台（E006），Allora Labs提出变异AI群体优于单一优化模型（E002）。特斯拉Cybercab发布会临近（E004），Rocket Lab完成第94次Electron发射（E009）。证据等级以B级新闻稿和C级媒体转载为主，官方披露仅E009、E010，多数事件为首次出现、未经人工复核，结论需保持审慎。 质量门诊断：缺少发布时间 15、缺少标题 15、证据未分级 15、缺少有效 URL 3、证据合格但未绑定变化字段 19。",
+    "executiveSummary": "2026年9月2日证据包记录了9起高价值事件，集中在AI基础设施、企业AI应用与安全治理三个方向。融资方面，Capacity完成5400万美元E轮融资（ARR超1亿美元），Airbility完成65亿韩元A轮融资；战略转型方面，GoPro通过2.85亿美元合并进入AI数据中心光收发器市场；产品方面，Google DeepMind发布Gemini 3.8 Flash及Cyber版本，Webflow推出Source代理工作区，ZeroDrift推出AI生成消息合规检查服务，World Class Health推出AI专科诊所，Plan A Technologies收购AI评估技术，McLean & Company推出以人为本的AI项目。整体显示AI投资与产品发布活跃，但多数证据为单一来源且等级为B/C，需后续验证。 质量门诊断：仅为发现线索，不能支持正式主张 1。",
     "keyDevelopments": [
       {
-        "title": "Staffmark Group发布2026 Heart of Work Index：招聘关键环节中人们仍优先选择人际互动而非AI",
-        "assessment": "研究显示技术帮助扩大候选人搜索范围，但最终成交仍依赖人际互动；并划分出四种劳动力群体画像。该信号指向AI在招聘领域的能力边界，对HR科技产品定位有参考意义。证据为B级新闻稿且未经人工复核，具体样本量与统计方法未在证据包中披露。",
-        "importance": 3,
+        "title": "Capacity完成5400万美元E轮融资，ARR突破1亿美元",
+        "assessment": "圣路易斯的智能客服自动化厂商Capacity获得5400万美元E轮融资，用于扩展统一AI原生客户体验平台，并称ARR已超1亿美元。该事件反映企业级AI客服赛道在整合需求下的资本热度。证据为单一行业媒体来源（CMSWire），等级C，金额与ARR数据需以公司官方披露为准。",
+        "importance": 4,
         "confidence": "medium",
         "entities": [
-          "Staffmark Group"
+          "Capacity"
         ],
         "evidenceIds": [
           "E001"
         ]
       },
       {
-        "title": "Allora Labs研究：变异AI群体在变化环境中优于单一优化模型",
-        "assessment": "研究主张通过基因突变有意降低单个模型表现可提升群体整体适应性。若成立，将挑战'追求单一最优模型'的主流范式，对AI模型部署策略有潜在影响。证据为B级新闻稿，实验设置、基准与复现细节未披露，需谨慎对待。",
-        "importance": 4,
+        "title": "GoPro以2.85亿美元合并Starman Optical，切入AI数据中心光收发器市场",
+        "assessment": "GoPro宣布与光学光子学公司Starman Optical合并，计划在美国生产AI数据中心用光收发器，并回流制造。此举被解读为应对相机业务财务困境的转型。交易金额、合并结构与战略效果均来自单一科技媒体（Tom's Hardware），等级C，需公司公告验证。",
+        "importance": 5,
         "confidence": "low",
         "entities": [
-          "Allora Labs"
-        ],
-        "evidenceIds": [
-          "E002"
-        ]
-      },
-      {
-        "title": "特斯拉将于周四在奥斯汀举办Cybercab发布会",
-        "assessment": "特斯拉自动驾驶出租车Cybercab发布会临近，表明其Robotaxi业务持续推进。证据为C级媒体转载，未提供发布会具体议程、运营时间表或监管进展，属于事件性线索而非实质性进展。",
-        "importance": 4,
-        "confidence": "medium",
-        "entities": [
-          "特斯拉"
+          "GoPro",
+          "Starman Optical"
         ],
         "evidenceIds": [
           "E004"
         ]
       },
       {
-        "title": "Equinix联合英伟达与Together AI推出Equinix Inference Exchange人工智能推理交换平台",
-        "assessment": "该分布式AI推理框架整合英伟达企业参考架构、Together AI开源模型平台与Equinix全球数据中心基础设施，反映AI推理层基础设施正在走向分布式与生态协作。证据为C级媒体转载，产品细节、商用时间与客户采用情况未披露。",
+        "title": "Google DeepMind发布Gemini 3.8 Flash与3.8 Flash Cyber",
+        "assessment": "Google DeepMind官方博客宣布推出Gemini 3.8 Flash及面向网络安全的3.8 Flash Cyber模型。官方来源等级B，但证据包仅含标题与摘要，缺乏性能、可用性与安全能力细节，暂无法评估其市场影响。",
         "importance": 4,
         "confidence": "medium",
         "entities": [
-          "Equinix",
-          "英伟达",
-          "Together AI"
-        ],
-        "evidenceIds": [
-          "E006"
-        ]
-      },
-      {
-        "title": "SEMI与Silicon Catalyst签署战略合作备忘录，加速全球半导体创新",
-        "assessment": "双方在SEMICON Taiwan 2026签署MoU，旨在扩大初创企业获取全球行业创新与产业资源的机会。对半导体初创生态是结构性利好信号，但MoU属于意向性安排，落地效果待观察。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "SEMI",
-          "Silicon Catalyst"
-        ],
-        "evidenceIds": [
-          "E005"
-        ]
-      },
-      {
-        "title": "Rocket Lab成功完成第94次Electron发射任务",
-        "assessment": "Rocket Lab官方宣布成功发射第94枚Electron火箭，为最新地球成像卫星提供部署服务。官方披露为高可信事件，但证据包未包含载荷客户、轨道细节及后续任务节奏。",
-        "importance": 3,
-        "confidence": "high",
-        "entities": [
-          "Rocket Lab"
+          "Google DeepMind",
+          "Gemini"
         ],
         "evidenceIds": [
           "E009"
         ]
       },
       {
-        "title": "Harvey将Playbook Review重构为多智能体系统",
-        "assessment": "Harvey官方博客披露其法律文书审查产品转向多智能体架构，并讨论在法律判断领域如何度量质量。反映法律AI从单模型向多智能体协作演进，对法律科技赛道有参考价值。官方披露可信度较高，但技术细节与效果数据有限。",
+        "title": "Airbility完成65亿韩元A轮融资，累计融资达760万美元",
+        "assessment": "Airbility宣布由Sazze Partners领投的65亿韩元A轮融资，将用于加速集成式高速eVTOL反无人机系统组合的商业化并建设全球部署产能。官方新闻稿等级B，但公司规模较小，融资额与市场前景需进一步跟踪。",
         "importance": 3,
         "confidence": "medium",
         "entities": [
-          "Harvey"
+          "Airbility",
+          "Sazze Partners"
         ],
         "evidenceIds": [
-          "E010"
+          "E002"
         ]
       },
       {
-        "title": "AIMX Singapore 2026现场观察：AI落地东盟30%靠技术、70%靠人",
-        "assessment": "钛媒体现场观察指出中国AI进入东盟市场的关键不在算法而在客户预算与本地化落地能力。该观点为媒体评论性内容，非系统性研究，但与其他证据（E001）共同指向'AI落地中人的因素'这一主题。",
-        "importance": 2,
-        "confidence": "low",
+        "title": "Webflow推出Source代理工作区，向代码级营销协作扩展",
+        "assessment": "Webflow发布Source平台，为营销团队和AI代理提供共享、受治理的网站代码访问，被视为其向可视化建站之外的最大扩展。单一行业媒体来源（CMSWire），等级C，产品功能细节有限。",
+        "importance": 3,
+        "confidence": "medium",
         "entities": [
-          "AIMX Singapore 2026"
+          "Webflow"
         ],
         "evidenceIds": [
           "E007"
         ]
       },
       {
-        "title": "Globee®人工智能奖第三年开放全球提名",
-        "assessment": "Globee Awards宣布第三届AI奖项开放产品、服务与解决方案提名。属于行业生态活动信号，商业与投资含义有限。",
-        "importance": 1,
-        "confidence": "high",
+        "title": "ZeroDrift推出AI生成消息合规检查服务",
+        "assessment": "ZeroDrift发布新服务，用于检查AI代理生成的消息是否符合公司政策。该事件指向AI代理治理与合规这一新兴需求。证据为单一媒体来源（SiliconANGLE），等级C，服务能力细节不足。",
+        "importance": 3,
+        "confidence": "medium",
         "entities": [
-          "Globee Awards"
+          "ZeroDrift"
+        ],
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "title": "World Class Health推出AI专科诊所",
+        "assessment": "World Class Health发布AI Specialty Clinic，由持证护士在理赔前60至90天接触会员，AI负责接诊、排程与随访，雇主保留更多节省费用。官方新闻稿等级B，但产品效果与临床验证数据未在证据中提供。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "World Class Health"
+        ],
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "title": "Plan A Technologies收购AI评估技术，增强技术尽调能力",
+        "assessment": "Plan A Technologies收购了一项隐秘AI评估技术，用于更快评估复杂技术环境并发现传统工具可能遗漏的技术风险与机会。官方新闻稿等级B，但交易规模与具体技术细节未披露。",
+        "importance": 2,
+        "confidence": "medium",
+        "entities": [
+          "Plan A Technologies"
         ],
         "evidenceIds": [
           "E003"
+        ]
+      },
+      {
+        "title": "McLean & Company推出以人为本的AI项目",
+        "assessment": "全球HR研究咨询公司McLean & Company推出判断优先的混合学习项目，帮助组织从AI实验走向规模化、负责任的AI能力建设。官方新闻稿等级B，属于企业AI培训与治理服务供给端动态。",
+        "importance": 2,
+        "confidence": "medium",
+        "entities": [
+          "McLean & Company"
+        ],
+        "evidenceIds": [
+          "E008"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "AI招聘科技",
-        "direction": "mixed",
-        "statement": "证据显示AI在招聘早期搜索阶段发挥作用，但关键决策环节人际互动仍不可替代（E001）；同时东盟市场观察强调落地中人的因素占70%（E007）。AI招聘产品应定位为辅助漏斗前端而非替代人类决策。",
-        "evidenceIds": [
-          "E001",
-          "E007"
-        ]
-      },
-      {
-        "entity": "AI模型部署范式",
+        "entity": "AI客服/客户体验平台",
         "direction": "positive",
-        "statement": "Allora Labs研究提出变异AI群体在动态环境中优于单一优化模型（E002），若经独立验证，将支持'群体智能+多样性'的部署策略，而非单一追求最优模型。当前证据等级低，仅作为观察信号。",
-        "evidenceIds": [
-          "E002"
-        ]
-      },
-      {
-        "entity": "AI推理基础设施",
-        "direction": "positive",
-        "statement": "Equinix联合英伟达与Together AI推出分布式推理交换平台（E006），表明AI推理层正从集中式走向分布式生态协作，利好具备数据中心与生态整合能力的厂商。",
-        "evidenceIds": [
-          "E006"
-        ]
-      },
-      {
-        "entity": "自动驾驶出租车",
-        "direction": "positive",
-        "statement": "特斯拉Cybercab发布会即将举行（E004），Robotaxi商业化叙事进入新阶段，但证据未包含运营许可、定价或时间表，实质进展仍需发布会验证。",
-        "evidenceIds": [
-          "E004"
-        ]
-      },
-      {
-        "entity": "法律AI",
-        "direction": "positive",
-        "statement": "Harvey将Playbook Review重构为多智能体系统（E010），反映法律AI产品架构向多智能体协作演进，可能提升复杂法律判断任务的处理能力。",
-        "evidenceIds": [
-          "E010"
-        ]
-      },
-      {
-        "entity": "半导体初创生态",
-        "direction": "positive",
-        "statement": "SEMI与Silicon Catalyst签署MoU以加速全球半导体创新并扩大初创企业资源获取（E005），对半导体初创生态是温和利好，但MoU落地效果待观察。",
-        "evidenceIds": [
-          "E005"
-        ]
-      },
-      {
-        "entity": "商业航天",
-        "direction": "positive",
-        "statement": "Rocket Lab完成第94次Electron发射（E009），发射节奏稳定，执行记录持续积累，但证据未披露客户与财务条款，不构成收入预期依据。",
-        "evidenceIds": [
-          "E009"
-        ]
-      }
-    ],
-    "watchlist": [
-      {
-        "item": "特斯拉Cybercab发布会具体内容",
-        "reason": "发布会将验证Robotaxi的运营时间表、监管状态与商业模式细节，是判断自动驾驶出租车落地进程的关键节点。",
-        "nextEvidence": "发布会官方材料、运营许可公告或试运营数据",
-        "evidenceIds": [
-          "E004"
-        ]
-      },
-      {
-        "item": "Allora Labs变异AI群体研究的独立验证与复现",
-        "reason": "该研究若被第三方复现或应用于实际系统，将强化群体智能范式；当前仅有单一新闻稿，需更多技术细节与基准数据。",
-        "nextEvidence": "论文预印本、同行评审或第三方基准测试",
-        "evidenceIds": [
-          "E002"
-        ]
-      },
-      {
-        "item": "Equinix Inference Exchange商用进展",
-        "reason": "平台是否获得企业客户采用、与英伟达和Together AI的集成深度，将决定其在AI推理基础设施市场的实际影响。",
-        "nextEvidence": "产品文档、客户案例或营收披露",
-        "evidenceIds": [
-          "E006"
-        ]
-      },
-      {
-        "item": "Staffmark Group Heart of Work Index完整报告",
-        "reason": "完整报告可提供样本量、方法论与细分数据，用于评估AI在招聘中的真实边界及HR科技产品机会。",
-        "nextEvidence": "完整报告或后续媒体深度报道",
+        "statement": "Capacity完成5400万美元E轮融资且ARR超1亿美元，显示企业级AI客服平台在统一平台整合需求下仍获资本认可，但单一媒体来源（等级C）使融资规模与ARR数据需官方确认。",
         "evidenceIds": [
           "E001"
         ]
       },
       {
-        "item": "SEMI与Silicon Catalyst合作的首批落地项目",
-        "reason": "MoU签署后是否产生具体加速器项目、初创企业入驻或产业资源对接案例，是衡量合作实际价值的标准。",
-        "nextEvidence": "合作项目公告或参与初创企业名单",
-        "evidenceIds": [
-          "E005"
-        ]
-      },
-      {
-        "item": "Harvey多智能体系统的效果数据",
-        "reason": "法律AI领域'正确'依赖法律判断，多智能体架构是否提升审查质量与效率，需要客户案例或评估指标佐证。",
-        "nextEvidence": "客户案例、质量评估指标或技术白皮书",
-        "evidenceIds": [
-          "E010"
-        ]
-      },
-      {
-        "item": "Rocket Lab后续发射节奏与载荷客户",
-        "reason": "第94次发射成功后，后续任务频率与客户结构将影响商业航天板块的持续验证。",
-        "nextEvidence": "下一次发射公告或季度发射指引",
-        "evidenceIds": [
-          "E009"
-        ]
-      }
-    ],
-    "risks": [
-      {
-        "risk": "证据等级整体偏低，多数为B级新闻稿或C级媒体转载，且全部事件均为首次出现、未经人工复核",
-        "reason": "9条证据中仅E009、E010为官方披露，E001-E003、E005为B级新闻稿，E004、E006、E007为C级媒体来源；自动化未复核状态意味着事实准确性存在不确定性。",
-        "evidenceIds": [
-          "E001",
-          "E002",
-          "E003",
-          "E004",
-          "E005",
-          "E006",
-          "E007",
-          "E009"
-        ]
-      },
-      {
-        "risk": "Allora Labs研究结论可能被夸大或缺乏可复现性",
-        "reason": "'变异AI群体优于优化模型'为强主张，但证据仅为新闻稿摘要，未提供实验设计、基准与统计显著性，存在营销性夸大的可能。",
-        "evidenceIds": [
-          "E002"
-        ]
-      },
-      {
-        "risk": "特斯拉Cybercab发布会可能不及市场预期",
-        "reason": "证据仅确认发布会即将举行，未包含运营时间表、监管批准或商业模式细节；若发布会缺乏实质进展，Robotaxi叙事可能受挫。",
+        "entity": "AI数据中心硬件供应链",
+        "direction": "mixed",
+        "statement": "GoPro通过2.85亿美元合并进入美国制造光收发器市场，反映AI数据中心对本土光学硬件需求的增长，但该转型能否解决GoPro既有财务困境尚不确定，且证据等级低。",
         "evidenceIds": [
           "E004"
         ]
       },
       {
-        "risk": "Equinix推理交换平台面临执行与竞争风险",
-        "reason": "平台整合涉及多方生态协作，商用时间与客户采用未披露；AI推理基础设施市场竞争激烈，实际落地可能慢于预期。",
+        "entity": "AI代理治理与合规",
+        "direction": "positive",
+        "statement": "ZeroDrift推出AI生成消息政策合规检查服务，与Webflow为AI代理提供受治理代码访问共同表明，AI代理治理正成为企业软件的新增需求层。",
         "evidenceIds": [
-          "E006"
+          "E005",
+          "E007"
         ]
       },
       {
-        "risk": "东盟AI落地观察存在主观性与样本偏差",
-        "reason": "E007为媒体现场观察的评论性观点，'30%技术、70%人'为经验性概括而非量化研究，不能作为市场规模的确定性依据。",
+        "entity": "基础模型竞争",
+        "direction": "positive",
+        "statement": "Google DeepMind发布Gemini 3.8 Flash与3.8 Flash Cyber，显示头部模型厂商继续向低成本快速推理与网络安全垂直场景扩展，但证据包缺乏性能细节，影响评估深度。",
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "entity": "反无人机/国防科技",
+        "direction": "neutral",
+        "statement": "Airbility完成65亿韩元A轮融资推进eVTOL反无人机系统商业化，属于细分国防科技融资事件，累计融资760万美元规模较小，市场影响待观察。",
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "entity": "医疗AI服务",
+        "direction": "neutral",
+        "statement": "World Class Health推出AI专科诊所，将AI用于理赔前介入、接诊与随访，方向符合医疗成本控制需求，但缺乏临床效果与客户验证数据。",
+        "evidenceIds": [
+          "E006"
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "item": "Capacity E轮融资的官方确认与ARR数据",
+        "reason": "E轮5400万美元与ARR超1亿美元目前仅来自CMSWire单一报道（等级C），需公司官方新闻稿或财务披露确认。",
+        "nextEvidence": "Capacity官方公告、投资者名单及ARR披露",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "item": "GoPro与Starman Optical合并的交易细节及监管进展",
+        "reason": "2.85亿美元合并涉及上市公司转型与制造回流，交易结构、股东批准与交割条件均未披露，且来源为单一科技媒体。",
+        "nextEvidence": "GoPro SEC文件或官方新闻稿、合并交割公告",
+        "evidenceIds": [
+          "E004"
+        ]
+      },
+      {
+        "item": "Gemini 3.8 Flash与3.8 Flash Cyber的技术细节与可用性",
+        "reason": "官方博客仅提供标题级信息，模型性能、API可用性、安全能力与定价均未知。",
+        "nextEvidence": "Google DeepMind完整博客、开发者文档与基准测试",
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "item": "ZeroDrift合规检查服务的客户采用情况",
+        "reason": "AI代理生成内容的政策合规是新需求方向，但服务功能、客户案例与市场反响尚未披露。",
+        "nextEvidence": "ZeroDrift产品文档、客户案例或后续报道",
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "item": "Webflow Source代理工作区的正式发布与采用",
+        "reason": "Source平台是Webflow向代码级协作的重大扩展，但当前证据仅为摘要级，产品功能与市场定位需更多细节。",
+        "nextEvidence": "Webflow官方产品发布页、开发者文档与用户反馈",
         "evidenceIds": [
           "E007"
         ]
       },
       {
-        "risk": "SEMI与Silicon Catalyst的MoU可能停留在意向层面",
-        "reason": "谅解备忘录属于非约束性合作意向，实际加速创新与资源对接的效果取决于后续执行，存在落地不及预期的风险。",
+        "item": "Airbility A轮融资后的商业化进展",
+        "reason": "65亿韩元A轮融资将用于eVTOL反无人机系统商业化与产能建设，但产品交付与客户合同情况未知。",
+        "nextEvidence": "Airbility产品发布、客户合同或后续融资公告",
         "evidenceIds": [
-          "E005"
+          "E002"
         ]
       }
     ],
-    "methodologyNote": "本分析仅基于2026-09-02证据包中的9条证据（E001-E010，无E008），未补充外部事实。证据分级：官方披露（E009、E010）可信度最高；B级新闻稿（E001、E002、E003、E005）为厂商或机构自主发布，存在宣传倾向；C级媒体转载（E004、E006、E007）为二手来源。所有事件均为first_seen且automated_unreviewed，因此高置信度判断仅限事件本身发生（如发射成功、发布会安排），对研究结论、商业影响等推断均标注为medium或low置信度。输出不构成投资建议。"
+    "risks": [
+      {
+        "risk": "证据质量整体偏低，多数事件为单一来源且等级C",
+        "reason": "9条证据中E001、E004、E005、E007为等级C的行业媒体或科技媒体来源，且全部为automated_unreviewed状态，关键数据（融资金额、ARR、交易金额）可能不准确。",
+        "evidenceIds": [
+          "E001",
+          "E004",
+          "E005",
+          "E007"
+        ]
+      },
+      {
+        "risk": "GoPro转型执行风险",
+        "reason": "GoPro合并Starman Optical进入AI数据中心光收发器市场，被描述为应对财务困境之举，但交易尚未完成，制造回流与新产品商业化存在执行不确定性。",
+        "evidenceIds": [
+          "E004"
+        ]
+      },
+      {
+        "risk": "AI代理合规与治理需求可能滞后于产品供给",
+        "reason": "ZeroDrift与Webflow等产品瞄准AI代理治理需求，但企业采购决策、监管要求与客户付费意愿尚未在证据中体现，存在市场节奏风险。",
+        "evidenceIds": [
+          "E005",
+          "E007"
+        ]
+      },
+      {
+        "risk": "医疗AI产品缺乏临床验证证据",
+        "reason": "World Class Health的AI专科诊所宣称理赔前介入与AI接诊随访，但证据包未提供临床效果、患者安全或雇主采用数据，存在效果不及预期风险。",
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "risk": "基础模型发布信息不完整导致误判",
+        "reason": "Gemini 3.8 Flash系列仅有标题级信息，若后续披露的性能或安全能力与市场预期不符，可能影响相关产业链判断。",
+        "evidenceIds": [
+          "E009"
+        ]
+      }
+    ],
+    "methodologyNote": "本分析仅基于2026年9月2日证据包中的9条证据（E001-E009），全部为新增高价值情报事件，均为automated_unreviewed状态。证据等级分布：B级5条（E002、E003、E006、E008、E009），C级4条（E001、E004、E005、E007）。所有判断均引用证据编号，事实与推断分开表述；融资、交易与产品发布等事实性信息以证据原文为准，市场影响与趋势判断为基于证据的推断。未补充任何外部事实，不构成投资建议。"
   },
   "changes": [
     {
-      "id": "chg-4303b83bfe7bd98f817f",
+      "id": "chg-58d6705bb1a384b00d45",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-b5688ab8f8e2eb4ee3",
-      "entityName": "Workers Choose People Over AI at Hiring's Most Critical Moments, New Staffmark Group Research Finds",
+      "entityId": "intelligence-event-cdc7c0d2d88bfc5f2c",
+      "entityName": "Capacity Lands $54M Series E for AI Customer Experience Platform",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：Workers Choose People Over AI at Hiring's Most Critical Moments, New Staffmark Group Research Finds。",
-      "importance": 85,
+      "summary": "新增高价值情报事件记录：Capacity Lands $54M Series E for AI Customer Experience Platform。",
+      "importance": 91,
       "before": null,
       "after": {
         "publishedAt": "2026-09-02",
-        "summary": "2026 Heart of Work Index reveals four distinct workforce personas — from the \"Face Timer\" to the \"AI Autopilot\" — and shows technology helps fuel the search, while people close the deal. CINCINNATI, Sept. 2, 2026 /PRNewswire/ -- Even as artificial intelligenc…",
-        "title": "Workers Choose People Over AI at Hiring's Most Critical Moments, New Staffmark Group Research Finds"
+        "summary": "The St. Louis agentic support automation vendor will use the funds to expand its unified AI-native CX platform amid enterprise consolidation demand. Continue reading...",
+        "title": "Capacity Lands $54M Series E for AI Customer Experience Platform"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -380,7 +353,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "2026 Heart of Work Index reveals four distinct workforce personas — from the \"Face Timer\" to the \"AI Autopilot\" — and shows technology helps fuel the search, while people close the deal. CINCINNATI, Sept. 2, 2026 /PRNewswire/ -- Even as artificial intelligenc…",
+          "after": "The St. Louis agentic support automation vendor will use the funds to expand its unified AI-native CX platform amid enterprise consolidation demand. Continue reading...",
           "evidenceIds": [
             "E001"
           ]
@@ -388,7 +361,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "Workers Choose People Over AI at Hiring's Most Critical Moments, New Staffmark Group Research Finds",
+          "after": "Capacity Lands $54M Series E for AI Customer Experience Platform",
           "evidenceIds": [
             "E001"
           ]
@@ -409,35 +382,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-bebade5c7575245c3e50"
+        "evt-31873f37bdd45ab7a46d"
       ],
       "eventLifecycles": {
-        "evt-bebade5c7575245c3e50": "first_seen"
+        "evt-31873f37bdd45ab7a46d": "first_seen"
       },
-      "eventId": "evt-bebade5c7575245c3e50",
+      "eventId": "evt-31873f37bdd45ab7a46d",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T14:56:41+00:00",
-      "lastSeenAt": "2026-09-02T14:56:41+00:00"
+      "firstSeenAt": "2026-09-02T16:51:57+00:00",
+      "lastSeenAt": "2026-09-02T16:51:57+00:00"
     },
     {
-      "id": "chg-37dac5f77baa764f5f3d",
+      "id": "chg-d21bcd4504cd357add43",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-425b09e43d84bec27c",
-      "entityName": "New research proves mutant AI swarms outperform optimized models in a changing world",
+      "entityId": "intelligence-event-be405bbff502278669",
+      "entityName": "Airbility Secures KRW 6.5 Billion Series A Led by Sazze Partners, Bringing Total Funding to USD 7.6 million",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：New research proves mutant AI swarms outperform optimized models in a changing world。",
-      "importance": 85,
+      "summary": "新增高价值情报事件记录：Airbility Secures KRW 6.5 Billion Series A Led by Sazze Partners, Bringing Total Funding to USD 7.6 million。",
+      "importance": 91,
       "before": null,
       "after": {
         "publishedAt": "2026-09-02",
-        "summary": "Researchers at Allora Labs demonstrate that intentionally worsening individual AI models through genetic mutations improves their collective performance NEW YORK, Sept. 2, 2026 /PRNewswire/ -- Current AI systems are limited by their inability to adapt when th…",
-        "title": "New research proves mutant AI swarms outperform optimized models in a changing world"
+        "summary": "Funding will accelerate commercialization of an integrated, high-speed eVTOL counter-UAS portfolio and build production capacity for global deployment SILICON VALLEY, Calif. and SEOUL, South Korea, Sept. 2, 2026 /PRNewswire/ -- Airbility, a deep-tech aerospac…",
+        "title": "Airbility Secures KRW 6.5 Billion Series A Led by Sazze Partners, Bringing Total Funding to USD 7.6 million"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -459,7 +432,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "Researchers at Allora Labs demonstrate that intentionally worsening individual AI models through genetic mutations improves their collective performance NEW YORK, Sept. 2, 2026 /PRNewswire/ -- Current AI systems are limited by their inability to adapt when th…",
+          "after": "Funding will accelerate commercialization of an integrated, high-speed eVTOL counter-UAS portfolio and build production capacity for global deployment SILICON VALLEY, Calif. and SEOUL, South Korea, Sept. 2, 2026 /PRNewswire/ -- Airbility, a deep-tech aerospac…",
           "evidenceIds": [
             "E002"
           ]
@@ -467,7 +440,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "New research proves mutant AI swarms outperform optimized models in a changing world",
+          "after": "Airbility Secures KRW 6.5 Billion Series A Led by Sazze Partners, Bringing Total Funding to USD 7.6 million",
           "evidenceIds": [
             "E002"
           ]
@@ -488,35 +461,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-03dc6fd60db09d55f72c"
+        "evt-a3e49238c5aae05edad0"
       ],
       "eventLifecycles": {
-        "evt-03dc6fd60db09d55f72c": "first_seen"
+        "evt-a3e49238c5aae05edad0": "first_seen"
       },
-      "eventId": "evt-03dc6fd60db09d55f72c",
+      "eventId": "evt-a3e49238c5aae05edad0",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T14:56:41+00:00",
-      "lastSeenAt": "2026-09-02T14:56:41+00:00"
+      "firstSeenAt": "2026-09-02T16:51:57+00:00",
+      "lastSeenAt": "2026-09-02T16:51:57+00:00"
     },
     {
-      "id": "chg-10347a21eb22385f4942",
+      "id": "chg-74e6580d7e8158f42545",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-0c54c85484ee478900",
-      "entityName": "Globee® Awards for Artificial Intelligence, Now in Its 3rd Year, Invite Product, Service, and Solution Achievement Nominations Worldwide",
+      "entityId": "intelligence-event-69d36f5bc40d053089",
+      "entityName": "Plan A Technologies Acquires Stealth AI Assessment Technology to Expand Technical M&A Due Diligence Capabilities",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：Globee® Awards for Artificial Intelligence, Now in Its 3rd Year, Invite Product, Service, and Solution Achievement Nominations Worldwide。",
-      "importance": 85,
+      "summary": "新增高价值情报事件记录：Plan A Technologies Acquires Stealth AI Assessment Technology to Expand Technical M&A Due Diligence Capabilities。",
+      "importance": 89,
       "before": null,
       "after": {
         "publishedAt": "2026-09-02",
-        "summary": "Recognizing local, regional, and global achievements across AI products, services, platforms, applications, and solutions creating measurable customer and business value SAN FRANCISCO, Sept. 2, 2026 /PRNewswire/ -- The Globee® Awards announced that nomination…",
-        "title": "Globee® Awards for Artificial Intelligence, Now in Its 3rd Year, Invite Product, Service, and Solution Achievement Nominations Worldwide"
+        "summary": "Proprietary technology helps Plan A evaluate complex technology environments faster—and uncover technical risks, patterns, and opportunities that traditional assessment tools may miss LAS VEGAS, Sept. 2, 2026 /PRNewswire/ -- Plan A Technologies, an award-winn…",
+        "title": "Plan A Technologies Acquires Stealth AI Assessment Technology to Expand Technical M&A Due Diligence Capabilities"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -538,7 +511,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "Recognizing local, regional, and global achievements across AI products, services, platforms, applications, and solutions creating measurable customer and business value SAN FRANCISCO, Sept. 2, 2026 /PRNewswire/ -- The Globee® Awards announced that nomination…",
+          "after": "Proprietary technology helps Plan A evaluate complex technology environments faster—and uncover technical risks, patterns, and opportunities that traditional assessment tools may miss LAS VEGAS, Sept. 2, 2026 /PRNewswire/ -- Plan A Technologies, an award-winn…",
           "evidenceIds": [
             "E003"
           ]
@@ -546,7 +519,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "Globee® Awards for Artificial Intelligence, Now in Its 3rd Year, Invite Product, Service, and Solution Achievement Nominations Worldwide",
+          "after": "Plan A Technologies Acquires Stealth AI Assessment Technology to Expand Technical M&A Due Diligence Capabilities",
           "evidenceIds": [
             "E003"
           ]
@@ -567,35 +540,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-57925b5d9e4608495410"
+        "evt-c6249791c9b19fc9ac6d"
       ],
       "eventLifecycles": {
-        "evt-57925b5d9e4608495410": "first_seen"
+        "evt-c6249791c9b19fc9ac6d": "first_seen"
       },
-      "eventId": "evt-57925b5d9e4608495410",
+      "eventId": "evt-c6249791c9b19fc9ac6d",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T14:56:41+00:00",
-      "lastSeenAt": "2026-09-02T14:56:41+00:00"
+      "firstSeenAt": "2026-09-02T16:51:57+00:00",
+      "lastSeenAt": "2026-09-02T16:51:57+00:00"
     },
     {
-      "id": "chg-b0133600fc9c80421585",
+      "id": "chg-863807f1acc5b0aefd0c",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-3ad104e57678496f1f",
-      "entityName": "特斯拉将于奥斯汀举办Cybercab发布会 自动驾驶出租车落地进程推进",
+      "entityId": "intelligence-event-6c950b60c4e72132fa",
+      "entityName": "GoPro to expand into AI data centers after $285 million merger with optical-photonics company — move to solve camera maker’s financial woes, move manufacturing back into the US",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：特斯拉将于奥斯汀举办Cybercab发布会 自动驾驶出租车落地进程推进。",
-      "importance": 84,
+      "summary": "新增高价值情报事件记录：GoPro to expand into AI data centers after $285 million merger with optical-photonics company — move to solve camera maker’s financial woes, move manufacturing back into the US。",
+      "importance": 89,
       "before": null,
       "after": {
         "publishedAt": "2026-09-02",
-        "summary": "特斯拉定于周四在得克萨斯州奥斯汀，为其专为自动驾驶打造的Cybercab无人驾驶出租车举办发布会，该公司自动驾驶业务仍在持续推进。",
-        "title": "特斯拉将于奥斯汀举办Cybercab发布会 自动驾驶出租车落地进程推进"
+        "summary": "GoPro just announced a merger with Starman Optical, Inc., an optical-photonics company, saying that the deal would allow the combined entity to produce U.S.-made optical transceivers for use in AI data centers. According to the press release , Starman will pa…",
+        "title": "GoPro to expand into AI data centers after $285 million merger with optical-photonics company — move to solve camera maker’s financial woes, move manufacturing back into the US"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -617,7 +590,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "特斯拉定于周四在得克萨斯州奥斯汀，为其专为自动驾驶打造的Cybercab无人驾驶出租车举办发布会，该公司自动驾驶业务仍在持续推进。",
+          "after": "GoPro just announced a merger with Starman Optical, Inc., an optical-photonics company, saying that the deal would allow the combined entity to produce U.S.-made optical transceivers for use in AI data centers. According to the press release , Starman will pa…",
           "evidenceIds": [
             "E004"
           ]
@@ -625,7 +598,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "特斯拉将于奥斯汀举办Cybercab发布会 自动驾驶出租车落地进程推进",
+          "after": "GoPro to expand into AI data centers after $285 million merger with optical-photonics company — move to solve camera maker’s financial woes, move manufacturing back into the US",
           "evidenceIds": [
             "E004"
           ]
@@ -646,272 +619,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-9c24b9edcf96dbf7c1fe"
+        "evt-c5319ae8a4c95b53c6b8"
       ],
       "eventLifecycles": {
-        "evt-9c24b9edcf96dbf7c1fe": "first_seen"
+        "evt-c5319ae8a4c95b53c6b8": "first_seen"
       },
-      "eventId": "evt-9c24b9edcf96dbf7c1fe",
+      "eventId": "evt-c5319ae8a4c95b53c6b8",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T14:56:41+00:00",
-      "lastSeenAt": "2026-09-02T14:56:41+00:00"
+      "firstSeenAt": "2026-09-02T16:51:57+00:00",
+      "lastSeenAt": "2026-09-02T16:51:57+00:00"
     },
     {
-      "id": "chg-8109c8470ee0792f1fa1",
+      "id": "chg-5ab7201015983e945c7c",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-74edae40523f418474",
-      "entityName": "SEMI and Silicon Catalyst Aim to Accelerate Global Semiconductor Innovation with Strategic Partnership",
+      "entityId": "intelligence-event-a17f888a7f69c6ea65",
+      "entityName": "ZeroDrift launches service to check agent-generated messages against company policies - SiliconANGLE",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：SEMI and Silicon Catalyst Aim to Accelerate Global Semiconductor Innovation with Strategic Partnership。",
-      "importance": 84,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-02",
-        "summary": "Memorandum of Understanding Signed at SEMICON Taiwan 2026 Expands Access to Global Startup Innovation and Industry Resources TAIPEI, Sept. 2, 2026 /PRNewswire/ -- SEMI, the global industry association connecting the electronics design and manufacturing supply…",
-        "title": "SEMI and Silicon Catalyst Aim to Accelerate Global Semiconductor Innovation with Strategic Partnership"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-02",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Memorandum of Understanding Signed at SEMICON Taiwan 2026 Expands Access to Global Startup Innovation and Industry Resources TAIPEI, Sept. 2, 2026 /PRNewswire/ -- SEMI, the global industry association connecting the electronics design and manufacturing supply…",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "SEMI and Silicon Catalyst Aim to Accelerate Global Semiconductor Innovation with Strategic Partnership",
-          "evidenceIds": [
-            "E005"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E005"
-      ],
-      "supportingEvidenceIds": [
-        "E005"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-284278899a07ad740e92"
-      ],
-      "eventLifecycles": {
-        "evt-284278899a07ad740e92": "first_seen"
-      },
-      "eventId": "evt-284278899a07ad740e92",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T14:56:41+00:00",
-      "lastSeenAt": "2026-09-02T14:56:41+00:00"
-    },
-    {
-      "id": "chg-5186dc5b75ec46bbc8ba",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-a6b55d29fd66a42fe1",
-      "entityName": "Equinix将携手英伟达、Together AI推出人工智能推理交换平台",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Equinix将携手英伟达、Together AI推出人工智能推理交换平台。",
-      "importance": 84,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-02",
-        "summary": "Equinix发布分布式人工智能推理框架Equinix Inference Exchange，整合英伟达企业参考架构、Together AI开源模型平台以及Equinix全球数据中心基础设施。",
-        "title": "Equinix将携手英伟达、Together AI推出人工智能推理交换平台"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-02",
-          "evidenceIds": [
-            "E006"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Equinix发布分布式人工智能推理框架Equinix Inference Exchange，整合英伟达企业参考架构、Together AI开源模型平台以及Equinix全球数据中心基础设施。",
-          "evidenceIds": [
-            "E006"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Equinix将携手英伟达、Together AI推出人工智能推理交换平台",
-          "evidenceIds": [
-            "E006"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E006"
-      ],
-      "supportingEvidenceIds": [
-        "E006"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-55cee1939808c51c9b38"
-      ],
-      "eventLifecycles": {
-        "evt-55cee1939808c51c9b38": "first_seen"
-      },
-      "eventId": "evt-55cee1939808c51c9b38",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T14:56:41+00:00",
-      "lastSeenAt": "2026-09-02T14:56:41+00:00"
-    },
-    {
-      "id": "chg-09447a3725f0cda294e3",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-fd5a5e16a1904b6fe0",
-      "entityName": "AI 落地东盟，30% 是技术和算法，70% 是人 | AIMX Singapore 2026 现场观察",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：AI 落地东盟，30% 是技术和算法，70% 是人 | AIMX Singapore 2026 现场观察。",
-      "importance": 84,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-02",
-        "summary": "上海证明的是中国 AI 能站上多高的舞台，金沙检验的是它能不能进别人的预算表。",
-        "title": "AI 落地东盟，30% 是技术和算法，70% 是人 | AIMX Singapore 2026 现场观察"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-02",
-          "evidenceIds": [
-            "E007"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "上海证明的是中国 AI 能站上多高的舞台，金沙检验的是它能不能进别人的预算表。",
-          "evidenceIds": [
-            "E007"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "AI 落地东盟，30% 是技术和算法，70% 是人 | AIMX Singapore 2026 现场观察",
-          "evidenceIds": [
-            "E007"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E007"
-      ],
-      "supportingEvidenceIds": [
-        "E007"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-accb45313844035ce314"
-      ],
-      "eventLifecycles": {
-        "evt-accb45313844035ce314": "first_seen"
-      },
-      "eventId": "evt-accb45313844035ce314",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T14:56:41+00:00",
-      "lastSeenAt": "2026-09-02T14:56:41+00:00"
-    },
-    {
-      "id": "chg-e0bc9d98f3554c1c84eb",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-5cd65581f24ac6a3cd",
-      "entityName": "MISSION SUCCESS: Rocket Lab Launches 94th Electron Mission | Wed, 09/02/2026 - 09:07",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：MISSION SUCCESS: Rocket Lab Launches 94th Electron Mission | Wed, 09/02/2026 - 09:07。",
+      "summary": "新增高价值情报事件记录：ZeroDrift launches service to check agent-generated messages against company policies - SiliconANGLE。",
       "importance": 82,
       "before": null,
       "after": {
         "publishedAt": "2026-09-02",
-        "summary": "MAHIA, New Zealand, Sept. 02, 2026 (GLOBE NEWSWIRE) -- Rocket Lab Corporation (Nasdaq: RKLB), a global leader in launch services and space systems, today successfully launched its 94 th Electron rocket to deploy the latest Earth-imaging satellite to space for…",
-        "title": "MISSION SUCCESS: Rocket Lab Launches 94th Electron Mission | Wed, 09/02/2026 - 09:07"
+        "summary": "ZeroDrift launches service to check agent-generated messages against company policies - SiliconANGLE",
+        "title": "ZeroDrift launches service to check agent-generated messages against company policies - SiliconANGLE"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -927,31 +663,31 @@
           "before": null,
           "after": "2026-09-02",
           "evidenceIds": [
-            "E009"
+            "E005"
           ]
         },
         {
           "field": "summary",
           "before": null,
-          "after": "MAHIA, New Zealand, Sept. 02, 2026 (GLOBE NEWSWIRE) -- Rocket Lab Corporation (Nasdaq: RKLB), a global leader in launch services and space systems, today successfully launched its 94 th Electron rocket to deploy the latest Earth-imaging satellite to space for…",
+          "after": "ZeroDrift launches service to check agent-generated messages against company policies - SiliconANGLE",
           "evidenceIds": [
-            "E009"
+            "E005"
           ]
         },
         {
           "field": "title",
           "before": null,
-          "after": "MISSION SUCCESS: Rocket Lab Launches 94th Electron Mission | Wed, 09/02/2026 - 09:07",
+          "after": "ZeroDrift launches service to check agent-generated messages against company policies - SiliconANGLE",
           "evidenceIds": [
-            "E009"
+            "E005"
           ]
         }
       ],
       "evidenceIds": [
-        "E009"
+        "E005"
       ],
       "supportingEvidenceIds": [
-        "E009"
+        "E005"
       ],
       "evidenceQuality": {
         "status": "passed",
@@ -962,35 +698,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-df3fd70a8e5f326d2741"
+        "evt-9b9f5fcf82b3a2f32a3c"
       ],
       "eventLifecycles": {
-        "evt-df3fd70a8e5f326d2741": "first_seen"
+        "evt-9b9f5fcf82b3a2f32a3c": "first_seen"
       },
-      "eventId": "evt-df3fd70a8e5f326d2741",
+      "eventId": "evt-9b9f5fcf82b3a2f32a3c",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T14:56:41+00:00",
-      "lastSeenAt": "2026-09-02T14:56:41+00:00"
+      "firstSeenAt": "2026-09-02T16:51:57+00:00",
+      "lastSeenAt": "2026-09-02T16:51:57+00:00"
     },
     {
-      "id": "chg-b76caf6efa0dd4d144aa",
+      "id": "chg-2b4c02c8fbde61808259",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-fe53ff4614708db2af",
-      "entityName": "Rebuilding Playbook Review as a Multi-Agent System",
+      "entityId": "intelligence-event-36e70c292a038a7ad6",
+      "entityName": "World Class Health Introduces The AI Specialty Clinic™",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：Rebuilding Playbook Review as a Multi-Agent System。",
-      "importance": 80,
+      "summary": "新增高价值情报事件记录：World Class Health Introduces The AI Specialty Clinic™。",
+      "importance": 82,
       "before": null,
       "after": {
         "publishedAt": "2026-09-02",
-        "summary": "Why we made the shift, how we measure quality in a domain where \"correct\" is a matter of legal judgment, and what the new architecture unlocks.",
-        "title": "Rebuilding Playbook Review as a Multi-Agent System"
+        "summary": "Licensed nurses reach members 60 to 90 days before a claim is filed, AI does the intake, scheduling and follow-up, and employers keep more of the savings SAN FRANCISCO, Sept. 2, 2026 /PRNewswire/ -- World Class Health today introduced The AI Specialty Clinic™…",
+        "title": "World Class Health Introduces The AI Specialty Clinic™"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -1006,31 +742,31 @@
           "before": null,
           "after": "2026-09-02",
           "evidenceIds": [
-            "E010"
+            "E006"
           ]
         },
         {
           "field": "summary",
           "before": null,
-          "after": "Why we made the shift, how we measure quality in a domain where \"correct\" is a matter of legal judgment, and what the new architecture unlocks.",
+          "after": "Licensed nurses reach members 60 to 90 days before a claim is filed, AI does the intake, scheduling and follow-up, and employers keep more of the savings SAN FRANCISCO, Sept. 2, 2026 /PRNewswire/ -- World Class Health today introduced The AI Specialty Clinic™…",
           "evidenceIds": [
-            "E010"
+            "E006"
           ]
         },
         {
           "field": "title",
           "before": null,
-          "after": "Rebuilding Playbook Review as a Multi-Agent System",
+          "after": "World Class Health Introduces The AI Specialty Clinic™",
           "evidenceIds": [
-            "E010"
+            "E006"
           ]
         }
       ],
       "evidenceIds": [
-        "E010"
+        "E006"
       ],
       "supportingEvidenceIds": [
-        "E010"
+        "E006"
       ],
       "evidenceQuality": {
         "status": "passed",
@@ -1041,32 +777,269 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-ba44b7a3fd8b5f7f5e1c"
+        "evt-da11efbf18e9cbb5bec6"
       ],
       "eventLifecycles": {
-        "evt-ba44b7a3fd8b5f7f5e1c": "first_seen"
+        "evt-da11efbf18e9cbb5bec6": "first_seen"
       },
-      "eventId": "evt-ba44b7a3fd8b5f7f5e1c",
+      "eventId": "evt-da11efbf18e9cbb5bec6",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T14:56:41+00:00",
-      "lastSeenAt": "2026-09-02T14:56:41+00:00"
+      "firstSeenAt": "2026-09-02T16:51:57+00:00",
+      "lastSeenAt": "2026-09-02T16:51:57+00:00"
+    },
+    {
+      "id": "chg-6e66fee3914ac0eac792",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-e1780d2fb5bb200a79",
+      "entityName": "Webflow Launches Source Agentic Workspace for Marketers",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Webflow Launches Source Agentic Workspace for Marketers。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-02",
+        "summary": "Webflow's new Source platform gives marketing teams and AI agents shared, governed access to site code — its biggest push yet beyond visual website building. Continue reading...",
+        "title": "Webflow Launches Source Agentic Workspace for Marketers"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-02",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Webflow's new Source platform gives marketing teams and AI agents shared, governed access to site code — its biggest push yet beyond visual website building. Continue reading...",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Webflow Launches Source Agentic Workspace for Marketers",
+          "evidenceIds": [
+            "E007"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E007"
+      ],
+      "supportingEvidenceIds": [
+        "E007"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-71ac2ad349a91894670a"
+      ],
+      "eventLifecycles": {
+        "evt-71ac2ad349a91894670a": "first_seen"
+      },
+      "eventId": "evt-71ac2ad349a91894670a",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-02T16:51:57+00:00",
+      "lastSeenAt": "2026-09-02T16:51:57+00:00"
+    },
+    {
+      "id": "chg-d95938f024f7a9ef664f",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-95d06a727151d6821a",
+      "entityName": "McLean & Company Launches Human-Centric AI Program to Build Organization-Wide Capabilities for Responsible AI Adoption",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：McLean & Company Launches Human-Centric AI Program to Build Organization-Wide Capabilities for Responsible AI Adoption。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-02",
+        "summary": "Global HR research and advisory firm McLean & Company introduces a judgment-first, blended learning experience designed to help leaders and employees across the organization move beyond AI experimentation and build sustainable, responsible AI capability at sc…",
+        "title": "McLean & Company Launches Human-Centric AI Program to Build Organization-Wide Capabilities for Responsible AI Adoption"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-02",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Global HR research and advisory firm McLean & Company introduces a judgment-first, blended learning experience designed to help leaders and employees across the organization move beyond AI experimentation and build sustainable, responsible AI capability at sc…",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "McLean & Company Launches Human-Centric AI Program to Build Organization-Wide Capabilities for Responsible AI Adoption",
+          "evidenceIds": [
+            "E008"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E008"
+      ],
+      "supportingEvidenceIds": [
+        "E008"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-6cbc825ed33ba31e462a"
+      ],
+      "eventLifecycles": {
+        "evt-6cbc825ed33ba31e462a": "first_seen"
+      },
+      "eventId": "evt-6cbc825ed33ba31e462a",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-02T16:51:57+00:00",
+      "lastSeenAt": "2026-09-02T16:51:57+00:00"
+    },
+    {
+      "id": "chg-f5e84cdd4f1e54989d28",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-ba067bc2b893baa44f",
+      "entityName": "Introducing Gemini 3.8 Flash and 3.8 Flash Cyber",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Introducing Gemini 3.8 Flash and 3.8 Flash Cyber。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-02",
+        "summary": "Google DeepMind 发布相关公开信息，完整内容见原文。",
+        "title": "Introducing Gemini 3.8 Flash and 3.8 Flash Cyber"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-02",
+          "evidenceIds": [
+            "E009"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Google DeepMind 发布相关公开信息，完整内容见原文。",
+          "evidenceIds": [
+            "E009"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Introducing Gemini 3.8 Flash and 3.8 Flash Cyber",
+          "evidenceIds": [
+            "E009"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E009"
+      ],
+      "supportingEvidenceIds": [
+        "E009"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-3bd5fbcbb7d30ea27455"
+      ],
+      "eventLifecycles": {
+        "evt-3bd5fbcbb7d30ea27455": "first_seen"
+      },
+      "eventId": "evt-3bd5fbcbb7d30ea27455",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-02T16:51:57+00:00",
+      "lastSeenAt": "2026-09-02T16:51:57+00:00"
     }
   ],
   "evidence": [
     {
       "id": "E001",
-      "changeId": "chg-4303b83bfe7bd98f817f",
-      "entityName": "Workers Choose People Over AI at Hiring's Most Critical Moments, New Staffmark Group Research Finds",
-      "claim": "新增高价值情报事件记录：Workers Choose People Over AI at Hiring's Most Critical Moments, New Staffmark Group Research Finds。",
+      "changeId": "chg-58d6705bb1a384b00d45",
+      "entityName": "Capacity Lands $54M Series E for AI Customer Experience Platform",
+      "claim": "新增高价值情报事件记录：Capacity Lands $54M Series E for AI Customer Experience Platform。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "PR Newswire Consumer Technology",
-      "title": "Workers Choose People Over AI at Hiring's Most Critical Moments, New Staffmark Group Research Finds",
-      "url": "https://www.prnewswire.com/news-releases/workers-choose-people-over-ai-at-hirings-most-critical-moments-new-staffmark-group-research-finds-302867797.html",
+      "sourceName": "CMSWire",
+      "title": "Capacity Lands $54M Series E for AI Customer Experience Platform",
+      "url": "https://www.cmswire.com/customer-experience/capacity-lands-54m-series-e-as-arr-tops-100m",
       "publishedAt": "2026-09-02",
-      "evidenceGrade": "B",
-      "platformName": "新闻稿",
-      "sourceRole": "primary",
+      "evidenceGrade": "C",
+      "platformName": "CMSWire",
+      "sourceRole": "corroboration",
       "claimFields": [
         "publishedAt",
         "summary",
@@ -1079,14 +1052,14 @@
     },
     {
       "id": "E002",
-      "changeId": "chg-37dac5f77baa764f5f3d",
-      "entityName": "New research proves mutant AI swarms outperform optimized models in a changing world",
-      "claim": "新增高价值情报事件记录：New research proves mutant AI swarms outperform optimized models in a changing world。",
+      "changeId": "chg-d21bcd4504cd357add43",
+      "entityName": "Airbility Secures KRW 6.5 Billion Series A Led by Sazze Partners, Bringing Total Funding to USD 7.6 million",
+      "claim": "新增高价值情报事件记录：Airbility Secures KRW 6.5 Billion Series A Led by Sazze Partners, Bringing Total Funding to USD 7.6 million。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "sourceName": "PR Newswire Consumer Technology",
-      "title": "New research proves mutant AI swarms outperform optimized models in a changing world",
-      "url": "https://www.prnewswire.com/news-releases/new-research-proves-mutant-ai-swarms-outperform-optimized-models-in-a-changing-world-302867774.html",
+      "title": "Airbility Secures KRW 6.5 Billion Series A Led by Sazze Partners, Bringing Total Funding to USD 7.6 million",
+      "url": "https://www.prnewswire.com/news-releases/airbility-secures-krw-6-5-billion-series-a-led-by-sazze-partners-bringing-total-funding-to-usd-7-6-million-302867009.html",
       "publishedAt": "2026-09-02",
       "evidenceGrade": "B",
       "platformName": "新闻稿",
@@ -1103,14 +1076,14 @@
     },
     {
       "id": "E003",
-      "changeId": "chg-10347a21eb22385f4942",
-      "entityName": "Globee® Awards for Artificial Intelligence, Now in Its 3rd Year, Invite Product, Service, and Solution Achievement Nominations Worldwide",
-      "claim": "新增高价值情报事件记录：Globee® Awards for Artificial Intelligence, Now in Its 3rd Year, Invite Product, Service, and Solution Achievement Nominations Worldwide。",
+      "changeId": "chg-74e6580d7e8158f42545",
+      "entityName": "Plan A Technologies Acquires Stealth AI Assessment Technology to Expand Technical M&A Due Diligence Capabilities",
+      "claim": "新增高价值情报事件记录：Plan A Technologies Acquires Stealth AI Assessment Technology to Expand Technical M&A Due Diligence Capabilities。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "sourceName": "PR Newswire Consumer Technology",
-      "title": "Globee® Awards for Artificial Intelligence, Now in Its 3rd Year, Invite Product, Service, and Solution Achievement Nominations Worldwide",
-      "url": "https://www.prnewswire.com/news-releases/globee-awards-for-artificial-intelligence-now-in-its-3rd-year-invite-product-service-and-solution-achievement-nominations-worldwide-302864650.html",
+      "title": "Plan A Technologies Acquires Stealth AI Assessment Technology to Expand Technical M&A Due Diligence Capabilities",
+      "url": "https://www.prnewswire.com/news-releases/plan-a-technologies-acquires-stealth-ai-assessment-technology-to-expand-technical-ma-due-diligence-capabilities-302867944.html",
       "publishedAt": "2026-09-02",
       "evidenceGrade": "B",
       "platformName": "新闻稿",
@@ -1127,17 +1100,17 @@
     },
     {
       "id": "E004",
-      "changeId": "chg-b0133600fc9c80421585",
-      "entityName": "特斯拉将于奥斯汀举办Cybercab发布会 自动驾驶出租车落地进程推进",
-      "claim": "新增高价值情报事件记录：特斯拉将于奥斯汀举办Cybercab发布会 自动驾驶出租车落地进程推进。",
+      "changeId": "chg-863807f1acc5b0aefd0c",
+      "entityName": "GoPro to expand into AI data centers after $285 million merger with optical-photonics company — move to solve camera maker’s financial woes, move manufacturing back into the US",
+      "claim": "新增高价值情报事件记录：GoPro to expand into AI data centers after $285 million merger with optical-photonics company — move to solve camera maker’s financial woes, move manufacturing back into the US。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "特斯拉将于奥斯汀举办Cybercab发布会 自动驾驶出租车落地进程推进",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-02/doc-iniqmwqu2790724.shtml",
+      "sourceName": "Tom's Hardware",
+      "title": "GoPro to expand into AI data centers after $285 million merger with optical-photonics company — move to solve camera maker’s financial woes, move manufacturing back into the US",
+      "url": "https://www.tomshardware.com/tech-industry/data-centers/gopro-to-expand-into-ai-data-centers-after-usd285-million-merger-with-optical-photonics-company-move-to-solve-camera-makers-financial-woes-move-manufacturing-back-into-the-us",
       "publishedAt": "2026-09-02",
       "evidenceGrade": "C",
-      "platformName": "新浪",
+      "platformName": "Tom's Hardware",
       "sourceRole": "corroboration",
       "claimFields": [
         "publishedAt",
@@ -1151,14 +1124,38 @@
     },
     {
       "id": "E005",
-      "changeId": "chg-8109c8470ee0792f1fa1",
-      "entityName": "SEMI and Silicon Catalyst Aim to Accelerate Global Semiconductor Innovation with Strategic Partnership",
-      "claim": "新增高价值情报事件记录：SEMI and Silicon Catalyst Aim to Accelerate Global Semiconductor Innovation with Strategic Partnership。",
+      "changeId": "chg-5ab7201015983e945c7c",
+      "entityName": "ZeroDrift launches service to check agent-generated messages against company policies - SiliconANGLE",
+      "claim": "新增高价值情报事件记录：ZeroDrift launches service to check agent-generated messages against company policies - SiliconANGLE。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "SiliconANGLE",
+      "title": "ZeroDrift launches service to check agent-generated messages against company policies - SiliconANGLE",
+      "url": "https://siliconangle.com/2026/09/02/zerodrift-launches-service-to-check-agent-generated-messages-against-company-policies",
+      "publishedAt": "2026-09-02",
+      "evidenceGrade": "C",
+      "platformName": "SiliconANGLE",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E006",
+      "changeId": "chg-2b4c02c8fbde61808259",
+      "entityName": "World Class Health Introduces The AI Specialty Clinic™",
+      "claim": "新增高价值情报事件记录：World Class Health Introduces The AI Specialty Clinic™。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "sourceName": "PR Newswire Consumer Technology",
-      "title": "SEMI and Silicon Catalyst Aim to Accelerate Global Semiconductor Innovation with Strategic Partnership",
-      "url": "https://www.prnewswire.com/news-releases/semi-and-silicon-catalyst-aim-to-accelerate-global-semiconductor-innovation-with-strategic-partnership-302867239.html",
+      "title": "World Class Health Introduces The AI Specialty Clinic™",
+      "url": "https://www.prnewswire.com/news-releases/world-class-health-introduces-the-ai-specialty-clinic-302867863.html",
       "publishedAt": "2026-09-02",
       "evidenceGrade": "B",
       "platformName": "新闻稿",
@@ -1174,42 +1171,18 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E006",
-      "changeId": "chg-5186dc5b75ec46bbc8ba",
-      "entityName": "Equinix将携手英伟达、Together AI推出人工智能推理交换平台",
-      "claim": "新增高价值情报事件记录：Equinix将携手英伟达、Together AI推出人工智能推理交换平台。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "Equinix将携手英伟达、Together AI推出人工智能推理交换平台",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-02/doc-iniqnaws2671784.shtml",
-      "publishedAt": "2026-09-02",
-      "evidenceGrade": "C",
-      "platformName": "新浪",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
       "id": "E007",
-      "changeId": "chg-09447a3725f0cda294e3",
-      "entityName": "AI 落地东盟，30% 是技术和算法，70% 是人 | AIMX Singapore 2026 现场观察",
-      "claim": "新增高价值情报事件记录：AI 落地东盟，30% 是技术和算法，70% 是人 | AIMX Singapore 2026 现场观察。",
+      "changeId": "chg-6e66fee3914ac0eac792",
+      "entityName": "Webflow Launches Source Agentic Workspace for Marketers",
+      "claim": "新增高价值情报事件记录：Webflow Launches Source Agentic Workspace for Marketers。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "钛媒体",
-      "title": "AI 落地东盟，30% 是技术和算法，70% 是人 | AIMX Singapore 2026 现场观察",
-      "url": "https://www.tmtpost.com/8124464.html",
+      "sourceName": "CMSWire",
+      "title": "Webflow Launches Source Agentic Workspace for Marketers",
+      "url": "https://www.cmswire.com/digital-experience/webflow-launches-source-agentic-workspace-for-marketers",
       "publishedAt": "2026-09-02",
       "evidenceGrade": "C",
-      "platformName": "专业媒体",
+      "platformName": "CMSWire",
       "sourceRole": "corroboration",
       "claimFields": [
         "publishedAt",
@@ -1222,18 +1195,18 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E009",
-      "changeId": "chg-e0bc9d98f3554c1c84eb",
-      "entityName": "MISSION SUCCESS: Rocket Lab Launches 94th Electron Mission | Wed, 09/02/2026 - 09:07",
-      "claim": "新增高价值情报事件记录：MISSION SUCCESS: Rocket Lab Launches 94th Electron Mission | Wed, 09/02/2026 - 09:07。",
+      "id": "E008",
+      "changeId": "chg-d95938f024f7a9ef664f",
+      "entityName": "McLean & Company Launches Human-Centric AI Program to Build Organization-Wide Capabilities for Responsible AI Adoption",
+      "claim": "新增高价值情报事件记录：McLean & Company Launches Human-Centric AI Program to Build Organization-Wide Capabilities for Responsible AI Adoption。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "Rocket Lab",
-      "title": "MISSION SUCCESS: Rocket Lab Launches 94th Electron Mission | Wed, 09/02/2026 - 09:07",
-      "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/mission-success-rocket-lab-launches-94th-electron-mission",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "McLean & Company Launches Human-Centric AI Program to Build Organization-Wide Capabilities for Responsible AI Adoption",
+      "url": "https://www.prnewswire.com/news-releases/mclean--company-launches-human-centric-ai-program-to-build-organization-wide-capabilities-for-responsible-ai-adoption-302866273.html",
       "publishedAt": "2026-09-02",
-      "evidenceGrade": "官方披露",
-      "platformName": "官方网站",
+      "evidenceGrade": "B",
+      "platformName": "新闻稿",
       "sourceRole": "primary",
       "claimFields": [
         "publishedAt",
@@ -1246,18 +1219,19 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E010",
-      "changeId": "chg-b76caf6efa0dd4d144aa",
-      "entityName": "Rebuilding Playbook Review as a Multi-Agent System",
-      "claim": "新增高价值情报事件记录：Rebuilding Playbook Review as a Multi-Agent System。",
+      "id": "E009",
+      "changeId": "chg-f5e84cdd4f1e54989d28",
+      "entityName": "Introducing Gemini 3.8 Flash and 3.8 Flash Cyber",
+      "claim": "新增高价值情报事件记录：Introducing Gemini 3.8 Flash and 3.8 Flash Cyber。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "Harvey",
-      "title": "Rebuilding Playbook Review as a Multi-Agent System",
-      "url": "https://www.harvey.ai/blog/rebuilding-playbook-review-as-a-multi-agent-system",
+      "sourceName": "Google DeepMind",
+      "title": "Introducing Gemini 3.8 Flash and 3.8 Flash Cyber",
+      "url": "https://deepmind.google/blog/introducing-gemini-3-8-flash-and-38-flash-cyber",
       "publishedAt": "2026-09-02",
-      "evidenceGrade": "官方披露",
+      "evidenceGrade": "B",
       "platformName": "官方网站",
+      "sourceRole": "primary",
       "claimFields": [
         "publishedAt",
         "summary",
@@ -1271,9 +1245,488 @@
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-02T14:56:41+00:00",
+    "generatedAt": "2026-09-02T16:51:57+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-da11efbf18e9cbb5bec6": {
+        "eventId": "evt-da11efbf18e9cbb5bec6",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-36e70c292a038a7ad6",
+        "entityName": "World Class Health Introduces The AI Specialty Clinic™",
+        "title": "World Class Health Introduces The AI Specialty Clinic™",
+        "titleAliases": [
+          "worldclasshealthintroducestheaispecialtyclinictm"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-0825c602e7f398a2c106",
+          "record-f0a446f71d51122574c6",
+          "src-0f74a615fa5c820a73e7"
+        ],
+        "evidenceFingerprints": [
+          "0825c602e7f398a2c106"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "World Class Health Introduces The AI Specialty Clinic™",
+            "url": "https://www.prnewswire.com/news-releases/world-class-health-introduces-the-ai-specialty-clinic-302867863.html",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "a531dd699398afd9b5d5",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T16:51:57+00:00",
+        "lastSeenAt": "2026-09-02T16:51:57+00:00",
+        "lastPublishedAt": "2026-09-02T16:51:57+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-c6249791c9b19fc9ac6d": {
+        "eventId": "evt-c6249791c9b19fc9ac6d",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-69d36f5bc40d053089",
+        "entityName": "Plan A Technologies Acquires Stealth AI Assessment Technology to Expand Technical M&A Due Diligence Capabilities",
+        "title": "Plan A Technologies Acquires Stealth AI Assessment Technology to Expand Technical M&A Due Diligence Capabilities",
+        "titleAliases": [
+          "planatechnologiesacquiresstealthaiassessmenttechnologytoexpandtechnicalmaduediligencecapabilities"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "并购",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-c23b130c2d6bc20de9fc",
+          "record-bde6770fec23e18e0e76",
+          "src-5712a06cbafbcb3ca33d"
+        ],
+        "evidenceFingerprints": [
+          "c23b130c2d6bc20de9fc"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "Plan A Technologies Acquires Stealth AI Assessment Technology to Expand Technical M&A Due Diligence Capabilities",
+            "url": "https://www.prnewswire.com/news-releases/plan-a-technologies-acquires-stealth-ai-assessment-technology-to-expand-technical-ma-due-diligence-capabilities-302867944.html",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "06faec80f36bf1669788",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T16:51:57+00:00",
+        "lastSeenAt": "2026-09-02T16:51:57+00:00",
+        "lastPublishedAt": "2026-09-02T16:51:57+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-c5319ae8a4c95b53c6b8": {
+        "eventId": "evt-c5319ae8a4c95b53c6b8",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-6c950b60c4e72132fa",
+        "entityName": "GoPro to expand into AI data centers after $285 million merger with optical-photonics company — move to solve camera maker’s financial woes, move manufacturing back into the US",
+        "title": "GoPro to expand into AI data centers after $285 million merger with optical-photonics company — move to solve camera maker’s financial woes, move manufacturing back into the US",
+        "titleAliases": [
+          "goprotoexpandintoaidatacentersafter285millionmergerwithopticalphotonicscompanymovetosolvecameramakersfinancialwoesmovemanufacturingbackintotheus"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "并购",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "285"
+        ],
+        "sourceAliases": [
+          "evd-d02816fa730862e29527",
+          "record-ccb9c9dda7812fc29f19",
+          "src-c8bad169e40f25ade2b0"
+        ],
+        "evidenceFingerprints": [
+          "d02816fa730862e29527"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Tom's Hardware",
+            "title": "GoPro to expand into AI data centers after $285 million merger with optical-photonics company — move to solve camera maker’s financial woes, move manufacturing back into the US",
+            "url": "https://www.tomshardware.com/tech-industry/data-centers/gopro-to-expand-into-ai-data-centers-after-usd285-million-merger-with-optical-photonics-company-move-to-solve-camera-makers-financial-woes-move-manufacturing-back-into-the-us",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "960cf1f289c96e2ed93f",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T16:51:57+00:00",
+        "lastSeenAt": "2026-09-02T16:51:57+00:00",
+        "lastPublishedAt": "2026-09-02T16:51:57+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-a3e49238c5aae05edad0": {
+        "eventId": "evt-a3e49238c5aae05edad0",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-be405bbff502278669",
+        "entityName": "Airbility Secures KRW 6.5 Billion Series A Led by Sazze Partners, Bringing Total Funding to USD 7.6 million",
+        "title": "Airbility Secures KRW 6.5 Billion Series A Led by Sazze Partners, Bringing Total Funding to USD 7.6 million",
+        "titleAliases": [
+          "airbilitysecureskrw65billionseriesaledbysazzepartnersbringingtotalfundingtousd76million"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "6.5",
+          "7.6"
+        ],
+        "sourceAliases": [
+          "evd-10eebe279709ea507b7a",
+          "record-677d52b68bcf360fef44",
+          "src-479fe5761942c7d3e7cf"
+        ],
+        "evidenceFingerprints": [
+          "10eebe279709ea507b7a"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "Airbility Secures KRW 6.5 Billion Series A Led by Sazze Partners, Bringing Total Funding to USD 7.6 million",
+            "url": "https://www.prnewswire.com/news-releases/airbility-secures-krw-6-5-billion-series-a-led-by-sazze-partners-bringing-total-funding-to-usd-7-6-million-302867009.html",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "0b91508a07a6af6c9e21",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T16:51:57+00:00",
+        "lastSeenAt": "2026-09-02T16:51:57+00:00",
+        "lastPublishedAt": "2026-09-02T16:51:57+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-9b9f5fcf82b3a2f32a3c": {
+        "eventId": "evt-9b9f5fcf82b3a2f32a3c",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-a17f888a7f69c6ea65",
+        "entityName": "ZeroDrift launches service to check agent-generated messages against company policies - SiliconANGLE",
+        "title": "ZeroDrift launches service to check agent-generated messages against company policies - SiliconANGLE",
+        "titleAliases": [
+          "zerodriftlaunchesservicetocheckagentgeneratedmessagesagainstcompanypoliciessiliconangle"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-3f487788681e4bc2abc2",
+          "record-a07655d48422b6460834",
+          "src-36c8ca8a768def58fb4c"
+        ],
+        "evidenceFingerprints": [
+          "3f487788681e4bc2abc2"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "SiliconANGLE",
+            "title": "ZeroDrift launches service to check agent-generated messages against company policies - SiliconANGLE",
+            "url": "https://siliconangle.com/2026/09/02/zerodrift-launches-service-to-check-agent-generated-messages-against-company-policies",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "e4437f7f5597fc991a82",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T16:51:57+00:00",
+        "lastSeenAt": "2026-09-02T16:51:57+00:00",
+        "lastPublishedAt": "2026-09-02T16:51:57+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-71ac2ad349a91894670a": {
+        "eventId": "evt-71ac2ad349a91894670a",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-e1780d2fb5bb200a79",
+        "entityName": "Webflow Launches Source Agentic Workspace for Marketers",
+        "title": "Webflow Launches Source Agentic Workspace for Marketers",
+        "titleAliases": [
+          "webflowlaunchessourceagenticworkspaceformarketers"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-07981847f20819f12a1b",
+          "record-72390ed3729f8317f741",
+          "src-adedc4cfb13e2f6027c4"
+        ],
+        "evidenceFingerprints": [
+          "07981847f20819f12a1b"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "CMSWire",
+            "title": "Webflow Launches Source Agentic Workspace for Marketers",
+            "url": "https://www.cmswire.com/digital-experience/webflow-launches-source-agentic-workspace-for-marketers",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "8b2f76009697136c99a0",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T16:51:57+00:00",
+        "lastSeenAt": "2026-09-02T16:51:57+00:00",
+        "lastPublishedAt": "2026-09-02T16:51:57+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-6cbc825ed33ba31e462a": {
+        "eventId": "evt-6cbc825ed33ba31e462a",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-95d06a727151d6821a",
+        "entityName": "McLean & Company Launches Human-Centric AI Program to Build Organization-Wide Capabilities for Responsible AI Adoption",
+        "title": "McLean & Company Launches Human-Centric AI Program to Build Organization-Wide Capabilities for Responsible AI Adoption",
+        "titleAliases": [
+          "mcleancompanylauncheshumancentricaiprogramtobuildorganizationwidecapabilitiesforresponsibleaiadoption"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-9eb31fa7d96b9ee82ef5",
+          "record-3c0722b1c27c401bc666",
+          "src-f9152ed75410ee42c3c5"
+        ],
+        "evidenceFingerprints": [
+          "9eb31fa7d96b9ee82ef5"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "McLean & Company Launches Human-Centric AI Program to Build Organization-Wide Capabilities for Responsible AI Adoption",
+            "url": "https://www.prnewswire.com/news-releases/mclean--company-launches-human-centric-ai-program-to-build-organization-wide-capabilities-for-responsible-ai-adoption-302866273.html",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "6af353df2b3bb4d48e82",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T16:51:57+00:00",
+        "lastSeenAt": "2026-09-02T16:51:57+00:00",
+        "lastPublishedAt": "2026-09-02T16:51:57+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-3bd5fbcbb7d30ea27455": {
+        "eventId": "evt-3bd5fbcbb7d30ea27455",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-ba067bc2b893baa44f",
+        "entityName": "Introducing Gemini 3.8 Flash and 3.8 Flash Cyber",
+        "title": "Introducing Gemini 3.8 Flash and 3.8 Flash Cyber",
+        "titleAliases": [
+          "introducinggemini38flashand38flashcyber"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [
+          "company:google"
+        ],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "3.8"
+        ],
+        "sourceAliases": [
+          "evd-b9c2b81d2795f5f8a81f",
+          "record-9ab04ad9da8ed59e89e0",
+          "src-da4169124514e4be2ca3"
+        ],
+        "evidenceFingerprints": [
+          "b9c2b81d2795f5f8a81f"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Google DeepMind",
+            "title": "Introducing Gemini 3.8 Flash and 3.8 Flash Cyber",
+            "url": "https://deepmind.google/blog/introducing-gemini-3-8-flash-and-38-flash-cyber",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "566b4e9ef478b615eb7b",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T16:51:57+00:00",
+        "lastSeenAt": "2026-09-02T16:51:57+00:00",
+        "lastPublishedAt": "2026-09-02T16:51:57+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-31873f37bdd45ab7a46d": {
+        "eventId": "evt-31873f37bdd45ab7a46d",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-cdc7c0d2d88bfc5f2c",
+        "entityName": "Capacity Lands $54M Series E for AI Customer Experience Platform",
+        "title": "Capacity Lands $54M Series E for AI Customer Experience Platform",
+        "titleAliases": [
+          "capacitylands54mserieseforaicustomerexperienceplatform"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "54"
+        ],
+        "sourceAliases": [
+          "evd-530c96aea9befadcd5ef",
+          "record-5dd7258bec2d7a5e6076",
+          "src-92e12b997dc3df8a293b"
+        ],
+        "evidenceFingerprints": [
+          "530c96aea9befadcd5ef"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "CMSWire",
+            "title": "Capacity Lands $54M Series E for AI Customer Experience Platform",
+            "url": "https://www.cmswire.com/customer-experience/capacity-lands-54m-series-e-as-arr-tops-100m",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "491929c5d465bc576d39",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T16:51:57+00:00",
+        "lastSeenAt": "2026-09-02T16:51:57+00:00",
+        "lastPublishedAt": "2026-09-02T16:51:57+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-ea30894062d975829591": {
         "eventId": "evt-ea30894062d975829591",
         "dataset": "marketCompany",
@@ -18325,12 +18778,12 @@
   },
   "eventDiagnostics": {
     "newEvents": 9,
-    "reconfirmations": 10,
+    "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
     "duplicatesSuppressed": 0,
-    "observedEvents": 19,
+    "observedEvents": 9,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -20035,25 +20488,89 @@
         "possibleConflicts": 0,
         "duplicatesSuppressed": 10
       }
+    },
+    {
+      "metricsVersion": 2,
+      "date": "2026-09-03",
+      "generatedAt": "2026-09-02T16:51:57+00:00",
+      "runStatus": "model",
+      "changeCount": 9,
+      "executiveSummary": "2026年9月2日证据包记录了9起高价值事件，集中在AI基础设施、企业AI应用与安全治理三个方向。融资方面，Capacity完成5400万美元E轮融资（ARR超1亿美元），Airbility完成65亿韩元A轮融资；战略转型方面，GoPro通过2.85亿美元合并进入AI数据中心光收发器市场；产品方面，Google DeepMind发布Gemini 3.8 Flash及Cyber版本，Webflow推出Source代理工作区，ZeroDrift推出AI生成消息合规检查服务，World Class Health推出AI专科诊所，Plan A Technologies收购AI评估技术，McLean & Company推出以人为本的AI项目。整体显示AI投资与产品发布活跃，但多数证据为单一来源且等级为B/C，需后续验证。",
+      "eventIds": [
+        "evt-31873f37bdd45ab7a46d",
+        "evt-a3e49238c5aae05edad0",
+        "evt-c6249791c9b19fc9ac6d",
+        "evt-c5319ae8a4c95b53c6b8",
+        "evt-9b9f5fcf82b3a2f32a3c",
+        "evt-da11efbf18e9cbb5bec6",
+        "evt-71ac2ad349a91894670a",
+        "evt-6cbc825ed33ba31e462a",
+        "evt-3bd5fbcbb7d30ea27455"
+      ],
+      "eventStates": [
+        {
+          "eventId": "evt-31873f37bdd45ab7a46d",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-a3e49238c5aae05edad0",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-c6249791c9b19fc9ac6d",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-c5319ae8a4c95b53c6b8",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-9b9f5fcf82b3a2f32a3c",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-da11efbf18e9cbb5bec6",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-71ac2ad349a91894670a",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-6cbc825ed33ba31e462a",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-3bd5fbcbb7d30ea27455",
+          "lifecycle": "first_seen"
+        }
+      ],
+      "verifiedChangeTotal": 0,
+      "candidateTotal": 0,
+      "auxiliaryLeadTotal": 9,
+      "rejectedTotal": 1,
+      "eventSummary": {
+        "newEvents": 9,
+        "reconfirmations": 0,
+        "updates": 0,
+        "corrections": 0,
+        "possibleConflicts": 0,
+        "duplicatesSuppressed": 0
+      }
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 21,
-    "eligibleCandidateCount": 19,
-    "rejectedCandidateCount": 2,
+    "candidateCount": 10,
+    "eligibleCandidateCount": 9,
+    "rejectedCandidateCount": 1,
     "rejectedByDataset": {
-      "intelligenceEvent": 1,
-      "marketCompany": 1
+      "intelligenceEvent": 1
     },
-    "evidenceCount": 54,
-    "supportingEvidenceCount": 19,
-    "rejectedEvidenceCount": 16,
-    "passedButUnboundEvidenceCount": 19,
+    "evidenceCount": 10,
+    "supportingEvidenceCount": 9,
+    "rejectedEvidenceCount": 1,
+    "passedButUnboundEvidenceCount": 0,
     "rejectionReasons": {
-      "missing_published_at": 15,
-      "missing_title": 15,
-      "ungraded": 15,
-      "missing_or_invalid_url": 3,
       "discovery_only": 1
     },
     "sourceClassificationWarnings": []
