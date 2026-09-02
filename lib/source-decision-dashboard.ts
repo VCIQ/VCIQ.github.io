@@ -1,7 +1,20 @@
 import type { SourceDirectoryEntry } from "@/lib/source-directory";
+import { sourceCoreEligible } from "@/lib/source-governance";
 
 export type SourceFreshnessState = "fresh" | "aging" | "stale" | "unobserved";
 export type SourceCoverageState = "covered" | "watch" | "gap";
+export type SourceOperationalReason =
+  | "collector_error"
+  | "collector_partial"
+  | "stale"
+  | "unobserved";
+
+export const SOURCE_OPERATION_REASON_LABELS: Record<SourceOperationalReason, string> = {
+  collector_error: "采集失败",
+  collector_partial: "部分成功",
+  stale: "超过采集周期",
+  unobserved: "尚无成功观测",
+};
 
 export type SourceCoverageRow = {
   sector: string;
@@ -127,16 +140,49 @@ export function buildSourceCoverageRows(
   );
 }
 
-export function sourceNeedsAction(source: SourceDirectoryEntry, now = new Date()): boolean {
+export function sourceOperationalReasons(
+  source: SourceDirectoryEntry,
+  now = new Date(),
+): SourceOperationalReason[] {
+  const reasons: SourceOperationalReason[] = [];
+  if (source.healthStatus === "error") reasons.push("collector_error");
+  if (source.healthStatus === "partial") reasons.push("collector_partial");
+
   const freshness = sourceFreshness(source, now).state;
-  return source.healthStatus === "error"
-    || source.healthStatus === "partial"
-    || freshness === "stale"
-    || freshness === "unobserved"
-    || source.promotion?.state === "blocked";
+  if (freshness === "stale") reasons.push("stale");
+  if (freshness === "unobserved") reasons.push("unobserved");
+  return reasons;
+}
+
+export function sourceNeedsOperationalAction(
+  source: SourceDirectoryEntry,
+  now = new Date(),
+): boolean {
+  return sourceOperationalReasons(source, now).length > 0;
+}
+
+/**
+ * Backward-compatible alias. "Action" now means an operational collection
+ * issue only; lifecycle evidence and review states are exposed separately.
+ */
+export function sourceNeedsAction(source: SourceDirectoryEntry, now = new Date()): boolean {
+  return sourceNeedsOperationalAction(source, now);
+}
+
+export function sourceNeedsGovernanceDecision(source: SourceDirectoryEntry): boolean {
+  if (!sourceCoreEligible(source)) return false;
+  const state = source.promotion?.state;
+  return source.lifecycle === "candidate"
+    || state === "candidate"
+    || state === "blocked";
+}
+
+export function sourceNeedsEvidence(source: SourceDirectoryEntry): boolean {
+  return sourceCoreEligible(source) && source.promotion?.state === "evidence_pending";
 }
 
 export function sourceReadinessDistance(source: SourceDirectoryEntry): number {
+  if (!sourceCoreEligible(source)) return 100;
   if (source.promotion?.state === "core") return 0;
   if (source.promotion?.state === "review_pending") return 1;
   if (source.promotion?.state === "evidence_pending") {
@@ -148,6 +194,7 @@ export function sourceReadinessDistance(source: SourceDirectoryEntry): number {
 }
 
 export function sourceReadinessLabel(source: SourceDirectoryEntry): string {
+  if (!sourceCoreEligible(source)) return "DISCOVERY ONLY";
   const state = source.promotion?.state ?? "candidate";
   if (state === "core") return "CORE";
   if (state === "review_pending") return "CORE READY / REVIEW";
@@ -163,13 +210,23 @@ export function buildSourceDecisionSummary(
 ) {
   const coverageRows = buildSourceCoverageRows(sources);
   const freshness = sources.map((source) => sourceFreshness(source, now).state);
+  const operationalActionRequired = sources.filter(
+    (source) => sourceNeedsOperationalAction(source, now),
+  ).length;
+
   return {
     fresh: freshness.filter((state) => state === "fresh").length,
     aging: freshness.filter((state) => state === "aging").length,
     stale: freshness.filter((state) => state === "stale").length,
     unobserved: freshness.filter((state) => state === "unobserved").length,
-    actionRequired: sources.filter((source) => sourceNeedsAction(source, now)).length,
-    coreReady: sources.filter((source) => source.promotion?.state === "review_pending").length,
+    actionRequired: operationalActionRequired,
+    operationalActionRequired,
+    governanceDecisionRequired: sources.filter(sourceNeedsGovernanceDecision).length,
+    evidencePending: sources.filter(sourceNeedsEvidence).length,
+    discoveryOnly: sources.filter((source) => !sourceCoreEligible(source)).length,
+    coreReady: sources.filter(
+      (source) => sourceCoreEligible(source) && source.promotion?.state === "review_pending",
+    ).length,
     coverageGaps: coverageRows.filter((row) => row.state !== "covered").length,
     criticalCoverageGaps: coverageRows.filter((row) => row.state === "gap").length,
   };

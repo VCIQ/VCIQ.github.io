@@ -4,9 +4,14 @@ import test from "node:test";
 import type { SourceDirectoryEntry } from "@/lib/source-directory";
 import {
   buildSourceCoverageRows,
+  buildSourceDecisionSummary,
   sourceFreshness,
   sourceNeedsAction,
+  sourceNeedsEvidence,
+  sourceNeedsGovernanceDecision,
+  sourceNeedsOperationalAction,
   sourceReadinessDistance,
+  sourceReadinessLabel,
 } from "@/lib/source-decision-dashboard";
 
 function source(overrides: Partial<SourceDirectoryEntry> & Pick<SourceDirectoryEntry, "id" | "name">): SourceDirectoryEntry {
@@ -115,6 +120,87 @@ test("unobserved endpoints stay distinct from source research role", () => {
   assert.equal(sourceFreshness(item, new Date("2026-09-02T12:00:00Z")).state, "unobserved");
 });
 
+test("operational issues stay separate from governance and evidence states", () => {
+  const blocked = source({
+    id: "blocked",
+    name: "Blocked",
+    promotion: {
+      lifecycle: "tracked",
+      state: "blocked",
+      coreReadyByMetrics: false,
+      manualDecision: "rejected",
+      reasons: ["人工 Core 审核已拒绝"],
+    },
+  });
+  const evidence = source({
+    id: "evidence",
+    name: "Evidence",
+    promotion: {
+      lifecycle: "tracked",
+      state: "evidence_pending",
+      coreReadyByMetrics: false,
+      manualDecision: "pending",
+      reasons: ["跨日观测不足（4/7）"],
+    },
+  });
+
+  assert.equal(sourceNeedsGovernanceDecision(blocked), true);
+  assert.equal(sourceNeedsEvidence(blocked), false);
+  assert.equal(sourceNeedsGovernanceDecision(evidence), false);
+  assert.equal(sourceNeedsEvidence(evidence), true);
+});
+
+test("healthy blocked sources do not become collection incidents", () => {
+  const now = new Date("2026-09-02T12:00:00Z");
+  const blocked = source({
+    id: "blocked-healthy",
+    name: "Blocked Healthy",
+    endpoints: [{
+      id: "endpoint:blocked-healthy",
+      label: "官网",
+      platform: "Web",
+      status: "ok",
+      scanned: 1,
+      accepted: 1,
+      lastSuccessAt: "2026-09-02T06:00:00Z",
+      sourceIds: ["blocked-healthy"],
+    }],
+    promotion: {
+      lifecycle: "tracked",
+      state: "blocked",
+      coreReadyByMetrics: false,
+      manualDecision: "rejected",
+      reasons: ["人工 Core 审核已拒绝"],
+    },
+  });
+
+  assert.equal(sourceNeedsOperationalAction(blocked, now), false);
+  assert.equal(sourceNeedsGovernanceDecision(blocked), true);
+  const summary = buildSourceDecisionSummary([blocked], now);
+  assert.equal(summary.operationalActionRequired, 0);
+  assert.equal(summary.governanceDecisionRequired, 1);
+});
+
+test("Discovery-only sources are excluded from Core evidence and readiness queues", () => {
+  const discovery = source({
+    id: "discovery",
+    name: "Discovery",
+    sourceRole: "discovery",
+    promotion: {
+      lifecycle: "tracked",
+      state: "evidence_pending",
+      coreReadyByMetrics: false,
+      manualDecision: "pending",
+      reasons: ["人工抽查样本不足（0/20）"],
+    },
+  });
+
+  assert.equal(sourceNeedsEvidence(discovery), false);
+  assert.equal(sourceNeedsGovernanceDecision(discovery), false);
+  assert.equal(sourceReadinessLabel(discovery), "DISCOVERY ONLY");
+  assert.equal(sourceReadinessDistance(discovery), 100);
+});
+
 test("Core readiness queue ranks review-pending ahead of evidence-pending", () => {
   const ready = source({
     id: "ready",
@@ -142,20 +228,24 @@ test("Core readiness queue ranks review-pending ahead of evidence-pending", () =
   assert.ok(sourceReadinessDistance(ready) < sourceReadinessDistance(pending));
 });
 
-test("Sources v2 renders decision queues and separates evidence role from collector health", async () => {
+test("Sources v2 renders separate operational, governance and evidence queues", async () => {
   const client = await readFile(new URL("../app/sources/source-operations-client.tsx", import.meta.url), "utf8");
   const page = await readFile(new URL("../app/sources/page.tsx", import.meta.url), "utf8");
 
   assert.match(client, /COVERAGE \/ GAP MATRIX/);
-  assert.match(client, /需要处理/);
+  assert.match(client, /采集处理/);
+  assert.match(client, /治理决策/);
+  assert.match(client, /证据补齐/);
   assert.match(client, /最接近 Core/);
   assert.match(client, /Coverage 缺口/);
   assert.match(client, /Unobserved/);
   assert.match(client, /EVIDENCE ROLE/);
   assert.match(client, /COLLECTOR HEALTH/);
   assert.match(client, /CORE READINESS/);
+  assert.match(client, /DISCOVERY ONLY/);
   assert.match(client, /SOURCE_FRESHNESS_POLICY\.freshHours/);
   assert.match(client, /SOURCE_FRESHNESS_POLICY\.staleHours/);
   assert.match(page, /SourceOperationsClient/);
+  assert.match(page, /Discovery-only/);
   assert.doesNotMatch(page, /groups\.map/);
 });

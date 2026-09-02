@@ -1,4 +1,5 @@
 import type { SourceDirectoryEntry } from "@/lib/source-directory";
+import { sourceCoreEligible } from "@/lib/source-governance";
 import type { SourceLifecyclePolicy } from "@/lib/source-lifecycle";
 
 export type SourceQaTier = "qa-now" | "qa-next" | "defer";
@@ -64,6 +65,7 @@ export function buildSourceQaQueue(
   const rows: SourceQaQueueRow[] = [];
 
   for (const source of sources) {
+    if (!sourceCoreEligible(source)) continue;
     if (source.lifecycle !== "tracked" || source.promotion?.state !== "evidence_pending") continue;
 
     const evidence = source.promotion.evidence;
@@ -106,11 +108,17 @@ export function buildSourceQaQueue(
     "qa-next": 1,
     defer: 2,
   };
+  const roleRank: Record<SourceDirectoryEntry["sourceRole"], number> = {
+    primary: 0,
+    corroboration: 1,
+    discovery: 2,
+  };
 
   return rows.sort((left, right) =>
     tierRank[left.tier] - tierRank[right.tier]
     || left.otherBlockers.length - right.otherBlockers.length
     || left.reviewGap - right.reviewGap
+    || roleRank[left.sourceRole] - roleRank[right.sourceRole]
     || left.name.localeCompare(right.name, "zh-CN")
   );
 }

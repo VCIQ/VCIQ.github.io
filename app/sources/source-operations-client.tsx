@@ -15,19 +15,35 @@ import type { SourceDirectoryEntry } from "@/lib/source-directory";
 import {
   SOURCE_COVERAGE_POLICY,
   SOURCE_FRESHNESS_POLICY,
+  SOURCE_OPERATION_REASON_LABELS,
   buildSourceCoverageRows,
   buildSourceDecisionSummary,
   sourceFreshness,
   sourceHasObservedEndpoint,
-  sourceNeedsAction,
+  sourceNeedsEvidence,
+  sourceNeedsGovernanceDecision,
+  sourceNeedsOperationalAction,
+  sourceOperationalReasons,
   sourceReadinessDistance,
   sourceReadinessLabel,
   type SourceCoverageState,
   type SourceFreshnessState,
 } from "@/lib/source-decision-dashboard";
+import {
+  sourceCoreEligibilityReason,
+  sourceCoreEligible,
+  sourceRolePriority,
+} from "@/lib/source-governance";
 import styles from "./source-operations.module.css";
 
-type QueueMode = "all" | "action" | "near-core" | "coverage-gap" | "unobserved";
+type QueueMode =
+  | "all"
+  | "operational"
+  | "governance"
+  | "evidence"
+  | "near-core"
+  | "coverage-gap"
+  | "unobserved";
 type SortMode = "default" | "near-core" | "health" | "freshness" | "name";
 type RoleFilter = "all" | SourceDirectoryEntry["sourceRole"];
 type HealthFilter = "all" | SourceDirectoryEntry["healthStatus"];
@@ -62,7 +78,9 @@ const coverageLabels: Record<SourceCoverageState, string> = {
 
 const queueOptions: Array<{ key: QueueMode; label: string; description: string }> = [
   { key: "all", label: "全部 Source", description: "完整目录" },
-  { key: "action", label: "需要处理", description: "异常 / stale / blocked" },
+  { key: "operational", label: "采集处理", description: "失败 / 部分成功 / 过期" },
+  { key: "governance", label: "治理决策", description: "Candidate / Blocked" },
+  { key: "evidence", label: "证据补齐", description: "Core 候选 Evidence Pending" },
   { key: "near-core", label: "最接近 Core", description: "优先补齐证据" },
   { key: "coverage-gap", label: "Coverage 缺口", description: "盲区相关 Source" },
   { key: "unobserved", label: "Unobserved", description: "尚无可靠观测" },
@@ -180,10 +198,15 @@ export default function SourceOperationsClient({
       if (readiness !== "all" && promotionState(source) !== readiness) return false;
       if (sector !== "all" && !source.sectors.includes(sector)) return false;
 
-      if (queue === "action" && !sourceNeedsAction(source, now)) return false;
+      if (queue === "operational" && !sourceNeedsOperationalAction(source, now)) return false;
+      if (queue === "governance" && !sourceNeedsGovernanceDecision(source)) return false;
+      if (queue === "evidence" && !sourceNeedsEvidence(source)) return false;
       if (
         queue === "near-core"
-        && !["evidence_pending", "review_pending"].includes(source.promotion?.state ?? "candidate")
+        && (
+          !sourceCoreEligible(source)
+          || !["evidence_pending", "review_pending"].includes(source.promotion?.state ?? "candidate")
+        )
       ) return false;
       if (queue === "coverage-gap" && !source.sectors.some((item) => gapSectors.has(item))) return false;
       if (queue === "unobserved" && sourceFreshness(source, now).state !== "unobserved") return false;
@@ -193,6 +216,7 @@ export default function SourceOperationsClient({
     return [...filtered].sort((left, right) => {
       if (queue === "near-core" || sort === "near-core") {
         return sourceReadinessDistance(left) - sourceReadinessDistance(right)
+          || sourceRolePriority(left) - sourceRolePriority(right)
           || compareDefault(left, right);
       }
       if (sort === "health") {
@@ -216,8 +240,15 @@ export default function SourceOperationsClient({
 
   const closestToCore = useMemo(
     () => [...sources]
-      .filter((source) => ["evidence_pending", "review_pending"].includes(source.promotion?.state ?? "candidate"))
-      .sort((left, right) => sourceReadinessDistance(left) - sourceReadinessDistance(right))
+      .filter((source) =>
+        sourceCoreEligible(source)
+        && ["evidence_pending", "review_pending"].includes(source.promotion?.state ?? "candidate")
+      )
+      .sort((left, right) =>
+        sourceReadinessDistance(left) - sourceReadinessDistance(right)
+        || sourceRolePriority(left) - sourceRolePriority(right)
+        || compareDefault(left, right)
+      )
       .slice(0, 5),
     [sources],
   );
@@ -226,9 +257,14 @@ export default function SourceOperationsClient({
     <>
       <section className={styles.decisionSummary} aria-label="Source decision summary">
         <article>
-          <small>需要处理</small>
-          <b>{summary.actionRequired}</b>
-          <span>异常 / stale / unobserved / blocked</span>
+          <small>采集处理</small>
+          <b>{summary.operationalActionRequired}</b>
+          <span>采集失败 / 部分成功 / stale / unobserved</span>
+        </article>
+        <article>
+          <small>治理决策</small>
+          <b>{summary.governanceDecisionRequired}</b>
+          <span>稳定入口不足或人工 Core 决策阻塞</span>
         </article>
         <article>
           <small>Core Ready</small>
@@ -240,18 +276,13 @@ export default function SourceOperationsClient({
           <b>{summary.criticalCoverageGaps}</b>
           <span>{summary.coverageGaps} 个赛道仍未满足覆盖合同</span>
         </article>
-        <article>
-          <small>Fresh / Aging / Stale</small>
-          <b>{summary.fresh} / {summary.aging} / {summary.stale}</b>
-          <span>{summary.unobserved} 个尚未建立成功观测</span>
-        </article>
       </section>
 
       <section className={styles.controlPlane}>
         <div className={styles.sectionHeading}>
           <div>
             <span>SOURCE DECISION CONTROL PLANE</span>
-            <h2>先回答哪里有盲区、哪个 Source 值得修、哪个最接近 Core。</h2>
+            <h2>先区分采集故障、治理决策、证据积累与覆盖盲区。</h2>
           </div>
           <small>快照基准 {compactDate(snapshotAt)}</small>
         </div>
@@ -325,7 +356,10 @@ export default function SourceOperationsClient({
         <div className={styles.resultsMeta}>
           <span>显示 {visibleSources.length} / {sources.length} 个 Source Entity</span>
           <span>
-            Fresh &lt; {SOURCE_FRESHNESS_POLICY.freshHours}h · Aging {SOURCE_FRESHNESS_POLICY.freshHours}–{SOURCE_FRESHNESS_POLICY.staleHours}h · Stale &gt; {SOURCE_FRESHNESS_POLICY.staleHours}h
+            Fresh &lt; {SOURCE_FRESHNESS_POLICY.freshHours}h ·
+            Aging {SOURCE_FRESHNESS_POLICY.freshHours}–{SOURCE_FRESHNESS_POLICY.staleHours}h ·
+            Stale &gt; {SOURCE_FRESHNESS_POLICY.staleHours}h ·
+            {summary.discoveryOnly} Discovery-only · {summary.evidencePending} Core 候选等待证据
           </span>
         </div>
       </section>
@@ -373,7 +407,7 @@ export default function SourceOperationsClient({
         <div className={styles.sectionHeading}>
           <div>
             <span>CORE READINESS QUEUE</span>
-            <h2>最接近 Core 的 Source</h2>
+            <h2>最接近 Core 的默认可晋级 Source</h2>
           </div>
           <button type="button" onClick={() => { setQueue("near-core"); setSort("near-core"); }}>查看完整队列 →</button>
         </div>
@@ -389,7 +423,7 @@ export default function SourceOperationsClient({
               <p>{closestReason(source)}</p>
             </article>
           ))}
-          {!closestToCore.length ? <p className={styles.empty}>当前没有处于 Core 晋级验证中的 Source。</p> : null}
+          {!closestToCore.length ? <p className={styles.empty}>当前没有处于 Core 晋级验证中的默认可晋级 Source。</p> : null}
         </div>
       </section>
 
@@ -397,15 +431,19 @@ export default function SourceOperationsClient({
         <div className={styles.sectionHeading}>
           <div>
             <span>SOURCE ENTITIES</span>
-            <h2>证据角色与采集健康分轴展示</h2>
+            <h2>证据角色、采集健康与治理动作分轴展示</h2>
           </div>
-          <small>Source Entity 的研究角色不会因单一 Collection Endpoint 故障而被整体降级。</small>
+          <small>Discovery-only 保留发现价值，但不进入 Core 晋级和 Core QA 队列。</small>
         </div>
 
         <div className={styles.sourceGrid}>
           {visibleSources.map((source) => {
             const freshness = sourceFreshness(source, now);
             const observed = sourceHasObservedEndpoint(source);
+            const coreEligible = sourceCoreEligible(source);
+            const operationalReasons = sourceOperationalReasons(source, now);
+            const governanceDecision = sourceNeedsGovernanceDecision(source);
+            const evidencePending = sourceNeedsEvidence(source);
             return (
               <article className={styles.sourceCard} id={source.id.replace(/[:]/g, "-")} key={source.id}>
                 <div className={styles.sourceHeader}>
@@ -465,11 +503,15 @@ export default function SourceOperationsClient({
 
                 <div className={styles.readinessBlock}>
                   <div>
-                    {source.promotion?.state === "review_pending" ? <CheckCircle2 size={14} aria-hidden="true" /> : <ShieldCheck size={14} aria-hidden="true" />}
+                    {source.promotion?.state === "review_pending" && coreEligible
+                      ? <CheckCircle2 size={14} aria-hidden="true" />
+                      : <ShieldCheck size={14} aria-hidden="true" />}
                     <span>CORE READINESS</span>
                     <b>{sourceReadinessLabel(source)}</b>
                   </div>
-                  {source.promotion?.reasons.length ? (
+                  {!coreEligible ? (
+                    <p>{sourceCoreEligibilityReason(source)}</p>
+                  ) : source.promotion?.reasons.length ? (
                     <ol>
                       {source.promotion.reasons.slice(0, 3).map((reason) => <li key={reason}>{reason}</li>)}
                     </ol>
@@ -480,8 +522,19 @@ export default function SourceOperationsClient({
 
                 <div className={styles.sourceFooter}>
                   <span><Radio size={11} aria-hidden="true" /> 健康快照 {source.healthUpdatedAt?.slice(0, 10) || "不可用"}</span>
-                  {sourceNeedsAction(source, now) ? (
-                    <strong className={styles.actionFlag}><AlertTriangle size={11} /> 需要处理</strong>
+                  {operationalReasons.length ? (
+                    <strong className={styles.actionFlag}>
+                      <AlertTriangle size={11} />
+                      采集处理 · {operationalReasons.slice(0, 2).map((reason) => SOURCE_OPERATION_REASON_LABELS[reason]).join(" / ")}
+                    </strong>
+                  ) : governanceDecision ? (
+                    <strong className={styles.actionFlag}><ShieldCheck size={11} /> 治理决策</strong>
+                  ) : source.promotion?.state === "review_pending" && coreEligible ? (
+                    <strong className={styles.actionFlag}><CheckCircle2 size={11} /> 待 Core 审批</strong>
+                  ) : evidencePending ? (
+                    <strong className={styles.stableFlag}><Clock3 size={11} /> 证据积累</strong>
+                  ) : !coreEligible ? (
+                    <strong className={styles.stableFlag}><Radio size={11} /> Discovery only</strong>
                   ) : (
                     <strong className={styles.stableFlag}><Clock3 size={11} /> 稳定观察</strong>
                   )}
