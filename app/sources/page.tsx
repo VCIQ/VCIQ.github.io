@@ -1,100 +1,17 @@
 import type { Metadata } from "next";
-import { ArrowUpRight, Radio, ShieldCheck } from "lucide-react";
-import {
-  sourceDirectoryStats,
-  sourcesByDirectoryKind,
-  type SourceDirectoryKind,
-  type SourceHealthStatus,
-  type SourceRole,
-} from "@/lib/source-directory";
-import type { SourcePromotionState } from "@/lib/source-lifecycle";
+import { ShieldCheck } from "lucide-react";
+import { sourceDirectory, sourceDirectoryStats } from "@/lib/source-directory";
+import SourceOperationsClient from "./source-operations-client";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "重点信源",
-  description: "将微信公众号、X 发现源、原始研究论文、专业媒体、公司官方来源与监管材料统一纳入 Source Entity 模型，并公开呈现角色、生命周期与采集健康。",
+  description: "将微信公众号、X 发现源、原始研究论文、专业媒体、公司官方来源与监管材料统一纳入 Source Entity 模型，并公开呈现角色、生命周期、覆盖缺口与采集健康。",
 };
-
-const groups: Array<{
-  kind: SourceDirectoryKind;
-  eyebrow: string;
-  title: string;
-  description: string;
-}> = [
-  {
-    kind: "微信公众号",
-    eyebrow: "DISCOVERY SOURCES",
-    title: "微信公众号",
-    description: "中文科技与产业精确信源主要承担发现职责；采集健康与媒体本身分开评估，微信索引失效不等于 Source Entity 失效。",
-  },
-  {
-    kind: "X / 发现",
-    eyebrow: "DISCOVERY SOURCES",
-    title: "X Profiles",
-    description: "组织与研究者的 X Profile 作为高时效发现入口单独管理，不与公司官网、论文和监管披露等 Primary Sources 混合；后续事实结论仍需要回到原始材料核验。",
-  },
-  {
-    kind: "论文 / 原始研究",
-    eyebrow: "PRIMARY RESEARCH SOURCES",
-    title: "论文与原始研究",
-    description: "直接读取已配置的论文仓库与原始研究检索入口。当前启用的 arXiv 采集不再只存在于 crawler 配置，而是进入 Source Governance、Collector Health 与生命周期模型。",
-  },
-  {
-    kind: "官方 / 原始",
-    eyebrow: "PRIMARY SOURCES",
-    title: "官方与原始来源",
-    description: "直接读取已配置的公司官方来源与监管披露入口，优先承担事实核验和关键结论回溯；未配置稳定新闻入口的公司保留为 Candidate。",
-  },
-  {
-    kind: "媒体 / 研究",
-    eyebrow: "CORROBORATION SOURCES",
-    title: "专业媒体与研究来源",
-    description: "用于发现与交叉验证产业变化、融资、产品和研究进展；关键结论仍回到 Primary Source 核验。",
-  },
-];
-
-const healthLabels: Record<SourceHealthStatus, string> = {
-  ok: "OK",
-  partial: "PARTIAL",
-  error: "ERROR",
-  unknown: "UNKNOWN",
-};
-
-const roleLabels: Record<SourceRole, string> = {
-  primary: "PRIMARY",
-  corroboration: "CORROBORATION",
-  discovery: "DISCOVERY",
-};
-
-const promotionLabels: Record<SourcePromotionState, string> = {
-  candidate: "NOT ELIGIBLE",
-  evidence_pending: "EVIDENCE PENDING",
-  review_pending: "CORE READY / REVIEW",
-  blocked: "BLOCKED",
-  core: "CORE",
-};
-
-function healthClass(status: SourceHealthStatus): string {
-  if (status === "ok") return styles.healthOk;
-  if (status === "partial") return styles.healthPartial;
-  if (status === "error") return styles.healthError;
-  return styles.healthUnknown;
-}
-
-function compactDate(value?: string): string {
-  return value ? value.slice(0, 10) : "尚无成功记录";
-}
-
-function hasObservedEndpoint(
-  endpoints: Array<{ status: SourceHealthStatus; sourceIds: string[] }>,
-): boolean {
-  return endpoints.some(
-    (endpoint) => endpoint.sourceIds.length > 0 && endpoint.status !== "unknown",
-  );
-}
 
 export default function SourcesPage() {
   const issueCount = sourceDirectoryStats.partial + sourceDirectoryStats.error;
+  const snapshotAt = new Date().toISOString();
 
   return (
     <main className="page-shell subpage">
@@ -114,129 +31,7 @@ export default function SourcesPage() {
         </div>
       </header>
 
-      {groups.map((group) => {
-        const sources = sourcesByDirectoryKind(group.kind);
-        if (!sources.length) return null;
-        return (
-          <section className={styles.group} key={group.kind}>
-            <div className={styles.groupHeader}>
-              <div>
-                <span>{group.eyebrow}</span>
-                <h2>{group.title}</h2>
-              </div>
-              <strong>{sources.length} 个信源实体</strong>
-            </div>
-
-            <div className={styles.grid}>
-              {sources.map((source) => (
-                <article className={styles.card} id={source.id.replace(/[:]/g, "-")} key={source.id}>
-                  <div className={styles.cardHead}>
-                    <div>
-                      <div className={styles.cardMeta}>
-                        {source.region} · {source.platform} · {source.sourceLevel}
-                      </div>
-                      <h3>{source.name}</h3>
-                    </div>
-                    <div className={styles.statusStack} aria-label="信源状态">
-                      <span className={styles.roleStatus}>{roleLabels[source.sourceRole]}</span>
-                      <span className={styles.lifecycleStatus}>{source.lifecycle.toUpperCase()}</span>
-                      <span className={`${styles.healthStatus} ${healthClass(source.healthStatus)}`}>
-                        {healthLabels[source.healthStatus]}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className={styles.coverageRow} aria-label="覆盖摘要">
-                    {source.sectors.length ? <span>{source.sectors.length} 赛道</span> : null}
-                    {source.companies.length ? <span>{source.companies.length} 公司</span> : null}
-                    {source.people.length ? <span>{source.people.length} 人物</span> : null}
-                    <span>{source.endpoints.length} 采集通道</span>
-                    <span>Core readiness: {promotionLabels[source.promotion?.state ?? "candidate"]}</span>
-                  </div>
-
-                  {source.sectors.length ? (
-                    <div className={styles.tags} aria-label="覆盖赛道">
-                      {source.sectors.slice(0, 5).map((sector) => (
-                        <span key={sector}>{sector}</span>
-                      ))}
-                    </div>
-                  ) : null}
-
-                  <div className={styles.endpointBlock} aria-label="采集通道健康">
-                    <div className={styles.endpointHeader}>
-                      <span>COLLECTION ENDPOINTS</span>
-                      <small>Source Entity 与采集通道分离</small>
-                    </div>
-                    <div className={styles.endpointList}>
-                      {source.endpoints.slice(0, 4).map((endpoint) => (
-                        <div className={styles.endpointRow} key={endpoint.id}>
-                          <div>
-                            <strong>{endpoint.label}</strong>
-                            <small>
-                              {endpoint.evidenceGrade ? `Grade ${endpoint.evidenceGrade} · ` : ""}
-                              本次刷新 · 扫描 {endpoint.scanned} · 接受 {endpoint.accepted}
-                            </small>
-                          </div>
-                          <div className={styles.endpointState}>
-                            <span className={`${styles.healthDot} ${healthClass(endpoint.status)}`} aria-hidden="true" />
-                            <strong>{healthLabels[endpoint.status]}</strong>
-                            <small>{compactDate(endpoint.lastSuccessAt)}</small>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {source.promotion?.reasons.length ? (
-                    <div className={styles.signalBlock}>
-                      <span className={styles.signalLabel}>Core 晋级状态</span>
-                      <p>{source.promotion.reasons.slice(0, 2).join(" · ")}</p>
-                    </div>
-                  ) : null}
-
-                  {source.keywords.length ? (
-                    <div className={styles.signalBlock}>
-                      <span className={styles.signalLabel}>重点发现词</span>
-                      <p>{source.keywords.slice(0, 8).join(" · ")}</p>
-                    </div>
-                  ) : null}
-
-                  {source.companies.length ? (
-                    <div className={styles.signalBlock}>
-                      <span className={styles.signalLabel}>重点公司</span>
-                      <p>{source.companies.slice(0, 6).join(" · ")}</p>
-                    </div>
-                  ) : null}
-
-                  {source.people.length ? (
-                    <div className={styles.signalBlock}>
-                      <span className={styles.signalLabel}>重点人物</span>
-                      <p>{source.people.slice(0, 6).join(" · ")}</p>
-                    </div>
-                  ) : null}
-
-                  <div className={styles.cardFooter}>
-                    <span>
-                      <Radio size={11} aria-hidden="true" />
-                      健康快照 {source.healthUpdatedAt?.slice(0, 10) || "不可用"}
-                    </span>
-                    {source.url ? (
-                      <a href={source.url} target="_blank" rel="noreferrer">
-                        原始入口 <ArrowUpRight size={12} />
-                      </a>
-                    ) : hasObservedEndpoint(source.endpoints) ? (
-                      <span>采集端点已建立 · 未配置实体主页</span>
-                    ) : (
-                      <span>未建立观测 / 无稳定公开入口</span>
-                    )}
-                  </div>
-                </article>
-              ))}
-            </div>
-            <p className="intro-copy">{group.description}</p>
-          </section>
-        );
-      })}
+      <SourceOperationsClient sources={sourceDirectory} snapshotAt={snapshotAt} />
 
       <details className={styles.lifecycle}>
         <summary>
