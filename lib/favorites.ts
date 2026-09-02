@@ -67,7 +67,6 @@ export type FavoriteImportResult = {
   total: number;
 };
 
-const MAX_FAVORITES = 300;
 const MAX_KEYWORDS = 40;
 const MAX_SOURCES = 20;
 const EMPTY_FAVORITES: FavoriteItem[] = [];
@@ -265,7 +264,6 @@ export function parseFavoriteItems(value: string | null): FavoriteItem[] {
       if (!item || seen.has(item.id)) continue;
       seen.add(item.id);
       items.push(item);
-      if (items.length >= MAX_FAVORITES) break;
     }
     return items.sort((left, right) => right.savedAt.localeCompare(left.savedAt));
   } catch {
@@ -374,7 +372,7 @@ export function getFavoriteIdSnapshot(): Set<string> {
 function writeFavoriteItems(items: FavoriteItem[]): void {
   const storage = browserStorage();
   if (!storage) return;
-  const nextItems = items.slice(0, MAX_FAVORITES);
+  const nextItems = items;
   const payload: FavoritePayload = {
     schemaVersion: FAVORITES_SCHEMA_VERSION,
     items: nextItems,
@@ -389,7 +387,7 @@ function writeFavoriteItems(items: FavoriteItem[]): void {
 export function serializeFavoriteItems(items = readFavoriteItems()): string {
   const payload: FavoritePayload = {
     schemaVersion: FAVORITES_SCHEMA_VERSION,
-    items: items.slice(0, MAX_FAVORITES),
+    items,
   };
   return JSON.stringify(payload, null, 2);
 }
@@ -419,7 +417,6 @@ export function importFavoriteItems(value: string): FavoriteImportResult {
     if (!item || existingIds.has(item.id)) continue;
     existingIds.add(item.id);
     imported.push(item);
-    if (current.length + imported.length >= MAX_FAVORITES) break;
   }
 
   if (imported.length) {
