@@ -16,6 +16,17 @@ from datetime import UTC, datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
+try:
+    from .regulatory_source_health import (
+        load_disclosure_snapshot,
+        merge_regulatory_statuses,
+    )
+except ImportError:
+    from regulatory_source_health import (
+        load_disclosure_snapshot,
+        merge_regulatory_statuses,
+    )
+
 ROOT = Path(__file__).resolve().parents[1]
 ARTICLES_PATH = ROOT / "public" / "data" / "articles.json"
 BASELINE_PATH = Path(os.environ.get("RUNNER_TEMP", str(ROOT))) / "vciq-refresh-baseline.json"
@@ -93,6 +104,10 @@ def main() -> int:
     payload = json.loads(ARTICLES_PATH.read_text(encoding="utf-8"))
     if not isinstance(payload, dict):
         raise SystemExit("article snapshot must be a JSON object")
+
+    disclosure_payload = load_disclosure_snapshot()
+    if disclosure_payload:
+        merge_regulatory_statuses(payload, disclosure_payload)
 
     completed_at = datetime.now(UTC).replace(microsecond=0).isoformat()
     local_date = datetime.now(TAIPEI).date().isoformat()
