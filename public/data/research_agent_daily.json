@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-01T21:19:36+00:00",
+  "generatedAt": "2026-09-02T00:59:29+00:00",
   "asOfDate": "2026-09-02",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
@@ -12,161 +12,205 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 5164,
-      "completion_tokens": 4289,
-      "total_tokens": 9453,
+      "prompt_tokens": 14591,
+      "completion_tokens": 4487,
+      "total_tokens": 19078,
       "completion_tokens_details": {
-        "reasoning_tokens": 2145
+        "reasoning_tokens": 1981
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 5164
+      "prompt_cache_miss_tokens": 14591
     }
   },
   "changeSummary": {
-    "totalDetected": 8,
-    "total": 6,
+    "totalDetected": 59,
+    "total": 19,
     "byDataset": {
-      "intelligenceEvent": 6
+      "intelligenceEvent": 18,
+      "marketCompany": 1
     },
     "byChangeType": {
-      "external_event": 8
+      "external_event": 35,
+      "data_maintenance": 9,
+      "source_refresh": 15
     },
-    "externalCandidates": 8,
-    "qualityRejected": 1,
-    "maintenanceExcluded": 0,
+    "externalCandidates": 35,
+    "qualityRejected": 2,
+    "maintenanceExcluded": 24,
     "aggregatedEvents": 0,
-    "highestImportance": 89,
+    "highestImportance": 91,
     "verifiedChangeTotal": 0,
-    "candidateTotal": 0,
-    "auxiliaryLeadTotal": 6,
-    "rejectedTotal": 1,
-    "newEvents": 6,
-    "reconfirmations": 0,
+    "candidateTotal": 1,
+    "auxiliaryLeadTotal": 18,
+    "rejectedTotal": 2,
+    "newEvents": 19,
+    "reconfirmations": 11,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 1
+    "duplicatesSuppressed": 3
   },
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "证据包记录了2026年9月1日六项高价值情报事件，集中在AI基础设施、模型竞争与监管方向，另有一项机场资产收购。OpenAI发布自研Jalapeño芯片基准测试，声称能效与延迟优于Nvidia GB200/GB300，但证据等级为C且为厂商自述，需独立验证。Anthropic推出Fable 5.1与Mythos 5.1，强调安全改进并降低费用，但安全事件背景与具体定价细节尚待确认。美国在G20论坛反对设立AI监管机构，属政策信号，影响需观察。Google DeepMind发布Gemini智能体视频理解功能，官方来源但细节有限。ASUR完成对Motiva多国机场权益收购，属公司事件，与AI主线无关。整体证据多为单一来源、自动未审阅，结论置信度受限。 质量门诊断：仅为发现线索，不能支持正式主张 1。",
+    "executiveSummary": "本报告基于2026年9月1-2日证据包，覆盖AI模型、算力基础设施、资本市场等事件。主要发现：Anthropic发布Claude Fable 5.1/Mythos 5.1，Google DeepMind提升Gemini视频理解效率，Cerebras宣布在芬兰建设165MW AI数据中心，燧原科技启动科创板申购，AfterQuery据称成为YC最快独角兽（估值32亿美元）。同时TDS宣布放弃收购Array Digital Infrastructure公众股份，美股AI硬件股普跌。多数证据为官方披露或媒体报道，部分高估值事件证据等级较低，需进一步验证。 质量门诊断：缺少发布时间 20、缺少标题 20、证据未分级 20、缺少有效 URL 3、证据合格但未绑定变化字段 21。",
     "keyDevelopments": [
       {
-        "title": "OpenAI发布自研Jalapeño芯片基准，声称优于Nvidia GB300",
-        "assessment": "OpenAI在Hot Chips公布Jalapeño芯片首批基准，声称每千瓦吞吐量较Nvidia GB200/GB300高1.5至1.9倍，延迟低至3.6倍，功耗约700W。此为厂商自述且证据等级C，属推断性重大事实，需第三方验证。若属实，将强化OpenAI在AI算力供应链的自主性，并对Nvidia高端推理市场构成潜在竞争压力。",
+        "title": "AfterQuery据称成为Y Combinator史上最快独角兽，估值32亿美元",
+        "assessment": "据TechCrunch报道，AI模型训练初创公司AfterQuery在宣布3000万美元A轮（估值3亿美元）仅五个月后，以32亿美元估值完成新一轮融资。该消息为媒体报道，证据等级C，且标题使用“reportedly”，应视为待验证传闻，而非确定性事实。若属实，将显著提升YC生态的估值标杆。",
+        "importance": 5,
+        "confidence": "low",
+        "entities": [
+          "AfterQuery",
+          "Y Combinator"
+        ],
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "title": "Anthropic推出Claude Fable 5.1和Mythos 5.1，宣称全球最先进编程与知识工作模型",
+        "assessment": "Anthropic官方X账号宣布推出Fable 5.1和Mythos 5.1，后者面向高风险领域采用更宽松防护。东方财富报道称其强调性价比，并提及上市流程关键节点。官方声明为B级证据，但“全球最先进”属厂商自我宣称，需第三方基准验证。",
         "importance": 5,
         "confidence": "medium",
         "entities": [
-          "OpenAI",
-          "Nvidia"
-        ],
-        "evidenceIds": [
-          "E004"
-        ]
-      },
-      {
-        "title": "Anthropic发布Fable 5.1与Mythos 5.1，主打安全与性价比",
-        "assessment": "Anthropic推出Fable 5.1新版本，称编程与科研任务表现更好且费用更低，同时发布Mythos 5.1并强调安全改进。发布背景是AI智能体安全事件引发关注。费用降低与能力提升若获验证，可能加剧模型层价格竞争；安全改进声明需结合后续安全评估证据。",
-        "importance": 4,
-        "confidence": "medium",
-        "entities": [
-          "Anthropic"
+          "Anthropic",
+          "Claude"
         ],
         "evidenceIds": [
           "E007",
-          "E008"
+          "E012"
         ]
       },
       {
-        "title": "美国在G20论坛反对设立AI监管机构",
-        "assessment": "特朗普政府的AI负责人称设立美国AI监管机构将是“灾难”，在G20技术论坛上推动放松监管立场。这是政策信号而非已成文法规，影响取决于后续立法与多边协调。对AI企业短期偏正面（监管不确定性降低），但长期治理风险上升。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "美国政府",
-          "G20"
-        ],
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "title": "Google DeepMind推出Gemini智能体视频理解功能",
-        "assessment": "Google DeepMind官方发布Gemini的智能体视频理解能力，但证据摘要仅说明发布本身，未提供技术细节、能力边界或商用时间表。官方来源等级B，但信息量有限，暂列为产品能力演进信号。",
-        "importance": 3,
+        "title": "Google DeepMind为Gemini模型引入agentic视频理解，token使用减少88%",
+        "assessment": "Google DeepMind官方X账号称，最新Gemini模型可跨转录文本、音频和帧进行推理，动态调整帧率，长视频效率提升显著。官方披露为B级证据，但“88%”为厂商数据，实际效果需开发者验证。",
+        "importance": 4,
         "confidence": "medium",
         "entities": [
           "Google DeepMind",
           "Gemini"
         ],
         "evidenceIds": [
-          "E006"
+          "E009",
+          "E011"
         ]
       },
       {
-        "title": "ASUR完成收购Motiva在巴西、厄瓜多尔、哥斯达黎加与库拉索机场权益",
-        "assessment": "ASUR宣布完成对Motiva在上述四地机场权益的收购，所有先决条件已满足。证据为PR Newswire新闻稿，等级B，属公司公告事实。该事件与AI主线无关，对机场运营与拉美基建投资有影响，但证据未披露交易金额与资产明细。",
-        "importance": 2,
+        "title": "Cerebras与Compute Nordic Finland宣布在芬兰Mikkeli建设165MW AI数据中心",
+        "assessment": "Cerebras官方新闻稿披露，该设施由七年期容量协议支持，预计区域投资10-17亿欧元。官方披露为高可信证据，显示Cerebras在算力基础设施上的扩张，但建设周期和执行风险未披露。",
+        "importance": 4,
         "confidence": "high",
         "entities": [
-          "ASUR",
-          "Motiva"
+          "Cerebras Systems",
+          "Compute Nordic Finland"
         ],
         "evidenceIds": [
-          "E002"
-        ]
-      }
-    ],
-    "thesisUpdates": [
-      {
-        "entity": "OpenAI",
-        "direction": "positive",
-        "statement": "自研芯片基准发布显示OpenAI在算力自主化上取得进展，若第三方验证通过，将降低对Nvidia的依赖并改善推理成本结构。",
-        "evidenceIds": [
-          "E004"
+          "E020"
         ]
       },
       {
-        "entity": "Anthropic",
-        "direction": "positive",
-        "statement": "Fable 5.1以更低费用提供更强编程与科研能力，叠加安全改进声明，产品竞争力与商业化吸引力有望提升，但需验证实际性能与安全效果。",
+        "title": "燧原科技今日开启科创板申购，发行价142.18元/股",
+        "assessment": "东方财富报道，燧原科技发行价142.18元，募资61.19亿元，上市市值约611.87亿元，股票代码688801。媒体报道为C级证据，但具体数字明确，可作为国产GPU赛道资本化进程的重要节点。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "燧原科技"
+        ],
         "evidenceIds": [
-          "E007",
-          "E008"
+          "E013"
         ]
       },
       {
-        "entity": "美国AI监管环境",
-        "direction": "positive",
-        "statement": "美国在G20明确反对设立AI监管机构，短期降低AI企业合规成本与监管不确定性，但长期政策稳定性存疑。",
+        "title": "TDS宣布不再收购Array Digital Infrastructure公众股份，预计恢复回购",
+        "assessment": "TDS官方新闻稿（PR Newswire）宣布放弃收购Array Digital Infrastructure公众股份，并预计恢复股票回购计划。官方披露为B级证据，直接影响Array的收购预期，可能引发其股价波动。",
+        "importance": 4,
+        "confidence": "high",
+        "entities": [
+          "Telephone and Data Systems",
+          "Array Digital Infrastructure"
+        ],
         "evidenceIds": [
           "E003"
         ]
       },
       {
+        "title": "Shield AI与L3Harris达成Tracker C-UAS集成合作",
+        "assessment": "Shield AI官方宣布，L3Harris已获授权将Tracker反无人机系统集成至VAMPIRE平台。官方披露为高可信证据，显示反无人机领域合作深化，但商业条款未披露。",
+        "importance": 3,
+        "confidence": "high",
+        "entities": [
+          "Shield AI",
+          "L3Harris"
+        ],
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "title": "美股三大指数收跌，纳指跌超1%，AI硬件股普跌",
+        "assessment": "东方财富报道，9月1日美股收盘全线下跌，纳指跌1.03%，英伟达跌1.51%，特斯拉跌3.22%，国际油价涨逾5%。媒体报道为C级证据，反映市场对AI硬件板块的短期情绪波动。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "美股",
+          "AI硬件股"
+        ],
+        "evidenceIds": [
+          "E014"
+        ]
+      }
+    ],
+    "thesisUpdates": [
+      {
+        "entity": "Anthropic",
+        "direction": "positive",
+        "statement": "Anthropic在上市关键节点快速推出新模型，并强调性价比，显示其产品迭代和商业化节奏加快，但“全球最先进”需独立验证。",
+        "evidenceIds": [
+          "E007",
+          "E012"
+        ]
+      },
+      {
         "entity": "Google DeepMind",
         "direction": "positive",
-        "statement": "Gemini新增智能体视频理解能力，扩展多模态智能体应用场景，但证据细节有限，暂视为产品路线图进展。",
+        "statement": "Gemini视频理解效率大幅提升，可能增强其在多模态AI领域的竞争力，但实际部署效果待观察。",
         "evidenceIds": [
-          "E006"
+          "E009",
+          "E011"
         ]
       },
       {
-        "entity": "Nvidia",
-        "direction": "negative",
-        "statement": "OpenAI自研芯片声称在能效与延迟上超越GB200/GB300，若被证实，可能削弱Nvidia在AI推理芯片市场的主导地位。",
-        "evidenceIds": [
-          "E004"
-        ]
-      },
-      {
-        "entity": "ASUR",
+        "entity": "Cerebras Systems",
         "direction": "positive",
-        "statement": "完成对Motiva四国机场权益收购，扩大拉美与加勒比机场资产组合，但交易财务条款未披露，影响程度待评估。",
+        "statement": "在芬兰新建165MW数据中心，表明其算力供给能力持续扩张，但大规模投资带来执行风险。",
+        "evidenceIds": [
+          "E020"
+        ]
+      },
+      {
+        "entity": "燧原科技",
+        "direction": "positive",
+        "statement": "科创板申购启动，国产GPU赛道资本化进程推进，但上市后表现和盈利能力仍待市场检验。",
+        "evidenceIds": [
+          "E013"
+        ]
+      },
+      {
+        "entity": "Telephone and Data Systems",
+        "direction": "mixed",
+        "statement": "放弃收购Array Digital Infrastructure公众股份，短期可能影响Array估值预期；TDS自身恢复回购，对股东回报偏正面。",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "entity": "AfterQuery",
+        "direction": "positive",
+        "statement": "据称估值从3亿美元跃升至32亿美元，若属实将刷新YC最快独角兽纪录，但该消息仅为媒体报道，需官方确认。",
         "evidenceIds": [
           "E002"
         ]
@@ -174,185 +218,202 @@
     ],
     "watchlist": [
       {
-        "item": "Jalapeño芯片第三方基准验证与量产时间表",
-        "reason": "当前基准为OpenAI自述，证据等级C，需独立测试确认能效与延迟优势，并观察实际部署与客户采用情况。",
-        "nextEvidence": "第三方基准测试报告、OpenAI数据中心部署公告或Nvidia回应",
+        "item": "AfterQuery融资轮次官方确认",
+        "reason": "当前证据为TechCrunch报道（C级），标题使用“reportedly”，需公司官方公告或投资者名单验证。",
+        "nextEvidence": "AfterQuery官方声明、SEC文件或后续主流财经媒体确认",
         "evidenceIds": [
-          "E004"
+          "E002"
         ]
       },
       {
-        "item": "Fable 5.1实际定价、性能评测与安全事件后续",
-        "reason": "费用更低与能力更强的声明需通过公开定价表和独立评测验证；AI智能体安全事件可能引发监管或客户审查。",
-        "nextEvidence": "Anthropic官方定价页、独立模型评测、安全事件调查报告",
+        "item": "Anthropic Fable 5.1/Mythos 5.1第三方基准测试",
+        "reason": "官方宣称“全球最先进”，但缺乏独立评测，需关注SWE-bench、MMLU等公开基准结果。",
+        "nextEvidence": "第三方评测机构或社区基准测试发布",
         "evidenceIds": [
           "E007",
-          "E008"
+          "E012"
         ]
       },
       {
-        "item": "美国AI监管立法的后续动向",
-        "reason": "G20表态是行政层面信号，国会立法与各州监管仍可能推进，需跟踪政策落地情况。",
-        "nextEvidence": "美国国会AI法案进展、行政命令或机构指导文件",
+        "item": "Gemini视频理解效率的实际API可用性",
+        "reason": "官方披露token减少88%，但需确认是否已向开发者开放，以及实际成本变化。",
+        "nextEvidence": "Google Cloud官方文档、API更新日志或开发者反馈",
+        "evidenceIds": [
+          "E009",
+          "E011"
+        ]
+      },
+      {
+        "item": "燧原科技上市首日表现及后续财务披露",
+        "reason": "申购已启动，但发行后股价走势和公司盈利能力尚未验证，需关注招股书细节和首日行情。",
+        "nextEvidence": "上市首日交易数据、公司季度财报",
+        "evidenceIds": [
+          "E013"
+        ]
+      },
+      {
+        "item": "TDS放弃收购后Array Digital Infrastructure的战略动向",
+        "reason": "TDS官方公告为B级证据，但Array方面未回应，需关注其股价反应和替代融资/收购方案。",
+        "nextEvidence": "Array官方声明、市场交易数据或后续并购新闻",
         "evidenceIds": [
           "E003"
         ]
       },
       {
-        "item": "Gemini智能体视频理解的技术细节与商用进展",
-        "reason": "官方发布未提供能力边界、API可用性与性能指标，需补充技术文档与客户案例。",
-        "nextEvidence": "Google DeepMind技术报告、Gemini API更新日志或开发者文档",
+        "item": "Anthropic与Lambda的350亿美元云计算协议",
+        "reason": "该信息来自钛媒体晨报摘要（C级），缺乏官方细节，需验证协议真实性、期限和规模。",
+        "nextEvidence": "Anthropic或Lambda官方新闻稿、合同披露",
         "evidenceIds": [
-          "E006"
-        ]
-      },
-      {
-        "item": "ASUR收购交易的财务条款与资产运营数据",
-        "reason": "新闻稿未披露交易金额、融资方式与标的资产盈利情况，需通过后续财报或公告确认。",
-        "nextEvidence": "ASUR季报、交易交割公告补充披露或Motiva相关文件",
-        "evidenceIds": [
-          "E002"
+          "E004"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "Jalapeño芯片性能声明可能被第三方证伪或延迟量产",
-        "reason": "证据等级C且为厂商自述，基准测试条件未披露，存在营销夸大或工程样品与量产差异风险。",
-        "evidenceIds": [
-          "E004"
-        ]
-      },
-      {
-        "risk": "Anthropic安全改进声明可能不足以应对智能体安全事件",
-        "reason": "发布背景是AI智能体安全事件引发关注，安全声明缺乏独立验证，若后续事件曝光可能损害信任。",
-        "evidenceIds": [
-          "E008"
-        ]
-      },
-      {
-        "risk": "美国反对AI监管可能加剧国际监管碎片化",
-        "reason": "美国在G20的放松监管立场与其他国家监管路径可能分歧，增加跨国AI企业合规复杂度。",
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "risk": "Gemini新功能发布信息不完整，存在预期落差",
-        "reason": "证据摘要仅确认发布，未提供能力边界与可用性，市场可能高估短期影响。",
-        "evidenceIds": [
-          "E006"
-        ]
-      },
-      {
-        "risk": "ASUR跨境收购面临整合与监管风险",
-        "reason": "涉及巴西、厄瓜多尔、哥斯达黎加与库拉索多司法辖区，整合执行与当地监管变化可能影响资产表现。",
+        "risk": "AfterQuery估值传闻可能不实",
+        "reason": "证据等级C且为“reportedly”，若后续被否认，将影响市场对YC生态和AI训练赛道的情绪。",
         "evidenceIds": [
           "E002"
         ]
+      },
+      {
+        "risk": "Anthropic模型性能宣传存在夸大风险",
+        "reason": "官方自我宣称“全球最先进”，缺乏独立验证，若第三方评测不符，可能损害品牌信誉。",
+        "evidenceIds": [
+          "E007",
+          "E012"
+        ]
+      },
+      {
+        "risk": "AI硬件股普跌可能反映估值回调压力",
+        "reason": "美股纳指跌超1%，英伟达、特斯拉等下跌，若持续可能影响AI基础设施投资热情。",
+        "evidenceIds": [
+          "E014"
+        ]
+      },
+      {
+        "risk": "Cerebras数据中心项目执行风险",
+        "reason": "165MW数据中心投资10-17亿欧元，规模大，存在建设延期、成本超支或需求不及预期风险。",
+        "evidenceIds": [
+          "E020"
+        ]
+      },
+      {
+        "risk": "燧原科技上市后竞争与盈利压力",
+        "reason": "国产GPU赛道竞争激烈，发行市值约611.87亿元，若业绩不达预期，股价可能承压。",
+        "evidenceIds": [
+          "E013"
+        ]
+      },
+      {
+        "risk": "TDS放弃收购可能引发Array股价波动",
+        "reason": "收购预期落空，Array Digital Infrastructure公众股份可能面临抛售压力，但TDS恢复回购对自身股价有支撑。",
+        "evidenceIds": [
+          "E003"
+        ]
       }
     ],
-    "methodologyNote": "本分析仅基于证据包内六条证据（E002-E008），全部为2026年9月1日新增的高价值情报事件，均通过质量门但处于automated_unreviewed状态，证据等级以B和C为主。所有判断均标注证据编号；厂商自述性能、政策表态等按推断处理，未作为确定性事实。不构成投资建议。"
+    "methodologyNote": "本报告仅基于证据包内提供的结构化证据，未补充外部事实。事实与推断已明确区分：官方新闻稿（B级）和官方披露视为高可信事实；媒体报道（C级）和厂商自我宣称视为待验证信息。所有判断均引用至少一个evidenceIds。不提供任何买入、卖出、目标价或收益承诺。"
   },
   "changes": [
     {
-      "id": "chg-e9769bd27de538dd5967",
+      "id": "chg-0c0de219df226d1c1cec",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-462379f3f4a0579777",
-      "entityName": "ASUR CLOSES ACQUISITION OF MOTIVA'S INTERESTS IN AIRPORTS IN BRAZIL, ECUADOR, COSTA RICA AND CURAÇAO",
+      "entityId": "intelligence-event-ee074d72338d281fb2",
+      "entityName": "AfterQuery reportedly becomes Y Combinator’s fastest-ever unicorn, now valued at $3.2B",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：ASUR CLOSES ACQUISITION OF MOTIVA'S INTERESTS IN AIRPORTS IN BRAZIL, ECUADOR, COSTA RICA AND CURAÇAO。",
+      "summary": "新增高价值情报事件记录：AfterQuery reportedly becomes Y Combinator’s fastest-ever unicorn, now valued at $3.2B。",
+      "importance": 91,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-01",
+        "summary": "AI model-training startup AfterQuery has reportedly raised a round that valued it at $3.2 billion, just five months after announcing its $30 million Series A at a $300 million valuation in April.",
+        "title": "AfterQuery reportedly becomes Y Combinator’s fastest-ever unicorn, now valued at $3.2B"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-01",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "AI model-training startup AfterQuery has reportedly raised a round that valued it at $3.2 billion, just five months after announcing its $30 million Series A at a $300 million valuation in April.",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "AfterQuery reportedly becomes Y Combinator’s fastest-ever unicorn, now valued at $3.2B",
+          "evidenceIds": [
+            "E002"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E002"
+      ],
+      "supportingEvidenceIds": [
+        "E002"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-11a1ffa455911c67dcd3"
+      ],
+      "eventLifecycles": {
+        "evt-11a1ffa455911c67dcd3": "first_seen"
+      },
+      "eventId": "evt-11a1ffa455911c67dcd3",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-02T00:59:29+00:00",
+      "lastSeenAt": "2026-09-02T00:59:29+00:00"
+    },
+    {
+      "id": "chg-a0741736be163308a8d7",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-d06e312bc80fd228a4",
+      "entityName": "Telephone and Data Systems Announces It Is No Longer Pursuing the Acquisition of Public Shares of Array Digital Infrastructure",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Telephone and Data Systems Announces It Is No Longer Pursuing the Acquisition of Public Shares of Array Digital Infrastructure。",
       "importance": 89,
       "before": null,
       "after": {
         "publishedAt": "2026-09-01",
-        "summary": "MEXICO CITY, Sept. 1, 2026 /PRNewswire/ -- Grupo Aeroportuario del Sureste, S.A.B. de C.V. (NYSE: ASR; BMV: ASUR) (\"ASUR\") and Motiva Infraestrutura de Mobilidade S.A. (B3: MOTV3) (\"Motiva\") announced today that, following the satisfaction of all conditions p…",
-        "title": "ASUR CLOSES ACQUISITION OF MOTIVA'S INTERESTS IN AIRPORTS IN BRAZIL, ECUADOR, COSTA RICA AND CURAÇAO"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-01",
-          "evidenceIds": [
-            "E002"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "MEXICO CITY, Sept. 1, 2026 /PRNewswire/ -- Grupo Aeroportuario del Sureste, S.A.B. de C.V. (NYSE: ASR; BMV: ASUR) (\"ASUR\") and Motiva Infraestrutura de Mobilidade S.A. (B3: MOTV3) (\"Motiva\") announced today that, following the satisfaction of all conditions p…",
-          "evidenceIds": [
-            "E002"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "ASUR CLOSES ACQUISITION OF MOTIVA'S INTERESTS IN AIRPORTS IN BRAZIL, ECUADOR, COSTA RICA AND CURAÇAO",
-          "evidenceIds": [
-            "E002"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E002"
-      ],
-      "supportingEvidenceIds": [
-        "E002"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-5a01a296d6caa5b088b8"
-      ],
-      "eventLifecycles": {
-        "evt-5a01a296d6caa5b088b8": "first_seen"
-      },
-      "eventId": "evt-5a01a296d6caa5b088b8",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T21:19:36+00:00",
-      "lastSeenAt": "2026-09-01T21:19:36+00:00"
-    },
-    {
-      "id": "chg-42c325ebc764dc188595",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-d6b1a652ce919c9850",
-      "entityName": "No ‘DMV for AI’: US Pushes Against AI Regulations at Global Forum",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：No ‘DMV for AI’: US Pushes Against AI Regulations at Global Forum。",
-      "importance": 86,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-01",
-        "summary": "A US regulatory agency for AI would be a “disaster,” Trump’s AI czar said during a G20 forum on technology.",
-        "title": "No ‘DMV for AI’: US Pushes Against AI Regulations at Global Forum"
+        "summary": "TDS Expects to Recommence Repurchase Program CHICAGO, Sept. 1, 2026 /PRNewswire/ -- Telephone and Data Systems, Inc. (NYSE: TDS) (the \"Company\" or \"TDS\") today announced that it is no longer pursuing the acquisition of the Common Shares of Array Digital Infra…",
+        "title": "Telephone and Data Systems Announces It Is No Longer Pursuing the Acquisition of Public Shares of Array Digital Infrastructure"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -374,7 +435,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "A US regulatory agency for AI would be a “disaster,” Trump’s AI czar said during a G20 forum on technology.",
+          "after": "TDS Expects to Recommence Repurchase Program CHICAGO, Sept. 1, 2026 /PRNewswire/ -- Telephone and Data Systems, Inc. (NYSE: TDS) (the \"Company\" or \"TDS\") today announced that it is no longer pursuing the acquisition of the Common Shares of Array Digital Infra…",
           "evidenceIds": [
             "E003"
           ]
@@ -382,7 +443,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "No ‘DMV for AI’: US Pushes Against AI Regulations at Global Forum",
+          "after": "Telephone and Data Systems Announces It Is No Longer Pursuing the Acquisition of Public Shares of Array Digital Infrastructure",
           "evidenceIds": [
             "E003"
           ]
@@ -403,35 +464,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-82bcd7b1d1660b20507c"
+        "evt-6dd45f32ad659adffdcf"
       ],
       "eventLifecycles": {
-        "evt-82bcd7b1d1660b20507c": "first_seen"
+        "evt-6dd45f32ad659adffdcf": "first_seen"
       },
-      "eventId": "evt-82bcd7b1d1660b20507c",
+      "eventId": "evt-6dd45f32ad659adffdcf",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T21:19:36+00:00",
-      "lastSeenAt": "2026-09-01T21:19:36+00:00"
+      "firstSeenAt": "2026-09-02T00:59:29+00:00",
+      "lastSeenAt": "2026-09-02T00:59:29+00:00"
     },
     {
-      "id": "chg-414f55b873a14eba8dc7",
+      "id": "chg-5c3f4f7a28f559aebe39",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-0e722539562488e9e2",
-      "entityName": "OpenAI lifts the lid on its in-house Jalapeño chip - with benchmarks claiming it beats Nvidia's GB300",
+      "entityId": "intelligence-event-65f0b9e50204aaa51c",
+      "entityName": "【钛晨报】引导汽车企业规范境外竞争行为，三部门发文；Anthropic同英伟达支持的Lambda签署350亿美元云计算协议；电影暑期档收官，票房超124亿元",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：OpenAI lifts the lid on its in-house Jalapeño chip - with benchmarks claiming it beats Nvidia's GB300。",
-      "importance": 85,
+      "summary": "新增高价值情报事件记录：【钛晨报】引导汽车企业规范境外竞争行为，三部门发文；Anthropic同英伟达支持的Lambda签署350亿美元云计算协议；电影暑期档收官，票房超124亿元。",
+      "importance": 84,
       "before": null,
       "after": {
-        "publishedAt": "2026-09-01",
-        "summary": "OpenAI published the first Jalapeño benchmarks at Hot Chips, claiming 1.5 to 1.9x more throughput per kilowatt and up to 3.6x lower latency than Nvidia's GB200 and GB300 rack systems The chip's purported gains are at a reported 700W power draw and center arou…",
-        "title": "OpenAI lifts the lid on its in-house Jalapeño chip - with benchmarks claiming it beats Nvidia's GB300"
+        "publishedAt": "2026-09-02",
+        "summary": "Manus正式恢复独立运营；胖东来1-8月销售额超195亿，同比增长26.98%；SpaceX据悉重组数据中心领导团队；苹果官网更新，库克头衔已变为执行主席，约翰·特努斯正式担任苹果首席执行官；外籍个人从外商投资企业取得股息红利需缴个税；交易所制定L2行情使用规范，严禁“绕道抢跑”；《微短剧发展管理办法》9月1日起正式施行；中国牵头制定，全球首个腿式机器人国际标准发布；国家药监局：进一步加强药品信息化追溯管理工作；全链条治理流量造假、网络暴力，9月1日起互联网新规正式施行；上半年公募基金分仓佣金收入达87.27亿…",
+        "title": "【钛晨报】引导汽车企业规范境外竞争行为，三部门发文；Anthropic同英伟达支持的Lambda签署350亿美元云计算协议；电影暑期档收官，票房超124亿元"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -445,7 +506,7 @@
         {
           "field": "publishedAt",
           "before": null,
-          "after": "2026-09-01",
+          "after": "2026-09-02",
           "evidenceIds": [
             "E004"
           ]
@@ -453,7 +514,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "OpenAI published the first Jalapeño benchmarks at Hot Chips, claiming 1.5 to 1.9x more throughput per kilowatt and up to 3.6x lower latency than Nvidia's GB200 and GB300 rack systems The chip's purported gains are at a reported 700W power draw and center arou…",
+          "after": "Manus正式恢复独立运营；胖东来1-8月销售额超195亿，同比增长26.98%；SpaceX据悉重组数据中心领导团队；苹果官网更新，库克头衔已变为执行主席，约翰·特努斯正式担任苹果首席执行官；外籍个人从外商投资企业取得股息红利需缴个税；交易所制定L2行情使用规范，严禁“绕道抢跑”；《微短剧发展管理办法》9月1日起正式施行；中国牵头制定，全球首个腿式机器人国际标准发布；国家药监局：进一步加强药品信息化追溯管理工作；全链条治理流量造假、网络暴力，9月1日起互联网新规正式施行；上半年公募基金分仓佣金收入达87.27亿…",
           "evidenceIds": [
             "E004"
           ]
@@ -461,7 +522,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "OpenAI lifts the lid on its in-house Jalapeño chip - with benchmarks claiming it beats Nvidia's GB300",
+          "after": "【钛晨报】引导汽车企业规范境外竞争行为，三部门发文；Anthropic同英伟达支持的Lambda签署350亿美元云计算协议；电影暑期档收官，票房超124亿元",
           "evidenceIds": [
             "E004"
           ]
@@ -482,35 +543,114 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-cf24c19507ef109f570e"
+        "evt-c57f64aca5c3724011c1"
       ],
       "eventLifecycles": {
-        "evt-cf24c19507ef109f570e": "first_seen"
+        "evt-c57f64aca5c3724011c1": "first_seen"
       },
-      "eventId": "evt-cf24c19507ef109f570e",
+      "eventId": "evt-c57f64aca5c3724011c1",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T21:19:36+00:00",
-      "lastSeenAt": "2026-09-01T21:19:36+00:00"
+      "firstSeenAt": "2026-09-02T00:59:29+00:00",
+      "lastSeenAt": "2026-09-02T00:59:29+00:00"
     },
     {
-      "id": "chg-0215cbbfbc6036de8291",
+      "id": "chg-e5d261ae1013808b5a46",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-4a5f5eb0ff4ce0a4cb",
-      "entityName": "Introducing agentic video understanding with Gemini",
+      "entityId": "intelligence-event-c9490b02e9de3c8721",
+      "entityName": "Shield AI expands Tracker C-UAS integration with L3Harris VAMPIRE™",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：Introducing agentic video understanding with Gemini。",
+      "summary": "新增高价值情报事件记录：Shield AI expands Tracker C-UAS integration with L3Harris VAMPIRE™。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-01",
+        "summary": "SAN DIEGO (September 1, 2026) — Shield AI today announced that L3Harris Technologies (NYSE: LHX) has licensed Shield AI’s Tracker Counter-Unmanned Aircraft System (Tracker C-UAS) to equip its VAMPIRE™ platform, creating an integrated counter-drone solution. T…",
+        "title": "Shield AI expands Tracker C-UAS integration with L3Harris VAMPIRE™"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-01",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "SAN DIEGO (September 1, 2026) — Shield AI today announced that L3Harris Technologies (NYSE: LHX) has licensed Shield AI’s Tracker Counter-Unmanned Aircraft System (Tracker C-UAS) to equip its VAMPIRE™ platform, creating an integrated counter-drone solution. T…",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Shield AI expands Tracker C-UAS integration with L3Harris VAMPIRE™",
+          "evidenceIds": [
+            "E005"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E005"
+      ],
+      "supportingEvidenceIds": [
+        "E005"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-3c107c43f58ecd379b62"
+      ],
+      "eventLifecycles": {
+        "evt-3c107c43f58ecd379b62": "first_seen"
+      },
+      "eventId": "evt-3c107c43f58ecd379b62",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-02T00:59:29+00:00",
+      "lastSeenAt": "2026-09-02T00:59:29+00:00"
+    },
+    {
+      "id": "chg-c6d27ba11174905c3781",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-5ebc3fa8805730d8c1",
+      "entityName": "Are We There Yet? Startup Wants to Launch an 80,000-Year Mission to Alpha Centauri",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Are We There Yet? Startup Wants to Launch an 80,000-Year Mission to Alpha Centauri。",
       "importance": 82,
       "before": null,
       "after": {
         "publishedAt": "2026-09-01",
-        "summary": "Google DeepMind 发布相关公开信息，完整内容见原文。",
-        "title": "Introducing agentic video understanding with Gemini"
+        "summary": "AI data centers in space apparently weren’t enough, so the company decided to give interstellar travel a try.",
+        "title": "Are We There Yet? Startup Wants to Launch an 80,000-Year Mission to Alpha Centauri"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -532,7 +672,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "Google DeepMind 发布相关公开信息，完整内容见原文。",
+          "after": "AI data centers in space apparently weren’t enough, so the company decided to give interstellar travel a try.",
           "evidenceIds": [
             "E006"
           ]
@@ -540,7 +680,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "Introducing agentic video understanding with Gemini",
+          "after": "Are We There Yet? Startup Wants to Launch an 80,000-Year Mission to Alpha Centauri",
           "evidenceIds": [
             "E006"
           ]
@@ -561,35 +701,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-4e9f27a1e31f8482fda1"
+        "evt-d7d6939007fdfd3f169d"
       ],
       "eventLifecycles": {
-        "evt-4e9f27a1e31f8482fda1": "first_seen"
+        "evt-d7d6939007fdfd3f169d": "first_seen"
       },
-      "eventId": "evt-4e9f27a1e31f8482fda1",
+      "eventId": "evt-d7d6939007fdfd3f169d",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T21:19:36+00:00",
-      "lastSeenAt": "2026-09-01T21:19:36+00:00"
+      "firstSeenAt": "2026-09-02T00:59:29+00:00",
+      "lastSeenAt": "2026-09-02T00:59:29+00:00"
     },
     {
-      "id": "chg-f9c7e1037386af636f9a",
+      "id": "chg-b1d05508e9f0d210415e",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-cfa8b157c5ad018e3c",
-      "entityName": "Anthropic将推出人工智能模型Fable新版本 收费更便宜而编程能力更强",
+      "entityId": "intelligence-event-88b8044f5b57d5cc38",
+      "entityName": "Anthropic：RT @claudeai: We’re introducing Claude Fable 5.1 and Claude Mythos 5.1. They're the world’s most advanced models for coding and knowledge…",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：Anthropic将推出人工智能模型Fable新版本 收费更便宜而编程能力更强。",
+      "summary": "新增高价值情报事件记录：Anthropic：RT @claudeai: We’re introducing Claude Fable 5.1 and Claude Mythos 5.1. They're the world’s most advanced models for coding and knowledge…。",
       "importance": 82,
       "before": null,
       "after": {
         "publishedAt": "2026-09-01",
-        "summary": "Anthropic PBC将发布其强大人工智能模型Fable的新版本。公司称，Fable 5.1在编程和科研任务方面表现更好，同时费用也更低，这些调整均是根据客户反馈作出的。",
-        "title": "Anthropic将推出人工智能模型Fable新版本 收费更便宜而编程能力更强"
+        "summary": "RT @claudeai: We’re introducing Claude Fable 5.1 and Claude Mythos 5.1. They're the world’s most advanced models for coding and knowledge…",
+        "title": "Anthropic：RT @claudeai: We’re introducing Claude Fable 5.1 and Claude Mythos 5.1. They're the world’s most advanced models for coding and knowledge…"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -611,7 +751,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "Anthropic PBC将发布其强大人工智能模型Fable的新版本。公司称，Fable 5.1在编程和科研任务方面表现更好，同时费用也更低，这些调整均是根据客户反馈作出的。",
+          "after": "RT @claudeai: We’re introducing Claude Fable 5.1 and Claude Mythos 5.1. They're the world’s most advanced models for coding and knowledge…",
           "evidenceIds": [
             "E007"
           ]
@@ -619,7 +759,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "Anthropic将推出人工智能模型Fable新版本 收费更便宜而编程能力更强",
+          "after": "Anthropic：RT @claudeai: We’re introducing Claude Fable 5.1 and Claude Mythos 5.1. They're the world’s most advanced models for coding and knowledge…",
           "evidenceIds": [
             "E007"
           ]
@@ -640,35 +780,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-f7197d0fcd59cafd45b3"
+        "evt-33d18eef06195c599d41"
       ],
       "eventLifecycles": {
-        "evt-f7197d0fcd59cafd45b3": "first_seen"
+        "evt-33d18eef06195c599d41": "first_seen"
       },
-      "eventId": "evt-f7197d0fcd59cafd45b3",
+      "eventId": "evt-33d18eef06195c599d41",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T21:19:36+00:00",
-      "lastSeenAt": "2026-09-01T21:19:36+00:00"
+      "firstSeenAt": "2026-09-02T00:59:29+00:00",
+      "lastSeenAt": "2026-09-02T00:59:29+00:00"
     },
     {
-      "id": "chg-064cb809397f6d477e7d",
+      "id": "chg-884d105d83f2ec2b8010",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-5791dd42e712adc57f",
-      "entityName": "Anthropic launches Fable 5.1 as AI security worries mount",
+      "entityId": "intelligence-event-f3db484644e2c2163e",
+      "entityName": "Google DeepMind：We’re bringing agentic video understanding to our latest Gemini models. They can now analyze videos with better accuracy while using up to 88% fewer t",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：Anthropic launches Fable 5.1 as AI security worries mount。",
-      "importance": 82,
+      "summary": "新增高价值情报事件记录：Google DeepMind：We’re bringing agentic video understanding to our latest Gemini models. They can now analyze videos with better accuracy while using up to 88% fewer t。",
+      "importance": 81,
       "before": null,
       "after": {
         "publishedAt": "2026-09-01",
-        "summary": "Anthropic launches Claude Fable 5.1 and Mythos 5.1, touting safety gains as AI agent security incidents draw scrutiny",
-        "title": "Anthropic launches Fable 5.1 as AI security worries mount"
+        "summary": "We’re bringing agentic video understanding to our latest Gemini models. They can now analyze videos with better accuracy while using up to 88% fewer tokens. 🧵 https://t.co/ZTjlaLk7tX",
+        "title": "Google DeepMind：We’re bringing agentic video understanding to our latest Gemini models. They can now analyze videos with better accuracy while using up to 88% fewer t"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -684,31 +824,31 @@
           "before": null,
           "after": "2026-09-01",
           "evidenceIds": [
-            "E008"
+            "E009"
           ]
         },
         {
           "field": "summary",
           "before": null,
-          "after": "Anthropic launches Claude Fable 5.1 and Mythos 5.1, touting safety gains as AI agent security incidents draw scrutiny",
+          "after": "We’re bringing agentic video understanding to our latest Gemini models. They can now analyze videos with better accuracy while using up to 88% fewer tokens. 🧵 https://t.co/ZTjlaLk7tX",
           "evidenceIds": [
-            "E008"
+            "E009"
           ]
         },
         {
           "field": "title",
           "before": null,
-          "after": "Anthropic launches Fable 5.1 as AI security worries mount",
+          "after": "Google DeepMind：We’re bringing agentic video understanding to our latest Gemini models. They can now analyze videos with better accuracy while using up to 88% fewer t",
           "evidenceIds": [
-            "E008"
+            "E009"
           ]
         }
       ],
       "evidenceIds": [
-        "E008"
+        "E009"
       ],
       "supportingEvidenceIds": [
-        "E008"
+        "E009"
       ],
       "evidenceQuality": {
         "status": "passed",
@@ -719,28 +859,994 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-b323033e0bb919e08ee6"
+        "evt-1653fa5eda1e4dfef5cd"
       ],
       "eventLifecycles": {
-        "evt-b323033e0bb919e08ee6": "first_seen"
+        "evt-1653fa5eda1e4dfef5cd": "first_seen"
       },
-      "eventId": "evt-b323033e0bb919e08ee6",
+      "eventId": "evt-1653fa5eda1e4dfef5cd",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-01T21:19:36+00:00",
-      "lastSeenAt": "2026-09-01T21:19:36+00:00"
+      "firstSeenAt": "2026-09-02T00:59:29+00:00",
+      "lastSeenAt": "2026-09-02T00:59:29+00:00"
+    },
+    {
+      "id": "chg-c0132cd42b63517515a2",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-51ac41d88665a7fcab",
+      "entityName": "Google DeepMind：RT @koraykv: Great catching up with @OfficialLoganK. The pace of what we’re building right now across @GoogleDeepMind and @Google is exciti…",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Google DeepMind：RT @koraykv: Great catching up with @OfficialLoganK. The pace of what we’re building right now across @GoogleDeepMind and @Google is exciti…。",
+      "importance": 81,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-01",
+        "summary": "RT @koraykv: Great catching up with @OfficialLoganK. The pace of what we’re building right now across @GoogleDeepMind and @Google is exciti…",
+        "title": "Google DeepMind：RT @koraykv: Great catching up with @OfficialLoganK. The pace of what we’re building right now across @GoogleDeepMind and @Google is exciti…"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-01",
+          "evidenceIds": [
+            "E010"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "RT @koraykv: Great catching up with @OfficialLoganK. The pace of what we’re building right now across @GoogleDeepMind and @Google is exciti…",
+          "evidenceIds": [
+            "E010"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Google DeepMind：RT @koraykv: Great catching up with @OfficialLoganK. The pace of what we’re building right now across @GoogleDeepMind and @Google is exciti…",
+          "evidenceIds": [
+            "E010"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E010"
+      ],
+      "supportingEvidenceIds": [
+        "E010"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-497ef4efd8ecda6eb03a"
+      ],
+      "eventLifecycles": {
+        "evt-497ef4efd8ecda6eb03a": "first_seen"
+      },
+      "eventId": "evt-497ef4efd8ecda6eb03a",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-02T00:59:29+00:00",
+      "lastSeenAt": "2026-09-02T00:59:29+00:00"
+    },
+    {
+      "id": "chg-03a690a7e3964af35487",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-985e3ac0fc2e2ee5ae",
+      "entityName": "Google DeepMind：Instead of scanning an entire file, Gemini reasons across the video’s transcript, audio, and frames, dynamically adjusting the frame rate to pull the",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Google DeepMind：Instead of scanning an entire file, Gemini reasons across the video’s transcript, audio, and frames, dynamically adjusting the frame rate to pull the。",
+      "importance": 81,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-01",
+        "summary": "Instead of scanning an entire file, Gemini reasons across the video’s transcript, audio, and frames, dynamically adjusting the frame rate to pull the exact moments needed. The efficiency gains are most significant for long-form content, from 10-minute guides…",
+        "title": "Google DeepMind：Instead of scanning an entire file, Gemini reasons across the video’s transcript, audio, and frames, dynamically adjusting the frame rate to pull the"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-01",
+          "evidenceIds": [
+            "E011"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Instead of scanning an entire file, Gemini reasons across the video’s transcript, audio, and frames, dynamically adjusting the frame rate to pull the exact moments needed. The efficiency gains are most significant for long-form content, from 10-minute guides…",
+          "evidenceIds": [
+            "E011"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Google DeepMind：Instead of scanning an entire file, Gemini reasons across the video’s transcript, audio, and frames, dynamically adjusting the frame rate to pull the",
+          "evidenceIds": [
+            "E011"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E011"
+      ],
+      "supportingEvidenceIds": [
+        "E011"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-ccfbd9b20668b4b62235"
+      ],
+      "eventLifecycles": {
+        "evt-ccfbd9b20668b4b62235": "first_seen"
+      },
+      "eventId": "evt-ccfbd9b20668b4b62235",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-02T00:59:29+00:00",
+      "lastSeenAt": "2026-09-02T00:59:29+00:00"
+    },
+    {
+      "id": "chg-dca0b19b84db07dff77a",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-7ac470e2fb18b37d33",
+      "entityName": "地球最强大模型也开始强调性价比！Anthropic上新Fable 5.1",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：地球最强大模型也开始强调性价比！Anthropic上新Fable 5.1。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-02",
+        "summary": "随着上市流程进入关键节点，Anthropic把用来狙击“GPT-6”的大模型直接端了出来。 当地时间周二， Anthropic宣布推出“全球最先进的编程和知识工作模型”Fable 5.1 ，同时为拥有Mythos访问权限的用户发布Mythos 5.1。 在Anthropic的Claude产品体系中，Fable是最强大的模型。而Fable和Mythos本质上是同一个模型，但安全防护级别不同，后者对高风险领域（如生物学和 网络安全 ）中的某些任务采用更宽松的防护措施 。",
+        "title": "地球最强大模型也开始强调性价比！Anthropic上新Fable 5.1"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-02",
+          "evidenceIds": [
+            "E012"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "随着上市流程进入关键节点，Anthropic把用来狙击“GPT-6”的大模型直接端了出来。 当地时间周二， Anthropic宣布推出“全球最先进的编程和知识工作模型”Fable 5.1 ，同时为拥有Mythos访问权限的用户发布Mythos 5.1。 在Anthropic的Claude产品体系中，Fable是最强大的模型。而Fable和Mythos本质上是同一个模型，但安全防护级别不同，后者对高风险领域（如生物学和 网络安全 ）中的某些任务采用更宽松的防护措施 。",
+          "evidenceIds": [
+            "E012"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "地球最强大模型也开始强调性价比！Anthropic上新Fable 5.1",
+          "evidenceIds": [
+            "E012"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E012"
+      ],
+      "supportingEvidenceIds": [
+        "E012"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-dc6c97cc577ef6cb46f8"
+      ],
+      "eventLifecycles": {
+        "evt-dc6c97cc577ef6cb46f8": "first_seen"
+      },
+      "eventId": "evt-dc6c97cc577ef6cb46f8",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-02T00:59:29+00:00",
+      "lastSeenAt": "2026-09-02T00:59:29+00:00"
+    },
+    {
+      "id": "chg-eca6b2d33b00b3847797",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-1f10c00f7f012bc9a9",
+      "entityName": "发行价142.18元！燧原科技今日申购 中一签能赚多少？",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：发行价142.18元！燧原科技今日申购 中一签能赚多少？。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-02",
+        "summary": "“国产GPU四小龙”最后一块拼图即将补齐。 发行价142.18元/股、募资61.19亿元、上市市值约611.87亿元， 燧原科技 今日将开启科创板申购。叠加国产算力赛道的高热度与同赛道“玩家”上市后的赚钱效应，又一场打新盛宴或近在眼前。 9月2日， 燧原科技 将正式开启网上网下申购，股票代码688801，网上申购代码787801。",
+        "title": "发行价142.18元！燧原科技今日申购 中一签能赚多少？"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-02",
+          "evidenceIds": [
+            "E013"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "“国产GPU四小龙”最后一块拼图即将补齐。 发行价142.18元/股、募资61.19亿元、上市市值约611.87亿元， 燧原科技 今日将开启科创板申购。叠加国产算力赛道的高热度与同赛道“玩家”上市后的赚钱效应，又一场打新盛宴或近在眼前。 9月2日， 燧原科技 将正式开启网上网下申购，股票代码688801，网上申购代码787801。",
+          "evidenceIds": [
+            "E013"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "发行价142.18元！燧原科技今日申购 中一签能赚多少？",
+          "evidenceIds": [
+            "E013"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E013"
+      ],
+      "supportingEvidenceIds": [
+        "E013"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-4f56483d1b6539cc70ee"
+      ],
+      "eventLifecycles": {
+        "evt-4f56483d1b6539cc70ee": "first_seen"
+      },
+      "eventId": "evt-4f56483d1b6539cc70ee",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-02T00:59:29+00:00",
+      "lastSeenAt": "2026-09-02T00:59:29+00:00"
+    },
+    {
+      "id": "chg-38bc196737872f62cfdc",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-5c793ba8fb346eb37d",
+      "entityName": "全球市场：美股三大指数收跌 纳指跌超1% AI硬件股普跌 国际油价涨逾5%",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：全球市场：美股三大指数收跌 纳指跌超1% AI硬件股普跌 国际油价涨逾5%。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-02",
+        "summary": "美股市场： 美股三大指数09月01日收盘全线下跌。截至收盘，道琼斯工业平均指数比前一交易日下跌419.02点，收于52766.88点，跌幅为0.79%； 标准普尔 500种股票指数下跌54.67点，收于7631.47点，跌幅为0.71%； 纳斯达克 综合 指数下跌271.12点，收于26099.77点，跌幅为1.03%。 大型科技股多数下跌， 苹果 涨2.61%、Meta涨1.08%、 微软 跌1.24%、 谷歌-A 跌1.28%、 英伟达 跌1.51%、 亚马逊 跌1.87%、 特斯拉 跌3.22%。 财报方面…",
+        "title": "全球市场：美股三大指数收跌 纳指跌超1% AI硬件股普跌 国际油价涨逾5%"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-02",
+          "evidenceIds": [
+            "E014"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "美股市场： 美股三大指数09月01日收盘全线下跌。截至收盘，道琼斯工业平均指数比前一交易日下跌419.02点，收于52766.88点，跌幅为0.79%； 标准普尔 500种股票指数下跌54.67点，收于7631.47点，跌幅为0.71%； 纳斯达克 综合 指数下跌271.12点，收于26099.77点，跌幅为1.03%。 大型科技股多数下跌， 苹果 涨2.61%、Meta涨1.08%、 微软 跌1.24%、 谷歌-A 跌1.28%、 英伟达 跌1.51%、 亚马逊 跌1.87%、 特斯拉 跌3.22%。 财报方面…",
+          "evidenceIds": [
+            "E014"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "全球市场：美股三大指数收跌 纳指跌超1% AI硬件股普跌 国际油价涨逾5%",
+          "evidenceIds": [
+            "E014"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E014"
+      ],
+      "supportingEvidenceIds": [
+        "E014"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-e1733cccb303aa22e270"
+      ],
+      "eventLifecycles": {
+        "evt-e1733cccb303aa22e270": "first_seen"
+      },
+      "eventId": "evt-e1733cccb303aa22e270",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-02T00:59:29+00:00",
+      "lastSeenAt": "2026-09-02T00:59:29+00:00"
+    },
+    {
+      "id": "chg-c297be11f59f34f04e5e",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-9bfb8020bc03bd5944",
+      "entityName": "世界动力电池大会即将举办 固态电池板块有望迎来全新催化",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：世界动力电池大会即将举办 固态电池板块有望迎来全新催化。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-02",
+        "summary": "2026世界动力 电池 大会9月3日至4日在四川宜宾举办，旨在推动全球绿色低碳可持续发展，加快动力 电池 和 新能源 汽车 产业高质量发展，届时将发布动力 电池 创新技术及技术路线图等成果。 德邦证券翟堃指出，政策与资本双向驱动共振，2027年或成关键节点。产业普遍预期2026年半 固态电池 率先迈入商业化周期，至2027年， 宁德时代 、 比亚迪 、 国轩高科 等多家头部企业规划实现全 固态电池 小批量量产或示范装车，产业化节奏显著提速。 固态电池 产业化拐点渐近，建议优先布局确定性高的上游环节：一是设备端，关…",
+        "title": "世界动力电池大会即将举办 固态电池板块有望迎来全新催化"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-02",
+          "evidenceIds": [
+            "E015"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "2026世界动力 电池 大会9月3日至4日在四川宜宾举办，旨在推动全球绿色低碳可持续发展，加快动力 电池 和 新能源 汽车 产业高质量发展，届时将发布动力 电池 创新技术及技术路线图等成果。 德邦证券翟堃指出，政策与资本双向驱动共振，2027年或成关键节点。产业普遍预期2026年半 固态电池 率先迈入商业化周期，至2027年， 宁德时代 、 比亚迪 、 国轩高科 等多家头部企业规划实现全 固态电池 小批量量产或示范装车，产业化节奏显著提速。 固态电池 产业化拐点渐近，建议优先布局确定性高的上游环节：一是设备端，关…",
+          "evidenceIds": [
+            "E015"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "世界动力电池大会即将举办 固态电池板块有望迎来全新催化",
+          "evidenceIds": [
+            "E015"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E015"
+      ],
+      "supportingEvidenceIds": [
+        "E015"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-f05b162e3dfd60438ef0"
+      ],
+      "eventLifecycles": {
+        "evt-f05b162e3dfd60438ef0": "first_seen"
+      },
+      "eventId": "evt-f05b162e3dfd60438ef0",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-02T00:59:29+00:00",
+      "lastSeenAt": "2026-09-02T00:59:29+00:00"
+    },
+    {
+      "id": "chg-2d9578d5fb583b2b9107",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-aec8cdd62cf4fa136d",
+      "entityName": "What is fusion?",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：What is fusion?。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-01",
+        "summary": "Fusion is the process that powers the sun, combining light atoms to release vast amounts of clean energy. Learn how fusion works, why it’s challenging to achieve on Earth, and how it could provide abundant, carbon-free electricity for the future.",
+        "title": "What is fusion?"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-01",
+          "evidenceIds": [
+            "E016"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Fusion is the process that powers the sun, combining light atoms to release vast amounts of clean energy. Learn how fusion works, why it’s challenging to achieve on Earth, and how it could provide abundant, carbon-free electricity for the future.",
+          "evidenceIds": [
+            "E016"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "What is fusion?",
+          "evidenceIds": [
+            "E016"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E016"
+      ],
+      "supportingEvidenceIds": [
+        "E016"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-e929a86befcfbc7f5915"
+      ],
+      "eventLifecycles": {
+        "evt-e929a86befcfbc7f5915": "first_seen"
+      },
+      "eventId": "evt-e929a86befcfbc7f5915",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-02T00:59:29+00:00",
+      "lastSeenAt": "2026-09-02T00:59:29+00:00"
+    },
+    {
+      "id": "chg-4021c9c41629a8b6e94f",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-ac5fad6d9e99d486d9",
+      "entityName": "How the FDA is building a secure, AI-ready data foundation on Databricks for Government",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：How the FDA is building a secure, AI-ready data foundation on Databricks for Government。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-01",
+        "summary": "Learn how the FDA is using Databricks on AWS GovCloud to scale secure AI, modernize its data foundation, and improve efficiency without mission disruption.",
+        "title": "How the FDA is building a secure, AI-ready data foundation on Databricks for Government"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-01",
+          "evidenceIds": [
+            "E019"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Learn how the FDA is using Databricks on AWS GovCloud to scale secure AI, modernize its data foundation, and improve efficiency without mission disruption.",
+          "evidenceIds": [
+            "E019"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "How the FDA is building a secure, AI-ready data foundation on Databricks for Government",
+          "evidenceIds": [
+            "E019"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E019"
+      ],
+      "supportingEvidenceIds": [
+        "E019"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-8faefc42cfa80ec47bc3"
+      ],
+      "eventLifecycles": {
+        "evt-8faefc42cfa80ec47bc3": "first_seen"
+      },
+      "eventId": "evt-8faefc42cfa80ec47bc3",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-02T00:59:29+00:00",
+      "lastSeenAt": "2026-09-02T00:59:29+00:00"
+    },
+    {
+      "id": "chg-3b89b0873b4e92a8116e",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-bcf8c4013eb303001b",
+      "entityName": "Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-01",
+        "summary": "Facility backed by seven-year contracted capacity agreement and estimated €1.0–1.7 billion in regional investment for local development and employment MIKKELI, Finland, Sept. 01, 2026 (GLOBE NEWSWIRE) -- Cerebras Systems (NASDAQ: CBRS) today announced a new A…",
+        "title": "Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-01",
+          "evidenceIds": [
+            "E020"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Facility backed by seven-year contracted capacity agreement and estimated €1.0–1.7 billion in regional investment for local development and employment MIKKELI, Finland, Sept. 01, 2026 (GLOBE NEWSWIRE) -- Cerebras Systems (NASDAQ: CBRS) today announced a new A…",
+          "evidenceIds": [
+            "E020"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026",
+          "evidenceIds": [
+            "E020"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E020"
+      ],
+      "supportingEvidenceIds": [
+        "E020"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-7c2170f93d8f8d98b344"
+      ],
+      "eventLifecycles": {
+        "evt-7c2170f93d8f8d98b344": "first_seen"
+      },
+      "eventId": "evt-7c2170f93d8f8d98b344",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-02T00:59:29+00:00",
+      "lastSeenAt": "2026-09-02T00:59:29+00:00"
+    },
+    {
+      "id": "chg-f884cc0c6e9cc5184538",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-188b4fce3bf0e9cee6",
+      "entityName": "Anduril to Deliver Hardware and Shelter Integration for Army’s TITAN Program",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Anduril to Deliver Hardware and Shelter Integration for Army’s TITAN Program。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-01",
+        "summary": "Anduril Industries builds advanced autonomous systems and defense technology to protect US and allied forces. Creating the future of national security through AI, robotics, and cutting-edge engineering.",
+        "title": "Anduril to Deliver Hardware and Shelter Integration for Army’s TITAN Program"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-01",
+          "evidenceIds": [
+            "E021"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Anduril Industries builds advanced autonomous systems and defense technology to protect US and allied forces. Creating the future of national security through AI, robotics, and cutting-edge engineering.",
+          "evidenceIds": [
+            "E021"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Anduril to Deliver Hardware and Shelter Integration for Army’s TITAN Program",
+          "evidenceIds": [
+            "E021"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E021"
+      ],
+      "supportingEvidenceIds": [
+        "E021"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-6c417b83a693d3a492ab"
+      ],
+      "eventLifecycles": {
+        "evt-6c417b83a693d3a492ab": "first_seen"
+      },
+      "eventId": "evt-6c417b83a693d3a492ab",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-02T00:59:29+00:00",
+      "lastSeenAt": "2026-09-02T00:59:29+00:00"
+    },
+    {
+      "id": "chg-b62f404a459627e75345",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-516e78395a4baeef36",
+      "entityName": "AI制药成巨头竞逐新赛道 AI4S迎来高速发展窗口期",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：AI制药成巨头竞逐新赛道 AI4S迎来高速发展窗口期。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-02",
+        "summary": "据报道，AI技术正深度融入药物研发全链条，在政策红利与资本加持下，AI制药产业迎来高速发展窗口期。工信部等多部门联合印发的实施方案明确提出，建设 人工智能 驱动的新药发现与虚拟筛选平台。据预测，2025至2030年中国智能制药市场规模有望突破5000亿元。 AI技术正在改变传统药企的研发逻辑。目前，AI可将新药临床前研发周期压缩至1年左右，全球已有多款AI设计药物进入Ⅱ期、Ⅲ期临床阶段，行业正加速进入收获期。中邮证券指出，AI制药正逐步成为AI巨头公司的战略主航道。2026年以来，谷歌/Anthropic等巨头将…",
+        "title": "AI制药成巨头竞逐新赛道 AI4S迎来高速发展窗口期"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-02",
+          "evidenceIds": [
+            "E022"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "据报道，AI技术正深度融入药物研发全链条，在政策红利与资本加持下，AI制药产业迎来高速发展窗口期。工信部等多部门联合印发的实施方案明确提出，建设 人工智能 驱动的新药发现与虚拟筛选平台。据预测，2025至2030年中国智能制药市场规模有望突破5000亿元。 AI技术正在改变传统药企的研发逻辑。目前，AI可将新药临床前研发周期压缩至1年左右，全球已有多款AI设计药物进入Ⅱ期、Ⅲ期临床阶段，行业正加速进入收获期。中邮证券指出，AI制药正逐步成为AI巨头公司的战略主航道。2026年以来，谷歌/Anthropic等巨头将…",
+          "evidenceIds": [
+            "E022"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "AI制药成巨头竞逐新赛道 AI4S迎来高速发展窗口期",
+          "evidenceIds": [
+            "E022"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E022"
+      ],
+      "supportingEvidenceIds": [
+        "E022"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-af8b868734ebfa9c80d4"
+      ],
+      "eventLifecycles": {
+        "evt-af8b868734ebfa9c80d4": "first_seen"
+      },
+      "eventId": "evt-af8b868734ebfa9c80d4",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-02T00:59:29+00:00",
+      "lastSeenAt": "2026-09-02T00:59:29+00:00"
+    },
+    {
+      "id": "chg-3dece9dfc135f477282a",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "catl",
+      "entityName": "宁德时代",
+      "action": "updated",
+      "changedFields": [
+        "news"
+      ],
+      "summary": "宁德时代 的 news 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": []
+      },
+      "after": {
+        "news": [
+          {
+            "publishedAt": "2026-09-01T22:43:00+08:00",
+            "source": "新浪财经",
+            "title": "9月“金股”来了！宁德时代、天孚通信等27股获最至少2券商推荐",
+            "url": "https://k.sina.cn/article_7879996919_1d5af35f7020027boo.html"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [],
+          "after": [
+            {
+              "publishedAt": "2026-09-01T22:43:00+08:00",
+              "source": "新浪财经",
+              "title": "9月“金股”来了！宁德时代、天孚通信等27股获最至少2券商推荐",
+              "url": "https://k.sina.cn/article_7879996919_1d5af35f7020027boo.html"
+            }
+          ],
+          "evidenceIds": [
+            "E031"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E031"
+      ],
+      "supportingEvidenceIds": [
+        "E031"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-a2b98717afa49c66e560"
+      ],
+      "eventLifecycles": {
+        "evt-a2b98717afa49c66e560": "first_seen"
+      },
+      "eventId": "evt-a2b98717afa49c66e560",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-02T00:59:29+00:00",
+      "lastSeenAt": "2026-09-02T00:59:29+00:00"
     }
   ],
   "evidence": [
     {
       "id": "E002",
-      "changeId": "chg-e9769bd27de538dd5967",
-      "entityName": "ASUR CLOSES ACQUISITION OF MOTIVA'S INTERESTS IN AIRPORTS IN BRAZIL, ECUADOR, COSTA RICA AND CURAÇAO",
-      "claim": "新增高价值情报事件记录：ASUR CLOSES ACQUISITION OF MOTIVA'S INTERESTS IN AIRPORTS IN BRAZIL, ECUADOR, COSTA RICA AND CURAÇAO。",
+      "changeId": "chg-0c0de219df226d1c1cec",
+      "entityName": "AfterQuery reportedly becomes Y Combinator’s fastest-ever unicorn, now valued at $3.2B",
+      "claim": "新增高价值情报事件记录：AfterQuery reportedly becomes Y Combinator’s fastest-ever unicorn, now valued at $3.2B。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "TechCrunch Venture",
+      "title": "AfterQuery reportedly becomes Y Combinator’s fastest-ever unicorn, now valued at $3.2B",
+      "url": "https://techcrunch.com/2026/09/01/afterquery-reportedly-becomes-y-combinators-fastest-ever-unicorn-now-valued-at-3-2b",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E003",
+      "changeId": "chg-a0741736be163308a8d7",
+      "entityName": "Telephone and Data Systems Announces It Is No Longer Pursuing the Acquisition of Public Shares of Array Digital Infrastructure",
+      "claim": "新增高价值情报事件记录：Telephone and Data Systems Announces It Is No Longer Pursuing the Acquisition of Public Shares of Array Digital Infrastructure。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "sourceName": "PR Newswire Consumer Technology",
-      "title": "ASUR CLOSES ACQUISITION OF MOTIVA'S INTERESTS IN AIRPORTS IN BRAZIL, ECUADOR, COSTA RICA AND CURAÇAO",
-      "url": "https://www.prnewswire.com/news-releases/asur-closes-acquisition-of-motivas-interests-in-airports-in-brazil-ecuador-costa-rica-and-curacao-302866774.html",
+      "title": "Telephone and Data Systems Announces It Is No Longer Pursuing the Acquisition of Public Shares of Array Digital Infrastructure",
+      "url": "https://www.prnewswire.com/news-releases/telephone-and-data-systems-announces-it-is-no-longer-pursuing-the-acquisition-of-public-shares-of-array-digital-infrastructure-302866945.html",
       "publishedAt": "2026-09-01",
       "evidenceGrade": "B",
       "platformName": "新闻稿",
@@ -756,15 +1862,62 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E003",
-      "changeId": "chg-42c325ebc764dc188595",
-      "entityName": "No ‘DMV for AI’: US Pushes Against AI Regulations at Global Forum",
-      "claim": "新增高价值情报事件记录：No ‘DMV for AI’: US Pushes Against AI Regulations at Global Forum。",
+      "id": "E004",
+      "changeId": "chg-5c3f4f7a28f559aebe39",
+      "entityName": "【钛晨报】引导汽车企业规范境外竞争行为，三部门发文；Anthropic同英伟达支持的Lambda签署350亿美元云计算协议；电影暑期档收官，票房超124亿元",
+      "claim": "新增高价值情报事件记录：【钛晨报】引导汽车企业规范境外竞争行为，三部门发文；Anthropic同英伟达支持的Lambda签署350亿美元云计算协议；电影暑期档收官，票房超124亿元。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "钛媒体",
+      "title": "【钛晨报】引导汽车企业规范境外竞争行为，三部门发文；Anthropic同英伟达支持的Lambda签署350亿美元云计算协议；电影暑期档收官，票房超124亿元",
+      "url": "https://www.tmtpost.com/8125054.html",
+      "publishedAt": "2026-09-02",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E005",
+      "changeId": "chg-e5d261ae1013808b5a46",
+      "entityName": "Shield AI expands Tracker C-UAS integration with L3Harris VAMPIRE™",
+      "claim": "新增高价值情报事件记录：Shield AI expands Tracker C-UAS integration with L3Harris VAMPIRE™。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Shield AI",
+      "title": "Shield AI expands Tracker C-UAS integration with L3Harris VAMPIRE™",
+      "url": "https://shield.ai/shield-ai-expands-tracker-c-uas-integration-with-l3harris-vampire",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "官方披露",
+      "platformName": "官方网站",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E006",
+      "changeId": "chg-c6d27ba11174905c3781",
+      "entityName": "Are We There Yet? Startup Wants to Launch an 80,000-Year Mission to Alpha Centauri",
+      "claim": "新增高价值情报事件记录：Are We There Yet? Startup Wants to Launch an 80,000-Year Mission to Alpha Centauri。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "sourceName": "CNET",
-      "title": "No ‘DMV for AI’: US Pushes Against AI Regulations at Global Forum",
-      "url": "https://www.cnet.com/tech/services-and-software/g20-innovation-ministerial-ai-regulation-us-news",
+      "title": "Are We There Yet? Startup Wants to Launch an 80,000-Year Mission to Alpha Centauri",
+      "url": "https://www.cnet.com/science/space/are-we-there-yet-startup-wants-to-launch-an-80000-year-mission-to-alpha-centauri",
       "publishedAt": "2026-09-01",
       "evidenceGrade": "C",
       "platformName": "CNET",
@@ -780,42 +1933,18 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E004",
-      "changeId": "chg-414f55b873a14eba8dc7",
-      "entityName": "OpenAI lifts the lid on its in-house Jalapeño chip - with benchmarks claiming it beats Nvidia's GB300",
-      "claim": "新增高价值情报事件记录：OpenAI lifts the lid on its in-house Jalapeño chip - with benchmarks claiming it beats Nvidia's GB300。",
+      "id": "E007",
+      "changeId": "chg-b1d05508e9f0d210415e",
+      "entityName": "Anthropic：RT @claudeai: We’re introducing Claude Fable 5.1 and Claude Mythos 5.1. They're the world’s most advanced models for coding and knowledge…",
+      "claim": "新增高价值情报事件记录：Anthropic：RT @claudeai: We’re introducing Claude Fable 5.1 and Claude Mythos 5.1. They're the world’s most advanced models for coding and knowledge…。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "TechRadar",
-      "title": "OpenAI lifts the lid on its in-house Jalapeño chip - with benchmarks claiming it beats Nvidia's GB300",
-      "url": "https://www.techradar.com/pro/openai-lifts-the-lid-on-its-in-house-jalapeno-chip-with-benchmarks-claiming-it-beats-nvidias-gb300",
-      "publishedAt": "2026-09-01",
-      "evidenceGrade": "C",
-      "platformName": "TechRadar",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E006",
-      "changeId": "chg-0215cbbfbc6036de8291",
-      "entityName": "Introducing agentic video understanding with Gemini",
-      "claim": "新增高价值情报事件记录：Introducing agentic video understanding with Gemini。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Google DeepMind",
-      "title": "Introducing agentic video understanding with Gemini",
-      "url": "https://deepmind.google/blog/introducing-agentic-video-in-gemini",
+      "sourceName": "Anthropic on X",
+      "title": "Anthropic：RT @claudeai: We’re introducing Claude Fable 5.1 and Claude Mythos 5.1. They're the world’s most advanced models for coding and knowledge…",
+      "url": "https://x.com/AnthropicAI/status/2094848668650074336",
       "publishedAt": "2026-09-01",
       "evidenceGrade": "B",
-      "platformName": "官方网站",
+      "platformName": "X",
       "sourceRole": "primary",
       "claimFields": [
         "publishedAt",
@@ -828,19 +1957,19 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E007",
-      "changeId": "chg-f9c7e1037386af636f9a",
-      "entityName": "Anthropic将推出人工智能模型Fable新版本 收费更便宜而编程能力更强",
-      "claim": "新增高价值情报事件记录：Anthropic将推出人工智能模型Fable新版本 收费更便宜而编程能力更强。",
+      "id": "E009",
+      "changeId": "chg-884d105d83f2ec2b8010",
+      "entityName": "Google DeepMind：We’re bringing agentic video understanding to our latest Gemini models. They can now analyze videos with better accuracy while using up to 88% fewer t",
+      "claim": "新增高价值情报事件记录：Google DeepMind：We’re bringing agentic video understanding to our latest Gemini models. They can now analyze videos with better accuracy while using up to 88% fewer t。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "Anthropic将推出人工智能模型Fable新版本 收费更便宜而编程能力更强",
-      "url": "https://finance.sina.com.cn/world/2026-09-02/doc-iniqkkpk1423231.shtml",
+      "sourceName": "Google DeepMind on X",
+      "title": "Google DeepMind：We’re bringing agentic video understanding to our latest Gemini models. They can now analyze videos with better accuracy while using up to 88% fewer t",
+      "url": "https://x.com/GoogleDeepMind/status/2094840179676660097",
       "publishedAt": "2026-09-01",
-      "evidenceGrade": "C",
-      "platformName": "新浪",
-      "sourceRole": "corroboration",
+      "evidenceGrade": "B",
+      "platformName": "X",
+      "sourceRole": "primary",
       "claimFields": [
         "publishedAt",
         "summary",
@@ -852,19 +1981,19 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E008",
-      "changeId": "chg-064cb809397f6d477e7d",
-      "entityName": "Anthropic launches Fable 5.1 as AI security worries mount",
-      "claim": "新增高价值情报事件记录：Anthropic launches Fable 5.1 as AI security worries mount。",
+      "id": "E010",
+      "changeId": "chg-c0132cd42b63517515a2",
+      "entityName": "Google DeepMind：RT @koraykv: Great catching up with @OfficialLoganK. The pace of what we’re building right now across @GoogleDeepMind and @Google is exciti…",
+      "claim": "新增高价值情报事件记录：Google DeepMind：RT @koraykv: Great catching up with @OfficialLoganK. The pace of what we’re building right now across @GoogleDeepMind and @Google is exciti…。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "Mashable",
-      "title": "Anthropic launches Fable 5.1 as AI security worries mount",
-      "url": "https://mashable.com/tech/anthropic-fable-5-1-launch-announcment",
+      "sourceName": "Google DeepMind on X",
+      "title": "Google DeepMind：RT @koraykv: Great catching up with @OfficialLoganK. The pace of what we’re building right now across @GoogleDeepMind and @Google is exciti…",
+      "url": "https://x.com/GoogleDeepMind/status/2094878106402107449",
       "publishedAt": "2026-09-01",
-      "evidenceGrade": "C",
-      "platformName": "Mashable",
-      "sourceRole": "corroboration",
+      "evidenceGrade": "B",
+      "platformName": "X",
+      "sourceRole": "primary",
       "claimFields": [
         "publishedAt",
         "summary",
@@ -874,13 +2003,2183 @@
       "qualityIssues": [],
       "qualityStatus": "passed",
       "supportStatus": "supports"
+    },
+    {
+      "id": "E011",
+      "changeId": "chg-03a690a7e3964af35487",
+      "entityName": "Google DeepMind：Instead of scanning an entire file, Gemini reasons across the video’s transcript, audio, and frames, dynamically adjusting the frame rate to pull the",
+      "claim": "新增高价值情报事件记录：Google DeepMind：Instead of scanning an entire file, Gemini reasons across the video’s transcript, audio, and frames, dynamically adjusting the frame rate to pull the。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Google DeepMind on X",
+      "title": "Google DeepMind：Instead of scanning an entire file, Gemini reasons across the video’s transcript, audio, and frames, dynamically adjusting the frame rate to pull the",
+      "url": "https://x.com/GoogleDeepMind/status/2094840182457422260",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "B",
+      "platformName": "X",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E012",
+      "changeId": "chg-dca0b19b84db07dff77a",
+      "entityName": "地球最强大模型也开始强调性价比！Anthropic上新Fable 5.1",
+      "claim": "新增高价值情报事件记录：地球最强大模型也开始强调性价比！Anthropic上新Fable 5.1。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "东方财富",
+      "title": "地球最强大模型也开始强调性价比！Anthropic上新Fable 5.1",
+      "url": "https://finance.eastmoney.com/a/202609023861892250.html",
+      "publishedAt": "2026-09-02",
+      "evidenceGrade": "媒体报道",
+      "platformName": "东方财富",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E013",
+      "changeId": "chg-eca6b2d33b00b3847797",
+      "entityName": "发行价142.18元！燧原科技今日申购 中一签能赚多少？",
+      "claim": "新增高价值情报事件记录：发行价142.18元！燧原科技今日申购 中一签能赚多少？。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "东方财富",
+      "title": "发行价142.18元！燧原科技今日申购 中一签能赚多少？",
+      "url": "https://finance.eastmoney.com/a/202609023861955559.html",
+      "publishedAt": "2026-09-02",
+      "evidenceGrade": "媒体报道",
+      "platformName": "东方财富",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E014",
+      "changeId": "chg-38bc196737872f62cfdc",
+      "entityName": "全球市场：美股三大指数收跌 纳指跌超1% AI硬件股普跌 国际油价涨逾5%",
+      "claim": "新增高价值情报事件记录：全球市场：美股三大指数收跌 纳指跌超1% AI硬件股普跌 国际油价涨逾5%。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "东方财富",
+      "title": "全球市场：美股三大指数收跌 纳指跌超1% AI硬件股普跌 国际油价涨逾5%",
+      "url": "https://finance.eastmoney.com/a/202609023861898065.html",
+      "publishedAt": "2026-09-02",
+      "evidenceGrade": "媒体报道",
+      "platformName": "东方财富",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E015",
+      "changeId": "chg-c297be11f59f34f04e5e",
+      "entityName": "世界动力电池大会即将举办 固态电池板块有望迎来全新催化",
+      "claim": "新增高价值情报事件记录：世界动力电池大会即将举办 固态电池板块有望迎来全新催化。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "东方财富",
+      "title": "世界动力电池大会即将举办 固态电池板块有望迎来全新催化",
+      "url": "https://finance.eastmoney.com/a/202609023862039837.html",
+      "publishedAt": "2026-09-02",
+      "evidenceGrade": "媒体报道",
+      "platformName": "东方财富",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E016",
+      "changeId": "chg-2d9578d5fb583b2b9107",
+      "entityName": "What is fusion?",
+      "claim": "新增高价值情报事件记录：What is fusion?。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Helion Energy",
+      "title": "What is fusion?",
+      "url": "https://www.helionenergy.com/blog/what-is-fusion",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "官方披露",
+      "platformName": "官方网站",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E019",
+      "changeId": "chg-4021c9c41629a8b6e94f",
+      "entityName": "How the FDA is building a secure, AI-ready data foundation on Databricks for Government",
+      "claim": "新增高价值情报事件记录：How the FDA is building a secure, AI-ready data foundation on Databricks for Government。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Databricks",
+      "title": "How the FDA is building a secure, AI-ready data foundation on Databricks for Government",
+      "url": "https://www.databricks.com/blog/how-fda-building-secure-ai-ready-data-foundation-databricks-government",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "官方披露",
+      "platformName": "官方网站",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E020",
+      "changeId": "chg-3b89b0873b4e92a8116e",
+      "entityName": "Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026",
+      "claim": "新增高价值情报事件记录：Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Cerebras Systems",
+      "title": "Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026",
+      "url": "https://investors.cerebras.ai/news-releases/news-release-details/cerebras-and-compute-nordic-finland-announce-new-165-mw-ai-data",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "官方披露",
+      "platformName": "官方网站",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E021",
+      "changeId": "chg-f884cc0c6e9cc5184538",
+      "entityName": "Anduril to Deliver Hardware and Shelter Integration for Army’s TITAN Program",
+      "claim": "新增高价值情报事件记录：Anduril to Deliver Hardware and Shelter Integration for Army’s TITAN Program。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Anduril Industries",
+      "title": "Anduril to Deliver Hardware and Shelter Integration for Army’s TITAN Program",
+      "url": "https://www.anduril.com/news/anduril-to-deliver-hardware-and-shelter-integration-for-army-s-titan-program",
+      "publishedAt": "2026-09-01",
+      "evidenceGrade": "官方披露",
+      "platformName": "官方网站",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E022",
+      "changeId": "chg-b62f404a459627e75345",
+      "entityName": "AI制药成巨头竞逐新赛道 AI4S迎来高速发展窗口期",
+      "claim": "新增高价值情报事件记录：AI制药成巨头竞逐新赛道 AI4S迎来高速发展窗口期。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "东方财富",
+      "title": "AI制药成巨头竞逐新赛道 AI4S迎来高速发展窗口期",
+      "url": "https://finance.eastmoney.com/a/202609023862038585.html",
+      "publishedAt": "2026-09-02",
+      "evidenceGrade": "媒体报道",
+      "platformName": "东方财富",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E031",
+      "changeId": "chg-3dece9dfc135f477282a",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "9月“金股”来了！宁德时代、天孚通信等27股获最至少2券商推荐",
+      "url": "https://k.sina.cn/article_7879996919_1d5af35f7020027boo.html",
+      "publishedAt": "2026-09-01T22:43:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
     }
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-01T21:19:36+00:00",
+    "generatedAt": "2026-09-02T00:59:29+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-f05b162e3dfd60438ef0": {
+        "eventId": "evt-f05b162e3dfd60438ef0",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-9bfb8020bc03bd5944",
+        "entityName": "世界动力电池大会即将举办 固态电池板块有望迎来全新催化",
+        "title": "世界动力电池大会即将举办 固态电池板块有望迎来全新催化",
+        "titleAliases": [
+          "世界动力电池大会即将举办固态电池板块有望迎来全新催化"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [
+          "company:catl",
+          "company:宁德时代"
+        ],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-a99a8887b0dd1be9ad2e",
+          "record-1bb987228ebed2f14c41",
+          "src-a46528d8338ed0b1db16"
+        ],
+        "evidenceFingerprints": [
+          "a99a8887b0dd1be9ad2e"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "东方财富",
+            "title": "世界动力电池大会即将举办 固态电池板块有望迎来全新催化",
+            "url": "https://finance.eastmoney.com/a/202609023862039837.html",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "c55b39fa7b7fa2702696",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-ea30894062d975829591": {
+        "eventId": "evt-ea30894062d975829591",
+        "dataset": "marketCompany",
+        "entityId": "mobileye",
+        "entityName": "Mobileye Global Inc.",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:mobileye",
+          "name:mobileye global inc."
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-4784366ca17ad9d0f78c",
+          "src-af6cdb5675017fa99563",
+          "evd-403be2964778da8f3275"
+        ],
+        "evidenceFingerprints": [
+          "4784366ca17ad9d0f78c",
+          "403be2964778da8f3275"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/MBLY/",
+            "publishedAt": "2026-08-31T20:00:01+00:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/MBLY/",
+            "publishedAt": "2026-09-01T20:00:01+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-e929a86befcfbc7f5915": {
+        "eventId": "evt-e929a86befcfbc7f5915",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-aec8cdd62cf4fa136d",
+        "entityName": "What is fusion?",
+        "title": "What is fusion?",
+        "titleAliases": [
+          "whatisfusion"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "company:helion",
+          "company:helion energy"
+        ],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-99c93307c90041771b79",
+          "record-4ceff597b4e52258ba5c",
+          "src-2f5f4eb306c6e028f2a0"
+        ],
+        "evidenceFingerprints": [
+          "99c93307c90041771b79"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Helion Energy",
+            "title": "What is fusion?",
+            "url": "https://www.helionenergy.com/blog/what-is-fusion",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "d2217621ba77959e72e8",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-e1733cccb303aa22e270": {
+        "eventId": "evt-e1733cccb303aa22e270",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-5c793ba8fb346eb37d",
+        "entityName": "全球市场：美股三大指数收跌 纳指跌超1% AI硬件股普跌 国际油价涨逾5%",
+        "title": "全球市场：美股三大指数收跌 纳指跌超1% AI硬件股普跌 国际油价涨逾5%",
+        "titleAliases": [
+          "全球市场美股三大指数收跌纳指跌超1ai硬件股普跌国际油价涨逾5"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "1%",
+          "5%"
+        ],
+        "sourceAliases": [
+          "evd-072aa330564e4c7398aa",
+          "record-30a8e2fea1c1206bc618",
+          "src-e473d52e8a89d6d972f7"
+        ],
+        "evidenceFingerprints": [
+          "072aa330564e4c7398aa"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "东方财富",
+            "title": "全球市场：美股三大指数收跌 纳指跌超1% AI硬件股普跌 国际油价涨逾5%",
+            "url": "https://finance.eastmoney.com/a/202609023861898065.html",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "dc2af98cd0609a12c274",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-dc6c97cc577ef6cb46f8": {
+        "eventId": "evt-dc6c97cc577ef6cb46f8",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-7ac470e2fb18b37d33",
+        "entityName": "地球最强大模型也开始强调性价比！Anthropic上新Fable 5.1",
+        "title": "地球最强大模型也开始强调性价比！Anthropic上新Fable 5.1",
+        "titleAliases": [
+          "地球最强大模型也开始强调性价比anthropic上新fable51"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [
+          "company:anthropic"
+        ],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "5.1"
+        ],
+        "sourceAliases": [
+          "evd-f203912fdd2dfd1eeda1",
+          "record-fd5fe7c1792f7f449e93",
+          "src-352a4d44e18dc3ff391f"
+        ],
+        "evidenceFingerprints": [
+          "f203912fdd2dfd1eeda1"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "东方财富",
+            "title": "地球最强大模型也开始强调性价比！Anthropic上新Fable 5.1",
+            "url": "https://finance.eastmoney.com/a/202609023861892250.html",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "0922d0ba6b11e4ad49be",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-da20967dbfd246ac57ff": {
+        "eventId": "evt-da20967dbfd246ac57ff",
+        "dataset": "marketCompany",
+        "entityId": "weride",
+        "entityName": "文远知行",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:weride",
+          "name:文远知行"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-fc434613bdf0e91f35f6",
+          "src-104aee3ac7413e1c6dba",
+          "evd-17ac95ea760cc2318aae"
+        ],
+        "evidenceFingerprints": [
+          "fc434613bdf0e91f35f6",
+          "17ac95ea760cc2318aae"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/WRD/",
+            "publishedAt": "2026-08-31T20:00:01+00:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/WRD/",
+            "publishedAt": "2026-09-01T20:00:00+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-d7d6939007fdfd3f169d": {
+        "eventId": "evt-d7d6939007fdfd3f169d",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-5ebc3fa8805730d8c1",
+        "entityName": "Are We There Yet? Startup Wants to Launch an 80,000-Year Mission to Alpha Centauri",
+        "title": "Are We There Yet? Startup Wants to Launch an 80,000-Year Mission to Alpha Centauri",
+        "titleAliases": [
+          "arewethereyetstartupwantstolaunchan80000yearmissiontoalphacentauri"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "000",
+          "80"
+        ],
+        "sourceAliases": [
+          "evd-e9a3a58b7a80e19a39c6",
+          "record-96f3507ce49c5eb6b636",
+          "src-621385474460e97ead39"
+        ],
+        "evidenceFingerprints": [
+          "e9a3a58b7a80e19a39c6"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "CNET",
+            "title": "Are We There Yet? Startup Wants to Launch an 80,000-Year Mission to Alpha Centauri",
+            "url": "https://www.cnet.com/science/space/are-we-there-yet-startup-wants-to-launch-an-80000-year-mission-to-alpha-centauri",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "04ef555eed9524283933",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-ccfbd9b20668b4b62235": {
+        "eventId": "evt-ccfbd9b20668b4b62235",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-985e3ac0fc2e2ee5ae",
+        "entityName": "Google DeepMind：Instead of scanning an entire file, Gemini reasons across the video’s transcript, audio, and frames, dynamically adjusting the frame rate to pull the",
+        "title": "Google DeepMind：Instead of scanning an entire file, Gemini reasons across the video’s transcript, audio, and frames, dynamically adjusting the frame rate to pull the",
+        "titleAliases": [
+          "googledeepmindinsteadofscanninganentirefilegeminireasonsacrossthevideostranscriptaudioandframesdynamicallyadjustingtheframeratetopullthe"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "人物观点",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-81fc8beb358135578899",
+          "record-b4ba824bca8f2daddd11",
+          "src-315ab9b7753baf7ab299"
+        ],
+        "evidenceFingerprints": [
+          "81fc8beb358135578899"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Google DeepMind on X",
+            "title": "Google DeepMind：Instead of scanning an entire file, Gemini reasons across the video’s transcript, audio, and frames, dynamically adjusting the frame rate to pull the",
+            "url": "https://x.com/GoogleDeepMind/status/2094840182457422260",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "4d88275468e6e1325f99",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-c57f64aca5c3724011c1": {
+        "eventId": "evt-c57f64aca5c3724011c1",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-65f0b9e50204aaa51c",
+        "entityName": "【钛晨报】引导汽车企业规范境外竞争行为，三部门发文；Anthropic同英伟达支持的Lambda签署350亿美元云计算协议；电影暑期档收官，票房超124亿元",
+        "title": "【钛晨报】引导汽车企业规范境外竞争行为，三部门发文；Anthropic同英伟达支持的Lambda签署350亿美元云计算协议；电影暑期档收官，票房超124亿元",
+        "titleAliases": [
+          "钛晨报引导汽车企业规范境外竞争行为三部门发文anthropic同英伟达支持的lambda签署350亿美元云计算协议电影暑期档收官票房超124亿元"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [
+          "company:anthropic"
+        ],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "124",
+          "350"
+        ],
+        "sourceAliases": [
+          "evd-0abb4d72d2674d05677e",
+          "record-6e84e89597aed961e2bd",
+          "src-6d5b6e611034c5757655"
+        ],
+        "evidenceFingerprints": [
+          "0abb4d72d2674d05677e"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "钛媒体",
+            "title": "【钛晨报】引导汽车企业规范境外竞争行为，三部门发文；Anthropic同英伟达支持的Lambda签署350亿美元云计算协议；电影暑期档收官，票房超124亿元",
+            "url": "https://www.tmtpost.com/8125054.html",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "7325f3eb8f01a4d8724d",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-b323033e0bb919e08ee6": {
+        "eventId": "evt-b323033e0bb919e08ee6",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-5791dd42e712adc57f",
+        "entityName": "Anthropic launches Fable 5.1 as AI security worries mount",
+        "title": "Anthropic launches Fable 5.1 as AI security worries mount",
+        "titleAliases": [
+          "anthropiclaunchesfable51asaisecurityworriesmount",
+          "anthropiclaunchesclaudefable51andsaysitsupto45percentcheaperforagenticwork"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "company:anthropic"
+        ],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "5.1",
+          "45"
+        ],
+        "sourceAliases": [
+          "evd-f060a64375b73ed359ad",
+          "record-0dd0898ad7ba3420898a",
+          "src-5ff812e3229538f52d72",
+          "evd-3c0b5ea7044c23c111df",
+          "record-916141602f60056461ad",
+          "src-51850b2ba6f410b6e645"
+        ],
+        "evidenceFingerprints": [
+          "f060a64375b73ed359ad",
+          "3c0b5ea7044c23c111df"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Mashable",
+            "title": "Anthropic launches Fable 5.1 as AI security worries mount",
+            "url": "https://mashable.com/tech/anthropic-fable-5-1-launch-announcment",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "The Verge",
+            "title": "Anthropic launches Claude Fable 5.1 and says it’s up to 45 percent cheaper for agentic work",
+            "url": "https://www.theverge.com/ai-artificial-intelligence/987830/anthropic-claude-fable-mythos-5-1",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "6d7f589ce19b919ad132",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T21:19:36+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-09-01T21:19:36+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-af8b868734ebfa9c80d4": {
+        "eventId": "evt-af8b868734ebfa9c80d4",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-516e78395a4baeef36",
+        "entityName": "AI制药成巨头竞逐新赛道 AI4S迎来高速发展窗口期",
+        "title": "AI制药成巨头竞逐新赛道 AI4S迎来高速发展窗口期",
+        "titleAliases": [
+          "ai制药成巨头竞逐新赛道ai4s迎来高速发展窗口期"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "4"
+        ],
+        "sourceAliases": [
+          "evd-1e50a3f9429baf961e54",
+          "record-7b7d3ec75f44ac0389e1",
+          "src-8c8be6ddc4d9cde58ad8"
+        ],
+        "evidenceFingerprints": [
+          "1e50a3f9429baf961e54"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "东方财富",
+            "title": "AI制药成巨头竞逐新赛道 AI4S迎来高速发展窗口期",
+            "url": "https://finance.eastmoney.com/a/202609023862038585.html",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "7cdd07374c868cc62708",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-a2b98717afa49c66e560": {
+        "eventId": "evt-a2b98717afa49c66e560",
+        "dataset": "marketCompany",
+        "entityId": "catl",
+        "entityName": "宁德时代",
+        "title": "9月“金股”来了！宁德时代、天孚通信等27股获最至少2券商推荐",
+        "titleAliases": [
+          "9月金股来了宁德时代天孚通信等27股获最至少2券商推荐"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:catl",
+          "name:宁德时代"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "2",
+          "27",
+          "9"
+        ],
+        "sourceAliases": [
+          "evd-d45c7dac935d314076f5",
+          "src-664b3e57a26661e53738"
+        ],
+        "evidenceFingerprints": [
+          "d45c7dac935d314076f5"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "9月“金股”来了！宁德时代、天孚通信等27股获最至少2券商推荐",
+            "url": "https://k.sina.cn/article_7879996919_1d5af35f7020027boo.html",
+            "publishedAt": "2026-09-01T22:43:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "ae2e1fe502d17f833ed1",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-8faefc42cfa80ec47bc3": {
+        "eventId": "evt-8faefc42cfa80ec47bc3",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-ac5fad6d9e99d486d9",
+        "entityName": "How the FDA is building a secure, AI-ready data foundation on Databricks for Government",
+        "title": "How the FDA is building a secure, AI-ready data foundation on Databricks for Government",
+        "titleAliases": [
+          "howthefdaisbuildingasecureaireadydatafoundationondatabricksforgovernment"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "company:databricks"
+        ],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-764fe93ff6d59f552fce",
+          "record-a846b4497e291ad1f3c8",
+          "src-ab0308cff549a02a4c3d"
+        ],
+        "evidenceFingerprints": [
+          "764fe93ff6d59f552fce"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Databricks",
+            "title": "How the FDA is building a secure, AI-ready data foundation on Databricks for Government",
+            "url": "https://www.databricks.com/blog/how-fda-building-secure-ai-ready-data-foundation-databricks-government",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "fac28e98e5245d3bfd7e",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-8e039dfb25f1f995402e": {
+        "eventId": "evt-8e039dfb25f1f995402e",
+        "dataset": "marketCompany",
+        "entityId": "tempus-ai",
+        "entityName": "Tempus AI, Inc.",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:tempus-ai",
+          "name:tempus ai, inc."
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-29214bb33e07646a122a",
+          "src-2e90f0632a883088f19a",
+          "evd-7cc66a646a53384506ac"
+        ],
+        "evidenceFingerprints": [
+          "29214bb33e07646a122a",
+          "7cc66a646a53384506ac"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/TEM/",
+            "publishedAt": "2026-08-31T20:00:01+00:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/TEM/",
+            "publishedAt": "2026-09-01T20:00:00+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-7c2170f93d8f8d98b344": {
+        "eventId": "evt-7c2170f93d8f8d98b344",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-bcf8c4013eb303001b",
+        "entityName": "Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026",
+        "title": "Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026",
+        "titleAliases": [
+          "cerebrasandcomputenordicfinlandannouncenew165mwaidatacentreinmikkelifinlandaugust312026"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "company:cerebras",
+          "company:cerebras systems"
+        ],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "165",
+          "31"
+        ],
+        "sourceAliases": [
+          "evd-5d7389a3cffdd346e59a",
+          "record-7572e5cbf67e5878f25c",
+          "src-826549916bbc986a093d"
+        ],
+        "evidenceFingerprints": [
+          "5d7389a3cffdd346e59a"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Cerebras Systems",
+            "title": "Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026",
+            "url": "https://investors.cerebras.ai/news-releases/news-release-details/cerebras-and-compute-nordic-finland-announce-new-165-mw-ai-data",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "b0aa575ae770790a8347",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-6dd45f32ad659adffdcf": {
+        "eventId": "evt-6dd45f32ad659adffdcf",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-d06e312bc80fd228a4",
+        "entityName": "Telephone and Data Systems Announces It Is No Longer Pursuing the Acquisition of Public Shares of Array Digital Infrastructure",
+        "title": "Telephone and Data Systems Announces It Is No Longer Pursuing the Acquisition of Public Shares of Array Digital Infrastructure",
+        "titleAliases": [
+          "telephoneanddatasystemsannouncesitisnolongerpursuingtheacquisitionofpublicsharesofarraydigitalinfrastructure"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "并购",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-cf4ed35cbf6b14fcc021",
+          "record-3ea71e8beee711dc8c40",
+          "src-f93286cfe03ad2098e47"
+        ],
+        "evidenceFingerprints": [
+          "cf4ed35cbf6b14fcc021"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "Telephone and Data Systems Announces It Is No Longer Pursuing the Acquisition of Public Shares of Array Digital Infrastructure",
+            "url": "https://www.prnewswire.com/news-releases/telephone-and-data-systems-announces-it-is-no-longer-pursuing-the-acquisition-of-public-shares-of-array-digital-infrastructure-302866945.html",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "1a142dd1a213802b11e2",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-6c417b83a693d3a492ab": {
+        "eventId": "evt-6c417b83a693d3a492ab",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-188b4fce3bf0e9cee6",
+        "entityName": "Anduril to Deliver Hardware and Shelter Integration for Army’s TITAN Program",
+        "title": "Anduril to Deliver Hardware and Shelter Integration for Army’s TITAN Program",
+        "titleAliases": [
+          "anduriltodeliverhardwareandshelterintegrationforarmystitanprogram"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "company:anduril",
+          "company:anduril industries"
+        ],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-5e3d8c4901edb0ea1698",
+          "record-c7a32f5a5e29416c6ce7",
+          "src-7a84c2d972a2c34d6293"
+        ],
+        "evidenceFingerprints": [
+          "5e3d8c4901edb0ea1698"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Anduril Industries",
+            "title": "Anduril to Deliver Hardware and Shelter Integration for Army’s TITAN Program",
+            "url": "https://www.anduril.com/news/anduril-to-deliver-hardware-and-shelter-integration-for-army-s-titan-program",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "118d46b5f2cdc33fa151",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-67891a2b291c8ba3f656": {
+        "eventId": "evt-67891a2b291c8ba3f656",
+        "dataset": "marketCompany",
+        "entityId": "rigetti",
+        "entityName": "Rigetti Computing, Inc.",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:rigetti",
+          "name:rigetti computing, inc."
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-ae33f3e191afc018e6c3",
+          "src-db581944fea092040261",
+          "evd-905775e1a7077dea85e1"
+        ],
+        "evidenceFingerprints": [
+          "ae33f3e191afc018e6c3",
+          "905775e1a7077dea85e1"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/RGTI/",
+            "publishedAt": "2026-08-31T20:00:01+00:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/RGTI/",
+            "publishedAt": "2026-09-01T20:00:00+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-5fca7f13cf16ed40f9f9": {
+        "eventId": "evt-5fca7f13cf16ed40f9f9",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-29b7d180a2b859d95b",
+        "entityName": "WeRide Included in HKEX Tech 100 Index Following September 2026 Quarterly Review | WeRide Inc.",
+        "title": "WeRide Included in HKEX Tech 100 Index Following September 2026 Quarterly Review | WeRide Inc.",
+        "titleAliases": [
+          "werideincludedinhkextech100indexfollowingseptember2026quarterlyreview"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31"
+        ],
+        "entityKeys": [
+          "company:weride",
+          "company:文远知行"
+        ],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "100"
+        ],
+        "sourceAliases": [
+          "evd-2f06863c3a2b003931af",
+          "record-71b2bbe28449936b788b",
+          "src-aebd66adc9eefe51a2e8"
+        ],
+        "evidenceFingerprints": [
+          "2f06863c3a2b003931af"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "文远知行",
+            "title": "WeRide Included in HKEX Tech 100 Index Following September 2026 Quarterly Review | WeRide Inc.",
+            "url": "https://ir.weride.ai/news-releases/news-release-details/weride-included-hkex-tech-100-index-following-september-2026",
+            "publishedAt": "2026-08-31",
+            "evidenceGrade": "官方披露",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "50c5dccc1c275213fc79",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T09:08:35+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-525fb7f3040be79dc57b": {
+        "eventId": "evt-525fb7f3040be79dc57b",
+        "dataset": "marketCompany",
+        "entityId": "recursion",
+        "entityName": "Recursion Pharmaceuticals, Inc.",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:recursion",
+          "name:recursion pharmaceuticals, inc."
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-72d7b892c69400a60051",
+          "src-1333fbc4f3cd46bece14",
+          "evd-181d85ce6ad108f9cb36"
+        ],
+        "evidenceFingerprints": [
+          "72d7b892c69400a60051",
+          "181d85ce6ad108f9cb36"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/RXRX/",
+            "publishedAt": "2026-08-31T20:00:00+00:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/RXRX/",
+            "publishedAt": "2026-09-01T20:00:01+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-4f56483d1b6539cc70ee": {
+        "eventId": "evt-4f56483d1b6539cc70ee",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-1f10c00f7f012bc9a9",
+        "entityName": "发行价142.18元！燧原科技今日申购 中一签能赚多少？",
+        "title": "发行价142.18元！燧原科技今日申购 中一签能赚多少？",
+        "titleAliases": [
+          "发行价14218元燧原科技今日申购中一签能赚多少"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "142.18"
+        ],
+        "sourceAliases": [
+          "evd-e1b3d016605ed4ebc078",
+          "record-2e1e8b109052695f1bb3",
+          "src-ecfa505595b73d9cc805"
+        ],
+        "evidenceFingerprints": [
+          "e1b3d016605ed4ebc078"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "东方财富",
+            "title": "发行价142.18元！燧原科技今日申购 中一签能赚多少？",
+            "url": "https://finance.eastmoney.com/a/202609023861955559.html",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "0773fd8bf62d549b9222",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-4d7e79896211eaa35f75": {
+        "eventId": "evt-4d7e79896211eaa35f75",
+        "dataset": "marketCompany",
+        "entityId": "ionq",
+        "entityName": "IonQ, Inc.",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:ionq",
+          "name:ionq, inc."
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-e2ad63d49f3c4e0640fe",
+          "src-c5ea30cc0aba5ccc9996",
+          "evd-c8ee82edf5173ac9b32b"
+        ],
+        "evidenceFingerprints": [
+          "e2ad63d49f3c4e0640fe",
+          "c8ee82edf5173ac9b32b"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/IONQ/",
+            "publishedAt": "2026-08-31T20:00:03+00:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/IONQ/",
+            "publishedAt": "2026-09-01T20:00:02+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-497ef4efd8ecda6eb03a": {
+        "eventId": "evt-497ef4efd8ecda6eb03a",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-51ac41d88665a7fcab",
+        "entityName": "Google DeepMind：RT @koraykv: Great catching up with @OfficialLoganK. The pace of what we’re building right now across @GoogleDeepMind and @Google is exciti…",
+        "title": "Google DeepMind：RT @koraykv: Great catching up with @OfficialLoganK. The pace of what we’re building right now across @GoogleDeepMind and @Google is exciti…",
+        "titleAliases": [
+          "googledeepmindrtkoraykvgreatcatchingupwithofficiallogankthepaceofwhatwerebuildingrightnowacrossgoogledeepmindandgoogleisexciti"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "人物观点",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-e431c404a8697d2a8e81",
+          "record-65dfca0e94e2680d0c43",
+          "src-06403b58789a34055c84"
+        ],
+        "evidenceFingerprints": [
+          "e431c404a8697d2a8e81"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Google DeepMind on X",
+            "title": "Google DeepMind：RT @koraykv: Great catching up with @OfficialLoganK. The pace of what we’re building right now across @GoogleDeepMind and @Google is exciti…",
+            "url": "https://x.com/GoogleDeepMind/status/2094878106402107449",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "bb8410a8487249a86155",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-40665b58084cc6b5bacb": {
+        "eventId": "evt-40665b58084cc6b5bacb",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-2b3c683e95e1902152",
+        "entityName": "Piloting the world's first double-blind AI evaluations",
+        "title": "Piloting the world's first double-blind AI evaluations",
+        "titleAliases": [
+          "pilotingtheworldsfirstdoubleblindaievaluations"
+        ],
+        "publishedDate": "2026-08-27",
+        "publishedDates": [
+          "2026-08-27"
+        ],
+        "entityKeys": [
+          "company:google"
+        ],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-21f9099a57e5ff739012",
+          "record-23929a84a5ca512062fd",
+          "src-614c2d112d7f1790d9bf"
+        ],
+        "evidenceFingerprints": [
+          "21f9099a57e5ff739012"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Google",
+            "title": "Piloting the world's first double-blind AI evaluations",
+            "url": "https://deepmind.google/blog/piloting-the-worlds-first-double-blind-ai-evaluations",
+            "publishedAt": "2026-08-27",
+            "evidenceGrade": "官方披露",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "4587a6a595defe79fcf8",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T01:56:14+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-09-01T01:56:14+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-3c107c43f58ecd379b62": {
+        "eventId": "evt-3c107c43f58ecd379b62",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-c9490b02e9de3c8721",
+        "entityName": "Shield AI expands Tracker C-UAS integration with L3Harris VAMPIRE™",
+        "title": "Shield AI expands Tracker C-UAS integration with L3Harris VAMPIRE™",
+        "titleAliases": [
+          "shieldaiexpandstrackercuasintegrationwithl3harrisvampiretm"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "company:shield ai",
+          "company:shield-ai"
+        ],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "3"
+        ],
+        "sourceAliases": [
+          "evd-ee459ef2395aef3cb459",
+          "record-0deb5871c431c501be68",
+          "src-3e38d4ea8ccfc94e5a1c"
+        ],
+        "evidenceFingerprints": [
+          "ee459ef2395aef3cb459"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Shield AI",
+            "title": "Shield AI expands Tracker C-UAS integration with L3Harris VAMPIRE™",
+            "url": "https://shield.ai/shield-ai-expands-tracker-c-uas-integration-with-l3harris-vampire",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "de9750d66a564b5fa6a0",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-3b7d475c36a3a738f707": {
+        "eventId": "evt-3b7d475c36a3a738f707",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-84df9d987b2c40eb92",
+        "entityName": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
+        "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
+        "titleAliases": [
+          "真正能干活的机器人不到两成人形机器人量产元年迎来大考"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "company:catl",
+          "mention:宁德时代",
+          "mention:小鹏",
+          "mention:银河通用"
+        ],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-90204b224f661c03e393",
+          "record-44f41cf41ea3089fc678",
+          "src-aa4fa1c89949d229947a",
+          "record-1ef5939d607e99023f39",
+          "src-a136f4504626308b4d2f",
+          "record-d99f02dc6837da839bdb",
+          "src-6c7183b9d49c41e5a33f",
+          "record-45d8d423b763f95cc787",
+          "src-097a0737474b83c170d0"
+        ],
+        "evidenceFingerprints": [
+          "90204b224f661c03e393"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "机器人与智能制造",
+            "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=9aQuL3BGUq2yNAlNo5wm2jRzzeI-wbtLfd3uQcZk6f%2AreFOCBGwWg9Hb-Sd3kVKQvwm-ha1UBvgMxxGuSvGsqwVnh9rknou9sCVYJNzayRKk-owoVTzPR4UwkfhpQ2WP&src=11&timestamp=1788264547&ver=6940",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "机器人与智能制造",
+            "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=9aQuL3BGUq2yNAlNo5wm2jRzzeI-wbtLfd3uQcZk6f8t91XWxV61hVccwcX3G%2AdTqcWabm4P9jP3K30XjRMhwEQaGLQQ4tRbwqxdP0-sBIZ2tRlz3LigfFhZWzmM-k07&src=11&timestamp=1788282125&ver=6940",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "机器人与智能制造",
+            "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=o1WhXUpDcTDrSwZQ54abFEjJcD4TgOmn6YMDnU5pbgb6HQPfMepugeRsQVe5Ve%2Atq5m2p1DSSSRSQ4xy9Shh%2AhnpaMMWWMKoNAFYIPaQi%2A7Ygtke7Y95rzG4a3tCTsQL&src=11&timestamp=1788296994&ver=6941",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "机器人与智能制造",
+            "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=o1WhXUpDcTDrSwZQ54abFEjJcD4TgOmn6YMDnU5pbgZOqvTsT2OYJ5PD1zJcfxm86FYhMEnRTc2qpIB9brRRs44GOVHipDdsalpd8z311OcdctH2dJCD2W7oeX1HsFlT&src=11&timestamp=1788309190&ver=6941",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "751d6c02190b8129a812",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T12:24:14+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-09-01T12:24:14+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-33d18eef06195c599d41": {
+        "eventId": "evt-33d18eef06195c599d41",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-88b8044f5b57d5cc38",
+        "entityName": "Anthropic：RT @claudeai: We’re introducing Claude Fable 5.1 and Claude Mythos 5.1. They're the world’s most advanced models for coding and knowledge…",
+        "title": "Anthropic：RT @claudeai: We’re introducing Claude Fable 5.1 and Claude Mythos 5.1. They're the world’s most advanced models for coding and knowledge…",
+        "titleAliases": [
+          "anthropicrtclaudeaiwereintroducingclaudefable51andclaudemythos51theyretheworldsmostadvancedmodelsforcodingandknowledge"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "company:anthropic"
+        ],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "5.1"
+        ],
+        "sourceAliases": [
+          "evd-d5b7a86422373ae412bb",
+          "record-f3a464577d25e949f32a",
+          "src-df6bef4b06f831fc1930"
+        ],
+        "evidenceFingerprints": [
+          "d5b7a86422373ae412bb"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Anthropic on X",
+            "title": "Anthropic：RT @claudeai: We’re introducing Claude Fable 5.1 and Claude Mythos 5.1. They're the world’s most advanced models for coding and knowledge…",
+            "url": "https://x.com/AnthropicAI/status/2094848668650074336",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "aff90a0aba2ae3c3baf1",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-17ed32f8b6d304c6cfee": {
+        "eventId": "evt-17ed32f8b6d304c6cfee",
+        "dataset": "marketCompany",
+        "entityId": "joby",
+        "entityName": "Joby Aviation, Inc.",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:joby",
+          "name:joby aviation, inc."
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-ca3597f4aa9d85387cbd",
+          "src-c5d415a4154403078940",
+          "evd-4e52f4dc0250641148a2"
+        ],
+        "evidenceFingerprints": [
+          "ca3597f4aa9d85387cbd",
+          "4e52f4dc0250641148a2"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/JOBY/",
+            "publishedAt": "2026-08-31T20:00:03+00:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/JOBY/",
+            "publishedAt": "2026-09-01T20:00:02+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-1653fa5eda1e4dfef5cd": {
+        "eventId": "evt-1653fa5eda1e4dfef5cd",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-f3db484644e2c2163e",
+        "entityName": "Google DeepMind：We’re bringing agentic video understanding to our latest Gemini models. They can now analyze videos with better accuracy while using up to 88% fewer t",
+        "title": "Google DeepMind：We’re bringing agentic video understanding to our latest Gemini models. They can now analyze videos with better accuracy while using up to 88% fewer t",
+        "titleAliases": [
+          "googledeepmindwerebringingagenticvideounderstandingtoourlatestgeminimodelstheycannowanalyzevideoswithbetteraccuracywhileusingupto88fewert"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "人物观点",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "88%"
+        ],
+        "sourceAliases": [
+          "evd-9d83f6e6ff7ee2953a16",
+          "record-0c424018e0c4eb1cee54",
+          "src-da5a30ff58dc3311b34e"
+        ],
+        "evidenceFingerprints": [
+          "9d83f6e6ff7ee2953a16"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Google DeepMind on X",
+            "title": "Google DeepMind：We’re bringing agentic video understanding to our latest Gemini models. They can now analyze videos with better accuracy while using up to 88% fewer t",
+            "url": "https://x.com/GoogleDeepMind/status/2094840179676660097",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "ea780d34d89972bfdd80",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-153774159d0350838a72": {
+        "eventId": "evt-153774159d0350838a72",
+        "dataset": "marketCompany",
+        "entityId": "rocket-lab",
+        "entityName": "Rocket Lab Corporation",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:rocket-lab",
+          "name:rocket lab corporation"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-ed6c8a35c6aecbfc7101",
+          "src-53bc3b93ef8ddcc14d0b",
+          "evd-e35a39a3bc571cdcbed8"
+        ],
+        "evidenceFingerprints": [
+          "ed6c8a35c6aecbfc7101",
+          "e35a39a3bc571cdcbed8"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/RKLB/",
+            "publishedAt": "2026-08-31T20:00:00+00:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/RKLB/",
+            "publishedAt": "2026-09-01T20:00:00+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-1257d630ab9467d64f5b": {
+        "eventId": "evt-1257d630ab9467d64f5b",
+        "dataset": "marketCompany",
+        "entityId": "aurora",
+        "entityName": "Aurora Innovation, Inc.",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:aurora",
+          "name:aurora innovation, inc."
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-9037f472fcf35b6b30e5",
+          "src-17f30948990caae50a84",
+          "evd-3fb524e43052a6b18043"
+        ],
+        "evidenceFingerprints": [
+          "9037f472fcf35b6b30e5",
+          "3fb524e43052a6b18043"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/AUR/",
+            "publishedAt": "2026-08-31T20:00:01+00:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/AUR/",
+            "publishedAt": "2026-09-01T20:00:01+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-11a1ffa455911c67dcd3": {
+        "eventId": "evt-11a1ffa455911c67dcd3",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-ee074d72338d281fb2",
+        "entityName": "AfterQuery reportedly becomes Y Combinator’s fastest-ever unicorn, now valued at $3.2B",
+        "title": "AfterQuery reportedly becomes Y Combinator’s fastest-ever unicorn, now valued at $3.2B",
+        "titleAliases": [
+          "afterqueryreportedlybecomesycombinatorsfastesteverunicornnowvaluedat32b"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "3.2"
+        ],
+        "sourceAliases": [
+          "evd-d93b3e1c3f562e900252",
+          "record-c5b2114d94c15b58d736",
+          "src-00a8290c3ce081f25e91"
+        ],
+        "evidenceFingerprints": [
+          "d93b3e1c3f562e900252"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "TechCrunch Venture",
+            "title": "AfterQuery reportedly becomes Y Combinator’s fastest-ever unicorn, now valued at $3.2B",
+            "url": "https://techcrunch.com/2026/09/01/afterquery-reportedly-becomes-y-combinators-fastest-ever-unicorn-now-valued-at-3-2b",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "f68648ed224a87ddf53e",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-0c22629c6006a87d8c3f": {
+        "eventId": "evt-0c22629c6006a87d8c3f",
+        "dataset": "marketCompany",
+        "entityId": "pony-ai",
+        "entityName": "小马智行",
+        "title": "Yahoo财经 行情数据",
+        "titleAliases": [
+          "yahoo财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "marketCompany:pony-ai",
+          "name:小马智行"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-9cf13fc7b4e0308209e5",
+          "src-a4f80386a85c9af7acd1",
+          "evd-a8a679982fa6157ee9f1"
+        ],
+        "evidenceFingerprints": [
+          "9cf13fc7b4e0308209e5",
+          "a8a679982fa6157ee9f1"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/PONY/",
+            "publishedAt": "2026-08-31T20:00:01+00:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "Yahoo财经",
+            "title": "Yahoo财经 行情数据",
+            "url": "https://sg.finance.yahoo.com/quote/PONY/",
+            "publishedAt": "2026-09-01T20:00:00+00:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "2d46b9f63d858cd458fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T17:42:45+00:00",
+        "lastSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-f7197d0fcd59cafd45b3": {
         "eventId": "evt-f7197d0fcd59cafd45b3",
         "dataset": "intelligenceEvent",
@@ -977,62 +4276,6 @@
           }
         ],
         "claimFingerprint": "afcca0ee61dd70c6be7e",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T21:19:36+00:00",
-        "lastSeenAt": "2026-09-01T21:19:36+00:00",
-        "lastPublishedAt": "2026-09-01T21:19:36+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-b323033e0bb919e08ee6": {
-        "eventId": "evt-b323033e0bb919e08ee6",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-5791dd42e712adc57f",
-        "entityName": "Anthropic launches Fable 5.1 as AI security worries mount",
-        "title": "Anthropic launches Fable 5.1 as AI security worries mount",
-        "titleAliases": [
-          "anthropiclaunchesfable51asaisecurityworriesmount"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [
-          "company:anthropic"
-        ],
-        "typeKeys": [
-          "产品发布",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "5.1"
-        ],
-        "sourceAliases": [
-          "evd-f060a64375b73ed359ad",
-          "record-0dd0898ad7ba3420898a",
-          "src-5ff812e3229538f52d72"
-        ],
-        "evidenceFingerprints": [
-          "f060a64375b73ed359ad"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Mashable",
-            "title": "Anthropic launches Fable 5.1 as AI security worries mount",
-            "url": "https://mashable.com/tech/anthropic-fable-5-1-launch-announcment",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "6d7f589ce19b919ad132",
         "scalarClaims": {},
         "ipoStage": null,
         "firstSeenAt": "2026-09-01T21:19:36+00:00",
@@ -1200,83 +4443,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 4,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-3b7d475c36a3a738f707": {
-        "eventId": "evt-3b7d475c36a3a738f707",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-84df9d987b2c40eb92",
-        "entityName": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
-        "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
-        "titleAliases": [
-          "真正能干活的机器人不到两成人形机器人量产元年迎来大考"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [
-          "company:catl",
-          "mention:宁德时代",
-          "mention:小鹏",
-          "mention:银河通用"
-        ],
-        "typeKeys": [
-          "融资",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-90204b224f661c03e393",
-          "record-44f41cf41ea3089fc678",
-          "src-aa4fa1c89949d229947a",
-          "record-1ef5939d607e99023f39",
-          "src-a136f4504626308b4d2f",
-          "record-d99f02dc6837da839bdb",
-          "src-6c7183b9d49c41e5a33f"
-        ],
-        "evidenceFingerprints": [
-          "90204b224f661c03e393"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "机器人与智能制造",
-            "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=9aQuL3BGUq2yNAlNo5wm2jRzzeI-wbtLfd3uQcZk6f%2AreFOCBGwWg9Hb-Sd3kVKQvwm-ha1UBvgMxxGuSvGsqwVnh9rknou9sCVYJNzayRKk-owoVTzPR4UwkfhpQ2WP&src=11&timestamp=1788264547&ver=6940",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "机器人与智能制造",
-            "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=9aQuL3BGUq2yNAlNo5wm2jRzzeI-wbtLfd3uQcZk6f8t91XWxV61hVccwcX3G%2AdTqcWabm4P9jP3K30XjRMhwEQaGLQQ4tRbwqxdP0-sBIZ2tRlz3LigfFhZWzmM-k07&src=11&timestamp=1788282125&ver=6940",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "机器人与智能制造",
-            "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=o1WhXUpDcTDrSwZQ54abFEjJcD4TgOmn6YMDnU5pbgb6HQPfMepugeRsQVe5Ve%2Atq5m2p1DSSSRSQ4xy9Shh%2AhnpaMMWWMKoNAFYIPaQi%2A7Ygtke7Y95rzG4a3tCTsQL&src=11&timestamp=1788296994&ver=6941",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "751d6c02190b8129a812",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T12:24:14+00:00",
-        "lastSeenAt": "2026-09-01T21:19:36+00:00",
-        "lastPublishedAt": "2026-09-01T12:24:14+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -5198,58 +8364,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-ea30894062d975829591": {
-        "eventId": "evt-ea30894062d975829591",
-        "dataset": "marketCompany",
-        "entityId": "mobileye",
-        "entityName": "Mobileye Global Inc.",
-        "title": "Yahoo财经 行情数据",
-        "titleAliases": [
-          "yahoo财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:mobileye",
-          "name:mobileye global inc."
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-4784366ca17ad9d0f78c",
-          "src-af6cdb5675017fa99563"
-        ],
-        "evidenceFingerprints": [
-          "4784366ca17ad9d0f78c"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Yahoo财经",
-            "title": "Yahoo财经 行情数据",
-            "url": "https://sg.finance.yahoo.com/quote/MBLY/",
-            "publishedAt": "2026-08-31T20:00:01+00:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "2d46b9f63d858cd458fc",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastSeenAt": "2026-09-01T01:56:14+00:00",
-        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-e0514d8636ed71fb0d80": {
         "eventId": "evt-e0514d8636ed71fb0d80",
         "dataset": "intelligenceEvent",
@@ -5296,58 +8410,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-da20967dbfd246ac57ff": {
-        "eventId": "evt-da20967dbfd246ac57ff",
-        "dataset": "marketCompany",
-        "entityId": "weride",
-        "entityName": "文远知行",
-        "title": "Yahoo财经 行情数据",
-        "titleAliases": [
-          "yahoo财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:weride",
-          "name:文远知行"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-fc434613bdf0e91f35f6",
-          "src-104aee3ac7413e1c6dba"
-        ],
-        "evidenceFingerprints": [
-          "fc434613bdf0e91f35f6"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Yahoo财经",
-            "title": "Yahoo财经 行情数据",
-            "url": "https://sg.finance.yahoo.com/quote/WRD/",
-            "publishedAt": "2026-08-31T20:00:01+00:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "2d46b9f63d858cd458fc",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastSeenAt": "2026-09-01T01:56:14+00:00",
-        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -5464,58 +8526,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-8e039dfb25f1f995402e": {
-        "eventId": "evt-8e039dfb25f1f995402e",
-        "dataset": "marketCompany",
-        "entityId": "tempus-ai",
-        "entityName": "Tempus AI, Inc.",
-        "title": "Yahoo财经 行情数据",
-        "titleAliases": [
-          "yahoo财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:tempus-ai",
-          "name:tempus ai, inc."
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-29214bb33e07646a122a",
-          "src-2e90f0632a883088f19a"
-        ],
-        "evidenceFingerprints": [
-          "29214bb33e07646a122a"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Yahoo财经",
-            "title": "Yahoo财经 行情数据",
-            "url": "https://sg.finance.yahoo.com/quote/TEM/",
-            "publishedAt": "2026-08-31T20:00:01+00:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "2d46b9f63d858cd458fc",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastSeenAt": "2026-09-01T01:56:14+00:00",
-        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-89b141ca64c7cbd22d59": {
         "eventId": "evt-89b141ca64c7cbd22d59",
         "dataset": "intelligenceEvent",
@@ -5620,115 +8630,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-67891a2b291c8ba3f656": {
-        "eventId": "evt-67891a2b291c8ba3f656",
-        "dataset": "marketCompany",
-        "entityId": "rigetti",
-        "entityName": "Rigetti Computing, Inc.",
-        "title": "Yahoo财经 行情数据",
-        "titleAliases": [
-          "yahoo财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:rigetti",
-          "name:rigetti computing, inc."
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-ae33f3e191afc018e6c3",
-          "src-db581944fea092040261"
-        ],
-        "evidenceFingerprints": [
-          "ae33f3e191afc018e6c3"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Yahoo财经",
-            "title": "Yahoo财经 行情数据",
-            "url": "https://sg.finance.yahoo.com/quote/RGTI/",
-            "publishedAt": "2026-08-31T20:00:01+00:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "2d46b9f63d858cd458fc",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastSeenAt": "2026-09-01T01:56:14+00:00",
-        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-5fca7f13cf16ed40f9f9": {
-        "eventId": "evt-5fca7f13cf16ed40f9f9",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-29b7d180a2b859d95b",
-        "entityName": "WeRide Included in HKEX Tech 100 Index Following September 2026 Quarterly Review | WeRide Inc.",
-        "title": "WeRide Included in HKEX Tech 100 Index Following September 2026 Quarterly Review | WeRide Inc.",
-        "titleAliases": [
-          "werideincludedinhkextech100indexfollowingseptember2026quarterlyreview"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "company:weride",
-          "company:文远知行"
-        ],
-        "typeKeys": [
-          "公司动态",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "100"
-        ],
-        "sourceAliases": [
-          "evd-2f06863c3a2b003931af",
-          "record-71b2bbe28449936b788b",
-          "src-aebd66adc9eefe51a2e8"
-        ],
-        "evidenceFingerprints": [
-          "2f06863c3a2b003931af"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "文远知行",
-            "title": "WeRide Included in HKEX Tech 100 Index Following September 2026 Quarterly Review | WeRide Inc.",
-            "url": "https://ir.weride.ai/news-releases/news-release-details/weride-included-hkex-tech-100-index-following-september-2026",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "官方披露",
-            "sourceRole": "primary"
-          }
-        ],
-        "claimFingerprint": "50c5dccc1c275213fc79",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastSeenAt": "2026-09-01T01:56:14+00:00",
-        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 4,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-5bdb8c4019a7ed2d1bb8": {
         "eventId": "evt-5bdb8c4019a7ed2d1bb8",
         "dataset": "intelligenceEvent",
@@ -5775,164 +8676,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-525fb7f3040be79dc57b": {
-        "eventId": "evt-525fb7f3040be79dc57b",
-        "dataset": "marketCompany",
-        "entityId": "recursion",
-        "entityName": "Recursion Pharmaceuticals, Inc.",
-        "title": "Yahoo财经 行情数据",
-        "titleAliases": [
-          "yahoo财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:recursion",
-          "name:recursion pharmaceuticals, inc."
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-72d7b892c69400a60051",
-          "src-1333fbc4f3cd46bece14"
-        ],
-        "evidenceFingerprints": [
-          "72d7b892c69400a60051"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Yahoo财经",
-            "title": "Yahoo财经 行情数据",
-            "url": "https://sg.finance.yahoo.com/quote/RXRX/",
-            "publishedAt": "2026-08-31T20:00:00+00:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "2d46b9f63d858cd458fc",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastSeenAt": "2026-09-01T01:56:14+00:00",
-        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-4d7e79896211eaa35f75": {
-        "eventId": "evt-4d7e79896211eaa35f75",
-        "dataset": "marketCompany",
-        "entityId": "ionq",
-        "entityName": "IonQ, Inc.",
-        "title": "Yahoo财经 行情数据",
-        "titleAliases": [
-          "yahoo财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:ionq",
-          "name:ionq, inc."
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-e2ad63d49f3c4e0640fe",
-          "src-c5ea30cc0aba5ccc9996"
-        ],
-        "evidenceFingerprints": [
-          "e2ad63d49f3c4e0640fe"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Yahoo财经",
-            "title": "Yahoo财经 行情数据",
-            "url": "https://sg.finance.yahoo.com/quote/IONQ/",
-            "publishedAt": "2026-08-31T20:00:03+00:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "2d46b9f63d858cd458fc",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastSeenAt": "2026-09-01T01:56:14+00:00",
-        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-40665b58084cc6b5bacb": {
-        "eventId": "evt-40665b58084cc6b5bacb",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-2b3c683e95e1902152",
-        "entityName": "Piloting the world's first double-blind AI evaluations",
-        "title": "Piloting the world's first double-blind AI evaluations",
-        "titleAliases": [
-          "pilotingtheworldsfirstdoubleblindaievaluations"
-        ],
-        "publishedDate": "2026-08-27",
-        "publishedDates": [
-          "2026-08-27"
-        ],
-        "entityKeys": [
-          "company:google"
-        ],
-        "typeKeys": [
-          "公司动态",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-21f9099a57e5ff739012",
-          "record-23929a84a5ca512062fd",
-          "src-614c2d112d7f1790d9bf"
-        ],
-        "evidenceFingerprints": [
-          "21f9099a57e5ff739012"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Google",
-            "title": "Piloting the world's first double-blind AI evaluations",
-            "url": "https://deepmind.google/blog/piloting-the-worlds-first-double-blind-ai-evaluations",
-            "publishedAt": "2026-08-27",
-            "evidenceGrade": "官方披露",
-            "sourceRole": "primary"
-          }
-        ],
-        "claimFingerprint": "4587a6a595defe79fcf8",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T01:56:14+00:00",
-        "lastSeenAt": "2026-09-01T01:56:14+00:00",
-        "lastPublishedAt": "2026-09-01T01:56:14+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 4,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -6094,162 +8837,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-17ed32f8b6d304c6cfee": {
-        "eventId": "evt-17ed32f8b6d304c6cfee",
-        "dataset": "marketCompany",
-        "entityId": "joby",
-        "entityName": "Joby Aviation, Inc.",
-        "title": "Yahoo财经 行情数据",
-        "titleAliases": [
-          "yahoo财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:joby",
-          "name:joby aviation, inc."
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-ca3597f4aa9d85387cbd",
-          "src-c5d415a4154403078940"
-        ],
-        "evidenceFingerprints": [
-          "ca3597f4aa9d85387cbd"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Yahoo财经",
-            "title": "Yahoo财经 行情数据",
-            "url": "https://sg.finance.yahoo.com/quote/JOBY/",
-            "publishedAt": "2026-08-31T20:00:03+00:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "2d46b9f63d858cd458fc",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastSeenAt": "2026-09-01T01:56:14+00:00",
-        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-153774159d0350838a72": {
-        "eventId": "evt-153774159d0350838a72",
-        "dataset": "marketCompany",
-        "entityId": "rocket-lab",
-        "entityName": "Rocket Lab Corporation",
-        "title": "Yahoo财经 行情数据",
-        "titleAliases": [
-          "yahoo财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:rocket-lab",
-          "name:rocket lab corporation"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-ed6c8a35c6aecbfc7101",
-          "src-53bc3b93ef8ddcc14d0b"
-        ],
-        "evidenceFingerprints": [
-          "ed6c8a35c6aecbfc7101"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Yahoo财经",
-            "title": "Yahoo财经 行情数据",
-            "url": "https://sg.finance.yahoo.com/quote/RKLB/",
-            "publishedAt": "2026-08-31T20:00:00+00:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "2d46b9f63d858cd458fc",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastSeenAt": "2026-09-01T01:56:14+00:00",
-        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-1257d630ab9467d64f5b": {
-        "eventId": "evt-1257d630ab9467d64f5b",
-        "dataset": "marketCompany",
-        "entityId": "aurora",
-        "entityName": "Aurora Innovation, Inc.",
-        "title": "Yahoo财经 行情数据",
-        "titleAliases": [
-          "yahoo财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:aurora",
-          "name:aurora innovation, inc."
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-9037f472fcf35b6b30e5",
-          "src-17f30948990caae50a84"
-        ],
-        "evidenceFingerprints": [
-          "9037f472fcf35b6b30e5"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Yahoo财经",
-            "title": "Yahoo财经 行情数据",
-            "url": "https://sg.finance.yahoo.com/quote/AUR/",
-            "publishedAt": "2026-08-31T20:00:01+00:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "2d46b9f63d858cd458fc",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastSeenAt": "2026-09-01T01:56:14+00:00",
-        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-0dcabc4fc8aaf0a2e36c": {
         "eventId": "evt-0dcabc4fc8aaf0a2e36c",
         "dataset": "intelligenceEvent",
@@ -6297,58 +8884,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 4,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-0c22629c6006a87d8c3f": {
-        "eventId": "evt-0c22629c6006a87d8c3f",
-        "dataset": "marketCompany",
-        "entityId": "pony-ai",
-        "entityName": "小马智行",
-        "title": "Yahoo财经 行情数据",
-        "titleAliases": [
-          "yahoo财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:pony-ai",
-          "name:小马智行"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-9cf13fc7b4e0308209e5",
-          "src-a4f80386a85c9af7acd1"
-        ],
-        "evidenceFingerprints": [
-          "9cf13fc7b4e0308209e5"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Yahoo财经",
-            "title": "Yahoo财经 行情数据",
-            "url": "https://sg.finance.yahoo.com/quote/PONY/",
-            "publishedAt": "2026-08-31T20:00:01+00:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "2d46b9f63d858cd458fc",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T17:42:45+00:00",
-        "lastSeenAt": "2026-09-01T01:56:14+00:00",
-        "lastPublishedAt": "2026-08-31T17:42:45+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -13446,13 +15981,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 6,
-    "reconfirmations": 0,
+    "newEvents": 19,
+    "reconfirmations": 11,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 1,
-    "observedEvents": 7,
+    "duplicatesSuppressed": 3,
+    "observedEvents": 33,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -14672,10 +17207,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-02",
-      "generatedAt": "2026-09-01T21:19:36+00:00",
+      "generatedAt": "2026-09-02T00:59:29+00:00",
       "runStatus": "model",
-      "changeCount": 15,
-      "executiveSummary": "证据包记录了2026年9月1日六项高价值情报事件，集中在AI基础设施、模型竞争与监管方向，另有一项机场资产收购。OpenAI发布自研Jalapeño芯片基准测试，声称能效与延迟优于Nvidia GB200/GB300，但证据等级为C且为厂商自述，需独立验证。Anthropic推出Fable 5.1与Mythos 5.1，强调安全改进并降低费用，但安全事件背景与具体定价细节尚待确认。美国在G20论坛反对设立AI监管机构，属政策信号，影响需观察。Google DeepMind发布Gemini智能体视频理解功能，官方来源但细节有限。ASUR完成对Motiva多国机场权益收购，属公司事件，与AI主线无关。整体证据多为单一来源、自动未审阅，结论置信度受限。",
+      "changeCount": 34,
+      "executiveSummary": "本报告基于2026年9月1-2日证据包，覆盖AI模型、算力基础设施、资本市场等事件。主要发现：Anthropic发布Claude Fable 5.1/Mythos 5.1，Google DeepMind提升Gemini视频理解效率，Cerebras宣布在芬兰建设165MW AI数据中心，燧原科技启动科创板申购，AfterQuery据称成为YC最快独角兽（估值32亿美元）。同时TDS宣布放弃收购Array Digital Infrastructure公众股份，美股AI硬件股普跌。多数证据为官方披露或媒体报道，部分高估值事件证据等级较低，需进一步验证。",
       "eventIds": [
         "evt-973f579139dc001e0d59",
         "evt-90802cef087749b92580",
@@ -14691,7 +17226,26 @@
         "evt-cf24c19507ef109f570e",
         "evt-4e9f27a1e31f8482fda1",
         "evt-f7197d0fcd59cafd45b3",
-        "evt-b323033e0bb919e08ee6"
+        "evt-b323033e0bb919e08ee6",
+        "evt-11a1ffa455911c67dcd3",
+        "evt-6dd45f32ad659adffdcf",
+        "evt-c57f64aca5c3724011c1",
+        "evt-3c107c43f58ecd379b62",
+        "evt-d7d6939007fdfd3f169d",
+        "evt-33d18eef06195c599d41",
+        "evt-1653fa5eda1e4dfef5cd",
+        "evt-497ef4efd8ecda6eb03a",
+        "evt-ccfbd9b20668b4b62235",
+        "evt-dc6c97cc577ef6cb46f8",
+        "evt-4f56483d1b6539cc70ee",
+        "evt-e1733cccb303aa22e270",
+        "evt-f05b162e3dfd60438ef0",
+        "evt-e929a86befcfbc7f5915",
+        "evt-8faefc42cfa80ec47bc3",
+        "evt-7c2170f93d8f8d98b344",
+        "evt-6c417b83a693d3a492ab",
+        "evt-af8b868734ebfa9c80d4",
+        "evt-a2b98717afa49c66e560"
       ],
       "eventStates": [
         {
@@ -14753,35 +17307,114 @@
         {
           "eventId": "evt-b323033e0bb919e08ee6",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-11a1ffa455911c67dcd3",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-6dd45f32ad659adffdcf",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-c57f64aca5c3724011c1",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-3c107c43f58ecd379b62",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-d7d6939007fdfd3f169d",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-33d18eef06195c599d41",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-1653fa5eda1e4dfef5cd",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-497ef4efd8ecda6eb03a",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-ccfbd9b20668b4b62235",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-dc6c97cc577ef6cb46f8",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-4f56483d1b6539cc70ee",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-e1733cccb303aa22e270",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-f05b162e3dfd60438ef0",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-e929a86befcfbc7f5915",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-8faefc42cfa80ec47bc3",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-7c2170f93d8f8d98b344",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-6c417b83a693d3a492ab",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-af8b868734ebfa9c80d4",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-a2b98717afa49c66e560",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 0,
-      "candidateTotal": 0,
-      "auxiliaryLeadTotal": 15,
-      "rejectedTotal": 1,
+      "candidateTotal": 1,
+      "auxiliaryLeadTotal": 33,
+      "rejectedTotal": 3,
       "eventSummary": {
-        "newEvents": 15,
-        "reconfirmations": 0,
+        "newEvents": 34,
+        "reconfirmations": 11,
         "updates": 0,
         "corrections": 0,
         "possibleConflicts": 0,
-        "duplicatesSuppressed": 2
+        "duplicatesSuppressed": 5
       }
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 8,
-    "eligibleCandidateCount": 7,
-    "rejectedCandidateCount": 1,
+    "candidateCount": 35,
+    "eligibleCandidateCount": 33,
+    "rejectedCandidateCount": 2,
     "rejectedByDataset": {
-      "intelligenceEvent": 1
+      "marketCompany": 2
     },
-    "evidenceCount": 8,
-    "supportingEvidenceCount": 7,
-    "rejectedEvidenceCount": 1,
-    "passedButUnboundEvidenceCount": 0,
+    "evidenceCount": 74,
+    "supportingEvidenceCount": 33,
+    "rejectedEvidenceCount": 20,
+    "passedButUnboundEvidenceCount": 21,
     "rejectionReasons": {
-      "discovery_only": 1
+      "missing_published_at": 20,
+      "missing_title": 20,
+      "ungraded": 20,
+      "missing_or_invalid_url": 3
     },
     "sourceClassificationWarnings": []
   },
@@ -14802,7 +17435,7 @@
     "person": {
       "label": "核心人物",
       "status": "active",
-      "count": 112,
+      "count": 113,
       "note": "已进入每日实体快照与变化检测。"
     },
     "ventureCompany": {
