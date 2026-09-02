@@ -201,6 +201,26 @@ test("Discovery-only sources are excluded from Core evidence and readiness queue
   assert.equal(sourceReadinessDistance(discovery), 100);
 });
 
+test("Discovery-only candidates still require an endpoint governance decision", () => {
+  const discovery = source({
+    id: "discovery-candidate",
+    name: "Discovery Candidate",
+    sourceRole: "discovery",
+    lifecycle: "candidate",
+    promotion: {
+      lifecycle: "candidate",
+      state: "candidate",
+      coreReadyByMetrics: false,
+      manualDecision: "pending",
+      reasons: ["尚未建立可持续采集入口"],
+    },
+  });
+
+  assert.equal(sourceNeedsGovernanceDecision(discovery), true);
+  assert.equal(sourceNeedsEvidence(discovery), false);
+  assert.equal(sourceReadinessLabel(discovery), "DISCOVERY ONLY");
+});
+
 test("Core readiness queue ranks review-pending ahead of evidence-pending", () => {
   const ready = source({
     id: "ready",
