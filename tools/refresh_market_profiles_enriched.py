@@ -3,7 +3,9 @@
 
 from __future__ import annotations
 
+import math
 import re
+from typing import Any
 
 try:
     from . import market_profile_enrichment as enrichment
@@ -74,6 +76,58 @@ def preserve_company_copy(profile, previous):
     return profile
 
 
+def valid_ohlc_point(point: object) -> bool:
+    """Apply the same strict OHLC invariant enforced by the product validator."""
+
+    if not isinstance(point, dict):
+        return False
+    try:
+        open_ = float(point["open"])
+        close = float(point["close"])
+        high = float(point["high"])
+        low = float(point["low"])
+    except (KeyError, TypeError, ValueError):
+        return False
+    values = (open_, close, high, low)
+    if not all(math.isfinite(value) and value >= 0 for value in values):
+        return False
+    return high >= max(values) and low <= min(values)
+
+
+def filter_inconsistent_price_history(profile: dict[str, Any]) -> dict[str, Any]:
+    """Drop malformed provider rows rather than fabricating corrected prices.
+
+    Public daily endpoints can expose an incomplete current-session row whose
+    close has advanced beyond the simultaneously returned high/low.  The
+    committed snapshot must remain internally valid, so the row is rejected,
+    the prior completed history is retained, and the profile is made partial
+    with an explicit warning.  The downstream validator remains strict.
+    """
+
+    raw_points = profile.get("priceHistory")
+    if not isinstance(raw_points, list):
+        return profile
+    accepted = [point for point in raw_points if valid_ohlc_point(point)]
+    rejected = len(raw_points) - len(accepted)
+    if rejected <= 0:
+        return profile
+
+    profile["priceHistory"] = runner.market.dedupe_price_points(accepted)
+    warnings = profile.get("warnings")
+    if not isinstance(warnings, list):
+        warnings = []
+    warning = (
+        f"行情走势质量门：已过滤{rejected}条 OHLC 不一致或非数值日线；"
+        "未改写任何价格字段"
+    )
+    if warning not in warnings:
+        warnings.append(warning)
+    profile["warnings"] = warnings[-8:]
+    if profile.get("status") == "ok":
+        profile["status"] = "partial"
+    return profile
+
+
 def crawl_item(item, previous):
     profile, status = _original_crawl_item(item, previous)
     profile = preserve_company_copy(profile, previous)
@@ -84,6 +138,7 @@ def crawl_item(item, previous):
     )
     profile = preserve_company_copy(profile, previous)
     profile = quote_news.enrich_quote_and_news(item["identity"], profile, previous)
+    profile = filter_inconsistent_price_history(profile)
     status["status"] = profile.get("status", status.get("status", "partial"))
     status["pricePoints"] = len(profile.get("priceHistory", []))
     status["marketCapAccepted"] = any(
