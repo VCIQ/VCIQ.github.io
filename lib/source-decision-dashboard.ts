@@ -170,11 +170,9 @@ export function sourceNeedsAction(source: SourceDirectoryEntry, now = new Date()
 }
 
 export function sourceNeedsGovernanceDecision(source: SourceDirectoryEntry): boolean {
-  if (!sourceCoreEligible(source)) return false;
   const state = source.promotion?.state;
-  return source.lifecycle === "candidate"
-    || state === "candidate"
-    || state === "blocked";
+  if (source.lifecycle === "candidate" || state === "candidate") return true;
+  return sourceCoreEligible(source) && state === "blocked";
 }
 
 export function sourceNeedsEvidence(source: SourceDirectoryEntry): boolean {
