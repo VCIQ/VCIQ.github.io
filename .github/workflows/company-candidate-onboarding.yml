@@ -316,3 +316,19 @@ jobs:
               exit 1
               ;;
           esac
+
+  terminal-publication-fallback:
+    # Candidate onboarding must remain fail-closed, but a failed private/profile
+    # mutation must not block publication of an already fixed-point public snapshot.
+    # Pages owns its own readiness/build gates and will still refuse an unsafe deploy.
+    needs: onboard
+    if: ${{ always() && needs.onboard.result == 'failure' && inputs.post_onboarding_handoff == 'publish-with-research' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish the unchanged fixed-point snapshot after isolated onboarding failure
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "Candidate onboarding failed closed; publish the unchanged fixed-point repository state through the normal Pages gate."
+          gh workflow run pages.yml --ref main \
+            -f run_research_after_deploy=true
