@@ -242,7 +242,7 @@ test("Sources v2 renders separate operational, governance and evidence queues", 
   assert.match(client, /EVIDENCE ROLE/);
   assert.match(client, /COLLECTOR HEALTH/);
   assert.match(client, /CORE READINESS/);
-  assert.match(client, /DISCOVERY ONLY/);
+  assert.match(client, /Discovery only/);
   assert.match(client, /SOURCE_FRESHNESS_POLICY\.freshHours/);
   assert.match(client, /SOURCE_FRESHNESS_POLICY\.staleHours/);
   assert.match(page, /SourceOperationsClient/);
