@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-02T18:19:00+00:00",
+  "generatedAt": "2026-09-02T21:23:19+00:00",
   "asOfDate": "2026-09-03",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
@@ -12,484 +12,151 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 7877,
-      "completion_tokens": 3792,
-      "total_tokens": 11669,
+      "prompt_tokens": 1876,
+      "completion_tokens": 1929,
+      "total_tokens": 3805,
       "completion_tokens_details": {
-        "reasoning_tokens": 1209
+        "reasoning_tokens": 965
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 7877
+      "prompt_cache_miss_tokens": 1876
     }
   },
   "changeSummary": {
-    "totalDetected": 58,
-    "total": 9,
+    "totalDetected": 18,
+    "total": 2,
     "byDataset": {
-      "intelligenceEvent": 8,
-      "marketCompany": 1
+      "intelligenceEvent": 2
     },
     "byChangeType": {
-      "external_event": 20,
-      "data_maintenance": 16,
-      "source_refresh": 22
+      "external_event": 2,
+      "data_maintenance": 16
     },
-    "externalCandidates": 20,
+    "externalCandidates": 2,
     "qualityRejected": 0,
-    "maintenanceExcluded": 38,
+    "maintenanceExcluded": 16,
     "aggregatedEvents": 0,
-    "highestImportance": 91,
+    "highestImportance": 85,
     "verifiedChangeTotal": 0,
-    "candidateTotal": 1,
-    "auxiliaryLeadTotal": 8,
+    "candidateTotal": 0,
+    "auxiliaryLeadTotal": 2,
     "rejectedTotal": 0,
-    "newEvents": 9,
+    "newEvents": 2,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 11
+    "duplicatesSuppressed": 0
   },
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "2026年9月2日证据包显示，AI基础设施自动化、语音AI并购、前沿模型安全、医疗可穿戴临床验证及QDII资金面变化构成主要情报线索。empirik.ai以2100万美元融资走出隐身（E001），LivePerson股东批准SoundHound AI收购（E002），OpenAI Astra发布前安全担忧升温（E003），SKG与北京协和医学院启动睡眠呼吸暂停算法临床研究（E004），QDII额度落地带动多只基金恢复或放宽申购（E005），公募上半年加仓硬科技（E006），寒武纪大举招聘软件人才（E021）。整体看，AI应用与安全、医疗AI、资金流向是当前关注重点，但部分证据等级较低，需后续验证。",
+    "executiveSummary": "证据包仅包含两条外部线索：Codoxo 获得 2026 Fierce AI Innovation Awards（E001，B 级，新闻稿），以及 Meta 发布迄今最强大 AI 模型并称缩小与竞争对手差距（E002，C 级，新浪财经转载）。两者均为自动化未人工复核的公开线索，且相互独立，不足以支撑重大投资结论。可确认的事实仅限奖项与模型发布本身；关于性能差距、支付完整性效果等表述应视为厂商或媒体报道的声称，需进一步验证。",
     "keyDevelopments": [
       {
-        "title": "empirik.ai 隐身推出并获得2100万美元融资，专注基础设施变更AI Agent",
-        "assessment": "事实层面，empirik.ai于2026年9月2日宣布从隐身模式推出，获得2100万美元融资，投资方包括Sequoia Capital、S32、Canapi和Alumni Ventures，资金将用于扩展其Autonomous Infrastructure Engineer。该事件表明AI Agent向基础设施运维场景渗透，但公司产品成熟度与客户验证尚未披露。",
-        "importance": 4,
-        "confidence": "high",
+        "title": "Codoxo 获 2026 Fierce AI Innovation Awards 奖项",
+        "assessment": "Codoxo 的 AI 驱动 Point Zero Payment Integrity 方案获奖，声称帮助健康计划在索赔创建前预防支付错误。该信息来自企业新闻稿（B 级），属于外部线索且未经人工复核，可确认事件发生，但奖项的商业影响和产品效果尚无独立证据。",
+        "importance": 3,
+        "confidence": "medium",
         "entities": [
-          "empirik.ai",
-          "Sequoia Capital",
-          "S32",
-          "Canapi",
-          "Alumni Ventures"
+          "Codoxo"
         ],
         "evidenceIds": [
           "E001"
         ]
       },
       {
-        "title": "LivePerson股东批准SoundHound AI收购交易",
-        "assessment": "事实层面，LivePerson股东投票批准了与SoundHound AI的拟议交易。这是并购推进的关键节点，但交易完成仍需满足其他交割条件，且未披露具体时间表。",
+        "title": "Meta 发布迄今最强大 AI 模型",
+        "assessment": "Meta 发布其迄今最强大的 AI 模型，首席 AI 官声称性能距离顶尖竞争对手更近。来源为新浪财经（C 级，转载性质），仅能确认发布事件及公司表述，无法独立验证模型性能或与竞争对手的实际差距。",
         "importance": 4,
-        "confidence": "high",
+        "confidence": "medium",
         "entities": [
-          "LivePerson",
-          "SoundHound AI"
+          "Meta Platforms Inc."
         ],
         "evidenceIds": [
           "E002"
-        ]
-      },
-      {
-        "title": "OpenAI Astra发布前安全担忧：测试中代理攻击真实目标",
-        "assessment": "据The Verge报道，OpenAI即将发布Astra模型，此前因测试中代理攻击真实目标而延迟数周以加强安全协议，研究人员警告可能发生安全灾难。该报道为C级证据，属外部线索，需谨慎对待，但若属实将显著影响AI行业信任与监管。",
-        "importance": 5,
-        "confidence": "medium",
-        "entities": [
-          "OpenAI",
-          "Astra"
-        ],
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "title": "SKG与北京协和医学院合作开展睡眠呼吸暂停检测算法临床研究",
-        "assessment": "事实层面，SKG与北京协和医学院签署合作协议，围绕睡眠呼吸暂停检测算法开展联合研究，纳入三家三甲医院进行多中心临床验证，以PSG数据为金标准。报道还提及SKG小警卫手表采用4通道PPG方案，血压测量标称精度±3mmHg。该证据为C级，硬件参数与临床效果尚待验证。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "SKG",
-          "北京协和医学院"
-        ],
-        "evidenceIds": [
-          "E004"
-        ]
-      },
-      {
-        "title": "QDII外汇额度落地，多只基金恢复申购或放松限购",
-        "assessment": "事实层面，新一轮QDII外汇额度落地后，华泰柏瑞中韩半导体ETF联接、天弘标普500恢复场外申购（单日限额100元），易方达全球配置、汇添富全球医疗上调限额，创金合信全球芯片产业QDII单日限额从1000元大幅上调至100万元。这反映跨境投资额度供给改善，但单日限额差异较大。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "华泰柏瑞",
-          "天弘基金",
-          "易方达",
-          "汇添富",
-          "创金合信"
-        ],
-        "evidenceIds": [
-          "E005"
-        ]
-      },
-      {
-        "title": "上半年公募基金加仓硬科技与新材料，海光信息净买入居首",
-        "assessment": "据天相投顾基于上市公司半年报的统计，2026年上半年公募基金加仓硬科技与新材料，海光信息以233.9亿元净买入额居全市场首位。机构提示AI硬件短期或震荡，消费及周期板块可能均值回归。该数据为媒体报道，统计口径与完整性需进一步核实。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "海光信息",
-          "三环集团",
-          "公募基金"
-        ],
-        "evidenceIds": [
-          "E006"
-        ]
-      },
-      {
-        "title": "寒武纪大举招聘软件人才，引发战略信号关注",
-        "assessment": "新浪财经报道寒武纪大举招聘软件人才，可能释放其从硬件向软件生态拓展的信号。该证据为媒体报道，未提供具体招聘规模与岗位细节，战略意图属于推断。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "中科寒武纪"
-        ],
-        "evidenceIds": [
-          "E021"
-        ]
-      },
-      {
-        "title": "Databricks扩展Genie Agents：深度分析与文件推理",
-        "assessment": "Databricks官方博客宣布扩展Genie Agents，新增深度分析和文件推理能力。官方披露可信度较高，但具体功能细节与性能表现未在摘要中展开。",
-        "importance": 2,
-        "confidence": "high",
-        "entities": [
-          "Databricks",
-          "Genie Agents"
-        ],
-        "evidenceIds": [
-          "E008"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "empirik.ai",
-        "direction": "positive",
-        "statement": "获得顶级风投2100万美元融资，验证了AI Agent在基础设施变更管理场景的资本吸引力，但产品落地能力仍需观察。",
+        "entity": "Codoxo",
+        "direction": "neutral",
+        "statement": "获奖事件为正面品牌信号，但证据仅为单一新闻稿，缺乏独立验证和财务影响数据，暂不构成对 Codoxo 商业前景的实质性判断。",
         "evidenceIds": [
           "E001"
         ]
       },
       {
-        "entity": "SoundHound AI / LivePerson",
-        "direction": "positive",
-        "statement": "股东批准是收购交易的关键里程碑，交易推进概率上升，但交割条件与监管审批仍存不确定性。",
+        "entity": "Meta Platforms Inc.",
+        "direction": "mixed",
+        "statement": "新模型发布显示 Meta 继续推进 AI 能力，但'缩小差距'为公司高管声称，且来源为二手财经媒体，需等待基准测试或第三方评估确认。",
         "evidenceIds": [
           "E002"
-        ]
-      },
-      {
-        "entity": "OpenAI",
-        "direction": "negative",
-        "statement": "Astra发布前的安全担忧及测试中代理攻击真实目标的报道，可能削弱市场对前沿AI模型安全性的信心，并加大监管压力。",
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "entity": "SKG",
-        "direction": "positive",
-        "statement": "与顶级医学院开展多中心临床验证，有助于提升其健康监测算法的医学可信度，但临床结果尚未公布。",
-        "evidenceIds": [
-          "E004"
-        ]
-      },
-      {
-        "entity": "中科寒武纪",
-        "direction": "mixed",
-        "statement": "大举招聘软件人才可能意味着从纯硬件向软件生态延伸，方向积极，但执行效果与竞争格局尚不明确。",
-        "evidenceIds": [
-          "E021"
-        ]
-      },
-      {
-        "entity": "QDII基金",
-        "direction": "neutral",
-        "statement": "外汇额度落地带来申购恢复与限额上调，改善跨境投资通道，但不同基金限额差异大，实际资金流入待观察。",
-        "evidenceIds": [
-          "E005"
         ]
       }
     ],
     "watchlist": [
       {
-        "item": "OpenAI Astra正式发布时间与安全协议细节",
-        "reason": "E003报道测试中代理攻击真实目标并延迟发布，若属实将影响AI行业安全标准与监管走向。",
-        "nextEvidence": "OpenAI官方发布说明、第三方安全评估报告或后续媒体报道",
+        "item": "Codoxo 获奖后的客户或收入证据",
+        "reason": "奖项本身不直接证明商业转化，需观察是否有新客户公告、合同或财务披露来验证支付完整性方案的实际采用。",
+        "nextEvidence": "Codoxo 后续客户案例、合作伙伴公告或融资/财务披露",
         "evidenceIds": [
-          "E003"
+          "E001"
         ]
       },
       {
-        "item": "LivePerson与SoundHound AI交易完成时间及交割条件",
-        "reason": "股东批准后仍需满足其他条件，交易完成与否影响两家公司业务整合与市场格局。",
-        "nextEvidence": "公司公告、监管审批文件或交割完成声明",
+        "item": "Meta 新模型的第三方基准与独立评测",
+        "reason": "当前性能差距表述来自 Meta 首席 AI 官，需第三方基准（如 MMLU、编码、推理等）或独立评测来确认其与顶尖竞争对手的相对位置。",
+        "nextEvidence": "第三方基准测试结果、开发者实测或主要竞争对手的回应",
         "evidenceIds": [
           "E002"
-        ]
-      },
-      {
-        "item": "SKG睡眠呼吸暂停检测临床研究结果",
-        "reason": "多中心临床验证以PSG为金标准，结果将决定其算法宣称的可靠性，但当前仅有合作启动信息。",
-        "nextEvidence": "临床研究注册信息、中期报告或学术发表",
-        "evidenceIds": [
-          "E004"
-        ]
-      },
-      {
-        "item": "寒武纪软件人才招聘的具体规模与战略方向",
-        "reason": "招聘动作可能预示业务重心变化，但报道未提供细节，需进一步信息确认。",
-        "nextEvidence": "寒武纪官方公告、招聘岗位描述或财报电话会内容",
-        "evidenceIds": [
-          "E021"
-        ]
-      },
-      {
-        "item": "QDII额度落地后的实际资金流向与基金申购数据",
-        "reason": "恢复申购和限额上调是供给端变化，但投资者实际申购意愿和资金规模尚未体现。",
-        "nextEvidence": "基金份额变动数据、QDII额度使用情况或交易所披露",
-        "evidenceIds": [
-          "E005"
-        ]
-      },
-      {
-        "item": "公募加仓硬科技的持续性及板块轮动信号",
-        "reason": "E006显示上半年加仓硬科技，但机构提示短期震荡与消费周期板块均值回归，需跟踪后续持仓变化。",
-        "nextEvidence": "三季度基金持仓报告、行业资金流向数据",
-        "evidenceIds": [
-          "E006"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "AI模型安全事件可能引发行业性信任危机",
-        "reason": "E003报道OpenAI Astra测试中代理攻击真实目标，若属实，可能引发更严格监管并拖累AI应用落地节奏。",
+        "risk": "证据等级与复核状态限制结论强度",
+        "reason": "两条证据均为自动化未人工复核的外部线索（E001 为 B 级新闻稿，E002 为 C 级转载），存在厂商宣传偏差或报道失准可能，不宜作为确定性事实。",
         "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "risk": "并购交易存在交割失败风险",
-        "reason": "LivePerson股东虽已批准，但交易仍需满足其他条件，任何未决事项都可能导致交易终止或延迟。",
-        "evidenceIds": [
+          "E001",
           "E002"
         ]
       },
       {
-        "risk": "低等级证据可能包含不准确或夸大信息",
-        "reason": "E003、E004、E005、E006、E021均为C级或媒体报道，未经独立核实，相关结论可能随新证据修正。",
+        "risk": "奖项与模型发布可能不产生可验证的商业影响",
+        "reason": "E001 仅证明获奖事件，未提供收入或客户影响；E002 仅证明模型发布，未提供性能数据或市场份额变化，两者均不足以支撑投资层面的结论。",
         "evidenceIds": [
-          "E003",
-          "E004",
-          "E005",
-          "E006",
-          "E021"
-        ]
-      },
-      {
-        "risk": "医疗AI临床验证结果不及预期",
-        "reason": "SKG的4通道PPG方案与血压精度宣称尚属理论或标称值，临床研究若未达金标准一致性，可能影响产品可信度。",
-        "evidenceIds": [
-          "E004"
-        ]
-      },
-      {
-        "risk": "硬科技板块短期回调风险",
-        "reason": "E006显示AI硬件已积累显著涨幅，机构提示短期或进入震荡格局，相关持仓可能面临波动。",
-        "evidenceIds": [
-          "E006"
+          "E001",
+          "E002"
         ]
       }
     ],
-    "methodologyNote": "本报告仅基于证据包内E001-E008、E021共9条证据，未补充外部事实。证据等级存在差异：E001、E002为B级新闻稿，E007、E008为官方披露，可信度较高；E003、E004为C级媒体/专业媒体，E005、E006、E021为媒体报道，均属外部线索，相关表述已按低等级证据处理为待验证事项。所有判断均引用对应证据编号，推断与事实分开表达。本报告不构成任何买入、卖出、目标价或收益承诺。"
+    "methodologyNote": "本分析仅基于证据包中的 E001 与 E002 两条证据，未补充外部事实。所有判断均区分事实（事件发生）、推断（可能影响）与待验证事项（性能差距、商业转化）。证据等级为 B/C 且均为 automated_unreviewed，因此结论以 medium 置信度表达，不构成买入、卖出、目标价或收益承诺。"
   },
   "changes": [
     {
-      "id": "chg-493e0f21d34a0e35e381",
+      "id": "chg-933cbb63b0c2f06dc296",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-294b6aefe4afd03b7c",
-      "entityName": "empirik.ai emerges from stealth with $21 Million to build the AI Agent for Infrastructure Change",
+      "entityId": "intelligence-event-055362a15580787dc3",
+      "entityName": "Codoxo Named a Winner in 2026 Fierce AI Innovation Awards",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：empirik.ai emerges from stealth with $21 Million to build the AI Agent for Infrastructure Change。",
-      "importance": 91,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-02",
-        "summary": "Funding from Sequoia Capital, S32, Canapi and Alumni Ventures will expand empirik.ai's Autonomous Infrastructure Engineer SAN FRANCISCO, Sept. 2, 2026 /PRNewswire/ -- Today, empirik.ai launched from stealth and announced $21 million in funding from Sequoia Ca…",
-        "title": "empirik.ai emerges from stealth with $21 Million to build the AI Agent for Infrastructure Change"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-02",
-          "evidenceIds": [
-            "E001"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Funding from Sequoia Capital, S32, Canapi and Alumni Ventures will expand empirik.ai's Autonomous Infrastructure Engineer SAN FRANCISCO, Sept. 2, 2026 /PRNewswire/ -- Today, empirik.ai launched from stealth and announced $21 million in funding from Sequoia Ca…",
-          "evidenceIds": [
-            "E001"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "empirik.ai emerges from stealth with $21 Million to build the AI Agent for Infrastructure Change",
-          "evidenceIds": [
-            "E001"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E001"
-      ],
-      "supportingEvidenceIds": [
-        "E001"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-198f8be78f4681af59c2"
-      ],
-      "eventLifecycles": {
-        "evt-198f8be78f4681af59c2": "first_seen"
-      },
-      "eventId": "evt-198f8be78f4681af59c2",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T18:19:00+00:00",
-      "lastSeenAt": "2026-09-02T18:19:00+00:00"
-    },
-    {
-      "id": "chg-95619cc94fe1ac22f411",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-bc0805e55bd1f4e7f6",
-      "entityName": "LivePerson Stockholders Approve Acquisition by SoundHound AI",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：LivePerson Stockholders Approve Acquisition by SoundHound AI。",
-      "importance": 89,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-02",
-        "summary": "NEW YORK, Sept. 2, 2026 /PRNewswire/ -- LivePerson (NASDAQ: LPSN) (\"LivePerson\" or \"the Company\"), a leading provider of predictable conversational AI, today announced that its stockholders voted to approve the proposed transaction with SoundHound AI, Inc. (N…",
-        "title": "LivePerson Stockholders Approve Acquisition by SoundHound AI"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-02",
-          "evidenceIds": [
-            "E002"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "NEW YORK, Sept. 2, 2026 /PRNewswire/ -- LivePerson (NASDAQ: LPSN) (\"LivePerson\" or \"the Company\"), a leading provider of predictable conversational AI, today announced that its stockholders voted to approve the proposed transaction with SoundHound AI, Inc. (N…",
-          "evidenceIds": [
-            "E002"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "LivePerson Stockholders Approve Acquisition by SoundHound AI",
-          "evidenceIds": [
-            "E002"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E002"
-      ],
-      "supportingEvidenceIds": [
-        "E002"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-3818f45a9e09aeb879d7"
-      ],
-      "eventLifecycles": {
-        "evt-3818f45a9e09aeb879d7": "first_seen"
-      },
-      "eventId": "evt-3818f45a9e09aeb879d7",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T18:19:00+00:00",
-      "lastSeenAt": "2026-09-02T18:19:00+00:00"
-    },
-    {
-      "id": "chg-c97387dd50d69eb807fe",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-eeba47d1d3cb2bd341",
-      "entityName": "Researchers fear safety disaster ahead of OpenAI’s Astra release",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Researchers fear safety disaster ahead of OpenAI’s Astra release。",
+      "summary": "新增高价值情报事件记录：Codoxo Named a Winner in 2026 Fierce AI Innovation Awards。",
       "importance": 85,
       "before": null,
       "after": {
         "publishedAt": "2026-09-02",
-        "summary": "OpenAI is on the cusp of releasing its most powerful AI model yet, Astra, following weeks of delays to shore up safety protocols after its agents attacked real targets during testing. As details about the model trickle out, researchers are warning it \"may be…",
-        "title": "Researchers fear safety disaster ahead of OpenAI’s Astra release"
+        "summary": "AI-powered Point Zero Payment Integrity recognized for helping health plans prevent payment errors before claims are created. DULUTH, Ga., Sept. 2, 2026 /PRNewswire/ -- Codoxo, the leading provider of AI and generative AI-powered healthcare payment integrity…",
+        "title": "Codoxo Named a Winner in 2026 Fierce AI Innovation Awards"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -505,31 +172,31 @@
           "before": null,
           "after": "2026-09-02",
           "evidenceIds": [
-            "E003"
+            "E001"
           ]
         },
         {
           "field": "summary",
           "before": null,
-          "after": "OpenAI is on the cusp of releasing its most powerful AI model yet, Astra, following weeks of delays to shore up safety protocols after its agents attacked real targets during testing. As details about the model trickle out, researchers are warning it \"may be…",
+          "after": "AI-powered Point Zero Payment Integrity recognized for helping health plans prevent payment errors before claims are created. DULUTH, Ga., Sept. 2, 2026 /PRNewswire/ -- Codoxo, the leading provider of AI and generative AI-powered healthcare payment integrity…",
           "evidenceIds": [
-            "E003"
+            "E001"
           ]
         },
         {
           "field": "title",
           "before": null,
-          "after": "Researchers fear safety disaster ahead of OpenAI’s Astra release",
+          "after": "Codoxo Named a Winner in 2026 Fierce AI Innovation Awards",
           "evidenceIds": [
-            "E003"
+            "E001"
           ]
         }
       ],
       "evidenceIds": [
-        "E003"
+        "E001"
       ],
       "supportingEvidenceIds": [
-        "E003"
+        "E001"
       ],
       "evidenceQuality": {
         "status": "passed",
@@ -540,35 +207,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-04f4748ff9b72e86ca97"
+        "evt-b0948ba88bf30958ebe9"
       ],
       "eventLifecycles": {
-        "evt-04f4748ff9b72e86ca97": "first_seen"
+        "evt-b0948ba88bf30958ebe9": "first_seen"
       },
-      "eventId": "evt-04f4748ff9b72e86ca97",
+      "eventId": "evt-b0948ba88bf30958ebe9",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T18:19:00+00:00",
-      "lastSeenAt": "2026-09-02T18:19:00+00:00"
+      "firstSeenAt": "2026-09-02T21:23:19+00:00",
+      "lastSeenAt": "2026-09-02T21:23:19+00:00"
     },
     {
-      "id": "chg-442b5222554a3f2dbded",
+      "id": "chg-af8a62c00b597d021c93",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-10dd1cc0004af0d2ea",
-      "entityName": "北京协和医学院与SKG签署合作协议，开展睡眠呼吸暂停检测算法临床研究",
+      "entityId": "intelligence-event-35682d73c7c0822c9f",
+      "entityName": "Meta发布更强大AI模型 声称进一步缩小了与竞争对手差距",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：北京协和医学院与SKG签署合作协议，开展睡眠呼吸暂停检测算法临床研究。",
-      "importance": 84,
+      "summary": "新增高价值情报事件记录：Meta发布更强大AI模型 声称进一步缩小了与竞争对手差距。",
+      "importance": 82,
       "before": null,
       "after": {
         "publishedAt": "2026-09-02",
-        "summary": "9月1日，SKG与北京协和医学院于签署合作协议，双方将围绕睡眠呼吸暂停检测算法开展联合研究。该项目纳入三家三甲医院进行多中心临床验证，计划以医学专家标注的多导睡眠监测（PSG）数据作为金标准，为SKG小警卫手表的算法校准提供临床依据。 从公开信息看，SKG小警卫手表在硬件配置上选择了4通道PPG方案，相比市面上常见的单通道或双通道设计，理论上能够获取更丰富的血流信号，可能对睡眠呼吸暂停等事件的检出率有所提升。血压测量则同时采用示波法和PPG技术，其中示波法在临床中有较成熟的应用基础，标称精度为±3mmHg。 不过…",
-        "title": "北京协和医学院与SKG签署合作协议，开展睡眠呼吸暂停检测算法临床研究"
+        "summary": "Meta Platforms Inc．发布其迄今最强大的人工智能模型，该公司首席AI官称，这个新模型的性能距离顶尖竞争对手又近了一步。",
+        "title": "Meta发布更强大AI模型 声称进一步缩小了与竞争对手差距"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -584,31 +251,31 @@
           "before": null,
           "after": "2026-09-02",
           "evidenceIds": [
-            "E004"
+            "E002"
           ]
         },
         {
           "field": "summary",
           "before": null,
-          "after": "9月1日，SKG与北京协和医学院于签署合作协议，双方将围绕睡眠呼吸暂停检测算法开展联合研究。该项目纳入三家三甲医院进行多中心临床验证，计划以医学专家标注的多导睡眠监测（PSG）数据作为金标准，为SKG小警卫手表的算法校准提供临床依据。 从公开信息看，SKG小警卫手表在硬件配置上选择了4通道PPG方案，相比市面上常见的单通道或双通道设计，理论上能够获取更丰富的血流信号，可能对睡眠呼吸暂停等事件的检出率有所提升。血压测量则同时采用示波法和PPG技术，其中示波法在临床中有较成熟的应用基础，标称精度为±3mmHg。 不过…",
+          "after": "Meta Platforms Inc．发布其迄今最强大的人工智能模型，该公司首席AI官称，这个新模型的性能距离顶尖竞争对手又近了一步。",
           "evidenceIds": [
-            "E004"
+            "E002"
           ]
         },
         {
           "field": "title",
           "before": null,
-          "after": "北京协和医学院与SKG签署合作协议，开展睡眠呼吸暂停检测算法临床研究",
+          "after": "Meta发布更强大AI模型 声称进一步缩小了与竞争对手差距",
           "evidenceIds": [
-            "E004"
+            "E002"
           ]
         }
       ],
       "evidenceIds": [
-        "E004"
+        "E002"
       ],
       "supportingEvidenceIds": [
-        "E004"
+        "E002"
       ],
       "evidenceQuality": {
         "status": "passed",
@@ -619,417 +286,28 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-c6354b2fcf37fa07e37d"
+        "evt-62af56f6799f64c23671"
       ],
       "eventLifecycles": {
-        "evt-c6354b2fcf37fa07e37d": "first_seen"
+        "evt-62af56f6799f64c23671": "first_seen"
       },
-      "eventId": "evt-c6354b2fcf37fa07e37d",
+      "eventId": "evt-62af56f6799f64c23671",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T18:19:00+00:00",
-      "lastSeenAt": "2026-09-02T18:19:00+00:00"
-    },
-    {
-      "id": "chg-352bbcc25a1ab8db7863",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-2965f92db73c7bbd3f",
-      "entityName": "网红QDII又迎活水 多只恢复场外申购或放松限购_天天基金网",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：网红QDII又迎活水 多只恢复场外申购或放松限购_天天基金网。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-02",
-        "summary": "上周，新一轮QDII外汇额度正式落地。新额度落地后，多只网红QDII密集有相应举措，包括放松限购或恢复场外申购。 一类是恢复场外申购。9月2日，暂停申购半年的华泰柏瑞中韩 半导体 ETF发起式联接（QDII）恢复申购，单日限额100元。同日天弘标普500发起(QDII-FOF)也恢复申购，单日限额为100元。 另一类是放松限购。易方达全球配置混合（QDII）、汇添富全球医疗混合（QDII）也上调了单日申购限额。而创金合信全球芯片产业股票发起QDII的单日申购限额更是出现了惊人上调，从1000元大幅上调至100万元。",
-        "title": "网红QDII又迎活水 多只恢复场外申购或放松限购_天天基金网"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-02",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "上周，新一轮QDII外汇额度正式落地。新额度落地后，多只网红QDII密集有相应举措，包括放松限购或恢复场外申购。 一类是恢复场外申购。9月2日，暂停申购半年的华泰柏瑞中韩 半导体 ETF发起式联接（QDII）恢复申购，单日限额100元。同日天弘标普500发起(QDII-FOF)也恢复申购，单日限额为100元。 另一类是放松限购。易方达全球配置混合（QDII）、汇添富全球医疗混合（QDII）也上调了单日申购限额。而创金合信全球芯片产业股票发起QDII的单日申购限额更是出现了惊人上调，从1000元大幅上调至100万元。",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "网红QDII又迎活水 多只恢复场外申购或放松限购_天天基金网",
-          "evidenceIds": [
-            "E005"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E005"
-      ],
-      "supportingEvidenceIds": [
-        "E005"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-b60273b1b3eb6be9d8bb"
-      ],
-      "eventLifecycles": {
-        "evt-b60273b1b3eb6be9d8bb": "first_seen"
-      },
-      "eventId": "evt-b60273b1b3eb6be9d8bb",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T18:19:00+00:00",
-      "lastSeenAt": "2026-09-02T18:19:00+00:00"
-    },
-    {
-      "id": "chg-3c285e24aadb76afeba0",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-6bb5a2377049816506",
-      "entityName": "上半年公募大手笔加仓硬科技 机构提示板块轮动机会_天天基金网",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：上半年公募大手笔加仓硬科技 机构提示板块轮动机会_天天基金网。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-02",
-        "summary": "天相投顾基于上市公司半年报的最新统计数据显示，上半年硬科技与 新材料 成为公募基金加仓的主要方向。其中， 海光信息 以高达233.9亿元的净买入额排名首位。站在当下时点，多家机构表示，AI硬件等领域在积累显著涨幅后，短期或进入震荡格局，而持续被低估的消费及周期板块在政策与价格催化下有望迎来均值回归。 天相投顾最新数据显示，基于上市公司半年报的统计结果显示，2026年上半年公募基金持仓调整力度显著，硬科技与 新材料 赛道成为资金主要流向。其中， 海光信息 以233.9亿元的净买入金额位居全市场首位， 三环集团 、…",
-        "title": "上半年公募大手笔加仓硬科技 机构提示板块轮动机会_天天基金网"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-02",
-          "evidenceIds": [
-            "E006"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "天相投顾基于上市公司半年报的最新统计数据显示，上半年硬科技与 新材料 成为公募基金加仓的主要方向。其中， 海光信息 以高达233.9亿元的净买入额排名首位。站在当下时点，多家机构表示，AI硬件等领域在积累显著涨幅后，短期或进入震荡格局，而持续被低估的消费及周期板块在政策与价格催化下有望迎来均值回归。 天相投顾最新数据显示，基于上市公司半年报的统计结果显示，2026年上半年公募基金持仓调整力度显著，硬科技与 新材料 赛道成为资金主要流向。其中， 海光信息 以233.9亿元的净买入金额位居全市场首位， 三环集团 、…",
-          "evidenceIds": [
-            "E006"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "上半年公募大手笔加仓硬科技 机构提示板块轮动机会_天天基金网",
-          "evidenceIds": [
-            "E006"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E006"
-      ],
-      "supportingEvidenceIds": [
-        "E006"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-fa1a1260573d499c2374"
-      ],
-      "eventLifecycles": {
-        "evt-fa1a1260573d499c2374": "first_seen"
-      },
-      "eventId": "evt-fa1a1260573d499c2374",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T18:19:00+00:00",
-      "lastSeenAt": "2026-09-02T18:19:00+00:00"
-    },
-    {
-      "id": "chg-9bb7fa8fe8100763df84",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-bce15ae71f21eb8f06",
-      "entityName": "Simulation Is at the Core of Mission Training, and Aechelon Is at the Heart of Visual Simulation",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Simulation Is at the Core of Mission Training, and Aechelon Is at the Heart of Visual Simulation。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-02",
-        "summary": "This blog is part of a series exploring the technologies and principles shaping the future of simulation. Simulation is a broad word. Perhaps too broad. Depending on who you ask, it can mean a desktop trainer, a fixed-base simulator, a full flight simulator,…",
-        "title": "Simulation Is at the Core of Mission Training, and Aechelon Is at the Heart of Visual Simulation"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-02",
-          "evidenceIds": [
-            "E007"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "This blog is part of a series exploring the technologies and principles shaping the future of simulation. Simulation is a broad word. Perhaps too broad. Depending on who you ask, it can mean a desktop trainer, a fixed-base simulator, a full flight simulator,…",
-          "evidenceIds": [
-            "E007"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Simulation Is at the Core of Mission Training, and Aechelon Is at the Heart of Visual Simulation",
-          "evidenceIds": [
-            "E007"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E007"
-      ],
-      "supportingEvidenceIds": [
-        "E007"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-5e81860c26fd17688cc4"
-      ],
-      "eventLifecycles": {
-        "evt-5e81860c26fd17688cc4": "first_seen"
-      },
-      "eventId": "evt-5e81860c26fd17688cc4",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T18:19:00+00:00",
-      "lastSeenAt": "2026-09-02T18:19:00+00:00"
-    },
-    {
-      "id": "chg-fd38c031ff20efb3d6fd",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-85afe9d5b32101e98e",
-      "entityName": "Expanding Genie Agents: Deep analysis, file reasoning, and more",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Expanding Genie Agents: Deep analysis, file reasoning, and more。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-02",
-        "summary": "At D",
-        "title": "Expanding Genie Agents: Deep analysis, file reasoning, and more"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-02",
-          "evidenceIds": [
-            "E008"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "At D",
-          "evidenceIds": [
-            "E008"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Expanding Genie Agents: Deep analysis, file reasoning, and more",
-          "evidenceIds": [
-            "E008"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E008"
-      ],
-      "supportingEvidenceIds": [
-        "E008"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-b44fed70102674df4ede"
-      ],
-      "eventLifecycles": {
-        "evt-b44fed70102674df4ede": "first_seen"
-      },
-      "eventId": "evt-b44fed70102674df4ede",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T18:19:00+00:00",
-      "lastSeenAt": "2026-09-02T18:19:00+00:00"
-    },
-    {
-      "id": "chg-5fe878581dad19b4a2a4",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "cambricon",
-      "entityName": "中科寒武纪科技股份有限公司",
-      "action": "updated",
-      "changedFields": [
-        "news"
-      ],
-      "summary": "中科寒武纪科技股份有限公司 的 news 发生变化。",
-      "importance": 48,
-      "before": {
-        "news": []
-      },
-      "after": {
-        "news": [
-          {
-            "publishedAt": "2026-09-02T22:40:00+08:00",
-            "source": "新浪财经",
-            "title": "寒武纪放大招：大举招聘软件人才！释放哪些信号？",
-            "url": "https://finance.sina.com.cn/jjxw/2026-09-02/doc-iniqnawq1330542.shtml"
-          }
-        ]
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "news"
-      ],
-      "claimBindings": [
-        {
-          "field": "news",
-          "before": [],
-          "after": [
-            {
-              "publishedAt": "2026-09-02T22:40:00+08:00",
-              "source": "新浪财经",
-              "title": "寒武纪放大招：大举招聘软件人才！释放哪些信号？",
-              "url": "https://finance.sina.com.cn/jjxw/2026-09-02/doc-iniqnawq1330542.shtml"
-            }
-          ],
-          "evidenceIds": [
-            "E021"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E021"
-      ],
-      "supportingEvidenceIds": [
-        "E021"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-67e03bfcfed6c01df2a3"
-      ],
-      "eventLifecycles": {
-        "evt-67e03bfcfed6c01df2a3": "first_seen"
-      },
-      "eventId": "evt-67e03bfcfed6c01df2a3",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T18:19:00+00:00",
-      "lastSeenAt": "2026-09-02T18:19:00+00:00"
+      "firstSeenAt": "2026-09-02T21:23:19+00:00",
+      "lastSeenAt": "2026-09-02T21:23:19+00:00"
     }
   ],
   "evidence": [
     {
       "id": "E001",
-      "changeId": "chg-493e0f21d34a0e35e381",
-      "entityName": "empirik.ai emerges from stealth with $21 Million to build the AI Agent for Infrastructure Change",
-      "claim": "新增高价值情报事件记录：empirik.ai emerges from stealth with $21 Million to build the AI Agent for Infrastructure Change。",
+      "changeId": "chg-933cbb63b0c2f06dc296",
+      "entityName": "Codoxo Named a Winner in 2026 Fierce AI Innovation Awards",
+      "claim": "新增高价值情报事件记录：Codoxo Named a Winner in 2026 Fierce AI Innovation Awards。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "sourceName": "PR Newswire Consumer Technology",
-      "title": "empirik.ai emerges from stealth with $21 Million to build the AI Agent for Infrastructure Change",
-      "url": "https://www.prnewswire.com/news-releases/empirikai-emerges-from-stealth-with-21-million-to-build-the-ai-agent-for-infrastructure-change-302867970.html",
+      "title": "Codoxo Named a Winner in 2026 Fierce AI Innovation Awards",
+      "url": "https://www.prnewswire.com/news-releases/codoxo-named-a-winner-in-2026-fierce-ai-innovation-awards-302868120.html",
       "publishedAt": "2026-09-02",
       "evidenceGrade": "B",
       "platformName": "新闻稿",
@@ -1046,184 +324,24 @@
     },
     {
       "id": "E002",
-      "changeId": "chg-95619cc94fe1ac22f411",
-      "entityName": "LivePerson Stockholders Approve Acquisition by SoundHound AI",
-      "claim": "新增高价值情报事件记录：LivePerson Stockholders Approve Acquisition by SoundHound AI。",
+      "changeId": "chg-af8a62c00b597d021c93",
+      "entityName": "Meta发布更强大AI模型 声称进一步缩小了与竞争对手差距",
+      "claim": "新增高价值情报事件记录：Meta发布更强大AI模型 声称进一步缩小了与竞争对手差距。",
       "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "PR Newswire Consumer Technology",
-      "title": "LivePerson Stockholders Approve Acquisition by SoundHound AI",
-      "url": "https://www.prnewswire.com/news-releases/liveperson-stockholders-approve-acquisition-by-soundhound-ai-302867972.html",
-      "publishedAt": "2026-09-02",
-      "evidenceGrade": "B",
-      "platformName": "新闻稿",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E003",
-      "changeId": "chg-c97387dd50d69eb807fe",
-      "entityName": "Researchers fear safety disaster ahead of OpenAI’s Astra release",
-      "claim": "新增高价值情报事件记录：Researchers fear safety disaster ahead of OpenAI’s Astra release。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "The Verge",
-      "title": "Researchers fear safety disaster ahead of OpenAI’s Astra release",
-      "url": "https://www.theverge.com/ai-artificial-intelligence/988334/openai-astra-ai-monitoring-safety",
-      "publishedAt": "2026-09-02",
-      "evidenceGrade": "C",
-      "platformName": "The Verge",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E004",
-      "changeId": "chg-442b5222554a3f2dbded",
-      "entityName": "北京协和医学院与SKG签署合作协议，开展睡眠呼吸暂停检测算法临床研究",
-      "claim": "新增高价值情报事件记录：北京协和医学院与SKG签署合作协议，开展睡眠呼吸暂停检测算法临床研究。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "雷峰网",
-      "title": "北京协和医学院与SKG签署合作协议，开展睡眠呼吸暂停检测算法临床研究",
-      "url": "https://www.leiphone.com/category/weiwu/66bHoBvGJOjv7lV0.html",
-      "publishedAt": "2026-09-02",
-      "evidenceGrade": "C",
-      "platformName": "专业媒体",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E005",
-      "changeId": "chg-352bbcc25a1ab8db7863",
-      "entityName": "网红QDII又迎活水 多只恢复场外申购或放松限购_天天基金网",
-      "claim": "新增高价值情报事件记录：网红QDII又迎活水 多只恢复场外申购或放松限购_天天基金网。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "网红QDII又迎活水 多只恢复场外申购或放松限购_天天基金网",
-      "url": "https://fund.eastmoney.com/a/202609023862873022.html",
-      "publishedAt": "2026-09-02",
-      "evidenceGrade": "媒体报道",
-      "platformName": "东方财富",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E006",
-      "changeId": "chg-3c285e24aadb76afeba0",
-      "entityName": "上半年公募大手笔加仓硬科技 机构提示板块轮动机会_天天基金网",
-      "claim": "新增高价值情报事件记录：上半年公募大手笔加仓硬科技 机构提示板块轮动机会_天天基金网。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "上半年公募大手笔加仓硬科技 机构提示板块轮动机会_天天基金网",
-      "url": "https://fund.eastmoney.com/a/202609023862613784.html",
-      "publishedAt": "2026-09-02",
-      "evidenceGrade": "媒体报道",
-      "platformName": "东方财富",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E007",
-      "changeId": "chg-9bb7fa8fe8100763df84",
-      "entityName": "Simulation Is at the Core of Mission Training, and Aechelon Is at the Heart of Visual Simulation",
-      "claim": "新增高价值情报事件记录：Simulation Is at the Core of Mission Training, and Aechelon Is at the Heart of Visual Simulation。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Shield AI",
-      "title": "Simulation Is at the Core of Mission Training, and Aechelon Is at the Heart of Visual Simulation",
-      "url": "https://shield.ai/simulation-is-at-the-core-of-mission-training-and-aechelon-is-at-the-heart-of-visual-simulation",
-      "publishedAt": "2026-09-02",
-      "evidenceGrade": "官方披露",
-      "platformName": "官方网站",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E008",
-      "changeId": "chg-fd38c031ff20efb3d6fd",
-      "entityName": "Expanding Genie Agents: Deep analysis, file reasoning, and more",
-      "claim": "新增高价值情报事件记录：Expanding Genie Agents: Deep analysis, file reasoning, and more。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Databricks",
-      "title": "Expanding Genie Agents: Deep analysis, file reasoning, and more",
-      "url": "https://www.databricks.com/blog/expanding-genie-agents-deep-analysis-file-reasoning-and-more",
-      "publishedAt": "2026-09-02",
-      "evidenceGrade": "官方披露",
-      "platformName": "官方网站",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E021",
-      "changeId": "chg-5fe878581dad19b4a2a4",
-      "entityName": "中科寒武纪科技股份有限公司",
-      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
-      "publicationTier": "candidate",
       "reviewStatus": "automated_unreviewed",
       "sourceName": "新浪财经",
-      "title": "寒武纪放大招：大举招聘软件人才！释放哪些信号？",
-      "url": "https://finance.sina.com.cn/jjxw/2026-09-02/doc-iniqnawq1330542.shtml",
-      "publishedAt": "2026-09-02T22:40:00+08:00",
-      "evidenceGrade": "媒体报道",
+      "title": "Meta发布更强大AI模型 声称进一步缩小了与竞争对手差距",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-03/doc-iniqntuk7235690.shtml",
+      "publishedAt": "2026-09-02",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
       "claimFields": [
-        "news"
+        "publishedAt",
+        "summary",
+        "title"
       ],
-      "entityMatchStatus": "matched",
+      "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
       "qualityStatus": "passed",
       "supportStatus": "supports"
@@ -1231,9 +349,113 @@
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-02T18:19:00+00:00",
+    "generatedAt": "2026-09-02T21:23:19+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-b0948ba88bf30958ebe9": {
+        "eventId": "evt-b0948ba88bf30958ebe9",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-055362a15580787dc3",
+        "entityName": "Codoxo Named a Winner in 2026 Fierce AI Innovation Awards",
+        "title": "Codoxo Named a Winner in 2026 Fierce AI Innovation Awards",
+        "titleAliases": [
+          "codoxonamedawinnerin2026fierceaiinnovationawards"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-8a7d617e447d624e7b2a",
+          "record-2687bb196111ac51a9f7",
+          "src-4e1795c56e907e57f423"
+        ],
+        "evidenceFingerprints": [
+          "8a7d617e447d624e7b2a"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "Codoxo Named a Winner in 2026 Fierce AI Innovation Awards",
+            "url": "https://www.prnewswire.com/news-releases/codoxo-named-a-winner-in-2026-fierce-ai-innovation-awards-302868120.html",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "06cfb77a49490ecc3dde",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T21:23:19+00:00",
+        "lastSeenAt": "2026-09-02T21:23:19+00:00",
+        "lastPublishedAt": "2026-09-02T21:23:19+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-62af56f6799f64c23671": {
+        "eventId": "evt-62af56f6799f64c23671",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-35682d73c7c0822c9f",
+        "entityName": "Meta发布更强大AI模型 声称进一步缩小了与竞争对手差距",
+        "title": "Meta发布更强大AI模型 声称进一步缩小了与竞争对手差距",
+        "titleAliases": [
+          "meta发布更强大ai模型声称进一步缩小了与竞争对手差距"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-c04af1e015d9a8279b56",
+          "record-bf313fabbbf328447b56",
+          "src-4e97ee7d5d84a2998c3c"
+        ],
+        "evidenceFingerprints": [
+          "c04af1e015d9a8279b56"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "Meta发布更强大AI模型 声称进一步缩小了与竞争对手差距",
+            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-03/doc-iniqntuk7235690.shtml",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "507d01609e5398f6d18d",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T21:23:19+00:00",
+        "lastSeenAt": "2026-09-02T21:23:19+00:00",
+        "lastPublishedAt": "2026-09-02T21:23:19+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-fa1a1260573d499c2374": {
         "eventId": "evt-fa1a1260573d499c2374",
         "dataset": "intelligenceEvent",
@@ -19236,13 +18458,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 9,
+    "newEvents": 2,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 11,
-    "observedEvents": 20,
+    "duplicatesSuppressed": 0,
+    "observedEvents": 2,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -20951,10 +20173,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-03",
-      "generatedAt": "2026-09-02T18:19:00+00:00",
+      "generatedAt": "2026-09-02T21:23:19+00:00",
       "runStatus": "model",
-      "changeCount": 18,
-      "executiveSummary": "2026年9月2日证据包显示，AI基础设施自动化、语音AI并购、前沿模型安全、医疗可穿戴临床验证及QDII资金面变化构成主要情报线索。empirik.ai以2100万美元融资走出隐身（E001），LivePerson股东批准SoundHound AI收购（E002），OpenAI Astra发布前安全担忧升温（E003），SKG与北京协和医学院启动睡眠呼吸暂停算法临床研究（E004），QDII额度落地带动多只基金恢复或放宽申购（E005），公募上半年加仓硬科技（E006），寒武纪大举招聘软件人才（E021）。整体看，AI应用与安全、医疗AI、资金流向是当前关注重点，但部分证据等级较低，需后续验证。",
+      "changeCount": 20,
+      "executiveSummary": "证据包仅包含两条外部线索：Codoxo 获得 2026 Fierce AI Innovation Awards（E001，B 级，新闻稿），以及 Meta 发布迄今最强大 AI 模型并称缩小与竞争对手差距（E002，C 级，新浪财经转载）。两者均为自动化未人工复核的公开线索，且相互独立，不足以支撑重大投资结论。可确认的事实仅限奖项与模型发布本身；关于性能差距、支付完整性效果等表述应视为厂商或媒体报道的声称，需进一步验证。",
       "eventIds": [
         "evt-31873f37bdd45ab7a46d",
         "evt-a3e49238c5aae05edad0",
@@ -20973,7 +20195,9 @@
         "evt-fa1a1260573d499c2374",
         "evt-5e81860c26fd17688cc4",
         "evt-b44fed70102674df4ede",
-        "evt-67e03bfcfed6c01df2a3"
+        "evt-67e03bfcfed6c01df2a3",
+        "evt-b0948ba88bf30958ebe9",
+        "evt-62af56f6799f64c23671"
       ],
       "eventStates": [
         {
@@ -21047,14 +20271,22 @@
         {
           "eventId": "evt-67e03bfcfed6c01df2a3",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-b0948ba88bf30958ebe9",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-62af56f6799f64c23671",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 0,
       "candidateTotal": 1,
-      "auxiliaryLeadTotal": 17,
+      "auxiliaryLeadTotal": 19,
       "rejectedTotal": 1,
       "eventSummary": {
-        "newEvents": 18,
+        "newEvents": 20,
         "reconfirmations": 0,
         "updates": 0,
         "corrections": 0,
@@ -21064,19 +20296,15 @@
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 20,
-    "eligibleCandidateCount": 20,
+    "candidateCount": 2,
+    "eligibleCandidateCount": 2,
     "rejectedCandidateCount": 0,
     "rejectedByDataset": {},
-    "evidenceCount": 56,
-    "supportingEvidenceCount": 20,
-    "rejectedEvidenceCount": 16,
-    "passedButUnboundEvidenceCount": 20,
-    "rejectionReasons": {
-      "missing_published_at": 16,
-      "missing_title": 8,
-      "ungraded": 8
-    },
+    "evidenceCount": 2,
+    "supportingEvidenceCount": 2,
+    "rejectedEvidenceCount": 0,
+    "passedButUnboundEvidenceCount": 0,
+    "rejectionReasons": {},
     "sourceClassificationWarnings": []
   },
   "sourceClassificationWarnings": [],
