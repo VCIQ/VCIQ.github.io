@@ -32,11 +32,13 @@ jobs:
             tools/source_performance.py \
             tools/source_quality_reviews.py \
             tools/source_performance_review.py \
+            tools/source_quality_review_queue.py \
             tools/update_source_health.py
           python -m unittest \
             tests.test_source_performance \
             tests.test_source_quality_reviews \
             tests.test_source_performance_review \
+            tests.test_source_quality_review_queue \
             tests.test_source_health_performance
           python - <<'PY'
           from tools.source_quality_reviews import load_review_manifest
@@ -47,6 +49,8 @@ jobs:
         run: |
           python tools/source_performance_review.py
           python tools/source_performance_review.py --check
+          python tools/source_quality_review_queue.py
+          python tools/source_quality_review_queue.py --check
 
       - name: Commit changed review snapshot
         shell: bash
@@ -56,7 +60,9 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add \
             public/data/source_performance_review.json \
-            docs/source-performance-review.md
+            public/data/source_quality_review_queue.json \
+            docs/source-performance-review.md \
+            docs/source-quality-review-queue.md
           if git diff --cached --quiet; then
             echo "No source-performance review changes."
             exit 0
@@ -66,9 +72,13 @@ jobs:
             git pull --rebase origin main
             python tools/source_performance_review.py
             python tools/source_performance_review.py --check
+            python tools/source_quality_review_queue.py
+            python tools/source_quality_review_queue.py --check
             git add \
               public/data/source_performance_review.json \
-              docs/source-performance-review.md
+              public/data/source_quality_review_queue.json \
+              docs/source-performance-review.md \
+              docs/source-quality-review-queue.md
             if ! git diff --cached --quiet; then
               git commit --amend --no-edit
             fi
@@ -87,6 +97,14 @@ jobs:
         run: |
           set -euo pipefail
           TITLE='[月度审查] 信源效能与降级建议'
+          ISSUE_BODY="$RUNNER_TEMP/source-review-issue.md"
+          cat docs/source-performance-review.md > "$ISSUE_BODY"
+          cat >> "$ISSUE_BODY" <<'EOF'
+
+          ## 记录级人工抽样
+
+          具体待审 record ID、原始 URL 与 `sampleDigest` 见 [信源人工质量抽样队列](https://github.com/VCIQ/VCIQ.github.io/blob/main/docs/source-quality-review-queue.md)。人工判断完成后，仍按现有 schema 将汇总计数写入 `config/source_quality_reviews.json`；不要自动生成误归属结论。
+          EOF
           ISSUE_NUMBER=$(gh issue list \
             --state open \
             --search "$TITLE in:title" \
@@ -94,7 +112,7 @@ jobs:
             --jq '.[] | select(.title == "[月度审查] 信源效能与降级建议") | .number' \
             | head -n 1)
           if [ -n "$ISSUE_NUMBER" ]; then
-            gh issue edit "$ISSUE_NUMBER" --body-file docs/source-performance-review.md
+            gh issue edit "$ISSUE_NUMBER" --body-file "$ISSUE_BODY"
           else
-            gh issue create --title "$TITLE" --body-file docs/source-performance-review.md
+            gh issue create --title "$TITLE" --body-file "$ISSUE_BODY"
           fi
