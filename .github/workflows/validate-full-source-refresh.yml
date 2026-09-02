@@ -6,6 +6,7 @@ on:
       - .maintenance/full-source-refresh-validation.md
       - tools/prepare_full_refresh.py
       - tools/finalize_full_refresh.py
+      - tools/regulatory_source_health.py
       - tools/validate_full_refresh.py
       - tools/professional_media_sources.py
       - tools/source_portfolio.py
@@ -27,6 +28,7 @@ on:
       - tests/test_article_publication_gate.py
       - tests/test_core_official_adapters.py
       - tests/test_tracking_seed_governance.py
+      - tests/test_regulatory_source_health.py
       - tests/test_source_health_summary.py
       - tests/test_scheduled_sync_workflow.py
       - .github/workflows/scheduled-sync.yml
@@ -54,6 +56,7 @@ jobs:
             tools/article_publication_gate.py \
             tools/core_official_adapters.py \
             tools/tracking_seed_governance.py \
+            tools/regulatory_source_health.py \
             tools/validate_professional_media_snapshot.py \
             tools/crawl_with_wechat_registry.py \
             tools/validate_full_refresh.py \
@@ -68,6 +71,7 @@ jobs:
             tests.test_article_publication_gate \
             tests.test_core_official_adapters \
             tests.test_tracking_seed_governance \
+            tests.test_regulatory_source_health \
             tests.test_source_health_summary \
             tests.test_scheduled_sync_workflow
           python tools/source_health_summary.py --check
