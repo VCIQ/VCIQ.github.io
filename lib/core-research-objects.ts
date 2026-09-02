@@ -47,6 +47,10 @@ const coreTechnologyPublicNames = new Map(
   ].map(([source, publicName]) => [normalizeResearchObjectName(source), publicName]),
 );
 
+export function publicCoreTechnologyName(value: string) {
+  return coreTechnologyPublicNames.get(normalizeResearchObjectName(value)) ?? value;
+}
+
 /**
  * Core technologies are substantive public topic entities that are more
  * specific than the configured track taxonomy. Broad domains such as AI or
@@ -90,9 +94,7 @@ export const coreTechnologyEntities = publishedTrackingResearchEntities
   )
   .map(({ entity, topics }) => ({
     ...entity,
-    name:
-      coreTechnologyPublicNames.get(normalizeResearchObjectName(entity.name)) ??
-      entity.name,
+    name: publicCoreTechnologyName(entity.name),
     // Do not expose inherited crawler tracks on the curated technology layer.
     // The topic taxonomy is the canonical source for a technology's parents.
     trackNames: unique(topics.flatMap((topic) => topic.trackNames)),
