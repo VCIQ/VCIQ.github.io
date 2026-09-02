@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-09-02T09:36:13+00:00",
-  "attemptCount": 37,
+  "generatedAt": "2026-09-02T13:14:41+00:00",
+  "attemptCount": 39,
   "attempts": [
     {
       "taskId": "person-research-fcb717642c97",
@@ -642,6 +642,36 @@
       },
       "durationMs": 2331,
       "queryCostUnits": 1.0
+    },
+    {
+      "taskId": "person-research-d8703bb7f4b3",
+      "taskType": "first_party_evidence",
+      "personSlug": "zhang-xue",
+      "researchDate": "2026-09-02",
+      "query": "Zhang Xue 机器人 演讲",
+      "queryStrategy": "topic_speech",
+      "outcome": "no_evidence",
+      "candidateCount": 0,
+      "sourceHosts": [],
+      "sourceTypes": [],
+      "sourceTypeCounts": {},
+      "durationMs": 5223,
+      "queryCostUnits": 1.0
+    },
+    {
+      "taskId": "person-research-bd260d4f942f",
+      "taskType": "first_party_evidence",
+      "personSlug": "gavin-baker",
+      "researchDate": "2026-09-02",
+      "query": "Gavin Baker AI / AGI 演讲",
+      "queryStrategy": "topic_speech",
+      "outcome": "no_evidence",
+      "candidateCount": 0,
+      "sourceHosts": [],
+      "sourceTypes": [],
+      "sourceTypeCounts": {},
+      "durationMs": 5601,
+      "queryCostUnits": 1.0
     }
   ],
   "taskStats": {
@@ -670,9 +700,9 @@
       "errors": 0
     },
     "person-research-d8703bb7f4b3": {
-      "attempts": 13,
+      "attempts": 14,
       "candidateFound": 12,
-      "noEvidence": 1,
+      "noEvidence": 2,
       "errors": 0
     },
     "person-research-8fbea4a6b50d": {
@@ -718,9 +748,9 @@
       "errors": 0
     },
     "person-research-bd260d4f942f": {
-      "attempts": 1,
+      "attempts": 2,
       "candidateFound": 1,
-      "noEvidence": 0,
+      "noEvidence": 1,
       "errors": 0
     }
   },
@@ -736,25 +766,25 @@
   },
   "queryStrategyStats": {
     "topic_speech": {
-      "attempts": 37,
+      "attempts": 39,
       "candidateFound": 14,
-      "noEvidence": 23,
+      "noEvidence": 25,
       "errors": 0,
       "candidates": 49,
-      "successRate": 0.378,
-      "averageCandidates": 1.324
+      "successRate": 0.359,
+      "averageCandidates": 1.256
     }
   },
   "taskStrategyStats": {
     "first_party_evidence": {
       "topic_speech": {
-        "attempts": 37,
+        "attempts": 39,
         "candidateFound": 14,
-        "noEvidence": 23,
+        "noEvidence": 25,
         "errors": 0,
         "candidates": 49,
-        "successRate": 0.378,
-        "averageCandidates": 1.324
+        "successRate": 0.359,
+        "averageCandidates": 1.256
       }
     }
   },
@@ -768,30 +798,30 @@
   "taskSourceMatrix": {
     "first_party_evidence": {
       "video_platform": {
-        "attempts": 37,
+        "attempts": 39,
         "yieldAttempts": 14,
-        "yieldRate": 0.378,
+        "yieldRate": 0.359,
         "candidates": 49
       }
     }
   },
   "queryStrategyCostStats": {
     "topic_speech": {
-      "attempts": 37,
-      "costUnits": 37.0,
-      "durationMs": 70783,
+      "attempts": 39,
+      "costUnits": 39.0,
+      "durationMs": 81607,
       "averageCostUnits": 1.0,
-      "averageDurationMs": 1913
+      "averageDurationMs": 2092
     }
   },
   "taskStrategyCostStats": {
     "first_party_evidence": {
       "topic_speech": {
-        "attempts": 37,
-        "costUnits": 37.0,
-        "durationMs": 70783,
+        "attempts": 39,
+        "costUnits": 39.0,
+        "durationMs": 81607,
         "averageCostUnits": 1.0,
-        "averageDurationMs": 1913
+        "averageDurationMs": 2092
       }
     }
   },
