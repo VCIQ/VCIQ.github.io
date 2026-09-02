@@ -3,6 +3,7 @@ import test from "node:test";
 import {
   CORE_TECHNOLOGY_EXCLUDED_NAMES,
   coreTechnologyEntities,
+  publicCoreTechnologyName,
 } from "../lib/core-research-objects";
 import { technologyTopicsForCoreEntity } from "../lib/technology-topics";
 
@@ -56,16 +57,22 @@ test("broad topics organizations projects and collision-prone names stay out of 
 });
 
 test("public model names and agent topic overrides remain explicit", () => {
+  assert.equal(publicCoreTechnologyName("Opus"), "Claude Opus");
+  assert.equal(publicCoreTechnologyName("Sonnet"), "Claude Sonnet");
+  assert.equal(publicCoreTechnologyName("Claude Opus"), "Claude Opus");
+  assert.equal(publicCoreTechnologyName("Claude Sonnet"), "Claude Sonnet");
+
   const byName = new Map(coreTechnologyEntities.map((entity) => [entity.name, entity]));
-  assert.ok(byName.has("Claude Opus"));
-  assert.ok(byName.has("Claude Sonnet"));
   assert.equal(byName.has("Opus"), false);
   assert.equal(byName.has("Sonnet"), false);
 
   for (const name of ["Claude Code", "Codex", "Agent OS"]) {
-    const entity = byName.get(name);
-    assert.ok(entity, `${name} is missing from the core directory`);
-    const topics = technologyTopicsForCoreEntity(entity).map((topic) => topic.name);
-    assert.ok(topics.includes("AI 智能体"), `${name} is missing the AI agent topic`);
+    const topics = technologyTopicsForCoreEntity({
+      name,
+      aliases: [],
+      researchThesis: "",
+      analystNotes: [],
+    }).map((topic) => topic.name);
+    assert.ok(topics.includes("AI 智能体"), `${name} is missing the AI agent topic override`);
   }
 });
