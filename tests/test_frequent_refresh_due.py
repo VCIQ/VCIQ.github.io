@@ -65,14 +65,37 @@ class FrequentRefreshDueTests(unittest.TestCase):
         self.assertTrue(result["due"])
         self.assertEqual(result["reason"], "age-threshold")
 
-    def test_manual_dispatch_bypasses_full_refresh_reservation(self) -> None:
+    def test_unforced_dispatch_respects_full_refresh_reservation(self) -> None:
         result = evaluate_due(
             payload(last_news="2026-08-13T20:07:35+00:00"),
             event_name="workflow_dispatch",
             now=datetime(2026, 8, 13, 22, 25, tzinfo=UTC),
         )
+        self.assertFalse(result["due"])
+        self.assertEqual(result["reason"], "awaiting-daily-full-refresh")
+
+    def test_unforced_dispatch_respects_recent_crawl_freshness(self) -> None:
+        result = evaluate_due(
+            payload(
+                last_news="2026-09-02T09:32:00+00:00",
+                last_full="2026-09-02T09:32:00+00:00",
+            ),
+            event_name="workflow_dispatch",
+            now=datetime(2026, 9, 2, 9, 45, tzinfo=UTC),
+        )
+        self.assertFalse(result["due"])
+        self.assertEqual(result["reason"], "age-threshold")
+        self.assertEqual(result["ageMinutes"], 13)
+
+    def test_forced_dispatch_bypasses_reservation_and_freshness(self) -> None:
+        result = evaluate_due(
+            payload(last_news="2026-08-13T20:07:35+00:00"),
+            event_name="workflow_dispatch",
+            force=True,
+            now=datetime(2026, 8, 13, 22, 25, tzinfo=UTC),
+        )
         self.assertTrue(result["due"])
-        self.assertEqual(result["reason"], "manual-dispatch")
+        self.assertEqual(result["reason"], "forced-dispatch")
 
     def test_scheduled_refresh_before_reservation_uses_age_threshold(self) -> None:
         result = evaluate_due(

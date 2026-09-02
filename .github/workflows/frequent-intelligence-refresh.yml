@@ -8,6 +8,12 @@ on:
   - cron: "17 0,2,4,8,10,12,14,16,18,20,22 * * *"
     timezone: "Asia/Taipei"
   workflow_dispatch:
+    inputs:
+      force_crawl:
+        description: Force a lightweight crawl even when freshness says it is not due
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -24,9 +30,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # Scheduled runs can wait behind a full repository writer. Resolve
-          # main only after the lock is acquired so the due check sees the
-          # newly published snapshot rather than the schedule event's old SHA.
+          # Scheduled and dispatched runs can wait behind another repository
+          # writer. Resolve main only after the lock is acquired so the due
+          # check sees the newest completed crawl instead of the trigger SHA.
           ref: main
           fetch-depth: 0
       - uses: actions/setup-python@v5
@@ -36,6 +42,7 @@ jobs:
         id: due
         env:
           EVENT_NAME: ${{ github.event_name }}
+          FORCE_CRAWL: ${{ inputs.force_crawl || 'false' }}
         run: python tools/frequent_refresh_due.py
       - name: Explain lightweight refresh skip
         if: steps.due.outputs.due != 'true'
