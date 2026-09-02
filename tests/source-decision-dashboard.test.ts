@@ -10,9 +10,10 @@ import {
 } from "@/lib/source-decision-dashboard";
 
 function source(overrides: Partial<SourceDirectoryEntry> & Pick<SourceDirectoryEntry, "id" | "name">): SourceDirectoryEntry {
+  const { id, name, ...rest } = overrides;
   return {
-    id: overrides.id,
-    name: overrides.name,
+    id,
+    name,
     kind: "媒体 / 研究",
     platform: "Web",
     sourceLevel: "待交叉验证",
@@ -25,7 +26,7 @@ function source(overrides: Partial<SourceDirectoryEntry> & Pick<SourceDirectoryE
     lifecycle: "tracked",
     healthStatus: "ok",
     endpoints: [],
-    ...overrides,
+    ...rest,
   } as SourceDirectoryEntry;
 }
 
