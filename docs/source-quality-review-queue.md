@@ -1,8 +1,8 @@
 # 信源人工质量抽样队列
 
-周期：`2026-09`；信源健康快照：`2026-09-02T14:36:59+00:00`。
+周期：`2026-09`；信源健康快照：`2026-09-02T18:07:14+00:00`。
 
-目标为每个来源累计 **20** 条人工审查记录。当前有 **8** 个来源已具备足量候选，**632** 个来源仍缺少可审记录。
+目标为每个来源累计 **20** 条人工审查记录。当前有 **6** 个来源已具备足量候选，**632** 个来源仍缺少可审记录。
 
 ## 审核规则
 
@@ -13,8 +13,6 @@
 
 | 来源 | 等级 | 已审/目标 | 还需 | 可用记录 | 队列状态 | sampleDigest |
 |---|---|---:|---:|---:|---|---|
-| 巨潮资讯 | A | 0/20 | 20 | 57 | 可审核 | `0279a88b65af846f` |
-| 香港交易所披露易 | A | 0/20 | 20 | 60 | 可审核 | `c9f8bbb95f84ac15` |
 | DEV Community | C | 0/20 | 20 | 20 | 可审核 | `4812c00094daaaff` |
 | Yahoo奇摩 | C | 0/20 | 20 | 20 | 可审核 | `56ece0d341a58772` |
 | Yahoo奇摩 | C | 0/20 | 20 | 20 | 可审核 | `73695d5c92e4c19b` |
@@ -39,15 +37,15 @@
 | Cerebras Systems · 官方网站 | B | 0/20 | 20 | 0 | 记录不足 | `d12a01499bac284c` |
 | Cerebras Systems 官方动态 | B | 0/20 | 20 | 2 | 记录不足 | `a32f97719eaede4e` |
 | Commonwealth Fusion Systems 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `22309084a7a95cff` |
-| Databricks 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `3f40880b057464dd` |
+| Databricks 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `d741822a8afe3852` |
 | DeepSeek | B | 0/20 | 20 | 0 | 记录不足 | `6f7ac1823da81d2e` |
 | DeepSeek 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `c2f9cdf3e4878ef1` |
 | Figure AI | B | 0/20 | 20 | 0 | 记录不足 | `889393fb69a5b305` |
 | Figure AI 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `45e0e01a913b5387` |
-| Form Energy 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `dd69f336c93830ce` |
+| Form Energy 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `2de8708683602d68` |
 | Glean 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `8955a0c76b81e41a` |
-| Google AI | B | 0/20 | 20 | 2 | 记录不足 | `a8facdc7df4fd5bd` |
-| Google DeepMind | B | 0/20 | 20 | 2 | 记录不足 | `5fe368725b1f3be2` |
+| Google AI | B | 0/20 | 20 | 3 | 记录不足 | `8c7f448d7c441bd3` |
+| Google DeepMind | B | 0/20 | 20 | 3 | 记录不足 | `75bb465ae2338982` |
 | Google DeepMind | B | 0/20 | 20 | 0 | 记录不足 | `1c6e824927bc1740` |
 | Google DeepMind | B | 0/20 | 20 | 5 | 记录不足 | `606aa0bc48d2e66f` |
 | Google 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `99e57c7e7c6606cd` |
@@ -69,7 +67,7 @@
 | OpenAI 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `8f83eab02e36d396` |
 | Perplexity 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `ff22b92ab74ddce8` |
 | Pony.ai Investor Relations | B | 0/20 | 20 | 0 | 记录不足 | `c2ece5279671ac71` |
-| PR Newswire Consumer Technology | B | 0/20 | 20 | 5 | 记录不足 | `0ba88ef4a7909331` |
+| PR Newswire Consumer Technology | B | 0/20 | 20 | 3 | 记录不足 | `1b6cd8dbf2c1bdc0` |
 | PsiQuantum 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `e3fe24b977ce9dbc` |
 | Recursion Pharmaceuticals 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `24716ff8c6ee157a` |
 | Redwood Materials 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `26d2fb29af852a3f` |
@@ -80,14 +78,14 @@
 | SambaNova Systems 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `07e771583f82804b` |
 | Scale AI | B | 0/20 | 20 | 0 | 记录不足 | `59c5204e6b81208b` |
 | Scale AI 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `164885ac0fe6a241` |
-| Shield AI 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `490c9c8302a850e4` |
+| Shield AI 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `6a77b19f56936c1e` |
 | Shopify 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `ecd77a12e5305b6a` |
 | Shopify 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `c5de1fb0e02dc3a7` |
 | Shopify 官方网站 | B | 0/20 | 20 | 0 | 记录不足 | `2ddbee055a110ae8` |
 | Sierra 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `68d7ed7ac189e99a` |
 | SpaceX | B | 0/20 | 20 | 0 | 记录不足 | `e78bdebae031095b` |
 | SpaceX 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `1c04218ff2296233` |
-| Tempus AI 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `a6111d51beea3380` |
+| Tempus AI 官方动态 | B | 0/20 | 20 | 1 | 记录不足 | `56090db4fe833f14` |
 | The Washington Post | B | 0/20 | 20 | 10 | 记录不足 | `803480caa6a0f605` |
 | The Washington Post | B | 0/20 | 20 | 0 | 记录不足 | `f7efb455dec04697` |
 | Varda Space Industries 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `bb603f44803396fe` |
@@ -113,138 +111,10 @@
 | 小鹏汇天 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `b39156c8c6d0a80c` |
 | 搜狐网 · 商业航天信源 | B | 0/20 | 20 | 2 | 记录不足 | `d2c6a4bb2fd3065c` |
 | 搜狐网 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `b627d43624d58c06` |
+| 摩尔线程 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `63680eebbc823209` |
+| 文远知行 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `39f752ec9f0dbcab` |
 
 这里只展示前 100 个来源；完整队列见 JSON 文件。
-
-## 巨潮资讯
-
-`sourceId=regulatory:cninfo` · 还需审核 `20` 条 · `sampleDigest=0279a88b65af846f`
-
-1. **2026年半年度报告**
-   - `regulatory-disclosure` · `disclosure-bgi-genomics-dc0ea32e87dcc2133f` · 2026-08-21 · 华大基因
-   - https://static.cninfo.com.cn/finalpage/2026-08-22/1225492096.PDF
-2. **关于增加2026年度日常关联交易预计额度的公告**
-   - `regulatory-disclosure` · `disclosure-bgi-genomics-346005a55079926b78` · 2026-08-21 · 华大基因
-   - https://static.cninfo.com.cn/finalpage/2026-08-22/1225492099.PDF
-3. **2026年半年度报告摘要**
-   - `regulatory-disclosure` · `disclosure-bgi-genomics-17e4691f6401ec8748` · 2026-08-21 · 华大基因
-   - https://static.cninfo.com.cn/finalpage/2026-08-22/1225492095.PDF
-4. **关于回购股份事项前十名股东和前十名无限售条件股东持股情况的公告**
-   - `regulatory-disclosure` · `disclosure-catl-2f47086b3d22373858` · 2026-08-07 · 宁德时代
-   - https://static.cninfo.com.cn/finalpage/2026-08-07/1225464975.PDF
-5. **关于公司2026年半年度募集资金存放、管理与实际使用情况的专项报告**
-   - `regulatory-disclosure` · `disclosure-cambricon-9c68a2fa026e13c3e5` · 2026-08-07 · 寒武纪
-   - https://static.cninfo.com.cn/finalpage/2026-08-08/1225464970.PDF
-6. **2026年半年度报告摘要**
-   - `regulatory-disclosure` · `disclosure-cambricon-919b6ad05554a828e6` · 2026-08-07 · 寒武纪
-   - https://static.cninfo.com.cn/finalpage/2026-08-08/1225464971.PDF
-7. **2026年半年度报告**
-   - `regulatory-disclosure` · `disclosure-cambricon-5f51962ae942848d38` · 2026-08-07 · 寒武纪
-   - https://static.cninfo.com.cn/finalpage/2026-08-08/1225464969.PDF
-8. **关于回购股份事项前十名股东和前十名无限售条件股东持股情况的公告**
-   - `regulatory-disclosure` · `disclosure-catl-9f155fe3afae307b2b` · 2026-07-30 · 宁德时代
-   - https://static.cninfo.com.cn/finalpage/2026-07-30/1225448968.PDF
-9. **关于回购公司股份方案的公告暨回购股份报告书**
-   - `regulatory-disclosure` · `disclosure-catl-f97b3005c272bf3b25` · 2026-07-24 · 宁德时代
-   - https://static.cninfo.com.cn/finalpage/2026-07-25/1225441582.PDF
-10. **关于2026年半年度募集资金存放与使用情况的专项报告**
-   - `regulatory-disclosure` · `disclosure-catl-b5067ca914c4f1f4d1` · 2026-07-24 · 宁德时代
-   - https://static.cninfo.com.cn/finalpage/2026-07-25/1225441590.PDF
-11. **2026年半年度报告**
-   - `regulatory-disclosure` · `disclosure-catl-812316a4268ed72182` · 2026-07-24 · 宁德时代
-   - https://static.cninfo.com.cn/finalpage/2026-07-25/1225441586.PDF
-12. **2026年半年度报告摘要**
-   - `regulatory-disclosure` · `disclosure-catl-3ff23cd689c96d67ff` · 2026-07-24 · 宁德时代
-   - https://static.cninfo.com.cn/finalpage/2026-07-25/1225441585.PDF
-13. **宁德时代新能源科技股份有限公司2026年面向专业投资者公开发行科技创新公司债券（第二期）在深圳证券交易所上市的公告**
-   - `regulatory-disclosure` · `disclosure-catl-6775f1c8f430f53fc0` · 2026-06-25 · 宁德时代
-   - https://static.cninfo.com.cn/finalpage/2026-06-25/1225387554.PDF
-14. **宁德时代新能源科技股份有限公司2026年面向专业投资者公开发行科技创新公司债券（第二期）发行结果公告**
-   - `regulatory-disclosure` · `disclosure-catl-024ca94f4152477d7f` · 2026-06-18 · 宁德时代
-   - https://static.cninfo.com.cn/finalpage/2026-06-18/1225377939.PDF
-15. **关于回购股份事项前十名股东和前十名无限售条件股东持股情况的公告**
-   - `regulatory-disclosure` · `disclosure-bgi-genomics-9675c2b2e6ca85ea3b` · 2026-06-18 · 华大基因
-   - https://static.cninfo.com.cn/finalpage/2026-06-18/1225377667.PDF
-16. **宁德时代新能源科技股份有限公司2026年面向专业投资者公开发行科技创新公司债券（第二期）票面利率公告**
-   - `regulatory-disclosure` · `disclosure-catl-e75fab83a573169658` · 2026-06-17 · 宁德时代
-   - https://static.cninfo.com.cn/finalpage/2026-06-17/1225376442.PDF
-17. **宁德时代新能源科技股份有限公司2026年面向专业投资者公开发行公司债券更名公告**
-   - `regulatory-disclosure` · `disclosure-catl-e87d37f391b4128b67` · 2026-06-16 · 宁德时代
-   - https://static.cninfo.com.cn/finalpage/2026-06-16/1225373022.PDF
-18. **宁德时代新能源科技股份有限公司2026年面向专业投资者公开发行科技创新公司债券（第二期）发行公告**
-   - `regulatory-disclosure` · `disclosure-catl-49bb303471a0c0b8b9` · 2026-06-16 · 宁德时代
-   - https://static.cninfo.com.cn/finalpage/2026-06-16/1225373026.PDF
-19. **宁德时代新能源科技股份有限公司2026年面向专业投资者公开发行科技创新公司债券（第二期）募集说明书**
-   - `regulatory-disclosure` · `disclosure-catl-42ae64f064c37ffa2c` · 2026-06-16 · 宁德时代
-   - https://static.cninfo.com.cn/finalpage/2026-06-16/1225373024.PDF
-20. **关于控股股东提议公司回购股份的公告**
-   - `regulatory-disclosure` · `disclosure-bgi-genomics-53b4854f643d6ede36` · 2026-06-16 · 华大基因
-   - https://static.cninfo.com.cn/finalpage/2026-06-16/1225374424.PDF
-
-## 香港交易所披露易
-
-`sourceId=regulatory:hkex` · 还需审核 `20` 条 · `sampleDigest=c9f8bbb95f84ac15`
-
-1. **An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section**
-   - `regulatory-disclosure` · `disclosure-catl-6bf50ba54802770bf8` · 2026-08-27 · 宁德时代
-   - https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0827/2026082701064.htm
-2. **COMPLETION OF THE ISSUE OF US$450,000,000 ZERO COUPON CONVERTIBLE BONDS DUE 2027**
-   - `regulatory-disclosure` · `disclosure-horizon-robotics-cf9f2a50333b22ae88` · 2026-07-29 · 地平线机器人
-   - https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0729/2026072900588.pdf
-3. **GRANT OF AWARDS PURSUANT TO THE POST-IPO SHARE INCENTIVE PLAN**
-   - `regulatory-disclosure` · `disclosure-horizon-robotics-28ded6a4a11024bb02` · 2026-07-26 · 地平线机器人
-   - https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0726/2026072600115.pdf
-4. **2026 INTERIM REPORT**
-   - `regulatory-disclosure` · `disclosure-catl-ea1417317a87dd9a12` · 2026-07-26 · 宁德时代
-   - https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0726/2026072600031.pdf
-5. **PROPOSED GRANT OF GENERAL MANDATE FOR A SUBSIDIARY TO ISSUE BONDS PROPOSED FORMULATION OF THE MANAGEMENT SYSTEM FOR THE REMUNERATION OF DIRECTORS AND SENIOR MANAGEMENT PROPOSED ENGAGEMENT IN FUTURES AND DERIVATIVES TRADING BY THE SUBSIDIARIES OF THE COMPANY A SHARES REPURCHASE PLAN NOTICE OF THE EXTRAORDINARY GENERAL MEETING**
-   - `regulatory-disclosure` · `disclosure-catl-a3558dfa60ef946e48` · 2026-07-26 · 宁德时代
-   - https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0726/2026072600107.pdf
-6. **PROFIT WARNING**
-   - `regulatory-disclosure` · `disclosure-xtalpi-f2c6f1076ff78e0f7e` · 2026-07-24 · 晶泰科技
-   - https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0724/2026072401900.pdf
-7. **An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section**
-   - `regulatory-disclosure` · `disclosure-catl-bb4479f0726d36b3a0` · 2026-07-24 · 宁德时代
-   - https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0724/2026072401883.htm
-8. **An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section**
-   - `regulatory-disclosure` · `disclosure-catl-b4766a960a051afd0a` · 2026-07-24 · 宁德时代
-   - https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0724/2026072401877.htm
-9. **An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section**
-   - `regulatory-disclosure` · `disclosure-catl-9b0b7a67b98eeaed73` · 2026-07-24 · 宁德时代
-   - https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0724/2026072401827.htm
-10. **An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section**
-   - `regulatory-disclosure` · `disclosure-catl-7c3b81becd20bc3472` · 2026-07-24 · 宁德时代
-   - https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0724/2026072401887.htm
-11. **An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section**
-   - `regulatory-disclosure` · `disclosure-catl-7576b425b03e831be9` · 2026-07-24 · 宁德时代
-   - https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0724/2026072401863.htm
-12. **An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section**
-   - `regulatory-disclosure` · `disclosure-catl-08bd1803b09201fb07` · 2026-07-24 · 宁德时代
-   - https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0724/2026072401617.htm
-13. **An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section**
-   - `regulatory-disclosure` · `disclosure-catl-051364ea6c500fcaa6` · 2026-07-24 · 宁德时代
-   - https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0724/2026072401623.htm
-14. **PRICING OF US$450,000,000 ZERO COUPON CONVERTIBLE BONDS DUE 2027**
-   - `regulatory-disclosure` · `disclosure-horizon-robotics-2a0ccebcd63f7ed0c3` · 2026-07-23 · 地平线机器人
-   - https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0723/2026072300027.pdf
-15. **INSIDE INFORMATION PROPOSED ISSUE OF CONVERTIBLE BOND UNDER GENERAL MANDATE**
-   - `regulatory-disclosure` · `disclosure-horizon-robotics-c1d342124d08026fa2` · 2026-07-22 · 地平线机器人
-   - https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0722/2026072200995.pdf
-16. **INSIDE INFORMATION UPDATE ON FINANCIAL PERFORMANCE**
-   - `regulatory-disclosure` · `disclosure-horizon-robotics-7199b05100e1b5487a` · 2026-07-21 · 地平线机器人
-   - https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0721/2026072100145.pdf
-17. **GRANT OF SHARE OPTIONS AND RESTRICTED SHARE UNITS**
-   - `regulatory-disclosure` · `disclosure-xtalpi-4ea62e6ec593936097` · 2026-07-02 · 晶泰科技
-   - https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0702/2026070203757.pdf
-18. **An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section**
-   - `regulatory-disclosure` · `disclosure-catl-54bc64e53c587171ea` · 2026-06-26 · 宁德时代
-   - https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0626/2026062602344.htm
-19. **An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section**
-   - `regulatory-disclosure` · `disclosure-catl-f9eecd363a8bf8f757` · 2026-06-25 · 宁德时代
-   - https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0625/2026062501327.htm
-20. **An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section**
-   - `regulatory-disclosure` · `disclosure-catl-890d64e7587a09dca1` · 2026-06-18 · 宁德时代
-   - https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0618/2026061801299.htm
 
 ## DEV Community
 
@@ -827,11 +697,11 @@
 
 ## Databricks 官方动态
 
-`sourceId=official-databricks` · 还需审核 `20` 条 · `sampleDigest=3f40880b057464dd`
+`sourceId=official-databricks` · 还需审核 `20` 条 · `sampleDigest=d741822a8afe3852`
 
-1. **Announcing the Databricks Big Book of AgentOps**
-   - `article` · `official-databricks-f2050ccb0482507b` · 2026-09-02 · Databricks
-   - https://www.databricks.com/blog/announcing-databricks-big-book-agentops
+1. **Expanding Genie Agents: Deep analysis, file reasoning, and more**
+   - `article` · `official-databricks-536151d492263778` · 2026-09-02 · Databricks
+   - https://www.databricks.com/blog/expanding-genie-agents-deep-analysis-file-reasoning-and-more
 2. **Beyond answers: New Genie One features to turn insights into action**
    - `article` · `official-databricks-9d97f2607ce6990b` · 2026-08-28 · Databricks
    - https://www.databricks.com/blog/beyond-answers-new-genie-one-features-turn-insights-action
@@ -890,20 +760,9 @@
 
 ## Form Energy 官方动态
 
-`sourceId=official-form-energy` · 还需审核 `20` 条 · `sampleDigest=dd69f336c93830ce`
+`sourceId=official-form-energy` · 还需审核 `20` 条 · `sampleDigest=2de8708683602d68`
 
-1. **Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments**
-   - `article` · `official-form-energy-e4f632a601abe7eb` · 2026-08-12 · Form Energy
-   - https://formenergy.com/form-energy-secures-750m-in-series-g-financing
-2. **Form Energy & Crusoe Announce Agreement for 12 Gigawatt-Hours of Iron-Air Batteries for AI Data Centers**
-   - `article` · `official-form-energy-afe04636dadad0f2` · 2026-03-24 · Form Energy
-   - https://formenergy.com/form-energy-crusoe-announce-agreement-for-12-gigawatt-hours-of-iron-air-batteries-for-ai-data-centers
-3. **Form Energy and FuturEnergy Ireland Announce Agreement To Deploy First Iron-Air Battery Storage Project In Ireland**
-   - `article` · `official-form-energy-efc10c6b01624ea6` · 2026-03-17 · Form Energy
-   - https://formenergy.com/form-energy-and-futurenergy-ireland-announce-agreement-to-deploy-first-iron-air-battery-storage-project-in-ireland
-4. **Form Energy’s Breakthrough Iron-Air Battery Technology Sets a New Benchmark for Safety in Energy Storage Systems**
-   - `article` · `official-form-energy-aeff7db6145c5ec6` · 2024-12-12 · Form Energy
-   - https://formenergy.com/form-energys-breakthrough-iron-air-battery-technology-sets-a-new-benchmark-for-safety-in-energy-storage-systems
+当前没有可追溯的精确匹配记录。
 
 ## Glean 官方动态
 
@@ -913,23 +772,29 @@
 
 ## Google AI
 
-`sourceId=google-ai-blog` · 还需审核 `20` 条 · `sampleDigest=a8facdc7df4fd5bd`
+`sourceId=google-ai-blog` · 还需审核 `20` 条 · `sampleDigest=8c7f448d7c441bd3`
 
-1. **The latest AI news we announced in August 2026**
+1. **Proactive cyber defense for governments and enterprises**
+   - `article` · `google-ai-blog-445c9f3e3d31d266` · 2026-09-02 · Google
+   - https://blog.google/innovation-and-ai/technology/safety-security/fairwind-program
+2. **The latest AI news we announced in August 2026**
    - `article` · `google-ai-blog-e6646933ca959a5f` · 2026-09-01 · Google
    - https://blog.google/innovation-and-ai/technology/google-ai-updates-august-2026
-2. **3 new ways to plan and book travel in Search**
+3. **3 new ways to plan and book travel in Search**
    - `article` · `google-ai-blog-a7db6e12c1ae453b` · 2026-08-27 · Google
    - https://blog.google/products-and-platforms/products/search/book-travel-ai-mode
 
 ## Google DeepMind
 
-`sourceId=deepmind-blog` · 还需审核 `20` 条 · `sampleDigest=5fe368725b1f3be2`
+`sourceId=deepmind-blog` · 还需审核 `20` 条 · `sampleDigest=75bb465ae2338982`
 
-1. **Introducing agentic video understanding with Gemini**
+1. **Introducing Gemini 3.8 Flash and 3.8 Flash Cyber**
+   - `article` · `deepmind-blog-355be2cf6d2d139c` · 2026-09-02 · Google
+   - https://deepmind.google/blog/introducing-gemini-3-8-flash-and-38-flash-cyber
+2. **Introducing agentic video understanding with Gemini**
    - `article` · `deepmind-blog-6bf5b05134dd23a6` · 2026-09-01 · Google
    - https://deepmind.google/blog/introducing-agentic-video-in-gemini
-2. **From Atari to EVE Online: Building on 15 Years of AI Research in Games**
+3. **From Atari to EVE Online: Building on 15 Years of AI Research in Games**
    - `article` · `google-deepmind-76900827bd8bbfff` · 2026-08-21 · Google
    - https://deepmind.google/blog/from-atari-to-eve-online-building-on-15-years-of-ai-research-in-games
 
@@ -1180,23 +1045,17 @@
 
 ## PR Newswire Consumer Technology
 
-`sourceId=prnewswire-tech` · 还需审核 `20` 条 · `sampleDigest=0ba88ef4a7909331`
+`sourceId=prnewswire-tech` · 还需审核 `20` 条 · `sampleDigest=1b6cd8dbf2c1bdc0`
 
-1. **New research proves mutant AI swarms outperform optimized models in a changing world**
-   - `article` · `prnewswire-tech-babd9f3e19fe9425` · 2026-09-02 · 科技产业
-   - https://www.prnewswire.com/news-releases/new-research-proves-mutant-ai-swarms-outperform-optimized-models-in-a-changing-world-302867774.html
-2. **Integrity and Mosaic Partner to Expand and Enhance Agent Growth and Client Experience with AI-First Technology**
-   - `article` · `prnewswire-tech-63ad3701fb1ab4c3` · 2026-09-02 · 科技产业
-   - https://www.prnewswire.com/news-releases/integrity-and-mosaic-partner-to-expand-and-enhance-agent-growth-and-client-experience-with-ai-first-technology-302867794.html
-3. **Globee® Awards for Artificial Intelligence, Now in Its 3rd Year, Invite Product, Service, and Solution Achievement Nominations Worldwide**
-   - `article` · `prnewswire-tech-4c767817d2a74271` · 2026-09-02 · 科技产业
-   - https://www.prnewswire.com/news-releases/globee-awards-for-artificial-intelligence-now-in-its-3rd-year-invite-product-service-and-solution-achievement-nominations-worldwide-302864650.html
-4. **SEMI and Silicon Catalyst Aim to Accelerate Global Semiconductor Innovation with Strategic Partnership**
-   - `article` · `prnewswire-tech-33a3014478c9e6f9` · 2026-09-02 · 科技产业
-   - https://www.prnewswire.com/news-releases/semi-and-silicon-catalyst-aim-to-accelerate-global-semiconductor-innovation-with-strategic-partnership-302867239.html
-5. **Workers Choose People Over AI at Hiring's Most Critical Moments, New Staffmark Group Research Finds**
-   - `article` · `prnewswire-tech-0ddce3360918246e` · 2026-09-02 · 科技产业
-   - https://www.prnewswire.com/news-releases/workers-choose-people-over-ai-at-hirings-most-critical-moments-new-staffmark-group-research-finds-302867797.html
+1. **empirik.ai emerges from stealth with $21 Million to build the AI Agent for Infrastructure Change**
+   - `article` · `prnewswire-tech-f123cc216acceeba` · 2026-09-02 · 科技产业
+   - https://www.prnewswire.com/news-releases/empirikai-emerges-from-stealth-with-21-million-to-build-the-ai-agent-for-infrastructure-change-302867970.html
+2. **Therap Services Hosts Virtual Event Highlighting Person-Centered Planning and AI Integration for Human Services Providers**
+   - `article` · `prnewswire-tech-add4e03b2e955b05` · 2026-09-02 · 科技产业
+   - https://www.prnewswire.com/news-releases/therap-services-hosts-virtual-event-highlighting-person-centered-planning-and-ai-integration-for-human-services-providers-302867606.html
+3. **LivePerson Stockholders Approve Acquisition by SoundHound AI**
+   - `article` · `prnewswire-tech-2b22bc65013fbc97` · 2026-09-02 · 科技产业
+   - https://www.prnewswire.com/news-releases/liveperson-stockholders-approve-acquisition-by-soundhound-ai-302867972.html
 
 ## PsiQuantum 官方动态
 
@@ -1348,17 +1207,17 @@
 
 ## Shield AI 官方动态
 
-`sourceId=official-shield-ai` · 还需审核 `20` 条 · `sampleDigest=490c9c8302a850e4`
+`sourceId=official-shield-ai` · 还需审核 `20` 条 · `sampleDigest=6a77b19f56936c1e`
 
-1. **Shield AI expands Tracker C-UAS integration with L3Harris VAMPIRE™**
+1. **Simulation Is at the Core of Mission Training, and Aechelon Is at the Heart of Visual Simulation**
+   - `article` · `official-shield-ai-46e1d85f7d75d992` · 2026-09-02 · Shield AI
+   - https://shield.ai/simulation-is-at-the-core-of-mission-training-and-aechelon-is-at-the-heart-of-visual-simulation
+2. **Shield AI expands Tracker C-UAS integration with L3Harris VAMPIRE™**
    - `article` · `official-shield-ai-e529ef0e401b41d5` · 2026-09-01 · Shield AI
    - https://shield.ai/shield-ai-expands-tracker-c-uas-integration-with-l3harris-vampire
-2. **Shield AI and Sedaro demonstrate trusted autonomy capabilities on NOVI satellite**
+3. **Shield AI and Sedaro demonstrate trusted autonomy capabilities on NOVI satellite**
    - `article` · `official-shield-ai-ca17bf92c2cc9a37` · 2026-08-24 · Shield AI
    - https://shield.ai/shield-ai-and-sedaro-demonstrate-trusted-autonomy-capabilities-on-novi-satellite
-3. **Shield AI’s X-BAT named official autonomous aircraft of the Army-Navy Game**
-   - `article` · `official-shield-ai-b2c5074094aaa87f` · 2026-08-20 · Shield AI
-   - https://shield.ai/shield-ais-x-bat-named-official-autonomous-aircraft-of-the-army-navy-game
 4. **X-BAT: Unmanned VTOL AI Fighter Jet**
    - `article` · `official-shield-ai-942bfd76e3a9ca18` · 2025-10-20 · Shield AI
    - https://shield.ai/x-bat
@@ -1423,9 +1282,11 @@
 
 ## Tempus AI 官方动态
 
-`sourceId=official-tempus-ai` · 还需审核 `20` 条 · `sampleDigest=a6111d51beea3380`
+`sourceId=official-tempus-ai` · 还需审核 `20` 条 · `sampleDigest=56090db4fe833f14`
 
-当前没有可追溯的精确匹配记录。
+1. **Tempus to Acquire Personalis, More Tightly Integrating Molecular Residual Disease (MRD) into Its AI-Enabled Precision Oncology Platform**
+   - `article` · `official-tempus-ai-fc54328e497289aa` · 2026-07-20 · Tempus AI
+   - https://investors.tempus.com/news-releases/news-release-details/tempus-acquire-personalis-more-tightly-integrating-molecular
 
 ## The Washington Post
 
@@ -1678,3 +1539,37 @@
 `sourceId=official-user-搜狐网` · 还需审核 `20` 条 · `sampleDigest=b627d43624d58c06`
 
 当前没有可追溯的精确匹配记录。
+
+## 摩尔线程 官方动态
+
+`sourceId=official-moore-threads` · 还需审核 `20` 条 · `sampleDigest=63680eebbc823209`
+
+1. **摩尔线程重磅发布 MTT AICUBE：搭载全域智能体“小麦”，打造家庭 AI 中枢**
+   - `article` · `official-moore-threads-dd8aed953dbdbf01` · 2026-05-19 · 摩尔线程
+   - https://www.mthreads.com/news/311
+2. **词元时代，万物智能 | 摩尔线程 2026 产品发布会：打造全场景 AI 算力基石**
+   - `article` · `official-moore-threads-5868a45713dc1772` · 2026-05-18 · 摩尔线程
+   - https://www.mthreads.com/news/310
+3. **一图读懂摩尔线程 2025 年报暨 2026 年一季报**
+   - `article` · `official-moore-threads-1153860a1451d73f` · 2026-04-26 · 摩尔线程
+   - https://www.mthreads.com/news/300
+4. **让 AI 开发更简单！摩尔线程发布 AI 算力本 MTT AIBOOK**
+   - `article` · `official-moore-threads-393f440aea2aa98e` · 2025-12-29 · 摩尔线程
+   - https://www.mthreads.com/news/273
+
+## 文远知行 官方动态
+
+`sourceId=official-weride` · 还需审核 `20` 条 · `sampleDigest=39f752ec9f0dbcab`
+
+1. **WeRide Included in HKEX Tech 100 Index Following September 2026 Quarterly Review | WeRide Inc.**
+   - `article` · `weride-f15807f8d1b64ad7` · 2026-08-31 · 文远知行
+   - https://ir.weride.ai/news-releases/news-release-details/weride-included-hkex-tech-100-index-following-september-2026
+2. **Accelerating European Expansion Through Proven Asset-Light Model, Driving Rapid Overseas Revenue Growth; 2Q2026 Total Revenue Reached RMB231.7 Million, Up 82.2% Year over Year | WeRide Inc.**
+   - `article` · `official-weride-a38062677ff8081f` · 2026-08-12 · 文远知行
+   - https://ir.weride.ai/news-releases/news-release-details/accelerating-european-expansion-through-proven-asset-light-model
+3. **WeRide and GreenMobility Announce Strategic Partnership to Advance Level 4 Autonomous Mobility in Denmark, Marking WeRide’s Entry into the Nordic Region | WeRide Inc.**
+   - `article` · `official-weride-f9d33dabd20e2290` · 2026-08-03 · 文远知行
+   - https://ir.weride.ai/news-releases/news-release-details/weride-and-greenmobility-announce-strategic-partnership-advance
+4. **WeRide to Report Second Quarter and First Half 2026 Financial Results on Wednesday, August 12, 2026 | WeRide Inc.**
+   - `article` · `official-weride-3de1ac9a4a12973f` · 2026-07-22 · 文远知行
+   - https://ir.weride.ai/news-releases/news-release-details/weride-report-second-quarter-and-first-half-2026-financial
