@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-01T12:22:58+00:00",
+  "generatedAt": "2026-09-02T00:45:31+00:00",
   "personCount": 106,
-  "taskCount": 249,
-  "openTaskCount": 249,
+  "taskCount": 250,
+  "openTaskCount": 250,
   "people": {
     "ali-ghodsi": {
       "personName": "Ali Ghodsi",
@@ -460,38 +460,6 @@
       ],
       "openCount": 2
     },
-    "fei-fei-li": {
-      "personName": "李飞飞",
-      "tasks": [
-        {
-          "id": "person-research-f59d0473307e",
-          "taskType": "execution_verification",
-          "priority": "P1",
-          "target": "Stanford University · 机器人",
-          "question": "李飞飞 的最新公开事件涉及“机器人”后，Stanford University 是否出现独立的产品、技术、组织或商业执行证据？",
-          "objective": "把“人物表达”与“组织执行”分开验证；人物观点本身不自动等同于公司战略或产品落地。",
-          "preferredEvidence": [
-            "公司官方公告/博客",
-            "产品或技术官方发布",
-            "监管文件",
-            "公司官方开发者/研究页面"
-          ],
-          "searchQueries": [],
-          "successCriteria": "至少存在 1 条独立于人物表述、且 URL 不与人物证据重合的一手/官方组织来源，同时直接命中组织与目标技术/产品；第三方报道或同一来源复用只能形成 candidate_found。",
-          "evidenceBasis": [
-            {
-              "title": "李飞飞、吴佳俊再联手，打破世界模型和机器人动作的「巴别塔」",
-              "url": "https://www.leiphone.com/category/academic/LF4mbUTko5bRYDky.html",
-              "source": "雷峰网",
-              "date": "2026-09-01"
-            }
-          ],
-          "candidateEvidence": [],
-          "status": "open"
-        }
-      ],
-      "openCount": 1
-    },
     "gary-dickerson": {
       "personName": "Gary Dickerson",
       "tasks": [
@@ -536,6 +504,58 @@
             "Gary Dickerson 最新演讲 访谈"
           ],
           "successCriteria": "找到至少 1 条最近 180 天的一手或机构官方材料；否则保持 open 并明确近期证据空窗。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        }
+      ],
+      "openCount": 2
+    },
+    "gavin-baker": {
+      "personName": "Gavin Baker",
+      "tasks": [
+        {
+          "id": "person-research-bd260d4f942f",
+          "taskType": "first_party_evidence",
+          "priority": "P0",
+          "target": "AI / AGI",
+          "question": "能否找到 Gavin Baker 围绕“AI / AGI”的本人演讲、访谈、论文、公开发文或官方文件？",
+          "objective": "增加可归因于人物本人的一手材料，避免人物研究长期依赖第三方报道。",
+          "preferredEvidence": [
+            "本人论文/著作",
+            "个人或机构官方主页",
+            "官方 YouTube/视频号",
+            "公开演讲/问答原始视频"
+          ],
+          "searchQueries": [
+            "Gavin Baker AI / AGI",
+            "Gavin Baker AI / AGI 演讲",
+            "Gavin Baker AI / AGI 访谈"
+          ],
+          "successCriteria": "人物档案至少补齐到 2 条可直接归因于本人的独立公开材料；若用于观点演进，仍需形成跨时间的同主题证据点。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        },
+        {
+          "id": "person-research-5d9bf0bb0090",
+          "taskType": "identity_verification",
+          "priority": "P0",
+          "target": "身份与任职",
+          "question": "Gavin Baker 当前公开身份、任职机构和角色能否由本人、机构官网或监管/学术档案独立核验？",
+          "objective": "补齐人物身份与任职证据；在验证完成前，不把网页标题、媒体称谓或自动抽取角色当作正式任职。",
+          "preferredEvidence": [
+            "机构官方人物页",
+            "个人学术主页",
+            "监管文件",
+            "官方任命/团队页面"
+          ],
+          "searchQueries": [
+            "Gavin Baker official profile",
+            "Gavin Baker 个人主页",
+            "Gavin Baker 任职 官方"
+          ],
+          "successCriteria": "至少取得 1 条可直接归因于本人或任职机构的公开来源，同时明确姓名与当前角色。",
           "evidenceBasis": [],
           "candidateEvidence": [],
           "status": "open"
