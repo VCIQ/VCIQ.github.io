@@ -534,10 +534,17 @@ function promotionMetricsFromRow(
   const performance = record(row.item.performance);
   if (!Object.keys(performance).length) return undefined;
   const samples = Array.isArray(performance.samples) ? performance.samples.map(record) : [];
+  const persistedObservedDates = Array.isArray(performance.observedDates)
+    ? performance.observedDates
+      .map((value) => text(value, 80).slice(0, 10))
+      .filter(Boolean)
+    : [];
   const observedDays = new Set(
-    samples
-      .map((sample) => text(sample.at, 80).slice(0, 10))
-      .filter(Boolean),
+    persistedObservedDates.length
+      ? persistedObservedDates
+      : samples
+        .map((sample) => text(sample.at, 80).slice(0, 10))
+        .filter(Boolean),
   ).size;
   const manualQuality = record(performance.manualQuality);
   const collectionState = text(row.item.collectionState, 40);
