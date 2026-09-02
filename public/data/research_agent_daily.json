@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-02T05:16:49+00:00",
+  "generatedAt": "2026-09-02T05:59:48+00:00",
   "asOfDate": "2026-09-02",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
@@ -12,481 +12,257 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 2687,
-      "completion_tokens": 2919,
-      "total_tokens": 5606,
+      "prompt_tokens": 1275,
+      "completion_tokens": 1992,
+      "total_tokens": 3267,
       "completion_tokens_details": {
-        "reasoning_tokens": 1460
+        "reasoning_tokens": 997
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 2687
+      "prompt_cache_miss_tokens": 1275
     }
   },
   "changeSummary": {
-    "totalDetected": 18,
-    "total": 3,
+    "totalDetected": 7,
+    "total": 1,
     "byDataset": {
-      "intelligenceEvent": 3
+      "ventureCompany": 1
     },
     "byChangeType": {
-      "external_event": 5,
-      "data_maintenance": 13
+      "external_event": 6,
+      "entity_reconciliation": 1
     },
-    "externalCandidates": 5,
-    "qualityRejected": 1,
-    "maintenanceExcluded": 13,
+    "externalCandidates": 6,
+    "qualityRejected": 4,
+    "maintenanceExcluded": 1,
     "aggregatedEvents": 0,
-    "highestImportance": 84,
-    "verifiedChangeTotal": 0,
+    "highestImportance": 88,
+    "verifiedChangeTotal": 1,
     "candidateTotal": 0,
-    "auxiliaryLeadTotal": 3,
-    "rejectedTotal": 1,
-    "newEvents": 3,
-    "reconfirmations": 0,
-    "updates": 0,
+    "auxiliaryLeadTotal": 0,
+    "rejectedTotal": 4,
+    "newEvents": 0,
+    "reconfirmations": 1,
+    "updates": 1,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 1
+    "duplicatesSuppressed": 0
   },
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "证据包包含三条2026年9月2日新增的高价值情报事件：Minimax成为港股通内地投资者上月最青睐港股，买入规模超越阿里巴巴和腾讯；OpenAI计划发布名为Astra的新AI模型，并对最尖端网络安全功能的使用设限；Comcast Technology Solutions推出基于VideoAI平台的新一代视频AI应用套件。三条事件均处于automated_unreviewed状态，其中两条来自新浪财经（证据等级C，佐证角色），一条来自PR Newswire（证据等级B，一手来源）。整体上，AI应用与资本流向仍是当前情报主线，但证据等级偏低，需后续更高等级来源验证。 质量门诊断：仅为发现线索，不能支持正式主张 1。",
+    "executiveSummary": "证据包显示晶泰科技官网披露的产品与技术描述发生更新：产品列表从笼统的“智能药物研发平台、自动化实验室”扩展为多项具体平台，技术描述则聚焦于 Xtalgazer® 药物固体形态研发平台。所有证据均来自晶泰科技官方页面，属于官方披露，但证据等级为低等级（官网页面），且为自动未人工复核状态，因此仅能确认公司对外宣传口径的变化，不能据此推断研发进展、商业化或投资价值。 质量门诊断：缺少发布时间 19、缺少标题 2、证据未分级 2、证据合格但未绑定变化字段 2。",
     "keyDevelopments": [
       {
-        "title": "Minimax成为港股通内地投资者上月最青睐港股，买入规模超越阿里巴巴和腾讯",
-        "assessment": "证据显示Minimax Group Inc.成为上月内地投资者最青睐的港股，港股通买入规模超越阿里巴巴和腾讯，反映内地投资者对中国新一代AI模型开发商的强烈投资热情。该事件来自新浪财经，证据等级C，且为automated_unreviewed，属于外部线索，可作为市场情绪观察点，但不应视为已确认的重大资金流向事实。",
-        "importance": 4,
+        "title": "晶泰科技官网产品列表更新，披露多项具体平台",
+        "assessment": "官网产品描述从“智能药物研发平台、自动化实验室”更新为包含 AI 自主实验平台、Ailux 抗体药物发现平台、PatSight 药物专利挖掘平台、XFEP/XMolGen 自由能微扰亲和力预测平台、Xtalgazer® 药物固体形态研发平台等多项具体产品。这属于公司对外宣传口径的扩展，可视为产品线展示更加细化，但证据仅为官网页面，未提供功能细节、客户或收入数据，不能据此判断产品成熟度或市场表现。",
+        "importance": 3,
         "confidence": "medium",
         "entities": [
-          "Minimax Group Inc.",
-          "阿里巴巴",
-          "腾讯"
+          "晶泰科技"
         ],
         "evidenceIds": [
           "E002"
         ]
       },
       {
-        "title": "OpenAI计划发布AI新模型Astra，并对网络安全功能使用设限",
-        "assessment": "OpenAI计划很快推出名为Astra的强大新型AI模型，同时限制谁可以使用该软件最尖端的网络安全功能。该事件来自新浪财经转载，证据等级C，且为automated_unreviewed，属于外部线索。模型发布与安全限制的组合值得关注，但细节有限，需等待OpenAI官方博客或更高等级来源确认。",
-        "importance": 4,
-        "confidence": "medium",
-        "entities": [
-          "OpenAI"
-        ],
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "title": "Comcast Technology Solutions推出新一代视频AI应用套件",
-        "assessment": "Comcast Technology Solutions基于其VideoAI平台，推出面向广播商、内容方、流媒体提供商和运营商的端到端AI工作流应用套件，功能包括视频垂直化、本地化、智能章节等，用于管理和变现整个内容库。该事件来自PR Newswire新闻稿，证据等级B，为一手来源，但新闻稿本身属于公司自我声明，仍需独立验证。",
+        "title": "技术描述聚焦 Xtalgazer® 药物固体形态研发平台",
+        "assessment": "官网技术介绍从笼统的“核心技术与产品包括智能药物研发平台与自动化实验室”更新为围绕 Xtalgazer® 新一代药物结晶研发平台，强调晶型预测、结晶策略推荐和自动化实验技术。该变化表明公司当前宣传重点转向药物固体形态研究，但证据来源为同一官网页面，属于公司自我描述，未提供第三方验证或技术指标，因此只能作为宣传重点变化的低强度证据。",
         "importance": 3,
         "confidence": "medium",
         "entities": [
-          "Comcast Technology Solutions"
+          "晶泰科技"
         ],
         "evidenceIds": [
-          "E005"
+          "E001"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "Minimax Group Inc.",
-        "direction": "positive",
-        "statement": "港股通买入规模超越阿里巴巴和腾讯，显示内地投资者对中国新一代AI模型开发商兴趣升温；但证据等级C且未经人工复核，暂作为情绪面积极信号而非确定性资金流向结论。",
+        "entity": "晶泰科技",
+        "direction": "neutral",
+        "statement": "官网产品与技术描述更新，产品列表更具体、技术宣传聚焦 Xtalgazer® 药物固体形态平台；但证据仅为公司官网页面，属于宣传口径变化，不构成对研发能力或商业进展的实质性验证。",
         "evidenceIds": [
+          "E001",
           "E002"
-        ]
-      },
-      {
-        "entity": "OpenAI",
-        "direction": "mixed",
-        "statement": "计划发布新模型Astra体现产品线扩张，但对网络安全功能设限可能影响部分安全场景采用；证据等级C且细节有限，需官方来源确认。",
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "entity": "Comcast Technology Solutions",
-        "direction": "positive",
-        "statement": "推出新一代视频AI应用套件，扩展VideoAI平台能力，面向内容库管理与变现；证据等级B但属公司新闻稿自我声明，需观察客户采用情况。",
-        "evidenceIds": [
-          "E005"
         ]
       }
     ],
     "watchlist": [
       {
-        "item": "Minimax港股通资金流向的后续数据",
-        "reason": "当前证据仅来自新浪财经单篇报道（等级C），需港股通官方或交易所数据验证买入规模及持续性。",
-        "nextEvidence": "港股通月度资金流向数据、港交所披露或更高等级财经媒体确认",
+        "item": "晶泰科技是否披露 Xtalgazer® 平台的具体技术指标或客户案例",
+        "reason": "当前证据仅显示官网宣传文字更新，缺乏技术性能、应用效果或商业验证数据，需要后续证据确认该平台的实际进展。",
+        "nextEvidence": "晶泰科技官方公告、技术白皮书、客户合作新闻或第三方验证报告",
         "evidenceIds": [
+          "E001",
           "E002"
         ]
       },
       {
-        "item": "OpenAI Astra模型的官方发布与安全限制细则",
-        "reason": "当前证据为新浪财经转载（等级C），未包含OpenAI官方博客原文细节，模型能力与网络安全功能限制范围待确认。",
-        "nextEvidence": "OpenAI官方博客或发布会材料、API文档",
+        "item": "产品列表中“另 4 项”的具体内容",
+        "reason": "证据包中产品列表包含“…另 4 项”，说明官网可能披露了更多产品，但当前证据未完整列出，需补充证据以完整评估产品组合。",
+        "nextEvidence": "晶泰科技官网完整产品页或产品手册",
         "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "item": "Comcast VideoAI新应用套件的客户采用与商业落地",
-        "reason": "证据来自公司新闻稿（等级B），属于自我声明，需独立第三方报道或客户案例验证实际部署。",
-        "nextEvidence": "客户公告、行业分析报告或独立媒体报道",
-        "evidenceIds": [
-          "E005"
+          "E002"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "证据等级偏低，事件可能被夸大或存在事实偏差",
-        "reason": "E002和E003均为新浪财经来源且证据等级C，E005为公司新闻稿（等级B），三条事件均处于automated_unreviewed状态，未经人工复核。",
+        "risk": "官网宣传口径变化可能被误读为实质性技术进展",
+        "reason": "证据仅来自晶泰科技官网页面，属于公司自我披露，且 reviewStatus 为 automated_unreviewed，证据等级较低；若据此推断产品成熟度或投资价值，存在信息不充分风险。",
         "evidenceIds": [
-          "E002",
-          "E003",
-          "E005"
-        ]
-      },
-      {
-        "risk": "Minimax港股通买入规模报道可能为单月现象，不代表持续趋势",
-        "reason": "证据仅描述“上月”买入规模，未提供多期数据或持续性证据，且来源为单一媒体。",
-        "evidenceIds": [
+          "E001",
           "E002"
         ]
       },
       {
-        "risk": "OpenAI网络安全功能设限可能影响Astra在安全领域的采用预期",
-        "reason": "证据显示OpenAI将限制谁可以使用最尖端网络安全功能，但限制范围与对象未明确，可能引发市场对模型安全商业化空间的重新评估。",
+        "risk": "产品与技术描述更新可能不反映实际业务重心",
+        "reason": "官网页面更新可能仅反映营销或网站改版，而非研发管线或收入结构变化；证据中无财务、客户或监管数据佐证。",
         "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "risk": "Comcast新应用套件可能面临竞争或采用不及预期",
-        "reason": "新闻稿未提供客户签约或收入影响数据，视频AI领域竞争激烈，产品发布不等于商业成功。",
-        "evidenceIds": [
-          "E005"
+          "E001",
+          "E002"
         ]
       }
     ],
-    "methodologyNote": "本分析仅基于证据包内三条新增情报事件（E002、E003、E005），未补充外部事实。所有判断均引用证据编号；证据等级C（新浪财经）与B（PR Newswire新闻稿）均非最高等级，且全部事件处于automated_unreviewed状态，因此重大事实均以中等置信度表述，未给出确定性结论。不构成任何买入、卖出、目标价或收益承诺。"
+    "methodologyNote": "本分析仅基于证据包中的两条官方网页证据（E001、E002），两者均来自晶泰科技官网，属于低等级官方披露且为自动未人工复核状态。分析将事实限定为“官网描述发生变化”，推断限定为“宣传重点可能转向药物固体形态”，并明确标注待验证事项；未引入任何外部事实或投资建议。"
   },
   "changes": [
     {
-      "id": "chg-d9f2cfac2ede92de2638",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-433badff25d00cc109",
-      "entityName": "Minimax成为内地投资者新宠 港股通买入规模超越阿里巴巴和腾讯",
-      "action": "added",
+      "id": "chg-14d1e05c156e39c8d6ec",
+      "dataset": "ventureCompany",
+      "entityType": "创业公司",
+      "entityId": "xtalpi",
+      "entityName": "晶泰科技",
+      "action": "updated",
       "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "products",
+        "technology"
       ],
-      "summary": "新增高价值情报事件记录：Minimax成为内地投资者新宠 港股通买入规模超越阿里巴巴和腾讯。",
-      "importance": 84,
-      "before": null,
+      "summary": "晶泰科技 的 products、technology 发生变化。",
+      "importance": 88,
+      "before": {
+        "products": [
+          "智能药物研发平台",
+          "自动化实验室"
+        ],
+        "technology": "核心技术与产品包括智能药物研发平台与自动化实验室"
+      },
       "after": {
-        "publishedAt": "2026-09-02",
-        "summary": "Minimax Group Inc．成为上月内地投资者最青睐的港股，这是内地投资者对中国新一代人工智能（AI）模型开发商表现出强烈投资热情的最新迹象。",
-        "title": "Minimax成为内地投资者新宠 港股通买入规模超越阿里巴巴和腾讯"
+        "products": [
+          "AI 自主实验平台",
+          "Ailux 抗体药物发现平台",
+          "PatSight 药物专利挖掘平台",
+          "XFEP 自由能微扰亲和力预测平台",
+          "XMolGen 自由能微扰亲和力预测平台",
+          "Xtalgazer® 药物固体形态研发平台",
+          "…另 4 项"
+        ],
+        "technology": "药物固体形态研究 了解我们自主研发的 Xtalgazer® 新一代药物结晶研发平台，如何利用晶泰科技晶型预测技术、结晶策略推荐技术和自动化实验技术，提升固态研究的效率及质量，推动整个行业向新的高度迈进"
       },
       "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
       "isResearchCandidate": true,
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "products",
+        "technology"
       ],
       "claimBindings": [
         {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-02",
+          "field": "products",
+          "before": [
+            "智能药物研发平台",
+            "自动化实验室"
+          ],
+          "after": [
+            "AI 自主实验平台",
+            "Ailux 抗体药物发现平台",
+            "PatSight 药物专利挖掘平台",
+            "XFEP 自由能微扰亲和力预测平台",
+            "XMolGen 自由能微扰亲和力预测平台",
+            "Xtalgazer® 药物固体形态研发平台",
+            "…另 4 项"
+          ],
           "evidenceIds": [
             "E002"
           ]
         },
         {
-          "field": "summary",
-          "before": null,
-          "after": "Minimax Group Inc．成为上月内地投资者最青睐的港股，这是内地投资者对中国新一代人工智能（AI）模型开发商表现出强烈投资热情的最新迹象。",
+          "field": "technology",
+          "before": "核心技术与产品包括智能药物研发平台与自动化实验室",
+          "after": "药物固体形态研究 了解我们自主研发的 Xtalgazer® 新一代药物结晶研发平台，如何利用晶泰科技晶型预测技术、结晶策略推荐技术和自动化实验技术，提升固态研究的效率及质量，推动整个行业向新的高度迈进",
           "evidenceIds": [
-            "E002"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Minimax成为内地投资者新宠 港股通买入规模超越阿里巴巴和腾讯",
-          "evidenceIds": [
-            "E002"
+            "E001"
           ]
         }
       ],
       "evidenceIds": [
+        "E001",
         "E002"
       ],
       "supportingEvidenceIds": [
+        "E001",
         "E002"
       ],
       "evidenceQuality": {
         "status": "passed",
-        "supporting": 1,
-        "total": 1
+        "supporting": 2,
+        "total": 2
       },
-      "publicationTier": "external_clue",
+      "publicationTier": "verified_change",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-6acebc5ac8382d1bd5d9"
+        "evt-98fe814c09da08febb68"
       ],
       "eventLifecycles": {
-        "evt-6acebc5ac8382d1bd5d9": "first_seen"
+        "evt-98fe814c09da08febb68": "updated"
       },
-      "eventId": "evt-6acebc5ac8382d1bd5d9",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T05:16:49+00:00",
-      "lastSeenAt": "2026-09-02T05:16:49+00:00"
-    },
-    {
-      "id": "chg-86c0ce8cb1e675a0f1e3",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-a9284fd7e34ac05542",
-      "entityName": "OpenAI计划发布AI新模型 并对网络安全功能的使用设限",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：OpenAI计划发布AI新模型 并对网络安全功能的使用设限。",
-      "importance": 82,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-02",
-        "summary": "OpenAI计划很快推出一款名为Astra的强大新型人工智能AI模型，但表示将限制谁可以使用该软件最尖端的网络安全功能。 OpenAI周二在一篇博客文章中表示...",
-        "title": "OpenAI计划发布AI新模型 并对网络安全功能的使用设限"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-02",
-          "evidenceIds": [
-            "E003"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "OpenAI计划很快推出一款名为Astra的强大新型人工智能AI模型，但表示将限制谁可以使用该软件最尖端的网络安全功能。 OpenAI周二在一篇博客文章中表示...",
-          "evidenceIds": [
-            "E003"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "OpenAI计划发布AI新模型 并对网络安全功能的使用设限",
-          "evidenceIds": [
-            "E003"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E003"
-      ],
-      "supportingEvidenceIds": [
-        "E003"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-1f265d18c42e2c237307"
-      ],
-      "eventLifecycles": {
-        "evt-1f265d18c42e2c237307": "first_seen"
-      },
-      "eventId": "evt-1f265d18c42e2c237307",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T05:16:49+00:00",
-      "lastSeenAt": "2026-09-02T05:16:49+00:00"
-    },
-    {
-      "id": "chg-720a177275b43888d948",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-d0cd2e8f97be5f6ccd",
-      "entityName": "Comcast Technology Solutions Unveils Next-Gen Video AI Applications for Broadcasters, Content and Streaming Providers, and Operators",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Comcast Technology Solutions Unveils Next-Gen Video AI Applications for Broadcasters, Content and Streaming Providers, and Operators。",
-      "importance": 82,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-02",
-        "summary": "Building on CTS' VideoAI™ platform, new suite of end-to-end AI-powered workflow applications brings premium content processing capabilities to manage and monetize entire content libraries Applications include video verticalization, localization, smart chapter…",
-        "title": "Comcast Technology Solutions Unveils Next-Gen Video AI Applications for Broadcasters, Content and Streaming Providers, and Operators"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-02",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Building on CTS' VideoAI™ platform, new suite of end-to-end AI-powered workflow applications brings premium content processing capabilities to manage and monetize entire content libraries Applications include video verticalization, localization, smart chapter…",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Comcast Technology Solutions Unveils Next-Gen Video AI Applications for Broadcasters, Content and Streaming Providers, and Operators",
-          "evidenceIds": [
-            "E005"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E005"
-      ],
-      "supportingEvidenceIds": [
-        "E005"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-7e29241456aac3a265ee"
-      ],
-      "eventLifecycles": {
-        "evt-7e29241456aac3a265ee": "first_seen"
-      },
-      "eventId": "evt-7e29241456aac3a265ee",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T05:16:49+00:00",
-      "lastSeenAt": "2026-09-02T05:16:49+00:00"
+      "eventId": "evt-98fe814c09da08febb68",
+      "lifecycle": "updated",
+      "firstSeenAt": "2026-09-01T06:25:42+00:00",
+      "lastSeenAt": "2026-09-02T05:59:48+00:00"
     }
   ],
   "evidence": [
     {
+      "id": "E001",
+      "changeId": "chg-14d1e05c156e39c8d6ec",
+      "entityName": "晶泰科技",
+      "claim": "晶泰科技 的 products、technology 发生变化。",
+      "publicationTier": "verified_change",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "晶泰科技",
+      "title": "首页",
+      "url": "https://www.xtalpi.com/",
+      "publishedAt": "2024-08-29",
+      "evidenceGrade": "官方披露",
+      "claimFields": [
+        "technology"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
       "id": "E002",
-      "changeId": "chg-d9f2cfac2ede92de2638",
-      "entityName": "Minimax成为内地投资者新宠 港股通买入规模超越阿里巴巴和腾讯",
-      "claim": "新增高价值情报事件记录：Minimax成为内地投资者新宠 港股通买入规模超越阿里巴巴和腾讯。",
-      "publicationTier": "external_clue",
+      "changeId": "chg-14d1e05c156e39c8d6ec",
+      "entityName": "晶泰科技",
+      "claim": "晶泰科技 的 products、technology 发生变化。",
+      "publicationTier": "verified_change",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "Minimax成为内地投资者新宠 港股通买入规模超越阿里巴巴和腾讯",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-02/doc-iniqkzme3061738.shtml",
-      "publishedAt": "2026-09-02",
-      "evidenceGrade": "C",
-      "platformName": "新浪",
-      "sourceRole": "corroboration",
+      "sourceName": "晶泰科技",
+      "title": "首页",
+      "url": "https://www.xtalpi.com/solid-state-chemistry-computation-services/",
+      "publishedAt": "2024-08-29",
+      "evidenceGrade": "官方披露",
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E003",
-      "changeId": "chg-86c0ce8cb1e675a0f1e3",
-      "entityName": "OpenAI计划发布AI新模型 并对网络安全功能的使用设限",
-      "claim": "新增高价值情报事件记录：OpenAI计划发布AI新模型 并对网络安全功能的使用设限。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "OpenAI计划发布AI新模型 并对网络安全功能的使用设限",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-02/doc-iniqkzky4616763.shtml",
-      "publishedAt": "2026-09-02",
-      "evidenceGrade": "C",
-      "platformName": "新浪",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E005",
-      "changeId": "chg-720a177275b43888d948",
-      "entityName": "Comcast Technology Solutions Unveils Next-Gen Video AI Applications for Broadcasters, Content and Streaming Providers, and Operators",
-      "claim": "新增高价值情报事件记录：Comcast Technology Solutions Unveils Next-Gen Video AI Applications for Broadcasters, Content and Streaming Providers, and Operators。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "PR Newswire Consumer Technology",
-      "title": "Comcast Technology Solutions Unveils Next-Gen Video AI Applications for Broadcasters, Content and Streaming Providers, and Operators",
-      "url": "https://www.prnewswire.com/news-releases/comcast-technology-solutions-unveils-next-gen-video-ai-applications-for-broadcasters-content-and-streaming-providers-and-operators-302866174.html",
-      "publishedAt": "2026-09-02",
-      "evidenceGrade": "B",
-      "platformName": "新闻稿",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "products"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
@@ -496,9 +272,150 @@
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-02T05:16:49+00:00",
+    "generatedAt": "2026-09-02T05:59:48+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-98fe814c09da08febb68": {
+        "eventId": "evt-98fe814c09da08febb68",
+        "dataset": "ventureCompany",
+        "entityId": "xtalpi",
+        "entityName": "晶泰科技",
+        "title": "首页",
+        "titleAliases": [
+          "aiforscience距离自主发现有多远晶泰科技提出五级分级体系",
+          "首页"
+        ],
+        "publishedDate": "2024-08-29",
+        "publishedDates": [
+          "2024-08-29",
+          "2026-08-14"
+        ],
+        "entityKeys": [
+          "name:晶泰科技",
+          "ventureCompany:xtalpi"
+        ],
+        "typeKeys": [
+          "创业公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-51ecb44c7d44ee6852b3",
+          "evd-a7058ece2467ce73f8b7",
+          "src-5b850b0455c4267a2067",
+          "src-ae10558c9fa0b67f51a0",
+          "src-e48e4366b433bc8bc06f"
+        ],
+        "evidenceFingerprints": [
+          "a7058ece2467ce73f8b7",
+          "51ecb44c7d44ee6852b3"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "晶泰科技",
+            "title": "首页",
+            "url": "https://www.xtalpi.com/",
+            "publishedAt": "2024-08-29",
+            "evidenceGrade": "官方披露"
+          },
+          {
+            "sourceName": "晶泰科技",
+            "title": "AI for Science距离“自主发现”有多远？晶泰科技提出五级分级体系",
+            "url": "https://www.xtalpi.com/ai-for-science%e8%b7%9d%e7%a6%bb%e8%87%aa%e4%b8%bb%e5%8f%91%e7%8e%b0%e6%9c%89%e5%a4%9a%e8%bf%9c%ef%bc%9f%e6%99%b6%e6%b3%b0%e7%a7%91%e6%8a%80%e6%8f%90%e5%87%ba%e4%ba%94%e7%ba%a7/",
+            "publishedAt": "2026-08-14",
+            "evidenceGrade": "官方披露"
+          },
+          {
+            "sourceName": "晶泰科技",
+            "title": "首页",
+            "url": "https://www.xtalpi.com/solid-state-chemistry-computation-services/",
+            "publishedAt": "2024-08-29",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "41df2531e54124214176",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T06:25:42+00:00",
+        "lastSeenAt": "2026-09-02T05:59:48+00:00",
+        "lastPublishedAt": "2026-09-02T05:59:48+00:00",
+        "lastLifecycle": "updated",
+        "observationCount": 2,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-7c2170f93d8f8d98b344": {
+        "eventId": "evt-7c2170f93d8f8d98b344",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-bcf8c4013eb303001b",
+        "entityName": "Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026",
+        "title": "Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026",
+        "titleAliases": [
+          "cerebrasandcomputenordicfinlandannouncenew165mwaidatacentreinmikkelifinlandaugust312026"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "company:cerebras",
+          "company:cerebras systems",
+          "name:cerebras systems",
+          "ventureCompany:cerebras"
+        ],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件",
+          "创业公司"
+        ],
+        "numericCues": [
+          "165",
+          "31"
+        ],
+        "sourceAliases": [
+          "evd-5d7389a3cffdd346e59a",
+          "record-7572e5cbf67e5878f25c",
+          "src-826549916bbc986a093d",
+          "evd-d578da4a0ea8421797d1"
+        ],
+        "evidenceFingerprints": [
+          "5d7389a3cffdd346e59a",
+          "d578da4a0ea8421797d1"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Cerebras Systems",
+            "title": "Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026",
+            "url": "https://investors.cerebras.ai/news-releases/news-release-details/cerebras-and-compute-nordic-finland-announce-new-165-mw-ai-data",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "官方披露"
+          },
+          {
+            "sourceName": "Cerebras",
+            "title": "Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026",
+            "url": "https://investors.cerebras.ai/news-releases/news-release-details/cerebras-and-compute-nordic-finland-announce-new-165-mw-ai-data",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "b0aa575ae770790a8347",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastSeenAt": "2026-09-02T05:59:48+00:00",
+        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-7e29241456aac3a265ee": {
         "eventId": "evt-7e29241456aac3a265ee",
         "dataset": "intelligenceEvent",
@@ -1548,63 +1465,6 @@
         "observationCount": 2,
         "confirmationCount": 1,
         "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-7c2170f93d8f8d98b344": {
-        "eventId": "evt-7c2170f93d8f8d98b344",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-bcf8c4013eb303001b",
-        "entityName": "Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026",
-        "title": "Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026",
-        "titleAliases": [
-          "cerebrasandcomputenordicfinlandannouncenew165mwaidatacentreinmikkelifinlandaugust312026"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [
-          "company:cerebras",
-          "company:cerebras systems"
-        ],
-        "typeKeys": [
-          "公司动态",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "165",
-          "31"
-        ],
-        "sourceAliases": [
-          "evd-5d7389a3cffdd346e59a",
-          "record-7572e5cbf67e5878f25c",
-          "src-826549916bbc986a093d"
-        ],
-        "evidenceFingerprints": [
-          "5d7389a3cffdd346e59a"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Cerebras Systems",
-            "title": "Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026",
-            "url": "https://investors.cerebras.ai/news-releases/news-release-details/cerebras-and-compute-nordic-finland-announce-new-165-mw-ai-data",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "官方披露"
-          }
-        ],
-        "claimFingerprint": "b0aa575ae770790a8347",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-02T00:59:29+00:00",
-        "lastSeenAt": "2026-09-02T00:59:29+00:00",
-        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 4,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -6192,78 +6052,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-98fe814c09da08febb68": {
-        "eventId": "evt-98fe814c09da08febb68",
-        "dataset": "ventureCompany",
-        "entityId": "xtalpi",
-        "entityName": "晶泰科技",
-        "title": "AI for Science距离“自主发现”有多远？晶泰科技提出五级分级体系",
-        "titleAliases": [
-          "aiforscience距离自主发现有多远晶泰科技提出五级分级体系",
-          "首页"
-        ],
-        "publishedDate": "2024-08-29",
-        "publishedDates": [
-          "2024-08-29",
-          "2026-08-14"
-        ],
-        "entityKeys": [
-          "name:晶泰科技",
-          "ventureCompany:xtalpi"
-        ],
-        "typeKeys": [
-          "创业公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-51ecb44c7d44ee6852b3",
-          "evd-a7058ece2467ce73f8b7",
-          "src-5b850b0455c4267a2067",
-          "src-ae10558c9fa0b67f51a0",
-          "src-e48e4366b433bc8bc06f"
-        ],
-        "evidenceFingerprints": [
-          "a7058ece2467ce73f8b7",
-          "51ecb44c7d44ee6852b3"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "晶泰科技",
-            "title": "首页",
-            "url": "https://www.xtalpi.com/",
-            "publishedAt": "2024-08-29",
-            "evidenceGrade": "官方披露"
-          },
-          {
-            "sourceName": "晶泰科技",
-            "title": "AI for Science距离“自主发现”有多远？晶泰科技提出五级分级体系",
-            "url": "https://www.xtalpi.com/ai-for-science%e8%b7%9d%e7%a6%bb%e8%87%aa%e4%b8%bb%e5%8f%91%e7%8e%b0%e6%9c%89%e5%a4%9a%e8%bf%9c%ef%bc%9f%e6%99%b6%e6%b3%b0%e7%a7%91%e6%8a%80%e6%8f%90%e5%87%ba%e4%ba%94%e7%ba%a7/",
-            "publishedAt": "2026-08-14",
-            "evidenceGrade": "官方披露"
-          },
-          {
-            "sourceName": "晶泰科技",
-            "title": "首页",
-            "url": "https://www.xtalpi.com/solid-state-chemistry-computation-services/",
-            "publishedAt": "2024-08-29",
-            "evidenceGrade": "官方披露"
-          }
-        ],
-        "claimFingerprint": "b6f9f896553567c53938",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T06:25:42+00:00",
-        "lastSeenAt": "2026-09-01T06:25:42+00:00",
-        "lastPublishedAt": "2026-09-01T06:25:42+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 2,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 4,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -14387,13 +14175,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 3,
-    "reconfirmations": 0,
-    "updates": 0,
+    "newEvents": 0,
+    "reconfirmations": 1,
+    "updates": 1,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 1,
-    "observedEvents": 4,
+    "duplicatesSuppressed": 0,
+    "observedEvents": 2,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -15613,10 +15401,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-02",
-      "generatedAt": "2026-09-02T05:16:49+00:00",
+      "generatedAt": "2026-09-02T05:59:48+00:00",
       "runStatus": "model",
-      "changeCount": 37,
-      "executiveSummary": "证据包包含三条2026年9月2日新增的高价值情报事件：Minimax成为港股通内地投资者上月最青睐港股，买入规模超越阿里巴巴和腾讯；OpenAI计划发布名为Astra的新AI模型，并对最尖端网络安全功能的使用设限；Comcast Technology Solutions推出基于VideoAI平台的新一代视频AI应用套件。三条事件均处于automated_unreviewed状态，其中两条来自新浪财经（证据等级C，佐证角色），一条来自PR Newswire（证据等级B，一手来源）。整体上，AI应用与资本流向仍是当前情报主线，但证据等级偏低，需后续更高等级来源验证。",
+      "changeCount": 38,
+      "executiveSummary": "证据包显示晶泰科技官网披露的产品与技术描述发生更新：产品列表从笼统的“智能药物研发平台、自动化实验室”扩展为多项具体平台，技术描述则聚焦于 Xtalgazer® 药物固体形态研发平台。所有证据均来自晶泰科技官方页面，属于官方披露，但证据等级为低等级（官网页面），且为自动未人工复核状态，因此仅能确认公司对外宣传口径的变化，不能据此推断研发进展、商业化或投资价值。",
       "eventIds": [
         "evt-973f579139dc001e0d59",
         "evt-90802cef087749b92580",
@@ -15654,7 +15442,8 @@
         "evt-a2b98717afa49c66e560",
         "evt-6acebc5ac8382d1bd5d9",
         "evt-1f265d18c42e2c237307",
-        "evt-7e29241456aac3a265ee"
+        "evt-7e29241456aac3a265ee",
+        "evt-98fe814c09da08febb68"
       ],
       "eventStates": [
         {
@@ -15804,16 +15593,20 @@
         {
           "eventId": "evt-7e29241456aac3a265ee",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-98fe814c09da08febb68",
+          "lifecycle": "updated"
         }
       ],
-      "verifiedChangeTotal": 0,
+      "verifiedChangeTotal": 1,
       "candidateTotal": 1,
       "auxiliaryLeadTotal": 36,
-      "rejectedTotal": 4,
+      "rejectedTotal": 8,
       "eventSummary": {
         "newEvents": 37,
-        "reconfirmations": 11,
-        "updates": 0,
+        "reconfirmations": 12,
+        "updates": 1,
         "corrections": 0,
         "possibleConflicts": 0,
         "duplicatesSuppressed": 6
@@ -15821,18 +15614,20 @@
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 5,
-    "eligibleCandidateCount": 4,
-    "rejectedCandidateCount": 1,
+    "candidateCount": 6,
+    "eligibleCandidateCount": 2,
+    "rejectedCandidateCount": 4,
     "rejectedByDataset": {
-      "intelligenceEvent": 1
+      "ventureCompany": 4
     },
-    "evidenceCount": 5,
-    "supportingEvidenceCount": 4,
-    "rejectedEvidenceCount": 1,
-    "passedButUnboundEvidenceCount": 0,
+    "evidenceCount": 24,
+    "supportingEvidenceCount": 3,
+    "rejectedEvidenceCount": 19,
+    "passedButUnboundEvidenceCount": 2,
     "rejectionReasons": {
-      "discovery_only": 1
+      "missing_published_at": 19,
+      "missing_title": 2,
+      "ungraded": 2
     },
     "sourceClassificationWarnings": []
   },
