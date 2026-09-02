@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-02T00:59:29+00:00",
+  "generatedAt": "2026-09-02T05:16:49+00:00",
   "asOfDate": "2026-09-02",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
@@ -12,329 +12,195 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 14591,
-      "completion_tokens": 4487,
-      "total_tokens": 19078,
+      "prompt_tokens": 2687,
+      "completion_tokens": 2919,
+      "total_tokens": 5606,
       "completion_tokens_details": {
-        "reasoning_tokens": 1981
+        "reasoning_tokens": 1460
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 14591
+      "prompt_cache_miss_tokens": 2687
     }
   },
   "changeSummary": {
-    "totalDetected": 59,
-    "total": 19,
+    "totalDetected": 18,
+    "total": 3,
     "byDataset": {
-      "intelligenceEvent": 18,
-      "marketCompany": 1
+      "intelligenceEvent": 3
     },
     "byChangeType": {
-      "external_event": 35,
-      "data_maintenance": 9,
-      "source_refresh": 15
+      "external_event": 5,
+      "data_maintenance": 13
     },
-    "externalCandidates": 35,
-    "qualityRejected": 2,
-    "maintenanceExcluded": 24,
+    "externalCandidates": 5,
+    "qualityRejected": 1,
+    "maintenanceExcluded": 13,
     "aggregatedEvents": 0,
-    "highestImportance": 91,
+    "highestImportance": 84,
     "verifiedChangeTotal": 0,
-    "candidateTotal": 1,
-    "auxiliaryLeadTotal": 18,
-    "rejectedTotal": 2,
-    "newEvents": 19,
-    "reconfirmations": 11,
+    "candidateTotal": 0,
+    "auxiliaryLeadTotal": 3,
+    "rejectedTotal": 1,
+    "newEvents": 3,
+    "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 3
+    "duplicatesSuppressed": 1
   },
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "本报告基于2026年9月1-2日证据包，覆盖AI模型、算力基础设施、资本市场等事件。主要发现：Anthropic发布Claude Fable 5.1/Mythos 5.1，Google DeepMind提升Gemini视频理解效率，Cerebras宣布在芬兰建设165MW AI数据中心，燧原科技启动科创板申购，AfterQuery据称成为YC最快独角兽（估值32亿美元）。同时TDS宣布放弃收购Array Digital Infrastructure公众股份，美股AI硬件股普跌。多数证据为官方披露或媒体报道，部分高估值事件证据等级较低，需进一步验证。 质量门诊断：缺少发布时间 20、缺少标题 20、证据未分级 20、缺少有效 URL 3、证据合格但未绑定变化字段 21。",
+    "executiveSummary": "证据包包含三条2026年9月2日新增的高价值情报事件：Minimax成为港股通内地投资者上月最青睐港股，买入规模超越阿里巴巴和腾讯；OpenAI计划发布名为Astra的新AI模型，并对最尖端网络安全功能的使用设限；Comcast Technology Solutions推出基于VideoAI平台的新一代视频AI应用套件。三条事件均处于automated_unreviewed状态，其中两条来自新浪财经（证据等级C，佐证角色），一条来自PR Newswire（证据等级B，一手来源）。整体上，AI应用与资本流向仍是当前情报主线，但证据等级偏低，需后续更高等级来源验证。 质量门诊断：仅为发现线索，不能支持正式主张 1。",
     "keyDevelopments": [
       {
-        "title": "AfterQuery据称成为Y Combinator史上最快独角兽，估值32亿美元",
-        "assessment": "据TechCrunch报道，AI模型训练初创公司AfterQuery在宣布3000万美元A轮（估值3亿美元）仅五个月后，以32亿美元估值完成新一轮融资。该消息为媒体报道，证据等级C，且标题使用“reportedly”，应视为待验证传闻，而非确定性事实。若属实，将显著提升YC生态的估值标杆。",
-        "importance": 5,
-        "confidence": "low",
+        "title": "Minimax成为港股通内地投资者上月最青睐港股，买入规模超越阿里巴巴和腾讯",
+        "assessment": "证据显示Minimax Group Inc.成为上月内地投资者最青睐的港股，港股通买入规模超越阿里巴巴和腾讯，反映内地投资者对中国新一代AI模型开发商的强烈投资热情。该事件来自新浪财经，证据等级C，且为automated_unreviewed，属于外部线索，可作为市场情绪观察点，但不应视为已确认的重大资金流向事实。",
+        "importance": 4,
+        "confidence": "medium",
         "entities": [
-          "AfterQuery",
-          "Y Combinator"
+          "Minimax Group Inc.",
+          "阿里巴巴",
+          "腾讯"
         ],
         "evidenceIds": [
           "E002"
         ]
       },
       {
-        "title": "Anthropic推出Claude Fable 5.1和Mythos 5.1，宣称全球最先进编程与知识工作模型",
-        "assessment": "Anthropic官方X账号宣布推出Fable 5.1和Mythos 5.1，后者面向高风险领域采用更宽松防护。东方财富报道称其强调性价比，并提及上市流程关键节点。官方声明为B级证据，但“全球最先进”属厂商自我宣称，需第三方基准验证。",
-        "importance": 5,
-        "confidence": "medium",
-        "entities": [
-          "Anthropic",
-          "Claude"
-        ],
-        "evidenceIds": [
-          "E007",
-          "E012"
-        ]
-      },
-      {
-        "title": "Google DeepMind为Gemini模型引入agentic视频理解，token使用减少88%",
-        "assessment": "Google DeepMind官方X账号称，最新Gemini模型可跨转录文本、音频和帧进行推理，动态调整帧率，长视频效率提升显著。官方披露为B级证据，但“88%”为厂商数据，实际效果需开发者验证。",
+        "title": "OpenAI计划发布AI新模型Astra，并对网络安全功能使用设限",
+        "assessment": "OpenAI计划很快推出名为Astra的强大新型AI模型，同时限制谁可以使用该软件最尖端的网络安全功能。该事件来自新浪财经转载，证据等级C，且为automated_unreviewed，属于外部线索。模型发布与安全限制的组合值得关注，但细节有限，需等待OpenAI官方博客或更高等级来源确认。",
         "importance": 4,
         "confidence": "medium",
         "entities": [
-          "Google DeepMind",
-          "Gemini"
-        ],
-        "evidenceIds": [
-          "E009",
-          "E011"
-        ]
-      },
-      {
-        "title": "Cerebras与Compute Nordic Finland宣布在芬兰Mikkeli建设165MW AI数据中心",
-        "assessment": "Cerebras官方新闻稿披露，该设施由七年期容量协议支持，预计区域投资10-17亿欧元。官方披露为高可信证据，显示Cerebras在算力基础设施上的扩张，但建设周期和执行风险未披露。",
-        "importance": 4,
-        "confidence": "high",
-        "entities": [
-          "Cerebras Systems",
-          "Compute Nordic Finland"
-        ],
-        "evidenceIds": [
-          "E020"
-        ]
-      },
-      {
-        "title": "燧原科技今日开启科创板申购，发行价142.18元/股",
-        "assessment": "东方财富报道，燧原科技发行价142.18元，募资61.19亿元，上市市值约611.87亿元，股票代码688801。媒体报道为C级证据，但具体数字明确，可作为国产GPU赛道资本化进程的重要节点。",
-        "importance": 4,
-        "confidence": "medium",
-        "entities": [
-          "燧原科技"
-        ],
-        "evidenceIds": [
-          "E013"
-        ]
-      },
-      {
-        "title": "TDS宣布不再收购Array Digital Infrastructure公众股份，预计恢复回购",
-        "assessment": "TDS官方新闻稿（PR Newswire）宣布放弃收购Array Digital Infrastructure公众股份，并预计恢复股票回购计划。官方披露为B级证据，直接影响Array的收购预期，可能引发其股价波动。",
-        "importance": 4,
-        "confidence": "high",
-        "entities": [
-          "Telephone and Data Systems",
-          "Array Digital Infrastructure"
+          "OpenAI"
         ],
         "evidenceIds": [
           "E003"
         ]
       },
       {
-        "title": "Shield AI与L3Harris达成Tracker C-UAS集成合作",
-        "assessment": "Shield AI官方宣布，L3Harris已获授权将Tracker反无人机系统集成至VAMPIRE平台。官方披露为高可信证据，显示反无人机领域合作深化，但商业条款未披露。",
-        "importance": 3,
-        "confidence": "high",
-        "entities": [
-          "Shield AI",
-          "L3Harris"
-        ],
-        "evidenceIds": [
-          "E005"
-        ]
-      },
-      {
-        "title": "美股三大指数收跌，纳指跌超1%，AI硬件股普跌",
-        "assessment": "东方财富报道，9月1日美股收盘全线下跌，纳指跌1.03%，英伟达跌1.51%，特斯拉跌3.22%，国际油价涨逾5%。媒体报道为C级证据，反映市场对AI硬件板块的短期情绪波动。",
+        "title": "Comcast Technology Solutions推出新一代视频AI应用套件",
+        "assessment": "Comcast Technology Solutions基于其VideoAI平台，推出面向广播商、内容方、流媒体提供商和运营商的端到端AI工作流应用套件，功能包括视频垂直化、本地化、智能章节等，用于管理和变现整个内容库。该事件来自PR Newswire新闻稿，证据等级B，为一手来源，但新闻稿本身属于公司自我声明，仍需独立验证。",
         "importance": 3,
         "confidence": "medium",
         "entities": [
-          "美股",
-          "AI硬件股"
+          "Comcast Technology Solutions"
         ],
         "evidenceIds": [
-          "E014"
+          "E005"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "Anthropic",
+        "entity": "Minimax Group Inc.",
         "direction": "positive",
-        "statement": "Anthropic在上市关键节点快速推出新模型，并强调性价比，显示其产品迭代和商业化节奏加快，但“全球最先进”需独立验证。",
+        "statement": "港股通买入规模超越阿里巴巴和腾讯，显示内地投资者对中国新一代AI模型开发商兴趣升温；但证据等级C且未经人工复核，暂作为情绪面积极信号而非确定性资金流向结论。",
         "evidenceIds": [
-          "E007",
-          "E012"
+          "E002"
         ]
       },
       {
-        "entity": "Google DeepMind",
-        "direction": "positive",
-        "statement": "Gemini视频理解效率大幅提升，可能增强其在多模态AI领域的竞争力，但实际部署效果待观察。",
-        "evidenceIds": [
-          "E009",
-          "E011"
-        ]
-      },
-      {
-        "entity": "Cerebras Systems",
-        "direction": "positive",
-        "statement": "在芬兰新建165MW数据中心，表明其算力供给能力持续扩张，但大规模投资带来执行风险。",
-        "evidenceIds": [
-          "E020"
-        ]
-      },
-      {
-        "entity": "燧原科技",
-        "direction": "positive",
-        "statement": "科创板申购启动，国产GPU赛道资本化进程推进，但上市后表现和盈利能力仍待市场检验。",
-        "evidenceIds": [
-          "E013"
-        ]
-      },
-      {
-        "entity": "Telephone and Data Systems",
+        "entity": "OpenAI",
         "direction": "mixed",
-        "statement": "放弃收购Array Digital Infrastructure公众股份，短期可能影响Array估值预期；TDS自身恢复回购，对股东回报偏正面。",
+        "statement": "计划发布新模型Astra体现产品线扩张，但对网络安全功能设限可能影响部分安全场景采用；证据等级C且细节有限，需官方来源确认。",
         "evidenceIds": [
           "E003"
         ]
       },
       {
-        "entity": "AfterQuery",
+        "entity": "Comcast Technology Solutions",
         "direction": "positive",
-        "statement": "据称估值从3亿美元跃升至32亿美元，若属实将刷新YC最快独角兽纪录，但该消息仅为媒体报道，需官方确认。",
+        "statement": "推出新一代视频AI应用套件，扩展VideoAI平台能力，面向内容库管理与变现；证据等级B但属公司新闻稿自我声明，需观察客户采用情况。",
         "evidenceIds": [
-          "E002"
+          "E005"
         ]
       }
     ],
     "watchlist": [
       {
-        "item": "AfterQuery融资轮次官方确认",
-        "reason": "当前证据为TechCrunch报道（C级），标题使用“reportedly”，需公司官方公告或投资者名单验证。",
-        "nextEvidence": "AfterQuery官方声明、SEC文件或后续主流财经媒体确认",
+        "item": "Minimax港股通资金流向的后续数据",
+        "reason": "当前证据仅来自新浪财经单篇报道（等级C），需港股通官方或交易所数据验证买入规模及持续性。",
+        "nextEvidence": "港股通月度资金流向数据、港交所披露或更高等级财经媒体确认",
         "evidenceIds": [
           "E002"
         ]
       },
       {
-        "item": "Anthropic Fable 5.1/Mythos 5.1第三方基准测试",
-        "reason": "官方宣称“全球最先进”，但缺乏独立评测，需关注SWE-bench、MMLU等公开基准结果。",
-        "nextEvidence": "第三方评测机构或社区基准测试发布",
-        "evidenceIds": [
-          "E007",
-          "E012"
-        ]
-      },
-      {
-        "item": "Gemini视频理解效率的实际API可用性",
-        "reason": "官方披露token减少88%，但需确认是否已向开发者开放，以及实际成本变化。",
-        "nextEvidence": "Google Cloud官方文档、API更新日志或开发者反馈",
-        "evidenceIds": [
-          "E009",
-          "E011"
-        ]
-      },
-      {
-        "item": "燧原科技上市首日表现及后续财务披露",
-        "reason": "申购已启动，但发行后股价走势和公司盈利能力尚未验证，需关注招股书细节和首日行情。",
-        "nextEvidence": "上市首日交易数据、公司季度财报",
-        "evidenceIds": [
-          "E013"
-        ]
-      },
-      {
-        "item": "TDS放弃收购后Array Digital Infrastructure的战略动向",
-        "reason": "TDS官方公告为B级证据，但Array方面未回应，需关注其股价反应和替代融资/收购方案。",
-        "nextEvidence": "Array官方声明、市场交易数据或后续并购新闻",
+        "item": "OpenAI Astra模型的官方发布与安全限制细则",
+        "reason": "当前证据为新浪财经转载（等级C），未包含OpenAI官方博客原文细节，模型能力与网络安全功能限制范围待确认。",
+        "nextEvidence": "OpenAI官方博客或发布会材料、API文档",
         "evidenceIds": [
           "E003"
         ]
       },
       {
-        "item": "Anthropic与Lambda的350亿美元云计算协议",
-        "reason": "该信息来自钛媒体晨报摘要（C级），缺乏官方细节，需验证协议真实性、期限和规模。",
-        "nextEvidence": "Anthropic或Lambda官方新闻稿、合同披露",
+        "item": "Comcast VideoAI新应用套件的客户采用与商业落地",
+        "reason": "证据来自公司新闻稿（等级B），属于自我声明，需独立第三方报道或客户案例验证实际部署。",
+        "nextEvidence": "客户公告、行业分析报告或独立媒体报道",
         "evidenceIds": [
-          "E004"
+          "E005"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "AfterQuery估值传闻可能不实",
-        "reason": "证据等级C且为“reportedly”，若后续被否认，将影响市场对YC生态和AI训练赛道的情绪。",
+        "risk": "证据等级偏低，事件可能被夸大或存在事实偏差",
+        "reason": "E002和E003均为新浪财经来源且证据等级C，E005为公司新闻稿（等级B），三条事件均处于automated_unreviewed状态，未经人工复核。",
+        "evidenceIds": [
+          "E002",
+          "E003",
+          "E005"
+        ]
+      },
+      {
+        "risk": "Minimax港股通买入规模报道可能为单月现象，不代表持续趋势",
+        "reason": "证据仅描述“上月”买入规模，未提供多期数据或持续性证据，且来源为单一媒体。",
         "evidenceIds": [
           "E002"
         ]
       },
       {
-        "risk": "Anthropic模型性能宣传存在夸大风险",
-        "reason": "官方自我宣称“全球最先进”，缺乏独立验证，若第三方评测不符，可能损害品牌信誉。",
-        "evidenceIds": [
-          "E007",
-          "E012"
-        ]
-      },
-      {
-        "risk": "AI硬件股普跌可能反映估值回调压力",
-        "reason": "美股纳指跌超1%，英伟达、特斯拉等下跌，若持续可能影响AI基础设施投资热情。",
-        "evidenceIds": [
-          "E014"
-        ]
-      },
-      {
-        "risk": "Cerebras数据中心项目执行风险",
-        "reason": "165MW数据中心投资10-17亿欧元，规模大，存在建设延期、成本超支或需求不及预期风险。",
-        "evidenceIds": [
-          "E020"
-        ]
-      },
-      {
-        "risk": "燧原科技上市后竞争与盈利压力",
-        "reason": "国产GPU赛道竞争激烈，发行市值约611.87亿元，若业绩不达预期，股价可能承压。",
-        "evidenceIds": [
-          "E013"
-        ]
-      },
-      {
-        "risk": "TDS放弃收购可能引发Array股价波动",
-        "reason": "收购预期落空，Array Digital Infrastructure公众股份可能面临抛售压力，但TDS恢复回购对自身股价有支撑。",
+        "risk": "OpenAI网络安全功能设限可能影响Astra在安全领域的采用预期",
+        "reason": "证据显示OpenAI将限制谁可以使用最尖端网络安全功能，但限制范围与对象未明确，可能引发市场对模型安全商业化空间的重新评估。",
         "evidenceIds": [
           "E003"
         ]
+      },
+      {
+        "risk": "Comcast新应用套件可能面临竞争或采用不及预期",
+        "reason": "新闻稿未提供客户签约或收入影响数据，视频AI领域竞争激烈，产品发布不等于商业成功。",
+        "evidenceIds": [
+          "E005"
+        ]
       }
     ],
-    "methodologyNote": "本报告仅基于证据包内提供的结构化证据，未补充外部事实。事实与推断已明确区分：官方新闻稿（B级）和官方披露视为高可信事实；媒体报道（C级）和厂商自我宣称视为待验证信息。所有判断均引用至少一个evidenceIds。不提供任何买入、卖出、目标价或收益承诺。"
+    "methodologyNote": "本分析仅基于证据包内三条新增情报事件（E002、E003、E005），未补充外部事实。所有判断均引用证据编号；证据等级C（新浪财经）与B（PR Newswire新闻稿）均非最高等级，且全部事件处于automated_unreviewed状态，因此重大事实均以中等置信度表述，未给出确定性结论。不构成任何买入、卖出、目标价或收益承诺。"
   },
   "changes": [
     {
-      "id": "chg-0c0de219df226d1c1cec",
+      "id": "chg-d9f2cfac2ede92de2638",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-ee074d72338d281fb2",
-      "entityName": "AfterQuery reportedly becomes Y Combinator’s fastest-ever unicorn, now valued at $3.2B",
+      "entityId": "intelligence-event-433badff25d00cc109",
+      "entityName": "Minimax成为内地投资者新宠 港股通买入规模超越阿里巴巴和腾讯",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：AfterQuery reportedly becomes Y Combinator’s fastest-ever unicorn, now valued at $3.2B。",
-      "importance": 91,
+      "summary": "新增高价值情报事件记录：Minimax成为内地投资者新宠 港股通买入规模超越阿里巴巴和腾讯。",
+      "importance": 84,
       "before": null,
       "after": {
-        "publishedAt": "2026-09-01",
-        "summary": "AI model-training startup AfterQuery has reportedly raised a round that valued it at $3.2 billion, just five months after announcing its $30 million Series A at a $300 million valuation in April.",
-        "title": "AfterQuery reportedly becomes Y Combinator’s fastest-ever unicorn, now valued at $3.2B"
+        "publishedAt": "2026-09-02",
+        "summary": "Minimax Group Inc．成为上月内地投资者最青睐的港股，这是内地投资者对中国新一代人工智能（AI）模型开发商表现出强烈投资热情的最新迹象。",
+        "title": "Minimax成为内地投资者新宠 港股通买入规模超越阿里巴巴和腾讯"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -348,7 +214,7 @@
         {
           "field": "publishedAt",
           "before": null,
-          "after": "2026-09-01",
+          "after": "2026-09-02",
           "evidenceIds": [
             "E002"
           ]
@@ -356,7 +222,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "AI model-training startup AfterQuery has reportedly raised a round that valued it at $3.2 billion, just five months after announcing its $30 million Series A at a $300 million valuation in April.",
+          "after": "Minimax Group Inc．成为上月内地投资者最青睐的港股，这是内地投资者对中国新一代人工智能（AI）模型开发商表现出强烈投资热情的最新迹象。",
           "evidenceIds": [
             "E002"
           ]
@@ -364,7 +230,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "AfterQuery reportedly becomes Y Combinator’s fastest-ever unicorn, now valued at $3.2B",
+          "after": "Minimax成为内地投资者新宠 港股通买入规模超越阿里巴巴和腾讯",
           "evidenceIds": [
             "E002"
           ]
@@ -385,35 +251,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-11a1ffa455911c67dcd3"
+        "evt-6acebc5ac8382d1bd5d9"
       ],
       "eventLifecycles": {
-        "evt-11a1ffa455911c67dcd3": "first_seen"
+        "evt-6acebc5ac8382d1bd5d9": "first_seen"
       },
-      "eventId": "evt-11a1ffa455911c67dcd3",
+      "eventId": "evt-6acebc5ac8382d1bd5d9",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T00:59:29+00:00",
-      "lastSeenAt": "2026-09-02T00:59:29+00:00"
+      "firstSeenAt": "2026-09-02T05:16:49+00:00",
+      "lastSeenAt": "2026-09-02T05:16:49+00:00"
     },
     {
-      "id": "chg-a0741736be163308a8d7",
+      "id": "chg-86c0ce8cb1e675a0f1e3",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-d06e312bc80fd228a4",
-      "entityName": "Telephone and Data Systems Announces It Is No Longer Pursuing the Acquisition of Public Shares of Array Digital Infrastructure",
+      "entityId": "intelligence-event-a9284fd7e34ac05542",
+      "entityName": "OpenAI计划发布AI新模型 并对网络安全功能的使用设限",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：Telephone and Data Systems Announces It Is No Longer Pursuing the Acquisition of Public Shares of Array Digital Infrastructure。",
-      "importance": 89,
+      "summary": "新增高价值情报事件记录：OpenAI计划发布AI新模型 并对网络安全功能的使用设限。",
+      "importance": 82,
       "before": null,
       "after": {
-        "publishedAt": "2026-09-01",
-        "summary": "TDS Expects to Recommence Repurchase Program CHICAGO, Sept. 1, 2026 /PRNewswire/ -- Telephone and Data Systems, Inc. (NYSE: TDS) (the \"Company\" or \"TDS\") today announced that it is no longer pursuing the acquisition of the Common Shares of Array Digital Infra…",
-        "title": "Telephone and Data Systems Announces It Is No Longer Pursuing the Acquisition of Public Shares of Array Digital Infrastructure"
+        "publishedAt": "2026-09-02",
+        "summary": "OpenAI计划很快推出一款名为Astra的强大新型人工智能AI模型，但表示将限制谁可以使用该软件最尖端的网络安全功能。 OpenAI周二在一篇博客文章中表示...",
+        "title": "OpenAI计划发布AI新模型 并对网络安全功能的使用设限"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -427,7 +293,7 @@
         {
           "field": "publishedAt",
           "before": null,
-          "after": "2026-09-01",
+          "after": "2026-09-02",
           "evidenceIds": [
             "E003"
           ]
@@ -435,7 +301,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "TDS Expects to Recommence Repurchase Program CHICAGO, Sept. 1, 2026 /PRNewswire/ -- Telephone and Data Systems, Inc. (NYSE: TDS) (the \"Company\" or \"TDS\") today announced that it is no longer pursuing the acquisition of the Common Shares of Array Digital Infra…",
+          "after": "OpenAI计划很快推出一款名为Astra的强大新型人工智能AI模型，但表示将限制谁可以使用该软件最尖端的网络安全功能。 OpenAI周二在一篇博客文章中表示...",
           "evidenceIds": [
             "E003"
           ]
@@ -443,7 +309,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "Telephone and Data Systems Announces It Is No Longer Pursuing the Acquisition of Public Shares of Array Digital Infrastructure",
+          "after": "OpenAI计划发布AI新模型 并对网络安全功能的使用设限",
           "evidenceIds": [
             "E003"
           ]
@@ -464,35 +330,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-6dd45f32ad659adffdcf"
+        "evt-1f265d18c42e2c237307"
       ],
       "eventLifecycles": {
-        "evt-6dd45f32ad659adffdcf": "first_seen"
+        "evt-1f265d18c42e2c237307": "first_seen"
       },
-      "eventId": "evt-6dd45f32ad659adffdcf",
+      "eventId": "evt-1f265d18c42e2c237307",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T00:59:29+00:00",
-      "lastSeenAt": "2026-09-02T00:59:29+00:00"
+      "firstSeenAt": "2026-09-02T05:16:49+00:00",
+      "lastSeenAt": "2026-09-02T05:16:49+00:00"
     },
     {
-      "id": "chg-5c3f4f7a28f559aebe39",
+      "id": "chg-720a177275b43888d948",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-65f0b9e50204aaa51c",
-      "entityName": "【钛晨报】引导汽车企业规范境外竞争行为，三部门发文；Anthropic同英伟达支持的Lambda签署350亿美元云计算协议；电影暑期档收官，票房超124亿元",
+      "entityId": "intelligence-event-d0cd2e8f97be5f6ccd",
+      "entityName": "Comcast Technology Solutions Unveils Next-Gen Video AI Applications for Broadcasters, Content and Streaming Providers, and Operators",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：【钛晨报】引导汽车企业规范境外竞争行为，三部门发文；Anthropic同英伟达支持的Lambda签署350亿美元云计算协议；电影暑期档收官，票房超124亿元。",
-      "importance": 84,
+      "summary": "新增高价值情报事件记录：Comcast Technology Solutions Unveils Next-Gen Video AI Applications for Broadcasters, Content and Streaming Providers, and Operators。",
+      "importance": 82,
       "before": null,
       "after": {
         "publishedAt": "2026-09-02",
-        "summary": "Manus正式恢复独立运营；胖东来1-8月销售额超195亿，同比增长26.98%；SpaceX据悉重组数据中心领导团队；苹果官网更新，库克头衔已变为执行主席，约翰·特努斯正式担任苹果首席执行官；外籍个人从外商投资企业取得股息红利需缴个税；交易所制定L2行情使用规范，严禁“绕道抢跑”；《微短剧发展管理办法》9月1日起正式施行；中国牵头制定，全球首个腿式机器人国际标准发布；国家药监局：进一步加强药品信息化追溯管理工作；全链条治理流量造假、网络暴力，9月1日起互联网新规正式施行；上半年公募基金分仓佣金收入达87.27亿…",
-        "title": "【钛晨报】引导汽车企业规范境外竞争行为，三部门发文；Anthropic同英伟达支持的Lambda签署350亿美元云计算协议；电影暑期档收官，票房超124亿元"
+        "summary": "Building on CTS' VideoAI™ platform, new suite of end-to-end AI-powered workflow applications brings premium content processing capabilities to manage and monetize entire content libraries Applications include video verticalization, localization, smart chapter…",
+        "title": "Comcast Technology Solutions Unveils Next-Gen Video AI Applications for Broadcasters, Content and Streaming Providers, and Operators"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -508,92 +374,13 @@
           "before": null,
           "after": "2026-09-02",
           "evidenceIds": [
-            "E004"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Manus正式恢复独立运营；胖东来1-8月销售额超195亿，同比增长26.98%；SpaceX据悉重组数据中心领导团队；苹果官网更新，库克头衔已变为执行主席，约翰·特努斯正式担任苹果首席执行官；外籍个人从外商投资企业取得股息红利需缴个税；交易所制定L2行情使用规范，严禁“绕道抢跑”；《微短剧发展管理办法》9月1日起正式施行；中国牵头制定，全球首个腿式机器人国际标准发布；国家药监局：进一步加强药品信息化追溯管理工作；全链条治理流量造假、网络暴力，9月1日起互联网新规正式施行；上半年公募基金分仓佣金收入达87.27亿…",
-          "evidenceIds": [
-            "E004"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "【钛晨报】引导汽车企业规范境外竞争行为，三部门发文；Anthropic同英伟达支持的Lambda签署350亿美元云计算协议；电影暑期档收官，票房超124亿元",
-          "evidenceIds": [
-            "E004"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E004"
-      ],
-      "supportingEvidenceIds": [
-        "E004"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-c57f64aca5c3724011c1"
-      ],
-      "eventLifecycles": {
-        "evt-c57f64aca5c3724011c1": "first_seen"
-      },
-      "eventId": "evt-c57f64aca5c3724011c1",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T00:59:29+00:00",
-      "lastSeenAt": "2026-09-02T00:59:29+00:00"
-    },
-    {
-      "id": "chg-e5d261ae1013808b5a46",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-c9490b02e9de3c8721",
-      "entityName": "Shield AI expands Tracker C-UAS integration with L3Harris VAMPIRE™",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Shield AI expands Tracker C-UAS integration with L3Harris VAMPIRE™。",
-      "importance": 84,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-01",
-        "summary": "SAN DIEGO (September 1, 2026) — Shield AI today announced that L3Harris Technologies (NYSE: LHX) has licensed Shield AI’s Tracker Counter-Unmanned Aircraft System (Tracker C-UAS) to equip its VAMPIRE™ platform, creating an integrated counter-drone solution. T…",
-        "title": "Shield AI expands Tracker C-UAS integration with L3Harris VAMPIRE™"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-01",
-          "evidenceIds": [
             "E005"
           ]
         },
         {
           "field": "summary",
           "before": null,
-          "after": "SAN DIEGO (September 1, 2026) — Shield AI today announced that L3Harris Technologies (NYSE: LHX) has licensed Shield AI’s Tracker Counter-Unmanned Aircraft System (Tracker C-UAS) to equip its VAMPIRE™ platform, creating an integrated counter-drone solution. T…",
+          "after": "Building on CTS' VideoAI™ platform, new suite of end-to-end AI-powered workflow applications brings premium content processing capabilities to manage and monetize entire content libraries Applications include video verticalization, localization, smart chapter…",
           "evidenceIds": [
             "E005"
           ]
@@ -601,7 +388,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "Shield AI expands Tracker C-UAS integration with L3Harris VAMPIRE™",
+          "after": "Comcast Technology Solutions Unveils Next-Gen Video AI Applications for Broadcasters, Content and Streaming Providers, and Operators",
           "evidenceIds": [
             "E005"
           ]
@@ -622,1210 +409,31 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-3c107c43f58ecd379b62"
+        "evt-7e29241456aac3a265ee"
       ],
       "eventLifecycles": {
-        "evt-3c107c43f58ecd379b62": "first_seen"
+        "evt-7e29241456aac3a265ee": "first_seen"
       },
-      "eventId": "evt-3c107c43f58ecd379b62",
+      "eventId": "evt-7e29241456aac3a265ee",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T00:59:29+00:00",
-      "lastSeenAt": "2026-09-02T00:59:29+00:00"
-    },
-    {
-      "id": "chg-c6d27ba11174905c3781",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-5ebc3fa8805730d8c1",
-      "entityName": "Are We There Yet? Startup Wants to Launch an 80,000-Year Mission to Alpha Centauri",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Are We There Yet? Startup Wants to Launch an 80,000-Year Mission to Alpha Centauri。",
-      "importance": 82,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-01",
-        "summary": "AI data centers in space apparently weren’t enough, so the company decided to give interstellar travel a try.",
-        "title": "Are We There Yet? Startup Wants to Launch an 80,000-Year Mission to Alpha Centauri"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-01",
-          "evidenceIds": [
-            "E006"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "AI data centers in space apparently weren’t enough, so the company decided to give interstellar travel a try.",
-          "evidenceIds": [
-            "E006"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Are We There Yet? Startup Wants to Launch an 80,000-Year Mission to Alpha Centauri",
-          "evidenceIds": [
-            "E006"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E006"
-      ],
-      "supportingEvidenceIds": [
-        "E006"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-d7d6939007fdfd3f169d"
-      ],
-      "eventLifecycles": {
-        "evt-d7d6939007fdfd3f169d": "first_seen"
-      },
-      "eventId": "evt-d7d6939007fdfd3f169d",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T00:59:29+00:00",
-      "lastSeenAt": "2026-09-02T00:59:29+00:00"
-    },
-    {
-      "id": "chg-b1d05508e9f0d210415e",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-88b8044f5b57d5cc38",
-      "entityName": "Anthropic：RT @claudeai: We’re introducing Claude Fable 5.1 and Claude Mythos 5.1. They're the world’s most advanced models for coding and knowledge…",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Anthropic：RT @claudeai: We’re introducing Claude Fable 5.1 and Claude Mythos 5.1. They're the world’s most advanced models for coding and knowledge…。",
-      "importance": 82,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-01",
-        "summary": "RT @claudeai: We’re introducing Claude Fable 5.1 and Claude Mythos 5.1. They're the world’s most advanced models for coding and knowledge…",
-        "title": "Anthropic：RT @claudeai: We’re introducing Claude Fable 5.1 and Claude Mythos 5.1. They're the world’s most advanced models for coding and knowledge…"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-01",
-          "evidenceIds": [
-            "E007"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "RT @claudeai: We’re introducing Claude Fable 5.1 and Claude Mythos 5.1. They're the world’s most advanced models for coding and knowledge…",
-          "evidenceIds": [
-            "E007"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Anthropic：RT @claudeai: We’re introducing Claude Fable 5.1 and Claude Mythos 5.1. They're the world’s most advanced models for coding and knowledge…",
-          "evidenceIds": [
-            "E007"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E007"
-      ],
-      "supportingEvidenceIds": [
-        "E007"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-33d18eef06195c599d41"
-      ],
-      "eventLifecycles": {
-        "evt-33d18eef06195c599d41": "first_seen"
-      },
-      "eventId": "evt-33d18eef06195c599d41",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T00:59:29+00:00",
-      "lastSeenAt": "2026-09-02T00:59:29+00:00"
-    },
-    {
-      "id": "chg-884d105d83f2ec2b8010",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-f3db484644e2c2163e",
-      "entityName": "Google DeepMind：We’re bringing agentic video understanding to our latest Gemini models. They can now analyze videos with better accuracy while using up to 88% fewer t",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Google DeepMind：We’re bringing agentic video understanding to our latest Gemini models. They can now analyze videos with better accuracy while using up to 88% fewer t。",
-      "importance": 81,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-01",
-        "summary": "We’re bringing agentic video understanding to our latest Gemini models. They can now analyze videos with better accuracy while using up to 88% fewer tokens. 🧵 https://t.co/ZTjlaLk7tX",
-        "title": "Google DeepMind：We’re bringing agentic video understanding to our latest Gemini models. They can now analyze videos with better accuracy while using up to 88% fewer t"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-01",
-          "evidenceIds": [
-            "E009"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "We’re bringing agentic video understanding to our latest Gemini models. They can now analyze videos with better accuracy while using up to 88% fewer tokens. 🧵 https://t.co/ZTjlaLk7tX",
-          "evidenceIds": [
-            "E009"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Google DeepMind：We’re bringing agentic video understanding to our latest Gemini models. They can now analyze videos with better accuracy while using up to 88% fewer t",
-          "evidenceIds": [
-            "E009"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E009"
-      ],
-      "supportingEvidenceIds": [
-        "E009"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-1653fa5eda1e4dfef5cd"
-      ],
-      "eventLifecycles": {
-        "evt-1653fa5eda1e4dfef5cd": "first_seen"
-      },
-      "eventId": "evt-1653fa5eda1e4dfef5cd",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T00:59:29+00:00",
-      "lastSeenAt": "2026-09-02T00:59:29+00:00"
-    },
-    {
-      "id": "chg-c0132cd42b63517515a2",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-51ac41d88665a7fcab",
-      "entityName": "Google DeepMind：RT @koraykv: Great catching up with @OfficialLoganK. The pace of what we’re building right now across @GoogleDeepMind and @Google is exciti…",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Google DeepMind：RT @koraykv: Great catching up with @OfficialLoganK. The pace of what we’re building right now across @GoogleDeepMind and @Google is exciti…。",
-      "importance": 81,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-01",
-        "summary": "RT @koraykv: Great catching up with @OfficialLoganK. The pace of what we’re building right now across @GoogleDeepMind and @Google is exciti…",
-        "title": "Google DeepMind：RT @koraykv: Great catching up with @OfficialLoganK. The pace of what we’re building right now across @GoogleDeepMind and @Google is exciti…"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-01",
-          "evidenceIds": [
-            "E010"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "RT @koraykv: Great catching up with @OfficialLoganK. The pace of what we’re building right now across @GoogleDeepMind and @Google is exciti…",
-          "evidenceIds": [
-            "E010"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Google DeepMind：RT @koraykv: Great catching up with @OfficialLoganK. The pace of what we’re building right now across @GoogleDeepMind and @Google is exciti…",
-          "evidenceIds": [
-            "E010"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E010"
-      ],
-      "supportingEvidenceIds": [
-        "E010"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-497ef4efd8ecda6eb03a"
-      ],
-      "eventLifecycles": {
-        "evt-497ef4efd8ecda6eb03a": "first_seen"
-      },
-      "eventId": "evt-497ef4efd8ecda6eb03a",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T00:59:29+00:00",
-      "lastSeenAt": "2026-09-02T00:59:29+00:00"
-    },
-    {
-      "id": "chg-03a690a7e3964af35487",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-985e3ac0fc2e2ee5ae",
-      "entityName": "Google DeepMind：Instead of scanning an entire file, Gemini reasons across the video’s transcript, audio, and frames, dynamically adjusting the frame rate to pull the",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Google DeepMind：Instead of scanning an entire file, Gemini reasons across the video’s transcript, audio, and frames, dynamically adjusting the frame rate to pull the。",
-      "importance": 81,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-01",
-        "summary": "Instead of scanning an entire file, Gemini reasons across the video’s transcript, audio, and frames, dynamically adjusting the frame rate to pull the exact moments needed. The efficiency gains are most significant for long-form content, from 10-minute guides…",
-        "title": "Google DeepMind：Instead of scanning an entire file, Gemini reasons across the video’s transcript, audio, and frames, dynamically adjusting the frame rate to pull the"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-01",
-          "evidenceIds": [
-            "E011"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Instead of scanning an entire file, Gemini reasons across the video’s transcript, audio, and frames, dynamically adjusting the frame rate to pull the exact moments needed. The efficiency gains are most significant for long-form content, from 10-minute guides…",
-          "evidenceIds": [
-            "E011"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Google DeepMind：Instead of scanning an entire file, Gemini reasons across the video’s transcript, audio, and frames, dynamically adjusting the frame rate to pull the",
-          "evidenceIds": [
-            "E011"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E011"
-      ],
-      "supportingEvidenceIds": [
-        "E011"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-ccfbd9b20668b4b62235"
-      ],
-      "eventLifecycles": {
-        "evt-ccfbd9b20668b4b62235": "first_seen"
-      },
-      "eventId": "evt-ccfbd9b20668b4b62235",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T00:59:29+00:00",
-      "lastSeenAt": "2026-09-02T00:59:29+00:00"
-    },
-    {
-      "id": "chg-dca0b19b84db07dff77a",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-7ac470e2fb18b37d33",
-      "entityName": "地球最强大模型也开始强调性价比！Anthropic上新Fable 5.1",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：地球最强大模型也开始强调性价比！Anthropic上新Fable 5.1。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-02",
-        "summary": "随着上市流程进入关键节点，Anthropic把用来狙击“GPT-6”的大模型直接端了出来。 当地时间周二， Anthropic宣布推出“全球最先进的编程和知识工作模型”Fable 5.1 ，同时为拥有Mythos访问权限的用户发布Mythos 5.1。 在Anthropic的Claude产品体系中，Fable是最强大的模型。而Fable和Mythos本质上是同一个模型，但安全防护级别不同，后者对高风险领域（如生物学和 网络安全 ）中的某些任务采用更宽松的防护措施 。",
-        "title": "地球最强大模型也开始强调性价比！Anthropic上新Fable 5.1"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-02",
-          "evidenceIds": [
-            "E012"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "随着上市流程进入关键节点，Anthropic把用来狙击“GPT-6”的大模型直接端了出来。 当地时间周二， Anthropic宣布推出“全球最先进的编程和知识工作模型”Fable 5.1 ，同时为拥有Mythos访问权限的用户发布Mythos 5.1。 在Anthropic的Claude产品体系中，Fable是最强大的模型。而Fable和Mythos本质上是同一个模型，但安全防护级别不同，后者对高风险领域（如生物学和 网络安全 ）中的某些任务采用更宽松的防护措施 。",
-          "evidenceIds": [
-            "E012"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "地球最强大模型也开始强调性价比！Anthropic上新Fable 5.1",
-          "evidenceIds": [
-            "E012"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E012"
-      ],
-      "supportingEvidenceIds": [
-        "E012"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-dc6c97cc577ef6cb46f8"
-      ],
-      "eventLifecycles": {
-        "evt-dc6c97cc577ef6cb46f8": "first_seen"
-      },
-      "eventId": "evt-dc6c97cc577ef6cb46f8",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T00:59:29+00:00",
-      "lastSeenAt": "2026-09-02T00:59:29+00:00"
-    },
-    {
-      "id": "chg-eca6b2d33b00b3847797",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-1f10c00f7f012bc9a9",
-      "entityName": "发行价142.18元！燧原科技今日申购 中一签能赚多少？",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：发行价142.18元！燧原科技今日申购 中一签能赚多少？。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-02",
-        "summary": "“国产GPU四小龙”最后一块拼图即将补齐。 发行价142.18元/股、募资61.19亿元、上市市值约611.87亿元， 燧原科技 今日将开启科创板申购。叠加国产算力赛道的高热度与同赛道“玩家”上市后的赚钱效应，又一场打新盛宴或近在眼前。 9月2日， 燧原科技 将正式开启网上网下申购，股票代码688801，网上申购代码787801。",
-        "title": "发行价142.18元！燧原科技今日申购 中一签能赚多少？"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-02",
-          "evidenceIds": [
-            "E013"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "“国产GPU四小龙”最后一块拼图即将补齐。 发行价142.18元/股、募资61.19亿元、上市市值约611.87亿元， 燧原科技 今日将开启科创板申购。叠加国产算力赛道的高热度与同赛道“玩家”上市后的赚钱效应，又一场打新盛宴或近在眼前。 9月2日， 燧原科技 将正式开启网上网下申购，股票代码688801，网上申购代码787801。",
-          "evidenceIds": [
-            "E013"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "发行价142.18元！燧原科技今日申购 中一签能赚多少？",
-          "evidenceIds": [
-            "E013"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E013"
-      ],
-      "supportingEvidenceIds": [
-        "E013"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-4f56483d1b6539cc70ee"
-      ],
-      "eventLifecycles": {
-        "evt-4f56483d1b6539cc70ee": "first_seen"
-      },
-      "eventId": "evt-4f56483d1b6539cc70ee",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T00:59:29+00:00",
-      "lastSeenAt": "2026-09-02T00:59:29+00:00"
-    },
-    {
-      "id": "chg-38bc196737872f62cfdc",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-5c793ba8fb346eb37d",
-      "entityName": "全球市场：美股三大指数收跌 纳指跌超1% AI硬件股普跌 国际油价涨逾5%",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：全球市场：美股三大指数收跌 纳指跌超1% AI硬件股普跌 国际油价涨逾5%。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-02",
-        "summary": "美股市场： 美股三大指数09月01日收盘全线下跌。截至收盘，道琼斯工业平均指数比前一交易日下跌419.02点，收于52766.88点，跌幅为0.79%； 标准普尔 500种股票指数下跌54.67点，收于7631.47点，跌幅为0.71%； 纳斯达克 综合 指数下跌271.12点，收于26099.77点，跌幅为1.03%。 大型科技股多数下跌， 苹果 涨2.61%、Meta涨1.08%、 微软 跌1.24%、 谷歌-A 跌1.28%、 英伟达 跌1.51%、 亚马逊 跌1.87%、 特斯拉 跌3.22%。 财报方面…",
-        "title": "全球市场：美股三大指数收跌 纳指跌超1% AI硬件股普跌 国际油价涨逾5%"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-02",
-          "evidenceIds": [
-            "E014"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "美股市场： 美股三大指数09月01日收盘全线下跌。截至收盘，道琼斯工业平均指数比前一交易日下跌419.02点，收于52766.88点，跌幅为0.79%； 标准普尔 500种股票指数下跌54.67点，收于7631.47点，跌幅为0.71%； 纳斯达克 综合 指数下跌271.12点，收于26099.77点，跌幅为1.03%。 大型科技股多数下跌， 苹果 涨2.61%、Meta涨1.08%、 微软 跌1.24%、 谷歌-A 跌1.28%、 英伟达 跌1.51%、 亚马逊 跌1.87%、 特斯拉 跌3.22%。 财报方面…",
-          "evidenceIds": [
-            "E014"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "全球市场：美股三大指数收跌 纳指跌超1% AI硬件股普跌 国际油价涨逾5%",
-          "evidenceIds": [
-            "E014"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E014"
-      ],
-      "supportingEvidenceIds": [
-        "E014"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-e1733cccb303aa22e270"
-      ],
-      "eventLifecycles": {
-        "evt-e1733cccb303aa22e270": "first_seen"
-      },
-      "eventId": "evt-e1733cccb303aa22e270",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T00:59:29+00:00",
-      "lastSeenAt": "2026-09-02T00:59:29+00:00"
-    },
-    {
-      "id": "chg-c297be11f59f34f04e5e",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-9bfb8020bc03bd5944",
-      "entityName": "世界动力电池大会即将举办 固态电池板块有望迎来全新催化",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：世界动力电池大会即将举办 固态电池板块有望迎来全新催化。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-02",
-        "summary": "2026世界动力 电池 大会9月3日至4日在四川宜宾举办，旨在推动全球绿色低碳可持续发展，加快动力 电池 和 新能源 汽车 产业高质量发展，届时将发布动力 电池 创新技术及技术路线图等成果。 德邦证券翟堃指出，政策与资本双向驱动共振，2027年或成关键节点。产业普遍预期2026年半 固态电池 率先迈入商业化周期，至2027年， 宁德时代 、 比亚迪 、 国轩高科 等多家头部企业规划实现全 固态电池 小批量量产或示范装车，产业化节奏显著提速。 固态电池 产业化拐点渐近，建议优先布局确定性高的上游环节：一是设备端，关…",
-        "title": "世界动力电池大会即将举办 固态电池板块有望迎来全新催化"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-02",
-          "evidenceIds": [
-            "E015"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "2026世界动力 电池 大会9月3日至4日在四川宜宾举办，旨在推动全球绿色低碳可持续发展，加快动力 电池 和 新能源 汽车 产业高质量发展，届时将发布动力 电池 创新技术及技术路线图等成果。 德邦证券翟堃指出，政策与资本双向驱动共振，2027年或成关键节点。产业普遍预期2026年半 固态电池 率先迈入商业化周期，至2027年， 宁德时代 、 比亚迪 、 国轩高科 等多家头部企业规划实现全 固态电池 小批量量产或示范装车，产业化节奏显著提速。 固态电池 产业化拐点渐近，建议优先布局确定性高的上游环节：一是设备端，关…",
-          "evidenceIds": [
-            "E015"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "世界动力电池大会即将举办 固态电池板块有望迎来全新催化",
-          "evidenceIds": [
-            "E015"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E015"
-      ],
-      "supportingEvidenceIds": [
-        "E015"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-f05b162e3dfd60438ef0"
-      ],
-      "eventLifecycles": {
-        "evt-f05b162e3dfd60438ef0": "first_seen"
-      },
-      "eventId": "evt-f05b162e3dfd60438ef0",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T00:59:29+00:00",
-      "lastSeenAt": "2026-09-02T00:59:29+00:00"
-    },
-    {
-      "id": "chg-2d9578d5fb583b2b9107",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-aec8cdd62cf4fa136d",
-      "entityName": "What is fusion?",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：What is fusion?。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-01",
-        "summary": "Fusion is the process that powers the sun, combining light atoms to release vast amounts of clean energy. Learn how fusion works, why it’s challenging to achieve on Earth, and how it could provide abundant, carbon-free electricity for the future.",
-        "title": "What is fusion?"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-01",
-          "evidenceIds": [
-            "E016"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Fusion is the process that powers the sun, combining light atoms to release vast amounts of clean energy. Learn how fusion works, why it’s challenging to achieve on Earth, and how it could provide abundant, carbon-free electricity for the future.",
-          "evidenceIds": [
-            "E016"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "What is fusion?",
-          "evidenceIds": [
-            "E016"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E016"
-      ],
-      "supportingEvidenceIds": [
-        "E016"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-e929a86befcfbc7f5915"
-      ],
-      "eventLifecycles": {
-        "evt-e929a86befcfbc7f5915": "first_seen"
-      },
-      "eventId": "evt-e929a86befcfbc7f5915",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T00:59:29+00:00",
-      "lastSeenAt": "2026-09-02T00:59:29+00:00"
-    },
-    {
-      "id": "chg-4021c9c41629a8b6e94f",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-ac5fad6d9e99d486d9",
-      "entityName": "How the FDA is building a secure, AI-ready data foundation on Databricks for Government",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：How the FDA is building a secure, AI-ready data foundation on Databricks for Government。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-01",
-        "summary": "Learn how the FDA is using Databricks on AWS GovCloud to scale secure AI, modernize its data foundation, and improve efficiency without mission disruption.",
-        "title": "How the FDA is building a secure, AI-ready data foundation on Databricks for Government"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-01",
-          "evidenceIds": [
-            "E019"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Learn how the FDA is using Databricks on AWS GovCloud to scale secure AI, modernize its data foundation, and improve efficiency without mission disruption.",
-          "evidenceIds": [
-            "E019"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "How the FDA is building a secure, AI-ready data foundation on Databricks for Government",
-          "evidenceIds": [
-            "E019"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E019"
-      ],
-      "supportingEvidenceIds": [
-        "E019"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-8faefc42cfa80ec47bc3"
-      ],
-      "eventLifecycles": {
-        "evt-8faefc42cfa80ec47bc3": "first_seen"
-      },
-      "eventId": "evt-8faefc42cfa80ec47bc3",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T00:59:29+00:00",
-      "lastSeenAt": "2026-09-02T00:59:29+00:00"
-    },
-    {
-      "id": "chg-3b89b0873b4e92a8116e",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-bcf8c4013eb303001b",
-      "entityName": "Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-01",
-        "summary": "Facility backed by seven-year contracted capacity agreement and estimated €1.0–1.7 billion in regional investment for local development and employment MIKKELI, Finland, Sept. 01, 2026 (GLOBE NEWSWIRE) -- Cerebras Systems (NASDAQ: CBRS) today announced a new A…",
-        "title": "Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-01",
-          "evidenceIds": [
-            "E020"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Facility backed by seven-year contracted capacity agreement and estimated €1.0–1.7 billion in regional investment for local development and employment MIKKELI, Finland, Sept. 01, 2026 (GLOBE NEWSWIRE) -- Cerebras Systems (NASDAQ: CBRS) today announced a new A…",
-          "evidenceIds": [
-            "E020"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026",
-          "evidenceIds": [
-            "E020"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E020"
-      ],
-      "supportingEvidenceIds": [
-        "E020"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-7c2170f93d8f8d98b344"
-      ],
-      "eventLifecycles": {
-        "evt-7c2170f93d8f8d98b344": "first_seen"
-      },
-      "eventId": "evt-7c2170f93d8f8d98b344",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T00:59:29+00:00",
-      "lastSeenAt": "2026-09-02T00:59:29+00:00"
-    },
-    {
-      "id": "chg-f884cc0c6e9cc5184538",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-188b4fce3bf0e9cee6",
-      "entityName": "Anduril to Deliver Hardware and Shelter Integration for Army’s TITAN Program",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Anduril to Deliver Hardware and Shelter Integration for Army’s TITAN Program。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-01",
-        "summary": "Anduril Industries builds advanced autonomous systems and defense technology to protect US and allied forces. Creating the future of national security through AI, robotics, and cutting-edge engineering.",
-        "title": "Anduril to Deliver Hardware and Shelter Integration for Army’s TITAN Program"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-01",
-          "evidenceIds": [
-            "E021"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Anduril Industries builds advanced autonomous systems and defense technology to protect US and allied forces. Creating the future of national security through AI, robotics, and cutting-edge engineering.",
-          "evidenceIds": [
-            "E021"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Anduril to Deliver Hardware and Shelter Integration for Army’s TITAN Program",
-          "evidenceIds": [
-            "E021"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E021"
-      ],
-      "supportingEvidenceIds": [
-        "E021"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-6c417b83a693d3a492ab"
-      ],
-      "eventLifecycles": {
-        "evt-6c417b83a693d3a492ab": "first_seen"
-      },
-      "eventId": "evt-6c417b83a693d3a492ab",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T00:59:29+00:00",
-      "lastSeenAt": "2026-09-02T00:59:29+00:00"
-    },
-    {
-      "id": "chg-b62f404a459627e75345",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-516e78395a4baeef36",
-      "entityName": "AI制药成巨头竞逐新赛道 AI4S迎来高速发展窗口期",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：AI制药成巨头竞逐新赛道 AI4S迎来高速发展窗口期。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-02",
-        "summary": "据报道，AI技术正深度融入药物研发全链条，在政策红利与资本加持下，AI制药产业迎来高速发展窗口期。工信部等多部门联合印发的实施方案明确提出，建设 人工智能 驱动的新药发现与虚拟筛选平台。据预测，2025至2030年中国智能制药市场规模有望突破5000亿元。 AI技术正在改变传统药企的研发逻辑。目前，AI可将新药临床前研发周期压缩至1年左右，全球已有多款AI设计药物进入Ⅱ期、Ⅲ期临床阶段，行业正加速进入收获期。中邮证券指出，AI制药正逐步成为AI巨头公司的战略主航道。2026年以来，谷歌/Anthropic等巨头将…",
-        "title": "AI制药成巨头竞逐新赛道 AI4S迎来高速发展窗口期"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-02",
-          "evidenceIds": [
-            "E022"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "据报道，AI技术正深度融入药物研发全链条，在政策红利与资本加持下，AI制药产业迎来高速发展窗口期。工信部等多部门联合印发的实施方案明确提出，建设 人工智能 驱动的新药发现与虚拟筛选平台。据预测，2025至2030年中国智能制药市场规模有望突破5000亿元。 AI技术正在改变传统药企的研发逻辑。目前，AI可将新药临床前研发周期压缩至1年左右，全球已有多款AI设计药物进入Ⅱ期、Ⅲ期临床阶段，行业正加速进入收获期。中邮证券指出，AI制药正逐步成为AI巨头公司的战略主航道。2026年以来，谷歌/Anthropic等巨头将…",
-          "evidenceIds": [
-            "E022"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "AI制药成巨头竞逐新赛道 AI4S迎来高速发展窗口期",
-          "evidenceIds": [
-            "E022"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E022"
-      ],
-      "supportingEvidenceIds": [
-        "E022"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-af8b868734ebfa9c80d4"
-      ],
-      "eventLifecycles": {
-        "evt-af8b868734ebfa9c80d4": "first_seen"
-      },
-      "eventId": "evt-af8b868734ebfa9c80d4",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T00:59:29+00:00",
-      "lastSeenAt": "2026-09-02T00:59:29+00:00"
-    },
-    {
-      "id": "chg-3dece9dfc135f477282a",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "catl",
-      "entityName": "宁德时代",
-      "action": "updated",
-      "changedFields": [
-        "news"
-      ],
-      "summary": "宁德时代 的 news 发生变化。",
-      "importance": 48,
-      "before": {
-        "news": []
-      },
-      "after": {
-        "news": [
-          {
-            "publishedAt": "2026-09-01T22:43:00+08:00",
-            "source": "新浪财经",
-            "title": "9月“金股”来了！宁德时代、天孚通信等27股获最至少2券商推荐",
-            "url": "https://k.sina.cn/article_7879996919_1d5af35f7020027boo.html"
-          }
-        ]
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "news"
-      ],
-      "claimBindings": [
-        {
-          "field": "news",
-          "before": [],
-          "after": [
-            {
-              "publishedAt": "2026-09-01T22:43:00+08:00",
-              "source": "新浪财经",
-              "title": "9月“金股”来了！宁德时代、天孚通信等27股获最至少2券商推荐",
-              "url": "https://k.sina.cn/article_7879996919_1d5af35f7020027boo.html"
-            }
-          ],
-          "evidenceIds": [
-            "E031"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E031"
-      ],
-      "supportingEvidenceIds": [
-        "E031"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-a2b98717afa49c66e560"
-      ],
-      "eventLifecycles": {
-        "evt-a2b98717afa49c66e560": "first_seen"
-      },
-      "eventId": "evt-a2b98717afa49c66e560",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-02T00:59:29+00:00",
-      "lastSeenAt": "2026-09-02T00:59:29+00:00"
+      "firstSeenAt": "2026-09-02T05:16:49+00:00",
+      "lastSeenAt": "2026-09-02T05:16:49+00:00"
     }
   ],
   "evidence": [
     {
       "id": "E002",
-      "changeId": "chg-0c0de219df226d1c1cec",
-      "entityName": "AfterQuery reportedly becomes Y Combinator’s fastest-ever unicorn, now valued at $3.2B",
-      "claim": "新增高价值情报事件记录：AfterQuery reportedly becomes Y Combinator’s fastest-ever unicorn, now valued at $3.2B。",
+      "changeId": "chg-d9f2cfac2ede92de2638",
+      "entityName": "Minimax成为内地投资者新宠 港股通买入规模超越阿里巴巴和腾讯",
+      "claim": "新增高价值情报事件记录：Minimax成为内地投资者新宠 港股通买入规模超越阿里巴巴和腾讯。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "TechCrunch Venture",
-      "title": "AfterQuery reportedly becomes Y Combinator’s fastest-ever unicorn, now valued at $3.2B",
-      "url": "https://techcrunch.com/2026/09/01/afterquery-reportedly-becomes-y-combinators-fastest-ever-unicorn-now-valued-at-3-2b",
-      "publishedAt": "2026-09-01",
+      "sourceName": "新浪财经",
+      "title": "Minimax成为内地投资者新宠 港股通买入规模超越阿里巴巴和腾讯",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-02/doc-iniqkzme3061738.shtml",
+      "publishedAt": "2026-09-02",
       "evidenceGrade": "C",
-      "platformName": "专业媒体",
+      "platformName": "新浪",
       "sourceRole": "corroboration",
       "claimFields": [
         "publishedAt",
@@ -1839,41 +447,17 @@
     },
     {
       "id": "E003",
-      "changeId": "chg-a0741736be163308a8d7",
-      "entityName": "Telephone and Data Systems Announces It Is No Longer Pursuing the Acquisition of Public Shares of Array Digital Infrastructure",
-      "claim": "新增高价值情报事件记录：Telephone and Data Systems Announces It Is No Longer Pursuing the Acquisition of Public Shares of Array Digital Infrastructure。",
+      "changeId": "chg-86c0ce8cb1e675a0f1e3",
+      "entityName": "OpenAI计划发布AI新模型 并对网络安全功能的使用设限",
+      "claim": "新增高价值情报事件记录：OpenAI计划发布AI新模型 并对网络安全功能的使用设限。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "PR Newswire Consumer Technology",
-      "title": "Telephone and Data Systems Announces It Is No Longer Pursuing the Acquisition of Public Shares of Array Digital Infrastructure",
-      "url": "https://www.prnewswire.com/news-releases/telephone-and-data-systems-announces-it-is-no-longer-pursuing-the-acquisition-of-public-shares-of-array-digital-infrastructure-302866945.html",
-      "publishedAt": "2026-09-01",
-      "evidenceGrade": "B",
-      "platformName": "新闻稿",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E004",
-      "changeId": "chg-5c3f4f7a28f559aebe39",
-      "entityName": "【钛晨报】引导汽车企业规范境外竞争行为，三部门发文；Anthropic同英伟达支持的Lambda签署350亿美元云计算协议；电影暑期档收官，票房超124亿元",
-      "claim": "新增高价值情报事件记录：【钛晨报】引导汽车企业规范境外竞争行为，三部门发文；Anthropic同英伟达支持的Lambda签署350亿美元云计算协议；电影暑期档收官，票房超124亿元。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "钛媒体",
-      "title": "【钛晨报】引导汽车企业规范境外竞争行为，三部门发文；Anthropic同英伟达支持的Lambda签署350亿美元云计算协议；电影暑期档收官，票房超124亿元",
-      "url": "https://www.tmtpost.com/8125054.html",
+      "sourceName": "新浪财经",
+      "title": "OpenAI计划发布AI新模型 并对网络安全功能的使用设限",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-02/doc-iniqkzky4616763.shtml",
       "publishedAt": "2026-09-02",
       "evidenceGrade": "C",
-      "platformName": "专业媒体",
+      "platformName": "新浪",
       "sourceRole": "corroboration",
       "claimFields": [
         "publishedAt",
@@ -1887,64 +471,17 @@
     },
     {
       "id": "E005",
-      "changeId": "chg-e5d261ae1013808b5a46",
-      "entityName": "Shield AI expands Tracker C-UAS integration with L3Harris VAMPIRE™",
-      "claim": "新增高价值情报事件记录：Shield AI expands Tracker C-UAS integration with L3Harris VAMPIRE™。",
+      "changeId": "chg-720a177275b43888d948",
+      "entityName": "Comcast Technology Solutions Unveils Next-Gen Video AI Applications for Broadcasters, Content and Streaming Providers, and Operators",
+      "claim": "新增高价值情报事件记录：Comcast Technology Solutions Unveils Next-Gen Video AI Applications for Broadcasters, Content and Streaming Providers, and Operators。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "Shield AI",
-      "title": "Shield AI expands Tracker C-UAS integration with L3Harris VAMPIRE™",
-      "url": "https://shield.ai/shield-ai-expands-tracker-c-uas-integration-with-l3harris-vampire",
-      "publishedAt": "2026-09-01",
-      "evidenceGrade": "官方披露",
-      "platformName": "官方网站",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E006",
-      "changeId": "chg-c6d27ba11174905c3781",
-      "entityName": "Are We There Yet? Startup Wants to Launch an 80,000-Year Mission to Alpha Centauri",
-      "claim": "新增高价值情报事件记录：Are We There Yet? Startup Wants to Launch an 80,000-Year Mission to Alpha Centauri。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "CNET",
-      "title": "Are We There Yet? Startup Wants to Launch an 80,000-Year Mission to Alpha Centauri",
-      "url": "https://www.cnet.com/science/space/are-we-there-yet-startup-wants-to-launch-an-80000-year-mission-to-alpha-centauri",
-      "publishedAt": "2026-09-01",
-      "evidenceGrade": "C",
-      "platformName": "CNET",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E007",
-      "changeId": "chg-b1d05508e9f0d210415e",
-      "entityName": "Anthropic：RT @claudeai: We’re introducing Claude Fable 5.1 and Claude Mythos 5.1. They're the world’s most advanced models for coding and knowledge…",
-      "claim": "新增高价值情报事件记录：Anthropic：RT @claudeai: We’re introducing Claude Fable 5.1 and Claude Mythos 5.1. They're the world’s most advanced models for coding and knowledge…。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Anthropic on X",
-      "title": "Anthropic：RT @claudeai: We’re introducing Claude Fable 5.1 and Claude Mythos 5.1. They're the world’s most advanced models for coding and knowledge…",
-      "url": "https://x.com/AnthropicAI/status/2094848668650074336",
-      "publishedAt": "2026-09-01",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "Comcast Technology Solutions Unveils Next-Gen Video AI Applications for Broadcasters, Content and Streaming Providers, and Operators",
+      "url": "https://www.prnewswire.com/news-releases/comcast-technology-solutions-unveils-next-gen-video-ai-applications-for-broadcasters-content-and-streaming-providers-and-operators-302866174.html",
+      "publishedAt": "2026-09-02",
       "evidenceGrade": "B",
-      "platformName": "X",
+      "platformName": "新闻稿",
       "sourceRole": "primary",
       "claimFields": [
         "publishedAt",
@@ -1952,305 +489,6 @@
         "title"
       ],
       "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E009",
-      "changeId": "chg-884d105d83f2ec2b8010",
-      "entityName": "Google DeepMind：We’re bringing agentic video understanding to our latest Gemini models. They can now analyze videos with better accuracy while using up to 88% fewer t",
-      "claim": "新增高价值情报事件记录：Google DeepMind：We’re bringing agentic video understanding to our latest Gemini models. They can now analyze videos with better accuracy while using up to 88% fewer t。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Google DeepMind on X",
-      "title": "Google DeepMind：We’re bringing agentic video understanding to our latest Gemini models. They can now analyze videos with better accuracy while using up to 88% fewer t",
-      "url": "https://x.com/GoogleDeepMind/status/2094840179676660097",
-      "publishedAt": "2026-09-01",
-      "evidenceGrade": "B",
-      "platformName": "X",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E010",
-      "changeId": "chg-c0132cd42b63517515a2",
-      "entityName": "Google DeepMind：RT @koraykv: Great catching up with @OfficialLoganK. The pace of what we’re building right now across @GoogleDeepMind and @Google is exciti…",
-      "claim": "新增高价值情报事件记录：Google DeepMind：RT @koraykv: Great catching up with @OfficialLoganK. The pace of what we’re building right now across @GoogleDeepMind and @Google is exciti…。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Google DeepMind on X",
-      "title": "Google DeepMind：RT @koraykv: Great catching up with @OfficialLoganK. The pace of what we’re building right now across @GoogleDeepMind and @Google is exciti…",
-      "url": "https://x.com/GoogleDeepMind/status/2094878106402107449",
-      "publishedAt": "2026-09-01",
-      "evidenceGrade": "B",
-      "platformName": "X",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E011",
-      "changeId": "chg-03a690a7e3964af35487",
-      "entityName": "Google DeepMind：Instead of scanning an entire file, Gemini reasons across the video’s transcript, audio, and frames, dynamically adjusting the frame rate to pull the",
-      "claim": "新增高价值情报事件记录：Google DeepMind：Instead of scanning an entire file, Gemini reasons across the video’s transcript, audio, and frames, dynamically adjusting the frame rate to pull the。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Google DeepMind on X",
-      "title": "Google DeepMind：Instead of scanning an entire file, Gemini reasons across the video’s transcript, audio, and frames, dynamically adjusting the frame rate to pull the",
-      "url": "https://x.com/GoogleDeepMind/status/2094840182457422260",
-      "publishedAt": "2026-09-01",
-      "evidenceGrade": "B",
-      "platformName": "X",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E012",
-      "changeId": "chg-dca0b19b84db07dff77a",
-      "entityName": "地球最强大模型也开始强调性价比！Anthropic上新Fable 5.1",
-      "claim": "新增高价值情报事件记录：地球最强大模型也开始强调性价比！Anthropic上新Fable 5.1。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "地球最强大模型也开始强调性价比！Anthropic上新Fable 5.1",
-      "url": "https://finance.eastmoney.com/a/202609023861892250.html",
-      "publishedAt": "2026-09-02",
-      "evidenceGrade": "媒体报道",
-      "platformName": "东方财富",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E013",
-      "changeId": "chg-eca6b2d33b00b3847797",
-      "entityName": "发行价142.18元！燧原科技今日申购 中一签能赚多少？",
-      "claim": "新增高价值情报事件记录：发行价142.18元！燧原科技今日申购 中一签能赚多少？。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "发行价142.18元！燧原科技今日申购 中一签能赚多少？",
-      "url": "https://finance.eastmoney.com/a/202609023861955559.html",
-      "publishedAt": "2026-09-02",
-      "evidenceGrade": "媒体报道",
-      "platformName": "东方财富",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E014",
-      "changeId": "chg-38bc196737872f62cfdc",
-      "entityName": "全球市场：美股三大指数收跌 纳指跌超1% AI硬件股普跌 国际油价涨逾5%",
-      "claim": "新增高价值情报事件记录：全球市场：美股三大指数收跌 纳指跌超1% AI硬件股普跌 国际油价涨逾5%。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "全球市场：美股三大指数收跌 纳指跌超1% AI硬件股普跌 国际油价涨逾5%",
-      "url": "https://finance.eastmoney.com/a/202609023861898065.html",
-      "publishedAt": "2026-09-02",
-      "evidenceGrade": "媒体报道",
-      "platformName": "东方财富",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E015",
-      "changeId": "chg-c297be11f59f34f04e5e",
-      "entityName": "世界动力电池大会即将举办 固态电池板块有望迎来全新催化",
-      "claim": "新增高价值情报事件记录：世界动力电池大会即将举办 固态电池板块有望迎来全新催化。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "世界动力电池大会即将举办 固态电池板块有望迎来全新催化",
-      "url": "https://finance.eastmoney.com/a/202609023862039837.html",
-      "publishedAt": "2026-09-02",
-      "evidenceGrade": "媒体报道",
-      "platformName": "东方财富",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E016",
-      "changeId": "chg-2d9578d5fb583b2b9107",
-      "entityName": "What is fusion?",
-      "claim": "新增高价值情报事件记录：What is fusion?。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Helion Energy",
-      "title": "What is fusion?",
-      "url": "https://www.helionenergy.com/blog/what-is-fusion",
-      "publishedAt": "2026-09-01",
-      "evidenceGrade": "官方披露",
-      "platformName": "官方网站",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E019",
-      "changeId": "chg-4021c9c41629a8b6e94f",
-      "entityName": "How the FDA is building a secure, AI-ready data foundation on Databricks for Government",
-      "claim": "新增高价值情报事件记录：How the FDA is building a secure, AI-ready data foundation on Databricks for Government。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Databricks",
-      "title": "How the FDA is building a secure, AI-ready data foundation on Databricks for Government",
-      "url": "https://www.databricks.com/blog/how-fda-building-secure-ai-ready-data-foundation-databricks-government",
-      "publishedAt": "2026-09-01",
-      "evidenceGrade": "官方披露",
-      "platformName": "官方网站",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E020",
-      "changeId": "chg-3b89b0873b4e92a8116e",
-      "entityName": "Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026",
-      "claim": "新增高价值情报事件记录：Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Cerebras Systems",
-      "title": "Cerebras and Compute Nordic Finland Announce New 165 MW AI Data Centre in Mikkeli, Finland - August 31, 2026",
-      "url": "https://investors.cerebras.ai/news-releases/news-release-details/cerebras-and-compute-nordic-finland-announce-new-165-mw-ai-data",
-      "publishedAt": "2026-09-01",
-      "evidenceGrade": "官方披露",
-      "platformName": "官方网站",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E021",
-      "changeId": "chg-f884cc0c6e9cc5184538",
-      "entityName": "Anduril to Deliver Hardware and Shelter Integration for Army’s TITAN Program",
-      "claim": "新增高价值情报事件记录：Anduril to Deliver Hardware and Shelter Integration for Army’s TITAN Program。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Anduril Industries",
-      "title": "Anduril to Deliver Hardware and Shelter Integration for Army’s TITAN Program",
-      "url": "https://www.anduril.com/news/anduril-to-deliver-hardware-and-shelter-integration-for-army-s-titan-program",
-      "publishedAt": "2026-09-01",
-      "evidenceGrade": "官方披露",
-      "platformName": "官方网站",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E022",
-      "changeId": "chg-b62f404a459627e75345",
-      "entityName": "AI制药成巨头竞逐新赛道 AI4S迎来高速发展窗口期",
-      "claim": "新增高价值情报事件记录：AI制药成巨头竞逐新赛道 AI4S迎来高速发展窗口期。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "AI制药成巨头竞逐新赛道 AI4S迎来高速发展窗口期",
-      "url": "https://finance.eastmoney.com/a/202609023862038585.html",
-      "publishedAt": "2026-09-02",
-      "evidenceGrade": "媒体报道",
-      "platformName": "东方财富",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E031",
-      "changeId": "chg-3dece9dfc135f477282a",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 的 news 发生变化。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "9月“金股”来了！宁德时代、天孚通信等27股获最至少2券商推荐",
-      "url": "https://k.sina.cn/article_7879996919_1d5af35f7020027boo.html",
-      "publishedAt": "2026-09-01T22:43:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "entityMatchStatus": "matched",
       "qualityIssues": [],
       "qualityStatus": "passed",
       "supportStatus": "supports"
@@ -2258,9 +496,264 @@
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-02T00:59:29+00:00",
+    "generatedAt": "2026-09-02T05:16:49+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-7e29241456aac3a265ee": {
+        "eventId": "evt-7e29241456aac3a265ee",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-d0cd2e8f97be5f6ccd",
+        "entityName": "Comcast Technology Solutions Unveils Next-Gen Video AI Applications for Broadcasters, Content and Streaming Providers, and Operators",
+        "title": "Comcast Technology Solutions Unveils Next-Gen Video AI Applications for Broadcasters, Content and Streaming Providers, and Operators",
+        "titleAliases": [
+          "comcasttechnologysolutionsunveilsnextgenvideoaiapplicationsforbroadcasterscontentandstreamingprovidersandoperators"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-58ab2c8533299080f493",
+          "record-671c53f04f79308ad68b",
+          "src-3d7fa89141e614b578a8"
+        ],
+        "evidenceFingerprints": [
+          "58ab2c8533299080f493"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "Comcast Technology Solutions Unveils Next-Gen Video AI Applications for Broadcasters, Content and Streaming Providers, and Operators",
+            "url": "https://www.prnewswire.com/news-releases/comcast-technology-solutions-unveils-next-gen-video-ai-applications-for-broadcasters-content-and-streaming-providers-and-operators-302866174.html",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "8648486ca2f5470e6941",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T05:16:49+00:00",
+        "lastSeenAt": "2026-09-02T05:16:49+00:00",
+        "lastPublishedAt": "2026-09-02T05:16:49+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-6acebc5ac8382d1bd5d9": {
+        "eventId": "evt-6acebc5ac8382d1bd5d9",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-433badff25d00cc109",
+        "entityName": "Minimax成为内地投资者新宠 港股通买入规模超越阿里巴巴和腾讯",
+        "title": "Minimax成为内地投资者新宠 港股通买入规模超越阿里巴巴和腾讯",
+        "titleAliases": [
+          "minimax成为内地投资者新宠港股通买入规模超越阿里巴巴和腾讯"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产业投资",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-367ab06b43255f21904e",
+          "record-2adf316136d1397a0572",
+          "src-1f83b53acd6273354cfc"
+        ],
+        "evidenceFingerprints": [
+          "367ab06b43255f21904e"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "Minimax成为内地投资者新宠 港股通买入规模超越阿里巴巴和腾讯",
+            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-02/doc-iniqkzme3061738.shtml",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "a95beddc762a33fd642b",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T05:16:49+00:00",
+        "lastSeenAt": "2026-09-02T05:16:49+00:00",
+        "lastPublishedAt": "2026-09-02T05:16:49+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-3b7d475c36a3a738f707": {
+        "eventId": "evt-3b7d475c36a3a738f707",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-84df9d987b2c40eb92",
+        "entityName": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
+        "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
+        "titleAliases": [
+          "真正能干活的机器人不到两成人形机器人量产元年迎来大考"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "company:catl",
+          "mention:宁德时代",
+          "mention:小鹏",
+          "mention:银河通用"
+        ],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-90204b224f661c03e393",
+          "record-44f41cf41ea3089fc678",
+          "src-aa4fa1c89949d229947a",
+          "record-1ef5939d607e99023f39",
+          "src-a136f4504626308b4d2f",
+          "record-d99f02dc6837da839bdb",
+          "src-6c7183b9d49c41e5a33f",
+          "record-45d8d423b763f95cc787",
+          "src-097a0737474b83c170d0",
+          "record-c6c71702dfc14c05d34e",
+          "src-57d41b4b56fd6a9a2f0f"
+        ],
+        "evidenceFingerprints": [
+          "90204b224f661c03e393"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "机器人与智能制造",
+            "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=9aQuL3BGUq2yNAlNo5wm2jRzzeI-wbtLfd3uQcZk6f%2AreFOCBGwWg9Hb-Sd3kVKQvwm-ha1UBvgMxxGuSvGsqwVnh9rknou9sCVYJNzayRKk-owoVTzPR4UwkfhpQ2WP&src=11&timestamp=1788264547&ver=6940",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "机器人与智能制造",
+            "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=9aQuL3BGUq2yNAlNo5wm2jRzzeI-wbtLfd3uQcZk6f8t91XWxV61hVccwcX3G%2AdTqcWabm4P9jP3K30XjRMhwEQaGLQQ4tRbwqxdP0-sBIZ2tRlz3LigfFhZWzmM-k07&src=11&timestamp=1788282125&ver=6940",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "机器人与智能制造",
+            "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=o1WhXUpDcTDrSwZQ54abFEjJcD4TgOmn6YMDnU5pbgb6HQPfMepugeRsQVe5Ve%2Atq5m2p1DSSSRSQ4xy9Shh%2AhnpaMMWWMKoNAFYIPaQi%2A7Ygtke7Y95rzG4a3tCTsQL&src=11&timestamp=1788296994&ver=6941",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "机器人与智能制造",
+            "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=o1WhXUpDcTDrSwZQ54abFEjJcD4TgOmn6YMDnU5pbgZOqvTsT2OYJ5PD1zJcfxm86FYhMEnRTc2qpIB9brRRs44GOVHipDdsalpd8z311OcdctH2dJCD2W7oeX1HsFlT&src=11&timestamp=1788309190&ver=6941",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          },
+          {
+            "sourceName": "机器人与智能制造",
+            "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=o1WhXUpDcTDrSwZQ54abFEjJcD4TgOmn6YMDnU5pbgYwbCaUxpzELX1ppxokZZ8JAc4SH7Siynpk0cpAjg6B3qVYcSa5np3K771J9k6KBth7MS9xWEL77jHNJXepXW4x&src=11&timestamp=1788325179&ver=6941",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "751d6c02190b8129a812",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-01T12:24:14+00:00",
+        "lastSeenAt": "2026-09-02T05:16:49+00:00",
+        "lastPublishedAt": "2026-09-01T12:24:14+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-1f265d18c42e2c237307": {
+        "eventId": "evt-1f265d18c42e2c237307",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-a9284fd7e34ac05542",
+        "entityName": "OpenAI计划发布AI新模型 并对网络安全功能的使用设限",
+        "title": "OpenAI计划发布AI新模型 并对网络安全功能的使用设限",
+        "titleAliases": [
+          "openai计划发布ai新模型并对网络安全功能的使用设限"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [
+          "company:openai"
+        ],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-efb452917fa05de32d38",
+          "record-69f5a039278d21c3f828",
+          "src-8b5e7edbd569e7a8505a"
+        ],
+        "evidenceFingerprints": [
+          "efb452917fa05de32d38"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "OpenAI计划发布AI新模型 并对网络安全功能的使用设限",
+            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-02/doc-iniqkzky4616763.shtml",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "625541aac9b110095078",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T05:16:49+00:00",
+        "lastSeenAt": "2026-09-02T05:16:49+00:00",
+        "lastPublishedAt": "2026-09-02T05:16:49+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-f05b162e3dfd60438ef0": {
         "eventId": "evt-f05b162e3dfd60438ef0",
         "dataset": "intelligenceEvent",
@@ -3676,93 +2169,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 4,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-3b7d475c36a3a738f707": {
-        "eventId": "evt-3b7d475c36a3a738f707",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-84df9d987b2c40eb92",
-        "entityName": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
-        "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
-        "titleAliases": [
-          "真正能干活的机器人不到两成人形机器人量产元年迎来大考"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [
-          "company:catl",
-          "mention:宁德时代",
-          "mention:小鹏",
-          "mention:银河通用"
-        ],
-        "typeKeys": [
-          "融资",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-90204b224f661c03e393",
-          "record-44f41cf41ea3089fc678",
-          "src-aa4fa1c89949d229947a",
-          "record-1ef5939d607e99023f39",
-          "src-a136f4504626308b4d2f",
-          "record-d99f02dc6837da839bdb",
-          "src-6c7183b9d49c41e5a33f",
-          "record-45d8d423b763f95cc787",
-          "src-097a0737474b83c170d0"
-        ],
-        "evidenceFingerprints": [
-          "90204b224f661c03e393"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "机器人与智能制造",
-            "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=9aQuL3BGUq2yNAlNo5wm2jRzzeI-wbtLfd3uQcZk6f%2AreFOCBGwWg9Hb-Sd3kVKQvwm-ha1UBvgMxxGuSvGsqwVnh9rknou9sCVYJNzayRKk-owoVTzPR4UwkfhpQ2WP&src=11&timestamp=1788264547&ver=6940",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "机器人与智能制造",
-            "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=9aQuL3BGUq2yNAlNo5wm2jRzzeI-wbtLfd3uQcZk6f8t91XWxV61hVccwcX3G%2AdTqcWabm4P9jP3K30XjRMhwEQaGLQQ4tRbwqxdP0-sBIZ2tRlz3LigfFhZWzmM-k07&src=11&timestamp=1788282125&ver=6940",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "机器人与智能制造",
-            "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=o1WhXUpDcTDrSwZQ54abFEjJcD4TgOmn6YMDnU5pbgb6HQPfMepugeRsQVe5Ve%2Atq5m2p1DSSSRSQ4xy9Shh%2AhnpaMMWWMKoNAFYIPaQi%2A7Ygtke7Y95rzG4a3tCTsQL&src=11&timestamp=1788296994&ver=6941",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "机器人与智能制造",
-            "title": "真正能干活的机器人不到两成 ， 人形机器人\"量产元年\"迎来大考",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=o1WhXUpDcTDrSwZQ54abFEjJcD4TgOmn6YMDnU5pbgZOqvTsT2OYJ5PD1zJcfxm86FYhMEnRTc2qpIB9brRRs44GOVHipDdsalpd8z311OcdctH2dJCD2W7oeX1HsFlT&src=11&timestamp=1788309190&ver=6941",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "751d6c02190b8129a812",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T12:24:14+00:00",
-        "lastSeenAt": "2026-09-02T00:59:29+00:00",
-        "lastPublishedAt": "2026-09-01T12:24:14+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -15981,13 +14387,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 19,
-    "reconfirmations": 11,
+    "newEvents": 3,
+    "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 3,
-    "observedEvents": 33,
+    "duplicatesSuppressed": 1,
+    "observedEvents": 4,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -17207,10 +15613,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-02",
-      "generatedAt": "2026-09-02T00:59:29+00:00",
+      "generatedAt": "2026-09-02T05:16:49+00:00",
       "runStatus": "model",
-      "changeCount": 34,
-      "executiveSummary": "本报告基于2026年9月1-2日证据包，覆盖AI模型、算力基础设施、资本市场等事件。主要发现：Anthropic发布Claude Fable 5.1/Mythos 5.1，Google DeepMind提升Gemini视频理解效率，Cerebras宣布在芬兰建设165MW AI数据中心，燧原科技启动科创板申购，AfterQuery据称成为YC最快独角兽（估值32亿美元）。同时TDS宣布放弃收购Array Digital Infrastructure公众股份，美股AI硬件股普跌。多数证据为官方披露或媒体报道，部分高估值事件证据等级较低，需进一步验证。",
+      "changeCount": 37,
+      "executiveSummary": "证据包包含三条2026年9月2日新增的高价值情报事件：Minimax成为港股通内地投资者上月最青睐港股，买入规模超越阿里巴巴和腾讯；OpenAI计划发布名为Astra的新AI模型，并对最尖端网络安全功能的使用设限；Comcast Technology Solutions推出基于VideoAI平台的新一代视频AI应用套件。三条事件均处于automated_unreviewed状态，其中两条来自新浪财经（证据等级C，佐证角色），一条来自PR Newswire（证据等级B，一手来源）。整体上，AI应用与资本流向仍是当前情报主线，但证据等级偏低，需后续更高等级来源验证。",
       "eventIds": [
         "evt-973f579139dc001e0d59",
         "evt-90802cef087749b92580",
@@ -17245,7 +15651,10 @@
         "evt-7c2170f93d8f8d98b344",
         "evt-6c417b83a693d3a492ab",
         "evt-af8b868734ebfa9c80d4",
-        "evt-a2b98717afa49c66e560"
+        "evt-a2b98717afa49c66e560",
+        "evt-6acebc5ac8382d1bd5d9",
+        "evt-1f265d18c42e2c237307",
+        "evt-7e29241456aac3a265ee"
       ],
       "eventStates": [
         {
@@ -17383,38 +15792,47 @@
         {
           "eventId": "evt-a2b98717afa49c66e560",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-6acebc5ac8382d1bd5d9",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-1f265d18c42e2c237307",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-7e29241456aac3a265ee",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 0,
       "candidateTotal": 1,
-      "auxiliaryLeadTotal": 33,
-      "rejectedTotal": 3,
+      "auxiliaryLeadTotal": 36,
+      "rejectedTotal": 4,
       "eventSummary": {
-        "newEvents": 34,
+        "newEvents": 37,
         "reconfirmations": 11,
         "updates": 0,
         "corrections": 0,
         "possibleConflicts": 0,
-        "duplicatesSuppressed": 5
+        "duplicatesSuppressed": 6
       }
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 35,
-    "eligibleCandidateCount": 33,
-    "rejectedCandidateCount": 2,
+    "candidateCount": 5,
+    "eligibleCandidateCount": 4,
+    "rejectedCandidateCount": 1,
     "rejectedByDataset": {
-      "marketCompany": 2
+      "intelligenceEvent": 1
     },
-    "evidenceCount": 74,
-    "supportingEvidenceCount": 33,
-    "rejectedEvidenceCount": 20,
-    "passedButUnboundEvidenceCount": 21,
+    "evidenceCount": 5,
+    "supportingEvidenceCount": 4,
+    "rejectedEvidenceCount": 1,
+    "passedButUnboundEvidenceCount": 0,
     "rejectionReasons": {
-      "missing_published_at": 20,
-      "missing_title": 20,
-      "ungraded": 20,
-      "missing_or_invalid_url": 3
+      "discovery_only": 1
     },
     "sourceClassificationWarnings": []
   },
