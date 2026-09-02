@@ -79,6 +79,79 @@ class MarketProfileEnrichmentTests(unittest.TestCase):
         self.assertIn("动力电池", cleaned["company"]["description"])
         self.assertIn("储能系统", cleaned["company"]["mainBusiness"])
 
+    def test_inconsistent_provider_ohlc_is_dropped_without_price_rewrite(self):
+        profile = {
+            "status": "ok",
+            "priceHistory": [
+                {
+                    "date": "2026-09-01",
+                    "open": 37.86,
+                    "close": 37.78,
+                    "high": 39.25,
+                    "low": 37.59,
+                    "volume": 14_071_700,
+                },
+                {
+                    "date": "2026-09-02",
+                    "open": 38.0,
+                    "close": 38.5,
+                    "high": 38.4,
+                    "low": 37.8,
+                    "volume": 100,
+                },
+                {
+                    "date": "2026-09-03",
+                    "open": 39.0,
+                    "close": 39.2,
+                    "high": 39.5,
+                    "low": 39.1,
+                    "volume": 200,
+                },
+            ],
+            "warnings": [],
+        }
+
+        cleaned = enriched_runner.filter_inconsistent_price_history(profile)
+
+        self.assertEqual(
+            cleaned["priceHistory"],
+            [
+                {
+                    "date": "2026-09-01",
+                    "open": 37.86,
+                    "close": 37.78,
+                    "high": 39.25,
+                    "low": 37.59,
+                    "volume": 14_071_700,
+                }
+            ],
+        )
+        self.assertEqual(cleaned["status"], "partial")
+        self.assertTrue(
+            any(
+                "已过滤2条 OHLC 不一致或非数值日线" in warning
+                and "未改写任何价格字段" in warning
+                for warning in cleaned["warnings"]
+            )
+        )
+
+    def test_valid_ohlc_contract_matches_strict_snapshot_validator(self):
+        self.assertTrue(
+            enriched_runner.valid_ohlc_point(
+                {"open": 10, "close": 11, "high": 11, "low": 10}
+            )
+        )
+        self.assertFalse(
+            enriched_runner.valid_ohlc_point(
+                {"open": 10, "close": 11, "high": 10.99, "low": 10}
+            )
+        )
+        self.assertFalse(
+            enriched_runner.valid_ohlc_point(
+                {"open": 10, "close": 11, "high": 12, "low": "not-a-number"}
+            )
+        )
+
     def test_description_removes_award_tail_and_closes_sentence(self):
         raw = (
             "公司主营人工智能芯片研发、设计与销售，产品覆盖云端、边缘和终端设备。"
