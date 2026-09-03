@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-03T01:04:41+00:00",
+  "generatedAt": "2026-09-03T01:27:13+00:00",
   "asOfDate": "2026-09-03",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
@@ -12,277 +12,138 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 10346,
-      "completion_tokens": 5835,
-      "total_tokens": 16181,
+      "prompt_tokens": 2356,
+      "completion_tokens": 3191,
+      "total_tokens": 5547,
       "completion_tokens_details": {
-        "reasoning_tokens": 2918
+        "reasoning_tokens": 1929
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 10346
+      "prompt_cache_miss_tokens": 2356
     }
   },
   "changeSummary": {
-    "totalDetected": 50,
-    "total": 12,
+    "totalDetected": 12,
+    "total": 3,
     "byDataset": {
-      "intelligenceEvent": 10,
-      "marketCompany": 2
+      "institutionEvent": 3
     },
     "byChangeType": {
-      "external_event": 22,
-      "data_maintenance": 14,
-      "source_refresh": 14
+      "external_event": 12
     },
-    "externalCandidates": 22,
-    "qualityRejected": 0,
-    "maintenanceExcluded": 28,
+    "externalCandidates": 12,
+    "qualityRejected": 1,
+    "maintenanceExcluded": 0,
     "aggregatedEvents": 0,
-    "highestImportance": 84,
+    "highestImportance": 70,
     "verifiedChangeTotal": 0,
-    "candidateTotal": 2,
-    "auxiliaryLeadTotal": 10,
-    "rejectedTotal": 0,
-    "newEvents": 13,
-    "reconfirmations": 0,
+    "candidateTotal": 3,
+    "auxiliaryLeadTotal": 0,
+    "rejectedTotal": 1,
+    "newEvents": 3,
+    "reconfirmations": 5,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 10
+    "duplicatesSuppressed": 3
   },
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "证据包覆盖2026年9月2日至3日的12条新增或更新情报，集中在AI基础设施、自动驾驶、政策与产业链景气信号。高置信度事实包括：优步在伦敦率先推出商业化自动驾驶出租车服务并使用Wayve技术（E004）；三星电机签下1.07万亿韩元AI服务器MLCC长约（E010）；成都施行全国首个人工智能地方政府规章（E006）；寒武纪启动11个团队软件人才招聘（E005）。另有Broadcom与Cisco的AI工厂方案（E003）、SambaNova SN50 RDU（E009）、CrowdStrike与OpenAI扩大合作（E001）等生态信号。证据等级多为C级或媒体报道，且全部为automated_unreviewed，因此重大结论需后续验证。",
+    "executiveSummary": "本证据包新增三条外部事件记录：贵州年产20万吨锂电负极材料项目环评公示（总投资35.5亿元）、Apple MacBook Pro 16 2026评测（M5 Max性能强但电源不足）、Anthropic发布Claude Fable 5.1并声称设定新标准。三条证据均来自单一媒体来源，证据等级为C，且未经人工审核，仅可作为初步线索，不宜作为确定性事实或投资依据。 质量门诊断：证据未分级 1。",
     "keyDevelopments": [
       {
-        "title": "优步在伦敦率先推出商业化自动驾驶出租车服务",
-        "assessment": "事实：优步在伦敦推出当地首个商业化自动驾驶出租车服务，使用英国初创企业Wayve的技术，运营初期车内配备安全驾驶员。该事件显示自动驾驶商业化竞争从美国扩展到欧洲，且优步选择第三方技术路线而非自研。证据为单一C级媒体转载，具体运营规模、定价与监管条件未披露。",
-        "importance": 5,
-        "confidence": "medium",
+        "title": "贵州20万吨锂电负极材料项目环评公示",
+        "assessment": "据电池中国报道，贵州一总投资35.5亿元、年产20万吨锂电负极材料项目进行环评公示。该信息仅来自标题，未提供项目主体、具体地点、环评结论等细节，且证据等级为C，需进一步核实项目进展及实际影响。",
+        "importance": 3,
+        "confidence": "low",
         "entities": [
-          "优步",
-          "Waymo",
-          "Wayve"
+          "贵州锂电负极材料项目",
+          "电池中国"
         ],
         "evidenceIds": [
-          "E004"
+          "E002"
         ]
       },
       {
-        "title": "三星电机签下史上最大AI服务器MLCC长约",
-        "assessment": "事实：三星电机9月1日宣布与一家全球大型科技企业签署AI服务器用MLCC长期供货协议，金额1.0722万亿韩元（约合人民币近53亿元），供货期为2027年全年，占上一财年合并营收9.5%，为历史单笔最大。报道还提及8月1日涨价30%及行业供需偏紧。客户身份未披露，订单溢出与国产替代为机构观点而非事实。",
-        "importance": 4,
-        "confidence": "medium",
+        "title": "Apple MacBook Pro 16 2026评测：M5 Max性能强但电源不足",
+        "assessment": "Notebookcheck发布评测结论，称MacBook Pro 16 2026搭载的M5 Max性能强大，但电源供应不足。该结论为媒体评测观点，证据等级C，且标题未提供具体测试数据，需等待更多独立评测验证。",
+        "importance": 3,
+        "confidence": "low",
         "entities": [
-          "三星电机",
-          "MLCC产业链"
-        ],
-        "evidenceIds": [
-          "E010"
-        ]
-      },
-      {
-        "title": "全国首个人工智能地方政府规章在成都施行",
-        "assessment": "事实：《成都市促进人工智能产业发展办法》于9月1日正式施行，共六章三十六条，围绕科技创新、产业生态、要素配置、治理体系作出制度安排，明确推动新一代智能终端、具身智能、智能体等前沿领域发展。该事件反映地方层面AI产业政策加速落地，但具体财政支持与执行效果未披露。",
-        "importance": 4,
-        "confidence": "medium",
-        "entities": [
-          "成都市"
+          "Apple",
+          "MacBook Pro 16 2026",
+          "Notebookcheck"
         ],
         "evidenceIds": [
           "E006"
         ]
       },
       {
-        "title": "寒武纪大举招聘软件人才，拟搭建AI软件系统",
-        "assessment": "事实：寒武纪9月2日发布招聘公告，拟为11个团队招聘软件人才，覆盖驱动、编译器、高性能通信、计算库、深度学习框架及生态组件、推理与训练解决方案等团队。同日融资数据显示9月2日融资买入7.74亿元，融资余额177.78亿元，占流通市值2.55%，超过近一年60%分位。招聘动作指向从芯片向软件栈延伸，但招聘规模、岗位数量与战略投入金额未披露。",
+        "title": "Anthropic发布Claude Fable 5.1并声称设定新标准",
+        "assessment": "ITPro报道Anthropic称Claude Fable 5.1在编程、知识工作和长期问题解决任务上设定新标准。此为厂商声明，未经独立验证，证据等级C，需关注后续基准测试和用户反馈。",
         "importance": 4,
-        "confidence": "medium",
+        "confidence": "low",
         "entities": [
-          "寒武纪"
-        ],
-        "evidenceIds": [
-          "E005",
-          "E023"
-        ]
-      },
-      {
-        "title": "Broadcom与Cisco推出负载驱动的AI工厂部署方案",
-        "assessment": "事实：Broadcom与Cisco在VMware Explore相关报道中展示AI工厂部署与工作负载需求绑定，验证基础设施覆盖边缘推理和数据中心负载。该事件属于厂商方案发布，未披露客户采用量或收入影响。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "Broadcom",
-          "Cisco"
-        ],
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "title": "SambaNova在Hot Chips 2026披露SN50 RDU数据流架构",
-        "assessment": "事实：SambaNova发布Hot Chips 2026技术内容，介绍SN50 RDU如何将已安装带宽转化为智能体推理的token速度，采用数据流及scale-up/scale-out以太网。属于厂商技术披露，无第三方性能验证或客户部署数据。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "SambaNova Systems"
+          "Anthropic",
+          "Claude Fable 5.1",
+          "ITPro"
         ],
         "evidenceIds": [
           "E009"
-        ]
-      },
-      {
-        "title": "CrowdStrike与OpenAI扩大合作",
-        "assessment": "事实：钛媒体晨报标题提及CrowdStrike与OpenAI扩大合作，但证据包中仅有标题与摘要，未提供合作具体内容、范围或金额。该事件为低细节线索，需后续证据补充。",
-        "importance": 3,
-        "confidence": "low",
-        "entities": [
-          "CrowdStrike",
-          "OpenAI"
-        ],
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "title": "港股通买入Minimax规模超越阿里巴巴和腾讯",
-        "assessment": "事实：钛媒体晨报标题提及港股通买入Minimax规模超越阿里巴巴和腾讯，但证据包未提供具体金额、时间区间或对比口径。该事件为低细节线索，需后续证据补充。",
-        "importance": 3,
-        "confidence": "low",
-        "entities": [
-          "Minimax",
-          "阿里巴巴",
-          "腾讯"
-        ],
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "title": "宁德时代新增软件著作权及QFII新进持仓",
-        "assessment": "事实：宁德时代新注册《密封钉在线复测软件V1.0》等2个软件著作权；媒体报道QFII二季度现身1727只A股，新进宁德时代。两项均为低强度运营与资金面信息，不构成重大业务变化。",
-        "importance": 2,
-        "confidence": "medium",
-        "entities": [
-          "宁德时代"
-        ],
-        "evidenceIds": [
-          "E019",
-          "E020"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "自动驾驶出行服务",
-        "direction": "positive",
-        "statement": "优步在伦敦率先推出商业化自动驾驶出租车服务，采用Wayve技术并配备安全驾驶员，表明第三方技术+出行平台模式在欧洲落地，可能加速自动驾驶出行服务的跨区域复制；但运营初期仍有人类安全员，完全无人化程度有限。",
-        "evidenceIds": [
-          "E004"
-        ]
-      },
-      {
-        "entity": "AI服务器硬件产业链",
-        "direction": "positive",
-        "statement": "三星电机签下1.07万亿韩元AI服务器MLCC长约并叠加8月涨价30%，显示AI算力需求向被动元件环节传导，产业链景气信号增强；但客户身份未披露，长约金额对行业整体供需的指示意义有限。",
-        "evidenceIds": [
-          "E010"
-        ]
-      },
-      {
-        "entity": "寒武纪",
-        "direction": "positive",
-        "statement": "寒武纪为11个团队招聘软件人才，覆盖编译器、高性能通信、计算库、深度学习框架等，显示其从AI芯片向软件系统栈延伸的战略意图；融资余额处于近一年60%分位以上，市场关注度较高，但招聘公告本身不构成业绩承诺。",
-        "evidenceIds": [
-          "E005",
-          "E023"
-        ]
-      },
-      {
-        "entity": "AI基础设施厂商",
+        "entity": "锂电负极材料产业链",
         "direction": "mixed",
-        "statement": "Broadcom与Cisco推出负载驱动的AI工厂部署方案，SambaNova披露SN50 RDU数据流架构，显示AI基础设施竞争从单一芯片扩展到系统级部署与推理效率；但均为厂商自述，缺乏第三方验证。",
+        "statement": "贵州20万吨锂电负极材料项目环评公示显示行业扩产动向，但仅凭单一来源标题，无法确认项目主体、资金落实及环评结果，对产业链供需的实际影响待验证。",
         "evidenceIds": [
-          "E003",
-          "E009"
+          "E002"
         ]
       },
       {
-        "entity": "中国AI产业政策",
-        "direction": "positive",
-        "statement": "成都施行全国首个人工智能地方政府规章，明确推动智能终端、具身智能、智能体等前沿领域，显示地方政策对AI产业的支持力度提升；但政策执行效果和财政资源投入尚待观察。",
+        "entity": "Apple MacBook Pro 16 2026",
+        "direction": "mixed",
+        "statement": "评测显示M5 Max性能强大但电源供应不足，表明产品在性能与功耗平衡上存在争议，但该结论来自单一媒体，需更多测试确认。",
         "evidenceIds": [
           "E006"
         ]
       },
       {
-        "entity": "宁德时代",
-        "direction": "neutral",
-        "statement": "新增软件著作权与QFII新进持仓属于常规运营和资金面信息，未改变公司基本面判断。",
+        "entity": "Anthropic Claude Fable 5.1",
+        "direction": "positive",
+        "statement": "Anthropic声称Claude Fable 5.1在编程和知识工作方面设定新标准，若属实将提升AI模型能力预期，但当前仅为厂商声明，需独立验证。",
         "evidenceIds": [
-          "E019",
-          "E020"
+          "E009"
         ]
       }
     ],
     "watchlist": [
       {
-        "item": "优步伦敦自动驾驶出租车运营数据",
-        "reason": "当前仅有服务上线信息，缺少车队规模、定价、订单量、安全事件等运营数据，无法评估商业化进展质量。",
-        "nextEvidence": "优步或Wayve披露伦敦车队规模、周订单量、安全记录或下一城市扩张计划",
+        "item": "贵州锂电负极材料项目环评结果及投资方",
+        "reason": "当前仅有环评公示标题，缺少项目主体、地点、环评结论等关键信息，需后续公告确认。",
+        "nextEvidence": "项目环评批复文件或官方公告",
         "evidenceIds": [
-          "E004"
+          "E002"
         ]
       },
       {
-        "item": "三星电机MLCC长约客户身份及后续订单",
-        "reason": "客户未披露，长约对2027年营收的贡献和行业供需格局影响需要更多数据验证。",
-        "nextEvidence": "三星电机财报或供应链调研披露客户名称、其他厂商长约、MLCC价格走势",
-        "evidenceIds": [
-          "E010"
-        ]
-      },
-      {
-        "item": "寒武纪软件人才招聘落地与产品进展",
-        "reason": "招聘公告显示战略方向，但未披露招聘规模、薪酬投入和软件产品发布时间表。",
-        "nextEvidence": "寒武纪财报、招聘岗位数量变化或软件系统产品发布公告",
-        "evidenceIds": [
-          "E005",
-          "E023"
-        ]
-      },
-      {
-        "item": "CrowdStrike与OpenAI合作细节",
-        "reason": "证据包仅有标题线索，无合作范围、产品集成或商业条款信息。",
-        "nextEvidence": "双方官方公告或产品发布说明",
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "item": "港股通买入Minimax的具体规模",
-        "reason": "证据包仅有标题对比，缺少金额、时间区间和口径说明。",
-        "nextEvidence": "港交所披露的港股通持股数据或Minimax上市相关公告",
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "item": "成都AI产业办法执行效果",
-        "reason": "规章已施行，但配套资金、项目落地和企业反馈尚未披露。",
-        "nextEvidence": "成都市后续实施细则、AI产业项目签约或企业数量统计",
+        "item": "MacBook Pro 16 2026电源供应问题的具体测试数据",
+        "reason": "评测标题指出电源不足，但未提供详细数据，需更多独立评测或Apple官方回应。",
+        "nextEvidence": "完整评测文章或第三方功耗测试",
         "evidenceIds": [
           "E006"
         ]
       },
       {
-        "item": "SambaNova SN50 RDU第三方验证",
-        "reason": "Hot Chips披露为厂商自述，性能与部署效果需要独立测试或客户案例验证。",
-        "nextEvidence": "第三方基准测试、客户部署案例或后续技术白皮书",
+        "item": "Claude Fable 5.1的独立基准测试结果",
+        "reason": "Anthropic的声明需要第三方基准测试和用户实际体验验证。",
+        "nextEvidence": "独立评测机构或开发者社区的基准测试报告",
         "evidenceIds": [
           "E009"
         ]
@@ -290,178 +151,58 @@
     ],
     "risks": [
       {
-        "risk": "自动驾驶出租车安全与监管风险",
-        "reason": "优步伦敦服务运营初期仍配备安全驾驶员，说明全无人驾驶尚未获准；若发生安全事故或监管收紧，服务扩展可能受阻。",
+        "risk": "证据等级低且来源单一",
+        "reason": "三条证据均来自单一媒体（微信、Notebookcheck、ITPro），证据等级为C，且未经人工审核，可能包含不准确或夸大信息。",
         "evidenceIds": [
-          "E004"
-        ]
-      },
-      {
-        "risk": "MLCC景气判断依赖单一供应商事件",
-        "reason": "三星电机长约和涨价为单一媒体报道，客户身份未披露，若需求不及预期或客户调整订单，产业链景气判断可能被高估。",
-        "evidenceIds": [
-          "E010"
-        ]
-      },
-      {
-        "risk": "寒武纪软件战略执行不确定性",
-        "reason": "大规模软件人才招聘可能推高研发费用，且软件生态建设周期长，短期难以转化为收入；融资余额处于较高分位也意味着股价对资金面敏感。",
-        "evidenceIds": [
-          "E005",
-          "E023"
-        ]
-      },
-      {
-        "risk": "低等级证据被误读为确定性事实",
-        "reason": "本包多数证据为C级或媒体报道且未经人工复核，标题级线索（如CrowdStrike与OpenAI合作、港股通买入Minimax）缺乏细节，若直接作为投资依据存在失真风险。",
-        "evidenceIds": [
-          "E001",
-          "E004",
-          "E005",
+          "E002",
           "E006",
-          "E010"
+          "E009"
         ]
       },
       {
-        "risk": "AI基础设施厂商自述性能缺乏独立验证",
-        "reason": "Broadcom/Cisco与SambaNova的方案均为厂商发布，若实际部署性能与宣传不符，可能影响相关技术路线预期。",
+        "risk": "厂商声明与媒体标题可能夸大",
+        "reason": "Anthropic的声明和Notebookcheck的标题均可能带有营销或吸引点击性质，需独立验证。",
         "evidenceIds": [
-          "E003",
-          "E009"
+          "E009",
+          "E006"
+        ]
+      },
+      {
+        "risk": "环评公示不代表项目落地",
+        "reason": "环评公示仅为前期程序，项目可能因资金、审批、市场变化而调整或终止，不能视为确定投资。",
+        "evidenceIds": [
+          "E002"
         ]
       }
     ],
-    "methodologyNote": "本分析仅基于证据包中12条变更记录及其关联证据（E001-E010、E019、E020、E023），未引入外部事实。所有证据均通过质量门但处于automated_unreviewed状态，证据等级以C级和媒体报道为主，因此高重要性判断均标注为medium或low置信度。事实与推断已分开表述：事实仅陈述证据中明确记载的内容；推断标注为信号、显示、可能等措辞。未提供任何买入、卖出、目标价或收益承诺。"
+    "methodologyNote": "本分析仅基于证据包中三条新增事件记录，未补充外部事实。所有证据均为C级、单一来源、自动收录未人工复核，因此所有判断均以“待验证”为前提，不构成投资建议。输出中事实、推断与待验证事项已尽量区分，但受证据限制，多数内容属于初步线索。 数据管线提示：两小时公开情报刷新=stale。"
   },
   "changes": [
     {
-      "id": "chg-908e4b8e9aca4d4a844f",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-6b3b103970cca270f1",
-      "entityName": "【钛晨报】央行行长潘功胜出席G20财长和央行行长会议，强调继续实施好适度宽松的货币政策；CrowdStrike与OpenAI扩大合作；港股通买入Minimax规模超越阿里巴巴和腾讯",
+      "id": "chg-becd5b8031d2e3b54cb3",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-track-wechat-cbea-battery-energy-9f2b195f130d0ddd",
+      "entityName": "总投资35.5亿！贵州年产20万吨锂电负极材料项目环评公示 | 欢迎关注CBIS2026【电池材料革新与产业化实践】论坛",
       "action": "added",
       "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "publishedAt"
       ],
-      "summary": "新增高价值情报事件记录：【钛晨报】央行行长潘功胜出席G20财长和央行行长会议，强调继续实施好适度宽松的货币政策；CrowdStrike与OpenAI扩大合作；港股通买入Minimax规模超越阿里巴巴和腾讯。",
-      "importance": 84,
+      "summary": "新增机构/资本事件记录：总投资35.5亿！贵州年产20万吨锂电负极材料项目环评公示 | 欢迎关注CBIS2026【电池材料革新与产业化实践】论坛。",
+      "importance": 70,
       "before": null,
-      "after": {
-        "publishedAt": "2026-09-03",
-        "summary": "中国团队在自主超导量子计算机上实现新突破，传输效率高达98%；畅销书《富爸爸穷爸爸》作者自曝负债12亿美元；燧原科技：科创板IPO网上发行最终中签率0.02455315%；国家能源局召开新型电网建设工作部署会，加快输电通道等重大电网工程核准建设；Uber将裁减约3300个岗位，寻求精简管理层级；Kimi API已原生支持Codex和Claude Code",
-        "title": "【钛晨报】央行行长潘功胜出席G20财长和央行行长会议，强调继续实施好适度宽松的货币政策；CrowdStrike与OpenAI扩大合作；港股通买入Minimax规模超越阿里巴巴和腾讯"
-      },
+      "after": {},
       "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "classificationReason": "新增事件型记录",
       "isResearchCandidate": true,
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "publishedAt"
       ],
       "claimBindings": [
         {
           "field": "publishedAt",
           "before": null,
-          "after": "2026-09-03",
-          "evidenceIds": [
-            "E001"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "中国团队在自主超导量子计算机上实现新突破，传输效率高达98%；畅销书《富爸爸穷爸爸》作者自曝负债12亿美元；燧原科技：科创板IPO网上发行最终中签率0.02455315%；国家能源局召开新型电网建设工作部署会，加快输电通道等重大电网工程核准建设；Uber将裁减约3300个岗位，寻求精简管理层级；Kimi API已原生支持Codex和Claude Code",
-          "evidenceIds": [
-            "E001"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "【钛晨报】央行行长潘功胜出席G20财长和央行行长会议，强调继续实施好适度宽松的货币政策；CrowdStrike与OpenAI扩大合作；港股通买入Minimax规模超越阿里巴巴和腾讯",
-          "evidenceIds": [
-            "E001"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E001"
-      ],
-      "supportingEvidenceIds": [
-        "E001"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-fce8159606bad3318afa"
-      ],
-      "eventLifecycles": {
-        "evt-fce8159606bad3318afa": "first_seen"
-      },
-      "eventId": "evt-fce8159606bad3318afa",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T01:04:41+00:00",
-      "lastSeenAt": "2026-09-03T01:04:41+00:00"
-    },
-    {
-      "id": "chg-99decaa7f8b005c8293c",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-856e4d092be6e06124",
-      "entityName": "Gargle Expands Dental SEO Strategy to Help Dental Practices Get Found in AI Search",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Gargle Expands Dental SEO Strategy to Help Dental Practices Get Found in AI Search。",
-      "importance": 84,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-02",
-        "summary": "Integrated AEO and GEO strategies help dental practices remain visible as patients increasingly turn to AI tools and voice assistants for answers. LEHI, Utah, Sept. 2, 2026 /PRNewswire/ -- Gargle, Inc., a dental marketing agency, has expanded its SEO offering…",
-        "title": "Gargle Expands Dental SEO Strategy to Help Dental Practices Get Found in AI Search"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-02",
-          "evidenceIds": [
-            "E002"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Integrated AEO and GEO strategies help dental practices remain visible as patients increasingly turn to AI tools and voice assistants for answers. LEHI, Utah, Sept. 2, 2026 /PRNewswire/ -- Gargle, Inc., a dental marketing agency, has expanded its SEO offering…",
-          "evidenceIds": [
-            "E002"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Gargle Expands Dental SEO Strategy to Help Dental Practices Get Found in AI Search",
+          "after": null,
           "evidenceIds": [
             "E002"
           ]
@@ -478,306 +219,45 @@
         "supporting": 1,
         "total": 1
       },
-      "publicationTier": "external_clue",
+      "publicationTier": "candidate",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-cffd17d45849e98aa647"
+        "evt-80c15d32e9c8ac1b6278"
       ],
       "eventLifecycles": {
-        "evt-cffd17d45849e98aa647": "first_seen"
+        "evt-80c15d32e9c8ac1b6278": "first_seen"
       },
-      "eventId": "evt-cffd17d45849e98aa647",
+      "eventId": "evt-80c15d32e9c8ac1b6278",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T01:04:41+00:00",
-      "lastSeenAt": "2026-09-03T01:04:41+00:00"
+      "firstSeenAt": "2026-09-03T01:27:13+00:00",
+      "lastSeenAt": "2026-09-03T01:27:13+00:00"
     },
     {
-      "id": "chg-6147d625da96a47edc68",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-fa12bd2279b1709a1f",
-      "entityName": "Broadcom and Cisco make AI factory deployment workload-driven - SiliconANGLE",
+      "id": "chg-0876a95c7907a38f59de",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "professional-media-notebookcheck-0860e5e559c883b6",
+      "entityName": "Review verdict for the Apple MacBook Pro 16 2026 - Powerful M5 Max, insufficient PSU",
       "action": "added",
       "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "publishedAt"
       ],
-      "summary": "新增高价值情报事件记录：Broadcom and Cisco make AI factory deployment workload-driven - SiliconANGLE。",
-      "importance": 84,
+      "summary": "新增机构/资本事件记录：Review verdict for the Apple MacBook Pro 16 2026 - Powerful M5 Max, insufficient PSU。",
+      "importance": 70,
       "before": null,
-      "after": {
-        "publishedAt": "2026-09-02",
-        "summary": "Broadcom and Cisco make AI factory deployment workload-driven with validated infrastructure spanning edge inference and demanding data-center workloads.",
-        "title": "Broadcom and Cisco make AI factory deployment workload-driven - SiliconANGLE"
-      },
+      "after": {},
       "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "classificationReason": "新增事件型记录",
       "isResearchCandidate": true,
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "publishedAt"
       ],
       "claimBindings": [
         {
           "field": "publishedAt",
           "before": null,
-          "after": "2026-09-02",
-          "evidenceIds": [
-            "E003"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Broadcom and Cisco make AI factory deployment workload-driven with validated infrastructure spanning edge inference and demanding data-center workloads.",
-          "evidenceIds": [
-            "E003"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Broadcom and Cisco make AI factory deployment workload-driven - SiliconANGLE",
-          "evidenceIds": [
-            "E003"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E003"
-      ],
-      "supportingEvidenceIds": [
-        "E003"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-a08b810c3f3da655f67f"
-      ],
-      "eventLifecycles": {
-        "evt-a08b810c3f3da655f67f": "first_seen"
-      },
-      "eventId": "evt-a08b810c3f3da655f67f",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T01:04:41+00:00",
-      "lastSeenAt": "2026-09-03T01:04:41+00:00"
-    },
-    {
-      "id": "chg-37db0adcc15679802d65",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-12c8775f22866a010b",
-      "entityName": "优步在伦敦推出自动驾驶出租车服务，抢先Waymo一步",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：优步在伦敦推出自动驾驶出租车服务，抢先Waymo一步。",
-      "importance": 82,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-03",
-        "summary": "优步击败Waymo，率先在伦敦推出了当地首个商业化自动驾驶出租车服务。其车辆使用英国初创企业Wayve研发的自动驾驶技术，运营初期车内会配备安全驾驶员。",
-        "title": "优步在伦敦推出自动驾驶出租车服务，抢先Waymo一步"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-03",
-          "evidenceIds": [
-            "E004"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "优步击败Waymo，率先在伦敦推出了当地首个商业化自动驾驶出租车服务。其车辆使用英国初创企业Wayve研发的自动驾驶技术，运营初期车内会配备安全驾驶员。",
-          "evidenceIds": [
-            "E004"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "优步在伦敦推出自动驾驶出租车服务，抢先Waymo一步",
-          "evidenceIds": [
-            "E004"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E004"
-      ],
-      "supportingEvidenceIds": [
-        "E004"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-2398c25e83b0017dbb64"
-      ],
-      "eventLifecycles": {
-        "evt-2398c25e83b0017dbb64": "first_seen"
-      },
-      "eventId": "evt-2398c25e83b0017dbb64",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T01:04:41+00:00",
-      "lastSeenAt": "2026-09-03T01:04:41+00:00"
-    },
-    {
-      "id": "chg-655b7d2d21f76ec2093f",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-fdf948c6b4eda98d3d",
-      "entityName": "寒武纪放大招：大举招聘软件人才！释放哪些信号？",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：寒武纪放大招：大举招聘软件人才！释放哪些信号？。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-03",
-        "summary": "【导读】 寒武纪 拟为11个团队招聘相关软件人才 9月2日，“ AI芯片 第一股” 寒武纪 发布招聘公告，拟为11个团队招聘相关软件人才，以搭建领先的 人工智能 软件系统，其中包括驱动团队、编译器团队、高性能 通信 团队、计算库团队、深度学习框架及生态组件开发团队、推理与训练解决方案团队等。 作为集成电路领域的新兴方向， AI芯片 在集成电路和 人工智能 方面有着双重技术门槛，通用型 AI芯片 及其基础系统软件的研发，需要研发人员全面掌握核心芯片与系统软件的大量关键技术。要成为持续创新的智能时代领导者，芯片是坚实…",
-        "title": "寒武纪放大招：大举招聘软件人才！释放哪些信号？"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-03",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "【导读】 寒武纪 拟为11个团队招聘相关软件人才 9月2日，“ AI芯片 第一股” 寒武纪 发布招聘公告，拟为11个团队招聘相关软件人才，以搭建领先的 人工智能 软件系统，其中包括驱动团队、编译器团队、高性能 通信 团队、计算库团队、深度学习框架及生态组件开发团队、推理与训练解决方案团队等。 作为集成电路领域的新兴方向， AI芯片 在集成电路和 人工智能 方面有着双重技术门槛，通用型 AI芯片 及其基础系统软件的研发，需要研发人员全面掌握核心芯片与系统软件的大量关键技术。要成为持续创新的智能时代领导者，芯片是坚实…",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "寒武纪放大招：大举招聘软件人才！释放哪些信号？",
-          "evidenceIds": [
-            "E005"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E005"
-      ],
-      "supportingEvidenceIds": [
-        "E005"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-cdbb673272ed1f000816"
-      ],
-      "eventLifecycles": {
-        "evt-cdbb673272ed1f000816": "first_seen"
-      },
-      "eventId": "evt-cdbb673272ed1f000816",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T01:04:41+00:00",
-      "lastSeenAt": "2026-09-03T01:04:41+00:00"
-    },
-    {
-      "id": "chg-92d5984e43554e2718af",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-af3cfa1887360c1eba",
-      "entityName": "全国首个人工智能地方政府规章施行",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：全国首个人工智能地方政府规章施行。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-03",
-        "summary": "9月1日，全国首个 人工智能 地方政府规章——《成都市促进 人工智能 产业发展办法》（以下简称《办法》）正式施行。 据介绍，《办法》共六章三十六条，立足 人工智能 产业发展特点和成都市实际，重点围绕促进科技创新、构筑产业生态环境、优化要素资源配置、完善治理体系等方面作出制度安排，为促进成都人工智能产业发展保驾护航。 在科技创新与产业促进方面，《办法》明确要求推动新一代智能终端、具身智能、智能体等前沿领域高质量发展。围绕融合应用场景，《办法》按经济、生活、城市治理三大领域分条细化：推动人工智能与制造业、服务业、农业…",
-        "title": "全国首个人工智能地方政府规章施行"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-03",
-          "evidenceIds": [
-            "E006"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "9月1日，全国首个 人工智能 地方政府规章——《成都市促进 人工智能 产业发展办法》（以下简称《办法》）正式施行。 据介绍，《办法》共六章三十六条，立足 人工智能 产业发展特点和成都市实际，重点围绕促进科技创新、构筑产业生态环境、优化要素资源配置、完善治理体系等方面作出制度安排，为促进成都人工智能产业发展保驾护航。 在科技创新与产业促进方面，《办法》明确要求推动新一代智能终端、具身智能、智能体等前沿领域高质量发展。围绕融合应用场景，《办法》按经济、生活、城市治理三大领域分条细化：推动人工智能与制造业、服务业、农业…",
-          "evidenceIds": [
-            "E006"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "全国首个人工智能地方政府规章施行",
+          "after": null,
           "evidenceIds": [
             "E006"
           ]
@@ -794,227 +274,45 @@
         "supporting": 1,
         "total": 1
       },
-      "publicationTier": "external_clue",
+      "publicationTier": "candidate",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-ea6420abf18cfbeb285d"
+        "evt-9b55af5a6003a5322294"
       ],
       "eventLifecycles": {
-        "evt-ea6420abf18cfbeb285d": "first_seen"
+        "evt-9b55af5a6003a5322294": "first_seen"
       },
-      "eventId": "evt-ea6420abf18cfbeb285d",
+      "eventId": "evt-9b55af5a6003a5322294",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T01:04:41+00:00",
-      "lastSeenAt": "2026-09-03T01:04:41+00:00"
+      "firstSeenAt": "2026-09-03T01:27:13+00:00",
+      "lastSeenAt": "2026-09-03T01:27:13+00:00"
     },
     {
-      "id": "chg-2e6418587ba20e10410f",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-6d081f2d9b322d4cc7",
-      "entityName": "Why is fusion plasma pink?",
+      "id": "chg-2449b199b544dc2e22a7",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "professional-media-itpro-a5f15431bea7d706",
+      "entityName": "Anthropic says Claude Fable 5.1 ‘sets a new standard for coding, knowledge work, and long-running problem-solving tasks’",
       "action": "added",
       "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "publishedAt"
       ],
-      "summary": "新增高价值情报事件记录：Why is fusion plasma pink?。",
-      "importance": 80,
+      "summary": "新增机构/资本事件记录：Anthropic says Claude Fable 5.1 ‘sets a new standard for coding, knowledge work, and long-running problem-solving tasks’。",
+      "importance": 70,
       "before": null,
-      "after": {
-        "publishedAt": "2026-09-02",
-        "summary": "Why is fusion plasma pink? Learn what plasma is and how hydrogen fuel creates the distinctive fuchsia color seen in Helion's fusion machines.",
-        "title": "Why is fusion plasma pink?"
-      },
+      "after": {},
       "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "classificationReason": "新增事件型记录",
       "isResearchCandidate": true,
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "publishedAt"
       ],
       "claimBindings": [
         {
           "field": "publishedAt",
           "before": null,
-          "after": "2026-09-02",
-          "evidenceIds": [
-            "E007"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Why is fusion plasma pink? Learn what plasma is and how hydrogen fuel creates the distinctive fuchsia color seen in Helion's fusion machines.",
-          "evidenceIds": [
-            "E007"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Why is fusion plasma pink?",
-          "evidenceIds": [
-            "E007"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E007"
-      ],
-      "supportingEvidenceIds": [
-        "E007"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-8db817f209bd4082883b"
-      ],
-      "eventLifecycles": {
-        "evt-8db817f209bd4082883b": "first_seen"
-      },
-      "eventId": "evt-8db817f209bd4082883b",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T01:04:41+00:00",
-      "lastSeenAt": "2026-09-03T01:04:41+00:00"
-    },
-    {
-      "id": "chg-097541f81ad562d04904",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-aac2d112a88ed423e8",
-      "entityName": "Southern Company’s SCOUT: Completing the Storm Intelligence Story",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Southern Company’s SCOUT: Completing the Storm Intelligence Story。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-02",
-        "summary": "Learn how Southern Company built SCOUT on the Databricks Platform to deliver real-time storm intelligence and improve outage restoration decisions.",
-        "title": "Southern Company’s SCOUT: Completing the Storm Intelligence Story"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-02",
-          "evidenceIds": [
-            "E008"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Learn how Southern Company built SCOUT on the Databricks Platform to deliver real-time storm intelligence and improve outage restoration decisions.",
-          "evidenceIds": [
-            "E008"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Southern Company’s SCOUT: Completing the Storm Intelligence Story",
-          "evidenceIds": [
-            "E008"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E008"
-      ],
-      "supportingEvidenceIds": [
-        "E008"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-244943b7e4df1752a8a4"
-      ],
-      "eventLifecycles": {
-        "evt-244943b7e4df1752a8a4": "first_seen"
-      },
-      "eventId": "evt-244943b7e4df1752a8a4",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T01:04:41+00:00",
-      "lastSeenAt": "2026-09-03T01:04:41+00:00"
-    },
-    {
-      "id": "chg-f43c3f2e0f9993acfe61",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-08d5a026a4a55880da",
-      "entityName": "Hot Chips 2026: SN50 RDU Dataflow at Scale",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Hot Chips 2026: SN50 RDU Dataflow at Scale。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-02",
-        "summary": "How SambaNova's SN50 RDU turns installed bandwidth into token speed for agentic inference, using dataflow and scale-up and scale-out Ethernet.",
-        "title": "Hot Chips 2026: SN50 RDU Dataflow at Scale"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-02",
-          "evidenceIds": [
-            "E009"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "How SambaNova's SN50 RDU turns installed bandwidth into token speed for agentic inference, using dataflow and scale-up and scale-out Ethernet.",
-          "evidenceIds": [
-            "E009"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Hot Chips 2026: SN50 RDU Dataflow at Scale",
+          "after": null,
           "evidenceIds": [
             "E009"
           ]
@@ -1031,376 +329,37 @@
         "supporting": 1,
         "total": 1
       },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-55c42df46e3d1d2f1f78"
-      ],
-      "eventLifecycles": {
-        "evt-55c42df46e3d1d2f1f78": "first_seen"
-      },
-      "eventId": "evt-55c42df46e3d1d2f1f78",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T01:04:41+00:00",
-      "lastSeenAt": "2026-09-03T01:04:41+00:00"
-    },
-    {
-      "id": "chg-6c380dc560c5c993fa28",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-fe7c0dc4985eb4c841",
-      "entityName": "AI算力引爆MLCC需求 三星电机斩获史上最大长约 产业链景气或持续上行(附股)",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：AI算力引爆MLCC需求 三星电机斩获史上最大长约 产业链景气或持续上行(附股)。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-03",
-        "summary": "继8月1日涨价30%之后，三星电机签下约1.07万亿韩元AI服务器 MLCC 长约，创历史单笔金额纪录。行业供需偏紧叠加涨价潮， MLCC 赛道景气向好，有机构建议关注订单溢出和国产替代。 9月1日，三星电机宣布，公司与一家全球大型科技企业签署AI服务器用 MLCC 长期供货协议，合同金额1.0722万亿韩元（约合人民币近53亿元），供货期为2027年全年。 这是三星电机历史上单笔金额最大的MLCC长约，金额占公司上一财年合并营收的9.5%。自5月以来，其已接连签下多份AI服务器MLCC及硅电容长期协议，年内公开…",
-        "title": "AI算力引爆MLCC需求 三星电机斩获史上最大长约 产业链景气或持续上行(附股)"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-03",
-          "evidenceIds": [
-            "E010"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "继8月1日涨价30%之后，三星电机签下约1.07万亿韩元AI服务器 MLCC 长约，创历史单笔金额纪录。行业供需偏紧叠加涨价潮， MLCC 赛道景气向好，有机构建议关注订单溢出和国产替代。 9月1日，三星电机宣布，公司与一家全球大型科技企业签署AI服务器用 MLCC 长期供货协议，合同金额1.0722万亿韩元（约合人民币近53亿元），供货期为2027年全年。 这是三星电机历史上单笔金额最大的MLCC长约，金额占公司上一财年合并营收的9.5%。自5月以来，其已接连签下多份AI服务器MLCC及硅电容长期协议，年内公开…",
-          "evidenceIds": [
-            "E010"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "AI算力引爆MLCC需求 三星电机斩获史上最大长约 产业链景气或持续上行(附股)",
-          "evidenceIds": [
-            "E010"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E010"
-      ],
-      "supportingEvidenceIds": [
-        "E010"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-383e062e4ec85ded274a"
-      ],
-      "eventLifecycles": {
-        "evt-383e062e4ec85ded274a": "first_seen"
-      },
-      "eventId": "evt-383e062e4ec85ded274a",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T01:04:41+00:00",
-      "lastSeenAt": "2026-09-03T01:04:41+00:00"
-    },
-    {
-      "id": "chg-4d2b02562b2cbfc38e06",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "catl",
-      "entityName": "宁德时代",
-      "action": "updated",
-      "changedFields": [
-        "news"
-      ],
-      "summary": "宁德时代 的 news 发生变化。",
-      "importance": 48,
-      "before": {
-        "news": []
-      },
-      "after": {
-        "news": [
-          {
-            "publishedAt": "2026-09-03T02:16:00+08:00",
-            "source": "新浪财经",
-            "title": "宁德时代新注册《密封钉在线复测软件V1.0》等2个项目的软件著作权",
-            "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002ii4c"
-          },
-          {
-            "publishedAt": "2026-09-03T07:18:00+08:00",
-            "source": "新浪财经",
-            "title": "QFII二季度现身1727只A股：生益科技市值第一，新进宁德时代",
-            "url": "https://cj.sina.cn/articles/view/5044281310/12ca99fde02002kr2k"
-          }
-        ]
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "news"
-      ],
-      "claimBindings": [
-        {
-          "field": "news",
-          "before": [],
-          "after": [
-            {
-              "publishedAt": "2026-09-03T02:16:00+08:00",
-              "source": "新浪财经",
-              "title": "宁德时代新注册《密封钉在线复测软件V1.0》等2个项目的软件著作权",
-              "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002ii4c"
-            },
-            {
-              "publishedAt": "2026-09-03T07:18:00+08:00",
-              "source": "新浪财经",
-              "title": "QFII二季度现身1727只A股：生益科技市值第一，新进宁德时代",
-              "url": "https://cj.sina.cn/articles/view/5044281310/12ca99fde02002kr2k"
-            }
-          ],
-          "evidenceIds": [
-            "E019",
-            "E020"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E019",
-        "E020"
-      ],
-      "supportingEvidenceIds": [
-        "E019",
-        "E020"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 2,
-        "total": 2
-      },
       "publicationTier": "candidate",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-2ebd87523cb27bcec533",
-        "evt-a94d3b32a70956d8224c"
+        "evt-157887d3a01322a18ff2"
       ],
       "eventLifecycles": {
-        "evt-2ebd87523cb27bcec533": "first_seen",
-        "evt-a94d3b32a70956d8224c": "first_seen"
+        "evt-157887d3a01322a18ff2": "first_seen"
       },
-      "lifecycle": "mixed",
-      "firstSeenAt": "2026-09-03T01:04:41+00:00",
-      "lastSeenAt": "2026-09-03T01:04:41+00:00"
-    },
-    {
-      "id": "chg-2d899e3987aed1f698ab",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "cambricon",
-      "entityName": "中科寒武纪科技股份有限公司",
-      "action": "updated",
-      "changedFields": [
-        "news"
-      ],
-      "summary": "中科寒武纪科技股份有限公司 的 news 发生变化。",
-      "importance": 48,
-      "before": {
-        "news": []
-      },
-      "after": {
-        "news": [
-          {
-            "publishedAt": "2026-09-03T08:17:00+08:00",
-            "source": "新浪财经",
-            "title": "寒武纪：9月2日获融资买入7.74亿元，融资余额177.78亿元占流通市值比例2.55%，超过近一年60%分位水平",
-            "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-09-03/doc-iniqnyae1118264.shtml"
-          }
-        ]
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "news"
-      ],
-      "claimBindings": [
-        {
-          "field": "news",
-          "before": [],
-          "after": [
-            {
-              "publishedAt": "2026-09-03T08:17:00+08:00",
-              "source": "新浪财经",
-              "title": "寒武纪：9月2日获融资买入7.74亿元，融资余额177.78亿元占流通市值比例2.55%，超过近一年60%分位水平",
-              "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-09-03/doc-iniqnyae1118264.shtml"
-            }
-          ],
-          "evidenceIds": [
-            "E023"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E023"
-      ],
-      "supportingEvidenceIds": [
-        "E023"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-da584486edbf4a93c95d"
-      ],
-      "eventLifecycles": {
-        "evt-da584486edbf4a93c95d": "first_seen"
-      },
-      "eventId": "evt-da584486edbf4a93c95d",
+      "eventId": "evt-157887d3a01322a18ff2",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T01:04:41+00:00",
-      "lastSeenAt": "2026-09-03T01:04:41+00:00"
+      "firstSeenAt": "2026-09-03T01:27:13+00:00",
+      "lastSeenAt": "2026-09-03T01:27:13+00:00"
     }
   ],
   "evidence": [
     {
-      "id": "E001",
-      "changeId": "chg-908e4b8e9aca4d4a844f",
-      "entityName": "【钛晨报】央行行长潘功胜出席G20财长和央行行长会议，强调继续实施好适度宽松的货币政策；CrowdStrike与OpenAI扩大合作；港股通买入Minimax规模超越阿里巴巴和腾讯",
-      "claim": "新增高价值情报事件记录：【钛晨报】央行行长潘功胜出席G20财长和央行行长会议，强调继续实施好适度宽松的货币政策；CrowdStrike与OpenAI扩大合作；港股通买入Minimax规模超越阿里巴巴和腾讯。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "钛媒体",
-      "title": "【钛晨报】央行行长潘功胜出席G20财长和央行行长会议，强调继续实施好适度宽松的货币政策；CrowdStrike与OpenAI扩大合作；港股通买入Minimax规模超越阿里巴巴和腾讯",
-      "url": "https://www.tmtpost.com/8126299.html",
-      "publishedAt": "2026-09-03",
-      "evidenceGrade": "C",
-      "platformName": "专业媒体",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
       "id": "E002",
-      "changeId": "chg-99decaa7f8b005c8293c",
-      "entityName": "Gargle Expands Dental SEO Strategy to Help Dental Practices Get Found in AI Search",
-      "claim": "新增高价值情报事件记录：Gargle Expands Dental SEO Strategy to Help Dental Practices Get Found in AI Search。",
-      "publicationTier": "external_clue",
+      "changeId": "chg-becd5b8031d2e3b54cb3",
+      "entityName": "总投资35.5亿！贵州年产20万吨锂电负极材料项目环评公示 | 欢迎关注CBIS2026【电池材料革新与产业化实践】论坛",
+      "claim": "新增机构/资本事件记录：总投资35.5亿！贵州年产20万吨锂电负极材料项目环评公示 | 欢迎关注CBIS2026【电池材料革新与产业化实践】论坛。",
+      "publicationTier": "candidate",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "PR Newswire Consumer Technology",
-      "title": "Gargle Expands Dental SEO Strategy to Help Dental Practices Get Found in AI Search",
-      "url": "https://www.prnewswire.com/news-releases/gargle-expands-dental-seo-strategy-to-help-dental-practices-get-found-in-ai-search-302868264.html",
-      "publishedAt": "2026-09-02",
-      "evidenceGrade": "B",
-      "platformName": "新闻稿",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E003",
-      "changeId": "chg-6147d625da96a47edc68",
-      "entityName": "Broadcom and Cisco make AI factory deployment workload-driven - SiliconANGLE",
-      "claim": "新增高价值情报事件记录：Broadcom and Cisco make AI factory deployment workload-driven - SiliconANGLE。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "SiliconANGLE",
-      "title": "Broadcom and Cisco make AI factory deployment workload-driven - SiliconANGLE",
-      "url": "https://siliconangle.com/2026/09/02/broadcom-and-cisco-tie-ai-factory-deployment-to-workload-needs-vmwareexplore",
-      "publishedAt": "2026-09-02",
+      "sourceName": "电池中国",
+      "title": "总投资35.5亿！贵州年产20万吨锂电负极材料项目环评公示 | 欢迎关注CBIS2026【电池材料革新与产业化实践】论坛",
+      "url": "https://mp.weixin.qq.com/s?new=1&signature=QPH5WE1-yFQcDlB5YuxNXj88fpKaJuZp9KlUpbboH3dyN5Dw7yf4kuk2gzvKMiCW3KxmaHQhqGO4Z41pb1jWbc-kjOpHWxif57s7zD%2AvntF3-4CcITm-2RUaG8UCD7Ms&src=11&timestamp=1788348559&ver=6942",
+      "publishedAt": "2026-09-01",
       "evidenceGrade": "C",
-      "platformName": "SiliconANGLE",
-      "sourceRole": "corroboration",
+      "platformName": "微信",
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E004",
-      "changeId": "chg-37db0adcc15679802d65",
-      "entityName": "优步在伦敦推出自动驾驶出租车服务，抢先Waymo一步",
-      "claim": "新增高价值情报事件记录：优步在伦敦推出自动驾驶出租车服务，抢先Waymo一步。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "优步在伦敦推出自动驾驶出租车服务，抢先Waymo一步",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-03/doc-iniqpeiy4234779.shtml",
-      "publishedAt": "2026-09-03",
-      "evidenceGrade": "C",
-      "platformName": "新浪",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E005",
-      "changeId": "chg-655b7d2d21f76ec2093f",
-      "entityName": "寒武纪放大招：大举招聘软件人才！释放哪些信号？",
-      "claim": "新增高价值情报事件记录：寒武纪放大招：大举招聘软件人才！释放哪些信号？。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "寒武纪放大招：大举招聘软件人才！释放哪些信号？",
-      "url": "https://finance.eastmoney.com/a/202609023863109970.html",
-      "publishedAt": "2026-09-03",
-      "evidenceGrade": "媒体报道",
-      "platformName": "东方财富",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "publishedAt"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
@@ -1409,67 +368,19 @@
     },
     {
       "id": "E006",
-      "changeId": "chg-92d5984e43554e2718af",
-      "entityName": "全国首个人工智能地方政府规章施行",
-      "claim": "新增高价值情报事件记录：全国首个人工智能地方政府规章施行。",
-      "publicationTier": "external_clue",
+      "changeId": "chg-0876a95c7907a38f59de",
+      "entityName": "Review verdict for the Apple MacBook Pro 16 2026 - Powerful M5 Max, insufficient PSU",
+      "claim": "新增机构/资本事件记录：Review verdict for the Apple MacBook Pro 16 2026 - Powerful M5 Max, insufficient PSU。",
+      "publicationTier": "candidate",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "全国首个人工智能地方政府规章施行",
-      "url": "https://finance.eastmoney.com/a/202609033863425189.html",
-      "publishedAt": "2026-09-03",
-      "evidenceGrade": "媒体报道",
-      "platformName": "东方财富",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E007",
-      "changeId": "chg-2e6418587ba20e10410f",
-      "entityName": "Why is fusion plasma pink?",
-      "claim": "新增高价值情报事件记录：Why is fusion plasma pink?。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Helion Energy",
-      "title": "Why is fusion plasma pink?",
-      "url": "https://www.helionenergy.com/blog/why-is-fusion-plasma-pink",
+      "sourceName": "Notebookcheck",
+      "title": "Review verdict for the Apple MacBook Pro 16 2026 - Powerful M5 Max, insufficient PSU",
+      "url": "https://www.notebookcheck.net/Review-verdict-for-the-Apple-MacBook-Pro-16-2026-Powerful-M5-Max-insufficient-PSU.1383794.0.html",
       "publishedAt": "2026-09-02",
-      "evidenceGrade": "官方披露",
-      "platformName": "官方网站",
+      "evidenceGrade": "C",
+      "platformName": "Notebookcheck",
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E008",
-      "changeId": "chg-097541f81ad562d04904",
-      "entityName": "Southern Company’s SCOUT: Completing the Storm Intelligence Story",
-      "claim": "新增高价值情报事件记录：Southern Company’s SCOUT: Completing the Storm Intelligence Story。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Databricks",
-      "title": "Southern Company’s SCOUT: Completing the Storm Intelligence Story",
-      "url": "https://www.databricks.com/blog/southern-companys-scout-completing-storm-intelligence-story",
-      "publishedAt": "2026-09-02",
-      "evidenceGrade": "官方披露",
-      "platformName": "官方网站",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "publishedAt"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
@@ -1478,106 +389,21 @@
     },
     {
       "id": "E009",
-      "changeId": "chg-f43c3f2e0f9993acfe61",
-      "entityName": "Hot Chips 2026: SN50 RDU Dataflow at Scale",
-      "claim": "新增高价值情报事件记录：Hot Chips 2026: SN50 RDU Dataflow at Scale。",
-      "publicationTier": "external_clue",
+      "changeId": "chg-2449b199b544dc2e22a7",
+      "entityName": "Anthropic says Claude Fable 5.1 ‘sets a new standard for coding, knowledge work, and long-running problem-solving tasks’",
+      "claim": "新增机构/资本事件记录：Anthropic says Claude Fable 5.1 ‘sets a new standard for coding, knowledge work, and long-running problem-solving tasks’。",
+      "publicationTier": "candidate",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "SambaNova Systems",
-      "title": "Hot Chips 2026: SN50 RDU Dataflow at Scale",
-      "url": "https://sambanova.ai/blog/hot-chips-2026-dataflow-at-scale",
+      "sourceName": "ITPro",
+      "title": "Anthropic says Claude Fable 5.1 ‘sets a new standard for coding, knowledge work, and long-running problem-solving tasks’",
+      "url": "https://www.itpro.com/technology/artificial-intelligence/anthropic-says-claude-fable-5-1-sets-a-new-standard-for-coding-knowledge-work-and-long-running-problem-solving-tasks",
       "publishedAt": "2026-09-02",
-      "evidenceGrade": "官方披露",
-      "platformName": "官方网站",
+      "evidenceGrade": "C",
+      "platformName": "ITPro",
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "publishedAt"
       ],
       "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E010",
-      "changeId": "chg-6c380dc560c5c993fa28",
-      "entityName": "AI算力引爆MLCC需求 三星电机斩获史上最大长约 产业链景气或持续上行(附股)",
-      "claim": "新增高价值情报事件记录：AI算力引爆MLCC需求 三星电机斩获史上最大长约 产业链景气或持续上行(附股)。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "AI算力引爆MLCC需求 三星电机斩获史上最大长约 产业链景气或持续上行(附股)",
-      "url": "https://finance.eastmoney.com/a/202609033863294424.html",
-      "publishedAt": "2026-09-03",
-      "evidenceGrade": "媒体报道",
-      "platformName": "东方财富",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E019",
-      "changeId": "chg-4d2b02562b2cbfc38e06",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 的 news 发生变化。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "宁德时代新注册《密封钉在线复测软件V1.0》等2个项目的软件著作权",
-      "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002ii4c",
-      "publishedAt": "2026-09-03T02:16:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "entityMatchStatus": "matched",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E020",
-      "changeId": "chg-4d2b02562b2cbfc38e06",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 的 news 发生变化。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "QFII二季度现身1727只A股：生益科技市值第一，新进宁德时代",
-      "url": "https://cj.sina.cn/articles/view/5044281310/12ca99fde02002kr2k",
-      "publishedAt": "2026-09-03T07:18:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "entityMatchStatus": "matched",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E023",
-      "changeId": "chg-2d899e3987aed1f698ab",
-      "entityName": "中科寒武纪科技股份有限公司",
-      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "寒武纪：9月2日获融资买入7.74亿元，融资余额177.78亿元占流通市值比例2.55%，超过近一年60%分位水平",
-      "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-09-03/doc-iniqnyae1118264.shtml",
-      "publishedAt": "2026-09-03T08:17:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "entityMatchStatus": "matched",
       "qualityIssues": [],
       "qualityStatus": "passed",
       "supportStatus": "supports"
@@ -1585,7 +411,7 @@
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-03T01:04:41+00:00",
+    "generatedAt": "2026-09-03T01:27:13+00:00",
     "retentionDays": 180,
     "events": {
       "evt-fce8159606bad3318afa": {
@@ -1602,11 +428,14 @@
           "2026-09-03"
         ],
         "entityKeys": [
-          "company:openai"
+          "company:openai",
+          "institutionEvent:tmtpost-2a17b7f2240f5482",
+          "name:【钛晨报】央行行长潘功胜出席g20财长和央行行长会议,强调继续实施好适度宽松的货币政策;crowdstrike与openai扩大合作;港股通买入minimax规模超越阿里巴巴和腾讯"
         ],
         "typeKeys": [
           "商业进展",
-          "高价值情报事件"
+          "高价值情报事件",
+          "机构/资本事件"
         ],
         "numericCues": [
           "20"
@@ -1614,7 +443,8 @@
         "sourceAliases": [
           "evd-601b06b8a45aa8abfbd6",
           "record-c39ad39a005b7b2cbafb",
-          "src-3ac0d46582365d2e8631"
+          "src-3ac0d46582365d2e8631",
+          "record-0abb8df2954cae9f7c30"
         ],
         "evidenceFingerprints": [
           "601b06b8a45aa8abfbd6"
@@ -1625,19 +455,606 @@
             "title": "【钛晨报】央行行长潘功胜出席G20财长和央行行长会议，强调继续实施好适度宽松的货币政策；CrowdStrike与OpenAI扩大合作；港股通买入Minimax规模超越阿里巴巴和腾讯",
             "url": "https://www.tmtpost.com/8126299.html",
             "publishedAt": "2026-09-03",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
+            "evidenceGrade": "C"
           }
         ],
         "claimFingerprint": "5a3c93e25f42576638b1",
         "scalarClaims": {},
         "ipoStage": null,
         "firstSeenAt": "2026-09-03T01:04:41+00:00",
-        "lastSeenAt": "2026-09-03T01:04:41+00:00",
+        "lastSeenAt": "2026-09-03T01:27:13+00:00",
         "lastPublishedAt": "2026-09-03T01:04:41+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-f05b162e3dfd60438ef0": {
+        "eventId": "evt-f05b162e3dfd60438ef0",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-9bfb8020bc03bd5944",
+        "entityName": "世界动力电池大会即将举办 固态电池板块有望迎来全新催化",
+        "title": "世界动力电池大会即将举办 固态电池板块有望迎来全新催化",
+        "titleAliases": [
+          "世界动力电池大会即将举办固态电池板块有望迎来全新催化"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [
+          "company:catl",
+          "company:宁德时代",
+          "institutionEvent:official-user-东方财富-4490d001587f8daf",
+          "name:世界动力电池大会即将举办 固态电池板块有望迎来全新催化"
+        ],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件",
+          "机构/资本事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-a99a8887b0dd1be9ad2e",
+          "record-1bb987228ebed2f14c41",
+          "src-a46528d8338ed0b1db16",
+          "record-b7672441fd06c6223a1a"
+        ],
+        "evidenceFingerprints": [
+          "a99a8887b0dd1be9ad2e"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "东方财富",
+            "title": "世界动力电池大会即将举办 固态电池板块有望迎来全新催化",
+            "url": "https://finance.eastmoney.com/a/202609023862039837.html",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "c55b39fa7b7fa2702696",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastSeenAt": "2026-09-03T01:27:13+00:00",
+        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-c5319ae8a4c95b53c6b8": {
+        "eventId": "evt-c5319ae8a4c95b53c6b8",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-6c950b60c4e72132fa",
+        "entityName": "GoPro to expand into AI data centers after $285 million merger with optical-photonics company — move to solve camera maker’s financial woes, move manufacturing back into the US",
+        "title": "GoPro to expand into AI data centers after $285 million merger with optical-photonics company — move to solve camera maker’s financial woes, move manufacturing back into the US",
+        "titleAliases": [
+          "goprotoexpandintoaidatacentersafter285millionmergerwithopticalphotonicscompanymovetosolvecameramakersfinancialwoesmovemanufacturingbackintotheus"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [
+          "institutionEvent:professional-media-tom-s-hardware-8160d29bdf38c7b5",
+          "name:gopro to expand into ai data centers after $285 million merger with optical-photonics company — move to solve camera maker’s financial woes, move manufacturing back into the us"
+        ],
+        "typeKeys": [
+          "并购",
+          "高价值情报事件",
+          "机构/资本事件"
+        ],
+        "numericCues": [
+          "285"
+        ],
+        "sourceAliases": [
+          "evd-d02816fa730862e29527",
+          "record-ccb9c9dda7812fc29f19",
+          "src-c8bad169e40f25ade2b0",
+          "evd-25dc4ee2a441564b57e0",
+          "record-2b46042fc9fb80ea5321"
+        ],
+        "evidenceFingerprints": [
+          "d02816fa730862e29527",
+          "25dc4ee2a441564b57e0"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Tom's Hardware",
+            "title": "GoPro to expand into AI data centers after $285 million merger with optical-photonics company — move to solve camera maker’s financial woes, move manufacturing back into the US",
+            "url": "https://www.tomshardware.com/tech-industry/data-centers/gopro-to-expand-into-ai-data-centers-after-usd285-million-merger-with-optical-photonics-company-move-to-solve-camera-makers-financial-woes-move-manufacturing-back-into-the-us",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "960cf1f289c96e2ed93f",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T16:51:57+00:00",
+        "lastSeenAt": "2026-09-03T01:27:13+00:00",
+        "lastPublishedAt": "2026-09-02T16:51:57+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-c516f5ed1014ba299b32": {
+        "eventId": "evt-c516f5ed1014ba299b32",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-2bd0bceb74d8658b37",
+        "entityName": "腾讯WorkBuddy开放平台上线：首批超百家伙伴入局 国内首个同时打通软硬件、开发者三层生态的Agent基座",
+        "title": "腾讯WorkBuddy开放平台上线：首批超百家伙伴入局 国内首个同时打通软硬件、开发者三层生态的Agent基座",
+        "titleAliases": [
+          "腾讯workbuddy开放平台上线首批超百家伙伴入局国内首个同时打通软硬件开发者三层生态的agent基座"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [
+          "institutionEvent:leiphone-f5a1edae0e311d66",
+          "name:腾讯workbuddy开放平台上线:首批超百家伙伴入局 国内首个同时打通软硬件、开发者三层生态的agent基座"
+        ],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件",
+          "机构/资本事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-2dc24bf80a09cbdc8b6f",
+          "record-6fbceab409bd977d6404",
+          "src-0ff387ed167e210d933c",
+          "evd-267f10bf702200cb12eb",
+          "record-d6fb9fa661353e5632e2"
+        ],
+        "evidenceFingerprints": [
+          "2dc24bf80a09cbdc8b6f",
+          "267f10bf702200cb12eb"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "腾讯WorkBuddy开放平台上线：首批超百家伙伴入局 国内首个同时打通软硬件、开发者三层生态的Agent基座",
+            "url": "https://www.leiphone.com/category/industrynews/3BBOm1CluS1kcwFf.html",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "a3dfd45e54f9718b90fe",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T10:01:01+00:00",
+        "lastSeenAt": "2026-09-03T01:27:13+00:00",
+        "lastPublishedAt": "2026-09-02T10:01:01+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-9b55af5a6003a5322294": {
+        "eventId": "evt-9b55af5a6003a5322294",
+        "dataset": "institutionEvent",
+        "entityId": "professional-media-notebookcheck-0860e5e559c883b6",
+        "entityName": "Review verdict for the Apple MacBook Pro 16 2026 - Powerful M5 Max, insufficient PSU",
+        "title": "Review verdict for the Apple MacBook Pro 16 2026 - Powerful M5 Max, insufficient PSU",
+        "titleAliases": [
+          "reviewverdictfortheapplemacbookpro162026powerfulm5maxinsufficientpsu"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [
+          "institutionEvent:professional-media-notebookcheck-0860e5e559c883b6",
+          "name:review verdict for the apple macbook pro 16 2026 - powerful m5 max, insufficient psu"
+        ],
+        "typeKeys": [
+          "机构/资本事件"
+        ],
+        "numericCues": [
+          "16",
+          "5"
+        ],
+        "sourceAliases": [
+          "evd-8a2ea22b189787ee7ac7",
+          "record-361f113246e52e6a2671",
+          "src-4ced16c38cb3a22e3379"
+        ],
+        "evidenceFingerprints": [
+          "8a2ea22b189787ee7ac7"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Notebookcheck",
+            "title": "Review verdict for the Apple MacBook Pro 16 2026 - Powerful M5 Max, insufficient PSU",
+            "url": "https://www.notebookcheck.net/Review-verdict-for-the-Apple-MacBook-Pro-16-2026-Powerful-M5-Max-insufficient-PSU.1383794.0.html",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "d39b4bf124c15938ffd0",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T01:27:13+00:00",
+        "lastSeenAt": "2026-09-03T01:27:13+00:00",
+        "lastPublishedAt": "2026-09-03T01:27:13+00:00",
         "lastLifecycle": "first_seen",
         "observationCount": 1,
         "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-80c15d32e9c8ac1b6278": {
+        "eventId": "evt-80c15d32e9c8ac1b6278",
+        "dataset": "institutionEvent",
+        "entityId": "user-track-wechat-cbea-battery-energy-9f2b195f130d0ddd",
+        "entityName": "总投资35.5亿！贵州年产20万吨锂电负极材料项目环评公示 | 欢迎关注CBIS2026【电池材料革新与产业化实践】论坛",
+        "title": "总投资35.5亿！贵州年产20万吨锂电负极材料项目环评公示 | 欢迎关注CBIS2026【电池材料革新与产业化实践】论坛",
+        "titleAliases": [
+          "总投资355亿贵州年产20万吨锂电负极材料项目环评公示"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "institutionEvent:user-track-wechat-cbea-battery-energy-9f2b195f130d0ddd",
+          "name:总投资35.5亿!贵州年产20万吨锂电负极材料项目环评公示 | 欢迎关注cbis2026【电池材料革新与产业化实践】论坛"
+        ],
+        "typeKeys": [
+          "机构/资本事件"
+        ],
+        "numericCues": [
+          "20",
+          "35.5"
+        ],
+        "sourceAliases": [
+          "evd-cf0c4e84684a72f88bbd",
+          "record-659033708854a766ff96",
+          "src-95cea5d6c5506d95c924"
+        ],
+        "evidenceFingerprints": [
+          "cf0c4e84684a72f88bbd"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "电池中国",
+            "title": "总投资35.5亿！贵州年产20万吨锂电负极材料项目环评公示 | 欢迎关注CBIS2026【电池材料革新与产业化实践】论坛",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=QPH5WE1-yFQcDlB5YuxNXj88fpKaJuZp9KlUpbboH3dyN5Dw7yf4kuk2gzvKMiCW3KxmaHQhqGO4Z41pb1jWbc-kjOpHWxif57s7zD%2AvntF3-4CcITm-2RUaG8UCD7Ms&src=11&timestamp=1788348559&ver=6942",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "ab23e5316d657af6a3b6",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T01:27:13+00:00",
+        "lastSeenAt": "2026-09-03T01:27:13+00:00",
+        "lastPublishedAt": "2026-09-03T01:27:13+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-4ec9107927e4e1de9e08": {
+        "eventId": "evt-4ec9107927e4e1de9e08",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-9d7ec873acabb1e353",
+        "entityName": "8月新材料融资事件盘点：半导体与电子材料、电池材料、高性能复材与合金、AI4M、合成生物与生物基材料",
+        "title": "8月新材料融资事件盘点：半导体与电子材料、电池材料、高性能复材与合金、AI4M、合成生物与生物基材料",
+        "titleAliases": [
+          "8月新材料融资事件盘点半导体与电子材料电池材料高性能复材与合金ai4m合成生物与生物基材料"
+        ],
+        "publishedDate": "2026-08-30",
+        "publishedDates": [
+          "2026-08-30"
+        ],
+        "entityKeys": [
+          "company:catl",
+          "company:宁德时代",
+          "mention:中际旭创",
+          "mention:北航",
+          "mention:宁德时代",
+          "mention:王锦山",
+          "mention:联想",
+          "institutionEvent:user-track-wechat-materials-921ad7929b2962c2",
+          "name:8月新材料融资事件盘点:半导体与电子材料、电池材料、高性能复材与合金、ai4m、合成生物与生物基材料"
+        ],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件",
+          "机构/资本事件"
+        ],
+        "numericCues": [
+          "4",
+          "8"
+        ],
+        "sourceAliases": [
+          "evd-62164853836f2b6bb679",
+          "record-e6a0cf2369230a114ef7",
+          "src-0d4f7cec60ec78545fad",
+          "record-8f15c755d0acb473ac9f"
+        ],
+        "evidenceFingerprints": [
+          "62164853836f2b6bb679"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "荆茂资本",
+            "title": "8月新材料融资事件盘点：半导体与电子材料、电池材料、高性能复材与合金、AI4M、合成生物与生物基材料",
+            "url": "https://mp.weixin.qq.com/s?src=11&timestamp=1788348589&ver=6942&signature=S1zAoovKk2Deu13gBErHrm8Pk-CLESYmfoq4V3x2S6DGw8YHB5ttj-jIDzGDws-l2BfBnf50HmHgLK2Lo%2AtARyGsXtd72JpsiH2UKGDQkkE8zbxo%2AzHcRSag7MnMqdBw&new=1",
+            "publishedAt": "2026-08-30",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "dd999303c6259f936818",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T13:45:07+00:00",
+        "lastSeenAt": "2026-09-03T01:27:13+00:00",
+        "lastPublishedAt": "2026-09-02T13:45:07+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-46d619d72faa849e82c5": {
+        "eventId": "evt-46d619d72faa849e82c5",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-40ac06930b083655c3",
+        "entityName": "The Designless Semiconductor Industry",
+        "title": "The Designless Semiconductor Industry",
+        "titleAliases": [
+          "thedesignlesssemiconductorindustry"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [
+          "institutionEvent:professional-media-electronics-weekly-c13c5ed65ec0c8a2",
+          "name:the designless semiconductor industry"
+        ],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件",
+          "机构/资本事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-dad2174454c9c10cf346",
+          "record-7ed1026f4a75f3d84c51",
+          "src-61817d2f90b65a7561f8",
+          "evd-198d1193c9a40390b068",
+          "record-ea970ca00207ba3be4aa"
+        ],
+        "evidenceFingerprints": [
+          "dad2174454c9c10cf346",
+          "198d1193c9a40390b068"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Electronics Weekly",
+            "title": "The Designless Semiconductor Industry",
+            "url": "https://www.electronicsweekly.com/news/business/the-designless-semiconductor-industry-2026-09",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "e9ae23ed4927c086e454",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T10:01:01+00:00",
+        "lastSeenAt": "2026-09-03T01:27:13+00:00",
+        "lastPublishedAt": "2026-09-02T10:01:01+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-31873f37bdd45ab7a46d": {
+        "eventId": "evt-31873f37bdd45ab7a46d",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-cdc7c0d2d88bfc5f2c",
+        "entityName": "Capacity Lands $54M Series E for AI Customer Experience Platform",
+        "title": "Capacity Lands $54M Series E for AI Customer Experience Platform",
+        "titleAliases": [
+          "capacitylands54mserieseforaicustomerexperienceplatform"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [
+          "institutionEvent:professional-media-cmswire-2e06ddd80e97c475",
+          "name:capacity lands $54m series e for ai customer experience platform"
+        ],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件",
+          "机构/资本事件"
+        ],
+        "numericCues": [
+          "54"
+        ],
+        "sourceAliases": [
+          "evd-530c96aea9befadcd5ef",
+          "record-5dd7258bec2d7a5e6076",
+          "src-92e12b997dc3df8a293b",
+          "evd-b7e3426d148c63d95427",
+          "record-054ff141900d23ab5f60"
+        ],
+        "evidenceFingerprints": [
+          "530c96aea9befadcd5ef",
+          "b7e3426d148c63d95427"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "CMSWire",
+            "title": "Capacity Lands $54M Series E for AI Customer Experience Platform",
+            "url": "https://www.cmswire.com/customer-experience/capacity-lands-54m-series-e-as-arr-tops-100m",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "491929c5d465bc576d39",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T16:51:57+00:00",
+        "lastSeenAt": "2026-09-03T01:27:13+00:00",
+        "lastPublishedAt": "2026-09-02T16:51:57+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-157887d3a01322a18ff2": {
+        "eventId": "evt-157887d3a01322a18ff2",
+        "dataset": "institutionEvent",
+        "entityId": "professional-media-itpro-a5f15431bea7d706",
+        "entityName": "Anthropic says Claude Fable 5.1 ‘sets a new standard for coding, knowledge work, and long-running problem-solving tasks’",
+        "title": "Anthropic says Claude Fable 5.1 ‘sets a new standard for coding, knowledge work, and long-running problem-solving tasks’",
+        "titleAliases": [
+          "anthropicsaysclaudefable51setsanewstandardforcodingknowledgeworkandlongrunningproblemsolvingtasks"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [
+          "company:anthropic",
+          "institutionEvent:professional-media-itpro-a5f15431bea7d706",
+          "name:anthropic says claude fable 5.1 ‘sets a new standard for coding, knowledge work, and long-running problem-solving tasks’"
+        ],
+        "typeKeys": [
+          "机构/资本事件"
+        ],
+        "numericCues": [
+          "5.1"
+        ],
+        "sourceAliases": [
+          "evd-9accf4b9e70f5dc6bd5e",
+          "record-06893de75eb672b9c055",
+          "src-8ad910f633f7dd14cec3"
+        ],
+        "evidenceFingerprints": [
+          "9accf4b9e70f5dc6bd5e"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "ITPro",
+            "title": "Anthropic says Claude Fable 5.1 ‘sets a new standard for coding, knowledge work, and long-running problem-solving tasks’",
+            "url": "https://www.itpro.com/technology/artificial-intelligence/anthropic-says-claude-fable-5-1-sets-a-new-standard-for-coding-knowledge-work-and-long-running-problem-solving-tasks",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "bee2a81eca8febad007c",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T01:27:13+00:00",
+        "lastSeenAt": "2026-09-03T01:27:13+00:00",
+        "lastPublishedAt": "2026-09-03T01:27:13+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-11a1ffa455911c67dcd3": {
+        "eventId": "evt-11a1ffa455911c67dcd3",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-ee074d72338d281fb2",
+        "entityName": "AfterQuery reportedly becomes Y Combinator’s fastest-ever unicorn, now valued at $3.2B",
+        "title": "AfterQuery reportedly becomes Y Combinator’s fastest-ever unicorn, now valued at $3.2B",
+        "titleAliases": [
+          "afterqueryreportedlybecomesycombinatorsfastesteverunicornnowvaluedat32b"
+        ],
+        "publishedDate": "2026-09-01",
+        "publishedDates": [
+          "2026-09-01"
+        ],
+        "entityKeys": [
+          "institutionEvent:techcrunch-venture-a7ffd5ff318654f5",
+          "name:afterquery reportedly becomes y combinator’s fastest-ever unicorn, now valued at $3.2b"
+        ],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件",
+          "机构/资本事件"
+        ],
+        "numericCues": [
+          "3.2"
+        ],
+        "sourceAliases": [
+          "evd-d93b3e1c3f562e900252",
+          "record-c5b2114d94c15b58d736",
+          "src-00a8290c3ce081f25e91",
+          "evd-c44d12f71e7e1a48518d",
+          "record-752eaa7d310fe3ec4006"
+        ],
+        "evidenceFingerprints": [
+          "d93b3e1c3f562e900252",
+          "c44d12f71e7e1a48518d"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "TechCrunch Venture",
+            "title": "AfterQuery reportedly becomes Y Combinator’s fastest-ever unicorn, now valued at $3.2B",
+            "url": "https://techcrunch.com/2026/09/01/afterquery-reportedly-becomes-y-combinators-fastest-ever-unicorn-now-valued-at-3-2b",
+            "publishedAt": "2026-09-01",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "f68648ed224a87ddf53e",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-02T00:59:29+00:00",
+        "lastSeenAt": "2026-09-03T01:27:13+00:00",
+        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
         "bestEvidenceStrength": 2,
         "status": "active",
         "conflictStatus": "none",
@@ -3740,60 +3157,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-c5319ae8a4c95b53c6b8": {
-        "eventId": "evt-c5319ae8a4c95b53c6b8",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-6c950b60c4e72132fa",
-        "entityName": "GoPro to expand into AI data centers after $285 million merger with optical-photonics company — move to solve camera maker’s financial woes, move manufacturing back into the US",
-        "title": "GoPro to expand into AI data centers after $285 million merger with optical-photonics company — move to solve camera maker’s financial woes, move manufacturing back into the US",
-        "titleAliases": [
-          "goprotoexpandintoaidatacentersafter285millionmergerwithopticalphotonicscompanymovetosolvecameramakersfinancialwoesmovemanufacturingbackintotheus"
-        ],
-        "publishedDate": "2026-09-02",
-        "publishedDates": [
-          "2026-09-02"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "并购",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "285"
-        ],
-        "sourceAliases": [
-          "evd-d02816fa730862e29527",
-          "record-ccb9c9dda7812fc29f19",
-          "src-c8bad169e40f25ade2b0"
-        ],
-        "evidenceFingerprints": [
-          "d02816fa730862e29527"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Tom's Hardware",
-            "title": "GoPro to expand into AI data centers after $285 million merger with optical-photonics company — move to solve camera maker’s financial woes, move manufacturing back into the US",
-            "url": "https://www.tomshardware.com/tech-industry/data-centers/gopro-to-expand-into-ai-data-centers-after-usd285-million-merger-with-optical-photonics-company-move-to-solve-camera-makers-financial-woes-move-manufacturing-back-into-the-us",
-            "publishedAt": "2026-09-02",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "960cf1f289c96e2ed93f",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-02T16:51:57+00:00",
-        "lastSeenAt": "2026-09-02T16:51:57+00:00",
-        "lastPublishedAt": "2026-09-02T16:51:57+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-a3e49238c5aae05edad0": {
         "eventId": "evt-a3e49238c5aae05edad0",
         "dataset": "intelligenceEvent",
@@ -4056,60 +3419,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 4,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-31873f37bdd45ab7a46d": {
-        "eventId": "evt-31873f37bdd45ab7a46d",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-cdc7c0d2d88bfc5f2c",
-        "entityName": "Capacity Lands $54M Series E for AI Customer Experience Platform",
-        "title": "Capacity Lands $54M Series E for AI Customer Experience Platform",
-        "titleAliases": [
-          "capacitylands54mserieseforaicustomerexperienceplatform"
-        ],
-        "publishedDate": "2026-09-02",
-        "publishedDates": [
-          "2026-09-02"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "融资",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "54"
-        ],
-        "sourceAliases": [
-          "evd-530c96aea9befadcd5ef",
-          "record-5dd7258bec2d7a5e6076",
-          "src-92e12b997dc3df8a293b"
-        ],
-        "evidenceFingerprints": [
-          "530c96aea9befadcd5ef"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "CMSWire",
-            "title": "Capacity Lands $54M Series E for AI Customer Experience Platform",
-            "url": "https://www.cmswire.com/customer-experience/capacity-lands-54m-series-e-as-arr-tops-100m",
-            "publishedAt": "2026-09-02",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "491929c5d465bc576d39",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-02T16:51:57+00:00",
-        "lastSeenAt": "2026-09-02T16:51:57+00:00",
-        "lastPublishedAt": "2026-09-02T16:51:57+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -5362,69 +4671,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-4ec9107927e4e1de9e08": {
-        "eventId": "evt-4ec9107927e4e1de9e08",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-9d7ec873acabb1e353",
-        "entityName": "8月新材料融资事件盘点：半导体与电子材料、电池材料、高性能复材与合金、AI4M、合成生物与生物基材料",
-        "title": "8月新材料融资事件盘点：半导体与电子材料、电池材料、高性能复材与合金、AI4M、合成生物与生物基材料",
-        "titleAliases": [
-          "8月新材料融资事件盘点半导体与电子材料电池材料高性能复材与合金ai4m合成生物与生物基材料"
-        ],
-        "publishedDate": "2026-08-30",
-        "publishedDates": [
-          "2026-08-30"
-        ],
-        "entityKeys": [
-          "company:catl",
-          "company:宁德时代",
-          "mention:中际旭创",
-          "mention:北航",
-          "mention:宁德时代",
-          "mention:王锦山",
-          "mention:联想"
-        ],
-        "typeKeys": [
-          "融资",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "4",
-          "8"
-        ],
-        "sourceAliases": [
-          "evd-62164853836f2b6bb679",
-          "record-e6a0cf2369230a114ef7",
-          "src-0d4f7cec60ec78545fad"
-        ],
-        "evidenceFingerprints": [
-          "62164853836f2b6bb679"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "荆茂资本",
-            "title": "8月新材料融资事件盘点：半导体与电子材料、电池材料、高性能复材与合金、AI4M、合成生物与生物基材料",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=S1zAoovKk2Deu13gBErHrm8Pk-CLESYmfoq4V3x2S6DGw8YHB5ttj-jIDzGDws-l2BfBnf50HmHgLK2Lo%2AtARyGsXtd72JpsiH2UKGDQkkE8zbxo%2AzHcRSag7MnMqdBw&src=11&timestamp=1788348589&ver=6942",
-            "publishedAt": "2026-08-30",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "dd999303c6259f936818",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-02T13:45:07+00:00",
-        "lastSeenAt": "2026-09-02T13:45:07+00:00",
-        "lastPublishedAt": "2026-09-02T13:45:07+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-4c07afdaddc9bb4293c4": {
         "eventId": "evt-4c07afdaddc9bb4293c4",
         "dataset": "intelligenceEvent",
@@ -6226,58 +5472,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-c516f5ed1014ba299b32": {
-        "eventId": "evt-c516f5ed1014ba299b32",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-2bd0bceb74d8658b37",
-        "entityName": "腾讯WorkBuddy开放平台上线：首批超百家伙伴入局 国内首个同时打通软硬件、开发者三层生态的Agent基座",
-        "title": "腾讯WorkBuddy开放平台上线：首批超百家伙伴入局 国内首个同时打通软硬件、开发者三层生态的Agent基座",
-        "titleAliases": [
-          "腾讯workbuddy开放平台上线首批超百家伙伴入局国内首个同时打通软硬件开发者三层生态的agent基座"
-        ],
-        "publishedDate": "2026-09-02",
-        "publishedDates": [
-          "2026-09-02"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "产品发布",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-2dc24bf80a09cbdc8b6f",
-          "record-6fbceab409bd977d6404",
-          "src-0ff387ed167e210d933c"
-        ],
-        "evidenceFingerprints": [
-          "2dc24bf80a09cbdc8b6f"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "雷峰网",
-            "title": "腾讯WorkBuddy开放平台上线：首批超百家伙伴入局 国内首个同时打通软硬件、开发者三层生态的Agent基座",
-            "url": "https://www.leiphone.com/category/industrynews/3BBOm1CluS1kcwFf.html",
-            "publishedAt": "2026-09-02",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "a3dfd45e54f9718b90fe",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-02T10:01:01+00:00",
-        "lastSeenAt": "2026-09-02T10:01:01+00:00",
-        "lastPublishedAt": "2026-09-02T10:01:01+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-bedfda8426d0526f9c47": {
         "eventId": "evt-bedfda8426d0526f9c47",
         "dataset": "intelligenceEvent",
@@ -7017,58 +6211,6 @@
           }
         ],
         "claimFingerprint": "957b09793cdc2348793d",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-02T10:01:01+00:00",
-        "lastSeenAt": "2026-09-02T10:01:01+00:00",
-        "lastPublishedAt": "2026-09-02T10:01:01+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-46d619d72faa849e82c5": {
-        "eventId": "evt-46d619d72faa849e82c5",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-40ac06930b083655c3",
-        "entityName": "The Designless Semiconductor Industry",
-        "title": "The Designless Semiconductor Industry",
-        "titleAliases": [
-          "thedesignlesssemiconductorindustry"
-        ],
-        "publishedDate": "2026-09-02",
-        "publishedDates": [
-          "2026-09-02"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "融资",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-dad2174454c9c10cf346",
-          "record-7ed1026f4a75f3d84c51",
-          "src-61817d2f90b65a7561f8"
-        ],
-        "evidenceFingerprints": [
-          "dad2174454c9c10cf346"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Electronics Weekly",
-            "title": "The Designless Semiconductor Industry",
-            "url": "https://www.electronicsweekly.com/news/business/the-designless-semiconductor-industry-2026-09",
-            "publishedAt": "2026-09-02",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "e9ae23ed4927c086e454",
         "scalarClaims": {},
         "ipoStage": null,
         "firstSeenAt": "2026-09-02T10:01:01+00:00",
@@ -7973,60 +7115,6 @@
         "firstSeenAt": "2026-09-02T05:16:49+00:00",
         "lastSeenAt": "2026-09-02T05:16:49+00:00",
         "lastPublishedAt": "2026-09-02T05:16:49+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-f05b162e3dfd60438ef0": {
-        "eventId": "evt-f05b162e3dfd60438ef0",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-9bfb8020bc03bd5944",
-        "entityName": "世界动力电池大会即将举办 固态电池板块有望迎来全新催化",
-        "title": "世界动力电池大会即将举办 固态电池板块有望迎来全新催化",
-        "titleAliases": [
-          "世界动力电池大会即将举办固态电池板块有望迎来全新催化"
-        ],
-        "publishedDate": "2026-09-02",
-        "publishedDates": [
-          "2026-09-02"
-        ],
-        "entityKeys": [
-          "company:catl",
-          "company:宁德时代"
-        ],
-        "typeKeys": [
-          "公司动态",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-a99a8887b0dd1be9ad2e",
-          "record-1bb987228ebed2f14c41",
-          "src-a46528d8338ed0b1db16"
-        ],
-        "evidenceFingerprints": [
-          "a99a8887b0dd1be9ad2e"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "东方财富",
-            "title": "世界动力电池大会即将举办 固态电池板块有望迎来全新催化",
-            "url": "https://finance.eastmoney.com/a/202609023862039837.html",
-            "publishedAt": "2026-09-02",
-            "evidenceGrade": "媒体报道"
-          }
-        ],
-        "claimFingerprint": "c55b39fa7b7fa2702696",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-02T00:59:29+00:00",
-        "lastSeenAt": "2026-09-02T00:59:29+00:00",
-        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
         "lastLifecycle": "first_seen",
         "observationCount": 1,
         "confirmationCount": 0,
@@ -8967,60 +8055,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 4,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-11a1ffa455911c67dcd3": {
-        "eventId": "evt-11a1ffa455911c67dcd3",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-ee074d72338d281fb2",
-        "entityName": "AfterQuery reportedly becomes Y Combinator’s fastest-ever unicorn, now valued at $3.2B",
-        "title": "AfterQuery reportedly becomes Y Combinator’s fastest-ever unicorn, now valued at $3.2B",
-        "titleAliases": [
-          "afterqueryreportedlybecomesycombinatorsfastesteverunicornnowvaluedat32b"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "融资",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "3.2"
-        ],
-        "sourceAliases": [
-          "evd-d93b3e1c3f562e900252",
-          "record-c5b2114d94c15b58d736",
-          "src-00a8290c3ce081f25e91"
-        ],
-        "evidenceFingerprints": [
-          "d93b3e1c3f562e900252"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "TechCrunch Venture",
-            "title": "AfterQuery reportedly becomes Y Combinator’s fastest-ever unicorn, now valued at $3.2B",
-            "url": "https://techcrunch.com/2026/09/01/afterquery-reportedly-becomes-y-combinators-fastest-ever-unicorn-now-valued-at-3-2b",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "f68648ed224a87ddf53e",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-02T00:59:29+00:00",
-        "lastSeenAt": "2026-09-02T00:59:29+00:00",
-        "lastPublishedAt": "2026-09-02T00:59:29+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -20393,13 +19427,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 13,
-    "reconfirmations": 0,
+    "newEvents": 3,
+    "reconfirmations": 5,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 10,
-    "observedEvents": 23,
+    "duplicatesSuppressed": 3,
+    "observedEvents": 11,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -22108,10 +21142,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-03",
-      "generatedAt": "2026-09-03T01:04:41+00:00",
+      "generatedAt": "2026-09-03T01:27:13+00:00",
       "runStatus": "model",
-      "changeCount": 33,
-      "executiveSummary": "证据包覆盖2026年9月2日至3日的12条新增或更新情报，集中在AI基础设施、自动驾驶、政策与产业链景气信号。高置信度事实包括：优步在伦敦率先推出商业化自动驾驶出租车服务并使用Wayve技术（E004）；三星电机签下1.07万亿韩元AI服务器MLCC长约（E010）；成都施行全国首个人工智能地方政府规章（E006）；寒武纪启动11个团队软件人才招聘（E005）。另有Broadcom与Cisco的AI工厂方案（E003）、SambaNova SN50 RDU（E009）、CrowdStrike与OpenAI扩大合作（E001）等生态信号。证据等级多为C级或媒体报道，且全部为automated_unreviewed，因此重大结论需后续验证。",
+      "changeCount": 36,
+      "executiveSummary": "本证据包新增三条外部事件记录：贵州年产20万吨锂电负极材料项目环评公示（总投资35.5亿元）、Apple MacBook Pro 16 2026评测（M5 Max性能强但电源不足）、Anthropic发布Claude Fable 5.1并声称设定新标准。三条证据均来自单一媒体来源，证据等级为C，且未经人工审核，仅可作为初步线索，不宜作为确定性事实或投资依据。",
       "eventIds": [
         "evt-31873f37bdd45ab7a46d",
         "evt-a3e49238c5aae05edad0",
@@ -22145,7 +21179,10 @@
         "evt-383e062e4ec85ded274a",
         "evt-2ebd87523cb27bcec533",
         "evt-a94d3b32a70956d8224c",
-        "evt-da584486edbf4a93c95d"
+        "evt-da584486edbf4a93c95d",
+        "evt-80c15d32e9c8ac1b6278",
+        "evt-9b55af5a6003a5322294",
+        "evt-157887d3a01322a18ff2"
       ],
       "eventStates": [
         {
@@ -22279,35 +21316,47 @@
         {
           "eventId": "evt-da584486edbf4a93c95d",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-80c15d32e9c8ac1b6278",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-9b55af5a6003a5322294",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-157887d3a01322a18ff2",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 0,
-      "candidateTotal": 3,
+      "candidateTotal": 6,
       "auxiliaryLeadTotal": 29,
-      "rejectedTotal": 1,
+      "rejectedTotal": 2,
       "eventSummary": {
-        "newEvents": 33,
-        "reconfirmations": 0,
+        "newEvents": 36,
+        "reconfirmations": 5,
         "updates": 0,
         "corrections": 0,
         "possibleConflicts": 0,
-        "duplicatesSuppressed": 21
+        "duplicatesSuppressed": 24
       }
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 22,
-    "eligibleCandidateCount": 22,
-    "rejectedCandidateCount": 0,
-    "rejectedByDataset": {},
-    "evidenceCount": 58,
-    "supportingEvidenceCount": 23,
-    "rejectedEvidenceCount": 15,
-    "passedButUnboundEvidenceCount": 20,
+    "candidateCount": 12,
+    "eligibleCandidateCount": 11,
+    "rejectedCandidateCount": 1,
+    "rejectedByDataset": {
+      "institutionEvent": 1
+    },
+    "evidenceCount": 12,
+    "supportingEvidenceCount": 11,
+    "rejectedEvidenceCount": 1,
+    "passedButUnboundEvidenceCount": 0,
     "rejectionReasons": {
-      "missing_published_at": 15,
-      "missing_title": 7,
-      "ungraded": 7
+      "ungraded": 1
     },
     "sourceClassificationWarnings": []
   },
@@ -22339,9 +21388,16 @@
     }
   },
   "pipelineHealth": {
-    "overallStatus": "healthy",
-    "healthyJobs": 9,
+    "overallStatus": "stale",
+    "healthyJobs": 8,
     "jobCount": 9,
-    "issueJobs": []
+    "issueJobs": [
+      {
+        "jobId": "public-intelligence-frequent-refresh",
+        "name": "两小时公开情报刷新",
+        "status": "stale",
+        "lastCompletedAt": "2026-09-02T21:14:55Z"
+      }
+    ]
   }
 }
