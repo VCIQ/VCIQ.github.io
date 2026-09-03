@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-03T17:06:19+00:00",
+  "generatedAt": "2026-09-03T21:19:58+00:00",
   "asOfDate": "2026-09-04",
-  "runStatus": "no-material-change",
+  "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
   "baselineSource": "snapshot",
   "model": {
@@ -10,24 +10,41 @@
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": false,
-    "usage": {}
+    "used": true,
+    "usage": {
+      "prompt_tokens": 9233,
+      "completion_tokens": 8562,
+      "total_tokens": 17795,
+      "completion_tokens_details": {
+        "reasoning_tokens": 5969
+      },
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 9233
+    }
   },
   "changeSummary": {
-    "totalDetected": 0,
-    "total": 0,
-    "byDataset": {},
-    "byChangeType": {},
-    "externalCandidates": 0,
-    "qualityRejected": 0,
-    "maintenanceExcluded": 0,
+    "totalDetected": 16,
+    "total": 11,
+    "byDataset": {
+      "intelligenceEvent": 11
+    },
+    "byChangeType": {
+      "external_event": 12,
+      "data_maintenance": 4
+    },
+    "externalCandidates": 12,
+    "qualityRejected": 1,
+    "maintenanceExcluded": 4,
     "aggregatedEvents": 0,
-    "highestImportance": 0,
+    "highestImportance": 89,
     "verifiedChangeTotal": 0,
     "candidateTotal": 0,
-    "auxiliaryLeadTotal": 0,
-    "rejectedTotal": 0,
-    "newEvents": 0,
+    "auxiliaryLeadTotal": 11,
+    "rejectedTotal": 1,
+    "newEvents": 11,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
@@ -35,22 +52,2017 @@
     "duplicatesSuppressed": 0
   },
   "analysis": {
-    "mode": "structured-change-only",
-    "isResearchJudgment": false,
-    "executiveSummary": "本轮未检测到新的外部事实候选。",
-    "keyDevelopments": [],
-    "thesisUpdates": [],
-    "watchlist": [],
-    "risks": [],
-    "methodologyNote": "结构化变化检查；本期无材料变化。未执行生成式研判。"
+    "mode": "model-analysis",
+    "isResearchJudgment": true,
+    "executiveSummary": "证据包显示，2026年9月3日前后，AI基础设施与模型层发生多项高价值事件：英伟达宣布以约130亿美元收购Hugging Face（E001-E004），OpenAI发布GPT-6 Astra并终止与Cursor的合作（E008、E006），Crusoe与Jane Street签署约130亿美元AI云协议（E007），英伟达和联想分别发布端侧AI硬件（E010、E011），Google DeepMind发布WeatherNext 3（E012）。多数证据为C级且未经人工复核，结论应视为初步观察，交易细节与数据需以官方公告或财报为准。 质量门诊断：仅为发现线索，不能支持正式主张 1。",
+    "keyDevelopments": [
+      {
+        "title": "英伟达约130亿美元收购Hugging Face",
+        "assessment": "据多家媒体报道，英伟达同意以约130亿美元收购AI平台Hugging Face，交易包含最高10亿美元的股权留任计划（E001）。另有报道将金额表述为129.3亿美元（E004）。交易使英伟达获得主要AI模型分发平台，但引发平台开放性与中立性的疑问（E002、E003）。由于证据均为C级且未经人工复核，交易细节应以官方公告为准。",
+        "importance": 5,
+        "confidence": "medium",
+        "entities": [
+          "Nvidia",
+          "Hugging Face"
+        ],
+        "evidenceIds": [
+          "E001",
+          "E002",
+          "E003",
+          "E004"
+        ]
+      },
+      {
+        "title": "OpenAI发布GPT-6 Astra",
+        "assessment": "据新浪财经报道，OpenAI发布新一代技术GPT-6，定位为迈向AGI的关键里程碑，并已向Daybreak项目中的企业用户推出（E008）。该报道为单一C级来源，具体能力、可用范围及性能尚未独立验证。",
+        "importance": 4,
+        "confidence": "low",
+        "entities": [
+          "OpenAI"
+        ],
+        "evidenceIds": [
+          "E008"
+        ]
+      },
+      {
+        "title": "OpenAI终止与Cursor的合作",
+        "assessment": "据WIRED报道，OpenAI曾估计与Cursor的合作每年可带来超过10亿美元收入，但在SpaceX收购Cursor后仍选择终止合作（E006）。该消息为单一来源，且涉及未公开的商业决策，需进一步验证。",
+        "importance": 4,
+        "confidence": "low",
+        "entities": [
+          "OpenAI",
+          "Cursor",
+          "SpaceX",
+          "Elon Musk"
+        ],
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "title": "Crusoe与Jane Street签署约130亿美元AI云协议",
+        "assessment": "据知情人士透露，数据中心初创公司Crusoe与Jane Street签署了价值约130亿美元的云计算协议（E007）。该消息基于匿名信源，尚未获得公司官方确认。",
+        "importance": 4,
+        "confidence": "low",
+        "entities": [
+          "Crusoe",
+          "Jane Street"
+        ],
+        "evidenceIds": [
+          "E007"
+        ]
+      },
+      {
+        "title": "英伟达公布RTX Spark N1X十月发布计划",
+        "assessment": "据Tom's Hardware报道，英伟达将RTX Spark正式命名为N1X，计划10月在笔记本和台式机推出，配置包括18或20个CPU核心、5120或6144个CUDA核心，最高128GB统一内存（E010）。单一C级来源，具体规格和上市时间需官方确认。",
+        "importance": 3,
+        "confidence": "low",
+        "entities": [
+          "Nvidia"
+        ],
+        "evidenceIds": [
+          "E010"
+        ]
+      },
+      {
+        "title": "联想发布ThinkCentre M75s Gen 6台式机",
+        "assessment": "据Notebookcheck报道，联想全球发布ThinkCentre M75s Gen 6台式机，可选AMD Zen 5处理器，最高64GB DDR5内存、双PCIe Gen 5 SSD、PCIe显卡插槽，并配备50 TOPS NPU（E011）。单一C级来源，具体定价和供货信息未完整披露。",
+        "importance": 2,
+        "confidence": "low",
+        "entities": [
+          "Lenovo"
+        ],
+        "evidenceIds": [
+          "E011"
+        ]
+      },
+      {
+        "title": "Google DeepMind发布WeatherNext 3",
+        "assessment": "Google DeepMind官方发布WeatherNext 3，称其为最先进、最准确的全球天气AI模型（E012）。官方来源，证据等级B，但摘要未提供技术细节，性能声明需独立验证。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "Google DeepMind"
+        ],
+        "evidenceIds": [
+          "E012"
+        ]
+      },
+      {
+        "title": "中概3C巨头端侧AI叙事升温",
+        "assessment": "据钛媒体报道，联想AI服务器订单储备达540亿美元，百度GPU云连续四季度三位数增长，中国科技资产估值锚点正从流量/GMV转向AI硬件渗透率与毛利率（E005）。该文为媒体观点，数据未独立验证。",
+        "importance": 3,
+        "confidence": "low",
+        "entities": [
+          "联想",
+          "百度"
+        ],
+        "evidenceIds": [
+          "E005"
+        ]
+      }
+    ],
+    "thesisUpdates": [
+      {
+        "entity": "Nvidia",
+        "direction": "mixed",
+        "statement": "收购Hugging Face可强化英伟达在AI模型分发与生态层面的控制力，并可能获得模型采用趋势的洞察（E003）；但平台开放性与中立性存疑，且交易金额存在约130亿与129.3亿美元的报道差异（E001、E002、E004）。",
+        "evidenceIds": [
+          "E001",
+          "E002",
+          "E003",
+          "E004"
+        ]
+      },
+      {
+        "entity": "OpenAI",
+        "direction": "mixed",
+        "statement": "GPT-6发布标志产品代际推进（E008），但终止与Cursor的合作可能放弃每年超10亿美元的收入机会（E006），两者叠加使OpenAI的短期增长与战略自主性呈现混合信号。",
+        "evidenceIds": [
+          "E006",
+          "E008"
+        ]
+      },
+      {
+        "entity": "联想",
+        "direction": "positive",
+        "statement": "据钛媒体，联想AI服务器订单储备达540亿美元，叠加端侧AI硬件新品发布（E011），若数据属实，AI硬件渗透率提升可能改善其估值锚点（E005）。",
+        "evidenceIds": [
+          "E005",
+          "E011"
+        ]
+      },
+      {
+        "entity": "百度",
+        "direction": "positive",
+        "statement": "据钛媒体，百度GPU云连续四季度三位数增长，显示AI云业务动能强劲（E005），但该数据为媒体转述，需财报验证。",
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "entity": "Crusoe",
+        "direction": "positive",
+        "statement": "与Jane Street签署约130亿美元AI云协议（若属实）将显著扩大Crusoe的客户基础，此前其已与Meta、甲骨文签约（E007）。",
+        "evidenceIds": [
+          "E007"
+        ]
+      },
+      {
+        "entity": "Google DeepMind",
+        "direction": "neutral",
+        "statement": "WeatherNext 3发布是产品线更新，官方称最先进最准确（E012），但未提供独立性能验证，对Alphabet整体影响中性。",
+        "evidenceIds": [
+          "E012"
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "item": "英伟达-Hugging Face交易的监管审批与开放性承诺",
+        "reason": "交易金额重大且涉及开源平台，监管审查和社区反应可能影响最终完成与平台中立性（E001-E004）。",
+        "nextEvidence": "英伟达或Hugging Face官方公告、监管机构审批文件、平台治理政策更新",
+        "evidenceIds": [
+          "E001",
+          "E002",
+          "E003",
+          "E004"
+        ]
+      },
+      {
+        "item": "OpenAI GPT-6的正式发布范围与第三方评测",
+        "reason": "目前仅向Daybreak项目企业用户推出，具体能力与性能尚未独立验证（E008）。",
+        "nextEvidence": "OpenAI官方文档、API开放公告、独立基准测试",
+        "evidenceIds": [
+          "E008"
+        ]
+      },
+      {
+        "item": "OpenAI与Cursor/SpaceX关系的后续发展",
+        "reason": "终止合作可能引发收入影响、法律争议或战略调整（E006）。",
+        "nextEvidence": "OpenAI、SpaceX或Cursor的后续声明，以及行业报道",
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "item": "Crusoe-Jane Street协议的官方确认",
+        "reason": "目前为知情人士消息，金额和条款未获公司确认（E007）。",
+        "nextEvidence": "Crusoe或Jane Street的官方新闻稿、合同备案信息",
+        "evidenceIds": [
+          "E007"
+        ]
+      },
+      {
+        "item": "英伟达RTX Spark N1X十月实际发布与性能表现",
+        "reason": "产品规格和上市时间来自单一媒体报道，实际性能和市场接受度待观察（E010）。",
+        "nextEvidence": "英伟达官方发布、第三方评测、零售渠道信息",
+        "evidenceIds": [
+          "E010"
+        ]
+      },
+      {
+        "item": "联想与百度的AI业务财务数据验证",
+        "reason": "E005中的订单储备和云增长数据来自媒体文章，需财报或公司指引交叉验证。",
+        "nextEvidence": "联想、百度下一份财报或投资者材料",
+        "evidenceIds": [
+          "E005"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "证据质量风险：多数事件仅由C级、未经人工复核的单一来源支持",
+        "reason": "E001-E011中除E012外均为C级且automated_unreviewed，E006、E007、E008等为单一来源或匿名信源，存在误报或夸大可能。",
+        "evidenceIds": [
+          "E001",
+          "E006",
+          "E007",
+          "E008",
+          "E010",
+          "E011"
+        ]
+      },
+      {
+        "risk": "英伟达收购Hugging Face的开放性与生态风险",
+        "reason": "若Hugging Face在英伟达旗下失去中立性，开发者可能转向其他平台，削弱其作为模型分发中心的网络效应（E002、E003）。",
+        "evidenceIds": [
+          "E002",
+          "E003"
+        ]
+      },
+      {
+        "risk": "OpenAI商业关系风险",
+        "reason": "终止与Cursor的合作可能放弃每年超10亿美元的收入，并可能引发合同纠纷或对OpenAI决策独立性的质疑（E006）。",
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "risk": "交易与协议不确定性风险",
+        "reason": "英伟达收购金额报道存在约130亿与129.3亿美元差异（E001、E004），Crusoe协议尚未官方确认（E007），交易可能因监管或条款变化而调整。",
+        "evidenceIds": [
+          "E001",
+          "E004",
+          "E007"
+        ]
+      },
+      {
+        "risk": "中概股端侧AI叙事证伪风险",
+        "reason": "E005为媒体观点，所引用的订单储备和云增长数据未经公司财报验证，若实际数据不及预期，相关估值逻辑可能受挫。",
+        "evidenceIds": [
+          "E005"
+        ]
+      }
+    ],
+    "methodologyNote": "本分析仅基于证据包内提供的结构化证据，不补充外部事实。证据等级多为C级且reviewStatus为automated_unreviewed，因此所有判断均为初步观察，并在各条目中区分事实、推断与待验证事项。每个判断均引用至少一个evidenceIds中的证据编号。本输出不构成任何买入、卖出、目标价或收益承诺。"
   },
-  "changes": [],
-  "evidence": [],
+  "changes": [
+    {
+      "id": "chg-90e349fc8f27a2c43699",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-bd2c391fb71b60ded8",
+      "entityName": "英伟达斥资约130亿美元收购人工智能平台Hugging Face",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：英伟达斥资约130亿美元收购人工智能平台Hugging Face。",
+      "importance": 89,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "英伟达同意以约130亿美元收购人工智能初创公司Hugging Face。 交易价格中包括一项最高10亿美元的股权留任计划，用于留住加入英伟达的Hugging Face员工。",
+        "title": "英伟达斥资约130亿美元收购人工智能平台Hugging Face"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "英伟达同意以约130亿美元收购人工智能初创公司Hugging Face。 交易价格中包括一项最高10亿美元的股权留任计划，用于留住加入英伟达的Hugging Face员工。",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "英伟达斥资约130亿美元收购人工智能平台Hugging Face",
+          "evidenceIds": [
+            "E001"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E001"
+      ],
+      "supportingEvidenceIds": [
+        "E001"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-1cd03978532a2bd32fff"
+      ],
+      "eventLifecycles": {
+        "evt-1cd03978532a2bd32fff": "first_seen"
+      },
+      "eventId": "evt-1cd03978532a2bd32fff",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-03T21:19:58+00:00",
+      "lastSeenAt": "2026-09-03T21:19:58+00:00"
+    },
+    {
+      "id": "chg-7ddca310dbe4eb4b0844",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-22bc0871aa1ac71631",
+      "entityName": "What Nvidia’s $13B acquisition of Hugging Face means for AI model choice",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：What Nvidia’s $13B acquisition of Hugging Face means for AI model choice。",
+      "importance": 89,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "When Nvidia said Thursday that it plans to pay $13 billion to acquire Hugging Face, the question arose of whether the open AI platform would remain open when it becomes a unit of Nvidia. And the current lack of a single viable open alternative that does every…",
+        "title": "What Nvidia’s $13B acquisition of Hugging Face means for AI model choice"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "When Nvidia said Thursday that it plans to pay $13 billion to acquire Hugging Face, the question arose of whether the open AI platform would remain open when it becomes a unit of Nvidia. And the current lack of a single viable open alternative that does every…",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "What Nvidia’s $13B acquisition of Hugging Face means for AI model choice",
+          "evidenceIds": [
+            "E002"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E002"
+      ],
+      "supportingEvidenceIds": [
+        "E002"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-96427342f20a17a0f4bd"
+      ],
+      "eventLifecycles": {
+        "evt-96427342f20a17a0f4bd": "first_seen"
+      },
+      "eventId": "evt-96427342f20a17a0f4bd",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-03T21:19:58+00:00",
+      "lastSeenAt": "2026-09-03T21:19:58+00:00"
+    },
+    {
+      "id": "chg-ea3d05db871f15e4de8f",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-3ccba9a59d8908641f",
+      "entityName": "Open and Neutral? Nvidia Says Don't Worry About Its Hugging Face Acquisition",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Open and Neutral? Nvidia Says Don't Worry About Its Hugging Face Acquisition。",
+      "importance": 89,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "Still, Nvidia's Hugging Face deal could give it a competitive edge by providing the GPU maker with insight into which AI models are gaining traction, says one analyst.",
+        "title": "Open and Neutral? Nvidia Says Don't Worry About Its Hugging Face Acquisition"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Still, Nvidia's Hugging Face deal could give it a competitive edge by providing the GPU maker with insight into which AI models are gaining traction, says one analyst.",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Open and Neutral? Nvidia Says Don't Worry About Its Hugging Face Acquisition",
+          "evidenceIds": [
+            "E003"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E003"
+      ],
+      "supportingEvidenceIds": [
+        "E003"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-3c71031e479b3af224e0"
+      ],
+      "eventLifecycles": {
+        "evt-3c71031e479b3af224e0": "first_seen"
+      },
+      "eventId": "evt-3c71031e479b3af224e0",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-03T21:19:58+00:00",
+      "lastSeenAt": "2026-09-03T21:19:58+00:00"
+    },
+    {
+      "id": "chg-da1f63433e1cf28d61dd",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-4c1b1e1da3b019ce74",
+      "entityName": "Nvidia acquires Hugging Face for $12.93 billion — company gains control of major AI model distribution platform",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Nvidia acquires Hugging Face for $12.93 billion — company gains control of major AI model distribution platform。",
+      "importance": 89,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "Nvidia started its AI business with humble AI accelerators, then moved to AI servers, and later to rack-scale and data center-scale platforms. With its multi-faceted AI strategy in place, the company is now looking beyond hardware. On Thursday, Nvidia said it…",
+        "title": "Nvidia acquires Hugging Face for $12.93 billion — company gains control of major AI model distribution platform"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Nvidia started its AI business with humble AI accelerators, then moved to AI servers, and later to rack-scale and data center-scale platforms. With its multi-faceted AI strategy in place, the company is now looking beyond hardware. On Thursday, Nvidia said it…",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Nvidia acquires Hugging Face for $12.93 billion — company gains control of major AI model distribution platform",
+          "evidenceIds": [
+            "E004"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E004"
+      ],
+      "supportingEvidenceIds": [
+        "E004"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-4d0013166e6341585f6c"
+      ],
+      "eventLifecycles": {
+        "evt-4d0013166e6341585f6c": "first_seen"
+      },
+      "eventId": "evt-4d0013166e6341585f6c",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-03T21:19:58+00:00",
+      "lastSeenAt": "2026-09-03T21:19:58+00:00"
+    },
+    {
+      "id": "chg-a8f7b03e53112353ddaa",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-590838e8799838d091",
+      "entityName": "价值真相 · 财报季｜美股中概3C巨头的“端侧 AI”溢价：硬件更迭周期里的毛利真相",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：价值真相 · 财报季｜美股中概3C巨头的“端侧 AI”溢价：硬件更迭周期里的毛利真相。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "2026年，利润表正在改写估值坐标。当联想的AI服务器订单储备飙至540亿美元、百度的GPU云连续四季度三位数增长，中国科技资产的估值锚点正从“流量与GMV”转向“AI硬件渗透率与毛利率”。",
+        "title": "价值真相 · 财报季｜美股中概3C巨头的“端侧 AI”溢价：硬件更迭周期里的毛利真相"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "2026年，利润表正在改写估值坐标。当联想的AI服务器订单储备飙至540亿美元、百度的GPU云连续四季度三位数增长，中国科技资产的估值锚点正从“流量与GMV”转向“AI硬件渗透率与毛利率”。",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "价值真相 · 财报季｜美股中概3C巨头的“端侧 AI”溢价：硬件更迭周期里的毛利真相",
+          "evidenceIds": [
+            "E005"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E005"
+      ],
+      "supportingEvidenceIds": [
+        "E005"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-0b35412dc671522e101d"
+      ],
+      "eventLifecycles": {
+        "evt-0b35412dc671522e101d": "first_seen"
+      },
+      "eventId": "evt-0b35412dc671522e101d",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-03T21:19:58+00:00",
+      "lastSeenAt": "2026-09-03T21:19:58+00:00"
+    },
+    {
+      "id": "chg-af477291a7f11c925503",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-55785e63285cc9034f",
+      "entityName": "OpenAI Cut Off a Billion-Dollar Customer to Avoid Elon Musk",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：OpenAI Cut Off a Billion-Dollar Customer to Avoid Elon Musk。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "OpenAI recently estimated its Cursor partnership would make more than $1 billion in revenue a year, WIRED has learned. It still walked away after Elon Musk’s SpaceX acquired the AI coding startup.",
+        "title": "OpenAI Cut Off a Billion-Dollar Customer to Avoid Elon Musk"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "OpenAI recently estimated its Cursor partnership would make more than $1 billion in revenue a year, WIRED has learned. It still walked away after Elon Musk’s SpaceX acquired the AI coding startup.",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "OpenAI Cut Off a Billion-Dollar Customer to Avoid Elon Musk",
+          "evidenceIds": [
+            "E006"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E006"
+      ],
+      "supportingEvidenceIds": [
+        "E006"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-28f371d7bb731ff1f336"
+      ],
+      "eventLifecycles": {
+        "evt-28f371d7bb731ff1f336": "first_seen"
+      },
+      "eventId": "evt-28f371d7bb731ff1f336",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-03T21:19:58+00:00",
+      "lastSeenAt": "2026-09-03T21:19:58+00:00"
+    },
+    {
+      "id": "chg-17b8f0173becd20a2b47",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-4309f8679cc1f40834",
+      "entityName": "Crusoe据悉与Jane Street签署价值约130亿美元的AI云协议",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Crusoe据悉与Jane Street签署价值约130亿美元的AI云协议。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "据知情人士透露，数据中心初创公司Crusoe与量化交易公司Jane Street Group签署了一份价值约130亿美元的云计算协议。Crusoe此前已与Meta Platforms和甲骨文等公司签约...",
+        "title": "Crusoe据悉与Jane Street签署价值约130亿美元的AI云协议"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "据知情人士透露，数据中心初创公司Crusoe与量化交易公司Jane Street Group签署了一份价值约130亿美元的云计算协议。Crusoe此前已与Meta Platforms和甲骨文等公司签约...",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Crusoe据悉与Jane Street签署价值约130亿美元的AI云协议",
+          "evidenceIds": [
+            "E007"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E007"
+      ],
+      "supportingEvidenceIds": [
+        "E007"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-4b183930f5680715b747"
+      ],
+      "eventLifecycles": {
+        "evt-4b183930f5680715b747": "first_seen"
+      },
+      "eventId": "evt-4b183930f5680715b747",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-03T21:19:58+00:00",
+      "lastSeenAt": "2026-09-03T21:19:58+00:00"
+    },
+    {
+      "id": "chg-3eda305667d190f2b044",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-8d85fdb60ff14b2a7d",
+      "entityName": "OpenAI推出GPT-6 Astra 称其为迈向通用人工智能的重要里程碑",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：OpenAI推出GPT-6 Astra 称其为迈向通用人工智能的重要里程碑。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "OpenAI正在发布新一代技术GPT-6，并将其定位为公司十年来推动通用人工智能（AGI）发展取得的一个关键里程碑。 OpenAI周四表示，已向Daybreak项目中的企业用户推出GPT-6...",
+        "title": "OpenAI推出GPT-6 Astra 称其为迈向通用人工智能的重要里程碑"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "OpenAI正在发布新一代技术GPT-6，并将其定位为公司十年来推动通用人工智能（AGI）发展取得的一个关键里程碑。 OpenAI周四表示，已向Daybreak项目中的企业用户推出GPT-6...",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "OpenAI推出GPT-6 Astra 称其为迈向通用人工智能的重要里程碑",
+          "evidenceIds": [
+            "E008"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E008"
+      ],
+      "supportingEvidenceIds": [
+        "E008"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-ecbe9a8bef8a64a285f8"
+      ],
+      "eventLifecycles": {
+        "evt-ecbe9a8bef8a64a285f8": "first_seen"
+      },
+      "eventId": "evt-ecbe9a8bef8a64a285f8",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-03T21:19:58+00:00",
+      "lastSeenAt": "2026-09-03T21:19:58+00:00"
+    },
+    {
+      "id": "chg-5e91568e6c655bea6b0b",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-a0980cda2544816f3a",
+      "entityName": "Nvidia's RTX Spark N1X launches in October for laptops and desktops — 18 or 20 CPU cores, paired with 5,120 or6,144 CUDA cores, up to 128GB of unified memory",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Nvidia's RTX Spark N1X launches in October for laptops and desktops — 18 or 20 CPU cores, paired with 5,120 or6,144 CUDA cores, up to 128GB of unified memory。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "Nvidia is finally getting more specific about the launch of the RTX Spark. The chip, which it is now officially calling the \"N1X,\" will launch in laptops in October and come in two configurations. The more powerful option will mix a 20-core Grace CPU with a 6…",
+        "title": "Nvidia's RTX Spark N1X launches in October for laptops and desktops — 18 or 20 CPU cores, paired with 5,120 or6,144 CUDA cores, up to 128GB of unified memory"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E010"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Nvidia is finally getting more specific about the launch of the RTX Spark. The chip, which it is now officially calling the \"N1X,\" will launch in laptops in October and come in two configurations. The more powerful option will mix a 20-core Grace CPU with a 6…",
+          "evidenceIds": [
+            "E010"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Nvidia's RTX Spark N1X launches in October for laptops and desktops — 18 or 20 CPU cores, paired with 5,120 or6,144 CUDA cores, up to 128GB of unified memory",
+          "evidenceIds": [
+            "E010"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E010"
+      ],
+      "supportingEvidenceIds": [
+        "E010"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-f19560fcc02fc737a14b"
+      ],
+      "eventLifecycles": {
+        "evt-f19560fcc02fc737a14b": "first_seen"
+      },
+      "eventId": "evt-f19560fcc02fc737a14b",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-03T21:19:58+00:00",
+      "lastSeenAt": "2026-09-03T21:19:58+00:00"
+    },
+    {
+      "id": "chg-c1079595c0e815443bde",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-f7b3b09f070be30368",
+      "entityName": "Lenovo launches new ThinkCentre desktop globally with 64 GB RAM and 50 TOPS NPU",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Lenovo launches new ThinkCentre desktop globally with 64 GB RAM and 50 TOPS NPU。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "Lenovo has launched a new desktop PC globally. Featuring a choice of modern AMD Zen 5 processors, the ThinkCentre M75s Gen 6 also includes up to 64 GB of DDR5 RAM, dual PCIe Gen 5 SSDs and a PCIe slot for adding dedicated GPUs. Lenovo has confirmed pricing an…",
+        "title": "Lenovo launches new ThinkCentre desktop globally with 64 GB RAM and 50 TOPS NPU"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E011"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Lenovo has launched a new desktop PC globally. Featuring a choice of modern AMD Zen 5 processors, the ThinkCentre M75s Gen 6 also includes up to 64 GB of DDR5 RAM, dual PCIe Gen 5 SSDs and a PCIe slot for adding dedicated GPUs. Lenovo has confirmed pricing an…",
+          "evidenceIds": [
+            "E011"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Lenovo launches new ThinkCentre desktop globally with 64 GB RAM and 50 TOPS NPU",
+          "evidenceIds": [
+            "E011"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E011"
+      ],
+      "supportingEvidenceIds": [
+        "E011"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-b649ba056486aca6bdd2"
+      ],
+      "eventLifecycles": {
+        "evt-b649ba056486aca6bdd2": "first_seen"
+      },
+      "eventId": "evt-b649ba056486aca6bdd2",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-03T21:19:58+00:00",
+      "lastSeenAt": "2026-09-03T21:19:58+00:00"
+    },
+    {
+      "id": "chg-3251eb2b6f137a5a23e9",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-9c2cf54a769aa6f7ef",
+      "entityName": "Introducing WeatherNext 3, our most advanced and accurate global weather AI model",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Introducing WeatherNext 3, our most advanced and accurate global weather AI model。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "Google DeepMind 发布相关公开信息，完整内容见原文。",
+        "title": "Introducing WeatherNext 3, our most advanced and accurate global weather AI model"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E012"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Google DeepMind 发布相关公开信息，完整内容见原文。",
+          "evidenceIds": [
+            "E012"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Introducing WeatherNext 3, our most advanced and accurate global weather AI model",
+          "evidenceIds": [
+            "E012"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E012"
+      ],
+      "supportingEvidenceIds": [
+        "E012"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-ef7bb4189091ac901c65"
+      ],
+      "eventLifecycles": {
+        "evt-ef7bb4189091ac901c65": "first_seen"
+      },
+      "eventId": "evt-ef7bb4189091ac901c65",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-03T21:19:58+00:00",
+      "lastSeenAt": "2026-09-03T21:19:58+00:00"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E001",
+      "changeId": "chg-90e349fc8f27a2c43699",
+      "entityName": "英伟达斥资约130亿美元收购人工智能平台Hugging Face",
+      "claim": "新增高价值情报事件记录：英伟达斥资约130亿美元收购人工智能平台Hugging Face。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "英伟达斥资约130亿美元收购人工智能平台Hugging Face",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-03/doc-iniqqnck4262718.shtml",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E002",
+      "changeId": "chg-7ddca310dbe4eb4b0844",
+      "entityName": "What Nvidia’s $13B acquisition of Hugging Face means for AI model choice",
+      "claim": "新增高价值情报事件记录：What Nvidia’s $13B acquisition of Hugging Face means for AI model choice。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "InfoWorld",
+      "title": "What Nvidia’s $13B acquisition of Hugging Face means for AI model choice",
+      "url": "https://www.infoworld.com/article/4218324/what-nvidias-13b-acquisition-of-hugging-face-means-for-ai-model-choice.html",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "C",
+      "platformName": "InfoWorld",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E003",
+      "changeId": "chg-ea3d05db871f15e4de8f",
+      "entityName": "Open and Neutral? Nvidia Says Don't Worry About Its Hugging Face Acquisition",
+      "claim": "新增高价值情报事件记录：Open and Neutral? Nvidia Says Don't Worry About Its Hugging Face Acquisition。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "PCMag",
+      "title": "Open and Neutral? Nvidia Says Don't Worry About Its Hugging Face Acquisition",
+      "url": "https://www.pcmag.com/news/open-and-neutral-nvidia-says-dont-worry-about-its-hugging-face-acquisition",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "C",
+      "platformName": "PCMag",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E004",
+      "changeId": "chg-da1f63433e1cf28d61dd",
+      "entityName": "Nvidia acquires Hugging Face for $12.93 billion — company gains control of major AI model distribution platform",
+      "claim": "新增高价值情报事件记录：Nvidia acquires Hugging Face for $12.93 billion — company gains control of major AI model distribution platform。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Tom's Hardware",
+      "title": "Nvidia acquires Hugging Face for $12.93 billion — company gains control of major AI model distribution platform",
+      "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/nvidia-acquires-hugging-face-for-usd12-93-billion-company-gains-control-of-major-ai-model-distribution-platform",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "C",
+      "platformName": "Tom's Hardware",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E005",
+      "changeId": "chg-a8f7b03e53112353ddaa",
+      "entityName": "价值真相 · 财报季｜美股中概3C巨头的“端侧 AI”溢价：硬件更迭周期里的毛利真相",
+      "claim": "新增高价值情报事件记录：价值真相 · 财报季｜美股中概3C巨头的“端侧 AI”溢价：硬件更迭周期里的毛利真相。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "钛媒体",
+      "title": "价值真相 · 财报季｜美股中概3C巨头的“端侧 AI”溢价：硬件更迭周期里的毛利真相",
+      "url": "https://www.tmtpost.com/8128007.html",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E006",
+      "changeId": "chg-af477291a7f11c925503",
+      "entityName": "OpenAI Cut Off a Billion-Dollar Customer to Avoid Elon Musk",
+      "claim": "新增高价值情报事件记录：OpenAI Cut Off a Billion-Dollar Customer to Avoid Elon Musk。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "WIRED",
+      "title": "OpenAI Cut Off a Billion-Dollar Customer to Avoid Elon Musk",
+      "url": "https://www.wired.com/story/openai-elon-musk-cursor-billion-revenue",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "C",
+      "platformName": "WIRED",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E007",
+      "changeId": "chg-17b8f0173becd20a2b47",
+      "entityName": "Crusoe据悉与Jane Street签署价值约130亿美元的AI云协议",
+      "claim": "新增高价值情报事件记录：Crusoe据悉与Jane Street签署价值约130亿美元的AI云协议。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "Crusoe据悉与Jane Street签署价值约130亿美元的AI云协议",
+      "url": "https://finance.sina.com.cn/world/2026-09-04/doc-iniqqwtk6537034.shtml",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E008",
+      "changeId": "chg-3eda305667d190f2b044",
+      "entityName": "OpenAI推出GPT-6 Astra 称其为迈向通用人工智能的重要里程碑",
+      "claim": "新增高价值情报事件记录：OpenAI推出GPT-6 Astra 称其为迈向通用人工智能的重要里程碑。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "OpenAI推出GPT-6 Astra 称其为迈向通用人工智能的重要里程碑",
+      "url": "https://finance.sina.com.cn/world/2026-09-04/doc-iniqqwtk6535966.shtml",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E010",
+      "changeId": "chg-5e91568e6c655bea6b0b",
+      "entityName": "Nvidia's RTX Spark N1X launches in October for laptops and desktops — 18 or 20 CPU cores, paired with 5,120 or6,144 CUDA cores, up to 128GB of unified memory",
+      "claim": "新增高价值情报事件记录：Nvidia's RTX Spark N1X launches in October for laptops and desktops — 18 or 20 CPU cores, paired with 5,120 or6,144 CUDA cores, up to 128GB of unified memory。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Tom's Hardware",
+      "title": "Nvidia's RTX Spark N1X launches in October for laptops and desktops — 18 or 20 CPU cores, paired with 5,120 or6,144 CUDA cores, up to 128GB of unified memory",
+      "url": "https://www.tomshardware.com/laptops/nvidias-rtx-spark-n1x-launches-in-october-for-laptops-and-desktops-18-or-20-cpu-cores-paired-with-5-120-or-6-144-cuda-cores-up-to-128gb-of-unified-memory",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "C",
+      "platformName": "Tom's Hardware",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E011",
+      "changeId": "chg-c1079595c0e815443bde",
+      "entityName": "Lenovo launches new ThinkCentre desktop globally with 64 GB RAM and 50 TOPS NPU",
+      "claim": "新增高价值情报事件记录：Lenovo launches new ThinkCentre desktop globally with 64 GB RAM and 50 TOPS NPU。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Notebookcheck",
+      "title": "Lenovo launches new ThinkCentre desktop globally with 64 GB RAM and 50 TOPS NPU",
+      "url": "https://www.notebookcheck.net/Lenovo-launches-new-ThinkCentre-desktop-globally-with-64-GB-RAM-and-50-TOPS-NPU.1385344.0.html",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "C",
+      "platformName": "Notebookcheck",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E012",
+      "changeId": "chg-3251eb2b6f137a5a23e9",
+      "entityName": "Introducing WeatherNext 3, our most advanced and accurate global weather AI model",
+      "claim": "新增高价值情报事件记录：Introducing WeatherNext 3, our most advanced and accurate global weather AI model。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Google DeepMind",
+      "title": "Introducing WeatherNext 3, our most advanced and accurate global weather AI model",
+      "url": "https://deepmind.google/blog/introducing-weathernext-3-our-most-advanced-and-accurate-global-weather-ai-model",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "B",
+      "platformName": "官方网站",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    }
+  ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-03T17:06:19+00:00",
+    "generatedAt": "2026-09-03T21:19:58+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-f19560fcc02fc737a14b": {
+        "eventId": "evt-f19560fcc02fc737a14b",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-a0980cda2544816f3a",
+        "entityName": "Nvidia's RTX Spark N1X launches in October for laptops and desktops — 18 or 20 CPU cores, paired with 5,120 or6,144 CUDA cores, up to 128GB of unified memory",
+        "title": "Nvidia's RTX Spark N1X launches in October for laptops and desktops — 18 or 20 CPU cores, paired with 5,120 or6,144 CUDA cores, up to 128GB of unified memory",
+        "titleAliases": [
+          "nvidiasrtxsparkn1xlaunchesinoctoberforlaptopsanddesktops18or20cpucorespairedwith5120or6144cudacoresupto128gbofunifiedmemory"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "1",
+          "120",
+          "128",
+          "144",
+          "18",
+          "20",
+          "5",
+          "6"
+        ],
+        "sourceAliases": [
+          "evd-08de9cfc1444d95f1a22",
+          "record-c1a33a65a3377fc5dbed",
+          "src-e1da298c1f1c25d95417"
+        ],
+        "evidenceFingerprints": [
+          "08de9cfc1444d95f1a22"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Tom's Hardware",
+            "title": "Nvidia's RTX Spark N1X launches in October for laptops and desktops — 18 or 20 CPU cores, paired with 5,120 or6,144 CUDA cores, up to 128GB of unified memory",
+            "url": "https://www.tomshardware.com/laptops/nvidias-rtx-spark-n1x-launches-in-october-for-laptops-and-desktops-18-or-20-cpu-cores-paired-with-5-120-or-6-144-cuda-cores-up-to-128gb-of-unified-memory",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "ce963da5029642668586",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T21:19:58+00:00",
+        "lastSeenAt": "2026-09-03T21:19:58+00:00",
+        "lastPublishedAt": "2026-09-03T21:19:58+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-ef7bb4189091ac901c65": {
+        "eventId": "evt-ef7bb4189091ac901c65",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-9c2cf54a769aa6f7ef",
+        "entityName": "Introducing WeatherNext 3, our most advanced and accurate global weather AI model",
+        "title": "Introducing WeatherNext 3, our most advanced and accurate global weather AI model",
+        "titleAliases": [
+          "introducingweathernext3ourmostadvancedandaccurateglobalweatheraimodel"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [
+          "company:google"
+        ],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "3"
+        ],
+        "sourceAliases": [
+          "evd-d44f2270f4e09e3dca57",
+          "record-6d9dbd6153964b9fdcfb",
+          "src-2c11ffa52b4e96e8d943"
+        ],
+        "evidenceFingerprints": [
+          "d44f2270f4e09e3dca57"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Google DeepMind",
+            "title": "Introducing WeatherNext 3, our most advanced and accurate global weather AI model",
+            "url": "https://deepmind.google/blog/introducing-weathernext-3-our-most-advanced-and-accurate-global-weather-ai-model",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "83805fc3f852968f6355",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T21:19:58+00:00",
+        "lastSeenAt": "2026-09-03T21:19:58+00:00",
+        "lastPublishedAt": "2026-09-03T21:19:58+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-ecbe9a8bef8a64a285f8": {
+        "eventId": "evt-ecbe9a8bef8a64a285f8",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-8d85fdb60ff14b2a7d",
+        "entityName": "OpenAI推出GPT-6 Astra 称其为迈向通用人工智能的重要里程碑",
+        "title": "OpenAI推出GPT-6 Astra 称其为迈向通用人工智能的重要里程碑",
+        "titleAliases": [
+          "openai推出gpt6astra称其为迈向通用人工智能的重要里程碑"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [
+          "company:openai"
+        ],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "6"
+        ],
+        "sourceAliases": [
+          "evd-61db7acbbd103a7c97b0",
+          "record-eb7f0dd0d4cd32a8f917",
+          "src-124650bfdcf8d6110049"
+        ],
+        "evidenceFingerprints": [
+          "61db7acbbd103a7c97b0"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "OpenAI推出GPT-6 Astra 称其为迈向通用人工智能的重要里程碑",
+            "url": "https://finance.sina.com.cn/world/2026-09-04/doc-iniqqwtk6535966.shtml",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "87d1548617773932b97d",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T21:19:58+00:00",
+        "lastSeenAt": "2026-09-03T21:19:58+00:00",
+        "lastPublishedAt": "2026-09-03T21:19:58+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-b649ba056486aca6bdd2": {
+        "eventId": "evt-b649ba056486aca6bdd2",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-f7b3b09f070be30368",
+        "entityName": "Lenovo launches new ThinkCentre desktop globally with 64 GB RAM and 50 TOPS NPU",
+        "title": "Lenovo launches new ThinkCentre desktop globally with 64 GB RAM and 50 TOPS NPU",
+        "titleAliases": [
+          "lenovolaunchesnewthinkcentredesktopgloballywith64gbramand50topsnpu"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "50",
+          "64"
+        ],
+        "sourceAliases": [
+          "evd-86f22ae7f61c654c4bf1",
+          "record-b5e945e5956427058fab",
+          "src-bda68ce55622a6acaa05"
+        ],
+        "evidenceFingerprints": [
+          "86f22ae7f61c654c4bf1"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Notebookcheck",
+            "title": "Lenovo launches new ThinkCentre desktop globally with 64 GB RAM and 50 TOPS NPU",
+            "url": "https://www.notebookcheck.net/Lenovo-launches-new-ThinkCentre-desktop-globally-with-64-GB-RAM-and-50-TOPS-NPU.1385344.0.html",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "6af36512a8896e984ac4",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T21:19:58+00:00",
+        "lastSeenAt": "2026-09-03T21:19:58+00:00",
+        "lastPublishedAt": "2026-09-03T21:19:58+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-96427342f20a17a0f4bd": {
+        "eventId": "evt-96427342f20a17a0f4bd",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-22bc0871aa1ac71631",
+        "entityName": "What Nvidia’s $13B acquisition of Hugging Face means for AI model choice",
+        "title": "What Nvidia’s $13B acquisition of Hugging Face means for AI model choice",
+        "titleAliases": [
+          "whatnvidias13bacquisitionofhuggingfacemeansforaimodelchoice"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "并购",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "13"
+        ],
+        "sourceAliases": [
+          "evd-55dfd46baf7af9750a21",
+          "record-d27a080f812d90caba85",
+          "src-8f044292cfdd7b1bbc05"
+        ],
+        "evidenceFingerprints": [
+          "55dfd46baf7af9750a21"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "InfoWorld",
+            "title": "What Nvidia’s $13B acquisition of Hugging Face means for AI model choice",
+            "url": "https://www.infoworld.com/article/4218324/what-nvidias-13b-acquisition-of-hugging-face-means-for-ai-model-choice.html",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "27135af973e24d23b238",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T21:19:58+00:00",
+        "lastSeenAt": "2026-09-03T21:19:58+00:00",
+        "lastPublishedAt": "2026-09-03T21:19:58+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-4d0013166e6341585f6c": {
+        "eventId": "evt-4d0013166e6341585f6c",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-4c1b1e1da3b019ce74",
+        "entityName": "Nvidia acquires Hugging Face for $12.93 billion — company gains control of major AI model distribution platform",
+        "title": "Nvidia acquires Hugging Face for $12.93 billion — company gains control of major AI model distribution platform",
+        "titleAliases": [
+          "nvidiaacquireshuggingfacefor1293billioncompanygainscontrolofmajoraimodeldistributionplatform"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "并购",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "12.93"
+        ],
+        "sourceAliases": [
+          "evd-03e58c0625c7c672d3d9",
+          "record-a97c119153530b393dbe",
+          "src-cda582ed0db5ca9f6f98"
+        ],
+        "evidenceFingerprints": [
+          "03e58c0625c7c672d3d9"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Tom's Hardware",
+            "title": "Nvidia acquires Hugging Face for $12.93 billion — company gains control of major AI model distribution platform",
+            "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/nvidia-acquires-hugging-face-for-usd12-93-billion-company-gains-control-of-major-ai-model-distribution-platform",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "ecc287920364e277d756",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T21:19:58+00:00",
+        "lastSeenAt": "2026-09-03T21:19:58+00:00",
+        "lastPublishedAt": "2026-09-03T21:19:58+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-4b183930f5680715b747": {
+        "eventId": "evt-4b183930f5680715b747",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-4309f8679cc1f40834",
+        "entityName": "Crusoe据悉与Jane Street签署价值约130亿美元的AI云协议",
+        "title": "Crusoe据悉与Jane Street签署价值约130亿美元的AI云协议",
+        "titleAliases": [
+          "crusoe据悉与janestreet签署价值约130亿美元的ai云协议"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "130"
+        ],
+        "sourceAliases": [
+          "evd-606a5d7f2557262cea4c",
+          "record-1246218acf230ec3abf3",
+          "src-08d406357824f2d833f3"
+        ],
+        "evidenceFingerprints": [
+          "606a5d7f2557262cea4c"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "Crusoe据悉与Jane Street签署价值约130亿美元的AI云协议",
+            "url": "https://finance.sina.com.cn/world/2026-09-04/doc-iniqqwtk6537034.shtml",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "6a8b369db8921cc725ad",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T21:19:58+00:00",
+        "lastSeenAt": "2026-09-03T21:19:58+00:00",
+        "lastPublishedAt": "2026-09-03T21:19:58+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-3c71031e479b3af224e0": {
+        "eventId": "evt-3c71031e479b3af224e0",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-3ccba9a59d8908641f",
+        "entityName": "Open and Neutral? Nvidia Says Don't Worry About Its Hugging Face Acquisition",
+        "title": "Open and Neutral? Nvidia Says Don't Worry About Its Hugging Face Acquisition",
+        "titleAliases": [
+          "openandneutralnvidiasaysdontworryaboutitshuggingfaceacquisition"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "并购",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-15ad6a90cc5bed987b17",
+          "record-398470da0324ba7cc8c6",
+          "src-3ef85129d99755257ffb"
+        ],
+        "evidenceFingerprints": [
+          "15ad6a90cc5bed987b17"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PCMag",
+            "title": "Open and Neutral? Nvidia Says Don't Worry About Its Hugging Face Acquisition",
+            "url": "https://www.pcmag.com/news/open-and-neutral-nvidia-says-dont-worry-about-its-hugging-face-acquisition",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "71f4b50dc3cdf4bbcfc7",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T21:19:58+00:00",
+        "lastSeenAt": "2026-09-03T21:19:58+00:00",
+        "lastPublishedAt": "2026-09-03T21:19:58+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-28f371d7bb731ff1f336": {
+        "eventId": "evt-28f371d7bb731ff1f336",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-55785e63285cc9034f",
+        "entityName": "OpenAI Cut Off a Billion-Dollar Customer to Avoid Elon Musk",
+        "title": "OpenAI Cut Off a Billion-Dollar Customer to Avoid Elon Musk",
+        "titleAliases": [
+          "openaicutoffabilliondollarcustomertoavoidelonmusk"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [
+          "company:openai"
+        ],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-776ddcc1e486c203acae",
+          "record-2ff2e184290b0bc7de93",
+          "src-19080e86295b7059880d"
+        ],
+        "evidenceFingerprints": [
+          "776ddcc1e486c203acae"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "WIRED",
+            "title": "OpenAI Cut Off a Billion-Dollar Customer to Avoid Elon Musk",
+            "url": "https://www.wired.com/story/openai-elon-musk-cursor-billion-revenue",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "ab5e57ad5a4ba3b9d983",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T21:19:58+00:00",
+        "lastSeenAt": "2026-09-03T21:19:58+00:00",
+        "lastPublishedAt": "2026-09-03T21:19:58+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-1cd03978532a2bd32fff": {
+        "eventId": "evt-1cd03978532a2bd32fff",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-bd2c391fb71b60ded8",
+        "entityName": "英伟达斥资约130亿美元收购人工智能平台Hugging Face",
+        "title": "英伟达斥资约130亿美元收购人工智能平台Hugging Face",
+        "titleAliases": [
+          "英伟达斥资约130亿美元收购人工智能平台huggingface"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "并购",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "130"
+        ],
+        "sourceAliases": [
+          "evd-c62201fe56b874098f8a",
+          "record-b1feb45a19a29d56d6d2",
+          "src-da8651d04610b462e438"
+        ],
+        "evidenceFingerprints": [
+          "c62201fe56b874098f8a"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "英伟达斥资约130亿美元收购人工智能平台Hugging Face",
+            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-03/doc-iniqqnck4262718.shtml",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "d02ebb9acbb353ffa55c",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T21:19:58+00:00",
+        "lastSeenAt": "2026-09-03T21:19:58+00:00",
+        "lastPublishedAt": "2026-09-03T21:19:58+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-0b35412dc671522e101d": {
+        "eventId": "evt-0b35412dc671522e101d",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-590838e8799838d091",
+        "entityName": "价值真相 · 财报季｜美股中概3C巨头的“端侧 AI”溢价：硬件更迭周期里的毛利真相",
+        "title": "价值真相 · 财报季｜美股中概3C巨头的“端侧 AI”溢价：硬件更迭周期里的毛利真相",
+        "titleAliases": [
+          "价值真相财报季"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "财报",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "3"
+        ],
+        "sourceAliases": [
+          "evd-1101cd8f7673c88cf451",
+          "record-6e66745f61cefd3c418f",
+          "src-15293960039585358019"
+        ],
+        "evidenceFingerprints": [
+          "1101cd8f7673c88cf451"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "钛媒体",
+            "title": "价值真相 · 财报季｜美股中概3C巨头的“端侧 AI”溢价：硬件更迭周期里的毛利真相",
+            "url": "https://www.tmtpost.com/8128007.html",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "416de6e541f7014f178a",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T21:19:58+00:00",
+        "lastSeenAt": "2026-09-03T21:19:58+00:00",
+        "lastPublishedAt": "2026-09-03T21:19:58+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-c4968f86dd0baa667346": {
         "eventId": "evt-c4968f86dd0baa667346",
         "dataset": "intelligenceEvent",
@@ -20185,13 +22197,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 0,
+    "newEvents": 11,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
     "duplicatesSuppressed": 0,
-    "observedEvents": 0,
+    "observedEvents": 11,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -22209,18 +24221,75 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-04",
-      "generatedAt": "2026-09-03T17:06:19+00:00",
-      "runStatus": "no-material-change",
-      "changeCount": 0,
-      "executiveSummary": "本轮未检测到新的外部事实候选。",
-      "eventIds": [],
-      "eventStates": [],
+      "generatedAt": "2026-09-03T21:19:58+00:00",
+      "runStatus": "model",
+      "changeCount": 11,
+      "executiveSummary": "证据包显示，2026年9月3日前后，AI基础设施与模型层发生多项高价值事件：英伟达宣布以约130亿美元收购Hugging Face（E001-E004），OpenAI发布GPT-6 Astra并终止与Cursor的合作（E008、E006），Crusoe与Jane Street签署约130亿美元AI云协议（E007），英伟达和联想分别发布端侧AI硬件（E010、E011），Google DeepMind发布WeatherNext 3（E012）。多数证据为C级且未经人工复核，结论应视为初步观察，交易细节与数据需以官方公告或财报为准。",
+      "eventIds": [
+        "evt-1cd03978532a2bd32fff",
+        "evt-96427342f20a17a0f4bd",
+        "evt-3c71031e479b3af224e0",
+        "evt-4d0013166e6341585f6c",
+        "evt-0b35412dc671522e101d",
+        "evt-28f371d7bb731ff1f336",
+        "evt-4b183930f5680715b747",
+        "evt-ecbe9a8bef8a64a285f8",
+        "evt-f19560fcc02fc737a14b",
+        "evt-b649ba056486aca6bdd2",
+        "evt-ef7bb4189091ac901c65"
+      ],
+      "eventStates": [
+        {
+          "eventId": "evt-1cd03978532a2bd32fff",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-96427342f20a17a0f4bd",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-3c71031e479b3af224e0",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-4d0013166e6341585f6c",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-0b35412dc671522e101d",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-28f371d7bb731ff1f336",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-4b183930f5680715b747",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-ecbe9a8bef8a64a285f8",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-f19560fcc02fc737a14b",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-b649ba056486aca6bdd2",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-ef7bb4189091ac901c65",
+          "lifecycle": "first_seen"
+        }
+      ],
       "verifiedChangeTotal": 0,
       "candidateTotal": 0,
-      "auxiliaryLeadTotal": 0,
-      "rejectedTotal": 0,
+      "auxiliaryLeadTotal": 11,
+      "rejectedTotal": 1,
       "eventSummary": {
-        "newEvents": 0,
+        "newEvents": 11,
         "reconfirmations": 0,
         "updates": 0,
         "corrections": 0,
@@ -22230,15 +24299,19 @@
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 0,
-    "eligibleCandidateCount": 0,
-    "rejectedCandidateCount": 0,
-    "rejectedByDataset": {},
-    "evidenceCount": 0,
-    "supportingEvidenceCount": 0,
-    "rejectedEvidenceCount": 0,
+    "candidateCount": 12,
+    "eligibleCandidateCount": 11,
+    "rejectedCandidateCount": 1,
+    "rejectedByDataset": {
+      "intelligenceEvent": 1
+    },
+    "evidenceCount": 12,
+    "supportingEvidenceCount": 11,
+    "rejectedEvidenceCount": 1,
     "passedButUnboundEvidenceCount": 0,
-    "rejectionReasons": {},
+    "rejectionReasons": {
+      "discovery_only": 1
+    },
     "sourceClassificationWarnings": []
   },
   "sourceClassificationWarnings": [],
