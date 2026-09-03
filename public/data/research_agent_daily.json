@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-03T01:27:13+00:00",
+  "generatedAt": "2026-09-03T04:51:30+00:00",
   "asOfDate": "2026-09-03",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
@@ -12,197 +12,269 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 2356,
-      "completion_tokens": 3191,
-      "total_tokens": 5547,
+      "prompt_tokens": 2200,
+      "completion_tokens": 2223,
+      "total_tokens": 4423,
       "completion_tokens_details": {
-        "reasoning_tokens": 1929
+        "reasoning_tokens": 1112
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 2356
+      "prompt_cache_miss_tokens": 2200
     }
   },
   "changeSummary": {
-    "totalDetected": 12,
-    "total": 3,
+    "totalDetected": 19,
+    "total": 2,
     "byDataset": {
-      "institutionEvent": 3
+      "intelligenceEvent": 2
     },
     "byChangeType": {
-      "external_event": 12
+      "external_event": 2,
+      "data_maintenance": 17
     },
-    "externalCandidates": 12,
-    "qualityRejected": 1,
-    "maintenanceExcluded": 0,
+    "externalCandidates": 2,
+    "qualityRejected": 0,
+    "maintenanceExcluded": 17,
     "aggregatedEvents": 0,
-    "highestImportance": 70,
+    "highestImportance": 84,
     "verifiedChangeTotal": 0,
-    "candidateTotal": 3,
-    "auxiliaryLeadTotal": 0,
-    "rejectedTotal": 1,
-    "newEvents": 3,
-    "reconfirmations": 5,
+    "candidateTotal": 0,
+    "auxiliaryLeadTotal": 2,
+    "rejectedTotal": 0,
+    "newEvents": 2,
+    "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 3
+    "duplicatesSuppressed": 0
   },
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "本证据包新增三条外部事件记录：贵州年产20万吨锂电负极材料项目环评公示（总投资35.5亿元）、Apple MacBook Pro 16 2026评测（M5 Max性能强但电源不足）、Anthropic发布Claude Fable 5.1并声称设定新标准。三条证据均来自单一媒体来源，证据等级为C，且未经人工审核，仅可作为初步线索，不宜作为确定性事实或投资依据。 质量门诊断：证据未分级 1。",
+    "executiveSummary": "证据包包含两条新增高价值情报事件：一是雷峰网报道长安汽车在研发、生产制造、供应链、销售、服务等业务场景接入千问办公，并引用长安汽车高管关于AI native组织的表述；二是PR Newswire发布Eluvio在IBC 2026推出业内首个内联、开放模型视频AI与智能体编排方案的新闻稿。两条事件均处于automated_unreviewed状态，证据等级分别为C和B，属于外部线索或一手新闻稿，尚未经人工复核，因此只能作为初步情报线索，不宜作为确定性重大事实。",
     "keyDevelopments": [
       {
-        "title": "贵州20万吨锂电负极材料项目环评公示",
-        "assessment": "据电池中国报道，贵州一总投资35.5亿元、年产20万吨锂电负极材料项目进行环评公示。该信息仅来自标题，未提供项目主体、具体地点、环评结论等细节，且证据等级为C，需进一步核实项目进展及实际影响。",
-        "importance": 3,
-        "confidence": "low",
+        "title": "千问办公落地长安汽车，覆盖“研产供销服”",
+        "assessment": "据雷峰网报道，长安汽车已在研发、生产制造、供应链、销售、服务等业务场景接入千问办公，并引用长安汽车总裁助理梁光忠称此类Agent不仅是个人提效工具，更是打造AI native组织的利器。该事件为外部媒体线索，证据等级C，且为automated_unreviewed，可视为AI办公Agent在大型央企落地的早期信号，但细节（接入深度、实际效果、合同关系）尚未验证。",
+        "importance": 4,
+        "confidence": "medium",
         "entities": [
-          "贵州锂电负极材料项目",
-          "电池中国"
+          "长安汽车",
+          "千问办公",
+          "梁光忠"
+        ],
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "title": "Eluvio发布内联开放模型视频AI与智能体编排方案",
+        "assessment": "PR Newswire新闻稿称Eluvio在IBC 2026推出业内首个商用内联、帧级精确、多模态AI推理与编排方案，原生构建于Content Fabric媒体管线。证据等级B，来源为厂商新闻稿，属于厂商自述，需独立验证产品可用性与市场反响。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "Eluvio",
+          "Content Fabric"
         ],
         "evidenceIds": [
           "E002"
-        ]
-      },
-      {
-        "title": "Apple MacBook Pro 16 2026评测：M5 Max性能强但电源不足",
-        "assessment": "Notebookcheck发布评测结论，称MacBook Pro 16 2026搭载的M5 Max性能强大，但电源供应不足。该结论为媒体评测观点，证据等级C，且标题未提供具体测试数据，需等待更多独立评测验证。",
-        "importance": 3,
-        "confidence": "low",
-        "entities": [
-          "Apple",
-          "MacBook Pro 16 2026",
-          "Notebookcheck"
-        ],
-        "evidenceIds": [
-          "E006"
-        ]
-      },
-      {
-        "title": "Anthropic发布Claude Fable 5.1并声称设定新标准",
-        "assessment": "ITPro报道Anthropic称Claude Fable 5.1在编程、知识工作和长期问题解决任务上设定新标准。此为厂商声明，未经独立验证，证据等级C，需关注后续基准测试和用户反馈。",
-        "importance": 4,
-        "confidence": "low",
-        "entities": [
-          "Anthropic",
-          "Claude Fable 5.1",
-          "ITPro"
-        ],
-        "evidenceIds": [
-          "E009"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "锂电负极材料产业链",
+        "entity": "千问办公/阿里AI办公生态",
+        "direction": "positive",
+        "statement": "长安汽车作为三大汽车央企之一，在研产供销服全链路接入千问办公，若属实，将强化AI办公Agent在大型制造企业组织内落地的叙事；但证据为单一媒体线索且未经人工复核，暂不构成确定性结论。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "entity": "Eluvio",
         "direction": "mixed",
-        "statement": "贵州20万吨锂电负极材料项目环评公示显示行业扩产动向，但仅凭单一来源标题，无法确认项目主体、资金落实及环评结果，对产业链供需的实际影响待验证。",
+        "statement": "Eluvio宣称推出业内首个内联开放模型视频AI与智能体编排方案，属于产品创新声明，方向偏正面；但证据来自厂商新闻稿，缺乏第三方验证与客户案例，需保持审慎。",
         "evidenceIds": [
           "E002"
-        ]
-      },
-      {
-        "entity": "Apple MacBook Pro 16 2026",
-        "direction": "mixed",
-        "statement": "评测显示M5 Max性能强大但电源供应不足，表明产品在性能与功耗平衡上存在争议，但该结论来自单一媒体，需更多测试确认。",
-        "evidenceIds": [
-          "E006"
-        ]
-      },
-      {
-        "entity": "Anthropic Claude Fable 5.1",
-        "direction": "positive",
-        "statement": "Anthropic声称Claude Fable 5.1在编程和知识工作方面设定新标准，若属实将提升AI模型能力预期，但当前仅为厂商声明，需独立验证。",
-        "evidenceIds": [
-          "E009"
         ]
       }
     ],
     "watchlist": [
       {
-        "item": "贵州锂电负极材料项目环评结果及投资方",
-        "reason": "当前仅有环评公示标题，缺少项目主体、地点、环评结论等关键信息，需后续公告确认。",
-        "nextEvidence": "项目环评批复文件或官方公告",
+        "item": "长安汽车千问办公接入的后续官方披露或第三方验证",
+        "reason": "当前仅有雷峰网一篇报道，证据等级C且为automated_unreviewed，需要长安汽车官方公告、阿里云/千问官方材料或更多独立媒体交叉验证。",
+        "nextEvidence": "长安汽车或阿里官方发布、其他主流媒体报道、案例研究或客户会议材料",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "item": "Eluvio内联视频AI方案的商用落地与客户采用",
+        "reason": "新闻稿为厂商自述，需观察是否有实际部署案例、行业评测或竞争对手回应。",
+        "nextEvidence": "Eluvio后续产品文档、客户案例、行业分析机构报告或IBC 2026现场报道",
         "evidenceIds": [
           "E002"
-        ]
-      },
-      {
-        "item": "MacBook Pro 16 2026电源供应问题的具体测试数据",
-        "reason": "评测标题指出电源不足，但未提供详细数据，需更多独立评测或Apple官方回应。",
-        "nextEvidence": "完整评测文章或第三方功耗测试",
-        "evidenceIds": [
-          "E006"
-        ]
-      },
-      {
-        "item": "Claude Fable 5.1的独立基准测试结果",
-        "reason": "Anthropic的声明需要第三方基准测试和用户实际体验验证。",
-        "nextEvidence": "独立评测机构或开发者社区的基准测试报告",
-        "evidenceIds": [
-          "E009"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "证据等级低且来源单一",
-        "reason": "三条证据均来自单一媒体（微信、Notebookcheck、ITPro），证据等级为C，且未经人工审核，可能包含不准确或夸大信息。",
+        "risk": "证据未经人工复核，存在报道偏差或厂商宣传成分",
+        "reason": "两条证据均为automated_unreviewed，E001为C级媒体线索，E002为B级厂商新闻稿，均可能包含夸大或不准确信息。",
         "evidenceIds": [
-          "E002",
-          "E006",
-          "E009"
+          "E001",
+          "E002"
         ]
       },
       {
-        "risk": "厂商声明与媒体标题可能夸大",
-        "reason": "Anthropic的声明和Notebookcheck的标题均可能带有营销或吸引点击性质，需独立验证。",
+        "risk": "长安汽车接入千问办公的深度与效果不明",
+        "reason": "报道仅提及场景覆盖和高管表态，未提供量化指标、部署规模或业务成效数据，不能据此推断实际商业价值。",
         "evidenceIds": [
-          "E009",
-          "E006"
+          "E001"
         ]
       },
       {
-        "risk": "环评公示不代表项目落地",
-        "reason": "环评公示仅为前期程序，项目可能因资金、审批、市场变化而调整或终止，不能视为确定投资。",
+        "risk": "Eluvio“业内首个”声明缺乏独立验证",
+        "reason": "新闻稿中的“industry-first”属于厂商主张，未提供第三方评测或对比证据，存在竞争性夸大风险。",
         "evidenceIds": [
           "E002"
         ]
       }
     ],
-    "methodologyNote": "本分析仅基于证据包中三条新增事件记录，未补充外部事实。所有证据均为C级、单一来源、自动收录未人工复核，因此所有判断均以“待验证”为前提，不构成投资建议。输出中事实、推断与待验证事项已尽量区分，但受证据限制，多数内容属于初步线索。 数据管线提示：两小时公开情报刷新=stale。"
+    "methodologyNote": "本分析仅基于证据包内E001、E002两条证据，未补充外部事实。两条证据均通过质量门但处于automated_unreviewed状态，证据等级分别为C和B，因此所有判断均以“报道称”“新闻稿称”等限定表达呈现，不构成投资建议或确定性结论。"
   },
   "changes": [
     {
-      "id": "chg-becd5b8031d2e3b54cb3",
-      "dataset": "institutionEvent",
-      "entityType": "机构/资本事件",
-      "entityId": "user-track-wechat-cbea-battery-energy-9f2b195f130d0ddd",
-      "entityName": "总投资35.5亿！贵州年产20万吨锂电负极材料项目环评公示 | 欢迎关注CBIS2026【电池材料革新与产业化实践】论坛",
+      "id": "chg-bac2acad4735878fc2e7",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-7172111d3464c8cde6",
+      "entityName": "千问办公落地长安汽车，“研产供销服”都在用",
       "action": "added",
       "changedFields": [
-        "publishedAt"
+        "publishedAt",
+        "summary",
+        "title"
       ],
-      "summary": "新增机构/资本事件记录：总投资35.5亿！贵州年产20万吨锂电负极材料项目环评公示 | 欢迎关注CBIS2026【电池材料革新与产业化实践】论坛。",
-      "importance": 70,
+      "summary": "新增高价值情报事件记录：千问办公落地长安汽车，“研产供销服”都在用。",
+      "importance": 84,
       "before": null,
-      "after": {},
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "9月2日，记者获悉，长安汽车已在研发、生产制造、供应链、销售、服务等业务场景接入千问办公。 作为中国汽车行业三大央企之一，长安汽车积极拥抱AI技术浪潮，提出“无AI，不长安”。此前，长安汽车已推出业内领先的天枢领航、天枢座舱等产品。今年以来，长安汽车进一步将AI创新推进到组织内部，覆盖各个业务单元。 长安汽车公司总裁助理、变革与效率部总经理梁光忠表示：“在长安汽车，千问办公这类Agent不仅仅是个人提效工具，更是企业打造AI native组织的利器，它能把AI能力嵌入到业务流程本身，让整个组织的运转方式发生变化，…",
+        "title": "千问办公落地长安汽车，“研产供销服”都在用"
+      },
       "changeType": "external_event",
-      "classificationReason": "新增事件型记录",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
       "isResearchCandidate": true,
       "claimFields": [
-        "publishedAt"
+        "publishedAt",
+        "summary",
+        "title"
       ],
       "claimBindings": [
         {
           "field": "publishedAt",
           "before": null,
-          "after": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "9月2日，记者获悉，长安汽车已在研发、生产制造、供应链、销售、服务等业务场景接入千问办公。 作为中国汽车行业三大央企之一，长安汽车积极拥抱AI技术浪潮，提出“无AI，不长安”。此前，长安汽车已推出业内领先的天枢领航、天枢座舱等产品。今年以来，长安汽车进一步将AI创新推进到组织内部，覆盖各个业务单元。 长安汽车公司总裁助理、变革与效率部总经理梁光忠表示：“在长安汽车，千问办公这类Agent不仅仅是个人提效工具，更是企业打造AI native组织的利器，它能把AI能力嵌入到业务流程本身，让整个组织的运转方式发生变化，…",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "千问办公落地长安汽车，“研产供销服”都在用",
+          "evidenceIds": [
+            "E001"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E001"
+      ],
+      "supportingEvidenceIds": [
+        "E001"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-3853c1248cd8b1d8e330"
+      ],
+      "eventLifecycles": {
+        "evt-3853c1248cd8b1d8e330": "first_seen"
+      },
+      "eventId": "evt-3853c1248cd8b1d8e330",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-03T04:51:30+00:00",
+      "lastSeenAt": "2026-09-03T04:51:30+00:00"
+    },
+    {
+      "id": "chg-6b50ec47b4f5303189e7",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-192e5129d2350fc2dc",
+      "entityName": "Eluvio Unveils Industry-First: Inline, Open-Model Video AI and Agentic Orchestration at IBC 2026",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Eluvio Unveils Industry-First: Inline, Open-Model Video AI and Agentic Orchestration at IBC 2026。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "Universal & Dynamic Video Intelligence Architecture: First commercially available solution for inline, frame-accurate, multimodal AI inference, analysis, and orchestration built natively into the Content Fabric media pipeline for live and derivative content g…",
+        "title": "Eluvio Unveils Industry-First: Inline, Open-Model Video AI and Agentic Orchestration at IBC 2026"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Universal & Dynamic Video Intelligence Architecture: First commercially available solution for inline, frame-accurate, multimodal AI inference, analysis, and orchestration built natively into the Content Fabric media pipeline for live and derivative content g…",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Eluvio Unveils Industry-First: Inline, Open-Model Video AI and Agentic Orchestration at IBC 2026",
           "evidenceIds": [
             "E002"
           ]
@@ -219,189 +291,64 @@
         "supporting": 1,
         "total": 1
       },
-      "publicationTier": "candidate",
+      "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-80c15d32e9c8ac1b6278"
+        "evt-f2f708f6097a7f5968df"
       ],
       "eventLifecycles": {
-        "evt-80c15d32e9c8ac1b6278": "first_seen"
+        "evt-f2f708f6097a7f5968df": "first_seen"
       },
-      "eventId": "evt-80c15d32e9c8ac1b6278",
+      "eventId": "evt-f2f708f6097a7f5968df",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T01:27:13+00:00",
-      "lastSeenAt": "2026-09-03T01:27:13+00:00"
-    },
-    {
-      "id": "chg-0876a95c7907a38f59de",
-      "dataset": "institutionEvent",
-      "entityType": "机构/资本事件",
-      "entityId": "professional-media-notebookcheck-0860e5e559c883b6",
-      "entityName": "Review verdict for the Apple MacBook Pro 16 2026 - Powerful M5 Max, insufficient PSU",
-      "action": "added",
-      "changedFields": [
-        "publishedAt"
-      ],
-      "summary": "新增机构/资本事件记录：Review verdict for the Apple MacBook Pro 16 2026 - Powerful M5 Max, insufficient PSU。",
-      "importance": 70,
-      "before": null,
-      "after": {},
-      "changeType": "external_event",
-      "classificationReason": "新增事件型记录",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": null,
-          "evidenceIds": [
-            "E006"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E006"
-      ],
-      "supportingEvidenceIds": [
-        "E006"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-9b55af5a6003a5322294"
-      ],
-      "eventLifecycles": {
-        "evt-9b55af5a6003a5322294": "first_seen"
-      },
-      "eventId": "evt-9b55af5a6003a5322294",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T01:27:13+00:00",
-      "lastSeenAt": "2026-09-03T01:27:13+00:00"
-    },
-    {
-      "id": "chg-2449b199b544dc2e22a7",
-      "dataset": "institutionEvent",
-      "entityType": "机构/资本事件",
-      "entityId": "professional-media-itpro-a5f15431bea7d706",
-      "entityName": "Anthropic says Claude Fable 5.1 ‘sets a new standard for coding, knowledge work, and long-running problem-solving tasks’",
-      "action": "added",
-      "changedFields": [
-        "publishedAt"
-      ],
-      "summary": "新增机构/资本事件记录：Anthropic says Claude Fable 5.1 ‘sets a new standard for coding, knowledge work, and long-running problem-solving tasks’。",
-      "importance": 70,
-      "before": null,
-      "after": {},
-      "changeType": "external_event",
-      "classificationReason": "新增事件型记录",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": null,
-          "evidenceIds": [
-            "E009"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E009"
-      ],
-      "supportingEvidenceIds": [
-        "E009"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-157887d3a01322a18ff2"
-      ],
-      "eventLifecycles": {
-        "evt-157887d3a01322a18ff2": "first_seen"
-      },
-      "eventId": "evt-157887d3a01322a18ff2",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T01:27:13+00:00",
-      "lastSeenAt": "2026-09-03T01:27:13+00:00"
+      "firstSeenAt": "2026-09-03T04:51:30+00:00",
+      "lastSeenAt": "2026-09-03T04:51:30+00:00"
     }
   ],
   "evidence": [
     {
+      "id": "E001",
+      "changeId": "chg-bac2acad4735878fc2e7",
+      "entityName": "千问办公落地长安汽车，“研产供销服”都在用",
+      "claim": "新增高价值情报事件记录：千问办公落地长安汽车，“研产供销服”都在用。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "雷峰网",
+      "title": "千问办公落地长安汽车，“研产供销服”都在用",
+      "url": "https://www.leiphone.com/category/industrynews/QvD9ITqjzVcafOeu.html",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
       "id": "E002",
-      "changeId": "chg-becd5b8031d2e3b54cb3",
-      "entityName": "总投资35.5亿！贵州年产20万吨锂电负极材料项目环评公示 | 欢迎关注CBIS2026【电池材料革新与产业化实践】论坛",
-      "claim": "新增机构/资本事件记录：总投资35.5亿！贵州年产20万吨锂电负极材料项目环评公示 | 欢迎关注CBIS2026【电池材料革新与产业化实践】论坛。",
-      "publicationTier": "candidate",
+      "changeId": "chg-6b50ec47b4f5303189e7",
+      "entityName": "Eluvio Unveils Industry-First: Inline, Open-Model Video AI and Agentic Orchestration at IBC 2026",
+      "claim": "新增高价值情报事件记录：Eluvio Unveils Industry-First: Inline, Open-Model Video AI and Agentic Orchestration at IBC 2026。",
+      "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "电池中国",
-      "title": "总投资35.5亿！贵州年产20万吨锂电负极材料项目环评公示 | 欢迎关注CBIS2026【电池材料革新与产业化实践】论坛",
-      "url": "https://mp.weixin.qq.com/s?new=1&signature=QPH5WE1-yFQcDlB5YuxNXj88fpKaJuZp9KlUpbboH3dyN5Dw7yf4kuk2gzvKMiCW3KxmaHQhqGO4Z41pb1jWbc-kjOpHWxif57s7zD%2AvntF3-4CcITm-2RUaG8UCD7Ms&src=11&timestamp=1788348559&ver=6942",
-      "publishedAt": "2026-09-01",
-      "evidenceGrade": "C",
-      "platformName": "微信",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "Eluvio Unveils Industry-First: Inline, Open-Model Video AI and Agentic Orchestration at IBC 2026",
+      "url": "https://www.prnewswire.com/news-releases/eluvio-unveils-industry-first-inline-open-model-video-ai-and-agentic-orchestration-at-ibc-2026-302868456.html",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "B",
+      "platformName": "新闻稿",
+      "sourceRole": "primary",
       "claimFields": [
-        "publishedAt"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E006",
-      "changeId": "chg-0876a95c7907a38f59de",
-      "entityName": "Review verdict for the Apple MacBook Pro 16 2026 - Powerful M5 Max, insufficient PSU",
-      "claim": "新增机构/资本事件记录：Review verdict for the Apple MacBook Pro 16 2026 - Powerful M5 Max, insufficient PSU。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Notebookcheck",
-      "title": "Review verdict for the Apple MacBook Pro 16 2026 - Powerful M5 Max, insufficient PSU",
-      "url": "https://www.notebookcheck.net/Review-verdict-for-the-Apple-MacBook-Pro-16-2026-Powerful-M5-Max-insufficient-PSU.1383794.0.html",
-      "publishedAt": "2026-09-02",
-      "evidenceGrade": "C",
-      "platformName": "Notebookcheck",
-      "claimFields": [
-        "publishedAt"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E009",
-      "changeId": "chg-2449b199b544dc2e22a7",
-      "entityName": "Anthropic says Claude Fable 5.1 ‘sets a new standard for coding, knowledge work, and long-running problem-solving tasks’",
-      "claim": "新增机构/资本事件记录：Anthropic says Claude Fable 5.1 ‘sets a new standard for coding, knowledge work, and long-running problem-solving tasks’。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "ITPro",
-      "title": "Anthropic says Claude Fable 5.1 ‘sets a new standard for coding, knowledge work, and long-running problem-solving tasks’",
-      "url": "https://www.itpro.com/technology/artificial-intelligence/anthropic-says-claude-fable-5-1-sets-a-new-standard-for-coding-knowledge-work-and-long-running-problem-solving-tasks",
-      "publishedAt": "2026-09-02",
-      "evidenceGrade": "C",
-      "platformName": "ITPro",
-      "claimFields": [
-        "publishedAt"
+        "publishedAt",
+        "summary",
+        "title"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
@@ -411,9 +358,113 @@
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-03T01:27:13+00:00",
+    "generatedAt": "2026-09-03T04:51:30+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-f2f708f6097a7f5968df": {
+        "eventId": "evt-f2f708f6097a7f5968df",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-192e5129d2350fc2dc",
+        "entityName": "Eluvio Unveils Industry-First: Inline, Open-Model Video AI and Agentic Orchestration at IBC 2026",
+        "title": "Eluvio Unveils Industry-First: Inline, Open-Model Video AI and Agentic Orchestration at IBC 2026",
+        "titleAliases": [
+          "eluviounveilsindustryfirstinlineopenmodelvideoaiandagenticorchestrationatibc2026"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-376e3ce7142cabc975d8",
+          "record-bed176f6bf31cbd2a3d0",
+          "src-623e55e10df49249fdff"
+        ],
+        "evidenceFingerprints": [
+          "376e3ce7142cabc975d8"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "Eluvio Unveils Industry-First: Inline, Open-Model Video AI and Agentic Orchestration at IBC 2026",
+            "url": "https://www.prnewswire.com/news-releases/eluvio-unveils-industry-first-inline-open-model-video-ai-and-agentic-orchestration-at-ibc-2026-302868456.html",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "94c2c0deb1619527dd2d",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T04:51:30+00:00",
+        "lastSeenAt": "2026-09-03T04:51:30+00:00",
+        "lastPublishedAt": "2026-09-03T04:51:30+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-3853c1248cd8b1d8e330": {
+        "eventId": "evt-3853c1248cd8b1d8e330",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-7172111d3464c8cde6",
+        "entityName": "千问办公落地长安汽车，“研产供销服”都在用",
+        "title": "千问办公落地长安汽车，“研产供销服”都在用",
+        "titleAliases": [
+          "千问办公落地长安汽车研产供销服都在用"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-992dee7a50c53ebe993b",
+          "record-42962b6f543c7a015393",
+          "src-e0b2913b0853cbcb6ee9"
+        ],
+        "evidenceFingerprints": [
+          "992dee7a50c53ebe993b"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "千问办公落地长安汽车，“研产供销服”都在用",
+            "url": "https://www.leiphone.com/category/industrynews/QvD9ITqjzVcafOeu.html",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "d054a74dd9887bcef9d8",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T04:51:30+00:00",
+        "lastSeenAt": "2026-09-03T04:51:30+00:00",
+        "lastPublishedAt": "2026-09-03T04:51:30+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-fce8159606bad3318afa": {
         "eventId": "evt-fce8159606bad3318afa",
         "dataset": "intelligenceEvent",
@@ -19427,13 +19478,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 3,
-    "reconfirmations": 5,
+    "newEvents": 2,
+    "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 3,
-    "observedEvents": 11,
+    "duplicatesSuppressed": 0,
+    "observedEvents": 2,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -21142,10 +21193,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-03",
-      "generatedAt": "2026-09-03T01:27:13+00:00",
+      "generatedAt": "2026-09-03T04:51:30+00:00",
       "runStatus": "model",
-      "changeCount": 36,
-      "executiveSummary": "本证据包新增三条外部事件记录：贵州年产20万吨锂电负极材料项目环评公示（总投资35.5亿元）、Apple MacBook Pro 16 2026评测（M5 Max性能强但电源不足）、Anthropic发布Claude Fable 5.1并声称设定新标准。三条证据均来自单一媒体来源，证据等级为C，且未经人工审核，仅可作为初步线索，不宜作为确定性事实或投资依据。",
+      "changeCount": 38,
+      "executiveSummary": "证据包包含两条新增高价值情报事件：一是雷峰网报道长安汽车在研发、生产制造、供应链、销售、服务等业务场景接入千问办公，并引用长安汽车高管关于AI native组织的表述；二是PR Newswire发布Eluvio在IBC 2026推出业内首个内联、开放模型视频AI与智能体编排方案的新闻稿。两条事件均处于automated_unreviewed状态，证据等级分别为C和B，属于外部线索或一手新闻稿，尚未经人工复核，因此只能作为初步情报线索，不宜作为确定性重大事实。",
       "eventIds": [
         "evt-31873f37bdd45ab7a46d",
         "evt-a3e49238c5aae05edad0",
@@ -21182,7 +21233,9 @@
         "evt-da584486edbf4a93c95d",
         "evt-80c15d32e9c8ac1b6278",
         "evt-9b55af5a6003a5322294",
-        "evt-157887d3a01322a18ff2"
+        "evt-157887d3a01322a18ff2",
+        "evt-3853c1248cd8b1d8e330",
+        "evt-f2f708f6097a7f5968df"
       ],
       "eventStates": [
         {
@@ -21328,14 +21381,22 @@
         {
           "eventId": "evt-157887d3a01322a18ff2",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-3853c1248cd8b1d8e330",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-f2f708f6097a7f5968df",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 0,
       "candidateTotal": 6,
-      "auxiliaryLeadTotal": 29,
+      "auxiliaryLeadTotal": 31,
       "rejectedTotal": 2,
       "eventSummary": {
-        "newEvents": 36,
+        "newEvents": 38,
         "reconfirmations": 5,
         "updates": 0,
         "corrections": 0,
@@ -21345,19 +21406,15 @@
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 12,
-    "eligibleCandidateCount": 11,
-    "rejectedCandidateCount": 1,
-    "rejectedByDataset": {
-      "institutionEvent": 1
-    },
-    "evidenceCount": 12,
-    "supportingEvidenceCount": 11,
-    "rejectedEvidenceCount": 1,
+    "candidateCount": 2,
+    "eligibleCandidateCount": 2,
+    "rejectedCandidateCount": 0,
+    "rejectedByDataset": {},
+    "evidenceCount": 2,
+    "supportingEvidenceCount": 2,
+    "rejectedEvidenceCount": 0,
     "passedButUnboundEvidenceCount": 0,
-    "rejectionReasons": {
-      "ungraded": 1
-    },
+    "rejectionReasons": {},
     "sourceClassificationWarnings": []
   },
   "sourceClassificationWarnings": [],
@@ -21388,16 +21445,9 @@
     }
   },
   "pipelineHealth": {
-    "overallStatus": "stale",
-    "healthyJobs": 8,
+    "overallStatus": "healthy",
+    "healthyJobs": 9,
     "jobCount": 9,
-    "issueJobs": [
-      {
-        "jobId": "public-intelligence-frequent-refresh",
-        "name": "两小时公开情报刷新",
-        "status": "stale",
-        "lastCompletedAt": "2026-09-02T21:14:55Z"
-      }
-    ]
+    "issueJobs": []
   }
 }
