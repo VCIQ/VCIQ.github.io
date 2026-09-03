@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-03T11:35:45+00:00",
+  "generatedAt": "2026-09-03T15:22:31+00:00",
   "asOfDate": "2026-09-03",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
@@ -12,38 +12,38 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 8355,
-      "completion_tokens": 6799,
-      "total_tokens": 15154,
+      "prompt_tokens": 7962,
+      "completion_tokens": 5387,
+      "total_tokens": 13349,
       "completion_tokens_details": {
-        "reasoning_tokens": 3400
+        "reasoning_tokens": 2694
       },
       "prompt_tokens_details": {
-        "cached_tokens": 0
+        "cached_tokens": 7936
       },
-      "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 8355
+      "prompt_cache_hit_tokens": 7936,
+      "prompt_cache_miss_tokens": 26
     }
   },
   "changeSummary": {
-    "totalDetected": 10,
-    "total": 10,
+    "totalDetected": 9,
+    "total": 9,
     "byDataset": {
-      "intelligenceEvent": 10
+      "intelligenceEvent": 9
     },
     "byChangeType": {
-      "external_event": 10
+      "external_event": 9
     },
-    "externalCandidates": 10,
+    "externalCandidates": 9,
     "qualityRejected": 0,
     "maintenanceExcluded": 0,
     "aggregatedEvents": 0,
-    "highestImportance": 91,
+    "highestImportance": 89,
     "verifiedChangeTotal": 0,
     "candidateTotal": 0,
-    "auxiliaryLeadTotal": 10,
+    "auxiliaryLeadTotal": 9,
     "rejectedTotal": 0,
-    "newEvents": 10,
+    "newEvents": 9,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
@@ -53,348 +53,277 @@
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "2026-09-03证据包共收录10条高价值情报事件，全部为C级外部线索且未经人工复核。当日主线集中在AI基础设施与模型竞争：KKR为100亿美元AI基础设施投资主体Helix数字基础设施任命新高管（E006），Soitec因AI需求上调业绩指引、股价单日涨超15%（E007），Meta发布Muse Spark 1.3模型（E009）；同时出现AI监管政策分歧：美国联合科技巨头向G20推销轻监管（E003），南非UCT研究则警告不能拖延AI监管（E004）。国内方面，上海公布首批38家算力生态合作伙伴，连尚集团入选算力应用方（E005），腾讯发布WorkBuddy金融版（E008）。融资侧，碧澄能源C1轮融资显示新能源资产证券化从首单走向批量（E001），VAST半年融资57亿元、完成30亿元B轮和B+轮（E002）。另有面向创业者的AI工具综述（E010）。整体看，AI基础设施投资、算力生态与监管博弈是当日最密集主题，但证据等级低，需后续验证。",
+    "executiveSummary": "2026年9月3日证据包显示，英伟达拟以约129.3亿至130亿美元收购Hugging Face，交易预计2027年上半年完成并需监管批准，多家媒体交叉印证但均为外部线索级证据，金额表述存在细微差异；同日另有AI浏览器代理能力评测、Quantinuum与Aramco量子计算合作、Figure与Nscale的10万GPU算力合作、ZINOVA与逐际动力建筑施工机器人POC、Whop与xAI产品集成等事件。整体看，算力、开源模型、量子计算、具身智能与AI应用层均有新动态，但多数证据等级为C或B，且未经人工复核，应视为待验证线索而非确定性结论。",
     "keyDevelopments": [
       {
-        "title": "KKR为100亿美元AI基础设施投资项目Helix数字基础设施任命新高管",
-        "assessment": "KKR旗下规模达100亿美元的AI新投资主体Helix数字基础设施在原AWS首席执行官亚当·塞利普斯基出任CEO后，新增两名高管执掌。该事件表明大型私募机构继续加码AI基础设施，但细节来自知情人士，且证据为C级，具体职责与投资进度待验证。",
-        "importance": 4,
+        "title": "英伟达拟以约129.3亿至130亿美元收购Hugging Face",
+        "assessment": "黄仁勋在X平台官宣拟收购Hugging Face，交易预计2027年上半年完成交割并需监管批准。三篇来源（新浪财经两篇、WIRED一篇）交叉印证交易存在，但金额表述分别为129.3亿美元和130亿美元，且均为C级外部线索、自动未复核状态，因此交易金额与条款细节仍需以官方公告为准。",
+        "importance": 5,
         "confidence": "medium",
         "entities": [
-          "KKR",
-          "Helix数字基础设施",
-          "亚当·塞利普斯基"
+          "NVIDIA",
+          "Hugging Face",
+          "黄仁勋"
         ],
         "evidenceIds": [
-          "E006"
+          "E001",
+          "E002",
+          "E003"
         ]
       },
       {
-        "title": "Soitec上调业绩指引，AI需求推动股价单日涨超15%",
-        "assessment": "Soitec将第二财季固定汇率及可比合并口径营收增速指引上调，股价单日涨幅超15%，今年以来累计涨幅超五倍，显示AI基础设施建设对上游材料/器件需求的拉动。但证据为C级媒体快照，未提供指引具体数值，涨幅与指引细节需以公司公告为准。",
+        "title": "Figure与Nscale签署最高10万颗NVIDIA Vera Rubin GPU战略合作",
+        "assessment": "Figure AI官方发布与Nscale合作，部署NVIDIA Vera Rubin平台，最高10万颗GPU，初始承诺35亿美元，目标2027年下半年在德克萨斯州Barstow开始部署。来源为B级一手新闻稿，但属于公司自我声明，尚未有独立验证或客户确认。",
         "importance": 4,
         "confidence": "medium",
         "entities": [
-          "Soitec"
-        ],
-        "evidenceIds": [
-          "E007"
-        ]
-      },
-      {
-        "title": "Meta发布新一代AI模型Muse Spark 1.3",
-        "assessment": "Meta周三宣布推出Muse Spark 1.3，公司称代码生成与智能体能力更强，token消耗量较上一代降低25%。该发布反映头部大模型厂商持续迭代，但性能与成本优势为厂商自述，缺乏第三方基准验证。",
-        "importance": 4,
-        "confidence": "medium",
-        "entities": [
-          "Meta",
-          "Muse Spark 1.3"
+          "Figure AI",
+          "Nscale",
+          "NVIDIA"
         ],
         "evidenceIds": [
           "E009"
         ]
       },
       {
-        "title": "美国联合科技巨头向G20推销AI轻监管，黄仁勋、奥特曼等警告过度监管",
-        "assessment": "科技企业高管与特朗普政府官员向其他主要经济体政策制定者呼吁亲AI政策，认为严苛监管会扼杀产业。该事件反映AI监管国际博弈升温，但报道为媒体转述，具体政策主张与G20回应待验证。",
-        "importance": 4,
-        "confidence": "medium",
-        "entities": [
-          "美国",
-          "G20",
-          "黄仁勋",
-          "奥特曼"
-        ],
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "title": "碧澄能源C1轮融资，新能源资产证券化从首单走向批量",
-        "assessment": "碧澄能源完成C1轮融资，报道称天合、阿特斯、中联基金等已入局，新能源资产证券化行业通路成型。该事件对新能源资产金融化有信号意义，但融资规模、投资方名单与证券化产品细节未在证据中展开。",
-        "importance": 3,
-        "confidence": "low",
-        "entities": [
-          "碧澄能源",
-          "天合",
-          "阿特斯",
-          "中联基金"
-        ],
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "title": "VAST半年融资57亿元，完成30亿元B轮和B+轮融资",
-        "assessment": "VAST作为95后创业者创办的AI3D公司，半年内融资57亿元，其中B轮和B+轮合计30亿元，创始团队来自商汤、MiniMax。融资规模较大，但估值、投资方与产品进展未在证据中披露。",
-        "importance": 3,
-        "confidence": "low",
-        "entities": [
-          "VAST"
-        ],
-        "evidenceIds": [
-          "E002"
-        ]
-      },
-      {
-        "title": "上海公布首批38家算力生态合作伙伴，连尚集团入选算力应用方",
-        "assessment": "上海市数据局、上海市通信管理局公布2026年第一批算力生态合作伙伴名单，共38家，其中算力供给方12家、算力应用方18家、平台共建方8家，连尚集团入选算力应用方。该事件显示地方算力生态建设进入落地阶段，但名单完整性与合作细则未披露。",
+        "title": "Quantinuum与Aramco签署非约束性MOU探索工业量子计算",
+        "assessment": "Quantinuum宣布与沙特阿美签署非约束性谅解备忘录，探索能源行业工业量子计算研究、应用与专业能力协同。来源为B级一手新闻稿，但MOU本身为非约束性，商业落地与收入影响尚不明确。",
         "importance": 3,
         "confidence": "medium",
         "entities": [
-          "连尚集团",
-          "上海市数据局",
-          "上海市通信管理局"
+          "Quantinuum",
+          "Aramco"
         ],
         "evidenceIds": [
           "E005"
         ]
       },
       {
-        "title": "腾讯发布WorkBuddy金融版，面向金融机构的AI智能工作台",
-        "assessment": "腾讯WorkBuddy金融版于9月3日正式上线，面向券商、银行、保险等提供专家与技能矩阵、金融数据源及安全底座，覆盖投研、合规、客户经营、信贷尽调、财富资配等场景。产品发布为事实，但客户案例与落地效果未在证据中体现。",
+        "title": "Decodo研究显示AI浏览器代理未完全掌握真实浏览任务",
+        "assessment": "TechRadar报道Decodo研究称，没有任何一个AI代理在20分制测试中拿到满分；Claude for Chrome表现优于ChatGPT Chrome扩展，且不同测试类别表现差异明显。该研究为第三方评测，样本与方法细节在证据摘要中不完整，结论应视为阶段性评测而非行业定论。",
         "importance": 3,
         "confidence": "medium",
         "entities": [
-          "腾讯",
-          "WorkBuddy金融版"
-        ],
-        "evidenceIds": [
-          "E008"
-        ]
-      },
-      {
-        "title": "UCT研究警告南非不能拖延AI监管",
-        "assessment": "南非UCT研究指出南非需要可执行的AI监管，以应对偏见、权利侵犯、治理碎片化及新兴技术风险。该研究与美方轻监管主张形成对比，显示全球AI监管路径分歧，但研究具体内容与政策影响待验证。",
-        "importance": 2,
-        "confidence": "medium",
-        "entities": [
-          "UCT",
-          "南非"
+          "Anthropic",
+          "OpenAI",
+          "Decodo"
         ],
         "evidenceIds": [
           "E004"
         ]
       },
       {
-        "title": "TechRadar盘点2026年创业可用的7款AI工具",
-        "assessment": "TechRadar文章称AI工具可以以远低于常规成本自动化大规模任务，适合单人/小企业创业。该内容为工具综述，信息价值较低，不构成重大产业信号。",
+        "title": "ZINOVA联合逐际动力完成建筑施工机器人缩比POC",
+        "assessment": "ZINOVA基于逐际动力TRON 2双臂具身机器人，联合RIC Robotics完成混凝土倾覆板缩比施工场景演示，覆盖支模组框、多层钢筋铺设与绑扎等工序，验证了具身机器人使用现有工具参与复杂施工流程的可行性。来源为C级专业媒体，属于POC演示，距离规模化商用仍有距离。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "ZINOVA",
+          "逐际动力",
+          "RIC Robotics"
+        ],
+        "evidenceIds": [
+          "E007"
+        ]
+      },
+      {
+        "title": "Whop推出全栈API并与xAI产品集成",
+        "assessment": "Whop发布全栈API，使Grok和Grok Bot用户可直接将创意转化为业务，并让Cursor开发者可在编码环境内调用Whop端到端业务功能。来源为B级一手新闻稿，属于产品与生态合作声明，实际采用情况待观察。",
+        "importance": 2,
+        "confidence": "medium",
+        "entities": [
+          "Whop",
+          "xAI",
+          "Cursor"
+        ],
+        "evidenceIds": [
+          "E008"
+        ]
+      },
+      {
+        "title": "Tom's Hardware发布31款CPU游戏基准测试",
+        "assessment": "Tom's Hardware在《鬼武者：剑之道》中测试31款CPU，X3D系列比旗舰产品领先约10%，270K Plus落后于Raptor Lake Refresh。该事件为消费级硬件评测，对AI与科技投资主题相关性较低，但反映CPU竞争格局。",
         "importance": 1,
         "confidence": "medium",
         "entities": [
-          "TechRadar"
+          "AMD",
+          "Intel",
+          "Capcom"
         ],
         "evidenceIds": [
-          "E010"
+          "E006"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "AI基础设施投资",
+        "entity": "NVIDIA",
         "direction": "positive",
-        "statement": "KKR为100亿美元AI基础设施投资主体Helix数字基础设施任命新高管，叠加Soitec因AI需求上调指引，显示机构资本与上游供应链均确认AI基础设施需求旺盛。",
+        "statement": "英伟达拟收购Hugging Face并推进Vera Rubin平台大规模部署合作，显示其在开源AI生态与下一代算力平台上的双重布局意图；但交易尚待监管批准，金额表述存在129.3亿与130亿美元差异，且证据均为外部线索或公司自述，需官方确认。",
         "evidenceIds": [
-          "E006",
-          "E007"
-        ]
-      },
-      {
-        "entity": "大模型竞争格局",
-        "direction": "mixed",
-        "statement": "Meta发布Muse Spark 1.3并宣称token消耗降低25%，显示头部厂商加速追赶；但性能与成本优势为厂商自述，竞争格局变化需第三方基准验证。",
-        "evidenceIds": [
+          "E001",
+          "E002",
+          "E003",
           "E009"
         ]
       },
       {
-        "entity": "AI监管政策",
-        "direction": "mixed",
-        "statement": "美国联合科技巨头向G20推销AI轻监管，而南非UCT研究警告不能拖延AI监管，全球AI监管路径呈现明显分歧，跨境合规不确定性上升。",
+        "entity": "Hugging Face",
+        "direction": "positive",
+        "statement": "Hugging Face作为开源AI模型与数据集仓库，若被英伟达收购，可能获得更强算力与商业化资源，但其独立性与开源中立定位可能成为监管与社区关注点；目前交易未完成，影响待评估。",
         "evidenceIds": [
-          "E003",
-          "E004"
+          "E001",
+          "E002",
+          "E003"
         ]
       },
       {
-        "entity": "中国算力生态",
+        "entity": "量子计算行业",
         "direction": "positive",
-        "statement": "上海公布首批38家算力生态合作伙伴并设置供给方、应用方、平台共建方三类主体，连尚集团入选算力应用方，显示地方算力生态建设进入落地阶段。",
+        "statement": "Quantinuum与Aramco签署非约束性MOU，显示工业量子计算向能源行业渗透的早期迹象，但MOU不具约束力，尚不能视为确定收入或部署承诺。",
         "evidenceIds": [
           "E005"
         ]
       },
       {
-        "entity": "新能源资产证券化",
-        "direction": "positive",
-        "statement": "碧澄能源C1轮融资及天合、阿特斯、中联基金等入局，显示新能源资产证券化从首单走向批量，行业通路成型。",
+        "entity": "AI浏览器代理",
+        "direction": "mixed",
+        "statement": "Decodo研究显示AI代理在真实浏览任务中尚无满分表现，且不同产品类别表现分化，说明该赛道能力尚未成熟，产品选型需按场景匹配。",
         "evidenceIds": [
-          "E001"
+          "E004"
         ]
       },
       {
-        "entity": "AI3D创业融资",
+        "entity": "具身智能/建筑机器人",
         "direction": "positive",
-        "statement": "VAST半年融资57亿元并完成30亿元B轮和B+轮融资，显示AI3D赛道在一级市场获得大额资金注入。",
+        "statement": "ZINOVA与逐际动力、RIC Robotics的POC验证了通用机器人平台结合现有工具参与复杂施工的可行性，但缩比演示距离规模化商用仍有较大不确定性。",
         "evidenceIds": [
-          "E002"
+          "E007"
         ]
       },
       {
-        "entity": "金融AI应用",
+        "entity": "AI算力基础设施",
         "direction": "positive",
-        "statement": "腾讯WorkBuddy金融版正式上线，面向券商、银行、保险提供开箱即用智能工作台，显示AI Agent在金融业务现场加速落地。",
+        "statement": "Figure与Nscale的10万GPU合作意向显示AI算力需求仍在扩张，初始承诺35亿美元，但部署始于2027年下半年，执行风险与融资安排未披露。",
         "evidenceIds": [
-          "E008"
+          "E009"
         ]
       }
     ],
     "watchlist": [
       {
-        "item": "KKR Helix数字基础设施的后续投资公告与项目落地",
-        "reason": "100亿美元AI基础设施投资主体高管到位，但具体投资标的、出资进度与项目落地尚未披露。",
-        "nextEvidence": "KKR或Helix数字基础设施的官方公告、监管文件或项目签约信息",
+        "item": "英伟达-Hugging Face交易的监管审批进展与官方公告",
+        "reason": "交易金额在证据中存在129.3亿与130亿美元差异，且需监管批准，交割预计2027年上半年；官方确认与审批动态将决定交易确定性。",
+        "nextEvidence": "英伟达或Hugging Face官方新闻稿、监管 filings、交易终止或获批公告",
         "evidenceIds": [
-          "E006"
+          "E001",
+          "E002",
+          "E003"
         ]
       },
       {
-        "item": "Soitec第二财季业绩指引的具体数值与后续财报",
-        "reason": "当前证据仅提及指引上调与股价涨幅，未提供指引具体数值，需以公司官方披露为准。",
-        "nextEvidence": "Soitec官方业绩指引文件或财报公告",
-        "evidenceIds": [
-          "E007"
-        ]
-      },
-      {
-        "item": "Meta Muse Spark 1.3的第三方基准评测与采用情况",
-        "reason": "模型能力与token消耗降低25%为厂商自述，需第三方基准与开发者采用数据验证。",
-        "nextEvidence": "第三方基准测试结果、开发者社区采用数据或Meta官方技术报告",
+        "item": "Figure-Nscale 10万GPU合作的后续执行细节",
+        "reason": "合作声明为Figure官方发布，初始承诺35亿美元，但部署2027年下半年才开始，需观察融资、客户锁定与交付里程碑。",
+        "nextEvidence": "Nscale或Figure的后续公告、融资信息、部署里程碑更新",
         "evidenceIds": [
           "E009"
         ]
       },
       {
-        "item": "G20对AI轻监管主张的回应与后续国际监管协调",
-        "reason": "美方联合科技巨头推销轻监管，但G20成员国立场与政策产出尚未明确。",
-        "nextEvidence": "G20会议公报、成员国AI政策声明或后续监管框架文件",
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "item": "碧澄能源C1轮融资的规模、投资方名单与证券化产品细节",
-        "reason": "报道标题提及天合、阿特斯、中联基金等入局，但证据摘要未展开融资规模与产品结构。",
-        "nextEvidence": "碧澄能源官方融资公告、工商变更记录或证券化产品发行文件",
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "item": "VAST融资的投资方、估值与产品商业化进展",
-        "reason": "半年57亿元融资规模较大，但投资方、估值与AI3D产品落地情况未披露。",
-        "nextEvidence": "VAST官方融资公告、投资方确认或产品发布信息",
-        "evidenceIds": [
-          "E002"
-        ]
-      },
-      {
-        "item": "上海市首批算力生态合作伙伴的完整名单与后续算力调用政策",
-        "reason": "当前证据仅确认连尚集团入选算力应用方，完整名单与平台租用、模型调用细则待公布。",
-        "nextEvidence": "上海市数据局或通信管理局官方名单与实施细则",
+        "item": "Quantinuum-Aramco MOU是否转化为正式合同",
+        "reason": "MOU为非约束性，需观察是否升级为付费试点或商业合同，以判断量子计算在能源行业的真实落地节奏。",
+        "nextEvidence": "双方后续联合公告、试点项目或采购合同披露",
         "evidenceIds": [
           "E005"
         ]
       },
       {
-        "item": "腾讯WorkBuddy金融版的客户案例与安全合规认证",
-        "reason": "产品发布为事实，但金融机构实际采用情况与合规认证细节未在证据中体现。",
-        "nextEvidence": "腾讯官方客户案例、金融机构合作公告或合规认证文件",
+        "item": "AI浏览器代理能力评测的后续验证",
+        "reason": "Decodo研究为单一第三方评测，样本与方法细节有限；需更多独立评测或厂商回应来确认能力差距。",
+        "nextEvidence": "其他评测机构报告、Anthropic/OpenAI官方回应或产品更新",
         "evidenceIds": [
-          "E008"
+          "E004"
         ]
       },
       {
-        "item": "南非AI监管研究的政策转化与立法进展",
-        "reason": "UCT研究警告不能拖延AI监管，但研究是否转化为可执行立法尚待观察。",
-        "nextEvidence": "南非政府AI监管立法草案或政策文件",
+        "item": "ZINOVA-逐际动力建筑机器人POC是否进入真实工地试点",
+        "reason": "当前为缩比施工场景演示，需观察是否扩展至真实工地、客户验证与订单转化。",
+        "nextEvidence": "ZINOVA、逐际动力或RIC Robotics的后续试点公告、客户案例",
         "evidenceIds": [
-          "E004"
+          "E007"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "证据等级低且未经人工复核，关键数字可能失真",
-        "reason": "全部10条证据均为C级外部线索且reviewStatus为automated_unreviewed，融资规模、股价涨幅、指引上调等数字均来自媒体快照，未经公司公告或人工核实。",
+        "risk": "英伟达收购Hugging Face可能因监管审查或反垄断问题受阻",
+        "reason": "交易需获得监管部门批准，且Hugging Face作为开源社区基础设施，其被芯片巨头收购可能引发竞争与中立性关切；证据均为媒体线索，尚无监管表态。",
         "evidenceIds": [
           "E001",
           "E002",
-          "E006",
-          "E007",
+          "E003"
+        ]
+      },
+      {
+        "risk": "交易金额与条款存在信息不一致风险",
+        "reason": "新浪财经两篇报道分别使用129.3亿美元和130亿美元，WIRED使用129亿美元，差异可能源于四舍五入或信息误差，需官方口径确认。",
+        "evidenceIds": [
+          "E001",
+          "E002",
+          "E003"
+        ]
+      },
+      {
+        "risk": "大规模GPU合作存在执行与融资风险",
+        "reason": "Figure-Nscale合作涉及最高10万颗GPU与35亿美元初始承诺，部署2027年下半年才开始，公司自述未提供融资细节，存在延期或缩减风险。",
+        "evidenceIds": [
           "E009"
         ]
       },
       {
-        "risk": "AI基础设施投资存在资本开支过热与回报不及预期风险",
-        "reason": "KKR设立100亿美元AI基础设施投资主体、Soitec因AI需求上调指引，显示资本与供应链高度乐观，但证据未提供需求可持续性或项目回报数据。",
+        "risk": "AI代理产品宣称能力与实际表现差距可能影响采用",
+        "reason": "Decodo研究显示没有代理获得满分，且类别表现差异大，若厂商营销宣称超过实际能力，可能导致企业客户失望与赛道估值回调。",
         "evidenceIds": [
-          "E006",
-          "E007"
-        ]
-      },
-      {
-        "risk": "全球AI监管分歧加大跨境合规不确定性",
-        "reason": "美国向G20推销轻监管，而南非研究主张加强可执行监管，不同司法辖区监管路径分化可能增加跨国AI企业的合规成本与市场准入风险。",
-        "evidenceIds": [
-          "E003",
           "E004"
         ]
       },
       {
-        "risk": "新能源资产证券化批量复制可能面临资产质量与流动性风险",
-        "reason": "碧澄能源C1轮融资显示新能源资产证券化从首单走向批量，但证据未提供底层资产质量、增信结构与二级市场流动性信息。",
+        "risk": "非约束性MOU可能不产生实际商业价值",
+        "reason": "Quantinuum与Aramco的MOU明确为非约束性，属于探索性合作，可能停留在研究层面而无法转化为收入。",
         "evidenceIds": [
-          "E001"
+          "E005"
         ]
       },
       {
-        "risk": "大模型厂商自述性能优势可能夸大，竞争格局判断存在偏差",
-        "reason": "Meta宣称Muse Spark 1.3代码生成与智能体能力更强且token消耗降低25%，但缺乏第三方基准验证，若实际表现不及宣传将影响竞争格局判断。",
+        "risk": "机器人POC成果可能无法规模化复制",
+        "reason": "ZINOVA的施工演示为缩比场景，覆盖核心工序但未证明在真实工地环境下的效率、成本与可靠性优势。",
         "evidenceIds": [
-          "E009"
-        ]
-      },
-      {
-        "risk": "AI3D赛道高额融资可能伴随估值泡沫",
-        "reason": "VAST半年融资57亿元，但证据未披露估值、收入或产品商业化进展，高额融资与商业化进度不匹配可能带来估值回调风险。",
-        "evidenceIds": [
-          "E002"
+          "E007"
         ]
       }
     ],
-    "methodologyNote": "本报告仅基于2026-09-03证据包中的10条C级外部线索（E001-E010）进行分析，所有事件均来自媒体快照且未经人工复核，因此将事实、推断与待验证事项分开表述，并对关键数字保持谨慎。每个判断均引用至少一个evidenceIds中的证据编号；未补充任何外部事实。证据等级低或内部差异证据未写成确定性重大事实。本报告不构成买入、卖出、目标价或收益承诺。 数据管线提示：每日证据约束研究摘要=degraded。"
+    "methodologyNote": "本分析仅基于2026-09-03证据包中的9条证据（E001-E009），未补充外部事实。证据等级分布：B级3条（E005、E008、E009，均为一手新闻稿或官方声明），C级6条（媒体转载或专业媒体）。所有事件均为automated_unreviewed状态，未经人工复核。分析将事实（如媒体报道内容、公司声明）、推断（如战略意图、行业影响）与待验证事项（如监管审批、交易金额差异、MOU转化）分开表述。由于证据等级偏低且来源单一，所有判断均标注为medium或low置信度，不构成投资建议。"
   },
   "changes": [
     {
-      "id": "chg-cdd1be7f9df268e8cde2",
+      "id": "chg-d83f683fcdccd73458ec",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-f7f96cb82979cb0004",
-      "entityName": "碧澄能源C1轮融资背后，天合、阿特斯、中联基金等已纷纷入局，新能源资产证券化从“首单”走向“批量”",
+      "entityId": "intelligence-event-9a05773b44394f17d2",
+      "entityName": "黄仁勋官宣：英伟达拟以129.3亿美元收购AI创企Hugging Face",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：碧澄能源C1轮融资背后，天合、阿特斯、中联基金等已纷纷入局，新能源资产证券化从“首单”走向“批量”。",
-      "importance": 91,
+      "summary": "新增高价值情报事件记录：黄仁勋官宣：英伟达拟以129.3亿美元收购AI创企Hugging Face。",
+      "importance": 89,
       "before": null,
       "after": {
         "publishedAt": "2026-09-03",
-        "summary": "碧澄能源完成融资，新能源资产证券化行业通路成型。",
-        "title": "碧澄能源C1轮融资背后，天合、阿特斯、中联基金等已纷纷入局，新能源资产证券化从“首单”走向“批量”"
+        "summary": "英伟达CEO黄仁勋在X发文，官宣拟以129.3亿美元收购AI创企“抱抱脸”（Hugging Face），据悉，交易预计于2027年上半年完成交割，需获得监管部门批准。",
+        "title": "黄仁勋官宣：英伟达拟以129.3亿美元收购AI创企Hugging Face"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -416,7 +345,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "碧澄能源完成融资，新能源资产证券化行业通路成型。",
+          "after": "英伟达CEO黄仁勋在X发文，官宣拟以129.3亿美元收购AI创企“抱抱脸”（Hugging Face），据悉，交易预计于2027年上半年完成交割，需获得监管部门批准。",
           "evidenceIds": [
             "E001"
           ]
@@ -424,7 +353,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "碧澄能源C1轮融资背后，天合、阿特斯、中联基金等已纷纷入局，新能源资产证券化从“首单”走向“批量”",
+          "after": "黄仁勋官宣：英伟达拟以129.3亿美元收购AI创企Hugging Face",
           "evidenceIds": [
             "E001"
           ]
@@ -445,35 +374,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-94d5c9efcaa0cc137fed"
+        "evt-830f3ccaff434f55920b"
       ],
       "eventLifecycles": {
-        "evt-94d5c9efcaa0cc137fed": "first_seen"
+        "evt-830f3ccaff434f55920b": "first_seen"
       },
-      "eventId": "evt-94d5c9efcaa0cc137fed",
+      "eventId": "evt-830f3ccaff434f55920b",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T11:35:45+00:00",
-      "lastSeenAt": "2026-09-03T11:35:45+00:00"
+      "firstSeenAt": "2026-09-03T15:22:31+00:00",
+      "lastSeenAt": "2026-09-03T15:22:31+00:00"
     },
     {
-      "id": "chg-110a8fc4d7da56ae9532",
+      "id": "chg-36ff85d63b3b1cdb9f5d",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-bce947957d40c8574b",
-      "entityName": "半年狂揽57亿，95后创业做AI3D，曾是商汤、MiniMax元老",
+      "entityId": "intelligence-event-2b1f5b1dedea9a2d96",
+      "entityName": "英伟达130亿美元收购开源AI平台Hugging Face",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：半年狂揽57亿，95后创业做AI3D，曾是商汤、MiniMax元老。",
-      "importance": 91,
+      "summary": "新增高价值情报事件记录：英伟达130亿美元收购开源AI平台Hugging Face。",
+      "importance": 89,
       "before": null,
       "after": {
         "publishedAt": "2026-09-03",
-        "summary": "VAST完成30亿元B轮和B+轮融资。",
-        "title": "半年狂揽57亿，95后创业做AI3D，曾是商汤、MiniMax元老"
+        "summary": "英伟达已达成协议，以 130 亿美元收购 AI 模型平台 Hugging Face。这家市值 5.4 万亿美元的芯片巨头，再度动用雄厚资金实力，助推人工智能产业高速发展...",
+        "title": "英伟达130亿美元收购开源AI平台Hugging Face"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -495,7 +424,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "VAST完成30亿元B轮和B+轮融资。",
+          "after": "英伟达已达成协议，以 130 亿美元收购 AI 模型平台 Hugging Face。这家市值 5.4 万亿美元的芯片巨头，再度动用雄厚资金实力，助推人工智能产业高速发展...",
           "evidenceIds": [
             "E002"
           ]
@@ -503,7 +432,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "半年狂揽57亿，95后创业做AI3D，曾是商汤、MiniMax元老",
+          "after": "英伟达130亿美元收购开源AI平台Hugging Face",
           "evidenceIds": [
             "E002"
           ]
@@ -524,35 +453,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-c9b5ff159d634b9fb87b"
+        "evt-0633f03bd59fcaeecf53"
       ],
       "eventLifecycles": {
-        "evt-c9b5ff159d634b9fb87b": "first_seen"
+        "evt-0633f03bd59fcaeecf53": "first_seen"
       },
-      "eventId": "evt-c9b5ff159d634b9fb87b",
+      "eventId": "evt-0633f03bd59fcaeecf53",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T11:35:45+00:00",
-      "lastSeenAt": "2026-09-03T11:35:45+00:00"
+      "firstSeenAt": "2026-09-03T15:22:31+00:00",
+      "lastSeenAt": "2026-09-03T15:22:31+00:00"
     },
     {
-      "id": "chg-c4d0436726822edeab97",
+      "id": "chg-e9a65f8b840d0711b464",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-31aabf8c4e587af63f",
-      "entityName": "美国联合科技巨头向G20推销AI“轻监管” 黄仁勋、奥特曼等警告过度监管",
+      "entityId": "intelligence-event-d2ff856ca60be20824",
+      "entityName": "Nvidia’s Hugging Face Acquisition Is a $12.9 Billion Bet on Open-Source AI",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：美国联合科技巨头向G20推销AI“轻监管” 黄仁勋、奥特曼等警告过度监管。",
-      "importance": 86,
+      "summary": "新增高价值情报事件记录：Nvidia’s Hugging Face Acquisition Is a $12.9 Billion Bet on Open-Source AI。",
+      "importance": 89,
       "before": null,
       "after": {
         "publishedAt": "2026-09-03",
-        "summary": "科技企业高管与特朗普政府官员向其他主要经济体的政策制定者呼吁采取亲AI政策，他们提出严苛监管会扼杀这样一个有望拉动全球经济高速增长、攻克疑难疾病的产业。",
-        "title": "美国联合科技巨头向G20推销AI“轻监管” 黄仁勋、奥特曼等警告过度监管"
+        "summary": "The long-rumored deal will give the chip giant access to—and help it promote—a huge repository of open-source AI models and data sets.",
+        "title": "Nvidia’s Hugging Face Acquisition Is a $12.9 Billion Bet on Open-Source AI"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -574,7 +503,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "科技企业高管与特朗普政府官员向其他主要经济体的政策制定者呼吁采取亲AI政策，他们提出严苛监管会扼杀这样一个有望拉动全球经济高速增长、攻克疑难疾病的产业。",
+          "after": "The long-rumored deal will give the chip giant access to—and help it promote—a huge repository of open-source AI models and data sets.",
           "evidenceIds": [
             "E003"
           ]
@@ -582,7 +511,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "美国联合科技巨头向G20推销AI“轻监管” 黄仁勋、奥特曼等警告过度监管",
+          "after": "Nvidia’s Hugging Face Acquisition Is a $12.9 Billion Bet on Open-Source AI",
           "evidenceIds": [
             "E003"
           ]
@@ -603,35 +532,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-f31a61980c8a67e5bd8e"
+        "evt-89abda2a7e186c7a6f45"
       ],
       "eventLifecycles": {
-        "evt-f31a61980c8a67e5bd8e": "first_seen"
+        "evt-89abda2a7e186c7a6f45": "first_seen"
       },
-      "eventId": "evt-f31a61980c8a67e5bd8e",
+      "eventId": "evt-89abda2a7e186c7a6f45",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T11:35:45+00:00",
-      "lastSeenAt": "2026-09-03T11:35:45+00:00"
+      "firstSeenAt": "2026-09-03T15:22:31+00:00",
+      "lastSeenAt": "2026-09-03T15:22:31+00:00"
     },
     {
-      "id": "chg-7110eee346586132dc0e",
+      "id": "chg-da39304af3f9ac962a5a",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-b51d104592bc214b2f",
-      "entityName": "UCT research warns SA cannot delay AI regulation",
+      "entityId": "intelligence-event-e3b108017e445ac323",
+      "entityName": "Research finds AI agents haven't quite mastered real-world browsing tasks despite claiming they can",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：UCT research warns SA cannot delay AI regulation。",
-      "importance": 86,
+      "summary": "新增高价值情报事件记录：Research finds AI agents haven't quite mastered real-world browsing tasks despite claiming they can。",
+      "importance": 85,
       "before": null,
       "after": {
         "publishedAt": "2026-09-03",
-        "summary": "SA needs enforceable AI regulation to address bias, rights violations, fragmented governance and emerging technological risks.",
-        "title": "UCT research warns SA cannot delay AI regulation"
+        "summary": "Not a single agent scored the full 20 out of 20 Claude for Chrome performed better than the ChatGPT Chrome Extension With performance varying by testing category, Decodo advises selecting an agent based on planned usage New Decodo research has criticized AI a…",
+        "title": "Research finds AI agents haven't quite mastered real-world browsing tasks despite claiming they can"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -653,7 +582,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "SA needs enforceable AI regulation to address bias, rights violations, fragmented governance and emerging technological risks.",
+          "after": "Not a single agent scored the full 20 out of 20 Claude for Chrome performed better than the ChatGPT Chrome Extension With performance varying by testing category, Decodo advises selecting an agent based on planned usage New Decodo research has criticized AI a…",
           "evidenceIds": [
             "E004"
           ]
@@ -661,7 +590,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "UCT research warns SA cannot delay AI regulation",
+          "after": "Research finds AI agents haven't quite mastered real-world browsing tasks despite claiming they can",
           "evidenceIds": [
             "E004"
           ]
@@ -682,35 +611,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-c95fb1b6790adb00f6f5"
+        "evt-7b8a453e1bdbb11d6e51"
       ],
       "eventLifecycles": {
-        "evt-c95fb1b6790adb00f6f5": "first_seen"
+        "evt-7b8a453e1bdbb11d6e51": "first_seen"
       },
-      "eventId": "evt-c95fb1b6790adb00f6f5",
+      "eventId": "evt-7b8a453e1bdbb11d6e51",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T11:35:45+00:00",
-      "lastSeenAt": "2026-09-03T11:35:45+00:00"
+      "firstSeenAt": "2026-09-03T15:22:31+00:00",
+      "lastSeenAt": "2026-09-03T15:22:31+00:00"
     },
     {
-      "id": "chg-f468d817416228d13a04",
+      "id": "chg-3f0cdb7390798fb26334",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-8f5ac8a5794f153282",
-      "entityName": "连尚集团入选上海市首批算力生态合作伙伴名单",
+      "entityId": "intelligence-event-6fa39d34000003816a",
+      "entityName": "Quantinuum Signs Non-binding MOU with Aramco to Explore Synergies Leveraging Industrial Quantum Computing Research, Applications, and Expertise",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：连尚集团入选上海市首批算力生态合作伙伴名单。",
-      "importance": 84,
+      "summary": "新增高价值情报事件记录：Quantinuum Signs Non-binding MOU with Aramco to Explore Synergies Leveraging Industrial Quantum Computing Research, Applications, and Expertise。",
+      "importance": 85,
       "before": null,
       "after": {
         "publishedAt": "2026-09-03",
-        "summary": "近日，据雷峰网了解，上海市数据局、上海市通信管理局正式公布2026年第一批算力生态合作伙伴名单。上海连尚网络科技集团有限公司（以下简称“连尚集团”）入选“算力应用方”名单，成为上海首批38家算力生态合作伙伴之一。 此次征集面向算力全产业链，共设置算力供给方、算力应用方和平台共建方三类合作主体。经专家评审，最终确定算力供给方12家、算力应用方18家、平台共建方8家。 根据征集要求，算力应用方需要具备明确的算力使用需求以及技术研发、场景建设计划，并通过相关平台租用算力、调用模型，持续开展技术研发和应用创新。连尚集团此…",
-        "title": "连尚集团入选上海市首批算力生态合作伙伴名单"
+        "summary": "Non-binding Memorandum of Understanding (MOU) aims to support innovation and operational excellence within the energy sector. RIYADH, Saudi Arabia, Sept. 3, 2026 /PRNewswire/ -- Quantinuum, a leading quantum computing company, today announced the signing of a…",
+        "title": "Quantinuum Signs Non-binding MOU with Aramco to Explore Synergies Leveraging Industrial Quantum Computing Research, Applications, and Expertise"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -732,7 +661,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "近日，据雷峰网了解，上海市数据局、上海市通信管理局正式公布2026年第一批算力生态合作伙伴名单。上海连尚网络科技集团有限公司（以下简称“连尚集团”）入选“算力应用方”名单，成为上海首批38家算力生态合作伙伴之一。 此次征集面向算力全产业链，共设置算力供给方、算力应用方和平台共建方三类合作主体。经专家评审，最终确定算力供给方12家、算力应用方18家、平台共建方8家。 根据征集要求，算力应用方需要具备明确的算力使用需求以及技术研发、场景建设计划，并通过相关平台租用算力、调用模型，持续开展技术研发和应用创新。连尚集团此…",
+          "after": "Non-binding Memorandum of Understanding (MOU) aims to support innovation and operational excellence within the energy sector. RIYADH, Saudi Arabia, Sept. 3, 2026 /PRNewswire/ -- Quantinuum, a leading quantum computing company, today announced the signing of a…",
           "evidenceIds": [
             "E005"
           ]
@@ -740,7 +669,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "连尚集团入选上海市首批算力生态合作伙伴名单",
+          "after": "Quantinuum Signs Non-binding MOU with Aramco to Explore Synergies Leveraging Industrial Quantum Computing Research, Applications, and Expertise",
           "evidenceIds": [
             "E005"
           ]
@@ -761,35 +690,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-8351565acb803db9eb12"
+        "evt-5a4651f69228c5947872"
       ],
       "eventLifecycles": {
-        "evt-8351565acb803db9eb12": "first_seen"
+        "evt-5a4651f69228c5947872": "first_seen"
       },
-      "eventId": "evt-8351565acb803db9eb12",
+      "eventId": "evt-5a4651f69228c5947872",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T11:35:45+00:00",
-      "lastSeenAt": "2026-09-03T11:35:45+00:00"
+      "firstSeenAt": "2026-09-03T15:22:31+00:00",
+      "lastSeenAt": "2026-09-03T15:22:31+00:00"
     },
     {
-      "id": "chg-8c0787b67766b464f280",
+      "id": "chg-0b3e525072f5827c11ff",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-d197ef0a4aa3e74130",
-      "entityName": "两名新高管执掌KKR规模100亿美元的AI基础设施投资项目",
+      "entityId": "intelligence-event-456a1c6692e2bd31fd",
+      "entityName": "Benchmarking 31 different CPUs in Onimusha: Way of the Sword — X3D beats flagships by 10%, 270K Plus falls behind Raptor Lake Refresh",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：两名新高管执掌KKR规模100亿美元的AI基础设施投资项目。",
-      "importance": 84,
+      "summary": "新增高价值情报事件记录：Benchmarking 31 different CPUs in Onimusha: Way of the Sword — X3D beats flagships by 10%, 270K Plus falls behind Raptor Lake Refresh。",
+      "importance": 85,
       "before": null,
       "after": {
         "publishedAt": "2026-09-03",
-        "summary": "据知情人士透露，在原亚马逊云科技（AWS）首席执行官亚当・塞利普斯基出任首席执行官后，KKR 旗下规模达 100 亿美元的 AI 新投资主体Helix 数字基础设施（Helix Digital...",
-        "title": "两名新高管执掌KKR规模100亿美元的AI基础设施投资项目"
+        "summary": "Onimusha: Way of the Sword closes out an incredible year for Capcom, following hot on the heels of both Resident Evil Requiem and Pragmata earlier in the year. Like those titles, the game is built on Capcom’s proprietary RE Engine, which has proven to be a re…",
+        "title": "Benchmarking 31 different CPUs in Onimusha: Way of the Sword — X3D beats flagships by 10%, 270K Plus falls behind Raptor Lake Refresh"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -811,7 +740,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "据知情人士透露，在原亚马逊云科技（AWS）首席执行官亚当・塞利普斯基出任首席执行官后，KKR 旗下规模达 100 亿美元的 AI 新投资主体Helix 数字基础设施（Helix Digital...",
+          "after": "Onimusha: Way of the Sword closes out an incredible year for Capcom, following hot on the heels of both Resident Evil Requiem and Pragmata earlier in the year. Like those titles, the game is built on Capcom’s proprietary RE Engine, which has proven to be a re…",
           "evidenceIds": [
             "E006"
           ]
@@ -819,7 +748,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "两名新高管执掌KKR规模100亿美元的AI基础设施投资项目",
+          "after": "Benchmarking 31 different CPUs in Onimusha: Way of the Sword — X3D beats flagships by 10%, 270K Plus falls behind Raptor Lake Refresh",
           "evidenceIds": [
             "E006"
           ]
@@ -840,35 +769,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-0edc73264cf2328f913b"
+        "evt-87440741547d88cd1713"
       ],
       "eventLifecycles": {
-        "evt-0edc73264cf2328f913b": "first_seen"
+        "evt-87440741547d88cd1713": "first_seen"
       },
-      "eventId": "evt-0edc73264cf2328f913b",
+      "eventId": "evt-87440741547d88cd1713",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T11:35:45+00:00",
-      "lastSeenAt": "2026-09-03T11:35:45+00:00"
+      "firstSeenAt": "2026-09-03T15:22:31+00:00",
+      "lastSeenAt": "2026-09-03T15:22:31+00:00"
     },
     {
-      "id": "chg-7036e06ad4f01a3ac697",
+      "id": "chg-4a82401cf38757771f23",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-76d5596e1d7767ec66",
-      "entityName": "Soitec上调业绩指引，AI需求旺盛推动股价大涨",
+      "entityId": "intelligence-event-cc51265ee3b539d24c",
+      "entityName": "ZINOVA携手逐际动力，探索机器人在复杂建筑施工中的应用",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：Soitec上调业绩指引，AI需求旺盛推动股价大涨。",
+      "summary": "新增高价值情报事件记录：ZINOVA携手逐际动力，探索机器人在复杂建筑施工中的应用。",
       "importance": 84,
       "before": null,
       "after": {
         "publishedAt": "2026-09-03",
-        "summary": "股价单日涨幅超 15%，今年以来累计涨幅超五倍人工智能基础设施建设竞赛持续拉动 Soitec 产品需求。 内容速览 Soitec 将第二财季固定汇率及可比合并口径营收增速指引由此前...",
-        "title": "Soitec上调业绩指引，AI需求旺盛推动股价大涨"
+        "summary": "近日，物理AI研发公司 ZINOVA 基于逐际动力TRON 2双臂具身机器人，联合建筑机器人公司RIC Robotics完成了混凝土倾覆板（Tilt-up Construction）缩比施工场景演示，覆盖支模组框、多层钢筋铺设与绑扎等核心工序。雷峰网了解到， 此次POC验证了具身机器人使用现有工具参与复杂施工流程的可行性，也是垂直行业创新企业基于通用机器人平台开发行业应用的又一次原创性实践。 TRON 2双臂具身机器人 创新 构型完成混凝土倾覆板缩比施工场景演示 ZINOVA 探索工具智能，让机器人“学会用工具”…",
+        "title": "ZINOVA携手逐际动力，探索机器人在复杂建筑施工中的应用"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -890,7 +819,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "股价单日涨幅超 15%，今年以来累计涨幅超五倍人工智能基础设施建设竞赛持续拉动 Soitec 产品需求。 内容速览 Soitec 将第二财季固定汇率及可比合并口径营收增速指引由此前...",
+          "after": "近日，物理AI研发公司 ZINOVA 基于逐际动力TRON 2双臂具身机器人，联合建筑机器人公司RIC Robotics完成了混凝土倾覆板（Tilt-up Construction）缩比施工场景演示，覆盖支模组框、多层钢筋铺设与绑扎等核心工序。雷峰网了解到， 此次POC验证了具身机器人使用现有工具参与复杂施工流程的可行性，也是垂直行业创新企业基于通用机器人平台开发行业应用的又一次原创性实践。 TRON 2双臂具身机器人 创新 构型完成混凝土倾覆板缩比施工场景演示 ZINOVA 探索工具智能，让机器人“学会用工具”…",
           "evidenceIds": [
             "E007"
           ]
@@ -898,7 +827,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "Soitec上调业绩指引，AI需求旺盛推动股价大涨",
+          "after": "ZINOVA携手逐际动力，探索机器人在复杂建筑施工中的应用",
           "evidenceIds": [
             "E007"
           ]
@@ -919,35 +848,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-1cd10481c7a44593be9f"
+        "evt-5f0d9dea55afe81d6b9a"
       ],
       "eventLifecycles": {
-        "evt-1cd10481c7a44593be9f": "first_seen"
+        "evt-5f0d9dea55afe81d6b9a": "first_seen"
       },
-      "eventId": "evt-1cd10481c7a44593be9f",
+      "eventId": "evt-5f0d9dea55afe81d6b9a",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T11:35:45+00:00",
-      "lastSeenAt": "2026-09-03T11:35:45+00:00"
+      "firstSeenAt": "2026-09-03T15:22:31+00:00",
+      "lastSeenAt": "2026-09-03T15:22:31+00:00"
     },
     {
-      "id": "chg-02fb80d5d53502585225",
+      "id": "chg-99e854e24ac8f675a7f6",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-51af309ae7bbb579f9",
-      "entityName": "WorkBuddy金融版正式发布，让Agent真正进入金融业务现场",
+      "entityId": "intelligence-event-fa0099bde1edbd163d",
+      "entityName": "Whop Brings Full Stack API to Create and Scale a Business with a Partnership Across SpaceXAI Products",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：WorkBuddy金融版正式发布，让Agent真正进入金融业务现场。",
-      "importance": 82,
+      "summary": "新增高价值情报事件记录：Whop Brings Full Stack API to Create and Scale a Business with a Partnership Across SpaceXAI Products。",
+      "importance": 84,
       "before": null,
       "after": {
         "publishedAt": "2026-09-03",
-        "summary": "9月 3 日，腾讯WorkBuddy金融版正式上线 。 WorkBuddy金融版 是 专门 面向金融机构打造的AI智能工作台， 可为券商、银行、保险等 行业 提供开箱即用的专家与技能矩阵，丰富的金融数据源及全链路安全可信底座，覆盖投研、合规、客户经营、信贷尽调、财富资配等核心业务场景，助力金融机构安全、高效地落地智能体应用。 金融行业的业务逻辑复杂，且对安全合规要求极高。在真实业务中，客户经理要查企业、看财报、核工商、翻公告、找风险；保险团队长要看续保率、查渠道、盯座席、跟客户等等。这些都是需要业务视图、数据工具…",
-        "title": "WorkBuddy金融版正式发布，让Agent真正进入金融业务现场"
+        "summary": "New integrations give Grok and Grok Bot users direct access to turn ideas into businesses and let Cursor developers direct Whop end-to-end business functions from inside coding environments NEW YORK, Sept. 3, 2026 /PRNewswire/ -- Whop, the company building th…",
+        "title": "Whop Brings Full Stack API to Create and Scale a Business with a Partnership Across SpaceXAI Products"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -969,7 +898,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "9月 3 日，腾讯WorkBuddy金融版正式上线 。 WorkBuddy金融版 是 专门 面向金融机构打造的AI智能工作台， 可为券商、银行、保险等 行业 提供开箱即用的专家与技能矩阵，丰富的金融数据源及全链路安全可信底座，覆盖投研、合规、客户经营、信贷尽调、财富资配等核心业务场景，助力金融机构安全、高效地落地智能体应用。 金融行业的业务逻辑复杂，且对安全合规要求极高。在真实业务中，客户经理要查企业、看财报、核工商、翻公告、找风险；保险团队长要看续保率、查渠道、盯座席、跟客户等等。这些都是需要业务视图、数据工具…",
+          "after": "New integrations give Grok and Grok Bot users direct access to turn ideas into businesses and let Cursor developers direct Whop end-to-end business functions from inside coding environments NEW YORK, Sept. 3, 2026 /PRNewswire/ -- Whop, the company building th…",
           "evidenceIds": [
             "E008"
           ]
@@ -977,7 +906,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "WorkBuddy金融版正式发布，让Agent真正进入金融业务现场",
+          "after": "Whop Brings Full Stack API to Create and Scale a Business with a Partnership Across SpaceXAI Products",
           "evidenceIds": [
             "E008"
           ]
@@ -998,35 +927,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-a3981e898ddb226a59f4"
+        "evt-171f57b942d025dc813a"
       ],
       "eventLifecycles": {
-        "evt-a3981e898ddb226a59f4": "first_seen"
+        "evt-171f57b942d025dc813a": "first_seen"
       },
-      "eventId": "evt-a3981e898ddb226a59f4",
+      "eventId": "evt-171f57b942d025dc813a",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T11:35:45+00:00",
-      "lastSeenAt": "2026-09-03T11:35:45+00:00"
+      "firstSeenAt": "2026-09-03T15:22:31+00:00",
+      "lastSeenAt": "2026-09-03T15:22:31+00:00"
     },
     {
-      "id": "chg-9e9e147786a94b52ecd8",
+      "id": "chg-a45deefedf3f405cdf6e",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-6d7883d956a26311da",
-      "entityName": "Meta发布全新AI模型，加速追赶竞争对手",
+      "entityId": "intelligence-event-c080477e875a171c8b",
+      "entityName": "Figure and Nscale Sign Strategic Partnership For Up to 100,000 GPUs on the NVIDIA Vera Rubin Platform",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：Meta发布全新AI模型，加速追赶竞争对手。",
-      "importance": 82,
+      "summary": "新增高价值情报事件记录：Figure and Nscale Sign Strategic Partnership For Up to 100,000 GPUs on the NVIDIA Vera Rubin Platform。",
+      "importance": 84,
       "before": null,
       "after": {
         "publishedAt": "2026-09-03",
-        "summary": "公司称 Muse Spark 1.3 模型的代码生成与智能体能力更强，同时相比上一代模型，token 消耗量降低 25%。 Meta 平台周三宣布推出新一代 AI 模型 Muse Spark 1.3。",
-        "title": "Meta发布全新AI模型，加速追赶竞争对手"
+        "summary": "Today we are announcing a partnership with Nscale to deploy the NVIDIA Vera Rubin platform for up to 100,000 GPUs targeted for initial deployment starting the second half of 2027 in Barstow, Texas. This deal represents an initial commitment of $3.5 billion of…",
+        "title": "Figure and Nscale Sign Strategic Partnership For Up to 100,000 GPUs on the NVIDIA Vera Rubin Platform"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -1048,7 +977,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "公司称 Muse Spark 1.3 模型的代码生成与智能体能力更强，同时相比上一代模型，token 消耗量降低 25%。 Meta 平台周三宣布推出新一代 AI 模型 Muse Spark 1.3。",
+          "after": "Today we are announcing a partnership with Nscale to deploy the NVIDIA Vera Rubin platform for up to 100,000 GPUs targeted for initial deployment starting the second half of 2027 in Barstow, Texas. This deal represents an initial commitment of $3.5 billion of…",
           "evidenceIds": [
             "E009"
           ]
@@ -1056,7 +985,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "Meta发布全新AI模型，加速追赶竞争对手",
+          "after": "Figure and Nscale Sign Strategic Partnership For Up to 100,000 GPUs on the NVIDIA Vera Rubin Platform",
           "evidenceIds": [
             "E009"
           ]
@@ -1077,110 +1006,31 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-55d4b156acc50a1e818e"
+        "evt-c4968f86dd0baa667346"
       ],
       "eventLifecycles": {
-        "evt-55d4b156acc50a1e818e": "first_seen"
+        "evt-c4968f86dd0baa667346": "first_seen"
       },
-      "eventId": "evt-55d4b156acc50a1e818e",
+      "eventId": "evt-c4968f86dd0baa667346",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T11:35:45+00:00",
-      "lastSeenAt": "2026-09-03T11:35:45+00:00"
-    },
-    {
-      "id": "chg-28685d8fe2fb856e43bb",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-c303b0b2fec44e5fe2",
-      "entityName": "Launching a business in 2026? Use these 7 AI tools",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Launching a business in 2026? Use these 7 AI tools。",
-      "importance": 82,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-03",
-        "summary": "AI tools can automate large-scale tasks at a fraction of the usual cost, which makes them a great option for solo or small business setups. If you can't invest in a sizeable employee headcount just yet, you can now limit your hires to key roles or just have a…",
-        "title": "Launching a business in 2026? Use these 7 AI tools"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-03",
-          "evidenceIds": [
-            "E010"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "AI tools can automate large-scale tasks at a fraction of the usual cost, which makes them a great option for solo or small business setups. If you can't invest in a sizeable employee headcount just yet, you can now limit your hires to key roles or just have a…",
-          "evidenceIds": [
-            "E010"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Launching a business in 2026? Use these 7 AI tools",
-          "evidenceIds": [
-            "E010"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E010"
-      ],
-      "supportingEvidenceIds": [
-        "E010"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-8389f24d054236d54e63"
-      ],
-      "eventLifecycles": {
-        "evt-8389f24d054236d54e63": "first_seen"
-      },
-      "eventId": "evt-8389f24d054236d54e63",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T11:35:45+00:00",
-      "lastSeenAt": "2026-09-03T11:35:45+00:00"
+      "firstSeenAt": "2026-09-03T15:22:31+00:00",
+      "lastSeenAt": "2026-09-03T15:22:31+00:00"
     }
   ],
   "evidence": [
     {
       "id": "E001",
-      "changeId": "chg-cdd1be7f9df268e8cde2",
-      "entityName": "碧澄能源C1轮融资背后，天合、阿特斯、中联基金等已纷纷入局，新能源资产证券化从“首单”走向“批量”",
-      "claim": "新增高价值情报事件记录：碧澄能源C1轮融资背后，天合、阿特斯、中联基金等已纷纷入局，新能源资产证券化从“首单”走向“批量”。",
+      "changeId": "chg-d83f683fcdccd73458ec",
+      "entityName": "黄仁勋官宣：英伟达拟以129.3亿美元收购AI创企Hugging Face",
+      "claim": "新增高价值情报事件记录：黄仁勋官宣：英伟达拟以129.3亿美元收购AI创企Hugging Face。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "钛媒体",
-      "title": "碧澄能源C1轮融资背后，天合、阿特斯、中联基金等已纷纷入局，新能源资产证券化从“首单”走向“批量”",
-      "url": "https://www.tmtpost.com/8126384.html",
+      "sourceName": "新浪财经",
+      "title": "黄仁勋官宣：英伟达拟以129.3亿美元收购AI创企Hugging Face",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-03/doc-iniqqfvs6751451.shtml",
       "publishedAt": "2026-09-03",
       "evidenceGrade": "C",
-      "platformName": "专业媒体",
+      "platformName": "新浪",
       "sourceRole": "corroboration",
       "claimFields": [
         "publishedAt",
@@ -1194,17 +1044,17 @@
     },
     {
       "id": "E002",
-      "changeId": "chg-110a8fc4d7da56ae9532",
-      "entityName": "半年狂揽57亿，95后创业做AI3D，曾是商汤、MiniMax元老",
-      "claim": "新增高价值情报事件记录：半年狂揽57亿，95后创业做AI3D，曾是商汤、MiniMax元老。",
+      "changeId": "chg-36ff85d63b3b1cdb9f5d",
+      "entityName": "英伟达130亿美元收购开源AI平台Hugging Face",
+      "claim": "新增高价值情报事件记录：英伟达130亿美元收购开源AI平台Hugging Face。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "钛媒体",
-      "title": "半年狂揽57亿，95后创业做AI3D，曾是商汤、MiniMax元老",
-      "url": "https://www.tmtpost.com/8127562.html",
+      "sourceName": "新浪财经",
+      "title": "英伟达130亿美元收购开源AI平台Hugging Face",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-03/doc-iniqqfvn4299794.shtml",
       "publishedAt": "2026-09-03",
       "evidenceGrade": "C",
-      "platformName": "专业媒体",
+      "platformName": "新浪",
       "sourceRole": "corroboration",
       "claimFields": [
         "publishedAt",
@@ -1218,17 +1068,17 @@
     },
     {
       "id": "E003",
-      "changeId": "chg-c4d0436726822edeab97",
-      "entityName": "美国联合科技巨头向G20推销AI“轻监管” 黄仁勋、奥特曼等警告过度监管",
-      "claim": "新增高价值情报事件记录：美国联合科技巨头向G20推销AI“轻监管” 黄仁勋、奥特曼等警告过度监管。",
+      "changeId": "chg-e9a65f8b840d0711b464",
+      "entityName": "Nvidia’s Hugging Face Acquisition Is a $12.9 Billion Bet on Open-Source AI",
+      "claim": "新增高价值情报事件记录：Nvidia’s Hugging Face Acquisition Is a $12.9 Billion Bet on Open-Source AI。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "美国联合科技巨头向G20推销AI“轻监管” 黄仁勋、奥特曼等警告过度监管",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-03/doc-iniqpvfw2108115.shtml",
+      "sourceName": "WIRED",
+      "title": "Nvidia’s Hugging Face Acquisition Is a $12.9 Billion Bet on Open-Source AI",
+      "url": "https://www.wired.com/story/nvidias-hugging-face-acquisition-is-a-dollar129-billion-bet-on-open-source-ai",
       "publishedAt": "2026-09-03",
       "evidenceGrade": "C",
-      "platformName": "新浪",
+      "platformName": "WIRED",
       "sourceRole": "corroboration",
       "claimFields": [
         "publishedAt",
@@ -1242,158 +1092,14 @@
     },
     {
       "id": "E004",
-      "changeId": "chg-7110eee346586132dc0e",
-      "entityName": "UCT research warns SA cannot delay AI regulation",
-      "claim": "新增高价值情报事件记录：UCT research warns SA cannot delay AI regulation。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "ITWeb",
-      "title": "UCT research warns SA cannot delay AI regulation",
-      "url": "https://www.itweb.co.za/article/uct-research-warns-sa-cannot-delay-ai-regulation/KBpdg7pm5YJMLEew",
-      "publishedAt": "2026-09-03",
-      "evidenceGrade": "C",
-      "platformName": "ITWeb",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E005",
-      "changeId": "chg-f468d817416228d13a04",
-      "entityName": "连尚集团入选上海市首批算力生态合作伙伴名单",
-      "claim": "新增高价值情报事件记录：连尚集团入选上海市首批算力生态合作伙伴名单。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "雷峰网",
-      "title": "连尚集团入选上海市首批算力生态合作伙伴名单",
-      "url": "https://www.leiphone.com/category/ai/L2kvpqr4fseLUbUN.html",
-      "publishedAt": "2026-09-03",
-      "evidenceGrade": "C",
-      "platformName": "专业媒体",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E006",
-      "changeId": "chg-8c0787b67766b464f280",
-      "entityName": "两名新高管执掌KKR规模100亿美元的AI基础设施投资项目",
-      "claim": "新增高价值情报事件记录：两名新高管执掌KKR规模100亿美元的AI基础设施投资项目。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "两名新高管执掌KKR规模100亿美元的AI基础设施投资项目",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-03/doc-iniqpzpq4294970.shtml",
-      "publishedAt": "2026-09-03",
-      "evidenceGrade": "C",
-      "platformName": "新浪",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E007",
-      "changeId": "chg-7036e06ad4f01a3ac697",
-      "entityName": "Soitec上调业绩指引，AI需求旺盛推动股价大涨",
-      "claim": "新增高价值情报事件记录：Soitec上调业绩指引，AI需求旺盛推动股价大涨。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "Soitec上调业绩指引，AI需求旺盛推动股价大涨",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-03/doc-iniqpzpu2010279.shtml",
-      "publishedAt": "2026-09-03",
-      "evidenceGrade": "C",
-      "platformName": "新浪",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E008",
-      "changeId": "chg-02fb80d5d53502585225",
-      "entityName": "WorkBuddy金融版正式发布，让Agent真正进入金融业务现场",
-      "claim": "新增高价值情报事件记录：WorkBuddy金融版正式发布，让Agent真正进入金融业务现场。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "雷峰网",
-      "title": "WorkBuddy金融版正式发布，让Agent真正进入金融业务现场",
-      "url": "https://www.leiphone.com/category/industrynews/zr0zxn8R9MVT4y7n.html",
-      "publishedAt": "2026-09-03",
-      "evidenceGrade": "C",
-      "platformName": "专业媒体",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E009",
-      "changeId": "chg-9e9e147786a94b52ecd8",
-      "entityName": "Meta发布全新AI模型，加速追赶竞争对手",
-      "claim": "新增高价值情报事件记录：Meta发布全新AI模型，加速追赶竞争对手。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "Meta发布全新AI模型，加速追赶竞争对手",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-03/doc-iniqpvfs4361764.shtml",
-      "publishedAt": "2026-09-03",
-      "evidenceGrade": "C",
-      "platformName": "新浪",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E010",
-      "changeId": "chg-28685d8fe2fb856e43bb",
-      "entityName": "Launching a business in 2026? Use these 7 AI tools",
-      "claim": "新增高价值情报事件记录：Launching a business in 2026? Use these 7 AI tools。",
+      "changeId": "chg-da39304af3f9ac962a5a",
+      "entityName": "Research finds AI agents haven't quite mastered real-world browsing tasks despite claiming they can",
+      "claim": "新增高价值情报事件记录：Research finds AI agents haven't quite mastered real-world browsing tasks despite claiming they can。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "sourceName": "TechRadar",
-      "title": "Launching a business in 2026? Use these 7 AI tools",
-      "url": "https://www.techradar.com/pro/launching-a-business-in-2026-use-these-7-ai-tools",
+      "title": "Research finds AI agents haven't quite mastered real-world browsing tasks despite claiming they can",
+      "url": "https://www.techradar.com/pro/research-finds-ai-agents-havent-quite-mastered-real-world-browsing-tasks-despite-claiming-they-can",
       "publishedAt": "2026-09-03",
       "evidenceGrade": "C",
       "platformName": "TechRadar",
@@ -1407,13 +1113,618 @@
       "qualityIssues": [],
       "qualityStatus": "passed",
       "supportStatus": "supports"
+    },
+    {
+      "id": "E005",
+      "changeId": "chg-3f0cdb7390798fb26334",
+      "entityName": "Quantinuum Signs Non-binding MOU with Aramco to Explore Synergies Leveraging Industrial Quantum Computing Research, Applications, and Expertise",
+      "claim": "新增高价值情报事件记录：Quantinuum Signs Non-binding MOU with Aramco to Explore Synergies Leveraging Industrial Quantum Computing Research, Applications, and Expertise。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "Quantinuum Signs Non-binding MOU with Aramco to Explore Synergies Leveraging Industrial Quantum Computing Research, Applications, and Expertise",
+      "url": "https://www.prnewswire.com/news-releases/quantinuum-signs-non-binding-mou-with-aramco-to-explore-synergies-leveraging-industrial-quantum-computing-research-applications-and-expertise-302869100.html",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "B",
+      "platformName": "新闻稿",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E006",
+      "changeId": "chg-0b3e525072f5827c11ff",
+      "entityName": "Benchmarking 31 different CPUs in Onimusha: Way of the Sword — X3D beats flagships by 10%, 270K Plus falls behind Raptor Lake Refresh",
+      "claim": "新增高价值情报事件记录：Benchmarking 31 different CPUs in Onimusha: Way of the Sword — X3D beats flagships by 10%, 270K Plus falls behind Raptor Lake Refresh。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Tom's Hardware",
+      "title": "Benchmarking 31 different CPUs in Onimusha: Way of the Sword — X3D beats flagships by 10%, 270K Plus falls behind Raptor Lake Refresh",
+      "url": "https://www.tomshardware.com/pc-components/cpus/benchmarking-31-different-cpus-in-onimusha-way-of-the-sword-x3d-beats-flagships-by-10-percent-270k-plus-falls-behind-raptor-lake-refresh",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "C",
+      "platformName": "Tom's Hardware",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E007",
+      "changeId": "chg-4a82401cf38757771f23",
+      "entityName": "ZINOVA携手逐际动力，探索机器人在复杂建筑施工中的应用",
+      "claim": "新增高价值情报事件记录：ZINOVA携手逐际动力，探索机器人在复杂建筑施工中的应用。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "雷峰网",
+      "title": "ZINOVA携手逐际动力，探索机器人在复杂建筑施工中的应用",
+      "url": "https://www.leiphone.com/category/robot/TaL9FUorWHBFyKzT.html",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E008",
+      "changeId": "chg-99e854e24ac8f675a7f6",
+      "entityName": "Whop Brings Full Stack API to Create and Scale a Business with a Partnership Across SpaceXAI Products",
+      "claim": "新增高价值情报事件记录：Whop Brings Full Stack API to Create and Scale a Business with a Partnership Across SpaceXAI Products。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "Whop Brings Full Stack API to Create and Scale a Business with a Partnership Across SpaceXAI Products",
+      "url": "https://www.prnewswire.com/news-releases/whop-brings-full-stack-api-to-create-and-scale-a-business-with-a-partnership-across-spacexai-products-302868578.html",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "B",
+      "platformName": "新闻稿",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E009",
+      "changeId": "chg-a45deefedf3f405cdf6e",
+      "entityName": "Figure and Nscale Sign Strategic Partnership For Up to 100,000 GPUs on the NVIDIA Vera Rubin Platform",
+      "claim": "新增高价值情报事件记录：Figure and Nscale Sign Strategic Partnership For Up to 100,000 GPUs on the NVIDIA Vera Rubin Platform。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Figure AI",
+      "title": "Figure and Nscale Sign Strategic Partnership For Up to 100,000 GPUs on the NVIDIA Vera Rubin Platform",
+      "url": "https://www.figure.ai/news/figure-and-nscale-sign-strategic-partnership",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "B",
+      "platformName": "官方网站",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
     }
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-03T11:35:45+00:00",
+    "generatedAt": "2026-09-03T15:22:31+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-c4968f86dd0baa667346": {
+        "eventId": "evt-c4968f86dd0baa667346",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-c080477e875a171c8b",
+        "entityName": "Figure and Nscale Sign Strategic Partnership For Up to 100,000 GPUs on the NVIDIA Vera Rubin Platform",
+        "title": "Figure and Nscale Sign Strategic Partnership For Up to 100,000 GPUs on the NVIDIA Vera Rubin Platform",
+        "titleAliases": [
+          "figureandnscalesignstrategicpartnershipforupto100000gpusonthenvidiaverarubinplatform"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [
+          "company:figure ai",
+          "company:figure-ai"
+        ],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "000",
+          "100"
+        ],
+        "sourceAliases": [
+          "evd-21c7a34d4c5d8cd66e9b",
+          "record-6d03ac2ec296d42dc70e",
+          "src-b69b727f82f01025e5ca"
+        ],
+        "evidenceFingerprints": [
+          "21c7a34d4c5d8cd66e9b"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Figure AI",
+            "title": "Figure and Nscale Sign Strategic Partnership For Up to 100,000 GPUs on the NVIDIA Vera Rubin Platform",
+            "url": "https://www.figure.ai/news/figure-and-nscale-sign-strategic-partnership",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "6c66bf8b24e640bde23d",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T15:22:31+00:00",
+        "lastSeenAt": "2026-09-03T15:22:31+00:00",
+        "lastPublishedAt": "2026-09-03T15:22:31+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-89abda2a7e186c7a6f45": {
+        "eventId": "evt-89abda2a7e186c7a6f45",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-d2ff856ca60be20824",
+        "entityName": "Nvidia’s Hugging Face Acquisition Is a $12.9 Billion Bet on Open-Source AI",
+        "title": "Nvidia’s Hugging Face Acquisition Is a $12.9 Billion Bet on Open-Source AI",
+        "titleAliases": [
+          "nvidiashuggingfaceacquisitionisa129billionbetonopensourceai"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "并购",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "12.9"
+        ],
+        "sourceAliases": [
+          "evd-08d5d39f148d5ffc7814",
+          "record-6ab9a86bdff415ddac8f",
+          "src-2a04128cdfe00f3302bc"
+        ],
+        "evidenceFingerprints": [
+          "08d5d39f148d5ffc7814"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "WIRED",
+            "title": "Nvidia’s Hugging Face Acquisition Is a $12.9 Billion Bet on Open-Source AI",
+            "url": "https://www.wired.com/story/nvidias-hugging-face-acquisition-is-a-dollar129-billion-bet-on-open-source-ai",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "b0a0ab773e228fe6e023",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T15:22:31+00:00",
+        "lastSeenAt": "2026-09-03T15:22:31+00:00",
+        "lastPublishedAt": "2026-09-03T15:22:31+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-87440741547d88cd1713": {
+        "eventId": "evt-87440741547d88cd1713",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-456a1c6692e2bd31fd",
+        "entityName": "Benchmarking 31 different CPUs in Onimusha: Way of the Sword — X3D beats flagships by 10%, 270K Plus falls behind Raptor Lake Refresh",
+        "title": "Benchmarking 31 different CPUs in Onimusha: Way of the Sword — X3D beats flagships by 10%, 270K Plus falls behind Raptor Lake Refresh",
+        "titleAliases": [
+          "benchmarking31differentcpusinonimushawayoftheswordx3dbeatsflagshipsby10270kplusfallsbehindraptorlakerefresh"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "10%",
+          "270",
+          "3",
+          "31"
+        ],
+        "sourceAliases": [
+          "evd-5f9541d3accc7112c6cf",
+          "record-8f8c3096856b1b60ec66",
+          "src-01bf7e5a49cca726d4ad"
+        ],
+        "evidenceFingerprints": [
+          "5f9541d3accc7112c6cf"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Tom's Hardware",
+            "title": "Benchmarking 31 different CPUs in Onimusha: Way of the Sword — X3D beats flagships by 10%, 270K Plus falls behind Raptor Lake Refresh",
+            "url": "https://www.tomshardware.com/pc-components/cpus/benchmarking-31-different-cpus-in-onimusha-way-of-the-sword-x3d-beats-flagships-by-10-percent-270k-plus-falls-behind-raptor-lake-refresh",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "6d064095acaa71fa0c0c",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T15:22:31+00:00",
+        "lastSeenAt": "2026-09-03T15:22:31+00:00",
+        "lastPublishedAt": "2026-09-03T15:22:31+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-830f3ccaff434f55920b": {
+        "eventId": "evt-830f3ccaff434f55920b",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-9a05773b44394f17d2",
+        "entityName": "黄仁勋官宣：英伟达拟以129.3亿美元收购AI创企Hugging Face",
+        "title": "黄仁勋官宣：英伟达拟以129.3亿美元收购AI创企Hugging Face",
+        "titleAliases": [
+          "黄仁勋官宣英伟达拟以1293亿美元收购ai创企huggingface"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "并购",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "129.3"
+        ],
+        "sourceAliases": [
+          "evd-ab46b4d783deff260022",
+          "record-211acc540c7f5bd4406e",
+          "src-5d2b664d108b71fabb91"
+        ],
+        "evidenceFingerprints": [
+          "ab46b4d783deff260022"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "黄仁勋官宣：英伟达拟以129.3亿美元收购AI创企Hugging Face",
+            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-03/doc-iniqqfvs6751451.shtml",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "9302bb0589d47be5ff31",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T15:22:31+00:00",
+        "lastSeenAt": "2026-09-03T15:22:31+00:00",
+        "lastPublishedAt": "2026-09-03T15:22:31+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-7b8a453e1bdbb11d6e51": {
+        "eventId": "evt-7b8a453e1bdbb11d6e51",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-e3b108017e445ac323",
+        "entityName": "Research finds AI agents haven't quite mastered real-world browsing tasks despite claiming they can",
+        "title": "Research finds AI agents haven't quite mastered real-world browsing tasks despite claiming they can",
+        "titleAliases": [
+          "researchfindsaiagentshaventquitemasteredrealworldbrowsingtasksdespiteclaimingtheycan"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-bb23c72f6d8c8fb2deb5",
+          "record-2891ed7de8eb47db009f",
+          "src-9e9fdc51f83a8d4aa134"
+        ],
+        "evidenceFingerprints": [
+          "bb23c72f6d8c8fb2deb5"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "TechRadar",
+            "title": "Research finds AI agents haven't quite mastered real-world browsing tasks despite claiming they can",
+            "url": "https://www.techradar.com/pro/research-finds-ai-agents-havent-quite-mastered-real-world-browsing-tasks-despite-claiming-they-can",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "43775144cedde93d6dda",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T15:22:31+00:00",
+        "lastSeenAt": "2026-09-03T15:22:31+00:00",
+        "lastPublishedAt": "2026-09-03T15:22:31+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-5f0d9dea55afe81d6b9a": {
+        "eventId": "evt-5f0d9dea55afe81d6b9a",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-cc51265ee3b539d24c",
+        "entityName": "ZINOVA携手逐际动力，探索机器人在复杂建筑施工中的应用",
+        "title": "ZINOVA携手逐际动力，探索机器人在复杂建筑施工中的应用",
+        "titleAliases": [
+          "zinova携手逐际动力探索机器人在复杂建筑施工中的应用"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-500cd2dfb491defa5b41",
+          "record-b20b749d4febc92c847e",
+          "src-0ccd7d477cd9b8b2ea2b"
+        ],
+        "evidenceFingerprints": [
+          "500cd2dfb491defa5b41"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "ZINOVA携手逐际动力，探索机器人在复杂建筑施工中的应用",
+            "url": "https://www.leiphone.com/category/robot/TaL9FUorWHBFyKzT.html",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "2bc5858d0e31f5c38497",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T15:22:31+00:00",
+        "lastSeenAt": "2026-09-03T15:22:31+00:00",
+        "lastPublishedAt": "2026-09-03T15:22:31+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-5a4651f69228c5947872": {
+        "eventId": "evt-5a4651f69228c5947872",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-6fa39d34000003816a",
+        "entityName": "Quantinuum Signs Non-binding MOU with Aramco to Explore Synergies Leveraging Industrial Quantum Computing Research, Applications, and Expertise",
+        "title": "Quantinuum Signs Non-binding MOU with Aramco to Explore Synergies Leveraging Industrial Quantum Computing Research, Applications, and Expertise",
+        "titleAliases": [
+          "quantinuumsignsnonbindingmouwitharamcotoexploresynergiesleveragingindustrialquantumcomputingresearchapplicationsandexpertise"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-452de25b4f3d79f728b1",
+          "record-58ba16c493d5de0d3bb0",
+          "src-bc4babf1f257dcd764e1"
+        ],
+        "evidenceFingerprints": [
+          "452de25b4f3d79f728b1"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "Quantinuum Signs Non-binding MOU with Aramco to Explore Synergies Leveraging Industrial Quantum Computing Research, Applications, and Expertise",
+            "url": "https://www.prnewswire.com/news-releases/quantinuum-signs-non-binding-mou-with-aramco-to-explore-synergies-leveraging-industrial-quantum-computing-research-applications-and-expertise-302869100.html",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "42ddd4b2db3cf7d0c703",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T15:22:31+00:00",
+        "lastSeenAt": "2026-09-03T15:22:31+00:00",
+        "lastPublishedAt": "2026-09-03T15:22:31+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-171f57b942d025dc813a": {
+        "eventId": "evt-171f57b942d025dc813a",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-fa0099bde1edbd163d",
+        "entityName": "Whop Brings Full Stack API to Create and Scale a Business with a Partnership Across SpaceXAI Products",
+        "title": "Whop Brings Full Stack API to Create and Scale a Business with a Partnership Across SpaceXAI Products",
+        "titleAliases": [
+          "whopbringsfullstackapitocreateandscaleabusinesswithapartnershipacrossspacexaiproducts"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-5a6ec7985ec5e6bd1f5c",
+          "record-11dfc548711707b89e06",
+          "src-616df5f0847dc1119aa2"
+        ],
+        "evidenceFingerprints": [
+          "5a6ec7985ec5e6bd1f5c"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "Whop Brings Full Stack API to Create and Scale a Business with a Partnership Across SpaceXAI Products",
+            "url": "https://www.prnewswire.com/news-releases/whop-brings-full-stack-api-to-create-and-scale-a-business-with-a-partnership-across-spacexai-products-302868578.html",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "21a05feaf6a2061fef80",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T15:22:31+00:00",
+        "lastSeenAt": "2026-09-03T15:22:31+00:00",
+        "lastPublishedAt": "2026-09-03T15:22:31+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-0633f03bd59fcaeecf53": {
+        "eventId": "evt-0633f03bd59fcaeecf53",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-2b1f5b1dedea9a2d96",
+        "entityName": "英伟达130亿美元收购开源AI平台Hugging Face",
+        "title": "英伟达130亿美元收购开源AI平台Hugging Face",
+        "titleAliases": [
+          "英伟达130亿美元收购开源ai平台huggingface"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "并购",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "130"
+        ],
+        "sourceAliases": [
+          "evd-21bfcf1f50d9fd83cf2c",
+          "record-9b462288d8f85ef94fdf",
+          "src-9ebae52ab47b105378ae"
+        ],
+        "evidenceFingerprints": [
+          "21bfcf1f50d9fd83cf2c"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "英伟达130亿美元收购开源AI平台Hugging Face",
+            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-03/doc-iniqqfvn4299794.shtml",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "42d29a17810697a48084",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T15:22:31+00:00",
+        "lastSeenAt": "2026-09-03T15:22:31+00:00",
+        "lastPublishedAt": "2026-09-03T15:22:31+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-f31a61980c8a67e5bd8e": {
         "eventId": "evt-f31a61980c8a67e5bd8e",
         "dataset": "intelligenceEvent",
@@ -21063,13 +21374,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 10,
+    "newEvents": 9,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
     "duplicatesSuppressed": 0,
-    "observedEvents": 10,
+    "observedEvents": 9,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -22778,10 +23089,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-03",
-      "generatedAt": "2026-09-03T11:35:45+00:00",
+      "generatedAt": "2026-09-03T15:22:31+00:00",
       "runStatus": "model",
-      "changeCount": 48,
-      "executiveSummary": "2026-09-03证据包共收录10条高价值情报事件，全部为C级外部线索且未经人工复核。当日主线集中在AI基础设施与模型竞争：KKR为100亿美元AI基础设施投资主体Helix数字基础设施任命新高管（E006），Soitec因AI需求上调业绩指引、股价单日涨超15%（E007），Meta发布Muse Spark 1.3模型（E009）；同时出现AI监管政策分歧：美国联合科技巨头向G20推销轻监管（E003），南非UCT研究则警告不能拖延AI监管（E004）。国内方面，上海公布首批38家算力生态合作伙伴，连尚集团入选算力应用方（E005），腾讯发布WorkBuddy金融版（E008）。融资侧，碧澄能源C1轮融资显示新能源资产证券化从首单走向批量（E001），VAST半年融资57亿元、完成30亿元B轮和B+轮（E002）。另有面向创业者的AI工具综述（E010）。整体看，AI基础设施投资、算力生态与监管博弈是当日最密集主题，但证据等级低，需后续验证。",
+      "changeCount": 57,
+      "executiveSummary": "2026年9月3日证据包显示，英伟达拟以约129.3亿至130亿美元收购Hugging Face，交易预计2027年上半年完成并需监管批准，多家媒体交叉印证但均为外部线索级证据，金额表述存在细微差异；同日另有AI浏览器代理能力评测、Quantinuum与Aramco量子计算合作、Figure与Nscale的10万GPU算力合作、ZINOVA与逐际动力建筑施工机器人POC、Whop与xAI产品集成等事件。整体看，算力、开源模型、量子计算、具身智能与AI应用层均有新动态，但多数证据等级为C或B，且未经人工复核，应视为待验证线索而非确定性结论。",
       "eventIds": [
         "evt-31873f37bdd45ab7a46d",
         "evt-a3e49238c5aae05edad0",
@@ -22830,7 +23141,16 @@
         "evt-1cd10481c7a44593be9f",
         "evt-a3981e898ddb226a59f4",
         "evt-55d4b156acc50a1e818e",
-        "evt-8389f24d054236d54e63"
+        "evt-8389f24d054236d54e63",
+        "evt-830f3ccaff434f55920b",
+        "evt-0633f03bd59fcaeecf53",
+        "evt-89abda2a7e186c7a6f45",
+        "evt-7b8a453e1bdbb11d6e51",
+        "evt-5a4651f69228c5947872",
+        "evt-87440741547d88cd1713",
+        "evt-5f0d9dea55afe81d6b9a",
+        "evt-171f57b942d025dc813a",
+        "evt-c4968f86dd0baa667346"
       ],
       "eventStates": [
         {
@@ -23024,14 +23344,50 @@
         {
           "eventId": "evt-8389f24d054236d54e63",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-830f3ccaff434f55920b",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-0633f03bd59fcaeecf53",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-89abda2a7e186c7a6f45",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-7b8a453e1bdbb11d6e51",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-5a4651f69228c5947872",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-87440741547d88cd1713",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-5f0d9dea55afe81d6b9a",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-171f57b942d025dc813a",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-c4968f86dd0baa667346",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 0,
       "candidateTotal": 6,
-      "auxiliaryLeadTotal": 41,
+      "auxiliaryLeadTotal": 50,
       "rejectedTotal": 2,
       "eventSummary": {
-        "newEvents": 48,
+        "newEvents": 57,
         "reconfirmations": 5,
         "updates": 0,
         "corrections": 0,
@@ -23041,12 +23397,12 @@
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 10,
-    "eligibleCandidateCount": 10,
+    "candidateCount": 9,
+    "eligibleCandidateCount": 9,
     "rejectedCandidateCount": 0,
     "rejectedByDataset": {},
-    "evidenceCount": 10,
-    "supportingEvidenceCount": 10,
+    "evidenceCount": 9,
+    "supportingEvidenceCount": 9,
     "rejectedEvidenceCount": 0,
     "passedButUnboundEvidenceCount": 0,
     "rejectionReasons": {},
@@ -23080,16 +23436,9 @@
     }
   },
   "pipelineHealth": {
-    "overallStatus": "degraded",
-    "healthyJobs": 8,
+    "overallStatus": "healthy",
+    "healthyJobs": 9,
     "jobCount": 9,
-    "issueJobs": [
-      {
-        "jobId": "research-agent-daily",
-        "name": "每日证据约束研究摘要",
-        "status": "degraded",
-        "lastCompletedAt": "2026-09-03T05:59:54Z"
-      }
-    ]
+    "issueJobs": []
   }
 }
