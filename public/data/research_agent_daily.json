@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-03T04:51:30+00:00",
+  "generatedAt": "2026-09-03T05:59:52+00:00",
   "asOfDate": "2026-09-03",
-  "runStatus": "model",
+  "runStatus": "no-material-change",
   "reviewStatus": "automated_unreviewed",
   "baselineSource": "snapshot",
   "model": {
@@ -10,41 +10,28 @@
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": true,
-    "usage": {
-      "prompt_tokens": 2200,
-      "completion_tokens": 2223,
-      "total_tokens": 4423,
-      "completion_tokens_details": {
-        "reasoning_tokens": 1112
-      },
-      "prompt_tokens_details": {
-        "cached_tokens": 0
-      },
-      "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 2200
-    }
+    "used": false,
+    "usage": {}
   },
   "changeSummary": {
-    "totalDetected": 19,
-    "total": 2,
-    "byDataset": {
-      "intelligenceEvent": 2
-    },
+    "totalDetected": 9,
+    "total": 0,
+    "byDataset": {},
     "byChangeType": {
-      "external_event": 2,
-      "data_maintenance": 17
+      "external_event": 6,
+      "source_refresh": 2,
+      "entity_reconciliation": 1
     },
-    "externalCandidates": 2,
-    "qualityRejected": 0,
-    "maintenanceExcluded": 17,
+    "externalCandidates": 6,
+    "qualityRejected": 6,
+    "maintenanceExcluded": 3,
     "aggregatedEvents": 0,
-    "highestImportance": 84,
+    "highestImportance": 0,
     "verifiedChangeTotal": 0,
     "candidateTotal": 0,
-    "auxiliaryLeadTotal": 2,
-    "rejectedTotal": 0,
-    "newEvents": 2,
+    "auxiliaryLeadTotal": 0,
+    "rejectedTotal": 6,
+    "newEvents": 0,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
@@ -52,313 +39,20 @@
     "duplicatesSuppressed": 0
   },
   "analysis": {
-    "mode": "model-analysis",
-    "isResearchJudgment": true,
-    "executiveSummary": "证据包包含两条新增高价值情报事件：一是雷峰网报道长安汽车在研发、生产制造、供应链、销售、服务等业务场景接入千问办公，并引用长安汽车高管关于AI native组织的表述；二是PR Newswire发布Eluvio在IBC 2026推出业内首个内联、开放模型视频AI与智能体编排方案的新闻稿。两条事件均处于automated_unreviewed状态，证据等级分别为C和B，属于外部线索或一手新闻稿，尚未经人工复核，因此只能作为初步情报线索，不宜作为确定性重大事实。",
-    "keyDevelopments": [
-      {
-        "title": "千问办公落地长安汽车，覆盖“研产供销服”",
-        "assessment": "据雷峰网报道，长安汽车已在研发、生产制造、供应链、销售、服务等业务场景接入千问办公，并引用长安汽车总裁助理梁光忠称此类Agent不仅是个人提效工具，更是打造AI native组织的利器。该事件为外部媒体线索，证据等级C，且为automated_unreviewed，可视为AI办公Agent在大型央企落地的早期信号，但细节（接入深度、实际效果、合同关系）尚未验证。",
-        "importance": 4,
-        "confidence": "medium",
-        "entities": [
-          "长安汽车",
-          "千问办公",
-          "梁光忠"
-        ],
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "title": "Eluvio发布内联开放模型视频AI与智能体编排方案",
-        "assessment": "PR Newswire新闻稿称Eluvio在IBC 2026推出业内首个商用内联、帧级精确、多模态AI推理与编排方案，原生构建于Content Fabric媒体管线。证据等级B，来源为厂商新闻稿，属于厂商自述，需独立验证产品可用性与市场反响。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "Eluvio",
-          "Content Fabric"
-        ],
-        "evidenceIds": [
-          "E002"
-        ]
-      }
-    ],
-    "thesisUpdates": [
-      {
-        "entity": "千问办公/阿里AI办公生态",
-        "direction": "positive",
-        "statement": "长安汽车作为三大汽车央企之一，在研产供销服全链路接入千问办公，若属实，将强化AI办公Agent在大型制造企业组织内落地的叙事；但证据为单一媒体线索且未经人工复核，暂不构成确定性结论。",
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "entity": "Eluvio",
-        "direction": "mixed",
-        "statement": "Eluvio宣称推出业内首个内联开放模型视频AI与智能体编排方案，属于产品创新声明，方向偏正面；但证据来自厂商新闻稿，缺乏第三方验证与客户案例，需保持审慎。",
-        "evidenceIds": [
-          "E002"
-        ]
-      }
-    ],
-    "watchlist": [
-      {
-        "item": "长安汽车千问办公接入的后续官方披露或第三方验证",
-        "reason": "当前仅有雷峰网一篇报道，证据等级C且为automated_unreviewed，需要长安汽车官方公告、阿里云/千问官方材料或更多独立媒体交叉验证。",
-        "nextEvidence": "长安汽车或阿里官方发布、其他主流媒体报道、案例研究或客户会议材料",
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "item": "Eluvio内联视频AI方案的商用落地与客户采用",
-        "reason": "新闻稿为厂商自述，需观察是否有实际部署案例、行业评测或竞争对手回应。",
-        "nextEvidence": "Eluvio后续产品文档、客户案例、行业分析机构报告或IBC 2026现场报道",
-        "evidenceIds": [
-          "E002"
-        ]
-      }
-    ],
-    "risks": [
-      {
-        "risk": "证据未经人工复核，存在报道偏差或厂商宣传成分",
-        "reason": "两条证据均为automated_unreviewed，E001为C级媒体线索，E002为B级厂商新闻稿，均可能包含夸大或不准确信息。",
-        "evidenceIds": [
-          "E001",
-          "E002"
-        ]
-      },
-      {
-        "risk": "长安汽车接入千问办公的深度与效果不明",
-        "reason": "报道仅提及场景覆盖和高管表态，未提供量化指标、部署规模或业务成效数据，不能据此推断实际商业价值。",
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "risk": "Eluvio“业内首个”声明缺乏独立验证",
-        "reason": "新闻稿中的“industry-first”属于厂商主张，未提供第三方评测或对比证据，存在竞争性夸大风险。",
-        "evidenceIds": [
-          "E002"
-        ]
-      }
-    ],
-    "methodologyNote": "本分析仅基于证据包内E001、E002两条证据，未补充外部事实。两条证据均通过质量门但处于automated_unreviewed状态，证据等级分别为C和B，因此所有判断均以“报道称”“新闻稿称”等限定表达呈现，不构成投资建议或确定性结论。"
+    "mode": "structured-change-only",
+    "isResearchJudgment": false,
+    "executiveSummary": "本轮检测到 6 个外部事实候选，但全部未通过证据质量门。 质量门诊断：缺少发布时间 12、证据未分级 2、证据合格但未绑定变化字段 9。",
+    "keyDevelopments": [],
+    "thesisUpdates": [],
+    "watchlist": [],
+    "risks": [],
+    "methodologyNote": "结构化变化检查；本期无材料变化。未执行生成式研判。"
   },
-  "changes": [
-    {
-      "id": "chg-bac2acad4735878fc2e7",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-7172111d3464c8cde6",
-      "entityName": "千问办公落地长安汽车，“研产供销服”都在用",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：千问办公落地长安汽车，“研产供销服”都在用。",
-      "importance": 84,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-03",
-        "summary": "9月2日，记者获悉，长安汽车已在研发、生产制造、供应链、销售、服务等业务场景接入千问办公。 作为中国汽车行业三大央企之一，长安汽车积极拥抱AI技术浪潮，提出“无AI，不长安”。此前，长安汽车已推出业内领先的天枢领航、天枢座舱等产品。今年以来，长安汽车进一步将AI创新推进到组织内部，覆盖各个业务单元。 长安汽车公司总裁助理、变革与效率部总经理梁光忠表示：“在长安汽车，千问办公这类Agent不仅仅是个人提效工具，更是企业打造AI native组织的利器，它能把AI能力嵌入到业务流程本身，让整个组织的运转方式发生变化，…",
-        "title": "千问办公落地长安汽车，“研产供销服”都在用"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-03",
-          "evidenceIds": [
-            "E001"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "9月2日，记者获悉，长安汽车已在研发、生产制造、供应链、销售、服务等业务场景接入千问办公。 作为中国汽车行业三大央企之一，长安汽车积极拥抱AI技术浪潮，提出“无AI，不长安”。此前，长安汽车已推出业内领先的天枢领航、天枢座舱等产品。今年以来，长安汽车进一步将AI创新推进到组织内部，覆盖各个业务单元。 长安汽车公司总裁助理、变革与效率部总经理梁光忠表示：“在长安汽车，千问办公这类Agent不仅仅是个人提效工具，更是企业打造AI native组织的利器，它能把AI能力嵌入到业务流程本身，让整个组织的运转方式发生变化，…",
-          "evidenceIds": [
-            "E001"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "千问办公落地长安汽车，“研产供销服”都在用",
-          "evidenceIds": [
-            "E001"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E001"
-      ],
-      "supportingEvidenceIds": [
-        "E001"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-3853c1248cd8b1d8e330"
-      ],
-      "eventLifecycles": {
-        "evt-3853c1248cd8b1d8e330": "first_seen"
-      },
-      "eventId": "evt-3853c1248cd8b1d8e330",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T04:51:30+00:00",
-      "lastSeenAt": "2026-09-03T04:51:30+00:00"
-    },
-    {
-      "id": "chg-6b50ec47b4f5303189e7",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-192e5129d2350fc2dc",
-      "entityName": "Eluvio Unveils Industry-First: Inline, Open-Model Video AI and Agentic Orchestration at IBC 2026",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Eluvio Unveils Industry-First: Inline, Open-Model Video AI and Agentic Orchestration at IBC 2026。",
-      "importance": 82,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-03",
-        "summary": "Universal & Dynamic Video Intelligence Architecture: First commercially available solution for inline, frame-accurate, multimodal AI inference, analysis, and orchestration built natively into the Content Fabric media pipeline for live and derivative content g…",
-        "title": "Eluvio Unveils Industry-First: Inline, Open-Model Video AI and Agentic Orchestration at IBC 2026"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-03",
-          "evidenceIds": [
-            "E002"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Universal & Dynamic Video Intelligence Architecture: First commercially available solution for inline, frame-accurate, multimodal AI inference, analysis, and orchestration built natively into the Content Fabric media pipeline for live and derivative content g…",
-          "evidenceIds": [
-            "E002"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Eluvio Unveils Industry-First: Inline, Open-Model Video AI and Agentic Orchestration at IBC 2026",
-          "evidenceIds": [
-            "E002"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E002"
-      ],
-      "supportingEvidenceIds": [
-        "E002"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-f2f708f6097a7f5968df"
-      ],
-      "eventLifecycles": {
-        "evt-f2f708f6097a7f5968df": "first_seen"
-      },
-      "eventId": "evt-f2f708f6097a7f5968df",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-03T04:51:30+00:00",
-      "lastSeenAt": "2026-09-03T04:51:30+00:00"
-    }
-  ],
-  "evidence": [
-    {
-      "id": "E001",
-      "changeId": "chg-bac2acad4735878fc2e7",
-      "entityName": "千问办公落地长安汽车，“研产供销服”都在用",
-      "claim": "新增高价值情报事件记录：千问办公落地长安汽车，“研产供销服”都在用。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "雷峰网",
-      "title": "千问办公落地长安汽车，“研产供销服”都在用",
-      "url": "https://www.leiphone.com/category/industrynews/QvD9ITqjzVcafOeu.html",
-      "publishedAt": "2026-09-03",
-      "evidenceGrade": "C",
-      "platformName": "专业媒体",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E002",
-      "changeId": "chg-6b50ec47b4f5303189e7",
-      "entityName": "Eluvio Unveils Industry-First: Inline, Open-Model Video AI and Agentic Orchestration at IBC 2026",
-      "claim": "新增高价值情报事件记录：Eluvio Unveils Industry-First: Inline, Open-Model Video AI and Agentic Orchestration at IBC 2026。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "PR Newswire Consumer Technology",
-      "title": "Eluvio Unveils Industry-First: Inline, Open-Model Video AI and Agentic Orchestration at IBC 2026",
-      "url": "https://www.prnewswire.com/news-releases/eluvio-unveils-industry-first-inline-open-model-video-ai-and-agentic-orchestration-at-ibc-2026-302868456.html",
-      "publishedAt": "2026-09-03",
-      "evidenceGrade": "B",
-      "platformName": "新闻稿",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    }
-  ],
+  "changes": [],
+  "evidence": [],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-03T04:51:30+00:00",
+    "generatedAt": "2026-09-03T05:59:52+00:00",
     "retentionDays": 180,
     "events": {
       "evt-f2f708f6097a7f5968df": {
@@ -19478,13 +19172,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 2,
+    "newEvents": 0,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
     "duplicatesSuppressed": 0,
-    "observedEvents": 2,
+    "observedEvents": 0,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -21193,10 +20887,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-03",
-      "generatedAt": "2026-09-03T04:51:30+00:00",
-      "runStatus": "model",
+      "generatedAt": "2026-09-03T05:59:52+00:00",
+      "runStatus": "no-material-change",
       "changeCount": 38,
-      "executiveSummary": "证据包包含两条新增高价值情报事件：一是雷峰网报道长安汽车在研发、生产制造、供应链、销售、服务等业务场景接入千问办公，并引用长安汽车高管关于AI native组织的表述；二是PR Newswire发布Eluvio在IBC 2026推出业内首个内联、开放模型视频AI与智能体编排方案的新闻稿。两条事件均处于automated_unreviewed状态，证据等级分别为C和B，属于外部线索或一手新闻稿，尚未经人工复核，因此只能作为初步情报线索，不宜作为确定性重大事实。",
+      "executiveSummary": "本轮检测到 6 个外部事实候选，但全部未通过证据质量门。",
       "eventIds": [
         "evt-31873f37bdd45ab7a46d",
         "evt-a3e49238c5aae05edad0",
@@ -21406,15 +21100,20 @@
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 2,
-    "eligibleCandidateCount": 2,
-    "rejectedCandidateCount": 0,
-    "rejectedByDataset": {},
-    "evidenceCount": 2,
-    "supportingEvidenceCount": 2,
-    "rejectedEvidenceCount": 0,
-    "passedButUnboundEvidenceCount": 0,
-    "rejectionReasons": {},
+    "candidateCount": 6,
+    "eligibleCandidateCount": 0,
+    "rejectedCandidateCount": 6,
+    "rejectedByDataset": {
+      "ventureCompany": 6
+    },
+    "evidenceCount": 23,
+    "supportingEvidenceCount": 0,
+    "rejectedEvidenceCount": 14,
+    "passedButUnboundEvidenceCount": 9,
+    "rejectionReasons": {
+      "missing_published_at": 12,
+      "ungraded": 2
+    },
     "sourceClassificationWarnings": []
   },
   "sourceClassificationWarnings": [],
