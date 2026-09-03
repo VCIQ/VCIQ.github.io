@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-03T05:59:52+00:00",
+  "generatedAt": "2026-09-03T11:35:45+00:00",
   "asOfDate": "2026-09-03",
-  "runStatus": "no-material-change",
+  "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
   "baselineSource": "snapshot",
   "model": {
@@ -10,28 +10,40 @@
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": false,
-    "usage": {}
+    "used": true,
+    "usage": {
+      "prompt_tokens": 8355,
+      "completion_tokens": 6799,
+      "total_tokens": 15154,
+      "completion_tokens_details": {
+        "reasoning_tokens": 3400
+      },
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 8355
+    }
   },
   "changeSummary": {
-    "totalDetected": 9,
-    "total": 0,
-    "byDataset": {},
-    "byChangeType": {
-      "external_event": 6,
-      "source_refresh": 2,
-      "entity_reconciliation": 1
+    "totalDetected": 10,
+    "total": 10,
+    "byDataset": {
+      "intelligenceEvent": 10
     },
-    "externalCandidates": 6,
-    "qualityRejected": 6,
-    "maintenanceExcluded": 3,
+    "byChangeType": {
+      "external_event": 10
+    },
+    "externalCandidates": 10,
+    "qualityRejected": 0,
+    "maintenanceExcluded": 0,
     "aggregatedEvents": 0,
-    "highestImportance": 0,
+    "highestImportance": 91,
     "verifiedChangeTotal": 0,
     "candidateTotal": 0,
-    "auxiliaryLeadTotal": 0,
-    "rejectedTotal": 6,
-    "newEvents": 0,
+    "auxiliaryLeadTotal": 10,
+    "rejectedTotal": 0,
+    "newEvents": 10,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
@@ -39,22 +51,1901 @@
     "duplicatesSuppressed": 0
   },
   "analysis": {
-    "mode": "structured-change-only",
-    "isResearchJudgment": false,
-    "executiveSummary": "本轮检测到 6 个外部事实候选，但全部未通过证据质量门。 质量门诊断：缺少发布时间 12、证据未分级 2、证据合格但未绑定变化字段 9。",
-    "keyDevelopments": [],
-    "thesisUpdates": [],
-    "watchlist": [],
-    "risks": [],
-    "methodologyNote": "结构化变化检查；本期无材料变化。未执行生成式研判。"
+    "mode": "model-analysis",
+    "isResearchJudgment": true,
+    "executiveSummary": "2026-09-03证据包共收录10条高价值情报事件，全部为C级外部线索且未经人工复核。当日主线集中在AI基础设施与模型竞争：KKR为100亿美元AI基础设施投资主体Helix数字基础设施任命新高管（E006），Soitec因AI需求上调业绩指引、股价单日涨超15%（E007），Meta发布Muse Spark 1.3模型（E009）；同时出现AI监管政策分歧：美国联合科技巨头向G20推销轻监管（E003），南非UCT研究则警告不能拖延AI监管（E004）。国内方面，上海公布首批38家算力生态合作伙伴，连尚集团入选算力应用方（E005），腾讯发布WorkBuddy金融版（E008）。融资侧，碧澄能源C1轮融资显示新能源资产证券化从首单走向批量（E001），VAST半年融资57亿元、完成30亿元B轮和B+轮（E002）。另有面向创业者的AI工具综述（E010）。整体看，AI基础设施投资、算力生态与监管博弈是当日最密集主题，但证据等级低，需后续验证。",
+    "keyDevelopments": [
+      {
+        "title": "KKR为100亿美元AI基础设施投资项目Helix数字基础设施任命新高管",
+        "assessment": "KKR旗下规模达100亿美元的AI新投资主体Helix数字基础设施在原AWS首席执行官亚当·塞利普斯基出任CEO后，新增两名高管执掌。该事件表明大型私募机构继续加码AI基础设施，但细节来自知情人士，且证据为C级，具体职责与投资进度待验证。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "KKR",
+          "Helix数字基础设施",
+          "亚当·塞利普斯基"
+        ],
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "title": "Soitec上调业绩指引，AI需求推动股价单日涨超15%",
+        "assessment": "Soitec将第二财季固定汇率及可比合并口径营收增速指引上调，股价单日涨幅超15%，今年以来累计涨幅超五倍，显示AI基础设施建设对上游材料/器件需求的拉动。但证据为C级媒体快照，未提供指引具体数值，涨幅与指引细节需以公司公告为准。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "Soitec"
+        ],
+        "evidenceIds": [
+          "E007"
+        ]
+      },
+      {
+        "title": "Meta发布新一代AI模型Muse Spark 1.3",
+        "assessment": "Meta周三宣布推出Muse Spark 1.3，公司称代码生成与智能体能力更强，token消耗量较上一代降低25%。该发布反映头部大模型厂商持续迭代，但性能与成本优势为厂商自述，缺乏第三方基准验证。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "Meta",
+          "Muse Spark 1.3"
+        ],
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "title": "美国联合科技巨头向G20推销AI轻监管，黄仁勋、奥特曼等警告过度监管",
+        "assessment": "科技企业高管与特朗普政府官员向其他主要经济体政策制定者呼吁亲AI政策，认为严苛监管会扼杀产业。该事件反映AI监管国际博弈升温，但报道为媒体转述，具体政策主张与G20回应待验证。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "美国",
+          "G20",
+          "黄仁勋",
+          "奥特曼"
+        ],
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "title": "碧澄能源C1轮融资，新能源资产证券化从首单走向批量",
+        "assessment": "碧澄能源完成C1轮融资，报道称天合、阿特斯、中联基金等已入局，新能源资产证券化行业通路成型。该事件对新能源资产金融化有信号意义，但融资规模、投资方名单与证券化产品细节未在证据中展开。",
+        "importance": 3,
+        "confidence": "low",
+        "entities": [
+          "碧澄能源",
+          "天合",
+          "阿特斯",
+          "中联基金"
+        ],
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "title": "VAST半年融资57亿元，完成30亿元B轮和B+轮融资",
+        "assessment": "VAST作为95后创业者创办的AI3D公司，半年内融资57亿元，其中B轮和B+轮合计30亿元，创始团队来自商汤、MiniMax。融资规模较大，但估值、投资方与产品进展未在证据中披露。",
+        "importance": 3,
+        "confidence": "low",
+        "entities": [
+          "VAST"
+        ],
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "title": "上海公布首批38家算力生态合作伙伴，连尚集团入选算力应用方",
+        "assessment": "上海市数据局、上海市通信管理局公布2026年第一批算力生态合作伙伴名单，共38家，其中算力供给方12家、算力应用方18家、平台共建方8家，连尚集团入选算力应用方。该事件显示地方算力生态建设进入落地阶段，但名单完整性与合作细则未披露。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "连尚集团",
+          "上海市数据局",
+          "上海市通信管理局"
+        ],
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "title": "腾讯发布WorkBuddy金融版，面向金融机构的AI智能工作台",
+        "assessment": "腾讯WorkBuddy金融版于9月3日正式上线，面向券商、银行、保险等提供专家与技能矩阵、金融数据源及安全底座，覆盖投研、合规、客户经营、信贷尽调、财富资配等场景。产品发布为事实，但客户案例与落地效果未在证据中体现。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "腾讯",
+          "WorkBuddy金融版"
+        ],
+        "evidenceIds": [
+          "E008"
+        ]
+      },
+      {
+        "title": "UCT研究警告南非不能拖延AI监管",
+        "assessment": "南非UCT研究指出南非需要可执行的AI监管，以应对偏见、权利侵犯、治理碎片化及新兴技术风险。该研究与美方轻监管主张形成对比，显示全球AI监管路径分歧，但研究具体内容与政策影响待验证。",
+        "importance": 2,
+        "confidence": "medium",
+        "entities": [
+          "UCT",
+          "南非"
+        ],
+        "evidenceIds": [
+          "E004"
+        ]
+      },
+      {
+        "title": "TechRadar盘点2026年创业可用的7款AI工具",
+        "assessment": "TechRadar文章称AI工具可以以远低于常规成本自动化大规模任务，适合单人/小企业创业。该内容为工具综述，信息价值较低，不构成重大产业信号。",
+        "importance": 1,
+        "confidence": "medium",
+        "entities": [
+          "TechRadar"
+        ],
+        "evidenceIds": [
+          "E010"
+        ]
+      }
+    ],
+    "thesisUpdates": [
+      {
+        "entity": "AI基础设施投资",
+        "direction": "positive",
+        "statement": "KKR为100亿美元AI基础设施投资主体Helix数字基础设施任命新高管，叠加Soitec因AI需求上调指引，显示机构资本与上游供应链均确认AI基础设施需求旺盛。",
+        "evidenceIds": [
+          "E006",
+          "E007"
+        ]
+      },
+      {
+        "entity": "大模型竞争格局",
+        "direction": "mixed",
+        "statement": "Meta发布Muse Spark 1.3并宣称token消耗降低25%，显示头部厂商加速追赶；但性能与成本优势为厂商自述，竞争格局变化需第三方基准验证。",
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "entity": "AI监管政策",
+        "direction": "mixed",
+        "statement": "美国联合科技巨头向G20推销AI轻监管，而南非UCT研究警告不能拖延AI监管，全球AI监管路径呈现明显分歧，跨境合规不确定性上升。",
+        "evidenceIds": [
+          "E003",
+          "E004"
+        ]
+      },
+      {
+        "entity": "中国算力生态",
+        "direction": "positive",
+        "statement": "上海公布首批38家算力生态合作伙伴并设置供给方、应用方、平台共建方三类主体，连尚集团入选算力应用方，显示地方算力生态建设进入落地阶段。",
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "entity": "新能源资产证券化",
+        "direction": "positive",
+        "statement": "碧澄能源C1轮融资及天合、阿特斯、中联基金等入局，显示新能源资产证券化从首单走向批量，行业通路成型。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "entity": "AI3D创业融资",
+        "direction": "positive",
+        "statement": "VAST半年融资57亿元并完成30亿元B轮和B+轮融资，显示AI3D赛道在一级市场获得大额资金注入。",
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "entity": "金融AI应用",
+        "direction": "positive",
+        "statement": "腾讯WorkBuddy金融版正式上线，面向券商、银行、保险提供开箱即用智能工作台，显示AI Agent在金融业务现场加速落地。",
+        "evidenceIds": [
+          "E008"
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "item": "KKR Helix数字基础设施的后续投资公告与项目落地",
+        "reason": "100亿美元AI基础设施投资主体高管到位，但具体投资标的、出资进度与项目落地尚未披露。",
+        "nextEvidence": "KKR或Helix数字基础设施的官方公告、监管文件或项目签约信息",
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "item": "Soitec第二财季业绩指引的具体数值与后续财报",
+        "reason": "当前证据仅提及指引上调与股价涨幅，未提供指引具体数值，需以公司官方披露为准。",
+        "nextEvidence": "Soitec官方业绩指引文件或财报公告",
+        "evidenceIds": [
+          "E007"
+        ]
+      },
+      {
+        "item": "Meta Muse Spark 1.3的第三方基准评测与采用情况",
+        "reason": "模型能力与token消耗降低25%为厂商自述，需第三方基准与开发者采用数据验证。",
+        "nextEvidence": "第三方基准测试结果、开发者社区采用数据或Meta官方技术报告",
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "item": "G20对AI轻监管主张的回应与后续国际监管协调",
+        "reason": "美方联合科技巨头推销轻监管，但G20成员国立场与政策产出尚未明确。",
+        "nextEvidence": "G20会议公报、成员国AI政策声明或后续监管框架文件",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "item": "碧澄能源C1轮融资的规模、投资方名单与证券化产品细节",
+        "reason": "报道标题提及天合、阿特斯、中联基金等入局，但证据摘要未展开融资规模与产品结构。",
+        "nextEvidence": "碧澄能源官方融资公告、工商变更记录或证券化产品发行文件",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "item": "VAST融资的投资方、估值与产品商业化进展",
+        "reason": "半年57亿元融资规模较大，但投资方、估值与AI3D产品落地情况未披露。",
+        "nextEvidence": "VAST官方融资公告、投资方确认或产品发布信息",
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "item": "上海市首批算力生态合作伙伴的完整名单与后续算力调用政策",
+        "reason": "当前证据仅确认连尚集团入选算力应用方，完整名单与平台租用、模型调用细则待公布。",
+        "nextEvidence": "上海市数据局或通信管理局官方名单与实施细则",
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "item": "腾讯WorkBuddy金融版的客户案例与安全合规认证",
+        "reason": "产品发布为事实，但金融机构实际采用情况与合规认证细节未在证据中体现。",
+        "nextEvidence": "腾讯官方客户案例、金融机构合作公告或合规认证文件",
+        "evidenceIds": [
+          "E008"
+        ]
+      },
+      {
+        "item": "南非AI监管研究的政策转化与立法进展",
+        "reason": "UCT研究警告不能拖延AI监管，但研究是否转化为可执行立法尚待观察。",
+        "nextEvidence": "南非政府AI监管立法草案或政策文件",
+        "evidenceIds": [
+          "E004"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "证据等级低且未经人工复核，关键数字可能失真",
+        "reason": "全部10条证据均为C级外部线索且reviewStatus为automated_unreviewed，融资规模、股价涨幅、指引上调等数字均来自媒体快照，未经公司公告或人工核实。",
+        "evidenceIds": [
+          "E001",
+          "E002",
+          "E006",
+          "E007",
+          "E009"
+        ]
+      },
+      {
+        "risk": "AI基础设施投资存在资本开支过热与回报不及预期风险",
+        "reason": "KKR设立100亿美元AI基础设施投资主体、Soitec因AI需求上调指引，显示资本与供应链高度乐观，但证据未提供需求可持续性或项目回报数据。",
+        "evidenceIds": [
+          "E006",
+          "E007"
+        ]
+      },
+      {
+        "risk": "全球AI监管分歧加大跨境合规不确定性",
+        "reason": "美国向G20推销轻监管，而南非研究主张加强可执行监管，不同司法辖区监管路径分化可能增加跨国AI企业的合规成本与市场准入风险。",
+        "evidenceIds": [
+          "E003",
+          "E004"
+        ]
+      },
+      {
+        "risk": "新能源资产证券化批量复制可能面临资产质量与流动性风险",
+        "reason": "碧澄能源C1轮融资显示新能源资产证券化从首单走向批量，但证据未提供底层资产质量、增信结构与二级市场流动性信息。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "risk": "大模型厂商自述性能优势可能夸大，竞争格局判断存在偏差",
+        "reason": "Meta宣称Muse Spark 1.3代码生成与智能体能力更强且token消耗降低25%，但缺乏第三方基准验证，若实际表现不及宣传将影响竞争格局判断。",
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "risk": "AI3D赛道高额融资可能伴随估值泡沫",
+        "reason": "VAST半年融资57亿元，但证据未披露估值、收入或产品商业化进展，高额融资与商业化进度不匹配可能带来估值回调风险。",
+        "evidenceIds": [
+          "E002"
+        ]
+      }
+    ],
+    "methodologyNote": "本报告仅基于2026-09-03证据包中的10条C级外部线索（E001-E010）进行分析，所有事件均来自媒体快照且未经人工复核，因此将事实、推断与待验证事项分开表述，并对关键数字保持谨慎。每个判断均引用至少一个evidenceIds中的证据编号；未补充任何外部事实。证据等级低或内部差异证据未写成确定性重大事实。本报告不构成买入、卖出、目标价或收益承诺。 数据管线提示：每日证据约束研究摘要=degraded。"
   },
-  "changes": [],
-  "evidence": [],
+  "changes": [
+    {
+      "id": "chg-cdd1be7f9df268e8cde2",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-f7f96cb82979cb0004",
+      "entityName": "碧澄能源C1轮融资背后，天合、阿特斯、中联基金等已纷纷入局，新能源资产证券化从“首单”走向“批量”",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：碧澄能源C1轮融资背后，天合、阿特斯、中联基金等已纷纷入局，新能源资产证券化从“首单”走向“批量”。",
+      "importance": 91,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "碧澄能源完成融资，新能源资产证券化行业通路成型。",
+        "title": "碧澄能源C1轮融资背后，天合、阿特斯、中联基金等已纷纷入局，新能源资产证券化从“首单”走向“批量”"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "碧澄能源完成融资，新能源资产证券化行业通路成型。",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "碧澄能源C1轮融资背后，天合、阿特斯、中联基金等已纷纷入局，新能源资产证券化从“首单”走向“批量”",
+          "evidenceIds": [
+            "E001"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E001"
+      ],
+      "supportingEvidenceIds": [
+        "E001"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-94d5c9efcaa0cc137fed"
+      ],
+      "eventLifecycles": {
+        "evt-94d5c9efcaa0cc137fed": "first_seen"
+      },
+      "eventId": "evt-94d5c9efcaa0cc137fed",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-03T11:35:45+00:00",
+      "lastSeenAt": "2026-09-03T11:35:45+00:00"
+    },
+    {
+      "id": "chg-110a8fc4d7da56ae9532",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-bce947957d40c8574b",
+      "entityName": "半年狂揽57亿，95后创业做AI3D，曾是商汤、MiniMax元老",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：半年狂揽57亿，95后创业做AI3D，曾是商汤、MiniMax元老。",
+      "importance": 91,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "VAST完成30亿元B轮和B+轮融资。",
+        "title": "半年狂揽57亿，95后创业做AI3D，曾是商汤、MiniMax元老"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "VAST完成30亿元B轮和B+轮融资。",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "半年狂揽57亿，95后创业做AI3D，曾是商汤、MiniMax元老",
+          "evidenceIds": [
+            "E002"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E002"
+      ],
+      "supportingEvidenceIds": [
+        "E002"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-c9b5ff159d634b9fb87b"
+      ],
+      "eventLifecycles": {
+        "evt-c9b5ff159d634b9fb87b": "first_seen"
+      },
+      "eventId": "evt-c9b5ff159d634b9fb87b",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-03T11:35:45+00:00",
+      "lastSeenAt": "2026-09-03T11:35:45+00:00"
+    },
+    {
+      "id": "chg-c4d0436726822edeab97",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-31aabf8c4e587af63f",
+      "entityName": "美国联合科技巨头向G20推销AI“轻监管” 黄仁勋、奥特曼等警告过度监管",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：美国联合科技巨头向G20推销AI“轻监管” 黄仁勋、奥特曼等警告过度监管。",
+      "importance": 86,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "科技企业高管与特朗普政府官员向其他主要经济体的政策制定者呼吁采取亲AI政策，他们提出严苛监管会扼杀这样一个有望拉动全球经济高速增长、攻克疑难疾病的产业。",
+        "title": "美国联合科技巨头向G20推销AI“轻监管” 黄仁勋、奥特曼等警告过度监管"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "科技企业高管与特朗普政府官员向其他主要经济体的政策制定者呼吁采取亲AI政策，他们提出严苛监管会扼杀这样一个有望拉动全球经济高速增长、攻克疑难疾病的产业。",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "美国联合科技巨头向G20推销AI“轻监管” 黄仁勋、奥特曼等警告过度监管",
+          "evidenceIds": [
+            "E003"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E003"
+      ],
+      "supportingEvidenceIds": [
+        "E003"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-f31a61980c8a67e5bd8e"
+      ],
+      "eventLifecycles": {
+        "evt-f31a61980c8a67e5bd8e": "first_seen"
+      },
+      "eventId": "evt-f31a61980c8a67e5bd8e",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-03T11:35:45+00:00",
+      "lastSeenAt": "2026-09-03T11:35:45+00:00"
+    },
+    {
+      "id": "chg-7110eee346586132dc0e",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-b51d104592bc214b2f",
+      "entityName": "UCT research warns SA cannot delay AI regulation",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：UCT research warns SA cannot delay AI regulation。",
+      "importance": 86,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "SA needs enforceable AI regulation to address bias, rights violations, fragmented governance and emerging technological risks.",
+        "title": "UCT research warns SA cannot delay AI regulation"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "SA needs enforceable AI regulation to address bias, rights violations, fragmented governance and emerging technological risks.",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "UCT research warns SA cannot delay AI regulation",
+          "evidenceIds": [
+            "E004"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E004"
+      ],
+      "supportingEvidenceIds": [
+        "E004"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-c95fb1b6790adb00f6f5"
+      ],
+      "eventLifecycles": {
+        "evt-c95fb1b6790adb00f6f5": "first_seen"
+      },
+      "eventId": "evt-c95fb1b6790adb00f6f5",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-03T11:35:45+00:00",
+      "lastSeenAt": "2026-09-03T11:35:45+00:00"
+    },
+    {
+      "id": "chg-f468d817416228d13a04",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-8f5ac8a5794f153282",
+      "entityName": "连尚集团入选上海市首批算力生态合作伙伴名单",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：连尚集团入选上海市首批算力生态合作伙伴名单。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "近日，据雷峰网了解，上海市数据局、上海市通信管理局正式公布2026年第一批算力生态合作伙伴名单。上海连尚网络科技集团有限公司（以下简称“连尚集团”）入选“算力应用方”名单，成为上海首批38家算力生态合作伙伴之一。 此次征集面向算力全产业链，共设置算力供给方、算力应用方和平台共建方三类合作主体。经专家评审，最终确定算力供给方12家、算力应用方18家、平台共建方8家。 根据征集要求，算力应用方需要具备明确的算力使用需求以及技术研发、场景建设计划，并通过相关平台租用算力、调用模型，持续开展技术研发和应用创新。连尚集团此…",
+        "title": "连尚集团入选上海市首批算力生态合作伙伴名单"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "近日，据雷峰网了解，上海市数据局、上海市通信管理局正式公布2026年第一批算力生态合作伙伴名单。上海连尚网络科技集团有限公司（以下简称“连尚集团”）入选“算力应用方”名单，成为上海首批38家算力生态合作伙伴之一。 此次征集面向算力全产业链，共设置算力供给方、算力应用方和平台共建方三类合作主体。经专家评审，最终确定算力供给方12家、算力应用方18家、平台共建方8家。 根据征集要求，算力应用方需要具备明确的算力使用需求以及技术研发、场景建设计划，并通过相关平台租用算力、调用模型，持续开展技术研发和应用创新。连尚集团此…",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "连尚集团入选上海市首批算力生态合作伙伴名单",
+          "evidenceIds": [
+            "E005"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E005"
+      ],
+      "supportingEvidenceIds": [
+        "E005"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-8351565acb803db9eb12"
+      ],
+      "eventLifecycles": {
+        "evt-8351565acb803db9eb12": "first_seen"
+      },
+      "eventId": "evt-8351565acb803db9eb12",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-03T11:35:45+00:00",
+      "lastSeenAt": "2026-09-03T11:35:45+00:00"
+    },
+    {
+      "id": "chg-8c0787b67766b464f280",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-d197ef0a4aa3e74130",
+      "entityName": "两名新高管执掌KKR规模100亿美元的AI基础设施投资项目",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：两名新高管执掌KKR规模100亿美元的AI基础设施投资项目。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "据知情人士透露，在原亚马逊云科技（AWS）首席执行官亚当・塞利普斯基出任首席执行官后，KKR 旗下规模达 100 亿美元的 AI 新投资主体Helix 数字基础设施（Helix Digital...",
+        "title": "两名新高管执掌KKR规模100亿美元的AI基础设施投资项目"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "据知情人士透露，在原亚马逊云科技（AWS）首席执行官亚当・塞利普斯基出任首席执行官后，KKR 旗下规模达 100 亿美元的 AI 新投资主体Helix 数字基础设施（Helix Digital...",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "两名新高管执掌KKR规模100亿美元的AI基础设施投资项目",
+          "evidenceIds": [
+            "E006"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E006"
+      ],
+      "supportingEvidenceIds": [
+        "E006"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-0edc73264cf2328f913b"
+      ],
+      "eventLifecycles": {
+        "evt-0edc73264cf2328f913b": "first_seen"
+      },
+      "eventId": "evt-0edc73264cf2328f913b",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-03T11:35:45+00:00",
+      "lastSeenAt": "2026-09-03T11:35:45+00:00"
+    },
+    {
+      "id": "chg-7036e06ad4f01a3ac697",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-76d5596e1d7767ec66",
+      "entityName": "Soitec上调业绩指引，AI需求旺盛推动股价大涨",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Soitec上调业绩指引，AI需求旺盛推动股价大涨。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "股价单日涨幅超 15%，今年以来累计涨幅超五倍人工智能基础设施建设竞赛持续拉动 Soitec 产品需求。 内容速览 Soitec 将第二财季固定汇率及可比合并口径营收增速指引由此前...",
+        "title": "Soitec上调业绩指引，AI需求旺盛推动股价大涨"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "股价单日涨幅超 15%，今年以来累计涨幅超五倍人工智能基础设施建设竞赛持续拉动 Soitec 产品需求。 内容速览 Soitec 将第二财季固定汇率及可比合并口径营收增速指引由此前...",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Soitec上调业绩指引，AI需求旺盛推动股价大涨",
+          "evidenceIds": [
+            "E007"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E007"
+      ],
+      "supportingEvidenceIds": [
+        "E007"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-1cd10481c7a44593be9f"
+      ],
+      "eventLifecycles": {
+        "evt-1cd10481c7a44593be9f": "first_seen"
+      },
+      "eventId": "evt-1cd10481c7a44593be9f",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-03T11:35:45+00:00",
+      "lastSeenAt": "2026-09-03T11:35:45+00:00"
+    },
+    {
+      "id": "chg-02fb80d5d53502585225",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-51af309ae7bbb579f9",
+      "entityName": "WorkBuddy金融版正式发布，让Agent真正进入金融业务现场",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：WorkBuddy金融版正式发布，让Agent真正进入金融业务现场。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "9月 3 日，腾讯WorkBuddy金融版正式上线 。 WorkBuddy金融版 是 专门 面向金融机构打造的AI智能工作台， 可为券商、银行、保险等 行业 提供开箱即用的专家与技能矩阵，丰富的金融数据源及全链路安全可信底座，覆盖投研、合规、客户经营、信贷尽调、财富资配等核心业务场景，助力金融机构安全、高效地落地智能体应用。 金融行业的业务逻辑复杂，且对安全合规要求极高。在真实业务中，客户经理要查企业、看财报、核工商、翻公告、找风险；保险团队长要看续保率、查渠道、盯座席、跟客户等等。这些都是需要业务视图、数据工具…",
+        "title": "WorkBuddy金融版正式发布，让Agent真正进入金融业务现场"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "9月 3 日，腾讯WorkBuddy金融版正式上线 。 WorkBuddy金融版 是 专门 面向金融机构打造的AI智能工作台， 可为券商、银行、保险等 行业 提供开箱即用的专家与技能矩阵，丰富的金融数据源及全链路安全可信底座，覆盖投研、合规、客户经营、信贷尽调、财富资配等核心业务场景，助力金融机构安全、高效地落地智能体应用。 金融行业的业务逻辑复杂，且对安全合规要求极高。在真实业务中，客户经理要查企业、看财报、核工商、翻公告、找风险；保险团队长要看续保率、查渠道、盯座席、跟客户等等。这些都是需要业务视图、数据工具…",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "WorkBuddy金融版正式发布，让Agent真正进入金融业务现场",
+          "evidenceIds": [
+            "E008"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E008"
+      ],
+      "supportingEvidenceIds": [
+        "E008"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-a3981e898ddb226a59f4"
+      ],
+      "eventLifecycles": {
+        "evt-a3981e898ddb226a59f4": "first_seen"
+      },
+      "eventId": "evt-a3981e898ddb226a59f4",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-03T11:35:45+00:00",
+      "lastSeenAt": "2026-09-03T11:35:45+00:00"
+    },
+    {
+      "id": "chg-9e9e147786a94b52ecd8",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-6d7883d956a26311da",
+      "entityName": "Meta发布全新AI模型，加速追赶竞争对手",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Meta发布全新AI模型，加速追赶竞争对手。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "公司称 Muse Spark 1.3 模型的代码生成与智能体能力更强，同时相比上一代模型，token 消耗量降低 25%。 Meta 平台周三宣布推出新一代 AI 模型 Muse Spark 1.3。",
+        "title": "Meta发布全新AI模型，加速追赶竞争对手"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E009"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "公司称 Muse Spark 1.3 模型的代码生成与智能体能力更强，同时相比上一代模型，token 消耗量降低 25%。 Meta 平台周三宣布推出新一代 AI 模型 Muse Spark 1.3。",
+          "evidenceIds": [
+            "E009"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Meta发布全新AI模型，加速追赶竞争对手",
+          "evidenceIds": [
+            "E009"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E009"
+      ],
+      "supportingEvidenceIds": [
+        "E009"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-55d4b156acc50a1e818e"
+      ],
+      "eventLifecycles": {
+        "evt-55d4b156acc50a1e818e": "first_seen"
+      },
+      "eventId": "evt-55d4b156acc50a1e818e",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-03T11:35:45+00:00",
+      "lastSeenAt": "2026-09-03T11:35:45+00:00"
+    },
+    {
+      "id": "chg-28685d8fe2fb856e43bb",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-c303b0b2fec44e5fe2",
+      "entityName": "Launching a business in 2026? Use these 7 AI tools",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Launching a business in 2026? Use these 7 AI tools。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "AI tools can automate large-scale tasks at a fraction of the usual cost, which makes them a great option for solo or small business setups. If you can't invest in a sizeable employee headcount just yet, you can now limit your hires to key roles or just have a…",
+        "title": "Launching a business in 2026? Use these 7 AI tools"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E010"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "AI tools can automate large-scale tasks at a fraction of the usual cost, which makes them a great option for solo or small business setups. If you can't invest in a sizeable employee headcount just yet, you can now limit your hires to key roles or just have a…",
+          "evidenceIds": [
+            "E010"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Launching a business in 2026? Use these 7 AI tools",
+          "evidenceIds": [
+            "E010"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E010"
+      ],
+      "supportingEvidenceIds": [
+        "E010"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-8389f24d054236d54e63"
+      ],
+      "eventLifecycles": {
+        "evt-8389f24d054236d54e63": "first_seen"
+      },
+      "eventId": "evt-8389f24d054236d54e63",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-03T11:35:45+00:00",
+      "lastSeenAt": "2026-09-03T11:35:45+00:00"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E001",
+      "changeId": "chg-cdd1be7f9df268e8cde2",
+      "entityName": "碧澄能源C1轮融资背后，天合、阿特斯、中联基金等已纷纷入局，新能源资产证券化从“首单”走向“批量”",
+      "claim": "新增高价值情报事件记录：碧澄能源C1轮融资背后，天合、阿特斯、中联基金等已纷纷入局，新能源资产证券化从“首单”走向“批量”。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "钛媒体",
+      "title": "碧澄能源C1轮融资背后，天合、阿特斯、中联基金等已纷纷入局，新能源资产证券化从“首单”走向“批量”",
+      "url": "https://www.tmtpost.com/8126384.html",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E002",
+      "changeId": "chg-110a8fc4d7da56ae9532",
+      "entityName": "半年狂揽57亿，95后创业做AI3D，曾是商汤、MiniMax元老",
+      "claim": "新增高价值情报事件记录：半年狂揽57亿，95后创业做AI3D，曾是商汤、MiniMax元老。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "钛媒体",
+      "title": "半年狂揽57亿，95后创业做AI3D，曾是商汤、MiniMax元老",
+      "url": "https://www.tmtpost.com/8127562.html",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E003",
+      "changeId": "chg-c4d0436726822edeab97",
+      "entityName": "美国联合科技巨头向G20推销AI“轻监管” 黄仁勋、奥特曼等警告过度监管",
+      "claim": "新增高价值情报事件记录：美国联合科技巨头向G20推销AI“轻监管” 黄仁勋、奥特曼等警告过度监管。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "美国联合科技巨头向G20推销AI“轻监管” 黄仁勋、奥特曼等警告过度监管",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-03/doc-iniqpvfw2108115.shtml",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E004",
+      "changeId": "chg-7110eee346586132dc0e",
+      "entityName": "UCT research warns SA cannot delay AI regulation",
+      "claim": "新增高价值情报事件记录：UCT research warns SA cannot delay AI regulation。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "ITWeb",
+      "title": "UCT research warns SA cannot delay AI regulation",
+      "url": "https://www.itweb.co.za/article/uct-research-warns-sa-cannot-delay-ai-regulation/KBpdg7pm5YJMLEew",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "C",
+      "platformName": "ITWeb",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E005",
+      "changeId": "chg-f468d817416228d13a04",
+      "entityName": "连尚集团入选上海市首批算力生态合作伙伴名单",
+      "claim": "新增高价值情报事件记录：连尚集团入选上海市首批算力生态合作伙伴名单。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "雷峰网",
+      "title": "连尚集团入选上海市首批算力生态合作伙伴名单",
+      "url": "https://www.leiphone.com/category/ai/L2kvpqr4fseLUbUN.html",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E006",
+      "changeId": "chg-8c0787b67766b464f280",
+      "entityName": "两名新高管执掌KKR规模100亿美元的AI基础设施投资项目",
+      "claim": "新增高价值情报事件记录：两名新高管执掌KKR规模100亿美元的AI基础设施投资项目。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "两名新高管执掌KKR规模100亿美元的AI基础设施投资项目",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-03/doc-iniqpzpq4294970.shtml",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E007",
+      "changeId": "chg-7036e06ad4f01a3ac697",
+      "entityName": "Soitec上调业绩指引，AI需求旺盛推动股价大涨",
+      "claim": "新增高价值情报事件记录：Soitec上调业绩指引，AI需求旺盛推动股价大涨。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "Soitec上调业绩指引，AI需求旺盛推动股价大涨",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-03/doc-iniqpzpu2010279.shtml",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E008",
+      "changeId": "chg-02fb80d5d53502585225",
+      "entityName": "WorkBuddy金融版正式发布，让Agent真正进入金融业务现场",
+      "claim": "新增高价值情报事件记录：WorkBuddy金融版正式发布，让Agent真正进入金融业务现场。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "雷峰网",
+      "title": "WorkBuddy金融版正式发布，让Agent真正进入金融业务现场",
+      "url": "https://www.leiphone.com/category/industrynews/zr0zxn8R9MVT4y7n.html",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E009",
+      "changeId": "chg-9e9e147786a94b52ecd8",
+      "entityName": "Meta发布全新AI模型，加速追赶竞争对手",
+      "claim": "新增高价值情报事件记录：Meta发布全新AI模型，加速追赶竞争对手。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "Meta发布全新AI模型，加速追赶竞争对手",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-03/doc-iniqpvfs4361764.shtml",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E010",
+      "changeId": "chg-28685d8fe2fb856e43bb",
+      "entityName": "Launching a business in 2026? Use these 7 AI tools",
+      "claim": "新增高价值情报事件记录：Launching a business in 2026? Use these 7 AI tools。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "TechRadar",
+      "title": "Launching a business in 2026? Use these 7 AI tools",
+      "url": "https://www.techradar.com/pro/launching-a-business-in-2026-use-these-7-ai-tools",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "C",
+      "platformName": "TechRadar",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    }
+  ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-03T05:59:52+00:00",
+    "generatedAt": "2026-09-03T11:35:45+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-f31a61980c8a67e5bd8e": {
+        "eventId": "evt-f31a61980c8a67e5bd8e",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-31aabf8c4e587af63f",
+        "entityName": "美国联合科技巨头向G20推销AI“轻监管” 黄仁勋、奥特曼等警告过度监管",
+        "title": "美国联合科技巨头向G20推销AI“轻监管” 黄仁勋、奥特曼等警告过度监管",
+        "titleAliases": [
+          "美国联合科技巨头向g20推销ai轻监管黄仁勋奥特曼等警告过度监管"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "政策",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "20"
+        ],
+        "sourceAliases": [
+          "evd-78909410d3dccb23ed64",
+          "record-8d241cf906116c92bccb",
+          "src-30dff78f7065e5c7cadf"
+        ],
+        "evidenceFingerprints": [
+          "78909410d3dccb23ed64"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "美国联合科技巨头向G20推销AI“轻监管” 黄仁勋、奥特曼等警告过度监管",
+            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-03/doc-iniqpvfw2108115.shtml",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "1da9fea020a1ef7bf073",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T11:35:45+00:00",
+        "lastSeenAt": "2026-09-03T11:35:45+00:00",
+        "lastPublishedAt": "2026-09-03T11:35:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-c9b5ff159d634b9fb87b": {
+        "eventId": "evt-c9b5ff159d634b9fb87b",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-bce947957d40c8574b",
+        "entityName": "半年狂揽57亿，95后创业做AI3D，曾是商汤、MiniMax元老",
+        "title": "半年狂揽57亿，95后创业做AI3D，曾是商汤、MiniMax元老",
+        "titleAliases": [
+          "半年狂揽57亿95后创业做ai3d曾是商汤minimax元老"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "3",
+          "57",
+          "95"
+        ],
+        "sourceAliases": [
+          "evd-d4d4e612712907c23b59",
+          "record-a9ec3f3711a0d79e44d1",
+          "src-657668f9676426800081"
+        ],
+        "evidenceFingerprints": [
+          "d4d4e612712907c23b59"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "钛媒体",
+            "title": "半年狂揽57亿，95后创业做AI3D，曾是商汤、MiniMax元老",
+            "url": "https://www.tmtpost.com/8127562.html",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "dfdeb5f8321753a23f93",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T11:35:45+00:00",
+        "lastSeenAt": "2026-09-03T11:35:45+00:00",
+        "lastPublishedAt": "2026-09-03T11:35:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-c95fb1b6790adb00f6f5": {
+        "eventId": "evt-c95fb1b6790adb00f6f5",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-b51d104592bc214b2f",
+        "entityName": "UCT research warns SA cannot delay AI regulation",
+        "title": "UCT research warns SA cannot delay AI regulation",
+        "titleAliases": [
+          "uctresearchwarnssacannotdelayairegulation"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "政策",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-6d0739ff4e37ff407849",
+          "record-0c5554fa4a9c0c51185b",
+          "src-0af3a12355831a247e98"
+        ],
+        "evidenceFingerprints": [
+          "6d0739ff4e37ff407849"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "ITWeb",
+            "title": "UCT research warns SA cannot delay AI regulation",
+            "url": "https://www.itweb.co.za/article/uct-research-warns-sa-cannot-delay-ai-regulation/KBpdg7pm5YJMLEew",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "37e22201827468fad178",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T11:35:45+00:00",
+        "lastSeenAt": "2026-09-03T11:35:45+00:00",
+        "lastPublishedAt": "2026-09-03T11:35:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-a3981e898ddb226a59f4": {
+        "eventId": "evt-a3981e898ddb226a59f4",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-51af309ae7bbb579f9",
+        "entityName": "WorkBuddy金融版正式发布，让Agent真正进入金融业务现场",
+        "title": "WorkBuddy金融版正式发布，让Agent真正进入金融业务现场",
+        "titleAliases": [
+          "workbuddy金融版正式发布让agent真正进入金融业务现场"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-eec0f903f8b6c3259c5a",
+          "record-b19b90817aab537d68e6",
+          "src-f7124ca75724cc70aa67"
+        ],
+        "evidenceFingerprints": [
+          "eec0f903f8b6c3259c5a"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "WorkBuddy金融版正式发布，让Agent真正进入金融业务现场",
+            "url": "https://www.leiphone.com/category/industrynews/zr0zxn8R9MVT4y7n.html",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "c00da4433cf3313a6626",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T11:35:45+00:00",
+        "lastSeenAt": "2026-09-03T11:35:45+00:00",
+        "lastPublishedAt": "2026-09-03T11:35:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-94d5c9efcaa0cc137fed": {
+        "eventId": "evt-94d5c9efcaa0cc137fed",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-f7f96cb82979cb0004",
+        "entityName": "碧澄能源C1轮融资背后，天合、阿特斯、中联基金等已纷纷入局，新能源资产证券化从“首单”走向“批量”",
+        "title": "碧澄能源C1轮融资背后，天合、阿特斯、中联基金等已纷纷入局，新能源资产证券化从“首单”走向“批量”",
+        "titleAliases": [
+          "碧澄能源c1轮融资背后天合阿特斯中联基金等已纷纷入局新能源资产证券化从首单走向批量"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "1"
+        ],
+        "sourceAliases": [
+          "evd-61057e719b63e9ef7a33",
+          "record-15864b307c716e3612f3",
+          "src-2d7b88759c05c576ec94"
+        ],
+        "evidenceFingerprints": [
+          "61057e719b63e9ef7a33"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "钛媒体",
+            "title": "碧澄能源C1轮融资背后，天合、阿特斯、中联基金等已纷纷入局，新能源资产证券化从“首单”走向“批量”",
+            "url": "https://www.tmtpost.com/8126384.html",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "a4046409c511d26a835e",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T11:35:45+00:00",
+        "lastSeenAt": "2026-09-03T11:35:45+00:00",
+        "lastPublishedAt": "2026-09-03T11:35:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-8389f24d054236d54e63": {
+        "eventId": "evt-8389f24d054236d54e63",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-c303b0b2fec44e5fe2",
+        "entityName": "Launching a business in 2026? Use these 7 AI tools",
+        "title": "Launching a business in 2026? Use these 7 AI tools",
+        "titleAliases": [
+          "launchingabusinessin2026usethese7aitools"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "7"
+        ],
+        "sourceAliases": [
+          "evd-54dc870ce520c97f156f",
+          "record-f7e81406b49cdfbfbd3b",
+          "src-c35f8c3f300daefea75a"
+        ],
+        "evidenceFingerprints": [
+          "54dc870ce520c97f156f"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "TechRadar",
+            "title": "Launching a business in 2026? Use these 7 AI tools",
+            "url": "https://www.techradar.com/pro/launching-a-business-in-2026-use-these-7-ai-tools",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "4165bc1ec1f2c5cd7aad",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T11:35:45+00:00",
+        "lastSeenAt": "2026-09-03T11:35:45+00:00",
+        "lastPublishedAt": "2026-09-03T11:35:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-8351565acb803db9eb12": {
+        "eventId": "evt-8351565acb803db9eb12",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-8f5ac8a5794f153282",
+        "entityName": "连尚集团入选上海市首批算力生态合作伙伴名单",
+        "title": "连尚集团入选上海市首批算力生态合作伙伴名单",
+        "titleAliases": [
+          "连尚集团入选上海市首批算力生态合作伙伴名单"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-fa4410b00cc932c0908e",
+          "record-4bc0d77a9165694a7ab8",
+          "src-beaf3c5438c1c6c1864b"
+        ],
+        "evidenceFingerprints": [
+          "fa4410b00cc932c0908e"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "连尚集团入选上海市首批算力生态合作伙伴名单",
+            "url": "https://www.leiphone.com/category/ai/L2kvpqr4fseLUbUN.html",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "9695e2a6721e42b2f58b",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T11:35:45+00:00",
+        "lastSeenAt": "2026-09-03T11:35:45+00:00",
+        "lastPublishedAt": "2026-09-03T11:35:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-55d4b156acc50a1e818e": {
+        "eventId": "evt-55d4b156acc50a1e818e",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-6d7883d956a26311da",
+        "entityName": "Meta发布全新AI模型，加速追赶竞争对手",
+        "title": "Meta发布全新AI模型，加速追赶竞争对手",
+        "titleAliases": [
+          "meta发布全新ai模型加速追赶竞争对手"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-296b98c379e07d6a3a6d",
+          "record-12ea23560b132759a8a3",
+          "src-8327b3605f29a1e049f0"
+        ],
+        "evidenceFingerprints": [
+          "296b98c379e07d6a3a6d"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "Meta发布全新AI模型，加速追赶竞争对手",
+            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-03/doc-iniqpvfs4361764.shtml",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "216e1b41898f9359a0df",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T11:35:45+00:00",
+        "lastSeenAt": "2026-09-03T11:35:45+00:00",
+        "lastPublishedAt": "2026-09-03T11:35:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-1cd10481c7a44593be9f": {
+        "eventId": "evt-1cd10481c7a44593be9f",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-76d5596e1d7767ec66",
+        "entityName": "Soitec上调业绩指引，AI需求旺盛推动股价大涨",
+        "title": "Soitec上调业绩指引，AI需求旺盛推动股价大涨",
+        "titleAliases": [
+          "soitec上调业绩指引ai需求旺盛推动股价大涨"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "财报",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-f22b69f6ff3417fd1fe8",
+          "record-2cdad4be22fa63a5f067",
+          "src-bfea4c09409d40d7941f"
+        ],
+        "evidenceFingerprints": [
+          "f22b69f6ff3417fd1fe8"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "Soitec上调业绩指引，AI需求旺盛推动股价大涨",
+            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-03/doc-iniqpzpu2010279.shtml",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "5c5fdfc20b04994ed8ab",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T11:35:45+00:00",
+        "lastSeenAt": "2026-09-03T11:35:45+00:00",
+        "lastPublishedAt": "2026-09-03T11:35:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-0edc73264cf2328f913b": {
+        "eventId": "evt-0edc73264cf2328f913b",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-d197ef0a4aa3e74130",
+        "entityName": "两名新高管执掌KKR规模100亿美元的AI基础设施投资项目",
+        "title": "两名新高管执掌KKR规模100亿美元的AI基础设施投资项目",
+        "titleAliases": [
+          "两名新高管执掌kkr规模100亿美元的ai基础设施投资项目"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产业投资",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "100"
+        ],
+        "sourceAliases": [
+          "evd-49d585a717ec5f8b9166",
+          "record-717dcdd6b073f55953bd",
+          "src-c8cfbc36a30787401390"
+        ],
+        "evidenceFingerprints": [
+          "49d585a717ec5f8b9166"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "两名新高管执掌KKR规模100亿美元的AI基础设施投资项目",
+            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-03/doc-iniqpzpq4294970.shtml",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "cd08e4e3bdf368f80308",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-03T11:35:45+00:00",
+        "lastSeenAt": "2026-09-03T11:35:45+00:00",
+        "lastPublishedAt": "2026-09-03T11:35:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-f2f708f6097a7f5968df": {
         "eventId": "evt-f2f708f6097a7f5968df",
         "dataset": "intelligenceEvent",
@@ -19172,13 +21063,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 0,
+    "newEvents": 10,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
     "duplicatesSuppressed": 0,
-    "observedEvents": 0,
+    "observedEvents": 10,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -20887,10 +22778,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-03",
-      "generatedAt": "2026-09-03T05:59:52+00:00",
-      "runStatus": "no-material-change",
-      "changeCount": 38,
-      "executiveSummary": "本轮检测到 6 个外部事实候选，但全部未通过证据质量门。",
+      "generatedAt": "2026-09-03T11:35:45+00:00",
+      "runStatus": "model",
+      "changeCount": 48,
+      "executiveSummary": "2026-09-03证据包共收录10条高价值情报事件，全部为C级外部线索且未经人工复核。当日主线集中在AI基础设施与模型竞争：KKR为100亿美元AI基础设施投资主体Helix数字基础设施任命新高管（E006），Soitec因AI需求上调业绩指引、股价单日涨超15%（E007），Meta发布Muse Spark 1.3模型（E009）；同时出现AI监管政策分歧：美国联合科技巨头向G20推销轻监管（E003），南非UCT研究则警告不能拖延AI监管（E004）。国内方面，上海公布首批38家算力生态合作伙伴，连尚集团入选算力应用方（E005），腾讯发布WorkBuddy金融版（E008）。融资侧，碧澄能源C1轮融资显示新能源资产证券化从首单走向批量（E001），VAST半年融资57亿元、完成30亿元B轮和B+轮（E002）。另有面向创业者的AI工具综述（E010）。整体看，AI基础设施投资、算力生态与监管博弈是当日最密集主题，但证据等级低，需后续验证。",
       "eventIds": [
         "evt-31873f37bdd45ab7a46d",
         "evt-a3e49238c5aae05edad0",
@@ -20929,7 +22820,17 @@
         "evt-9b55af5a6003a5322294",
         "evt-157887d3a01322a18ff2",
         "evt-3853c1248cd8b1d8e330",
-        "evt-f2f708f6097a7f5968df"
+        "evt-f2f708f6097a7f5968df",
+        "evt-94d5c9efcaa0cc137fed",
+        "evt-c9b5ff159d634b9fb87b",
+        "evt-f31a61980c8a67e5bd8e",
+        "evt-c95fb1b6790adb00f6f5",
+        "evt-8351565acb803db9eb12",
+        "evt-0edc73264cf2328f913b",
+        "evt-1cd10481c7a44593be9f",
+        "evt-a3981e898ddb226a59f4",
+        "evt-55d4b156acc50a1e818e",
+        "evt-8389f24d054236d54e63"
       ],
       "eventStates": [
         {
@@ -21083,14 +22984,54 @@
         {
           "eventId": "evt-f2f708f6097a7f5968df",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-94d5c9efcaa0cc137fed",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-c9b5ff159d634b9fb87b",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-f31a61980c8a67e5bd8e",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-c95fb1b6790adb00f6f5",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-8351565acb803db9eb12",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-0edc73264cf2328f913b",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-1cd10481c7a44593be9f",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-a3981e898ddb226a59f4",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-55d4b156acc50a1e818e",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-8389f24d054236d54e63",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 0,
       "candidateTotal": 6,
-      "auxiliaryLeadTotal": 31,
+      "auxiliaryLeadTotal": 41,
       "rejectedTotal": 2,
       "eventSummary": {
-        "newEvents": 38,
+        "newEvents": 48,
         "reconfirmations": 5,
         "updates": 0,
         "corrections": 0,
@@ -21100,20 +23041,15 @@
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 6,
-    "eligibleCandidateCount": 0,
-    "rejectedCandidateCount": 6,
-    "rejectedByDataset": {
-      "ventureCompany": 6
-    },
-    "evidenceCount": 23,
-    "supportingEvidenceCount": 0,
-    "rejectedEvidenceCount": 14,
-    "passedButUnboundEvidenceCount": 9,
-    "rejectionReasons": {
-      "missing_published_at": 12,
-      "ungraded": 2
-    },
+    "candidateCount": 10,
+    "eligibleCandidateCount": 10,
+    "rejectedCandidateCount": 0,
+    "rejectedByDataset": {},
+    "evidenceCount": 10,
+    "supportingEvidenceCount": 10,
+    "rejectedEvidenceCount": 0,
+    "passedButUnboundEvidenceCount": 0,
+    "rejectionReasons": {},
     "sourceClassificationWarnings": []
   },
   "sourceClassificationWarnings": [],
@@ -21144,9 +23080,16 @@
     }
   },
   "pipelineHealth": {
-    "overallStatus": "healthy",
-    "healthyJobs": 9,
+    "overallStatus": "degraded",
+    "healthyJobs": 8,
     "jobCount": 9,
-    "issueJobs": []
+    "issueJobs": [
+      {
+        "jobId": "research-agent-daily",
+        "name": "每日证据约束研究摘要",
+        "status": "degraded",
+        "lastCompletedAt": "2026-09-03T05:59:54Z"
+      }
+    ]
   }
 }
