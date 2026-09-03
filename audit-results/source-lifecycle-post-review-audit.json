@@ -1,0 +1,704 @@
+{
+  "auditVersion": "post-review-2026-09-03",
+  "sourceCount": 101,
+  "policy": {
+    "schemaVersion": 1,
+    "requiresManualApproval": true,
+    "coreMinRuns": 5,
+    "coreMinScanned": 20,
+    "coreMinAvailabilityRate": 0.9,
+    "coreMinValidYieldRate": 0.5,
+    "coreMinObservedDays": 7,
+    "coreMinReviewedRecords": 20,
+    "coreMaxMisattributionRate": 0.05,
+    "requireActiveCollection": true,
+    "requirePublicationEligible": true,
+    "disallowPerformanceReviewRequired": true
+  },
+  "governancePolicy": {
+    "schemaVersion": 1,
+    "coreEligibleRoles": [
+      "primary",
+      "corroboration"
+    ],
+    "discoveryOnlyRoles": [
+      "discovery"
+    ],
+    "unstableEndpointCyclesBeforePause": 3,
+    "requireFreshSnapshotBeforeBulkDisable": true
+  },
+  "governanceCounts": {
+    "coreCandidate": 78,
+    "discoveryOnly": 23
+  },
+  "report": {
+    "corroboration_media": {
+      "total": 5,
+      "tracked": 5,
+      "coreEligible": 5,
+      "discoveryOnly": 0,
+      "withEvidence": 5,
+      "coreWithEvidence": 5,
+      "manualQaEvidence": 0,
+      "qaGatePassed": 0,
+      "coreReadyByMetrics": 0,
+      "reviewPending": 0,
+      "core": 0,
+      "failedMetricCounts": {
+        "runs": 0,
+        "observedDays": 5,
+        "scanned": 0,
+        "availabilityRate": 0,
+        "validYieldRate": 0,
+        "reviewedRecords": 5,
+        "misattributionRate": 5,
+        "activeCollection": 0,
+        "publicationEligible": 0,
+        "performanceReviewRequired": 0
+      },
+      "singleBlockerCounts": {
+        "runs": 0,
+        "observedDays": 0,
+        "scanned": 0,
+        "availabilityRate": 0,
+        "validYieldRate": 0,
+        "reviewedRecords": 0,
+        "misattributionRate": 0,
+        "activeCollection": 0,
+        "publicationEligible": 0,
+        "performanceReviewRequired": 0
+      },
+      "singleBlockerSources": {
+        "runs": [],
+        "observedDays": [],
+        "scanned": [],
+        "availabilityRate": [],
+        "validYieldRate": [],
+        "reviewedRecords": [],
+        "misattributionRate": [],
+        "activeCollection": [],
+        "publicationEligible": [],
+        "performanceReviewRequired": []
+      },
+      "passRates": {
+        "runs": 1,
+        "observedDays": 0,
+        "scanned": 1,
+        "availabilityRate": 1,
+        "validYieldRate": 1,
+        "reviewedRecords": 0,
+        "misattributionRate": 0,
+        "activeCollection": 1,
+        "publicationEligible": 1,
+        "performanceReviewRequired": 1
+      },
+      "rawMedians": {
+        "runs": 30,
+        "observedDays": 5,
+        "scanned": 210,
+        "availabilityRate": 1,
+        "validYieldRate": 1,
+        "reviewedRecords": 0,
+        "misattributionRate": null
+      },
+      "coreMedians": {
+        "runs": 30,
+        "observedDays": 5,
+        "scanned": 210,
+        "availabilityRate": 1,
+        "validYieldRate": 1,
+        "reviewedRecords": 0,
+        "misattributionRate": null
+      }
+    },
+    "discovery_wechat": {
+      "total": 13,
+      "tracked": 13,
+      "coreEligible": 0,
+      "discoveryOnly": 13,
+      "withEvidence": 13,
+      "coreWithEvidence": 0,
+      "manualQaEvidence": 0,
+      "qaGatePassed": 0,
+      "coreReadyByMetrics": 0,
+      "reviewPending": 0,
+      "core": 0,
+      "failedMetricCounts": {
+        "runs": 0,
+        "observedDays": 0,
+        "scanned": 0,
+        "availabilityRate": 0,
+        "validYieldRate": 0,
+        "reviewedRecords": 0,
+        "misattributionRate": 0,
+        "activeCollection": 0,
+        "publicationEligible": 0,
+        "performanceReviewRequired": 0
+      },
+      "singleBlockerCounts": {
+        "runs": 0,
+        "observedDays": 0,
+        "scanned": 0,
+        "availabilityRate": 0,
+        "validYieldRate": 0,
+        "reviewedRecords": 0,
+        "misattributionRate": 0,
+        "activeCollection": 0,
+        "publicationEligible": 0,
+        "performanceReviewRequired": 0
+      },
+      "singleBlockerSources": {
+        "runs": [],
+        "observedDays": [],
+        "scanned": [],
+        "availabilityRate": [],
+        "validYieldRate": [],
+        "reviewedRecords": [],
+        "misattributionRate": [],
+        "activeCollection": [],
+        "publicationEligible": [],
+        "performanceReviewRequired": []
+      },
+      "passRates": {
+        "runs": null,
+        "observedDays": null,
+        "scanned": null,
+        "availabilityRate": null,
+        "validYieldRate": null,
+        "reviewedRecords": null,
+        "misattributionRate": null,
+        "activeCollection": null,
+        "publicationEligible": null,
+        "performanceReviewRequired": null
+      },
+      "rawMedians": {
+        "runs": 30,
+        "observedDays": 5,
+        "scanned": 270,
+        "availabilityRate": 1,
+        "validYieldRate": 0.356,
+        "reviewedRecords": 0,
+        "misattributionRate": null
+      },
+      "coreMedians": {
+        "runs": null,
+        "observedDays": null,
+        "scanned": null,
+        "availabilityRate": null,
+        "validYieldRate": null,
+        "reviewedRecords": null,
+        "misattributionRate": null
+      }
+    },
+    "discovery_x": {
+      "total": 10,
+      "tracked": 10,
+      "coreEligible": 0,
+      "discoveryOnly": 10,
+      "withEvidence": 10,
+      "coreWithEvidence": 0,
+      "manualQaEvidence": 0,
+      "qaGatePassed": 0,
+      "coreReadyByMetrics": 0,
+      "reviewPending": 0,
+      "core": 0,
+      "failedMetricCounts": {
+        "runs": 0,
+        "observedDays": 0,
+        "scanned": 0,
+        "availabilityRate": 0,
+        "validYieldRate": 0,
+        "reviewedRecords": 0,
+        "misattributionRate": 0,
+        "activeCollection": 0,
+        "publicationEligible": 0,
+        "performanceReviewRequired": 0
+      },
+      "singleBlockerCounts": {
+        "runs": 0,
+        "observedDays": 0,
+        "scanned": 0,
+        "availabilityRate": 0,
+        "validYieldRate": 0,
+        "reviewedRecords": 0,
+        "misattributionRate": 0,
+        "activeCollection": 0,
+        "publicationEligible": 0,
+        "performanceReviewRequired": 0
+      },
+      "singleBlockerSources": {
+        "runs": [],
+        "observedDays": [],
+        "scanned": [],
+        "availabilityRate": [],
+        "validYieldRate": [],
+        "reviewedRecords": [],
+        "misattributionRate": [],
+        "activeCollection": [],
+        "publicationEligible": [],
+        "performanceReviewRequired": []
+      },
+      "passRates": {
+        "runs": null,
+        "observedDays": null,
+        "scanned": null,
+        "availabilityRate": null,
+        "validYieldRate": null,
+        "reviewedRecords": null,
+        "misattributionRate": null,
+        "activeCollection": null,
+        "publicationEligible": null,
+        "performanceReviewRequired": null
+      },
+      "rawMedians": {
+        "runs": 30,
+        "observedDays": 5,
+        "scanned": 25,
+        "availabilityRate": 0.167,
+        "validYieldRate": 1,
+        "reviewedRecords": 0,
+        "misattributionRate": null
+      },
+      "coreMedians": {
+        "runs": null,
+        "observedDays": null,
+        "scanned": null,
+        "availabilityRate": null,
+        "validYieldRate": null,
+        "reviewedRecords": null,
+        "misattributionRate": null
+      }
+    },
+    "primary_official": {
+      "total": 66,
+      "tracked": 57,
+      "coreEligible": 57,
+      "discoveryOnly": 0,
+      "withEvidence": 56,
+      "coreWithEvidence": 56,
+      "manualQaEvidence": 0,
+      "qaGatePassed": 0,
+      "coreReadyByMetrics": 0,
+      "reviewPending": 0,
+      "core": 0,
+      "failedMetricCounts": {
+        "runs": 1,
+        "observedDays": 56,
+        "scanned": 2,
+        "availabilityRate": 1,
+        "validYieldRate": 41,
+        "reviewedRecords": 57,
+        "misattributionRate": 57,
+        "activeCollection": 1,
+        "publicationEligible": 1,
+        "performanceReviewRequired": 11
+      },
+      "singleBlockerCounts": {
+        "runs": 0,
+        "observedDays": 0,
+        "scanned": 0,
+        "availabilityRate": 0,
+        "validYieldRate": 0,
+        "reviewedRecords": 0,
+        "misattributionRate": 0,
+        "activeCollection": 0,
+        "publicationEligible": 0,
+        "performanceReviewRequired": 0
+      },
+      "singleBlockerSources": {
+        "runs": [],
+        "observedDays": [],
+        "scanned": [],
+        "availabilityRate": [],
+        "validYieldRate": [],
+        "reviewedRecords": [],
+        "misattributionRate": [],
+        "activeCollection": [],
+        "publicationEligible": [],
+        "performanceReviewRequired": []
+      },
+      "passRates": {
+        "runs": 0.982,
+        "observedDays": 0.018,
+        "scanned": 0.965,
+        "availabilityRate": 0.982,
+        "validYieldRate": 0.281,
+        "reviewedRecords": 0,
+        "misattributionRate": 0,
+        "activeCollection": 0.982,
+        "publicationEligible": 0.982,
+        "performanceReviewRequired": 0.807
+      },
+      "rawMedians": {
+        "runs": 30,
+        "observedDays": 5,
+        "scanned": 240,
+        "availabilityRate": 1,
+        "validYieldRate": 0.343,
+        "reviewedRecords": 0,
+        "misattributionRate": null
+      },
+      "coreMedians": {
+        "runs": 30,
+        "observedDays": 5,
+        "scanned": 240,
+        "availabilityRate": 1,
+        "validYieldRate": 0.343,
+        "reviewedRecords": 0,
+        "misattributionRate": null
+      }
+    },
+    "primary_regulatory": {
+      "total": 6,
+      "tracked": 6,
+      "coreEligible": 6,
+      "discoveryOnly": 0,
+      "withEvidence": 2,
+      "coreWithEvidence": 2,
+      "manualQaEvidence": 2,
+      "qaGatePassed": 2,
+      "coreReadyByMetrics": 0,
+      "reviewPending": 0,
+      "core": 0,
+      "failedMetricCounts": {
+        "runs": 4,
+        "observedDays": 6,
+        "scanned": 4,
+        "availabilityRate": 4,
+        "validYieldRate": 6,
+        "reviewedRecords": 4,
+        "misattributionRate": 4,
+        "activeCollection": 4,
+        "publicationEligible": 4,
+        "performanceReviewRequired": 4
+      },
+      "singleBlockerCounts": {
+        "runs": 0,
+        "observedDays": 0,
+        "scanned": 0,
+        "availabilityRate": 0,
+        "validYieldRate": 0,
+        "reviewedRecords": 0,
+        "misattributionRate": 0,
+        "activeCollection": 0,
+        "publicationEligible": 0,
+        "performanceReviewRequired": 0
+      },
+      "singleBlockerSources": {
+        "runs": [],
+        "observedDays": [],
+        "scanned": [],
+        "availabilityRate": [],
+        "validYieldRate": [],
+        "reviewedRecords": [],
+        "misattributionRate": [],
+        "activeCollection": [],
+        "publicationEligible": [],
+        "performanceReviewRequired": []
+      },
+      "passRates": {
+        "runs": 0.333,
+        "observedDays": 0,
+        "scanned": 0.333,
+        "availabilityRate": 0.333,
+        "validYieldRate": 0,
+        "reviewedRecords": 0.333,
+        "misattributionRate": 0.333,
+        "activeCollection": 0.333,
+        "publicationEligible": 0.333,
+        "performanceReviewRequired": 0.333
+      },
+      "rawMedians": {
+        "runs": 5,
+        "observedDays": 2,
+        "scanned": 1687.5,
+        "availabilityRate": 1,
+        "validYieldRate": 0.159,
+        "reviewedRecords": 20,
+        "misattributionRate": 0
+      },
+      "coreMedians": {
+        "runs": 5,
+        "observedDays": 2,
+        "scanned": 1687.5,
+        "availabilityRate": 1,
+        "validYieldRate": 0.159,
+        "reviewedRecords": 20,
+        "misattributionRate": 0
+      }
+    },
+    "primary_research": {
+      "total": 1,
+      "tracked": 1,
+      "coreEligible": 1,
+      "discoveryOnly": 0,
+      "withEvidence": 1,
+      "coreWithEvidence": 1,
+      "manualQaEvidence": 0,
+      "qaGatePassed": 0,
+      "coreReadyByMetrics": 0,
+      "reviewPending": 0,
+      "core": 0,
+      "failedMetricCounts": {
+        "runs": 0,
+        "observedDays": 1,
+        "scanned": 0,
+        "availabilityRate": 0,
+        "validYieldRate": 0,
+        "reviewedRecords": 1,
+        "misattributionRate": 1,
+        "activeCollection": 0,
+        "publicationEligible": 0,
+        "performanceReviewRequired": 0
+      },
+      "singleBlockerCounts": {
+        "runs": 0,
+        "observedDays": 0,
+        "scanned": 0,
+        "availabilityRate": 0,
+        "validYieldRate": 0,
+        "reviewedRecords": 0,
+        "misattributionRate": 0,
+        "activeCollection": 0,
+        "publicationEligible": 0,
+        "performanceReviewRequired": 0
+      },
+      "singleBlockerSources": {
+        "runs": [],
+        "observedDays": [],
+        "scanned": [],
+        "availabilityRate": [],
+        "validYieldRate": [],
+        "reviewedRecords": [],
+        "misattributionRate": [],
+        "activeCollection": [],
+        "publicationEligible": [],
+        "performanceReviewRequired": []
+      },
+      "passRates": {
+        "runs": 1,
+        "observedDays": 0,
+        "scanned": 1,
+        "availabilityRate": 1,
+        "validYieldRate": 1,
+        "reviewedRecords": 0,
+        "misattributionRate": 0,
+        "activeCollection": 1,
+        "publicationEligible": 1,
+        "performanceReviewRequired": 1
+      },
+      "rawMedians": {
+        "runs": 30,
+        "observedDays": 5,
+        "scanned": 220,
+        "availabilityRate": 0.967,
+        "validYieldRate": 1,
+        "reviewedRecords": 0,
+        "misattributionRate": null
+      },
+      "coreMedians": {
+        "runs": 30,
+        "observedDays": 5,
+        "scanned": 220,
+        "availabilityRate": 0.967,
+        "validYieldRate": 1,
+        "reviewedRecords": 0,
+        "misattributionRate": null
+      }
+    }
+  },
+  "regulatoryFocus": [
+    {
+      "id": "regulatory:eastmoney",
+      "name": "东方财富公告",
+      "governanceMode": "core_candidate",
+      "lifecycle": "tracked",
+      "promotionState": "evidence_pending",
+      "coreReadyByMetrics": false,
+      "manualDecision": "pending",
+      "failedMetrics": [
+        "runs",
+        "observedDays",
+        "scanned",
+        "availabilityRate",
+        "validYieldRate",
+        "reviewedRecords",
+        "misattributionRate",
+        "activeCollection",
+        "publicationEligible",
+        "performanceReviewRequired"
+      ],
+      "reasons": [
+        "运行样本不足（0/5）",
+        "跨日观测不足（0/7）",
+        "扫描样本不足（0/20）",
+        "可用率不足（无数据）",
+        "有效产出率不足（无数据）",
+        "人工抽查样本不足（0/20）",
+        "人工误归属率尚无可审计数据",
+        "采集通道当前未处于 active 状态",
+        "当前采集证据不满足 publication eligible",
+        "滚动性能审查状态尚无明确证据"
+      ]
+    },
+    {
+      "id": "regulatory:cninfo",
+      "name": "巨潮资讯",
+      "governanceMode": "core_candidate",
+      "lifecycle": "tracked",
+      "promotionState": "evidence_pending",
+      "coreReadyByMetrics": false,
+      "manualDecision": "pending",
+      "evidence": {
+        "runs": 5,
+        "observedDays": 2,
+        "scanned": 1800,
+        "availabilityRate": 1,
+        "validYieldRate": 0.1472,
+        "activeCollection": true,
+        "publicationEligible": true,
+        "performanceReviewRequired": false,
+        "reviewedRecords": 20,
+        "misattributionRate": 0,
+        "evidenceSourceId": "regulatory:cninfo"
+      },
+      "failedMetrics": [
+        "observedDays",
+        "validYieldRate"
+      ],
+      "reasons": [
+        "跨日观测不足（2/7）",
+        "有效产出率不足（0.15）"
+      ]
+    },
+    {
+      "id": "regulatory:sec",
+      "name": "美国证券交易委员会 SEC",
+      "governanceMode": "core_candidate",
+      "lifecycle": "tracked",
+      "promotionState": "evidence_pending",
+      "coreReadyByMetrics": false,
+      "manualDecision": "pending",
+      "failedMetrics": [
+        "runs",
+        "observedDays",
+        "scanned",
+        "availabilityRate",
+        "validYieldRate",
+        "reviewedRecords",
+        "misattributionRate",
+        "activeCollection",
+        "publicationEligible",
+        "performanceReviewRequired"
+      ],
+      "reasons": [
+        "运行样本不足（0/5）",
+        "跨日观测不足（0/7）",
+        "扫描样本不足（0/20）",
+        "可用率不足（无数据）",
+        "有效产出率不足（无数据）",
+        "人工抽查样本不足（0/20）",
+        "人工误归属率尚无可审计数据",
+        "采集通道当前未处于 active 状态",
+        "当前采集证据不满足 publication eligible",
+        "滚动性能审查状态尚无明确证据"
+      ]
+    },
+    {
+      "id": "regulatory:sse",
+      "name": "上海证券交易所",
+      "governanceMode": "core_candidate",
+      "lifecycle": "tracked",
+      "promotionState": "evidence_pending",
+      "coreReadyByMetrics": false,
+      "manualDecision": "pending",
+      "failedMetrics": [
+        "runs",
+        "observedDays",
+        "scanned",
+        "availabilityRate",
+        "validYieldRate",
+        "reviewedRecords",
+        "misattributionRate",
+        "activeCollection",
+        "publicationEligible",
+        "performanceReviewRequired"
+      ],
+      "reasons": [
+        "运行样本不足（0/5）",
+        "跨日观测不足（0/7）",
+        "扫描样本不足（0/20）",
+        "可用率不足（无数据）",
+        "有效产出率不足（无数据）",
+        "人工抽查样本不足（0/20）",
+        "人工误归属率尚无可审计数据",
+        "采集通道当前未处于 active 状态",
+        "当前采集证据不满足 publication eligible",
+        "滚动性能审查状态尚无明确证据"
+      ]
+    },
+    {
+      "id": "regulatory:szse",
+      "name": "深圳证券交易所",
+      "governanceMode": "core_candidate",
+      "lifecycle": "tracked",
+      "promotionState": "evidence_pending",
+      "coreReadyByMetrics": false,
+      "manualDecision": "pending",
+      "failedMetrics": [
+        "runs",
+        "observedDays",
+        "scanned",
+        "availabilityRate",
+        "validYieldRate",
+        "reviewedRecords",
+        "misattributionRate",
+        "activeCollection",
+        "publicationEligible",
+        "performanceReviewRequired"
+      ],
+      "reasons": [
+        "运行样本不足（0/5）",
+        "跨日观测不足（0/7）",
+        "扫描样本不足（0/20）",
+        "可用率不足（无数据）",
+        "有效产出率不足（无数据）",
+        "人工抽查样本不足（0/20）",
+        "人工误归属率尚无可审计数据",
+        "采集通道当前未处于 active 状态",
+        "当前采集证据不满足 publication eligible",
+        "滚动性能审查状态尚无明确证据"
+      ]
+    },
+    {
+      "id": "regulatory:hkex",
+      "name": "香港交易所披露易",
+      "governanceMode": "core_candidate",
+      "lifecycle": "tracked",
+      "promotionState": "evidence_pending",
+      "coreReadyByMetrics": false,
+      "manualDecision": "pending",
+      "evidence": {
+        "runs": 5,
+        "observedDays": 2,
+        "scanned": 1575,
+        "availabilityRate": 1,
+        "validYieldRate": 0.1714,
+        "activeCollection": true,
+        "publicationEligible": true,
+        "performanceReviewRequired": false,
+        "reviewedRecords": 20,
+        "misattributionRate": 0,
+        "evidenceSourceId": "regulatory:hkex"
+      },
+      "failedMetrics": [
+        "observedDays",
+        "validYieldRate"
+      ],
+      "reasons": [
+        "跨日观测不足（2/7）",
+        "有效产出率不足（0.17）"
+      ]
+    }
+  ]
+}
