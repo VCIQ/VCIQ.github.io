@@ -82,15 +82,19 @@ def _observation(
     scanned: Any,
     accepted: Any,
     errors: Any,
+    qualified: Any = None,
 ) -> tuple[str, dict[str, Any]]:
     error_rows = _errors(errors)
-    return source_key, {
+    row = {
         "status": state,
         "scanned": _integer(scanned),
         "accepted": _integer(accepted),
         "failed": len(error_rows),
         "errors": error_rows,
     }
+    if qualified is not None:
+        row["qualified"] = _integer(qualified)
+    return source_key, row
 
 
 def _collect_observations(payload: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
@@ -142,6 +146,11 @@ def _collect_observations(payload: dict[str, Any]) -> dict[str, list[dict[str, A
                 scanned=raw.get("structuredScanned"),
                 accepted=structured_accepted,
                 errors=structured_errors,
+                qualified=(
+                    raw.get("structuredQualified")
+                    if "structuredQualified" in raw
+                    else None
+                ),
             )
             grouped[key].append(row)
 
@@ -167,6 +176,7 @@ def _collect_observations(payload: dict[str, Any]) -> dict[str, list[dict[str, A
                 scanned=raw.get("scanned"),
                 accepted=direct_accepted,
                 errors=direct_errors,
+                qualified=raw.get("qualified") if "qualified" in raw else None,
             )
             grouped[key].append(row)
 
@@ -213,23 +223,26 @@ def regulatory_source_statuses(
         source = official_sources.get(source_key, {})
         source = source if isinstance(source, dict) else {}
         errors = [error for row in rows for error in _errors(row.get("errors"))]
-        result.append(
-            {
-                "id": f"{REGULATORY_PREFIX}{source_key}",
-                "name": str(source.get("name") or source_key),
-                "platform": str(source.get("name") or "监管机构"),
-                "sourceLevel": "监管文件",
-                "sourceRole": "primary",
-                "url": str(source.get("homepage") or ""),
-                "status": _aggregate_state(str(row.get("status") or "") for row in rows),
-                "scanned": sum(_integer(row.get("scanned")) for row in rows),
-                "accepted": sum(_integer(row.get("accepted")) for row in rows),
-                "failed": sum(_integer(row.get("failed")) for row in rows),
-                "errors": errors,
-                "evidenceAggregation": "institution-from-disclosure-channels",
-                "observationCount": len(rows),
-            }
-        )
+        aggregate = {
+            "id": f"{REGULATORY_PREFIX}{source_key}",
+            "name": str(source.get("name") or source_key),
+            "platform": str(source.get("name") or "监管机构"),
+            "sourceLevel": "监管文件",
+            "sourceRole": "primary",
+            "url": str(source.get("homepage") or ""),
+            "status": _aggregate_state(str(row.get("status") or "") for row in rows),
+            "scanned": sum(_integer(row.get("scanned")) for row in rows),
+            "accepted": sum(_integer(row.get("accepted")) for row in rows),
+            "failed": sum(_integer(row.get("failed")) for row in rows),
+            "errors": errors,
+            "evidenceAggregation": "institution-from-disclosure-channels",
+            "observationCount": len(rows),
+        }
+        if rows and all("qualified" in row for row in rows):
+            aggregate["qualified"] = sum(
+                _integer(row.get("qualified")) for row in rows
+            )
+        result.append(aggregate)
     return result
 
 
