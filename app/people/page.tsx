@@ -15,8 +15,8 @@ export const metadata: Metadata = {
 };
 
 const DIRECTORY_TAG_LIMIT = 1;
-const DIRECTORY_SUMMARY_LIMIT = 44;
-const DIRECTORY_EVENT_LIMIT = 44;
+const DIRECTORY_SUMMARY_LIMIT = 28;
+const DIRECTORY_EVENT_LIMIT = 28;
 const DIRECTORY_GRID_ID = "people-research-directory";
 
 const statusLabels = {
