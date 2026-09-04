@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-09-03T00:55:41+00:00",
-  "attemptCount": 41,
+  "generatedAt": "2026-09-04T00:36:04+00:00",
+  "attemptCount": 43,
   "attempts": [
     {
       "taskId": "person-research-fcb717642c97",
@@ -708,6 +708,48 @@
       },
       "durationMs": 2090,
       "queryCostUnits": 1.0
+    },
+    {
+      "taskId": "person-research-d3355526ef5e",
+      "taskType": "first_party_evidence",
+      "personSlug": "person-4d6ca4357c",
+      "researchDate": "2026-09-04",
+      "query": "黄仁勋 AI / AGI 演讲",
+      "queryStrategy": "topic_speech",
+      "outcome": "candidate_found",
+      "candidateCount": 2,
+      "sourceHosts": [
+        "youtube.com"
+      ],
+      "sourceTypes": [
+        "video_platform"
+      ],
+      "sourceTypeCounts": {
+        "video_platform": 2
+      },
+      "durationMs": 2140,
+      "queryCostUnits": 1.0
+    },
+    {
+      "taskId": "person-research-d8703bb7f4b3",
+      "taskType": "first_party_evidence",
+      "personSlug": "zhang-xue",
+      "researchDate": "2026-09-04",
+      "query": "Zhang Xue 机器人 演讲",
+      "queryStrategy": "topic_speech",
+      "outcome": "candidate_found",
+      "candidateCount": 4,
+      "sourceHosts": [
+        "youtube.com"
+      ],
+      "sourceTypes": [
+        "video_platform"
+      ],
+      "sourceTypeCounts": {
+        "video_platform": 4
+      },
+      "durationMs": 2388,
+      "queryCostUnits": 1.0
     }
   ],
   "taskStats": {
@@ -736,8 +778,8 @@
       "errors": 0
     },
     "person-research-d8703bb7f4b3": {
-      "attempts": 15,
-      "candidateFound": 13,
+      "attempts": 16,
+      "candidateFound": 14,
       "noEvidence": 2,
       "errors": 0
     },
@@ -788,12 +830,18 @@
       "candidateFound": 1,
       "noEvidence": 1,
       "errors": 0
+    },
+    "person-research-d3355526ef5e": {
+      "attempts": 1,
+      "candidateFound": 1,
+      "noEvidence": 0,
+      "errors": 0
     }
   },
   "sourceStats": {
     "youtube.com": {
-      "candidateAttempts": 15,
-      "candidates": 53
+      "candidateAttempts": 17,
+      "candidates": 59
     },
     "bilibili.com": {
       "candidateAttempts": 1,
@@ -802,62 +850,62 @@
   },
   "queryStrategyStats": {
     "topic_speech": {
-      "attempts": 41,
-      "candidateFound": 15,
+      "attempts": 43,
+      "candidateFound": 17,
       "noEvidence": 26,
       "errors": 0,
-      "candidates": 53,
-      "successRate": 0.366,
-      "averageCandidates": 1.293
+      "candidates": 59,
+      "successRate": 0.395,
+      "averageCandidates": 1.372
     }
   },
   "taskStrategyStats": {
     "first_party_evidence": {
       "topic_speech": {
-        "attempts": 41,
-        "candidateFound": 15,
+        "attempts": 43,
+        "candidateFound": 17,
         "noEvidence": 26,
         "errors": 0,
-        "candidates": 53,
-        "successRate": 0.366,
-        "averageCandidates": 1.293
+        "candidates": 59,
+        "successRate": 0.395,
+        "averageCandidates": 1.372
       }
     }
   },
   "sourceTypeStats": {
     "video_platform": {
-      "yieldAttempts": 15,
-      "candidates": 53,
-      "averageCandidatesPerYield": 3.533
+      "yieldAttempts": 17,
+      "candidates": 59,
+      "averageCandidatesPerYield": 3.471
     }
   },
   "taskSourceMatrix": {
     "first_party_evidence": {
       "video_platform": {
-        "attempts": 41,
-        "yieldAttempts": 15,
-        "yieldRate": 0.366,
-        "candidates": 53
+        "attempts": 43,
+        "yieldAttempts": 17,
+        "yieldRate": 0.395,
+        "candidates": 59
       }
     }
   },
   "queryStrategyCostStats": {
     "topic_speech": {
-      "attempts": 41,
-      "costUnits": 41.0,
-      "durationMs": 85654,
+      "attempts": 43,
+      "costUnits": 43.0,
+      "durationMs": 90182,
       "averageCostUnits": 1.0,
-      "averageDurationMs": 2089
+      "averageDurationMs": 2097
     }
   },
   "taskStrategyCostStats": {
     "first_party_evidence": {
       "topic_speech": {
-        "attempts": 41,
-        "costUnits": 41.0,
-        "durationMs": 85654,
+        "attempts": 43,
+        "costUnits": 43.0,
+        "durationMs": 90182,
         "averageCostUnits": 1.0,
-        "averageDurationMs": 2089
+        "averageDurationMs": 2097
       }
     }
   },
