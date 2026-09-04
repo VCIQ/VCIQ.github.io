@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-04T14:51:37+00:00",
+  "generatedAt": "2026-09-04T15:24:59+00:00",
   "records": [
     {
       "id": "capture-e4411359d02d6b17",
@@ -50,10 +50,10 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "AI-driven",
-        "targetId": "technology-82d6b8b61f4655db81dc",
+        "targetId": "topic:aidriven",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "aidriven",
         "reclassified": false
       }
@@ -109,10 +109,10 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "6G NTN",
-        "targetId": "technology-5329a6650008f04b11f0",
+        "targetId": "topic:6gntn",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "6gntn",
         "reclassified": false
       }
@@ -2632,21 +2632,27 @@
       },
       "capturedAt": "2026-09-03T15:54:38+00:00",
       "capturedBy": "VCIQ",
-      "status": "queued",
-      "appliedTo": [],
+      "status": "applied",
+      "appliedTo": [
+        "ai:people",
+        "semiconductor:people",
+        "robotics:people",
+        "track-1ccjq49:people",
+        "ai-2:people"
+      ],
       "reasons": [
         "个人研究兴趣"
       ],
       "note": "",
       "resolution": {
-        "status": "review",
+        "status": "resolved",
         "requestedType": "person",
         "entityType": "person",
         "canonicalName": "黄仁勋",
-        "targetId": "",
-        "confidence": "low",
+        "targetId": "person:jensen-huang",
+        "confidence": "high",
         "source": "people-registry",
-        "reason": "名称同时命中多个人物别名，需要人工消歧。",
+        "reason": "名称唯一命中正式人物目录。",
         "decisionKey": "黄仁勋",
         "reclassified": false
       }
