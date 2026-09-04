@@ -256,6 +256,7 @@ def query_listing(
         "provider": PROVIDER,
         "orgIdResolved": True,
         "scanned": scanned,
+        "qualified": len(accepted),
         "accepted": len(events),
         "errors": errors,
     }
@@ -334,6 +335,7 @@ def enrich_snapshot(
                 "provider": PROVIDER,
                 "orgIdResolved": False,
                 "scanned": 0,
+                "qualified": 0,
                 "accepted": 0,
                 "errors": ["CNINFO orgId not found"],
             }
@@ -348,6 +350,7 @@ def enrich_snapshot(
                     "provider": PROVIDER,
                     "orgIdResolved": True,
                     "scanned": 0,
+                    "qualified": 0,
                     "accepted": 0,
                     "errors": [f"{type(exc).__name__}:{exc}"],
                 }
@@ -356,6 +359,7 @@ def enrich_snapshot(
         status["structuredAttempted"] = structured["attempted"]
         status["structuredOrgIdResolved"] = structured["orgIdResolved"]
         status["structuredScanned"] = structured["scanned"]
+        status["structuredQualified"] = structured.get("qualified", structured["accepted"])
         status["structuredAccepted"] = structured["accepted"]
         status["structuredErrors"] = structured["errors"]
         if events:
@@ -414,6 +418,9 @@ def enrich_snapshot(
         "provider": PROVIDER,
         "attemptedListingCount": sum(
             1 for listing in listings if listing.market == "A股"
+        ),
+        "qualifiedEventCount": sum(
+            int(status.get("structuredQualified", 0) or 0) for status in statuses
         ),
         "acceptedEventCount": sum(
             int(status.get("structuredAccepted", 0) or 0) for status in statuses

@@ -550,6 +550,7 @@ def discover(
         "provider": "eastmoney" if fallback else "official",
         "status": "ok" if rows else "error",
         "scanned": len(candidates),
+        "qualified": len(accepted),
         "accepted": len(rows),
         "fallback": fallback,
         "errors": errors,
@@ -594,6 +595,7 @@ def build_snapshot(
                 "provider": "official",
                 "status": "error",
                 "scanned": 0,
+                "qualified": 0,
                 "accepted": 0,
                 "fallback": False,
                 "errors": [f"{type(exc).__name__}:{exc}"],
@@ -609,6 +611,7 @@ def build_snapshot(
                     status["fallbackUsed"] = True
                     status["accepted"] = len(events)
                 status["fallbackScanned"] = fallback_status.get("scanned", 0)
+                status["fallbackQualified"] = fallback_status.get("qualified", 0)
                 status["fallbackAccepted"] = fallback_status.get("accepted", 0)
                 status["fallbackErrors"] = fallback_status.get("errors", [])
             except Exception as exc:  # noqa: BLE001

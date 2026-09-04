@@ -8,7 +8,7 @@ Metrics are deliberately separated:
 
 * availabilityRate -- the source endpoint was reachable and parsable;
 * productiveRate -- the run produced at least one accepted record;
-* validYieldRate -- accepted records divided by scanned candidates;
+* validYieldRate -- explicit qualified records divided by scanned candidates, falling back to accepted for legacy runs;
 * duplicateRate -- current candidates removed by URL/fingerprint deduplication;
 * dropRate -- unique current candidates omitted for non-duplicate reasons;
 * averageDiscoveryLagDays -- calendar-day lag from publication to first sighting.
@@ -363,7 +363,7 @@ def _run_sample(
     )
     productive = accepted > 0 and state in {"ok", "partial"} and not retained
     article_metric = article_metric or {}
-    return {
+    sample = {
         "at": timestamp,
         "status": state,
         "successful": bool(successful),
@@ -380,6 +380,9 @@ def _run_sample(
         "lagDayTotal": _integer(article_metric.get("discoveryLagDayTotal")),
         "lagSamples": _integer(article_metric.get("discoveryLagSampleCount")),
     }
+    if status.get("qualified") is not None:
+        sample["qualified"] = _integer(status.get("qualified"))
+    return sample
 
 
 def _aggregate(samples: list[dict[str, Any]]) -> dict[str, Any]:
@@ -400,11 +403,22 @@ def _aggregate(samples: list[dict[str, Any]]) -> dict[str, Any]:
         "lagSamples": sum(_integer(item.get("lagSamples")) for item in samples),
     }
     duplicate_denominator = totals["candidates"] - totals["withheld"]
+    has_explicit_qualified = any("qualified" in item for item in samples)
+    explicit_qualified_total = sum(
+        _integer(item.get("qualified")) for item in samples if "qualified" in item
+    )
+    valid_yield_numerator = sum(
+        _integer(item.get("qualified"))
+        if "qualified" in item
+        else _integer(item.get("accepted"))
+        for item in samples
+    )
     return {
         **totals,
+        **({"qualified": explicit_qualified_total} if has_explicit_qualified else {}),
         "availabilityRate": _ratio(totals["successfulRuns"], totals["runs"]),
         "productiveRate": _ratio(totals["productiveRuns"], totals["runs"]),
-        "validYieldRate": _ratio(totals["accepted"], totals["scanned"]),
+        "validYieldRate": _ratio(valid_yield_numerator, totals["scanned"]),
         "publicationRate": _ratio(totals["published"], duplicate_denominator),
         "duplicateRate": _ratio(totals["duplicates"], duplicate_denominator),
         "dropRate": _ratio(totals["dropped"], duplicate_denominator),
