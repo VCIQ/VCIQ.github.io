@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Publish verified official US filing baselines without network dependency.
+"""Publish verified official US filing baselines with direct SEC observation.
 
-This deterministic publisher is used to bootstrap every enabled US-listed
-company into the formal disclosure snapshot. Live company-IR crawling remains
-responsible for adding newer filings in subsequent refreshes.
+The baseline content itself remains deterministic and guarantees every enabled
+US-listed company has an official filing reference. Before publishing that
+baseline, the command records a best-effort current-run direct SEC EDGAR
+observation. Network failures affect only the direct observation ledger; they
+do not erase or block the company-IR baseline fallback.
 """
 
 from __future__ import annotations
@@ -15,11 +17,13 @@ from typing import Any
 
 try:
     from . import crawl_listed_company_disclosures as base
+    from . import sec_configured_disclosures as configured_sec
     from . import sec_structured_disclosures as sec
     from . import us_ir_baseline_disclosures as baselines
     from . import us_ir_sec_disclosures as ir
 except ImportError:
     import crawl_listed_company_disclosures as base
+    import sec_configured_disclosures as configured_sec
     import sec_structured_disclosures as sec
     import us_ir_baseline_disclosures as baselines
     import us_ir_sec_disclosures as ir
@@ -41,7 +45,6 @@ def build_snapshot(previous: dict[str, Any] | None = None) -> dict[str, Any]:
         for status in result.get("sourceStatus", [])
         if isinstance(status, dict)
         and not str(status.get("id", "")).startswith("us-ir-disclosure-")
-        and not str(status.get("id", "")).startswith("sec-disclosure-")
     ]
     statuses = list(existing_statuses)
 
@@ -119,14 +122,13 @@ def build_snapshot(previous: dict[str, Any] | None = None) -> dict[str, Any]:
         for company in companies.values()
         if isinstance(company, dict)
     )
-    result.pop("secStructured", None)
     result["usIrStructured"] = {
         "schemaVersion": 1,
         "provider": "official-company-ir-sec-filings",
         "attemptedListingCount": len(rows),
         "acceptedEventCount": len(rows),
         "verifiedBaselineCount": len(rows),
-        "directSecAccess": "blocked-by-sec-for-shared-ci-ip",
+        "directSecAccess": "see-secStructured",
         "retentionPolicy": "live-official-discovery-plus-verified-baseline",
     }
     errors = baselines.validate_snapshot(result, rows)
@@ -140,7 +142,14 @@ def write_snapshot(snapshot: dict[str, Any], path: Path = OUTPUT_PATH) -> bool:
 
 
 def main() -> int:
-    snapshot = build_snapshot(base.load_previous(OUTPUT_PATH))
+    previous = base.load_previous(OUTPUT_PATH)
+    rows = sec.load_us_listings()
+    observed = configured_sec.build_observation_snapshot(previous, rows)
+    observation_errors = configured_sec.validate_observation_snapshot(observed, rows)
+    if observation_errors:
+        raise ValueError("; ".join(observation_errors))
+
+    snapshot = build_snapshot(observed)
     write_snapshot(snapshot, OUTPUT_PATH)
     print(
         json.dumps(
@@ -149,6 +158,9 @@ def main() -> int:
                 "eventCount": snapshot.get("eventCount", 0),
                 "verifiedBaselineCount": snapshot.get("usIrStructured", {}).get(
                     "verifiedBaselineCount", 0
+                ),
+                "directSecAccepted": snapshot.get("secStructured", {}).get(
+                    "acceptedEventCount", 0
                 ),
             },
             ensure_ascii=False,

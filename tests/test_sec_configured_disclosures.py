@@ -123,6 +123,128 @@ class SecConfiguredDisclosuresTest(unittest.TestCase):
             1,
         )
 
+    def test_observation_only_failure_is_not_promoted_by_existing_ir_content(self) -> None:
+        listing = sec.USListing("ionq", "IonQ", "IONQ", "量子计算")
+        previous = {
+            "generatedAt": "2026-09-01T00:00:00+00:00",
+            "companyCount": 1,
+            "eventCount": 1,
+            "companies": {
+                "ionq": {
+                    "slug": "ionq",
+                    "events": [{"id": "existing-ir-event"}],
+                }
+            },
+            "sourceStatus": [
+                {
+                    "id": "us-ir-disclosure-ionq-ionq",
+                    "provider": "official-company-ir-sec-filings",
+                    "status": "ok",
+                    "accepted": 1,
+                },
+                {
+                    "id": listing.source_id,
+                    "provider": sec.PROVIDER,
+                    "status": "ok",
+                    "accepted": 99,
+                },
+            ],
+        }
+        config = {
+            "settings": {
+                "requestTimeout": 1,
+                "requestAttempts": 1,
+                "maxAgeDays": 1095,
+                "maxItemsPerListing": 18,
+            },
+            "secCiks": {"ionq": "1824920"},
+        }
+
+        def blocked_submission(url, timeout, attempts):
+            raise RuntimeError("shared CI blocked by SEC")
+
+        result = configured.build_observation_snapshot(
+            previous,
+            [listing],
+            config,
+            submissions_fetcher=blocked_submission,
+        )
+        self.assertEqual(result["companies"], previous["companies"])
+        self.assertEqual(result["companyCount"], 1)
+        self.assertEqual(result["eventCount"], 1)
+        status = next(
+            row for row in result["sourceStatus"] if row.get("id") == listing.source_id
+        )
+        self.assertEqual(status["status"], "error")
+        self.assertEqual(status["scanned"], 0)
+        self.assertEqual(status["accepted"], 0)
+        self.assertIn("RuntimeError:shared CI blocked by SEC", status["errors"])
+        self.assertTrue(status["observedAt"])
+        self.assertEqual(status["cikSource"], "configured-official-registry")
+        self.assertEqual(result["secStructured"]["acceptedEventCount"], 0)
+        self.assertTrue(result["secStructured"]["observationOnly"])
+        self.assertEqual(
+            configured.validate_observation_snapshot(result, [listing]),
+            [],
+        )
+
+    def test_observation_only_success_keeps_direct_sec_counters(self) -> None:
+        listing = sec.USListing("ionq", "IonQ", "IONQ", "量子计算")
+        config = {
+            "settings": {
+                "requestTimeout": 1,
+                "requestAttempts": 1,
+                "maxAgeDays": 1095,
+                "maxItemsPerListing": 18,
+            },
+            "secCiks": {"ionq": "1824920"},
+        }
+        payload = {
+            "cik": "1824920",
+            "tickers": ["IONQ"],
+            "filings": {
+                "recent": {
+                    "form": ["10-Q", "8-K", "4"],
+                    "accessionNumber": [
+                        "0001193125-26-000001",
+                        "0001193125-26-000002",
+                        "0001193125-26-000003",
+                    ],
+                    "filingDate": ["2026-08-01", "2026-07-20", "2026-07-10"],
+                    "reportDate": ["2026-06-30", "2026-07-20", ""],
+                    "primaryDocument": ["ionq-10q.htm", "ionq-8k.htm", "form4.xml"],
+                    "primaryDocDescription": [
+                        "Quarterly Report",
+                        "Current Report",
+                        "Ownership Form",
+                    ],
+                }
+            },
+        }
+
+        def submissions_fetcher(url, timeout, attempts):
+            self.assertIn("CIK0001824920.json", url)
+            return payload
+
+        result = configured.build_observation_snapshot(
+            {"companies": {}, "sourceStatus": []},
+            [listing],
+            config,
+            submissions_fetcher=submissions_fetcher,
+        )
+        status = next(
+            row for row in result["sourceStatus"] if row.get("id") == listing.source_id
+        )
+        self.assertEqual(status["status"], "ok")
+        self.assertEqual(status["scanned"], 3)
+        self.assertEqual(status["accepted"], 2)
+        self.assertEqual(result["secStructured"]["acceptedEventCount"], 2)
+        self.assertEqual(result.get("companies"), {})
+        self.assertEqual(
+            configured.validate_observation_snapshot(result, [listing]),
+            [],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
