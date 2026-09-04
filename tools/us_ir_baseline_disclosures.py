@@ -6,6 +6,11 @@ primary refresh paths. A manually verified filing detail on the same official
 IR host is merged for every enabled US listing so transient timeouts or dynamic
 rendering cannot erase the company's regulatory evidence from the formal
 snapshot.
+
+Direct SEC availability observations are an independent ledger. The live IR
+builder may rebuild its own content/status rows, but this wrapper restores the
+current-run ``sec-disclosure-*`` observations and ``secStructured`` metadata
+unchanged before validation and publication.
 """
 
 from __future__ import annotations
@@ -28,6 +33,7 @@ except ImportError:
     import us_ir_sec_disclosures as ir
 
 PROVIDER = "verified-official-ir-baseline"
+DIRECT_SEC_PREFIX = "sec-disclosure-"
 
 
 def load_baselines(
@@ -147,6 +153,37 @@ def crawl_source(
     return merged, status
 
 
+def _restore_direct_sec_observations(
+    snapshot: dict[str, Any],
+    previous: dict[str, Any],
+) -> dict[str, Any]:
+    """Restore direct SEC status/metadata after the IR builder rewrites its rows."""
+
+    direct_statuses = [
+        dict(status)
+        for status in previous.get("sourceStatus", [])
+        if isinstance(status, dict)
+        and str(status.get("id", "")).startswith(DIRECT_SEC_PREFIX)
+    ]
+    direct_metadata = previous.get("secStructured")
+    if not direct_statuses and not isinstance(direct_metadata, dict):
+        return snapshot
+
+    result = json.loads(json.dumps(snapshot, ensure_ascii=False))
+    statuses = [
+        status
+        for status in result.get("sourceStatus", [])
+        if isinstance(status, dict)
+        and not str(status.get("id", "")).startswith(DIRECT_SEC_PREFIX)
+    ]
+    result["sourceStatus"] = [*statuses, *direct_statuses]
+    if isinstance(direct_metadata, dict):
+        result["secStructured"] = json.loads(
+            json.dumps(direct_metadata, ensure_ascii=False)
+        )
+    return result
+
+
 def validate_snapshot(
     snapshot: dict[str, Any],
     listings: Iterable[sec.USListing] | None = None,
@@ -205,6 +242,7 @@ def _apply_metadata(snapshot: dict[str, Any], rows: list[sec.USListing]) -> dict
     metadata = dict(metadata) if isinstance(metadata, dict) else {}
     metadata["verifiedBaselineCount"] = len(rows)
     metadata["retentionPolicy"] = "live-official-discovery-plus-verified-baseline"
+    metadata["directSecAccess"] = "see-secStructured"
     result["usIrStructured"] = metadata
     return result
 
@@ -242,7 +280,9 @@ def main() -> int:
         )
         return 0
 
-    snapshot = ir.build_snapshot(base.load_previous(ir.OUTPUT_PATH), rows)
+    previous = base.load_previous(ir.OUTPUT_PATH)
+    snapshot = ir.build_snapshot(previous, rows)
+    snapshot = _restore_direct_sec_observations(snapshot, previous)
     snapshot = _apply_metadata(snapshot, rows)
     errors = validate_snapshot(snapshot, rows)
     if errors:
