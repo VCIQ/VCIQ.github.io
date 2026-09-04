@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-04T01:25:54+00:00",
-  "personCount": 109,
-  "taskCount": 258,
-  "openTaskCount": 258,
+  "generatedAt": "2026-09-04T14:41:35+00:00",
+  "personCount": 111,
+  "taskCount": 259,
+  "openTaskCount": 259,
   "people": {
     "ali-ghodsi": {
       "personName": "Ali Ghodsi",
@@ -459,6 +459,60 @@
         }
       ],
       "openCount": 2
+    },
+    "elon-musk": {
+      "personName": "埃隆·马斯克",
+      "tasks": [
+        {
+          "id": "person-research-d230b71e4daa",
+          "taskType": "execution_verification",
+          "priority": "P1",
+          "target": "Tesla · Tesla",
+          "question": "埃隆·马斯克 的最新公开事件涉及“Tesla”后，Tesla 是否出现独立的产品、技术、组织或商业执行证据？",
+          "objective": "把“人物表达”与“组织执行”分开验证；人物观点本身不自动等同于公司战略或产品落地。",
+          "preferredEvidence": [
+            "公司官方公告/博客",
+            "产品或技术官方发布",
+            "监管文件",
+            "公司官方开发者/研究页面"
+          ],
+          "searchQueries": [],
+          "successCriteria": "至少存在 1 条独立于人物表述、且 URL 不与人物证据重合的一手/官方组织来源，同时直接命中组织与目标技术/产品；第三方报道或同一来源复用只能形成 candidate_found。",
+          "evidenceBasis": [
+            {
+              "title": "Tesla Cybercab finally hits the roads after two-year wait — but I’m not convinced its driverless cars will catch Waymo, whatever the Robotaxi data says",
+              "url": "https://www.techradar.com/vehicle-tech/hybrid-electric-vehicles/tesla-cybercab-finally-hits-the-roads-after-two-year-wait-but-im-not-convinced-its-driverless-cars-will-catch-waymo-whatever-the-robotaxi-data-says",
+              "source": "TechRadar",
+              "date": "2026-09-04"
+            }
+          ],
+          "candidateEvidence": [
+            {
+              "title": "Tesla Optimus vs. BYD Xiao Di vs. LG CLOiD: Nvidia enters AI robot segment",
+              "url": "https://www.notebookcheck.net/Tesla-Optimus-vs-BYD-Xiao-Di-vs-LG-CLOiD-Nvidia-enters-AI-robot-segment.1379260.0.html",
+              "source": "Notebookcheck",
+              "sourceLevel": "媒体报道",
+              "date": "2026-08-26"
+            },
+            {
+              "title": "Tesla insider says reports of Shanghai FSD data center shutdown are untrue",
+              "url": "https://technode.com/2026/08/26/tesla-insider-says-reports-of-shanghai-fsd-data-center-shutdown-are-untrue",
+              "source": "TechNode",
+              "sourceLevel": "媒体报道",
+              "date": "2026-08-26"
+            },
+            {
+              "title": "Tesla Cybercab finally hits the roads after two-year wait — but I’m not convinced its driverless cars will catch Waymo, whatever the Robotaxi data says",
+              "url": "https://www.techradar.com/vehicle-tech/hybrid-electric-vehicles/tesla-cybercab-finally-hits-the-roads-after-two-year-wait-but-im-not-convinced-its-driverless-cars-will-catch-waymo-whatever-the-robotaxi-data-says",
+              "source": "TechRadar",
+              "sourceLevel": "媒体报道",
+              "date": "2026-09-04"
+            }
+          ],
+          "status": "candidate_found"
+        }
+      ],
+      "openCount": 1
     },
     "gary-dickerson": {
       "personName": "Gary Dickerson",
@@ -3835,6 +3889,35 @@
       ],
       "openCount": 2
     },
+    "person-4d6ca4357c": {
+      "personName": "黄仁勋",
+      "tasks": [
+        {
+          "id": "person-research-cb529c0cc9bc",
+          "taskType": "identity_verification",
+          "priority": "P0",
+          "target": "身份与任职",
+          "question": "黄仁勋 当前公开身份、任职机构和角色能否由本人、机构官网或监管/学术档案独立核验？",
+          "objective": "补齐人物身份与任职证据；在验证完成前，不把网页标题、媒体称谓或自动抽取角色当作正式任职。",
+          "preferredEvidence": [
+            "机构官方人物页",
+            "个人学术主页",
+            "监管文件",
+            "官方任命/团队页面"
+          ],
+          "searchQueries": [
+            "黄仁勋 official profile",
+            "黄仁勋 个人主页",
+            "黄仁勋 任职 官方"
+          ],
+          "successCriteria": "至少取得 1 条可直接归因于本人或任职机构的公开来源，同时明确姓名与当前角色。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        }
+      ],
+      "openCount": 1
+    },
     "person-788bbbd245": {
       "personName": "黄文龙",
       "tasks": [
@@ -4961,36 +5044,6 @@
       "personName": "汪滔",
       "tasks": [
         {
-          "id": "person-research-083f05c080e3",
-          "taskType": "first_party_evidence",
-          "priority": "P1",
-          "target": "DJI 无人机",
-          "question": "能否找到 汪滔 围绕“DJI 无人机”的本人演讲、访谈、论文、公开发文或官方文件？",
-          "objective": "增加可归因于人物本人的一手材料，避免人物研究长期依赖第三方报道。",
-          "preferredEvidence": [
-            "本人论文/著作",
-            "个人或机构官方主页",
-            "官方 YouTube/视频号",
-            "公开演讲/问答原始视频"
-          ],
-          "searchQueries": [
-            "汪滔 DJI 无人机",
-            "汪滔 DJI 无人机 演讲",
-            "汪滔 DJI 无人机 访谈"
-          ],
-          "successCriteria": "人物档案至少补齐到 2 条可直接归因于本人的独立公开材料；若用于观点演进，仍需形成跨时间的同主题证据点。",
-          "evidenceBasis": [
-            {
-              "title": "DJI company profile",
-              "url": "https://www.dji.com/company",
-              "source": "DJI",
-              "date": "持续更新"
-            }
-          ],
-          "candidateEvidence": [],
-          "status": "open"
-        },
-        {
           "id": "person-research-c2f1d2c2223c",
           "taskType": "freshness_update",
           "priority": "P2",
@@ -5013,7 +5066,7 @@
           "status": "open"
         }
       ],
-      "openCount": 2
+      "openCount": 1
     },
     "kareem-zaki": {
       "personName": "Kareem Zaki",
