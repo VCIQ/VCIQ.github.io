@@ -103,6 +103,31 @@ def _collect_observations(payload: dict[str, Any]) -> dict[str, list[dict[str, A
             continue
         source_id = str(raw.get("id") or "")
 
+        # SSE/SZSE observations come only from dedicated official endpoint
+        # instrumentation. Never infer exchange performance from the mixed base
+        # crawler counters or from CNINFO/Eastmoney content.
+        if (
+            source_id.startswith("exchange-disclosure-")
+            and str(raw.get("market") or "") == "A股"
+            and raw.get("exchangeDirectAttempted") is True
+        ):
+            exchange_name = str(raw.get("exchange") or "")
+            expected_institution = {
+                "上海证券交易所": "sse",
+                "深圳证券交易所": "szse",
+            }.get(exchange_name, "")
+            observed_institution = str(raw.get("exchangeDirectInstitution") or "")
+            if expected_institution and observed_institution == expected_institution:
+                exchange_errors = _errors(raw.get("exchangeDirectErrors"))
+                key, row = _observation(
+                    expected_institution,
+                    state=str(raw.get("exchangeDirectStatus") or "unknown").casefold(),
+                    scanned=raw.get("exchangeDirectScanned"),
+                    accepted=raw.get("exchangeDirectAccepted"),
+                    errors=exchange_errors,
+                )
+                grouped[key].append(row)
+
         # CNINFO structured metrics are explicitly separated from the base
         # A-share exchange status by cninfo_structured_disclosures.py.
         if raw.get("structuredAttempted") is True:
@@ -159,9 +184,9 @@ def _collect_observations(payload: dict[str, Any]) -> dict[str, list[dict[str, A
             )
             grouped[key].append(row)
 
-        # Do not bridge the following yet:
-        # - SSE/SZSE base rows: their current scanned/accepted fields can mix
-        #   CNINFO and exchange-origin candidates.
+        # Do not bridge the following:
+        # - Legacy SSE/SZSE rows without exchangeDirect* evidence: aggregate
+        #   counters can mix CNINFO and exchange-origin candidates.
         # - Eastmoney fallback: it is a database fallback, not a regulator.
         # - us-ir-disclosure-* rows: they prove issuer IR availability, not SEC.
         if source_id.startswith(US_IR_PREFIX):

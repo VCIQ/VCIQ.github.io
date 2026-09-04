@@ -533,6 +533,22 @@ def main() -> int:
     errors = validate_enrichment(snapshot, listings, require_events=args.require_events)
     if errors:
         raise SystemExit("; ".join(errors))
+
+    # The content pipeline may mix CNINFO and exchange discovery, so collect
+    # exchange health separately through the exchanges' own structured endpoints.
+    # This augments sourceStatus only; it does not replace CNINFO events or mutate
+    # the aggregate listing counters above.
+    try:
+        from . import exchange_direct_observations as exchange_direct
+    except ImportError:
+        import exchange_direct_observations as exchange_direct
+    snapshot = exchange_direct.enrich_snapshot(snapshot, listings, settings)
+    exchange_errors = exchange_direct.validate_snapshot(
+        snapshot, listings, require_attempts=True
+    )
+    if exchange_errors:
+        raise SystemExit("; ".join(exchange_errors))
+
     write_snapshot(snapshot)
     return 0
 
