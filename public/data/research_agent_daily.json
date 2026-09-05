@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-05T05:53:26+00:00",
+  "generatedAt": "2026-09-05T15:36:06+00:00",
   "asOfDate": "2026-09-05",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
@@ -12,41 +12,40 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 2773,
-      "completion_tokens": 3353,
-      "total_tokens": 6126,
+      "prompt_tokens": 6207,
+      "completion_tokens": 4070,
+      "total_tokens": 10277,
       "completion_tokens_details": {
-        "reasoning_tokens": 2322
+        "reasoning_tokens": 1865
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 2773
+      "prompt_cache_miss_tokens": 6207
     }
   },
   "changeSummary": {
-    "totalDetected": 6,
-    "total": 2,
+    "totalDetected": 7,
+    "total": 7,
     "byDataset": {
-      "ventureCompany": 2
+      "intelligenceEvent": 7
     },
     "byChangeType": {
-      "external_event": 5,
-      "entity_reconciliation": 1
+      "external_event": 7
     },
-    "externalCandidates": 5,
-    "qualityRejected": 3,
-    "maintenanceExcluded": 1,
+    "externalCandidates": 7,
+    "qualityRejected": 0,
+    "maintenanceExcluded": 0,
     "aggregatedEvents": 0,
-    "highestImportance": 88,
-    "verifiedChangeTotal": 2,
+    "highestImportance": 86,
+    "verifiedChangeTotal": 0,
     "candidateTotal": 0,
-    "auxiliaryLeadTotal": 0,
-    "rejectedTotal": 3,
-    "newEvents": 1,
+    "auxiliaryLeadTotal": 7,
+    "rejectedTotal": 0,
+    "newEvents": 7,
     "reconfirmations": 0,
-    "updates": 1,
+    "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
     "duplicatesSuppressed": 0
@@ -54,182 +53,263 @@
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "本证据包包含两项创业公司融资相关变化：SambaNova Systems 的既有融资记录发生文本更新（确认10亿美元融资首轮交割、估值110亿美元），以及 Form Energy 新增一条7.5亿美元Series G融资记录（用于铁空气电池扩产与商业化）。二者均为官方披露，但 Form Energy 的融资记录存在日期不一致，需以具体新闻稿日期为准，并持续核验后续信息。 质量门诊断：缺少发布时间 9、证据未分级 2、证据合格但未绑定变化字段 3。",
+    "executiveSummary": "截至2026-09-05的证据包显示，当日出现多条高价值科技动态：OpenAI在州级立法阻力下扩充政策团队；塔塔旗下HyperVault计划在海得拉巴建设最高1GW的大型AI数据中心园区；IFA 2026展会期间，追觅、Dyson、UGREEN等消费电子厂商密集发布新品；研究者报告太阳风暴引发的GPS故障曾严重到足以导致自动驾驶汽车崩溃；周报还提及OpenAI发布GPT-6 Astra、国家人工智能基金向北京可灵注入14亿元现金资本、阿里更新Qwen3.8-Max。总体反映AI监管、基础设施、终端产品和外部环境风险四条主线，但多数证据为单一来源或C级，需保持审慎。",
     "keyDevelopments": [
       {
-        "title": "SambaNova完成10亿美元融资首轮交割，估值110亿美元",
-        "assessment": "依据SambaNova官方新闻稿，公司完成10亿美元融资的首轮交割，估值达110亿美元，资金将用于SambaCloud、SambaStack、SambaManaged等产品线及主权AI、Neoclouds等方向。需注意此为首轮交割（first close），并非整轮融资完成；投资方名单未披露。",
-        "importance": 5,
-        "confidence": "high",
+        "title": "OpenAI在立法阻力下扩充州级政策团队",
+        "assessment": "据新浪财经报道，OpenAI发言人表示全球事务团队正在扩充，新增三位专注于州级政策的关键人才，背景是全美两党加强对人工智能的监管。事实层面，此次事件为新增政策岗位；推断层面，州级监管压力正在成为OpenAI等AI公司的显著外部变量，公司需增加政策事务投入。该判断基于单一条C级证据，不宜作为确定性结论。",
+        "importance": 4,
+        "confidence": "low",
         "entities": [
-          "SambaNova Systems"
+          "OpenAI"
         ],
         "evidenceIds": [
           "E001"
         ]
       },
       {
-        "title": "Form Energy宣布7.5亿美元Series G融资，用于铁空气电池扩产",
-        "assessment": "Form Energy官方新闻稿宣布完成7.5亿美元Series G融资，以扩大铁空气电池制造并加速商业部署。证据中同一条融资记录出现2020-03-04和2026-08-12两个日期，应以具体新闻发布日2026-08-12为准；融资总额及投资方信息仍待完整披露。",
-        "importance": 5,
-        "confidence": "medium",
+        "title": "塔塔规划大型AI数据中心，最高1GW算力",
+        "assessment": "据交易所文件与新浪财经报道，塔塔咨询服务公司（TCS）旗下HyperVault已获得264英亩土地，将在海得拉巴开发最高1GW算力的大型AI数据中心园区，标题提及预计投资7000亿卢比。事实为土地获得与园区规划；推断为印度AI基础设施投资正显著加速，但投资规模、建设周期和资金来源仍需后续验证。",
+        "importance": 4,
+        "confidence": "low",
         "entities": [
-          "Form Energy"
+          "塔塔咨询服务公司",
+          "HyperVault"
         ],
         "evidenceIds": [
-          "E008",
-          "E007",
-          "E009"
+          "E004"
+        ]
+      },
+      {
+        "title": "IFA 2026消费电子与智能家居新品密集发布",
+        "assessment": "多个来源显示：追觅以16个品类百余款产品参展IFA 2026，6款产品获国际奖项；Dyson在柏林发布10款新品；UGREEN发布面向本地AI的HomeAgent系列和MagFlow产品线。事实为各公司参展并发布新品；推断为消费电子厂商正向本地AI、多楼层清洁和智能连接等细分场景集中发力，市场竞争加剧。其中UGREEN证据为B级厂商新闻稿，其余为C级媒体来源，整体可信度中等。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "追觅",
+          "Dyson",
+          "UGREEN"
+        ],
+        "evidenceIds": [
+          "E002",
+          "E006",
+          "E007"
+        ]
+      },
+      {
+        "title": "研究者报告太阳风暴导致GPS故障并波及自动驾驶",
+        "assessment": "TechRadar报道研究者报告称，太阳风暴曾引发GPS故障，严重程度足以导致自动驾驶汽车崩溃。事实为存在一份研究报告；推断为自动驾驶对GPS的依赖构成环境脆弱性，在太阳活动高发期可能面临系统性风险。当前证据为单一C级媒体转述，未提供研究细节，无法确认故障规模与复现条件。",
+        "importance": 3,
+        "confidence": "low",
+        "entities": [
+          "自动驾驶行业",
+          "GPS",
+          "太阳风暴"
+        ],
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "title": "中国AI资本与模型更新动态密集",
+        "assessment": "数智周报标题列示：OpenAI发布GPT-6 Astra模型；国家人工智能基金向北京可灵注入现金资本14亿元；阿里更新旗舰模型Qwen3.8-Max。事实为周报标题所披露的事项；推断为AI模型竞争与政策资金支持同步加强，头部厂商持续迭代产品。该证据为C级媒体周报，且摘要仅提及其他降价与发布信息，标题与摘要内容不完全对应，需等待官方确认。",
+        "importance": 4,
+        "confidence": "low",
+        "entities": [
+          "OpenAI",
+          "国家人工智能基金",
+          "北京可灵",
+          "阿里巴巴"
+        ],
+        "evidenceIds": [
+          "E005"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "SambaNova Systems",
-        "direction": "positive",
-        "statement": "10亿美元融资首轮交割及110亿美元估值显示投资者对其AI推理/主权AI方向的认可，但需观察后续交割情况和投资方阵容。",
+        "entity": "OpenAI",
+        "direction": "negative",
+        "statement": "OpenAI在州级立法阻力下扩充政策团队，说明其面临的监管对抗环境正在升温，合规和政策投入成本可能上升。",
         "evidenceIds": [
           "E001"
         ]
       },
       {
-        "entity": "Form Energy",
+        "entity": "塔塔咨询服务公司",
         "direction": "positive",
-        "statement": "7.5亿美元融资将支持铁空气电池制造扩张与商业化，但融资记录日期不一致提示数据源需进一步核验。",
+        "statement": "塔塔旗下HyperVault获地并规划最高1GW AI数据中心，反映其正抓住AI算力需求增长机遇，若建成将显著扩大印度本土算力供给。",
         "evidenceIds": [
-          "E008",
-          "E007",
-          "E009"
+          "E004"
+        ]
+      },
+      {
+        "entity": "消费电子智能家居行业",
+        "direction": "positive",
+        "statement": "追觅、Dyson、UGREEN在IFA 2026集中展示新品，表明行业创新周期依然活跃，本地化AI与细分场景清洁成为差异化方向。",
+        "evidenceIds": [
+          "E002",
+          "E006",
+          "E007"
+        ]
+      },
+      {
+        "entity": "自动驾驶行业",
+        "direction": "negative",
+        "statement": "研究者报告的太阳风暴引发GPS故障并导致自动驾驶崩溃，提示自动驾驶对卫星定位的高度依赖可能成为重大安全性弱点。",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "entity": "中国AI产业",
+        "direction": "positive",
+        "statement": "国家人工智能基金向北京可灵注入14亿元现金资本，叠加模型厂商密集发布新版本，显示政策资金与市场竞争共同推动AI产业发展。",
+        "evidenceIds": [
+          "E005"
         ]
       }
     ],
     "watchlist": [
       {
-        "item": "SambaNova融资轮次后续交割及投资方披露",
-        "reason": "当前仅宣布首轮交割，未披露投资方，完整融资规模及条件可能随后续交割变化。",
-        "nextEvidence": "SambaNova后续新闻稿或融资数据库更新",
+        "item": "OpenAI州级政策团队的实际影响",
+        "reason": "新增政策岗位是否对应具体州级立法议案或监管行动，以及是否改变OpenAI在各州的业务准入态势，需要后续动态验证。",
+        "nextEvidence": "OpenAI官方公告、州级监管文件或政策团队负责人公开表态",
         "evidenceIds": [
           "E001"
         ]
       },
       {
-        "item": "Form Energy融资日期核验",
-        "reason": "证据中同一条融资出现2020-03-04和2026-08-12两个日期，需确认实际公告日。",
-        "nextEvidence": "Form Energy官方新闻室或权威融资数据库记录",
+        "item": "塔塔HyperVault数据中心项目进展",
+        "reason": "7000亿卢比投资规模较大，土地已获得，但尚不清楚资金安排、建设周期和最高1GW是否完全落地。",
+        "nextEvidence": "项目动工公告、财报披露的资本开支或地方政府审批记录",
         "evidenceIds": [
-          "E007",
-          "E008",
-          "E009"
+          "E004"
         ]
       },
       {
-        "item": "Form Energy融资总额和投资方名单",
-        "reason": "新闻稿摘要提到'round brings total […]'但未给出完整总额和投资方名单。",
-        "nextEvidence": "Form Energy投资者页面或新闻稿全文",
+        "item": "太阳风暴与自动驾驶GPS故障研究的全文和影响面",
+        "reason": "当前报道未提供研究方法、故障具体时段和涉及车辆数量，无法评估该风险的概率和严重性。",
+        "nextEvidence": "研究报告全文、同行评议、或后续事故统计",
         "evidenceIds": [
-          "E008",
-          "E009"
+          "E003"
+        ]
+      },
+      {
+        "item": "IFA 2026新品市场接受度",
+        "reason": "新品密集发布后，需要观察零售订单、测评反馈和市场份额变化，以判断是否形成实际销售增长。",
+        "nextEvidence": "厂商销售数据、第三方评测、电商平台销量排行",
+        "evidenceIds": [
+          "E002",
+          "E006",
+          "E007"
+        ]
+      },
+      {
+        "item": "可灵获国家基金注资及模型发布后续",
+        "reason": "周报标题与摘要存在不一致，注资的工商变更、模型能力评测和应用落地情况尚未确认，需官方文件佐证。",
+        "nextEvidence": "工商变更记录、公司公告、模型评测报告",
+        "evidenceIds": [
+          "E005"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "SambaNova融资完成度风险",
-        "reason": "10亿美元融资仅完成首轮交割，后续交割可能受市场环境或投资者条件影响。",
+        "risk": "证据质量风险：多数证据为C级且单一来源，可能包含夸大或误报",
+        "reason": "除UGREEN新闻稿为B级外，其余事件均来自单一媒体或行业媒体，且全部标注为automated_unreviewed，尚无官方公告或交叉验证。",
+        "evidenceIds": [
+          "E001",
+          "E002",
+          "E003",
+          "E004",
+          "E005",
+          "E006"
+        ]
+      },
+      {
+        "risk": "AI监管环境进一步收紧，头部AI公司合规成本上升",
+        "reason": "OpenAI在立法阻力下扩充政策团队，暗示美国州级AI立法压力可能加大，进而影响模型发布和业务部署节奏。",
         "evidenceIds": [
           "E001"
         ]
       },
       {
-        "risk": "Form Energy融资数据可靠性风险",
-        "reason": "证据中同笔融资出现日期不一致，可能导致事件时间线判断错误。",
+        "risk": "自动驾驶系统对GPS信号的空间天气脆弱性",
+        "reason": "太阳风暴导致GPS故障并波及自动驾驶的研究若属实，意味着低概率高影响事件可能对自动驾驶安全记录造成冲击，并影响监管审批。",
         "evidenceIds": [
-          "E007",
-          "E008",
-          "E009"
+          "E003"
         ]
       },
       {
-        "risk": "商业化与竞争风险",
-        "reason": "两家公司均处于资本密集的AI推理/储能领域，融资成功不代表商业化必然成功，后续需跟踪技术落地和订单进展。",
+        "risk": "大型数据中心项目执行不确定性",
+        "reason": "塔塔数据中心投资规模巨大，可能面临土地开发审批、电力供应、资金筹措或需求波动等风险，项目未必如期达产。",
         "evidenceIds": [
-          "E001",
-          "E008"
+          "E004"
+        ]
+      },
+      {
+        "risk": "IFA新品存在只发布不畅销的风险",
+        "reason": "消费电子新品密集亮相不等于商业成功，若产品定价、供应链或卖点缺乏持续竞争力，可能无法形成稳定收入贡献。",
+        "evidenceIds": [
+          "E002",
+          "E006",
+          "E007"
         ]
       }
     ],
-    "methodologyNote": "本分析仅基于证据包中的变化记录及官方披露，未补充外部事实。对Form Energy的融资，因同一记录出现不同日期，置信度设为medium，并以具体新闻日期为准。所有判断仅为研究分析，不构成任何买入、卖出、目标价或收益承诺。"
+    "methodologyNote": "本分析仅基于证据包内7条evidence，未引入外部事实。事实与推断分开表达：证据编号内的标题、摘要和来源字段视为可引用事实；对其含义和影响的解释视为推断。证据等级方面，E007为B级（厂商新闻稿），其余均为C级媒体线索，且全部为automated_unreviewed，因此除UGREEN新品事件外，其余判断的confidence均设为low。所有判断均至少引用一个evidenceIds，投资者不应据此直接作出买卖决策。"
   },
   "changes": [
     {
-      "id": "chg-92fff40a9f61e80f1340",
-      "dataset": "ventureCompany",
-      "entityType": "创业公司",
-      "entityId": "sambanova",
-      "entityName": "SambaNova Systems",
-      "action": "updated",
+      "id": "chg-a61175f609f4984bb79e",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-247e6c46bb0d60f993",
+      "entityName": "OpenAI在立法阻力下扩充政策团队，聘用三人负责州级政策事务",
+      "action": "added",
       "changedFields": [
-        "financing"
+        "publishedAt",
+        "summary",
+        "title"
       ],
-      "summary": "SambaNova Systems 的 financing 发生变化。",
-      "importance": 88,
-      "before": {
-        "financing": [
-          {
-            "amount": "$1B",
-            "date": "2026-07-08",
-            "investors": [],
-            "sourceUrl": "https://sambanova.ai/press/sambanova-completes-first-close-of-1b-financing-at-11b-valuation",
-            "summary": "SambaNova Completes First Close of $1B Financing at $11B Valuation SambaCloud SambaStack SambaManaged SambaRack RDU Dataflow Technology SambaRack RDU Dataflow Products SambaCloud SambaStack SambaManaged Technology SambaRack RDU Dataflow Inference Providers Sovereign AI Developers & Enterprises Gover",
-            "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
-            "type": "融资"
-          }
-        ]
-      },
+      "summary": "新增高价值情报事件记录：OpenAI在立法阻力下扩充政策团队，聘用三人负责州级政策事务。",
+      "importance": 86,
+      "before": null,
       "after": {
-        "financing": [
-          {
-            "amount": "$1B",
-            "date": "2026-07-08",
-            "investors": [],
-            "sourceUrl": "https://sambanova.ai/press/sambanova-completes-first-close-of-1b-financing-at-11b-valuation",
-            "summary": "SambaNova Completes First Close of $1B Financing at $11B Valuation SambaCloud SambaStack SambaManaged SambaRack RDU Dataflow Technology SambaRack RDU Dataflow Products SambaCloud SambaStack SambaManaged Technology SambaRack RDU Dataflow Neoclouds Sovereign AI Developers & Enterprises Government & Pu",
-            "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
-            "type": "融资"
-          }
-        ]
+        "publishedAt": "2026-09-05",
+        "summary": "OpenAI一位发言人表示，该实验室的全球事务团队正在扩充，新增了三位专注于州级政策的关键人才。 随着全美两党加强对人工智能的监管...",
+        "title": "OpenAI在立法阻力下扩充政策团队，聘用三人负责州级政策事务"
       },
       "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
       "isResearchCandidate": true,
       "claimFields": [
-        "financing"
+        "publishedAt",
+        "summary",
+        "title"
       ],
       "claimBindings": [
         {
-          "field": "financing",
-          "before": [
-            {
-              "amount": "$1B",
-              "date": "2026-07-08",
-              "investors": [],
-              "sourceUrl": "https://sambanova.ai/press/sambanova-completes-first-close-of-1b-financing-at-11b-valuation",
-              "summary": "SambaNova Completes First Close of $1B Financing at $11B Valuation SambaCloud SambaStack SambaManaged SambaRack RDU Dataflow Technology SambaRack RDU Dataflow Products SambaCloud SambaStack SambaManaged Technology SambaRack RDU Dataflow Inference Providers Sovereign AI Developers & Enterprises Gover",
-              "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
-              "type": "融资"
-            }
-          ],
-          "after": [
-            {
-              "amount": "$1B",
-              "date": "2026-07-08",
-              "investors": [],
-              "sourceUrl": "https://sambanova.ai/press/sambanova-completes-first-close-of-1b-financing-at-11b-valuation",
-              "summary": "SambaNova Completes First Close of $1B Financing at $11B Valuation SambaCloud SambaStack SambaManaged SambaRack RDU Dataflow Technology SambaRack RDU Dataflow Products SambaCloud SambaStack SambaManaged Technology SambaRack RDU Dataflow Neoclouds Sovereign AI Developers & Enterprises Government & Pu",
-              "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
-              "type": "融资"
-            }
-          ],
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-05",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "OpenAI一位发言人表示，该实验室的全球事务团队正在扩充，新增了三位专注于州级政策的关键人才。 随着全美两党加强对人工智能的监管...",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "OpenAI在立法阻力下扩充政策团队，聘用三人负责州级政策事务",
           "evidenceIds": [
             "E001"
           ]
@@ -246,143 +326,634 @@
         "supporting": 1,
         "total": 1
       },
-      "publicationTier": "verified_change",
+      "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-810db7a54dc6fae74039"
+        "evt-3647b506a41ecaa77f8f"
       ],
       "eventLifecycles": {
-        "evt-810db7a54dc6fae74039": "first_seen"
+        "evt-3647b506a41ecaa77f8f": "first_seen"
       },
-      "eventId": "evt-810db7a54dc6fae74039",
+      "eventId": "evt-3647b506a41ecaa77f8f",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-05T05:53:26+00:00",
-      "lastSeenAt": "2026-09-05T05:53:26+00:00"
+      "firstSeenAt": "2026-09-05T15:36:06+00:00",
+      "lastSeenAt": "2026-09-05T15:36:06+00:00"
     },
     {
-      "id": "chg-49c14de07f15e86b4440",
-      "dataset": "ventureCompany",
-      "entityType": "创业公司",
-      "entityId": "form-energy",
-      "entityName": "Form Energy",
-      "action": "updated",
+      "id": "chg-55993fd1d7c5d84164f8",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-2a1a8af988260d8ea5",
+      "entityName": "追觅百余款产品亮相IFA：覆盖16个品类，6款产品获国际奖项",
+      "action": "added",
       "changedFields": [
-        "financing"
+        "publishedAt",
+        "summary",
+        "title"
       ],
-      "summary": "Form Energy 的 financing 发生变化。",
-      "importance": 88,
-      "before": {
-        "financing": []
-      },
+      "summary": "新增高价值情报事件记录：追觅百余款产品亮相IFA：覆盖16个品类，6款产品获国际奖项。",
+      "importance": 85,
+      "before": null,
       "after": {
-        "financing": [
-          {
-            "amount": "$750M",
-            "date": "2020-03-04",
-            "investors": [],
-            "round": "Series G",
-            "sourceUrl": "https://formenergy.com/",
-            "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
-            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
-            "type": "融资"
-          },
-          {
-            "amount": "$750M",
-            "date": "2026-08-12",
-            "investors": [],
-            "round": "Series G",
-            "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
-            "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
-            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
-            "type": "融资"
-          }
-        ]
+        "publishedAt": "2026-09-05",
+        "summary": "9月4日，追觅以“EMPOWER YOUR DREAM LIFE”为主题亮相IFA 2026，集中展示覆盖超过16个品类的百余款产品及数十项全球首创技术。其中，来自扫地机器人、吹风机、生活环境电器、擦窗机器人和割草机器人等品类的6款产品获得国际奖项。 本届展品聚焦真实使用难题：Cyber X将自动清洁从单层延伸至多层住宅，T16 Pro Heat针对厨房重油污，Pano10系列擦窗机器人通过机械臂覆盖边角，LumiDryer把光能技术用于头发护理。不同产品共享感知、算法和控制能力，形成从环境识别到动作执行的技术闭…",
+        "title": "追觅百余款产品亮相IFA：覆盖16个品类，6款产品获国际奖项"
       },
       "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
       "isResearchCandidate": true,
       "claimFields": [
-        "financing"
+        "publishedAt",
+        "summary",
+        "title"
       ],
       "claimBindings": [
         {
-          "field": "financing",
-          "before": [],
-          "after": [
-            {
-              "amount": "$750M",
-              "date": "2020-03-04",
-              "investors": [],
-              "round": "Series G",
-              "sourceUrl": "https://formenergy.com/",
-              "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
-              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
-              "type": "融资"
-            },
-            {
-              "amount": "$750M",
-              "date": "2026-08-12",
-              "investors": [],
-              "round": "Series G",
-              "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
-              "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
-              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
-              "type": "融资"
-            }
-          ],
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-05",
           "evidenceIds": [
-            "E007",
-            "E008",
-            "E009"
+            "E002"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "9月4日，追觅以“EMPOWER YOUR DREAM LIFE”为主题亮相IFA 2026，集中展示覆盖超过16个品类的百余款产品及数十项全球首创技术。其中，来自扫地机器人、吹风机、生活环境电器、擦窗机器人和割草机器人等品类的6款产品获得国际奖项。 本届展品聚焦真实使用难题：Cyber X将自动清洁从单层延伸至多层住宅，T16 Pro Heat针对厨房重油污，Pano10系列擦窗机器人通过机械臂覆盖边角，LumiDryer把光能技术用于头发护理。不同产品共享感知、算法和控制能力，形成从环境识别到动作执行的技术闭…",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "追觅百余款产品亮相IFA：覆盖16个品类，6款产品获国际奖项",
+          "evidenceIds": [
+            "E002"
           ]
         }
       ],
       "evidenceIds": [
-        "E007",
-        "E008",
-        "E009"
+        "E002"
       ],
       "supportingEvidenceIds": [
-        "E007",
-        "E008",
-        "E009"
+        "E002"
       ],
       "evidenceQuality": {
         "status": "passed",
-        "supporting": 3,
-        "total": 3
+        "supporting": 1,
+        "total": 1
       },
-      "publicationTier": "verified_change",
+      "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-8be8280900881dcbec79"
+        "evt-26c0931af7e343038abe"
       ],
       "eventLifecycles": {
-        "evt-8be8280900881dcbec79": "updated"
+        "evt-26c0931af7e343038abe": "first_seen"
       },
-      "eventId": "evt-8be8280900881dcbec79",
-      "lifecycle": "updated",
-      "firstSeenAt": "2026-08-31T09:08:35+00:00",
-      "lastSeenAt": "2026-09-05T05:53:26+00:00"
+      "eventId": "evt-26c0931af7e343038abe",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-05T15:36:06+00:00",
+      "lastSeenAt": "2026-09-05T15:36:06+00:00"
+    },
+    {
+      "id": "chg-6a9f3c7b736e911d4d8b",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-bc1bf7667f637a4821",
+      "entityName": "Researchers report on a solar storm that caused a GPS glitch serious enough to crash self-driving cars",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Researchers report on a solar storm that caused a GPS glitch serious enough to crash self-driving cars。",
+      "importance": 85,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-05",
+        "summary": "You may not think about it, but Earth is under a constant bombardment of solar radiation shooting through space. While our planet's magnetic field does an excellent job of blocking it, sometimes concentrated bursts of radiation known as solar flares are stron…",
+        "title": "Researchers report on a solar storm that caused a GPS glitch serious enough to crash self-driving cars"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-05",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "You may not think about it, but Earth is under a constant bombardment of solar radiation shooting through space. While our planet's magnetic field does an excellent job of blocking it, sometimes concentrated bursts of radiation known as solar flares are stron…",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Researchers report on a solar storm that caused a GPS glitch serious enough to crash self-driving cars",
+          "evidenceIds": [
+            "E003"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E003"
+      ],
+      "supportingEvidenceIds": [
+        "E003"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-37bf8a603b7e2a364ccb"
+      ],
+      "eventLifecycles": {
+        "evt-37bf8a603b7e2a364ccb": "first_seen"
+      },
+      "eventId": "evt-37bf8a603b7e2a364ccb",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-05T15:36:06+00:00",
+      "lastSeenAt": "2026-09-05T15:36:06+00:00"
+    },
+    {
+      "id": "chg-04d5e84445c9c00f05da",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-5bb047aabdfe41b674",
+      "entityName": "塔塔将在印度海得拉巴建设大型AI数据中心，预计投资7000亿卢比",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：塔塔将在印度海得拉巴建设大型AI数据中心，预计投资7000亿卢比。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-05",
+        "summary": "据交易所文件显示，塔塔咨询服务公司（TCS）旗下的HyperVault已获得264英亩土地，将在海得拉巴开发一个最高1吉瓦（GW）算力的大型人工智能数据中心园区。",
+        "title": "塔塔将在印度海得拉巴建设大型AI数据中心，预计投资7000亿卢比"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-05",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "据交易所文件显示，塔塔咨询服务公司（TCS）旗下的HyperVault已获得264英亩土地，将在海得拉巴开发一个最高1吉瓦（GW）算力的大型人工智能数据中心园区。",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "塔塔将在印度海得拉巴建设大型AI数据中心，预计投资7000亿卢比",
+          "evidenceIds": [
+            "E004"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E004"
+      ],
+      "supportingEvidenceIds": [
+        "E004"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-b6f6c42747c8e654c569"
+      ],
+      "eventLifecycles": {
+        "evt-b6f6c42747c8e654c569": "first_seen"
+      },
+      "eventId": "evt-b6f6c42747c8e654c569",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-05T15:36:06+00:00",
+      "lastSeenAt": "2026-09-05T15:36:06+00:00"
+    },
+    {
+      "id": "chg-6c068addb2ec63891bc5",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-ebbdb106c277caffac",
+      "entityName": "【数智周报】 OpenAI发布GPT-6 Astra模型；国家人工智能基金向北京可灵注入现金资本14亿元；阿里更新旗舰模型Qwen3.8-Max",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：【数智周报】 OpenAI发布GPT-6 Astra模型；国家人工智能基金向北京可灵注入现金资本14亿元；阿里更新旗舰模型Qwen3.8-Max。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-05",
+        "summary": "（8月31日~9月6日）阿里云宣布Qwen3-VL-Rerank模型降价；Anthropic发布Claude Fable 5.1和Mythos 5.1；",
+        "title": "【数智周报】 OpenAI发布GPT-6 Astra模型；国家人工智能基金向北京可灵注入现金资本14亿元；阿里更新旗舰模型Qwen3.8-Max"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-05",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "（8月31日~9月6日）阿里云宣布Qwen3-VL-Rerank模型降价；Anthropic发布Claude Fable 5.1和Mythos 5.1；",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "【数智周报】 OpenAI发布GPT-6 Astra模型；国家人工智能基金向北京可灵注入现金资本14亿元；阿里更新旗舰模型Qwen3.8-Max",
+          "evidenceIds": [
+            "E005"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E005"
+      ],
+      "supportingEvidenceIds": [
+        "E005"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-3a68a43a0a148467d6ba"
+      ],
+      "eventLifecycles": {
+        "evt-3a68a43a0a148467d6ba": "first_seen"
+      },
+      "eventId": "evt-3a68a43a0a148467d6ba",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-05T15:36:06+00:00",
+      "lastSeenAt": "2026-09-05T15:36:06+00:00"
+    },
+    {
+      "id": "chg-d9fd2546c6c8d1b31c7a",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-3b3a0e5c1bfadc47dc",
+      "entityName": "Dyson Went Bonkers During IFA 2026: Here Are all 10 of Its New Products",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Dyson Went Bonkers During IFA 2026: Here Are all 10 of Its New Products。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-05",
+        "summary": "Dyson popped off at a launch event in Berlin, introducing a whopping 10 new products.",
+        "title": "Dyson Went Bonkers During IFA 2026: Here Are all 10 of Its New Products"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-05",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Dyson popped off at a launch event in Berlin, introducing a whopping 10 new products.",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Dyson Went Bonkers During IFA 2026: Here Are all 10 of Its New Products",
+          "evidenceIds": [
+            "E006"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E006"
+      ],
+      "supportingEvidenceIds": [
+        "E006"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-973da48cc834b1a3ce9b"
+      ],
+      "eventLifecycles": {
+        "evt-973da48cc834b1a3ce9b": "first_seen"
+      },
+      "eventId": "evt-973da48cc834b1a3ce9b",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-05T15:36:06+00:00",
+      "lastSeenAt": "2026-09-05T15:36:06+00:00"
+    },
+    {
+      "id": "chg-89a9085a1ca954ca246b",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-c17ddcc828eca8501d",
+      "entityName": "Bringing Local AI Home: UGREEN Introduces Privacy-First HomeAgent for Smarter Living",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Bringing Local AI Home: UGREEN Introduces Privacy-First HomeAgent for Smarter Living。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-05",
+        "summary": "BERLIN, Sept. 5, 2026 /PRNewswire/ -- UGREEN, a leading global consumer technology brand, announced two new product lineups at a European launch event. The unveiling of the UGREENHomeAgent series of agentic local AI hubs and a new MagFlow lineup marks UGREEN'…",
+        "title": "Bringing Local AI Home: UGREEN Introduces Privacy-First HomeAgent for Smarter Living"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-05",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "BERLIN, Sept. 5, 2026 /PRNewswire/ -- UGREEN, a leading global consumer technology brand, announced two new product lineups at a European launch event. The unveiling of the UGREENHomeAgent series of agentic local AI hubs and a new MagFlow lineup marks UGREEN'…",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Bringing Local AI Home: UGREEN Introduces Privacy-First HomeAgent for Smarter Living",
+          "evidenceIds": [
+            "E007"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E007"
+      ],
+      "supportingEvidenceIds": [
+        "E007"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-4b00b59ad9500ed6ff10"
+      ],
+      "eventLifecycles": {
+        "evt-4b00b59ad9500ed6ff10": "first_seen"
+      },
+      "eventId": "evt-4b00b59ad9500ed6ff10",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-05T15:36:06+00:00",
+      "lastSeenAt": "2026-09-05T15:36:06+00:00"
     }
   ],
   "evidence": [
     {
       "id": "E001",
-      "changeId": "chg-92fff40a9f61e80f1340",
-      "entityName": "SambaNova Systems",
-      "claim": "SambaNova Systems 的 financing 发生变化。",
-      "publicationTier": "verified_change",
+      "changeId": "chg-a61175f609f4984bb79e",
+      "entityName": "OpenAI在立法阻力下扩充政策团队，聘用三人负责州级政策事务",
+      "claim": "新增高价值情报事件记录：OpenAI在立法阻力下扩充政策团队，聘用三人负责州级政策事务。",
+      "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "SambaNova",
-      "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
-      "url": "https://sambanova.ai/press/sambanova-completes-first-close-of-1b-financing-at-11b-valuation",
-      "publishedAt": "2026-07-08",
-      "evidenceGrade": "官方披露",
+      "sourceName": "新浪财经",
+      "title": "OpenAI在立法阻力下扩充政策团队，聘用三人负责州级政策事务",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-05/doc-iniqutzq4993319.shtml",
+      "publishedAt": "2026-09-05",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
       "claimFields": [
-        "financing"
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E002",
+      "changeId": "chg-55993fd1d7c5d84164f8",
+      "entityName": "追觅百余款产品亮相IFA：覆盖16个品类，6款产品获国际奖项",
+      "claim": "新增高价值情报事件记录：追觅百余款产品亮相IFA：覆盖16个品类，6款产品获国际奖项。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "雷峰网",
+      "title": "追觅百余款产品亮相IFA：覆盖16个品类，6款产品获国际奖项",
+      "url": "https://www.leiphone.com/category/industrynews/XNJJff9rFB30oDEH.html",
+      "publishedAt": "2026-09-05",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E003",
+      "changeId": "chg-6a9f3c7b736e911d4d8b",
+      "entityName": "Researchers report on a solar storm that caused a GPS glitch serious enough to crash self-driving cars",
+      "claim": "新增高价值情报事件记录：Researchers report on a solar storm that caused a GPS glitch serious enough to crash self-driving cars。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "TechRadar",
+      "title": "Researchers report on a solar storm that caused a GPS glitch serious enough to crash self-driving cars",
+      "url": "https://www.techradar.com/tech/researchers-report-on-a-solar-storm-that-caused-a-gps-glitch-serious-enough-to-crash-self-driving-cars",
+      "publishedAt": "2026-09-05",
+      "evidenceGrade": "C",
+      "platformName": "TechRadar",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E004",
+      "changeId": "chg-04d5e84445c9c00f05da",
+      "entityName": "塔塔将在印度海得拉巴建设大型AI数据中心，预计投资7000亿卢比",
+      "claim": "新增高价值情报事件记录：塔塔将在印度海得拉巴建设大型AI数据中心，预计投资7000亿卢比。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "塔塔将在印度海得拉巴建设大型AI数据中心，预计投资7000亿卢比",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-05/doc-iniqupts5088932.shtml",
+      "publishedAt": "2026-09-05",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E005",
+      "changeId": "chg-6c068addb2ec63891bc5",
+      "entityName": "【数智周报】 OpenAI发布GPT-6 Astra模型；国家人工智能基金向北京可灵注入现金资本14亿元；阿里更新旗舰模型Qwen3.8-Max",
+      "claim": "新增高价值情报事件记录：【数智周报】 OpenAI发布GPT-6 Astra模型；国家人工智能基金向北京可灵注入现金资本14亿元；阿里更新旗舰模型Qwen3.8-Max。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "钛媒体",
+      "title": "【数智周报】 OpenAI发布GPT-6 Astra模型；国家人工智能基金向北京可灵注入现金资本14亿元；阿里更新旗舰模型Qwen3.8-Max",
+      "url": "https://www.tmtpost.com/8129653.html",
+      "publishedAt": "2026-09-05",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E006",
+      "changeId": "chg-d9fd2546c6c8d1b31c7a",
+      "entityName": "Dyson Went Bonkers During IFA 2026: Here Are all 10 of Its New Products",
+      "claim": "新增高价值情报事件记录：Dyson Went Bonkers During IFA 2026: Here Are all 10 of Its New Products。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "CNET",
+      "title": "Dyson Went Bonkers During IFA 2026: Here Are all 10 of Its New Products",
+      "url": "https://www.cnet.com/home/dyson-went-bonkers-during-ifa-2026-here-are-all-10-of-its-new-products",
+      "publishedAt": "2026-09-05",
+      "evidenceGrade": "C",
+      "platformName": "CNET",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
@@ -391,58 +962,22 @@
     },
     {
       "id": "E007",
-      "changeId": "chg-49c14de07f15e86b4440",
-      "entityName": "Form Energy",
-      "claim": "Form Energy 的 financing 发生变化。",
-      "publicationTier": "verified_change",
+      "changeId": "chg-89a9085a1ca954ca246b",
+      "entityName": "Bringing Local AI Home: UGREEN Introduces Privacy-First HomeAgent for Smarter Living",
+      "claim": "新增高价值情报事件记录：Bringing Local AI Home: UGREEN Introduces Privacy-First HomeAgent for Smarter Living。",
+      "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "Form Energy",
-      "title": "Home",
-      "url": "https://formenergy.com/",
-      "publishedAt": "2020-03-04",
-      "evidenceGrade": "官方披露",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "Bringing Local AI Home: UGREEN Introduces Privacy-First HomeAgent for Smarter Living",
+      "url": "https://www.prnewswire.com/news-releases/bringing-local-ai-home-ugreen-introduces-privacy-first-homeagent-for-smarter-living-302870674.html",
+      "publishedAt": "2026-09-05",
+      "evidenceGrade": "B",
+      "platformName": "新闻稿",
+      "sourceRole": "primary",
       "claimFields": [
-        "financing"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E008",
-      "changeId": "chg-49c14de07f15e86b4440",
-      "entityName": "Form Energy",
-      "claim": "Form Energy 的 financing 发生变化。",
-      "publicationTier": "verified_change",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Form Energy",
-      "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
-      "url": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
-      "publishedAt": "2026-08-12",
-      "evidenceGrade": "官方披露",
-      "claimFields": [
-        "financing"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E009",
-      "changeId": "chg-49c14de07f15e86b4440",
-      "entityName": "Form Energy",
-      "claim": "Form Energy 的 financing 发生变化。",
-      "publicationTier": "verified_change",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Form Energy",
-      "title": "Newsroom",
-      "url": "https://formenergy.com/newsroom/",
-      "publishedAt": "2021-03-19",
-      "evidenceGrade": "官方披露",
-      "claimFields": [
-        "financing"
+        "publishedAt",
+        "summary",
+        "title"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
@@ -452,9 +987,388 @@
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-05T05:53:26+00:00",
+    "generatedAt": "2026-09-05T15:36:06+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-b6f6c42747c8e654c569": {
+        "eventId": "evt-b6f6c42747c8e654c569",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-5bb047aabdfe41b674",
+        "entityName": "塔塔将在印度海得拉巴建设大型AI数据中心，预计投资7000亿卢比",
+        "title": "塔塔将在印度海得拉巴建设大型AI数据中心，预计投资7000亿卢比",
+        "titleAliases": [
+          "塔塔将在印度海得拉巴建设大型ai数据中心预计投资7000亿卢比"
+        ],
+        "publishedDate": "2026-09-05",
+        "publishedDates": [
+          "2026-09-05"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产业投资",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "7000"
+        ],
+        "sourceAliases": [
+          "evd-ac91cd6ac5715d3d268c",
+          "record-4b39f280567514775168",
+          "src-0ca4e92f3f056ebd128f"
+        ],
+        "evidenceFingerprints": [
+          "ac91cd6ac5715d3d268c"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "塔塔将在印度海得拉巴建设大型AI数据中心，预计投资7000亿卢比",
+            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-05/doc-iniqupts5088932.shtml",
+            "publishedAt": "2026-09-05",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "caaf7f73591dc570b207",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-05T15:36:06+00:00",
+        "lastSeenAt": "2026-09-05T15:36:06+00:00",
+        "lastPublishedAt": "2026-09-05T15:36:06+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-973da48cc834b1a3ce9b": {
+        "eventId": "evt-973da48cc834b1a3ce9b",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-3b3a0e5c1bfadc47dc",
+        "entityName": "Dyson Went Bonkers During IFA 2026: Here Are all 10 of Its New Products",
+        "title": "Dyson Went Bonkers During IFA 2026: Here Are all 10 of Its New Products",
+        "titleAliases": [
+          "dysonwentbonkersduringifa2026hereareall10ofitsnewproducts"
+        ],
+        "publishedDate": "2026-09-05",
+        "publishedDates": [
+          "2026-09-05"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "10"
+        ],
+        "sourceAliases": [
+          "evd-fbdbb6fc5c2d94b6be94",
+          "record-85fac3b105bde8f44d13",
+          "src-faa1413d6bf7736f045f"
+        ],
+        "evidenceFingerprints": [
+          "fbdbb6fc5c2d94b6be94"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "CNET",
+            "title": "Dyson Went Bonkers During IFA 2026: Here Are all 10 of Its New Products",
+            "url": "https://www.cnet.com/home/dyson-went-bonkers-during-ifa-2026-here-are-all-10-of-its-new-products",
+            "publishedAt": "2026-09-05",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "779b5359ac673952e422",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-05T15:36:06+00:00",
+        "lastSeenAt": "2026-09-05T15:36:06+00:00",
+        "lastPublishedAt": "2026-09-05T15:36:06+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-4b00b59ad9500ed6ff10": {
+        "eventId": "evt-4b00b59ad9500ed6ff10",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-c17ddcc828eca8501d",
+        "entityName": "Bringing Local AI Home: UGREEN Introduces Privacy-First HomeAgent for Smarter Living",
+        "title": "Bringing Local AI Home: UGREEN Introduces Privacy-First HomeAgent for Smarter Living",
+        "titleAliases": [
+          "bringinglocalaihomeugreenintroducesprivacyfirsthomeagentforsmarterliving"
+        ],
+        "publishedDate": "2026-09-05",
+        "publishedDates": [
+          "2026-09-05"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-a7a1134607ebf8131b23",
+          "record-ced1203f8fa44ea379ca",
+          "src-cb0419dbf045f4f60ec8"
+        ],
+        "evidenceFingerprints": [
+          "a7a1134607ebf8131b23"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "Bringing Local AI Home: UGREEN Introduces Privacy-First HomeAgent for Smarter Living",
+            "url": "https://www.prnewswire.com/news-releases/bringing-local-ai-home-ugreen-introduces-privacy-first-homeagent-for-smarter-living-302870674.html",
+            "publishedAt": "2026-09-05",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "6ccbde6a8aaee36a17e8",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-05T15:36:06+00:00",
+        "lastSeenAt": "2026-09-05T15:36:06+00:00",
+        "lastPublishedAt": "2026-09-05T15:36:06+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-3a68a43a0a148467d6ba": {
+        "eventId": "evt-3a68a43a0a148467d6ba",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-ebbdb106c277caffac",
+        "entityName": "【数智周报】 OpenAI发布GPT-6 Astra模型；国家人工智能基金向北京可灵注入现金资本14亿元；阿里更新旗舰模型Qwen3.8-Max",
+        "title": "【数智周报】 OpenAI发布GPT-6 Astra模型；国家人工智能基金向北京可灵注入现金资本14亿元；阿里更新旗舰模型Qwen3.8-Max",
+        "titleAliases": [
+          "数智周报openai发布gpt6astra模型国家人工智能基金向北京可灵注入现金资本14亿元阿里更新旗舰模型qwen38max"
+        ],
+        "publishedDate": "2026-09-05",
+        "publishedDates": [
+          "2026-09-05"
+        ],
+        "entityKeys": [
+          "company:openai"
+        ],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "14",
+          "3.8",
+          "6"
+        ],
+        "sourceAliases": [
+          "evd-e3370158a7215c7b8c0c",
+          "record-185833302809add41a7c",
+          "src-5eb6ad2043ad97fbd065"
+        ],
+        "evidenceFingerprints": [
+          "e3370158a7215c7b8c0c"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "钛媒体",
+            "title": "【数智周报】 OpenAI发布GPT-6 Astra模型；国家人工智能基金向北京可灵注入现金资本14亿元；阿里更新旗舰模型Qwen3.8-Max",
+            "url": "https://www.tmtpost.com/8129653.html",
+            "publishedAt": "2026-09-05",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "4f3286c780298a1fecf5",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-05T15:36:06+00:00",
+        "lastSeenAt": "2026-09-05T15:36:06+00:00",
+        "lastPublishedAt": "2026-09-05T15:36:06+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-37bf8a603b7e2a364ccb": {
+        "eventId": "evt-37bf8a603b7e2a364ccb",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-bc1bf7667f637a4821",
+        "entityName": "Researchers report on a solar storm that caused a GPS glitch serious enough to crash self-driving cars",
+        "title": "Researchers report on a solar storm that caused a GPS glitch serious enough to crash self-driving cars",
+        "titleAliases": [
+          "researchersreportonasolarstormthatcausedagpsglitchseriousenoughtocrashselfdrivingcars"
+        ],
+        "publishedDate": "2026-09-05",
+        "publishedDates": [
+          "2026-09-05"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-6c9fe9770373ec9dab89",
+          "record-b7ee87373d37b30346be",
+          "src-344f54913309daeb157a"
+        ],
+        "evidenceFingerprints": [
+          "6c9fe9770373ec9dab89"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "TechRadar",
+            "title": "Researchers report on a solar storm that caused a GPS glitch serious enough to crash self-driving cars",
+            "url": "https://www.techradar.com/tech/researchers-report-on-a-solar-storm-that-caused-a-gps-glitch-serious-enough-to-crash-self-driving-cars",
+            "publishedAt": "2026-09-05",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "1e1c5da4518aa5f43f22",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-05T15:36:06+00:00",
+        "lastSeenAt": "2026-09-05T15:36:06+00:00",
+        "lastPublishedAt": "2026-09-05T15:36:06+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-3647b506a41ecaa77f8f": {
+        "eventId": "evt-3647b506a41ecaa77f8f",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-247e6c46bb0d60f993",
+        "entityName": "OpenAI在立法阻力下扩充政策团队，聘用三人负责州级政策事务",
+        "title": "OpenAI在立法阻力下扩充政策团队，聘用三人负责州级政策事务",
+        "titleAliases": [
+          "openai在立法阻力下扩充政策团队聘用三人负责州级政策事务"
+        ],
+        "publishedDate": "2026-09-05",
+        "publishedDates": [
+          "2026-09-05"
+        ],
+        "entityKeys": [
+          "company:openai"
+        ],
+        "typeKeys": [
+          "政策",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-6a27c2d41720bfe6bfe9",
+          "record-6dfd9c23458ff7b0596d",
+          "src-aafff86607ee78e91a63"
+        ],
+        "evidenceFingerprints": [
+          "6a27c2d41720bfe6bfe9"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "OpenAI在立法阻力下扩充政策团队，聘用三人负责州级政策事务",
+            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-05/doc-iniqutzq4993319.shtml",
+            "publishedAt": "2026-09-05",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "c4817621983548396ba2",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-05T15:36:06+00:00",
+        "lastSeenAt": "2026-09-05T15:36:06+00:00",
+        "lastPublishedAt": "2026-09-05T15:36:06+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-26c0931af7e343038abe": {
+        "eventId": "evt-26c0931af7e343038abe",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-2a1a8af988260d8ea5",
+        "entityName": "追觅百余款产品亮相IFA：覆盖16个品类，6款产品获国际奖项",
+        "title": "追觅百余款产品亮相IFA：覆盖16个品类，6款产品获国际奖项",
+        "titleAliases": [
+          "追觅百余款产品亮相ifa覆盖16个品类6款产品获国际奖项"
+        ],
+        "publishedDate": "2026-09-05",
+        "publishedDates": [
+          "2026-09-05"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "16",
+          "6"
+        ],
+        "sourceAliases": [
+          "evd-c9e98b72e4acfc229c54",
+          "record-329d28ca9e0979635203",
+          "src-a70d3a044b6c79d820b7"
+        ],
+        "evidenceFingerprints": [
+          "c9e98b72e4acfc229c54"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "追觅百余款产品亮相IFA：覆盖16个品类，6款产品获国际奖项",
+            "url": "https://www.leiphone.com/category/industrynews/XNJJff9rFB30oDEH.html",
+            "publishedAt": "2026-09-05",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "8b9b16c4f219a593793c",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-05T15:36:06+00:00",
+        "lastSeenAt": "2026-09-05T15:36:06+00:00",
+        "lastPublishedAt": "2026-09-05T15:36:06+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-8be8280900881dcbec79": {
         "eventId": "evt-8be8280900881dcbec79",
         "dataset": "ventureCompany",
@@ -25522,13 +26436,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 1,
+    "newEvents": 7,
     "reconfirmations": 0,
-    "updates": 1,
+    "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
     "duplicatesSuppressed": 0,
-    "observedEvents": 2,
+    "observedEvents": 7,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -27625,10 +28539,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-05",
-      "generatedAt": "2026-09-05T05:53:26+00:00",
+      "generatedAt": "2026-09-05T15:36:06+00:00",
       "runStatus": "model",
-      "changeCount": 79,
-      "executiveSummary": "本证据包包含两项创业公司融资相关变化：SambaNova Systems 的既有融资记录发生文本更新（确认10亿美元融资首轮交割、估值110亿美元），以及 Form Energy 新增一条7.5亿美元Series G融资记录（用于铁空气电池扩产与商业化）。二者均为官方披露，但 Form Energy 的融资记录存在日期不一致，需以具体新闻稿日期为准，并持续核验后续信息。",
+      "changeCount": 86,
+      "executiveSummary": "截至2026-09-05的证据包显示，当日出现多条高价值科技动态：OpenAI在州级立法阻力下扩充政策团队；塔塔旗下HyperVault计划在海得拉巴建设最高1GW的大型AI数据中心园区；IFA 2026展会期间，追觅、Dyson、UGREEN等消费电子厂商密集发布新品；研究者报告太阳风暴引发的GPS故障曾严重到足以导致自动驾驶汽车崩溃；周报还提及OpenAI发布GPT-6 Astra、国家人工智能基金向北京可灵注入14亿元现金资本、阿里更新Qwen3.8-Max。总体反映AI监管、基础设施、终端产品和外部环境风险四条主线，但多数证据为单一来源或C级，需保持审慎。",
       "eventIds": [
         "evt-6e1fda684e6c54d318b3",
         "evt-8be8280900881dcbec79",
@@ -27708,7 +28622,14 @@
         "evt-c264f03745dbf09af06e",
         "evt-a7e302a905e2f5d14fd7",
         "evt-044c2b75b21a03dede76",
-        "evt-810db7a54dc6fae74039"
+        "evt-810db7a54dc6fae74039",
+        "evt-3647b506a41ecaa77f8f",
+        "evt-26c0931af7e343038abe",
+        "evt-37bf8a603b7e2a364ccb",
+        "evt-b6f6c42747c8e654c569",
+        "evt-3a68a43a0a148467d6ba",
+        "evt-973da48cc834b1a3ce9b",
+        "evt-4b00b59ad9500ed6ff10"
       ],
       "eventStates": [
         {
@@ -28026,14 +28947,42 @@
         {
           "eventId": "evt-810db7a54dc6fae74039",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-3647b506a41ecaa77f8f",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-26c0931af7e343038abe",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-37bf8a603b7e2a364ccb",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-b6f6c42747c8e654c569",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-3a68a43a0a148467d6ba",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-973da48cc834b1a3ce9b",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-4b00b59ad9500ed6ff10",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 3,
       "candidateTotal": 14,
-      "auxiliaryLeadTotal": 63,
+      "auxiliaryLeadTotal": 70,
       "rejectedTotal": 10,
       "eventSummary": {
-        "newEvents": 78,
+        "newEvents": 85,
         "reconfirmations": 13,
         "updates": 2,
         "corrections": 0,
@@ -28043,20 +28992,15 @@
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 5,
-    "eligibleCandidateCount": 2,
-    "rejectedCandidateCount": 3,
-    "rejectedByDataset": {
-      "ventureCompany": 3
-    },
-    "evidenceCount": 18,
-    "supportingEvidenceCount": 4,
-    "rejectedEvidenceCount": 11,
-    "passedButUnboundEvidenceCount": 3,
-    "rejectionReasons": {
-      "missing_published_at": 9,
-      "ungraded": 2
-    },
+    "candidateCount": 7,
+    "eligibleCandidateCount": 7,
+    "rejectedCandidateCount": 0,
+    "rejectedByDataset": {},
+    "evidenceCount": 7,
+    "supportingEvidenceCount": 7,
+    "rejectedEvidenceCount": 0,
+    "passedButUnboundEvidenceCount": 0,
+    "rejectionReasons": {},
     "sourceClassificationWarnings": []
   },
   "sourceClassificationWarnings": [],
