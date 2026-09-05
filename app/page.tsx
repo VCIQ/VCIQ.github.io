@@ -5,10 +5,13 @@ import {
 import { DailyBriefQuickActions } from "@/components/daily-brief-actions";
 import { HomepageTopicBriefs } from "@/components/homepage-topic-briefs";
 import { HomepageTrackingActions } from "@/components/homepage-tracking-actions";
+import { HomepageV3AttentionLayer } from "@/components/homepage-v3-attention-layer";
 import unifiedStyles from "@/components/homepage-unified-inbox.module.css";
 import { coreResearchObjectStats } from "@/lib/core-research-objects";
+import { selectDailyBriefEvents } from "@/lib/daily-brief";
 import {
   mergeRankedIntelligenceIntoArticlePayload,
+  parseRankedIntelligenceProjection,
   RANKED_INTELLIGENCE_FALLBACK_SECTOR,
 } from "@/lib/ranked-intelligence";
 import { formatTaipeiDate } from "@/lib/snapshot-freshness";
@@ -22,6 +25,7 @@ const snapshot = mergeRankedIntelligenceIntoArticlePayload(
   rawArticles as unknown as ArticlePayload,
   rawRankedIntelligence,
 );
+const rankedProjection = parseRankedIntelligenceProjection(rawRankedIntelligence);
 const trackedSectorAliases = [
   ...new Set([
     ...trackedSectors.flatMap((sector) => sector.aliases),
@@ -71,6 +75,16 @@ const initialArticles: LiveIntelligenceEvent[] = activeArticles
   .slice(0, INITIAL_KEY_EVENTS_LIMIT)
   .map(compactHomepageArticle);
 
+const latestPublishedAt = activeArticles.reduce(
+  (latest, item) => (item.publishedAt > latest ? item.publishedAt : latest),
+  "",
+);
+const todayMustRead = selectDailyBriefEvents(
+  activeArticles.filter((item) => item.qualityStatus !== "低可信"),
+  5,
+  latestPublishedAt,
+).map(compactHomepageArticle);
+
 function marketSourceCount(market: "中国" | "美国") {
   return new Set(
     activeArticles
@@ -107,10 +121,7 @@ const bootstrap: DashboardBootstrap = {
   platformCount: new Set(
     activeArticles.map((item) => item.source.platform).filter(Boolean),
   ).size,
-  latestPublishedAt: activeArticles.reduce(
-    (latest, item) => (item.publishedAt > latest ? item.publishedAt : latest),
-    "",
-  ),
+  latestPublishedAt,
   chinaCount: activeArticles.filter((item) => item.region === "中国").length,
   usCount: activeArticles.filter((item) => item.region === "美国").length,
   marketSourceCounts: {
@@ -128,6 +139,10 @@ export default function Home() {
   return (
     <main className="page-shell">
       <div className={unifiedStyles.root}>
+        <HomepageV3AttentionLayer
+          rankedItems={rankedProjection.items}
+          todayItems={todayMustRead}
+        />
         <DashboardV2Client
           bootstrap={bootstrap}
           initialPayload={initialPayload}
