@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-05T04:47:14+00:00",
+  "generatedAt": "2026-09-05T05:53:26+00:00",
   "asOfDate": "2026-09-05",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
@@ -12,1155 +12,190 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 9063,
-      "completion_tokens": 17233,
-      "total_tokens": 26296,
+      "prompt_tokens": 2773,
+      "completion_tokens": 3353,
+      "total_tokens": 6126,
       "completion_tokens_details": {
-        "reasoning_tokens": 13716
+        "reasoning_tokens": 2322
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 9063
+      "prompt_cache_miss_tokens": 2773
     }
   },
   "changeSummary": {
-    "totalDetected": 46,
-    "total": 11,
+    "totalDetected": 6,
+    "total": 2,
     "byDataset": {
-      "intelligenceEvent": 10,
-      "marketCompany": 1
+      "ventureCompany": 2
     },
     "byChangeType": {
-      "external_event": 22,
-      "data_maintenance": 7,
-      "source_refresh": 17
+      "external_event": 5,
+      "entity_reconciliation": 1
     },
-    "externalCandidates": 22,
-    "qualityRejected": 1,
-    "maintenanceExcluded": 24,
+    "externalCandidates": 5,
+    "qualityRejected": 3,
+    "maintenanceExcluded": 1,
     "aggregatedEvents": 0,
-    "highestImportance": 84,
-    "verifiedChangeTotal": 0,
-    "candidateTotal": 1,
-    "auxiliaryLeadTotal": 10,
-    "rejectedTotal": 1,
-    "newEvents": 11,
+    "highestImportance": 88,
+    "verifiedChangeTotal": 2,
+    "candidateTotal": 0,
+    "auxiliaryLeadTotal": 0,
+    "rejectedTotal": 3,
+    "newEvents": 1,
     "reconfirmations": 0,
-    "updates": 0,
+    "updates": 1,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 10
+    "duplicatesSuppressed": 0
   },
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "证据包显示，截至2026年9月5日，A股市场在9月4日成交额重返2万亿元（20510亿元），但指数午后回落，资金呈现从高位科技硬件切向AI应用及低位消费/价值的分化格局；同时公募基金密集上报消费电子、通信设备、算力基础设施等科技主题ETF，显示产品端对科技产业链关注仍在。海外产品层面，GPT-6 Astra限量上线、VS Code 1.136引入Agent Merge、Nvidia DLSS 5正式发布（暂限RTX 50系列）、Databricks发布AI代理相关技术与营销用例，均指向AI软件/工具链和渲染技术持续推进。寒武纪融资余额高企，杠杆资金参与度高。整体看，AI产业链内部出现结构性分化，产品端布局与二级市场短线情绪并存，需区分事实与预期。 质量门诊断：缺少发布时间 17、缺少标题 17、证据未分级 17、缺少有效 URL 3、证据合格但未绑定变化字段 20。",
+    "executiveSummary": "本证据包包含两项创业公司融资相关变化：SambaNova Systems 的既有融资记录发生文本更新（确认10亿美元融资首轮交割、估值110亿美元），以及 Form Energy 新增一条7.5亿美元Series G融资记录（用于铁空气电池扩产与商业化）。二者均为官方披露，但 Form Energy 的融资记录存在日期不一致，需以具体新闻稿日期为准，并持续核验后续信息。 质量门诊断：缺少发布时间 9、证据未分级 2、证据合格但未绑定变化字段 3。",
     "keyDevelopments": [
       {
-        "title": "A股科技硬件与AI应用分化，资金切换迹象明显",
-        "assessment": "事实：据E001与E009，9月4日A股冲高回落，沪深北成交20510亿元、较前日放量2708亿元；半导体、电子化学品、通信设备（CPO/光模块）等硬件方向领跌，AI应用（多模态AI、AI语料、AIGC）、传媒、白酒食品饮料、银行等方向活跃。推断：资金正从高位硬件科技切向AI应用及低位价值/消费板块。待验证：该切换的持续性。风险提示：E001显示涨停41家、跌停9家、连板高度降至5板、封板率约51%，题材情绪退潮。",
+        "title": "SambaNova完成10亿美元融资首轮交割，估值110亿美元",
+        "assessment": "依据SambaNova官方新闻稿，公司完成10亿美元融资的首轮交割，估值达110亿美元，资金将用于SambaCloud、SambaStack、SambaManaged等产品线及主权AI、Neoclouds等方向。需注意此为首轮交割（first close），并非整轮融资完成；投资方名单未披露。",
         "importance": 5,
         "confidence": "high",
         "entities": [
-          "A股",
-          "AI应用",
-          "半导体",
-          "通信设备"
+          "SambaNova Systems"
         ],
         "evidenceIds": [
-          "E001",
-          "E009"
+          "E001"
         ]
       },
       {
-        "title": "科技主题ETF密集上报，产品端布局科技产业链",
-        "assessment": "事实：E006显示，8月以来截至9月4日，共有6只消费电子主题基金集中上报（5只国证消费电子主题ETF、1只联接基金），嘉实、汇添富、广发、工银瑞信、华安等参与；另有8家基金公司上报通信设备主题ETF，10家上报创业板算力基础设施相关主题产品。推断：公募基金有意在科技产业链增加工具供给。待验证：审批进度、发行节奏及实际募集规模；上报不等于获批或资金流入。",
-        "importance": 4,
+        "title": "Form Energy宣布7.5亿美元Series G融资，用于铁空气电池扩产",
+        "assessment": "Form Energy官方新闻稿宣布完成7.5亿美元Series G融资，以扩大铁空气电池制造并加速商业部署。证据中同一条融资记录出现2020-03-04和2026-08-12两个日期，应以具体新闻发布日2026-08-12为准；融资总额及投资方信息仍待完整披露。",
+        "importance": 5,
         "confidence": "medium",
         "entities": [
-          "嘉实基金",
-          "汇添富基金",
-          "广发基金",
-          "工银瑞信基金",
-          "华安基金",
-          "易方达基金",
-          "天弘基金",
-          "鹏华基金"
+          "Form Energy"
         ],
         "evidenceIds": [
-          "E006"
-        ]
-      },
-      {
-        "title": "GPT-6 Astra限量上线，AGI叙事推进但尚未全面开放",
-        "assessment": "事实：E004标题和摘要显示GPT-6 Astra已上线，但“限量开放，普通用户还要再‘仰望’一会儿”。推断：全面开放仍需等待，其实际能力对普通用户的影响尚未验证。待验证：开放范围、能力评测和社会影响。",
-        "importance": 4,
-        "confidence": "medium",
-        "entities": [
-          "GPT-6 Astra"
-        ],
-        "evidenceIds": [
-          "E004"
-        ]
-      },
-      {
-        "title": "VS Code 1.136引入Agent Merge，AI代理进入代码合并流程",
-        "assessment": "事实：E003显示微软发布VS Code 1.136，预览Agent Merge功能，并引入两个实验性功能用于agentic coding；该版本于2026年9月2日发布。推断：AI代理在开发者工作流中的角色正从代码生成扩展到代码评审/合并。待验证：Agent Merge正式版发布和开发者采用情况。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "微软",
-          "Visual Studio Code",
-          "Agent Merge"
-        ],
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "title": "Nvidia DLSS 5正式发布，但当前仅限RTX 50系列",
-        "assessment": "事实：E005显示DLSS 5已在NBA 2K27中正式启动，目前仅限RTX 50系列GPU；Nvidia承诺将相关渲染技术带给RTX 40系列。推断：新一代渲染技术进入商业化阶段，但对存量RTX 40系列用户的价值兑现需要时间。待验证：RTX 40系列支持时间表和更多游戏适配。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "Nvidia",
-          "DLSS 5",
-          "RTX 50系列",
-          "RTX 40系列"
-        ],
-        "evidenceIds": [
-          "E005"
-        ]
-      },
-      {
-        "title": "Databricks发布AI代理相关技术博客与用例",
-        "assessment": "事实：E007（官方博客）称Genie One可帮助营销人员基于受治理数据行动；E010（官方博客）称构建了自动化生成和验证专用GPU内核的agentic系统以提升推理效率。推断：AI代理在企业数据分析与模型推理优化场景的落地正在加速。待验证：客户采用和实际效果；官方博客可能具有产品宣传色彩。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "Databricks",
-          "Genie One",
-          "GPU内核"
-        ],
-        "evidenceIds": [
+          "E008",
           "E007",
-          "E010"
-        ]
-      },
-      {
-        "title": "寒武纪融资余额高企，杠杆资金参与度高",
-        "assessment": "事实：E023显示寒武纪9月4日获融资买入5.41亿元，融资余额173.70亿元，占流通市值比例2.58%，超过近一年60%分位水平。推断：杠杆资金对寒武纪关注度高；高融资余额也可能放大股价波动。待验证：融资余额后续变化方向及其与股价的关系。该数据不构成基本面判断。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "中科寒武纪科技股份有限公司"
-        ],
-        "evidenceIds": [
-          "E023"
+          "E009"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "A股AI产业链",
-        "direction": "mixed",
-        "statement": "证据显示二级市场行情由AI硬件（半导体、通信设备/CPO、电子化学品）切向AI应用（多模态AI、AI语料、AIGC），另有部分资金流向低位消费/价值；但产品端仍在上报消费电子、通信设备、算力基础设施等科技主题ETF。推断：AI产业链中长期关注未消退，但短线资金结构正在调整，硬件与软件可能继续分化。待验证：科技ETF获批后能否带来增量资金。",
-        "evidenceIds": [
-          "E001",
-          "E009",
-          "E006"
-        ]
-      },
-      {
-        "entity": "AI应用/传媒",
+        "entity": "SambaNova Systems",
         "direction": "positive",
-        "statement": "据E009，AI应用赛道反复活跃，多模态AI、AI语料、AIGC概念走强，龙版传媒5连板、欢瑞世纪5天4板；E001也显示传媒（出版/AI应用）领涨。事实层面活跃度较高；但E001提示连板高度降至5板、封板率约51%，情绪正在退潮，因此方向为正面但需注意短线波动。",
+        "statement": "10亿美元融资首轮交割及110亿美元估值显示投资者对其AI推理/主权AI方向的认可，但需观察后续交割情况和投资方阵容。",
         "evidenceIds": [
-          "E009",
           "E001"
         ]
       },
       {
-        "entity": "寒武纪",
-        "direction": "neutral",
-        "statement": "E023显示融资买入5.41亿元、融资余额173.70亿元、占流通市值2.58%、超过近一年60%分位。这是杠杆资金参与的客观事实；高融资余额既可能反映市场关注度高，也可能放大波动。不做方向性预测，列为中性。",
-        "evidenceIds": [
-          "E023"
-        ]
-      },
-      {
-        "entity": "AI编程工具",
+        "entity": "Form Energy",
         "direction": "positive",
-        "statement": "E003显示VS Code 1.136预览Agent Merge并引入两个agentic coding实验功能。推断：AI代理在开发者工作流中的角色从生成代码扩展到代码合并与评审。待验证：正式发布后的实际采用率。",
+        "statement": "7.5亿美元融资将支持铁空气电池制造扩张与商业化，但融资记录日期不一致提示数据源需进一步核验。",
         "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "entity": "Nvidia/GPU渲染",
-        "direction": "neutral",
-        "statement": "E005显示DLSS 5正式发布，但当前仅限RTX 50系列，RTX 40系列支持“很快”到来但未给时间表。方向：商业化启动是正面，但对存量RTX 40系列用户的价值兑现仍待验证。",
-        "evidenceIds": [
-          "E005"
-        ]
-      },
-      {
-        "entity": "GPT-6 Astra",
-        "direction": "neutral",
-        "statement": "E004显示GPT-6 Astra已上线但“限量开放”，普通用户暂不可用。事实：发布与限量；推断：全面开放和实际能力影响仍有待观察，不宜过度解读为AGI时代已到。",
-        "evidenceIds": [
-          "E004"
-        ]
-      },
-      {
-        "entity": "AI基础设施/数据智能",
-        "direction": "positive",
-        "statement": "E007和E010来自Databricks官方，展示Genie One用于营销场景和agentic系统生成GPU内核。推断：AI代理在企业数据侧和推理优化侧的落地加快；但官方宣传需以客户结果验证。",
-        "evidenceIds": [
+          "E008",
           "E007",
-          "E010"
+          "E009"
         ]
       }
     ],
     "watchlist": [
       {
-        "item": "A股AI应用板块的持续性",
-        "reason": "AI应用概念活跃，但连板高度降至5板、封板率约51%，题材接力情绪退潮；需要观察情绪降温后AI应用能否继续获得资金关注。",
-        "nextEvidence": "后续交易日的板块成交、涨停/连板家数、封板率及AI应用龙头股表现。",
+        "item": "SambaNova融资轮次后续交割及投资方披露",
+        "reason": "当前仅宣布首轮交割，未披露投资方，完整融资规模及条件可能随后续交割变化。",
+        "nextEvidence": "SambaNova后续新闻稿或融资数据库更新",
         "evidenceIds": [
-          "E001",
+          "E001"
+        ]
+      },
+      {
+        "item": "Form Energy融资日期核验",
+        "reason": "证据中同一条融资出现2020-03-04和2026-08-12两个日期，需确认实际公告日。",
+        "nextEvidence": "Form Energy官方新闻室或权威融资数据库记录",
+        "evidenceIds": [
+          "E007",
+          "E008",
           "E009"
         ]
       },
       {
-        "item": "科技主题ETF审批与发行",
-        "reason": "多家基金公司已上报消费电子、通信设备、创业板算力基础设施等主题ETF，但上报不等于获批；若获批发行可能带来增量资金，也可能因市场情绪低迷而延后或募资遇冷。",
-        "nextEvidence": "证监会基金审批进度、基金发行公告及募集规模。",
+        "item": "Form Energy融资总额和投资方名单",
+        "reason": "新闻稿摘要提到'round brings total […]'但未给出完整总额和投资方名单。",
+        "nextEvidence": "Form Energy投资者页面或新闻稿全文",
         "evidenceIds": [
-          "E006"
-        ]
-      },
-      {
-        "item": "GPT-6 Astra开放范围与能力评测",
-        "reason": "当前限量开放，普通用户不可用；需要观察是否扩大范围以及第三方评测。",
-        "nextEvidence": "OpenAI官方公告、模型评测报告。",
-        "evidenceIds": [
-          "E004"
-        ]
-      },
-      {
-        "item": "VS Code Agent Merge正式版",
-        "reason": "Agent Merge仍为预览功能，且有两个实验性agentic编码功能；需要观察正式版本和开发者反馈。",
-        "nextEvidence": "VS Code更新日志、开发者社区讨论。",
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "item": "DLSS 5对RTX 40系列的支持",
-        "reason": "Nvidia承诺即将带来RTX 40系列支持，但当前仅限RTX 50系列；40系列用户和游戏生态的适配进度是重要变量。",
-        "nextEvidence": "Nvidia驱动更新、RTX 40系列相关公告、更多游戏适配。",
-        "evidenceIds": [
-          "E005"
-        ]
-      },
-      {
-        "item": "寒武纪融资余额变化",
-        "reason": "融资余额占流通市值比例超过近一年60%分位，杠杆资金集中；需要观察后续融资买入/偿还变化和股价波动，警惕杠杆负反馈。",
-        "nextEvidence": "每日融资融券数据、股价与成交情况。",
-        "evidenceIds": [
-          "E023"
-        ]
-      },
-      {
-        "item": "客户服务AI代理的内容基础设施准备",
-        "reason": "E002提出在扩展AI代理前，CX领导者需要解决来源权威性、漂移和升级问题；这是企业准备度的待验证问题，可能影响AI代理在客户服务中的实际效果。",
-        "nextEvidence": "相关行业调查、企业案例或标准规范。",
-        "evidenceIds": [
-          "E002"
-        ]
-      },
-      {
-        "item": "聚变行业公开沟通与工程进展",
-        "reason": "E008是Helion Energy的辐射科普内容，未涉及新的技术或工程里程碑；可作为行业公共沟通信号，但不足以支撑投资判断。",
-        "nextEvidence": "聚变公司的技术公告、项目里程碑或监管进展。",
-        "evidenceIds": [
-          "E008"
+          "E008",
+          "E009"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "A股短线题材情绪退潮风险",
-        "reason": "E001显示全市场41只涨停、9只跌停，连板高度降至5板、封板率约51%，题材接力情绪明显退潮；E009显示指数午后走弱。短线交易者可能面临更剧烈的情绪波动和回撤。",
+        "risk": "SambaNova融资完成度风险",
+        "reason": "10亿美元融资仅完成首轮交割，后续交割可能受市场环境或投资者条件影响。",
         "evidenceIds": [
-          "E001",
-          "E009"
-        ]
-      },
-      {
-        "risk": "AI硬件板块继续回调风险",
-        "reason": "E001和E009均显示半导体、通信设备（CPO/光模块）、电子化学品等硬件方向领跌，资金有切出迹象；若趋势延续，相关板块可能继续承压。",
-        "evidenceIds": [
-          "E001",
-          "E009"
-        ]
-      },
-      {
-        "risk": "科技主题ETF供给与二级市场行情背离",
-        "reason": "E006显示产品端密集上报科技硬件相关ETF，但E001显示二级市场科技硬件正遭抛售；若产品集中获批发行而市场情绪未修复，可能形成供给压力或导致新产品发行困难。",
-        "evidenceIds": [
-          "E006",
           "E001"
         ]
       },
       {
-        "risk": "寒武纪杠杆资金集中风险",
-        "reason": "E023显示融资余额占流通市值比例2.58%、超过近一年60%分位，杠杆资金参与度高；若股价大幅下行，融资盘可能强平并放大波动。",
+        "risk": "Form Energy融资数据可靠性风险",
+        "reason": "证据中同笔融资出现日期不一致，可能导致事件时间线判断错误。",
         "evidenceIds": [
-          "E023"
+          "E007",
+          "E008",
+          "E009"
         ]
       },
       {
-        "risk": "AI应用炒作与基本面不匹配风险",
-        "reason": "E009显示龙版传媒5连板、欢瑞世纪5天4板等，但证据包未提供这些公司的业绩或订单支撑；短线炒作可能脱离基本面，回调风险较高。",
+        "risk": "商业化与竞争风险",
+        "reason": "两家公司均处于资本密集的AI推理/储能领域，融资成功不代表商业化必然成功，后续需跟踪技术落地和订单进展。",
         "evidenceIds": [
-          "E009",
-          "E001"
-        ]
-      },
-      {
-        "risk": "GPT-6预期过高的风险",
-        "reason": "E004显示GPT-6 Astra限量开放，普通用户仍不可用；若市场基于“AGI时代到来”的预期过度定价，而实际能力或开放节奏不及预期，可能引发AI相关资产波动。",
-        "evidenceIds": [
-          "E004"
-        ]
-      },
-      {
-        "risk": "DLSS 5硬件限定引发的用户与生态风险",
-        "reason": "E005显示DLSS 5目前仅限RTX 50系列，RTX 40系列支持尚无时间表；若支持延迟，可能导致部分用户不满，并影响游戏开发者对技术的采用节奏。",
-        "evidenceIds": [
-          "E005"
+          "E001",
+          "E008"
         ]
       }
     ],
-    "methodologyNote": "本报告仅基于证据包内提供的change记录和evidence条目，未补充外部事实。证据等级包括B级（官方博客/官网）、C级（专业媒体/外部线索）以及一条媒体报道（E023）。对于C级和单来源证据，判断以“证据显示”或“待验证”的措辞表达；涉及未来影响的部分均标记为推断或待验证，不构成确定性重大事实。所有判断均引用至少一个证据编号。本报告不提供买入、卖出、目标价或收益承诺，不构成投资建议。输出为JSON，无Markdown格式。"
+    "methodologyNote": "本分析仅基于证据包中的变化记录及官方披露，未补充外部事实。对Form Energy的融资，因同一记录出现不同日期，置信度设为medium，并以具体新闻日期为准。所有判断仅为研究分析，不构成任何买入、卖出、目标价或收益承诺。"
   },
   "changes": [
     {
-      "id": "chg-4aac968a404cb6a6a1be",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-ac419ddb3e0d5f01e6",
-      "entityName": "价值判断：涨停板的投资机会和风险提示（9月4日）｜上市公司观察",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：价值判断：涨停板的投资机会和风险提示（9月4日）｜上市公司观察。",
-      "importance": 84,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-05",
-        "summary": "盘面上，早盘一度普涨、午后科技跳水，资金从高位科技切向低位消费与价值。农林牧渔（猪肉、养殖、种业）、传媒（出版/AI应用）、白酒食品饮料、银行、数字货币/稳定币等板块领涨，半导体、电子化学品、通信设备（CPO/光模块）、小金属、煤炭、玻璃玻纤等板块领跌。全市场41只涨停、9只跌停，连板高度降至5板、封板率约51%，题材接力情绪明显退潮。",
-        "title": "价值判断：涨停板的投资机会和风险提示（9月4日）｜上市公司观察"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-05",
-          "evidenceIds": [
-            "E001"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "盘面上，早盘一度普涨、午后科技跳水，资金从高位科技切向低位消费与价值。农林牧渔（猪肉、养殖、种业）、传媒（出版/AI应用）、白酒食品饮料、银行、数字货币/稳定币等板块领涨，半导体、电子化学品、通信设备（CPO/光模块）、小金属、煤炭、玻璃玻纤等板块领跌。全市场41只涨停、9只跌停，连板高度降至5板、封板率约51%，题材接力情绪明显退潮。",
-          "evidenceIds": [
-            "E001"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "价值判断：涨停板的投资机会和风险提示（9月4日）｜上市公司观察",
-          "evidenceIds": [
-            "E001"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E001"
-      ],
-      "supportingEvidenceIds": [
-        "E001"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-678ad3c3c9727f9e4838"
-      ],
-      "eventLifecycles": {
-        "evt-678ad3c3c9727f9e4838": "first_seen"
-      },
-      "eventId": "evt-678ad3c3c9727f9e4838",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-05T04:47:14+00:00",
-      "lastSeenAt": "2026-09-05T04:47:14+00:00"
-    },
-    {
-      "id": "chg-5b205b9cbc899f40b695",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-afdae0916ada2aee58",
-      "entityName": "Is Your Content Infrastructure Ready for Customer Service Agents?",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Is Your Content Infrastructure Ready for Customer Service Agents?。",
-      "importance": 84,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-04",
-        "summary": "Before scaling AI agents, CX leaders need answers on source authority, drift and escalation. Continue reading...",
-        "title": "Is Your Content Infrastructure Ready for Customer Service Agents?"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-04",
-          "evidenceIds": [
-            "E002"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Before scaling AI agents, CX leaders need answers on source authority, drift and escalation. Continue reading...",
-          "evidenceIds": [
-            "E002"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Is Your Content Infrastructure Ready for Customer Service Agents?",
-          "evidenceIds": [
-            "E002"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E002"
-      ],
-      "supportingEvidenceIds": [
-        "E002"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-02438ef51df289ba019c"
-      ],
-      "eventLifecycles": {
-        "evt-02438ef51df289ba019c": "first_seen"
-      },
-      "eventId": "evt-02438ef51df289ba019c",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-05T04:47:14+00:00",
-      "lastSeenAt": "2026-09-05T04:47:14+00:00"
-    },
-    {
-      "id": "chg-b08f0fce97115891bfa1",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-1eafb2005c873d3dfd",
-      "entityName": "Visual Studio Code 1.136 introduces agent merges for pull requests",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Visual Studio Code 1.136 introduces agent merges for pull requests。",
-      "importance": 82,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-04",
-        "summary": "Microsoft has released Visual Studio Code 1.136, an update to the popular programming editor that previews an Agent Merge feature and introduces two experimental features for agentic coding. VS Code 1.136 was released September 2 and can be downloaded from co…",
-        "title": "Visual Studio Code 1.136 introduces agent merges for pull requests"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-04",
-          "evidenceIds": [
-            "E003"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Microsoft has released Visual Studio Code 1.136, an update to the popular programming editor that previews an Agent Merge feature and introduces two experimental features for agentic coding. VS Code 1.136 was released September 2 and can be downloaded from co…",
-          "evidenceIds": [
-            "E003"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Visual Studio Code 1.136 introduces agent merges for pull requests",
-          "evidenceIds": [
-            "E003"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E003"
-      ],
-      "supportingEvidenceIds": [
-        "E003"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-21f3becf1404d2d9c077"
-      ],
-      "eventLifecycles": {
-        "evt-21f3becf1404d2d9c077": "first_seen"
-      },
-      "eventId": "evt-21f3becf1404d2d9c077",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-05T04:47:14+00:00",
-      "lastSeenAt": "2026-09-05T04:47:14+00:00"
-    },
-    {
-      "id": "chg-fa530230fcd4ca091423",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-9ca9db817e8df0cc09",
-      "entityName": "GPT-6 Astra上线，AGI时代真到来了吗？",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：GPT-6 Astra上线，AGI时代真到来了吗？。",
-      "importance": 82,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-05",
-        "summary": "限量开放，普通用户还要再“仰望”一会儿。",
-        "title": "GPT-6 Astra上线，AGI时代真到来了吗？"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-05",
-          "evidenceIds": [
-            "E004"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "限量开放，普通用户还要再“仰望”一会儿。",
-          "evidenceIds": [
-            "E004"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "GPT-6 Astra上线，AGI时代真到来了吗？",
-          "evidenceIds": [
-            "E004"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E004"
-      ],
-      "supportingEvidenceIds": [
-        "E004"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-e0d247f0b94366dac996"
-      ],
-      "eventLifecycles": {
-        "evt-e0d247f0b94366dac996": "first_seen"
-      },
-      "eventId": "evt-e0d247f0b94366dac996",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-05T04:47:14+00:00",
-      "lastSeenAt": "2026-09-05T04:47:14+00:00"
-    },
-    {
-      "id": "chg-d1a2f15e52d0e2433f7c",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-13f06685e21c11ea75",
-      "entityName": "DLSS 5 officially launches inside NBA 2K27, limited to RTX 50-series GPUs for now — Nvidia promises to bring neutral rendering tech to RTX 40-series soon",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：DLSS 5 officially launches inside NBA 2K27, limited to RTX 50-series GPUs for now — Nvidia promises to bring neutral rendering tech to RTX 40-series soon。",
-      "importance": 82,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-04",
-        "summary": "After a heavily scrutinized announcement earlier this year and a very revealing past few days , DLSS 5 has finally, officially launched inside NBA 2K27 . A sports game is a bit of an unusual choice to showcase what is seemingly the next big leap in real-time…",
-        "title": "DLSS 5 officially launches inside NBA 2K27, limited to RTX 50-series GPUs for now — Nvidia promises to bring neutral rendering tech to RTX 40-series soon"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-04",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "After a heavily scrutinized announcement earlier this year and a very revealing past few days , DLSS 5 has finally, officially launched inside NBA 2K27 . A sports game is a bit of an unusual choice to showcase what is seemingly the next big leap in real-time…",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "DLSS 5 officially launches inside NBA 2K27, limited to RTX 50-series GPUs for now — Nvidia promises to bring neutral rendering tech to RTX 40-series soon",
-          "evidenceIds": [
-            "E005"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E005"
-      ],
-      "supportingEvidenceIds": [
-        "E005"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-ca762ca188e81ca3fbd9"
-      ],
-      "eventLifecycles": {
-        "evt-ca762ca188e81ca3fbd9": "first_seen"
-      },
-      "eventId": "evt-ca762ca188e81ca3fbd9",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-05T04:47:14+00:00",
-      "lastSeenAt": "2026-09-05T04:47:14+00:00"
-    },
-    {
-      "id": "chg-2f0d967ea5a316bbd016",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-027a38f582f2436d72",
-      "entityName": "资金涌入ETF 科技主题基金密集扩容",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：资金涌入ETF 科技主题基金密集扩容。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-05",
-        "summary": "围绕科技产业链，公募基金近期正在全方位布局，头部公司频频出手。 Choice数据显示，8月以来，截至9月4日，共有6只 消费电子 主题基金集中上报，包括5只国证 消费电子 主题ETF、1只国证 消费电子 主题ETF联接基金。布局的基金管理人，包括嘉实基金、汇添富基金、广发基金、工银瑞信基金和华安基金等头部基金公司。 除了消费 电子 行业外，8月以来，易方达基金、天弘基金、鹏华基金、南方基金等8家基金公司还上报了 通信设备 主题ETF。易方达基金、鹏华基金、华夏基金、富国基金等10家基金公司上报了创业板算力基础设施…",
-        "title": "资金涌入ETF 科技主题基金密集扩容"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-05",
-          "evidenceIds": [
-            "E006"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "围绕科技产业链，公募基金近期正在全方位布局，头部公司频频出手。 Choice数据显示，8月以来，截至9月4日，共有6只 消费电子 主题基金集中上报，包括5只国证 消费电子 主题ETF、1只国证 消费电子 主题ETF联接基金。布局的基金管理人，包括嘉实基金、汇添富基金、广发基金、工银瑞信基金和华安基金等头部基金公司。 除了消费 电子 行业外，8月以来，易方达基金、天弘基金、鹏华基金、南方基金等8家基金公司还上报了 通信设备 主题ETF。易方达基金、鹏华基金、华夏基金、富国基金等10家基金公司上报了创业板算力基础设施…",
-          "evidenceIds": [
-            "E006"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "资金涌入ETF 科技主题基金密集扩容",
-          "evidenceIds": [
-            "E006"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E006"
-      ],
-      "supportingEvidenceIds": [
-        "E006"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-7a8a142e1c7b07744969"
-      ],
-      "eventLifecycles": {
-        "evt-7a8a142e1c7b07744969": "first_seen"
-      },
-      "eventId": "evt-7a8a142e1c7b07744969",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-05T04:47:14+00:00",
-      "lastSeenAt": "2026-09-05T04:47:14+00:00"
-    },
-    {
-      "id": "chg-8537b45bae1c259eea56",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-f82b7bb6f721938b94",
-      "entityName": "Five ways marketers can use Genie One",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Five ways marketers can use Genie One。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-04",
-        "summary": "Discover five high-impact use cases for Databricks Genie One, the data-smart AI coworker that helps marketers skip the analyst queue and take action on governed data.",
-        "title": "Five ways marketers can use Genie One"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-04",
-          "evidenceIds": [
-            "E007"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Discover five high-impact use cases for Databricks Genie One, the data-smart AI coworker that helps marketers skip the analyst queue and take action on governed data.",
-          "evidenceIds": [
-            "E007"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Five ways marketers can use Genie One",
-          "evidenceIds": [
-            "E007"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E007"
-      ],
-      "supportingEvidenceIds": [
-        "E007"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-4051530253e0077ceade"
-      ],
-      "eventLifecycles": {
-        "evt-4051530253e0077ceade": "first_seen"
-      },
-      "eventId": "evt-4051530253e0077ceade",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-05T04:47:14+00:00",
-      "lastSeenAt": "2026-09-05T04:47:14+00:00"
-    },
-    {
-      "id": "chg-725db2db0240d5fe2cac",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-40fd817bac61fa9ea8",
-      "entityName": "Does fusion produce radiation?",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Does fusion produce radiation?。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-04",
-        "summary": "Radiation is all around us, from sunlight to medical imaging. Explore how radiation works, the types produced in fusion systems, and the science and regulations that keep fusion facilities safe.",
-        "title": "Does fusion produce radiation?"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-04",
-          "evidenceIds": [
-            "E008"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Radiation is all around us, from sunlight to medical imaging. Explore how radiation works, the types produced in fusion systems, and the science and regulations that keep fusion facilities safe.",
-          "evidenceIds": [
-            "E008"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Does fusion produce radiation?",
-          "evidenceIds": [
-            "E008"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E008"
-      ],
-      "supportingEvidenceIds": [
-        "E008"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-4840faf93067793cfc8b"
-      ],
-      "eventLifecycles": {
-        "evt-4840faf93067793cfc8b": "first_seen"
-      },
-      "eventId": "evt-4840faf93067793cfc8b",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-05T04:47:14+00:00",
-      "lastSeenAt": "2026-09-05T04:47:14+00:00"
-    },
-    {
-      "id": "chg-32a87694ee3d373b4601",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-7b2f43cd5ea0177fa8",
-      "entityName": "A股成交额重上2万亿元 AI应用赛道反复活跃",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：A股成交额重上2万亿元 AI应用赛道反复活跃。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-05",
-        "summary": "9月4日，A股市场冲高回落，主要指数午后走弱。截至收盘，上证指数报3930.12点，跌0.30%；深证成指报13516.97点，跌0.79%；创业板指报3286.55点，跌0.78%；科创综指报1865.37点，跌2.16%。沪深北三市全天成交20510亿元，较上个交易日放量2708亿元。盘面上，AI产业链两极分化，行情由硬件切向软件。 昨日， AI应用 赛道再度走强， 多模态AI 、 AI语料 、AIGC等概念均走势活跃。截至收盘， 龙版传媒 收获5连板， 欢瑞世纪 5天4板， 实丰文化 、 新炬网络 、 中国…",
-        "title": "A股成交额重上2万亿元 AI应用赛道反复活跃"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-05",
-          "evidenceIds": [
-            "E009"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "9月4日，A股市场冲高回落，主要指数午后走弱。截至收盘，上证指数报3930.12点，跌0.30%；深证成指报13516.97点，跌0.79%；创业板指报3286.55点，跌0.78%；科创综指报1865.37点，跌2.16%。沪深北三市全天成交20510亿元，较上个交易日放量2708亿元。盘面上，AI产业链两极分化，行情由硬件切向软件。 昨日， AI应用 赛道再度走强， 多模态AI 、 AI语料 、AIGC等概念均走势活跃。截至收盘， 龙版传媒 收获5连板， 欢瑞世纪 5天4板， 实丰文化 、 新炬网络 、 中国…",
-          "evidenceIds": [
-            "E009"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "A股成交额重上2万亿元 AI应用赛道反复活跃",
-          "evidenceIds": [
-            "E009"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E009"
-      ],
-      "supportingEvidenceIds": [
-        "E009"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-c264f03745dbf09af06e"
-      ],
-      "eventLifecycles": {
-        "evt-c264f03745dbf09af06e": "first_seen"
-      },
-      "eventId": "evt-c264f03745dbf09af06e",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-05T04:47:14+00:00",
-      "lastSeenAt": "2026-09-05T04:47:14+00:00"
-    },
-    {
-      "id": "chg-55c8a4168e2f785af92c",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-f519fc42b68a3e4bff",
-      "entityName": "Achieving Extreme Efficiency through Specialized GPU Kernel Generation",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Achieving Extreme Efficiency through Specialized GPU Kernel Generation。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-04",
-        "summary": "Learn how we built an agentic system that automates the generation and rigorous validation of specialized GPU kernels to achieve extreme inference efficiency.",
-        "title": "Achieving Extreme Efficiency through Specialized GPU Kernel Generation"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-04",
-          "evidenceIds": [
-            "E010"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Learn how we built an agentic system that automates the generation and rigorous validation of specialized GPU kernels to achieve extreme inference efficiency.",
-          "evidenceIds": [
-            "E010"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Achieving Extreme Efficiency through Specialized GPU Kernel Generation",
-          "evidenceIds": [
-            "E010"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E010"
-      ],
-      "supportingEvidenceIds": [
-        "E010"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-a7e302a905e2f5d14fd7"
-      ],
-      "eventLifecycles": {
-        "evt-a7e302a905e2f5d14fd7": "first_seen"
-      },
-      "eventId": "evt-a7e302a905e2f5d14fd7",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-05T04:47:14+00:00",
-      "lastSeenAt": "2026-09-05T04:47:14+00:00"
-    },
-    {
-      "id": "chg-5365e76602c8e4d2eeb3",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "cambricon",
-      "entityName": "中科寒武纪科技股份有限公司",
+      "id": "chg-92fff40a9f61e80f1340",
+      "dataset": "ventureCompany",
+      "entityType": "创业公司",
+      "entityId": "sambanova",
+      "entityName": "SambaNova Systems",
       "action": "updated",
       "changedFields": [
-        "news"
+        "financing"
       ],
-      "summary": "中科寒武纪科技股份有限公司 的 news 发生变化。",
-      "importance": 48,
+      "summary": "SambaNova Systems 的 financing 发生变化。",
+      "importance": 88,
       "before": {
-        "news": []
+        "financing": [
+          {
+            "amount": "$1B",
+            "date": "2026-07-08",
+            "investors": [],
+            "sourceUrl": "https://sambanova.ai/press/sambanova-completes-first-close-of-1b-financing-at-11b-valuation",
+            "summary": "SambaNova Completes First Close of $1B Financing at $11B Valuation SambaCloud SambaStack SambaManaged SambaRack RDU Dataflow Technology SambaRack RDU Dataflow Products SambaCloud SambaStack SambaManaged Technology SambaRack RDU Dataflow Inference Providers Sovereign AI Developers & Enterprises Gover",
+            "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
+            "type": "融资"
+          }
+        ]
       },
       "after": {
-        "news": [
+        "financing": [
           {
-            "publishedAt": "2026-09-05T08:13:00+08:00",
-            "source": "新浪财经",
-            "title": "寒武纪：9月4日获融资买入5.41亿元，融资余额173.70亿元占流通市值比例2.58%，超过近一年60%分位水平",
-            "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-09-05/doc-iniqtnha0601966.shtml"
+            "amount": "$1B",
+            "date": "2026-07-08",
+            "investors": [],
+            "sourceUrl": "https://sambanova.ai/press/sambanova-completes-first-close-of-1b-financing-at-11b-valuation",
+            "summary": "SambaNova Completes First Close of $1B Financing at $11B Valuation SambaCloud SambaStack SambaManaged SambaRack RDU Dataflow Technology SambaRack RDU Dataflow Products SambaCloud SambaStack SambaManaged Technology SambaRack RDU Dataflow Neoclouds Sovereign AI Developers & Enterprises Government & Pu",
+            "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
+            "type": "融资"
           }
         ]
       },
@@ -1168,190 +203,186 @@
       "classificationReason": "包含可形成外部事实主张的字段变化",
       "isResearchCandidate": true,
       "claimFields": [
-        "news"
+        "financing"
       ],
       "claimBindings": [
         {
-          "field": "news",
-          "before": [],
+          "field": "financing",
+          "before": [
+            {
+              "amount": "$1B",
+              "date": "2026-07-08",
+              "investors": [],
+              "sourceUrl": "https://sambanova.ai/press/sambanova-completes-first-close-of-1b-financing-at-11b-valuation",
+              "summary": "SambaNova Completes First Close of $1B Financing at $11B Valuation SambaCloud SambaStack SambaManaged SambaRack RDU Dataflow Technology SambaRack RDU Dataflow Products SambaCloud SambaStack SambaManaged Technology SambaRack RDU Dataflow Inference Providers Sovereign AI Developers & Enterprises Gover",
+              "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
+              "type": "融资"
+            }
+          ],
           "after": [
             {
-              "publishedAt": "2026-09-05T08:13:00+08:00",
-              "source": "新浪财经",
-              "title": "寒武纪：9月4日获融资买入5.41亿元，融资余额173.70亿元占流通市值比例2.58%，超过近一年60%分位水平",
-              "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-09-05/doc-iniqtnha0601966.shtml"
+              "amount": "$1B",
+              "date": "2026-07-08",
+              "investors": [],
+              "sourceUrl": "https://sambanova.ai/press/sambanova-completes-first-close-of-1b-financing-at-11b-valuation",
+              "summary": "SambaNova Completes First Close of $1B Financing at $11B Valuation SambaCloud SambaStack SambaManaged SambaRack RDU Dataflow Technology SambaRack RDU Dataflow Products SambaCloud SambaStack SambaManaged Technology SambaRack RDU Dataflow Neoclouds Sovereign AI Developers & Enterprises Government & Pu",
+              "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
+              "type": "融资"
             }
           ],
           "evidenceIds": [
-            "E023"
+            "E001"
           ]
         }
       ],
       "evidenceIds": [
-        "E023"
+        "E001"
       ],
       "supportingEvidenceIds": [
-        "E023"
+        "E001"
       ],
       "evidenceQuality": {
         "status": "passed",
         "supporting": 1,
         "total": 1
       },
-      "publicationTier": "candidate",
+      "publicationTier": "verified_change",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-044c2b75b21a03dede76"
+        "evt-810db7a54dc6fae74039"
       ],
       "eventLifecycles": {
-        "evt-044c2b75b21a03dede76": "first_seen"
+        "evt-810db7a54dc6fae74039": "first_seen"
       },
-      "eventId": "evt-044c2b75b21a03dede76",
+      "eventId": "evt-810db7a54dc6fae74039",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-05T04:47:14+00:00",
-      "lastSeenAt": "2026-09-05T04:47:14+00:00"
+      "firstSeenAt": "2026-09-05T05:53:26+00:00",
+      "lastSeenAt": "2026-09-05T05:53:26+00:00"
+    },
+    {
+      "id": "chg-49c14de07f15e86b4440",
+      "dataset": "ventureCompany",
+      "entityType": "创业公司",
+      "entityId": "form-energy",
+      "entityName": "Form Energy",
+      "action": "updated",
+      "changedFields": [
+        "financing"
+      ],
+      "summary": "Form Energy 的 financing 发生变化。",
+      "importance": 88,
+      "before": {
+        "financing": []
+      },
+      "after": {
+        "financing": [
+          {
+            "amount": "$750M",
+            "date": "2020-03-04",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/",
+            "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
+            "type": "融资"
+          },
+          {
+            "amount": "$750M",
+            "date": "2026-08-12",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+            "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+            "type": "融资"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "financing"
+      ],
+      "claimBindings": [
+        {
+          "field": "financing",
+          "before": [],
+          "after": [
+            {
+              "amount": "$750M",
+              "date": "2020-03-04",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/",
+              "summary": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form Energy’s manufacturing breakthrough July 7, 2026 Electricity Whenever You Want",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deploy",
+              "type": "融资"
+            },
+            {
+              "amount": "$750M",
+              "date": "2026-08-12",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+              "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+              "type": "融资"
+            }
+          ],
+          "evidenceIds": [
+            "E007",
+            "E008",
+            "E009"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E007",
+        "E008",
+        "E009"
+      ],
+      "supportingEvidenceIds": [
+        "E007",
+        "E008",
+        "E009"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 3,
+        "total": 3
+      },
+      "publicationTier": "verified_change",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-8be8280900881dcbec79"
+      ],
+      "eventLifecycles": {
+        "evt-8be8280900881dcbec79": "updated"
+      },
+      "eventId": "evt-8be8280900881dcbec79",
+      "lifecycle": "updated",
+      "firstSeenAt": "2026-08-31T09:08:35+00:00",
+      "lastSeenAt": "2026-09-05T05:53:26+00:00"
     }
   ],
   "evidence": [
     {
       "id": "E001",
-      "changeId": "chg-4aac968a404cb6a6a1be",
-      "entityName": "价值判断：涨停板的投资机会和风险提示（9月4日）｜上市公司观察",
-      "claim": "新增高价值情报事件记录：价值判断：涨停板的投资机会和风险提示（9月4日）｜上市公司观察。",
-      "publicationTier": "external_clue",
+      "changeId": "chg-92fff40a9f61e80f1340",
+      "entityName": "SambaNova Systems",
+      "claim": "SambaNova Systems 的 financing 发生变化。",
+      "publicationTier": "verified_change",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "钛媒体",
-      "title": "价值判断：涨停板的投资机会和风险提示（9月4日）｜上市公司观察",
-      "url": "https://www.tmtpost.com/8129359.html",
-      "publishedAt": "2026-09-05",
-      "evidenceGrade": "C",
-      "platformName": "专业媒体",
-      "sourceRole": "corroboration",
+      "sourceName": "SambaNova",
+      "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
+      "url": "https://sambanova.ai/press/sambanova-completes-first-close-of-1b-financing-at-11b-valuation",
+      "publishedAt": "2026-07-08",
+      "evidenceGrade": "官方披露",
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E002",
-      "changeId": "chg-5b205b9cbc899f40b695",
-      "entityName": "Is Your Content Infrastructure Ready for Customer Service Agents?",
-      "claim": "新增高价值情报事件记录：Is Your Content Infrastructure Ready for Customer Service Agents?。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "CMSWire",
-      "title": "Is Your Content Infrastructure Ready for Customer Service Agents?",
-      "url": "https://www.cmswire.com/customer-experience/is-your-content-infrastructure-ready-for-customer-service-agents",
-      "publishedAt": "2026-09-04",
-      "evidenceGrade": "C",
-      "platformName": "CMSWire",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E003",
-      "changeId": "chg-b08f0fce97115891bfa1",
-      "entityName": "Visual Studio Code 1.136 introduces agent merges for pull requests",
-      "claim": "新增高价值情报事件记录：Visual Studio Code 1.136 introduces agent merges for pull requests。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "InfoWorld",
-      "title": "Visual Studio Code 1.136 introduces agent merges for pull requests",
-      "url": "https://www.infoworld.com/article/4218856/visual-studio-code-1-136-introduces-agent-merges-for-pull-requests.html",
-      "publishedAt": "2026-09-04",
-      "evidenceGrade": "C",
-      "platformName": "InfoWorld",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E004",
-      "changeId": "chg-fa530230fcd4ca091423",
-      "entityName": "GPT-6 Astra上线，AGI时代真到来了吗？",
-      "claim": "新增高价值情报事件记录：GPT-6 Astra上线，AGI时代真到来了吗？。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "钛媒体",
-      "title": "GPT-6 Astra上线，AGI时代真到来了吗？",
-      "url": "https://www.tmtpost.com/8128178.html",
-      "publishedAt": "2026-09-05",
-      "evidenceGrade": "C",
-      "platformName": "专业媒体",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E005",
-      "changeId": "chg-d1a2f15e52d0e2433f7c",
-      "entityName": "DLSS 5 officially launches inside NBA 2K27, limited to RTX 50-series GPUs for now — Nvidia promises to bring neutral rendering tech to RTX 40-series soon",
-      "claim": "新增高价值情报事件记录：DLSS 5 officially launches inside NBA 2K27, limited to RTX 50-series GPUs for now — Nvidia promises to bring neutral rendering tech to RTX 40-series soon。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Tom's Hardware",
-      "title": "DLSS 5 officially launches inside NBA 2K27, limited to RTX 50-series GPUs for now — Nvidia promises to bring neutral rendering tech to RTX 40-series soon",
-      "url": "https://www.tomshardware.com/pc-components/gpus/dlss-5-officially-launches-inside-nba-2k27-limited-to-rtx-50-series-gpus-for-now-nvidia-promises-to-bring-neutral-rendering-tech-to-rtx-40-series-soon",
-      "publishedAt": "2026-09-04",
-      "evidenceGrade": "C",
-      "platformName": "Tom's Hardware",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E006",
-      "changeId": "chg-2f0d967ea5a316bbd016",
-      "entityName": "资金涌入ETF 科技主题基金密集扩容",
-      "claim": "新增高价值情报事件记录：资金涌入ETF 科技主题基金密集扩容。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "资金涌入ETF 科技主题基金密集扩容",
-      "url": "https://finance.eastmoney.com/a/202609053865787138.html",
-      "publishedAt": "2026-09-05",
-      "evidenceGrade": "C",
-      "platformName": "东方财富",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "financing"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
@@ -1360,22 +391,18 @@
     },
     {
       "id": "E007",
-      "changeId": "chg-8537b45bae1c259eea56",
-      "entityName": "Five ways marketers can use Genie One",
-      "claim": "新增高价值情报事件记录：Five ways marketers can use Genie One。",
-      "publicationTier": "external_clue",
+      "changeId": "chg-49c14de07f15e86b4440",
+      "entityName": "Form Energy",
+      "claim": "Form Energy 的 financing 发生变化。",
+      "publicationTier": "verified_change",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "Databricks",
-      "title": "Five ways marketers can use Genie One",
-      "url": "https://www.databricks.com/blog/five-ways-marketers-can-use-genie-one",
-      "publishedAt": "2026-09-04",
-      "evidenceGrade": "B",
-      "platformName": "官方网站",
-      "sourceRole": "primary",
+      "sourceName": "Form Energy",
+      "title": "Home",
+      "url": "https://formenergy.com/",
+      "publishedAt": "2020-03-04",
+      "evidenceGrade": "官方披露",
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "financing"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
@@ -1384,22 +411,18 @@
     },
     {
       "id": "E008",
-      "changeId": "chg-725db2db0240d5fe2cac",
-      "entityName": "Does fusion produce radiation?",
-      "claim": "新增高价值情报事件记录：Does fusion produce radiation?。",
-      "publicationTier": "external_clue",
+      "changeId": "chg-49c14de07f15e86b4440",
+      "entityName": "Form Energy",
+      "claim": "Form Energy 的 financing 发生变化。",
+      "publicationTier": "verified_change",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "Helion Energy",
-      "title": "Does fusion produce radiation?",
-      "url": "https://www.helionenergy.com/blog/does-fusion-produce-radiation",
-      "publishedAt": "2026-09-04",
-      "evidenceGrade": "B",
-      "platformName": "官方网站",
-      "sourceRole": "primary",
+      "sourceName": "Form Energy",
+      "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+      "url": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+      "publishedAt": "2026-08-12",
+      "evidenceGrade": "官方披露",
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "financing"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
@@ -1408,68 +431,20 @@
     },
     {
       "id": "E009",
-      "changeId": "chg-32a87694ee3d373b4601",
-      "entityName": "A股成交额重上2万亿元 AI应用赛道反复活跃",
-      "claim": "新增高价值情报事件记录：A股成交额重上2万亿元 AI应用赛道反复活跃。",
-      "publicationTier": "external_clue",
+      "changeId": "chg-49c14de07f15e86b4440",
+      "entityName": "Form Energy",
+      "claim": "Form Energy 的 financing 发生变化。",
+      "publicationTier": "verified_change",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "A股成交额重上2万亿元 AI应用赛道反复活跃",
-      "url": "https://finance.eastmoney.com/a/202609053865783516.html",
-      "publishedAt": "2026-09-05",
-      "evidenceGrade": "C",
-      "platformName": "东方财富",
-      "sourceRole": "corroboration",
+      "sourceName": "Form Energy",
+      "title": "Newsroom",
+      "url": "https://formenergy.com/newsroom/",
+      "publishedAt": "2021-03-19",
+      "evidenceGrade": "官方披露",
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "financing"
       ],
       "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E010",
-      "changeId": "chg-55c8a4168e2f785af92c",
-      "entityName": "Achieving Extreme Efficiency through Specialized GPU Kernel Generation",
-      "claim": "新增高价值情报事件记录：Achieving Extreme Efficiency through Specialized GPU Kernel Generation。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Databricks",
-      "title": "Achieving Extreme Efficiency through Specialized GPU Kernel Generation",
-      "url": "https://www.databricks.com/blog/achieving-extreme-efficiency-through-specialized-gpu-kernel-generation",
-      "publishedAt": "2026-09-04",
-      "evidenceGrade": "B",
-      "platformName": "官方网站",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E023",
-      "changeId": "chg-5365e76602c8e4d2eeb3",
-      "entityName": "中科寒武纪科技股份有限公司",
-      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "寒武纪：9月4日获融资买入5.41亿元，融资余额173.70亿元占流通市值比例2.58%，超过近一年60%分位水平",
-      "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-09-05/doc-iniqtnha0601966.shtml",
-      "publishedAt": "2026-09-05T08:13:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "entityMatchStatus": "matched",
       "qualityIssues": [],
       "qualityStatus": "passed",
       "supportStatus": "supports"
@@ -1477,9 +452,142 @@
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-05T04:47:14+00:00",
+    "generatedAt": "2026-09-05T05:53:26+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-8be8280900881dcbec79": {
+        "eventId": "evt-8be8280900881dcbec79",
+        "dataset": "ventureCompany",
+        "entityId": "form-energy",
+        "entityName": "Form Energy",
+        "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+        "titleAliases": [
+          "formenergysecures750minseriesgfinancingtoscaleironairbatterymanufacturingandacceleratecommercialdeployments",
+          "home",
+          "newsroom"
+        ],
+        "publishedDate": "2020-03-04",
+        "publishedDates": [
+          "2020-03-04",
+          "2026-08-12",
+          "2021-03-19"
+        ],
+        "entityKeys": [
+          "name:form energy",
+          "ventureCompany:form-energy"
+        ],
+        "typeKeys": [
+          "创业公司"
+        ],
+        "numericCues": [
+          "750"
+        ],
+        "sourceAliases": [
+          "evd-240d920c958998b9e698",
+          "evd-260ebca9594e10735828",
+          "evd-bbce94b49783f715f8ec",
+          "src-ae6596fda7c340d262d4",
+          "src-ce905be3bc5d52aa35cf",
+          "src-dc62ab01be9344185861"
+        ],
+        "evidenceFingerprints": [
+          "260ebca9594e10735828",
+          "240d920c958998b9e698",
+          "bbce94b49783f715f8ec"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Form Energy",
+            "title": "Home",
+            "url": "https://formenergy.com/",
+            "publishedAt": "2020-03-04",
+            "evidenceGrade": "官方披露"
+          },
+          {
+            "sourceName": "Form Energy",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+            "url": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+            "publishedAt": "2026-08-12",
+            "evidenceGrade": "官方披露"
+          },
+          {
+            "sourceName": "Form Energy",
+            "title": "Newsroom",
+            "url": "https://formenergy.com/newsroom/",
+            "publishedAt": "2021-03-19",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "ab53829200fcf80ab3ce",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T09:08:35+00:00",
+        "lastSeenAt": "2026-09-05T05:53:26+00:00",
+        "lastPublishedAt": "2026-09-05T05:53:26+00:00",
+        "lastLifecycle": "updated",
+        "observationCount": 3,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-810db7a54dc6fae74039": {
+        "eventId": "evt-810db7a54dc6fae74039",
+        "dataset": "ventureCompany",
+        "entityId": "sambanova",
+        "entityName": "SambaNova Systems",
+        "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
+        "titleAliases": [
+          "sambanovacompletesfirstcloseof1bfinancingat11bvaluation"
+        ],
+        "publishedDate": "2026-07-08",
+        "publishedDates": [
+          "2026-07-08"
+        ],
+        "entityKeys": [
+          "name:sambanova systems",
+          "ventureCompany:sambanova"
+        ],
+        "typeKeys": [
+          "创业公司"
+        ],
+        "numericCues": [
+          "1",
+          "11"
+        ],
+        "sourceAliases": [
+          "evd-2bc3d8b511b92a55fa11",
+          "src-6c377528822ac32d3dcf"
+        ],
+        "evidenceFingerprints": [
+          "2bc3d8b511b92a55fa11"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "SambaNova",
+            "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
+            "url": "https://sambanova.ai/press/sambanova-completes-first-close-of-1b-financing-at-11b-valuation",
+            "publishedAt": "2026-07-08",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "6f644a4afe71c1185e12",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-05T05:53:26+00:00",
+        "lastSeenAt": "2026-09-05T05:53:26+00:00",
+        "lastPublishedAt": "2026-09-05T05:53:26+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-ea30894062d975829591": {
         "eventId": "evt-ea30894062d975829591",
         "dataset": "marketCompany",
@@ -5026,84 +4134,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-8be8280900881dcbec79": {
-        "eventId": "evt-8be8280900881dcbec79",
-        "dataset": "ventureCompany",
-        "entityId": "form-energy",
-        "entityName": "Form Energy",
-        "title": "Newsroom",
-        "titleAliases": [
-          "formenergysecures750minseriesgfinancingtoscaleironairbatterymanufacturingandacceleratecommercialdeployments",
-          "home",
-          "newsroom"
-        ],
-        "publishedDate": "2020-03-04",
-        "publishedDates": [
-          "2020-03-04",
-          "2026-08-12",
-          "2021-03-19"
-        ],
-        "entityKeys": [
-          "name:form energy",
-          "ventureCompany:form-energy"
-        ],
-        "typeKeys": [
-          "创业公司"
-        ],
-        "numericCues": [
-          "750"
-        ],
-        "sourceAliases": [
-          "evd-240d920c958998b9e698",
-          "evd-260ebca9594e10735828",
-          "evd-bbce94b49783f715f8ec",
-          "src-ae6596fda7c340d262d4",
-          "src-ce905be3bc5d52aa35cf",
-          "src-dc62ab01be9344185861"
-        ],
-        "evidenceFingerprints": [
-          "260ebca9594e10735828",
-          "240d920c958998b9e698",
-          "bbce94b49783f715f8ec"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Form Energy",
-            "title": "Home",
-            "url": "https://formenergy.com/",
-            "publishedAt": "2020-03-04",
-            "evidenceGrade": "官方披露"
-          },
-          {
-            "sourceName": "Form Energy",
-            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
-            "url": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
-            "publishedAt": "2026-08-12",
-            "evidenceGrade": "官方披露"
-          },
-          {
-            "sourceName": "Form Energy",
-            "title": "Newsroom",
-            "url": "https://formenergy.com/newsroom/",
-            "publishedAt": "2021-03-19",
-            "evidenceGrade": "官方披露"
-          }
-        ],
-        "claimFingerprint": "790247642732a2cbb86e",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastSeenAt": "2026-09-04T16:56:14+00:00",
-        "lastPublishedAt": "2026-09-04T16:56:14+00:00",
-        "lastLifecycle": "updated",
-        "observationCount": 3,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 4,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -26492,13 +25522,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 11,
+    "newEvents": 1,
     "reconfirmations": 0,
-    "updates": 0,
+    "updates": 1,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 10,
-    "observedEvents": 21,
+    "duplicatesSuppressed": 0,
+    "observedEvents": 2,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -28595,10 +27625,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-05",
-      "generatedAt": "2026-09-05T04:47:14+00:00",
+      "generatedAt": "2026-09-05T05:53:26+00:00",
       "runStatus": "model",
-      "changeCount": 78,
-      "executiveSummary": "证据包显示，截至2026年9月5日，A股市场在9月4日成交额重返2万亿元（20510亿元），但指数午后回落，资金呈现从高位科技硬件切向AI应用及低位消费/价值的分化格局；同时公募基金密集上报消费电子、通信设备、算力基础设施等科技主题ETF，显示产品端对科技产业链关注仍在。海外产品层面，GPT-6 Astra限量上线、VS Code 1.136引入Agent Merge、Nvidia DLSS 5正式发布（暂限RTX 50系列）、Databricks发布AI代理相关技术与营销用例，均指向AI软件/工具链和渲染技术持续推进。寒武纪融资余额高企，杠杆资金参与度高。整体看，AI产业链内部出现结构性分化，产品端布局与二级市场短线情绪并存，需区分事实与预期。",
+      "changeCount": 79,
+      "executiveSummary": "本证据包包含两项创业公司融资相关变化：SambaNova Systems 的既有融资记录发生文本更新（确认10亿美元融资首轮交割、估值110亿美元），以及 Form Energy 新增一条7.5亿美元Series G融资记录（用于铁空气电池扩产与商业化）。二者均为官方披露，但 Form Energy 的融资记录存在日期不一致，需以具体新闻稿日期为准，并持续核验后续信息。",
       "eventIds": [
         "evt-6e1fda684e6c54d318b3",
         "evt-8be8280900881dcbec79",
@@ -28677,7 +27707,8 @@
         "evt-4840faf93067793cfc8b",
         "evt-c264f03745dbf09af06e",
         "evt-a7e302a905e2f5d14fd7",
-        "evt-044c2b75b21a03dede76"
+        "evt-044c2b75b21a03dede76",
+        "evt-810db7a54dc6fae74039"
       ],
       "eventStates": [
         {
@@ -28991,16 +28022,20 @@
         {
           "eventId": "evt-044c2b75b21a03dede76",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-810db7a54dc6fae74039",
+          "lifecycle": "first_seen"
         }
       ],
-      "verifiedChangeTotal": 1,
+      "verifiedChangeTotal": 3,
       "candidateTotal": 14,
       "auxiliaryLeadTotal": 63,
-      "rejectedTotal": 7,
+      "rejectedTotal": 10,
       "eventSummary": {
-        "newEvents": 77,
+        "newEvents": 78,
         "reconfirmations": 13,
-        "updates": 1,
+        "updates": 2,
         "corrections": 0,
         "possibleConflicts": 0,
         "duplicatesSuppressed": 11
@@ -29008,21 +28043,19 @@
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 22,
-    "eligibleCandidateCount": 21,
-    "rejectedCandidateCount": 1,
+    "candidateCount": 5,
+    "eligibleCandidateCount": 2,
+    "rejectedCandidateCount": 3,
     "rejectedByDataset": {
-      "marketCompany": 1
+      "ventureCompany": 3
     },
-    "evidenceCount": 58,
-    "supportingEvidenceCount": 21,
-    "rejectedEvidenceCount": 17,
-    "passedButUnboundEvidenceCount": 20,
+    "evidenceCount": 18,
+    "supportingEvidenceCount": 4,
+    "rejectedEvidenceCount": 11,
+    "passedButUnboundEvidenceCount": 3,
     "rejectionReasons": {
-      "missing_published_at": 17,
-      "missing_title": 17,
-      "ungraded": 17,
-      "missing_or_invalid_url": 3
+      "missing_published_at": 9,
+      "ungraded": 2
     },
     "sourceClassificationWarnings": []
   },
