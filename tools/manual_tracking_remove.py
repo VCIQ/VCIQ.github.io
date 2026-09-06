@@ -144,6 +144,15 @@ def matching_entity_ids(intents: dict[str, Any], kind: str, name: str) -> set[st
     return ids
 
 
+def membership_track_slug(membership: dict[str, Any]) -> str:
+    """Resolve the canonical ``trackId`` while retaining legacy ``trackSlug`` support."""
+
+    track_id = clean(membership.get("trackId"), 200)
+    if track_id.startswith("track:") and len(track_id) > len("track:"):
+        return track_id[len("track:") :]
+    return clean(membership.get("trackSlug"), 160)
+
+
 def reject_memberships(
     intents: dict[str, Any],
     *,
@@ -163,7 +172,7 @@ def reject_memberships(
     for membership in memberships:
         if not isinstance(membership, dict):
             continue
-        if clean(membership.get("trackSlug"), 160) != track_slug:
+        if membership_track_slug(membership) != track_slug:
             continue
         if clean(membership.get("entityId"), 240) not in entity_ids:
             continue
