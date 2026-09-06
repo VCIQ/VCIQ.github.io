@@ -15,6 +15,7 @@ EXPECTED_DIRECT_WRITERS = {
     "company-candidate-discovery.yml",
     "manual-tracking.yml",
     "manual-tracking-batch.yml",
+    "manual-tracking-ignore.yml",
     "manual-tracking-remove.yml",
     "register-semiconductor-media-sources.yml",
     "scheduled-sync.yml",
@@ -23,6 +24,7 @@ EXPECTED_DIRECT_WRITERS = {
 NPM_GATED_ENTITY_WRITERS = {
     "manual-tracking.yml",
     "manual-tracking-batch.yml",
+    "manual-tracking-ignore.yml",
     "manual-tracking-remove.yml",
     "tracking-discovery.yml",
 }
