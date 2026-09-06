@@ -4,6 +4,7 @@ import test from "node:test";
 
 // Lock the index/detail presentation boundary without changing person research data.
 const page = readFileSync("app/people/page.tsx", "utf8");
+const styles = readFileSync("app/people/page.module.css", "utf8");
 
 test("people directory keeps only the two decision-useful preview rows", () => {
   assert.match(page, /<b>为什么重要<\/b>/);
@@ -13,4 +14,11 @@ test("people directory keeps only the two decision-useful preview rows", () => {
 
 test("fuller person research remains delegated to the detail page", () => {
   assert.match(page, /完整判断、技术主线、观点演进、组织关系和事件证据进入人物详情查看/);
+});
+
+test("people directory avoids repeated per-card row classes", () => {
+  assert.doesNotMatch(page, /styles\.researchRow/);
+  assert.doesNotMatch(page, /styles\.latestChange/);
+  assert.match(styles, /\.cardResearch > div \{/);
+  assert.match(styles, /\.cardResearch > div:first-child p \{/);
 });
