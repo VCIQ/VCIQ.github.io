@@ -35,3 +35,11 @@ export function buildTrackingCaptureLink(input: TrackingCaptureLinkInput): strin
 export function buildTrackingManualTextLink(input: TrackingCaptureLinkInput): string {
   return buildTrackingAdminLink("/capture/manual-text", input);
 }
+
+export function buildTrackWatchlistLink(trackSlug?: string): string {
+  const slug = (trackSlug || "").trim().slice(0, 120);
+  const params = new URLSearchParams();
+  if (slug) params.set("track", slug);
+  const query = params.toString();
+  return `${trackingAdminBase()}/tracks${query ? `?${query}` : ""}`;
+}
