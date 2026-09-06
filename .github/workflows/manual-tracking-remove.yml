@@ -1,0 +1,267 @@
+name: Internal manual tracking removal
+
+# Authenticated inverse of manual-tracking.yml. Inputs and logs are public.
+# Never submit secrets, private URLs, personal data, or confidential notes.
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: "Validate previews removal; apply writes the rejected relation to main"
+        required: true
+        default: validate
+        type: choice
+        options: [validate, apply]
+      object_type:
+        description: "Fixed watch object type"
+        required: true
+        type: choice
+        options: [technology, person, company]
+      name:
+        description: "Exact fixed-watch display name"
+        required: true
+        type: string
+      target_track:
+        description: "Exactly one target track slug or name"
+        required: true
+        type: string
+      reasons:
+        description: "Public governance reason labels separated by |"
+        required: true
+        type: string
+      note:
+        description: "PUBLIC note; do not include private information"
+        required: false
+        type: string
+
+permissions: {}
+
+env:
+  EXPECTED_REPOSITORY: VCIQ/VCIQ.github.io
+
+jobs:
+  authorize:
+    name: Authorize internal operator
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: Require canonical repository and main branch
+        env:
+          ACTUAL_REPOSITORY: ${{ github.repository }}
+          ACTUAL_REF: ${{ github.ref }}
+          ACTUAL_EVENT: ${{ github.event_name }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$ACTUAL_REPOSITORY" = "$EXPECTED_REPOSITORY"
+          test "$ACTUAL_REF" = "refs/heads/main"
+          test "$ACTUAL_EVENT" = "workflow_dispatch"
+
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Require both initiator and rerun actor to be allowlisted
+        env:
+          ACTOR: ${{ github.actor }}
+          TRIGGERING_ACTOR: ${{ github.triggering_actor }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          admins = json.loads(Path("config/tracking_admins.json").read_text(encoding="utf-8"))
+          allowed = {
+              str(actor).strip().casefold()
+              for actor in admins.get("actors", [])
+              if str(actor).strip()
+          }
+          checked = {
+              "github.actor": os.environ.get("ACTOR", "").strip(),
+              "github.triggering_actor": os.environ.get("TRIGGERING_ACTOR", "").strip(),
+          }
+          denied = [label for label, actor in checked.items() if actor.casefold() not in allowed]
+          if denied:
+              raise SystemExit("manual tracking removal actor is not allowlisted: " + ", ".join(denied))
+          print("authorized actors: " + ", ".join(checked.values()))
+          PY
+
+  validate:
+    name: Validate fixed watch removal
+    needs: authorize
+    if: inputs.operation == 'validate'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: tracking-admin
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 1
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Preview the governed removal
+        env:
+          OBJECT_TYPE: ${{ inputs.object_type }}
+          NAME: ${{ inputs.name }}
+          TARGET_TRACK: ${{ inputs.target_track }}
+          REASONS: ${{ inputs.reasons }}
+          NOTE: ${{ inputs.note }}
+          ACTOR: ${{ github.actor }}
+          TRIGGERING_ACTOR: ${{ github.triggering_actor }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile tools/manual_tracking_remove.py
+          python tools/manual_tracking_remove.py \
+            --mode validate \
+            --kind "$OBJECT_TYPE" \
+            --name "$NAME" \
+            --tracks "$TARGET_TRACK" \
+            --reasons "$REASONS" \
+            --note "$NOTE" \
+            --actor "$ACTOR" \
+            --triggering-actor "$TRIGGERING_ACTOR" \
+            | tee /tmp/manual-tracking-remove-preview.json
+          {
+            echo "## Fixed watch removal validation"
+            echo
+            echo '```json'
+            cat /tmp/manual-tracking-remove-preview.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  apply:
+    name: Apply fixed watch removal
+    needs: authorize
+    if: inputs.operation == 'apply'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: tracking-admin
+    concurrency:
+      group: vciq-repository-writer-${{ github.ref }}
+      queue: max
+    permissions:
+      contents: write
+    outputs:
+      changed: ${{ steps.remove.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Capture exact main revision being edited
+        id: base
+        shell: bash
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Apply governed removal
+        id: remove
+        env:
+          OBJECT_TYPE: ${{ inputs.object_type }}
+          NAME: ${{ inputs.name }}
+          TARGET_TRACK: ${{ inputs.target_track }}
+          REASONS: ${{ inputs.reasons }}
+          NOTE: ${{ inputs.note }}
+          ACTOR: ${{ github.actor }}
+          TRIGGERING_ACTOR: ${{ github.triggering_actor }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile tools/manual_tracking_remove.py
+          python tools/manual_tracking_remove.py \
+            --mode apply \
+            --kind "$OBJECT_TYPE" \
+            --name "$NAME" \
+            --tracks "$TARGET_TRACK" \
+            --reasons "$REASONS" \
+            --note "$NOTE" \
+            --actor "$ACTOR" \
+            --triggering-actor "$TRIGGERING_ACTOR" \
+            | tee /tmp/manual-tracking-remove-result.json
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          report = json.loads(Path("/tmp/manual-tracking-remove-result.json").read_text(encoding="utf-8"))
+          if not isinstance(report, dict) or report.get("ok") is not True or "changed" not in report:
+              raise SystemExit("manual tracking removal report is invalid")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              output.write(f"changed={str(bool(report.get('changed'))).lower()}\n")
+          PY
+
+      - name: Validate changed tracking configuration
+        if: steps.remove.outputs.changed == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm ci
+          python -m unittest tests.test_manual_tracking_remove tests.test_tracking_manual_feedback
+          npm run validate:tracking
+          npm run validate:taxonomy
+          python tools/tracking_source_governance.py --check
+
+      - name: Commit and push only approved configuration files
+        if: steps.remove.outputs.changed == 'true'
+        env:
+          BASE_SHA: ${{ steps.base.outputs.sha }}
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "$BASE_SHA" || {
+            echo "main advanced while removal was running; refusing to replay or overwrite it"
+            exit 1
+          }
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- config/tracking_intents.json config/user_tracking.json
+          git diff --cached --quiet && {
+            echo "removal reported a change but no approved file changed"
+            exit 1
+          }
+          git commit -m "config: remove authenticated fixed watch relation"
+
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "$BASE_SHA" || {
+            echo "main advanced before push; refusing to rebase, force, or overwrite it"
+            exit 1
+          }
+          gh auth setup-git
+          git push origin HEAD:main
+
+      - name: Summarize public removal audit
+        if: always() && steps.remove.outcome != 'skipped'
+        shell: bash
+        run: |
+          {
+            echo "## Fixed watch removal"
+            echo
+            echo "> Removal preserves intent provenance by moving matching memberships to rejected."
+            echo
+            echo '```json'
+            cat /tmp/manual-tracking-remove-result.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
