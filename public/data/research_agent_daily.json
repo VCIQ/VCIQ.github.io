@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-06T06:04:23+00:00",
+  "generatedAt": "2026-09-06T15:45:35+00:00",
   "asOfDate": "2026-09-06",
-  "runStatus": "no-material-change",
+  "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
   "baselineSource": "snapshot",
   "model": {
@@ -10,26 +10,41 @@
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": false,
-    "usage": {}
+    "used": true,
+    "usage": {
+      "prompt_tokens": 2229,
+      "completion_tokens": 3611,
+      "total_tokens": 5840,
+      "completion_tokens_details": {
+        "reasoning_tokens": 2615
+      },
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 2229
+    }
   },
   "changeSummary": {
-    "totalDetected": 2,
-    "total": 0,
-    "byDataset": {},
+    "totalDetected": 3,
+    "total": 2,
+    "byDataset": {
+      "intelligenceEvent": 2
+    },
     "byChangeType": {
-      "external_event": 2
+      "external_event": 2,
+      "data_maintenance": 1
     },
     "externalCandidates": 2,
-    "qualityRejected": 2,
-    "maintenanceExcluded": 0,
+    "qualityRejected": 0,
+    "maintenanceExcluded": 1,
     "aggregatedEvents": 0,
-    "highestImportance": 0,
+    "highestImportance": 89,
     "verifiedChangeTotal": 0,
     "candidateTotal": 0,
-    "auxiliaryLeadTotal": 0,
-    "rejectedTotal": 2,
-    "newEvents": 0,
+    "auxiliaryLeadTotal": 2,
+    "rejectedTotal": 0,
+    "newEvents": 2,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
@@ -37,22 +52,421 @@
     "duplicatesSuppressed": 0
   },
   "analysis": {
-    "mode": "structured-change-only",
-    "isResearchJudgment": false,
-    "executiveSummary": "本轮检测到 2 个外部事实候选，但全部未通过证据质量门。 质量门诊断：缺少发布时间 4、缺少标题 1、证据未分级 1。",
-    "keyDevelopments": [],
-    "thesisUpdates": [],
-    "watchlist": [],
-    "risks": [],
-    "methodologyNote": "结构化变化检查；本期无材料变化。未执行生成式研判。"
+    "mode": "model-analysis",
+    "isResearchJudgment": true,
+    "executiveSummary": "证据包记录了2026年9月6日的两个独立事件：Resonant Clinical Solutions宣布收购Creapharm Bioservices以增强先进疗法与低温储存能力；GMKtec在IFA 2026发布高配置迷你PC EVO-X5 Pro。两则信息均来自单一来源，证据等级分别为B级和C级，尚未获得交叉验证，相关影响需保持谨慎。",
+    "keyDevelopments": [
+      {
+        "title": "Resonant Clinical Solutions收购Creapharm Bioservices",
+        "assessment": "根据公司新闻稿，Resonant Clinical Solutions宣布收购Creapharm Bioservices，以增强欧洲先进疗法与低温储存能力，并借助全球生物样本库服务支持细胞和基因治疗等复杂临床项目。收购公告本身为事实，但交易金额、完成条件及监管状态尚未披露。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "Resonant Clinical Solutions",
+          "Creapharm Bioservices"
+        ],
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "title": "GMKtec发布EVO-X5 Pro迷你PC",
+        "assessment": "据Notebookcheck报道，GMKtec在IFA 2026推出旗舰迷你PC EVO-X5 Pro，搭载AMD Ryzen AI Max+ Pro 495处理器和192GB RAM，目标用于本地运行大型AI模型。该信息来自单一外部媒体，处理器型号与性能宣称尚未得到官方详细规格或第三方评测证实。",
+        "importance": 3,
+        "confidence": "low",
+        "entities": [
+          "GMKtec",
+          "AMD"
+        ],
+        "evidenceIds": [
+          "E002"
+        ]
+      }
+    ],
+    "thesisUpdates": [
+      {
+        "entity": "Resonant Clinical Solutions",
+        "direction": "positive",
+        "statement": "证据表明Resonant Clinical Solutions通过收购Creapharm Bioservices强化其在欧洲的先进疗法和低温储存服务，可能提升其在复杂临床项目中的竞争力，但影响程度取决于后续整合与执行。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "entity": "GMKtec",
+        "direction": "neutral",
+        "statement": "推出EVO-X5 Pro显示GMKtec继续布局本地AI算力硬件，但其市场表现和性能宣称需更多独立信息验证，目前仅能视为产品发布事件。",
+        "evidenceIds": [
+          "E002"
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "item": "Resonant收购Creapharm Bioservices的后续进展",
+        "reason": "新闻稿未提供交易金额、完成条件或监管许可等细节，后续需跟踪整合进展与现有客户影响。",
+        "nextEvidence": "下一步可关注Resonant或Creapharm的后续公告、监管文件或第三方行业报道。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "item": "GMKtec EVO-X5 Pro的独立评测与官方规格",
+        "reason": "当前仅有一个媒体来源，且宣称可运行大规模AI模型需要实际验证；需确认AMD处理器型号与192GB RAM配置的准确性。",
+        "nextEvidence": "后续发布的产品页、评测机构的基准测试或IFA现场报道。",
+        "evidenceIds": [
+          "E002"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "单一来源信息可靠性风险",
+        "reason": "两个事件均各自只有一条证据，其中E002为C级媒体文章，E001虽为公司新闻稿但未经独立核实；信息可能存在偏差或遗漏。",
+        "evidenceIds": [
+          "E001",
+          "E002"
+        ]
+      },
+      {
+        "risk": "收购整合与执行风险",
+        "reason": "Resonant的收购公告未披露交易结构和完成条件，实际协同效果可能低于预期；且整合过程可能面临运营或监管不确定性。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "risk": "产品性能宣传风险",
+        "reason": "GMKtec声称EVO-X5 Pro为本地AI设计，但该声明缺乏官方详细技术规格和第三方实测数据，存在夸大或误导的可能性。",
+        "evidenceIds": [
+          "E002"
+        ]
+      }
+    ],
+    "methodologyNote": "本报告仅基于证据包中的两条结构化证据（E001、E002），不引入外部事实。判断中区分了事件事实（公司公告、媒体报道）与推断（如战略影响、市场表现）。由于证据等级为B/C且来源单一，关键发展均标记为medium或low置信度。本报告不构成任何投资建议或收益承诺。"
   },
-  "changes": [],
-  "evidence": [],
+  "changes": [
+    {
+      "id": "chg-96cfe4edecc2b2c45e8e",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-203d26b63280988e51",
+      "entityName": "Resonant Clinical Solutions renforce ses capacités de thérapies de pointe et de stockage cryogénique grâce à l'acquisition de Creapharm Bioservices",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Resonant Clinical Solutions renforce ses capacités de thérapies de pointe et de stockage cryogénique grâce à l'acquisition de Creapharm Bioservices。",
+      "importance": 89,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-06",
+        "summary": "Le développement des services spécialisés en Europe s'appuie sur l'offre mondiale de biobanques de Resonant afin de soutenir des programmes cliniques complexes, notamment dans le domaine des thérapies cellulaire et génique LEESBURG, Virginie, États-Unis, 6 se…",
+        "title": "Resonant Clinical Solutions renforce ses capacités de thérapies de pointe et de stockage cryogénique grâce à l'acquisition de Creapharm Bioservices"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-06",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Le développement des services spécialisés en Europe s'appuie sur l'offre mondiale de biobanques de Resonant afin de soutenir des programmes cliniques complexes, notamment dans le domaine des thérapies cellulaire et génique LEESBURG, Virginie, États-Unis, 6 se…",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Resonant Clinical Solutions renforce ses capacités de thérapies de pointe et de stockage cryogénique grâce à l'acquisition de Creapharm Bioservices",
+          "evidenceIds": [
+            "E001"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E001"
+      ],
+      "supportingEvidenceIds": [
+        "E001"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-b986ae3f7b2399790fa1"
+      ],
+      "eventLifecycles": {
+        "evt-b986ae3f7b2399790fa1": "first_seen"
+      },
+      "eventId": "evt-b986ae3f7b2399790fa1",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-06T15:45:35+00:00",
+      "lastSeenAt": "2026-09-06T15:45:35+00:00"
+    },
+    {
+      "id": "chg-5b71701518cc527a47af",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-9415dffd7000f83671",
+      "entityName": "GMKtec unveils EVO-X5 Pro at IFA 2026: A compact powerhouse with 192 GB RAM built for local AI",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：GMKtec unveils EVO-X5 Pro at IFA 2026: A compact powerhouse with 192 GB RAM built for local AI。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-06",
+        "summary": "GMKtec introduced its latest flagship mini PC, the EVO-X5 Pro, at IFA 2026. Equipped with AMD’s Ryzen AI Max+ Pro 495 processor and 192 GB of RAM, the compact system is engineered to run massive AI models locally.",
+        "title": "GMKtec unveils EVO-X5 Pro at IFA 2026: A compact powerhouse with 192 GB RAM built for local AI"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-06",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "GMKtec introduced its latest flagship mini PC, the EVO-X5 Pro, at IFA 2026. Equipped with AMD’s Ryzen AI Max+ Pro 495 processor and 192 GB of RAM, the compact system is engineered to run massive AI models locally.",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "GMKtec unveils EVO-X5 Pro at IFA 2026: A compact powerhouse with 192 GB RAM built for local AI",
+          "evidenceIds": [
+            "E002"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E002"
+      ],
+      "supportingEvidenceIds": [
+        "E002"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-d147fda2909f57502631"
+      ],
+      "eventLifecycles": {
+        "evt-d147fda2909f57502631": "first_seen"
+      },
+      "eventId": "evt-d147fda2909f57502631",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-06T15:45:35+00:00",
+      "lastSeenAt": "2026-09-06T15:45:35+00:00"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E001",
+      "changeId": "chg-96cfe4edecc2b2c45e8e",
+      "entityName": "Resonant Clinical Solutions renforce ses capacités de thérapies de pointe et de stockage cryogénique grâce à l'acquisition de Creapharm Bioservices",
+      "claim": "新增高价值情报事件记录：Resonant Clinical Solutions renforce ses capacités de thérapies de pointe et de stockage cryogénique grâce à l'acquisition de Creapharm Bioservices。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "Resonant Clinical Solutions renforce ses capacités de thérapies de pointe et de stockage cryogénique grâce à l'acquisition de Creapharm Bioservices",
+      "url": "https://www.prnewswire.com/news-releases/resonant-clinical-solutions-renforce-ses-capacites-de-therapies-de-pointe-et-de-stockage-cryogenique-grace-a-lacquisition-de-creapharm-bioservices-302870775.html",
+      "publishedAt": "2026-09-06",
+      "evidenceGrade": "B",
+      "platformName": "新闻稿",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E002",
+      "changeId": "chg-5b71701518cc527a47af",
+      "entityName": "GMKtec unveils EVO-X5 Pro at IFA 2026: A compact powerhouse with 192 GB RAM built for local AI",
+      "claim": "新增高价值情报事件记录：GMKtec unveils EVO-X5 Pro at IFA 2026: A compact powerhouse with 192 GB RAM built for local AI。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Notebookcheck",
+      "title": "GMKtec unveils EVO-X5 Pro at IFA 2026: A compact powerhouse with 192 GB RAM built for local AI",
+      "url": "https://www.notebookcheck.net/GMKtec-unveils-EVO-X5-Pro-at-IFA-2026-A-compact-powerhouse-with-192-GB-RAM-built-for-local-AI.1390527.0.html",
+      "publishedAt": "2026-09-06",
+      "evidenceGrade": "C",
+      "platformName": "Notebookcheck",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    }
+  ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-06T06:04:23+00:00",
+    "generatedAt": "2026-09-06T15:45:35+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-d147fda2909f57502631": {
+        "eventId": "evt-d147fda2909f57502631",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-9415dffd7000f83671",
+        "entityName": "GMKtec unveils EVO-X5 Pro at IFA 2026: A compact powerhouse with 192 GB RAM built for local AI",
+        "title": "GMKtec unveils EVO-X5 Pro at IFA 2026: A compact powerhouse with 192 GB RAM built for local AI",
+        "titleAliases": [
+          "gmktecunveilsevox5proatifa2026acompactpowerhousewith192gbrambuiltforlocalai"
+        ],
+        "publishedDate": "2026-09-06",
+        "publishedDates": [
+          "2026-09-06"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "192",
+          "5"
+        ],
+        "sourceAliases": [
+          "evd-1722f13513fe4bf90a0e",
+          "record-d0d24e365f5119f36f4d",
+          "src-d2061ee32b068b7241e1"
+        ],
+        "evidenceFingerprints": [
+          "1722f13513fe4bf90a0e"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Notebookcheck",
+            "title": "GMKtec unveils EVO-X5 Pro at IFA 2026: A compact powerhouse with 192 GB RAM built for local AI",
+            "url": "https://www.notebookcheck.net/GMKtec-unveils-EVO-X5-Pro-at-IFA-2026-A-compact-powerhouse-with-192-GB-RAM-built-for-local-AI.1390527.0.html",
+            "publishedAt": "2026-09-06",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "6c93a1d33eeb4aff74ef",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-06T15:45:35+00:00",
+        "lastSeenAt": "2026-09-06T15:45:35+00:00",
+        "lastPublishedAt": "2026-09-06T15:45:35+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-b986ae3f7b2399790fa1": {
+        "eventId": "evt-b986ae3f7b2399790fa1",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-203d26b63280988e51",
+        "entityName": "Resonant Clinical Solutions renforce ses capacités de thérapies de pointe et de stockage cryogénique grâce à l'acquisition de Creapharm Bioservices",
+        "title": "Resonant Clinical Solutions renforce ses capacités de thérapies de pointe et de stockage cryogénique grâce à l'acquisition de Creapharm Bioservices",
+        "titleAliases": [
+          "resonantclinicalsolutionsrenforcesescapacitsdethrapiesdepointeetdestockagecryogniquegrcelacquisitiondecreapharmbioservices"
+        ],
+        "publishedDate": "2026-09-06",
+        "publishedDates": [
+          "2026-09-06"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "并购",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-33373a447a247fd4cc6c",
+          "record-0df145be8217052f255f",
+          "src-c67e6fb8df249f07612b"
+        ],
+        "evidenceFingerprints": [
+          "33373a447a247fd4cc6c"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "Resonant Clinical Solutions renforce ses capacités de thérapies de pointe et de stockage cryogénique grâce à l'acquisition de Creapharm Bioservices",
+            "url": "https://www.prnewswire.com/news-releases/resonant-clinical-solutions-renforce-ses-capacites-de-therapies-de-pointe-et-de-stockage-cryogenique-grace-a-lacquisition-de-creapharm-bioservices-302870775.html",
+            "publishedAt": "2026-09-06",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "05311f08e233cabaa323",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-06T15:45:35+00:00",
+        "lastSeenAt": "2026-09-06T15:45:35+00:00",
+        "lastPublishedAt": "2026-09-06T15:45:35+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-fae2869808cdc7e3c60c": {
         "eventId": "evt-fae2869808cdc7e3c60c",
         "dataset": "intelligenceEvent",
@@ -25991,13 +26405,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 0,
+    "newEvents": 2,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
     "duplicatesSuppressed": 0,
-    "observedEvents": 0,
+    "observedEvents": 2,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -28548,10 +28962,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-06",
-      "generatedAt": "2026-09-06T06:04:23+00:00",
-      "runStatus": "no-material-change",
-      "changeCount": 8,
-      "executiveSummary": "本轮检测到 2 个外部事实候选，但全部未通过证据质量门。",
+      "generatedAt": "2026-09-06T15:45:35+00:00",
+      "runStatus": "model",
+      "changeCount": 11,
+      "executiveSummary": "证据包记录了2026年9月6日的两个独立事件：Resonant Clinical Solutions宣布收购Creapharm Bioservices以增强先进疗法与低温储存能力；GMKtec在IFA 2026发布高配置迷你PC EVO-X5 Pro。两则信息均来自单一来源，证据等级分别为B级和C级，尚未获得交叉验证，相关影响需保持谨慎。",
       "eventIds": [
         "evt-0f8bf58f927673b327b5",
         "evt-ecfb4dab93bcdc746288",
@@ -28561,7 +28975,9 @@
         "evt-e3975dcbf92e87a17f48",
         "evt-fae2869808cdc7e3c60c",
         "evt-b348ed4a27a4b30baa24",
-        "evt-284f6303b98e09b3e5c3"
+        "evt-284f6303b98e09b3e5c3",
+        "evt-b986ae3f7b2399790fa1",
+        "evt-d147fda2909f57502631"
       ],
       "eventStates": [
         {
@@ -28599,14 +29015,22 @@
         {
           "eventId": "evt-284f6303b98e09b3e5c3",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-b986ae3f7b2399790fa1",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-d147fda2909f57502631",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 0,
       "candidateTotal": 1,
-      "auxiliaryLeadTotal": 7,
+      "auxiliaryLeadTotal": 9,
       "rejectedTotal": 11,
       "eventSummary": {
-        "newEvents": 9,
+        "newEvents": 11,
         "reconfirmations": 0,
         "updates": 0,
         "corrections": 0,
@@ -28617,20 +29041,14 @@
   ],
   "qualityDiagnostics": {
     "candidateCount": 2,
-    "eligibleCandidateCount": 0,
-    "rejectedCandidateCount": 2,
-    "rejectedByDataset": {
-      "ventureCompany": 2
-    },
-    "evidenceCount": 5,
-    "supportingEvidenceCount": 0,
-    "rejectedEvidenceCount": 5,
+    "eligibleCandidateCount": 2,
+    "rejectedCandidateCount": 0,
+    "rejectedByDataset": {},
+    "evidenceCount": 2,
+    "supportingEvidenceCount": 2,
+    "rejectedEvidenceCount": 0,
     "passedButUnboundEvidenceCount": 0,
-    "rejectionReasons": {
-      "missing_published_at": 4,
-      "missing_title": 1,
-      "ungraded": 1
-    },
+    "rejectionReasons": {},
     "sourceClassificationWarnings": []
   },
   "sourceClassificationWarnings": [],
