@@ -13,6 +13,7 @@ import {
 } from "@/lib/institution-activity";
 import { heatMethodology, snapshotDate } from "@/lib/intelligence-data";
 import { reportContent } from "@/lib/research-content";
+import { buildTrackWatchlistLink } from "@/lib/tracking-admin-link";
 import {
   eventsForTrackedSector,
   getTrackedSector,
@@ -282,9 +283,14 @@ export default async function SectorDetail({
             ) : (
               <p className={styles.empty}>暂无样本公司，可在追踪配置中添加。</p>
             )}
-            <Link className={styles.configLink} href="/tracking">
-              管理样本公司与关键词 →
-            </Link>
+            <a
+              className={styles.configLink}
+              href={buildTrackWatchlistLink(sector.slug)}
+              target="_blank"
+              rel="noreferrer"
+            >
+              管理关注技术、人物与公司 ↗
+            </a>
           </Section>
 
           <Section id="投资机构" title="活跃与关联机构">
