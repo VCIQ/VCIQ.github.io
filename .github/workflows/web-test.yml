@@ -31,6 +31,8 @@ jobs:
             tests.test_tracking_manual_feedback \
             tests.test_expand_tracking_entities \
             tests.test_pipeline_health_runtime
+      - name: Run person identity unit tests
+        run: python -m unittest tests.test_jensen_canonical_identity_anchor
       - name: Require a normalized automatic source registry
         run: python tools/tracking_source_governance.py --check
       - run: npm ci
