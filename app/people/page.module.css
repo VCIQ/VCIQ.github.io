@@ -224,14 +224,14 @@
   border-top: 1px solid var(--border-soft);
 }
 
-.researchRow {
+.cardResearch > div {
   display: grid;
   grid-template-columns: 48px minmax(0, 1fr);
   gap: 6px;
   align-items: start;
 }
 
-.researchRow b {
+.cardResearch > div b {
   color: var(--green-bright);
   font-size: 8px;
   font-weight: 600;
@@ -239,7 +239,7 @@
   line-height: 1.45;
 }
 
-.researchRow p {
+.cardResearch > div p {
   display: -webkit-box;
   overflow: hidden;
   margin: 0 !important;
@@ -250,12 +250,9 @@
   -webkit-line-clamp: 1;
 }
 
-.researchRow:first-child p {
-  -webkit-line-clamp: 2;
-}
-
-.researchRow .latestChange {
+.cardResearch > div:first-child p {
   color: var(--text);
+  -webkit-line-clamp: 2;
 }
 
 .personMeta {

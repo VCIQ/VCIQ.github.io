@@ -151,8 +151,8 @@ test("people and company cards stay scan-dense without dropping research context
   assert.match(people, /statusLabels\[person\.status\]/);
   assert.match(peopleCss, /\.body :global\(\.people-grid > a\) \{[\s\S]*min-height:\s*212px/);
   assert.match(peopleCss, /\.personLead \{/);
-  assert.match(peopleCss, /\.researchRow \{[\s\S]*grid-template-columns:\s*48px minmax\(0, 1fr\)/);
-  assert.match(peopleCss, /\.researchRow:first-child p \{[\s\S]*-webkit-line-clamp:\s*2/);
+  assert.match(peopleCss, /\.cardResearch > div \{[\s\S]*grid-template-columns:\s*48px minmax\(0, 1fr\)/);
+  assert.match(peopleCss, /\.cardResearch > div:first-child p \{[\s\S]*-webkit-line-clamp:\s*2/);
 });
 
 test("sources render the live decision dashboard before lifecycle and governance explanations", async () => {
