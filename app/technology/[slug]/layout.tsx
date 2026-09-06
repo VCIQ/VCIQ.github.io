@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { ResearchRelationPanel } from "@/components/research-relation-panel";
+import { TrackWatchlistAdminEntry } from "@/components/track-watchlist-admin-entry";
 
 export default async function TechnologyTrackLayout({
   children,
@@ -11,6 +12,7 @@ export default async function TechnologyTrackLayout({
   const { slug } = await params;
   return (
     <>
+      <TrackWatchlistAdminEntry slug={slug} />
       {children}
       <ResearchRelationPanel kind="track" slug={slug} />
     </>
