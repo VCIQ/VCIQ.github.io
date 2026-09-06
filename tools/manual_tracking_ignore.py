@@ -55,6 +55,13 @@ ENTITY_KINDS = {
     "person": {"person"},
     "company": {"company"},
 }
+ALLOWED_IGNORE_REASONS = {
+    "与本赛道无关",
+    "实体识别错误",
+    "低信号噪声",
+    "重复或已覆盖",
+    "当前不再关注",
+}
 
 
 class ManualTrackingIgnoreError(ValueError):
@@ -367,6 +374,11 @@ def apply_ignore(
         raise ManualTrackingIgnoreError("名称至少需要两个有效字符。")
     if not reasons:
         raise ManualTrackingIgnoreError("忽略自动候选必须填写至少一个治理原因。")
+    unknown_reasons = [reason for reason in reasons if reason not in ALLOWED_IGNORE_REASONS]
+    if unknown_reasons:
+        raise ManualTrackingIgnoreError(
+            "忽略原因必须使用受控负反馈枚举；未知值：" + "、".join(unknown_reasons)
+        )
 
     track = find_track(tracking, track_name)
     slug = clean(track.get("slug"), 160)

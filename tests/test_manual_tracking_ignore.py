@@ -64,7 +64,7 @@ class ManualTrackingIgnoreTests(unittest.TestCase):
             track_name="robotics",
             actor="owner",
             triggering_actor="owner",
-            reasons=["个人研究兴趣"],
+            reasons=["与本赛道无关"],
             note="not relevant to this track",
             now="2026-09-06T07:00:00+00:00",
         )
@@ -84,6 +84,7 @@ class ManualTrackingIgnoreTests(unittest.TestCase):
         self.assertEqual(membership["state"], "rejected")
         self.assertTrue(membership["pinned"])
         self.assertEqual(membership["origins"][-1]["decision"], "ignore-auto-candidate")
+        self.assertEqual(membership["origins"][-1]["reasons"], ["与本赛道无关"])
         self.assertTrue(report["runtimeRemoved"])
         self.assertTrue(report["tombstoneAdded"])
         self.assertEqual(report["state"], "rejected")
@@ -108,10 +109,39 @@ class ManualTrackingIgnoreTests(unittest.TestCase):
                 track_name="robotics",
                 actor="owner",
                 triggering_actor="owner",
-                reasons=["个人研究兴趣"],
+                reasons=["与本赛道无关"],
                 note="",
                 now="2026-09-06T07:00:00+00:00",
             )
+
+    def test_positive_tracking_reason_is_rejected_for_negative_feedback(self):
+        with self.assertRaises(ignore.ManualTrackingIgnoreError) as raised:
+            ignore.apply_ignore(
+                copy.deepcopy(self.tracking),
+                copy.deepcopy(self.intents),
+                copy.deepcopy(self.ledger),
+                kind="technology",
+                name="自动候选技术",
+                track_name="robotics",
+                actor="owner",
+                triggering_actor="owner",
+                reasons=["融资机会"],
+                note="",
+                now="2026-09-06T07:00:00+00:00",
+            )
+        self.assertIn("受控负反馈枚举", str(raised.exception))
+
+    def test_all_controlled_ignore_reasons_are_accepted(self):
+        self.assertEqual(
+            ignore.ALLOWED_IGNORE_REASONS,
+            {
+                "与本赛道无关",
+                "实体识别错误",
+                "低信号噪声",
+                "重复或已覆盖",
+                "当前不再关注",
+            },
+        )
 
     def test_second_apply_is_idempotent(self):
         tracking, intents, ledger, first = self.apply("person", "候选人物")
@@ -124,7 +154,7 @@ class ManualTrackingIgnoreTests(unittest.TestCase):
             track_name="robotics",
             actor="owner",
             triggering_actor="owner",
-            reasons=["个人研究兴趣"],
+            reasons=["与本赛道无关"],
             note="not relevant to this track",
             now="2026-09-06T07:05:00+00:00",
         )
