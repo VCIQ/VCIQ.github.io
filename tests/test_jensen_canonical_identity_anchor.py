@@ -3,14 +3,26 @@ import json
 import unittest
 from pathlib import Path
 
+from tools import refresh_people_profiles as core
+
 ROOT = Path(__file__).resolve().parents[1]
+ORIGINAL_COLLECT = core.collect_candidates
+ORIGINAL_ENRICH = core.enrich_candidate
 SPEC = importlib.util.spec_from_file_location(
     "refresh_people_profiles_with_video_jensen_anchor",
     ROOT / "tools" / "refresh_people_profiles_with_video.py",
 )
 MODULE = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader
-SPEC.loader.exec_module(MODULE)
+try:
+    SPEC.loader.exec_module(MODULE)
+finally:
+    # Importing the production video refresh module intentionally installs its
+    # entrypoints on the shared core module. This test only needs the helper
+    # behavior, so restore shared state before unittest discovery imports later
+    # modules in the same Python process.
+    core.collect_candidates = ORIGINAL_COLLECT
+    core.enrich_candidate = ORIGINAL_ENRICH
 
 
 class JensenCanonicalIdentityAnchorTest(unittest.TestCase):
