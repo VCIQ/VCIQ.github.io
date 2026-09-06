@@ -88,6 +88,40 @@ class ManualTrackingRemovalTests(unittest.TestCase):
         self.assertTrue(report["intentsChanged"])
         self.assertEqual(report["state"], "rejected")
 
+    def test_canonical_track_id_membership_is_rejected(self):
+        tracking = copy.deepcopy(self.tracking)
+        intents = copy.deepcopy(self.intents)
+        for membership in intents["memberships"]:
+            membership["trackId"] = f"track:{membership.pop('trackSlug')}"
+
+        report = removal.apply_removal(
+            tracking,
+            intents,
+            kind="technology",
+            name="具身智能",
+            track_name="robotics",
+            actor="owner",
+            triggering_actor="owner",
+            reasons=["个人研究兴趣"],
+            note="canonical membership cleanup",
+            now="2026-09-05T12:00:00+00:00",
+        )
+
+        membership = next(row for row in intents["memberships"] if row["entityId"] == "technology:embodied")
+        self.assertEqual(membership["trackId"], "track:robotics")
+        self.assertEqual(membership["state"], "rejected")
+        self.assertEqual(membership["origins"][-1]["decision"], "remove-fixed-watch")
+        self.assertTrue(report["intentsChanged"])
+        self.assertEqual(report["membershipCount"], 1)
+        self.assertEqual(report["state"], "rejected")
+
+    def test_track_id_is_authoritative_when_legacy_track_slug_disagrees(self):
+        membership = {
+            "trackId": "track:robotics",
+            "trackSlug": "wrong-legacy-value",
+        }
+        self.assertEqual(removal.membership_track_slug(membership), "robotics")
+
     def test_symbolic_technology_identity_is_not_collapsed(self):
         tracking, intents, _ = self.apply("technology", "C++")
         self.assertNotIn("C++", tracking["tracks"][0]["keywords"])
