@@ -24,6 +24,7 @@ import {
 } from "@/lib/homepage-preferences";
 import {
   baseHomepageRecommendationScore,
+  buildHomepageFavoriteAffinityProfile,
   homepageEventKey,
   homepageFeedFavoriteInput,
   homepageFavoriteId,
@@ -236,8 +237,8 @@ export function HomepageNewsFeed({
     return () => window.clearInterval(timer);
   }, []);
 
-  const favoriteIds = useMemo(
-    () => new Set(favorites.map((favorite) => favorite.id)),
+  const favoriteProfile = useMemo(
+    () => buildHomepageFavoriteAffinityProfile(favorites),
     [favorites],
   );
   const enabledSectorNames = useMemo(
@@ -280,15 +281,15 @@ export function HomepageNewsFeed({
           );
         }
         return (
-          personalizedHomepageRecommendationScore(right, preferences, favorites) -
-            personalizedHomepageRecommendationScore(left, preferences, favorites) ||
+          personalizedHomepageRecommendationScore(right, preferences, favoriteProfile) -
+            personalizedHomepageRecommendationScore(left, preferences, favoriteProfile) ||
           right.publishedAt.localeCompare(left.publishedAt)
         );
       });
   }, [
     activeArticles,
     channel,
-    favorites,
+    favoriteProfile,
     normalizedQuery,
     preferences,
     qualityScope,
@@ -445,7 +446,7 @@ export function HomepageNewsFeed({
           <div className={styles.feedList}>
             {displayedArticles.length ? (
               displayedArticles.map((item, index) => {
-                const score = personalizedHomepageRecommendationScore(item, preferences, favorites);
+                const score = personalizedHomepageRecommendationScore(item, preferences, favoriteProfile);
                 const hero = index === 0 && !normalizedQuery && channel !== "latest";
                 const major = !hero && (item.importance >= 90 || score >= 88);
                 const prominenceClass = hero
@@ -455,7 +456,7 @@ export function HomepageNewsFeed({
                     : styles.standardCard;
                 const eventKey = homepageEventKey(item);
                 const favorite = homepageFeedFavoriteInput(item);
-                const saved = favoriteIds.has(homepageFavoriteId(item));
+                const saved = favoriteProfile.favoriteIds.has(homepageFavoriteId(item));
                 const followed = isHomepageSectorFollowed(item, preferences);
                 const reasonOpen = expandedReasonKey === eventKey;
 
@@ -540,7 +541,7 @@ export function HomepageNewsFeed({
                         <div className={preferenceStyles.reasonPanel}>
                           <strong>这条内容出现在推荐流，因为：</strong>
                           <ul>
-                            {homepageRecommendationReasons(item, preferences, favorites).map((reason) => (
+                            {homepageRecommendationReasons(item, preferences, favoriteProfile).map((reason) => (
                               <li key={reason}>{reason}</li>
                             ))}
                           </ul>
