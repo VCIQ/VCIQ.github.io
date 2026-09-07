@@ -36,6 +36,18 @@ export function SiteHeader({ status }: { status: ReactNode }) {
               {label}
             </Link>
           ))}
+          <Link className="mobile-nav-utility" href="/search" onClick={() => setOpen(false)}>
+            <span>07</span>
+            全局搜索
+          </Link>
+          <a
+            className="mobile-nav-utility"
+            href={TRACKING_ADMIN_URL}
+            onClick={() => setOpen(false)}
+          >
+            <span>08</span>
+            追踪管理台
+          </a>
         </nav>
 
         <div className="header-actions">
@@ -46,10 +58,20 @@ export function SiteHeader({ status }: { status: ReactNode }) {
           <Link className="icon-button" href="/favorites" aria-label="收藏" title="收藏">
             <Bookmark size={18} />
           </Link>
-          <a className="icon-button" href={TRACKING_ADMIN_URL} aria-label="追踪管理台" title="追踪管理台">
+          <a
+            className="icon-button desktop-utility-action"
+            href={TRACKING_ADMIN_URL}
+            aria-label="追踪管理台"
+            title="追踪管理台"
+          >
             <Settings size={18} />
           </a>
-          <Link className="icon-button" href="/search" aria-label="全局搜索">
+          <Link
+            className="icon-button desktop-utility-action"
+            href="/search"
+            aria-label="全局搜索"
+            title="全局搜索"
+          >
             <Search size={18} />
           </Link>
           <button className="icon-button mobile-menu" onClick={() => setOpen(!open)} aria-label="展开导航">
