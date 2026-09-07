@@ -15,6 +15,7 @@ const channelDirectory = read("components/channel-update-directory.tsx");
 const channelDirectoryClient = read("components/channel-update-directory-client.tsx");
 const dashboard = read("components/dashboard-v2-client.tsx");
 const dashboardStyles = read("components/dashboard-v2.module.css");
+const recommendationFeed = read("components/homepage-news-feed.tsx");
 const favoriteButton = read("components/favorite-button.tsx");
 const favoriteControls = read("components/homepage-favorite-controls.tsx");
 const favoritesPage = read("components/favorites-page.tsx");
@@ -34,10 +35,10 @@ const routeBudget = read("scripts/check-route-performance-budget.mjs");
 const packageJson = read("package.json");
 
 test("homepage client does not import full build-time research datasets", () => {
-  assert.doesNotMatch(dashboard, /@\/lib\/intelligence-data/);
-  assert.doesNotMatch(dashboard, /@\/lib\/tracked-sectors/);
-  assert.doesNotMatch(dashboard, /@\/lib\/core-research-objects/);
-  assert.match(page, /DashboardV2Client/);
+  assert.doesNotMatch(recommendationFeed, /@\/lib\/intelligence-data/);
+  assert.doesNotMatch(recommendationFeed, /@\/lib\/tracked-sectors/);
+  assert.doesNotMatch(recommendationFeed, /@\/lib\/core-research-objects/);
+  assert.match(page, /HomepageNewsFeed/);
   assert.match(page, /initialPayload/);
   assert.match(page, /bootstrap/);
 });
@@ -47,9 +48,9 @@ test("homepage bootstrap stays compact before the lazy full archive loads", () =
   assert.match(page, /compactHomepageArticle/);
   assert.match(page, /\.map\(compactHomepageArticle\)/);
   assert.doesNotMatch(page, /relatedSources: item\.relatedSources/);
-  assert.match(dashboard, /INITIAL_INBOX_RENDER_LIMIT = 24/);
-  assert.match(dashboard, /candidateEvents\.slice\(0, inboxRenderLimit\)/);
-  assert.match(dashboard, /显示更多情报/);
+  assert.match(recommendationFeed, /INITIAL_FEED_LIMIT = 24/);
+  assert.match(recommendationFeed, /visibleArticles\.slice\(0, feedLimit\)/);
+  assert.match(recommendationFeed, /继续加载下一批情报/);
 });
 
 test("global header status is build-time and cannot trigger the article archive fetch", () => {
