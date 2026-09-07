@@ -3,12 +3,12 @@
 import {
   ArrowUpRight,
   BookmarkPlus,
-  Bot,
   CircleMinus,
   Clock3,
   Info,
   Radar,
   Search,
+  Share2,
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
@@ -34,6 +34,7 @@ import {
   matchesHomepageFollowChannel,
   personalizedHomepageRecommendationScore,
 } from "@/lib/homepage-recommendation";
+import { recordArticleShare } from "@/lib/hotness";
 import { buildTrackingCaptureLink } from "@/lib/tracking-admin-link";
 import {
   useArticles,
@@ -41,6 +42,7 @@ import {
   type LiveIntelligenceEvent,
   type Region,
 } from "@/lib/use-articles";
+import actionStyles from "./homepage-card-utility-actions.module.css";
 import styles from "./homepage-news-feed.module.css";
 import polishStyles from "./homepage-news-feed-polish.module.css";
 import preferenceStyles from "./homepage-preference-controls.module.css";
@@ -70,7 +72,7 @@ const CHANNELS: ReadonlyArray<{
   label: string;
   keywords?: readonly string[];
 }> = [
-  { id: "follow", label: "关注" },
+  { id: "follow", label: "关注流" },
   { id: "recommend", label: "推荐" },
   { id: "latest", label: "快讯" },
   { id: "ai", label: "AI / AGI", keywords: ["AI", "AGI", "人工智能", "大模型", "基础模型", "算力"] },
@@ -88,6 +90,7 @@ const TOP_SIGNAL_LIMIT = 10;
 const MINUTE_MS = 60_000;
 const HOUR_MS = 60 * MINUTE_MS;
 const DAY_MS = 24 * HOUR_MS;
+const SHARE_REQUEST_EVENT = "vciq:favorite-share-request";
 
 const CHINA_DATE_TIME_FORMATTER = new Intl.DateTimeFormat("zh-CN", {
   timeZone: "Asia/Shanghai",
@@ -209,6 +212,28 @@ function trackingHref(item: LiveIntelligenceEvent) {
     source: `${item.source.level} · ${item.source.name}`,
     channel: "homepage-recommendation-feed",
   });
+}
+
+function shareHomepageItem(item: LiveIntelligenceEvent) {
+  recordArticleShare({
+    id: item.id,
+    href: item.source.url,
+    title: item.title,
+    summary: item.summary,
+    publishedAt: item.publishedAt.slice(0, 10),
+    importance: item.importance,
+    sourceName: item.source.name,
+    channelLabel: "首页推荐",
+  });
+  window.dispatchEvent(
+    new CustomEvent(SHARE_REQUEST_EVENT, {
+      detail: {
+        title: item.title,
+        summary: item.summary,
+        url: item.source.url,
+      },
+    }),
+  );
 }
 
 export function HomepageNewsFeed({
@@ -434,10 +459,10 @@ export function HomepageNewsFeed({
               <strong>{visibleArticles.length} 条候选情报</strong>
             </div>
             <p>
-              先看最值得知道的变化，再决定是否进入追踪或深度研究。
+              先看最值得知道的变化，再决定是否查看来源、进入追踪或分享。
               {(preferences.followedSectors.length || favorites.length) ? (
                 <span className={preferenceStyles.preferenceSummary}>
-                  个性化：关注 {preferences.followedSectors.length} · 稍后读 {favorites.length}
+                  已关注赛道 {preferences.followedSectors.length} · 稍后读 {favorites.length}
                 </span>
               ) : null}
             </p>
@@ -556,10 +581,16 @@ export function HomepageNewsFeed({
                           <BookmarkPlus size={13} aria-hidden="true" />
                           追踪
                         </a>
-                        <Link href="/research-agent">
-                          <Bot size={13} aria-hidden="true" />
-                          深度研究
-                        </Link>
+                        <button
+                          type="button"
+                          className={actionStyles.shareButton}
+                          onClick={() => shareHomepageItem(item)}
+                          aria-label={`分享：${item.title}`}
+                          title="分享这条情报"
+                        >
+                          <Share2 size={13} aria-hidden="true" />
+                          分享
+                        </button>
                       </div>
                     </div>
 
@@ -690,7 +721,7 @@ export function HomepageNewsFeed({
             scrollHome();
           }}
         >
-          关注
+          关注流
         </button>
         <button
           type="button"

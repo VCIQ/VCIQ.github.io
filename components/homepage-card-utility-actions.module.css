@@ -1,0 +1,43 @@
+.shareButton {
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 9px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 10px;
+}
+
+.shareButton:hover {
+  border-color: var(--border);
+  color: var(--text);
+  background: var(--surface-3);
+}
+
+@media (max-width: 760px) {
+  .shareButton {
+    flex: 0 1 auto;
+    min-height: 30px;
+    justify-content: flex-start;
+    padding: 0 8px;
+    border-color: transparent;
+    background: transparent;
+    font-size: 10px;
+  }
+
+  .shareButton:hover {
+    border-color: var(--border-soft);
+    background: var(--surface-3);
+  }
+}
+
+@media (max-width: 520px) {
+  .shareButton {
+    padding-inline: 6px;
+    font-size: 9px;
+  }
+}
