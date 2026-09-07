@@ -1,6 +1,7 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useEffect, useSyncExternalStore } from "react";
+import { ensureHomepagePreferenceCloudHydrated } from "@/lib/homepage-preference-cloud-bootstrap";
 import {
   EMPTY_HOMEPAGE_PREFERENCES,
   getHomepagePreferenceSnapshot,
@@ -13,6 +14,10 @@ function getServerSnapshot(): HomepagePreferenceState {
 }
 
 export function useHomepagePreferences(): HomepagePreferenceState {
+  useEffect(() => {
+    void ensureHomepagePreferenceCloudHydrated();
+  }, []);
+
   return useSyncExternalStore(
     subscribeHomepagePreferences,
     getHomepagePreferenceSnapshot,
