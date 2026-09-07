@@ -27,7 +27,10 @@ export function homepageEventKey(item: LiveIntelligenceEvent) {
 }
 
 export function homepageFavoriteId(item: LiveIntelligenceEvent) {
-  return `homepage-feed:event:${homepageEventKey(item)}`;
+  // Reuse the existing event-favorite identity emitted by Daily Brief so the
+  // same event cannot become two independent "later read" records merely
+  // because it was saved from two different homepage surfaces.
+  return `daily-brief:event:${homepageEventKey(item)}`;
 }
 
 export function baseHomepageRecommendationScore(item: LiveIntelligenceEvent) {
