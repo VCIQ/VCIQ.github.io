@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-07T07:41:48+00:00",
+  "generatedAt": "2026-09-07T12:11:29+00:00",
   "asOfDate": "2026-09-07",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
@@ -12,180 +12,257 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 6217,
-      "completion_tokens": 10117,
-      "total_tokens": 16334,
+      "prompt_tokens": 11437,
+      "completion_tokens": 6659,
+      "total_tokens": 18096,
       "completion_tokens_details": {
-        "reasoning_tokens": 7599
+        "reasoning_tokens": 3330
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 6217
+      "prompt_cache_miss_tokens": 11437
     }
   },
   "changeSummary": {
-    "totalDetected": 63,
-    "total": 7,
+    "totalDetected": 54,
+    "total": 13,
     "byDataset": {
-      "intelligenceEvent": 5,
-      "marketCompany": 2
+      "intelligenceEvent": 12,
+      "marketCompany": 1
     },
     "byChangeType": {
-      "external_event": 11,
-      "data_maintenance": 26,
+      "external_event": 15,
+      "data_maintenance": 13,
       "source_refresh": 26
     },
-    "externalCandidates": 11,
+    "externalCandidates": 15,
     "qualityRejected": 0,
-    "maintenanceExcluded": 52,
+    "maintenanceExcluded": 39,
     "aggregatedEvents": 0,
     "highestImportance": 84,
     "verifiedChangeTotal": 0,
-    "candidateTotal": 2,
-    "auxiliaryLeadTotal": 5,
+    "candidateTotal": 1,
+    "auxiliaryLeadTotal": 12,
     "rejectedTotal": 0,
-    "newEvents": 8,
+    "newEvents": 14,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 6
+    "duplicatesSuppressed": 3
   },
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "证据包包含五条高价值情报事件（E002-E006）及宁德时代、华大基因的新闻变更（E012、E013、E016），主要涉及AI监管、AI产品、AI工业合作、新能源产业链与机构资金配置。全部证据为媒体转述或摘要（C级/媒体报道），且均标记automated_unreviewed，因此本分析将其作为待验证信号，不视为确定性事实。核心观察：最高法首次发布涉AI司法裁判规则、阿里“千问办公”推出多人工作台、索尼与沙特阿美探索AI工业合作、理想汽车拟投资欣旺达动力、宁德时代盈利与全球份额信息强劲。本输出不构成投资建议。",
+    "executiveSummary": "证据包共收录12条情报事件与2条宁德时代相关快讯，覆盖动力电池、AI基础设施、半导体、医疗器械、智能穿戴等行业。最高优先级事件为理想汽车26.5亿投资被吉利起诉的动力电池公司，以及华为发布麒麟9050 Pro芯片与GPT-6 Astra发布。多数证据来自媒体或企业新闻稿，等级为B/C，需以追踪验证为主，不宜作为确定性投资结论。",
     "keyDevelopments": [
       {
-        "title": "最高人民法院发布首部涉人工智能司法裁判规则文件",
-        "assessment": "事实成分：证据显示最高法于2026-09-07发布《关于依法审理涉人工智能纠纷案件的意见》，共5部分24条，覆盖AI换脸、大数据杀熟、仿冒名人带货、自动驾驶、知识产权等问题（E006）。推断：AI应用企业将面临更明确的司法行为边界，合规与诉讼风险上升。待验证：该文件对具体案件的裁判尺度及对AI产品设计的实际影响。",
+        "title": "理想汽车向被吉利起诉的动力电池公司投资26.5亿元",
+        "assessment": "理想汽车对一家与吉利存在诉讼纠纷的动力电池企业进行26.5亿元投资，表明其加速向上游电池环节延伸。事件同时涉及头部车企与电池供应链，重要性高，但证据为单一媒体快照，且未公开具体标的企业名称和投资细节，需后续验证。",
         "importance": 5,
         "confidence": "medium",
         "entities": [
-          "最高人民法院",
-          "人工智能行业"
+          "理想汽车",
+          "吉利",
+          "动力电池公司"
         ],
         "evidenceIds": [
-          "E006"
+          "E001"
         ]
       },
       {
-        "title": "宁德时代盈利与全球市占率新闻集中出现",
-        "assessment": "事实成分：证据中的报道标题包含宁德时代“日赚2.4亿，15家上市车企加起来赚不到一半”以及全球动力电池前十统计中宁德时代市占率“逼近40%”等表述（E012、E013），但标题不等于完整财务确认。推断：其盈利能力和行业集中度优势处于高位。待验证：具体财务数据、统计口径和排名来源。",
-        "importance": 4,
+        "title": "华为发布麒麟9050 Pro芯片及Mate XT 2三折叠手机",
+        "assessment": "华为时隔六年再次发布旗舰级高性能芯片，并首次采用逻辑折叠技术；同时发布Mate XT 2（19999元起）等新品。反映华为在高端芯片与终端产品上持续推进自主创新，对国产半导体和消费电子产业链有信号意义。目前证据均来自媒体转述，官方技术细节有限。",
+        "importance": 5,
+        "confidence": "medium",
+        "entities": [
+          "华为",
+          "麒麟9050 Pro",
+          "Mate XT 2"
+        ],
+        "evidenceIds": [
+          "E006",
+          "E009"
+        ]
+      },
+      {
+        "title": "OpenAI发布GPT-6 Astra并称进入AGI时代",
+        "assessment": "GPT-6 Astra及Pro版本发布，被视为OpenAI在开源社区压力下的防御性反制。事件将影响AI大模型竞争格局，但来源为微信公众号单方分析，且发布时间为9月3日，未经官方源交叉验证。",
+        "importance": 5,
         "confidence": "low",
         "entities": [
-          "宁德时代"
+          "OpenAI",
+          "GPT-6 Astra",
+          "Hugging Face"
         ],
         "evidenceIds": [
-          "E012",
-          "E013"
+          "E008"
         ]
       },
       {
-        "title": "理想汽车拟以26.5亿元战略投资欣旺达动力",
-        "assessment": "事实成分：证据显示9月4日欣旺达公告子公司欣旺达动力拟进行C++轮融资，理想汽车拟战略投资26.5亿元；报道当日理想汽车-W午后涨超4%，报49.78港元（E004）。推断：理想汽车试图强化动力电池供应链。待验证：投资是否完成交割、持股比例及对两家公司业务的实质影响。",
+        "title": "英矽智能AI药物候选物Rentosertib在六种蛋白质组学衰老时钟中显示生物学年龄逆转潜力",
+        "assessment": "Nature Biotechnology刊文称，六种衰老时钟模型一致显示Rentosertib治疗患者预测生物学年龄降低。这是AI制药在衰老标志物领域的正向证据，但样本量、临床阶段等信息在证据包内未披露。",
         "importance": 4,
         "confidence": "medium",
         "entities": [
-          "理想汽车",
-          "欣旺达动力",
-          "欣旺达"
+          "英矽智能",
+          "Rentosertib"
         ],
         "evidenceIds": [
-          "E004"
+          "E011"
         ]
       },
       {
-        "title": "索尼与沙特阿美就AI工业解决方案签署无约束力谅解备忘录",
-        "assessment": "事实成分：证据显示索尼半导体解决方案与沙特阿美签署无约束力MoU，探讨在AI工业解决方案领域合作，索尼将提供图像传感及AI技术（E003）。推断：若合作落地，索尼传感器/AI技术可进入能源工业场景。待验证：具体合作范围、时间表及是否形成正式合同。",
+        "title": "宁德时代相关供应链动态：泰金新能战略合作澄清、电解铜箔企业IPO获比亚迪与宁德时代押注",
+        "assessment": "泰金新能20CM涨停后澄清与宁德时代的战略合作协议为框架性、意向性文件，未约定具体交易金额；另有江西抚州电解铜箔企业获比亚迪、宁德时代投资并推进IPO。反映宁德时代供应链资本活动活跃，但均属媒体报道，协议尚未落地为确定交易。",
         "importance": 3,
-        "confidence": "low",
+        "confidence": "medium",
         "entities": [
-          "索尼",
-          "沙特阿美",
-          "索尼半导体解决方案"
+          "宁德时代",
+          "泰金新能",
+          "比亚迪"
         ],
         "evidenceIds": [
-          "E003"
+          "E017",
+          "E019"
         ]
       },
       {
-        "title": "阿里“千问办公”推出业内首个“多人工作台”",
-        "assessment": "事实成分：证据显示“千问办公”推出“多人工作台”，用户描述需求后可生成最多百人同时在线协作的网页，面向活动组织、家校协同和企业协作（E005）。推断：这是AI Agent从个人工具向组织协同场景的延伸。待验证：“业内首个”为产品宣传或媒体表述，需第三方验证；用户规模与商业化效果尚不可知。",
+        "title": "黄仁勋、马斯克、孙正义押注AI基础设施落地",
+        "assessment": "报道称三位科技领袖正投身AI基础设施等重资产环节，将AI模型能力落地。事件对应AI算力和能源基础设施投资主线，但证据仅为观点性媒体文章，缺少具体项目和金额。",
         "importance": 3,
         "confidence": "low",
         "entities": [
-          "阿里巴巴",
-          "千问办公"
+          "NVIDIA",
+          "特斯拉",
+          "软银"
+        ],
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "title": "壁仞科技发布品牌动态，定位通用智能计算解决方案提供商",
+        "assessment": "壁仞科技以壁砺系列GPU为核心，面向各行业提供算力基础设施。此为企业官网常规品牌内容，不构成重大产品或订单进展。",
+        "importance": 2,
+        "confidence": "medium",
+        "entities": [
+          "壁仞科技"
+        ],
+        "evidenceIds": [
+          "E010"
+        ]
+      },
+      {
+        "title": "华为WATCH Ultimate 2发布雪域白与迪桑特联名款",
+        "assessment": "华为高端智能手表新增配色与联名款，升级滑雪模式与健康指标研究，目标客群为中产及鸿蒙智行车主。属于消费产品迭代，战略重要性中等。",
+        "importance": 2,
+        "confidence": "high",
+        "entities": [
+          "华为"
         ],
         "evidenceIds": [
           "E005"
         ]
       },
       {
-        "title": "美国大学捐赠基金2026财年业绩有望跑赢或持平标普500",
-        "assessment": "事实成分：证据显示Cambridge Associates称多家美国大型大学捐赠基金在2026财年有望跑赢或持平标普500，结束此前数年落后局面（E002）。推断：科技公司投资是业绩回暖的重要驱动。待验证：该表述是预期而非最终结果，需年度报告数据确认。",
-        "importance": 2,
+        "title": "上市医疗器械企业盈利分化：部分公司靠投资或手套业务盈利",
+        "assessment": "报道显示24%上市械企营收净利双降，最赚钱的5家企业中有靠投资和手套业务盈利。反映医疗器械行业整体承压与结构性分化，但未给出具体公司名单和财务数据。",
+        "importance": 3,
         "confidence": "low",
         "entities": [
-          "美国大学捐赠基金",
-          "Cambridge Associates",
-          "标普500"
+          "医疗器械上市公司"
         ],
         "evidenceIds": [
-          "E002"
+          "E003"
+        ]
+      },
+      {
+        "title": "绿控传动上市后市值较盘中高点跌去一半",
+        "assessment": "绿控传动8月20日登陆创业板，开盘价40元较发行价8.5元大涨370.59%，盘中市值一度逼近200亿元，此后回落。业绩与市值背离问题被提出，但具体财务数据未在证据包内。",
+        "importance": 2,
+        "confidence": "medium",
+        "entities": [
+          "绿控传动"
+        ],
+        "evidenceIds": [
+          "E004"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "索尼/沙特阿美AI工业合作",
+        "entity": "理想汽车",
+        "direction": "positive",
+        "statement": "理想汽车以26.5亿元投资被吉利起诉的动力电池公司，显示其加强电池供应链垂直整合的意愿，对长期成本控制与供应安全可能有利，但投资标的的诉讼风险与交易结构尚未披露。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "entity": "华为",
+        "direction": "positive",
+        "statement": "华为时隔六年发布麒麟9050 Pro并推出Mate XT 2三折叠新机，显示其芯片与终端迭代能力持续恢复，可能强化国产高端智能手机竞争力。",
+        "evidenceIds": [
+          "E006",
+          "E009"
+        ]
+      },
+      {
+        "entity": "OpenAI",
         "direction": "mixed",
-        "statement": "MoU无约束力且处于“探讨”阶段，短期不构成确定订单；若转为正式项目，对索尼AI图像传感在工业场景的应用是正向信号（E003）。",
+        "statement": "GPT-6 Astra发布标志OpenAI声称进入AGI时代，但事件同时被解读为对Hugging Face等开源力量的防御性反制，竞争格局仍不确定。",
+        "evidenceIds": [
+          "E008"
+        ]
+      },
+      {
+        "entity": "英矽智能",
+        "direction": "positive",
+        "statement": "六种蛋白质组学衰老时钟一致显示Rentosertib可降低预测生物学年龄，为AI制药延长健康寿命的叙事提供了学术证据，但临床价值仍需更大规模验证。",
+        "evidenceIds": [
+          "E011"
+        ]
+      },
+      {
+        "entity": "宁德时代",
+        "direction": "neutral",
+        "statement": "宁德时代供应链融资与合作活跃，但泰金新能明确战略协议为框架性文件且未约定金额，目前不宜高估其对宁德时代业绩的确定性影响。",
+        "evidenceIds": [
+          "E017",
+          "E019"
+        ]
+      },
+      {
+        "entity": "壁仞科技",
+        "direction": "neutral",
+        "statement": "壁仞科技官网重申其GPU算力基础设施定位，未披露新产品或客户进展，暂无新增可评估信息。",
+        "evidenceIds": [
+          "E010"
+        ]
+      },
+      {
+        "entity": "医疗器械行业",
+        "direction": "negative",
+        "statement": "24%上市械企营收净利双降，行业整体承压；最赚钱企业中有依赖投资和手套业务者，反映主营业务盈利能力分化。",
         "evidenceIds": [
           "E003"
         ]
       },
       {
-        "entity": "理想汽车",
-        "direction": "positive",
-        "statement": "拟投资欣旺达动力26.5亿元，显示向上游电池环节布局；但交易尚待完成，需验证对供应链稳定性和盈利的影响（E004）。",
+        "entity": "绿控传动",
+        "direction": "mixed",
+        "statement": "上市首日市值一度逼近200亿后回落一半，市场对估值与业绩匹配度产生分歧，需关注后续财务披露。",
         "evidenceIds": [
           "E004"
         ]
       },
       {
-        "entity": "阿里巴巴（千问办公）",
+        "entity": "NVIDIA/特斯拉/软银",
         "direction": "positive",
-        "statement": "“多人工作台”瞄准企业协同与复杂流程，扩展了AI Agent的落地场景；但“业内首个”和实际用户转化尚待第三方验证（E005）。",
-        "evidenceIds": [
-          "E005"
-        ]
-      },
-      {
-        "entity": "宁德时代",
-        "direction": "positive",
-        "statement": "媒体报道其单日利润水平及全球市占率显著，显示行业龙头地位强化；但相关数字来自标题，需正式财报与统计报告核验（E012、E013）。",
-        "evidenceIds": [
-          "E012",
-          "E013"
-        ]
-      },
-      {
-        "entity": "AI行业司法环境",
-        "direction": "mixed",
-        "statement": "最高法涉AI裁判规则明确了AI换脸、大数据杀熟等行为边界，增加规则确定性，同时也提高企业合规要求；实际影响取决于司法适用（E006）。",
-        "evidenceIds": [
-          "E006"
-        ]
-      },
-      {
-        "entity": "美国大学捐赠基金持仓风格",
-        "direction": "mixed",
-        "statement": "捐赠基金有望结束跑输大盘局面，科技投资是主要解释；但这是业绩预期，若科技股回调可能再次落后，需以最终年度数据确认（E002）。",
+        "statement": "黄仁勋、马斯克、孙正义等被认为争相投入AI落地基础设施，可能推动AI从模型竞赛转向工程化与商业化，但具体项目与资本开支尚未在证据中明确。",
         "evidenceIds": [
           "E002"
         ]
@@ -193,129 +270,219 @@
     ],
     "watchlist": [
       {
-        "item": "索尼-沙特阿美合作是否转为正式合同",
-        "reason": "当前仅无约束力MoU，商业价值取决于后续正式协议和具体项目。",
-        "nextEvidence": "双方披露合作框架协议、试点项目或采购订单。",
+        "item": "理想汽车26.5亿投资对象及交易细节",
+        "reason": "证据包未披露标的企业名称、持股比例、业务领域和吉利诉讼具体内容，需要官方公告或更多报道确认。",
+        "nextEvidence": "理想汽车或标的公司官方公告、工商变更、吉利诉讼进展",
         "evidenceIds": [
-          "E003"
+          "E001"
         ]
       },
       {
-        "item": "理想汽车对欣旺达动力26.5亿元投资的交割进展",
-        "reason": "投资处于拟议/公告阶段，尚未验证完成。",
-        "nextEvidence": "欣旺达或理想汽车发布C++轮融资完成公告、工商变更或董事会批准文件。",
+        "item": "麒麟9050 Pro芯片独立性能评测与量产供应链",
+        "reason": "逻辑折叠技术属于新型架构，媒体报道存在宣传性表述，需专业机构评测和拆解验证实际性能、良率与供应能力。",
+        "nextEvidence": "半导体第三方评测、拆解报告、后续搭载机型的实际供货情况",
         "evidenceIds": [
-          "E004"
+          "E006",
+          "E009"
         ]
       },
       {
-        "item": "千问办公“多人工作台”的用户与商业化指标",
-        "reason": "产品刚推出，协同场景能否形成付费价值尚无数据。",
-        "nextEvidence": "阿里官方或第三方报告的用户量、活跃项目数、企业客户案例或营收信息。",
+        "item": "GPT-6 Astra实际能力测评与安全事件",
+        "reason": "当前来源为单一自媒体分析文章，缺乏官方公告和独立测评；安全界反应较快但细节不足。",
+        "nextEvidence": "OpenAI官方技术报告、第三方基准测试、安全机构分析",
         "evidenceIds": [
-          "E005"
+          "E008"
         ]
       },
       {
-        "item": "最高人民法院涉AI裁判规则的司法适用案例",
-        "reason": "规则文本已发布，但实务影响需要典型案例和裁判尺度来确认。",
-        "nextEvidence": "最高法后续发布典型案例、执行细则或地方法院涉AI案件判决。",
+        "item": "Rentosertib临床数据与监管进展",
+        "reason": "Nature Biotechnology文章是重要学术背书，但六种衰老时钟的证据强度、样本规模和临床终点尚未在证据包中说明。",
+        "nextEvidence": "期刊全文、临床试验注册数据、监管审评进展",
         "evidenceIds": [
-          "E006"
+          "E011"
         ]
       },
       {
-        "item": "宁德时代盈利及全球市占率数据的正式口径",
-        "reason": "媒体标题中的“日赚2.4亿”“逼近40%”缺乏完整报告支撑。",
-        "nextEvidence": "宁德时代财报、SNE Research或行业统计报告中的准确数据。",
+        "item": "泰金新能与宁德时代战略合作的后续执行",
+        "reason": "协议仅属框架性、意向性文件，未约定具体交易金额，存在被市场过度解读的可能。",
+        "nextEvidence": "正式供货合同、订单公告、宁德时代官方确认",
         "evidenceIds": [
-          "E012",
-          "E013"
+          "E017"
         ]
       },
       {
-        "item": "美国大学捐赠基金2026财年最终业绩",
-        "reason": "“有望跑赢”是预期，可能因科技股波动而变化。",
-        "nextEvidence": "捐赠基金年度报告或Cambridge Associates最终业绩统计。",
+        "item": "江西抚州电解铜箔企业IPO进展",
+        "reason": "比亚迪与宁德时代押注显示电池材料供应链投资活跃，但企业名称、投资金额和IPO状态均未披露。",
+        "nextEvidence": "IPO招股书、证监会受理信息、投资方公告",
+        "evidenceIds": [
+          "E019"
+        ]
+      },
+      {
+        "item": "AI算力基础设施投资动态",
+        "reason": "三位科技领袖的AI落地方向与投入规模只是报道性内容，无具体资本开支数据，需持续跟踪。",
+        "nextEvidence": "企业财报资本开支、数据中心建设公告、具体合作合同",
         "evidenceIds": [
           "E002"
+        ]
+      },
+      {
+        "item": "医疗器械上市公司盈利分化",
+        "reason": "报道未指明具体公司，无法转化为可操作的标的判断，需要行业财务数据验证。",
+        "nextEvidence": "完整榜单、上市公司半年报/年报",
+        "evidenceIds": [
+          "E003"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "证据等级整体偏低，媒体报道标题易被误读为事实",
-        "reason": "E002-E006均为C级或媒体报道且automated_unreviewed，E012/E013/E016为新闻标题或行情快照，均未经官方一手文件交叉验证。",
+        "risk": "证据等级偏低且部分来源单一",
+        "reason": "多数情报来自媒体或自媒体，证据等级集中在B/C，GPT-6 Astra、理想汽车投资和械企盈利等事件仅有单一来源，存在报道偏差或事实不完整的可能。",
         "evidenceIds": [
-          "E002",
+          "E001",
           "E003",
-          "E004",
-          "E005",
+          "E008"
+        ]
+      },
+      {
+        "risk": "动力电池投资与诉讼风险交织",
+        "reason": "理想汽车投资对象同时被吉利起诉，若诉讼导致标的资产受限、赔偿或禁售，投资价值将受负面影响，且具体风险敞口未知。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "risk": "华为芯片宣传与实测可能存在差异",
+        "reason": "麒麟9050 Pro的逻辑折叠技术尚属首次商用，媒体报道基于发布会口径，实际性能、功耗与供应链稳定性仍需独立验证。",
+        "evidenceIds": [
           "E006",
-          "E012",
-          "E013",
-          "E016"
+          "E009"
         ]
       },
       {
-        "risk": "AI司法监管带来合规与诉讼不确定性",
-        "reason": "最高法意见将AI换脸、大数据杀熟、仿冒名人带货等纳入裁判规则，企业需调整产品风控，涉诉风险可能上升。",
+        "risk": "AGI声明及大模型安全风险",
+        "reason": "OpenAI声称进入AGI时代可能引发监管和安全争议，存在政策收紧或安全事件导致行业波动风险。",
         "evidenceIds": [
-          "E006"
+          "E008"
         ]
       },
       {
-        "risk": "合作与投资可能不落地",
-        "reason": "索尼-沙特阿美为无约束力MoU；理想汽车投资欣旺达动力尚处拟议阶段，存在条款变化或终止可能。",
+        "risk": "生物年龄逆转证据可能被过度解读",
+        "reason": "六种衰老时钟的结果属于预测性生物标志物变化，不等于临床获益或获批，若后续试验失败将导致预期回撤。",
         "evidenceIds": [
-          "E003",
-          "E004"
+          "E011"
         ]
       },
       {
-        "risk": "新产品“行业首个”未经独立验证，商业化存在不确定性",
-        "reason": "千问办公多人工作台刚上线，缺乏第三方使用数据和付费证据，实际采用率可能不及宣传。",
+        "risk": "合作框架协议的市场误读风险",
+        "reason": "泰金新能涨停与宁德时代框架协议相关，公司已澄清无具体交易金额，但市场仍可能短期过度反应，投资者需警惕波动。",
         "evidenceIds": [
-          "E005"
-        ]
-      },
-      {
-        "risk": "捐赠基金业绩回暖高度依赖科技股表现",
-        "reason": "若科技公司股价回调，捐赠基金“有望跑赢”的预期可能反转；且该预期尚未形成最终业绩。",
-        "evidenceIds": [
-          "E002"
-        ]
-      },
-      {
-        "risk": "行情快照类低信息新闻不应作为基本面判断",
-        "reason": "华大基因涨0.05%和成交额1.68亿元仅为当日行情，不构成对基因检测行业或公司基本面的有效证据。",
-        "evidenceIds": [
-          "E016"
+          "E017"
         ]
       }
     ],
-    "methodologyNote": "本分析仅使用证据包中的结构化证据，未补充外部事实。所有证据均未经独立来源或多方交叉核验（E002-E006为C级/媒体报道，E012/E013/E016为媒体新闻或行情快照），因此所有判断均按“待验证信号”处理，并在各条中区分事实成分、推断和待验证事项。E016仅作为行情类低信息证据在风险中提示，未纳入核心发展判断。输出不构成买卖建议、目标价或收益承诺。 数据管线提示：两小时公开情报刷新=stale。"
+    "methodologyNote": "本报告仅基于2026年9月7日证据包中的12条高价值情报事件和2条宁德时代新闻快讯进行分析。证据主要来自新浪财经、钛媒体、东方财富、企业官网和新闻稿，证据等级以C级（外部线索/媒体报道）为主，少数为B级（企业官方源）。所有判断均以引用证据为基础，对单一来源或低等级证据采取medium/low置信度表达，不构成投资建议。 数据管线提示：两小时公开情报刷新=stale。"
   },
   "changes": [
     {
-      "id": "chg-0158b35495d9b116e9a0",
+      "id": "chg-65c5fd579d5e4fafae94",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-1f27e72e5a5108a781",
-      "entityName": "美国大学捐赠基金业绩回暖 科技公司投资助力跑赢标普500",
+      "entityId": "intelligence-event-f5eb705511adeedd5f",
+      "entityName": "被吉利起诉的公司，获得了理想汽车26.5亿投资",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：美国大学捐赠基金业绩回暖 科技公司投资助力跑赢标普500。",
+      "summary": "新增高价值情报事件记录：被吉利起诉的公司，获得了理想汽车26.5亿投资。",
       "importance": 84,
       "before": null,
       "after": {
         "publishedAt": "2026-09-07",
-        "summary": "多家美国大型大学捐赠基金在2026财年有望跑赢或持平标普500指数，结束此前数年表现落后于大盘的局面。咨询机构Cambridge Associates表示...",
-        "title": "美国大学捐赠基金业绩回暖 科技公司投资助力跑赢标普500"
+        "summary": "来源 | 野马财经 一家车企索赔，一家车企入股。 作者 | 于婞编辑 | 高岩 动力电池市场的牌桌上，理想汽车（2015.HK）又押下了一笔重注。",
+        "title": "被吉利起诉的公司，获得了理想汽车26.5亿投资"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-07",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "来源 | 野马财经 一家车企索赔，一家车企入股。 作者 | 于婞编辑 | 高岩 动力电池市场的牌桌上，理想汽车（2015.HK）又押下了一笔重注。",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "被吉利起诉的公司，获得了理想汽车26.5亿投资",
+          "evidenceIds": [
+            "E001"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E001"
+      ],
+      "supportingEvidenceIds": [
+        "E001"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-a9f6af929ac59bd1179a"
+      ],
+      "eventLifecycles": {
+        "evt-a9f6af929ac59bd1179a": "first_seen"
+      },
+      "eventId": "evt-a9f6af929ac59bd1179a",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-07T12:11:29+00:00",
+      "lastSeenAt": "2026-09-07T12:11:29+00:00"
+    },
+    {
+      "id": "chg-f3c8a7788e0f42ec795e",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-00f5dd1e5dbb873da6",
+      "entityName": "模型负责上天，三个“野心家”负责把AI落地",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：模型负责上天，三个“野心家”负责把AI落地。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-07",
+        "summary": "黄仁勋、马斯克、孙正义，抢着做AI的“脏活”。",
+        "title": "模型负责上天，三个“野心家”负责把AI落地"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -337,7 +504,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "多家美国大型大学捐赠基金在2026财年有望跑赢或持平标普500指数，结束此前数年表现落后于大盘的局面。咨询机构Cambridge Associates表示...",
+          "after": "黄仁勋、马斯克、孙正义，抢着做AI的“脏活”。",
           "evidenceIds": [
             "E002"
           ]
@@ -345,7 +512,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "美国大学捐赠基金业绩回暖 科技公司投资助力跑赢标普500",
+          "after": "模型负责上天，三个“野心家”负责把AI落地",
           "evidenceIds": [
             "E002"
           ]
@@ -366,35 +533,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-7d75ec515f17967e44a5"
+        "evt-d014c563f43c084b4d8c"
       ],
       "eventLifecycles": {
-        "evt-7d75ec515f17967e44a5": "first_seen"
+        "evt-d014c563f43c084b4d8c": "first_seen"
       },
-      "eventId": "evt-7d75ec515f17967e44a5",
+      "eventId": "evt-d014c563f43c084b4d8c",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-07T07:41:48+00:00",
-      "lastSeenAt": "2026-09-07T07:41:48+00:00"
+      "firstSeenAt": "2026-09-07T12:11:29+00:00",
+      "lastSeenAt": "2026-09-07T12:11:29+00:00"
     },
     {
-      "id": "chg-0584104965ff4f74b755",
+      "id": "chg-02723a91f65cf47f2dcb",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-6c8ff8e4929f6ffb12",
-      "entityName": "索尼与沙特阿美合作开发人工智能驱动的工业解决方案",
+      "entityId": "intelligence-event-f3cf955a2b88e00cf6",
+      "entityName": "最赚钱的5家上市械企，一家靠投资，一家卖手套",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：索尼与沙特阿美合作开发人工智能驱动的工业解决方案。",
+      "summary": "新增高价值情报事件记录：最赚钱的5家上市械企，一家靠投资，一家卖手套。",
       "importance": 84,
       "before": null,
       "after": {
         "publishedAt": "2026-09-07",
-        "summary": "索尼集团旗下芯片业务部门与沙特阿美签署一份无约束力谅解备忘录，探讨在人工智能工业解决方案领域开展合作。 索尼半导体解决方案公司将提供图像传感及人工智能技术...",
-        "title": "索尼与沙特阿美合作开发人工智能驱动的工业解决方案"
+        "summary": "24%上市公司营收净利双降，中小企业如何生存？",
+        "title": "最赚钱的5家上市械企，一家靠投资，一家卖手套"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -416,7 +583,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "索尼集团旗下芯片业务部门与沙特阿美签署一份无约束力谅解备忘录，探讨在人工智能工业解决方案领域开展合作。 索尼半导体解决方案公司将提供图像传感及人工智能技术...",
+          "after": "24%上市公司营收净利双降，中小企业如何生存？",
           "evidenceIds": [
             "E003"
           ]
@@ -424,7 +591,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "索尼与沙特阿美合作开发人工智能驱动的工业解决方案",
+          "after": "最赚钱的5家上市械企，一家靠投资，一家卖手套",
           "evidenceIds": [
             "E003"
           ]
@@ -445,35 +612,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-3bcb1a81e1dc99cedc23"
+        "evt-0378c5ee39b04b0aaa0d"
       ],
       "eventLifecycles": {
-        "evt-3bcb1a81e1dc99cedc23": "first_seen"
+        "evt-0378c5ee39b04b0aaa0d": "first_seen"
       },
-      "eventId": "evt-3bcb1a81e1dc99cedc23",
+      "eventId": "evt-0378c5ee39b04b0aaa0d",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-07T07:41:48+00:00",
-      "lastSeenAt": "2026-09-07T07:41:48+00:00"
+      "firstSeenAt": "2026-09-07T12:11:29+00:00",
+      "lastSeenAt": "2026-09-07T12:11:29+00:00"
     },
     {
-      "id": "chg-86ba5dfebca529173944",
+      "id": "chg-c1e51a9c09ac5926b18c",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-780b23eaadd3b6ade7",
-      "entityName": "理想汽车-W午后涨超4% 拟以26.5亿元战略投资欣旺达动力",
+      "entityId": "intelligence-event-cbb9701f7658f3d30e",
+      "entityName": "市值离上市高点已跌掉一半，绿控传动的业绩和市值背离了吗？",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：理想汽车-W午后涨超4% 拟以26.5亿元战略投资欣旺达动力。",
+      "summary": "新增高价值情报事件记录：市值离上市高点已跌掉一半，绿控传动的业绩和市值背离了吗？。",
       "importance": 84,
       "before": null,
       "after": {
         "publishedAt": "2026-09-07",
-        "summary": "理想汽车-W（02015）午后涨超4%，截至发稿，股价上涨4.10%，现报49.78港元，成交额4.28亿港元。 9月4日，欣旺达发布公告称，子公司欣旺达动力科技股份有限公司拟进行C++轮...",
-        "title": "理想汽车-W午后涨超4% 拟以26.5亿元战略投资欣旺达动力"
+        "summary": "来源：翠鸟资本 8月20日登陆创业板的绿控传动（301655.SZ），开盘价40元，较8.5元的发行价暴涨370.59%，盘中市值一度逼近200亿元。",
+        "title": "市值离上市高点已跌掉一半，绿控传动的业绩和市值背离了吗？"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -495,7 +662,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "理想汽车-W（02015）午后涨超4%，截至发稿，股价上涨4.10%，现报49.78港元，成交额4.28亿港元。 9月4日，欣旺达发布公告称，子公司欣旺达动力科技股份有限公司拟进行C++轮...",
+          "after": "来源：翠鸟资本 8月20日登陆创业板的绿控传动（301655.SZ），开盘价40元，较8.5元的发行价暴涨370.59%，盘中市值一度逼近200亿元。",
           "evidenceIds": [
             "E004"
           ]
@@ -503,7 +670,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "理想汽车-W午后涨超4% 拟以26.5亿元战略投资欣旺达动力",
+          "after": "市值离上市高点已跌掉一半，绿控传动的业绩和市值背离了吗？",
           "evidenceIds": [
             "E004"
           ]
@@ -524,35 +691,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-8cdb4438f74d934a74a5"
+        "evt-cb12da18dfc47d4c9a7a"
       ],
       "eventLifecycles": {
-        "evt-8cdb4438f74d934a74a5": "first_seen"
+        "evt-cb12da18dfc47d4c9a7a": "first_seen"
       },
-      "eventId": "evt-8cdb4438f74d934a74a5",
+      "eventId": "evt-cb12da18dfc47d4c9a7a",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-07T07:41:48+00:00",
-      "lastSeenAt": "2026-09-07T07:41:48+00:00"
+      "firstSeenAt": "2026-09-07T12:11:29+00:00",
+      "lastSeenAt": "2026-09-07T12:11:29+00:00"
     },
     {
-      "id": "chg-4a4709b43e15ccd8e0cc",
+      "id": "chg-8290be583f55a98b85f7",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-32527866494460d89a",
-      "entityName": "业内首个！“千问办公”推出“多人工作台”",
+      "entityId": "intelligence-event-969895282b98f34bd1",
+      "entityName": "高端智能手表怎么选，华为WATCH Ultimate 2 非凡探索雪域白、迪桑特联名款发布",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：业内首个！“千问办公”推出“多人工作台”。",
+      "summary": "新增高价值情报事件记录：高端智能手表怎么选，华为WATCH Ultimate 2 非凡探索雪域白、迪桑特联名款发布。",
       "importance": 82,
       "before": null,
       "after": {
         "publishedAt": "2026-09-07",
-        "summary": "近日，阿里巴巴旗下Agent产品“千问办公”推出业内首个“多人工作台”。用户简单描述需求，即可生成并发布一个最多支持百人同时在线协作的网页，承载复杂的业务流程。该功能适用于活动组织、家校协同和企业协作等场景，可解决SaaS软件采购成本高、定制软件开发耗时高的难题。目前，用户可从“千问办公”首页下方功能入口直接体验。 “千问办公”产品首页 目前，市面上的AI工作台主要面向个人使用，例如生成在线简历、个人作品集、个人打卡器等，用于信息展示、记录或简单交互，能够解决的实际问题有限。“千问办公”推出的“多人工作台”，不仅…",
-        "title": "业内首个！“千问办公”推出“多人工作台”"
+        "summary": "高端腕表市场正在悄然生变——越来越多消费者不再满足于单纯的机械美学，而是希望一枚手表，既能撑起商务通勤场合的高级质感，又能陪伴潜水、高尔夫、滑雪等专业运动场景。 这种“商务通勤与专业运动并重”的双重诉求， 让 主打全场景运动能力的华为WATCH Ultimate 2 非凡探索 系列 受到消费者追捧。 9月7日，这款“华为全能表王” 迎来 雪域白与迪桑特联名款两款全新配色， 同步升级六大滑雪模式、新增三大健康指标研究，为追求智慧生活方式的中产人群、鸿蒙智行车主等用户，提供了高端手表新选择。 新色亮相：雪域白纯净破冰…",
+        "title": "高端智能手表怎么选，华为WATCH Ultimate 2 非凡探索雪域白、迪桑特联名款发布"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -574,7 +741,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "近日，阿里巴巴旗下Agent产品“千问办公”推出业内首个“多人工作台”。用户简单描述需求，即可生成并发布一个最多支持百人同时在线协作的网页，承载复杂的业务流程。该功能适用于活动组织、家校协同和企业协作等场景，可解决SaaS软件采购成本高、定制软件开发耗时高的难题。目前，用户可从“千问办公”首页下方功能入口直接体验。 “千问办公”产品首页 目前，市面上的AI工作台主要面向个人使用，例如生成在线简历、个人作品集、个人打卡器等，用于信息展示、记录或简单交互，能够解决的实际问题有限。“千问办公”推出的“多人工作台”，不仅…",
+          "after": "高端腕表市场正在悄然生变——越来越多消费者不再满足于单纯的机械美学，而是希望一枚手表，既能撑起商务通勤场合的高级质感，又能陪伴潜水、高尔夫、滑雪等专业运动场景。 这种“商务通勤与专业运动并重”的双重诉求， 让 主打全场景运动能力的华为WATCH Ultimate 2 非凡探索 系列 受到消费者追捧。 9月7日，这款“华为全能表王” 迎来 雪域白与迪桑特联名款两款全新配色， 同步升级六大滑雪模式、新增三大健康指标研究，为追求智慧生活方式的中产人群、鸿蒙智行车主等用户，提供了高端手表新选择。 新色亮相：雪域白纯净破冰…",
           "evidenceIds": [
             "E005"
           ]
@@ -582,7 +749,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "业内首个！“千问办公”推出“多人工作台”",
+          "after": "高端智能手表怎么选，华为WATCH Ultimate 2 非凡探索雪域白、迪桑特联名款发布",
           "evidenceIds": [
             "E005"
           ]
@@ -603,35 +770,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-0424f4fefae166ff305e"
+        "evt-b2ff6b4ce13417cbd01d"
       ],
       "eventLifecycles": {
-        "evt-0424f4fefae166ff305e": "first_seen"
+        "evt-b2ff6b4ce13417cbd01d": "first_seen"
       },
-      "eventId": "evt-0424f4fefae166ff305e",
+      "eventId": "evt-b2ff6b4ce13417cbd01d",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-07T07:41:48+00:00",
-      "lastSeenAt": "2026-09-07T07:41:48+00:00"
+      "firstSeenAt": "2026-09-07T12:11:29+00:00",
+      "lastSeenAt": "2026-09-07T12:11:29+00:00"
     },
     {
-      "id": "chg-a58d4645ae2eea718157",
+      "id": "chg-9d8f1398d1ddd88bd3e1",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-279a24bf94852f9856",
-      "entityName": "最高法发文明确“AI换脸拟声”等案件裁判规则",
+      "entityId": "intelligence-event-186faae9f42f307bad",
+      "entityName": "华为时隔六年再次发布高性能芯片",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：最高法发文明确“AI换脸拟声”等案件裁判规则。",
-      "importance": 80,
+      "summary": "新增高价值情报事件记录：华为时隔六年再次发布高性能芯片。",
+      "importance": 82,
       "before": null,
       "after": {
         "publishedAt": "2026-09-07",
-        "summary": "9月7日，最高人民法院召开新闻发布会， 发布《关于依法审理涉 人工智能 纠纷案件的意见》，这是首部由国家最高审判机构发布的涉 人工智能 司法裁判规则文件。 《意见》聚焦社会各界关注的AI换脸、 大数据 杀熟、仿冒名人带货、自动驾驶、 知识产权 保护等问题，明确相应的裁判规则，厘清行为边界和法律责任，以公正高效司法保障 人工智能 健康有序发展。 《意见》分为5个部分，共24条，主要内容有： 一是专门明确涉人工智能纠纷案件审理的指导思想和基本原则。 《意见》第一部分（第1条、第2条）明确了审理涉人工智能纠纷案件应当坚…",
-        "title": "最高法发文明确“AI换脸拟声”等案件裁判规则"
+        "summary": "华为7日在广州发布Mate XT 2三折叠手机，搭载最新的麒麟9050 Pro芯片，这是首款采用逻辑折叠技术的高性能芯片。据了解，麒麟9050 Pro在单芯片内将逻辑单元分层排布，如同从平层升级为复式，内部增设垂直互联通道，好似加装“电梯”，信号传输路径更短、时延更低、性能更好。这也是继华为Mate40全球发布会之后，华为时隔六年在旗舰发布会上推出全新麒麟芯片。 华为时隔六年再次发布高性能芯片 余承东：麒麟9050 Pro史上最强 9月7日，在HarmonyOS 7 | HUAWEI Mate XT 2 及全场景…",
+        "title": "华为时隔六年再次发布高性能芯片"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -653,7 +820,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "9月7日，最高人民法院召开新闻发布会， 发布《关于依法审理涉 人工智能 纠纷案件的意见》，这是首部由国家最高审判机构发布的涉 人工智能 司法裁判规则文件。 《意见》聚焦社会各界关注的AI换脸、 大数据 杀熟、仿冒名人带货、自动驾驶、 知识产权 保护等问题，明确相应的裁判规则，厘清行为边界和法律责任，以公正高效司法保障 人工智能 健康有序发展。 《意见》分为5个部分，共24条，主要内容有： 一是专门明确涉人工智能纠纷案件审理的指导思想和基本原则。 《意见》第一部分（第1条、第2条）明确了审理涉人工智能纠纷案件应当坚…",
+          "after": "华为7日在广州发布Mate XT 2三折叠手机，搭载最新的麒麟9050 Pro芯片，这是首款采用逻辑折叠技术的高性能芯片。据了解，麒麟9050 Pro在单芯片内将逻辑单元分层排布，如同从平层升级为复式，内部增设垂直互联通道，好似加装“电梯”，信号传输路径更短、时延更低、性能更好。这也是继华为Mate40全球发布会之后，华为时隔六年在旗舰发布会上推出全新麒麟芯片。 华为时隔六年再次发布高性能芯片 余承东：麒麟9050 Pro史上最强 9月7日，在HarmonyOS 7 | HUAWEI Mate XT 2 及全场景…",
           "evidenceIds": [
             "E006"
           ]
@@ -661,7 +828,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "最高法发文明确“AI换脸拟声”等案件裁判规则",
+          "after": "华为时隔六年再次发布高性能芯片",
           "evidenceIds": [
             "E006"
           ]
@@ -682,18 +849,492 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-ea7a4a50c4fde597bea2"
+        "evt-c655922f4db779fb519f"
       ],
       "eventLifecycles": {
-        "evt-ea7a4a50c4fde597bea2": "first_seen"
+        "evt-c655922f4db779fb519f": "first_seen"
       },
-      "eventId": "evt-ea7a4a50c4fde597bea2",
+      "eventId": "evt-c655922f4db779fb519f",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-07T07:41:48+00:00",
-      "lastSeenAt": "2026-09-07T07:41:48+00:00"
+      "firstSeenAt": "2026-09-07T12:11:29+00:00",
+      "lastSeenAt": "2026-09-07T12:11:29+00:00"
     },
     {
-      "id": "chg-cf29428b4abacde5d6b1",
+      "id": "chg-36df30b7b1dc1d46a00b",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-6a1328b657cb0fb437",
+      "entityName": "SunTec India Introduces AI-Accelerated Digital Engineering, Integrating AI Across the Software Development Lifecycle",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：SunTec India Introduces AI-Accelerated Digital Engineering, Integrating AI Across the Software Development Lifecycle。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-07",
+        "summary": "Embedding AI across every stage—ideation, coding, testing, and deployment to help enterprises build and scale software faster while maintaining human rigor. NEW DELHI, Sept. 7, 2026 /PRNewswire/ -- SunTec India today announced the expansion of its Digital Eng…",
+        "title": "SunTec India Introduces AI-Accelerated Digital Engineering, Integrating AI Across the Software Development Lifecycle"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-07",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Embedding AI across every stage—ideation, coding, testing, and deployment to help enterprises build and scale software faster while maintaining human rigor. NEW DELHI, Sept. 7, 2026 /PRNewswire/ -- SunTec India today announced the expansion of its Digital Eng…",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "SunTec India Introduces AI-Accelerated Digital Engineering, Integrating AI Across the Software Development Lifecycle",
+          "evidenceIds": [
+            "E007"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E007"
+      ],
+      "supportingEvidenceIds": [
+        "E007"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-3d71108d6994ccaa630a"
+      ],
+      "eventLifecycles": {
+        "evt-3d71108d6994ccaa630a": "first_seen"
+      },
+      "eventId": "evt-3d71108d6994ccaa630a",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-07T12:11:29+00:00",
+      "lastSeenAt": "2026-09-07T12:11:29+00:00"
+    },
+    {
+      "id": "chg-c4209bea3bf10fd08c4b",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-5ab98bdda8e440e0b3",
+      "entityName": "GPT-6-Astra发布OpenAI的AGI宣言与开源防御反制",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：GPT-6-Astra发布OpenAI的AGI宣言与开源防御反制。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-04",
+        "summary": "GPT-6 Astra发布：OpenAI的AGI宣言与开源防御的反制 8月26日Hugging Face事件只是前奏，Astra才是准备好的真正武器——但安全界的反应比想象中更快 AI观察 · 2026年9月4日 2026年9月3日，OpenAI正式发布GPT-6 Astra，并同时发布了GPT-6 Astra Pro。Greg Brockman在发布会上说了一句话：“我们已进入AGI时代。” 这个说法本身就很值得玩味。过去两年，“AGI”这个词被用得极其泛滥，每家公司发新品的时候都要在标题里塞一个“通用”或者“…",
+        "title": "GPT-6-Astra发布OpenAI的AGI宣言与开源防御反制"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-04",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "GPT-6 Astra发布：OpenAI的AGI宣言与开源防御的反制 8月26日Hugging Face事件只是前奏，Astra才是准备好的真正武器——但安全界的反应比想象中更快 AI观察 · 2026年9月4日 2026年9月3日，OpenAI正式发布GPT-6 Astra，并同时发布了GPT-6 Astra Pro。Greg Brockman在发布会上说了一句话：“我们已进入AGI时代。” 这个说法本身就很值得玩味。过去两年，“AGI”这个词被用得极其泛滥，每家公司发新品的时候都要在标题里塞一个“通用”或者“…",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "GPT-6-Astra发布OpenAI的AGI宣言与开源防御反制",
+          "evidenceIds": [
+            "E008"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E008"
+      ],
+      "supportingEvidenceIds": [
+        "E008"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-4e86abfb551a59c77c61"
+      ],
+      "eventLifecycles": {
+        "evt-4e86abfb551a59c77c61": "first_seen"
+      },
+      "eventId": "evt-4e86abfb551a59c77c61",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-07T12:11:29+00:00",
+      "lastSeenAt": "2026-09-07T12:11:29+00:00"
+    },
+    {
+      "id": "chg-47dea219871a737e1f37",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-40ff8ab70b85986149",
+      "entityName": "麒麟9050 Pro芯片！华为三折叠新机 19999元起售",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：麒麟9050 Pro芯片！华为三折叠新机 19999元起售。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-07",
+        "summary": "9月7日，华为在广州举行新品发布会，鸿蒙全新一代操作系统HarmonyOS 7、华为新款三折叠屏手机HUAWEI Mate XT 2非凡大师、全球首款阔直板机华为Pura X View等新品一众发布。其中，HUAWEI Mate XT 2非凡大师19999元起，手写笔套装29999元。 据介绍，HUAWEI Mate XT 2非凡大师首发搭载麒麟9050 Pro，该芯片是首款采用逻辑折叠技术的高性能芯片，信号传输路径更短、时延更低、性能更好。这也是继华为Mate40全球发布会之后，华为时隔六年在旗舰发布会上推出全…",
+        "title": "麒麟9050 Pro芯片！华为三折叠新机 19999元起售"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-07",
+          "evidenceIds": [
+            "E009"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "9月7日，华为在广州举行新品发布会，鸿蒙全新一代操作系统HarmonyOS 7、华为新款三折叠屏手机HUAWEI Mate XT 2非凡大师、全球首款阔直板机华为Pura X View等新品一众发布。其中，HUAWEI Mate XT 2非凡大师19999元起，手写笔套装29999元。 据介绍，HUAWEI Mate XT 2非凡大师首发搭载麒麟9050 Pro，该芯片是首款采用逻辑折叠技术的高性能芯片，信号传输路径更短、时延更低、性能更好。这也是继华为Mate40全球发布会之后，华为时隔六年在旗舰发布会上推出全…",
+          "evidenceIds": [
+            "E009"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "麒麟9050 Pro芯片！华为三折叠新机 19999元起售",
+          "evidenceIds": [
+            "E009"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E009"
+      ],
+      "supportingEvidenceIds": [
+        "E009"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-bcb5a0b38e133db8f588"
+      ],
+      "eventLifecycles": {
+        "evt-bcb5a0b38e133db8f588": "first_seen"
+      },
+      "eventId": "evt-bcb5a0b38e133db8f588",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-07T12:11:29+00:00",
+      "lastSeenAt": "2026-09-07T12:11:29+00:00"
+    },
+    {
+      "id": "chg-e00f9d40fc38dab282aa",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-1e3f9743cf0f43c5f4",
+      "entityName": "壁仞科技 智绘全球 | BIRENTECH",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：壁仞科技 智绘全球 | BIRENTECH。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-07",
+        "summary": "壁仞科技是国内领先的通用智能计算解决方案提供商，以自主研发的壁砺™系列GPU产品为核心，为各行业提供强大、安全、高效的算力基础设施。",
+        "title": "壁仞科技 智绘全球 | BIRENTECH"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-07",
+          "evidenceIds": [
+            "E010"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "壁仞科技是国内领先的通用智能计算解决方案提供商，以自主研发的壁砺™系列GPU产品为核心，为各行业提供强大、安全、高效的算力基础设施。",
+          "evidenceIds": [
+            "E010"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "壁仞科技 智绘全球 | BIRENTECH",
+          "evidenceIds": [
+            "E010"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E010"
+      ],
+      "supportingEvidenceIds": [
+        "E010"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-8e26aba42be8447a8637"
+      ],
+      "eventLifecycles": {
+        "evt-8e26aba42be8447a8637": "first_seen"
+      },
+      "eventId": "evt-8e26aba42be8447a8637",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-07T12:11:29+00:00",
+      "lastSeenAt": "2026-09-07T12:11:29+00:00"
+    },
+    {
+      "id": "chg-5c0e162d9062ec107f83",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-671d7594af7cb156da",
+      "entityName": "Nature Biotechnology | Insilico’s AI-Driven IPF Candidate Rentosertib Shows Potential for Biological Age Reversal, as Assessed by Six Proteomic Aging Clocks",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Nature Biotechnology | Insilico’s AI-Driven IPF Candidate Rentosertib Shows Potential for Biological Age Reversal, as Assessed by Six Proteomic Aging Clocks。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-07",
+        "summary": "All six models consistently indicated a reduction in predicted biological age among patients treated with rentosertib.",
+        "title": "Nature Biotechnology | Insilico’s AI-Driven IPF Candidate Rentosertib Shows Potential for Biological Age Reversal, as Assessed by Six Proteomic Aging Clocks"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-07",
+          "evidenceIds": [
+            "E011"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "All six models consistently indicated a reduction in predicted biological age among patients treated with rentosertib.",
+          "evidenceIds": [
+            "E011"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Nature Biotechnology | Insilico’s AI-Driven IPF Candidate Rentosertib Shows Potential for Biological Age Reversal, as Assessed by Six Proteomic Aging Clocks",
+          "evidenceIds": [
+            "E011"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E011"
+      ],
+      "supportingEvidenceIds": [
+        "E011"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-eb363cfdcfb61ee90090"
+      ],
+      "eventLifecycles": {
+        "evt-eb363cfdcfb61ee90090": "first_seen"
+      },
+      "eventId": "evt-eb363cfdcfb61ee90090",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-07T12:11:29+00:00",
+      "lastSeenAt": "2026-09-07T12:11:29+00:00"
+    },
+    {
+      "id": "chg-48740de2d68416f77b18",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-a21faf1cb2d7c9df0e",
+      "entityName": "Dr. Robin Zeng on the \"CATL Standard\": Safety, Reliability, and Longevity at the Core",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Dr. Robin Zeng on the \"CATL Standard\": Safety, Reliability, and Longevity at the Core。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-03",
+        "summary": "Today, I would like to talk about a simple yet fundamental topic: Quality. Why is it especially crucial to discuss quality at this juncture? In the first half of this year, new energy vehicle (NEV) sales in China surpassed 7.4 million units, accounting for ne…",
+        "title": "Dr. Robin Zeng on the \"CATL Standard\": Safety, Reliability, and Longevity at the Core"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-03",
+          "evidenceIds": [
+            "E012"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Today, I would like to talk about a simple yet fundamental topic: Quality. Why is it especially crucial to discuss quality at this juncture? In the first half of this year, new energy vehicle (NEV) sales in China surpassed 7.4 million units, accounting for ne…",
+          "evidenceIds": [
+            "E012"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Dr. Robin Zeng on the \"CATL Standard\": Safety, Reliability, and Longevity at the Core",
+          "evidenceIds": [
+            "E012"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E012"
+      ],
+      "supportingEvidenceIds": [
+        "E012"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-d35471563b00b1058845"
+      ],
+      "eventLifecycles": {
+        "evt-d35471563b00b1058845": "first_seen"
+      },
+      "eventId": "evt-d35471563b00b1058845",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-07T12:11:29+00:00",
+      "lastSeenAt": "2026-09-07T12:11:29+00:00"
+    },
+    {
+      "id": "chg-358e243d95c72e558d0a",
       "dataset": "marketCompany",
       "entityType": "上市公司",
       "entityId": "catl",
@@ -710,16 +1351,16 @@
       "after": {
         "news": [
           {
-            "publishedAt": "2026-09-07T13:46:00+08:00",
+            "publishedAt": "2026-09-07T18:37:00+08:00",
             "source": "新浪财经",
-            "title": "宁德时代日赚2.4亿，15家上市车企加起来赚不到一半",
-            "url": "https://finance.sina.com.cn/roll/2026-09-07/doc-iniqyrka5605654.shtml"
+            "title": "20CM涨停泰金新能：与宁德时代签署的战略合作协议为框架性、意向性文件 未约定具体交易金额",
+            "url": "https://cj.sina.cn/articles/view/2868676035/aafc85c302001x422"
           },
           {
-            "publishedAt": "2026-09-07T12:49:00+08:00",
+            "publishedAt": "2026-09-07T18:36:00+08:00",
             "source": "新浪财经",
-            "title": "725.2GWh！全球动力电池前十洗牌：瑞浦兰钧暴增118.5%，宁德时代逼近40%",
-            "url": "https://finance.sina.com.cn/roll/2026-09-07/doc-iniqyrkc0421598.shtml"
+            "title": "比亚迪、宁德时代押注！江西抚州冲出一家电解铜箔IPO",
+            "url": "https://k.sina.cn/article_5953190035_162d6789301901avtg.html"
           }
         ]
       },
@@ -735,31 +1376,31 @@
           "before": [],
           "after": [
             {
-              "publishedAt": "2026-09-07T13:46:00+08:00",
+              "publishedAt": "2026-09-07T18:37:00+08:00",
               "source": "新浪财经",
-              "title": "宁德时代日赚2.4亿，15家上市车企加起来赚不到一半",
-              "url": "https://finance.sina.com.cn/roll/2026-09-07/doc-iniqyrka5605654.shtml"
+              "title": "20CM涨停泰金新能：与宁德时代签署的战略合作协议为框架性、意向性文件 未约定具体交易金额",
+              "url": "https://cj.sina.cn/articles/view/2868676035/aafc85c302001x422"
             },
             {
-              "publishedAt": "2026-09-07T12:49:00+08:00",
+              "publishedAt": "2026-09-07T18:36:00+08:00",
               "source": "新浪财经",
-              "title": "725.2GWh！全球动力电池前十洗牌：瑞浦兰钧暴增118.5%，宁德时代逼近40%",
-              "url": "https://finance.sina.com.cn/roll/2026-09-07/doc-iniqyrkc0421598.shtml"
+              "title": "比亚迪、宁德时代押注！江西抚州冲出一家电解铜箔IPO",
+              "url": "https://k.sina.cn/article_5953190035_162d6789301901avtg.html"
             }
           ],
           "evidenceIds": [
-            "E012",
-            "E013"
+            "E017",
+            "E019"
           ]
         }
       ],
       "evidenceIds": [
-        "E012",
-        "E013"
+        "E017",
+        "E019"
       ],
       "supportingEvidenceIds": [
-        "E012",
-        "E013"
+        "E017",
+        "E019"
       ],
       "evidenceQuality": {
         "status": "passed",
@@ -770,105 +1411,56 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-79e90098986ced33c3ec",
-        "evt-f9ca097565f59ca8803c"
+        "evt-f1973281d0a70135b429",
+        "evt-d75bc1657b4e64d00734"
       ],
       "eventLifecycles": {
-        "evt-79e90098986ced33c3ec": "first_seen",
-        "evt-f9ca097565f59ca8803c": "first_seen"
+        "evt-f1973281d0a70135b429": "first_seen",
+        "evt-d75bc1657b4e64d00734": "first_seen"
       },
       "lifecycle": "mixed",
-      "firstSeenAt": "2026-09-07T07:41:48+00:00",
-      "lastSeenAt": "2026-09-07T07:41:48+00:00"
-    },
-    {
-      "id": "chg-e157cd4e97316725712a",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "bgi-genomics",
-      "entityName": "华大基因",
-      "action": "updated",
-      "changedFields": [
-        "news"
-      ],
-      "summary": "华大基因 的 news、quote 发生变化。",
-      "importance": 48,
-      "before": {
-        "news": []
-      },
-      "after": {
-        "news": [
-          {
-            "publishedAt": "2026-09-07T15:16:00+08:00",
-            "source": "新浪财经",
-            "title": "华大基因涨0.05%，成交额1.68亿元，后市是否有机会？",
-            "url": "https://finance.sina.com.cn/stock/aiassist/ggsp/2026-09-07/doc-iniqyvrw6308136.shtml"
-          }
-        ]
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "news"
-      ],
-      "claimBindings": [
-        {
-          "field": "news",
-          "before": [],
-          "after": [
-            {
-              "publishedAt": "2026-09-07T15:16:00+08:00",
-              "source": "新浪财经",
-              "title": "华大基因涨0.05%，成交额1.68亿元，后市是否有机会？",
-              "url": "https://finance.sina.com.cn/stock/aiassist/ggsp/2026-09-07/doc-iniqyvrw6308136.shtml"
-            }
-          ],
-          "evidenceIds": [
-            "E016"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E016"
-      ],
-      "supportingEvidenceIds": [
-        "E016"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-719437109570226a2a63"
-      ],
-      "eventLifecycles": {
-        "evt-719437109570226a2a63": "first_seen"
-      },
-      "eventId": "evt-719437109570226a2a63",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-07T07:41:48+00:00",
-      "lastSeenAt": "2026-09-07T07:41:48+00:00"
+      "firstSeenAt": "2026-09-07T12:11:29+00:00",
+      "lastSeenAt": "2026-09-07T12:11:29+00:00"
     }
   ],
   "evidence": [
     {
-      "id": "E002",
-      "changeId": "chg-0158b35495d9b116e9a0",
-      "entityName": "美国大学捐赠基金业绩回暖 科技公司投资助力跑赢标普500",
-      "claim": "新增高价值情报事件记录：美国大学捐赠基金业绩回暖 科技公司投资助力跑赢标普500。",
+      "id": "E001",
+      "changeId": "chg-65c5fd579d5e4fafae94",
+      "entityName": "被吉利起诉的公司，获得了理想汽车26.5亿投资",
+      "claim": "新增高价值情报事件记录：被吉利起诉的公司，获得了理想汽车26.5亿投资。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "sourceName": "新浪财经",
-      "title": "美国大学捐赠基金业绩回暖 科技公司投资助力跑赢标普500",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-07/doc-iniqyrka5623500.shtml",
+      "title": "被吉利起诉的公司，获得了理想汽车26.5亿投资",
+      "url": "https://finance.sina.com.cn/stock/s/2026-09-07/doc-iniqyzxx0302634.shtml",
       "publishedAt": "2026-09-07",
       "evidenceGrade": "C",
       "platformName": "新浪",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E002",
+      "changeId": "chg-f3c8a7788e0f42ec795e",
+      "entityName": "模型负责上天，三个“野心家”负责把AI落地",
+      "claim": "新增高价值情报事件记录：模型负责上天，三个“野心家”负责把AI落地。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "钛媒体",
+      "title": "模型负责上天，三个“野心家”负责把AI落地",
+      "url": "https://www.tmtpost.com/8130980.html",
+      "publishedAt": "2026-09-07",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
       "sourceRole": "corroboration",
       "claimFields": [
         "publishedAt",
@@ -882,17 +1474,17 @@
     },
     {
       "id": "E003",
-      "changeId": "chg-0584104965ff4f74b755",
-      "entityName": "索尼与沙特阿美合作开发人工智能驱动的工业解决方案",
-      "claim": "新增高价值情报事件记录：索尼与沙特阿美合作开发人工智能驱动的工业解决方案。",
+      "changeId": "chg-02723a91f65cf47f2dcb",
+      "entityName": "最赚钱的5家上市械企，一家靠投资，一家卖手套",
+      "claim": "新增高价值情报事件记录：最赚钱的5家上市械企，一家靠投资，一家卖手套。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "索尼与沙特阿美合作开发人工智能驱动的工业解决方案",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-07/doc-iniqyriy6345633.shtml",
+      "sourceName": "钛媒体",
+      "title": "最赚钱的5家上市械企，一家靠投资，一家卖手套",
+      "url": "https://www.tmtpost.com/8130921.html",
       "publishedAt": "2026-09-07",
       "evidenceGrade": "C",
-      "platformName": "新浪",
+      "platformName": "专业媒体",
       "sourceRole": "corroboration",
       "claimFields": [
         "publishedAt",
@@ -906,14 +1498,14 @@
     },
     {
       "id": "E004",
-      "changeId": "chg-86ba5dfebca529173944",
-      "entityName": "理想汽车-W午后涨超4% 拟以26.5亿元战略投资欣旺达动力",
-      "claim": "新增高价值情报事件记录：理想汽车-W午后涨超4% 拟以26.5亿元战略投资欣旺达动力。",
+      "changeId": "chg-c1e51a9c09ac5926b18c",
+      "entityName": "市值离上市高点已跌掉一半，绿控传动的业绩和市值背离了吗？",
+      "claim": "新增高价值情报事件记录：市值离上市高点已跌掉一半，绿控传动的业绩和市值背离了吗？。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "sourceName": "新浪财经",
-      "title": "理想汽车-W午后涨超4% 拟以26.5亿元战略投资欣旺达动力",
-      "url": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-09-07/doc-iniqyriy6355074.shtml",
+      "title": "市值离上市高点已跌掉一半，绿控传动的业绩和市值背离了吗？",
+      "url": "https://finance.sina.com.cn/stock/s/2026-09-07/doc-iniqyvrz0387831.shtml",
       "publishedAt": "2026-09-07",
       "evidenceGrade": "C",
       "platformName": "新浪",
@@ -930,14 +1522,14 @@
     },
     {
       "id": "E005",
-      "changeId": "chg-4a4709b43e15ccd8e0cc",
-      "entityName": "业内首个！“千问办公”推出“多人工作台”",
-      "claim": "新增高价值情报事件记录：业内首个！“千问办公”推出“多人工作台”。",
+      "changeId": "chg-8290be583f55a98b85f7",
+      "entityName": "高端智能手表怎么选，华为WATCH Ultimate 2 非凡探索雪域白、迪桑特联名款发布",
+      "claim": "新增高价值情报事件记录：高端智能手表怎么选，华为WATCH Ultimate 2 非凡探索雪域白、迪桑特联名款发布。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "sourceName": "雷峰网",
-      "title": "业内首个！“千问办公”推出“多人工作台”",
-      "url": "https://www.leiphone.com/category/industrynews/bv6uP9homPcjjRHl.html",
+      "title": "高端智能手表怎么选，华为WATCH Ultimate 2 非凡探索雪域白、迪桑特联名款发布",
+      "url": "https://www.leiphone.com/category/industrynews/j0Vn5Zjbs3tKiA2k.html",
       "publishedAt": "2026-09-07",
       "evidenceGrade": "C",
       "platformName": "专业媒体",
@@ -954,14 +1546,86 @@
     },
     {
       "id": "E006",
-      "changeId": "chg-a58d4645ae2eea718157",
-      "entityName": "最高法发文明确“AI换脸拟声”等案件裁判规则",
-      "claim": "新增高价值情报事件记录：最高法发文明确“AI换脸拟声”等案件裁判规则。",
+      "changeId": "chg-9d8f1398d1ddd88bd3e1",
+      "entityName": "华为时隔六年再次发布高性能芯片",
+      "claim": "新增高价值情报事件记录：华为时隔六年再次发布高性能芯片。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "sourceName": "东方财富",
-      "title": "最高法发文明确“AI换脸拟声”等案件裁判规则",
-      "url": "https://finance.eastmoney.com/a/202609073866640946.html",
+      "title": "华为时隔六年再次发布高性能芯片",
+      "url": "https://finance.eastmoney.com/a/202609073866641930.html",
+      "publishedAt": "2026-09-07",
+      "evidenceGrade": "C",
+      "platformName": "东方财富",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E007",
+      "changeId": "chg-36df30b7b1dc1d46a00b",
+      "entityName": "SunTec India Introduces AI-Accelerated Digital Engineering, Integrating AI Across the Software Development Lifecycle",
+      "claim": "新增高价值情报事件记录：SunTec India Introduces AI-Accelerated Digital Engineering, Integrating AI Across the Software Development Lifecycle。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "SunTec India Introduces AI-Accelerated Digital Engineering, Integrating AI Across the Software Development Lifecycle",
+      "url": "https://www.prnewswire.com/news-releases/suntec-india-introduces-ai-accelerated-digital-engineering-integrating-ai-across-the-software-development-lifecycle-302871314.html",
+      "publishedAt": "2026-09-07",
+      "evidenceGrade": "B",
+      "platformName": "新闻稿",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E008",
+      "changeId": "chg-c4209bea3bf10fd08c4b",
+      "entityName": "GPT-6-Astra发布OpenAI的AGI宣言与开源防御反制",
+      "claim": "新增高价值情报事件记录：GPT-6-Astra发布OpenAI的AGI宣言与开源防御反制。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "kc270",
+      "title": "GPT-6-Astra发布OpenAI的AGI宣言与开源防御反制",
+      "url": "https://mp.weixin.qq.com/s?new=1&signature=nIFZbv504XCwy8WMnQM0Z-E-FWRCUFmrBVG%2AFPy7cqksdBXx70-CF3Qg1SlP%2AtpigVIEdoPJXzxKdE4I-1Kan33Dz%2AhAHKGx80Sbh4BDlsJTmETUReLkZt8UuhSF3C%2Ac&src=11&timestamp=1788780247&ver=6952",
+      "publishedAt": "2026-09-04",
+      "evidenceGrade": "C",
+      "platformName": "微信",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E009",
+      "changeId": "chg-47dea219871a737e1f37",
+      "entityName": "麒麟9050 Pro芯片！华为三折叠新机 19999元起售",
+      "claim": "新增高价值情报事件记录：麒麟9050 Pro芯片！华为三折叠新机 19999元起售。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "东方财富",
+      "title": "麒麟9050 Pro芯片！华为三折叠新机 19999元起售",
+      "url": "https://finance.eastmoney.com/a/202609073866740920.html",
       "publishedAt": "2026-09-07",
       "evidenceGrade": "媒体报道",
       "platformName": "东方财富",
@@ -976,16 +1640,88 @@
       "supportStatus": "supports"
     },
     {
+      "id": "E010",
+      "changeId": "chg-e00f9d40fc38dab282aa",
+      "entityName": "壁仞科技 智绘全球 | BIRENTECH",
+      "claim": "新增高价值情报事件记录：壁仞科技 智绘全球 | BIRENTECH。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "壁仞科技",
+      "title": "壁仞科技 智绘全球 | BIRENTECH",
+      "url": "https://www.birentech.com/news/gix30jnrvumo1yi3qi24qhkk",
+      "publishedAt": "2026-09-07",
+      "evidenceGrade": "B",
+      "platformName": "官方网站",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E011",
+      "changeId": "chg-5c0e162d9062ec107f83",
+      "entityName": "Nature Biotechnology | Insilico’s AI-Driven IPF Candidate Rentosertib Shows Potential for Biological Age Reversal, as Assessed by Six Proteomic Aging Clocks",
+      "claim": "新增高价值情报事件记录：Nature Biotechnology | Insilico’s AI-Driven IPF Candidate Rentosertib Shows Potential for Biological Age Reversal, as Assessed by Six Proteomic Aging Clocks。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "英矽智能",
+      "title": "Nature Biotechnology | Insilico’s AI-Driven IPF Candidate Rentosertib Shows Potential for Biological Age Reversal, as Assessed by Six Proteomic Aging Clocks",
+      "url": "https://insilico.com/news/rnt0709261-rentosertib-proteomic-aging-clocks",
+      "publishedAt": "2026-09-07",
+      "evidenceGrade": "B",
+      "platformName": "官方网站",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
       "id": "E012",
-      "changeId": "chg-cf29428b4abacde5d6b1",
+      "changeId": "chg-48740de2d68416f77b18",
+      "entityName": "Dr. Robin Zeng on the \"CATL Standard\": Safety, Reliability, and Longevity at the Core",
+      "claim": "新增高价值情报事件记录：Dr. Robin Zeng on the \"CATL Standard\": Safety, Reliability, and Longevity at the Core。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "CATL",
+      "title": "Dr. Robin Zeng on the \"CATL Standard\": Safety, Reliability, and Longevity at the Core",
+      "url": "https://www.catl.com/en/news/6992.html",
+      "publishedAt": "2026-09-03",
+      "evidenceGrade": "B",
+      "platformName": "官方网站",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E017",
+      "changeId": "chg-358e243d95c72e558d0a",
       "entityName": "宁德时代",
       "claim": "宁德时代 的 news、quote 发生变化。",
       "publicationTier": "candidate",
       "reviewStatus": "automated_unreviewed",
       "sourceName": "新浪财经",
-      "title": "宁德时代日赚2.4亿，15家上市车企加起来赚不到一半",
-      "url": "https://finance.sina.com.cn/roll/2026-09-07/doc-iniqyrka5605654.shtml",
-      "publishedAt": "2026-09-07T13:46:00+08:00",
+      "title": "20CM涨停泰金新能：与宁德时代签署的战略合作协议为框架性、意向性文件 未约定具体交易金额",
+      "url": "https://cj.sina.cn/articles/view/2868676035/aafc85c302001x422",
+      "publishedAt": "2026-09-07T18:37:00+08:00",
       "evidenceGrade": "媒体报道",
       "claimFields": [
         "news"
@@ -996,36 +1732,16 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E013",
-      "changeId": "chg-cf29428b4abacde5d6b1",
+      "id": "E019",
+      "changeId": "chg-358e243d95c72e558d0a",
       "entityName": "宁德时代",
       "claim": "宁德时代 的 news、quote 发生变化。",
       "publicationTier": "candidate",
       "reviewStatus": "automated_unreviewed",
       "sourceName": "新浪财经",
-      "title": "725.2GWh！全球动力电池前十洗牌：瑞浦兰钧暴增118.5%，宁德时代逼近40%",
-      "url": "https://finance.sina.com.cn/roll/2026-09-07/doc-iniqyrkc0421598.shtml",
-      "publishedAt": "2026-09-07T12:49:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "entityMatchStatus": "matched",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E016",
-      "changeId": "chg-e157cd4e97316725712a",
-      "entityName": "华大基因",
-      "claim": "华大基因 的 news、quote 发生变化。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "华大基因涨0.05%，成交额1.68亿元，后市是否有机会？",
-      "url": "https://finance.sina.com.cn/stock/aiassist/ggsp/2026-09-07/doc-iniqyvrw6308136.shtml",
-      "publishedAt": "2026-09-07T15:16:00+08:00",
+      "title": "比亚迪、宁德时代押注！江西抚州冲出一家电解铜箔IPO",
+      "url": "https://k.sina.cn/article_5953190035_162d6789301901avtg.html",
+      "publishedAt": "2026-09-07T18:36:00+08:00",
       "evidenceGrade": "媒体报道",
       "claimFields": [
         "news"
@@ -1038,9 +1754,994 @@
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-07T07:41:48+00:00",
+    "generatedAt": "2026-09-07T12:11:29+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-f1973281d0a70135b429": {
+        "eventId": "evt-f1973281d0a70135b429",
+        "dataset": "marketCompany",
+        "entityId": "catl",
+        "entityName": "宁德时代",
+        "title": "20CM涨停泰金新能：与宁德时代签署的战略合作协议为框架性、意向性文件 未约定具体交易金额",
+        "titleAliases": [
+          "20cm涨停泰金新能与宁德时代签署的战略合作协议为框架性意向性文件未约定具体交易金额"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [
+          "marketCompany:catl",
+          "name:宁德时代"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "20"
+        ],
+        "sourceAliases": [
+          "evd-8d8696c84a2c12526932",
+          "src-5778665d35566c3d8a27"
+        ],
+        "evidenceFingerprints": [
+          "8d8696c84a2c12526932"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "20CM涨停泰金新能：与宁德时代签署的战略合作协议为框架性、意向性文件 未约定具体交易金额",
+            "url": "https://cj.sina.cn/articles/view/2868676035/aafc85c302001x422",
+            "publishedAt": "2026-09-07T18:37:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "0db9f6e96ec08787309c",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastPublishedAt": "2026-09-07T12:11:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-eb363cfdcfb61ee90090": {
+        "eventId": "evt-eb363cfdcfb61ee90090",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-671d7594af7cb156da",
+        "entityName": "Nature Biotechnology | Insilico’s AI-Driven IPF Candidate Rentosertib Shows Potential for Biological Age Reversal, as Assessed by Six Proteomic Aging Clocks",
+        "title": "Nature Biotechnology | Insilico’s AI-Driven IPF Candidate Rentosertib Shows Potential for Biological Age Reversal, as Assessed by Six Proteomic Aging Clocks",
+        "titleAliases": [
+          "naturebiotechnology"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [
+          "company:insilico-medicine",
+          "company:英矽智能"
+        ],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-f987633254db3461576a",
+          "record-f0de55567654ffb23e0d",
+          "src-9b3041af559383e72a58"
+        ],
+        "evidenceFingerprints": [
+          "f987633254db3461576a"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "英矽智能",
+            "title": "Nature Biotechnology | Insilico’s AI-Driven IPF Candidate Rentosertib Shows Potential for Biological Age Reversal, as Assessed by Six Proteomic Aging Clocks",
+            "url": "https://insilico.com/news/rnt0709261-rentosertib-proteomic-aging-clocks",
+            "publishedAt": "2026-09-07",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "1331a3b990e8d63e544b",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastPublishedAt": "2026-09-07T12:11:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-d75bc1657b4e64d00734": {
+        "eventId": "evt-d75bc1657b4e64d00734",
+        "dataset": "marketCompany",
+        "entityId": "catl",
+        "entityName": "宁德时代",
+        "title": "比亚迪、宁德时代押注！江西抚州冲出一家电解铜箔IPO",
+        "titleAliases": [
+          "比亚迪宁德时代押注江西抚州冲出一家电解铜箔ipo"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [
+          "marketCompany:catl",
+          "name:宁德时代"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-7b9028f7e6df4edaf26e",
+          "src-5be315c5dbb8e2bced07"
+        ],
+        "evidenceFingerprints": [
+          "7b9028f7e6df4edaf26e"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "比亚迪、宁德时代押注！江西抚州冲出一家电解铜箔IPO",
+            "url": "https://k.sina.cn/article_5953190035_162d6789301901avtg.html",
+            "publishedAt": "2026-09-07T18:36:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "2003b793ecbe447a41e6",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastPublishedAt": "2026-09-07T12:11:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-d35471563b00b1058845": {
+        "eventId": "evt-d35471563b00b1058845",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-a21faf1cb2d7c9df0e",
+        "entityName": "Dr. Robin Zeng on the \"CATL Standard\": Safety, Reliability, and Longevity at the Core",
+        "title": "Dr. Robin Zeng on the \"CATL Standard\": Safety, Reliability, and Longevity at the Core",
+        "titleAliases": [
+          "drrobinzengonthecatlstandardsafetyreliabilityandlongevityatthecore"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [
+          "company:catl",
+          "company:宁德时代"
+        ],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-c4bf13e639d32b4804db",
+          "record-bf45a945e44b1c66acf6",
+          "src-8498292664d1c81a77f0"
+        ],
+        "evidenceFingerprints": [
+          "c4bf13e639d32b4804db"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "CATL",
+            "title": "Dr. Robin Zeng on the \"CATL Standard\": Safety, Reliability, and Longevity at the Core",
+            "url": "https://www.catl.com/en/news/6992.html",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "9c3e96079542d012c5df",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastPublishedAt": "2026-09-07T12:11:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-d014c563f43c084b4d8c": {
+        "eventId": "evt-d014c563f43c084b4d8c",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-00f5dd1e5dbb873da6",
+        "entityName": "模型负责上天，三个“野心家”负责把AI落地",
+        "title": "模型负责上天，三个“野心家”负责把AI落地",
+        "titleAliases": [
+          "模型负责上天三个野心家负责把ai落地"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-560082b2a6f357e0a9df",
+          "record-eadf69034357ed903a4b",
+          "src-b05e9d703d5618641a22"
+        ],
+        "evidenceFingerprints": [
+          "560082b2a6f357e0a9df"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "钛媒体",
+            "title": "模型负责上天，三个“野心家”负责把AI落地",
+            "url": "https://www.tmtpost.com/8130980.html",
+            "publishedAt": "2026-09-07",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "c10d1feeedb3b7e54adb",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastPublishedAt": "2026-09-07T12:11:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-cb12da18dfc47d4c9a7a": {
+        "eventId": "evt-cb12da18dfc47d4c9a7a",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-cbb9701f7658f3d30e",
+        "entityName": "市值离上市高点已跌掉一半，绿控传动的业绩和市值背离了吗？",
+        "title": "市值离上市高点已跌掉一半，绿控传动的业绩和市值背离了吗？",
+        "titleAliases": [
+          "市值离上市高点已跌掉一半绿控传动的业绩和市值背离了吗"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "财报",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-015d934f41afba1049a1",
+          "record-339d3be3ed00373cdb36",
+          "src-9780593fd97a49a9f8fb"
+        ],
+        "evidenceFingerprints": [
+          "015d934f41afba1049a1"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "市值离上市高点已跌掉一半，绿控传动的业绩和市值背离了吗？",
+            "url": "https://finance.sina.com.cn/stock/s/2026-09-07/doc-iniqyvrz0387831.shtml",
+            "publishedAt": "2026-09-07",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "159f60cb37b3e3a095f7",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastPublishedAt": "2026-09-07T12:11:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-c655922f4db779fb519f": {
+        "eventId": "evt-c655922f4db779fb519f",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-186faae9f42f307bad",
+        "entityName": "华为时隔六年再次发布高性能芯片",
+        "title": "华为时隔六年再次发布高性能芯片",
+        "titleAliases": [
+          "华为时隔六年再次发布高性能芯片"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-8e4bcbd4420573b559db",
+          "record-73a827ecbef7bc9f34d8",
+          "src-734db24e80b6cb72dd4b"
+        ],
+        "evidenceFingerprints": [
+          "8e4bcbd4420573b559db"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "东方财富",
+            "title": "华为时隔六年再次发布高性能芯片",
+            "url": "https://finance.eastmoney.com/a/202609073866641930.html",
+            "publishedAt": "2026-09-07",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "ad30264f3f56d24462dd",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastPublishedAt": "2026-09-07T12:11:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-bcb5a0b38e133db8f588": {
+        "eventId": "evt-bcb5a0b38e133db8f588",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-40ff8ab70b85986149",
+        "entityName": "麒麟9050 Pro芯片！华为三折叠新机 19999元起售",
+        "title": "麒麟9050 Pro芯片！华为三折叠新机 19999元起售",
+        "titleAliases": [
+          "麒麟9050pro芯片华为三折叠新机19999元起售"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "19999",
+          "9050"
+        ],
+        "sourceAliases": [
+          "evd-5e08f9c2130f08850e3d",
+          "record-56d95d7a4e28a250198d",
+          "src-67e3f9c465d0377d5f7a"
+        ],
+        "evidenceFingerprints": [
+          "5e08f9c2130f08850e3d"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "东方财富",
+            "title": "麒麟9050 Pro芯片！华为三折叠新机 19999元起售",
+            "url": "https://finance.eastmoney.com/a/202609073866740920.html",
+            "publishedAt": "2026-09-07",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "fd1c0bcd070b66ee04e1",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastPublishedAt": "2026-09-07T12:11:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-bbd0edd30e3685815b21": {
+        "eventId": "evt-bbd0edd30e3685815b21",
+        "dataset": "marketCompany",
+        "entityId": "catl",
+        "entityName": "宁德时代",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [
+          "marketCompany:catl",
+          "name:宁德时代"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-3f025fb157bb019123fe",
+          "src-3fce98d95cf38a30749c"
+        ],
+        "evidenceFingerprints": [
+          "3f025fb157bb019123fe"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml",
+            "publishedAt": "2026-09-07T15:35:15+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T01:42:08+00:00",
+        "lastSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastPublishedAt": "2026-09-07T01:42:08+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-b2ff6b4ce13417cbd01d": {
+        "eventId": "evt-b2ff6b4ce13417cbd01d",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-969895282b98f34bd1",
+        "entityName": "高端智能手表怎么选，华为WATCH Ultimate 2 非凡探索雪域白、迪桑特联名款发布",
+        "title": "高端智能手表怎么选，华为WATCH Ultimate 2 非凡探索雪域白、迪桑特联名款发布",
+        "titleAliases": [
+          "高端智能手表怎么选华为watchultimate2非凡探索雪域白迪桑特联名款发布"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "2"
+        ],
+        "sourceAliases": [
+          "evd-c408e506f5733b17de13",
+          "record-76b9787d2236737c556d",
+          "src-edbcd0f9ba33ac84e734"
+        ],
+        "evidenceFingerprints": [
+          "c408e506f5733b17de13"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "高端智能手表怎么选，华为WATCH Ultimate 2 非凡探索雪域白、迪桑特联名款发布",
+            "url": "https://www.leiphone.com/category/industrynews/j0Vn5Zjbs3tKiA2k.html",
+            "publishedAt": "2026-09-07",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "5e6b97223c917c8663fc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastPublishedAt": "2026-09-07T12:11:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-a9f6af929ac59bd1179a": {
+        "eventId": "evt-a9f6af929ac59bd1179a",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-f5eb705511adeedd5f",
+        "entityName": "被吉利起诉的公司，获得了理想汽车26.5亿投资",
+        "title": "被吉利起诉的公司，获得了理想汽车26.5亿投资",
+        "titleAliases": [
+          "被吉利起诉的公司获得了理想汽车265亿投资"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产业投资",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "26.5"
+        ],
+        "sourceAliases": [
+          "evd-3b2d95783202473740bf",
+          "record-b51d2ec3846e28f3d8b9",
+          "src-57aae7cfc627a5a7acef"
+        ],
+        "evidenceFingerprints": [
+          "3b2d95783202473740bf"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "被吉利起诉的公司，获得了理想汽车26.5亿投资",
+            "url": "https://finance.sina.com.cn/stock/s/2026-09-07/doc-iniqyzxx0302634.shtml",
+            "publishedAt": "2026-09-07",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "03edffce6d26f11a12e1",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastPublishedAt": "2026-09-07T12:11:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-8e26aba42be8447a8637": {
+        "eventId": "evt-8e26aba42be8447a8637",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-1e3f9743cf0f43c5f4",
+        "entityName": "壁仞科技 智绘全球 | BIRENTECH",
+        "title": "壁仞科技 智绘全球 | BIRENTECH",
+        "titleAliases": [
+          "壁仞科技智绘全球"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [
+          "company:biren",
+          "company:壁仞科技"
+        ],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-a94ba80742779be47171",
+          "record-860ff90eb9a16a9423fd",
+          "src-f6cb699f163f501f324f"
+        ],
+        "evidenceFingerprints": [
+          "a94ba80742779be47171"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "壁仞科技",
+            "title": "壁仞科技 智绘全球 | BIRENTECH",
+            "url": "https://www.birentech.com/news/gix30jnrvumo1yi3qi24qhkk",
+            "publishedAt": "2026-09-07",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "c2e8598676a9e42fd355",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastPublishedAt": "2026-09-07T12:11:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-4e86abfb551a59c77c61": {
+        "eventId": "evt-4e86abfb551a59c77c61",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-5ab98bdda8e440e0b3",
+        "entityName": "GPT-6-Astra发布OpenAI的AGI宣言与开源防御反制",
+        "title": "GPT-6-Astra发布OpenAI的AGI宣言与开源防御反制",
+        "titleAliases": [
+          "gpt6astra发布openai的agi宣言与开源防御反制"
+        ],
+        "publishedDate": "2026-09-04",
+        "publishedDates": [
+          "2026-09-04"
+        ],
+        "entityKeys": [
+          "company:openai",
+          "mention:clem delangue",
+          "mention:deepseek",
+          "mention:hugging face",
+          "mention:openai",
+          "mention:rohan paul",
+          "mention:trusted access",
+          "mention:智谱ai",
+          "mention:月之暗面"
+        ],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "6"
+        ],
+        "sourceAliases": [
+          "evd-180d4e2dd09aafb05ef9",
+          "record-e924a9541d453523494e",
+          "src-0a80fce4731d9ea03c8e"
+        ],
+        "evidenceFingerprints": [
+          "180d4e2dd09aafb05ef9"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "kc270",
+            "title": "GPT-6-Astra发布OpenAI的AGI宣言与开源防御反制",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=nIFZbv504XCwy8WMnQM0Z-E-FWRCUFmrBVG%2AFPy7cqksdBXx70-CF3Qg1SlP%2AtpigVIEdoPJXzxKdE4I-1Kan33Dz%2AhAHKGx80Sbh4BDlsJTmETUReLkZt8UuhSF3C%2Ac&src=11&timestamp=1788780247&ver=6952",
+            "publishedAt": "2026-09-04",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "f02e22c07387be18fa8a",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastPublishedAt": "2026-09-07T12:11:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-3d71108d6994ccaa630a": {
+        "eventId": "evt-3d71108d6994ccaa630a",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-6a1328b657cb0fb437",
+        "entityName": "SunTec India Introduces AI-Accelerated Digital Engineering, Integrating AI Across the Software Development Lifecycle",
+        "title": "SunTec India Introduces AI-Accelerated Digital Engineering, Integrating AI Across the Software Development Lifecycle",
+        "titleAliases": [
+          "suntecindiaintroducesaiaccelerateddigitalengineeringintegratingaiacrossthesoftwaredevelopmentlifecycle"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-edda75038b7847ee7290",
+          "record-0fc3f5c8abb76a498e69",
+          "src-e3111e40e2e3a596638c"
+        ],
+        "evidenceFingerprints": [
+          "edda75038b7847ee7290"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "SunTec India Introduces AI-Accelerated Digital Engineering, Integrating AI Across the Software Development Lifecycle",
+            "url": "https://www.prnewswire.com/news-releases/suntec-india-introduces-ai-accelerated-digital-engineering-integrating-ai-across-the-software-development-lifecycle-302871314.html",
+            "publishedAt": "2026-09-07",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "978a7f882f5c1798efad",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastPublishedAt": "2026-09-07T12:11:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-107c31a86fb2bd117eed": {
+        "eventId": "evt-107c31a86fb2bd117eed",
+        "dataset": "marketCompany",
+        "entityId": "xtalpi",
+        "entityName": "晶泰控股有限公司",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01",
+          "2026-09-02",
+          "2026-09-07"
+        ],
+        "entityKeys": [
+          "marketCompany:xtalpi",
+          "name:晶泰控股有限公司"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-5fa1601b8d57d2004e8f",
+          "src-de35f484ecf44f83c49b",
+          "evd-f5f505b12de280e836e7",
+          "evd-9437856afcf99c124c2c",
+          "evd-06d67a94b7519b2d1063"
+        ],
+        "evidenceFingerprints": [
+          "5fa1601b8d57d2004e8f",
+          "f5f505b12de280e836e7",
+          "9437856afcf99c124c2c",
+          "06d67a94b7519b2d1063"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
+            "publishedAt": "2026-08-31T16:08:50+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
+            "publishedAt": "2026-09-01T16:08:18+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
+            "publishedAt": "2026-09-02T16:08:08+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
+            "publishedAt": "2026-09-07T16:08:22+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 4,
+        "confirmationCount": 3,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-09cacf02606d9838e6f2": {
+        "eventId": "evt-09cacf02606d9838e6f2",
+        "dataset": "marketCompany",
+        "entityId": "horizon-robotics",
+        "entityName": "Horizon Robotics",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01",
+          "2026-09-02",
+          "2026-09-04",
+          "2026-09-07"
+        ],
+        "entityKeys": [
+          "marketCompany:horizon-robotics",
+          "name:horizon robotics"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-b9931d767f7fdda9a522",
+          "src-2902bb7afee990ec31f7",
+          "evd-f9eda82d60279aa18d50",
+          "evd-c690cdfd1301ac54784c",
+          "evd-230de597643c6cb0a7fa",
+          "evd-ced861ace5efab8ab825"
+        ],
+        "evidenceFingerprints": [
+          "b9931d767f7fdda9a522",
+          "f9eda82d60279aa18d50",
+          "c690cdfd1301ac54784c",
+          "230de597643c6cb0a7fa",
+          "ced861ace5efab8ab825"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+            "publishedAt": "2026-08-31T16:08:50+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+            "publishedAt": "2026-09-01T16:08:16+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+            "publishedAt": "2026-09-02T16:08:08+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+            "publishedAt": "2026-09-04T16:08:06+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+            "publishedAt": "2026-09-07T16:08:22+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 5,
+        "confirmationCount": 4,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-0378c5ee39b04b0aaa0d": {
+        "eventId": "evt-0378c5ee39b04b0aaa0d",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-f3cf955a2b88e00cf6",
+        "entityName": "最赚钱的5家上市械企，一家靠投资，一家卖手套",
+        "title": "最赚钱的5家上市械企，一家靠投资，一家卖手套",
+        "titleAliases": [
+          "最赚钱的5家上市械企一家靠投资一家卖手套"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产业投资",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "5"
+        ],
+        "sourceAliases": [
+          "evd-6d8b39d458e9190050fe",
+          "record-0d5f538d3b3e45e6679b",
+          "src-3997b33df3ed0064d5d8"
+        ],
+        "evidenceFingerprints": [
+          "6d8b39d458e9190050fe"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "钛媒体",
+            "title": "最赚钱的5家上市械企，一家靠投资，一家卖手套",
+            "url": "https://www.tmtpost.com/8130921.html",
+            "publishedAt": "2026-09-07",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "d7436febf78f18dacacf",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastPublishedAt": "2026-09-07T12:11:29+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-f9ca097565f59ca8803c": {
         "eventId": "evt-f9ca097565f59ca8803c",
         "dataset": "marketCompany",
@@ -1142,58 +2843,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-bbd0edd30e3685815b21": {
-        "eventId": "evt-bbd0edd30e3685815b21",
-        "dataset": "marketCompany",
-        "entityId": "catl",
-        "entityName": "宁德时代",
-        "title": "新浪财经 行情数据",
-        "titleAliases": [
-          "新浪财经行情数据"
-        ],
-        "publishedDate": "2026-09-07",
-        "publishedDates": [
-          "2026-09-07"
-        ],
-        "entityKeys": [
-          "marketCompany:catl",
-          "name:宁德时代"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-3f025fb157bb019123fe",
-          "src-3fce98d95cf38a30749c"
-        ],
-        "evidenceFingerprints": [
-          "3f025fb157bb019123fe"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml",
-            "publishedAt": "2026-09-07T15:21:00+08:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "cc3711a9494cf1e2f7a9",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-07T01:42:08+00:00",
-        "lastSeenAt": "2026-09-07T07:41:48+00:00",
-        "lastPublishedAt": "2026-09-07T01:42:08+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -1689,180 +3338,6 @@
             "title": "新浪财经 行情数据",
             "url": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
             "publishedAt": "2026-09-07T15:21:11+08:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "cc3711a9494cf1e2f7a9",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T03:41:22+00:00",
-        "lastSeenAt": "2026-09-07T07:41:48+00:00",
-        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 5,
-        "confirmationCount": 4,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-107c31a86fb2bd117eed": {
-        "eventId": "evt-107c31a86fb2bd117eed",
-        "dataset": "marketCompany",
-        "entityId": "xtalpi",
-        "entityName": "晶泰控股有限公司",
-        "title": "新浪财经 行情数据",
-        "titleAliases": [
-          "新浪财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31",
-          "2026-09-01",
-          "2026-09-02",
-          "2026-09-07"
-        ],
-        "entityKeys": [
-          "marketCompany:xtalpi",
-          "name:晶泰控股有限公司"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-5fa1601b8d57d2004e8f",
-          "src-de35f484ecf44f83c49b",
-          "evd-f5f505b12de280e836e7",
-          "evd-9437856afcf99c124c2c",
-          "evd-06d67a94b7519b2d1063"
-        ],
-        "evidenceFingerprints": [
-          "5fa1601b8d57d2004e8f",
-          "f5f505b12de280e836e7",
-          "9437856afcf99c124c2c",
-          "06d67a94b7519b2d1063"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
-            "publishedAt": "2026-08-31T16:08:50+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
-            "publishedAt": "2026-09-01T16:08:18+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
-            "publishedAt": "2026-09-02T16:08:08+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
-            "publishedAt": "2026-09-07T15:21:01+08:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "cc3711a9494cf1e2f7a9",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T03:41:22+00:00",
-        "lastSeenAt": "2026-09-07T07:41:48+00:00",
-        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 4,
-        "confirmationCount": 3,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-09cacf02606d9838e6f2": {
-        "eventId": "evt-09cacf02606d9838e6f2",
-        "dataset": "marketCompany",
-        "entityId": "horizon-robotics",
-        "entityName": "Horizon Robotics",
-        "title": "新浪财经 行情数据",
-        "titleAliases": [
-          "新浪财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31",
-          "2026-09-01",
-          "2026-09-02",
-          "2026-09-04",
-          "2026-09-07"
-        ],
-        "entityKeys": [
-          "marketCompany:horizon-robotics",
-          "name:horizon robotics"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-b9931d767f7fdda9a522",
-          "src-2902bb7afee990ec31f7",
-          "evd-f9eda82d60279aa18d50",
-          "evd-c690cdfd1301ac54784c",
-          "evd-230de597643c6cb0a7fa",
-          "evd-ced861ace5efab8ab825"
-        ],
-        "evidenceFingerprints": [
-          "b9931d767f7fdda9a522",
-          "f9eda82d60279aa18d50",
-          "c690cdfd1301ac54784c",
-          "230de597643c6cb0a7fa",
-          "ced861ace5efab8ab825"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
-            "publishedAt": "2026-08-31T16:08:50+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
-            "publishedAt": "2026-09-01T16:08:16+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
-            "publishedAt": "2026-09-02T16:08:08+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
-            "publishedAt": "2026-09-04T16:08:06+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
-            "publishedAt": "2026-09-07T15:21:04+08:00",
             "evidenceGrade": "市场数据"
           }
         ],
@@ -29321,13 +30796,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 8,
+    "newEvents": 14,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 6,
-    "observedEvents": 14,
+    "duplicatesSuppressed": 3,
+    "observedEvents": 17,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -31957,10 +33432,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-07",
-      "generatedAt": "2026-09-07T07:41:48+00:00",
+      "generatedAt": "2026-09-07T12:11:29+00:00",
       "runStatus": "model",
-      "changeCount": 40,
-      "executiveSummary": "证据包包含五条高价值情报事件（E002-E006）及宁德时代、华大基因的新闻变更（E012、E013、E016），主要涉及AI监管、AI产品、AI工业合作、新能源产业链与机构资金配置。全部证据为媒体转述或摘要（C级/媒体报道），且均标记automated_unreviewed，因此本分析将其作为待验证信号，不视为确定性事实。核心观察：最高法首次发布涉AI司法裁判规则、阿里“千问办公”推出多人工作台、索尼与沙特阿美探索AI工业合作、理想汽车拟投资欣旺达动力、宁德时代盈利与全球份额信息强劲。本输出不构成投资建议。",
+      "changeCount": 54,
+      "executiveSummary": "证据包共收录12条情报事件与2条宁德时代相关快讯，覆盖动力电池、AI基础设施、半导体、医疗器械、智能穿戴等行业。最高优先级事件为理想汽车26.5亿投资被吉利起诉的动力电池公司，以及华为发布麒麟9050 Pro芯片与GPT-6 Astra发布。多数证据来自媒体或企业新闻稿，等级为B/C，需以追踪验证为主，不宜作为确定性投资结论。",
       "eventIds": [
         "evt-0b3c4f0fdc8d60987c6b",
         "evt-dd5c6325c3769b4014ec",
@@ -32001,7 +33476,21 @@
         "evt-ea7a4a50c4fde597bea2",
         "evt-79e90098986ced33c3ec",
         "evt-f9ca097565f59ca8803c",
-        "evt-719437109570226a2a63"
+        "evt-719437109570226a2a63",
+        "evt-a9f6af929ac59bd1179a",
+        "evt-d014c563f43c084b4d8c",
+        "evt-0378c5ee39b04b0aaa0d",
+        "evt-cb12da18dfc47d4c9a7a",
+        "evt-b2ff6b4ce13417cbd01d",
+        "evt-c655922f4db779fb519f",
+        "evt-3d71108d6994ccaa630a",
+        "evt-4e86abfb551a59c77c61",
+        "evt-bcb5a0b38e133db8f588",
+        "evt-8e26aba42be8447a8637",
+        "evt-eb363cfdcfb61ee90090",
+        "evt-d35471563b00b1058845",
+        "evt-f1973281d0a70135b429",
+        "evt-d75bc1657b4e64d00734"
       ],
       "eventStates": [
         {
@@ -32163,36 +33652,92 @@
         {
           "eventId": "evt-719437109570226a2a63",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-a9f6af929ac59bd1179a",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-d014c563f43c084b4d8c",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-0378c5ee39b04b0aaa0d",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-cb12da18dfc47d4c9a7a",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-b2ff6b4ce13417cbd01d",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-c655922f4db779fb519f",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-3d71108d6994ccaa630a",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-4e86abfb551a59c77c61",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-bcb5a0b38e133db8f588",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-8e26aba42be8447a8637",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-eb363cfdcfb61ee90090",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-d35471563b00b1058845",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-f1973281d0a70135b429",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-d75bc1657b4e64d00734",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 1,
-      "candidateTotal": 10,
-      "auxiliaryLeadTotal": 26,
+      "candidateTotal": 11,
+      "auxiliaryLeadTotal": 38,
       "rejectedTotal": 5,
       "eventSummary": {
-        "newEvents": 40,
+        "newEvents": 54,
         "reconfirmations": 9,
         "updates": 0,
         "corrections": 0,
         "possibleConflicts": 0,
-        "duplicatesSuppressed": 14
+        "duplicatesSuppressed": 17
       }
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 11,
-    "eligibleCandidateCount": 11,
+    "candidateCount": 15,
+    "eligibleCandidateCount": 15,
     "rejectedCandidateCount": 0,
     "rejectedByDataset": {},
-    "evidenceCount": 26,
-    "supportingEvidenceCount": 14,
-    "rejectedEvidenceCount": 7,
+    "evidenceCount": 24,
+    "supportingEvidenceCount": 17,
+    "rejectedEvidenceCount": 2,
     "passedButUnboundEvidenceCount": 5,
     "rejectionReasons": {
-      "missing_published_at": 6,
-      "missing_title": 3,
-      "ungraded": 3,
-      "entity_mismatch": 1
+      "entity_mismatch": 1,
+      "missing_published_at": 1,
+      "missing_title": 1,
+      "ungraded": 1
     },
     "sourceClassificationWarnings": []
   },
@@ -32213,7 +33758,7 @@
     "person": {
       "label": "核心人物",
       "status": "active",
-      "count": 120,
+      "count": 123,
       "note": "已进入每日实体快照与变化检测。"
     },
     "ventureCompany": {
