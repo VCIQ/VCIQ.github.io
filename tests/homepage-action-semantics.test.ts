@@ -13,10 +13,12 @@ test("homepage labels distinguish the follow feed from explicit followed sectors
   assert.doesNotMatch(feed, /个性化：关注 \{preferences\.followedSectors\.length\}/u);
 });
 
-test("homepage utility actions offer share and do not pretend a generic jump is deep research", async () => {
+test("homepage utility actions offer share and event-specific deep research", async () => {
   const feed = await source("components/homepage-news-feed.tsx");
   assert.match(feed, /recordArticleShare/u);
   assert.match(feed, /vciq:favorite-share-request/u);
   assert.match(feed, /分享这条情报/u);
+  assert.match(feed, /buildResearchInvestigationHref\(item\.id\)/u);
+  assert.match(feed, />\s*深研此条\s*</u);
   assert.doesNotMatch(feed, />\s*深度研究\s*</u);
 });
