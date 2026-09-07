@@ -9,7 +9,7 @@ on:
 
 permissions:
   contents: write
-  actions: write
+  actions: read
 
 concurrency:
   group: vciq-pages-observer
@@ -91,26 +91,6 @@ jobs:
           else
             : > diagnostics/pages-latest-failure.txt
           fi
-
-      - name: Recover a deferred stale-tracking publication
-        env:
-          GH_TOKEN: ${{ github.token }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          deployment_status="$(jq -r '.deploymentStatus // ""' diagnostics/pages-latest-status.json)"
-          deferred_reason="$(jq -r '.deferredReason // ""' diagnostics/pages-latest-status.json)"
-
-          if [ "$deployment_status" != "deferred" ] || [ "$deferred_reason" != "tracking_snapshot_refresh" ]; then
-            echo "No stale-tracking recovery is required."
-            exit 0
-          fi
-
-          echo "Pages was deferred because tracking inputs are newer than the article snapshot."
-          echo "Dispatching a current full refresh; the refresh workflow owns serialization and currentness checks."
-          gh workflow run scheduled-sync.yml \
-            --ref main \
-            --repo "$GITHUB_REPOSITORY"
 
       - name: Publish diagnostic snapshot
         shell: bash
