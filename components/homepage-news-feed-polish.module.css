@@ -1,0 +1,41 @@
+@media (max-width: 760px) {
+  .mobileSafeArea {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom));
+  }
+
+  .mobileActions {
+    flex-wrap: nowrap;
+    gap: 4px;
+    margin-top: 8px;
+  }
+
+  .mobileActions a {
+    flex: 0 1 auto;
+    min-height: 30px;
+    justify-content: flex-start;
+    padding: 0 8px;
+    border-color: transparent;
+    background: transparent;
+    font-size: 10px;
+  }
+
+  .mobileActions a:hover {
+    border-color: var(--border-soft);
+    background: var(--surface-3);
+  }
+
+  .cardMeta {
+    margin-top: 8px;
+  }
+
+  .mobileBottomNav {
+    min-height: calc(58px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 520px) {
+  .mobileActions a {
+    padding-inline: 6px;
+    font-size: 9px;
+  }
+}

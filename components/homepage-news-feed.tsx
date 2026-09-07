@@ -2,7 +2,7 @@
 
 import { ArrowUpRight, BookmarkPlus, Bot, Search } from "lucide-react";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { EventQualityIndicator } from "@/components/event-quality-indicator";
 import { buildTrackingCaptureLink } from "@/lib/tracking-admin-link";
 import {
@@ -12,6 +12,7 @@ import {
   type Region,
 } from "@/lib/use-articles";
 import styles from "./homepage-news-feed.module.css";
+import polishStyles from "./homepage-news-feed-polish.module.css";
 
 type ChannelId =
   | "follow"
@@ -47,6 +48,26 @@ const REGIONS: readonly RegionFilter[] = ["全部", "中国", "美国", "全球"
 const INITIAL_FEED_LIMIT = 24;
 const FEED_BATCH = 24;
 const TOP_SIGNAL_LIMIT = 10;
+const MINUTE_MS = 60_000;
+const HOUR_MS = 60 * MINUTE_MS;
+const DAY_MS = 24 * HOUR_MS;
+
+const CHINA_DATE_TIME_FORMATTER = new Intl.DateTimeFormat("zh-CN", {
+  timeZone: "Asia/Shanghai",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+  hourCycle: "h23",
+});
+
+const CHINA_CLOCK_FORMATTER = new Intl.DateTimeFormat("zh-CN", {
+  timeZone: "Asia/Shanghai",
+  hour: "2-digit",
+  minute: "2-digit",
+  hourCycle: "h23",
+});
 
 export type HomepageFeedBootstrap = {
   trackedSectorAliases: string[];
@@ -127,19 +148,33 @@ function matchesChannel(item: LiveIntelligenceEvent, channelId: ChannelId) {
   return channel.keywords.some((keyword) => haystack.includes(keyword.toLowerCase()));
 }
 
-function relatedSourceCount(item: LiveIntelligenceEvent) {
-  return Math.max(
-    1,
-    1 + (item.relatedSources?.length ?? 0),
-    item.duplicateCount ?? 1,
-  );
-}
-
 function compactSummary(summary: string, maxLength: number) {
   const normalized = summary.trim();
   return normalized.length > maxLength
     ? `${normalized.slice(0, maxLength)}…`
     : normalized;
+}
+
+function formatAbsolutePublishedAt(timestampMs: number) {
+  return CHINA_DATE_TIME_FORMATTER.format(new Date(timestampMs)).replaceAll("/", "-");
+}
+
+function formatPublishedAt(publishedAt: string, nowMs: number | null) {
+  const timestampMs = Date.parse(publishedAt);
+  if (!Number.isFinite(timestampMs)) return publishedAt;
+
+  const absolute = formatAbsolutePublishedAt(timestampMs);
+  if (nowMs === null) return absolute;
+
+  const delta = nowMs - timestampMs;
+  if (delta < 0 || delta >= 7 * DAY_MS) return absolute;
+  if (delta < MINUTE_MS) return "刚刚";
+  if (delta < HOUR_MS) return `${Math.max(1, Math.floor(delta / MINUTE_MS))}分钟前`;
+  if (delta < DAY_MS) return `${Math.max(1, Math.floor(delta / HOUR_MS))}小时前`;
+  if (delta < 2 * DAY_MS) {
+    return `昨天 ${CHINA_CLOCK_FORMATTER.format(new Date(timestampMs))}`;
+  }
+  return `${Math.max(2, Math.floor(delta / DAY_MS))}天前`;
 }
 
 function trackingHref(item: LiveIntelligenceEvent) {
@@ -174,6 +209,14 @@ export function HomepageNewsFeed({
   const [qualityScope, setQualityScope] = useState<QualityScope>("trusted");
   const [query, setQuery] = useState("");
   const [feedLimit, setFeedLimit] = useState(INITIAL_FEED_LIMIT);
+  const [clockMs, setClockMs] = useState<number | null>(null);
+
+  useEffect(() => {
+    const updateClock = () => setClockMs(Date.now());
+    updateClock();
+    const timer = window.setInterval(updateClock, MINUTE_MS);
+    return () => window.clearInterval(timer);
+  }, []);
 
   const enabledSectorNames = useMemo(
     () => new Set(bootstrap.trackedSectorAliases),
@@ -271,7 +314,10 @@ export function HomepageNewsFeed({
   }
 
   return (
-    <section className={styles.shell} aria-label="VCIQ 今日推荐情报流">
+    <section
+      className={`${styles.shell} ${polishStyles.mobileSafeArea}`}
+      aria-label="VCIQ 今日推荐情报流"
+    >
       <header className={styles.feedHeader}>
         <div className={styles.feedIdentity}>
           <span>VCIQ INTELLIGENCE FEED</span>
@@ -299,7 +345,12 @@ export function HomepageNewsFeed({
         <span>高优先级 {highPriorityCount}</span>
         <span>滚动情报库 {activeArticleCount}</span>
         <span className={styles.statusFreshness}>
-          {isLive ? "实时快照" : "页面快照"} · 最新 {latestPublishedAt || "暂无"}
+          {isLive ? "实时快照" : "页面快照"} · 最新{" "}
+          {latestPublishedAt ? (
+            <time dateTime={latestPublishedAt}>{formatPublishedAt(latestPublishedAt, clockMs)}</time>
+          ) : (
+            "暂无"
+          )}
         </span>
       </div>
 
@@ -383,14 +434,13 @@ export function HomepageNewsFeed({
 
                       <EventQualityIndicator item={item} />
 
-                      <div className={styles.cardMeta}>
+                      <div className={`${styles.cardMeta} ${polishStyles.cardMeta}`}>
                         <span>{item.source.name}</span>
-                        <span>{relatedSourceCount(item)} 个来源</span>
-                        <span>{item.publishedAt}</span>
+                        <time dateTime={item.publishedAt}>{formatPublishedAt(item.publishedAt, clockMs)}</time>
                         <strong>重要度 {item.importance}</strong>
                       </div>
 
-                      <div className={styles.cardActions}>
+                      <div className={`${styles.cardActions} ${polishStyles.mobileActions}`}>
                         <a href={item.source.url} target="_blank" rel="noreferrer">
                           查看来源 <ArrowUpRight size={13} aria-hidden="true" />
                         </a>
@@ -493,7 +543,10 @@ export function HomepageNewsFeed({
         </aside>
       </div>
 
-      <nav className={styles.mobileBottomNav} aria-label="移动端快捷导航">
+      <nav
+        className={`${styles.mobileBottomNav} ${polishStyles.mobileBottomNav}`}
+        aria-label="移动端快捷导航"
+      >
         <button
           type="button"
           className={channel === "recommend" ? styles.mobileNavActive : ""}
