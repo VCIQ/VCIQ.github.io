@@ -185,7 +185,7 @@ jobs:
             # workflow. Explicitly hand off exactly once after the repository
             # transaction has completed, preserving onboarding-before-refresh.
             if [ "$tracking_refresh_required" = "true" ]; then
-              echo "Candidate and tracking state changed; onboard first, then run one lightweight refresh."
+              echo "Candidate and tracking state changed; onboard first, then run one forced lightweight refresh."
               gh workflow run company-candidate-onboarding.yml --ref main \
                 -f post_onboarding_handoff=refresh
             elif [ "${PUBLISH_AFTER_RECONCILIATION:-false}" = "true" ]; then
@@ -197,8 +197,9 @@ jobs:
               gh workflow run company-candidate-onboarding.yml --ref main
             fi
           elif [ "$tracking_refresh_required" = "true" ]; then
-            echo "Tracking inputs changed; use the lightweight public refresh instead of a full crawl."
-            gh workflow run frequent-intelligence-refresh.yml --ref main
+            echo "Tracking inputs changed; force the lightweight public refresh so publication recovery cannot be skipped by freshness."
+            gh workflow run frequent-intelligence-refresh.yml --ref main \
+              -f force_crawl=true
           elif [ "${PUBLISH_AFTER_RECONCILIATION:-false}" = "true" ]; then
             echo "Entity reconciliation reached a fixed point; publish first, then generate research from that terminal snapshot."
             gh workflow run pages.yml --ref main \
