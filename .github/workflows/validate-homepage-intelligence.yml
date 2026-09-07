@@ -8,6 +8,12 @@ on:
       - components/homepage-news-feed.tsx
       - components/homepage-news-feed.module.css
       - components/homepage-news-feed-polish.module.css
+      - components/homepage-preference-controls.module.css
+      - components/use-homepage-preferences.ts
+      - lib/homepage-preferences.ts
+      - lib/homepage-recommendation.ts
+      - tests/homepage-preferences.test.ts
+      - tests/homepage-recommendation.test.ts
       - app/page.tsx
       - .github/workflows/refresh-homepage-intelligence.yml
       - .github/workflows/validate-homepage-intelligence.yml
@@ -45,7 +51,17 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
-          npx eslint components/dashboard.tsx components/homepage-channel-updates.tsx components/homepage-news-feed.tsx app/page.tsx 2>&1 | tee homepage-eslint.log
+          npx eslint \
+            components/dashboard.tsx \
+            components/homepage-channel-updates.tsx \
+            components/homepage-news-feed.tsx \
+            components/use-homepage-preferences.ts \
+            lib/homepage-preferences.ts \
+            lib/homepage-recommendation.ts \
+            tests/homepage-preferences.test.ts \
+            tests/homepage-recommendation.test.ts \
+            app/page.tsx \
+            2>&1 | tee homepage-eslint.log
       - name: Upload homepage lint diagnostics
         if: steps.homepage-lint.outcome == 'failure'
         uses: actions/upload-artifact@v4

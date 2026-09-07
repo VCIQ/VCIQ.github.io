@@ -1,0 +1,140 @@
+.sectorFollow {
+  min-height: 23px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 7px;
+  border: 1px solid var(--border-soft);
+  background: transparent;
+  color: var(--faint);
+  cursor: pointer;
+  font-size: 9px;
+}
+
+.sectorFollow:hover,
+.sectorFollowActive {
+  border-color: var(--green);
+  color: var(--green-bright);
+  background: color-mix(in srgb, var(--green) 7%, transparent);
+}
+
+.preferenceActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 13px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.preferenceActions button {
+  min-height: 26px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--faint);
+  cursor: pointer;
+  font-size: 10px;
+}
+
+.preferenceActions button:hover {
+  color: var(--text);
+}
+
+.preferenceActions button[aria-pressed="true"] {
+  color: var(--green-bright);
+  font-weight: 650;
+}
+
+.dismissAction:hover {
+  color: var(--orange) !important;
+}
+
+.reasonPanel {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-left: 2px solid var(--green);
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+}
+
+.reasonPanel > strong {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--text);
+  font-size: 10px;
+}
+
+.reasonPanel ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 15px;
+  margin: 0;
+  padding-left: 16px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.preferenceNotice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.preferenceNotice button {
+  flex: 0 0 auto;
+  border: 0;
+  background: transparent;
+  color: var(--green-bright);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.preferenceSummary {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--faint);
+  font-size: 9px;
+}
+
+@media (max-width: 760px) {
+  .sectorFollow {
+    min-height: 22px;
+    padding-inline: 6px;
+    font-size: 9px;
+  }
+
+  .preferenceActions {
+    gap: 3px 12px;
+    margin-top: 7px;
+  }
+
+  .preferenceActions button {
+    min-height: 28px;
+    font-size: 10px;
+  }
+
+  .reasonPanel {
+    padding: 9px 10px;
+  }
+
+  .reasonPanel ul {
+    display: grid;
+    gap: 3px;
+  }
+
+  .preferenceNotice {
+    align-items: flex-start;
+  }
+}
