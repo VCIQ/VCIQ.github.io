@@ -4,6 +4,7 @@ import type { FavoriteItem } from "@/lib/favorites";
 import type { HomepagePreferenceState } from "@/lib/homepage-preferences";
 import {
   baseHomepageRecommendationScore,
+  buildHomepageFavoriteAffinityProfile,
   homepageEventKey,
   homepageFeedFavoriteInput,
   homepageRecommendationReasons,
@@ -56,18 +57,21 @@ const favorite: FavoriteItem = {
   savedAt: "2026-09-07T01:00:00.000Z",
 };
 
+const favoriteProfile = buildHomepageFavoriteAffinityProfile([favorite]);
+const emptyFavoriteProfile = buildHomepageFavoriteAffinityProfile([]);
+
 test("explicit follows and saved-topic affinity increase homepage recommendation score", () => {
   const followed: HomepagePreferenceState = {
     ...emptyPreferences,
     followedSectors: ["HBM"],
   };
   const base = baseHomepageRecommendationScore(item);
-  const personalized = personalizedHomepageRecommendationScore(item, followed, [favorite]);
+  const personalized = personalizedHomepageRecommendationScore(item, followed, favoriteProfile);
 
   assert.ok(personalized > base + 15);
   assert.equal(matchesHomepageFollowChannel(item, followed), true);
-  assert.match(homepageRecommendationReasons(item, followed, [favorite]).join(" | "), /关注「HBM」/);
-  assert.match(homepageRecommendationReasons(item, followed, [favorite]).join(" | "), /稍后读过「HBM」/);
+  assert.match(homepageRecommendationReasons(item, followed, favoriteProfile).join(" | "), /关注「HBM」/);
+  assert.match(homepageRecommendationReasons(item, followed, favoriteProfile).join(" | "), /稍后读过「HBM」/);
 });
 
 test("negative sector feedback is bounded and exact dismissed events are filtered", () => {
@@ -79,7 +83,7 @@ test("negative sector feedback is bounded and exact dismissed events are filtere
 
   assert.equal(isHomepageEventDismissed(item, disliked), true);
   assert.ok(
-    personalizedHomepageRecommendationScore(item, disliked, []) <
+    personalizedHomepageRecommendationScore(item, disliked, emptyFavoriteProfile) <
       baseHomepageRecommendationScore(item),
   );
 });
