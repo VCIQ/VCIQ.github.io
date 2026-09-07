@@ -11,8 +11,12 @@ on:
       - components/homepage-preference-controls.module.css
       - components/use-homepage-preferences.ts
       - lib/homepage-preferences.ts
+      - lib/homepage-preference-sync.ts
+      - lib/homepage-preference-cloud-apply.ts
+      - lib/homepage-preference-cloud-bootstrap.ts
       - lib/homepage-recommendation.ts
       - tests/homepage-preferences.test.ts
+      - tests/homepage-preference-sync.test.ts
       - tests/homepage-recommendation.test.ts
       - app/page.tsx
       - .github/workflows/refresh-homepage-intelligence.yml
@@ -57,8 +61,12 @@ jobs:
             components/homepage-news-feed.tsx \
             components/use-homepage-preferences.ts \
             lib/homepage-preferences.ts \
+            lib/homepage-preference-sync.ts \
+            lib/homepage-preference-cloud-apply.ts \
+            lib/homepage-preference-cloud-bootstrap.ts \
             lib/homepage-recommendation.ts \
             tests/homepage-preferences.test.ts \
+            tests/homepage-preference-sync.test.ts \
             tests/homepage-recommendation.test.ts \
             app/page.tsx \
             2>&1 | tee homepage-eslint.log
