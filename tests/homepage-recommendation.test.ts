@@ -84,10 +84,10 @@ test("negative sector feedback is bounded and exact dismissed events are filtere
   );
 });
 
-test("later-read favorite payload carries stable event, sector and evidence metadata", () => {
+test("later-read favorite payload reuses the existing event favorite identity", () => {
   const payload = homepageFeedFavoriteInput(item);
 
-  assert.equal(payload.id, "homepage-feed:event:cluster-1");
+  assert.equal(payload.id, "daily-brief:event:cluster-1");
   assert.deepEqual(payload.sectors, ["HBM"]);
   assert.equal(payload.company, "Example Semiconductor");
   assert.equal(payload.importance, 94);
