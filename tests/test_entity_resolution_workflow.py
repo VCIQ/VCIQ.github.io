@@ -54,6 +54,14 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
         self.assertIn("-f run_research_after_deploy=true", onboarding)
         self.assertIn('handoff="${POST_ONBOARDING_HANDOFF:-none}"', onboarding)
 
+        direct_refresh = candidate.split('elif [ "$tracking_refresh_required" = "true" ]; then', 1)[1].split(
+            'elif [ "${PUBLISH_AFTER_RECONCILIATION:-false}" = "true" ]; then',
+            1,
+        )[0]
+        self.assertIn("-f force_crawl=true", direct_refresh)
+        onboarding_refresh = onboarding.split("refresh)", 1)[1].split(";;", 1)[0]
+        self.assertIn("-f force_crawl=true", onboarding_refresh)
+
     def test_default_onboarding_does_not_supersede_terminal_research_with_private_only_state(self) -> None:
         text = ONBOARDING_WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("PUBLISHED_COUNT: ${{ steps.onboarding.outputs.published_count }}", text)
@@ -104,6 +112,7 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
         )
         self.assertIn("Detect pushed tracking inputs", text)
         self.assertIn("gh workflow run frequent-intelligence-refresh.yml --ref main", text)
+        self.assertIn("-f force_crawl=true", text)
         refresh_trigger = refresh.split("  schedule:", 1)[0]
         self.assertNotIn("      - config/user_tracking.json", refresh_trigger)
         self.assertIn("      - config/user_tracking.json", pages)
