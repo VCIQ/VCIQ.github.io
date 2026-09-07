@@ -294,8 +294,9 @@ jobs:
           handoff="${POST_ONBOARDING_HANDOFF:-none}"
           case "$handoff" in
             refresh)
-              echo "Verified onboarding finished; run the lightweight public refresh from the committed company state."
-              gh workflow run frequent-intelligence-refresh.yml --ref main
+              echo "Verified onboarding finished; force the lightweight public refresh required for publication recovery."
+              gh workflow run frequent-intelligence-refresh.yml --ref main \
+                -f force_crawl=true
               ;;
             publish-with-research)
               echo "Verified onboarding finished at the terminal fixed point; publish Pages, then generate research."
