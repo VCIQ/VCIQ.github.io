@@ -2,6 +2,13 @@ import type { FavoriteInput, FavoriteItem } from "@/lib/favorites";
 import type { HomepagePreferenceState } from "@/lib/homepage-preferences";
 import type { LiveIntelligenceEvent } from "@/lib/use-articles";
 
+export type HomepageFavoriteAffinityProfile = {
+  favoriteIds: ReadonlySet<string>;
+  sectors: ReadonlySet<string>;
+  companies: ReadonlySet<string>;
+  sourceHosts: ReadonlySet<string>;
+};
+
 function normalized(value: string | undefined) {
   return (value ?? "").normalize("NFKC").trim().toLocaleLowerCase("zh-CN");
 }
@@ -33,6 +40,31 @@ export function homepageFavoriteId(item: LiveIntelligenceEvent) {
   return `daily-brief:event:${homepageEventKey(item)}`;
 }
 
+export function buildHomepageFavoriteAffinityProfile(
+  favorites: FavoriteItem[],
+): HomepageFavoriteAffinityProfile {
+  const favoriteIds = new Set<string>();
+  const sectors = new Set<string>();
+  const companies = new Set<string>();
+  const sourceHosts = new Set<string>();
+
+  for (const favorite of favorites) {
+    favoriteIds.add(favorite.id);
+    for (const sector of favorite.sectors) {
+      const key = normalized(sector);
+      if (key) sectors.add(key);
+    }
+    const company = normalized(favorite.company);
+    if (company) companies.add(company);
+    for (const source of favorite.sources) {
+      const host = sourceHost(source.url);
+      if (host) sourceHosts.add(host);
+    }
+  }
+
+  return { favoriteIds, sectors, companies, sourceHosts };
+}
+
 export function baseHomepageRecommendationScore(item: LiveIntelligenceEvent) {
   const quality =
     typeof item.qualityScore === "number"
@@ -55,33 +87,15 @@ export function baseHomepageRecommendationScore(item: LiveIntelligenceEvent) {
   );
 }
 
-function favoriteAffinity(item: LiveIntelligenceEvent, favorites: FavoriteItem[]) {
-  if (!favorites.length) return { score: 0, sameSector: false, sameCompany: false, sameSource: false };
-  const sector = normalized(item.sector);
-  const company = normalized(item.company);
+function favoriteAffinity(
+  item: LiveIntelligenceEvent,
+  profile: HomepageFavoriteAffinityProfile,
+) {
+  const sameSector = Boolean(normalized(item.sector) && profile.sectors.has(normalized(item.sector)));
+  const sameCompany = Boolean(normalized(item.company) && profile.companies.has(normalized(item.company)));
   const host = sourceHost(item.source.url);
-  let sameSector = false;
-  let sameCompany = false;
-  let sameSource = false;
-
-  for (const favorite of favorites) {
-    if (
-      sector &&
-      favorite.sectors.some((candidate) => normalized(candidate) === sector)
-    ) {
-      sameSector = true;
-    }
-    if (company && normalized(favorite.company) === company) sameCompany = true;
-    if (
-      host &&
-      favorite.sources.some((source) => sourceHost(source.url) === host)
-    ) {
-      sameSource = true;
-    }
-    if (sameSector && sameCompany && sameSource) break;
-  }
-
-  const exactSaved = favorites.some((favorite) => favorite.id === homepageFavoriteId(item));
+  const sameSource = Boolean(host && profile.sourceHosts.has(host));
+  const exactSaved = profile.favoriteIds.has(homepageFavoriteId(item));
   const score = Math.min(
     18,
     (exactSaved ? 4 : 0) +
@@ -95,13 +109,13 @@ function favoriteAffinity(item: LiveIntelligenceEvent, favorites: FavoriteItem[]
 export function personalizedHomepageRecommendationScore(
   item: LiveIntelligenceEvent,
   preferences: HomepagePreferenceState,
-  favorites: FavoriteItem[],
+  favoriteProfile: HomepageFavoriteAffinityProfile,
 ) {
   const followed = preferences.followedSectors.some(
     (sector) => normalized(sector) === normalized(item.sector),
   );
   const dislikeCount = preferences.sectorDislikes[item.sector] ?? 0;
-  const affinity = favoriteAffinity(item, favorites);
+  const affinity = favoriteAffinity(item, favoriteProfile);
   return (
     baseHomepageRecommendationScore(item) +
     (followed ? 14 : 0) +
@@ -187,10 +201,10 @@ export function homepageFeedFavoriteInput(item: LiveIntelligenceEvent): Favorite
 export function homepageRecommendationReasons(
   item: LiveIntelligenceEvent,
   preferences: HomepagePreferenceState,
-  favorites: FavoriteItem[],
+  favoriteProfile: HomepageFavoriteAffinityProfile,
 ) {
   const reasons: string[] = [];
-  const affinity = favoriteAffinity(item, favorites);
+  const affinity = favoriteAffinity(item, favoriteProfile);
 
   if (isHomepageSectorFollowed(item, preferences)) {
     reasons.push(`你关注「${item.sector}」`);
