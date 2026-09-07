@@ -1,3 +1,5 @@
+import { syncHomepagePreference } from "@/lib/homepage-preference-sync";
+
 export const HOMEPAGE_PREFERENCES_STORAGE_KEY = "vciq:homepage-preferences:v1";
 export const HOMEPAGE_PREFERENCES_CHANGED_EVENT = "vciq:homepage-preferences-changed";
 
@@ -162,6 +164,7 @@ export function toggleHomepageSectorFollow(sectorValue: string) {
   const exists = current.followedSectors.some(
     (item) => item.toLocaleLowerCase("zh-CN") === sector.toLocaleLowerCase("zh-CN"),
   );
+  const followed = !exists;
   writeState({
     ...current,
     followedSectors: exists
@@ -170,7 +173,8 @@ export function toggleHomepageSectorFollow(sectorValue: string) {
         )
       : [sector, ...current.followedSectors],
   });
-  return !exists;
+  void syncHomepagePreference({ action: followed ? "follow" : "unfollow", sector });
+  return followed;
 }
 
 export function dismissHomepageEvent(eventIdValue: string, sectorValue: string) {
@@ -190,6 +194,7 @@ export function dismissHomepageEvent(eventIdValue: string, sectorValue: string) 
     );
   }
   writeState({ ...current, dismissedEventIds, sectorDislikes });
+  if (sector) void syncHomepagePreference({ action: "dismiss", eventId, sector });
   return true;
 }
 
@@ -209,5 +214,6 @@ export function undoDismissHomepageEvent(eventIdValue: string, sectorValue: stri
     dismissedEventIds: current.dismissedEventIds.filter((item) => item !== eventId),
     sectorDislikes,
   });
+  if (sector) void syncHomepagePreference({ action: "restore", eventId, sector });
   return true;
 }
