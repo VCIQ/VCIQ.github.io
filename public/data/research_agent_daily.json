@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-07T05:02:49+00:00",
+  "generatedAt": "2026-09-07T06:17:45+00:00",
   "asOfDate": "2026-09-07",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
@@ -12,338 +12,156 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 12224,
-      "completion_tokens": 6117,
-      "total_tokens": 18341,
+      "prompt_tokens": 975,
+      "completion_tokens": 2830,
+      "total_tokens": 3805,
       "completion_tokens_details": {
-        "reasoning_tokens": 3912
+        "reasoning_tokens": 1970
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 12224
+      "prompt_cache_miss_tokens": 975
     }
   },
   "changeSummary": {
-    "totalDetected": 36,
-    "total": 14,
+    "totalDetected": 6,
+    "total": 1,
     "byDataset": {
-      "intelligenceEvent": 12,
-      "marketCompany": 2
+      "ventureCompany": 1
     },
     "byChangeType": {
-      "external_event": 17,
-      "data_maintenance": 9,
-      "source_refresh": 10
+      "external_event": 6
     },
-    "externalCandidates": 17,
-    "qualityRejected": 0,
-    "maintenanceExcluded": 19,
+    "externalCandidates": 6,
+    "qualityRejected": 3,
+    "maintenanceExcluded": 0,
     "aggregatedEvents": 0,
-    "highestImportance": 86,
-    "verifiedChangeTotal": 0,
-    "candidateTotal": 2,
-    "auxiliaryLeadTotal": 12,
-    "rejectedTotal": 0,
-    "newEvents": 14,
+    "highestImportance": 88,
+    "verifiedChangeTotal": 1,
+    "candidateTotal": 0,
+    "auxiliaryLeadTotal": 0,
+    "rejectedTotal": 3,
+    "newEvents": 1,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 6
+    "duplicatesSuppressed": 2
   },
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "2026-09-07证据包显示多个AI相关主题：龙版传媒因AI概念宣传遭监管警示，提示概念炒作与业绩脱节风险；韩国AI半导体链出现经济回暖、高盛目标价上调、企业美元存款创新高等多重信号，但均为外部观点或统计线索；华为更新3D堆叠芯片热管理论文，机构解读后道测试设备受益，但商业落地待验证；生成式AI在Nuix与汽车之家等企业产品中落地；A股资金出现从AI算力向能源有色等方向的轮动迹象。多数证据为媒体快照或新闻报道，证据等级以C级为主，需进一步核实。",
+    "executiveSummary": "基于证据 E001（蜂巢能源官网，2026-09-02），蜂巢能源的 financing 字段发生数据变化：此前记录于2026-08-06的融资条目（无投资者，内容为再次入选全球储能项目采购与金融可融资性风向标名单）被移除，当前 financing 为空。证据级别为官方披露，但审查状态为automated_unreviewed且未说明移除原因，因此仅将数据层变化视为事实，不据此推断融资状况恶化。 质量门诊断：缺少发布时间 13、证据未分级 1、证据合格但未绑定变化字段 5。",
     "keyDevelopments": [
       {
-        "title": "龙版传媒AI概念‘画饼’遭监管警示",
-        "assessment": "据媒体快照，龙版传媒因AI相关宣传播放量高达1.2亿但营收仅80元，收到监管警示，并提示8月26日起买入的股民可索赔。该事件表明AI概念与真实业绩可能严重脱节，需关注监管与诉讼风险。",
-        "importance": 4,
+        "title": "蜂巢能源融资记录被移除",
+        "assessment": "事实层面：E001 显示蜂巢能源的 financing 字段从包含一条日期为2026-08-06的记录（无投资者，摘要提及再次入选某全球储能项目名单）变为空列表。推断层面：这可能是数据清理，或此前将名单入选视为融资事件并不准确，但证据未提供原因。待验证：该变更是否反映蜂巢能源实际融资或可融资性状态的变化。由于证据为自动未复核，且变更方向不明确，暂视为数据调整而非实质性重大事件。",
+        "importance": 3,
         "confidence": "medium",
         "entities": [
-          "龙版传媒(605577)"
+          "蜂巢能源"
         ],
         "evidenceIds": [
           "E001"
-        ]
-      },
-      {
-        "title": "华为更新‘韬定律’论文回应3D堆叠芯片发热质疑",
-        "assessment": "华为半导体负责人何庭波于9月4日更新τ定律论文，提出芯片能耗主要来自数据传输而非计算本身，以回应3D堆叠芯片发热问题。媒体引述机构解读认为后道测试设备环节可能直接受益。目前仅为技术论文与媒体报道，实际商业影响待验证。",
-        "importance": 4,
-        "confidence": "medium",
-        "entities": [
-          "华为",
-          "半导体设备"
-        ],
-        "evidenceIds": [
-          "E008"
-        ]
-      },
-      {
-        "title": "韩国AI半导体景气获多重信号支撑",
-        "assessment": "韩国开发研究院称AI基础设施相关出口与投资支撑经济回暖；高盛维持Kospi 12000点目标价并预计“存储荒”明年加剧；韩国五大本土银行企业美元存款创下769.8亿美元历史新高。多个线索指向AI存储链高景气，但均为观点或统计数据，非企业业绩确证。",
-        "importance": 4,
-        "confidence": "medium",
-        "entities": [
-          "韩国存储芯片",
-          "Kospi",
-          "高盛"
-        ],
-        "evidenceIds": [
-          "E002",
-          "E010",
-          "E012"
-        ]
-      },
-      {
-        "title": "生成式AI加速进入企业软件与垂直场景",
-        "assessment": "Nuix宣布其生成式AI能力在Nuix Discover SaaS中全面可用，功能包括文档摘要、相似文档、语义搜索及AI聊天；汽车之家发布“芝士车管家”AI智能体，将选车判断与用车服务整合。显示AI产品正从概念向商业功能落地。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "Nuix",
-          "汽车之家"
-        ],
-        "evidenceIds": [
-          "E004",
-          "E006"
-        ]
-      },
-      {
-        "title": "A股市场资金出现风格轮动迹象",
-        "assessment": "媒体报道称基金经理正从极致倾斜AI算力产业链向能源、有色等方向转移；9月4日ETF整体净申购214.83亿元，科创50ETF华夏净申购居首。资金流向呈现结构性变化，但单月调查与单日数据不足以确认趋势。",
-        "importance": 3,
-        "confidence": "low",
-        "entities": [
-          "A股基金",
-          "科创50ETF华夏"
-        ],
-        "evidenceIds": [
-          "E007",
-          "E011"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "龙版传媒",
-        "direction": "negative",
-        "statement": "AI概念宣传与实际营收严重不符，监管警示及索赔诉讼风险上升，AI叙事可能损害公司信誉。",
+        "entity": "蜂巢能源",
+        "direction": "neutral",
+        "statement": "蜂巢能源的融资字段被清空，删除了一条此前标记为‘融资’的入选名单记录。但 E001 未提供移除原因，也未显示任何负面信息，因此无法判断方向为正面或负面；在获得更明确证据前，维持中性观察。",
         "evidenceIds": [
           "E001"
-        ]
-      },
-      {
-        "entity": "韩国存储芯片/AI半导体产业链",
-        "direction": "positive",
-        "statement": "韩国智库、高盛及企业美元存款数据均指向AI拉动存储芯片出口与投资，产业景气周期可能被低估；但高盛目标价属主观预测，需谨慎看待。",
-        "evidenceIds": [
-          "E002",
-          "E010",
-          "E012"
-        ]
-      },
-      {
-        "entity": "华为半导体/3D堆叠",
-        "direction": "mixed",
-        "statement": "韬定律论文回应发热质疑，机构看好后道测试设备，但未证实具体产品与订单落地，技术可行性仍需验证。",
-        "evidenceIds": [
-          "E008"
-        ]
-      },
-      {
-        "entity": "AI企业应用",
-        "direction": "positive",
-        "statement": "Nuix和汽车之家分别推出生成式AI产品，表明AI在专业服务与垂直场景的商业化进程持续。",
-        "evidenceIds": [
-          "E004",
-          "E006"
-        ]
-      },
-      {
-        "entity": "A股市场风格",
-        "direction": "mixed",
-        "statement": "基金经理仓位调查显示公募与险资加仓，但行业配置从AI算力向能源有色扩散；ETF资金净申购偏向科创50，市场主线尚未明确。",
-        "evidenceIds": [
-          "E007",
-          "E011"
-        ]
-      },
-      {
-        "entity": "AI可解释性研究",
-        "direction": "neutral",
-        "statement": "新论文指出计算机视觉可解释AI领域方法已成熟，但呼吁从解释方法转向构建可解释模型，反映研究范式可能演进。",
-        "evidenceIds": [
-          "E005"
-        ]
-      },
-      {
-        "entity": "机器人/自动驾驶产业链",
-        "direction": "neutral",
-        "statement": "港股机器人股普遍上涨，但缺乏基本面信息，仅作为短期市场情绪参考。",
-        "evidenceIds": [
-          "E029"
-        ]
-      },
-      {
-        "entity": "华大基因",
-        "direction": "neutral",
-        "statement": "融资余额占流通市值比例低于近一年30%分位，反映杠杆资金参与度不高，无明确趋势判断。",
-        "evidenceIds": [
-          "E022"
         ]
       }
     ],
     "watchlist": [
       {
-        "item": "龙版传媒监管后续及索赔进展",
-        "reason": "监管警示后是否进一步处罚，以及投资者索赔对公司的财务与声誉影响。",
-        "nextEvidence": "公司公告、交易所问询函、行政处罚决定书",
+        "item": "蜂巢能源官方是否发布新的融资或可融资性信息",
+        "reason": "现有证据仅显示旧记录被移除，无替代记录。需要等待蜂巢能源官网或权威渠道披露新的融资事件、储能项目名单入选或可融资性更新，才能判断其当前状态。",
+        "nextEvidence": "蜂巢能源官网、证券交易所公告或权威媒体关于融资/可融资性的更新内容。",
         "evidenceIds": [
           "E001"
         ]
       },
       {
-        "item": "华为韬定律论文的技术验证与设备订单",
-        "reason": "机构解读后道测试设备受益，但需获得设备商订单或财报数据验证。",
-        "nextEvidence": "华为后续论文或发布会、设备公司订单公告",
+        "item": "该 financing 字段变更的原因说明",
+        "reason": "E001 未说明移除原因，也未经过人工复核。若后续出现解释性文档或更正，才能区分数据清理、分类调整还是实际业务变化。",
+        "nextEvidence": "蜂巢能源或数据提供方对本次变更的说明，或带有更新日期的融资记录。",
         "evidenceIds": [
-          "E008"
-        ]
-      },
-      {
-        "item": "韩国存储芯片出口与韩元汇率",
-        "reason": "企业美元存款创新高显示“囤美元”现象，可能影响韩元走势和跨境资本流动；需观察持续性。",
-        "nextEvidence": "韩国贸易数据、央行国际收支、五大银行存款月度变化",
-        "evidenceIds": [
-          "E012",
-          "E010"
-        ]
-      },
-      {
-        "item": "Nuix与汽车之家AI产品的客户采用数据",
-        "reason": "产品发布不足以证明成功，需观察用户量、付费转化或收入贡献。",
-        "nextEvidence": "公司财报、产品使用量案例",
-        "evidenceIds": [
-          "E004",
-          "E006"
-        ]
-      },
-      {
-        "item": "基金经理仓位与板块轮动后续",
-        "reason": "单月调查和单日ETF数据不足以确定趋势，需跟踪未来数周资金流向与行业表现。",
-        "nextEvidence": "下一期机构调查、ETF申赎数据、行业指数相对收益",
-        "evidenceIds": [
-          "E007",
-          "E011"
-        ]
-      },
-      {
-        "item": "港股机器人板块持续性",
-        "reason": "单日普涨可能受消息面驱动，需观察成交量和后续公告。",
-        "nextEvidence": "公司公告、行业政策、订单消息",
-        "evidenceIds": [
-          "E029"
-        ]
-      },
-      {
-        "item": "AI可解释模型的工程化应用",
-        "reason": "学术论文提出新方向，但距离产品化与商业价值尚有距离。",
-        "nextEvidence": "后续论文、开源代码、企业技术采纳案例",
-        "evidenceIds": [
-          "E005"
+          "E001"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "AI概念业绩兑现风险",
-        "reason": "龙版传媒案例显示AI宣传与营收差距极大，监管和投资者维权可能对相关概念股形成负面冲击。",
+        "risk": "证据不完整可能导致对蜂巢能源融资状况的误判",
+        "reason": "E001 仅记录 financing 字段由有到无，未提供移除原因；且证据审查状态为automated_unreviewed，低等级验证水平意味着不应据此得出确定性结论。",
         "evidenceIds": [
           "E001"
         ]
       },
       {
-        "risk": "高盛目标价等卖方观点可能被过度解读",
-        "reason": "目标价和“存储荒”判断是预测，若盈利周期不如预期，市场可能反转。",
+        "risk": "将单一数据变化解读为负面信号的风险",
+        "reason": "在无附加解释的情况下，删除一条无投资者的名单入选记录可能是分类调整或数据清理，不代表实际融资失败。若据此做出负面判断，可能偏离事实。",
         "evidenceIds": [
-          "E010"
-        ]
-      },
-      {
-        "risk": "媒体报道证据等级低，存在偏差或夸大",
-        "reason": "大部分证据为C级媒体线索，自动审核未人工复核，关键事实需要一手来源确认。",
-        "evidenceIds": [
-          "E002",
-          "E008",
-          "E010"
-        ]
-      },
-      {
-        "risk": "资金轮动快速，短期策略失效风险",
-        "reason": "基金经理转向能源有色，但ETF资金仍加仓科创50，市场主线不明，拥挤交易可能逆转。",
-        "evidenceIds": [
-          "E007",
-          "E011"
+          "E001"
         ]
       }
     ],
-    "methodologyNote": "本报告仅基于提供的证据包进行分析，所有证据均处于自动审核未人工复核状态，多数为媒体快照或新闻稿，证据等级以C级为主（E004、E005为B级）。因此，本报告将事实、推断与待验证事项分开表述，不对任何证券提供买入、卖出、目标价或收益承诺。关键发展中的重要性仅代表基于当前证据的事件相关度，不代表投资评级。 数据管线提示：两小时公开情报刷新=stale。"
+    "methodologyNote": "本分析仅依据证据包中的 E001。该证据为‘verified_change’级别，来源为蜂巢能源官网，证据等级为‘官方披露’，但审查状态为automated_unreviewed，且未提供变更原因。因此，本报告将 financing 字段的数据变化视为已确认事实，将任何业务含义视为推断或待验证事项，不假设删除记录即为负面事件，不提供任何买入、卖出、目标价或收益承诺。 数据管线提示：两小时公开情报刷新=stale。"
   },
   "changes": [
     {
-      "id": "chg-548bd90375c4b979a9af",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-8f6c1943e6de390d1a",
-      "entityName": "播放量1.2亿，营收仅80元！龙版传媒（605577）AI“画饼”遭监管警示，8月26日起买入股民可索赔",
-      "action": "added",
+      "id": "chg-7ac5e0912159b63f6e2a",
+      "dataset": "ventureCompany",
+      "entityType": "创业公司",
+      "entityId": "svlot",
+      "entityName": "蜂巢能源",
+      "action": "updated",
       "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "financing"
       ],
-      "summary": "新增高价值情报事件记录：播放量1.2亿，营收仅80元！龙版传媒（605577）AI“画饼”遭监管警示，8月26日起买入股民可索赔。",
-      "importance": 86,
-      "before": null,
+      "summary": "蜂巢能源 的 financing 发生变化。",
+      "importance": 88,
+      "before": {
+        "financing": [
+          {
+            "date": "2026-08-06",
+            "investors": [],
+            "sourceUrl": "https://www.svolt.cn/",
+            "summary": "该名单是全球储能项目采购与金融可融资性的重要风向标，再次入选标志着蜂巢能源的企业信誉、技术实力及全球交付能力已稳居国际一流行列。",
+            "title": "蜂巢能源官方网站",
+            "type": "融资"
+          }
+        ]
+      },
       "after": {
-        "publishedAt": "2026-09-07",
-        "summary": "公司旗下有黑龙江人民出版社等7家出版社（含1家代管出版社）和新华书店集团、新华印务集团、报刊传媒集团3家子集团等100余家子分公司。",
-        "title": "播放量1.2亿，营收仅80元！龙版传媒（605577）AI“画饼”遭监管警示，8月26日起买入股民可索赔"
+        "financing": []
       },
       "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
       "isResearchCandidate": true,
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "financing"
       ],
       "claimBindings": [
         {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-07",
-          "evidenceIds": [
-            "E001"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "公司旗下有黑龙江人民出版社等7家出版社（含1家代管出版社）和新华书店集团、新华印务集团、报刊传媒集团3家子集团等100余家子分公司。",
-          "evidenceIds": [
-            "E001"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "播放量1.2亿，营收仅80元！龙版传媒（605577）AI“画饼”遭监管警示，8月26日起买入股民可索赔",
+          "field": "financing",
+          "before": [
+            {
+              "date": "2026-08-06",
+              "investors": [],
+              "sourceUrl": "https://www.svolt.cn/",
+              "summary": "该名单是全球储能项目采购与金融可融资性的重要风向标，再次入选标志着蜂巢能源的企业信誉、技术实力及全球交付能力已稳居国际一流行列。",
+              "title": "蜂巢能源官方网站",
+              "type": "融资"
+            }
+          ],
+          "after": [],
           "evidenceIds": [
             "E001"
           ]
@@ -360,1360 +178,38 @@
         "supporting": 1,
         "total": 1
       },
-      "publicationTier": "external_clue",
+      "publicationTier": "verified_change",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-8390f06cea1e6d903c53"
+        "evt-6308b5fa0eed7c865b8c"
       ],
       "eventLifecycles": {
-        "evt-8390f06cea1e6d903c53": "first_seen"
+        "evt-6308b5fa0eed7c865b8c": "first_seen"
       },
-      "eventId": "evt-8390f06cea1e6d903c53",
+      "eventId": "evt-6308b5fa0eed7c865b8c",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-07T05:02:49+00:00",
-      "lastSeenAt": "2026-09-07T05:02:49+00:00"
-    },
-    {
-      "id": "chg-fda72b134d145d6c5032",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-079b15fdac89e080f0",
-      "entityName": "韩国智库：AI拉动出口与投资，韩国经济持续回暖",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：韩国智库：AI拉动出口与投资，韩国经济持续回暖。",
-      "importance": 84,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-07",
-        "summary": "韩国一家公立智库周一表示，受海内外人工智能基础设施相关出口与投资的强劲支撑，韩国经济持续向好。 韩国开发研究院（KDI）在月度经济评估报告中称：“在和人工智能投资高...",
-        "title": "韩国智库：AI拉动出口与投资，韩国经济持续回暖"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-07",
-          "evidenceIds": [
-            "E002"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "韩国一家公立智库周一表示，受海内外人工智能基础设施相关出口与投资的强劲支撑，韩国经济持续向好。 韩国开发研究院（KDI）在月度经济评估报告中称：“在和人工智能投资高...",
-          "evidenceIds": [
-            "E002"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "韩国智库：AI拉动出口与投资，韩国经济持续回暖",
-          "evidenceIds": [
-            "E002"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E002"
-      ],
-      "supportingEvidenceIds": [
-        "E002"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-779cd8c698ee22722fa7"
-      ],
-      "eventLifecycles": {
-        "evt-779cd8c698ee22722fa7": "first_seen"
-      },
-      "eventId": "evt-779cd8c698ee22722fa7",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-07T05:02:49+00:00",
-      "lastSeenAt": "2026-09-07T05:02:49+00:00"
-    },
-    {
-      "id": "chg-ded69194c1f4a47c5cec",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-89a6ef8f4ea0629732",
-      "entityName": "巴伦对话钟兆民：AI时代，价值投资如何进化？ | 巴伦独家",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：巴伦对话钟兆民：AI时代，价值投资如何进化？ | 巴伦独家。",
-      "importance": 84,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-07",
-        "summary": "“越是变化剧烈的时代，越要分清什么必须变，什么绝不能变。”",
-        "title": "巴伦对话钟兆民：AI时代，价值投资如何进化？ | 巴伦独家"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-07",
-          "evidenceIds": [
-            "E003"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "“越是变化剧烈的时代，越要分清什么必须变，什么绝不能变。”",
-          "evidenceIds": [
-            "E003"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "巴伦对话钟兆民：AI时代，价值投资如何进化？ | 巴伦独家",
-          "evidenceIds": [
-            "E003"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E003"
-      ],
-      "supportingEvidenceIds": [
-        "E003"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-1f2cb2b4257ab603a775"
-      ],
-      "eventLifecycles": {
-        "evt-1f2cb2b4257ab603a775": "first_seen"
-      },
-      "eventId": "evt-1f2cb2b4257ab603a775",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-07T05:02:49+00:00",
-      "lastSeenAt": "2026-09-07T05:02:49+00:00"
-    },
-    {
-      "id": "chg-dc6345cee5521eb5676d",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-b13c1f34974b849ae2",
-      "entityName": "Nuix Expands Generative AI for Legal Review, Debuts AI Chat for Case Data",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Nuix Expands Generative AI for Legal Review, Debuts AI Chat for Case Data。",
-      "importance": 84,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-07",
-        "summary": "SYDNEY, Sept. 7, 2026 /PRNewswire/ -- Nuix announced the general availability (GA) of its Generative AI (Gen AI) capabilities in Nuix Discover SaaS on September 4. Bringing Document Summaries, Similar Documents, Semantic Search, Clustering and Visualizations…",
-        "title": "Nuix Expands Generative AI for Legal Review, Debuts AI Chat for Case Data"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-07",
-          "evidenceIds": [
-            "E004"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "SYDNEY, Sept. 7, 2026 /PRNewswire/ -- Nuix announced the general availability (GA) of its Generative AI (Gen AI) capabilities in Nuix Discover SaaS on September 4. Bringing Document Summaries, Similar Documents, Semantic Search, Clustering and Visualizations…",
-          "evidenceIds": [
-            "E004"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Nuix Expands Generative AI for Legal Review, Debuts AI Chat for Case Data",
-          "evidenceIds": [
-            "E004"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E004"
-      ],
-      "supportingEvidenceIds": [
-        "E004"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-3b7bfeed49317428bc41"
-      ],
-      "eventLifecycles": {
-        "evt-3b7bfeed49317428bc41": "first_seen"
-      },
-      "eventId": "evt-3b7bfeed49317428bc41",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-07T05:02:49+00:00",
-      "lastSeenAt": "2026-09-07T05:02:49+00:00"
-    },
-    {
-      "id": "chg-af36f770d728a123e653",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-af473146ef80c99131",
-      "entityName": "From Interpretability Methods to Interpretable Models",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：From Interpretability Methods to Interpretable Models。",
-      "importance": 84,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-04",
-        "summary": "More than a decade in, explainable AI (XAI) for computer vision has assembled a mature toolbox: attribution, feature visualization, concept-based, and circuit-based methods. Yet almost all of the field's effort has gone into building and comparing these metho…",
-        "title": "From Interpretability Methods to Interpretable Models"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-04",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "More than a decade in, explainable AI (XAI) for computer vision has assembled a mature toolbox: attribution, feature visualization, concept-based, and circuit-based methods. Yet almost all of the field's effort has gone into building and comparing these metho…",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "From Interpretability Methods to Interpretable Models",
-          "evidenceIds": [
-            "E005"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E005"
-      ],
-      "supportingEvidenceIds": [
-        "E005"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-9350d03a4175c12d22b8"
-      ],
-      "eventLifecycles": {
-        "evt-9350d03a4175c12d22b8": "first_seen"
-      },
-      "eventId": "evt-9350d03a4175c12d22b8",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-07T05:02:49+00:00",
-      "lastSeenAt": "2026-09-07T05:02:49+00:00"
-    },
-    {
-      "id": "chg-73a4506eab344611f7cd",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-9b1dc34216b955c278",
-      "entityName": "汽车之家发布芝士车管家AI智能体，选车判断与用车服务收进同一条路径",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：汽车之家发布芝士车管家AI智能体，选车判断与用车服务收进同一条路径。",
-      "importance": 82,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-07",
-        "summary": "过去20余年积累的汽车内容、数据与用户服务经验，正在新的技术环境下转化为解决实际问题的能力",
-        "title": "汽车之家发布芝士车管家AI智能体，选车判断与用车服务收进同一条路径"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-07",
-          "evidenceIds": [
-            "E006"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "过去20余年积累的汽车内容、数据与用户服务经验，正在新的技术环境下转化为解决实际问题的能力",
-          "evidenceIds": [
-            "E006"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "汽车之家发布芝士车管家AI智能体，选车判断与用车服务收进同一条路径",
-          "evidenceIds": [
-            "E006"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E006"
-      ],
-      "supportingEvidenceIds": [
-        "E006"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-00470d12e6d6f74ce038"
-      ],
-      "eventLifecycles": {
-        "evt-00470d12e6d6f74ce038": "first_seen"
-      },
-      "eventId": "evt-00470d12e6d6f74ce038",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-07T05:02:49+00:00",
-      "lastSeenAt": "2026-09-07T05:02:49+00:00"
-    },
-    {
-      "id": "chg-08e95d6663b734a40531",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-2409df4a1d91e428b6",
-      "entityName": "轮动中寻找主线 基金经理绘制9月“突围”路线图",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：轮动中寻找主线 基金经理绘制9月“突围”路线图。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-07",
-        "summary": "经过8月的短暂修复之后，9月以来的市场处于震荡调整状态。与此同时，基金产品仍面临净值修复的压力。从极致倾斜AI算力产业链向能源、有色等纵深方向转移，在轮动加剧的行情中，基金经理们正在绘制9月“突围”路线图，并试图从中找出真正的投资主线。 兴证策略8月本土机构投资者调查结果显示，8月，相对收益型公募与绝对收益型险资这两类重仓风格不同的资金各自加仓，平均权益仓位分别为83.7%和75.6%，较7月的78.3%和66.4%均有小幅上升，其他类型机构投资者的仓位则有不同程度的下降。 8月受访机构投资者在未来一个月（9月）…",
-        "title": "轮动中寻找主线 基金经理绘制9月“突围”路线图"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-07",
-          "evidenceIds": [
-            "E007"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "经过8月的短暂修复之后，9月以来的市场处于震荡调整状态。与此同时，基金产品仍面临净值修复的压力。从极致倾斜AI算力产业链向能源、有色等纵深方向转移，在轮动加剧的行情中，基金经理们正在绘制9月“突围”路线图，并试图从中找出真正的投资主线。 兴证策略8月本土机构投资者调查结果显示，8月，相对收益型公募与绝对收益型险资这两类重仓风格不同的资金各自加仓，平均权益仓位分别为83.7%和75.6%，较7月的78.3%和66.4%均有小幅上升，其他类型机构投资者的仓位则有不同程度的下降。 8月受访机构投资者在未来一个月（9月）…",
-          "evidenceIds": [
-            "E007"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "轮动中寻找主线 基金经理绘制9月“突围”路线图",
-          "evidenceIds": [
-            "E007"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E007"
-      ],
-      "supportingEvidenceIds": [
-        "E007"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-ec9b0ced3e4b7495402d"
-      ],
-      "eventLifecycles": {
-        "evt-ec9b0ced3e4b7495402d": "first_seen"
-      },
-      "eventId": "evt-ec9b0ced3e4b7495402d",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-07T05:02:49+00:00",
-      "lastSeenAt": "2026-09-07T05:02:49+00:00"
-    },
-    {
-      "id": "chg-fceb7b5c3475dd170f56",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-2c64c512406094d3bb",
-      "entityName": "华为更新韬定律论文 最新机构解读来了 后道测试设备环节直接受益？",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：华为更新韬定律论文 最新机构解读来了 后道测试设备环节直接受益？。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-07",
-        "summary": "9月4日，华为 半导体 负责人何庭波更新τ（韬）定律论文，此前5月25日华为发布韬定律V1版本、7月4日更新V2版本，不到四个月时间内，华为三次就韬定律发表学术论文。 最新论文《Huaweis τ Chip Was Supposed to Melt?》（华为韬芯片本应熔化吗？） 回应了3D堆叠芯片存在发热问题的质疑 。 其中提到，热量是韬定律最棘手的隐忧，在芯片内部，能量的主要消耗并非来自计算本身，而是来自数据传输。 外界预想折叠后单位面积晶体管激增，功率密度必然飙升，理应更热、更耗电，但事实上，通过电路折叠，典…",
-        "title": "华为更新韬定律论文 最新机构解读来了 后道测试设备环节直接受益？"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-07",
-          "evidenceIds": [
-            "E008"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "9月4日，华为 半导体 负责人何庭波更新τ（韬）定律论文，此前5月25日华为发布韬定律V1版本、7月4日更新V2版本，不到四个月时间内，华为三次就韬定律发表学术论文。 最新论文《Huaweis τ Chip Was Supposed to Melt?》（华为韬芯片本应熔化吗？） 回应了3D堆叠芯片存在发热问题的质疑 。 其中提到，热量是韬定律最棘手的隐忧，在芯片内部，能量的主要消耗并非来自计算本身，而是来自数据传输。 外界预想折叠后单位面积晶体管激增，功率密度必然飙升，理应更热、更耗电，但事实上，通过电路折叠，典…",
-          "evidenceIds": [
-            "E008"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "华为更新韬定律论文 最新机构解读来了 后道测试设备环节直接受益？",
-          "evidenceIds": [
-            "E008"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E008"
-      ],
-      "supportingEvidenceIds": [
-        "E008"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-edeaf925245b83ab0079"
-      ],
-      "eventLifecycles": {
-        "evt-edeaf925245b83ab0079": "first_seen"
-      },
-      "eventId": "evt-edeaf925245b83ab0079",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-07T05:02:49+00:00",
-      "lastSeenAt": "2026-09-07T05:02:49+00:00"
-    },
-    {
-      "id": "chg-1ac1acb46d1587e409f6",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-6c2595726ac7a62772",
-      "entityName": "从口腔医院到商业航天 增材制造正在“打印”全行业",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：从口腔医院到商业航天 增材制造正在“打印”全行业。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-07",
-        "summary": "9月2日，第48届世界技能大赛·魔都技能创享汇活动走进上海模速空间多功能厅。 第46届世界技能大赛增材制造项目上海选拔赛专家组长、裁判长（省一类），第47届世赛增材制造项目上海选拔赛技术副首席吴晨涛告诉记者，增材制造已经覆盖90%以上的实体制造领域。小到隐形牙套、鞋子，大到卫星、火箭零部件，甚至算力中心的散热装置，都离不开增材制造，它已经是一个真正赋能各行各业的“关键使能技术”。",
-        "title": "从口腔医院到商业航天 增材制造正在“打印”全行业"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-07",
-          "evidenceIds": [
-            "E009"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "9月2日，第48届世界技能大赛·魔都技能创享汇活动走进上海模速空间多功能厅。 第46届世界技能大赛增材制造项目上海选拔赛专家组长、裁判长（省一类），第47届世赛增材制造项目上海选拔赛技术副首席吴晨涛告诉记者，增材制造已经覆盖90%以上的实体制造领域。小到隐形牙套、鞋子，大到卫星、火箭零部件，甚至算力中心的散热装置，都离不开增材制造，它已经是一个真正赋能各行各业的“关键使能技术”。",
-          "evidenceIds": [
-            "E009"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "从口腔医院到商业航天 增材制造正在“打印”全行业",
-          "evidenceIds": [
-            "E009"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E009"
-      ],
-      "supportingEvidenceIds": [
-        "E009"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-32e4098c6b683be4a63a"
-      ],
-      "eventLifecycles": {
-        "evt-32e4098c6b683be4a63a": "first_seen"
-      },
-      "eventId": "evt-32e4098c6b683be4a63a",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-07T05:02:49+00:00",
-      "lastSeenAt": "2026-09-07T05:02:49+00:00"
-    },
-    {
-      "id": "chg-0cfa8fc774b2e956e923",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-ed8a53cd278c6c72f3",
-      "entityName": "“存储荒”明年或进一步加剧！高盛研判：韩股还有近八成上涨空间",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：“存储荒”明年或进一步加剧！高盛研判：韩股还有近八成上涨空间。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-07",
-        "summary": "高盛 集团策略师坚持其对韩国股市的看涨目标价， 并表示投资者低估了 人工智能 （AI）对韩国 存储芯片 制造商提振作用的持续时间 。 高盛 亚太区首席股票策略师Timothy Moe维持对韩国 综合 股价指数（Kospi）12000点的目标价——较当前水平有将近80%的上涨空间 。当他三个月前提出这一预测时，这是华尔街最乐观的目标价之一。 Moe在最新采访中表示，仍坚持这一目标价，支撑逻辑在于企业盈利兑现。市场低估了本轮盈利上行周期的持续时间。",
-        "title": "“存储荒”明年或进一步加剧！高盛研判：韩股还有近八成上涨空间"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-07",
-          "evidenceIds": [
-            "E010"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "高盛 集团策略师坚持其对韩国股市的看涨目标价， 并表示投资者低估了 人工智能 （AI）对韩国 存储芯片 制造商提振作用的持续时间 。 高盛 亚太区首席股票策略师Timothy Moe维持对韩国 综合 股价指数（Kospi）12000点的目标价——较当前水平有将近80%的上涨空间 。当他三个月前提出这一预测时，这是华尔街最乐观的目标价之一。 Moe在最新采访中表示，仍坚持这一目标价，支撑逻辑在于企业盈利兑现。市场低估了本轮盈利上行周期的持续时间。",
-          "evidenceIds": [
-            "E010"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "“存储荒”明年或进一步加剧！高盛研判：韩股还有近八成上涨空间",
-          "evidenceIds": [
-            "E010"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E010"
-      ],
-      "supportingEvidenceIds": [
-        "E010"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-91ce45ecb6d795b24b1b"
-      ],
-      "eventLifecycles": {
-        "evt-91ce45ecb6d795b24b1b": "first_seen"
-      },
-      "eventId": "evt-91ce45ecb6d795b24b1b",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-07T05:02:49+00:00",
-      "lastSeenAt": "2026-09-07T05:02:49+00:00"
-    },
-    {
-      "id": "chg-1d0082877cab84ee863b",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-591781d0865b8ba289",
-      "entityName": "ETF追踪丨9月4日ETF净申购214.83亿元 资金加仓科创50ETF华夏",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：ETF追踪丨9月4日ETF净申购214.83亿元 资金加仓科创50ETF华夏。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-07",
-        "summary": "上周五（9月4日），A股三大指数冲高回落悉数收跌，深成指、创业板指均跌近0.8%。 农林牧渔 、船舶、 白酒 、 AI应用 等逆势活跃， 半导体 、硬件、 云计算 、端侧AI等高开低走。 东方财富 Choice数据显示，上周五ETF资金整体净申购214.83亿元，其中，股票型ETF净申购159.98亿元。 股票型ETF中，科创50ETF华夏、中证1000ETF南方、 中证500 ETF南方净申购金额位居前三，分别达31.05亿、13.80亿和12.46亿元。",
-        "title": "ETF追踪丨9月4日ETF净申购214.83亿元 资金加仓科创50ETF华夏"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-07",
-          "evidenceIds": [
-            "E011"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "上周五（9月4日），A股三大指数冲高回落悉数收跌，深成指、创业板指均跌近0.8%。 农林牧渔 、船舶、 白酒 、 AI应用 等逆势活跃， 半导体 、硬件、 云计算 、端侧AI等高开低走。 东方财富 Choice数据显示，上周五ETF资金整体净申购214.83亿元，其中，股票型ETF净申购159.98亿元。 股票型ETF中，科创50ETF华夏、中证1000ETF南方、 中证500 ETF南方净申购金额位居前三，分别达31.05亿、13.80亿和12.46亿元。",
-          "evidenceIds": [
-            "E011"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "ETF追踪丨9月4日ETF净申购214.83亿元 资金加仓科创50ETF华夏",
-          "evidenceIds": [
-            "E011"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E011"
-      ],
-      "supportingEvidenceIds": [
-        "E011"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-c490c1d25e70347a0d56"
-      ],
-      "eventLifecycles": {
-        "evt-c490c1d25e70347a0d56": "first_seen"
-      },
-      "eventId": "evt-c490c1d25e70347a0d56",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-07T05:02:49+00:00",
-      "lastSeenAt": "2026-09-07T05:02:49+00:00"
-    },
-    {
-      "id": "chg-d18dcd2a98df60308376",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-ddb6192e76a2b77a3e",
-      "entityName": "AI半导体出口暴增！韩国企业美元存款 创历史新高",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：AI半导体出口暴增！韩国企业美元存款 创历史新高。",
-      "importance": 80,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-07",
-        "summary": "韩国最新数据显示，截至9月4日， 韩国国民银行 、新韩 银行 、韩亚 银行 、友利 银行 及农协银行等五大本土银行的企业美元存款余额攀升至769.8亿美元，创下2021年5月该统计口径设立以来的最高值。 半导体 超级周期，正在给韩国带来前所未有的美元收入。但是汇率波动与资本流动分化，让这些美元以存款形式沉淀而非转化为韩元资产，企业选择“囤美元”而非结汇，引发市场对韩元汇率走向和跨境资本流动格局的广泛关注。 402%！韩国贸易顺差规模历史性突破",
-        "title": "AI半导体出口暴增！韩国企业美元存款 创历史新高"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-07",
-          "evidenceIds": [
-            "E012"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "韩国最新数据显示，截至9月4日， 韩国国民银行 、新韩 银行 、韩亚 银行 、友利 银行 及农协银行等五大本土银行的企业美元存款余额攀升至769.8亿美元，创下2021年5月该统计口径设立以来的最高值。 半导体 超级周期，正在给韩国带来前所未有的美元收入。但是汇率波动与资本流动分化，让这些美元以存款形式沉淀而非转化为韩元资产，企业选择“囤美元”而非结汇，引发市场对韩元汇率走向和跨境资本流动格局的广泛关注。 402%！韩国贸易顺差规模历史性突破",
-          "evidenceIds": [
-            "E012"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "AI半导体出口暴增！韩国企业美元存款 创历史新高",
-          "evidenceIds": [
-            "E012"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E012"
-      ],
-      "supportingEvidenceIds": [
-        "E012"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-6f56bae1a72432116dc6"
-      ],
-      "eventLifecycles": {
-        "evt-6f56bae1a72432116dc6": "first_seen"
-      },
-      "eventId": "evt-6f56bae1a72432116dc6",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-07T05:02:49+00:00",
-      "lastSeenAt": "2026-09-07T05:02:49+00:00"
-    },
-    {
-      "id": "chg-a95c64335e244ced3d69",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "bgi-genomics",
-      "entityName": "华大基因",
-      "action": "updated",
-      "changedFields": [
-        "news"
-      ],
-      "summary": "华大基因 的 news、quote 发生变化。",
-      "importance": 48,
-      "before": {
-        "news": []
-      },
-      "after": {
-        "news": [
-          {
-            "publishedAt": "2026-09-07T09:35:00+08:00",
-            "source": "新浪财经",
-            "title": "华大基因：9月4日获融资买入2156.75万元，融资余额8.46亿元占流通市值比例5.49%，低于近一年30%分位水平",
-            "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-09-07/doc-iniqyeua9632683.shtml"
-          }
-        ]
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "news"
-      ],
-      "claimBindings": [
-        {
-          "field": "news",
-          "before": [],
-          "after": [
-            {
-              "publishedAt": "2026-09-07T09:35:00+08:00",
-              "source": "新浪财经",
-              "title": "华大基因：9月4日获融资买入2156.75万元，融资余额8.46亿元占流通市值比例5.49%，低于近一年30%分位水平",
-              "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-09-07/doc-iniqyeua9632683.shtml"
-            }
-          ],
-          "evidenceIds": [
-            "E022"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E022"
-      ],
-      "supportingEvidenceIds": [
-        "E022"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-f132047aec0203859dbc"
-      ],
-      "eventLifecycles": {
-        "evt-f132047aec0203859dbc": "first_seen"
-      },
-      "eventId": "evt-f132047aec0203859dbc",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-07T05:02:49+00:00",
-      "lastSeenAt": "2026-09-07T05:02:49+00:00"
-    },
-    {
-      "id": "chg-50090fac2ae0a60d9a8a",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "horizon-robotics",
-      "entityName": "Horizon Robotics",
-      "action": "updated",
-      "changedFields": [
-        "news"
-      ],
-      "summary": "Horizon Robotics 的 news、quote 发生变化。",
-      "importance": 48,
-      "before": {
-        "news": []
-      },
-      "after": {
-        "news": [
-          {
-            "publishedAt": "2026-09-07T10:33:00+08:00",
-            "source": "新浪财经",
-            "title": "港股机器人股震荡上升，极智嘉(02590.HK)涨近5%，优必选(09880.HK)涨超3%，禾赛-W(02525.HK)、黑芝麻智能(02533.HK)、地平线机器人(09660.HK)等均涨超1%。",
-            "url": "https://finance.sina.com.cn/7x24/2026-09-07/doc-iniqymaa6341562.shtml"
-          }
-        ]
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "news"
-      ],
-      "claimBindings": [
-        {
-          "field": "news",
-          "before": [],
-          "after": [
-            {
-              "publishedAt": "2026-09-07T10:33:00+08:00",
-              "source": "新浪财经",
-              "title": "港股机器人股震荡上升，极智嘉(02590.HK)涨近5%，优必选(09880.HK)涨超3%，禾赛-W(02525.HK)、黑芝麻智能(02533.HK)、地平线机器人(09660.HK)等均涨超1%。",
-              "url": "https://finance.sina.com.cn/7x24/2026-09-07/doc-iniqymaa6341562.shtml"
-            }
-          ],
-          "evidenceIds": [
-            "E029"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E029"
-      ],
-      "supportingEvidenceIds": [
-        "E029"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-496b45d1335434ef45a8"
-      ],
-      "eventLifecycles": {
-        "evt-496b45d1335434ef45a8": "first_seen"
-      },
-      "eventId": "evt-496b45d1335434ef45a8",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-07T05:02:49+00:00",
-      "lastSeenAt": "2026-09-07T05:02:49+00:00"
+      "firstSeenAt": "2026-09-07T06:17:45+00:00",
+      "lastSeenAt": "2026-09-07T06:17:45+00:00"
     }
   ],
   "evidence": [
     {
       "id": "E001",
-      "changeId": "chg-548bd90375c4b979a9af",
-      "entityName": "播放量1.2亿，营收仅80元！龙版传媒（605577）AI“画饼”遭监管警示，8月26日起买入股民可索赔",
-      "claim": "新增高价值情报事件记录：播放量1.2亿，营收仅80元！龙版传媒（605577）AI“画饼”遭监管警示，8月26日起买入股民可索赔。",
-      "publicationTier": "external_clue",
+      "changeId": "chg-7ac5e0912159b63f6e2a",
+      "entityName": "蜂巢能源",
+      "claim": "蜂巢能源 的 financing 发生变化。",
+      "publicationTier": "verified_change",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "播放量1.2亿，营收仅80元！龙版传媒（605577）AI“画饼”遭监管警示，8月26日起买入股民可索赔",
-      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-09-07/doc-iniqymaa6367214.shtml",
-      "publishedAt": "2026-09-07",
-      "evidenceGrade": "C",
-      "platformName": "新浪",
-      "sourceRole": "corroboration",
+      "sourceName": "蜂巢能源",
+      "title": "蜂巢能源官方网站",
+      "url": "https://www.svolt.cn/",
+      "publishedAt": "2026-09-02",
+      "evidenceGrade": "官方披露",
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "financing"
       ],
       "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E002",
-      "changeId": "chg-fda72b134d145d6c5032",
-      "entityName": "韩国智库：AI拉动出口与投资，韩国经济持续回暖",
-      "claim": "新增高价值情报事件记录：韩国智库：AI拉动出口与投资，韩国经济持续回暖。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "韩国智库：AI拉动出口与投资，韩国经济持续回暖",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-07/doc-iniqykzy9605309.shtml",
-      "publishedAt": "2026-09-07",
-      "evidenceGrade": "C",
-      "platformName": "新浪",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E003",
-      "changeId": "chg-ded69194c1f4a47c5cec",
-      "entityName": "巴伦对话钟兆民：AI时代，价值投资如何进化？ | 巴伦独家",
-      "claim": "新增高价值情报事件记录：巴伦对话钟兆民：AI时代，价值投资如何进化？ | 巴伦独家。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "钛媒体",
-      "title": "巴伦对话钟兆民：AI时代，价值投资如何进化？ | 巴伦独家",
-      "url": "https://www.tmtpost.com/8130463.html",
-      "publishedAt": "2026-09-07",
-      "evidenceGrade": "C",
-      "platformName": "专业媒体",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E004",
-      "changeId": "chg-dc6345cee5521eb5676d",
-      "entityName": "Nuix Expands Generative AI for Legal Review, Debuts AI Chat for Case Data",
-      "claim": "新增高价值情报事件记录：Nuix Expands Generative AI for Legal Review, Debuts AI Chat for Case Data。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "PR Newswire Consumer Technology",
-      "title": "Nuix Expands Generative AI for Legal Review, Debuts AI Chat for Case Data",
-      "url": "https://www.prnewswire.com/news-releases/nuix-expands-generative-ai-for-legal-review-debuts-ai-chat-for-case-data-302870926.html",
-      "publishedAt": "2026-09-07",
-      "evidenceGrade": "B",
-      "platformName": "新闻稿",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E005",
-      "changeId": "chg-af36f770d728a123e653",
-      "entityName": "From Interpretability Methods to Interpretable Models",
-      "claim": "新增高价值情报事件记录：From Interpretability Methods to Interpretable Models。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "arXiv · Core AI companies",
-      "title": "From Interpretability Methods to Interpretable Models",
-      "url": "https://arxiv.org/abs/2609.05399v1",
-      "publishedAt": "2026-09-04",
-      "evidenceGrade": "B",
-      "platformName": "arXiv",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E006",
-      "changeId": "chg-73a4506eab344611f7cd",
-      "entityName": "汽车之家发布芝士车管家AI智能体，选车判断与用车服务收进同一条路径",
-      "claim": "新增高价值情报事件记录：汽车之家发布芝士车管家AI智能体，选车判断与用车服务收进同一条路径。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "钛媒体",
-      "title": "汽车之家发布芝士车管家AI智能体，选车判断与用车服务收进同一条路径",
-      "url": "https://www.tmtpost.com/8129810.html",
-      "publishedAt": "2026-09-07",
-      "evidenceGrade": "C",
-      "platformName": "专业媒体",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E007",
-      "changeId": "chg-08e95d6663b734a40531",
-      "entityName": "轮动中寻找主线 基金经理绘制9月“突围”路线图",
-      "claim": "新增高价值情报事件记录：轮动中寻找主线 基金经理绘制9月“突围”路线图。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "轮动中寻找主线 基金经理绘制9月“突围”路线图",
-      "url": "https://finance.eastmoney.com/a/202609073866160994.html",
-      "publishedAt": "2026-09-07",
-      "evidenceGrade": "C",
-      "platformName": "东方财富",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E008",
-      "changeId": "chg-fceb7b5c3475dd170f56",
-      "entityName": "华为更新韬定律论文 最新机构解读来了 后道测试设备环节直接受益？",
-      "claim": "新增高价值情报事件记录：华为更新韬定律论文 最新机构解读来了 后道测试设备环节直接受益？。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "华为更新韬定律论文 最新机构解读来了 后道测试设备环节直接受益？",
-      "url": "https://finance.eastmoney.com/a/202609073866203674.html",
-      "publishedAt": "2026-09-07",
-      "evidenceGrade": "C",
-      "platformName": "东方财富",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E009",
-      "changeId": "chg-1ac1acb46d1587e409f6",
-      "entityName": "从口腔医院到商业航天 增材制造正在“打印”全行业",
-      "claim": "新增高价值情报事件记录：从口腔医院到商业航天 增材制造正在“打印”全行业。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "从口腔医院到商业航天 增材制造正在“打印”全行业",
-      "url": "https://finance.eastmoney.com/a/202609073866536236.html",
-      "publishedAt": "2026-09-07",
-      "evidenceGrade": "媒体报道",
-      "platformName": "东方财富",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E010",
-      "changeId": "chg-0cfa8fc774b2e956e923",
-      "entityName": "“存储荒”明年或进一步加剧！高盛研判：韩股还有近八成上涨空间",
-      "claim": "新增高价值情报事件记录：“存储荒”明年或进一步加剧！高盛研判：韩股还有近八成上涨空间。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "“存储荒”明年或进一步加剧！高盛研判：韩股还有近八成上涨空间",
-      "url": "https://finance.eastmoney.com/a/202609073866265473.html",
-      "publishedAt": "2026-09-07",
-      "evidenceGrade": "C",
-      "platformName": "东方财富",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E011",
-      "changeId": "chg-1d0082877cab84ee863b",
-      "entityName": "ETF追踪丨9月4日ETF净申购214.83亿元 资金加仓科创50ETF华夏",
-      "claim": "新增高价值情报事件记录：ETF追踪丨9月4日ETF净申购214.83亿元 资金加仓科创50ETF华夏。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "ETF追踪丨9月4日ETF净申购214.83亿元 资金加仓科创50ETF华夏",
-      "url": "https://finance.eastmoney.com/a/202609073866194279.html",
-      "publishedAt": "2026-09-07",
-      "evidenceGrade": "C",
-      "platformName": "东方财富",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E012",
-      "changeId": "chg-d18dcd2a98df60308376",
-      "entityName": "AI半导体出口暴增！韩国企业美元存款 创历史新高",
-      "claim": "新增高价值情报事件记录：AI半导体出口暴增！韩国企业美元存款 创历史新高。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "AI半导体出口暴增！韩国企业美元存款 创历史新高",
-      "url": "https://finance.eastmoney.com/a/202609073866190534.html",
-      "publishedAt": "2026-09-07",
-      "evidenceGrade": "C",
-      "platformName": "东方财富",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E022",
-      "changeId": "chg-a95c64335e244ced3d69",
-      "entityName": "华大基因",
-      "claim": "华大基因 的 news、quote 发生变化。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "华大基因：9月4日获融资买入2156.75万元，融资余额8.46亿元占流通市值比例5.49%，低于近一年30%分位水平",
-      "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-09-07/doc-iniqyeua9632683.shtml",
-      "publishedAt": "2026-09-07T09:35:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "entityMatchStatus": "matched",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E029",
-      "changeId": "chg-50090fac2ae0a60d9a8a",
-      "entityName": "Horizon Robotics",
-      "claim": "Horizon Robotics 的 news、quote 发生变化。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "港股机器人股震荡上升，极智嘉(02590.HK)涨近5%，优必选(09880.HK)涨超3%，禾赛-W(02525.HK)、黑芝麻智能(02533.HK)、地平线机器人(09660.HK)等均涨超1%。",
-      "url": "https://finance.sina.com.cn/7x24/2026-09-07/doc-iniqymaa6341562.shtml",
-      "publishedAt": "2026-09-07T10:33:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "entityMatchStatus": "matched",
       "qualityIssues": [],
       "qualityStatus": "passed",
       "supportStatus": "supports"
@@ -1721,9 +217,191 @@
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-07T05:02:49+00:00",
+    "generatedAt": "2026-09-07T06:17:45+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-8be8280900881dcbec79": {
+        "eventId": "evt-8be8280900881dcbec79",
+        "dataset": "ventureCompany",
+        "entityId": "form-energy",
+        "entityName": "Form Energy",
+        "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+        "titleAliases": [
+          "formenergysecures750minseriesgfinancingtoscaleironairbatterymanufacturingandacceleratecommercialdeployments",
+          "home",
+          "newsroom"
+        ],
+        "publishedDate": "2020-03-04",
+        "publishedDates": [
+          "2020-03-04",
+          "2026-08-12",
+          "2021-03-19"
+        ],
+        "entityKeys": [
+          "name:form energy",
+          "ventureCompany:form-energy"
+        ],
+        "typeKeys": [
+          "创业公司"
+        ],
+        "numericCues": [
+          "750"
+        ],
+        "sourceAliases": [
+          "evd-240d920c958998b9e698",
+          "evd-260ebca9594e10735828",
+          "evd-bbce94b49783f715f8ec",
+          "src-ae6596fda7c340d262d4",
+          "src-ce905be3bc5d52aa35cf",
+          "src-dc62ab01be9344185861"
+        ],
+        "evidenceFingerprints": [
+          "260ebca9594e10735828",
+          "240d920c958998b9e698",
+          "bbce94b49783f715f8ec"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Form Energy",
+            "title": "Home",
+            "url": "https://formenergy.com/",
+            "publishedAt": "2020-03-04",
+            "evidenceGrade": "官方披露"
+          },
+          {
+            "sourceName": "Form Energy",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+            "url": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+            "publishedAt": "2026-08-12",
+            "evidenceGrade": "官方披露"
+          },
+          {
+            "sourceName": "Form Energy",
+            "title": "Newsroom",
+            "url": "https://formenergy.com/newsroom/",
+            "publishedAt": "2021-03-19",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "ab53829200fcf80ab3ce",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T09:08:35+00:00",
+        "lastSeenAt": "2026-09-07T06:17:45+00:00",
+        "lastPublishedAt": "2026-09-05T05:53:26+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 3,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-6d0d17f79898a08012a6": {
+        "eventId": "evt-6d0d17f79898a08012a6",
+        "dataset": "ventureCompany",
+        "entityId": "joby",
+        "entityName": "Joby Aviation",
+        "title": "2025 Impact Report | Joby Aviation",
+        "titleAliases": [
+          "2025impactreport"
+        ],
+        "publishedDate": "2026-07-16",
+        "publishedDates": [
+          "2026-07-16"
+        ],
+        "entityKeys": [
+          "name:joby aviation",
+          "ventureCompany:joby"
+        ],
+        "typeKeys": [
+          "创业公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-23994f7a5a56f142cced",
+          "src-669a587c662ca12eb4c8"
+        ],
+        "evidenceFingerprints": [
+          "23994f7a5a56f142cced"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Joby Aviation",
+            "title": "2025 Impact Report | Joby Aviation",
+            "url": "https://www.jobyaviation.com/news/2025-impact-report",
+            "publishedAt": "2026-07-16",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "0b0ccadef2c34b240e44",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T09:08:35+00:00",
+        "lastSeenAt": "2026-09-07T06:17:45+00:00",
+        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-6308b5fa0eed7c865b8c": {
+        "eventId": "evt-6308b5fa0eed7c865b8c",
+        "dataset": "ventureCompany",
+        "entityId": "svlot",
+        "entityName": "蜂巢能源",
+        "title": "蜂巢能源官方网站",
+        "titleAliases": [
+          "蜂巢能源官方网站"
+        ],
+        "publishedDate": "2026-09-02",
+        "publishedDates": [
+          "2026-09-02"
+        ],
+        "entityKeys": [
+          "name:蜂巢能源",
+          "ventureCompany:svlot"
+        ],
+        "typeKeys": [
+          "创业公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-3875ea5807d519c07747",
+          "src-09258d744ed976af46ad"
+        ],
+        "evidenceFingerprints": [
+          "3875ea5807d519c07747"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "蜂巢能源",
+            "title": "蜂巢能源官方网站",
+            "url": "https://www.svolt.cn/",
+            "publishedAt": "2026-09-02",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "13f095f23f3937cf7380",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T06:17:45+00:00",
+        "lastSeenAt": "2026-09-07T06:17:45+00:00",
+        "lastPublishedAt": "2026-09-07T06:17:45+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-f132047aec0203859dbc": {
         "eventId": "evt-f132047aec0203859dbc",
         "dataset": "marketCompany",
@@ -5097,84 +3775,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-8be8280900881dcbec79": {
-        "eventId": "evt-8be8280900881dcbec79",
-        "dataset": "ventureCompany",
-        "entityId": "form-energy",
-        "entityName": "Form Energy",
-        "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
-        "titleAliases": [
-          "formenergysecures750minseriesgfinancingtoscaleironairbatterymanufacturingandacceleratecommercialdeployments",
-          "home",
-          "newsroom"
-        ],
-        "publishedDate": "2020-03-04",
-        "publishedDates": [
-          "2020-03-04",
-          "2026-08-12",
-          "2021-03-19"
-        ],
-        "entityKeys": [
-          "name:form energy",
-          "ventureCompany:form-energy"
-        ],
-        "typeKeys": [
-          "创业公司"
-        ],
-        "numericCues": [
-          "750"
-        ],
-        "sourceAliases": [
-          "evd-240d920c958998b9e698",
-          "evd-260ebca9594e10735828",
-          "evd-bbce94b49783f715f8ec",
-          "src-ae6596fda7c340d262d4",
-          "src-ce905be3bc5d52aa35cf",
-          "src-dc62ab01be9344185861"
-        ],
-        "evidenceFingerprints": [
-          "260ebca9594e10735828",
-          "240d920c958998b9e698",
-          "bbce94b49783f715f8ec"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Form Energy",
-            "title": "Home",
-            "url": "https://formenergy.com/",
-            "publishedAt": "2020-03-04",
-            "evidenceGrade": "官方披露"
-          },
-          {
-            "sourceName": "Form Energy",
-            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
-            "url": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
-            "publishedAt": "2026-08-12",
-            "evidenceGrade": "官方披露"
-          },
-          {
-            "sourceName": "Form Energy",
-            "title": "Newsroom",
-            "url": "https://formenergy.com/newsroom/",
-            "publishedAt": "2021-03-19",
-            "evidenceGrade": "官方披露"
-          }
-        ],
-        "claimFingerprint": "ab53829200fcf80ab3ce",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastSeenAt": "2026-09-05T05:53:26+00:00",
-        "lastPublishedAt": "2026-09-05T05:53:26+00:00",
-        "lastLifecycle": "updated",
-        "observationCount": 3,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 4,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -21534,58 +20134,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-6d0d17f79898a08012a6": {
-        "eventId": "evt-6d0d17f79898a08012a6",
-        "dataset": "ventureCompany",
-        "entityId": "joby",
-        "entityName": "Joby Aviation",
-        "title": "2025 Impact Report | Joby Aviation",
-        "titleAliases": [
-          "2025impactreport"
-        ],
-        "publishedDate": "2026-07-16",
-        "publishedDates": [
-          "2026-07-16"
-        ],
-        "entityKeys": [
-          "name:joby aviation",
-          "ventureCompany:joby"
-        ],
-        "typeKeys": [
-          "创业公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-23994f7a5a56f142cced",
-          "src-669a587c662ca12eb4c8"
-        ],
-        "evidenceFingerprints": [
-          "23994f7a5a56f142cced"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Joby Aviation",
-            "title": "2025 Impact Report | Joby Aviation",
-            "url": "https://www.jobyaviation.com/news/2025-impact-report",
-            "publishedAt": "2026-07-16",
-            "evidenceGrade": "官方披露"
-          }
-        ],
-        "claimFingerprint": "0b0ccadef2c34b240e44",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastSeenAt": "2026-09-01T06:25:42+00:00",
-        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 4,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-44f4881cf6dcb57371f7": {
         "eventId": "evt-44f4881cf6dcb57371f7",
         "dataset": "ventureCompany",
@@ -29522,13 +28070,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 14,
+    "newEvents": 1,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 6,
-    "observedEvents": 20,
+    "duplicatesSuppressed": 2,
+    "observedEvents": 3,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -32158,10 +30706,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-07",
-      "generatedAt": "2026-09-07T05:02:49+00:00",
+      "generatedAt": "2026-09-07T06:17:45+00:00",
       "runStatus": "model",
-      "changeCount": 31,
-      "executiveSummary": "2026-09-07证据包显示多个AI相关主题：龙版传媒因AI概念宣传遭监管警示，提示概念炒作与业绩脱节风险；韩国AI半导体链出现经济回暖、高盛目标价上调、企业美元存款创新高等多重信号，但均为外部观点或统计线索；华为更新3D堆叠芯片热管理论文，机构解读后道测试设备受益，但商业落地待验证；生成式AI在Nuix与汽车之家等企业产品中落地；A股资金出现从AI算力向能源有色等方向的轮动迹象。多数证据为媒体快照或新闻报道，证据等级以C级为主，需进一步核实。",
+      "changeCount": 32,
+      "executiveSummary": "基于证据 E001（蜂巢能源官网，2026-09-02），蜂巢能源的 financing 字段发生数据变化：此前记录于2026-08-06的融资条目（无投资者，内容为再次入选全球储能项目采购与金融可融资性风向标名单）被移除，当前 financing 为空。证据级别为官方披露，但审查状态为automated_unreviewed且未说明移除原因，因此仅将数据层变化视为事实，不据此推断融资状况恶化。",
       "eventIds": [
         "evt-0b3c4f0fdc8d60987c6b",
         "evt-dd5c6325c3769b4014ec",
@@ -32193,7 +30741,8 @@
         "evt-c490c1d25e70347a0d56",
         "evt-6f56bae1a72432116dc6",
         "evt-f132047aec0203859dbc",
-        "evt-496b45d1335434ef45a8"
+        "evt-496b45d1335434ef45a8",
+        "evt-6308b5fa0eed7c865b8c"
       ],
       "eventStates": [
         {
@@ -32319,37 +30868,40 @@
         {
           "eventId": "evt-496b45d1335434ef45a8",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-6308b5fa0eed7c865b8c",
+          "lifecycle": "first_seen"
         }
       ],
-      "verifiedChangeTotal": 0,
+      "verifiedChangeTotal": 1,
       "candidateTotal": 8,
       "auxiliaryLeadTotal": 21,
-      "rejectedTotal": 2,
+      "rejectedTotal": 5,
       "eventSummary": {
-        "newEvents": 31,
+        "newEvents": 32,
         "reconfirmations": 9,
         "updates": 0,
         "corrections": 0,
         "possibleConflicts": 0,
-        "duplicatesSuppressed": 6
+        "duplicatesSuppressed": 8
       }
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 17,
-    "eligibleCandidateCount": 17,
-    "rejectedCandidateCount": 0,
-    "rejectedByDataset": {},
-    "evidenceCount": 32,
-    "supportingEvidenceCount": 20,
-    "rejectedEvidenceCount": 9,
-    "passedButUnboundEvidenceCount": 3,
+    "candidateCount": 6,
+    "eligibleCandidateCount": 3,
+    "rejectedCandidateCount": 3,
+    "rejectedByDataset": {
+      "ventureCompany": 3
+    },
+    "evidenceCount": 24,
+    "supportingEvidenceCount": 5,
+    "rejectedEvidenceCount": 14,
+    "passedButUnboundEvidenceCount": 5,
     "rejectionReasons": {
-      "missing_published_at": 8,
-      "missing_title": 8,
-      "ungraded": 8,
-      "entity_mismatch": 1,
-      "missing_or_invalid_url": 1
+      "missing_published_at": 13,
+      "ungraded": 1
     },
     "sourceClassificationWarnings": []
   },
