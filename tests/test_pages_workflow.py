@@ -84,6 +84,31 @@ class PagesWorkflowTests(unittest.TestCase):
             9,
         )
 
+    def test_deferred_pages_explicitly_starts_the_required_recovery_chain(self):
+        self.assertIn("name: Recover deferred publication inputs", self.workflow)
+        self.assertIn(
+            "entity_reconciliation_required=$entity_reconciliation_required",
+            self.workflow,
+        )
+        self.assertIn("tracking_refresh_required=$tracking_refresh_required", self.workflow)
+        self.assertIn(
+            "gh workflow run company-candidate-discovery.yml --ref main",
+            self.workflow,
+        )
+        self.assertIn("-f publish_after_reconciliation=true", self.workflow)
+        self.assertIn(
+            "gh workflow run frequent-intelligence-refresh.yml --ref main",
+            self.workflow,
+        )
+        self.assertIn("-f force_crawl=true", self.workflow)
+        recovery = self.workflow.split("- name: Recover deferred publication inputs", 1)[1]
+        self.assertIn("NEEDS_ENTITY_RECONCILIATION", recovery)
+        self.assertIn("NEEDS_TRACKING_REFRESH", recovery)
+        self.assertLess(
+            recovery.index("company-candidate-discovery.yml"),
+            recovery.index("frequent-intelligence-refresh.yml"),
+        )
+
     def test_tracking_config_waits_for_light_refresh_instead_of_starting_full_refresh(self):
         refresh_trigger = self.refresh_workflow.split("  schedule:", 1)[0]
         self.assertNotIn("      - config/user_tracking.json", refresh_trigger)

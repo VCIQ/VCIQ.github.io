@@ -63,10 +63,13 @@ jobs:
           set -e
 
           deferred_reasons=()
+          entity_reconciliation_required=false
+          tracking_refresh_required=false
 
           if [ "$entity_status" -ne 0 ]; then
             if printf '%s\n' "$entity_output" | grep -Fq "entity resolution reconciliation is not at a fixed point"; then
               deferred_reasons+=("entity reconciliation")
+              entity_reconciliation_required=true
             else
               printf '%s\n' "$entity_output"
               echo "::error title=Pages readiness check failed::Entity reconciliation failed for an unexpected reason."
@@ -89,12 +92,16 @@ jobs:
                 exit "$tracking_status"
               fi
               deferred_reasons+=("tracking snapshot refresh")
+              tracking_refresh_required=true
             else
               printf '%s\n' "$tracking_output"
               echo "::error title=Pages readiness check failed::Tracking snapshot validation failed without a pending-refresh signature."
               exit "$tracking_status"
             fi
           fi
+
+          echo "entity_reconciliation_required=$entity_reconciliation_required" >> "$GITHUB_OUTPUT"
+          echo "tracking_refresh_required=$tracking_refresh_required" >> "$GITHUB_OUTPUT"
 
           if [ "${#deferred_reasons[@]}" -gt 0 ]; then
             if [ "$entity_status" -ne 0 ]; then
@@ -110,6 +117,27 @@ jobs:
 
           echo "ready=true" >> "$GITHUB_OUTPUT"
           echo "Publication inputs are at a fixed point."
+      - name: Recover deferred publication inputs
+        if: steps.publication_readiness.outputs.ready != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NEEDS_ENTITY_RECONCILIATION: ${{ steps.publication_readiness.outputs.entity_reconciliation_required }}
+          NEEDS_TRACKING_REFRESH: ${{ steps.publication_readiness.outputs.tracking_refresh_required }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${NEEDS_ENTITY_RECONCILIATION:-false}" = "true" ]; then
+            echo "Pages is deferred on entity reconciliation; start the fixed-point recovery chain and request terminal publication."
+            gh workflow run company-candidate-discovery.yml --ref main \
+              -f publish_after_reconciliation=true
+          elif [ "${NEEDS_TRACKING_REFRESH:-false}" = "true" ]; then
+            echo "Pages is deferred on tracking coverage; force a real lightweight crawl so freshness cannot skip publication recovery."
+            gh workflow run frequent-intelligence-refresh.yml --ref main \
+              -f force_crawl=true
+          else
+            echo "Pages was deferred without a recognized recoverable reason." >&2
+            exit 1
+          fi
       - name: Validate committed public data and automation contract
         if: steps.publication_readiness.outputs.ready == 'true'
         run: |
