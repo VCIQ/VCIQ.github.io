@@ -2,6 +2,10 @@
    Keep the full five-channel desktop navigation, then progressively compact it
    before the existing <=900px mobile menu takes over. */
 
+.mobile-nav-utility {
+  display: none !important;
+}
+
 @media (max-width: 1420px) and (min-width: 901px) {
   .header-inner {
     width: min(1560px, calc(100% - 28px));
@@ -88,6 +92,16 @@
   .icon-button {
     width: 34px;
     height: 34px;
+  }
+}
+
+@media (max-width: 900px) {
+  .desktop-utility-action {
+    display: none !important;
+  }
+
+  .main-nav.is-open .mobile-nav-utility {
+    display: flex !important;
   }
 }
 
