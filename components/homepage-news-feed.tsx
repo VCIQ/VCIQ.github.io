@@ -3,6 +3,7 @@
 import {
   ArrowUpRight,
   BookmarkPlus,
+  Bot,
   CircleMinus,
   Clock3,
   Info,
@@ -35,6 +36,7 @@ import {
   personalizedHomepageRecommendationScore,
 } from "@/lib/homepage-recommendation";
 import { recordArticleShare } from "@/lib/hotness";
+import { buildResearchInvestigationHref } from "@/lib/research-workspace-handoff";
 import { buildTrackingCaptureLink } from "@/lib/tracking-admin-link";
 import {
   useArticles,
@@ -459,7 +461,7 @@ export function HomepageNewsFeed({
               <strong>{visibleArticles.length} 条候选情报</strong>
             </div>
             <p>
-              先看最值得知道的变化，再决定是否查看来源、进入追踪或分享。
+              先看最值得知道的变化，再决定是否查看来源、进入追踪、分享或深研此条。
               {(preferences.followedSectors.length || favorites.length) ? (
                 <span className={preferenceStyles.preferenceSummary}>
                   已关注赛道 {preferences.followedSectors.length} · 稍后读 {favorites.length}
@@ -591,6 +593,13 @@ export function HomepageNewsFeed({
                           <Share2 size={13} aria-hidden="true" />
                           分享
                         </button>
+                        <Link
+                          href={buildResearchInvestigationHref(item.id)}
+                          title="把当前情报与关联来源带入深度研究上下文"
+                        >
+                          <Bot size={13} aria-hidden="true" />
+                          深研此条
+                        </Link>
                       </div>
                     </div>
 
