@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-07T06:17:45+00:00",
+  "generatedAt": "2026-09-07T07:41:48+00:00",
   "asOfDate": "2026-09-07",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
@@ -12,204 +12,1025 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 975,
-      "completion_tokens": 2830,
-      "total_tokens": 3805,
+      "prompt_tokens": 6217,
+      "completion_tokens": 10117,
+      "total_tokens": 16334,
       "completion_tokens_details": {
-        "reasoning_tokens": 1970
+        "reasoning_tokens": 7599
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 975
+      "prompt_cache_miss_tokens": 6217
     }
   },
   "changeSummary": {
-    "totalDetected": 6,
-    "total": 1,
+    "totalDetected": 63,
+    "total": 7,
     "byDataset": {
-      "ventureCompany": 1
+      "intelligenceEvent": 5,
+      "marketCompany": 2
     },
     "byChangeType": {
-      "external_event": 6
+      "external_event": 11,
+      "data_maintenance": 26,
+      "source_refresh": 26
     },
-    "externalCandidates": 6,
-    "qualityRejected": 3,
-    "maintenanceExcluded": 0,
+    "externalCandidates": 11,
+    "qualityRejected": 0,
+    "maintenanceExcluded": 52,
     "aggregatedEvents": 0,
-    "highestImportance": 88,
-    "verifiedChangeTotal": 1,
-    "candidateTotal": 0,
-    "auxiliaryLeadTotal": 0,
-    "rejectedTotal": 3,
-    "newEvents": 1,
+    "highestImportance": 84,
+    "verifiedChangeTotal": 0,
+    "candidateTotal": 2,
+    "auxiliaryLeadTotal": 5,
+    "rejectedTotal": 0,
+    "newEvents": 8,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 2
+    "duplicatesSuppressed": 6
   },
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "基于证据 E001（蜂巢能源官网，2026-09-02），蜂巢能源的 financing 字段发生数据变化：此前记录于2026-08-06的融资条目（无投资者，内容为再次入选全球储能项目采购与金融可融资性风向标名单）被移除，当前 financing 为空。证据级别为官方披露，但审查状态为automated_unreviewed且未说明移除原因，因此仅将数据层变化视为事实，不据此推断融资状况恶化。 质量门诊断：缺少发布时间 13、证据未分级 1、证据合格但未绑定变化字段 5。",
+    "executiveSummary": "证据包包含五条高价值情报事件（E002-E006）及宁德时代、华大基因的新闻变更（E012、E013、E016），主要涉及AI监管、AI产品、AI工业合作、新能源产业链与机构资金配置。全部证据为媒体转述或摘要（C级/媒体报道），且均标记automated_unreviewed，因此本分析将其作为待验证信号，不视为确定性事实。核心观察：最高法首次发布涉AI司法裁判规则、阿里“千问办公”推出多人工作台、索尼与沙特阿美探索AI工业合作、理想汽车拟投资欣旺达动力、宁德时代盈利与全球份额信息强劲。本输出不构成投资建议。",
     "keyDevelopments": [
       {
-        "title": "蜂巢能源融资记录被移除",
-        "assessment": "事实层面：E001 显示蜂巢能源的 financing 字段从包含一条日期为2026-08-06的记录（无投资者，摘要提及再次入选某全球储能项目名单）变为空列表。推断层面：这可能是数据清理，或此前将名单入选视为融资事件并不准确，但证据未提供原因。待验证：该变更是否反映蜂巢能源实际融资或可融资性状态的变化。由于证据为自动未复核，且变更方向不明确，暂视为数据调整而非实质性重大事件。",
-        "importance": 3,
+        "title": "最高人民法院发布首部涉人工智能司法裁判规则文件",
+        "assessment": "事实成分：证据显示最高法于2026-09-07发布《关于依法审理涉人工智能纠纷案件的意见》，共5部分24条，覆盖AI换脸、大数据杀熟、仿冒名人带货、自动驾驶、知识产权等问题（E006）。推断：AI应用企业将面临更明确的司法行为边界，合规与诉讼风险上升。待验证：该文件对具体案件的裁判尺度及对AI产品设计的实际影响。",
+        "importance": 5,
         "confidence": "medium",
         "entities": [
-          "蜂巢能源"
+          "最高人民法院",
+          "人工智能行业"
         ],
         "evidenceIds": [
-          "E001"
+          "E006"
+        ]
+      },
+      {
+        "title": "宁德时代盈利与全球市占率新闻集中出现",
+        "assessment": "事实成分：证据中的报道标题包含宁德时代“日赚2.4亿，15家上市车企加起来赚不到一半”以及全球动力电池前十统计中宁德时代市占率“逼近40%”等表述（E012、E013），但标题不等于完整财务确认。推断：其盈利能力和行业集中度优势处于高位。待验证：具体财务数据、统计口径和排名来源。",
+        "importance": 4,
+        "confidence": "low",
+        "entities": [
+          "宁德时代"
+        ],
+        "evidenceIds": [
+          "E012",
+          "E013"
+        ]
+      },
+      {
+        "title": "理想汽车拟以26.5亿元战略投资欣旺达动力",
+        "assessment": "事实成分：证据显示9月4日欣旺达公告子公司欣旺达动力拟进行C++轮融资，理想汽车拟战略投资26.5亿元；报道当日理想汽车-W午后涨超4%，报49.78港元（E004）。推断：理想汽车试图强化动力电池供应链。待验证：投资是否完成交割、持股比例及对两家公司业务的实质影响。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "理想汽车",
+          "欣旺达动力",
+          "欣旺达"
+        ],
+        "evidenceIds": [
+          "E004"
+        ]
+      },
+      {
+        "title": "索尼与沙特阿美就AI工业解决方案签署无约束力谅解备忘录",
+        "assessment": "事实成分：证据显示索尼半导体解决方案与沙特阿美签署无约束力MoU，探讨在AI工业解决方案领域合作，索尼将提供图像传感及AI技术（E003）。推断：若合作落地，索尼传感器/AI技术可进入能源工业场景。待验证：具体合作范围、时间表及是否形成正式合同。",
+        "importance": 3,
+        "confidence": "low",
+        "entities": [
+          "索尼",
+          "沙特阿美",
+          "索尼半导体解决方案"
+        ],
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "title": "阿里“千问办公”推出业内首个“多人工作台”",
+        "assessment": "事实成分：证据显示“千问办公”推出“多人工作台”，用户描述需求后可生成最多百人同时在线协作的网页，面向活动组织、家校协同和企业协作（E005）。推断：这是AI Agent从个人工具向组织协同场景的延伸。待验证：“业内首个”为产品宣传或媒体表述，需第三方验证；用户规模与商业化效果尚不可知。",
+        "importance": 3,
+        "confidence": "low",
+        "entities": [
+          "阿里巴巴",
+          "千问办公"
+        ],
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "title": "美国大学捐赠基金2026财年业绩有望跑赢或持平标普500",
+        "assessment": "事实成分：证据显示Cambridge Associates称多家美国大型大学捐赠基金在2026财年有望跑赢或持平标普500，结束此前数年落后局面（E002）。推断：科技公司投资是业绩回暖的重要驱动。待验证：该表述是预期而非最终结果，需年度报告数据确认。",
+        "importance": 2,
+        "confidence": "low",
+        "entities": [
+          "美国大学捐赠基金",
+          "Cambridge Associates",
+          "标普500"
+        ],
+        "evidenceIds": [
+          "E002"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "蜂巢能源",
-        "direction": "neutral",
-        "statement": "蜂巢能源的融资字段被清空，删除了一条此前标记为‘融资’的入选名单记录。但 E001 未提供移除原因，也未显示任何负面信息，因此无法判断方向为正面或负面；在获得更明确证据前，维持中性观察。",
+        "entity": "索尼/沙特阿美AI工业合作",
+        "direction": "mixed",
+        "statement": "MoU无约束力且处于“探讨”阶段，短期不构成确定订单；若转为正式项目，对索尼AI图像传感在工业场景的应用是正向信号（E003）。",
         "evidenceIds": [
-          "E001"
+          "E003"
+        ]
+      },
+      {
+        "entity": "理想汽车",
+        "direction": "positive",
+        "statement": "拟投资欣旺达动力26.5亿元，显示向上游电池环节布局；但交易尚待完成，需验证对供应链稳定性和盈利的影响（E004）。",
+        "evidenceIds": [
+          "E004"
+        ]
+      },
+      {
+        "entity": "阿里巴巴（千问办公）",
+        "direction": "positive",
+        "statement": "“多人工作台”瞄准企业协同与复杂流程，扩展了AI Agent的落地场景；但“业内首个”和实际用户转化尚待第三方验证（E005）。",
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "entity": "宁德时代",
+        "direction": "positive",
+        "statement": "媒体报道其单日利润水平及全球市占率显著，显示行业龙头地位强化；但相关数字来自标题，需正式财报与统计报告核验（E012、E013）。",
+        "evidenceIds": [
+          "E012",
+          "E013"
+        ]
+      },
+      {
+        "entity": "AI行业司法环境",
+        "direction": "mixed",
+        "statement": "最高法涉AI裁判规则明确了AI换脸、大数据杀熟等行为边界，增加规则确定性，同时也提高企业合规要求；实际影响取决于司法适用（E006）。",
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "entity": "美国大学捐赠基金持仓风格",
+        "direction": "mixed",
+        "statement": "捐赠基金有望结束跑输大盘局面，科技投资是主要解释；但这是业绩预期，若科技股回调可能再次落后，需以最终年度数据确认（E002）。",
+        "evidenceIds": [
+          "E002"
         ]
       }
     ],
     "watchlist": [
       {
-        "item": "蜂巢能源官方是否发布新的融资或可融资性信息",
-        "reason": "现有证据仅显示旧记录被移除，无替代记录。需要等待蜂巢能源官网或权威渠道披露新的融资事件、储能项目名单入选或可融资性更新，才能判断其当前状态。",
-        "nextEvidence": "蜂巢能源官网、证券交易所公告或权威媒体关于融资/可融资性的更新内容。",
+        "item": "索尼-沙特阿美合作是否转为正式合同",
+        "reason": "当前仅无约束力MoU，商业价值取决于后续正式协议和具体项目。",
+        "nextEvidence": "双方披露合作框架协议、试点项目或采购订单。",
         "evidenceIds": [
-          "E001"
+          "E003"
         ]
       },
       {
-        "item": "该 financing 字段变更的原因说明",
-        "reason": "E001 未说明移除原因，也未经过人工复核。若后续出现解释性文档或更正，才能区分数据清理、分类调整还是实际业务变化。",
-        "nextEvidence": "蜂巢能源或数据提供方对本次变更的说明，或带有更新日期的融资记录。",
+        "item": "理想汽车对欣旺达动力26.5亿元投资的交割进展",
+        "reason": "投资处于拟议/公告阶段，尚未验证完成。",
+        "nextEvidence": "欣旺达或理想汽车发布C++轮融资完成公告、工商变更或董事会批准文件。",
         "evidenceIds": [
-          "E001"
+          "E004"
+        ]
+      },
+      {
+        "item": "千问办公“多人工作台”的用户与商业化指标",
+        "reason": "产品刚推出，协同场景能否形成付费价值尚无数据。",
+        "nextEvidence": "阿里官方或第三方报告的用户量、活跃项目数、企业客户案例或营收信息。",
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "item": "最高人民法院涉AI裁判规则的司法适用案例",
+        "reason": "规则文本已发布，但实务影响需要典型案例和裁判尺度来确认。",
+        "nextEvidence": "最高法后续发布典型案例、执行细则或地方法院涉AI案件判决。",
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "item": "宁德时代盈利及全球市占率数据的正式口径",
+        "reason": "媒体标题中的“日赚2.4亿”“逼近40%”缺乏完整报告支撑。",
+        "nextEvidence": "宁德时代财报、SNE Research或行业统计报告中的准确数据。",
+        "evidenceIds": [
+          "E012",
+          "E013"
+        ]
+      },
+      {
+        "item": "美国大学捐赠基金2026财年最终业绩",
+        "reason": "“有望跑赢”是预期，可能因科技股波动而变化。",
+        "nextEvidence": "捐赠基金年度报告或Cambridge Associates最终业绩统计。",
+        "evidenceIds": [
+          "E002"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "证据不完整可能导致对蜂巢能源融资状况的误判",
-        "reason": "E001 仅记录 financing 字段由有到无，未提供移除原因；且证据审查状态为automated_unreviewed，低等级验证水平意味着不应据此得出确定性结论。",
+        "risk": "证据等级整体偏低，媒体报道标题易被误读为事实",
+        "reason": "E002-E006均为C级或媒体报道且automated_unreviewed，E012/E013/E016为新闻标题或行情快照，均未经官方一手文件交叉验证。",
         "evidenceIds": [
-          "E001"
+          "E002",
+          "E003",
+          "E004",
+          "E005",
+          "E006",
+          "E012",
+          "E013",
+          "E016"
         ]
       },
       {
-        "risk": "将单一数据变化解读为负面信号的风险",
-        "reason": "在无附加解释的情况下，删除一条无投资者的名单入选记录可能是分类调整或数据清理，不代表实际融资失败。若据此做出负面判断，可能偏离事实。",
+        "risk": "AI司法监管带来合规与诉讼不确定性",
+        "reason": "最高法意见将AI换脸、大数据杀熟、仿冒名人带货等纳入裁判规则，企业需调整产品风控，涉诉风险可能上升。",
         "evidenceIds": [
-          "E001"
+          "E006"
+        ]
+      },
+      {
+        "risk": "合作与投资可能不落地",
+        "reason": "索尼-沙特阿美为无约束力MoU；理想汽车投资欣旺达动力尚处拟议阶段，存在条款变化或终止可能。",
+        "evidenceIds": [
+          "E003",
+          "E004"
+        ]
+      },
+      {
+        "risk": "新产品“行业首个”未经独立验证，商业化存在不确定性",
+        "reason": "千问办公多人工作台刚上线，缺乏第三方使用数据和付费证据，实际采用率可能不及宣传。",
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "risk": "捐赠基金业绩回暖高度依赖科技股表现",
+        "reason": "若科技公司股价回调，捐赠基金“有望跑赢”的预期可能反转；且该预期尚未形成最终业绩。",
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "risk": "行情快照类低信息新闻不应作为基本面判断",
+        "reason": "华大基因涨0.05%和成交额1.68亿元仅为当日行情，不构成对基因检测行业或公司基本面的有效证据。",
+        "evidenceIds": [
+          "E016"
         ]
       }
     ],
-    "methodologyNote": "本分析仅依据证据包中的 E001。该证据为‘verified_change’级别，来源为蜂巢能源官网，证据等级为‘官方披露’，但审查状态为automated_unreviewed，且未提供变更原因。因此，本报告将 financing 字段的数据变化视为已确认事实，将任何业务含义视为推断或待验证事项，不假设删除记录即为负面事件，不提供任何买入、卖出、目标价或收益承诺。 数据管线提示：两小时公开情报刷新=stale。"
+    "methodologyNote": "本分析仅使用证据包中的结构化证据，未补充外部事实。所有证据均未经独立来源或多方交叉核验（E002-E006为C级/媒体报道，E012/E013/E016为媒体新闻或行情快照），因此所有判断均按“待验证信号”处理，并在各条中区分事实成分、推断和待验证事项。E016仅作为行情类低信息证据在风险中提示，未纳入核心发展判断。输出不构成买卖建议、目标价或收益承诺。 数据管线提示：两小时公开情报刷新=stale。"
   },
   "changes": [
     {
-      "id": "chg-7ac5e0912159b63f6e2a",
-      "dataset": "ventureCompany",
-      "entityType": "创业公司",
-      "entityId": "svlot",
-      "entityName": "蜂巢能源",
-      "action": "updated",
+      "id": "chg-0158b35495d9b116e9a0",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-1f27e72e5a5108a781",
+      "entityName": "美国大学捐赠基金业绩回暖 科技公司投资助力跑赢标普500",
+      "action": "added",
       "changedFields": [
-        "financing"
+        "publishedAt",
+        "summary",
+        "title"
       ],
-      "summary": "蜂巢能源 的 financing 发生变化。",
-      "importance": 88,
-      "before": {
-        "financing": [
-          {
-            "date": "2026-08-06",
-            "investors": [],
-            "sourceUrl": "https://www.svolt.cn/",
-            "summary": "该名单是全球储能项目采购与金融可融资性的重要风向标，再次入选标志着蜂巢能源的企业信誉、技术实力及全球交付能力已稳居国际一流行列。",
-            "title": "蜂巢能源官方网站",
-            "type": "融资"
-          }
-        ]
-      },
+      "summary": "新增高价值情报事件记录：美国大学捐赠基金业绩回暖 科技公司投资助力跑赢标普500。",
+      "importance": 84,
+      "before": null,
       "after": {
-        "financing": []
+        "publishedAt": "2026-09-07",
+        "summary": "多家美国大型大学捐赠基金在2026财年有望跑赢或持平标普500指数，结束此前数年表现落后于大盘的局面。咨询机构Cambridge Associates表示...",
+        "title": "美国大学捐赠基金业绩回暖 科技公司投资助力跑赢标普500"
       },
       "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
       "isResearchCandidate": true,
       "claimFields": [
-        "financing"
+        "publishedAt",
+        "summary",
+        "title"
       ],
       "claimBindings": [
         {
-          "field": "financing",
-          "before": [
-            {
-              "date": "2026-08-06",
-              "investors": [],
-              "sourceUrl": "https://www.svolt.cn/",
-              "summary": "该名单是全球储能项目采购与金融可融资性的重要风向标，再次入选标志着蜂巢能源的企业信誉、技术实力及全球交付能力已稳居国际一流行列。",
-              "title": "蜂巢能源官方网站",
-              "type": "融资"
-            }
-          ],
-          "after": [],
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-07",
           "evidenceIds": [
-            "E001"
+            "E002"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "多家美国大型大学捐赠基金在2026财年有望跑赢或持平标普500指数，结束此前数年表现落后于大盘的局面。咨询机构Cambridge Associates表示...",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "美国大学捐赠基金业绩回暖 科技公司投资助力跑赢标普500",
+          "evidenceIds": [
+            "E002"
           ]
         }
       ],
       "evidenceIds": [
-        "E001"
+        "E002"
       ],
       "supportingEvidenceIds": [
-        "E001"
+        "E002"
       ],
       "evidenceQuality": {
         "status": "passed",
         "supporting": 1,
         "total": 1
       },
-      "publicationTier": "verified_change",
+      "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-6308b5fa0eed7c865b8c"
+        "evt-7d75ec515f17967e44a5"
       ],
       "eventLifecycles": {
-        "evt-6308b5fa0eed7c865b8c": "first_seen"
+        "evt-7d75ec515f17967e44a5": "first_seen"
       },
-      "eventId": "evt-6308b5fa0eed7c865b8c",
+      "eventId": "evt-7d75ec515f17967e44a5",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-07T06:17:45+00:00",
-      "lastSeenAt": "2026-09-07T06:17:45+00:00"
+      "firstSeenAt": "2026-09-07T07:41:48+00:00",
+      "lastSeenAt": "2026-09-07T07:41:48+00:00"
+    },
+    {
+      "id": "chg-0584104965ff4f74b755",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-6c8ff8e4929f6ffb12",
+      "entityName": "索尼与沙特阿美合作开发人工智能驱动的工业解决方案",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：索尼与沙特阿美合作开发人工智能驱动的工业解决方案。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-07",
+        "summary": "索尼集团旗下芯片业务部门与沙特阿美签署一份无约束力谅解备忘录，探讨在人工智能工业解决方案领域开展合作。 索尼半导体解决方案公司将提供图像传感及人工智能技术...",
+        "title": "索尼与沙特阿美合作开发人工智能驱动的工业解决方案"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-07",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "索尼集团旗下芯片业务部门与沙特阿美签署一份无约束力谅解备忘录，探讨在人工智能工业解决方案领域开展合作。 索尼半导体解决方案公司将提供图像传感及人工智能技术...",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "索尼与沙特阿美合作开发人工智能驱动的工业解决方案",
+          "evidenceIds": [
+            "E003"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E003"
+      ],
+      "supportingEvidenceIds": [
+        "E003"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-3bcb1a81e1dc99cedc23"
+      ],
+      "eventLifecycles": {
+        "evt-3bcb1a81e1dc99cedc23": "first_seen"
+      },
+      "eventId": "evt-3bcb1a81e1dc99cedc23",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-07T07:41:48+00:00",
+      "lastSeenAt": "2026-09-07T07:41:48+00:00"
+    },
+    {
+      "id": "chg-86ba5dfebca529173944",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-780b23eaadd3b6ade7",
+      "entityName": "理想汽车-W午后涨超4% 拟以26.5亿元战略投资欣旺达动力",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：理想汽车-W午后涨超4% 拟以26.5亿元战略投资欣旺达动力。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-07",
+        "summary": "理想汽车-W（02015）午后涨超4%，截至发稿，股价上涨4.10%，现报49.78港元，成交额4.28亿港元。 9月4日，欣旺达发布公告称，子公司欣旺达动力科技股份有限公司拟进行C++轮...",
+        "title": "理想汽车-W午后涨超4% 拟以26.5亿元战略投资欣旺达动力"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-07",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "理想汽车-W（02015）午后涨超4%，截至发稿，股价上涨4.10%，现报49.78港元，成交额4.28亿港元。 9月4日，欣旺达发布公告称，子公司欣旺达动力科技股份有限公司拟进行C++轮...",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "理想汽车-W午后涨超4% 拟以26.5亿元战略投资欣旺达动力",
+          "evidenceIds": [
+            "E004"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E004"
+      ],
+      "supportingEvidenceIds": [
+        "E004"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-8cdb4438f74d934a74a5"
+      ],
+      "eventLifecycles": {
+        "evt-8cdb4438f74d934a74a5": "first_seen"
+      },
+      "eventId": "evt-8cdb4438f74d934a74a5",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-07T07:41:48+00:00",
+      "lastSeenAt": "2026-09-07T07:41:48+00:00"
+    },
+    {
+      "id": "chg-4a4709b43e15ccd8e0cc",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-32527866494460d89a",
+      "entityName": "业内首个！“千问办公”推出“多人工作台”",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：业内首个！“千问办公”推出“多人工作台”。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-07",
+        "summary": "近日，阿里巴巴旗下Agent产品“千问办公”推出业内首个“多人工作台”。用户简单描述需求，即可生成并发布一个最多支持百人同时在线协作的网页，承载复杂的业务流程。该功能适用于活动组织、家校协同和企业协作等场景，可解决SaaS软件采购成本高、定制软件开发耗时高的难题。目前，用户可从“千问办公”首页下方功能入口直接体验。 “千问办公”产品首页 目前，市面上的AI工作台主要面向个人使用，例如生成在线简历、个人作品集、个人打卡器等，用于信息展示、记录或简单交互，能够解决的实际问题有限。“千问办公”推出的“多人工作台”，不仅…",
+        "title": "业内首个！“千问办公”推出“多人工作台”"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-07",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "近日，阿里巴巴旗下Agent产品“千问办公”推出业内首个“多人工作台”。用户简单描述需求，即可生成并发布一个最多支持百人同时在线协作的网页，承载复杂的业务流程。该功能适用于活动组织、家校协同和企业协作等场景，可解决SaaS软件采购成本高、定制软件开发耗时高的难题。目前，用户可从“千问办公”首页下方功能入口直接体验。 “千问办公”产品首页 目前，市面上的AI工作台主要面向个人使用，例如生成在线简历、个人作品集、个人打卡器等，用于信息展示、记录或简单交互，能够解决的实际问题有限。“千问办公”推出的“多人工作台”，不仅…",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "业内首个！“千问办公”推出“多人工作台”",
+          "evidenceIds": [
+            "E005"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E005"
+      ],
+      "supportingEvidenceIds": [
+        "E005"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-0424f4fefae166ff305e"
+      ],
+      "eventLifecycles": {
+        "evt-0424f4fefae166ff305e": "first_seen"
+      },
+      "eventId": "evt-0424f4fefae166ff305e",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-07T07:41:48+00:00",
+      "lastSeenAt": "2026-09-07T07:41:48+00:00"
+    },
+    {
+      "id": "chg-a58d4645ae2eea718157",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-279a24bf94852f9856",
+      "entityName": "最高法发文明确“AI换脸拟声”等案件裁判规则",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：最高法发文明确“AI换脸拟声”等案件裁判规则。",
+      "importance": 80,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-07",
+        "summary": "9月7日，最高人民法院召开新闻发布会， 发布《关于依法审理涉 人工智能 纠纷案件的意见》，这是首部由国家最高审判机构发布的涉 人工智能 司法裁判规则文件。 《意见》聚焦社会各界关注的AI换脸、 大数据 杀熟、仿冒名人带货、自动驾驶、 知识产权 保护等问题，明确相应的裁判规则，厘清行为边界和法律责任，以公正高效司法保障 人工智能 健康有序发展。 《意见》分为5个部分，共24条，主要内容有： 一是专门明确涉人工智能纠纷案件审理的指导思想和基本原则。 《意见》第一部分（第1条、第2条）明确了审理涉人工智能纠纷案件应当坚…",
+        "title": "最高法发文明确“AI换脸拟声”等案件裁判规则"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-07",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "9月7日，最高人民法院召开新闻发布会， 发布《关于依法审理涉 人工智能 纠纷案件的意见》，这是首部由国家最高审判机构发布的涉 人工智能 司法裁判规则文件。 《意见》聚焦社会各界关注的AI换脸、 大数据 杀熟、仿冒名人带货、自动驾驶、 知识产权 保护等问题，明确相应的裁判规则，厘清行为边界和法律责任，以公正高效司法保障 人工智能 健康有序发展。 《意见》分为5个部分，共24条，主要内容有： 一是专门明确涉人工智能纠纷案件审理的指导思想和基本原则。 《意见》第一部分（第1条、第2条）明确了审理涉人工智能纠纷案件应当坚…",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "最高法发文明确“AI换脸拟声”等案件裁判规则",
+          "evidenceIds": [
+            "E006"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E006"
+      ],
+      "supportingEvidenceIds": [
+        "E006"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-ea7a4a50c4fde597bea2"
+      ],
+      "eventLifecycles": {
+        "evt-ea7a4a50c4fde597bea2": "first_seen"
+      },
+      "eventId": "evt-ea7a4a50c4fde597bea2",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-07T07:41:48+00:00",
+      "lastSeenAt": "2026-09-07T07:41:48+00:00"
+    },
+    {
+      "id": "chg-cf29428b4abacde5d6b1",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "catl",
+      "entityName": "宁德时代",
+      "action": "updated",
+      "changedFields": [
+        "news"
+      ],
+      "summary": "宁德时代 的 news、quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": []
+      },
+      "after": {
+        "news": [
+          {
+            "publishedAt": "2026-09-07T13:46:00+08:00",
+            "source": "新浪财经",
+            "title": "宁德时代日赚2.4亿，15家上市车企加起来赚不到一半",
+            "url": "https://finance.sina.com.cn/roll/2026-09-07/doc-iniqyrka5605654.shtml"
+          },
+          {
+            "publishedAt": "2026-09-07T12:49:00+08:00",
+            "source": "新浪财经",
+            "title": "725.2GWh！全球动力电池前十洗牌：瑞浦兰钧暴增118.5%，宁德时代逼近40%",
+            "url": "https://finance.sina.com.cn/roll/2026-09-07/doc-iniqyrkc0421598.shtml"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [],
+          "after": [
+            {
+              "publishedAt": "2026-09-07T13:46:00+08:00",
+              "source": "新浪财经",
+              "title": "宁德时代日赚2.4亿，15家上市车企加起来赚不到一半",
+              "url": "https://finance.sina.com.cn/roll/2026-09-07/doc-iniqyrka5605654.shtml"
+            },
+            {
+              "publishedAt": "2026-09-07T12:49:00+08:00",
+              "source": "新浪财经",
+              "title": "725.2GWh！全球动力电池前十洗牌：瑞浦兰钧暴增118.5%，宁德时代逼近40%",
+              "url": "https://finance.sina.com.cn/roll/2026-09-07/doc-iniqyrkc0421598.shtml"
+            }
+          ],
+          "evidenceIds": [
+            "E012",
+            "E013"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E012",
+        "E013"
+      ],
+      "supportingEvidenceIds": [
+        "E012",
+        "E013"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 2,
+        "total": 2
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-79e90098986ced33c3ec",
+        "evt-f9ca097565f59ca8803c"
+      ],
+      "eventLifecycles": {
+        "evt-79e90098986ced33c3ec": "first_seen",
+        "evt-f9ca097565f59ca8803c": "first_seen"
+      },
+      "lifecycle": "mixed",
+      "firstSeenAt": "2026-09-07T07:41:48+00:00",
+      "lastSeenAt": "2026-09-07T07:41:48+00:00"
+    },
+    {
+      "id": "chg-e157cd4e97316725712a",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "bgi-genomics",
+      "entityName": "华大基因",
+      "action": "updated",
+      "changedFields": [
+        "news"
+      ],
+      "summary": "华大基因 的 news、quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": []
+      },
+      "after": {
+        "news": [
+          {
+            "publishedAt": "2026-09-07T15:16:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因涨0.05%，成交额1.68亿元，后市是否有机会？",
+            "url": "https://finance.sina.com.cn/stock/aiassist/ggsp/2026-09-07/doc-iniqyvrw6308136.shtml"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [],
+          "after": [
+            {
+              "publishedAt": "2026-09-07T15:16:00+08:00",
+              "source": "新浪财经",
+              "title": "华大基因涨0.05%，成交额1.68亿元，后市是否有机会？",
+              "url": "https://finance.sina.com.cn/stock/aiassist/ggsp/2026-09-07/doc-iniqyvrw6308136.shtml"
+            }
+          ],
+          "evidenceIds": [
+            "E016"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E016"
+      ],
+      "supportingEvidenceIds": [
+        "E016"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-719437109570226a2a63"
+      ],
+      "eventLifecycles": {
+        "evt-719437109570226a2a63": "first_seen"
+      },
+      "eventId": "evt-719437109570226a2a63",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-07T07:41:48+00:00",
+      "lastSeenAt": "2026-09-07T07:41:48+00:00"
     }
   ],
   "evidence": [
     {
-      "id": "E001",
-      "changeId": "chg-7ac5e0912159b63f6e2a",
-      "entityName": "蜂巢能源",
-      "claim": "蜂巢能源 的 financing 发生变化。",
-      "publicationTier": "verified_change",
+      "id": "E002",
+      "changeId": "chg-0158b35495d9b116e9a0",
+      "entityName": "美国大学捐赠基金业绩回暖 科技公司投资助力跑赢标普500",
+      "claim": "新增高价值情报事件记录：美国大学捐赠基金业绩回暖 科技公司投资助力跑赢标普500。",
+      "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "蜂巢能源",
-      "title": "蜂巢能源官方网站",
-      "url": "https://www.svolt.cn/",
-      "publishedAt": "2026-09-02",
-      "evidenceGrade": "官方披露",
+      "sourceName": "新浪财经",
+      "title": "美国大学捐赠基金业绩回暖 科技公司投资助力跑赢标普500",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-07/doc-iniqyrka5623500.shtml",
+      "publishedAt": "2026-09-07",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
       "claimFields": [
-        "financing"
+        "publishedAt",
+        "summary",
+        "title"
       ],
       "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E003",
+      "changeId": "chg-0584104965ff4f74b755",
+      "entityName": "索尼与沙特阿美合作开发人工智能驱动的工业解决方案",
+      "claim": "新增高价值情报事件记录：索尼与沙特阿美合作开发人工智能驱动的工业解决方案。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "索尼与沙特阿美合作开发人工智能驱动的工业解决方案",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-07/doc-iniqyriy6345633.shtml",
+      "publishedAt": "2026-09-07",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E004",
+      "changeId": "chg-86ba5dfebca529173944",
+      "entityName": "理想汽车-W午后涨超4% 拟以26.5亿元战略投资欣旺达动力",
+      "claim": "新增高价值情报事件记录：理想汽车-W午后涨超4% 拟以26.5亿元战略投资欣旺达动力。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "理想汽车-W午后涨超4% 拟以26.5亿元战略投资欣旺达动力",
+      "url": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-09-07/doc-iniqyriy6355074.shtml",
+      "publishedAt": "2026-09-07",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E005",
+      "changeId": "chg-4a4709b43e15ccd8e0cc",
+      "entityName": "业内首个！“千问办公”推出“多人工作台”",
+      "claim": "新增高价值情报事件记录：业内首个！“千问办公”推出“多人工作台”。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "雷峰网",
+      "title": "业内首个！“千问办公”推出“多人工作台”",
+      "url": "https://www.leiphone.com/category/industrynews/bv6uP9homPcjjRHl.html",
+      "publishedAt": "2026-09-07",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E006",
+      "changeId": "chg-a58d4645ae2eea718157",
+      "entityName": "最高法发文明确“AI换脸拟声”等案件裁判规则",
+      "claim": "新增高价值情报事件记录：最高法发文明确“AI换脸拟声”等案件裁判规则。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "东方财富",
+      "title": "最高法发文明确“AI换脸拟声”等案件裁判规则",
+      "url": "https://finance.eastmoney.com/a/202609073866640946.html",
+      "publishedAt": "2026-09-07",
+      "evidenceGrade": "媒体报道",
+      "platformName": "东方财富",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E012",
+      "changeId": "chg-cf29428b4abacde5d6b1",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news、quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "宁德时代日赚2.4亿，15家上市车企加起来赚不到一半",
+      "url": "https://finance.sina.com.cn/roll/2026-09-07/doc-iniqyrka5605654.shtml",
+      "publishedAt": "2026-09-07T13:46:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E013",
+      "changeId": "chg-cf29428b4abacde5d6b1",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news、quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "725.2GWh！全球动力电池前十洗牌：瑞浦兰钧暴增118.5%，宁德时代逼近40%",
+      "url": "https://finance.sina.com.cn/roll/2026-09-07/doc-iniqyrkc0421598.shtml",
+      "publishedAt": "2026-09-07T12:49:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E016",
+      "changeId": "chg-e157cd4e97316725712a",
+      "entityName": "华大基因",
+      "claim": "华大基因 的 news、quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "华大基因涨0.05%，成交额1.68亿元，后市是否有机会？",
+      "url": "https://finance.sina.com.cn/stock/aiassist/ggsp/2026-09-07/doc-iniqyvrw6308136.shtml",
+      "publishedAt": "2026-09-07T15:16:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
       "qualityIssues": [],
       "qualityStatus": "passed",
       "supportStatus": "supports"
@@ -217,9 +1038,901 @@
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-07T06:17:45+00:00",
+    "generatedAt": "2026-09-07T07:41:48+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-f9ca097565f59ca8803c": {
+        "eventId": "evt-f9ca097565f59ca8803c",
+        "dataset": "marketCompany",
+        "entityId": "catl",
+        "entityName": "宁德时代",
+        "title": "宁德时代日赚2.4亿，15家上市车企加起来赚不到一半",
+        "titleAliases": [
+          "宁德时代日赚24亿15家上市车企加起来赚不到一半"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [
+          "marketCompany:catl",
+          "name:宁德时代"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "15",
+          "2.4"
+        ],
+        "sourceAliases": [
+          "evd-7745e90b40419c669dbf",
+          "src-786642efcd39d8e27c00"
+        ],
+        "evidenceFingerprints": [
+          "7745e90b40419c669dbf"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "宁德时代日赚2.4亿，15家上市车企加起来赚不到一半",
+            "url": "https://finance.sina.com.cn/roll/2026-09-07/doc-iniqyrka5605654.shtml",
+            "publishedAt": "2026-09-07T13:46:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "78276fc294648373d754",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T07:41:48+00:00",
+        "lastSeenAt": "2026-09-07T07:41:48+00:00",
+        "lastPublishedAt": "2026-09-07T07:41:48+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-ea7a4a50c4fde597bea2": {
+        "eventId": "evt-ea7a4a50c4fde597bea2",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-279a24bf94852f9856",
+        "entityName": "最高法发文明确“AI换脸拟声”等案件裁判规则",
+        "title": "最高法发文明确“AI换脸拟声”等案件裁判规则",
+        "titleAliases": [
+          "最高法发文明确ai换脸拟声等案件裁判规则"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-cd1e2cfb2e2fef2717b4",
+          "record-8fd819448d8c286360f0",
+          "src-fd0b096347bda7e55774"
+        ],
+        "evidenceFingerprints": [
+          "cd1e2cfb2e2fef2717b4"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "东方财富",
+            "title": "最高法发文明确“AI换脸拟声”等案件裁判规则",
+            "url": "https://finance.eastmoney.com/a/202609073866640946.html",
+            "publishedAt": "2026-09-07",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "b8338e8500f9998e2cf0",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T07:41:48+00:00",
+        "lastSeenAt": "2026-09-07T07:41:48+00:00",
+        "lastPublishedAt": "2026-09-07T07:41:48+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-bbd0edd30e3685815b21": {
+        "eventId": "evt-bbd0edd30e3685815b21",
+        "dataset": "marketCompany",
+        "entityId": "catl",
+        "entityName": "宁德时代",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [
+          "marketCompany:catl",
+          "name:宁德时代"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-3f025fb157bb019123fe",
+          "src-3fce98d95cf38a30749c"
+        ],
+        "evidenceFingerprints": [
+          "3f025fb157bb019123fe"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml",
+            "publishedAt": "2026-09-07T15:21:00+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T01:42:08+00:00",
+        "lastSeenAt": "2026-09-07T07:41:48+00:00",
+        "lastPublishedAt": "2026-09-07T01:42:08+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-ad5d2a8a6decad76795f": {
+        "eventId": "evt-ad5d2a8a6decad76795f",
+        "dataset": "marketCompany",
+        "entityId": "bgi-genomics",
+        "entityName": "华大基因",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01",
+          "2026-09-02",
+          "2026-09-04",
+          "2026-09-07"
+        ],
+        "entityKeys": [
+          "marketCompany:bgi-genomics",
+          "name:华大基因"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-4429ffb50bc66a93f9b0",
+          "src-f91830ef0c450da85176",
+          "evd-72aaeec3a50cc91b4d66",
+          "evd-cbdcaf449f9434d37e2c",
+          "evd-d7a1e445949f0b9e93a9",
+          "evd-92702c3aa9ec7884c967"
+        ],
+        "evidenceFingerprints": [
+          "4429ffb50bc66a93f9b0",
+          "72aaeec3a50cc91b4d66",
+          "cbdcaf449f9434d37e2c",
+          "d7a1e445949f0b9e93a9",
+          "92702c3aa9ec7884c967"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml",
+            "publishedAt": "2026-08-31T15:35:15+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml",
+            "publishedAt": "2026-09-01T15:35:15+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml",
+            "publishedAt": "2026-09-02T15:35:30+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml",
+            "publishedAt": "2026-09-04T15:35:45+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml",
+            "publishedAt": "2026-09-07T15:20:15+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-09-07T07:41:48+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 5,
+        "confirmationCount": 4,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-8cdb4438f74d934a74a5": {
+        "eventId": "evt-8cdb4438f74d934a74a5",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-780b23eaadd3b6ade7",
+        "entityName": "理想汽车-W午后涨超4% 拟以26.5亿元战略投资欣旺达动力",
+        "title": "理想汽车-W午后涨超4% 拟以26.5亿元战略投资欣旺达动力",
+        "titleAliases": [
+          "理想汽车w午后涨超4拟以265亿元战略投资欣旺达动力"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产业投资",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "26.5",
+          "4%"
+        ],
+        "sourceAliases": [
+          "evd-0cf698e40e6363a513c3",
+          "record-8ed5ef576e8a2dd6c509",
+          "src-976578051169f9f30d97"
+        ],
+        "evidenceFingerprints": [
+          "0cf698e40e6363a513c3"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "理想汽车-W午后涨超4% 拟以26.5亿元战略投资欣旺达动力",
+            "url": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-09-07/doc-iniqyriy6355074.shtml",
+            "publishedAt": "2026-09-07",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "8052e9f82f4f22d688b2",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T07:41:48+00:00",
+        "lastSeenAt": "2026-09-07T07:41:48+00:00",
+        "lastPublishedAt": "2026-09-07T07:41:48+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-7d75ec515f17967e44a5": {
+        "eventId": "evt-7d75ec515f17967e44a5",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-1f27e72e5a5108a781",
+        "entityName": "美国大学捐赠基金业绩回暖 科技公司投资助力跑赢标普500",
+        "title": "美国大学捐赠基金业绩回暖 科技公司投资助力跑赢标普500",
+        "titleAliases": [
+          "美国大学捐赠基金业绩回暖科技公司投资助力跑赢标普500"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "财报",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "500"
+        ],
+        "sourceAliases": [
+          "evd-621e6df328e898a66b6a",
+          "record-320a261830805af4c855",
+          "src-36e697e2c7bd1ef0c543"
+        ],
+        "evidenceFingerprints": [
+          "621e6df328e898a66b6a"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "美国大学捐赠基金业绩回暖 科技公司投资助力跑赢标普500",
+            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-07/doc-iniqyrka5623500.shtml",
+            "publishedAt": "2026-09-07",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "300112b6c1dff1403916",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T07:41:48+00:00",
+        "lastSeenAt": "2026-09-07T07:41:48+00:00",
+        "lastPublishedAt": "2026-09-07T07:41:48+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-79e90098986ced33c3ec": {
+        "eventId": "evt-79e90098986ced33c3ec",
+        "dataset": "marketCompany",
+        "entityId": "catl",
+        "entityName": "宁德时代",
+        "title": "725.2GWh！全球动力电池前十洗牌：瑞浦兰钧暴增118.5%，宁德时代逼近40%",
+        "titleAliases": [
+          "7252gwh全球动力电池前十洗牌瑞浦兰钧暴增1185宁德时代逼近40"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [
+          "marketCompany:catl",
+          "name:宁德时代"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "118.5%",
+          "40%",
+          "725.2"
+        ],
+        "sourceAliases": [
+          "evd-4ee8b4055d4c38151865",
+          "src-8da7f5651218f0511154"
+        ],
+        "evidenceFingerprints": [
+          "4ee8b4055d4c38151865"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "725.2GWh！全球动力电池前十洗牌：瑞浦兰钧暴增118.5%，宁德时代逼近40%",
+            "url": "https://finance.sina.com.cn/roll/2026-09-07/doc-iniqyrkc0421598.shtml",
+            "publishedAt": "2026-09-07T12:49:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "7e69b8fed18b5a326e8e",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T07:41:48+00:00",
+        "lastSeenAt": "2026-09-07T07:41:48+00:00",
+        "lastPublishedAt": "2026-09-07T07:41:48+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-719437109570226a2a63": {
+        "eventId": "evt-719437109570226a2a63",
+        "dataset": "marketCompany",
+        "entityId": "bgi-genomics",
+        "entityName": "华大基因",
+        "title": "华大基因涨0.05%，成交额1.68亿元，后市是否有机会？",
+        "titleAliases": [
+          "华大基因涨005成交额168亿元后市是否有机会"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [
+          "marketCompany:bgi-genomics",
+          "name:华大基因"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "0.05%",
+          "1.68"
+        ],
+        "sourceAliases": [
+          "evd-c93a0903b970d794ee6f",
+          "src-b34eb339bef940515cab"
+        ],
+        "evidenceFingerprints": [
+          "c93a0903b970d794ee6f"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "华大基因涨0.05%，成交额1.68亿元，后市是否有机会？",
+            "url": "https://finance.sina.com.cn/stock/aiassist/ggsp/2026-09-07/doc-iniqyvrw6308136.shtml",
+            "publishedAt": "2026-09-07T15:16:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "19b2fd7941e04c6d23de",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T07:41:48+00:00",
+        "lastSeenAt": "2026-09-07T07:41:48+00:00",
+        "lastPublishedAt": "2026-09-07T07:41:48+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-3bcb1a81e1dc99cedc23": {
+        "eventId": "evt-3bcb1a81e1dc99cedc23",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-6c8ff8e4929f6ffb12",
+        "entityName": "索尼与沙特阿美合作开发人工智能驱动的工业解决方案",
+        "title": "索尼与沙特阿美合作开发人工智能驱动的工业解决方案",
+        "titleAliases": [
+          "索尼与沙特阿美合作开发人工智能驱动的工业解决方案"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-d347ddb52a8d25f09fab",
+          "record-d0d083c56a3b67b79bbd",
+          "src-76ad24f9a7815da1ad21"
+        ],
+        "evidenceFingerprints": [
+          "d347ddb52a8d25f09fab"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "索尼与沙特阿美合作开发人工智能驱动的工业解决方案",
+            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-07/doc-iniqyriy6345633.shtml",
+            "publishedAt": "2026-09-07",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "e1b8a2d877e7a8373d41",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T07:41:48+00:00",
+        "lastSeenAt": "2026-09-07T07:41:48+00:00",
+        "lastPublishedAt": "2026-09-07T07:41:48+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-37bf8a603b7e2a364ccb": {
+        "eventId": "evt-37bf8a603b7e2a364ccb",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-bc1bf7667f637a4821",
+        "entityName": "Researchers report on a solar storm that caused a GPS glitch serious enough to crash self-driving cars",
+        "title": "Researchers report on a solar storm that caused a GPS glitch serious enough to crash self-driving cars",
+        "titleAliases": [
+          "researchersreportonasolarstormthatcausedagpsglitchseriousenoughtocrashselfdrivingcars"
+        ],
+        "publishedDate": "2026-09-05",
+        "publishedDates": [
+          "2026-09-05"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-6c9fe9770373ec9dab89",
+          "record-b7ee87373d37b30346be",
+          "src-344f54913309daeb157a"
+        ],
+        "evidenceFingerprints": [
+          "6c9fe9770373ec9dab89"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "TechRadar",
+            "title": "Researchers report on a solar storm that caused a GPS glitch serious enough to crash self-driving cars",
+            "url": "https://www.techradar.com/tech/researchers-report-on-a-solar-storm-that-caused-a-gps-glitch-serious-enough-to-crash-self-driving-cars",
+            "publishedAt": "2026-09-05",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "1e1c5da4518aa5f43f22",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-05T15:36:06+00:00",
+        "lastSeenAt": "2026-09-07T07:41:48+00:00",
+        "lastPublishedAt": "2026-09-05T15:36:06+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-236d3dfdcbf781c61260": {
+        "eventId": "evt-236d3dfdcbf781c61260",
+        "dataset": "marketCompany",
+        "entityId": "cambricon",
+        "entityName": "中科寒武纪科技股份有限公司",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01",
+          "2026-09-02",
+          "2026-09-04",
+          "2026-09-07"
+        ],
+        "entityKeys": [
+          "marketCompany:cambricon",
+          "name:中科寒武纪科技股份有限公司"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-66c0983b9ff21071f1c6",
+          "src-e95e9990c90226e17b22",
+          "evd-ed4ff3c7c588239b8a6d",
+          "evd-a4dffcef566e5f3c610f",
+          "evd-149dc84b1a589c59b55d",
+          "evd-25970d48e4dae95a4399"
+        ],
+        "evidenceFingerprints": [
+          "66c0983b9ff21071f1c6",
+          "ed4ff3c7c588239b8a6d",
+          "a4dffcef566e5f3c610f",
+          "149dc84b1a589c59b55d",
+          "25970d48e4dae95a4399"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
+            "publishedAt": "2026-08-31T11:30:00+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
+            "publishedAt": "2026-09-01T15:34:59+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
+            "publishedAt": "2026-09-02T15:34:59+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
+            "publishedAt": "2026-09-04T15:34:59+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
+            "publishedAt": "2026-09-07T15:21:11+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-09-07T07:41:48+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 5,
+        "confirmationCount": 4,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-107c31a86fb2bd117eed": {
+        "eventId": "evt-107c31a86fb2bd117eed",
+        "dataset": "marketCompany",
+        "entityId": "xtalpi",
+        "entityName": "晶泰控股有限公司",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01",
+          "2026-09-02",
+          "2026-09-07"
+        ],
+        "entityKeys": [
+          "marketCompany:xtalpi",
+          "name:晶泰控股有限公司"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-5fa1601b8d57d2004e8f",
+          "src-de35f484ecf44f83c49b",
+          "evd-f5f505b12de280e836e7",
+          "evd-9437856afcf99c124c2c",
+          "evd-06d67a94b7519b2d1063"
+        ],
+        "evidenceFingerprints": [
+          "5fa1601b8d57d2004e8f",
+          "f5f505b12de280e836e7",
+          "9437856afcf99c124c2c",
+          "06d67a94b7519b2d1063"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
+            "publishedAt": "2026-08-31T16:08:50+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
+            "publishedAt": "2026-09-01T16:08:18+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
+            "publishedAt": "2026-09-02T16:08:08+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
+            "publishedAt": "2026-09-07T15:21:01+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-09-07T07:41:48+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 4,
+        "confirmationCount": 3,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-09cacf02606d9838e6f2": {
+        "eventId": "evt-09cacf02606d9838e6f2",
+        "dataset": "marketCompany",
+        "entityId": "horizon-robotics",
+        "entityName": "Horizon Robotics",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01",
+          "2026-09-02",
+          "2026-09-04",
+          "2026-09-07"
+        ],
+        "entityKeys": [
+          "marketCompany:horizon-robotics",
+          "name:horizon robotics"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-b9931d767f7fdda9a522",
+          "src-2902bb7afee990ec31f7",
+          "evd-f9eda82d60279aa18d50",
+          "evd-c690cdfd1301ac54784c",
+          "evd-230de597643c6cb0a7fa",
+          "evd-ced861ace5efab8ab825"
+        ],
+        "evidenceFingerprints": [
+          "b9931d767f7fdda9a522",
+          "f9eda82d60279aa18d50",
+          "c690cdfd1301ac54784c",
+          "230de597643c6cb0a7fa",
+          "ced861ace5efab8ab825"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+            "publishedAt": "2026-08-31T16:08:50+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+            "publishedAt": "2026-09-01T16:08:16+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+            "publishedAt": "2026-09-02T16:08:08+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+            "publishedAt": "2026-09-04T16:08:06+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+            "publishedAt": "2026-09-07T15:21:04+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-09-07T07:41:48+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 5,
+        "confirmationCount": 4,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-0424f4fefae166ff305e": {
+        "eventId": "evt-0424f4fefae166ff305e",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-32527866494460d89a",
+        "entityName": "业内首个！“千问办公”推出“多人工作台”",
+        "title": "业内首个！“千问办公”推出“多人工作台”",
+        "titleAliases": [
+          "业内首个千问办公推出多人工作台"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-be5557fbd9103190c0ac",
+          "record-a926b3a1da05d0c25fac",
+          "src-c7f82fe08732831fba81"
+        ],
+        "evidenceFingerprints": [
+          "be5557fbd9103190c0ac"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "业内首个！“千问办公”推出“多人工作台”",
+            "url": "https://www.leiphone.com/category/industrynews/bv6uP9homPcjjRHl.html",
+            "publishedAt": "2026-09-07",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "707c09fb8bdcb7dd951c",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T07:41:48+00:00",
+        "lastSeenAt": "2026-09-07T07:41:48+00:00",
+        "lastPublishedAt": "2026-09-07T07:41:48+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-8be8280900881dcbec79": {
         "eventId": "evt-8be8280900881dcbec79",
         "dataset": "ventureCompany",
@@ -619,150 +2332,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-bbd0edd30e3685815b21": {
-        "eventId": "evt-bbd0edd30e3685815b21",
-        "dataset": "marketCompany",
-        "entityId": "catl",
-        "entityName": "宁德时代",
-        "title": "新浪财经 行情数据",
-        "titleAliases": [
-          "新浪财经行情数据"
-        ],
-        "publishedDate": "2026-09-07",
-        "publishedDates": [
-          "2026-09-07"
-        ],
-        "entityKeys": [
-          "marketCompany:catl",
-          "name:宁德时代"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-3f025fb157bb019123fe",
-          "src-3fce98d95cf38a30749c"
-        ],
-        "evidenceFingerprints": [
-          "3f025fb157bb019123fe"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml",
-            "publishedAt": "2026-09-07T11:30:00+08:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "cc3711a9494cf1e2f7a9",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-07T01:42:08+00:00",
-        "lastSeenAt": "2026-09-07T05:02:49+00:00",
-        "lastPublishedAt": "2026-09-07T01:42:08+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-ad5d2a8a6decad76795f": {
-        "eventId": "evt-ad5d2a8a6decad76795f",
-        "dataset": "marketCompany",
-        "entityId": "bgi-genomics",
-        "entityName": "华大基因",
-        "title": "新浪财经 行情数据",
-        "titleAliases": [
-          "新浪财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31",
-          "2026-09-01",
-          "2026-09-02",
-          "2026-09-04",
-          "2026-09-07"
-        ],
-        "entityKeys": [
-          "marketCompany:bgi-genomics",
-          "name:华大基因"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-4429ffb50bc66a93f9b0",
-          "src-f91830ef0c450da85176",
-          "evd-72aaeec3a50cc91b4d66",
-          "evd-cbdcaf449f9434d37e2c",
-          "evd-d7a1e445949f0b9e93a9",
-          "evd-92702c3aa9ec7884c967"
-        ],
-        "evidenceFingerprints": [
-          "4429ffb50bc66a93f9b0",
-          "72aaeec3a50cc91b4d66",
-          "cbdcaf449f9434d37e2c",
-          "d7a1e445949f0b9e93a9",
-          "92702c3aa9ec7884c967"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml",
-            "publishedAt": "2026-08-31T15:35:15+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml",
-            "publishedAt": "2026-09-01T15:35:15+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml",
-            "publishedAt": "2026-09-02T15:35:30+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml",
-            "publishedAt": "2026-09-04T15:35:45+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml",
-            "publishedAt": "2026-09-07T11:30:00+08:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "cc3711a9494cf1e2f7a9",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T03:41:22+00:00",
-        "lastSeenAt": "2026-09-07T05:02:49+00:00",
-        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 5,
-        "confirmationCount": 4,
-        "bestEvidenceStrength": 0,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -1250,98 +2819,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-236d3dfdcbf781c61260": {
-        "eventId": "evt-236d3dfdcbf781c61260",
-        "dataset": "marketCompany",
-        "entityId": "cambricon",
-        "entityName": "中科寒武纪科技股份有限公司",
-        "title": "新浪财经 行情数据",
-        "titleAliases": [
-          "新浪财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31",
-          "2026-09-01",
-          "2026-09-02",
-          "2026-09-04",
-          "2026-09-07"
-        ],
-        "entityKeys": [
-          "marketCompany:cambricon",
-          "name:中科寒武纪科技股份有限公司"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-66c0983b9ff21071f1c6",
-          "src-e95e9990c90226e17b22",
-          "evd-ed4ff3c7c588239b8a6d",
-          "evd-a4dffcef566e5f3c610f",
-          "evd-149dc84b1a589c59b55d",
-          "evd-25970d48e4dae95a4399"
-        ],
-        "evidenceFingerprints": [
-          "66c0983b9ff21071f1c6",
-          "ed4ff3c7c588239b8a6d",
-          "a4dffcef566e5f3c610f",
-          "149dc84b1a589c59b55d",
-          "25970d48e4dae95a4399"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
-            "publishedAt": "2026-08-31T11:30:00+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
-            "publishedAt": "2026-09-01T15:34:59+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
-            "publishedAt": "2026-09-02T15:34:59+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
-            "publishedAt": "2026-09-04T15:34:59+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
-            "publishedAt": "2026-09-07T11:30:00+08:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "cc3711a9494cf1e2f7a9",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T03:41:22+00:00",
-        "lastSeenAt": "2026-09-07T05:02:49+00:00",
-        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 5,
-        "confirmationCount": 4,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-1f2cb2b4257ab603a775": {
         "eventId": "evt-1f2cb2b4257ab603a775",
         "dataset": "intelligenceEvent",
@@ -1389,180 +2866,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-107c31a86fb2bd117eed": {
-        "eventId": "evt-107c31a86fb2bd117eed",
-        "dataset": "marketCompany",
-        "entityId": "xtalpi",
-        "entityName": "晶泰控股有限公司",
-        "title": "新浪财经 行情数据",
-        "titleAliases": [
-          "新浪财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31",
-          "2026-09-01",
-          "2026-09-02",
-          "2026-09-07"
-        ],
-        "entityKeys": [
-          "marketCompany:xtalpi",
-          "name:晶泰控股有限公司"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-5fa1601b8d57d2004e8f",
-          "src-de35f484ecf44f83c49b",
-          "evd-f5f505b12de280e836e7",
-          "evd-9437856afcf99c124c2c",
-          "evd-06d67a94b7519b2d1063"
-        ],
-        "evidenceFingerprints": [
-          "5fa1601b8d57d2004e8f",
-          "f5f505b12de280e836e7",
-          "9437856afcf99c124c2c",
-          "06d67a94b7519b2d1063"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
-            "publishedAt": "2026-08-31T16:08:50+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
-            "publishedAt": "2026-09-01T16:08:18+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
-            "publishedAt": "2026-09-02T16:08:08+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
-            "publishedAt": "2026-09-07T11:59:56+08:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "cc3711a9494cf1e2f7a9",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T03:41:22+00:00",
-        "lastSeenAt": "2026-09-07T05:02:49+00:00",
-        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 4,
-        "confirmationCount": 3,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-09cacf02606d9838e6f2": {
-        "eventId": "evt-09cacf02606d9838e6f2",
-        "dataset": "marketCompany",
-        "entityId": "horizon-robotics",
-        "entityName": "Horizon Robotics",
-        "title": "新浪财经 行情数据",
-        "titleAliases": [
-          "新浪财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31",
-          "2026-09-01",
-          "2026-09-02",
-          "2026-09-04",
-          "2026-09-07"
-        ],
-        "entityKeys": [
-          "marketCompany:horizon-robotics",
-          "name:horizon robotics"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-b9931d767f7fdda9a522",
-          "src-2902bb7afee990ec31f7",
-          "evd-f9eda82d60279aa18d50",
-          "evd-c690cdfd1301ac54784c",
-          "evd-230de597643c6cb0a7fa",
-          "evd-ced861ace5efab8ab825"
-        ],
-        "evidenceFingerprints": [
-          "b9931d767f7fdda9a522",
-          "f9eda82d60279aa18d50",
-          "c690cdfd1301ac54784c",
-          "230de597643c6cb0a7fa",
-          "ced861ace5efab8ab825"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
-            "publishedAt": "2026-08-31T16:08:50+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
-            "publishedAt": "2026-09-01T16:08:16+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
-            "publishedAt": "2026-09-02T16:08:08+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
-            "publishedAt": "2026-09-04T16:08:06+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
-            "publishedAt": "2026-09-07T11:59:48+08:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "cc3711a9494cf1e2f7a9",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T03:41:22+00:00",
-        "lastSeenAt": "2026-09-07T05:02:49+00:00",
-        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 5,
-        "confirmationCount": 4,
-        "bestEvidenceStrength": 0,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -3605,58 +4908,6 @@
           }
         ],
         "claimFingerprint": "4f3286c780298a1fecf5",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-05T15:36:06+00:00",
-        "lastSeenAt": "2026-09-05T15:36:06+00:00",
-        "lastPublishedAt": "2026-09-05T15:36:06+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-37bf8a603b7e2a364ccb": {
-        "eventId": "evt-37bf8a603b7e2a364ccb",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-bc1bf7667f637a4821",
-        "entityName": "Researchers report on a solar storm that caused a GPS glitch serious enough to crash self-driving cars",
-        "title": "Researchers report on a solar storm that caused a GPS glitch serious enough to crash self-driving cars",
-        "titleAliases": [
-          "researchersreportonasolarstormthatcausedagpsglitchseriousenoughtocrashselfdrivingcars"
-        ],
-        "publishedDate": "2026-09-05",
-        "publishedDates": [
-          "2026-09-05"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "技术突破",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-6c9fe9770373ec9dab89",
-          "record-b7ee87373d37b30346be",
-          "src-344f54913309daeb157a"
-        ],
-        "evidenceFingerprints": [
-          "6c9fe9770373ec9dab89"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "TechRadar",
-            "title": "Researchers report on a solar storm that caused a GPS glitch serious enough to crash self-driving cars",
-            "url": "https://www.techradar.com/tech/researchers-report-on-a-solar-storm-that-caused-a-gps-glitch-serious-enough-to-crash-self-driving-cars",
-            "publishedAt": "2026-09-05",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "1e1c5da4518aa5f43f22",
         "scalarClaims": {},
         "ipoStage": null,
         "firstSeenAt": "2026-09-05T15:36:06+00:00",
@@ -28070,13 +29321,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 1,
+    "newEvents": 8,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 2,
-    "observedEvents": 3,
+    "duplicatesSuppressed": 6,
+    "observedEvents": 14,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -30706,10 +31957,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-07",
-      "generatedAt": "2026-09-07T06:17:45+00:00",
+      "generatedAt": "2026-09-07T07:41:48+00:00",
       "runStatus": "model",
-      "changeCount": 32,
-      "executiveSummary": "基于证据 E001（蜂巢能源官网，2026-09-02），蜂巢能源的 financing 字段发生数据变化：此前记录于2026-08-06的融资条目（无投资者，内容为再次入选全球储能项目采购与金融可融资性风向标名单）被移除，当前 financing 为空。证据级别为官方披露，但审查状态为automated_unreviewed且未说明移除原因，因此仅将数据层变化视为事实，不据此推断融资状况恶化。",
+      "changeCount": 40,
+      "executiveSummary": "证据包包含五条高价值情报事件（E002-E006）及宁德时代、华大基因的新闻变更（E012、E013、E016），主要涉及AI监管、AI产品、AI工业合作、新能源产业链与机构资金配置。全部证据为媒体转述或摘要（C级/媒体报道），且均标记automated_unreviewed，因此本分析将其作为待验证信号，不视为确定性事实。核心观察：最高法首次发布涉AI司法裁判规则、阿里“千问办公”推出多人工作台、索尼与沙特阿美探索AI工业合作、理想汽车拟投资欣旺达动力、宁德时代盈利与全球份额信息强劲。本输出不构成投资建议。",
       "eventIds": [
         "evt-0b3c4f0fdc8d60987c6b",
         "evt-dd5c6325c3769b4014ec",
@@ -30742,7 +31993,15 @@
         "evt-6f56bae1a72432116dc6",
         "evt-f132047aec0203859dbc",
         "evt-496b45d1335434ef45a8",
-        "evt-6308b5fa0eed7c865b8c"
+        "evt-6308b5fa0eed7c865b8c",
+        "evt-7d75ec515f17967e44a5",
+        "evt-3bcb1a81e1dc99cedc23",
+        "evt-8cdb4438f74d934a74a5",
+        "evt-0424f4fefae166ff305e",
+        "evt-ea7a4a50c4fde597bea2",
+        "evt-79e90098986ced33c3ec",
+        "evt-f9ca097565f59ca8803c",
+        "evt-719437109570226a2a63"
       ],
       "eventStates": [
         {
@@ -30872,36 +32131,68 @@
         {
           "eventId": "evt-6308b5fa0eed7c865b8c",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-7d75ec515f17967e44a5",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-3bcb1a81e1dc99cedc23",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-8cdb4438f74d934a74a5",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-0424f4fefae166ff305e",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-ea7a4a50c4fde597bea2",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-79e90098986ced33c3ec",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-f9ca097565f59ca8803c",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-719437109570226a2a63",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 1,
-      "candidateTotal": 8,
-      "auxiliaryLeadTotal": 21,
+      "candidateTotal": 10,
+      "auxiliaryLeadTotal": 26,
       "rejectedTotal": 5,
       "eventSummary": {
-        "newEvents": 32,
+        "newEvents": 40,
         "reconfirmations": 9,
         "updates": 0,
         "corrections": 0,
         "possibleConflicts": 0,
-        "duplicatesSuppressed": 8
+        "duplicatesSuppressed": 14
       }
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 6,
-    "eligibleCandidateCount": 3,
-    "rejectedCandidateCount": 3,
-    "rejectedByDataset": {
-      "ventureCompany": 3
-    },
-    "evidenceCount": 24,
-    "supportingEvidenceCount": 5,
-    "rejectedEvidenceCount": 14,
+    "candidateCount": 11,
+    "eligibleCandidateCount": 11,
+    "rejectedCandidateCount": 0,
+    "rejectedByDataset": {},
+    "evidenceCount": 26,
+    "supportingEvidenceCount": 14,
+    "rejectedEvidenceCount": 7,
     "passedButUnboundEvidenceCount": 5,
     "rejectionReasons": {
-      "missing_published_at": 13,
-      "ungraded": 1
+      "missing_published_at": 6,
+      "missing_title": 3,
+      "ungraded": 3,
+      "entity_mismatch": 1
     },
     "sourceClassificationWarnings": []
   },
