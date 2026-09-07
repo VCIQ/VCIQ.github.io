@@ -1,9 +1,38 @@
 "use client";
 
-import { ArrowUpRight, BookmarkPlus, Bot, Search } from "lucide-react";
+import {
+  ArrowUpRight,
+  BookmarkPlus,
+  Bot,
+  CircleMinus,
+  Clock3,
+  Info,
+  Radar,
+  Search,
+} from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { EventQualityIndicator } from "@/components/event-quality-indicator";
+import { useFavorites } from "@/components/use-favorites";
+import { useHomepagePreferences } from "@/components/use-homepage-preferences";
+import { toggleFavorite } from "@/lib/favorites";
+import {
+  dismissHomepageEvent,
+  toggleHomepageSectorFollow,
+  undoDismissHomepageEvent,
+  type HomepagePreferenceState,
+} from "@/lib/homepage-preferences";
+import {
+  baseHomepageRecommendationScore,
+  homepageEventKey,
+  homepageFeedFavoriteInput,
+  homepageFavoriteId,
+  homepageRecommendationReasons,
+  isHomepageEventDismissed,
+  isHomepageSectorFollowed,
+  matchesHomepageFollowChannel,
+  personalizedHomepageRecommendationScore,
+} from "@/lib/homepage-recommendation";
 import { buildTrackingCaptureLink } from "@/lib/tracking-admin-link";
 import {
   useArticles,
@@ -13,6 +42,7 @@ import {
 } from "@/lib/use-articles";
 import styles from "./homepage-news-feed.module.css";
 import polishStyles from "./homepage-news-feed-polish.module.css";
+import preferenceStyles from "./homepage-preference-controls.module.css";
 
 type ChannelId =
   | "follow"
@@ -27,6 +57,12 @@ type ChannelId =
 
 type RegionFilter = "全部" | Region;
 type QualityScope = "trusted" | "all";
+
+type DismissedNotice = {
+  eventId: string;
+  sector: string;
+  title: string;
+};
 
 const CHANNELS: ReadonlyArray<{
   id: ChannelId;
@@ -110,36 +146,14 @@ function itemSearchText(item: LiveIntelligenceEvent) {
     .toLowerCase();
 }
 
-function recommendationScore(item: LiveIntelligenceEvent) {
-  const quality =
-    typeof item.qualityScore === "number"
-      ? item.qualityScore
-      : item.qualityStatus === "高可信"
-        ? 92
-        : item.qualityStatus === "可用"
-          ? 74
-          : item.qualityStatus === "低可信"
-            ? 35
-            : 65;
-  const relatedCount = Math.max(
-    item.relatedSources?.length ?? 0,
-    Math.max(0, (item.duplicateCount ?? 1) - 1),
-  );
-  const trackingMatches = Math.min(item.matchedTrackingTerms?.length ?? 0, 4);
-
-  return (
-    item.importance * 0.68 +
-    quality * 0.18 +
-    Math.min(relatedCount, 5) * 2.2 +
-    trackingMatches * 1.6 +
-    (item.curated ? 3 : 0)
-  );
-}
-
-function matchesChannel(item: LiveIntelligenceEvent, channelId: ChannelId) {
+function matchesChannel(
+  item: LiveIntelligenceEvent,
+  channelId: ChannelId,
+  preferences: HomepagePreferenceState,
+) {
   if (channelId === "recommend" || channelId === "latest") return true;
   if (channelId === "follow") {
-    return Boolean(item.curated || item.matchedTrackingTerms?.length);
+    return matchesHomepageFollowChannel(item, preferences);
   }
 
   const channel = CHANNELS.find((candidate) => candidate.id === channelId);
@@ -204,12 +218,16 @@ export function HomepageNewsFeed({
   bootstrap: HomepageFeedBootstrap;
 }) {
   const { articles, refreshAudit, isLive } = useArticles(initialPayload);
+  const favorites = useFavorites();
+  const preferences = useHomepagePreferences();
   const [channel, setChannel] = useState<ChannelId>("recommend");
   const [region, setRegion] = useState<RegionFilter>("全部");
   const [qualityScope, setQualityScope] = useState<QualityScope>("trusted");
   const [query, setQuery] = useState("");
   const [feedLimit, setFeedLimit] = useState(INITIAL_FEED_LIMIT);
   const [clockMs, setClockMs] = useState<number | null>(null);
+  const [expandedReasonKey, setExpandedReasonKey] = useState<string | null>(null);
+  const [dismissedNotice, setDismissedNotice] = useState<DismissedNotice | null>(null);
 
   useEffect(() => {
     const updateClock = () => setClockMs(Date.now());
@@ -218,6 +236,10 @@ export function HomepageNewsFeed({
     return () => window.clearInterval(timer);
   }, []);
 
+  const favoriteIds = useMemo(
+    () => new Set(favorites.map((favorite) => favorite.id)),
+    [favorites],
+  );
   const enabledSectorNames = useMemo(
     () => new Set(bootstrap.trackedSectorAliases),
     [bootstrap.trackedSectorAliases],
@@ -246,8 +268,9 @@ export function HomepageNewsFeed({
   const visibleArticles = useMemo(() => {
     const base = qualityScope === "trusted" ? trustedArticles : activeArticles;
     return base
+      .filter((item) => !isHomepageEventDismissed(item, preferences))
       .filter((item) => region === "全部" || item.region === region)
-      .filter((item) => matchesChannel(item, channel))
+      .filter((item) => matchesChannel(item, channel, preferences))
       .filter((item) => !normalizedQuery || itemSearchText(item).includes(normalizedQuery))
       .sort((left, right) => {
         if (channel === "latest") {
@@ -257,22 +280,39 @@ export function HomepageNewsFeed({
           );
         }
         return (
-          recommendationScore(right) - recommendationScore(left) ||
+          personalizedHomepageRecommendationScore(right, preferences, favorites) -
+            personalizedHomepageRecommendationScore(left, preferences, favorites) ||
           right.publishedAt.localeCompare(left.publishedAt)
         );
       });
-  }, [activeArticles, channel, normalizedQuery, qualityScope, region, trustedArticles]);
+  }, [
+    activeArticles,
+    channel,
+    favorites,
+    normalizedQuery,
+    preferences,
+    qualityScope,
+    region,
+    trustedArticles,
+  ]);
 
   const displayedArticles = visibleArticles.slice(0, feedLimit);
   const latestDate = latestPublishedAt.slice(0, 10);
   const latestDayArticles = trustedArticles.filter(
-    (item) => !latestDate || item.publishedAt.slice(0, 10) === latestDate,
+    (item) =>
+      (!latestDate || item.publishedAt.slice(0, 10) === latestDate) &&
+      !isHomepageEventDismissed(item, preferences),
   );
-  const topSignalSource = latestDayArticles.length >= 5 ? latestDayArticles : trustedArticles;
+  const trustedVisibleArticles = trustedArticles.filter(
+    (item) => !isHomepageEventDismissed(item, preferences),
+  );
+  const topSignalSource = latestDayArticles.length >= 5
+    ? latestDayArticles
+    : trustedVisibleArticles;
   const topSignals = [...topSignalSource]
     .sort(
       (left, right) =>
-        recommendationScore(right) - recommendationScore(left) ||
+        baseHomepageRecommendationScore(right) - baseHomepageRecommendationScore(left) ||
         right.publishedAt.localeCompare(left.publishedAt),
     )
     .slice(0, TOP_SIGNAL_LIMIT);
@@ -322,7 +362,7 @@ export function HomepageNewsFeed({
         <div className={styles.feedIdentity}>
           <span>VCIQ INTELLIGENCE FEED</span>
           <strong>今日推荐</strong>
-          <p>重要度、可信度、关联来源与关注词共同排序。</p>
+          <p>重要度、可信度、关联来源、关注赛道与稍后读共同排序。</p>
         </div>
 
         <label className={styles.searchBox}>
@@ -394,13 +434,20 @@ export function HomepageNewsFeed({
               <span>{currentChannelLabel}</span>
               <strong>{visibleArticles.length} 条候选情报</strong>
             </div>
-            <p>先看最值得知道的变化，再决定是否进入追踪或深度研究。</p>
+            <p>
+              先看最值得知道的变化，再决定是否进入追踪或深度研究。
+              {(preferences.followedSectors.length || favorites.length) ? (
+                <span className={preferenceStyles.preferenceSummary}>
+                  个性化：关注 {preferences.followedSectors.length} · 稍后读 {favorites.length}
+                </span>
+              ) : null}
+            </p>
           </div>
 
           <div className={styles.feedList}>
             {displayedArticles.length ? (
               displayedArticles.map((item, index) => {
-                const score = recommendationScore(item);
+                const score = personalizedHomepageRecommendationScore(item, preferences, favorites);
                 const hero = index === 0 && !normalizedQuery && channel !== "latest";
                 const major = !hero && (item.importance >= 90 || score >= 88);
                 const prominenceClass = hero
@@ -408,6 +455,11 @@ export function HomepageNewsFeed({
                   : major
                     ? styles.majorCard
                     : styles.standardCard;
+                const eventKey = homepageEventKey(item);
+                const favorite = homepageFeedFavoriteInput(item);
+                const saved = favoriteIds.has(homepageFavoriteId(item));
+                const followed = isHomepageSectorFollowed(item, preferences);
+                const reasonOpen = expandedReasonKey === eventKey;
 
                 return (
                   <article
@@ -420,6 +472,18 @@ export function HomepageNewsFeed({
                         <span>{item.type}</span>
                         <span>{item.region}</span>
                         <span>{item.sector}</span>
+                        <button
+                          type="button"
+                          className={`${preferenceStyles.sectorFollow} ${
+                            followed ? preferenceStyles.sectorFollowActive : ""
+                          }`}
+                          onClick={() => toggleHomepageSectorFollow(item.sector)}
+                          aria-pressed={followed}
+                          title={followed ? `取消关注 ${item.sector}` : `关注 ${item.sector}`}
+                        >
+                          <Radar size={11} aria-hidden="true" />
+                          {followed ? "已关注赛道" : "关注赛道"}
+                        </button>
                       </div>
 
                       <h2>
@@ -439,6 +503,51 @@ export function HomepageNewsFeed({
                         <time dateTime={item.publishedAt}>{formatPublishedAt(item.publishedAt, clockMs)}</time>
                         <strong>重要度 {item.importance}</strong>
                       </div>
+
+                      <div className={preferenceStyles.preferenceActions} aria-label="推荐反馈">
+                        <button
+                          type="button"
+                          onClick={() => toggleFavorite(favorite)}
+                          aria-pressed={saved}
+                          title={saved ? "取消稍后读" : "保存到稍后读"}
+                        >
+                          <Clock3 size={12} aria-hidden="true" />
+                          {saved ? "已稍后读" : "稍后读"}
+                        </button>
+                        <button
+                          type="button"
+                          className={preferenceStyles.dismissAction}
+                          onClick={() => {
+                            dismissHomepageEvent(eventKey, item.sector);
+                            setDismissedNotice({ eventId: eventKey, sector: item.sector, title: item.title });
+                            if (expandedReasonKey === eventKey) setExpandedReasonKey(null);
+                          }}
+                          title="隐藏这条，并减少类似赛道内容"
+                        >
+                          <CircleMinus size={12} aria-hidden="true" />
+                          不感兴趣
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setExpandedReasonKey(reasonOpen ? null : eventKey)}
+                          aria-pressed={reasonOpen}
+                          aria-expanded={reasonOpen}
+                        >
+                          <Info size={12} aria-hidden="true" />
+                          为什么推荐
+                        </button>
+                      </div>
+
+                      {reasonOpen ? (
+                        <div className={preferenceStyles.reasonPanel}>
+                          <strong>这条内容出现在推荐流，因为：</strong>
+                          <ul>
+                            {homepageRecommendationReasons(item, preferences, favorites).map((reason) => (
+                              <li key={reason}>{reason}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      ) : null}
 
                       <div className={`${styles.cardActions} ${polishStyles.mobileActions}`}>
                         <a href={item.source.url} target="_blank" rel="noreferrer">
@@ -472,6 +581,23 @@ export function HomepageNewsFeed({
               </div>
             )}
           </div>
+
+          {dismissedNotice ? (
+            <div className={preferenceStyles.preferenceNotice} role="status">
+              <span>
+                已隐藏“{compactSummary(dismissedNotice.title, 44)}”，并降低「{dismissedNotice.sector}」类似内容权重。
+              </span>
+              <button
+                type="button"
+                onClick={() => {
+                  undoDismissHomepageEvent(dismissedNotice.eventId, dismissedNotice.sector);
+                  setDismissedNotice(null);
+                }}
+              >
+                撤销
+              </button>
+            </div>
+          ) : null}
 
           {displayedArticles.length < visibleArticles.length ? (
             <button
