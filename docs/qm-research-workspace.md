@@ -162,6 +162,36 @@ QM_WORKSPACE_URL=https://<your-qm-portal-host>/
 
 随后重新运行 Pages workflow 即可启用入口。
 
+## 单条情报 contextual handoff
+
+首页的卡片级研究入口不再直接跳转到通用 `/research-agent/`。`深研此条` 先进入：
+
+```text
+/research-agent/investigate/?event=<VCIQ event id>
+```
+
+该页只在用户主动进入时读取 `articles.json` 与 `ranked-intelligence.json`，按事件 ID 恢复当前情报，并整理：
+
+- 标题、原始 URL、摘要、发布时间、赛道、公司和人物；
+- 主来源、关联来源、来源层级与质量状态；
+- 重要度；
+- 命中的追踪词、是否人工精选、是否显式关注赛道、是否加入稍后读；
+- 一份明确区分事实、推断和待验证项的研究指令。
+
+如果 `QM_WORKSPACE_URL` 已配置，公开站会在工作台 URL 上附加一个有版本的 VCIQ handoff 合同：
+
+```text
+vciq_handoff=1
+vciq_event=<event id>
+vciq_context=https://vciq.github.io/research-agent/investigate/?event=<event id>
+vciq_articles=https://vciq.github.io/data/articles.json
+vciq_ranked=https://vciq.github.io/data/ranked-intelligence.json
+```
+
+这里刻意不把完整摘要、个人偏好或任何私有凭据塞进 URL。当前页面同时提供“复制研究指令”，并在打开工作台时复制该指令；这样即使某个 QM 部署尚未实现 URL 参数自动接管，也不会把一个普通跳转伪装成已经完成上下文注入。
+
+QM 的 `vciq-investigate` 适配器实现后，应优先读取 `vciq_event`，再从 `vciq_articles` / `vciq_ranked` 对应的公开数据集中解析事件；`vciq_context` 用作人类可检查的回链。适配器必须忽略未知字段，并且不得根据 URL 参数获得任何额外生产写权限。
+
 ## Secret 与身份边界
 
 以下信息只能存在于 QM deployment provider、QM keychain、OIDC provider 或 GitHub Secrets 等私有控制面：
@@ -196,5 +226,6 @@ NEXT_PUBLIC_*
 5. 接入 VCIQ 公开数据并实现 `vciq-search` / `vciq-investigate`；
 6. 验证 QM 无法写 `VCIQ.github.io`；
 7. 设置 `QM_WORKSPACE_URL`，启用公开站入口；
-8. 运行一段时间后再评估 PR-only GitHub 权限；
-9. 最后再增加 `vciq-watch`、`vciq-thesis` 和更广泛协作能力。
+8. 验证 `深研此条 -> contextual handoff -> Research Workspace` 的 event id、数据集和回链均能被正确消费；
+9. 运行一段时间后再评估 PR-only GitHub 权限；
+10. 最后再增加 `vciq-watch`、`vciq-thesis` 和更广泛协作能力。
