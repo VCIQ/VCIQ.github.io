@@ -3,6 +3,7 @@ import { LiveStatus } from "@/components/live-status";
 import { SiteClientControls } from "@/components/site-client-controls";
 import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
+import "./fixed-light-scheme.css";
 import "./header-responsive.css";
 import "./detail-visual.css";
 

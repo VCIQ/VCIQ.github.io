@@ -68,6 +68,36 @@
     line-height: 1.62;
   }
 
+  /* Keep only the first four post-hero cards visually promoted. The ranking
+     may mark many high-scoring events as major, but allowing every card to
+     render a thumbnail collapses the hierarchy back into a uniform list. */
+  .mobileSafeArea :global(article[class*="majorCard"]:nth-child(n+6)) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    align-items: initial;
+    padding: 16px 0;
+  }
+
+  .mobileSafeArea :global(article[class*="majorCard"]:nth-child(n+6))::after {
+    display: none;
+  }
+
+  .mobileSafeArea :global(article[class*="majorCard"]:nth-child(n+6) h2) {
+    margin-bottom: 6px;
+    font-size: 17px;
+    line-height: 1.46;
+  }
+
+  .mobileSafeArea :global(article[class*="majorCard"]:nth-child(n+6) p[class*="cardSummary"]) {
+    margin-bottom: 7px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 1.62;
+  }
+
   .mobileSafeArea :global(ol[class*="signalList"] > li:nth-child(-n+3)) {
     padding-top: 14px;
     padding-bottom: 14px;
