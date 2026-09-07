@@ -1,0 +1,308 @@
+.page {
+  padding-bottom: 80px;
+}
+
+.hero {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.hero h1 {
+  margin: 8px 0 10px;
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1.05;
+}
+
+.hero > p:last-child {
+  max-width: 760px;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 18px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.statePanel,
+.workspacePanel {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-top: 28px;
+  padding: 18px 20px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+}
+
+.statePanel strong,
+.workspacePanel strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 15px;
+}
+
+.statePanel p,
+.workspacePanel p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.eventCard {
+  margin-top: 28px;
+  padding: 24px 26px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+}
+
+.tagRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.tagRow span {
+  padding: 4px 7px;
+  border: 1px solid var(--border-soft);
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.tagRow span:last-child {
+  border-color: color-mix(in srgb, var(--green) 45%, var(--border-soft));
+  color: var(--green-bright);
+}
+
+.eventCard h2 {
+  margin: 15px 0 12px;
+  font-size: clamp(25px, 3.2vw, 38px);
+  line-height: 1.18;
+}
+
+.summary {
+  max-width: 900px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.85;
+}
+
+.sourceRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-soft);
+  color: var(--faint);
+  font-size: 11px;
+}
+
+.sourceRow a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--green-bright);
+}
+
+.contextGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.contextGrid article {
+  min-height: 150px;
+  padding: 16px;
+  border: 1px solid var(--border-soft);
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+}
+
+.contextGrid header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 12px;
+  color: var(--green-bright);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.contextGrid p {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.sourcesSection,
+.promptSection {
+  margin-top: 34px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.sectionHeading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 16px;
+}
+
+.sectionHeading h2 {
+  margin: 4px 0 0;
+  font-size: 22px;
+}
+
+.sectionHeading > span {
+  color: var(--faint);
+  font-size: 10px;
+}
+
+.sectionHeading button,
+.workspacePanel button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid var(--border-soft);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.sectionHeading button:hover,
+.workspacePanel button:hover {
+  border-color: var(--green);
+  color: var(--green-bright);
+}
+
+.sourceList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sourceList li {
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+}
+
+.sourceList a {
+  position: relative;
+  display: block;
+  min-height: 96px;
+  padding: 14px 40px 14px 14px;
+}
+
+.sourceList strong {
+  display: block;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.sourceList span {
+  display: block;
+  margin-top: 7px;
+  color: var(--faint);
+  font-size: 10px;
+}
+
+.sourceList svg {
+  position: absolute;
+  top: 15px;
+  right: 14px;
+  color: var(--faint);
+}
+
+.promptSection pre {
+  max-height: 520px;
+  margin: 0;
+  padding: 18px;
+  overflow: auto;
+  border: 1px solid var(--border-soft);
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 11px;
+  line-height: 1.75;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.workspacePanel {
+  align-items: center;
+}
+
+.workspacePanel > svg {
+  flex: 0 0 auto;
+  color: var(--green-bright);
+}
+
+.workspacePanel > div {
+  flex: 1 1 auto;
+}
+
+.workspacePanel button {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 760px) {
+  .page {
+    padding-bottom: 110px;
+  }
+
+  .hero {
+    padding-top: 20px;
+  }
+
+  .eventCard {
+    padding: 18px 16px;
+  }
+
+  .summary {
+    font-size: 13px;
+  }
+
+  .contextGrid,
+  .sourceList {
+    grid-template-columns: 1fr;
+  }
+
+  .contextGrid article {
+    min-height: 0;
+  }
+
+  .sectionHeading,
+  .workspacePanel {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .sectionHeading > span {
+    display: none;
+  }
+
+  .sectionHeading button,
+  .workspacePanel button {
+    width: 100%;
+    min-height: 42px;
+  }
+}
