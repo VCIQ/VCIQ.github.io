@@ -5,6 +5,8 @@ on:
     paths:
       - components/dashboard.tsx
       - components/homepage-channel-updates.tsx
+      - components/homepage-news-feed.tsx
+      - components/homepage-news-feed.module.css
       - app/page.tsx
       - .github/workflows/refresh-homepage-intelligence.yml
       - .github/workflows/validate-homepage-intelligence.yml
@@ -42,7 +44,7 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
-          npx eslint components/dashboard.tsx components/homepage-channel-updates.tsx app/page.tsx 2>&1 | tee homepage-eslint.log
+          npx eslint components/dashboard.tsx components/homepage-channel-updates.tsx components/homepage-news-feed.tsx app/page.tsx 2>&1 | tee homepage-eslint.log
       - name: Upload homepage lint diagnostics
         if: steps.homepage-lint.outcome == 'failure'
         uses: actions/upload-artifact@v4

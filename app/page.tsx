@@ -1,8 +1,8 @@
-import {
-  DashboardV2Client,
-  type DashboardBootstrap,
-} from "@/components/dashboard-v2-client";
 import { DailyBriefQuickActions } from "@/components/daily-brief-actions";
+import {
+  HomepageNewsFeed,
+  type HomepageFeedBootstrap,
+} from "@/components/homepage-news-feed";
 import { HomepageTopicBriefs } from "@/components/homepage-topic-briefs";
 import { HomepageTrackingActions } from "@/components/homepage-tracking-actions";
 import unifiedStyles from "@/components/homepage-unified-inbox.module.css";
@@ -98,7 +98,7 @@ const initialPayload: ArticlePayload = {
 };
 
 const taipeiToday = formatTaipeiDate(new Date());
-const bootstrap: DashboardBootstrap = {
+const bootstrap: HomepageFeedBootstrap = {
   trackedSectorAliases,
   todayArticleCount: activeArticles.filter((item) => item.publishedAt.slice(0, 10) === taipeiToday).length,
   sectorCount: trackedSectors.length,
@@ -128,12 +128,10 @@ export default function Home() {
   return (
     <main className="page-shell">
       <div className={unifiedStyles.root}>
-        <DashboardV2Client
+        <HomepageNewsFeed
           bootstrap={bootstrap}
           initialPayload={initialPayload}
-        >
-          {null}
-        </DashboardV2Client>
+        />
         <HomepageTopicBriefs />
         <DailyBriefQuickActions
           initialPayload={initialPayload}

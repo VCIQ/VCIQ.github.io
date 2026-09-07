@@ -1,0 +1,794 @@
+.shell {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+.feedHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 520px);
+  gap: 28px;
+  align-items: center;
+  padding: 4px 0 18px;
+}
+
+.feedIdentity {
+  min-width: 0;
+}
+
+.feedIdentity > span,
+.railPanel header > span,
+.feedHeading > div > span {
+  display: block;
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .16em;
+}
+
+.feedIdentity > strong {
+  display: block;
+  margin-top: 3px;
+  font: 600 24px/1.2 "Noto Serif SC", "Songti SC", serif;
+}
+
+.feedIdentity > p {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.searchBox {
+  height: 46px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 15px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--faint);
+  box-shadow: 0 8px 24px rgba(31, 45, 38, .04);
+}
+
+.searchBox:focus-within {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 10%, transparent);
+}
+
+.searchBox input {
+  min-width: 0;
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.searchBox input::placeholder {
+  color: var(--faint);
+}
+
+.statusStrip {
+  display: flex;
+  gap: 0;
+  align-items: center;
+  min-height: 38px;
+  border-top: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+  color: var(--muted);
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.statusStrip > span {
+  padding: 0 13px;
+  border-right: 1px solid var(--border-soft);
+}
+
+.statusStrip > span:first-child {
+  padding-left: 0;
+}
+
+.statusFreshness {
+  margin-left: auto;
+  border-right: 0 !important;
+  color: var(--faint);
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.channelBar {
+  position: sticky;
+  top: 72px;
+  z-index: 24;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-height: 54px;
+  margin-bottom: 26px;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg) 94%, transparent);
+  backdrop-filter: blur(14px);
+}
+
+.channelRail {
+  min-width: 0;
+  display: flex;
+  align-items: stretch;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.channelRail::-webkit-scrollbar {
+  display: none;
+}
+
+.channelRail button {
+  position: relative;
+  flex: 0 0 auto;
+  height: 53px;
+  padding: 0 13px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.channelRail button:hover {
+  color: var(--text);
+}
+
+.channelRail button.channelActive {
+  color: var(--text);
+}
+
+.channelRail button.channelActive::after {
+  content: "";
+  position: absolute;
+  left: 13px;
+  right: 13px;
+  bottom: -1px;
+  height: 2px;
+  background: var(--green-bright);
+}
+
+.filters {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.filters label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--faint);
+  font-size: 10px;
+}
+
+.filters select,
+.filters > button {
+  height: 32px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.filters select {
+  padding: 0 24px 0 8px;
+}
+
+.filters > button {
+  padding: 0 10px;
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 312px;
+  gap: 32px;
+  align-items: start;
+}
+
+.feedColumn {
+  min-width: 0;
+}
+
+.feedHeading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 0 0 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.feedHeading > div > strong {
+  display: block;
+  margin-top: 4px;
+  font: 600 21px/1.25 "Noto Serif SC", "Songti SC", serif;
+}
+
+.feedHeading > p {
+  max-width: 390px;
+  margin: 0;
+  color: var(--faint);
+  font-size: 11px;
+  text-align: right;
+}
+
+.feedList {
+  border-bottom: 1px solid var(--border);
+}
+
+.feedCard {
+  position: relative;
+  display: grid;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--border-soft);
+  background: transparent;
+  transition: background .18s ease, transform .18s ease;
+}
+
+.feedCard:hover {
+  background: color-mix(in srgb, var(--surface) 58%, transparent);
+}
+
+.feedCard:last-child {
+  border-bottom: 0;
+}
+
+.heroCard {
+  grid-template-columns: minmax(0, 1fr) 168px;
+  gap: 28px;
+  padding: 26px 0;
+}
+
+.majorCard {
+  padding: 24px 0;
+}
+
+.cardBody {
+  min-width: 0;
+}
+
+.cardTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  align-items: center;
+  margin-bottom: 9px;
+  color: var(--faint);
+  font-size: 10px;
+}
+
+.cardTags > span:first-child {
+  border: 1px solid var(--border);
+  padding: 2px 7px;
+  color: var(--green-bright);
+}
+
+.feedCard h2 {
+  margin: 0 0 8px;
+  font: 600 18px/1.45 "Noto Serif SC", "Songti SC", serif;
+  letter-spacing: -.01em;
+}
+
+.heroCard h2 {
+  font-size: clamp(22px, 2.2vw, 30px);
+  line-height: 1.35;
+}
+
+.majorCard h2 {
+  font-size: 21px;
+}
+
+.feedCard h2 a:hover {
+  color: var(--green-bright);
+}
+
+.cardSummary {
+  margin: 0 0 11px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.72;
+}
+
+.standardCard .cardSummary {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cardMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  align-items: center;
+  margin-top: 10px;
+  color: var(--faint);
+  font-size: 10px;
+}
+
+.cardMeta strong {
+  color: var(--green-bright);
+  font-weight: 700;
+}
+
+.cardActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.cardActions a {
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 9px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.cardActions a:hover {
+  border-color: var(--border);
+  color: var(--text);
+  background: var(--surface-3);
+}
+
+.signalVisual {
+  min-height: 148px;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(circle at 78% 18%, color-mix(in srgb, var(--green) 28%, transparent), transparent 42%),
+    linear-gradient(145deg, var(--surface-2), var(--surface-3));
+  overflow: hidden;
+}
+
+.signalVisual > span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.signalVisual > strong {
+  align-self: flex-end;
+  color: var(--green-bright);
+  font-size: 52px;
+  font-weight: 450;
+  line-height: 1;
+  letter-spacing: -.06em;
+}
+
+.signalVisual > small {
+  color: var(--faint);
+  font-size: 8px;
+  letter-spacing: .18em;
+}
+
+.emptyState {
+  min-height: 280px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  text-align: center;
+  color: var(--muted);
+}
+
+.emptyState strong {
+  color: var(--text);
+}
+
+.emptyState p {
+  margin: 5px 0 0;
+  font-size: 12px;
+}
+
+.loadMore {
+  width: 100%;
+  min-height: 44px;
+  margin-top: 18px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.loadMore:hover {
+  color: var(--text);
+  background: var(--surface-3);
+}
+
+.rightRail {
+  position: sticky;
+  top: 146px;
+  display: grid;
+  gap: 18px;
+}
+
+.railPanel {
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+.railPanel header {
+  padding: 15px 16px 13px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.railPanel header > strong {
+  display: block;
+  margin-top: 3px;
+  font: 600 17px/1.3 "Noto Serif SC", "Songti SC", serif;
+}
+
+.signalList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.signalList li {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 9px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.signalList li:last-child {
+  border-bottom: 0;
+}
+
+.signalList li > span {
+  padding-top: 2px;
+  color: var(--faint);
+  font: 700 9px/1.4 Inter, sans-serif;
+}
+
+.signalList a {
+  display: block;
+  font-size: 12px;
+  font-weight: 550;
+  line-height: 1.5;
+}
+
+.signalList a:hover {
+  color: var(--green-bright);
+}
+
+.signalList small {
+  display: block;
+  margin-top: 4px;
+  color: var(--faint);
+  font-size: 9px;
+}
+
+.sectorPulse {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.sectorPulse button {
+  min-width: 0;
+  min-height: 62px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 12px;
+  border: 0;
+  border-right: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  text-align: left;
+}
+
+.sectorPulse button:nth-child(2n) {
+  border-right: 0;
+}
+
+.sectorPulse button:hover {
+  background: var(--surface-3);
+  color: var(--text);
+}
+
+.sectorPulse button > span {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 10px;
+}
+
+.sectorPulse button > strong {
+  color: var(--green-bright);
+  font-size: 16px;
+}
+
+.railMetrics dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.railMetrics dl > div {
+  min-height: 66px;
+  padding: 11px 14px;
+  border-right: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.railMetrics dl > div:nth-child(2n) {
+  border-right: 0;
+}
+
+.railMetrics dt {
+  color: var(--faint);
+  font-size: 9px;
+}
+
+.railMetrics dd {
+  margin: 4px 0 0;
+  color: var(--text);
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.mobileBottomNav {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .contentGrid {
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 24px;
+  }
+
+  .feedHeader {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 430px);
+  }
+
+  .channelRail button {
+    padding-inline: 10px;
+  }
+
+  .channelRail button.channelActive::after {
+    left: 10px;
+    right: 10px;
+  }
+}
+
+@media (max-width: 900px) {
+  .contentGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rightRail {
+    position: static;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .rightRail > .railPanel:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .signalList {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .signalList li:nth-child(odd) {
+    border-right: 1px solid var(--border-soft);
+  }
+}
+
+@media (max-width: 760px) {
+  .shell {
+    padding-bottom: 70px;
+  }
+
+  .feedHeader {
+    grid-template-columns: 1fr;
+    gap: 13px;
+    padding-top: 0;
+  }
+
+  .feedIdentity > span,
+  .feedIdentity > p {
+    display: none;
+  }
+
+  .feedIdentity > strong {
+    font-size: 20px;
+  }
+
+  .searchBox {
+    height: 48px;
+    border-radius: 4px;
+  }
+
+  .statusStrip {
+    min-height: 34px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .statusStrip::-webkit-scrollbar {
+    display: none;
+  }
+
+  .statusStrip > span {
+    flex: 0 0 auto;
+    padding-inline: 10px;
+  }
+
+  .statusFreshness {
+    margin-left: 0;
+  }
+
+  .channelBar {
+    top: 62px;
+    min-height: 50px;
+    margin-bottom: 16px;
+    gap: 0;
+  }
+
+  .channelRail {
+    width: 100%;
+  }
+
+  .channelRail button {
+    height: 49px;
+    padding-inline: 11px;
+    font-size: 14px;
+  }
+
+  .channelRail button.channelActive::after {
+    left: 11px;
+    right: 11px;
+  }
+
+  .filters {
+    display: none;
+  }
+
+  .feedHeading {
+    align-items: flex-start;
+    padding-bottom: 10px;
+  }
+
+  .feedHeading > div > strong {
+    font-size: 18px;
+  }
+
+  .feedHeading > p {
+    display: none;
+  }
+
+  .feedCard,
+  .heroCard,
+  .majorCard {
+    display: block;
+    padding: 18px 0;
+  }
+
+  .heroCard h2,
+  .majorCard h2,
+  .feedCard h2 {
+    font-size: 19px;
+    line-height: 1.5;
+  }
+
+  .heroCard h2 {
+    font-size: 22px;
+  }
+
+  .signalVisual {
+    display: none;
+  }
+
+  .cardSummary {
+    font-size: 13px;
+  }
+
+  .heroCard .cardSummary,
+  .majorCard .cardSummary,
+  .standardCard .cardSummary {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .cardMeta {
+    gap: 5px 10px;
+  }
+
+  .cardActions {
+    margin-top: 10px;
+  }
+
+  .cardActions a {
+    flex: 1 1 auto;
+    justify-content: center;
+    min-height: 34px;
+  }
+
+  .rightRail {
+    display: none;
+  }
+
+  .mobileBottomNav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 60;
+    min-height: 58px;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    border-top: 1px solid var(--border);
+    background: color-mix(in srgb, var(--surface-2) 96%, transparent);
+    backdrop-filter: blur(18px);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .mobileBottomNav button,
+  .mobileBottomNav a {
+    min-width: 0;
+    display: grid;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    color: var(--faint);
+    cursor: pointer;
+    font-size: 11px;
+  }
+
+  .mobileBottomNav .mobileNavActive {
+    color: var(--green-bright);
+    font-weight: 750;
+  }
+}
+
+@media (max-width: 520px) {
+  .feedIdentity > strong {
+    font-size: 18px;
+  }
+
+  .feedCard h2,
+  .majorCard h2 {
+    font-size: 18px;
+  }
+
+  .heroCard h2 {
+    font-size: 21px;
+  }
+
+  .cardActions a {
+    padding-inline: 7px;
+    font-size: 9px;
+  }
+}
