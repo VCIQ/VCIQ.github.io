@@ -12,6 +12,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useFavorites } from "@/components/use-favorites";
 import { useHomepagePreferences } from "@/components/use-homepage-preferences";
@@ -40,6 +41,13 @@ import styles from "./research-investigation.module.css";
 const researchWorkspaceUrl = process.env.NEXT_PUBLIC_QM_WORKSPACE_URL?.trim() || "";
 
 type LoadState = "loading" | "ready" | "missing" | "error";
+type TerminalLoadState = Exclude<LoadState, "loading">;
+
+type LoadResult = {
+  eventId: string;
+  state: TerminalLoadState;
+  item: LiveIntelligenceEvent | null;
+};
 
 type CopyState = "idle" | "copied" | "failed";
 
@@ -101,39 +109,45 @@ function relatedSourceLabel(item: NonNullable<LiveIntelligenceEvent["relatedSour
 }
 
 export default function ResearchInvestigationClient() {
+  const searchParams = useSearchParams();
+  const eventId = searchParams.get("event")?.trim() || "";
   const favorites = useFavorites();
   const preferences = useHomepagePreferences();
   const favoriteProfile = useMemo(
     () => buildHomepageFavoriteAffinityProfile(favorites),
     [favorites],
   );
-  const [eventId, setEventId] = useState("");
-  const [item, setItem] = useState<LiveIntelligenceEvent | null>(null);
-  const [state, setState] = useState<LoadState>("loading");
+  const [result, setResult] = useState<LoadResult | null>(null);
   const [copyState, setCopyState] = useState<CopyState>("idle");
 
   useEffect(() => {
-    const requested = new URLSearchParams(window.location.search).get("event")?.trim() || "";
-    setEventId(requested);
-    if (!requested) {
-      setState("missing");
-      return;
-    }
+    if (!eventId) return;
 
     let cancelled = false;
-    void loadResearchEvent(requested)
+    void loadResearchEvent(eventId)
       .then((nextItem) => {
         if (cancelled) return;
-        setItem(nextItem);
-        setState(nextItem ? "ready" : "missing");
+        setResult({
+          eventId,
+          state: nextItem ? "ready" : "missing",
+          item: nextItem,
+        });
       })
       .catch(() => {
-        if (!cancelled) setState("error");
+        if (!cancelled) {
+          setResult({ eventId, state: "error", item: null });
+        }
       });
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [eventId]);
+
+  const currentResult = result?.eventId === eventId ? result : null;
+  const state: LoadState = !eventId
+    ? "missing"
+    : currentResult?.state ?? "loading";
+  const item = currentResult?.item ?? null;
 
   const handoff = useMemo<ResearchWorkspaceHandoff | null>(() => {
     if (!item) return null;
