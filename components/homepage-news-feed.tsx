@@ -317,15 +317,13 @@ export function HomepageNewsFeed({
     )
     .slice(0, TOP_SIGNAL_LIMIT);
 
-  const sectorTrends = useMemo(() => {
-    const counts = new Map<string, number>();
-    for (const item of topSignalSource) {
-      counts.set(item.sector, (counts.get(item.sector) ?? 0) + 1);
-    }
-    return [...counts.entries()]
-      .sort((left, right) => right[1] - left[1])
-      .slice(0, 6);
-  }, [topSignalSource]);
+  const sectorTrendCounts = new Map<string, number>();
+  for (const item of topSignalSource) {
+    sectorTrendCounts.set(item.sector, (sectorTrendCounts.get(item.sector) ?? 0) + 1);
+  }
+  const sectorTrends = [...sectorTrendCounts.entries()]
+    .sort((left, right) => right[1] - left[1])
+    .slice(0, 6);
 
   const todayArticleCount = refreshAudit?.todayArticleCount ?? bootstrap.todayArticleCount;
   const newArticleCount = refreshAudit?.newArticleCount ?? "待刷新";
