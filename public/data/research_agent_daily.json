@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-08T17:19:49+00:00",
+  "generatedAt": "2026-09-08T21:27:30+00:00",
   "asOfDate": "2026-09-09",
-  "runStatus": "no-material-change",
+  "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
   "baselineSource": "snapshot",
   "model": {
@@ -10,24 +10,40 @@
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": false,
-    "usage": {}
+    "used": true,
+    "usage": {
+      "prompt_tokens": 1207,
+      "completion_tokens": 2380,
+      "total_tokens": 3587,
+      "completion_tokens_details": {
+        "reasoning_tokens": 1553
+      },
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 1207
+    }
   },
   "changeSummary": {
-    "totalDetected": 0,
-    "total": 0,
-    "byDataset": {},
-    "byChangeType": {},
-    "externalCandidates": 0,
-    "qualityRejected": 0,
+    "totalDetected": 2,
+    "total": 1,
+    "byDataset": {
+      "intelligenceEvent": 1
+    },
+    "byChangeType": {
+      "external_event": 2
+    },
+    "externalCandidates": 2,
+    "qualityRejected": 1,
     "maintenanceExcluded": 0,
     "aggregatedEvents": 0,
-    "highestImportance": 0,
+    "highestImportance": 82,
     "verifiedChangeTotal": 0,
     "candidateTotal": 0,
-    "auxiliaryLeadTotal": 0,
-    "rejectedTotal": 0,
-    "newEvents": 0,
+    "auxiliaryLeadTotal": 1,
+    "rejectedTotal": 1,
+    "newEvents": 1,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
@@ -35,22 +51,251 @@
     "duplicatesSuppressed": 0
   },
   "analysis": {
-    "mode": "structured-change-only",
-    "isResearchJudgment": false,
-    "executiveSummary": "本轮未检测到新的外部事实候选。",
-    "keyDevelopments": [],
-    "thesisUpdates": [],
-    "watchlist": [],
-    "risks": [],
-    "methodologyNote": "结构化变化检查；本期无材料变化。未执行生成式研判。"
+    "mode": "model-analysis",
+    "isResearchJudgment": true,
+    "executiveSummary": "基于Rocket Lab官网2026年9月8日新闻稿，公司宣布生产推出下一代倒置变质太阳能电池（Inverted Metamorphic, IMM Apex），并宣称该电池有助于减少对供应受限关键矿物的依赖。由于证据为单一官方来源且未经人工复核，此事件属于事实性发布，但其供应链与财务影响目前仅为推断，需后续第三方验证。 质量门诊断：仅为发现线索，不能支持正式主张 1。",
+    "keyDevelopments": [
+      {
+        "title": "Rocket Lab宣布生产推出IMM Apex太阳能电池",
+        "assessment": "事实：据官网新闻稿，Rocket Lab于2026年9月8日宣布生产推出Inverted Metamorphic (IMM) Apex太阳能电池，宣称其能降低对供应受限关键矿物的依赖。推断：这可能强化其太空系统业务的产品组合，但目前尚无效率或产能数据，且新闻稿尚未经独立验证，故影响程度未知。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "Rocket Lab Corporation"
+        ],
+        "evidenceIds": [
+          "E001"
+        ]
+      }
+    ],
+    "thesisUpdates": [
+      {
+        "entity": "Rocket Lab Corporation",
+        "direction": "positive",
+        "statement": "产品发布可能对Rocket Lab太空系统业务形成正面催化，有助于其垂直整合及降低关键矿物供应链风险；但当前仅依据公告，缺少订单或财务指引，实际影响需要后续证据确认。",
+        "evidenceIds": [
+          "E001"
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "item": "IMM Apex太阳能电池的客户应用或新订单",
+        "reason": "产品生产发布是否转化为商业收入，是评估其真实价值的关键。",
+        "nextEvidence": "来自Rocket Lab或下游客户的后续新闻稿、财报披露或行业媒体报道",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "item": "IMM Apex的效率、成本及关键矿物用量数据",
+        "reason": "新闻稿主要描述为高效率和减少关键矿物依赖，但未提供具体参数，需第三方测试或技术论文验证。",
+        "nextEvidence": "产品技术参数、第三方测评或行业分析报告",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "item": "供应链影响及生产爬坡进展",
+        "reason": "宣称的“减少对供应受限关键矿物依赖”需要量化验证；同时需观察量产爬坡是否顺利。",
+        "nextEvidence": "Rocket Lab后续供应链披露、财报或媒体调查报道",
+        "evidenceIds": [
+          "E001"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "证据基础薄弱且未经人工复核",
+        "reason": "本事件仅基于官方新闻稿快照，reviewStatus为automated_unreviewed，存在标题或表述与实际情况不一致的风险。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "risk": "新闻稿为宣传性声明，缺乏独立验证",
+        "reason": "官方公告可能夸大产品性能或供应链优势；关键矿物依赖减少的具体程度未量化，需谨慎看待。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "risk": "市场竞争与量产风险",
+        "reason": "太空太阳能电池市场竞争激烈，IMM Apex能否稳定量产并赢得客户尚未证实，可能影响预期收益。",
+        "evidenceIds": [
+          "E001"
+        ]
+      }
+    ],
+    "methodologyNote": "本分析仅基于单一证据（E001，Rocket Lab官网新闻稿快照），证据等级B且未经人工审查。因此将公司公告视为事实性事件，但将商业影响、供应链改善等判断明确列为推断或待验证，不构成投资建议。后续需引入客户、第三方测评及财务披露等证据进行交叉验证。"
   },
-  "changes": [],
-  "evidence": [],
+  "changes": [
+    {
+      "id": "chg-b92c66845cbc58e6026d",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-3b6ab64503b3e7d027",
+      "entityName": "Rocket Lab Introduces High-Efficiency Solar Cell to Reduce Reliance on Supply-Constrained Critical Minerals",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Rocket Lab Introduces High-Efficiency Solar Cell to Reduce Reliance on Supply-Constrained Critical Minerals。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-08",
+        "summary": "LONG BEACH, Calif., Sept. 08, 2026 (GLOBE NEWSWIRE) -- Rocket Lab Corporation (Nasdaq: RKLB), a global leader in launch services and space systems, today announced the production release of Inverted Metamorphic (IMM) Apex, the latest iteration of its next-gen…",
+        "title": "Rocket Lab Introduces High-Efficiency Solar Cell to Reduce Reliance on Supply-Constrained Critical Minerals"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-08",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "LONG BEACH, Calif., Sept. 08, 2026 (GLOBE NEWSWIRE) -- Rocket Lab Corporation (Nasdaq: RKLB), a global leader in launch services and space systems, today announced the production release of Inverted Metamorphic (IMM) Apex, the latest iteration of its next-gen…",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Rocket Lab Introduces High-Efficiency Solar Cell to Reduce Reliance on Supply-Constrained Critical Minerals",
+          "evidenceIds": [
+            "E001"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E001"
+      ],
+      "supportingEvidenceIds": [
+        "E001"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-0818176fc6308baea000"
+      ],
+      "eventLifecycles": {
+        "evt-0818176fc6308baea000": "first_seen"
+      },
+      "eventId": "evt-0818176fc6308baea000",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-08T21:27:30+00:00",
+      "lastSeenAt": "2026-09-08T21:27:30+00:00"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E001",
+      "changeId": "chg-b92c66845cbc58e6026d",
+      "entityName": "Rocket Lab Introduces High-Efficiency Solar Cell to Reduce Reliance on Supply-Constrained Critical Minerals",
+      "claim": "新增高价值情报事件记录：Rocket Lab Introduces High-Efficiency Solar Cell to Reduce Reliance on Supply-Constrained Critical Minerals。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Rocket Lab Investor Relations",
+      "title": "Rocket Lab Introduces High-Efficiency Solar Cell to Reduce Reliance on Supply-Constrained Critical Minerals",
+      "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-introduces-high-efficiency-solar-cell-reduce-reliance",
+      "publishedAt": "2026-09-08",
+      "evidenceGrade": "B",
+      "platformName": "官方网站",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    }
+  ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-08T17:19:49+00:00",
+    "generatedAt": "2026-09-08T21:27:30+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-0818176fc6308baea000": {
+        "eventId": "evt-0818176fc6308baea000",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-3b6ab64503b3e7d027",
+        "entityName": "Rocket Lab Introduces High-Efficiency Solar Cell to Reduce Reliance on Supply-Constrained Critical Minerals",
+        "title": "Rocket Lab Introduces High-Efficiency Solar Cell to Reduce Reliance on Supply-Constrained Critical Minerals",
+        "titleAliases": [
+          "rocketlabintroduceshighefficiencysolarcelltoreducerelianceonsupplyconstrainedcriticalminerals"
+        ],
+        "publishedDate": "2026-09-08",
+        "publishedDates": [
+          "2026-09-08"
+        ],
+        "entityKeys": [
+          "company:rocket lab",
+          "company:rocket-lab"
+        ],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-cde0fbab17459f92570a",
+          "record-fe88a93748684942d857",
+          "src-290f9c96361a337e1649"
+        ],
+        "evidenceFingerprints": [
+          "cde0fbab17459f92570a"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Rocket Lab Investor Relations",
+            "title": "Rocket Lab Introduces High-Efficiency Solar Cell to Reduce Reliance on Supply-Constrained Critical Minerals",
+            "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-introduces-high-efficiency-solar-cell-reduce-reliance",
+            "publishedAt": "2026-09-08",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "24dfcbe37ce9c605c65d",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-08T21:27:30+00:00",
+        "lastSeenAt": "2026-09-08T21:27:30+00:00",
+        "lastPublishedAt": "2026-09-08T21:27:30+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-f1c1034415c848fb8c10": {
         "eventId": "evt-f1c1034415c848fb8c10",
         "dataset": "intelligenceEvent",
@@ -30824,13 +31069,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 0,
+    "newEvents": 1,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
     "duplicatesSuppressed": 0,
-    "observedEvents": 0,
+    "observedEvents": 1,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -33903,10 +34148,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-09",
-      "generatedAt": "2026-09-08T17:19:49+00:00",
-      "runStatus": "no-material-change",
-      "changeCount": 7,
-      "executiveSummary": "本轮未检测到新的外部事实候选。",
+      "generatedAt": "2026-09-08T21:27:30+00:00",
+      "runStatus": "model",
+      "changeCount": 8,
+      "executiveSummary": "基于Rocket Lab官网2026年9月8日新闻稿，公司宣布生产推出下一代倒置变质太阳能电池（Inverted Metamorphic, IMM Apex），并宣称该电池有助于减少对供应受限关键矿物的依赖。由于证据为单一官方来源且未经人工复核，此事件属于事实性发布，但其供应链与财务影响目前仅为推断，需后续第三方验证。",
       "eventIds": [
         "evt-f1c1034415c848fb8c10",
         "evt-08ac93944d2b5b0d0112",
@@ -33914,7 +34159,8 @@
         "evt-45c4804dd273aa045a67",
         "evt-9a8ab5ffdb43c2c994e3",
         "evt-be795e26b63ca4e93c82",
-        "evt-dcc50265af37b42c1fc0"
+        "evt-dcc50265af37b42c1fc0",
+        "evt-0818176fc6308baea000"
       ],
       "eventStates": [
         {
@@ -33944,14 +34190,18 @@
         {
           "eventId": "evt-dcc50265af37b42c1fc0",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-0818176fc6308baea000",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 0,
       "candidateTotal": 0,
-      "auxiliaryLeadTotal": 7,
-      "rejectedTotal": 0,
+      "auxiliaryLeadTotal": 8,
+      "rejectedTotal": 1,
       "eventSummary": {
-        "newEvents": 7,
+        "newEvents": 8,
         "reconfirmations": 0,
         "updates": 0,
         "corrections": 0,
@@ -33961,15 +34211,19 @@
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 0,
-    "eligibleCandidateCount": 0,
-    "rejectedCandidateCount": 0,
-    "rejectedByDataset": {},
-    "evidenceCount": 0,
-    "supportingEvidenceCount": 0,
-    "rejectedEvidenceCount": 0,
+    "candidateCount": 2,
+    "eligibleCandidateCount": 1,
+    "rejectedCandidateCount": 1,
+    "rejectedByDataset": {
+      "intelligenceEvent": 1
+    },
+    "evidenceCount": 2,
+    "supportingEvidenceCount": 1,
+    "rejectedEvidenceCount": 1,
     "passedButUnboundEvidenceCount": 0,
-    "rejectionReasons": {},
+    "rejectionReasons": {
+      "discovery_only": 1
+    },
     "sourceClassificationWarnings": []
   },
   "sourceClassificationWarnings": [],
