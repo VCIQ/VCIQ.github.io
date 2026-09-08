@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-07T18:19:26+00:00",
+  "generatedAt": "2026-09-08T01:18:49+00:00",
   "asOfDate": "2026-09-08",
-  "runStatus": "no-material-change",
+  "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
   "baselineSource": "snapshot",
   "model": {
@@ -10,47 +10,1893 @@
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": false,
-    "usage": {}
+    "used": true,
+    "usage": {
+      "prompt_tokens": 7750,
+      "completion_tokens": 5991,
+      "total_tokens": 13741,
+      "completion_tokens_details": {
+        "reasoning_tokens": 2996
+      },
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 7750
+    }
   },
   "changeSummary": {
-    "totalDetected": 0,
-    "total": 0,
-    "byDataset": {},
-    "byChangeType": {},
-    "externalCandidates": 0,
+    "totalDetected": 63,
+    "total": 9,
+    "byDataset": {
+      "intelligenceEvent": 6,
+      "marketCompany": 3
+    },
+    "byChangeType": {
+      "external_event": 10,
+      "data_maintenance": 26,
+      "source_refresh": 27
+    },
+    "externalCandidates": 10,
     "qualityRejected": 0,
-    "maintenanceExcluded": 0,
+    "maintenanceExcluded": 53,
     "aggregatedEvents": 0,
-    "highestImportance": 0,
+    "highestImportance": 85,
     "verifiedChangeTotal": 0,
-    "candidateTotal": 0,
-    "auxiliaryLeadTotal": 0,
+    "candidateTotal": 3,
+    "auxiliaryLeadTotal": 6,
     "rejectedTotal": 0,
-    "newEvents": 0,
-    "reconfirmations": 0,
+    "newEvents": 9,
+    "reconfirmations": 2,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
     "duplicatesSuppressed": 0
   },
   "analysis": {
-    "mode": "structured-change-only",
-    "isResearchJudgment": false,
-    "executiveSummary": "本轮未检测到新的外部事实候选。",
-    "keyDevelopments": [],
-    "thesisUpdates": [],
-    "watchlist": [],
-    "risks": [],
-    "methodologyNote": "结构化变化检查；本期无材料变化。未执行生成式研判。"
+    "mode": "model-analysis",
+    "isResearchJudgment": true,
+    "executiveSummary": "本证据包仅含9月7-8日新增情报，以C级媒体转载和快照为主，无一手财务或官方文件。核心线索包括三方面：一是AI基础设施与算力成本端，OpenAI披露内部AI token日耗高企，反映出前沿模型研发投入强度，但证据未提供财务口径；二是中国政策端，信息通信行业“十五五”规划发布并部署26项重点任务，同时微信内测AI社交、华为时隔六年发布高性能芯片等被聚合报道，行业发展方向有信号意义；三是上市公司层面，宁德时代、寒武纪、地平线机器人各有外部舆情，但均不构成业绩判断。另有非洲研究者学术发表可及性及IEEE培训、特朗普AI图片社交媒体声明等边缘信息，投资相关性低。整体而言，证据呈现“高热度、低确证度”特征，应保持谨慎，多数事项需等待官方文件或公司披露进一步验证。",
+    "keyDevelopments": [
+      {
+        "title": "OpenAI披露内部研究人员AI token日均消耗规模，部分超过7000美元",
+        "assessment": "证据显示OpenAI称研究人员现在每天在AI token上花费约600美元，并称某些研究者每日消耗可达7000美元，伴随agentic coding使用激增。这是关于前沿AI实验室内部算力消耗的稀缺线索，说明大模型研发运行成本强度很大，但来源为ITPro对OpenAI博客的转述，且无具体时间、团队或预算口径，不能据此推断OpenAI的整体资本开支或盈亏变化。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "OpenAI"
+        ],
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "title": "中国信息通信行业“十五五”规划发布，部署26项重点任务；微信内测“小微AI社交”",
+        "assessment": "钛媒体晨报聚合披露信息通信行业“十五五”规划发布并部署26项重点任务，另有微信内测“小微AI社交”、华为时隔六年再次发布高性能芯片、宇树首次实现人形机器人全自主搏击等多项科技动态。该证据为媒体摘要而非官方规划原文，方向性上显示AI、通信基础设施、机器人为中国科技行业重点，但具体任务内容、投资规模和落地时间均需官方来源验证。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "中国信息通信行业",
+          "微信",
+          "华为",
+          "宇树科技"
+        ],
+        "evidenceIds": [
+          "E004"
+        ]
+      },
+      {
+        "title": "宁德时代签署合作协议引发泰金新能股价涨停并提示风险",
+        "assessment": "新浪财经报道泰金新能与宁德时代签署协议后股价涨停并提示风险。该事件仅表明双方存在合作签署行为，且涉及公司主动提示风险，未披露协议金额、业务范围和期限，对宁德时代的实质业绩影响无法判断，只应视为事件性信号。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "宁德时代",
+          "泰金新能"
+        ],
+        "evidenceIds": [
+          "E008"
+        ]
+      },
+      {
+        "title": "寒武纪融资买入10.39亿元，融资余额176.07亿元占流通市值2.56%",
+        "assessment": "新浪财经援引交易数据显示寒武纪9月7日获融资买入10.39亿元，融资余额176.07亿元，占流通市值2.56%，超过近一年60%分位水平。该数据反映市场杠杆资金关注度较高，但单一融资数据不构成基本面变化，也不应作为股价走势预测。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "中科寒武纪科技股份有限公司"
+        ],
+        "evidenceIds": [
+          "E012"
+        ]
+      },
+      {
+        "title": "国盛证券维持地平线机器人买入评级，称智驾芯片份额领先",
+        "assessment": "新浪财经转载国盛证券观点，维持地平线机器人买入评级并指智驾芯片份额领先。这是券商观点而非公司披露或第三方份额统计，且未给出报告全文和具体数据，证据等级低，不足以确认其市场份额领先地位。",
+        "importance": 2,
+        "confidence": "low",
+        "entities": [
+          "Horizon Robotics",
+          "国盛证券"
+        ],
+        "evidenceIds": [
+          "E016"
+        ]
+      },
+      {
+        "title": "IEEE在肯尼亚、卢旺达和乌干达举办出版相关研讨会，改善学术发表可及性",
+        "assessment": "IEEE Spectrum报道IEEE通过Xplore数字图书馆等措施，帮助非洲研究人员克服出版费和订阅费障碍。该事件为行业科普与包容性举措，与商业或投资逻辑距离较远，可视为学术出版领域的社会价值事件，不构成可投资信号。",
+        "importance": 1,
+        "confidence": "high",
+        "entities": [
+          "IEEE"
+        ],
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "title": "特朗普发布AI生成图片并自诩股票收益数千亿，未提供证据",
+        "assessment": "新浪财经报道特朗普在Truth Social发布AI图片并声称已为美国在股票及其他资产赚取数千亿，但未提供任何证据。该信息属于政治人物社交言论，缺少原始文件和财务验证，对投资判断无实质证据价值，应作为待验证的社会舆情事件处理。",
+        "importance": 1,
+        "confidence": "low",
+        "entities": [
+          "特朗普"
+        ],
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "title": "Chuwi与Beelink分别发布新款AMD迷你主机",
+        "assessment": "Notebookcheck报道Chuwi发布UniBox AI495 Pro，采用AMD Ryzen AI Max+ Pro 495与Radeon 8065S iGPU，支持192GB RAM、双10GbE和OCuLink；Beelink则推出EQR5的Ryzen 3新配置，最高支持64GB RAM和8TB存储。两则产品新闻反映AMD APU在迷你PC市场的渗透，但属于消费硬件动态，对相关公司财务影响需等待销售数据。",
+        "importance": 2,
+        "confidence": "high",
+        "entities": [
+          "Chuwi",
+          "Beelink",
+          "AMD"
+        ],
+        "evidenceIds": [
+          "E005",
+          "E006"
+        ]
+      }
+    ],
+    "thesisUpdates": [
+      {
+        "entity": "AI基础设施与算力成本",
+        "direction": "mixed",
+        "statement": "OpenAI内部token消耗数据指向前沿AI研发的算力成本强度上升，但证据仅来自媒体转述，无法确认对AI基础设施供应商或模型厂商的财务影响。",
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "entity": "中国科技行业政策",
+        "direction": "positive",
+        "statement": "信息通信行业“十五五”规划发布并部署26项重点任务，表明中国在通信和AI基础设施方向存在持续政策支持，但缺乏规划原文和量化目标，实际产业影响待验证。",
+        "evidenceIds": [
+          "E004"
+        ]
+      },
+      {
+        "entity": "宁德时代",
+        "direction": "neutral",
+        "statement": "与泰金新能签署协议属于具体商业事件，但协议价值与内容未披露，泰金新能股价涨停后提示风险，暂无法判断对宁德时代的影响。",
+        "evidenceIds": [
+          "E008"
+        ]
+      },
+      {
+        "entity": "中科寒武纪科技股份有限公司",
+        "direction": "neutral",
+        "statement": "融资买入和融资余额数据反映杠杆资金活跃，但不等同于基本面向好或投资信号，需结合后续订单与业绩验证。",
+        "evidenceIds": [
+          "E012"
+        ]
+      },
+      {
+        "entity": "Horizon Robotics",
+        "direction": "mixed",
+        "statement": "券商维持买入评级并称智驾芯片份额领先，但该判断来自单家券商观点，缺乏份额数据佐证，对投资结论影响有限。",
+        "evidenceIds": [
+          "E016"
+        ]
+      },
+      {
+        "entity": "AMD迷你PC生态",
+        "direction": "positive",
+        "statement": "Chuwi与Beelink相继推出基于AMD APU的迷你主机，显示AMD在细分PC市场的产品渗透在继续扩展，但销售规模未知。",
+        "evidenceIds": [
+          "E005",
+          "E006"
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "item": "OpenAI AI token成本与算力支出细节",
+        "reason": "OpenAI披露研究员日耗大量token，预示AI研发运营成本可能继续攀升，需要观察其是否会转化为对外部算力或推理需求的增长。",
+        "nextEvidence": "OpenAI后续博客原文、财报或融资披露中关于资本开支与token消耗的口径",
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "item": "信息通信行业“十五五”规划细则",
+        "reason": "媒体摘要显示26项重点任务已发布，但具体任务、目标产业和投资机制尚未公开，对通信设备和AI基础设施产业有指示意义。",
+        "nextEvidence": "官方发布的规划全文或主管部门解读",
+        "evidenceIds": [
+          "E004"
+        ]
+      },
+      {
+        "item": "微信“小微AI社交”内测进展",
+        "reason": "该功能以“AI先聊再带回结果”为特点，可能反映超级App的AI入口探索，但内测阶段不确定性高。",
+        "nextEvidence": "腾讯官方确认、功能上线时间或用户规模数据",
+        "evidenceIds": [
+          "E004"
+        ]
+      },
+      {
+        "item": "宁德时代与泰金新能合作协议详情",
+        "reason": "协议触发股价涨停但交易细节未披露，需跟踪合作内容是否涉及电池材料或设备供应以及金额规模。",
+        "nextEvidence": "泰金新能或宁德时代公告中的协议条款",
+        "evidenceIds": [
+          "E008"
+        ]
+      },
+      {
+        "item": "寒武纪融资余额变化",
+        "reason": "融资余额占流通市值超过近一年60%分位，说明杠杆资金参与度高，需关注是否持续上升或引发波动。",
+        "nextEvidence": "后续交易日融资融券数据及公司公告",
+        "evidenceIds": [
+          "E012"
+        ]
+      },
+      {
+        "item": "地平线机器人智驾芯片出货数据",
+        "reason": "券商称其份额领先但未给数据，需寻找权威第三方出货量或公司财报中的收入与装机量。",
+        "nextEvidence": "地平线机器人财报、高工智能汽车或IDC等第三方出货统计",
+        "evidenceIds": [
+          "E016"
+        ]
+      },
+      {
+        "item": "AMD基于Gorgon Halo架构迷你PC的销售表现",
+        "reason": "Chuwi新品搭载AMD新架构，若销售数据强劲可能印证AMD在AI PC/边缘算力市场的渗透。",
+        "nextEvidence": "产品销量、评测机构拆解或AMD财报中客户端业务表现",
+        "evidenceIds": [
+          "E005",
+          "E006"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "证据等级不足导致误读",
+        "reason": "本包事件大多为C级外部媒体报道或聚合摘要，且未经人工复核。将媒体转述直接当作官方事实，可能导致错误判断。",
+        "evidenceIds": [
+          "E001",
+          "E002",
+          "E003",
+          "E004",
+          "E005",
+          "E006"
+        ]
+      },
+      {
+        "risk": "AI高额token消耗被过度外推",
+        "reason": "OpenAI研究员单日数千美元token消耗虽是高强度信号，但缺少对照组和财务归因，若据此推断行业整体成本结构可能失准。",
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "risk": "政策解读被摘要误导",
+        "reason": "“十五五”规划仅通过钛媒体晨报摘要呈现，原文未获验证，具体任务方向可能被遗漏或曲解。",
+        "evidenceIds": [
+          "E004"
+        ]
+      },
+      {
+        "risk": "合作签约信息不完整",
+        "reason": "宁德时代与泰金新能的协议未披露金额和条款，而泰金新能涨停后提示风险，说明市场可能存在过度解读。",
+        "evidenceIds": [
+          "E008"
+        ]
+      },
+      {
+        "risk": "高杠杆交易放大股价波动",
+        "reason": "寒武纪融资余额处于近一年较高分位，杠杆资金集中可能加大股价双向波动，不应将融资买入视为单向利好。",
+        "evidenceIds": [
+          "E012"
+        ]
+      },
+      {
+        "risk": "单一券商观点与事实混淆",
+        "reason": "国盛证券维持买入评级是卖方观点，而非份额或业绩的实证数据，若直接采信可能造成判断偏见。",
+        "evidenceIds": [
+          "E016"
+        ]
+      },
+      {
+        "risk": "政治性信息干扰投资分析",
+        "reason": "特朗普未经证实的股票收益声明属于政治传播内容，若被误当作市场事件处理，可能污染投研信息流。",
+        "evidenceIds": [
+          "E003"
+        ]
+      }
+    ],
+    "methodologyNote": "本次分析严格限定在证据包内，使用E001-E016共10条证据（另有E007、E009-E011、E013-E015等ID本包未出现）。所有事件均为自动复核未人工审核的C级或普通媒体报道，故将证据分为事实陈述、推断和待验证三档：事实仅指证据本身所载内容，推断为基于现有信息的合理但不确证解读，待验证事项全部列入watchlist。未发布买入、卖出、目标价或收益承诺；对上市公司相关事件仅描述事件性质，不推导投资结论。输出为合法JSON。 数据管线提示：两小时公开情报刷新=stale。"
   },
-  "changes": [],
-  "evidence": [],
+  "changes": [
+    {
+      "id": "chg-b163a2b8ffcfe6277e89",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-a214e2541d47b62289",
+      "entityName": "Workshops Educate African Researchers On How to Publish With IEEE",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Workshops Educate African Researchers On How to Publish With IEEE。",
+      "importance": 85,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-07",
+        "summary": "Many researchers and students in Kenya, Rwanda, and Uganda struggle to access and publish scientific and technical articles because of financial barriers including publishing fees and subscriptions to research libraries. To help, IEEE has made its Xplore Digi…",
+        "title": "Workshops Educate African Researchers On How to Publish With IEEE"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-07",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Many researchers and students in Kenya, Rwanda, and Uganda struggle to access and publish scientific and technical articles because of financial barriers including publishing fees and subscriptions to research libraries. To help, IEEE has made its Xplore Digi…",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Workshops Educate African Researchers On How to Publish With IEEE",
+          "evidenceIds": [
+            "E001"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E001"
+      ],
+      "supportingEvidenceIds": [
+        "E001"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-b6a14102812c7598ba2f"
+      ],
+      "eventLifecycles": {
+        "evt-b6a14102812c7598ba2f": "first_seen"
+      },
+      "eventId": "evt-b6a14102812c7598ba2f",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-08T01:18:49+00:00",
+      "lastSeenAt": "2026-09-08T01:18:49+00:00"
+    },
+    {
+      "id": "chg-98810304f49c5ea88f07",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-3b970643c6419c994f",
+      "entityName": "OpenAI says some researchers are blowing through $7,000 in AI tokens every day – but it’s a price the company appears willing to pay",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：OpenAI says some researchers are blowing through $7,000 in AI tokens every day – but it’s a price the company appears willing to pay。",
+      "importance": 85,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-07",
+        "summary": "OpenAI has revealed details on how much staff are spending on AI, and some are blowing through significant sums on a daily basis. In a recent blog post , the company said researchers now spend around $600 each day on AI tokens amidst a surge in agentic coding…",
+        "title": "OpenAI says some researchers are blowing through $7,000 in AI tokens every day – but it’s a price the company appears willing to pay"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-07",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "OpenAI has revealed details on how much staff are spending on AI, and some are blowing through significant sums on a daily basis. In a recent blog post , the company said researchers now spend around $600 each day on AI tokens amidst a surge in agentic coding…",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "OpenAI says some researchers are blowing through $7,000 in AI tokens every day – but it’s a price the company appears willing to pay",
+          "evidenceIds": [
+            "E002"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E002"
+      ],
+      "supportingEvidenceIds": [
+        "E002"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-a5e04e4ee3309316e36e"
+      ],
+      "eventLifecycles": {
+        "evt-a5e04e4ee3309316e36e": "first_seen"
+      },
+      "eventId": "evt-a5e04e4ee3309316e36e",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-08T01:18:49+00:00",
+      "lastSeenAt": "2026-09-08T01:18:49+00:00"
+    },
+    {
+      "id": "chg-9d97fd50f3e841e3d202",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-7a01a394f116131e51",
+      "entityName": "特朗普发布AI图片自诩“为国赚数千亿”股票收益，未提供任何证据",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：特朗普发布AI图片自诩“为国赚数千亿”股票收益，未提供任何证据。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-07",
+        "summary": "美国总统唐纳德·特朗普上周日在其社交平台Truth Social上密集发布了一系列由人工智能生成的图片，并附带多项未经证实的宏大声明，其中包括声称自己已为美国在股票及其他资...",
+        "title": "特朗普发布AI图片自诩“为国赚数千亿”股票收益，未提供任何证据"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-07",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "美国总统唐纳德·特朗普上周日在其社交平台Truth Social上密集发布了一系列由人工智能生成的图片，并附带多项未经证实的宏大声明，其中包括声称自己已为美国在股票及其他资...",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "特朗普发布AI图片自诩“为国赚数千亿”股票收益，未提供任何证据",
+          "evidenceIds": [
+            "E003"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E003"
+      ],
+      "supportingEvidenceIds": [
+        "E003"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-759866d3157e1cd1124d"
+      ],
+      "eventLifecycles": {
+        "evt-759866d3157e1cd1124d": "first_seen"
+      },
+      "eventId": "evt-759866d3157e1cd1124d",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-08T01:18:49+00:00",
+      "lastSeenAt": "2026-09-08T01:18:49+00:00"
+    },
+    {
+      "id": "chg-430549007e6e3d71c79f",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-05d8190ac4204ec888",
+      "entityName": "【钛晨报】信息通信行业发展“十五五”规划发布，部署26项重点任务；微信内测“小微AI社交”：AI先聊再带回结果；央行：8月末黄金储备升至7673万盎司，连续22个月增持",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：【钛晨报】信息通信行业发展“十五五”规划发布，部署26项重点任务；微信内测“小微AI社交”：AI先聊再带回结果；央行：8月末黄金储备升至7673万盎司，连续22个月增持。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-08",
+        "summary": "宇树科技：首次实现人形机器人全自主搏击；理想汽车：自研电池将全面搭载到所有车型；华为时隔六年再次发布高性能芯片；千问办公推出业内首个多人工作台；捷豹路虎计划两年裁减4000个岗位；消息称1c nm有望2027年初成为SK海力士主流工艺；两部门：进一步规范汽车企业供应商账期管理；《版权工作“十五五”规划》印发；交通运输部就公路法修正草案征求意见稿向社会公开征求意见；六部门印发《关于推动历史经典产业高质量发展的意见》；港交所：8月底证券市场市价总值为47.2万亿港元，同比上升1%；澳大利亚或将允许用户关闭社交媒体算法…",
+        "title": "【钛晨报】信息通信行业发展“十五五”规划发布，部署26项重点任务；微信内测“小微AI社交”：AI先聊再带回结果；央行：8月末黄金储备升至7673万盎司，连续22个月增持"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-08",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "宇树科技：首次实现人形机器人全自主搏击；理想汽车：自研电池将全面搭载到所有车型；华为时隔六年再次发布高性能芯片；千问办公推出业内首个多人工作台；捷豹路虎计划两年裁减4000个岗位；消息称1c nm有望2027年初成为SK海力士主流工艺；两部门：进一步规范汽车企业供应商账期管理；《版权工作“十五五”规划》印发；交通运输部就公路法修正草案征求意见稿向社会公开征求意见；六部门印发《关于推动历史经典产业高质量发展的意见》；港交所：8月底证券市场市价总值为47.2万亿港元，同比上升1%；澳大利亚或将允许用户关闭社交媒体算法…",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "【钛晨报】信息通信行业发展“十五五”规划发布，部署26项重点任务；微信内测“小微AI社交”：AI先聊再带回结果；央行：8月末黄金储备升至7673万盎司，连续22个月增持",
+          "evidenceIds": [
+            "E004"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E004"
+      ],
+      "supportingEvidenceIds": [
+        "E004"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-c6b9de196bc94456942f"
+      ],
+      "eventLifecycles": {
+        "evt-c6b9de196bc94456942f": "first_seen"
+      },
+      "eventId": "evt-c6b9de196bc94456942f",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-08T01:18:49+00:00",
+      "lastSeenAt": "2026-09-08T01:18:49+00:00"
+    },
+    {
+      "id": "chg-bee8494e4a6aa019230e",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-c4522d51eae228409b",
+      "entityName": "Chuwi launches new mini-PC globally with OCuLink, 10 GbE Ethernet and 192 GB RAM",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Chuwi launches new mini-PC globally with OCuLink, 10 GbE Ethernet and 192 GB RAM。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-07",
+        "summary": "Chuwi has joined Minisforum in embracing AMD's new Gorgon Halo architecture. Launching globally, the UniBox AI495 Pro combines the new Ryzen AI Max+ Pro 495 and its Radeon 8065S iGPU with 192 GB RAM, dual 10 GbE Ethernet and even OCuLink connectivity for eGPU…",
+        "title": "Chuwi launches new mini-PC globally with OCuLink, 10 GbE Ethernet and 192 GB RAM"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-07",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Chuwi has joined Minisforum in embracing AMD's new Gorgon Halo architecture. Launching globally, the UniBox AI495 Pro combines the new Ryzen AI Max+ Pro 495 and its Radeon 8065S iGPU with 192 GB RAM, dual 10 GbE Ethernet and even OCuLink connectivity for eGPU…",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Chuwi launches new mini-PC globally with OCuLink, 10 GbE Ethernet and 192 GB RAM",
+          "evidenceIds": [
+            "E005"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E005"
+      ],
+      "supportingEvidenceIds": [
+        "E005"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-b25a3dcfb55d3a6d21df"
+      ],
+      "eventLifecycles": {
+        "evt-b25a3dcfb55d3a6d21df": "first_seen"
+      },
+      "eventId": "evt-b25a3dcfb55d3a6d21df",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-08T01:18:49+00:00",
+      "lastSeenAt": "2026-09-08T01:18:49+00:00"
+    },
+    {
+      "id": "chg-81cb100218cf7a2566f0",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-386a1931274ac20926",
+      "entityName": "Affordable mini PC with AMD APU and 16 GB DDR4 RAM now available for pre-order",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Affordable mini PC with AMD APU and 16 GB DDR4 RAM now available for pre-order。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-07",
+        "summary": "Beelink has introduced a new Ryzen 3-equipped variant for its EQR5 mini PC. With support for up to 64 GB RAM and 8 TB storage, the mini PC aims to take on the affordable mini PC segment.",
+        "title": "Affordable mini PC with AMD APU and 16 GB DDR4 RAM now available for pre-order"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-07",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Beelink has introduced a new Ryzen 3-equipped variant for its EQR5 mini PC. With support for up to 64 GB RAM and 8 TB storage, the mini PC aims to take on the affordable mini PC segment.",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Affordable mini PC with AMD APU and 16 GB DDR4 RAM now available for pre-order",
+          "evidenceIds": [
+            "E006"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E006"
+      ],
+      "supportingEvidenceIds": [
+        "E006"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-782432bd8925f73f7768"
+      ],
+      "eventLifecycles": {
+        "evt-782432bd8925f73f7768": "first_seen"
+      },
+      "eventId": "evt-782432bd8925f73f7768",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-08T01:18:49+00:00",
+      "lastSeenAt": "2026-09-08T01:18:49+00:00"
+    },
+    {
+      "id": "chg-51b797f15f0d33e6b29f",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "catl",
+      "entityName": "宁德时代",
+      "action": "updated",
+      "changedFields": [
+        "news"
+      ],
+      "summary": "宁德时代 的 news 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": []
+      },
+      "after": {
+        "news": [
+          {
+            "publishedAt": "2026-09-08T01:20:00+08:00",
+            "source": "新浪财经",
+            "title": "与宁德时代签协议 泰金新能股价涨停并提示风险",
+            "url": "https://finance.sina.com.cn/jjxw/2026-09-08/doc-iniqzsvr0026727.shtml"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [],
+          "after": [
+            {
+              "publishedAt": "2026-09-08T01:20:00+08:00",
+              "source": "新浪财经",
+              "title": "与宁德时代签协议 泰金新能股价涨停并提示风险",
+              "url": "https://finance.sina.com.cn/jjxw/2026-09-08/doc-iniqzsvr0026727.shtml"
+            }
+          ],
+          "evidenceIds": [
+            "E008"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E008"
+      ],
+      "supportingEvidenceIds": [
+        "E008"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-6f417d65ed26b84bb9c1"
+      ],
+      "eventLifecycles": {
+        "evt-6f417d65ed26b84bb9c1": "first_seen"
+      },
+      "eventId": "evt-6f417d65ed26b84bb9c1",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-08T01:18:49+00:00",
+      "lastSeenAt": "2026-09-08T01:18:49+00:00"
+    },
+    {
+      "id": "chg-83ab95b65fc351b0989f",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "cambricon",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "action": "updated",
+      "changedFields": [
+        "news"
+      ],
+      "summary": "中科寒武纪科技股份有限公司 的 news 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": []
+      },
+      "after": {
+        "news": [
+          {
+            "publishedAt": "2026-09-08T08:13:00+08:00",
+            "source": "新浪财经",
+            "title": "寒武纪：9月7日获融资买入10.39亿元，融资余额176.07亿元占流通市值比例2.56%，超过近一年60%分位水平",
+            "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-09-08/doc-iniraita9264445.shtml"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [],
+          "after": [
+            {
+              "publishedAt": "2026-09-08T08:13:00+08:00",
+              "source": "新浪财经",
+              "title": "寒武纪：9月7日获融资买入10.39亿元，融资余额176.07亿元占流通市值比例2.56%，超过近一年60%分位水平",
+              "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-09-08/doc-iniraita9264445.shtml"
+            }
+          ],
+          "evidenceIds": [
+            "E012"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E012"
+      ],
+      "supportingEvidenceIds": [
+        "E012"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-a739d45b61183022eb74"
+      ],
+      "eventLifecycles": {
+        "evt-a739d45b61183022eb74": "first_seen"
+      },
+      "eventId": "evt-a739d45b61183022eb74",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-08T01:18:49+00:00",
+      "lastSeenAt": "2026-09-08T01:18:49+00:00"
+    },
+    {
+      "id": "chg-f564895e32e48b7c492e",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "horizon-robotics",
+      "entityName": "Horizon Robotics",
+      "action": "updated",
+      "changedFields": [
+        "news"
+      ],
+      "summary": "Horizon Robotics 的 news、quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": []
+      },
+      "after": {
+        "news": [
+          {
+            "publishedAt": "2026-09-07T14:35:00+08:00",
+            "source": "新浪财经",
+            "title": "【券商聚焦】国盛证券维持地平线机器人（09660）买入评级 指智驾芯片份额领先",
+            "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-09-07/doc-iniqyriw9643820.shtml"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [],
+          "after": [
+            {
+              "publishedAt": "2026-09-07T14:35:00+08:00",
+              "source": "新浪财经",
+              "title": "【券商聚焦】国盛证券维持地平线机器人（09660）买入评级 指智驾芯片份额领先",
+              "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-09-07/doc-iniqyriw9643820.shtml"
+            }
+          ],
+          "evidenceIds": [
+            "E016"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E016"
+      ],
+      "supportingEvidenceIds": [
+        "E016"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-fe2688612b14844604db"
+      ],
+      "eventLifecycles": {
+        "evt-fe2688612b14844604db": "first_seen"
+      },
+      "eventId": "evt-fe2688612b14844604db",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-08T01:18:49+00:00",
+      "lastSeenAt": "2026-09-08T01:18:49+00:00"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E001",
+      "changeId": "chg-b163a2b8ffcfe6277e89",
+      "entityName": "Workshops Educate African Researchers On How to Publish With IEEE",
+      "claim": "新增高价值情报事件记录：Workshops Educate African Researchers On How to Publish With IEEE。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "IEEE Spectrum",
+      "title": "Workshops Educate African Researchers On How to Publish With IEEE",
+      "url": "https://spectrum.ieee.org/ieee-workshop-xplore-africa",
+      "publishedAt": "2026-09-07",
+      "evidenceGrade": "C",
+      "platformName": "IEEE Spectrum",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E002",
+      "changeId": "chg-98810304f49c5ea88f07",
+      "entityName": "OpenAI says some researchers are blowing through $7,000 in AI tokens every day – but it’s a price the company appears willing to pay",
+      "claim": "新增高价值情报事件记录：OpenAI says some researchers are blowing through $7,000 in AI tokens every day – but it’s a price the company appears willing to pay。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "ITPro",
+      "title": "OpenAI says some researchers are blowing through $7,000 in AI tokens every day – but it’s a price the company appears willing to pay",
+      "url": "https://www.itpro.com/technology/artificial-intelligence/openai-says-some-researchers-are-blowing-through-usd7-000-in-ai-tokens-every-day-but-its-a-price-the-company-appears-willing-to-pay",
+      "publishedAt": "2026-09-07",
+      "evidenceGrade": "C",
+      "platformName": "ITPro",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E003",
+      "changeId": "chg-9d97fd50f3e841e3d202",
+      "entityName": "特朗普发布AI图片自诩“为国赚数千亿”股票收益，未提供任何证据",
+      "claim": "新增高价值情报事件记录：特朗普发布AI图片自诩“为国赚数千亿”股票收益，未提供任何证据。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "特朗普发布AI图片自诩“为国赚数千亿”股票收益，未提供任何证据",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-09-08/doc-iniraite6015688.shtml",
+      "publishedAt": "2026-09-07",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E004",
+      "changeId": "chg-430549007e6e3d71c79f",
+      "entityName": "【钛晨报】信息通信行业发展“十五五”规划发布，部署26项重点任务；微信内测“小微AI社交”：AI先聊再带回结果；央行：8月末黄金储备升至7673万盎司，连续22个月增持",
+      "claim": "新增高价值情报事件记录：【钛晨报】信息通信行业发展“十五五”规划发布，部署26项重点任务；微信内测“小微AI社交”：AI先聊再带回结果；央行：8月末黄金储备升至7673万盎司，连续22个月增持。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "钛媒体",
+      "title": "【钛晨报】信息通信行业发展“十五五”规划发布，部署26项重点任务；微信内测“小微AI社交”：AI先聊再带回结果；央行：8月末黄金储备升至7673万盎司，连续22个月增持",
+      "url": "https://www.tmtpost.com/8131620.html",
+      "publishedAt": "2026-09-08",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E005",
+      "changeId": "chg-bee8494e4a6aa019230e",
+      "entityName": "Chuwi launches new mini-PC globally with OCuLink, 10 GbE Ethernet and 192 GB RAM",
+      "claim": "新增高价值情报事件记录：Chuwi launches new mini-PC globally with OCuLink, 10 GbE Ethernet and 192 GB RAM。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Notebookcheck",
+      "title": "Chuwi launches new mini-PC globally with OCuLink, 10 GbE Ethernet and 192 GB RAM",
+      "url": "https://www.notebookcheck.net/Chuwi-launches-new-mini-PC-globally-with-OCuLink-10-GbE-Ethernet-and-192-GB-RAM.1391948.0.html",
+      "publishedAt": "2026-09-07",
+      "evidenceGrade": "C",
+      "platformName": "Notebookcheck",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E006",
+      "changeId": "chg-81cb100218cf7a2566f0",
+      "entityName": "Affordable mini PC with AMD APU and 16 GB DDR4 RAM now available for pre-order",
+      "claim": "新增高价值情报事件记录：Affordable mini PC with AMD APU and 16 GB DDR4 RAM now available for pre-order。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Notebookcheck",
+      "title": "Affordable mini PC with AMD APU and 16 GB DDR4 RAM now available for pre-order",
+      "url": "https://www.notebookcheck.net/Affordable-mini-PC-with-AMD-APU-and-16-GB-DDR4-RAM-now-available-for-pre-order.1391215.0.html",
+      "publishedAt": "2026-09-07",
+      "evidenceGrade": "C",
+      "platformName": "Notebookcheck",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E008",
+      "changeId": "chg-51b797f15f0d33e6b29f",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "与宁德时代签协议 泰金新能股价涨停并提示风险",
+      "url": "https://finance.sina.com.cn/jjxw/2026-09-08/doc-iniqzsvr0026727.shtml",
+      "publishedAt": "2026-09-08T01:20:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E012",
+      "changeId": "chg-83ab95b65fc351b0989f",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "寒武纪：9月7日获融资买入10.39亿元，融资余额176.07亿元占流通市值比例2.56%，超过近一年60%分位水平",
+      "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-09-08/doc-iniraita9264445.shtml",
+      "publishedAt": "2026-09-08T08:13:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E016",
+      "changeId": "chg-f564895e32e48b7c492e",
+      "entityName": "Horizon Robotics",
+      "claim": "Horizon Robotics 的 news、quote 发生变化。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "【券商聚焦】国盛证券维持地平线机器人（09660）买入评级 指智驾芯片份额领先",
+      "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-09-07/doc-iniqyriw9643820.shtml",
+      "publishedAt": "2026-09-07T14:35:00+08:00",
+      "evidenceGrade": "媒体报道",
+      "claimFields": [
+        "news"
+      ],
+      "entityMatchStatus": "matched",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    }
+  ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-07T18:19:26+00:00",
+    "generatedAt": "2026-09-08T01:18:49+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-fe2688612b14844604db": {
+        "eventId": "evt-fe2688612b14844604db",
+        "dataset": "marketCompany",
+        "entityId": "horizon-robotics",
+        "entityName": "Horizon Robotics",
+        "title": "【券商聚焦】国盛证券维持地平线机器人（09660）买入评级 指智驾芯片份额领先",
+        "titleAliases": [
+          "券商聚焦国盛证券维持地平线机器人09660买入评级指智驾芯片份额领先"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [
+          "marketCompany:horizon-robotics",
+          "name:horizon robotics"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "09660"
+        ],
+        "sourceAliases": [
+          "evd-d64766eca91a458ff584",
+          "src-224ad5e2ab7c9607f903"
+        ],
+        "evidenceFingerprints": [
+          "d64766eca91a458ff584"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "【券商聚焦】国盛证券维持地平线机器人（09660）买入评级 指智驾芯片份额领先",
+            "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-09-07/doc-iniqyriw9643820.shtml",
+            "publishedAt": "2026-09-07T14:35:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "3c997613cb13e0d0a4fb",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-08T01:18:49+00:00",
+        "lastSeenAt": "2026-09-08T01:18:49+00:00",
+        "lastPublishedAt": "2026-09-08T01:18:49+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-d35471563b00b1058845": {
+        "eventId": "evt-d35471563b00b1058845",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-a21faf1cb2d7c9df0e",
+        "entityName": "Dr. Robin Zeng on the \"CATL Standard\": Safety, Reliability, and Longevity at the Core",
+        "title": "Dr. Robin Zeng on the \"CATL Standard\": Safety, Reliability, and Longevity at the Core",
+        "titleAliases": [
+          "drrobinzengonthecatlstandardsafetyreliabilityandlongevityatthecore"
+        ],
+        "publishedDate": "2026-09-03",
+        "publishedDates": [
+          "2026-09-03"
+        ],
+        "entityKeys": [
+          "company:catl",
+          "company:宁德时代"
+        ],
+        "typeKeys": [
+          "公司动态",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-c4bf13e639d32b4804db",
+          "record-bf45a945e44b1c66acf6",
+          "src-8498292664d1c81a77f0",
+          "evd-ae81b69bc2fbced19326"
+        ],
+        "evidenceFingerprints": [
+          "c4bf13e639d32b4804db",
+          "ae81b69bc2fbced19326"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "CATL",
+            "title": "Dr. Robin Zeng on the \"CATL Standard\": Safety, Reliability, and Longevity at the Core",
+            "url": "https://www.catl.com/en/news/6992.html",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          },
+          {
+            "sourceName": "宁德时代",
+            "title": "Dr. Robin Zeng on the \"CATL Standard\": Safety, Reliability, and Longevity at the Core",
+            "url": "https://www.catl.com/en/news/6992.html",
+            "publishedAt": "2026-09-03",
+            "evidenceGrade": "官方披露",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "9c3e96079542d012c5df",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-07T12:11:29+00:00",
+        "lastSeenAt": "2026-09-08T01:18:49+00:00",
+        "lastPublishedAt": "2026-09-07T12:11:29+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 2,
+        "confirmationCount": 1,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-c6b9de196bc94456942f": {
+        "eventId": "evt-c6b9de196bc94456942f",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-05d8190ac4204ec888",
+        "entityName": "【钛晨报】信息通信行业发展“十五五”规划发布，部署26项重点任务；微信内测“小微AI社交”：AI先聊再带回结果；央行：8月末黄金储备升至7673万盎司，连续22个月增持",
+        "title": "【钛晨报】信息通信行业发展“十五五”规划发布，部署26项重点任务；微信内测“小微AI社交”：AI先聊再带回结果；央行：8月末黄金储备升至7673万盎司，连续22个月增持",
+        "titleAliases": [
+          "钛晨报信息通信行业发展十五五规划发布部署26项重点任务微信内测小微ai社交ai先聊再带回结果央行8月末黄金储备升至7673万盎司连续22个月增持"
+        ],
+        "publishedDate": "2026-09-08",
+        "publishedDates": [
+          "2026-09-08"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "22",
+          "26",
+          "7673",
+          "8"
+        ],
+        "sourceAliases": [
+          "evd-2dcbc61a3c9f40523358",
+          "record-52199948ec7fcca771bf",
+          "src-9e2795f175ce34968e3a"
+        ],
+        "evidenceFingerprints": [
+          "2dcbc61a3c9f40523358"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "钛媒体",
+            "title": "【钛晨报】信息通信行业发展“十五五”规划发布，部署26项重点任务；微信内测“小微AI社交”：AI先聊再带回结果；央行：8月末黄金储备升至7673万盎司，连续22个月增持",
+            "url": "https://www.tmtpost.com/8131620.html",
+            "publishedAt": "2026-09-08",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "3640aea0137ace701a9f",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-08T01:18:49+00:00",
+        "lastSeenAt": "2026-09-08T01:18:49+00:00",
+        "lastPublishedAt": "2026-09-08T01:18:49+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-b6a14102812c7598ba2f": {
+        "eventId": "evt-b6a14102812c7598ba2f",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-a214e2541d47b62289",
+        "entityName": "Workshops Educate African Researchers On How to Publish With IEEE",
+        "title": "Workshops Educate African Researchers On How to Publish With IEEE",
+        "titleAliases": [
+          "workshopseducateafricanresearchersonhowtopublishwithieee"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-c94842414ba9d33ec080",
+          "record-1e9e67d0a8d631ca7339",
+          "src-3faea9e4b55ff2cb1974"
+        ],
+        "evidenceFingerprints": [
+          "c94842414ba9d33ec080"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "IEEE Spectrum",
+            "title": "Workshops Educate African Researchers On How to Publish With IEEE",
+            "url": "https://spectrum.ieee.org/ieee-workshop-xplore-africa",
+            "publishedAt": "2026-09-07",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "e6bdea81803147002dfb",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-08T01:18:49+00:00",
+        "lastSeenAt": "2026-09-08T01:18:49+00:00",
+        "lastPublishedAt": "2026-09-08T01:18:49+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-b25a3dcfb55d3a6d21df": {
+        "eventId": "evt-b25a3dcfb55d3a6d21df",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-c4522d51eae228409b",
+        "entityName": "Chuwi launches new mini-PC globally with OCuLink, 10 GbE Ethernet and 192 GB RAM",
+        "title": "Chuwi launches new mini-PC globally with OCuLink, 10 GbE Ethernet and 192 GB RAM",
+        "titleAliases": [
+          "chuwilaunchesnewminipcgloballywithoculink10gbeethernetand192gbram"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "10",
+          "192"
+        ],
+        "sourceAliases": [
+          "evd-e513ec4f9cc3e27bebe0",
+          "record-fef24c23e397a7939d9e",
+          "src-5fb7d1cc91b75e8028b2"
+        ],
+        "evidenceFingerprints": [
+          "e513ec4f9cc3e27bebe0"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Notebookcheck",
+            "title": "Chuwi launches new mini-PC globally with OCuLink, 10 GbE Ethernet and 192 GB RAM",
+            "url": "https://www.notebookcheck.net/Chuwi-launches-new-mini-PC-globally-with-OCuLink-10-GbE-Ethernet-and-192-GB-RAM.1391948.0.html",
+            "publishedAt": "2026-09-07",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "037a62caf17e34bb5d0b",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-08T01:18:49+00:00",
+        "lastSeenAt": "2026-09-08T01:18:49+00:00",
+        "lastPublishedAt": "2026-09-08T01:18:49+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-a739d45b61183022eb74": {
+        "eventId": "evt-a739d45b61183022eb74",
+        "dataset": "marketCompany",
+        "entityId": "cambricon",
+        "entityName": "中科寒武纪科技股份有限公司",
+        "title": "寒武纪：9月7日获融资买入10.39亿元，融资余额176.07亿元占流通市值比例2.56%，超过近一年60%分位水平",
+        "titleAliases": [
+          "寒武纪9月7日获融资买入1039亿元融资余额17607亿元占流通市值比例256超近一年60分位水平"
+        ],
+        "publishedDate": "2026-09-08",
+        "publishedDates": [
+          "2026-09-08"
+        ],
+        "entityKeys": [
+          "marketCompany:cambricon",
+          "name:中科寒武纪科技股份有限公司"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [
+          "10.39",
+          "176.07",
+          "2.56%",
+          "60%",
+          "7",
+          "9"
+        ],
+        "sourceAliases": [
+          "evd-1ef12de743b59bbfae9b",
+          "src-9662a9701ddc280f5ec8"
+        ],
+        "evidenceFingerprints": [
+          "1ef12de743b59bbfae9b"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "寒武纪：9月7日获融资买入10.39亿元，融资余额176.07亿元占流通市值比例2.56%，超过近一年60%分位水平",
+            "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-09-08/doc-iniraita9264445.shtml",
+            "publishedAt": "2026-09-08T08:13:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "8fb22b7e471f4b740a0c",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-08T01:18:49+00:00",
+        "lastSeenAt": "2026-09-08T01:18:49+00:00",
+        "lastPublishedAt": "2026-09-08T01:18:49+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-a5e04e4ee3309316e36e": {
+        "eventId": "evt-a5e04e4ee3309316e36e",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-3b970643c6419c994f",
+        "entityName": "OpenAI says some researchers are blowing through $7,000 in AI tokens every day – but it’s a price the company appears willing to pay",
+        "title": "OpenAI says some researchers are blowing through $7,000 in AI tokens every day – but it’s a price the company appears willing to pay",
+        "titleAliases": [
+          "openaisayssomeresearchersareblowingthrough7000inaitokenseverydaybutitsapricethecompanyappearswillingtopay"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [
+          "company:openai"
+        ],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "000",
+          "7"
+        ],
+        "sourceAliases": [
+          "evd-eebce6e9a3e06d7fec0c",
+          "record-199985f65d675a55fec6",
+          "src-5b641d817bdf08676239"
+        ],
+        "evidenceFingerprints": [
+          "eebce6e9a3e06d7fec0c"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "ITPro",
+            "title": "OpenAI says some researchers are blowing through $7,000 in AI tokens every day – but it’s a price the company appears willing to pay",
+            "url": "https://www.itpro.com/technology/artificial-intelligence/openai-says-some-researchers-are-blowing-through-usd7-000-in-ai-tokens-every-day-but-its-a-price-the-company-appears-willing-to-pay",
+            "publishedAt": "2026-09-07",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "5ab0e186c2120fc853dd",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-08T01:18:49+00:00",
+        "lastSeenAt": "2026-09-08T01:18:49+00:00",
+        "lastPublishedAt": "2026-09-08T01:18:49+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-782432bd8925f73f7768": {
+        "eventId": "evt-782432bd8925f73f7768",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-386a1931274ac20926",
+        "entityName": "Affordable mini PC with AMD APU and 16 GB DDR4 RAM now available for pre-order",
+        "title": "Affordable mini PC with AMD APU and 16 GB DDR4 RAM now available for pre-order",
+        "titleAliases": [
+          "affordableminipcwithamdapuand16gbddr4ramnowavailableforpreorder"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "16",
+          "4"
+        ],
+        "sourceAliases": [
+          "evd-141d37f437eaeb74dda4",
+          "record-8a1bd2b3bda78088a9c5",
+          "src-f92e5c5019e40ff56596"
+        ],
+        "evidenceFingerprints": [
+          "141d37f437eaeb74dda4"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Notebookcheck",
+            "title": "Affordable mini PC with AMD APU and 16 GB DDR4 RAM now available for pre-order",
+            "url": "https://www.notebookcheck.net/Affordable-mini-PC-with-AMD-APU-and-16-GB-DDR4-RAM-now-available-for-pre-order.1391215.0.html",
+            "publishedAt": "2026-09-07",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "c96e17af3f30542c0eb4",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-08T01:18:49+00:00",
+        "lastSeenAt": "2026-09-08T01:18:49+00:00",
+        "lastPublishedAt": "2026-09-08T01:18:49+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-759866d3157e1cd1124d": {
+        "eventId": "evt-759866d3157e1cd1124d",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-7a01a394f116131e51",
+        "entityName": "特朗普发布AI图片自诩“为国赚数千亿”股票收益，未提供任何证据",
+        "title": "特朗普发布AI图片自诩“为国赚数千亿”股票收益，未提供任何证据",
+        "titleAliases": [
+          "特朗普发布ai图片自诩为国赚数千亿股票收益未提供任何证据"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-9acd095dee53302c388f",
+          "record-cbe365d342a3b6e3ff83",
+          "src-cf691e781be10ea18625"
+        ],
+        "evidenceFingerprints": [
+          "9acd095dee53302c388f"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "特朗普发布AI图片自诩“为国赚数千亿”股票收益，未提供任何证据",
+            "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-09-08/doc-iniraite6015688.shtml",
+            "publishedAt": "2026-09-07",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "06287de09840faf30acf",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-08T01:18:49+00:00",
+        "lastSeenAt": "2026-09-08T01:18:49+00:00",
+        "lastPublishedAt": "2026-09-08T01:18:49+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-6f417d65ed26b84bb9c1": {
+        "eventId": "evt-6f417d65ed26b84bb9c1",
+        "dataset": "marketCompany",
+        "entityId": "catl",
+        "entityName": "宁德时代",
+        "title": "与宁德时代签协议 泰金新能股价涨停并提示风险",
+        "titleAliases": [
+          "与宁德时代签协议泰金新能股价涨停并提示风险"
+        ],
+        "publishedDate": "2026-09-07",
+        "publishedDates": [
+          "2026-09-07"
+        ],
+        "entityKeys": [
+          "marketCompany:catl",
+          "name:宁德时代"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-9f65cc548fedea97c490",
+          "src-77b9442d98ed6c28925c"
+        ],
+        "evidenceFingerprints": [
+          "9f65cc548fedea97c490"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "与宁德时代签协议 泰金新能股价涨停并提示风险",
+            "url": "https://finance.sina.com.cn/jjxw/2026-09-08/doc-iniqzsvr0026727.shtml",
+            "publishedAt": "2026-09-08T01:20:00+08:00",
+            "evidenceGrade": "媒体报道"
+          }
+        ],
+        "claimFingerprint": "c7d84abb1a74982e826e",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-08T01:18:49+00:00",
+        "lastSeenAt": "2026-09-08T01:18:49+00:00",
+        "lastPublishedAt": "2026-09-08T01:18:49+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-09cacf02606d9838e6f2": {
+        "eventId": "evt-09cacf02606d9838e6f2",
+        "dataset": "marketCompany",
+        "entityId": "horizon-robotics",
+        "entityName": "Horizon Robotics",
+        "title": "新浪财经 行情数据",
+        "titleAliases": [
+          "新浪财经行情数据"
+        ],
+        "publishedDate": "2026-08-31",
+        "publishedDates": [
+          "2026-08-31",
+          "2026-09-01",
+          "2026-09-02",
+          "2026-09-04",
+          "2026-09-07",
+          "2026-09-08"
+        ],
+        "entityKeys": [
+          "marketCompany:horizon-robotics",
+          "name:horizon robotics"
+        ],
+        "typeKeys": [
+          "上市公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-b9931d767f7fdda9a522",
+          "src-2902bb7afee990ec31f7",
+          "evd-f9eda82d60279aa18d50",
+          "evd-c690cdfd1301ac54784c",
+          "evd-230de597643c6cb0a7fa",
+          "evd-ced861ace5efab8ab825",
+          "evd-8aeeeb3893c562d253e0"
+        ],
+        "evidenceFingerprints": [
+          "b9931d767f7fdda9a522",
+          "f9eda82d60279aa18d50",
+          "c690cdfd1301ac54784c",
+          "230de597643c6cb0a7fa",
+          "ced861ace5efab8ab825",
+          "8aeeeb3893c562d253e0"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+            "publishedAt": "2026-08-31T16:08:50+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+            "publishedAt": "2026-09-01T16:08:16+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+            "publishedAt": "2026-09-02T16:08:08+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+            "publishedAt": "2026-09-04T16:08:06+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+            "publishedAt": "2026-09-07T16:08:22+08:00",
+            "evidenceGrade": "市场数据"
+          },
+          {
+            "sourceName": "新浪财经",
+            "title": "新浪财经 行情数据",
+            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
+            "publishedAt": "2026-09-08T08:55:00+08:00",
+            "evidenceGrade": "市场数据"
+          }
+        ],
+        "claimFingerprint": "cc3711a9494cf1e2f7a9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T03:41:22+00:00",
+        "lastSeenAt": "2026-09-08T01:18:49+00:00",
+        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
+        "lastLifecycle": "reconfirmed",
+        "observationCount": 6,
+        "confirmationCount": 5,
+        "bestEvidenceStrength": 0,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-f1973281d0a70135b429": {
         "eventId": "evt-f1973281d0a70135b429",
         "dataset": "marketCompany",
@@ -207,61 +2053,6 @@
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-d35471563b00b1058845": {
-        "eventId": "evt-d35471563b00b1058845",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-a21faf1cb2d7c9df0e",
-        "entityName": "Dr. Robin Zeng on the \"CATL Standard\": Safety, Reliability, and Longevity at the Core",
-        "title": "Dr. Robin Zeng on the \"CATL Standard\": Safety, Reliability, and Longevity at the Core",
-        "titleAliases": [
-          "drrobinzengonthecatlstandardsafetyreliabilityandlongevityatthecore"
-        ],
-        "publishedDate": "2026-09-03",
-        "publishedDates": [
-          "2026-09-03"
-        ],
-        "entityKeys": [
-          "company:catl",
-          "company:宁德时代"
-        ],
-        "typeKeys": [
-          "公司动态",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-c4bf13e639d32b4804db",
-          "record-bf45a945e44b1c66acf6",
-          "src-8498292664d1c81a77f0"
-        ],
-        "evidenceFingerprints": [
-          "c4bf13e639d32b4804db"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "CATL",
-            "title": "Dr. Robin Zeng on the \"CATL Standard\": Safety, Reliability, and Longevity at the Core",
-            "url": "https://www.catl.com/en/news/6992.html",
-            "publishedAt": "2026-09-03",
-            "evidenceGrade": "B",
-            "sourceRole": "primary"
-          }
-        ],
-        "claimFingerprint": "9c3e96079542d012c5df",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-07T12:11:29+00:00",
-        "lastSeenAt": "2026-09-07T12:11:29+00:00",
-        "lastPublishedAt": "2026-09-07T12:11:29+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 4,
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
@@ -884,98 +2675,6 @@
         "lastLifecycle": "duplicate",
         "observationCount": 4,
         "confirmationCount": 3,
-        "bestEvidenceStrength": 0,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-09cacf02606d9838e6f2": {
-        "eventId": "evt-09cacf02606d9838e6f2",
-        "dataset": "marketCompany",
-        "entityId": "horizon-robotics",
-        "entityName": "Horizon Robotics",
-        "title": "新浪财经 行情数据",
-        "titleAliases": [
-          "新浪财经行情数据"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31",
-          "2026-09-01",
-          "2026-09-02",
-          "2026-09-04",
-          "2026-09-07"
-        ],
-        "entityKeys": [
-          "marketCompany:horizon-robotics",
-          "name:horizon robotics"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-b9931d767f7fdda9a522",
-          "src-2902bb7afee990ec31f7",
-          "evd-f9eda82d60279aa18d50",
-          "evd-c690cdfd1301ac54784c",
-          "evd-230de597643c6cb0a7fa",
-          "evd-ced861ace5efab8ab825"
-        ],
-        "evidenceFingerprints": [
-          "b9931d767f7fdda9a522",
-          "f9eda82d60279aa18d50",
-          "c690cdfd1301ac54784c",
-          "230de597643c6cb0a7fa",
-          "ced861ace5efab8ab825"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
-            "publishedAt": "2026-08-31T16:08:50+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
-            "publishedAt": "2026-09-01T16:08:16+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
-            "publishedAt": "2026-09-02T16:08:08+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
-            "publishedAt": "2026-09-04T16:08:06+08:00",
-            "evidenceGrade": "市场数据"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "新浪财经 行情数据",
-            "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html",
-            "publishedAt": "2026-09-07T16:08:22+08:00",
-            "evidenceGrade": "市场数据"
-          }
-        ],
-        "claimFingerprint": "cc3711a9494cf1e2f7a9",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T03:41:22+00:00",
-        "lastSeenAt": "2026-09-07T12:11:29+00:00",
-        "lastPublishedAt": "2026-08-31T03:41:22+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 5,
-        "confirmationCount": 4,
         "bestEvidenceStrength": 0,
         "status": "active",
         "conflictStatus": "none",
@@ -29090,13 +30789,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 0,
-    "reconfirmations": 0,
+    "newEvents": 9,
+    "reconfirmations": 2,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
     "duplicatesSuppressed": 0,
-    "observedEvents": 0,
+    "observedEvents": 11,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -32020,19 +33719,66 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-08",
-      "generatedAt": "2026-09-07T18:19:26+00:00",
-      "runStatus": "no-material-change",
-      "changeCount": 0,
-      "executiveSummary": "本轮未检测到新的外部事实候选。",
-      "eventIds": [],
-      "eventStates": [],
+      "generatedAt": "2026-09-08T01:18:49+00:00",
+      "runStatus": "model",
+      "changeCount": 9,
+      "executiveSummary": "本证据包仅含9月7-8日新增情报，以C级媒体转载和快照为主，无一手财务或官方文件。核心线索包括三方面：一是AI基础设施与算力成本端，OpenAI披露内部AI token日耗高企，反映出前沿模型研发投入强度，但证据未提供财务口径；二是中国政策端，信息通信行业“十五五”规划发布并部署26项重点任务，同时微信内测AI社交、华为时隔六年发布高性能芯片等被聚合报道，行业发展方向有信号意义；三是上市公司层面，宁德时代、寒武纪、地平线机器人各有外部舆情，但均不构成业绩判断。另有非洲研究者学术发表可及性及IEEE培训、特朗普AI图片社交媒体声明等边缘信息，投资相关性低。整体而言，证据呈现“高热度、低确证度”特征，应保持谨慎，多数事项需等待官方文件或公司披露进一步验证。",
+      "eventIds": [
+        "evt-b6a14102812c7598ba2f",
+        "evt-a5e04e4ee3309316e36e",
+        "evt-759866d3157e1cd1124d",
+        "evt-c6b9de196bc94456942f",
+        "evt-b25a3dcfb55d3a6d21df",
+        "evt-782432bd8925f73f7768",
+        "evt-6f417d65ed26b84bb9c1",
+        "evt-a739d45b61183022eb74",
+        "evt-fe2688612b14844604db"
+      ],
+      "eventStates": [
+        {
+          "eventId": "evt-b6a14102812c7598ba2f",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-a5e04e4ee3309316e36e",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-759866d3157e1cd1124d",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-c6b9de196bc94456942f",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-b25a3dcfb55d3a6d21df",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-782432bd8925f73f7768",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-6f417d65ed26b84bb9c1",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-a739d45b61183022eb74",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-fe2688612b14844604db",
+          "lifecycle": "first_seen"
+        }
+      ],
       "verifiedChangeTotal": 0,
-      "candidateTotal": 0,
-      "auxiliaryLeadTotal": 0,
+      "candidateTotal": 3,
+      "auxiliaryLeadTotal": 6,
       "rejectedTotal": 0,
       "eventSummary": {
-        "newEvents": 0,
-        "reconfirmations": 0,
+        "newEvents": 9,
+        "reconfirmations": 2,
         "updates": 0,
         "corrections": 0,
         "possibleConflicts": 0,
@@ -32041,15 +33787,19 @@
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 0,
-    "eligibleCandidateCount": 0,
+    "candidateCount": 10,
+    "eligibleCandidateCount": 10,
     "rejectedCandidateCount": 0,
     "rejectedByDataset": {},
-    "evidenceCount": 0,
-    "supportingEvidenceCount": 0,
-    "rejectedEvidenceCount": 0,
-    "passedButUnboundEvidenceCount": 0,
-    "rejectionReasons": {},
+    "evidenceCount": 19,
+    "supportingEvidenceCount": 11,
+    "rejectedEvidenceCount": 6,
+    "passedButUnboundEvidenceCount": 2,
+    "rejectionReasons": {
+      "missing_published_at": 6,
+      "missing_title": 3,
+      "ungraded": 3
+    },
     "sourceClassificationWarnings": []
   },
   "sourceClassificationWarnings": [],
@@ -32069,7 +33819,7 @@
     "person": {
       "label": "核心人物",
       "status": "active",
-      "count": 123,
+      "count": 125,
       "note": "已进入每日实体快照与变化检测。"
     },
     "ventureCompany": {
@@ -32080,9 +33830,16 @@
     }
   },
   "pipelineHealth": {
-    "overallStatus": "healthy",
-    "healthyJobs": 9,
+    "overallStatus": "stale",
+    "healthyJobs": 8,
     "jobCount": 9,
-    "issueJobs": []
+    "issueJobs": [
+      {
+        "jobId": "public-intelligence-frequent-refresh",
+        "name": "两小时公开情报刷新",
+        "status": "stale",
+        "lastCompletedAt": "2026-09-07T18:35:19Z"
+      }
+    ]
   }
 }
