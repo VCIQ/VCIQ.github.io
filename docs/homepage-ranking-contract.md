@@ -6,9 +6,16 @@ The homepage has three distinct ranking intents. Keeping them separate prevents 
 
 The `推荐` channel is the only channel whose primary ordering is the personalized recommendation score. Recency is the first tie-breaker.
 
-## Follow and topic channels
+## Follow, topic, and entity channels
 
-`关注流`, `快讯`, and named topic channels (`AI / AGI`, `具身智能`, `半导体`, `商业航天`, `固态电池`, `HBM`) are recency-first views. Personalized recommendation score remains a secondary tie-breaker so similarly fresh items can still be ordered usefully, but personalization must not move older content ahead of newer content in these channels.
+`关注流`, `快讯`, named topic channels (`AI / AGI`, `具身智能`, `半导体`, `商业航天`, `固态电池`, `HBM`), and entity channels (`人物`, `公司`) are recency-first views. Personalized recommendation score remains a secondary tie-breaker so similarly fresh items can still be ordered usefully, but personalization must not move older content ahead of newer content in these channels.
+
+The two entity channels reuse the same feed cards and ranking semantics as topic channels, but their membership is entity-linked rather than keyword-only:
+
+- `人物`: an event has a canonical `personSlug`, is explicitly typed as `人物观点`, or contains resolved `mentionedPeople` links;
+- `公司`: an event has a canonical `companySlug` or resolved `mentionedCompanies` links.
+
+This keeps `人物` and `公司` as event-stream views on the homepage while `/people` and `/companies` remain structured research directories rather than duplicate news feeds.
 
 ## Guess-you-like rail
 
