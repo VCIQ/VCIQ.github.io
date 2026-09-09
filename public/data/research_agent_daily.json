@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-09T16:56:58+00:00",
+  "generatedAt": "2026-09-09T17:13:11+00:00",
   "asOfDate": "2026-09-10",
-  "runStatus": "model",
+  "runStatus": "no-material-change",
   "reviewStatus": "automated_unreviewed",
   "baselineSource": "snapshot",
   "model": {
@@ -10,40 +10,24 @@
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": true,
-    "usage": {
-      "prompt_tokens": 4346,
-      "completion_tokens": 12130,
-      "total_tokens": 16476,
-      "completion_tokens_details": {
-        "reasoning_tokens": 10052
-      },
-      "prompt_tokens_details": {
-        "cached_tokens": 0
-      },
-      "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 4346
-    }
+    "used": false,
+    "usage": {}
   },
   "changeSummary": {
-    "totalDetected": 6,
-    "total": 5,
-    "byDataset": {
-      "intelligenceEvent": 5
-    },
-    "byChangeType": {
-      "external_event": 6
-    },
-    "externalCandidates": 6,
-    "qualityRejected": 1,
+    "totalDetected": 0,
+    "total": 0,
+    "byDataset": {},
+    "byChangeType": {},
+    "externalCandidates": 0,
+    "qualityRejected": 0,
     "maintenanceExcluded": 0,
     "aggregatedEvents": 0,
-    "highestImportance": 91,
+    "highestImportance": 0,
     "verifiedChangeTotal": 0,
     "candidateTotal": 0,
-    "auxiliaryLeadTotal": 5,
-    "rejectedTotal": 1,
-    "newEvents": 5,
+    "auxiliaryLeadTotal": 0,
+    "rejectedTotal": 0,
+    "newEvents": 0,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
@@ -51,717 +35,20 @@
     "duplicatesSuppressed": 0
   },
   "analysis": {
-    "mode": "model-analysis",
-    "isResearchJudgment": true,
-    "executiveSummary": "截至2026-09-09的证据包包含五项外部事件，均来自单一来源且未经人工复核。其中三条事件围绕AI代理展开：Lightfield完成4700万美元A轮融资，面向“运行在代理上的公司”提供CRM；Meta推出个人AI代理Muse，定价为免费及每月20/100美元；Google将Gemini Daily Brief向所有美国用户开放。另有Aqua获得1880万美元支持推出另类投资平台，以及Spartan Logistics通过收购Allen Logistics扩大Toledo业务。证据等级为B/C级，需以官方信息验证；AI代理相关产品密集发布，但商业模式、收入转化与竞争格局尚待观察。 质量门诊断：仅为发现线索，不能支持正式主张 1。",
-    "keyDevelopments": [
-      {
-        "title": "Lightfield Raises $47 Million Series A to Build the CRM for Companies that Run on Agents",
-        "assessment": "据新闻稿，Lightfield完成4700万美元A轮融资，明确以“运行在代理上的公司”为目标客户构建CRM。自发布以来已有超过5000家公司注册，部署AI代理负责建立销售管道、推进交易和管理客户。该数字体现市场对Agent原生CRM的兴趣，但注册不等于付费收入，商业模式和与现有CRM的差异化尚未验证。",
-        "importance": 4,
-        "confidence": "medium",
-        "entities": [
-          "Lightfield"
-        ],
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "title": "Meta Launches Muse, a Personal AI Agent That Acts on Your Behalf",
-        "assessment": "根据ExtremeTech报道，Meta推出个人AI代理Muse，能够代表用户行动；服务提供免费层级及每月20美元和100美元两种付费计划。这表明Meta进入个人AI代理市场，与类似助手类产品展开竞争。但该事件仅有单一C级媒体来源，官方细节未确认，付费计划对应的功能范围未知。",
-        "importance": 4,
-        "confidence": "low",
-        "entities": [
-          "Meta",
-          "Muse"
-        ],
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "title": "Gemini’s Daily Brief is now available to everyone in the US.",
-        "assessment": "据The Verge报道，Google将Gemini Daily Brief向所有美国用户开放。该功能在5月I/O大会公布，可从已连接Gemini的应用中提取邮件、会议等信息生成每日摘要；此前仅限Google AI Plus、Pro和Ultra订阅者使用。该动作表明AI个人助手功能从付费订阅向大众市场扩展的意图。由于来源为单一C级媒体，具体推广节奏和可用范围仍需Google官方确认。",
-        "importance": 3,
-        "confidence": "low",
-        "entities": [
-          "Google",
-          "Gemini"
-        ],
-        "evidenceIds": [
-          "E005"
-        ]
-      },
-      {
-        "title": "Aqua Launches the Industry's First Turnkey Alternative Investment Platform, Backed by $18.8 Million from Google, Y Combinator, and Leading Venture Firms",
-        "assessment": "据新闻稿，Aqua推出面向另类投资的交钥匙平台，并宣布获得1880万美元支持，出资方包括Google、Y Combinator及多家头部风投。平台为财富管理者和基金发起人提供构建、管理和扩展另类投资计划的集成系统。“行业首个”为厂商表述，融资到位和产品发布是事实，但客户采用和监管情况未知。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "Aqua"
-        ],
-        "evidenceIds": [
-          "E006"
-        ]
-      },
-      {
-        "title": "Spartan Logistics Expands Toledo Presence Through Strategic Acquisition",
-        "assessment": "据新闻稿，Spartan Logistics宣布收购Allen Logistics以扩大在Toledo的业务。Spartan为家族式第三方物流企业，专注于仓储和运输；收购对象为仓储公司。此次收购属传统物流区域扩张，与AI代理主线关联较弱，但反映供应链服务整合仍在继续。财务条款和整合计划未披露。",
-        "importance": 1,
-        "confidence": "medium",
-        "entities": [
-          "Spartan Logistics",
-          "Allen Logistics"
-        ],
-        "evidenceIds": [
-          "E002"
-        ]
-      }
-    ],
-    "thesisUpdates": [
-      {
-        "entity": "个人AI代理市场",
-        "direction": "positive",
-        "statement": "Meta推出个人AI代理Muse并设置免费层级，Google将Gemini Daily Brief从付费订阅开放给所有美国用户，两者均表明个人AI代理产品正在扩大可触达用户范围。这为个人AI代理市场带来更多供给，但产品形态和定价体系仍在分化中。",
-        "evidenceIds": [
-          "E003",
-          "E005"
-        ]
-      },
-      {
-        "entity": "Agent原生企业软件",
-        "direction": "positive",
-        "statement": "Lightfield获得4700万美元A轮融资并报告5000+公司注册，说明针对AI代理部署的企业CRM是一个能吸引融资的早期市场。但注册用户与付费收入之间的转化尚未被证据验证。",
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "entity": "另类投资金融基础设施",
-        "direction": "positive",
-        "statement": "Aqua获得1880万美元融资并推出另类投资平台，投资方包括Google和Y Combinator，显示资本对下一代另类投资基础设施的关注。该平台尚需证明金融机构实际采用。",
-        "evidenceIds": [
-          "E006"
-        ]
-      },
-      {
-        "entity": "供应链物流区域整合",
-        "direction": "neutral",
-        "statement": "Spartan Logistics收购Allen Logistics以扩大Toledo业务，属于传统物流区域扩张，未涉及科技代理变革，对AI主题影响中性。",
-        "evidenceIds": [
-          "E002"
-        ]
-      }
-    ],
-    "watchlist": [
-      {
-        "item": "Lightfield付费客户转化率",
-        "reason": "证据显示5000+公司注册，但无收入或付费转化数据，需验证其商业模式有效性。",
-        "nextEvidence": "Lightfield后续公布的收入、ARR或付费客户数量披露，或第三方客户案例。",
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "item": "Meta Muse官方功能与定价细节",
-        "reason": "当前信息来自单一C级媒体，仅披露免费层级以及每月20/100美元两档价格，未说明各层级功能和可用地域。",
-        "nextEvidence": "Meta官方博客、产品页面或新闻稿。",
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "item": "Gemini Daily Brief的推广范围与商业化",
-        "reason": "报道称向所有美国用户开放，但此前的付费订阅者使用方式与免费版功能差异仍待确认。",
-        "nextEvidence": "Google官方支持页面或后续媒体报道。",
-        "evidenceIds": [
-          "E005"
-        ]
-      },
-      {
-        "item": "Aqua平台客户采用与合规状态",
-        "reason": "平台刚发布并获得融资，但“首个”为厂商表述，实际金融机构采用、监管许可未披露。",
-        "nextEvidence": "Aqua的合作伙伴公告、监管备案或客户名单。",
-        "evidenceIds": [
-          "E006"
-        ]
-      },
-      {
-        "item": "Spartan Logistics收购整合进展",
-        "reason": "收购宣布但未提供财务条款及如何整合Allen Logistics的仓储能力。",
-        "nextEvidence": "Spartan Logistics后续财报、官网公告或地方商业报道。",
-        "evidenceIds": [
-          "E002"
-        ]
-      }
-    ],
-    "risks": [
-      {
-        "risk": "产品发布信息未被官方确认",
-        "reason": "Meta Muse与Gemini Daily Brief的细节分别来自ExtremeTech和The Verge，且均为单一C级来源；后续官方信息可能修正或澄清当前理解。",
-        "evidenceIds": [
-          "E003",
-          "E005"
-        ]
-      },
-      {
-        "risk": "注册用户数可能对商业模式形成误导",
-        "reason": "Lightfield的5000+公司注册未对应收入证据；高注册量在SaaS早期可能来自免费试用，不能等同于可验证的付费需求。",
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "risk": "厂商宣称“行业首个”存在夸大风险",
-        "reason": "Aqua新闻稿使用“行业首个”表述，属于自我定位；若无第三方验证，创投判断不宜将其视为事实。",
-        "evidenceIds": [
-          "E006"
-        ]
-      },
-      {
-        "risk": "单一来源且未经人工复核的证据基础",
-        "reason": "证据包内所有事件均来自单一证据，reviewStatus为automated_unreviewed；任何单一快照都可能不完整或含错误。",
-        "evidenceIds": [
-          "E001",
-          "E002",
-          "E003",
-          "E005",
-          "E006"
-        ]
-      },
-      {
-        "risk": "区域物流收购整合风险",
-        "reason": "Spartan Logistics的收购未披露财务条款，且整合过程可能影响客户关系与运营，相关影响尚不可评估。",
-        "evidenceIds": [
-          "E002"
-        ]
-      }
-    ],
-    "methodologyNote": "本分析仅基于给定的证据包（changes与evidence字段），未补充任何外部事实或网络资料。证据等级：E001/E002/E006为B级新闻稿，E003/E005为C级媒体转载；所有事件reviewStatus为automated_unreviewed。报告中事实性表述均标注“据新闻稿/报道”，推断部分明确标为待验证。所有事件缺乏交叉验证，因此对重要性、方向和风险的判断均为初步结论，不构成投资建议，不提供目标价或收益承诺。 数据管线提示：追踪实体与公开信源发现=stale、完整公开情报刷新=stale、科创板招股书投资者证据刷新=stale、GitHub Pages 静态发布=stale。"
+    "mode": "structured-change-only",
+    "isResearchJudgment": false,
+    "executiveSummary": "本轮未检测到新的外部事实候选。",
+    "keyDevelopments": [],
+    "thesisUpdates": [],
+    "watchlist": [],
+    "risks": [],
+    "methodologyNote": "结构化变化检查；本期无材料变化。未执行生成式研判。 数据管线提示：追踪实体与公开信源发现=stale、完整公开情报刷新=stale、科创板招股书投资者证据刷新=stale、GitHub Pages 静态发布=stale。"
   },
-  "changes": [
-    {
-      "id": "chg-a32c7f3e51addc467e52",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-22def544e2719e9eaa",
-      "entityName": "Lightfield Raises $47 Million Series A to Build the CRM for Companies that Run on Agents",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Lightfield Raises $47 Million Series A to Build the CRM for Companies that Run on Agents。",
-      "importance": 91,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-09",
-        "summary": "More than 5,000 companies have signed up for Lightfield since launch in November, deploying AI agents that build pipeline, work deals, and manage customers from a shared, living record of their business. SAN FRANCISCO, Sept. 9, 2026 /PRNewswire/ -- Lightfield…",
-        "title": "Lightfield Raises $47 Million Series A to Build the CRM for Companies that Run on Agents"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-09",
-          "evidenceIds": [
-            "E001"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "More than 5,000 companies have signed up for Lightfield since launch in November, deploying AI agents that build pipeline, work deals, and manage customers from a shared, living record of their business. SAN FRANCISCO, Sept. 9, 2026 /PRNewswire/ -- Lightfield…",
-          "evidenceIds": [
-            "E001"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Lightfield Raises $47 Million Series A to Build the CRM for Companies that Run on Agents",
-          "evidenceIds": [
-            "E001"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E001"
-      ],
-      "supportingEvidenceIds": [
-        "E001"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-233c1e709437363741f6"
-      ],
-      "eventLifecycles": {
-        "evt-233c1e709437363741f6": "first_seen"
-      },
-      "eventId": "evt-233c1e709437363741f6",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T16:56:58+00:00",
-      "lastSeenAt": "2026-09-09T16:56:58+00:00"
-    },
-    {
-      "id": "chg-54a27ecdfb16be09925a",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-c02651566453995083",
-      "entityName": "Spartan Logistics Expands Toledo Presence Through Strategic Acquisition",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Spartan Logistics Expands Toledo Presence Through Strategic Acquisition。",
-      "importance": 89,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-09",
-        "summary": "WHITEHOUSE, Ohio, Sept. 9, 2026 /PRNewswire/ -- Spartan Logistics, a family-owned third-party logistics provider specializing in warehousing and transportation services, today announces the acquisition of Allen Logistics, a warehousing company supporting cust…",
-        "title": "Spartan Logistics Expands Toledo Presence Through Strategic Acquisition"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-09",
-          "evidenceIds": [
-            "E002"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "WHITEHOUSE, Ohio, Sept. 9, 2026 /PRNewswire/ -- Spartan Logistics, a family-owned third-party logistics provider specializing in warehousing and transportation services, today announces the acquisition of Allen Logistics, a warehousing company supporting cust…",
-          "evidenceIds": [
-            "E002"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Spartan Logistics Expands Toledo Presence Through Strategic Acquisition",
-          "evidenceIds": [
-            "E002"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E002"
-      ],
-      "supportingEvidenceIds": [
-        "E002"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-c8f6941fb2a65c87ca44"
-      ],
-      "eventLifecycles": {
-        "evt-c8f6941fb2a65c87ca44": "first_seen"
-      },
-      "eventId": "evt-c8f6941fb2a65c87ca44",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T16:56:58+00:00",
-      "lastSeenAt": "2026-09-09T16:56:58+00:00"
-    },
-    {
-      "id": "chg-d0a86e19ab08431aacea",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-39e3e3afcaad47ed52",
-      "entityName": "Meta Launches Muse, a Personal AI Agent That Acts on Your Behalf",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Meta Launches Muse, a Personal AI Agent That Acts on Your Behalf。",
-      "importance": 82,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-09",
-        "summary": "The service has a free tier as well as two paid plans: $20 and $100 per month.",
-        "title": "Meta Launches Muse, a Personal AI Agent That Acts on Your Behalf"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-09",
-          "evidenceIds": [
-            "E003"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "The service has a free tier as well as two paid plans: $20 and $100 per month.",
-          "evidenceIds": [
-            "E003"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Meta Launches Muse, a Personal AI Agent That Acts on Your Behalf",
-          "evidenceIds": [
-            "E003"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E003"
-      ],
-      "supportingEvidenceIds": [
-        "E003"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-4e79b61e1e3518e7e7aa"
-      ],
-      "eventLifecycles": {
-        "evt-4e79b61e1e3518e7e7aa": "first_seen"
-      },
-      "eventId": "evt-4e79b61e1e3518e7e7aa",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T16:56:58+00:00",
-      "lastSeenAt": "2026-09-09T16:56:58+00:00"
-    },
-    {
-      "id": "chg-1139f548aa06d139b505",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-536823418c9738b179",
-      "entityName": "Gemini’s Daily Brief is now available to everyone in the US.",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Gemini’s Daily Brief is now available to everyone in the US.。",
-      "importance": 82,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-08",
-        "summary": "First announced at I/O in May, Daily Brief is an AI feature that generates a summary of your day with the emails, meetings, and other information pulled from apps connected to Gemini. It was previously only available to Google AI Plus, Pro, and Ultra subscrib…",
-        "title": "Gemini’s Daily Brief is now available to everyone in the US."
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-08",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "First announced at I/O in May, Daily Brief is an AI feature that generates a summary of your day with the emails, meetings, and other information pulled from apps connected to Gemini. It was previously only available to Google AI Plus, Pro, and Ultra subscrib…",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Gemini’s Daily Brief is now available to everyone in the US.",
-          "evidenceIds": [
-            "E005"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E005"
-      ],
-      "supportingEvidenceIds": [
-        "E005"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-2218898b213648748fcd"
-      ],
-      "eventLifecycles": {
-        "evt-2218898b213648748fcd": "first_seen"
-      },
-      "eventId": "evt-2218898b213648748fcd",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T16:56:58+00:00",
-      "lastSeenAt": "2026-09-09T16:56:58+00:00"
-    },
-    {
-      "id": "chg-6c20947c6096b9f1407d",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-44a2baed7628724221",
-      "entityName": "Aqua Launches the Industry's First Turnkey Alternative Investment Platform, Backed by $18.8 Million from Google, Y Combinator, and Leading Venture Firms",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Aqua Launches the Industry's First Turnkey Alternative Investment Platform, Backed by $18.8 Million from Google, Y Combinator, and Leading Venture Firms。",
-      "importance": 82,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-09",
-        "summary": "Aqua gives wealth managers and fund sponsors an integrated system for building, managing, and scaling alternatives programs NEW YORK, Sept. 9, 2026 /PRNewswire/ -- Aqua, a next-generation alternatives infrastructure solution, today announced the launch of the…",
-        "title": "Aqua Launches the Industry's First Turnkey Alternative Investment Platform, Backed by $18.8 Million from Google, Y Combinator, and Leading Venture Firms"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-09",
-          "evidenceIds": [
-            "E006"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Aqua gives wealth managers and fund sponsors an integrated system for building, managing, and scaling alternatives programs NEW YORK, Sept. 9, 2026 /PRNewswire/ -- Aqua, a next-generation alternatives infrastructure solution, today announced the launch of the…",
-          "evidenceIds": [
-            "E006"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Aqua Launches the Industry's First Turnkey Alternative Investment Platform, Backed by $18.8 Million from Google, Y Combinator, and Leading Venture Firms",
-          "evidenceIds": [
-            "E006"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E006"
-      ],
-      "supportingEvidenceIds": [
-        "E006"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-bfb2ba5c653af6ccdfec"
-      ],
-      "eventLifecycles": {
-        "evt-bfb2ba5c653af6ccdfec": "first_seen"
-      },
-      "eventId": "evt-bfb2ba5c653af6ccdfec",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T16:56:58+00:00",
-      "lastSeenAt": "2026-09-09T16:56:58+00:00"
-    }
-  ],
-  "evidence": [
-    {
-      "id": "E001",
-      "changeId": "chg-a32c7f3e51addc467e52",
-      "entityName": "Lightfield Raises $47 Million Series A to Build the CRM for Companies that Run on Agents",
-      "claim": "新增高价值情报事件记录：Lightfield Raises $47 Million Series A to Build the CRM for Companies that Run on Agents。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "PR Newswire Consumer Technology",
-      "title": "Lightfield Raises $47 Million Series A to Build the CRM for Companies that Run on Agents",
-      "url": "https://www.prnewswire.com/news-releases/lightfield-raises-47-million-series-a-to-build-the-crm-for-companies-that-run-on-agents-302874024.html",
-      "publishedAt": "2026-09-09",
-      "evidenceGrade": "B",
-      "platformName": "新闻稿",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E002",
-      "changeId": "chg-54a27ecdfb16be09925a",
-      "entityName": "Spartan Logistics Expands Toledo Presence Through Strategic Acquisition",
-      "claim": "新增高价值情报事件记录：Spartan Logistics Expands Toledo Presence Through Strategic Acquisition。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "PR Newswire Consumer Technology",
-      "title": "Spartan Logistics Expands Toledo Presence Through Strategic Acquisition",
-      "url": "https://www.prnewswire.com/news-releases/spartan-logistics-expands-toledo-presence-through-strategic-acquisition-302874021.html",
-      "publishedAt": "2026-09-09",
-      "evidenceGrade": "B",
-      "platformName": "新闻稿",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E003",
-      "changeId": "chg-d0a86e19ab08431aacea",
-      "entityName": "Meta Launches Muse, a Personal AI Agent That Acts on Your Behalf",
-      "claim": "新增高价值情报事件记录：Meta Launches Muse, a Personal AI Agent That Acts on Your Behalf。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "ExtremeTech",
-      "title": "Meta Launches Muse, a Personal AI Agent That Acts on Your Behalf",
-      "url": "https://www.extremetech.com/internet/meta-launches-muse-a-personal-ai-agent-that-acts-on-your-behalf",
-      "publishedAt": "2026-09-09",
-      "evidenceGrade": "C",
-      "platformName": "ExtremeTech",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E005",
-      "changeId": "chg-1139f548aa06d139b505",
-      "entityName": "Gemini’s Daily Brief is now available to everyone in the US.",
-      "claim": "新增高价值情报事件记录：Gemini’s Daily Brief is now available to everyone in the US.。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "The Verge",
-      "title": "Gemini’s Daily Brief is now available to everyone in the US.",
-      "url": "https://www.theverge.com/tech/991837/geminis-daily-brief-is-now-available-to-everyone-in-the-us",
-      "publishedAt": "2026-09-08",
-      "evidenceGrade": "C",
-      "platformName": "The Verge",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E006",
-      "changeId": "chg-6c20947c6096b9f1407d",
-      "entityName": "Aqua Launches the Industry's First Turnkey Alternative Investment Platform, Backed by $18.8 Million from Google, Y Combinator, and Leading Venture Firms",
-      "claim": "新增高价值情报事件记录：Aqua Launches the Industry's First Turnkey Alternative Investment Platform, Backed by $18.8 Million from Google, Y Combinator, and Leading Venture Firms。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "PR Newswire Consumer Technology",
-      "title": "Aqua Launches the Industry's First Turnkey Alternative Investment Platform, Backed by $18.8 Million from Google, Y Combinator, and Leading Venture Firms",
-      "url": "https://www.prnewswire.com/news-releases/aqua-launches-the-industrys-first-turnkey-alternative-investment-platform-backed-by-18-8-million-from-google-y-combinator-and-leading-venture-firms-302874048.html",
-      "publishedAt": "2026-09-09",
-      "evidenceGrade": "B",
-      "platformName": "新闻稿",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    }
-  ],
+  "changes": [],
+  "evidence": [],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-09T16:56:58+00:00",
+    "generatedAt": "2026-09-09T17:13:11+00:00",
     "retentionDays": 180,
     "events": {
       "evt-c8f6941fb2a65c87ca44": {
@@ -33830,13 +33117,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 5,
+    "newEvents": 0,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
     "duplicatesSuppressed": 0,
-    "observedEvents": 5,
+    "observedEvents": 0,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -37151,10 +36438,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-10",
-      "generatedAt": "2026-09-09T16:56:58+00:00",
-      "runStatus": "model",
+      "generatedAt": "2026-09-09T17:13:11+00:00",
+      "runStatus": "no-material-change",
       "changeCount": 5,
-      "executiveSummary": "截至2026-09-09的证据包包含五项外部事件，均来自单一来源且未经人工复核。其中三条事件围绕AI代理展开：Lightfield完成4700万美元A轮融资，面向“运行在代理上的公司”提供CRM；Meta推出个人AI代理Muse，定价为免费及每月20/100美元；Google将Gemini Daily Brief向所有美国用户开放。另有Aqua获得1880万美元支持推出另类投资平台，以及Spartan Logistics通过收购Allen Logistics扩大Toledo业务。证据等级为B/C级，需以官方信息验证；AI代理相关产品密集发布，但商业模式、收入转化与竞争格局尚待观察。",
+      "executiveSummary": "本轮未检测到新的外部事实候选。",
       "eventIds": [
         "evt-233c1e709437363741f6",
         "evt-c8f6941fb2a65c87ca44",
@@ -37199,19 +36486,15 @@
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 6,
-    "eligibleCandidateCount": 5,
-    "rejectedCandidateCount": 1,
-    "rejectedByDataset": {
-      "intelligenceEvent": 1
-    },
-    "evidenceCount": 6,
-    "supportingEvidenceCount": 5,
-    "rejectedEvidenceCount": 1,
+    "candidateCount": 0,
+    "eligibleCandidateCount": 0,
+    "rejectedCandidateCount": 0,
+    "rejectedByDataset": {},
+    "evidenceCount": 0,
+    "supportingEvidenceCount": 0,
+    "rejectedEvidenceCount": 0,
     "passedButUnboundEvidenceCount": 0,
-    "rejectionReasons": {
-      "discovery_only": 1
-    },
+    "rejectionReasons": {},
     "sourceClassificationWarnings": []
   },
   "sourceClassificationWarnings": [],
