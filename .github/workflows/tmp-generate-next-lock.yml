@@ -1,0 +1,28 @@
+name: Temporary Next lockfile generator
+
+on:
+  push:
+    branches:
+      - security/next-16-3-4-20260908
+
+permissions:
+  contents: read
+
+jobs:
+  generate-lock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Generate lockfile from manifest
+        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+      - name: Upload generated lockfile
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-package-lock
+          path: package-lock.json
+          if-no-files-found: error
