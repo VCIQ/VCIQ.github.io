@@ -10,8 +10,8 @@ import { getPersonResearchSnapshot } from "@/lib/people-research";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
-  title: "核心人物",
-  description: "研究一级市场核心赛道中的创始人、科学家、工程负责人和关键决策者，并连接其公司与技术证据。",
+  title: "人物库",
+  description: "以结构化档案研究一级市场科技领域的创始人、科学家、工程负责人和关键决策者，并连接公司、技术与事件证据。",
 };
 
 const DIRECTORY_TAG_LIMIT = 1;
@@ -68,27 +68,28 @@ export default function PeoplePage() {
   return (
     <main className="page-shell subpage">
       <header className={`page-header ${styles.channelHeader}`}>
-        <p className="eyebrow">03 / CORE PEOPLE</p>
-        <h1>核心人物</h1>
+        <p className="eyebrow">04 / PEOPLE DIRECTORY</p>
+        <h1>人物库</h1>
         <div className="hero-chips">
           <span>{trackedCount} 位重点跟踪</span>
           {watchCount > 0 ? <span>{watchCount} 位观察对象</span> : null}
-          <span>{peopleUpdates.items.length} 条人物更新</span>
+          <span>{peopleUpdates.items.length} 条人物更新已归入首页</span>
           <span>资料更新 {peopleGeneratedAt.slice(0, 10)}</span>
         </div>
       </header>
 
       <ChannelSplitLayout
         channel="people"
-        eyebrow="CORE PEOPLE RESEARCH DIRECTORY"
-        title="核心人物档案"
-        description="目录展示精简研究预览；完整判断、技术主线、观点演进、组织关系和事件证据进入人物详情查看。"
+        eyebrow="PEOPLE RESEARCH DIRECTORY"
+        title="人物档案库"
+        description="人物库不再重复维护新闻流；目录集中展示结构化研究预览，完整判断、技术主线、观点演进、组织关系和事件证据进入人物详情查看。人物相关最新事件统一在首页“人物”频道消费。"
         count={researchPeople.length}
         countLabel="已发布人物"
         statusText={`更新 ${peopleGeneratedAt.slice(0, 10)}`}
         icon={<Users size={19} aria-hidden="true" />}
         bodyClassName={styles.body}
         directoryFirst
+        showUpdates={false}
       >
         <div className={styles.filters} aria-label="人物研究目录筛选" data-pf>
           <label className={styles.search}>
@@ -180,8 +181,8 @@ export default function PeoplePage() {
           <small>展开查看</small>
         </summary>
         <p>
-          人物频道解释赛道中的技术判断、组织选择和路线演进：先回答为什么值得跟踪、最近发生了什么、下一步看什么，
-          再连接其任职公司、产品项目、技术主题与事件级公开证据。公司关系仅按显式任职证据挂接。
+          人物库解释赛道中的技术判断、组织选择和路线演进：先回答为什么值得跟踪、最近发生了什么、下一步看什么，
+          再连接其任职公司、产品项目、技术主题与事件级公开证据。公司关系仅按显式任职证据挂接；最新人物事件统一在首页人物频道展示。
         </p>
       </details>
     </main>
