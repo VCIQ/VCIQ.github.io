@@ -16,6 +16,11 @@ from datetime import UTC, datetime
 from typing import Any
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
+try:
+    from .financing_details import validate_financing_details
+except ImportError:
+    from financing_details import validate_financing_details  # type: ignore
+
 TRACKING_PARAMETERS = {
     "utm_source",
     "utm_medium",
@@ -180,4 +185,8 @@ def validate_observation_metadata(article: dict[str, Any]) -> list[str]:
         errors.append("invalid:lastVerifiedAt")
     if first_seen and last_verified and first_seen > last_verified:
         errors.append("invalid:observation-order")
+    # Financing is optional, but if present it is part of the public article
+    # metadata contract and must remain evidence-constrained in every validation
+    # path, including standalone ``crawl_articles.py --validate-only`` calls.
+    errors.extend(validate_financing_details(article))
     return errors
