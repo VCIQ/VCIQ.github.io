@@ -60,7 +60,9 @@ type ChannelId =
   | "semiconductor"
   | "space"
   | "solid-state"
-  | "hbm";
+  | "hbm"
+  | "people"
+  | "companies";
 
 type RegionFilter = "全部" | Region;
 type QualityScope = "trusted" | "all";
@@ -85,6 +87,8 @@ const CHANNELS: ReadonlyArray<{
   { id: "space", label: "商业航天", keywords: ["商业航天", "航天", "火箭", "卫星", "运载", "太空"] },
   { id: "solid-state", label: "固态电池", keywords: ["固态电池", "全固态", "固态电解质", "电解质"] },
   { id: "hbm", label: "HBM", keywords: ["HBM", "高带宽内存", "高带宽存储"] },
+  { id: "people", label: "人物" },
+  { id: "companies", label: "公司" },
 ];
 
 const REGIONS: readonly RegionFilter[] = ["全部", "中国", "美国", "全球"];
@@ -165,10 +169,27 @@ function matchesChannel(
     return matchesHomepageFollowChannel(item, preferences);
   }
 
+  // Entity channels deliberately use structured entity fields instead of
+  // matching names in titles/summaries. This avoids routing an article into a
+  // person/company stream merely because it mentions a famous name in prose.
+  if (channelId === "people") {
+    return Boolean(item.personSlug)
+      || item.type === "人物观点"
+      || (item.mentionedPeople?.length ?? 0) > 0;
+  }
+  if (channelId === "companies") {
+    return Boolean(item.companySlug)
+      || (item.mentionedCompanies?.length ?? 0) > 0;
+  }
+
   const channel = CHANNELS.find((candidate) => candidate.id === channelId);
   if (!channel?.keywords?.length) return true;
   const haystack = itemSearchText(item);
   return channel.keywords.some((keyword) => haystack.includes(keyword.toLowerCase()));
+}
+
+function eventTypeLabel(item: LiveIntelligenceEvent) {
+  return item.type === "论文" ? "研究 / 论文" : item.type;
 }
 
 function compactSummary(summary: string, maxLength: number) {
@@ -396,6 +417,13 @@ export function HomepageNewsFeed({
   const highPriorityCount = trustedArticles.filter((item) => item.importance >= 90).length;
   const currentChannelLabel =
     CHANNELS.find((candidate) => candidate.id === channel)?.label ?? "推荐";
+  const currentChannelDescription = channel === "recommend"
+    ? "推荐频道按个性化优先排序；先看最值得知道的变化，再决定是否查看来源、进入追踪、分享或深研此条。"
+    : channel === "people"
+      ? "人物频道按最新事件优先，使用人物实体 ID、结构化人物提及和人物观点类型路由，不依赖姓名关键词碰撞。"
+      : channel === "companies"
+        ? "公司频道按最新事件优先，使用公司实体 ID 与结构化公司提及路由，不依赖公司名称关键词碰撞。"
+        : "当前频道按最新文章优先展示，个性化推荐仅用于同等新鲜度下的辅助排序。";
 
   function changeChannel(nextChannel: ChannelId) {
     setChannel(nextChannel);
@@ -498,9 +526,7 @@ export function HomepageNewsFeed({
               <strong>{visibleArticles.length} 条候选情报</strong>
             </div>
             <p>
-              {channel === "recommend"
-                ? "推荐频道按个性化优先排序；先看最值得知道的变化，再决定是否查看来源、进入追踪、分享或深研此条。"
-                : "当前频道按最新文章优先展示，个性化推荐仅用于同等新鲜度下的辅助排序。"}
+              {currentChannelDescription}
               {(preferences.followedSectors.length || favorites.length) ? (
                 <span className={preferenceStyles.preferenceSummary}>
                   已关注赛道 {preferences.followedSectors.length} · 稍后读 {favorites.length}
@@ -534,7 +560,7 @@ export function HomepageNewsFeed({
                   >
                     <div className={styles.cardBody}>
                       <div className={styles.cardTags}>
-                        <span>{item.type}</span>
+                        <span>{eventTypeLabel(item)}</span>
                         <span>{item.region}</span>
                         <span>{item.sector}</span>
                         <button
