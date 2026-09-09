@@ -1,3 +1,5 @@
+import { canonicalHotnessKey } from "@/lib/hotness";
+
 const DEFAULT_TRACKING_ADMIN = "https://vciq-tracking-console.pages.dev";
 const SHARE_PREFERENCE_PATH = "/api/tracking-admin/v1/preferences/share";
 const PENDING_SHARE_SYNC_KEY = "vciq:share-preference:pending:v1";
@@ -56,15 +58,24 @@ function absolutePublicUrl(value: string, publicOrigin: string): string {
   }
 }
 
+function stableShareId(href: string, fallbackId: string): string {
+  // The server intentionally deduplicates Share by `shareId`. Different public
+  // surfaces can expose the same article under different local/event IDs, so use
+  // the already-established canonical article URL key as the cross-surface
+  // identity. This also removes tracking parameters before the private write.
+  return canonicalHotnessKey(href) || fallbackId;
+}
+
 export function buildSharePreferencePayload(
   item: SharePreferenceSyncItem,
   publicOrigin = "https://vciq.github.io",
 ) {
   const href = absolutePublicUrl(item.href, publicOrigin);
-  if (!href || !item.id || !item.title) return null;
+  const id = href ? stableShareId(href, item.id) : "";
+  if (!href || !id || !item.title) return null;
   return {
     item: {
-      id: item.id,
+      id,
       href,
       title: item.title,
       summary: item.summary ?? "",
@@ -160,8 +171,12 @@ async function postSharePreference(item: SharePreferenceSyncItem, keepalive: boo
 }
 
 export async function syncSharePreference(item: SharePreferenceSyncItem): Promise<boolean> {
+  const origin = browserOrigin() || "https://vciq.github.io";
+  const href = absolutePublicUrl(item.href, origin);
   const normalizedItem = {
     ...item,
+    id: stableShareId(href || item.href, item.id),
+    href: href || item.href,
     sharedAt: item.sharedAt || new Date().toISOString(),
   };
   const pending = queuePendingShareSync(normalizedItem);
