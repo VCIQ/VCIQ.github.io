@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-09T15:25:34+00:00",
-  "asOfDate": "2026-09-09",
+  "generatedAt": "2026-09-09T16:56:58+00:00",
+  "asOfDate": "2026-09-10",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
   "baselineSource": "snapshot",
@@ -12,39 +12,38 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 7636,
-      "completion_tokens": 6810,
-      "total_tokens": 14446,
+      "prompt_tokens": 4346,
+      "completion_tokens": 12130,
+      "total_tokens": 16476,
       "completion_tokens_details": {
-        "reasoning_tokens": 4310
+        "reasoning_tokens": 10052
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 7636
+      "prompt_cache_miss_tokens": 4346
     }
   },
   "changeSummary": {
-    "totalDetected": 11,
-    "total": 9,
+    "totalDetected": 6,
+    "total": 5,
     "byDataset": {
-      "intelligenceEvent": 9
+      "intelligenceEvent": 5
     },
     "byChangeType": {
-      "external_event": 10,
-      "data_maintenance": 1
+      "external_event": 6
     },
-    "externalCandidates": 10,
+    "externalCandidates": 6,
     "qualityRejected": 1,
-    "maintenanceExcluded": 1,
+    "maintenanceExcluded": 0,
     "aggregatedEvents": 0,
     "highestImportance": 91,
     "verifiedChangeTotal": 0,
     "candidateTotal": 0,
-    "auxiliaryLeadTotal": 9,
+    "auxiliaryLeadTotal": 5,
     "rejectedTotal": 1,
-    "newEvents": 9,
+    "newEvents": 5,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
@@ -54,159 +53,102 @@
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "截至 2026-09-09 的证据包共新增 9 条高价值 AI 情报事件（证据级 B/C，多数单来源、自动化未人工审阅）。其中 OpenAI 声称其未发布模型解决了 Navier-Stokes 方程开放问题，属于潜在重大科学突破但亟待独立验证；Anthropic 内部安全研究人员发出极端风险警告，凸显 AI 安全争议；Euno 完成 2300 万美元融资，显示资本市场对 AI 代理基础设施的关注；Google Cloud 与 Accenture 组建联合业务部门，Databricks 推出自适应检索模型，体现企业 AI 落地与成本优化的活跃度。总体上，AI 技术与商业化进展加速，但安全滥用、虚假信息操纵和证据可靠性均构成不可忽视的风险。 质量门诊断：仅为发现线索，不能支持正式主张 1。",
+    "executiveSummary": "截至2026-09-09的证据包包含五项外部事件，均来自单一来源且未经人工复核。其中三条事件围绕AI代理展开：Lightfield完成4700万美元A轮融资，面向“运行在代理上的公司”提供CRM；Meta推出个人AI代理Muse，定价为免费及每月20/100美元；Google将Gemini Daily Brief向所有美国用户开放。另有Aqua获得1880万美元支持推出另类投资平台，以及Spartan Logistics通过收购Allen Logistics扩大Toledo业务。证据等级为B/C级，需以官方信息验证；AI代理相关产品密集发布，但商业模式、收入转化与竞争格局尚待观察。 质量门诊断：仅为发现线索，不能支持正式主张 1。",
     "keyDevelopments": [
       {
-        "title": "OpenAI 声称未发布模型解决 Navier-Stokes 方程重大开放问题",
-        "assessment": "事实：据 Washington Post 报道，OpenAI 称其一个未发布 AI 模型解决了现代数学研究中最重大的开放问题之一，涉及 Navier-Stokes 方程（E004）。推断：若获验证，这将是 AI 在基础科学发现领域的标志性突破。待验证：目前仅 OpenAI 单方声明，尚无同行评议、复现或细节披露。",
-        "importance": 5,
+        "title": "Lightfield Raises $47 Million Series A to Build the CRM for Companies that Run on Agents",
+        "assessment": "据新闻稿，Lightfield完成4700万美元A轮融资，明确以“运行在代理上的公司”为目标客户构建CRM。自发布以来已有超过5000家公司注册，部署AI代理负责建立销售管道、推进交易和管理客户。该数字体现市场对Agent原生CRM的兴趣，但注册不等于付费收入，商业模式和与现有CRM的差异化尚未验证。",
+        "importance": 4,
         "confidence": "medium",
         "entities": [
-          "OpenAI"
-        ],
-        "evidenceIds": [
-          "E004"
-        ]
-      },
-      {
-        "title": "Anthropic 研究人员警告 AI “可能杀死全人类”",
-        "assessment": "事实：The Verge 报道，Anthropic 一位高级安全研究员称 AI 在本十年末杀死全人类的概率超过 10%，且其同事因担忧业界竞速而辞职（E003）。推断：该事件可能强化 AI 安全监管讨论，但对公司业务的实际影响尚不明朗。待验证：研究员姓名、概率估算方法及辞职人数未在证据中详述。",
-        "importance": 4,
-        "confidence": "low",
-        "entities": [
-          "Anthropic"
-        ],
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "title": "Euno 完成 2300 万美元融资，构建自主代理上下文大脑",
-        "assessment": "事实：SiliconANGLE 报道，Euno 融资 2300 万美元，用于构建面向自主代理的 AI 原生上下文大脑（E001）。推断：融资显示市场对代理基础设施赛道保持热度。待验证：投资方、估值、产品阶段及客户采用均未披露。",
-        "importance": 3,
-        "confidence": "low",
-        "entities": [
-          "Euno"
+          "Lightfield"
         ],
         "evidenceIds": [
           "E001"
         ]
       },
       {
-        "title": "Google Cloud 与 Accenture 组建 Gemini Enterprise 联合业务部门",
-        "assessment": "事实：ITPro 报道，Google Cloud 与 Accenture 成立 Accenture Gemini Enterprise Business Group，整合顾问与前向部署工程师，帮助客户扩展 Gemini Enterprise AI 能力（E007）。推断：云厂商与咨询公司深度绑定将加速企业 AI 规模落地。待验证：部门规模、客户数量及实际业绩未披露。",
-        "importance": 3,
-        "confidence": "medium",
+        "title": "Meta Launches Muse, a Personal AI Agent That Acts on Your Behalf",
+        "assessment": "根据ExtremeTech报道，Meta推出个人AI代理Muse，能够代表用户行动；服务提供免费层级及每月20美元和100美元两种付费计划。这表明Meta进入个人AI代理市场，与类似助手类产品展开竞争。但该事件仅有单一C级媒体来源，官方细节未确认，付费计划对应的功能范围未知。",
+        "importance": 4,
+        "confidence": "low",
         "entities": [
-          "Google Cloud",
-          "Accenture"
+          "Meta",
+          "Muse"
         ],
         "evidenceIds": [
-          "E007"
+          "E003"
         ]
       },
       {
-        "title": "Databricks 推出自适应检索模型以降低搜索成本与延迟",
-        "assessment": "事实：InfoWorld 报道，Databricks 发布 Adaptive Instructed-Retriever，对复杂查询尝试额外步骤、简单查询提前停止，以平衡答案质量与成本（E010）。推断：该产品可增强企业 AI 搜索的性价比竞争力。待验证：具体性能指标和独立评测未出现。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "Databricks"
-        ],
-        "evidenceIds": [
-          "E010"
-        ]
-      },
-      {
-        "title": "虚假消费者团体被指使用 AI 生成对 Paramount 合并的假支持",
-        "assessment": "事实：Techdirt 报道，在 1110 亿美元 Paramount/Warner Bros 合并背景下，一个虚假消费者团体被指使用 AI 制造虚假支持，报道同时批评 Ellison 家族旗下公司高管（E002）。推断：事件凸显 AI 生成内容在舆论操纵中的滥用风险。待验证：指控细节、涉事方及法律后果均未提供。",
+        "title": "Gemini’s Daily Brief is now available to everyone in the US.",
+        "assessment": "据The Verge报道，Google将Gemini Daily Brief向所有美国用户开放。该功能在5月I/O大会公布，可从已连接Gemini的应用中提取邮件、会议等信息生成每日摘要；此前仅限Google AI Plus、Pro和Ultra订阅者使用。该动作表明AI个人助手功能从付费订阅向大众市场扩展的意图。由于来源为单一C级媒体，具体推广节奏和可用范围仍需Google官方确认。",
         "importance": 3,
         "confidence": "low",
         "entities": [
-          "Paramount",
-          "Warner Bros",
-          "Ellison家族"
+          "Google",
+          "Gemini"
         ],
         "evidenceIds": [
-          "E002"
+          "E005"
         ]
       },
       {
-        "title": "AskELIE 与 Pine Services Group 达成美国独家战略合作",
-        "assessment": "事实：PR Newswire 报道，AskELIE 与 Pine Services Group 建立独家合作，以扩展 AI 驱动的运营自动化在美国金融与合规工作流中的覆盖（E008）。推断：合作有助于渠道拓展，但市场影响有限。待验证：合作条款、客户案例与收入贡献未知。",
-        "importance": 2,
+        "title": "Aqua Launches the Industry's First Turnkey Alternative Investment Platform, Backed by $18.8 Million from Google, Y Combinator, and Leading Venture Firms",
+        "assessment": "据新闻稿，Aqua推出面向另类投资的交钥匙平台，并宣布获得1880万美元支持，出资方包括Google、Y Combinator及多家头部风投。平台为财富管理者和基金发起人提供构建、管理和扩展另类投资计划的集成系统。“行业首个”为厂商表述，融资到位和产品发布是事实，但客户采用和监管情况未知。",
+        "importance": 3,
         "confidence": "medium",
         "entities": [
-          "AskELIE",
-          "Pine Services Group"
+          "Aqua"
         ],
         "evidenceIds": [
-          "E008"
+          "E006"
         ]
       },
       {
-        "title": "AI 奖项活动吸引创新提名与知名企业入围",
-        "assessment": "事实：Globee Awards 宣布第 18 届创新奖开放 AI 实施成就提名（E005）；AFP 公布 2026 Pinnacle Awards 决赛名单，包括 Bandwidth、Google、ServiceNow（E006）。推断：奖项生态反映企业 AI 应用活跃，但不构成业务实质影响。待验证：最终获奖名单及后续影响。",
+        "title": "Spartan Logistics Expands Toledo Presence Through Strategic Acquisition",
+        "assessment": "据新闻稿，Spartan Logistics宣布收购Allen Logistics以扩大在Toledo的业务。Spartan为家族式第三方物流企业，专注于仓储和运输；收购对象为仓储公司。此次收购属传统物流区域扩张，与AI代理主线关联较弱，但反映供应链服务整合仍在继续。财务条款和整合计划未披露。",
         "importance": 1,
         "confidence": "medium",
         "entities": [
-          "Globee Awards",
-          "AFP",
-          "Bandwidth",
-          "Google",
-          "ServiceNow"
+          "Spartan Logistics",
+          "Allen Logistics"
         ],
         "evidenceIds": [
-          "E005",
-          "E006"
+          "E002"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "OpenAI",
+        "entity": "个人AI代理市场",
         "direction": "positive",
-        "statement": "OpenAI 声称在 Navier-Stokes 方程上取得重大突破，若获独立验证将显著强化其技术领导地位（E004）。",
+        "statement": "Meta推出个人AI代理Muse并设置免费层级，Google将Gemini Daily Brief从付费订阅开放给所有美国用户，两者均表明个人AI代理产品正在扩大可触达用户范围。这为个人AI代理市场带来更多供给，但产品形态和定价体系仍在分化中。",
         "evidenceIds": [
-          "E004"
+          "E003",
+          "E005"
         ]
       },
       {
-        "entity": "Anthropic",
-        "direction": "negative",
-        "statement": "内部安全研究人员的极端风险警告可能引发人才流失、品牌受损和监管关注（E003）。",
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "entity": "Euno",
+        "entity": "Agent原生企业软件",
         "direction": "positive",
-        "statement": "获得 2300 万美元融资表明资本市场对 AI 代理上下文基础设施的认可（E001）。",
+        "statement": "Lightfield获得4700万美元A轮融资并报告5000+公司注册，说明针对AI代理部署的企业CRM是一个能吸引融资的早期市场。但注册用户与付费收入之间的转化尚未被证据验证。",
         "evidenceIds": [
           "E001"
         ]
       },
       {
-        "entity": "Databricks",
+        "entity": "另类投资金融基础设施",
         "direction": "positive",
-        "statement": "自适应检索模型以复杂查询多步、简单查询早停的方式优化成本与延迟，有利于企业 AI 落地（E010）。",
+        "statement": "Aqua获得1880万美元融资并推出另类投资平台，投资方包括Google和Y Combinator，显示资本对下一代另类投资基础设施的关注。该平台尚需证明金融机构实际采用。",
         "evidenceIds": [
-          "E010"
+          "E006"
         ]
       },
       {
-        "entity": "Google Cloud / Accenture",
-        "direction": "positive",
-        "statement": "联合业务部门将咨询、前向部署工程师与 Gemini Enterprise 结合，有望加速客户 AI 规模化采用（E007）。",
-        "evidenceIds": [
-          "E007"
-        ]
-      },
-      {
-        "entity": "AI 治理与舆论风险",
-        "direction": "negative",
-        "statement": "AI 被用来制造虚假消费者支持的事件增加了监管与道德风险，可能拖累行业信任（E002）。",
+        "entity": "供应链物流区域整合",
+        "direction": "neutral",
+        "statement": "Spartan Logistics收购Allen Logistics以扩大Toledo业务，属于传统物流区域扩张，未涉及科技代理变革，对AI主题影响中性。",
         "evidenceIds": [
           "E002"
         ]
@@ -214,49 +156,41 @@
     ],
     "watchlist": [
       {
-        "item": "OpenAI 未发布模型的 Navier-Stokes 解决方案",
-        "reason": "该声明若为真将改变 AI 在科学发现中的格局，但当前仅是单方声明。",
-        "nextEvidence": "独立复现、同行评议或 OpenAI 的技术细节披露",
-        "evidenceIds": [
-          "E004"
-        ]
-      },
-      {
-        "item": "Anthropic 安全研究员离职与内部风波",
-        "reason": "可能影响人才流动、公司战略与 AI 安全监管走向。",
-        "nextEvidence": "后续报道、Anthropic 官方回应或更多证人信息",
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "item": "Euno 的产品落地与客户采用",
-        "reason": "需要验证“上下文大脑”是否真正解决自主代理的实用性挑战。",
-        "nextEvidence": "客户案例、产品文档、后续融资或合作伙伴公告",
+        "item": "Lightfield付费客户转化率",
+        "reason": "证据显示5000+公司注册，但无收入或付费转化数据，需验证其商业模式有效性。",
+        "nextEvidence": "Lightfield后续公布的收入、ARR或付费客户数量披露，或第三方客户案例。",
         "evidenceIds": [
           "E001"
         ]
       },
       {
-        "item": "Databricks 自适应检索模型的性能验证",
-        "reason": "成本与延迟优势是否可复现将决定其市场竞争力。",
-        "nextEvidence": "第三方基准测试、客户评测或成本分析",
+        "item": "Meta Muse官方功能与定价细节",
+        "reason": "当前信息来自单一C级媒体，仅披露免费层级以及每月20/100美元两档价格，未说明各层级功能和可用地域。",
+        "nextEvidence": "Meta官方博客、产品页面或新闻稿。",
         "evidenceIds": [
-          "E010"
+          "E003"
         ]
       },
       {
-        "item": "Google Cloud/Accenture 联合业务部门成效",
-        "reason": "该业务部门能否真正拉动 Gemini Enterprise 的规模化采用值得跟踪。",
-        "nextEvidence": "客户合同公告、收入指引或落地案例",
+        "item": "Gemini Daily Brief的推广范围与商业化",
+        "reason": "报道称向所有美国用户开放，但此前的付费订阅者使用方式与免费版功能差异仍待确认。",
+        "nextEvidence": "Google官方支持页面或后续媒体报道。",
         "evidenceIds": [
-          "E007"
+          "E005"
         ]
       },
       {
-        "item": "虚假消费者团体事件后续",
-        "reason": "该事件可能引发对 AI 生成内容操纵舆论的监管反应。",
-        "nextEvidence": "监管机构声明、执法行动或涉事方回应",
+        "item": "Aqua平台客户采用与合规状态",
+        "reason": "平台刚发布并获得融资，但“首个”为厂商表述，实际金融机构采用、监管许可未披露。",
+        "nextEvidence": "Aqua的合作伙伴公告、监管备案或客户名单。",
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "item": "Spartan Logistics收购整合进展",
+        "reason": "收购宣布但未提供财务条款及如何整合Allen Logistics的仓储能力。",
+        "nextEvidence": "Spartan Logistics后续财报、官网公告或地方商业报道。",
         "evidenceIds": [
           "E002"
         ]
@@ -264,60 +198,68 @@
     ],
     "risks": [
       {
-        "risk": "AI 生成内容被用于舆论操纵",
-        "reason": "证据显示虚假消费者团体可能利用 AI 伪造对重大并购的支持，暴露 AI 滥用风险（E002）。",
+        "risk": "产品发布信息未被官方确认",
+        "reason": "Meta Muse与Gemini Daily Brief的细节分别来自ExtremeTech和The Verge，且均为单一C级来源；后续官方信息可能修正或澄清当前理解。",
         "evidenceIds": [
-          "E002"
+          "E003",
+          "E005"
         ]
       },
       {
-        "risk": "AI 极端风险预警引发监管收紧",
-        "reason": "Anthropic 内部人员警告 AI 可能杀死全人类，若引发公众与立法关注，可能带来更严格监管（E003）。",
+        "risk": "注册用户数可能对商业模式形成误导",
+        "reason": "Lightfield的5000+公司注册未对应收入证据；高注册量在SaaS早期可能来自免费试用，不能等同于可验证的付费需求。",
         "evidenceIds": [
-          "E003"
+          "E001"
         ]
       },
       {
-        "risk": "关键声明缺乏独立验证",
-        "reason": "OpenAI 的 Navier-Stokes 突破仅是“声称”，若后续被否定，可能造成对 AI 进展的过度乐观（E004）。",
+        "risk": "厂商宣称“行业首个”存在夸大风险",
+        "reason": "Aqua新闻稿使用“行业首个”表述，属于自我定位；若无第三方验证，创投判断不宜将其视为事实。",
         "evidenceIds": [
-          "E004"
+          "E006"
         ]
       },
       {
-        "risk": "低等级单源证据导致误判",
-        "reason": "多数情报事件为 C 级或单一媒体/新闻稿，自动化未人工审阅，证据可靠性有限，研究结论存在被修正的可能（E001, E002, E003, E007, E010）。",
+        "risk": "单一来源且未经人工复核的证据基础",
+        "reason": "证据包内所有事件均来自单一证据，reviewStatus为automated_unreviewed；任何单一快照都可能不完整或含错误。",
         "evidenceIds": [
           "E001",
           "E002",
           "E003",
-          "E007",
-          "E010"
+          "E005",
+          "E006"
+        ]
+      },
+      {
+        "risk": "区域物流收购整合风险",
+        "reason": "Spartan Logistics的收购未披露财务条款，且整合过程可能影响客户关系与运营，相关影响尚不可评估。",
+        "evidenceIds": [
+          "E002"
         ]
       }
     ],
-    "methodologyNote": "本分析完全基于 2026-09-09 证据包中的 9 条情报事件（E001-E008、E010；E009 未出现）。证据等级以 B/C 为主，多数来源为单条外部线索且状态为 automated_unreviewed。分析严格区分事实（证据中明确报道的内容）、推断（对业务/投资方向的合理引申）和待验证事项，并对 C 级证据采用 low 或 medium 置信度。未补充任何外部信息，不构成投资建议或收益承诺。 数据管线提示：追踪实体与公开信源发现=stale、完整公开情报刷新=stale、科创板招股书投资者证据刷新=stale、GitHub Pages 静态发布=stale。"
+    "methodologyNote": "本分析仅基于给定的证据包（changes与evidence字段），未补充任何外部事实或网络资料。证据等级：E001/E002/E006为B级新闻稿，E003/E005为C级媒体转载；所有事件reviewStatus为automated_unreviewed。报告中事实性表述均标注“据新闻稿/报道”，推断部分明确标为待验证。所有事件缺乏交叉验证，因此对重要性、方向和风险的判断均为初步结论，不构成投资建议，不提供目标价或收益承诺。 数据管线提示：追踪实体与公开信源发现=stale、完整公开情报刷新=stale、科创板招股书投资者证据刷新=stale、GitHub Pages 静态发布=stale。"
   },
   "changes": [
     {
-      "id": "chg-24fc85514bc117219e7d",
+      "id": "chg-a32c7f3e51addc467e52",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-624ea81deddc89821e",
-      "entityName": "Euno raises $23M to build the AI-native context brain for autonomous agents - SiliconANGLE",
+      "entityId": "intelligence-event-22def544e2719e9eaa",
+      "entityName": "Lightfield Raises $47 Million Series A to Build the CRM for Companies that Run on Agents",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：Euno raises $23M to build the AI-native context brain for autonomous agents - SiliconANGLE。",
+      "summary": "新增高价值情报事件记录：Lightfield Raises $47 Million Series A to Build the CRM for Companies that Run on Agents。",
       "importance": 91,
       "before": null,
       "after": {
         "publishedAt": "2026-09-09",
-        "summary": "Euno raises $23M to build the AI-native context brain for autonomous agents - SiliconANGLE",
-        "title": "Euno raises $23M to build the AI-native context brain for autonomous agents - SiliconANGLE"
+        "summary": "More than 5,000 companies have signed up for Lightfield since launch in November, deploying AI agents that build pipeline, work deals, and manage customers from a shared, living record of their business. SAN FRANCISCO, Sept. 9, 2026 /PRNewswire/ -- Lightfield…",
+        "title": "Lightfield Raises $47 Million Series A to Build the CRM for Companies that Run on Agents"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -339,7 +281,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "Euno raises $23M to build the AI-native context brain for autonomous agents - SiliconANGLE",
+          "after": "More than 5,000 companies have signed up for Lightfield since launch in November, deploying AI agents that build pipeline, work deals, and manage customers from a shared, living record of their business. SAN FRANCISCO, Sept. 9, 2026 /PRNewswire/ -- Lightfield…",
           "evidenceIds": [
             "E001"
           ]
@@ -347,7 +289,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "Euno raises $23M to build the AI-native context brain for autonomous agents - SiliconANGLE",
+          "after": "Lightfield Raises $47 Million Series A to Build the CRM for Companies that Run on Agents",
           "evidenceIds": [
             "E001"
           ]
@@ -368,35 +310,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-70bcaa72c1daebb5d6f8"
+        "evt-233c1e709437363741f6"
       ],
       "eventLifecycles": {
-        "evt-70bcaa72c1daebb5d6f8": "first_seen"
+        "evt-233c1e709437363741f6": "first_seen"
       },
-      "eventId": "evt-70bcaa72c1daebb5d6f8",
+      "eventId": "evt-233c1e709437363741f6",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T15:25:34+00:00",
-      "lastSeenAt": "2026-09-09T15:25:34+00:00"
+      "firstSeenAt": "2026-09-09T16:56:58+00:00",
+      "lastSeenAt": "2026-09-09T16:56:58+00:00"
     },
     {
-      "id": "chg-3112353d9908e2f48e1d",
+      "id": "chg-54a27ecdfb16be09925a",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-d2639f37ff43200b32",
-      "entityName": "Fake Consumer Group Using AI To Generate Fake Support For Paramount Merger",
+      "entityId": "intelligence-event-c02651566453995083",
+      "entityName": "Spartan Logistics Expands Toledo Presence Through Strategic Acquisition",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：Fake Consumer Group Using AI To Generate Fake Support For Paramount Merger。",
+      "summary": "新增高价值情报事件记录：Spartan Logistics Expands Toledo Presence Through Strategic Acquisition。",
       "importance": 89,
       "before": null,
       "after": {
         "publishedAt": "2026-09-09",
-        "summary": "In addition to the $111 billion Paramount/Warner Bros merger just being foundationally bad for creatives, labor, and consumers, the Ellison family-owned company’s executives just keep demonstrating why they’re not really the kind of folks you want dominating…",
-        "title": "Fake Consumer Group Using AI To Generate Fake Support For Paramount Merger"
+        "summary": "WHITEHOUSE, Ohio, Sept. 9, 2026 /PRNewswire/ -- Spartan Logistics, a family-owned third-party logistics provider specializing in warehousing and transportation services, today announces the acquisition of Allen Logistics, a warehousing company supporting cust…",
+        "title": "Spartan Logistics Expands Toledo Presence Through Strategic Acquisition"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -418,7 +360,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "In addition to the $111 billion Paramount/Warner Bros merger just being foundationally bad for creatives, labor, and consumers, the Ellison family-owned company’s executives just keep demonstrating why they’re not really the kind of folks you want dominating…",
+          "after": "WHITEHOUSE, Ohio, Sept. 9, 2026 /PRNewswire/ -- Spartan Logistics, a family-owned third-party logistics provider specializing in warehousing and transportation services, today announces the acquisition of Allen Logistics, a warehousing company supporting cust…",
           "evidenceIds": [
             "E002"
           ]
@@ -426,7 +368,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "Fake Consumer Group Using AI To Generate Fake Support For Paramount Merger",
+          "after": "Spartan Logistics Expands Toledo Presence Through Strategic Acquisition",
           "evidenceIds": [
             "E002"
           ]
@@ -447,509 +389,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-026990bdc821e1f984da"
+        "evt-c8f6941fb2a65c87ca44"
       ],
       "eventLifecycles": {
-        "evt-026990bdc821e1f984da": "first_seen"
+        "evt-c8f6941fb2a65c87ca44": "first_seen"
       },
-      "eventId": "evt-026990bdc821e1f984da",
+      "eventId": "evt-c8f6941fb2a65c87ca44",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T15:25:34+00:00",
-      "lastSeenAt": "2026-09-09T15:25:34+00:00"
+      "firstSeenAt": "2026-09-09T16:56:58+00:00",
+      "lastSeenAt": "2026-09-09T16:56:58+00:00"
     },
     {
-      "id": "chg-38cdd23e39302d50b2e3",
+      "id": "chg-d0a86e19ab08431aacea",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-0a9116510baa72f1d4",
-      "entityName": "Worried Anthropic researchers warn that AI ‘could kill all humans’",
+      "entityId": "intelligence-event-39e3e3afcaad47ed52",
+      "entityName": "Meta Launches Muse, a Personal AI Agent That Acts on Your Behalf",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：Worried Anthropic researchers warn that AI ‘could kill all humans’。",
-      "importance": 85,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-09",
-        "summary": "A senior Anthropic safety researcher has said there is more than a 10 percent chance artificial intelligence \"could kill all humans\" by the end of the decade, just hours after a colleague resigned over fears the AI lab and its rivals are carelessly racing to…",
-        "title": "Worried Anthropic researchers warn that AI ‘could kill all humans’"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-09",
-          "evidenceIds": [
-            "E003"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "A senior Anthropic safety researcher has said there is more than a 10 percent chance artificial intelligence \"could kill all humans\" by the end of the decade, just hours after a colleague resigned over fears the AI lab and its rivals are carelessly racing to…",
-          "evidenceIds": [
-            "E003"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Worried Anthropic researchers warn that AI ‘could kill all humans’",
-          "evidenceIds": [
-            "E003"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E003"
-      ],
-      "supportingEvidenceIds": [
-        "E003"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-8b835855976234ea7c49"
-      ],
-      "eventLifecycles": {
-        "evt-8b835855976234ea7c49": "first_seen"
-      },
-      "eventId": "evt-8b835855976234ea7c49",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T15:25:34+00:00",
-      "lastSeenAt": "2026-09-09T15:25:34+00:00"
-    },
-    {
-      "id": "chg-2b7106a29fb1ec0ccb7c",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-59c702d26f1043d973",
-      "entityName": "The Washington Post：OpenAI said that an unreleased AI model had resolved one of the most significant open questions in modern math research. The problem concerns the Navi",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：The Washington Post：OpenAI said that an unreleased AI model had resolved one of the most significant open questions in modern math research. The problem concerns the Navi。",
-      "importance": 85,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-09",
-        "summary": "OpenAI said that an unreleased AI model had resolved one of the most significant open questions in modern math research. The problem concerns the Navier-Stokes equations, used to model the flow of fluids and predict phenomena such as weather patterns. https:/…",
-        "title": "The Washington Post：OpenAI said that an unreleased AI model had resolved one of the most significant open questions in modern math research. The problem concerns the Navi"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-09",
-          "evidenceIds": [
-            "E004"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "OpenAI said that an unreleased AI model had resolved one of the most significant open questions in modern math research. The problem concerns the Navier-Stokes equations, used to model the flow of fluids and predict phenomena such as weather patterns. https:/…",
-          "evidenceIds": [
-            "E004"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "The Washington Post：OpenAI said that an unreleased AI model had resolved one of the most significant open questions in modern math research. The problem concerns the Navi",
-          "evidenceIds": [
-            "E004"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E004"
-      ],
-      "supportingEvidenceIds": [
-        "E004"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-b43939dfa04eaed50489"
-      ],
-      "eventLifecycles": {
-        "evt-b43939dfa04eaed50489": "first_seen"
-      },
-      "eventId": "evt-b43939dfa04eaed50489",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T15:25:34+00:00",
-      "lastSeenAt": "2026-09-09T15:25:34+00:00"
-    },
-    {
-      "id": "chg-84ab162cbf4479860f35",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-b3be5993baf31fd265",
-      "entityName": "Globee® Awards for Innovation, Now in Its 18th Year, Invite Artificial Intelligence Implementation Achievement Nominations Worldwide",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Globee® Awards for Innovation, Now in Its 18th Year, Invite Artificial Intelligence Implementation Achievement Nominations Worldwide。",
-      "importance": 85,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-09",
-        "summary": "Recognizing local, regional, and global achievements that apply artificial intelligence to solve problems, enhance capabilities, improve experiences, and create measurable value SAN FRANCISCO, Sept. 9, 2026 /PRNewswire/ -- The Globee® Awards announced that no…",
-        "title": "Globee® Awards for Innovation, Now in Its 18th Year, Invite Artificial Intelligence Implementation Achievement Nominations Worldwide"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-09",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Recognizing local, regional, and global achievements that apply artificial intelligence to solve problems, enhance capabilities, improve experiences, and create measurable value SAN FRANCISCO, Sept. 9, 2026 /PRNewswire/ -- The Globee® Awards announced that no…",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Globee® Awards for Innovation, Now in Its 18th Year, Invite Artificial Intelligence Implementation Achievement Nominations Worldwide",
-          "evidenceIds": [
-            "E005"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E005"
-      ],
-      "supportingEvidenceIds": [
-        "E005"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-0b3d57282938020d02de"
-      ],
-      "eventLifecycles": {
-        "evt-0b3d57282938020d02de": "first_seen"
-      },
-      "eventId": "evt-0b3d57282938020d02de",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T15:25:34+00:00",
-      "lastSeenAt": "2026-09-09T15:25:34+00:00"
-    },
-    {
-      "id": "chg-fd35be46b1568960de6e",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-d5a8f5bb4ab2f6e5ad",
-      "entityName": "Finalists Named for the AFP 2026 Pinnacle Awards: Bandwidth, Google, ServiceNow",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Finalists Named for the AFP 2026 Pinnacle Awards: Bandwidth, Google, ServiceNow。",
-      "importance": 85,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-09",
-        "summary": "Sponsored by Truist for a third year, the AFP Pinnacle Awards recognize leading treasury and finance groups for innovation, excellence and impact ROCKVILLE, Md., Sept. 9, 2026 /PRNewswire/ -- The Association for Financial Professionals named Bandwidth, Google…",
-        "title": "Finalists Named for the AFP 2026 Pinnacle Awards: Bandwidth, Google, ServiceNow"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-09",
-          "evidenceIds": [
-            "E006"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Sponsored by Truist for a third year, the AFP Pinnacle Awards recognize leading treasury and finance groups for innovation, excellence and impact ROCKVILLE, Md., Sept. 9, 2026 /PRNewswire/ -- The Association for Financial Professionals named Bandwidth, Google…",
-          "evidenceIds": [
-            "E006"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Finalists Named for the AFP 2026 Pinnacle Awards: Bandwidth, Google, ServiceNow",
-          "evidenceIds": [
-            "E006"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E006"
-      ],
-      "supportingEvidenceIds": [
-        "E006"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-a6db4ee8b2188cef3fc7"
-      ],
-      "eventLifecycles": {
-        "evt-a6db4ee8b2188cef3fc7": "first_seen"
-      },
-      "eventId": "evt-a6db4ee8b2188cef3fc7",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T15:25:34+00:00",
-      "lastSeenAt": "2026-09-09T15:25:34+00:00"
-    },
-    {
-      "id": "chg-954242ec88ce248f3b12",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-ec71edb3622fdeaa75",
-      "entityName": "Google Cloud and Accenture launch new business group to embed forward deployed engineers with customers",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Google Cloud and Accenture launch new business group to embed forward deployed engineers with customers。",
-      "importance": 84,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-09",
-        "summary": "Google Cloud and Accenture have unveiled a new joint business unit aimed at helping Gemini Enterprise customers scale AI capabilities. The Accenture Gemini Enterprise Business Group will bring together Accenture’s Gemini Enterprise-certified consultants, forw…",
-        "title": "Google Cloud and Accenture launch new business group to embed forward deployed engineers with customers"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-09",
-          "evidenceIds": [
-            "E007"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Google Cloud and Accenture have unveiled a new joint business unit aimed at helping Gemini Enterprise customers scale AI capabilities. The Accenture Gemini Enterprise Business Group will bring together Accenture’s Gemini Enterprise-certified consultants, forw…",
-          "evidenceIds": [
-            "E007"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Google Cloud and Accenture launch new business group to embed forward deployed engineers with customers",
-          "evidenceIds": [
-            "E007"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E007"
-      ],
-      "supportingEvidenceIds": [
-        "E007"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-caf0883cfae2b41896c1"
-      ],
-      "eventLifecycles": {
-        "evt-caf0883cfae2b41896c1": "first_seen"
-      },
-      "eventId": "evt-caf0883cfae2b41896c1",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T15:25:34+00:00",
-      "lastSeenAt": "2026-09-09T15:25:34+00:00"
-    },
-    {
-      "id": "chg-63ca10f1f7976ac8b636",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-80123bb3da105fbde6",
-      "entityName": "AskELIE Announces Exclusive Strategic Partnership with Pine Services Group to Expand AI-Powered Operational Automation Across the U.S.",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：AskELIE Announces Exclusive Strategic Partnership with Pine Services Group to Expand AI-Powered Operational Automation Across the U.S.。",
-      "importance": 84,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-09",
-        "summary": "LONDON, Sept. 9, 2026 /PRNewswire/ -- AskELIE, the AI-powered operational automation platform built for real-world financial and compliance workflows, today announced an exclusive strategic partnership with Pine Services Group. The partnership marks the secon…",
-        "title": "AskELIE Announces Exclusive Strategic Partnership with Pine Services Group to Expand AI-Powered Operational Automation Across the U.S."
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-09",
-          "evidenceIds": [
-            "E008"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "LONDON, Sept. 9, 2026 /PRNewswire/ -- AskELIE, the AI-powered operational automation platform built for real-world financial and compliance workflows, today announced an exclusive strategic partnership with Pine Services Group. The partnership marks the secon…",
-          "evidenceIds": [
-            "E008"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "AskELIE Announces Exclusive Strategic Partnership with Pine Services Group to Expand AI-Powered Operational Automation Across the U.S.",
-          "evidenceIds": [
-            "E008"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E008"
-      ],
-      "supportingEvidenceIds": [
-        "E008"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-3f3bc86b19bc460a41f1"
-      ],
-      "eventLifecycles": {
-        "evt-3f3bc86b19bc460a41f1": "first_seen"
-      },
-      "eventId": "evt-3f3bc86b19bc460a41f1",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T15:25:34+00:00",
-      "lastSeenAt": "2026-09-09T15:25:34+00:00"
-    },
-    {
-      "id": "chg-9d4adaf588e31315ac13",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-752fddbdb9d965ac03",
-      "entityName": "Databricks unveils adaptive AI retrieval model to cut search costs and latency",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Databricks unveils adaptive AI retrieval model to cut search costs and latency。",
+      "summary": "新增高价值情报事件记录：Meta Launches Muse, a Personal AI Agent That Acts on Your Behalf。",
       "importance": 82,
       "before": null,
       "after": {
         "publishedAt": "2026-09-09",
-        "summary": "Databricks on Wednesday introduced Adaptive Instructed-Retriever, a new retrieval model designed to improve enterprise AI search by taking additional steps for complex queries while stopping early on simpler ones in order to help its customers balance answer…",
-        "title": "Databricks unveils adaptive AI retrieval model to cut search costs and latency"
+        "summary": "The service has a free tier as well as two paid plans: $20 and $100 per month.",
+        "title": "Meta Launches Muse, a Personal AI Agent That Acts on Your Behalf"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -965,31 +433,31 @@
           "before": null,
           "after": "2026-09-09",
           "evidenceIds": [
-            "E010"
+            "E003"
           ]
         },
         {
           "field": "summary",
           "before": null,
-          "after": "Databricks on Wednesday introduced Adaptive Instructed-Retriever, a new retrieval model designed to improve enterprise AI search by taking additional steps for complex queries while stopping early on simpler ones in order to help its customers balance answer…",
+          "after": "The service has a free tier as well as two paid plans: $20 and $100 per month.",
           "evidenceIds": [
-            "E010"
+            "E003"
           ]
         },
         {
           "field": "title",
           "before": null,
-          "after": "Databricks unveils adaptive AI retrieval model to cut search costs and latency",
+          "after": "Meta Launches Muse, a Personal AI Agent That Acts on Your Behalf",
           "evidenceIds": [
-            "E010"
+            "E003"
           ]
         }
       ],
       "evidenceIds": [
-        "E010"
+        "E003"
       ],
       "supportingEvidenceIds": [
-        "E010"
+        "E003"
       ],
       "evidenceQuality": {
         "status": "passed",
@@ -1000,32 +468,190 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-2e6ec079915a7bfca56c"
+        "evt-4e79b61e1e3518e7e7aa"
       ],
       "eventLifecycles": {
-        "evt-2e6ec079915a7bfca56c": "first_seen"
+        "evt-4e79b61e1e3518e7e7aa": "first_seen"
       },
-      "eventId": "evt-2e6ec079915a7bfca56c",
+      "eventId": "evt-4e79b61e1e3518e7e7aa",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T15:25:34+00:00",
-      "lastSeenAt": "2026-09-09T15:25:34+00:00"
+      "firstSeenAt": "2026-09-09T16:56:58+00:00",
+      "lastSeenAt": "2026-09-09T16:56:58+00:00"
+    },
+    {
+      "id": "chg-1139f548aa06d139b505",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-536823418c9738b179",
+      "entityName": "Gemini’s Daily Brief is now available to everyone in the US.",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Gemini’s Daily Brief is now available to everyone in the US.。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-08",
+        "summary": "First announced at I/O in May, Daily Brief is an AI feature that generates a summary of your day with the emails, meetings, and other information pulled from apps connected to Gemini. It was previously only available to Google AI Plus, Pro, and Ultra subscrib…",
+        "title": "Gemini’s Daily Brief is now available to everyone in the US."
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-08",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "First announced at I/O in May, Daily Brief is an AI feature that generates a summary of your day with the emails, meetings, and other information pulled from apps connected to Gemini. It was previously only available to Google AI Plus, Pro, and Ultra subscrib…",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Gemini’s Daily Brief is now available to everyone in the US.",
+          "evidenceIds": [
+            "E005"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E005"
+      ],
+      "supportingEvidenceIds": [
+        "E005"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-2218898b213648748fcd"
+      ],
+      "eventLifecycles": {
+        "evt-2218898b213648748fcd": "first_seen"
+      },
+      "eventId": "evt-2218898b213648748fcd",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-09T16:56:58+00:00",
+      "lastSeenAt": "2026-09-09T16:56:58+00:00"
+    },
+    {
+      "id": "chg-6c20947c6096b9f1407d",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-44a2baed7628724221",
+      "entityName": "Aqua Launches the Industry's First Turnkey Alternative Investment Platform, Backed by $18.8 Million from Google, Y Combinator, and Leading Venture Firms",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Aqua Launches the Industry's First Turnkey Alternative Investment Platform, Backed by $18.8 Million from Google, Y Combinator, and Leading Venture Firms。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-09",
+        "summary": "Aqua gives wealth managers and fund sponsors an integrated system for building, managing, and scaling alternatives programs NEW YORK, Sept. 9, 2026 /PRNewswire/ -- Aqua, a next-generation alternatives infrastructure solution, today announced the launch of the…",
+        "title": "Aqua Launches the Industry's First Turnkey Alternative Investment Platform, Backed by $18.8 Million from Google, Y Combinator, and Leading Venture Firms"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-09",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Aqua gives wealth managers and fund sponsors an integrated system for building, managing, and scaling alternatives programs NEW YORK, Sept. 9, 2026 /PRNewswire/ -- Aqua, a next-generation alternatives infrastructure solution, today announced the launch of the…",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Aqua Launches the Industry's First Turnkey Alternative Investment Platform, Backed by $18.8 Million from Google, Y Combinator, and Leading Venture Firms",
+          "evidenceIds": [
+            "E006"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E006"
+      ],
+      "supportingEvidenceIds": [
+        "E006"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-bfb2ba5c653af6ccdfec"
+      ],
+      "eventLifecycles": {
+        "evt-bfb2ba5c653af6ccdfec": "first_seen"
+      },
+      "eventId": "evt-bfb2ba5c653af6ccdfec",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-09T16:56:58+00:00",
+      "lastSeenAt": "2026-09-09T16:56:58+00:00"
     }
   ],
   "evidence": [
     {
       "id": "E001",
-      "changeId": "chg-24fc85514bc117219e7d",
-      "entityName": "Euno raises $23M to build the AI-native context brain for autonomous agents - SiliconANGLE",
-      "claim": "新增高价值情报事件记录：Euno raises $23M to build the AI-native context brain for autonomous agents - SiliconANGLE。",
+      "changeId": "chg-a32c7f3e51addc467e52",
+      "entityName": "Lightfield Raises $47 Million Series A to Build the CRM for Companies that Run on Agents",
+      "claim": "新增高价值情报事件记录：Lightfield Raises $47 Million Series A to Build the CRM for Companies that Run on Agents。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "SiliconANGLE",
-      "title": "Euno raises $23M to build the AI-native context brain for autonomous agents - SiliconANGLE",
-      "url": "https://siliconangle.com/2026/09/09/euno-raises-23m-to-build-the-ai-native-context-brain-for-autonomous-agents",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "Lightfield Raises $47 Million Series A to Build the CRM for Companies that Run on Agents",
+      "url": "https://www.prnewswire.com/news-releases/lightfield-raises-47-million-series-a-to-build-the-crm-for-companies-that-run-on-agents-302874024.html",
       "publishedAt": "2026-09-09",
-      "evidenceGrade": "C",
-      "platformName": "SiliconANGLE",
-      "sourceRole": "corroboration",
+      "evidenceGrade": "B",
+      "platformName": "新闻稿",
+      "sourceRole": "primary",
       "claimFields": [
         "publishedAt",
         "summary",
@@ -1038,18 +664,18 @@
     },
     {
       "id": "E002",
-      "changeId": "chg-3112353d9908e2f48e1d",
-      "entityName": "Fake Consumer Group Using AI To Generate Fake Support For Paramount Merger",
-      "claim": "新增高价值情报事件记录：Fake Consumer Group Using AI To Generate Fake Support For Paramount Merger。",
+      "changeId": "chg-54a27ecdfb16be09925a",
+      "entityName": "Spartan Logistics Expands Toledo Presence Through Strategic Acquisition",
+      "claim": "新增高价值情报事件记录：Spartan Logistics Expands Toledo Presence Through Strategic Acquisition。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "Techdirt",
-      "title": "Fake Consumer Group Using AI To Generate Fake Support For Paramount Merger",
-      "url": "https://www.techdirt.com/2026/09/09/fake-consumer-group-using-ai-to-generate-fake-support-for-paramount-merger",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "Spartan Logistics Expands Toledo Presence Through Strategic Acquisition",
+      "url": "https://www.prnewswire.com/news-releases/spartan-logistics-expands-toledo-presence-through-strategic-acquisition-302874021.html",
       "publishedAt": "2026-09-09",
-      "evidenceGrade": "C",
-      "platformName": "Techdirt",
-      "sourceRole": "corroboration",
+      "evidenceGrade": "B",
+      "platformName": "新闻稿",
+      "sourceRole": "primary",
       "claimFields": [
         "publishedAt",
         "summary",
@@ -1062,15 +688,39 @@
     },
     {
       "id": "E003",
-      "changeId": "chg-38cdd23e39302d50b2e3",
-      "entityName": "Worried Anthropic researchers warn that AI ‘could kill all humans’",
-      "claim": "新增高价值情报事件记录：Worried Anthropic researchers warn that AI ‘could kill all humans’。",
+      "changeId": "chg-d0a86e19ab08431aacea",
+      "entityName": "Meta Launches Muse, a Personal AI Agent That Acts on Your Behalf",
+      "claim": "新增高价值情报事件记录：Meta Launches Muse, a Personal AI Agent That Acts on Your Behalf。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "ExtremeTech",
+      "title": "Meta Launches Muse, a Personal AI Agent That Acts on Your Behalf",
+      "url": "https://www.extremetech.com/internet/meta-launches-muse-a-personal-ai-agent-that-acts-on-your-behalf",
+      "publishedAt": "2026-09-09",
+      "evidenceGrade": "C",
+      "platformName": "ExtremeTech",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E005",
+      "changeId": "chg-1139f548aa06d139b505",
+      "entityName": "Gemini’s Daily Brief is now available to everyone in the US.",
+      "claim": "新增高价值情报事件记录：Gemini’s Daily Brief is now available to everyone in the US.。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "sourceName": "The Verge",
-      "title": "Worried Anthropic researchers warn that AI ‘could kill all humans’",
-      "url": "https://www.theverge.com/ai-artificial-intelligence/991927/anthropic-ai-kill-all-humans",
-      "publishedAt": "2026-09-09",
+      "title": "Gemini’s Daily Brief is now available to everyone in the US.",
+      "url": "https://www.theverge.com/tech/991837/geminis-daily-brief-is-now-available-to-everyone-in-the-us",
+      "publishedAt": "2026-09-08",
       "evidenceGrade": "C",
       "platformName": "The Verge",
       "sourceRole": "corroboration",
@@ -1085,139 +735,19 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E004",
-      "changeId": "chg-2b7106a29fb1ec0ccb7c",
-      "entityName": "The Washington Post：OpenAI said that an unreleased AI model had resolved one of the most significant open questions in modern math research. The problem concerns the Navi",
-      "claim": "新增高价值情报事件记录：The Washington Post：OpenAI said that an unreleased AI model had resolved one of the most significant open questions in modern math research. The problem concerns the Navi。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "The Washington Post on X",
-      "title": "The Washington Post：OpenAI said that an unreleased AI model had resolved one of the most significant open questions in modern math research. The problem concerns the Navi",
-      "url": "https://x.com/washingtonpost/status/2097573229061722356",
-      "publishedAt": "2026-09-09",
-      "evidenceGrade": "B",
-      "platformName": "X",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E005",
-      "changeId": "chg-84ab162cbf4479860f35",
-      "entityName": "Globee® Awards for Innovation, Now in Its 18th Year, Invite Artificial Intelligence Implementation Achievement Nominations Worldwide",
-      "claim": "新增高价值情报事件记录：Globee® Awards for Innovation, Now in Its 18th Year, Invite Artificial Intelligence Implementation Achievement Nominations Worldwide。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "PR Newswire Consumer Technology",
-      "title": "Globee® Awards for Innovation, Now in Its 18th Year, Invite Artificial Intelligence Implementation Achievement Nominations Worldwide",
-      "url": "https://www.prnewswire.com/news-releases/globee-awards-for-innovation-now-in-its-18th-year-invite-artificial-intelligence-implementation-achievement-nominations-worldwide-302871284.html",
-      "publishedAt": "2026-09-09",
-      "evidenceGrade": "B",
-      "platformName": "新闻稿",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
       "id": "E006",
-      "changeId": "chg-fd35be46b1568960de6e",
-      "entityName": "Finalists Named for the AFP 2026 Pinnacle Awards: Bandwidth, Google, ServiceNow",
-      "claim": "新增高价值情报事件记录：Finalists Named for the AFP 2026 Pinnacle Awards: Bandwidth, Google, ServiceNow。",
+      "changeId": "chg-6c20947c6096b9f1407d",
+      "entityName": "Aqua Launches the Industry's First Turnkey Alternative Investment Platform, Backed by $18.8 Million from Google, Y Combinator, and Leading Venture Firms",
+      "claim": "新增高价值情报事件记录：Aqua Launches the Industry's First Turnkey Alternative Investment Platform, Backed by $18.8 Million from Google, Y Combinator, and Leading Venture Firms。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "sourceName": "PR Newswire Consumer Technology",
-      "title": "Finalists Named for the AFP 2026 Pinnacle Awards: Bandwidth, Google, ServiceNow",
-      "url": "https://www.prnewswire.com/news-releases/finalists-named-for-the-afp-2026-pinnacle-awards-bandwidth-google-servicenow-302873597.html",
+      "title": "Aqua Launches the Industry's First Turnkey Alternative Investment Platform, Backed by $18.8 Million from Google, Y Combinator, and Leading Venture Firms",
+      "url": "https://www.prnewswire.com/news-releases/aqua-launches-the-industrys-first-turnkey-alternative-investment-platform-backed-by-18-8-million-from-google-y-combinator-and-leading-venture-firms-302874048.html",
       "publishedAt": "2026-09-09",
       "evidenceGrade": "B",
       "platformName": "新闻稿",
       "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E007",
-      "changeId": "chg-954242ec88ce248f3b12",
-      "entityName": "Google Cloud and Accenture launch new business group to embed forward deployed engineers with customers",
-      "claim": "新增高价值情报事件记录：Google Cloud and Accenture launch new business group to embed forward deployed engineers with customers。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "ITPro",
-      "title": "Google Cloud and Accenture launch new business group to embed forward deployed engineers with customers",
-      "url": "https://www.itpro.com/business/business-strategy/google-cloud-and-accenture-launch-new-business-group-to-embed-forward-deployed-engineers-with-customers",
-      "publishedAt": "2026-09-09",
-      "evidenceGrade": "C",
-      "platformName": "ITPro",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E008",
-      "changeId": "chg-63ca10f1f7976ac8b636",
-      "entityName": "AskELIE Announces Exclusive Strategic Partnership with Pine Services Group to Expand AI-Powered Operational Automation Across the U.S.",
-      "claim": "新增高价值情报事件记录：AskELIE Announces Exclusive Strategic Partnership with Pine Services Group to Expand AI-Powered Operational Automation Across the U.S.。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "PR Newswire Consumer Technology",
-      "title": "AskELIE Announces Exclusive Strategic Partnership with Pine Services Group to Expand AI-Powered Operational Automation Across the U.S.",
-      "url": "https://www.prnewswire.com/news-releases/askelie-announces-exclusive-strategic-partnership-with-pine-services-group-to-expand-ai-powered-operational-automation-across-the-us-302872666.html",
-      "publishedAt": "2026-09-09",
-      "evidenceGrade": "B",
-      "platformName": "新闻稿",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E010",
-      "changeId": "chg-9d4adaf588e31315ac13",
-      "entityName": "Databricks unveils adaptive AI retrieval model to cut search costs and latency",
-      "claim": "新增高价值情报事件记录：Databricks unveils adaptive AI retrieval model to cut search costs and latency。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "InfoWorld",
-      "title": "Databricks unveils adaptive AI retrieval model to cut search costs and latency",
-      "url": "https://www.infoworld.com/article/4220216/databricks-unveils-adaptive-ai-retrieval-model-to-cut-search-costs-and-latency.html",
-      "publishedAt": "2026-09-09",
-      "evidenceGrade": "C",
-      "platformName": "InfoWorld",
-      "sourceRole": "corroboration",
       "claimFields": [
         "publishedAt",
         "summary",
@@ -1231,9 +761,273 @@
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-09T15:25:34+00:00",
+    "generatedAt": "2026-09-09T16:56:58+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-c8f6941fb2a65c87ca44": {
+        "eventId": "evt-c8f6941fb2a65c87ca44",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-c02651566453995083",
+        "entityName": "Spartan Logistics Expands Toledo Presence Through Strategic Acquisition",
+        "title": "Spartan Logistics Expands Toledo Presence Through Strategic Acquisition",
+        "titleAliases": [
+          "spartanlogisticsexpandstoledopresencethroughstrategicacquisition"
+        ],
+        "publishedDate": "2026-09-09",
+        "publishedDates": [
+          "2026-09-09"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "并购",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-acc50877d1ae8924f4b8",
+          "record-7e4cbe5b765c0dae49a1",
+          "src-f2aba3079ef8317a0112"
+        ],
+        "evidenceFingerprints": [
+          "acc50877d1ae8924f4b8"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "Spartan Logistics Expands Toledo Presence Through Strategic Acquisition",
+            "url": "https://www.prnewswire.com/news-releases/spartan-logistics-expands-toledo-presence-through-strategic-acquisition-302874021.html",
+            "publishedAt": "2026-09-09",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "d548c9bb6dfdad92cc26",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-09T16:56:58+00:00",
+        "lastSeenAt": "2026-09-09T16:56:58+00:00",
+        "lastPublishedAt": "2026-09-09T16:56:58+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-bfb2ba5c653af6ccdfec": {
+        "eventId": "evt-bfb2ba5c653af6ccdfec",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-44a2baed7628724221",
+        "entityName": "Aqua Launches the Industry's First Turnkey Alternative Investment Platform, Backed by $18.8 Million from Google, Y Combinator, and Leading Venture Firms",
+        "title": "Aqua Launches the Industry's First Turnkey Alternative Investment Platform, Backed by $18.8 Million from Google, Y Combinator, and Leading Venture Firms",
+        "titleAliases": [
+          "aqualaunchestheindustrysfirstturnkeyalternativeinvestmentplatformbackedby188millionfromgoogleycombinatorandleadingventurefirms"
+        ],
+        "publishedDate": "2026-09-09",
+        "publishedDates": [
+          "2026-09-09"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "18.8"
+        ],
+        "sourceAliases": [
+          "evd-b7a9ad497c51dfcb0996",
+          "record-9c76c42eab87e646f860",
+          "src-54b4b1cbb25ec0ff2c6a"
+        ],
+        "evidenceFingerprints": [
+          "b7a9ad497c51dfcb0996"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "Aqua Launches the Industry's First Turnkey Alternative Investment Platform, Backed by $18.8 Million from Google, Y Combinator, and Leading Venture Firms",
+            "url": "https://www.prnewswire.com/news-releases/aqua-launches-the-industrys-first-turnkey-alternative-investment-platform-backed-by-18-8-million-from-google-y-combinator-and-leading-venture-firms-302874048.html",
+            "publishedAt": "2026-09-09",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "28399bb979732705b5a8",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-09T16:56:58+00:00",
+        "lastSeenAt": "2026-09-09T16:56:58+00:00",
+        "lastPublishedAt": "2026-09-09T16:56:58+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-4e79b61e1e3518e7e7aa": {
+        "eventId": "evt-4e79b61e1e3518e7e7aa",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-39e3e3afcaad47ed52",
+        "entityName": "Meta Launches Muse, a Personal AI Agent That Acts on Your Behalf",
+        "title": "Meta Launches Muse, a Personal AI Agent That Acts on Your Behalf",
+        "titleAliases": [
+          "metalaunchesmuseapersonalaiagentthatactsonyourbehalf"
+        ],
+        "publishedDate": "2026-09-09",
+        "publishedDates": [
+          "2026-09-09"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-77c4d73747ca34f4418a",
+          "record-90d29e5385166b84944a",
+          "src-507ef166a021ad0aff9c"
+        ],
+        "evidenceFingerprints": [
+          "77c4d73747ca34f4418a"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "ExtremeTech",
+            "title": "Meta Launches Muse, a Personal AI Agent That Acts on Your Behalf",
+            "url": "https://www.extremetech.com/internet/meta-launches-muse-a-personal-ai-agent-that-acts-on-your-behalf",
+            "publishedAt": "2026-09-09",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "ec8a2d25ab71701a1b6f",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-09T16:56:58+00:00",
+        "lastSeenAt": "2026-09-09T16:56:58+00:00",
+        "lastPublishedAt": "2026-09-09T16:56:58+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-233c1e709437363741f6": {
+        "eventId": "evt-233c1e709437363741f6",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-22def544e2719e9eaa",
+        "entityName": "Lightfield Raises $47 Million Series A to Build the CRM for Companies that Run on Agents",
+        "title": "Lightfield Raises $47 Million Series A to Build the CRM for Companies that Run on Agents",
+        "titleAliases": [
+          "lightfieldraises47millionseriesatobuildthecrmforcompaniesthatrunonagents"
+        ],
+        "publishedDate": "2026-09-09",
+        "publishedDates": [
+          "2026-09-09"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "47"
+        ],
+        "sourceAliases": [
+          "evd-776c3a228edc6d7ec9a1",
+          "record-02a7ff02757c7ca5ba6d",
+          "src-27eb5dc28884ed8314de"
+        ],
+        "evidenceFingerprints": [
+          "776c3a228edc6d7ec9a1"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "Lightfield Raises $47 Million Series A to Build the CRM for Companies that Run on Agents",
+            "url": "https://www.prnewswire.com/news-releases/lightfield-raises-47-million-series-a-to-build-the-crm-for-companies-that-run-on-agents-302874024.html",
+            "publishedAt": "2026-09-09",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "683e9b16de189a7b6420",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-09T16:56:58+00:00",
+        "lastSeenAt": "2026-09-09T16:56:58+00:00",
+        "lastPublishedAt": "2026-09-09T16:56:58+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-2218898b213648748fcd": {
+        "eventId": "evt-2218898b213648748fcd",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-536823418c9738b179",
+        "entityName": "Gemini’s Daily Brief is now available to everyone in the US.",
+        "title": "Gemini’s Daily Brief is now available to everyone in the US.",
+        "titleAliases": [
+          "geminisdailybriefisnowavailabletoeveryoneintheus"
+        ],
+        "publishedDate": "2026-09-08",
+        "publishedDates": [
+          "2026-09-08"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-9476bfeeaf2327276078",
+          "record-c9719c6d26d1ef8981ca",
+          "src-88d375ea46c2395f7846"
+        ],
+        "evidenceFingerprints": [
+          "9476bfeeaf2327276078"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "The Verge",
+            "title": "Gemini’s Daily Brief is now available to everyone in the US.",
+            "url": "https://www.theverge.com/tech/991837/geminis-daily-brief-is-now-available-to-everyone-in-the-us",
+            "publishedAt": "2026-09-08",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "85b45b71da764d0a322a",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-09T16:56:58+00:00",
+        "lastSeenAt": "2026-09-09T16:56:58+00:00",
+        "lastPublishedAt": "2026-09-09T16:56:58+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-caf0883cfae2b41896c1": {
         "eventId": "evt-caf0883cfae2b41896c1",
         "dataset": "intelligenceEvent",
@@ -34036,13 +33830,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 9,
+    "newEvents": 5,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
     "duplicatesSuppressed": 0,
-    "observedEvents": 9,
+    "observedEvents": 5,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -34063,13 +33857,6 @@
     "disclaimer": "信息仅供研究，不构成投资建议；关键事实应回溯原始信源。"
   },
   "history": [
-    {
-      "date": "2026-08-05",
-      "generatedAt": "2026-08-05T13:44:34+00:00",
-      "runStatus": "no-material-change",
-      "changeCount": 0,
-      "executiveSummary": "本期未检测到进入研究阈值的结构化实体变化。"
-    },
     {
       "date": "2026-08-06",
       "generatedAt": "2026-08-06T09:50:50+00:00",
@@ -37360,17 +37147,66 @@
         "possibleConflicts": 0,
         "duplicatesSuppressed": 0
       }
+    },
+    {
+      "metricsVersion": 2,
+      "date": "2026-09-10",
+      "generatedAt": "2026-09-09T16:56:58+00:00",
+      "runStatus": "model",
+      "changeCount": 5,
+      "executiveSummary": "截至2026-09-09的证据包包含五项外部事件，均来自单一来源且未经人工复核。其中三条事件围绕AI代理展开：Lightfield完成4700万美元A轮融资，面向“运行在代理上的公司”提供CRM；Meta推出个人AI代理Muse，定价为免费及每月20/100美元；Google将Gemini Daily Brief向所有美国用户开放。另有Aqua获得1880万美元支持推出另类投资平台，以及Spartan Logistics通过收购Allen Logistics扩大Toledo业务。证据等级为B/C级，需以官方信息验证；AI代理相关产品密集发布，但商业模式、收入转化与竞争格局尚待观察。",
+      "eventIds": [
+        "evt-233c1e709437363741f6",
+        "evt-c8f6941fb2a65c87ca44",
+        "evt-4e79b61e1e3518e7e7aa",
+        "evt-2218898b213648748fcd",
+        "evt-bfb2ba5c653af6ccdfec"
+      ],
+      "eventStates": [
+        {
+          "eventId": "evt-233c1e709437363741f6",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-c8f6941fb2a65c87ca44",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-4e79b61e1e3518e7e7aa",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-2218898b213648748fcd",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-bfb2ba5c653af6ccdfec",
+          "lifecycle": "first_seen"
+        }
+      ],
+      "verifiedChangeTotal": 0,
+      "candidateTotal": 0,
+      "auxiliaryLeadTotal": 5,
+      "rejectedTotal": 1,
+      "eventSummary": {
+        "newEvents": 5,
+        "reconfirmations": 0,
+        "updates": 0,
+        "corrections": 0,
+        "possibleConflicts": 0,
+        "duplicatesSuppressed": 0
+      }
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 10,
-    "eligibleCandidateCount": 9,
+    "candidateCount": 6,
+    "eligibleCandidateCount": 5,
     "rejectedCandidateCount": 1,
     "rejectedByDataset": {
       "intelligenceEvent": 1
     },
-    "evidenceCount": 10,
-    "supportingEvidenceCount": 9,
+    "evidenceCount": 6,
+    "supportingEvidenceCount": 5,
     "rejectedEvidenceCount": 1,
     "passedButUnboundEvidenceCount": 0,
     "rejectionReasons": {
