@@ -38,6 +38,7 @@ import {
 } from "@/lib/homepage-recommendation";
 import { canonicalHotnessKey, metricsByHref, recordArticleShare } from "@/lib/hotness";
 import { buildResearchInvestigationHref } from "@/lib/research-workspace-handoff";
+import { flushPendingSharePreferences, syncSharePreference } from "@/lib/share-preference-sync";
 import { buildTrackingCaptureLink } from "@/lib/tracking-admin-link";
 import {
   useArticles,
@@ -229,6 +230,7 @@ function shareHomepageItem(item: LiveIntelligenceEvent) {
     sourceName: item.source.name,
     channelLabel: "首页推荐",
   });
+  void syncSharePreference(homepageFeedFavoriteInput(item));
   window.dispatchEvent(
     new CustomEvent(SHARE_REQUEST_EVENT, {
       detail: {
@@ -265,6 +267,10 @@ export function HomepageNewsFeed({
     updateClock();
     const timer = window.setInterval(updateClock, MINUTE_MS);
     return () => window.clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    void flushPendingSharePreferences();
   }, []);
 
   const favoriteProfile = useMemo(
