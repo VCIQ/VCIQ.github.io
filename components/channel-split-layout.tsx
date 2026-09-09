@@ -15,6 +15,7 @@ type ChannelSplitLayoutProps = {
   icon: ReactNode;
   bodyClassName?: string;
   directoryFirst?: boolean;
+  showUpdates?: boolean;
   beforeResearchSynergy?: ReactNode;
   children: ReactNode;
 };
@@ -30,6 +31,7 @@ export function ChannelSplitLayout({
   icon,
   bodyClassName,
   directoryFirst = false,
+  showUpdates,
   beforeResearchSynergy,
   children,
 }: ChannelSplitLayoutProps) {
@@ -60,24 +62,32 @@ export function ChannelSplitLayout({
       </div>
     </section>
   );
-  const showResearchSynergy = ["technology", "people", "companies"].includes(channel);
+  const researchDirectoryChannel = ["technology", "people", "companies"].includes(channel);
+  const shouldShowUpdates = showUpdates ?? !researchDirectoryChannel;
+  const showResearchSynergy = researchDirectoryChannel;
 
   return (
     <>
       {beforeResearchSynergy}
-      <div className={styles.splitLayout}>
-        {directoryFirst ? (
-          <>
-            {directoryPanel}
-            {updatesPanel}
-          </>
-        ) : (
-          <>
-            {updatesPanel}
-            {directoryPanel}
-          </>
-        )}
-      </div>
+      {shouldShowUpdates ? (
+        <div className={styles.splitLayout}>
+          {directoryFirst ? (
+            <>
+              {directoryPanel}
+              {updatesPanel}
+            </>
+          ) : (
+            <>
+              {updatesPanel}
+              {directoryPanel}
+            </>
+          )}
+        </div>
+      ) : (
+        <div className={styles.directoryOnly}>
+          {directoryPanel}
+        </div>
+      )}
       {showResearchSynergy ? <ResearchSynergyStrip compactOnMobile /> : null}
       <details className={styles.directoryNote}>
         <summary>
