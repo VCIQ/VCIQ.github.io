@@ -31,7 +31,7 @@ export function ChannelSplitLayout({
   icon,
   bodyClassName,
   directoryFirst = false,
-  showUpdates = true,
+  showUpdates,
   beforeResearchSynergy,
   children,
 }: ChannelSplitLayoutProps) {
@@ -62,12 +62,14 @@ export function ChannelSplitLayout({
       </div>
     </section>
   );
-  const showResearchSynergy = ["technology", "people", "companies"].includes(channel);
+  const researchDirectoryChannel = ["technology", "people", "companies"].includes(channel);
+  const shouldShowUpdates = showUpdates ?? !researchDirectoryChannel;
+  const showResearchSynergy = researchDirectoryChannel;
 
   return (
     <>
       {beforeResearchSynergy}
-      {showUpdates ? (
+      {shouldShowUpdates ? (
         <div className={styles.splitLayout}>
           {directoryFirst ? (
             <>
