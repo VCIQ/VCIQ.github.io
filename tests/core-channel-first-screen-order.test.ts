@@ -43,23 +43,27 @@ test("1440x900 core-channel contract puts live panels before research methodolog
   assert.match(css, /div:first-child\) \{\s*display:\s*none;/);
 });
 
-test("people and company channel headers expose current signals before explanations", async () => {
+test("people and company directories point live events back to the homepage", async () => {
   const people = await source("app/people/page.tsx");
   const companies = await source("app/companies/page.tsx");
 
-  assert.match(people, /getChannelUpdateDirectory\("people"\)/);
-  assert.match(people, /peopleUpdates\.items\.length\} 条人物更新/);
+  assert.doesNotMatch(people, /getChannelUpdateDirectory\("people"\)/);
+  assert.doesNotMatch(companies, /getChannelUpdateDirectory\("companies"\)/);
+  assert.match(people, /最新事件统一进入首页人物频道/);
+  assert.match(companies, /最新事件统一进入首页公司频道/);
+  assert.match(people, /showUpdates=\{false\}/);
+  assert.match(companies, /showUpdates=\{false\}/);
   assertOrder(
     people,
     "<ChannelSplitLayout",
     "<details className={styles.methodology}>",
-    "people methodology must sit below the live directory and event panels",
+    "people methodology must sit below the structured directory",
   );
   assertOrder(
     companies,
     "<ChannelSplitLayout",
     "<details className={styles.methodology}>",
-    "company methodology must sit below the live directory and event panels",
+    "company methodology must sit below the structured directory",
   );
 
   const peopleHeader = people.slice(
