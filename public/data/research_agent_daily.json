@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-09T10:39:33+00:00",
+  "generatedAt": "2026-09-09T15:25:34+00:00",
   "asOfDate": "2026-09-09",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
@@ -12,39 +12,39 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 13900,
-      "completion_tokens": 11553,
-      "total_tokens": 25453,
+      "prompt_tokens": 7636,
+      "completion_tokens": 6810,
+      "total_tokens": 14446,
       "completion_tokens_details": {
-        "reasoning_tokens": 8502
+        "reasoning_tokens": 4310
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 13900
+      "prompt_cache_miss_tokens": 7636
     }
   },
   "changeSummary": {
-    "totalDetected": 20,
-    "total": 17,
+    "totalDetected": 11,
+    "total": 9,
     "byDataset": {
-      "intelligenceEvent": 17
+      "intelligenceEvent": 9
     },
     "byChangeType": {
-      "external_event": 18,
-      "data_maintenance": 2
+      "external_event": 10,
+      "data_maintenance": 1
     },
-    "externalCandidates": 18,
+    "externalCandidates": 10,
     "qualityRejected": 1,
-    "maintenanceExcluded": 2,
+    "maintenanceExcluded": 1,
     "aggregatedEvents": 0,
     "highestImportance": 91,
     "verifiedChangeTotal": 0,
     "candidateTotal": 0,
-    "auxiliaryLeadTotal": 17,
+    "auxiliaryLeadTotal": 9,
     "rejectedTotal": 1,
-    "newEvents": 17,
+    "newEvents": 9,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
@@ -54,330 +54,270 @@
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "截至2026年9月9日，证据包显示AI行业在融资、资本开支、产品发布和安全争议方面出现多项高价值事件：Cognition完成超20亿美元融资，谷歌宣布欧洲最大AI基础设施投资，Meta推出个人AI代理Muse，Google DeepMind发布AlphaGenome Atlas；同时Anthropic安全研究员发出AI灭绝风险警告，npm再现恶意软件蠕虫。证据等级多为C级公开报道，部分企业官方声明为B级，因此多数判断置信度偏低。 质量门诊断：仅为发现线索，不能支持正式主张 1。",
+    "executiveSummary": "截至 2026-09-09 的证据包共新增 9 条高价值 AI 情报事件（证据级 B/C，多数单来源、自动化未人工审阅）。其中 OpenAI 声称其未发布模型解决了 Navier-Stokes 方程开放问题，属于潜在重大科学突破但亟待独立验证；Anthropic 内部安全研究人员发出极端风险警告，凸显 AI 安全争议；Euno 完成 2300 万美元融资，显示资本市场对 AI 代理基础设施的关注；Google Cloud 与 Accenture 组建联合业务部门，Databricks 推出自适应检索模型，体现企业 AI 落地与成本优化的活跃度。总体上，AI 技术与商业化进展加速，但安全滥用、虚假信息操纵和证据可靠性均构成不可忽视的风险。 质量门诊断：仅为发现线索，不能支持正式主张 1。",
     "keyDevelopments": [
       {
-        "title": "Cognition完成超20亿美元融资，估值达480亿美元",
-        "assessment": "据新浪财经报道，Cognition完成超20亿美元融资，估值达480亿美元，并披露当前年化营收约9亿美元（约每月7500万美元）。该事件反映AI应用服务商在一级市场仍能获得极高估值，但财务数据尚未经独立验证，需关注后续审计或官方确认。",
-        "importance": 4,
-        "confidence": "low",
-        "entities": [
-          "Cognition"
-        ],
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "title": "Google DeepMind发布AlphaGenome Atlas，映射90亿种DNA单字母变化影响",
-        "assessment": "Google DeepMind官方宣布推出AlphaGenome Atlas，这是一个AI驱动的可搜索数据库，预估所有90亿种可能的单字母DNA改变的影响，并提供AVI评分以识别高影响突变。资源将通过网站、API、Antigravity技能向全球科学社区开放，并计划登陆Google Cloud。这是AI在基因组学基础工具上的一次重大推进，但科学价值和实际应用效果仍需同行验证。",
-        "importance": 4,
+        "title": "OpenAI 声称未发布模型解决 Navier-Stokes 方程重大开放问题",
+        "assessment": "事实：据 Washington Post 报道，OpenAI 称其一个未发布 AI 模型解决了现代数学研究中最重大的开放问题之一，涉及 Navier-Stokes 方程（E004）。推断：若获验证，这将是 AI 在基础科学发现领域的标志性突破。待验证：目前仅 OpenAI 单方声明，尚无同行评议、复现或细节披露。",
+        "importance": 5,
         "confidence": "medium",
         "entities": [
-          "Google DeepMind"
+          "OpenAI"
         ],
         "evidenceIds": [
-          "E014",
-          "E015",
-          "E017"
+          "E004"
         ]
       },
       {
-        "title": "Meta推出个人AI代理Muse，可跨应用执行多步骤任务",
-        "assessment": "据新浪财经报道，Meta于2026年9月8日在美国推出个人AI代理Muse，面向18岁及以上用户，支持独立应用、网页和WhatsApp入口，可连接第三方服务、操作浏览器并持续执行邮件、购物和旅行预订等任务。这显示大型科技公司正在加速AI代理的消费级落地，但其实际能力、可靠性和用户接受度尚无独立评测。",
-        "importance": 4,
-        "confidence": "low",
-        "entities": [
-          "Meta"
-        ],
-        "evidenceIds": [
-          "E010",
-          "E011"
-        ]
-      },
-      {
-        "title": "Anthropic安全研究员警告AI灭绝风险，并引发离职风波",
-        "assessment": "据Tom's Hardware和Mashable报道，Anthropic安全研究员Evan Hubinger警告未来十年内AI杀死人类的可能性超过10%，同时研究员Jacob Coxon以伦理和安全担忧为由公开辞职，并批评AI公司“拿我们的生命赌博”。这属于个人观点和概率估计，反映了AI安全文化内部争议，但不应视为既定事实。",
+        "title": "Anthropic 研究人员警告 AI “可能杀死全人类”",
+        "assessment": "事实：The Verge 报道，Anthropic 一位高级安全研究员称 AI 在本十年末杀死全人类的概率超过 10%，且其同事因担忧业界竞速而辞职（E003）。推断：该事件可能强化 AI 安全监管讨论，但对公司业务的实际影响尚不明朗。待验证：研究员姓名、概率估算方法及辞职人数未在证据中详述。",
         "importance": 4,
         "confidence": "low",
         "entities": [
           "Anthropic"
         ],
         "evidenceIds": [
-          "E002",
-          "E004"
-        ]
-      },
-      {
-        "title": "谷歌计划在芬兰投资130亿欧元建设AI基础设施",
-        "assessment": "据新浪财经报道，谷歌计划在欧洲进行最大单笔投资，在芬兰建设至少130亿欧元（约151亿美元）的AI基础设施。这延续了大型科技公司大规模AI资本开支的趋势，可能提振相关供应链需求，但投资细节和建设周期未披露。",
-        "importance": 4,
-        "confidence": "low",
-        "entities": [
-          "Alphabet",
-          "Google"
-        ],
-        "evidenceIds": [
-          "E005"
-        ]
-      },
-      {
-        "title": "npm恶意软件Shai-Hulud蠕虫回归并绕过扫描",
-        "assessment": "据ITPro报道，Shai-Hulud npm蠕虫在数月后重新出现，能够绕过npm的恶意软件扫描功能。该事件凸显开源软件供应链的安全漏洞，可能加剧对npm生态的担忧，需关注影响范围。",
-        "importance": 3,
-        "confidence": "low",
-        "entities": [
-          "npm"
-        ],
-        "evidenceIds": [
           "E003"
         ]
       },
       {
-        "title": "追觅在IFA 2026展示户外庭院物理AI产品矩阵",
-        "assessment": "据雷峰网报道，追觅户外庭院在IFA 2026上以DREAME、MOVA、NexLawn三大品牌展出十余款首发新品，声称基于物理AI技术底座覆盖室内外全场景。该信息主要来自企业参展报道，商业化成果尚需订单数据验证。",
-        "importance": 2,
+        "title": "Euno 完成 2300 万美元融资，构建自主代理上下文大脑",
+        "assessment": "事实：SiliconANGLE 报道，Euno 融资 2300 万美元，用于构建面向自主代理的 AI 原生上下文大脑（E001）。推断：融资显示市场对代理基础设施赛道保持热度。待验证：投资方、估值、产品阶段及客户采用均未披露。",
+        "importance": 3,
         "confidence": "low",
         "entities": [
-          "追觅"
+          "Euno"
+        ],
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "title": "Google Cloud 与 Accenture 组建 Gemini Enterprise 联合业务部门",
+        "assessment": "事实：ITPro 报道，Google Cloud 与 Accenture 成立 Accenture Gemini Enterprise Business Group，整合顾问与前向部署工程师，帮助客户扩展 Gemini Enterprise AI 能力（E007）。推断：云厂商与咨询公司深度绑定将加速企业 AI 规模落地。待验证：部门规模、客户数量及实际业绩未披露。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "Google Cloud",
+          "Accenture"
         ],
         "evidenceIds": [
           "E007"
         ]
       },
       {
-        "title": "万勋发布NOVA2.0柔性具身大脑",
-        "assessment": "据雷峰网报道，万勋科技发布第二代柔性具身大脑NOVA2.0，号称服务于40+真实行业场景、超1000万次作业，并宣称行业首个开放世界全天候商业交付级具身智能架构。该表述包含较多企业自我评价，需要客户案例和业绩数据佐证。",
+        "title": "Databricks 推出自适应检索模型以降低搜索成本与延迟",
+        "assessment": "事实：InfoWorld 报道，Databricks 发布 Adaptive Instructed-Retriever，对复杂查询尝试额外步骤、简单查询提前停止，以平衡答案质量与成本（E010）。推断：该产品可增强企业 AI 搜索的性价比竞争力。待验证：具体性能指标和独立评测未出现。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "Databricks"
+        ],
+        "evidenceIds": [
+          "E010"
+        ]
+      },
+      {
+        "title": "虚假消费者团体被指使用 AI 生成对 Paramount 合并的假支持",
+        "assessment": "事实：Techdirt 报道，在 1110 亿美元 Paramount/Warner Bros 合并背景下，一个虚假消费者团体被指使用 AI 制造虚假支持，报道同时批评 Ellison 家族旗下公司高管（E002）。推断：事件凸显 AI 生成内容在舆论操纵中的滥用风险。待验证：指控细节、涉事方及法律后果均未提供。",
         "importance": 3,
         "confidence": "low",
         "entities": [
-          "万勋科技"
+          "Paramount",
+          "Warner Bros",
+          "Ellison家族"
         ],
         "evidenceIds": [
-          "E009"
+          "E002"
         ]
       },
       {
-        "title": "DFI推出面向物理AI的Mini-ITX平台",
-        "assessment": "DFI公司宣布推出ARH171/ARH173 Mini-ITX嵌入式主板平台，支持两代CPU，面向空间受限的机器人及自动化应用，扩展其AI-ready产品组合。这是企业产品发布，属于硬件层面的进展，重要性中等。",
+        "title": "AskELIE 与 Pine Services Group 达成美国独家战略合作",
+        "assessment": "事实：PR Newswire 报道，AskELIE 与 Pine Services Group 建立独家合作，以扩展 AI 驱动的运营自动化在美国金融与合规工作流中的覆盖（E008）。推断：合作有助于渠道拓展，但市场影响有限。待验证：合作条款、客户案例与收入贡献未知。",
         "importance": 2,
         "confidence": "medium",
         "entities": [
-          "DFI"
+          "AskELIE",
+          "Pine Services Group"
         ],
         "evidenceIds": [
-          "E012"
+          "E008"
         ]
       },
       {
-        "title": "行业观点：存储成为AI应用落地的“胜负手”",
-        "assessment": "钛媒体文章指出，存储系统正从幕后走向台前，成为制约AI落地的核心瓶颈，算力之后存储成为关键。该观点属于行业分析，没有提供独立数据，可作为存储产业链投资逻辑的线索。",
-        "importance": 2,
-        "confidence": "low",
+        "title": "AI 奖项活动吸引创新提名与知名企业入围",
+        "assessment": "事实：Globee Awards 宣布第 18 届创新奖开放 AI 实施成就提名（E005）；AFP 公布 2026 Pinnacle Awards 决赛名单，包括 Bandwidth、Google、ServiceNow（E006）。推断：奖项生态反映企业 AI 应用活跃，但不构成业务实质影响。待验证：最终获奖名单及后续影响。",
+        "importance": 1,
+        "confidence": "medium",
         "entities": [
-          "存储行业"
+          "Globee Awards",
+          "AFP",
+          "Bandwidth",
+          "Google",
+          "ServiceNow"
         ],
         "evidenceIds": [
+          "E005",
           "E006"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "AI应用服务商",
+        "entity": "OpenAI",
         "direction": "positive",
-        "statement": "Cognition以约9亿美元年化营收获得480亿美元估值，显示头部AI应用公司在一级市场仍具备高融资能力，但该估值对营收的依赖需要持续验证。",
+        "statement": "OpenAI 声称在 Navier-Stokes 方程上取得重大突破，若获独立验证将显著强化其技术领导地位（E004）。",
         "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "entity": "AI安全与治理",
-        "direction": "negative",
-        "statement": "Anthropic内部的安全警告和离职事件可能加剧公众对AI不可控风险的担忧，进而推动监管审查趋严，增加AI公司合规成本。",
-        "evidenceIds": [
-          "E002",
           "E004"
         ]
       },
       {
-        "entity": "AI基础设施",
-        "direction": "positive",
-        "statement": "谷歌在欧洲的130亿欧元AI基础设施投资显示超大规模云厂商仍在加码算力建设，利好上游硬件和能源供应链。",
-        "evidenceIds": [
-          "E005"
-        ]
-      },
-      {
-        "entity": "物理AI/具身智能",
-        "direction": "positive",
-        "statement": "追觅、万勋和DFI在IFA及展会上的产品发布显示物理AI正从Demo走向商业交付，但多数宣称仍待订单和客户验证。",
-        "evidenceIds": [
-          "E007",
-          "E009",
-          "E012"
-        ]
-      },
-      {
-        "entity": "AI代理(Agent)",
-        "direction": "positive",
-        "statement": "Meta推出Muse等个人AI代理，表明主流平台开始将AI代理嵌入日常消费场景，可能加速Agent生态普及。",
-        "evidenceIds": [
-          "E010",
-          "E011"
-        ]
-      },
-      {
-        "entity": "AI生物医药",
-        "direction": "positive",
-        "statement": "Google DeepMind开放AlphaGenome Atlas，可能降低基因组变异解读门槛，加速AI驱动的生物学发现和精准医学研究。",
-        "evidenceIds": [
-          "E014",
-          "E015",
-          "E017"
-        ]
-      },
-      {
-        "entity": "开源软件供应链",
+        "entity": "Anthropic",
         "direction": "negative",
-        "statement": "Shai-Hulud蠕虫再次绕过npm扫描，说明供应链安全防护仍存在缺口，可能提升软件生态的安全风险成本。",
+        "statement": "内部安全研究人员的极端风险警告可能引发人才流失、品牌受损和监管关注（E003）。",
         "evidenceIds": [
           "E003"
         ]
       },
       {
-        "entity": "存储产业链",
+        "entity": "Euno",
         "direction": "positive",
-        "statement": "存储被定位为AI应用落地的新瓶颈，若该判断成立，存储硬件和系统厂商将受益于AI工作负载扩展。",
+        "statement": "获得 2300 万美元融资表明资本市场对 AI 代理上下文基础设施的认可（E001）。",
         "evidenceIds": [
-          "E006"
+          "E001"
+        ]
+      },
+      {
+        "entity": "Databricks",
+        "direction": "positive",
+        "statement": "自适应检索模型以复杂查询多步、简单查询早停的方式优化成本与延迟，有利于企业 AI 落地（E010）。",
+        "evidenceIds": [
+          "E010"
+        ]
+      },
+      {
+        "entity": "Google Cloud / Accenture",
+        "direction": "positive",
+        "statement": "联合业务部门将咨询、前向部署工程师与 Gemini Enterprise 结合，有望加速客户 AI 规模化采用（E007）。",
+        "evidenceIds": [
+          "E007"
+        ]
+      },
+      {
+        "entity": "AI 治理与舆论风险",
+        "direction": "negative",
+        "statement": "AI 被用来制造虚假消费者支持的事件增加了监管与道德风险，可能拖累行业信任（E002）。",
+        "evidenceIds": [
+          "E002"
         ]
       }
     ],
     "watchlist": [
       {
-        "item": "Cognition融资后的营收与估值一致性",
-        "reason": "当前年化营收9亿美元与480亿美元估值对应约53倍PS，需观察营收增速、客户留存和Devin产品竞争力。",
-        "nextEvidence": "Cognition官方财报、客户案例或第三方收入分析",
+        "item": "OpenAI 未发布模型的 Navier-Stokes 解决方案",
+        "reason": "该声明若为真将改变 AI 在科学发现中的格局，但当前仅是单方声明。",
+        "nextEvidence": "独立复现、同行评议或 OpenAI 的技术细节披露",
         "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "item": "Anthropic安全争议是否触发监管或人才变动",
-        "reason": "高级研究员公开警告和离职可能影响公司声誉、AI人才招聘以及行业安全标准讨论。",
-        "nextEvidence": "Anthropic官方回应、监管文件或后续辞职事件",
-        "evidenceIds": [
-          "E002",
           "E004"
         ]
       },
       {
-        "item": "Shai-Hulud蠕虫的传播范围和修复进展",
-        "reason": "绕过npm扫描说明恶意软件防御存在漏洞，需跟踪受影响包数量和缓解措施。",
-        "nextEvidence": "npm安全公告、安全研究机构后续报告",
+        "item": "Anthropic 安全研究员离职与内部风波",
+        "reason": "可能影响人才流动、公司战略与 AI 安全监管走向。",
+        "nextEvidence": "后续报道、Anthropic 官方回应或更多证人信息",
         "evidenceIds": [
           "E003"
         ]
       },
       {
-        "item": "谷歌芬兰AI设施的投资落地进度",
-        "reason": "130亿欧元为欧洲最大单笔投资，需确认建设时间表、供应商订单和对欧洲数据中心市场的实际影响。",
-        "nextEvidence": "Alphabet资本开支指引、项目建设新闻",
+        "item": "Euno 的产品落地与客户采用",
+        "reason": "需要验证“上下文大脑”是否真正解决自主代理的实用性挑战。",
+        "nextEvidence": "客户案例、产品文档、后续融资或合作伙伴公告",
         "evidenceIds": [
-          "E005"
+          "E001"
         ]
       },
       {
-        "item": "Meta Muse的用户采用率与功能成熟度",
-        "reason": "AI代理需要完成复杂的多步骤任务，用户接受度和可靠性将决定产品能否成为新的增长点。",
-        "nextEvidence": "Meta产品更新、应用商店评分、第三方评测",
+        "item": "Databricks 自适应检索模型的性能验证",
+        "reason": "成本与延迟优势是否可复现将决定其市场竞争力。",
+        "nextEvidence": "第三方基准测试、客户评测或成本分析",
         "evidenceIds": [
-          "E010",
-          "E011"
+          "E010"
         ]
       },
       {
-        "item": "AlphaGenome Atlas在科研界的验证与应用",
-        "reason": "数据库的预测准确性需要在独立研究中得到复现，并观察其对基因组学和精准医学的贡献。",
-        "nextEvidence": "科学论文引用、API使用量、Google Cloud上线情况",
+        "item": "Google Cloud/Accenture 联合业务部门成效",
+        "reason": "该业务部门能否真正拉动 Gemini Enterprise 的规模化采用值得跟踪。",
+        "nextEvidence": "客户合同公告、收入指引或落地案例",
         "evidenceIds": [
-          "E014",
-          "E015",
-          "E017"
+          "E007"
         ]
       },
       {
-        "item": "物理AI产品的商业订单和规模化指标",
-        "reason": "当前多为产品发布和自述数据，需要实际出货量、客户合同或第三方市场报告来验证商业化真实性。",
-        "nextEvidence": "追觅、万勋、DFI的财报或客户公告",
+        "item": "虚假消费者团体事件后续",
+        "reason": "该事件可能引发对 AI 生成内容操纵舆论的监管反应。",
+        "nextEvidence": "监管机构声明、执法行动或涉事方回应",
         "evidenceIds": [
-          "E007",
-          "E009",
-          "E012"
+          "E002"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "AI安全风险可能引发更严格的监管",
-        "reason": "Anthropic内部人士警告AI存在高概率灭绝风险，若公众和监管机构采信，可能对AI研发和部署施加严格限制。",
+        "risk": "AI 生成内容被用于舆论操纵",
+        "reason": "证据显示虚假消费者团体可能利用 AI 伪造对重大并购的支持，暴露 AI 滥用风险（E002）。",
         "evidenceIds": [
-          "E002",
-          "E004"
+          "E002"
         ]
       },
       {
-        "risk": "开源供应链恶意软件威胁升级",
-        "reason": "npm蠕虫绕过安全扫描，可能导致大规模软件供应链污染，增加企业和开发者的安全成本和数据泄露风险。",
+        "risk": "AI 极端风险预警引发监管收紧",
+        "reason": "Anthropic 内部人员警告 AI 可能杀死全人类，若引发公众与立法关注，可能带来更严格监管（E003）。",
         "evidenceIds": [
           "E003"
         ]
       },
       {
-        "risk": "存储瓶颈制约AI应用扩展",
-        "reason": "若存储系统成为AI落地核心瓶颈，AI应用的性能和扩展将受制于存储创新，可能导致部分AI项目回报低于预期。",
+        "risk": "关键声明缺乏独立验证",
+        "reason": "OpenAI 的 Navier-Stokes 突破仅是“声称”，若后续被否定，可能造成对 AI 进展的过度乐观（E004）。",
         "evidenceIds": [
-          "E006"
+          "E004"
         ]
       },
       {
-        "risk": "高估值AI公司存在估值回调风险",
-        "reason": "Cognition以约53倍PS估值融资，若营收增长未达预期或资本市场降温，后续融资可能面临估值下修。",
+        "risk": "低等级单源证据导致误判",
+        "reason": "多数情报事件为 C 级或单一媒体/新闻稿，自动化未人工审阅，证据可靠性有限，研究结论存在被修正的可能（E001, E002, E003, E007, E010）。",
         "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "risk": "巨额AI资本开支可能拖累大型科技公司利润",
-        "reason": "谷歌计划投入130亿欧元建设AI设施，此类资本开支若不能带来匹配的回报，可能影响盈利能力和股东回报。",
-        "evidenceIds": [
-          "E005"
+          "E001",
+          "E002",
+          "E003",
+          "E007",
+          "E010"
         ]
       }
     ],
-    "methodologyNote": "本分析仅基于提供的证据包（asOf 2026-09-09T10:39:33+00:00），未引入外部事实。证据来源包括公开媒体报道和企业官方声明，其中多数为外部线索（evidenceGrade C），少数为企业官方通讯（evidenceGrade B），因此关键事件的置信度被限制在低或中等。所有判断均引用至少一条证据，并区分事实、推断与待验证事项。本输出不包含任何买入、卖出、目标价或收益承诺。 数据管线提示：追踪实体与公开信源发现=stale、完整公开情报刷新=stale、科创板招股书投资者证据刷新=stale、每日证据约束研究摘要=degraded。"
+    "methodologyNote": "本分析完全基于 2026-09-09 证据包中的 9 条情报事件（E001-E008、E010；E009 未出现）。证据等级以 B/C 为主，多数来源为单条外部线索且状态为 automated_unreviewed。分析严格区分事实（证据中明确报道的内容）、推断（对业务/投资方向的合理引申）和待验证事项，并对 C 级证据采用 low 或 medium 置信度。未补充任何外部信息，不构成投资建议或收益承诺。 数据管线提示：追踪实体与公开信源发现=stale、完整公开情报刷新=stale、科创板招股书投资者证据刷新=stale、GitHub Pages 静态发布=stale。"
   },
   "changes": [
     {
-      "id": "chg-bf41e18f3d8de60cc8c2",
+      "id": "chg-24fc85514bc117219e7d",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-d4de5d5f233ff87c8c",
-      "entityName": "Cognition完成超20亿美元融资，估值达480亿美元",
+      "entityId": "intelligence-event-624ea81deddc89821e",
+      "entityName": "Euno raises $23M to build the AI-native context brain for autonomous agents - SiliconANGLE",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：Cognition完成超20亿美元融资，估值达480亿美元。",
+      "summary": "新增高价值情报事件记录：Euno raises $23M to build the AI-native context brain for autonomous agents - SiliconANGLE。",
       "importance": 91,
       "before": null,
       "after": {
         "publishedAt": "2026-09-09",
-        "summary": "这家 AI 应用服务商当前年化营收约 9 亿美元，折合每月 7500 万美元。 开发 Devin 编程助手的 AI 初创公司 Cognition 周二宣布，公司完成超 20 亿美元融资...",
-        "title": "Cognition完成超20亿美元融资，估值达480亿美元"
+        "summary": "Euno raises $23M to build the AI-native context brain for autonomous agents - SiliconANGLE",
+        "title": "Euno raises $23M to build the AI-native context brain for autonomous agents - SiliconANGLE"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -399,7 +339,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "这家 AI 应用服务商当前年化营收约 9 亿美元，折合每月 7500 万美元。 开发 Devin 编程助手的 AI 初创公司 Cognition 周二宣布，公司完成超 20 亿美元融资...",
+          "after": "Euno raises $23M to build the AI-native context brain for autonomous agents - SiliconANGLE",
           "evidenceIds": [
             "E001"
           ]
@@ -407,7 +347,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "Cognition完成超20亿美元融资，估值达480亿美元",
+          "after": "Euno raises $23M to build the AI-native context brain for autonomous agents - SiliconANGLE",
           "evidenceIds": [
             "E001"
           ]
@@ -428,35 +368,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-bb11a50060399b980d54"
+        "evt-70bcaa72c1daebb5d6f8"
       ],
       "eventLifecycles": {
-        "evt-bb11a50060399b980d54": "first_seen"
+        "evt-70bcaa72c1daebb5d6f8": "first_seen"
       },
-      "eventId": "evt-bb11a50060399b980d54",
+      "eventId": "evt-70bcaa72c1daebb5d6f8",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T10:39:33+00:00",
-      "lastSeenAt": "2026-09-09T10:39:33+00:00"
+      "firstSeenAt": "2026-09-09T15:25:34+00:00",
+      "lastSeenAt": "2026-09-09T15:25:34+00:00"
     },
     {
-      "id": "chg-eb1b443da401a5685b83",
+      "id": "chg-3112353d9908e2f48e1d",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-c2ef2d1a2fb01348a9",
-      "entityName": "More than 10% chance AI 'could kill all humans' in the next 10 years, Anthropic safety researcher says — departing employee says AI companies are 'gambling with our lives'",
+      "entityId": "intelligence-event-d2639f37ff43200b32",
+      "entityName": "Fake Consumer Group Using AI To Generate Fake Support For Paramount Merger",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：More than 10% chance AI 'could kill all humans' in the next 10 years, Anthropic safety researcher says — departing employee says AI companies are 'gambling with our lives'。",
-      "importance": 85,
+      "summary": "新增高价值情报事件记录：Fake Consumer Group Using AI To Generate Fake Support For Paramount Merger。",
+      "importance": 89,
       "before": null,
       "after": {
         "publishedAt": "2026-09-09",
-        "summary": "Anthropic safety researcher Evan Hubinger has warned there is a more than 10% chance that AI could kill all humans within the next decade, but reassured the public the company is \"trying its best.\" The revelation comes following Jacob Coxon's public resignati…",
-        "title": "More than 10% chance AI 'could kill all humans' in the next 10 years, Anthropic safety researcher says — departing employee says AI companies are 'gambling with our lives'"
+        "summary": "In addition to the $111 billion Paramount/Warner Bros merger just being foundationally bad for creatives, labor, and consumers, the Ellison family-owned company’s executives just keep demonstrating why they’re not really the kind of folks you want dominating…",
+        "title": "Fake Consumer Group Using AI To Generate Fake Support For Paramount Merger"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -478,7 +418,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "Anthropic safety researcher Evan Hubinger has warned there is a more than 10% chance that AI could kill all humans within the next decade, but reassured the public the company is \"trying its best.\" The revelation comes following Jacob Coxon's public resignati…",
+          "after": "In addition to the $111 billion Paramount/Warner Bros merger just being foundationally bad for creatives, labor, and consumers, the Ellison family-owned company’s executives just keep demonstrating why they’re not really the kind of folks you want dominating…",
           "evidenceIds": [
             "E002"
           ]
@@ -486,7 +426,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "More than 10% chance AI 'could kill all humans' in the next 10 years, Anthropic safety researcher says — departing employee says AI companies are 'gambling with our lives'",
+          "after": "Fake Consumer Group Using AI To Generate Fake Support For Paramount Merger",
           "evidenceIds": [
             "E002"
           ]
@@ -507,35 +447,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-15f3672d9a3110937475"
+        "evt-026990bdc821e1f984da"
       ],
       "eventLifecycles": {
-        "evt-15f3672d9a3110937475": "first_seen"
+        "evt-026990bdc821e1f984da": "first_seen"
       },
-      "eventId": "evt-15f3672d9a3110937475",
+      "eventId": "evt-026990bdc821e1f984da",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T10:39:33+00:00",
-      "lastSeenAt": "2026-09-09T10:39:33+00:00"
+      "firstSeenAt": "2026-09-09T15:25:34+00:00",
+      "lastSeenAt": "2026-09-09T15:25:34+00:00"
     },
     {
-      "id": "chg-7841a08e11b50ee8a86a",
+      "id": "chg-38cdd23e39302d50b2e3",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-b20ee4d6f94b617a9f",
-      "entityName": "Is Shai-Hulud back? Researchers spot 'wormy boy' slipping past npm malware scanning features",
+      "entityId": "intelligence-event-0a9116510baa72f1d4",
+      "entityName": "Worried Anthropic researchers warn that AI ‘could kill all humans’",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：Is Shai-Hulud back? Researchers spot 'wormy boy' slipping past npm malware scanning features。",
+      "summary": "新增高价值情报事件记录：Worried Anthropic researchers warn that AI ‘could kill all humans’。",
       "importance": 85,
       "before": null,
       "after": {
         "publishedAt": "2026-09-09",
-        "summary": "The Shai-Hulud npm worm is back several months after everyone assumed it was dead. Back in May, a compromised maintainer account pushed 639 malicious versions of @antv packages to npm in a single hour, although the attack was swiftly halted. However, while np…",
-        "title": "Is Shai-Hulud back? Researchers spot 'wormy boy' slipping past npm malware scanning features"
+        "summary": "A senior Anthropic safety researcher has said there is more than a 10 percent chance artificial intelligence \"could kill all humans\" by the end of the decade, just hours after a colleague resigned over fears the AI lab and its rivals are carelessly racing to…",
+        "title": "Worried Anthropic researchers warn that AI ‘could kill all humans’"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -557,7 +497,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "The Shai-Hulud npm worm is back several months after everyone assumed it was dead. Back in May, a compromised maintainer account pushed 639 malicious versions of @antv packages to npm in a single hour, although the attack was swiftly halted. However, while np…",
+          "after": "A senior Anthropic safety researcher has said there is more than a 10 percent chance artificial intelligence \"could kill all humans\" by the end of the decade, just hours after a colleague resigned over fears the AI lab and its rivals are carelessly racing to…",
           "evidenceIds": [
             "E003"
           ]
@@ -565,7 +505,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "Is Shai-Hulud back? Researchers spot 'wormy boy' slipping past npm malware scanning features",
+          "after": "Worried Anthropic researchers warn that AI ‘could kill all humans’",
           "evidenceIds": [
             "E003"
           ]
@@ -586,35 +526,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-89efc117371c9ffb95b0"
+        "evt-8b835855976234ea7c49"
       ],
       "eventLifecycles": {
-        "evt-89efc117371c9ffb95b0": "first_seen"
+        "evt-8b835855976234ea7c49": "first_seen"
       },
-      "eventId": "evt-89efc117371c9ffb95b0",
+      "eventId": "evt-8b835855976234ea7c49",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T10:39:33+00:00",
-      "lastSeenAt": "2026-09-09T10:39:33+00:00"
+      "firstSeenAt": "2026-09-09T15:25:34+00:00",
+      "lastSeenAt": "2026-09-09T15:25:34+00:00"
     },
     {
-      "id": "chg-fc9018357fe707d01844",
+      "id": "chg-2b7106a29fb1ec0ccb7c",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-cc8632be3c74302778",
-      "entityName": "Anthropic researcher quits, says AI could kill us all by the end of the decade",
+      "entityId": "intelligence-event-59c702d26f1043d973",
+      "entityName": "The Washington Post：OpenAI said that an unreleased AI model had resolved one of the most significant open questions in modern math research. The problem concerns the Navi",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：Anthropic researcher quits, says AI could kill us all by the end of the decade。",
+      "summary": "新增高价值情报事件记录：The Washington Post：OpenAI said that an unreleased AI model had resolved one of the most significant open questions in modern math research. The problem concerns the Navi。",
       "importance": 85,
       "before": null,
       "after": {
         "publishedAt": "2026-09-09",
-        "summary": "An AI researcher quit Anthropic due to ethical and safety concerns, claiming that AI could everyone within the next 10 years.",
-        "title": "Anthropic researcher quits, says AI could kill us all by the end of the decade"
+        "summary": "OpenAI said that an unreleased AI model had resolved one of the most significant open questions in modern math research. The problem concerns the Navier-Stokes equations, used to model the flow of fluids and predict phenomena such as weather patterns. https:/…",
+        "title": "The Washington Post：OpenAI said that an unreleased AI model had resolved one of the most significant open questions in modern math research. The problem concerns the Navi"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -636,7 +576,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "An AI researcher quit Anthropic due to ethical and safety concerns, claiming that AI could everyone within the next 10 years.",
+          "after": "OpenAI said that an unreleased AI model had resolved one of the most significant open questions in modern math research. The problem concerns the Navier-Stokes equations, used to model the flow of fluids and predict phenomena such as weather patterns. https:/…",
           "evidenceIds": [
             "E004"
           ]
@@ -644,7 +584,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "Anthropic researcher quits, says AI could kill us all by the end of the decade",
+          "after": "The Washington Post：OpenAI said that an unreleased AI model had resolved one of the most significant open questions in modern math research. The problem concerns the Navi",
           "evidenceIds": [
             "E004"
           ]
@@ -665,35 +605,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-f87a903095ee5b7a61b9"
+        "evt-b43939dfa04eaed50489"
       ],
       "eventLifecycles": {
-        "evt-f87a903095ee5b7a61b9": "first_seen"
+        "evt-b43939dfa04eaed50489": "first_seen"
       },
-      "eventId": "evt-f87a903095ee5b7a61b9",
+      "eventId": "evt-b43939dfa04eaed50489",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T10:39:33+00:00",
-      "lastSeenAt": "2026-09-09T10:39:33+00:00"
+      "firstSeenAt": "2026-09-09T15:25:34+00:00",
+      "lastSeenAt": "2026-09-09T15:25:34+00:00"
     },
     {
-      "id": "chg-c02bd4bd6aee44bbaaa6",
+      "id": "chg-84ab162cbf4479860f35",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-ea162fe0817963e072",
-      "entityName": "谷歌计划在芬兰投入130亿欧元用于AI设施 为其在欧洲最大单笔投资",
+      "entityId": "intelligence-event-b3be5993baf31fd265",
+      "entityName": "Globee® Awards for Innovation, Now in Its 18th Year, Invite Artificial Intelligence Implementation Achievement Nominations Worldwide",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：谷歌计划在芬兰投入130亿欧元用于AI设施 为其在欧洲最大单笔投资。",
-      "importance": 84,
+      "summary": "新增高价值情报事件记录：Globee® Awards for Innovation, Now in Its 18th Year, Invite Artificial Intelligence Implementation Achievement Nominations Worldwide。",
+      "importance": 85,
       "before": null,
       "after": {
         "publishedAt": "2026-09-09",
-        "summary": "Alphabet旗下谷歌计划在欧洲进行其最大规模投资，在芬兰建设价值至少130亿欧元（151亿美元）的人工智能基础设施。 该公司周三在一份声明中表示...",
-        "title": "谷歌计划在芬兰投入130亿欧元用于AI设施 为其在欧洲最大单笔投资"
+        "summary": "Recognizing local, regional, and global achievements that apply artificial intelligence to solve problems, enhance capabilities, improve experiences, and create measurable value SAN FRANCISCO, Sept. 9, 2026 /PRNewswire/ -- The Globee® Awards announced that no…",
+        "title": "Globee® Awards for Innovation, Now in Its 18th Year, Invite Artificial Intelligence Implementation Achievement Nominations Worldwide"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -715,7 +655,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "Alphabet旗下谷歌计划在欧洲进行其最大规模投资，在芬兰建设价值至少130亿欧元（151亿美元）的人工智能基础设施。 该公司周三在一份声明中表示...",
+          "after": "Recognizing local, regional, and global achievements that apply artificial intelligence to solve problems, enhance capabilities, improve experiences, and create measurable value SAN FRANCISCO, Sept. 9, 2026 /PRNewswire/ -- The Globee® Awards announced that no…",
           "evidenceIds": [
             "E005"
           ]
@@ -723,7 +663,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "谷歌计划在芬兰投入130亿欧元用于AI设施 为其在欧洲最大单笔投资",
+          "after": "Globee® Awards for Innovation, Now in Its 18th Year, Invite Artificial Intelligence Implementation Achievement Nominations Worldwide",
           "evidenceIds": [
             "E005"
           ]
@@ -744,35 +684,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-d9bb63c4496f595ff6c1"
+        "evt-0b3d57282938020d02de"
       ],
       "eventLifecycles": {
-        "evt-d9bb63c4496f595ff6c1": "first_seen"
+        "evt-0b3d57282938020d02de": "first_seen"
       },
-      "eventId": "evt-d9bb63c4496f595ff6c1",
+      "eventId": "evt-0b3d57282938020d02de",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T10:39:33+00:00",
-      "lastSeenAt": "2026-09-09T10:39:33+00:00"
+      "firstSeenAt": "2026-09-09T15:25:34+00:00",
+      "lastSeenAt": "2026-09-09T15:25:34+00:00"
     },
     {
-      "id": "chg-4aad06c3b819b10605f6",
+      "id": "chg-fd35be46b1568960de6e",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-110c7c92de99c10fdb",
-      "entityName": "算力之后，存储成为AI应用落地的“胜负手”",
+      "entityId": "intelligence-event-d5a8f5bb4ab2f6e5ad",
+      "entityName": "Finalists Named for the AFP 2026 Pinnacle Awards: Bandwidth, Google, ServiceNow",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：算力之后，存储成为AI应用落地的“胜负手”。",
-      "importance": 84,
+      "summary": "新增高价值情报事件记录：Finalists Named for the AFP 2026 Pinnacle Awards: Bandwidth, Google, ServiceNow。",
+      "importance": 85,
       "before": null,
       "after": {
         "publishedAt": "2026-09-09",
-        "summary": "存储系统正被迫从幕后走向台前,成为制约AI落地的核心瓶颈。",
-        "title": "算力之后，存储成为AI应用落地的“胜负手”"
+        "summary": "Sponsored by Truist for a third year, the AFP Pinnacle Awards recognize leading treasury and finance groups for innovation, excellence and impact ROCKVILLE, Md., Sept. 9, 2026 /PRNewswire/ -- The Association for Financial Professionals named Bandwidth, Google…",
+        "title": "Finalists Named for the AFP 2026 Pinnacle Awards: Bandwidth, Google, ServiceNow"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -794,7 +734,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "存储系统正被迫从幕后走向台前,成为制约AI落地的核心瓶颈。",
+          "after": "Sponsored by Truist for a third year, the AFP Pinnacle Awards recognize leading treasury and finance groups for innovation, excellence and impact ROCKVILLE, Md., Sept. 9, 2026 /PRNewswire/ -- The Association for Financial Professionals named Bandwidth, Google…",
           "evidenceIds": [
             "E006"
           ]
@@ -802,7 +742,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "算力之后，存储成为AI应用落地的“胜负手”",
+          "after": "Finalists Named for the AFP 2026 Pinnacle Awards: Bandwidth, Google, ServiceNow",
           "evidenceIds": [
             "E006"
           ]
@@ -823,35 +763,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-28a606cc16a908f2c3d7"
+        "evt-a6db4ee8b2188cef3fc7"
       ],
       "eventLifecycles": {
-        "evt-28a606cc16a908f2c3d7": "first_seen"
+        "evt-a6db4ee8b2188cef3fc7": "first_seen"
       },
-      "eventId": "evt-28a606cc16a908f2c3d7",
+      "eventId": "evt-a6db4ee8b2188cef3fc7",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T10:39:33+00:00",
-      "lastSeenAt": "2026-09-09T10:39:33+00:00"
+      "firstSeenAt": "2026-09-09T15:25:34+00:00",
+      "lastSeenAt": "2026-09-09T15:25:34+00:00"
     },
     {
-      "id": "chg-a32b64fafdc1d8f4f04d",
+      "id": "chg-954242ec88ce248f3b12",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-64aaba26e91282e835",
-      "entityName": "物理 AI 奔赴广域，追觅户外庭院 IFA 2026交出从核心硬件到商用落地完整答卷",
+      "entityId": "intelligence-event-ec71edb3622fdeaa75",
+      "entityName": "Google Cloud and Accenture launch new business group to embed forward deployed engineers with customers",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：物理 AI 奔赴广域，追觅户外庭院 IFA 2026交出从核心硬件到商用落地完整答卷。",
+      "summary": "新增高价值情报事件记录：Google Cloud and Accenture launch new business group to embed forward deployed engineers with customers。",
       "importance": 84,
       "before": null,
       "after": {
         "publishedAt": "2026-09-09",
-        "summary": "9月8日，2026年德国柏林国际电子消费品展览会（IFA 2026）落下帷幕。追觅户外庭院以DREAME、MOVA、NexLawn三大品牌矩阵、十余款首发新品集中亮相，以技术突破、商用赛道抢跑、权威奖项加冕、硬核智造引领的全维度实力，交出了一份从技术突破到战略跃迁的完整答卷，更向全球用户清晰展示了中国智造在户外庭院赛道的核心竞争力与结构性优势。 一套物理AI技术底座，串联室内外全场景 从室内清洁到户外庭院，从智能出行到工业作业——追觅户外庭院的技术支撑，源自一套以物理AI为运行逻辑的广义机器人技术底座。 本届IF…",
-        "title": "物理 AI 奔赴广域，追觅户外庭院 IFA 2026交出从核心硬件到商用落地完整答卷"
+        "summary": "Google Cloud and Accenture have unveiled a new joint business unit aimed at helping Gemini Enterprise customers scale AI capabilities. The Accenture Gemini Enterprise Business Group will bring together Accenture’s Gemini Enterprise-certified consultants, forw…",
+        "title": "Google Cloud and Accenture launch new business group to embed forward deployed engineers with customers"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -873,7 +813,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "9月8日，2026年德国柏林国际电子消费品展览会（IFA 2026）落下帷幕。追觅户外庭院以DREAME、MOVA、NexLawn三大品牌矩阵、十余款首发新品集中亮相，以技术突破、商用赛道抢跑、权威奖项加冕、硬核智造引领的全维度实力，交出了一份从技术突破到战略跃迁的完整答卷，更向全球用户清晰展示了中国智造在户外庭院赛道的核心竞争力与结构性优势。 一套物理AI技术底座，串联室内外全场景 从室内清洁到户外庭院，从智能出行到工业作业——追觅户外庭院的技术支撑，源自一套以物理AI为运行逻辑的广义机器人技术底座。 本届IF…",
+          "after": "Google Cloud and Accenture have unveiled a new joint business unit aimed at helping Gemini Enterprise customers scale AI capabilities. The Accenture Gemini Enterprise Business Group will bring together Accenture’s Gemini Enterprise-certified consultants, forw…",
           "evidenceIds": [
             "E007"
           ]
@@ -881,7 +821,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "物理 AI 奔赴广域，追觅户外庭院 IFA 2026交出从核心硬件到商用落地完整答卷",
+          "after": "Google Cloud and Accenture launch new business group to embed forward deployed engineers with customers",
           "evidenceIds": [
             "E007"
           ]
@@ -902,35 +842,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-f588f2daa55e32b0bee4"
+        "evt-caf0883cfae2b41896c1"
       ],
       "eventLifecycles": {
-        "evt-f588f2daa55e32b0bee4": "first_seen"
+        "evt-caf0883cfae2b41896c1": "first_seen"
       },
-      "eventId": "evt-f588f2daa55e32b0bee4",
+      "eventId": "evt-caf0883cfae2b41896c1",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T10:39:33+00:00",
-      "lastSeenAt": "2026-09-09T10:39:33+00:00"
+      "firstSeenAt": "2026-09-09T15:25:34+00:00",
+      "lastSeenAt": "2026-09-09T15:25:34+00:00"
     },
     {
-      "id": "chg-80a1df169645ff6b32bc",
+      "id": "chg-63ca10f1f7976ac8b636",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-68be73d3964b80a978",
-      "entityName": "对话杉数科技：大模型跑完上半场，决策式AI接棒落地",
+      "entityId": "intelligence-event-80123bb3da105fbde6",
+      "entityName": "AskELIE Announces Exclusive Strategic Partnership with Pine Services Group to Expand AI-Powered Operational Automation Across the U.S.",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：对话杉数科技：大模型跑完上半场，决策式AI接棒落地。",
+      "summary": "新增高价值情报事件记录：AskELIE Announces Exclusive Strategic Partnership with Pine Services Group to Expand AI-Powered Operational Automation Across the U.S.。",
       "importance": 84,
       "before": null,
       "after": {
         "publishedAt": "2026-09-09",
-        "summary": "只有进入资源配置和经营计划，厂商才更接近企业愿意持续付费的核心环节，决策式AI被频繁提及。",
-        "title": "对话杉数科技：大模型跑完上半场，决策式AI接棒落地"
+        "summary": "LONDON, Sept. 9, 2026 /PRNewswire/ -- AskELIE, the AI-powered operational automation platform built for real-world financial and compliance workflows, today announced an exclusive strategic partnership with Pine Services Group. The partnership marks the secon…",
+        "title": "AskELIE Announces Exclusive Strategic Partnership with Pine Services Group to Expand AI-Powered Operational Automation Across the U.S."
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -952,7 +892,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "只有进入资源配置和经营计划，厂商才更接近企业愿意持续付费的核心环节，决策式AI被频繁提及。",
+          "after": "LONDON, Sept. 9, 2026 /PRNewswire/ -- AskELIE, the AI-powered operational automation platform built for real-world financial and compliance workflows, today announced an exclusive strategic partnership with Pine Services Group. The partnership marks the secon…",
           "evidenceIds": [
             "E008"
           ]
@@ -960,7 +900,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "对话杉数科技：大模型跑完上半场，决策式AI接棒落地",
+          "after": "AskELIE Announces Exclusive Strategic Partnership with Pine Services Group to Expand AI-Powered Operational Automation Across the U.S.",
           "evidenceIds": [
             "E008"
           ]
@@ -981,114 +921,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-3d96723cd54bc8f070f7"
+        "evt-3f3bc86b19bc460a41f1"
       ],
       "eventLifecycles": {
-        "evt-3d96723cd54bc8f070f7": "first_seen"
+        "evt-3f3bc86b19bc460a41f1": "first_seen"
       },
-      "eventId": "evt-3d96723cd54bc8f070f7",
+      "eventId": "evt-3f3bc86b19bc460a41f1",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T10:39:33+00:00",
-      "lastSeenAt": "2026-09-09T10:39:33+00:00"
+      "firstSeenAt": "2026-09-09T15:25:34+00:00",
+      "lastSeenAt": "2026-09-09T15:25:34+00:00"
     },
     {
-      "id": "chg-f02c16371161b08aec54",
+      "id": "chg-9d4adaf588e31315ac13",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-48ea524c6586d8be32",
-      "entityName": "从Demo到1000万次真实作业，万勋发布NOVA2.0柔性具身大脑",
+      "entityId": "intelligence-event-752fddbdb9d965ac03",
+      "entityName": "Databricks unveils adaptive AI retrieval model to cut search costs and latency",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：从Demo到1000万次真实作业，万勋发布NOVA2.0柔性具身大脑。",
+      "summary": "新增高价值情报事件记录：Databricks unveils adaptive AI retrieval model to cut search costs and latency。",
       "importance": 82,
       "before": null,
       "after": {
         "publishedAt": "2026-09-09",
-        "summary": "作为柔性具身智能的全球领航者，万勋科技于日前正式发布其第二代柔性具身大脑NOVA2.0（Neuromorphic Omniversal Versatile Architecture，神经元智能开放世界通用架构），同时也是行业首个开放世界全天候商业交付级具身智能架构——该架构脱胎并服务于40+真实行业场景超1000万次多维度极限工况作业，跨行业场景迁移、落地能力与应用价值已赢得全球客户广泛认可，并从中构建起极为稀缺的真实场景数据飞轮，为行业率先跑通了“真场景、真需求、真数据、真落地”的具身智能技术路线，宣告了具身智…",
-        "title": "从Demo到1000万次真实作业，万勋发布NOVA2.0柔性具身大脑"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-09",
-          "evidenceIds": [
-            "E009"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "作为柔性具身智能的全球领航者，万勋科技于日前正式发布其第二代柔性具身大脑NOVA2.0（Neuromorphic Omniversal Versatile Architecture，神经元智能开放世界通用架构），同时也是行业首个开放世界全天候商业交付级具身智能架构——该架构脱胎并服务于40+真实行业场景超1000万次多维度极限工况作业，跨行业场景迁移、落地能力与应用价值已赢得全球客户广泛认可，并从中构建起极为稀缺的真实场景数据飞轮，为行业率先跑通了“真场景、真需求、真数据、真落地”的具身智能技术路线，宣告了具身智…",
-          "evidenceIds": [
-            "E009"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "从Demo到1000万次真实作业，万勋发布NOVA2.0柔性具身大脑",
-          "evidenceIds": [
-            "E009"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E009"
-      ],
-      "supportingEvidenceIds": [
-        "E009"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-cd817f233aa484332324"
-      ],
-      "eventLifecycles": {
-        "evt-cd817f233aa484332324": "first_seen"
-      },
-      "eventId": "evt-cd817f233aa484332324",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T10:39:33+00:00",
-      "lastSeenAt": "2026-09-09T10:39:33+00:00"
-    },
-    {
-      "id": "chg-5de8575fcea0ddf808f8",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-4f468ff3ed4bf399a0",
-      "entityName": "Meta推出个人AI智能体Muse 可代用户处理日常事务",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Meta推出个人AI智能体Muse 可代用户处理日常事务。",
-      "importance": 82,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-09",
-        "summary": "Meta发布了一款能够代用户执行任务的新型AI智能体，进一步推进了马克·扎克伯格关于“每个人都拥有个性化AI助手”的愿景。",
-        "title": "Meta推出个人AI智能体Muse 可代用户处理日常事务"
+        "summary": "Databricks on Wednesday introduced Adaptive Instructed-Retriever, a new retrieval model designed to improve enterprise AI search by taking additional steps for complex queries while stopping early on simpler ones in order to help its customers balance answer…",
+        "title": "Databricks unveils adaptive AI retrieval model to cut search costs and latency"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -1110,7 +971,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "Meta发布了一款能够代用户执行任务的新型AI智能体，进一步推进了马克·扎克伯格关于“每个人都拥有个性化AI助手”的愿景。",
+          "after": "Databricks on Wednesday introduced Adaptive Instructed-Retriever, a new retrieval model designed to improve enterprise AI search by taking additional steps for complex queries while stopping early on simpler ones in order to help its customers balance answer…",
           "evidenceIds": [
             "E010"
           ]
@@ -1118,7 +979,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "Meta推出个人AI智能体Muse 可代用户处理日常事务",
+          "after": "Databricks unveils adaptive AI retrieval model to cut search costs and latency",
           "evidenceIds": [
             "E010"
           ]
@@ -1139,584 +1000,31 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-a37efb4a5ee6e8c2f723"
+        "evt-2e6ec079915a7bfca56c"
       ],
       "eventLifecycles": {
-        "evt-a37efb4a5ee6e8c2f723": "first_seen"
+        "evt-2e6ec079915a7bfca56c": "first_seen"
       },
-      "eventId": "evt-a37efb4a5ee6e8c2f723",
+      "eventId": "evt-2e6ec079915a7bfca56c",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T10:39:33+00:00",
-      "lastSeenAt": "2026-09-09T10:39:33+00:00"
-    },
-    {
-      "id": "chg-11578d45c48628066f16",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-78020fe97280702bec",
-      "entityName": "Meta推出个人AI代理Muse，可跨应用执行邮件、购物和旅行预订",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Meta推出个人AI代理Muse，可跨应用执行邮件、购物和旅行预订。",
-      "importance": 82,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-09",
-        "summary": "Meta于9月8日在美国推出个人AI代理Muse，面向18岁及以上用户开放。该产品可通过独立应用、网页及WhatsApp使用，能够连接第三方服务、操作浏览器并持续执行多步骤任务。",
-        "title": "Meta推出个人AI代理Muse，可跨应用执行邮件、购物和旅行预订"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-09",
-          "evidenceIds": [
-            "E011"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Meta于9月8日在美国推出个人AI代理Muse，面向18岁及以上用户开放。该产品可通过独立应用、网页及WhatsApp使用，能够连接第三方服务、操作浏览器并持续执行多步骤任务。",
-          "evidenceIds": [
-            "E011"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Meta推出个人AI代理Muse，可跨应用执行邮件、购物和旅行预订",
-          "evidenceIds": [
-            "E011"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E011"
-      ],
-      "supportingEvidenceIds": [
-        "E011"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-eaf762cea55b35006e84"
-      ],
-      "eventLifecycles": {
-        "evt-eaf762cea55b35006e84": "first_seen"
-      },
-      "eventId": "evt-eaf762cea55b35006e84",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T10:39:33+00:00",
-      "lastSeenAt": "2026-09-09T10:39:33+00:00"
-    },
-    {
-      "id": "chg-2fe04e7be63c0d9aff96",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-f0c6df20520964ad31",
-      "entityName": "DFI Introduces One Board, Two CPU Generations Mini-ITX Platform to Advance Physical AI for Robotics and Automation",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：DFI Introduces One Board, Two CPU Generations Mini-ITX Platform to Advance Physical AI for Robotics and Automation。",
-      "importance": 82,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-09",
-        "summary": "TAIPEI, Sept. 9, 2026 /PRNewswire/ -- DFI, a Qisda Group company and a global leader in embedded motherboards and industrial computers, introduces the ARH171/ARH173, expanding its AI-ready portfolio with a Mini-ITX platform built for space-constrained, missio…",
-        "title": "DFI Introduces One Board, Two CPU Generations Mini-ITX Platform to Advance Physical AI for Robotics and Automation"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-09",
-          "evidenceIds": [
-            "E012"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "TAIPEI, Sept. 9, 2026 /PRNewswire/ -- DFI, a Qisda Group company and a global leader in embedded motherboards and industrial computers, introduces the ARH171/ARH173, expanding its AI-ready portfolio with a Mini-ITX platform built for space-constrained, missio…",
-          "evidenceIds": [
-            "E012"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "DFI Introduces One Board, Two CPU Generations Mini-ITX Platform to Advance Physical AI for Robotics and Automation",
-          "evidenceIds": [
-            "E012"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E012"
-      ],
-      "supportingEvidenceIds": [
-        "E012"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-8c01bdfb72639b60ac05"
-      ],
-      "eventLifecycles": {
-        "evt-8c01bdfb72639b60ac05": "first_seen"
-      },
-      "eventId": "evt-8c01bdfb72639b60ac05",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T10:39:33+00:00",
-      "lastSeenAt": "2026-09-09T10:39:33+00:00"
-    },
-    {
-      "id": "chg-49f38a269016eafca615",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-9a1933e4a4d5b9c4d3",
-      "entityName": "Google DeepMind：We’re launching AlphaGenome Atlas: an AI-powered searchable database mapping the predicted impact of all 9 billion possible single-letter DNA changes.",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Google DeepMind：We’re launching AlphaGenome Atlas: an AI-powered searchable database mapping the predicted impact of all 9 billion possible single-letter DNA changes.。",
-      "importance": 81,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-08",
-        "summary": "We’re launching AlphaGenome Atlas: an AI-powered searchable database mapping the predicted impact of all 9 billion possible single-letter DNA changes. Here’s how it could help researchers better understand our biology 🧵 https://t.co/SABFZW5SiR",
-        "title": "Google DeepMind：We’re launching AlphaGenome Atlas: an AI-powered searchable database mapping the predicted impact of all 9 billion possible single-letter DNA changes."
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-08",
-          "evidenceIds": [
-            "E014"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "We’re launching AlphaGenome Atlas: an AI-powered searchable database mapping the predicted impact of all 9 billion possible single-letter DNA changes. Here’s how it could help researchers better understand our biology 🧵 https://t.co/SABFZW5SiR",
-          "evidenceIds": [
-            "E014"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Google DeepMind：We’re launching AlphaGenome Atlas: an AI-powered searchable database mapping the predicted impact of all 9 billion possible single-letter DNA changes.",
-          "evidenceIds": [
-            "E014"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E014"
-      ],
-      "supportingEvidenceIds": [
-        "E014"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-189a284860c2edd92222"
-      ],
-      "eventLifecycles": {
-        "evt-189a284860c2edd92222": "first_seen"
-      },
-      "eventId": "evt-189a284860c2edd92222",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T10:39:33+00:00",
-      "lastSeenAt": "2026-09-09T10:39:33+00:00"
-    },
-    {
-      "id": "chg-2db687c32505ffde080d",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-e0b4dd7f63e0b84dca",
-      "entityName": "Google DeepMind：We believe foundational biology tools should be accessible to everyone. AlphaGenome Atlas resources are available to the global scientific community v",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Google DeepMind：We believe foundational biology tools should be accessible to everyone. AlphaGenome Atlas resources are available to the global scientific community v。",
-      "importance": 81,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-08",
-        "summary": "We believe foundational biology tools should be accessible to everyone. AlphaGenome Atlas resources are available to the global scientific community via the Atlas website, our AlphaGenome API, as a skill in Google Antigravity, and coming to @GoogleCloud soon…",
-        "title": "Google DeepMind：We believe foundational biology tools should be accessible to everyone. AlphaGenome Atlas resources are available to the global scientific community v"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-08",
-          "evidenceIds": [
-            "E015"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "We believe foundational biology tools should be accessible to everyone. AlphaGenome Atlas resources are available to the global scientific community via the Atlas website, our AlphaGenome API, as a skill in Google Antigravity, and coming to @GoogleCloud soon…",
-          "evidenceIds": [
-            "E015"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Google DeepMind：We believe foundational biology tools should be accessible to everyone. AlphaGenome Atlas resources are available to the global scientific community v",
-          "evidenceIds": [
-            "E015"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E015"
-      ],
-      "supportingEvidenceIds": [
-        "E015"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-5a7e73217656eb2b58e5"
-      ],
-      "eventLifecycles": {
-        "evt-5a7e73217656eb2b58e5": "first_seen"
-      },
-      "eventId": "evt-5a7e73217656eb2b58e5",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T10:39:33+00:00",
-      "lastSeenAt": "2026-09-09T10:39:33+00:00"
-    },
-    {
-      "id": "chg-99857666a92e6e1dd652",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-ac7eee5f7a3d1c121b",
-      "entityName": "Google DeepMind：RT @dharshsky: Do LLMs passively report confidence—or do they use it to guide behaviour? Our @NatMachIntell paper provides causal evidence…",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Google DeepMind：RT @dharshsky: Do LLMs passively report confidence—or do they use it to guide behaviour? Our @NatMachIntell paper provides causal evidence…。",
-      "importance": 81,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-07",
-        "summary": "RT @dharshsky: Do LLMs passively report confidence—or do they use it to guide behaviour? Our @NatMachIntell paper provides causal evidence…",
-        "title": "Google DeepMind：RT @dharshsky: Do LLMs passively report confidence—or do they use it to guide behaviour? Our @NatMachIntell paper provides causal evidence…"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-07",
-          "evidenceIds": [
-            "E016"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "RT @dharshsky: Do LLMs passively report confidence—or do they use it to guide behaviour? Our @NatMachIntell paper provides causal evidence…",
-          "evidenceIds": [
-            "E016"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Google DeepMind：RT @dharshsky: Do LLMs passively report confidence—or do they use it to guide behaviour? Our @NatMachIntell paper provides causal evidence…",
-          "evidenceIds": [
-            "E016"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E016"
-      ],
-      "supportingEvidenceIds": [
-        "E016"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-b17a64c5b7a50b6ce0a9"
-      ],
-      "eventLifecycles": {
-        "evt-b17a64c5b7a50b6ce0a9": "first_seen"
-      },
-      "eventId": "evt-b17a64c5b7a50b6ce0a9",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T10:39:33+00:00",
-      "lastSeenAt": "2026-09-09T10:39:33+00:00"
-    },
-    {
-      "id": "chg-0cc73b61e61cf8153cb5",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-e689828e8b753971b0",
-      "entityName": "Google DeepMind：Atlas includes the AlphaGenome Variant Impact (AVI) score, which combines AlphaGenome, AlphaMissense and other features to: 1️⃣ Rank mutations from lo",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Google DeepMind：Atlas includes the AlphaGenome Variant Impact (AVI) score, which combines AlphaGenome, AlphaMissense and other features to: 1️⃣ Rank mutations from lo。",
-      "importance": 81,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-08",
-        "summary": "Atlas includes the AlphaGenome Variant Impact (AVI) score, which combines AlphaGenome, AlphaMissense and other features to: 1️⃣ Rank mutations from low to high-impact 2️⃣ Reveal how they cause damage - like breaking gene switches or RNA splicing instructions.…",
-        "title": "Google DeepMind：Atlas includes the AlphaGenome Variant Impact (AVI) score, which combines AlphaGenome, AlphaMissense and other features to: 1️⃣ Rank mutations from lo"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-08",
-          "evidenceIds": [
-            "E017"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Atlas includes the AlphaGenome Variant Impact (AVI) score, which combines AlphaGenome, AlphaMissense and other features to: 1️⃣ Rank mutations from low to high-impact 2️⃣ Reveal how they cause damage - like breaking gene switches or RNA splicing instructions.…",
-          "evidenceIds": [
-            "E017"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Google DeepMind：Atlas includes the AlphaGenome Variant Impact (AVI) score, which combines AlphaGenome, AlphaMissense and other features to: 1️⃣ Rank mutations from lo",
-          "evidenceIds": [
-            "E017"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E017"
-      ],
-      "supportingEvidenceIds": [
-        "E017"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-027b4231ccdfe63e4b10"
-      ],
-      "eventLifecycles": {
-        "evt-027b4231ccdfe63e4b10": "first_seen"
-      },
-      "eventId": "evt-027b4231ccdfe63e4b10",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T10:39:33+00:00",
-      "lastSeenAt": "2026-09-09T10:39:33+00:00"
-    },
-    {
-      "id": "chg-54b7cc9e0def165c65fd",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-1ec20d33f32c92744b",
-      "entityName": "Google DeepMind：AlphaGenome Atlas is over 30 times larger than the AlphaFold Database. It gives scientists an intuitive way to explore this vast 1-petabyte dataset -",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Google DeepMind：AlphaGenome Atlas is over 30 times larger than the AlphaFold Database. It gives scientists an intuitive way to explore this vast 1-petabyte dataset -。",
-      "importance": 81,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-08",
-        "summary": "AlphaGenome Atlas is over 30 times larger than the AlphaFold Database. It gives scientists an intuitive way to explore this vast 1-petabyte dataset - unifying interconnected resources so researchers can link genetic variants directly to the molecular mechanis…",
-        "title": "Google DeepMind：AlphaGenome Atlas is over 30 times larger than the AlphaFold Database. It gives scientists an intuitive way to explore this vast 1-petabyte dataset -"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-08",
-          "evidenceIds": [
-            "E018"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "AlphaGenome Atlas is over 30 times larger than the AlphaFold Database. It gives scientists an intuitive way to explore this vast 1-petabyte dataset - unifying interconnected resources so researchers can link genetic variants directly to the molecular mechanis…",
-          "evidenceIds": [
-            "E018"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Google DeepMind：AlphaGenome Atlas is over 30 times larger than the AlphaFold Database. It gives scientists an intuitive way to explore this vast 1-petabyte dataset -",
-          "evidenceIds": [
-            "E018"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E018"
-      ],
-      "supportingEvidenceIds": [
-        "E018"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-f20b02517c6661f62ca7"
-      ],
-      "eventLifecycles": {
-        "evt-f20b02517c6661f62ca7": "first_seen"
-      },
-      "eventId": "evt-f20b02517c6661f62ca7",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-09T10:39:33+00:00",
-      "lastSeenAt": "2026-09-09T10:39:33+00:00"
+      "firstSeenAt": "2026-09-09T15:25:34+00:00",
+      "lastSeenAt": "2026-09-09T15:25:34+00:00"
     }
   ],
   "evidence": [
     {
       "id": "E001",
-      "changeId": "chg-bf41e18f3d8de60cc8c2",
-      "entityName": "Cognition完成超20亿美元融资，估值达480亿美元",
-      "claim": "新增高价值情报事件记录：Cognition完成超20亿美元融资，估值达480亿美元。",
+      "changeId": "chg-24fc85514bc117219e7d",
+      "entityName": "Euno raises $23M to build the AI-native context brain for autonomous agents - SiliconANGLE",
+      "claim": "新增高价值情报事件记录：Euno raises $23M to build the AI-native context brain for autonomous agents - SiliconANGLE。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "Cognition完成超20亿美元融资，估值达480亿美元",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-09/doc-inirfqcq8920322.shtml",
+      "sourceName": "SiliconANGLE",
+      "title": "Euno raises $23M to build the AI-native context brain for autonomous agents - SiliconANGLE",
+      "url": "https://siliconangle.com/2026/09/09/euno-raises-23m-to-build-the-ai-native-context-brain-for-autonomous-agents",
       "publishedAt": "2026-09-09",
       "evidenceGrade": "C",
-      "platformName": "新浪",
+      "platformName": "SiliconANGLE",
       "sourceRole": "corroboration",
       "claimFields": [
         "publishedAt",
@@ -1730,17 +1038,17 @@
     },
     {
       "id": "E002",
-      "changeId": "chg-eb1b443da401a5685b83",
-      "entityName": "More than 10% chance AI 'could kill all humans' in the next 10 years, Anthropic safety researcher says — departing employee says AI companies are 'gambling with our lives'",
-      "claim": "新增高价值情报事件记录：More than 10% chance AI 'could kill all humans' in the next 10 years, Anthropic safety researcher says — departing employee says AI companies are 'gambling with our lives'。",
+      "changeId": "chg-3112353d9908e2f48e1d",
+      "entityName": "Fake Consumer Group Using AI To Generate Fake Support For Paramount Merger",
+      "claim": "新增高价值情报事件记录：Fake Consumer Group Using AI To Generate Fake Support For Paramount Merger。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "Tom's Hardware",
-      "title": "More than 10% chance AI 'could kill all humans' in the next 10 years, Anthropic safety researcher says — departing employee says AI companies are 'gambling with our lives'",
-      "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/more-than-10-percent-chance-ai-could-kill-all-humans-in-the-next-10-years-anthropic-safety-researcher-says-departing-employee-says-ai-companies-are-gambling-with-our-lives",
+      "sourceName": "Techdirt",
+      "title": "Fake Consumer Group Using AI To Generate Fake Support For Paramount Merger",
+      "url": "https://www.techdirt.com/2026/09/09/fake-consumer-group-using-ai-to-generate-fake-support-for-paramount-merger",
       "publishedAt": "2026-09-09",
       "evidenceGrade": "C",
-      "platformName": "Tom's Hardware",
+      "platformName": "Techdirt",
       "sourceRole": "corroboration",
       "claimFields": [
         "publishedAt",
@@ -1754,17 +1062,17 @@
     },
     {
       "id": "E003",
-      "changeId": "chg-7841a08e11b50ee8a86a",
-      "entityName": "Is Shai-Hulud back? Researchers spot 'wormy boy' slipping past npm malware scanning features",
-      "claim": "新增高价值情报事件记录：Is Shai-Hulud back? Researchers spot 'wormy boy' slipping past npm malware scanning features。",
+      "changeId": "chg-38cdd23e39302d50b2e3",
+      "entityName": "Worried Anthropic researchers warn that AI ‘could kill all humans’",
+      "claim": "新增高价值情报事件记录：Worried Anthropic researchers warn that AI ‘could kill all humans’。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "ITPro",
-      "title": "Is Shai-Hulud back? Researchers spot 'wormy boy' slipping past npm malware scanning features",
-      "url": "https://www.itpro.com/security/malware/is-shai-hulud-back-researchers-spot-wormy-boy-slipping-past-npm-malware-scanning-features",
+      "sourceName": "The Verge",
+      "title": "Worried Anthropic researchers warn that AI ‘could kill all humans’",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/991927/anthropic-ai-kill-all-humans",
       "publishedAt": "2026-09-09",
       "evidenceGrade": "C",
-      "platformName": "ITPro",
+      "platformName": "The Verge",
       "sourceRole": "corroboration",
       "claimFields": [
         "publishedAt",
@@ -1778,18 +1086,18 @@
     },
     {
       "id": "E004",
-      "changeId": "chg-fc9018357fe707d01844",
-      "entityName": "Anthropic researcher quits, says AI could kill us all by the end of the decade",
-      "claim": "新增高价值情报事件记录：Anthropic researcher quits, says AI could kill us all by the end of the decade。",
+      "changeId": "chg-2b7106a29fb1ec0ccb7c",
+      "entityName": "The Washington Post：OpenAI said that an unreleased AI model had resolved one of the most significant open questions in modern math research. The problem concerns the Navi",
+      "claim": "新增高价值情报事件记录：The Washington Post：OpenAI said that an unreleased AI model had resolved one of the most significant open questions in modern math research. The problem concerns the Navi。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "Mashable",
-      "title": "Anthropic researcher quits, says AI could kill us all by the end of the decade",
-      "url": "https://mashable.com/tech/anthropic-ai-researcher-quit-ethics-safety",
+      "sourceName": "The Washington Post on X",
+      "title": "The Washington Post：OpenAI said that an unreleased AI model had resolved one of the most significant open questions in modern math research. The problem concerns the Navi",
+      "url": "https://x.com/washingtonpost/status/2097573229061722356",
       "publishedAt": "2026-09-09",
-      "evidenceGrade": "C",
-      "platformName": "Mashable",
-      "sourceRole": "corroboration",
+      "evidenceGrade": "B",
+      "platformName": "X",
+      "sourceRole": "primary",
       "claimFields": [
         "publishedAt",
         "summary",
@@ -1802,182 +1110,14 @@
     },
     {
       "id": "E005",
-      "changeId": "chg-c02bd4bd6aee44bbaaa6",
-      "entityName": "谷歌计划在芬兰投入130亿欧元用于AI设施 为其在欧洲最大单笔投资",
-      "claim": "新增高价值情报事件记录：谷歌计划在芬兰投入130亿欧元用于AI设施 为其在欧洲最大单笔投资。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "谷歌计划在芬兰投入130亿欧元用于AI设施 为其在欧洲最大单笔投资",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-09/doc-inirfqcq8872289.shtml",
-      "publishedAt": "2026-09-09",
-      "evidenceGrade": "C",
-      "platformName": "新浪",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E006",
-      "changeId": "chg-4aad06c3b819b10605f6",
-      "entityName": "算力之后，存储成为AI应用落地的“胜负手”",
-      "claim": "新增高价值情报事件记录：算力之后，存储成为AI应用落地的“胜负手”。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "钛媒体",
-      "title": "算力之后，存储成为AI应用落地的“胜负手”",
-      "url": "https://www.tmtpost.com/8133976.html",
-      "publishedAt": "2026-09-09",
-      "evidenceGrade": "C",
-      "platformName": "专业媒体",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E007",
-      "changeId": "chg-a32b64fafdc1d8f4f04d",
-      "entityName": "物理 AI 奔赴广域，追觅户外庭院 IFA 2026交出从核心硬件到商用落地完整答卷",
-      "claim": "新增高价值情报事件记录：物理 AI 奔赴广域，追觅户外庭院 IFA 2026交出从核心硬件到商用落地完整答卷。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "雷峰网",
-      "title": "物理 AI 奔赴广域，追觅户外庭院 IFA 2026交出从核心硬件到商用落地完整答卷",
-      "url": "https://www.leiphone.com/category/industrynews/kf4KPltXt4hPhjpt.html",
-      "publishedAt": "2026-09-09",
-      "evidenceGrade": "C",
-      "platformName": "专业媒体",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E008",
-      "changeId": "chg-80a1df169645ff6b32bc",
-      "entityName": "对话杉数科技：大模型跑完上半场，决策式AI接棒落地",
-      "claim": "新增高价值情报事件记录：对话杉数科技：大模型跑完上半场，决策式AI接棒落地。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "钛媒体",
-      "title": "对话杉数科技：大模型跑完上半场，决策式AI接棒落地",
-      "url": "https://www.tmtpost.com/8132305.html",
-      "publishedAt": "2026-09-09",
-      "evidenceGrade": "C",
-      "platformName": "专业媒体",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E009",
-      "changeId": "chg-f02c16371161b08aec54",
-      "entityName": "从Demo到1000万次真实作业，万勋发布NOVA2.0柔性具身大脑",
-      "claim": "新增高价值情报事件记录：从Demo到1000万次真实作业，万勋发布NOVA2.0柔性具身大脑。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "雷峰网",
-      "title": "从Demo到1000万次真实作业，万勋发布NOVA2.0柔性具身大脑",
-      "url": "https://www.leiphone.com/category/robot/tEzDlRIgiHsXV8B0.html",
-      "publishedAt": "2026-09-09",
-      "evidenceGrade": "C",
-      "platformName": "专业媒体",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E010",
-      "changeId": "chg-5de8575fcea0ddf808f8",
-      "entityName": "Meta推出个人AI智能体Muse 可代用户处理日常事务",
-      "claim": "新增高价值情报事件记录：Meta推出个人AI智能体Muse 可代用户处理日常事务。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "Meta推出个人AI智能体Muse 可代用户处理日常事务",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-09/doc-inirfqcs5636363.shtml",
-      "publishedAt": "2026-09-09",
-      "evidenceGrade": "C",
-      "platformName": "新浪",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E011",
-      "changeId": "chg-11578d45c48628066f16",
-      "entityName": "Meta推出个人AI代理Muse，可跨应用执行邮件、购物和旅行预订",
-      "claim": "新增高价值情报事件记录：Meta推出个人AI代理Muse，可跨应用执行邮件、购物和旅行预订。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "Meta推出个人AI代理Muse，可跨应用执行邮件、购物和旅行预订",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-09/doc-inirfivw3801576.shtml",
-      "publishedAt": "2026-09-09",
-      "evidenceGrade": "C",
-      "platformName": "新浪",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E012",
-      "changeId": "chg-2fe04e7be63c0d9aff96",
-      "entityName": "DFI Introduces One Board, Two CPU Generations Mini-ITX Platform to Advance Physical AI for Robotics and Automation",
-      "claim": "新增高价值情报事件记录：DFI Introduces One Board, Two CPU Generations Mini-ITX Platform to Advance Physical AI for Robotics and Automation。",
+      "changeId": "chg-84ab162cbf4479860f35",
+      "entityName": "Globee® Awards for Innovation, Now in Its 18th Year, Invite Artificial Intelligence Implementation Achievement Nominations Worldwide",
+      "claim": "新增高价值情报事件记录：Globee® Awards for Innovation, Now in Its 18th Year, Invite Artificial Intelligence Implementation Achievement Nominations Worldwide。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "sourceName": "PR Newswire Consumer Technology",
-      "title": "DFI Introduces One Board, Two CPU Generations Mini-ITX Platform to Advance Physical AI for Robotics and Automation",
-      "url": "https://www.prnewswire.com/news-releases/dfi-introduces-one-board-two-cpu-generations-mini-itx-platform-to-advance-physical-ai-for-robotics-and-automation-302873374.html",
+      "title": "Globee® Awards for Innovation, Now in Its 18th Year, Invite Artificial Intelligence Implementation Achievement Nominations Worldwide",
+      "url": "https://www.prnewswire.com/news-releases/globee-awards-for-innovation-now-in-its-18th-year-invite-artificial-intelligence-implementation-achievement-nominations-worldwide-302871284.html",
       "publishedAt": "2026-09-09",
       "evidenceGrade": "B",
       "platformName": "新闻稿",
@@ -1993,18 +1133,18 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E014",
-      "changeId": "chg-49f38a269016eafca615",
-      "entityName": "Google DeepMind：We’re launching AlphaGenome Atlas: an AI-powered searchable database mapping the predicted impact of all 9 billion possible single-letter DNA changes.",
-      "claim": "新增高价值情报事件记录：Google DeepMind：We’re launching AlphaGenome Atlas: an AI-powered searchable database mapping the predicted impact of all 9 billion possible single-letter DNA changes.。",
+      "id": "E006",
+      "changeId": "chg-fd35be46b1568960de6e",
+      "entityName": "Finalists Named for the AFP 2026 Pinnacle Awards: Bandwidth, Google, ServiceNow",
+      "claim": "新增高价值情报事件记录：Finalists Named for the AFP 2026 Pinnacle Awards: Bandwidth, Google, ServiceNow。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "Google DeepMind on X",
-      "title": "Google DeepMind：We’re launching AlphaGenome Atlas: an AI-powered searchable database mapping the predicted impact of all 9 billion possible single-letter DNA changes.",
-      "url": "https://x.com/GoogleDeepMind/status/2097325048109384166",
-      "publishedAt": "2026-09-08",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "Finalists Named for the AFP 2026 Pinnacle Awards: Bandwidth, Google, ServiceNow",
+      "url": "https://www.prnewswire.com/news-releases/finalists-named-for-the-afp-2026-pinnacle-awards-bandwidth-google-servicenow-302873597.html",
+      "publishedAt": "2026-09-09",
       "evidenceGrade": "B",
-      "platformName": "X",
+      "platformName": "新闻稿",
       "sourceRole": "primary",
       "claimFields": [
         "publishedAt",
@@ -2017,18 +1157,42 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E015",
-      "changeId": "chg-2db687c32505ffde080d",
-      "entityName": "Google DeepMind：We believe foundational biology tools should be accessible to everyone. AlphaGenome Atlas resources are available to the global scientific community v",
-      "claim": "新增高价值情报事件记录：Google DeepMind：We believe foundational biology tools should be accessible to everyone. AlphaGenome Atlas resources are available to the global scientific community v。",
+      "id": "E007",
+      "changeId": "chg-954242ec88ce248f3b12",
+      "entityName": "Google Cloud and Accenture launch new business group to embed forward deployed engineers with customers",
+      "claim": "新增高价值情报事件记录：Google Cloud and Accenture launch new business group to embed forward deployed engineers with customers。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "Google DeepMind on X",
-      "title": "Google DeepMind：We believe foundational biology tools should be accessible to everyone. AlphaGenome Atlas resources are available to the global scientific community v",
-      "url": "https://x.com/GoogleDeepMind/status/2097325059140411626",
-      "publishedAt": "2026-09-08",
+      "sourceName": "ITPro",
+      "title": "Google Cloud and Accenture launch new business group to embed forward deployed engineers with customers",
+      "url": "https://www.itpro.com/business/business-strategy/google-cloud-and-accenture-launch-new-business-group-to-embed-forward-deployed-engineers-with-customers",
+      "publishedAt": "2026-09-09",
+      "evidenceGrade": "C",
+      "platformName": "ITPro",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E008",
+      "changeId": "chg-63ca10f1f7976ac8b636",
+      "entityName": "AskELIE Announces Exclusive Strategic Partnership with Pine Services Group to Expand AI-Powered Operational Automation Across the U.S.",
+      "claim": "新增高价值情报事件记录：AskELIE Announces Exclusive Strategic Partnership with Pine Services Group to Expand AI-Powered Operational Automation Across the U.S.。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "AskELIE Announces Exclusive Strategic Partnership with Pine Services Group to Expand AI-Powered Operational Automation Across the U.S.",
+      "url": "https://www.prnewswire.com/news-releases/askelie-announces-exclusive-strategic-partnership-with-pine-services-group-to-expand-ai-powered-operational-automation-across-the-us-302872666.html",
+      "publishedAt": "2026-09-09",
       "evidenceGrade": "B",
-      "platformName": "X",
+      "platformName": "新闻稿",
       "sourceRole": "primary",
       "claimFields": [
         "publishedAt",
@@ -2041,67 +1205,19 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E016",
-      "changeId": "chg-99857666a92e6e1dd652",
-      "entityName": "Google DeepMind：RT @dharshsky: Do LLMs passively report confidence—or do they use it to guide behaviour? Our @NatMachIntell paper provides causal evidence…",
-      "claim": "新增高价值情报事件记录：Google DeepMind：RT @dharshsky: Do LLMs passively report confidence—or do they use it to guide behaviour? Our @NatMachIntell paper provides causal evidence…。",
+      "id": "E010",
+      "changeId": "chg-9d4adaf588e31315ac13",
+      "entityName": "Databricks unveils adaptive AI retrieval model to cut search costs and latency",
+      "claim": "新增高价值情报事件记录：Databricks unveils adaptive AI retrieval model to cut search costs and latency。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "Google DeepMind on X",
-      "title": "Google DeepMind：RT @dharshsky: Do LLMs passively report confidence—or do they use it to guide behaviour? Our @NatMachIntell paper provides causal evidence…",
-      "url": "https://x.com/GoogleDeepMind/status/2096894471208153420",
-      "publishedAt": "2026-09-07",
-      "evidenceGrade": "B",
-      "platformName": "X",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E017",
-      "changeId": "chg-0cc73b61e61cf8153cb5",
-      "entityName": "Google DeepMind：Atlas includes the AlphaGenome Variant Impact (AVI) score, which combines AlphaGenome, AlphaMissense and other features to: 1️⃣ Rank mutations from lo",
-      "claim": "新增高价值情报事件记录：Google DeepMind：Atlas includes the AlphaGenome Variant Impact (AVI) score, which combines AlphaGenome, AlphaMissense and other features to: 1️⃣ Rank mutations from lo。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Google DeepMind on X",
-      "title": "Google DeepMind：Atlas includes the AlphaGenome Variant Impact (AVI) score, which combines AlphaGenome, AlphaMissense and other features to: 1️⃣ Rank mutations from lo",
-      "url": "https://x.com/GoogleDeepMind/status/2097325054430200205",
-      "publishedAt": "2026-09-08",
-      "evidenceGrade": "B",
-      "platformName": "X",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E018",
-      "changeId": "chg-54b7cc9e0def165c65fd",
-      "entityName": "Google DeepMind：AlphaGenome Atlas is over 30 times larger than the AlphaFold Database. It gives scientists an intuitive way to explore this vast 1-petabyte dataset -",
-      "claim": "新增高价值情报事件记录：Google DeepMind：AlphaGenome Atlas is over 30 times larger than the AlphaFold Database. It gives scientists an intuitive way to explore this vast 1-petabyte dataset -。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Google DeepMind on X",
-      "title": "Google DeepMind：AlphaGenome Atlas is over 30 times larger than the AlphaFold Database. It gives scientists an intuitive way to explore this vast 1-petabyte dataset -",
-      "url": "https://x.com/GoogleDeepMind/status/2097325050919596469",
-      "publishedAt": "2026-09-08",
-      "evidenceGrade": "B",
-      "platformName": "X",
-      "sourceRole": "primary",
+      "sourceName": "InfoWorld",
+      "title": "Databricks unveils adaptive AI retrieval model to cut search costs and latency",
+      "url": "https://www.infoworld.com/article/4220216/databricks-unveils-adaptive-ai-retrieval-model-to-cut-search-costs-and-latency.html",
+      "publishedAt": "2026-09-09",
+      "evidenceGrade": "C",
+      "platformName": "InfoWorld",
+      "sourceRole": "corroboration",
       "claimFields": [
         "publishedAt",
         "summary",
@@ -2115,9 +1231,485 @@
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-09T10:39:33+00:00",
+    "generatedAt": "2026-09-09T15:25:34+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-caf0883cfae2b41896c1": {
+        "eventId": "evt-caf0883cfae2b41896c1",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-ec71edb3622fdeaa75",
+        "entityName": "Google Cloud and Accenture launch new business group to embed forward deployed engineers with customers",
+        "title": "Google Cloud and Accenture launch new business group to embed forward deployed engineers with customers",
+        "titleAliases": [
+          "googlecloudandaccenturelaunchnewbusinessgrouptoembedforwarddeployedengineerswithcustomers"
+        ],
+        "publishedDate": "2026-09-09",
+        "publishedDates": [
+          "2026-09-09"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-6509ca6c65f424db2498",
+          "record-bf0c4a1552a3870970e4",
+          "src-83673c91b222b7d24ea9"
+        ],
+        "evidenceFingerprints": [
+          "6509ca6c65f424db2498"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "ITPro",
+            "title": "Google Cloud and Accenture launch new business group to embed forward deployed engineers with customers",
+            "url": "https://www.itpro.com/business/business-strategy/google-cloud-and-accenture-launch-new-business-group-to-embed-forward-deployed-engineers-with-customers",
+            "publishedAt": "2026-09-09",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "a07dde521df0e70d3481",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-09T15:25:34+00:00",
+        "lastSeenAt": "2026-09-09T15:25:34+00:00",
+        "lastPublishedAt": "2026-09-09T15:25:34+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-b43939dfa04eaed50489": {
+        "eventId": "evt-b43939dfa04eaed50489",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-59c702d26f1043d973",
+        "entityName": "The Washington Post：OpenAI said that an unreleased AI model had resolved one of the most significant open questions in modern math research. The problem concerns the Navi",
+        "title": "The Washington Post：OpenAI said that an unreleased AI model had resolved one of the most significant open questions in modern math research. The problem concerns the Navi",
+        "titleAliases": [
+          "thewashingtonpostopenaisaidthatanunreleasedaimodelhadresolvedoneofthemostsignificantopenquestionsinmodernmathresearchtheproblemconcernsthenavi"
+        ],
+        "publishedDate": "2026-09-09",
+        "publishedDates": [
+          "2026-09-09"
+        ],
+        "entityKeys": [
+          "company:openai"
+        ],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-29a87c90a9e389688af9",
+          "record-aa303a2e5d912982b30e",
+          "src-596a9a15b0676c451867"
+        ],
+        "evidenceFingerprints": [
+          "29a87c90a9e389688af9"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "The Washington Post on X",
+            "title": "The Washington Post：OpenAI said that an unreleased AI model had resolved one of the most significant open questions in modern math research. The problem concerns the Navi",
+            "url": "https://x.com/washingtonpost/status/2097573229061722356",
+            "publishedAt": "2026-09-09",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "abd44e0b34cb2397a7c3",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-09T15:25:34+00:00",
+        "lastSeenAt": "2026-09-09T15:25:34+00:00",
+        "lastPublishedAt": "2026-09-09T15:25:34+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-a6db4ee8b2188cef3fc7": {
+        "eventId": "evt-a6db4ee8b2188cef3fc7",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-d5a8f5bb4ab2f6e5ad",
+        "entityName": "Finalists Named for the AFP 2026 Pinnacle Awards: Bandwidth, Google, ServiceNow",
+        "title": "Finalists Named for the AFP 2026 Pinnacle Awards: Bandwidth, Google, ServiceNow",
+        "titleAliases": [
+          "finalistsnamedfortheafp2026pinnacleawardsbandwidthgoogleservicenow"
+        ],
+        "publishedDate": "2026-09-09",
+        "publishedDates": [
+          "2026-09-09"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-a94d4afe78d03bb53550",
+          "record-127dfa7d874601ab9a4a",
+          "src-37ebb13a057f6651b373"
+        ],
+        "evidenceFingerprints": [
+          "a94d4afe78d03bb53550"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "Finalists Named for the AFP 2026 Pinnacle Awards: Bandwidth, Google, ServiceNow",
+            "url": "https://www.prnewswire.com/news-releases/finalists-named-for-the-afp-2026-pinnacle-awards-bandwidth-google-servicenow-302873597.html",
+            "publishedAt": "2026-09-09",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "1c17f8b50d076dd2f307",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-09T15:25:34+00:00",
+        "lastSeenAt": "2026-09-09T15:25:34+00:00",
+        "lastPublishedAt": "2026-09-09T15:25:34+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-8b835855976234ea7c49": {
+        "eventId": "evt-8b835855976234ea7c49",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-0a9116510baa72f1d4",
+        "entityName": "Worried Anthropic researchers warn that AI ‘could kill all humans’",
+        "title": "Worried Anthropic researchers warn that AI ‘could kill all humans’",
+        "titleAliases": [
+          "worriedanthropicresearcherswarnthataicouldkillallhumans"
+        ],
+        "publishedDate": "2026-09-09",
+        "publishedDates": [
+          "2026-09-09"
+        ],
+        "entityKeys": [
+          "company:anthropic"
+        ],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-db75e9cb85be439c024f",
+          "record-b1dbe574b6938ec150f4",
+          "src-8ab439a9a15176514110"
+        ],
+        "evidenceFingerprints": [
+          "db75e9cb85be439c024f"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "The Verge",
+            "title": "Worried Anthropic researchers warn that AI ‘could kill all humans’",
+            "url": "https://www.theverge.com/ai-artificial-intelligence/991927/anthropic-ai-kill-all-humans",
+            "publishedAt": "2026-09-09",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "446a55fcd42a73fa3f89",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-09T15:25:34+00:00",
+        "lastSeenAt": "2026-09-09T15:25:34+00:00",
+        "lastPublishedAt": "2026-09-09T15:25:34+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-70bcaa72c1daebb5d6f8": {
+        "eventId": "evt-70bcaa72c1daebb5d6f8",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-624ea81deddc89821e",
+        "entityName": "Euno raises $23M to build the AI-native context brain for autonomous agents - SiliconANGLE",
+        "title": "Euno raises $23M to build the AI-native context brain for autonomous agents - SiliconANGLE",
+        "titleAliases": [
+          "eunoraises23mtobuildtheainativecontextbrainforautonomousagentssiliconangle"
+        ],
+        "publishedDate": "2026-09-09",
+        "publishedDates": [
+          "2026-09-09"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "23"
+        ],
+        "sourceAliases": [
+          "evd-126352f68c147c9c82d3",
+          "record-46af15518441848fd30c",
+          "src-9424161a427da32c174d"
+        ],
+        "evidenceFingerprints": [
+          "126352f68c147c9c82d3"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "SiliconANGLE",
+            "title": "Euno raises $23M to build the AI-native context brain for autonomous agents - SiliconANGLE",
+            "url": "https://siliconangle.com/2026/09/09/euno-raises-23m-to-build-the-ai-native-context-brain-for-autonomous-agents",
+            "publishedAt": "2026-09-09",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "2f0fe4a8f34495fbd0d7",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-09T15:25:34+00:00",
+        "lastSeenAt": "2026-09-09T15:25:34+00:00",
+        "lastPublishedAt": "2026-09-09T15:25:34+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-3f3bc86b19bc460a41f1": {
+        "eventId": "evt-3f3bc86b19bc460a41f1",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-80123bb3da105fbde6",
+        "entityName": "AskELIE Announces Exclusive Strategic Partnership with Pine Services Group to Expand AI-Powered Operational Automation Across the U.S.",
+        "title": "AskELIE Announces Exclusive Strategic Partnership with Pine Services Group to Expand AI-Powered Operational Automation Across the U.S.",
+        "titleAliases": [
+          "askelieannouncesexclusivestrategicpartnershipwithpineservicesgrouptoexpandaipoweredoperationalautomationacrosstheus"
+        ],
+        "publishedDate": "2026-09-09",
+        "publishedDates": [
+          "2026-09-09"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-3c471c253f1131a53a3f",
+          "record-8011089b9ec89f298a79",
+          "src-472a992de63b245396ae"
+        ],
+        "evidenceFingerprints": [
+          "3c471c253f1131a53a3f"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "AskELIE Announces Exclusive Strategic Partnership with Pine Services Group to Expand AI-Powered Operational Automation Across the U.S.",
+            "url": "https://www.prnewswire.com/news-releases/askelie-announces-exclusive-strategic-partnership-with-pine-services-group-to-expand-ai-powered-operational-automation-across-the-us-302872666.html",
+            "publishedAt": "2026-09-09",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "bdd7480cf1cbbbd99aa5",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-09T15:25:34+00:00",
+        "lastSeenAt": "2026-09-09T15:25:34+00:00",
+        "lastPublishedAt": "2026-09-09T15:25:34+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-2e6ec079915a7bfca56c": {
+        "eventId": "evt-2e6ec079915a7bfca56c",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-752fddbdb9d965ac03",
+        "entityName": "Databricks unveils adaptive AI retrieval model to cut search costs and latency",
+        "title": "Databricks unveils adaptive AI retrieval model to cut search costs and latency",
+        "titleAliases": [
+          "databricksunveilsadaptiveairetrievalmodeltocutsearchcostsandlatency"
+        ],
+        "publishedDate": "2026-09-09",
+        "publishedDates": [
+          "2026-09-09"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-eb23926f4fc58b6a9e64",
+          "record-a0f603d8b8c9e0a3ebd9",
+          "src-4b449314a3deee454deb"
+        ],
+        "evidenceFingerprints": [
+          "eb23926f4fc58b6a9e64"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "InfoWorld",
+            "title": "Databricks unveils adaptive AI retrieval model to cut search costs and latency",
+            "url": "https://www.infoworld.com/article/4220216/databricks-unveils-adaptive-ai-retrieval-model-to-cut-search-costs-and-latency.html",
+            "publishedAt": "2026-09-09",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "d326385824c6581612db",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-09T15:25:34+00:00",
+        "lastSeenAt": "2026-09-09T15:25:34+00:00",
+        "lastPublishedAt": "2026-09-09T15:25:34+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-0b3d57282938020d02de": {
+        "eventId": "evt-0b3d57282938020d02de",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-b3be5993baf31fd265",
+        "entityName": "Globee® Awards for Innovation, Now in Its 18th Year, Invite Artificial Intelligence Implementation Achievement Nominations Worldwide",
+        "title": "Globee® Awards for Innovation, Now in Its 18th Year, Invite Artificial Intelligence Implementation Achievement Nominations Worldwide",
+        "titleAliases": [
+          "globeeawardsforinnovationnowinits18thyearinviteartificialintelligenceimplementationachievementnominationsworldwide"
+        ],
+        "publishedDate": "2026-09-09",
+        "publishedDates": [
+          "2026-09-09"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "18"
+        ],
+        "sourceAliases": [
+          "evd-fa68425c58466f18520e",
+          "record-d8516b0911471ee46775",
+          "src-0e3f7189bb81b354147f"
+        ],
+        "evidenceFingerprints": [
+          "fa68425c58466f18520e"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "Globee® Awards for Innovation, Now in Its 18th Year, Invite Artificial Intelligence Implementation Achievement Nominations Worldwide",
+            "url": "https://www.prnewswire.com/news-releases/globee-awards-for-innovation-now-in-its-18th-year-invite-artificial-intelligence-implementation-achievement-nominations-worldwide-302871284.html",
+            "publishedAt": "2026-09-09",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "00cbfbc6b0e988721e7c",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-09T15:25:34+00:00",
+        "lastSeenAt": "2026-09-09T15:25:34+00:00",
+        "lastPublishedAt": "2026-09-09T15:25:34+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-026990bdc821e1f984da": {
+        "eventId": "evt-026990bdc821e1f984da",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-d2639f37ff43200b32",
+        "entityName": "Fake Consumer Group Using AI To Generate Fake Support For Paramount Merger",
+        "title": "Fake Consumer Group Using AI To Generate Fake Support For Paramount Merger",
+        "titleAliases": [
+          "fakeconsumergroupusingaitogeneratefakesupportforparamountmerger"
+        ],
+        "publishedDate": "2026-09-09",
+        "publishedDates": [
+          "2026-09-09"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "并购",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-bf8e0376bf97b3036754",
+          "record-fe8a34091d35cb35b3b4",
+          "src-11661b99a7e967bf1754"
+        ],
+        "evidenceFingerprints": [
+          "bf8e0376bf97b3036754"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Techdirt",
+            "title": "Fake Consumer Group Using AI To Generate Fake Support For Paramount Merger",
+            "url": "https://www.techdirt.com/2026/09/09/fake-consumer-group-using-ai-to-generate-fake-support-for-paramount-merger",
+            "publishedAt": "2026-09-09",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "d24529f05546c66c71e9",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-09T15:25:34+00:00",
+        "lastSeenAt": "2026-09-09T15:25:34+00:00",
+        "lastPublishedAt": "2026-09-09T15:25:34+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-f87a903095ee5b7a61b9": {
         "eventId": "evt-f87a903095ee5b7a61b9",
         "dataset": "intelligenceEvent",
@@ -34444,13 +34036,13 @@
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 17,
+    "newEvents": 9,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
     "duplicatesSuppressed": 0,
-    "observedEvents": 17,
+    "observedEvents": 9,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -37523,10 +37115,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-09",
-      "generatedAt": "2026-09-09T10:39:33+00:00",
+      "generatedAt": "2026-09-09T15:25:34+00:00",
       "runStatus": "model",
-      "changeCount": 36,
-      "executiveSummary": "截至2026年9月9日，证据包显示AI行业在融资、资本开支、产品发布和安全争议方面出现多项高价值事件：Cognition完成超20亿美元融资，谷歌宣布欧洲最大AI基础设施投资，Meta推出个人AI代理Muse，Google DeepMind发布AlphaGenome Atlas；同时Anthropic安全研究员发出AI灭绝风险警告，npm再现恶意软件蠕虫。证据等级多为C级公开报道，部分企业官方声明为B级，因此多数判断置信度偏低。",
+      "changeCount": 45,
+      "executiveSummary": "截至 2026-09-09 的证据包共新增 9 条高价值 AI 情报事件（证据级 B/C，多数单来源、自动化未人工审阅）。其中 OpenAI 声称其未发布模型解决了 Navier-Stokes 方程开放问题，属于潜在重大科学突破但亟待独立验证；Anthropic 内部安全研究人员发出极端风险警告，凸显 AI 安全争议；Euno 完成 2300 万美元融资，显示资本市场对 AI 代理基础设施的关注；Google Cloud 与 Accenture 组建联合业务部门，Databricks 推出自适应检索模型，体现企业 AI 落地与成本优化的活跃度。总体上，AI 技术与商业化进展加速，但安全滥用、虚假信息操纵和证据可靠性均构成不可忽视的风险。",
       "eventIds": [
         "evt-f1c1034415c848fb8c10",
         "evt-08ac93944d2b5b0d0112",
@@ -37563,7 +37155,16 @@
         "evt-5a7e73217656eb2b58e5",
         "evt-b17a64c5b7a50b6ce0a9",
         "evt-027b4231ccdfe63e4b10",
-        "evt-f20b02517c6661f62ca7"
+        "evt-f20b02517c6661f62ca7",
+        "evt-70bcaa72c1daebb5d6f8",
+        "evt-026990bdc821e1f984da",
+        "evt-8b835855976234ea7c49",
+        "evt-b43939dfa04eaed50489",
+        "evt-0b3d57282938020d02de",
+        "evt-a6db4ee8b2188cef3fc7",
+        "evt-caf0883cfae2b41896c1",
+        "evt-3f3bc86b19bc460a41f1",
+        "evt-2e6ec079915a7bfca56c"
       ],
       "eventStates": [
         {
@@ -37709,14 +37310,50 @@
         {
           "eventId": "evt-f20b02517c6661f62ca7",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-70bcaa72c1daebb5d6f8",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-026990bdc821e1f984da",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-8b835855976234ea7c49",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-b43939dfa04eaed50489",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-0b3d57282938020d02de",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-a6db4ee8b2188cef3fc7",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-caf0883cfae2b41896c1",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-3f3bc86b19bc460a41f1",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-2e6ec079915a7bfca56c",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 0,
       "candidateTotal": 0,
-      "auxiliaryLeadTotal": 36,
-      "rejectedTotal": 8,
+      "auxiliaryLeadTotal": 45,
+      "rejectedTotal": 9,
       "eventSummary": {
-        "newEvents": 36,
+        "newEvents": 45,
         "reconfirmations": 0,
         "updates": 0,
         "corrections": 0,
@@ -37726,14 +37363,14 @@
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 18,
-    "eligibleCandidateCount": 17,
+    "candidateCount": 10,
+    "eligibleCandidateCount": 9,
     "rejectedCandidateCount": 1,
     "rejectedByDataset": {
       "intelligenceEvent": 1
     },
-    "evidenceCount": 18,
-    "supportingEvidenceCount": 17,
+    "evidenceCount": 10,
+    "supportingEvidenceCount": 9,
     "rejectedEvidenceCount": 1,
     "passedButUnboundEvidenceCount": 0,
     "rejectionReasons": {
@@ -37769,8 +37406,8 @@
     }
   },
   "pipelineHealth": {
-    "overallStatus": "degraded",
-    "healthyJobs": 4,
+    "overallStatus": "stale",
+    "healthyJobs": 5,
     "jobCount": 9,
     "issueJobs": [
       {
@@ -37790,12 +37427,6 @@
         "name": "科创板招股书投资者证据刷新",
         "status": "stale",
         "lastCompletedAt": "2026-09-01T07:06:24Z"
-      },
-      {
-        "jobId": "research-agent-daily",
-        "name": "每日证据约束研究摘要",
-        "status": "degraded",
-        "lastCompletedAt": "2026-09-09T06:09:59Z"
       },
       {
         "jobId": "pages-deploy",
