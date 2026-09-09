@@ -30,6 +30,7 @@ import {
   setArticleFavorite,
   type HotnessInput,
 } from "@/lib/hotness";
+import { syncSharePreference } from "@/lib/share-preference-sync";
 import type { ArticlePayload, LiveIntelligenceEvent } from "@/lib/use-articles";
 import { useArticles } from "@/lib/use-articles";
 
@@ -85,6 +86,12 @@ function hotnessInput(article: LiveIntelligenceEvent): HotnessInput {
 
 function shareArticle(article: LiveIntelligenceEvent) {
   recordArticleShare(hotnessInput(article));
+  const preferenceItem = favoriteInput(article);
+  void syncSharePreference({
+    ...preferenceItem,
+    id: article.eventClusterId || article.id,
+    sharedAt: new Date().toISOString(),
+  });
   window.dispatchEvent(
     new CustomEvent(SHARE_REQUEST_EVENT, {
       detail: {
@@ -387,7 +394,7 @@ export function HotPage({ initialPayload }: { initialPayload: ArticlePayload }) 
       </section>
 
       <p className={styles.disclosure}>
-        文章互动统计仅保存在当前浏览器，不上传个人阅读记录；机构公开活动分来自网站爬虫收录的公开文章与事件元数据。
+        文章热点统计仍只保存在当前浏览器；“分享”会在已登录的情况下额外以私有偏好信号同步到 Tracking Admin，用于后续个性化学习，不公开个人行为记录。
       </p>
     </>
   );
