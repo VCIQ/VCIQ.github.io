@@ -30,9 +30,10 @@ jobs:
           npm pkg set 'dependencies.next=16.3.4'
           npm pkg set 'devDependencies.eslint-config-next=16.3.4'
           npm pkg set 'overrides.sharp=0.35.4'
+          npm pkg set 'overrides.js-yaml=4.3.2'
           npm install --package-lock-only --ignore-scripts
 
-      - name: Verify audit no longer reports high/critical production vulnerabilities
+      - name: Verify dependency audit
         run: node scripts/audit-dependencies.mjs
 
       - name: Commit generated lockfile
@@ -44,5 +45,5 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add package.json package-lock.json
-          git commit -m 'fix: patch Next.js and sharp security advisories [lockfile-generated]'
+          git commit -m 'fix: patch Next.js, sharp, and js-yaml advisories [lockfile-generated]'
           git push origin HEAD:${{ github.ref_name }}
