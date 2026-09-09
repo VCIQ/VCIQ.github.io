@@ -14,6 +14,7 @@ import {
   setArticleFavorite,
   type HotnessInput,
 } from "@/lib/hotness";
+import { syncSharePreference } from "@/lib/share-preference-sync";
 
 const SHARE_REQUEST_EVENT = "vciq:favorite-share-request";
 
@@ -124,6 +125,22 @@ function rowFromTarget(target: EventTarget | null): HTMLElement | null {
   );
 }
 
+function learnFromShare(item: HotnessInput) {
+  void syncSharePreference({
+    id: item.id || item.href,
+    href: item.href,
+    title: item.title,
+    summary: item.summary,
+    channelLabel: item.channelLabel,
+    sources: item.sourceName
+      ? [{ name: item.sourceName, url: item.href }]
+      : [],
+    publishedAt: item.publishedAt,
+    importance: item.importance,
+    sharedAt: new Date().toISOString(),
+  });
+}
+
 function InlineShareButton({ item }: { item: HotnessInput }) {
   return (
     <button
@@ -139,6 +156,7 @@ function InlineShareButton({ item }: { item: HotnessInput }) {
         event.preventDefault();
         event.stopPropagation();
         recordArticleShare(item);
+        learnFromShare(item);
         window.dispatchEvent(
           new CustomEvent(SHARE_REQUEST_EVENT, {
             detail: {
@@ -241,6 +259,7 @@ export function IntelligenceHotnessControls() {
 
       if (element.closest("button.favorite-share")) {
         recordArticleShare(item);
+        learnFromShare(item);
         return;
       }
 
