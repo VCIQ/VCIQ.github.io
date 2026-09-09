@@ -60,7 +60,9 @@ type ChannelId =
   | "semiconductor"
   | "space"
   | "solid-state"
-  | "hbm";
+  | "hbm"
+  | "people"
+  | "companies";
 
 type RegionFilter = "全部" | Region;
 type QualityScope = "trusted" | "all";
@@ -85,6 +87,8 @@ const CHANNELS: ReadonlyArray<{
   { id: "space", label: "商业航天", keywords: ["商业航天", "航天", "火箭", "卫星", "运载", "太空"] },
   { id: "solid-state", label: "固态电池", keywords: ["固态电池", "全固态", "固态电解质", "电解质"] },
   { id: "hbm", label: "HBM", keywords: ["HBM", "高带宽内存", "高带宽存储"] },
+  { id: "people", label: "人物" },
+  { id: "companies", label: "公司" },
 ];
 
 const REGIONS: readonly RegionFilter[] = ["全部", "中国", "美国", "全球"];
@@ -163,6 +167,12 @@ function matchesChannel(
   if (channelId === "recommend" || channelId === "latest") return true;
   if (channelId === "follow") {
     return matchesHomepageFollowChannel(item, preferences);
+  }
+  if (channelId === "people") {
+    return Boolean(item.personSlug) || item.type === "人物观点" || Boolean(item.mentionedPeople?.length);
+  }
+  if (channelId === "companies") {
+    return Boolean(item.companySlug) || Boolean(item.mentionedCompanies?.length);
   }
 
   const channel = CHANNELS.find((candidate) => candidate.id === channelId);
