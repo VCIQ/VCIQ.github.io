@@ -16,6 +16,7 @@ import { useEffect, useMemo, useState } from "react";
 import { EventQualityIndicator } from "@/components/event-quality-indicator";
 import { useFavorites } from "@/components/use-favorites";
 import { useHomepagePreferences } from "@/components/use-homepage-preferences";
+import { useHotness } from "@/components/use-hotness";
 import { toggleFavorite } from "@/lib/favorites";
 import {
   dismissHomepageEvent,
@@ -35,7 +36,7 @@ import {
   matchesHomepageFollowChannel,
   personalizedHomepageRecommendationScore,
 } from "@/lib/homepage-recommendation";
-import { recordArticleShare } from "@/lib/hotness";
+import { canonicalHotnessKey, metricsByHref, recordArticleShare } from "@/lib/hotness";
 import { buildResearchInvestigationHref } from "@/lib/research-workspace-handoff";
 import { buildTrackingCaptureLink } from "@/lib/tracking-admin-link";
 import {
@@ -88,7 +89,8 @@ const CHANNELS: ReadonlyArray<{
 const REGIONS: readonly RegionFilter[] = ["全部", "中国", "美国", "全球"];
 const INITIAL_FEED_LIMIT = 24;
 const FEED_BATCH = 24;
-const TOP_SIGNAL_LIMIT = 10;
+const DISCOVERY_SIGNAL_LIMIT = 10;
+const DISCOVERY_WINDOW_DAYS = 45;
 const MINUTE_MS = 60_000;
 const HOUR_MS = 60 * MINUTE_MS;
 const DAY_MS = 24 * HOUR_MS;
@@ -247,6 +249,7 @@ export function HomepageNewsFeed({
 }) {
   const { articles, refreshAudit, isLive } = useArticles(initialPayload);
   const favorites = useFavorites();
+  const hotnessItems = useHotness();
   const preferences = useHomepagePreferences();
   const [channel, setChannel] = useState<ChannelId>("recommend");
   const [region, setRegion] = useState<RegionFilter>("全部");
@@ -267,6 +270,10 @@ export function HomepageNewsFeed({
   const favoriteProfile = useMemo(
     () => buildHomepageFavoriteAffinityProfile(favorites),
     [favorites],
+  );
+  const hotnessByHref = useMemo(
+    () => metricsByHref(hotnessItems),
+    [hotnessItems],
   );
   const enabledSectorNames = useMemo(
     () => new Set(bootstrap.trackedSectorAliases),
@@ -301,16 +308,18 @@ export function HomepageNewsFeed({
       .filter((item) => matchesChannel(item, channel, preferences))
       .filter((item) => !normalizedQuery || itemSearchText(item).includes(normalizedQuery))
       .sort((left, right) => {
-        if (channel === "latest") {
+        if (channel === "recommend") {
           return (
-            right.publishedAt.localeCompare(left.publishedAt) ||
-            right.importance - left.importance
+            personalizedHomepageRecommendationScore(right, preferences, favoriteProfile) -
+              personalizedHomepageRecommendationScore(left, preferences, favoriteProfile) ||
+            right.publishedAt.localeCompare(left.publishedAt)
           );
         }
         return (
+          right.publishedAt.localeCompare(left.publishedAt) ||
           personalizedHomepageRecommendationScore(right, preferences, favoriteProfile) -
             personalizedHomepageRecommendationScore(left, preferences, favoriteProfile) ||
-          right.publishedAt.localeCompare(left.publishedAt)
+          right.importance - left.importance
         );
       });
   }, [
@@ -334,19 +343,41 @@ export function HomepageNewsFeed({
   const trustedVisibleArticles = trustedArticles.filter(
     (item) => !isHomepageEventDismissed(item, preferences),
   );
-  const topSignalSource = latestDayArticles.length >= 5
-    ? latestDayArticles
-    : trustedVisibleArticles;
-  const topSignals = [...topSignalSource]
+  const recommendationRanked = [...trustedVisibleArticles].sort(
+    (left, right) =>
+      personalizedHomepageRecommendationScore(right, preferences, favoriteProfile) -
+        personalizedHomepageRecommendationScore(left, preferences, favoriteProfile) ||
+      right.publishedAt.localeCompare(left.publishedAt),
+  );
+  const recommendationFirstPageIds = new Set(
+    recommendationRanked.slice(0, INITIAL_FEED_LIMIT).map((item) => homepageEventKey(item)),
+  );
+  const discoveryAnchorMs = Date.parse(latestPublishedAt);
+  const discoveryCutoffMs = Number.isFinite(discoveryAnchorMs)
+    ? discoveryAnchorMs - DISCOVERY_WINDOW_DAYS * DAY_MS
+    : Number.NEGATIVE_INFINITY;
+  const discoverySignals = trustedVisibleArticles
+    .filter((item) => Date.parse(item.publishedAt) >= discoveryCutoffMs)
+    .filter((item) => !favoriteProfile.favoriteIds.has(homepageFavoriteId(item)))
+    .filter((item) => !recommendationFirstPageIds.has(homepageEventKey(item)))
+    .filter((item) => {
+      const metrics = hotnessByHref.get(canonicalHotnessKey(item.source.url));
+      return !metrics || (metrics.opens < 2 && metrics.shares === 0 && !metrics.favorite);
+    })
     .sort(
       (left, right) =>
-        baseHomepageRecommendationScore(right) - baseHomepageRecommendationScore(left) ||
+        personalizedHomepageRecommendationScore(right, preferences, favoriteProfile) -
+          personalizedHomepageRecommendationScore(left, preferences, favoriteProfile) ||
+        right.importance - left.importance ||
         right.publishedAt.localeCompare(left.publishedAt),
     )
-    .slice(0, TOP_SIGNAL_LIMIT);
+    .slice(0, DISCOVERY_SIGNAL_LIMIT);
 
+  const trendSource = latestDayArticles.length >= 5
+    ? latestDayArticles
+    : trustedVisibleArticles;
   const sectorTrendCounts = new Map<string, number>();
-  for (const item of topSignalSource) {
+  for (const item of trendSource) {
     sectorTrendCounts.set(item.sector, (sectorTrendCounts.get(item.sector) ?? 0) + 1);
   }
   const sectorTrends = [...sectorTrendCounts.entries()]
@@ -461,7 +492,9 @@ export function HomepageNewsFeed({
               <strong>{visibleArticles.length} 条候选情报</strong>
             </div>
             <p>
-              先看最值得知道的变化，再决定是否查看来源、进入追踪、分享或深研此条。
+              {channel === "recommend"
+                ? "推荐频道按个性化优先排序；先看最值得知道的变化，再决定是否查看来源、进入追踪、分享或深研此条。"
+                : "当前频道按最新文章优先展示，个性化推荐仅用于同等新鲜度下的辅助排序。"}
               {(preferences.followedSectors.length || favorites.length) ? (
                 <span className={preferenceStyles.preferenceSummary}>
                   已关注赛道 {preferences.followedSectors.length} · 稍后读 {favorites.length}
@@ -474,7 +507,7 @@ export function HomepageNewsFeed({
             {displayedArticles.length ? (
               displayedArticles.map((item, index) => {
                 const score = personalizedHomepageRecommendationScore(item, preferences, favoriteProfile);
-                const hero = index === 0 && !normalizedQuery && channel !== "latest";
+                const hero = index === 0 && !normalizedQuery && channel === "recommend";
                 const major = !hero && (item.importance >= 90 || score >= 88);
                 const prominenceClass = hero
                   ? styles.heroCard
@@ -649,21 +682,21 @@ export function HomepageNewsFeed({
           ) : null}
         </main>
 
-        <aside className={styles.rightRail} aria-label="今日重大信号">
+        <aside className={styles.rightRail} aria-label="猜你喜欢｜你可能错过的重要信号">
           <section className={styles.railPanel}>
             <header>
-              <span>TOP SIGNALS</span>
-              <strong>今日重大信号 TOP 10</strong>
+              <span>YOU MAY HAVE MISSED</span>
+              <strong>猜你喜欢</strong>
             </header>
             <ol className={styles.signalList}>
-              {topSignals.map((item, index) => (
+              {discoverySignals.map((item, index) => (
                 <li key={item.id}>
                   <span>{String(index + 1).padStart(2, "0")}</span>
                   <div>
                     <a href={item.source.url} target="_blank" rel="noreferrer">
                       {item.title}
                     </a>
-                    <small>{item.sector} · {item.importance}</small>
+                    <small>{item.sector} · 重要度 {item.importance}</small>
                   </div>
                 </li>
               ))}
