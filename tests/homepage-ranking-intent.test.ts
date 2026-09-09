@@ -19,6 +19,16 @@ test("only the recommendation channel is personalization-first", () => {
   assert.match(contract, /recency-first views/u);
 });
 
+test("people and company channels follow HBM in the homepage rail and use entity linkage", () => {
+  assert.match(
+    source,
+    /\{ id: "hbm", label: "HBM"[\s\S]*\{ id: "people", label: "人物" \}[\s\S]*\{ id: "companies", label: "公司" \}/u,
+  );
+  assert.match(source, /channelId === "people"[\s\S]*item\.personSlug[\s\S]*item\.type === "人物观点"[\s\S]*item\.mentionedPeople/u);
+  assert.match(source, /channelId === "companies"[\s\S]*item\.companySlug[\s\S]*item\.mentionedCompanies/u);
+  assert.match(contract, /entity channels \(`人物`, `公司`\) are recency-first views/u);
+});
+
 test("guess-you-like is a missed-discovery rail instead of a daily leaderboard", () => {
   assert.match(source, /DISCOVERY_WINDOW_DAYS = 45/u);
   assert.match(source, /YOU MAY HAVE MISSED/u);
