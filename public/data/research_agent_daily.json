@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-09T17:13:11+00:00",
+  "generatedAt": "2026-09-09T21:13:59+00:00",
   "asOfDate": "2026-09-10",
-  "runStatus": "no-material-change",
+  "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
   "baselineSource": "snapshot",
   "model": {
@@ -10,24 +10,41 @@
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": false,
-    "usage": {}
+    "used": true,
+    "usage": {
+      "prompt_tokens": 5445,
+      "completion_tokens": 5894,
+      "total_tokens": 11339,
+      "completion_tokens_details": {
+        "reasoning_tokens": 3760
+      },
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 5445
+    }
   },
   "changeSummary": {
-    "totalDetected": 0,
-    "total": 0,
-    "byDataset": {},
-    "byChangeType": {},
-    "externalCandidates": 0,
-    "qualityRejected": 0,
-    "maintenanceExcluded": 0,
+    "totalDetected": 9,
+    "total": 7,
+    "byDataset": {
+      "intelligenceEvent": 7
+    },
+    "byChangeType": {
+      "external_event": 8,
+      "data_maintenance": 1
+    },
+    "externalCandidates": 8,
+    "qualityRejected": 1,
+    "maintenanceExcluded": 1,
     "aggregatedEvents": 0,
-    "highestImportance": 0,
+    "highestImportance": 89,
     "verifiedChangeTotal": 0,
     "candidateTotal": 0,
-    "auxiliaryLeadTotal": 0,
-    "rejectedTotal": 0,
-    "newEvents": 0,
+    "auxiliaryLeadTotal": 7,
+    "rejectedTotal": 1,
+    "newEvents": 7,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
@@ -35,22 +52,1338 @@
     "duplicatesSuppressed": 0
   },
   "analysis": {
-    "mode": "structured-change-only",
-    "isResearchJudgment": false,
-    "executiveSummary": "本轮未检测到新的外部事实候选。",
-    "keyDevelopments": [],
-    "thesisUpdates": [],
-    "watchlist": [],
-    "risks": [],
-    "methodologyNote": "结构化变化检查；本期无材料变化。未执行生成式研判。 数据管线提示：追踪实体与公开信源发现=stale、完整公开情报刷新=stale、科创板招股书投资者证据刷新=stale、GitHub Pages 静态发布=stale。"
+    "mode": "model-analysis",
+    "isResearchJudgment": true,
+    "executiveSummary": "2026-09-09证据包包含7件高价值情报事件，集中在半导体并购（ADI拟收购Alif）、AI安全威胁（Google称攻击者加速使用AI）、苹果硬件/软件发布（A20 Pro、iOS 27、iPhone 18 Pro可变光圈）以及企业AI平台发布（Writer Enterprise Brain、Qualtrics XM Data & AI Platform）。所有证据均为单一来源且evidenceGrade为C，本报告将各事件视为“单一来源报道”而非已确认事实，并对高影响判断保持低/中置信度。 质量门诊断：仅为发现线索，不能支持正式主张 1。",
+    "keyDevelopments": [
+      {
+        "title": "亚德诺半导体拟以13.5亿美元收购Alif半导体",
+        "assessment": "据新浪财经报道，ADI已达成收购Alif的协议并获双方董事会批准，预计年底前交割，交易意图拓展数据中心基础设施、国防等板块。该报道为单一来源且交割仍有条件，需以官方公告和监管进展为准。",
+        "importance": 4,
+        "confidence": "low",
+        "entities": [
+          "亚德诺半导体（ADI）",
+          "Alif半导体"
+        ],
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "title": "谷歌威胁情报研究称攻击者正加速使用AI进行自动化攻击",
+        "assessment": "据ITPro报道，Google Threat Intelligence Group称今年早前有攻击者使用AI代理在不到六小时内完成云资源入侵、计划并执行大规模凭据窃取，并判断所有威胁行为者都在以某种形式使用AI。该判断来自单一来源的厂商研究，应视为警告而非已核实的全行业事实。",
+        "importance": 4,
+        "confidence": "low",
+        "entities": [
+          "Google",
+          "Google Threat Intelligence Group"
+        ],
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "title": "苹果发布A20 Pro芯片",
+        "assessment": "据新浪财经报道，苹果在2026年秋季发布会上发布采用2纳米技术的A20 Pro芯片，并提及Siri AI和新的苹果智能。单一来源报道，具体性能参数和量产信息待苹果官方规格或后续评测验证。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "苹果",
+          "苹果A20 Pro"
+        ],
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "title": "iOS 27将于9月14日随Siri AI推出",
+        "assessment": "据The Verge报道，iOS 27将于2026年9月14日发布，包含Siri AI、Liquid Glass改进、新图标和音频变化等。发布时间和功能列表来自单一来源，需以苹果正式更新日志为准。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "苹果",
+          "iOS 27"
+        ],
+        "evidenceIds": [
+          "E004"
+        ]
+      },
+      {
+        "title": "Writer推出Enterprise Brain以统一AI代理上下文",
+        "assessment": "据CMSWire报道，Writer发布新上下文层Enterprise Brain，旨在为企业AI代理提供跨市场和收入团队的共享记忆、治理和实时业务数据。该发布属于产品公告，尚不能验证实际企业部署效果。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "Writer"
+        ],
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "title": "Qualtrics发布XM Data & AI Platform，目标2027年推出",
+        "assessment": "据CMSWire报道，Qualtrics发布统一体验管理平台，结合模拟、预测和AI驱动操作，目标2027年发布。产品尚未上市，功能与落地效果需后续观察。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "Qualtrics"
+        ],
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "title": "苹果为创作者推出可变光圈及更多AI工具",
+        "assessment": "据Mashable报道，iPhone 18 Pro的可变光圈为创作者提供对光线、景深和电影视频的更多控制。单一来源产品报道，实际成像表现需真机评测。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "苹果",
+          "iPhone 18 Pro"
+        ],
+        "evidenceIds": [
+          "E008"
+        ]
+      }
+    ],
+    "thesisUpdates": [
+      {
+        "entity": "亚德诺半导体（ADI）",
+        "direction": "positive",
+        "statement": "通过收购Alif扩展数据中心基础设施和国防业务，若年底前完成交割，将补充AI/边缘计算相关半导体能力；但交易仍存在审批和整合风险。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "entity": "苹果",
+        "direction": "positive",
+        "statement": "A20 Pro（2纳米）、Siri AI、iOS 27和iPhone 18 Pro可变光圈共同指向端侧AI与创作者体验升级；但均为发布口径，实际体验待验证。",
+        "evidenceIds": [
+          "E003",
+          "E004",
+          "E008"
+        ]
+      },
+      {
+        "entity": "网络安全攻防格局",
+        "direction": "negative",
+        "statement": "Google研究显示AI代理可在数小时内完成云入侵和大规模凭据窃取，提示企业防御需将AI自动化威胁视为默认场景。",
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "entity": "企业AI代理基础设施",
+        "direction": "positive",
+        "statement": "Writer和Qualtrics同日发布AI平台/上下文层，表明企业AI代理正从单点工具走向共享记忆、治理和实时数据编排；竞争和实际效果仍有待验证。",
+        "evidenceIds": [
+          "E005",
+          "E006"
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "item": "ADI-Alif交易交割与监管审批",
+        "reason": "交易预计年底前完成，但需监管审批；若未按时交割或条件变化，将改变对ADI业务拓展的判断。",
+        "nextEvidence": "公司公告、监管批准文件或交易终止/延期声明",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "item": "A20 Pro量产与评测",
+        "reason": "2纳米芯片是苹果旗舰升级的关键，需验证性能、能效和供应能力。",
+        "nextEvidence": "苹果官方规格页、第三方评测或供应链报告",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "item": "iOS 27实际发布与Siri AI可用范围",
+        "reason": "9月14日发布为报道日期，需确认推送范围及Siri AI功能是否完整落地。",
+        "nextEvidence": "苹果发布说明、用户反馈或系统更新日志",
+        "evidenceIds": [
+          "E004"
+        ]
+      },
+      {
+        "item": "iPhone 18 Pro可变光圈实拍表现",
+        "reason": "可变光圈是影像功能亮点，需看实拍效果与创作者工作流适配。",
+        "nextEvidence": "相机评测、苹果官方技术规格或开发者文档",
+        "evidenceIds": [
+          "E008"
+        ]
+      },
+      {
+        "item": "AI自动化攻击证据细节",
+        "reason": "GTIG研究中的攻击案例细节和防御建议可影响安全预算判断，需补充原始报告。",
+        "nextEvidence": "GTIG报告原文、后续安全厂商验证或事件响应案例",
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "item": "Writer Enterprise Brain落地案例",
+        "reason": "需要客户采用和治理效果来验证上下文层价值，避免把产品公告当能力兑现。",
+        "nextEvidence": "客户案例、产品文档或第三方评测",
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "item": "Qualtrics XM Data & AI Platform进展",
+        "reason": "2027年发布尚有时间，需观察beta测试和路线图是否按计划推进。",
+        "nextEvidence": "Qualtrics官方路线图、2027年发布公告或测试用户反馈",
+        "evidenceIds": [
+          "E006"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "单一来源且证据等级C",
+        "reason": "所有关键发展均来自单一公开网页快照，未经复核，可能包含标题党、事实错误或厂商公关口径。",
+        "evidenceIds": [
+          "E001",
+          "E002",
+          "E003",
+          "E004",
+          "E005",
+          "E006",
+          "E008"
+        ]
+      },
+      {
+        "risk": "并购交易完成风险",
+        "reason": "ADI收购Alif虽获董事会批准，但年底前交割可能因监管、股东或其他条件延迟或失败。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "risk": "AI威胁判断外推",
+        "reason": "Google研究称所有威胁行为者均以某种形式使用AI，属于研究机构的警告性论断，可能高估攻击者AI采用率。",
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "risk": "产品发布与实际能力差异",
+        "reason": "苹果、Writer、Qualtrics的产品发布均为预告或公告，与最终交付、性能和采用情况可能存在差异。",
+        "evidenceIds": [
+          "E003",
+          "E004",
+          "E005",
+          "E006",
+          "E008"
+        ]
+      }
+    ],
+    "methodologyNote": "本报告仅使用证据包内7条证据（E001-E006、E008），均为2026-09-09新增高价值情报事件；每条证据为单一来源、evidenceGrade C、automated_unreviewed，因此本文不将任何事件视为已确认事实，只按‘单一来源报道’转述，并将高影响判断标注为低/中置信度。未补充外部信息，不构成投资建议，也不提供买入、卖出、目标价或收益承诺。 数据管线提示：追踪实体与公开信源发现=stale、完整公开情报刷新=stale、科创板招股书投资者证据刷新=stale、GitHub Pages 静态发布=stale。"
   },
-  "changes": [],
-  "evidence": [],
+  "changes": [
+    {
+      "id": "chg-78b426cb631eafc91ac2",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-734df7d9f82fbc7b58",
+      "entityName": "亚德诺半导体将以13.5亿美元收购Alif半导体",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：亚德诺半导体将以13.5亿美元收购Alif半导体。",
+      "importance": 89,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-09",
+        "summary": "交易将拓展数据中心基础设施、国防等业务板块本次交易已获得两家公司董事会批准，预计于年底前完成交割。 内容概要 亚德诺半导体（ADI）已达成协议，以 13...",
+        "title": "亚德诺半导体将以13.5亿美元收购Alif半导体"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-09",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "交易将拓展数据中心基础设施、国防等业务板块本次交易已获得两家公司董事会批准，预计于年底前完成交割。 内容概要 亚德诺半导体（ADI）已达成协议，以 13...",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "亚德诺半导体将以13.5亿美元收购Alif半导体",
+          "evidenceIds": [
+            "E001"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E001"
+      ],
+      "supportingEvidenceIds": [
+        "E001"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-16070456cd531b4e870d"
+      ],
+      "eventLifecycles": {
+        "evt-16070456cd531b4e870d": "first_seen"
+      },
+      "eventId": "evt-16070456cd531b4e870d",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-09T21:13:59+00:00",
+      "lastSeenAt": "2026-09-09T21:13:59+00:00"
+    },
+    {
+      "id": "chg-63026fc65ac9526877ad",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-5d40c1aaf3f5335e13",
+      "entityName": "‘We can assume that all threat actors are using AI in some capacity’: Google cyber researchers warn hackers are ramping up automated attacks",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：‘We can assume that all threat actors are using AI in some capacity’: Google cyber researchers warn hackers are ramping up automated attacks。",
+      "importance": 85,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-09",
+        "summary": "Attackers used AI agents to compromise a cloud resource and then plan, build, and carry out a mass credential harvesting campaign earlier this year – and all in less than six hours. That’s according to new research from Google Threat Intelligence Group (GTIG)…",
+        "title": "‘We can assume that all threat actors are using AI in some capacity’: Google cyber researchers warn hackers are ramping up automated attacks"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-09",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Attackers used AI agents to compromise a cloud resource and then plan, build, and carry out a mass credential harvesting campaign earlier this year – and all in less than six hours. That’s according to new research from Google Threat Intelligence Group (GTIG)…",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "‘We can assume that all threat actors are using AI in some capacity’: Google cyber researchers warn hackers are ramping up automated attacks",
+          "evidenceIds": [
+            "E002"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E002"
+      ],
+      "supportingEvidenceIds": [
+        "E002"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-ad514c86d56c443a6b60"
+      ],
+      "eventLifecycles": {
+        "evt-ad514c86d56c443a6b60": "first_seen"
+      },
+      "eventId": "evt-ad514c86d56c443a6b60",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-09T21:13:59+00:00",
+      "lastSeenAt": "2026-09-09T21:13:59+00:00"
+    },
+    {
+      "id": "chg-4bd84d2807951dc5dbb7",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-c91bc07bd161445012",
+      "entityName": "苹果发布A20Pro芯片",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：苹果发布A20Pro芯片。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-09",
+        "summary": "新浪科技讯 9月9日晚间消息，在2026苹果秋季发布会上，苹果发布A20Pro芯片，2纳米技术，苹果芯片负责人表示，Siri AI和新的苹果智能Apple...",
+        "title": "苹果发布A20Pro芯片"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-09",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "新浪科技讯 9月9日晚间消息，在2026苹果秋季发布会上，苹果发布A20Pro芯片，2纳米技术，苹果芯片负责人表示，Siri AI和新的苹果智能Apple...",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "苹果发布A20Pro芯片",
+          "evidenceIds": [
+            "E003"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E003"
+      ],
+      "supportingEvidenceIds": [
+        "E003"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-a4c573bd54942282b898"
+      ],
+      "eventLifecycles": {
+        "evt-a4c573bd54942282b898": "first_seen"
+      },
+      "eventId": "evt-a4c573bd54942282b898",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-09T21:13:59+00:00",
+      "lastSeenAt": "2026-09-09T21:13:59+00:00"
+    },
+    {
+      "id": "chg-0f56a090d32cd1136986",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-44dba8c34091a43310",
+      "entityName": "iOS 27 launches on September 14th with Siri AI",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：iOS 27 launches on September 14th with Siri AI。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-09",
+        "summary": "iOS 27 also includes Liquid Glass improvements, new icons, audio changes, and more.",
+        "title": "iOS 27 launches on September 14th with Siri AI"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-09",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "iOS 27 also includes Liquid Glass improvements, new icons, audio changes, and more.",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "iOS 27 launches on September 14th with Siri AI",
+          "evidenceIds": [
+            "E004"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E004"
+      ],
+      "supportingEvidenceIds": [
+        "E004"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-2462a80f9b0aa93da896"
+      ],
+      "eventLifecycles": {
+        "evt-2462a80f9b0aa93da896": "first_seen"
+      },
+      "eventId": "evt-2462a80f9b0aa93da896",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-09T21:13:59+00:00",
+      "lastSeenAt": "2026-09-09T21:13:59+00:00"
+    },
+    {
+      "id": "chg-0faa19742fef76a36fde",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-cc7d569dc34354193d",
+      "entityName": "Writer Launches Enterprise Brain to Unify AI Agent Context",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Writer Launches Enterprise Brain to Unify AI Agent Context。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-09",
+        "summary": "Writer's new context layer aims to give enterprise AI agents shared memory, governance and live business data across marketing and revenue teams. Continue reading...",
+        "title": "Writer Launches Enterprise Brain to Unify AI Agent Context"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-09",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Writer's new context layer aims to give enterprise AI agents shared memory, governance and live business data across marketing and revenue teams. Continue reading...",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Writer Launches Enterprise Brain to Unify AI Agent Context",
+          "evidenceIds": [
+            "E005"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E005"
+      ],
+      "supportingEvidenceIds": [
+        "E005"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-a3876db46a02f490d696"
+      ],
+      "eventLifecycles": {
+        "evt-a3876db46a02f490d696": "first_seen"
+      },
+      "eventId": "evt-a3876db46a02f490d696",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-09T21:13:59+00:00",
+      "lastSeenAt": "2026-09-09T21:13:59+00:00"
+    },
+    {
+      "id": "chg-7508659d047a031f5762",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-69e48e3d906b5d5de5",
+      "entityName": "Qualtrics Unveils XM Data & AI Platform for 2027",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Qualtrics Unveils XM Data & AI Platform for 2027。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-09",
+        "summary": "Qualtrics debuts a unified experience management platform combining simulation, prediction and AI-driven action, targeting a 2027 release. Continue reading...",
+        "title": "Qualtrics Unveils XM Data & AI Platform for 2027"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-09",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Qualtrics debuts a unified experience management platform combining simulation, prediction and AI-driven action, targeting a 2027 release. Continue reading...",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Qualtrics Unveils XM Data & AI Platform for 2027",
+          "evidenceIds": [
+            "E006"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E006"
+      ],
+      "supportingEvidenceIds": [
+        "E006"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-1cbb9d5c12e94509b5dd"
+      ],
+      "eventLifecycles": {
+        "evt-1cbb9d5c12e94509b5dd": "first_seen"
+      },
+      "eventId": "evt-1cbb9d5c12e94509b5dd",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-09T21:13:59+00:00",
+      "lastSeenAt": "2026-09-09T21:13:59+00:00"
+    },
+    {
+      "id": "chg-1642c7b7ab32e95942a8",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-5523d0401c641e067e",
+      "entityName": "Apple introduces variable aperture and more AI tools for creators",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Apple introduces variable aperture and more AI tools for creators。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-09",
+        "summary": "Here’s how the iPhone 18 Pro’s variable aperture gives creators more control over light, depth of field and cinematic video.",
+        "title": "Apple introduces variable aperture and more AI tools for creators"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-09",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Here’s how the iPhone 18 Pro’s variable aperture gives creators more control over light, depth of field and cinematic video.",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Apple introduces variable aperture and more AI tools for creators",
+          "evidenceIds": [
+            "E008"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E008"
+      ],
+      "supportingEvidenceIds": [
+        "E008"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-13e6776e0be5b583de3d"
+      ],
+      "eventLifecycles": {
+        "evt-13e6776e0be5b583de3d": "first_seen"
+      },
+      "eventId": "evt-13e6776e0be5b583de3d",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-09T21:13:59+00:00",
+      "lastSeenAt": "2026-09-09T21:13:59+00:00"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E001",
+      "changeId": "chg-78b426cb631eafc91ac2",
+      "entityName": "亚德诺半导体将以13.5亿美元收购Alif半导体",
+      "claim": "新增高价值情报事件记录：亚德诺半导体将以13.5亿美元收购Alif半导体。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "亚德诺半导体将以13.5亿美元收购Alif半导体",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-10/doc-inirhezn3437432.shtml",
+      "publishedAt": "2026-09-09",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E002",
+      "changeId": "chg-63026fc65ac9526877ad",
+      "entityName": "‘We can assume that all threat actors are using AI in some capacity’: Google cyber researchers warn hackers are ramping up automated attacks",
+      "claim": "新增高价值情报事件记录：‘We can assume that all threat actors are using AI in some capacity’: Google cyber researchers warn hackers are ramping up automated attacks。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "ITPro",
+      "title": "‘We can assume that all threat actors are using AI in some capacity’: Google cyber researchers warn hackers are ramping up automated attacks",
+      "url": "https://www.itpro.com/security/cyber-crime/we-can-assume-that-all-threat-actors-are-using-ai-in-some-capacity-google-cyber-researchers-warn-hackers-are-ramping-up-automated-attacks",
+      "publishedAt": "2026-09-09",
+      "evidenceGrade": "C",
+      "platformName": "ITPro",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E003",
+      "changeId": "chg-4bd84d2807951dc5dbb7",
+      "entityName": "苹果发布A20Pro芯片",
+      "claim": "新增高价值情报事件记录：苹果发布A20Pro芯片。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "苹果发布A20Pro芯片",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-10/doc-inirhezn3446448.shtml",
+      "publishedAt": "2026-09-09",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E004",
+      "changeId": "chg-0f56a090d32cd1136986",
+      "entityName": "iOS 27 launches on September 14th with Siri AI",
+      "claim": "新增高价值情报事件记录：iOS 27 launches on September 14th with Siri AI。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "The Verge",
+      "title": "iOS 27 launches on September 14th with Siri AI",
+      "url": "https://www.theverge.com/news/992408/ios-27-release-date-features",
+      "publishedAt": "2026-09-09",
+      "evidenceGrade": "C",
+      "platformName": "The Verge",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E005",
+      "changeId": "chg-0faa19742fef76a36fde",
+      "entityName": "Writer Launches Enterprise Brain to Unify AI Agent Context",
+      "claim": "新增高价值情报事件记录：Writer Launches Enterprise Brain to Unify AI Agent Context。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "CMSWire",
+      "title": "Writer Launches Enterprise Brain to Unify AI Agent Context",
+      "url": "https://www.cmswire.com/customer-experience/writer-launches-enterprise-brain-to-unify-ai-agent-context",
+      "publishedAt": "2026-09-09",
+      "evidenceGrade": "C",
+      "platformName": "CMSWire",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E006",
+      "changeId": "chg-7508659d047a031f5762",
+      "entityName": "Qualtrics Unveils XM Data & AI Platform for 2027",
+      "claim": "新增高价值情报事件记录：Qualtrics Unveils XM Data & AI Platform for 2027。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "CMSWire",
+      "title": "Qualtrics Unveils XM Data & AI Platform for 2027",
+      "url": "https://www.cmswire.com/customer-experience/qualtrics-unveils-xm-data-ai-platform-for-2027",
+      "publishedAt": "2026-09-09",
+      "evidenceGrade": "C",
+      "platformName": "CMSWire",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E008",
+      "changeId": "chg-1642c7b7ab32e95942a8",
+      "entityName": "Apple introduces variable aperture and more AI tools for creators",
+      "claim": "新增高价值情报事件记录：Apple introduces variable aperture and more AI tools for creators。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Mashable",
+      "title": "Apple introduces variable aperture and more AI tools for creators",
+      "url": "https://mashable.com/life/iphone-18-pro-variable-aperture-creator-camera-tools",
+      "publishedAt": "2026-09-09",
+      "evidenceGrade": "C",
+      "platformName": "Mashable",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    }
+  ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-09T17:13:11+00:00",
+    "generatedAt": "2026-09-09T21:13:59+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-ad514c86d56c443a6b60": {
+        "eventId": "evt-ad514c86d56c443a6b60",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-5d40c1aaf3f5335e13",
+        "entityName": "‘We can assume that all threat actors are using AI in some capacity’: Google cyber researchers warn hackers are ramping up automated attacks",
+        "title": "‘We can assume that all threat actors are using AI in some capacity’: Google cyber researchers warn hackers are ramping up automated attacks",
+        "titleAliases": [
+          "wecanassumethatallthreatactorsareusingaiinsomecapacitygooglecyberresearcherswarnhackersarerampingupautomatedattacks"
+        ],
+        "publishedDate": "2026-09-09",
+        "publishedDates": [
+          "2026-09-09"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-c46895abde118d4d9511",
+          "record-ba0d83abd2682503f937",
+          "src-8be0f995f4dd2dc11e28"
+        ],
+        "evidenceFingerprints": [
+          "c46895abde118d4d9511"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "ITPro",
+            "title": "‘We can assume that all threat actors are using AI in some capacity’: Google cyber researchers warn hackers are ramping up automated attacks",
+            "url": "https://www.itpro.com/security/cyber-crime/we-can-assume-that-all-threat-actors-are-using-ai-in-some-capacity-google-cyber-researchers-warn-hackers-are-ramping-up-automated-attacks",
+            "publishedAt": "2026-09-09",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "4719d563b4e3e8ea41a3",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-09T21:13:59+00:00",
+        "lastSeenAt": "2026-09-09T21:13:59+00:00",
+        "lastPublishedAt": "2026-09-09T21:13:59+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-a4c573bd54942282b898": {
+        "eventId": "evt-a4c573bd54942282b898",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-c91bc07bd161445012",
+        "entityName": "苹果发布A20Pro芯片",
+        "title": "苹果发布A20Pro芯片",
+        "titleAliases": [
+          "苹果发布a20pro芯片"
+        ],
+        "publishedDate": "2026-09-09",
+        "publishedDates": [
+          "2026-09-09"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "20"
+        ],
+        "sourceAliases": [
+          "evd-7c3d3028855e129a91bd",
+          "record-9133687d21628fc8c4c0",
+          "src-8dd2c9c6ad73ab83e2db"
+        ],
+        "evidenceFingerprints": [
+          "7c3d3028855e129a91bd"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "苹果发布A20Pro芯片",
+            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-10/doc-inirhezn3446448.shtml",
+            "publishedAt": "2026-09-09",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "b92cae064087bf008783",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-09T21:13:59+00:00",
+        "lastSeenAt": "2026-09-09T21:13:59+00:00",
+        "lastPublishedAt": "2026-09-09T21:13:59+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-a3876db46a02f490d696": {
+        "eventId": "evt-a3876db46a02f490d696",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-cc7d569dc34354193d",
+        "entityName": "Writer Launches Enterprise Brain to Unify AI Agent Context",
+        "title": "Writer Launches Enterprise Brain to Unify AI Agent Context",
+        "titleAliases": [
+          "writerlaunchesenterprisebraintounifyaiagentcontext"
+        ],
+        "publishedDate": "2026-09-09",
+        "publishedDates": [
+          "2026-09-09"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-8737bc3f770dfceb1f74",
+          "record-ba9b1345f61401dbfb26",
+          "src-8b4dfc70384baabfb427"
+        ],
+        "evidenceFingerprints": [
+          "8737bc3f770dfceb1f74"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "CMSWire",
+            "title": "Writer Launches Enterprise Brain to Unify AI Agent Context",
+            "url": "https://www.cmswire.com/customer-experience/writer-launches-enterprise-brain-to-unify-ai-agent-context",
+            "publishedAt": "2026-09-09",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "fe922e5349c6a5ab288f",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-09T21:13:59+00:00",
+        "lastSeenAt": "2026-09-09T21:13:59+00:00",
+        "lastPublishedAt": "2026-09-09T21:13:59+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-2462a80f9b0aa93da896": {
+        "eventId": "evt-2462a80f9b0aa93da896",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-44dba8c34091a43310",
+        "entityName": "iOS 27 launches on September 14th with Siri AI",
+        "title": "iOS 27 launches on September 14th with Siri AI",
+        "titleAliases": [
+          "ios27launchesonseptember14thwithsiriai"
+        ],
+        "publishedDate": "2026-09-09",
+        "publishedDates": [
+          "2026-09-09"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "14",
+          "27"
+        ],
+        "sourceAliases": [
+          "evd-3e70b2901820b1de26ed",
+          "record-31943050dca43708ca66",
+          "src-f4045bb9735ef25da3b2"
+        ],
+        "evidenceFingerprints": [
+          "3e70b2901820b1de26ed"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "The Verge",
+            "title": "iOS 27 launches on September 14th with Siri AI",
+            "url": "https://www.theverge.com/news/992408/ios-27-release-date-features",
+            "publishedAt": "2026-09-09",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "e91c555e9e3ca875b7ba",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-09T21:13:59+00:00",
+        "lastSeenAt": "2026-09-09T21:13:59+00:00",
+        "lastPublishedAt": "2026-09-09T21:13:59+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-1cbb9d5c12e94509b5dd": {
+        "eventId": "evt-1cbb9d5c12e94509b5dd",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-69e48e3d906b5d5de5",
+        "entityName": "Qualtrics Unveils XM Data & AI Platform for 2027",
+        "title": "Qualtrics Unveils XM Data & AI Platform for 2027",
+        "titleAliases": [
+          "qualtricsunveilsxmdataaiplatformfor2027"
+        ],
+        "publishedDate": "2026-09-09",
+        "publishedDates": [
+          "2026-09-09"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-382de46f7c5cb4942e39",
+          "record-861d46c8099fef0d428b",
+          "src-e80652276e8678e46a81"
+        ],
+        "evidenceFingerprints": [
+          "382de46f7c5cb4942e39"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "CMSWire",
+            "title": "Qualtrics Unveils XM Data & AI Platform for 2027",
+            "url": "https://www.cmswire.com/customer-experience/qualtrics-unveils-xm-data-ai-platform-for-2027",
+            "publishedAt": "2026-09-09",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "a32f81b60e65d6a08ebc",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-09T21:13:59+00:00",
+        "lastSeenAt": "2026-09-09T21:13:59+00:00",
+        "lastPublishedAt": "2026-09-09T21:13:59+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-16070456cd531b4e870d": {
+        "eventId": "evt-16070456cd531b4e870d",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-734df7d9f82fbc7b58",
+        "entityName": "亚德诺半导体将以13.5亿美元收购Alif半导体",
+        "title": "亚德诺半导体将以13.5亿美元收购Alif半导体",
+        "titleAliases": [
+          "亚德诺半导体将以135亿美元收购alif半导体"
+        ],
+        "publishedDate": "2026-09-09",
+        "publishedDates": [
+          "2026-09-09"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "并购",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "13.5"
+        ],
+        "sourceAliases": [
+          "evd-7fd6a9edbc8f0d9aaf93",
+          "record-263df2a9af8dd5355a38",
+          "src-24d5a1057e8963d6dcd1"
+        ],
+        "evidenceFingerprints": [
+          "7fd6a9edbc8f0d9aaf93"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "亚德诺半导体将以13.5亿美元收购Alif半导体",
+            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-10/doc-inirhezn3437432.shtml",
+            "publishedAt": "2026-09-09",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "dbe36746805fa192d028",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-09T21:13:59+00:00",
+        "lastSeenAt": "2026-09-09T21:13:59+00:00",
+        "lastPublishedAt": "2026-09-09T21:13:59+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-13e6776e0be5b583de3d": {
+        "eventId": "evt-13e6776e0be5b583de3d",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-5523d0401c641e067e",
+        "entityName": "Apple introduces variable aperture and more AI tools for creators",
+        "title": "Apple introduces variable aperture and more AI tools for creators",
+        "titleAliases": [
+          "appleintroducesvariableapertureandmoreaitoolsforcreators"
+        ],
+        "publishedDate": "2026-09-09",
+        "publishedDates": [
+          "2026-09-09"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-219945dfab61cde8475b",
+          "record-5e0565e387907fcf7369",
+          "src-8bba247e8261dbfc44c2"
+        ],
+        "evidenceFingerprints": [
+          "219945dfab61cde8475b"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Mashable",
+            "title": "Apple introduces variable aperture and more AI tools for creators",
+            "url": "https://mashable.com/life/iphone-18-pro-variable-aperture-creator-camera-tools",
+            "publishedAt": "2026-09-09",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "53e1356c6daa26be0eda",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-09T21:13:59+00:00",
+        "lastSeenAt": "2026-09-09T21:13:59+00:00",
+        "lastPublishedAt": "2026-09-09T21:13:59+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-c8f6941fb2a65c87ca44": {
         "eventId": "evt-c8f6941fb2a65c87ca44",
         "dataset": "intelligenceEvent",
@@ -32790,340 +34123,18 @@
         "conflictStatus": "none",
         "conflictReasons": [],
         "relatedEventIds": []
-      },
-      "evt-44061e53fa8a2b68688f": {
-        "eventId": "evt-44061e53fa8a2b68688f",
-        "dataset": "marketCompany",
-        "entityId": "cambricon",
-        "entityName": "中科寒武纪科技股份有限公司",
-        "title": "科创50ETF平安(589150)交投活跃，AI驱动PCB、软件等细分板块走强",
-        "titleAliases": [
-          "科创50etf平安589150交投活跃ai驱动pcb软件等细分板块走强"
-        ],
-        "publishedDate": "2026-08-28",
-        "publishedDates": [
-          "2026-08-28"
-        ],
-        "entityKeys": [
-          "marketCompany:cambricon",
-          "name:中科寒武纪科技股份有限公司"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [
-          "50",
-          "589150"
-        ],
-        "sourceAliases": [
-          "evd-0ed442d726d21417e5c0",
-          "src-84793873186ae53d76a2"
-        ],
-        "evidenceFingerprints": [
-          "0ed442d726d21417e5c0"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "科创50ETF平安(589150)交投活跃，AI驱动PCB、软件等细分板块走强",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipvrtx4746462.shtml",
-            "publishedAt": "2026-08-28T10:52:00+08:00",
-            "evidenceGrade": "媒体报道"
-          }
-        ],
-        "claimFingerprint": "3b471ec1e9a48dfba75c",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-30T01:26:42+00:00",
-        "lastSeenAt": "2026-08-30T01:26:42+00:00",
-        "lastPublishedAt": "2026-08-30T01:26:42+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-3b869fcfa095929f2465": {
-        "eventId": "evt-3b869fcfa095929f2465",
-        "dataset": "marketCompany",
-        "entityId": "catl",
-        "entityName": "宁德时代",
-        "title": "自称“20万级最强纯电轿跑”，全新一代智己L6究竟“强”在哪？",
-        "titleAliases": [
-          "自称20万级最强纯电轿跑全新一代智己l6究竟强在哪"
-        ],
-        "publishedDate": "2026-08-29",
-        "publishedDates": [
-          "2026-08-29"
-        ],
-        "entityKeys": [
-          "marketCompany:catl",
-          "name:宁德时代"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [
-          "20",
-          "6"
-        ],
-        "sourceAliases": [
-          "evd-54395c575c68232b0275",
-          "src-ff320daafc732e0acdb7"
-        ],
-        "evidenceFingerprints": [
-          "54395c575c68232b0275"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "自称“20万级最强纯电轿跑”，全新一代智己L6究竟“强”在哪？",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-29/doc-inipxyyz9373119.shtml",
-            "publishedAt": "2026-08-29T11:18:00+08:00",
-            "evidenceGrade": "媒体报道"
-          }
-        ],
-        "claimFingerprint": "6e5b9c7ad604cb91e8d1",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-30T01:26:42+00:00",
-        "lastSeenAt": "2026-08-30T01:26:42+00:00",
-        "lastPublishedAt": "2026-08-30T01:26:42+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-364d87fc19c6ebff21b8": {
-        "eventId": "evt-364d87fc19c6ebff21b8",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-7c818cd1a55e5b7056",
-        "entityName": "ALIF: Building AI Fluency, One Cohort at a Time",
-        "title": "ALIF: Building AI Fluency, One Cohort at a Time",
-        "titleAliases": [
-          "alifbuildingaifluencyonecohortatatime"
-        ],
-        "publishedDate": "2026-08-25",
-        "publishedDates": [
-          "2026-08-25"
-        ],
-        "entityKeys": [
-          "company:scale ai",
-          "company:scale-ai"
-        ],
-        "typeKeys": [
-          "公司动态",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-2ee9fd607c3962a25a30",
-          "record-ae22ab1eb25404bb2ae7",
-          "src-a9fe208eceabc849d720"
-        ],
-        "evidenceFingerprints": [
-          "2ee9fd607c3962a25a30"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Scale AI",
-            "title": "ALIF: Building AI Fluency, One Cohort at a Time",
-            "url": "https://scale.com/blog/alif-building-ai-fluency-one-cohort-at-a-time",
-            "publishedAt": "2026-08-25",
-            "evidenceGrade": "媒体报道"
-          }
-        ],
-        "claimFingerprint": "86c110c960e66df79e62",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-30T01:26:42+00:00",
-        "lastSeenAt": "2026-08-30T01:26:42+00:00",
-        "lastPublishedAt": "2026-08-30T01:26:42+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-25441b3eaa54e34932cb": {
-        "eventId": "evt-25441b3eaa54e34932cb",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-fe9ed91c1f0dc32883",
-        "entityName": "OpenAI Expands India Push With ChatGPT Ads Launch And Senior Meta Executive Hire - AI Insider",
-        "title": "OpenAI Expands India Push With ChatGPT Ads Launch And Senior Meta Executive Hire - AI Insider",
-        "titleAliases": [
-          "openaiexpandsindiapushwithchatgptadslaunchandseniormetaexecutivehireaiinsider"
-        ],
-        "publishedDate": "2026-08-28",
-        "publishedDates": [
-          "2026-08-28"
-        ],
-        "entityKeys": [
-          "company:openai"
-        ],
-        "typeKeys": [
-          "商业进展",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-eebdc46e5576da00268f",
-          "record-6449f9e7db41f387c6f7",
-          "src-8186f81b4b81f1e54847"
-        ],
-        "evidenceFingerprints": [
-          "eebdc46e5576da00268f"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "GEO · Google News 英文",
-            "title": "OpenAI Expands India Push With ChatGPT Ads Launch And Senior Meta Executive Hire - AI Insider",
-            "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPckFkTkl5bUF4UmpPdGNMTzNfSk02VU1zMVdnZHgzcEFLY253a3VXY0JSZUYtZDRhSHEtRGw4YzdyWGxxZTZjUlRqNWs5MUEyNFFOa1dOV1RCeGxaMlFBSi0xX3V4bzdiUWtSSkNEUkNVOWVlNGRyakZkMDFZMktUZm1tMVlUZldDbWJHcE5NVktOcUVLbGQ1WE1nYjJCdnVGd0laOTZLeWpSZGFKS29fcEJJV3dKUklsMGc?oc=5",
-            "publishedAt": "2026-08-28",
-            "evidenceGrade": "D"
-          }
-        ],
-        "claimFingerprint": "442e57199bf357f58f7b",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-30T01:26:42+00:00",
-        "lastSeenAt": "2026-08-30T01:26:42+00:00",
-        "lastPublishedAt": "2026-08-30T01:26:42+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 1,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-1ae6907d6042593dc081": {
-        "eventId": "evt-1ae6907d6042593dc081",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-a33c24b807479aa8da",
-        "entityName": "环球下周看点：8月非农数据重磅来袭 博通财报接棒英伟达",
-        "title": "环球下周看点：8月非农数据重磅来袭 博通财报接棒英伟达",
-        "titleAliases": [
-          "环球下周看点8月非农数据重磅来袭博通财报接棒英伟达"
-        ],
-        "publishedDate": "2026-08-30",
-        "publishedDates": [
-          "2026-08-30"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "财报",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "8"
-        ],
-        "sourceAliases": [
-          "evd-a01f99edb7205d1fdae3",
-          "record-39d11d66abce4d0ab441",
-          "src-c65d104bae1c932985aa"
-        ],
-        "evidenceFingerprints": [
-          "a01f99edb7205d1fdae3"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "东方财富",
-            "title": "环球下周看点：8月非农数据重磅来袭 博通财报接棒英伟达",
-            "url": "https://finance.eastmoney.com/a/202608303859334765.html",
-            "publishedAt": "2026-08-30",
-            "evidenceGrade": "媒体报道"
-          }
-        ],
-        "claimFingerprint": "bc9c1e429fb3efdc9567",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-30T01:26:42+00:00",
-        "lastSeenAt": "2026-08-30T01:26:42+00:00",
-        "lastPublishedAt": "2026-08-30T01:26:42+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-19bcb463a7c66fb640db": {
-        "eventId": "evt-19bcb463a7c66fb640db",
-        "dataset": "marketCompany",
-        "entityId": "catl",
-        "entityName": "宁德时代",
-        "title": "动力与储能“双轨并行” 创业板新能源指数的产业链“引擎”",
-        "titleAliases": [
-          "动力与储能双轨并行创业板新能源指数的产业链引擎"
-        ],
-        "publishedDate": "2026-08-29",
-        "publishedDates": [
-          "2026-08-29"
-        ],
-        "entityKeys": [
-          "marketCompany:catl",
-          "name:宁德时代"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-dd13919e19e0c29e26dc",
-          "src-dded4702b65f1d73fccb"
-        ],
-        "evidenceFingerprints": [
-          "dd13919e19e0c29e26dc"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "动力与储能“双轨并行” 创业板新能源指数的产业链“引擎”",
-            "url": "https://cj.sina.cn/articles/view/6904572892/19b8b6bdc00101h5au",
-            "publishedAt": "2026-08-29T23:53:00+08:00",
-            "evidenceGrade": "媒体报道"
-          }
-        ],
-        "claimFingerprint": "8ddd0d143f86f0dfa9c4",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-30T01:26:42+00:00",
-        "lastSeenAt": "2026-08-30T01:26:42+00:00",
-        "lastPublishedAt": "2026-08-30T01:26:42+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
       }
     },
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 0,
+    "newEvents": 7,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
     "duplicatesSuppressed": 0,
-    "observedEvents": 0,
+    "observedEvents": 7,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -36438,16 +37449,23 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-10",
-      "generatedAt": "2026-09-09T17:13:11+00:00",
-      "runStatus": "no-material-change",
-      "changeCount": 5,
-      "executiveSummary": "本轮未检测到新的外部事实候选。",
+      "generatedAt": "2026-09-09T21:13:59+00:00",
+      "runStatus": "model",
+      "changeCount": 12,
+      "executiveSummary": "2026-09-09证据包包含7件高价值情报事件，集中在半导体并购（ADI拟收购Alif）、AI安全威胁（Google称攻击者加速使用AI）、苹果硬件/软件发布（A20 Pro、iOS 27、iPhone 18 Pro可变光圈）以及企业AI平台发布（Writer Enterprise Brain、Qualtrics XM Data & AI Platform）。所有证据均为单一来源且evidenceGrade为C，本报告将各事件视为“单一来源报道”而非已确认事实，并对高影响判断保持低/中置信度。",
       "eventIds": [
         "evt-233c1e709437363741f6",
         "evt-c8f6941fb2a65c87ca44",
         "evt-4e79b61e1e3518e7e7aa",
         "evt-2218898b213648748fcd",
-        "evt-bfb2ba5c653af6ccdfec"
+        "evt-bfb2ba5c653af6ccdfec",
+        "evt-16070456cd531b4e870d",
+        "evt-ad514c86d56c443a6b60",
+        "evt-a4c573bd54942282b898",
+        "evt-2462a80f9b0aa93da896",
+        "evt-a3876db46a02f490d696",
+        "evt-1cbb9d5c12e94509b5dd",
+        "evt-13e6776e0be5b583de3d"
       ],
       "eventStates": [
         {
@@ -36469,14 +37487,42 @@
         {
           "eventId": "evt-bfb2ba5c653af6ccdfec",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-16070456cd531b4e870d",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-ad514c86d56c443a6b60",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-a4c573bd54942282b898",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-2462a80f9b0aa93da896",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-a3876db46a02f490d696",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-1cbb9d5c12e94509b5dd",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-13e6776e0be5b583de3d",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 0,
       "candidateTotal": 0,
-      "auxiliaryLeadTotal": 5,
-      "rejectedTotal": 1,
+      "auxiliaryLeadTotal": 12,
+      "rejectedTotal": 2,
       "eventSummary": {
-        "newEvents": 5,
+        "newEvents": 12,
         "reconfirmations": 0,
         "updates": 0,
         "corrections": 0,
@@ -36486,15 +37532,19 @@
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 0,
-    "eligibleCandidateCount": 0,
-    "rejectedCandidateCount": 0,
-    "rejectedByDataset": {},
-    "evidenceCount": 0,
-    "supportingEvidenceCount": 0,
-    "rejectedEvidenceCount": 0,
+    "candidateCount": 8,
+    "eligibleCandidateCount": 7,
+    "rejectedCandidateCount": 1,
+    "rejectedByDataset": {
+      "intelligenceEvent": 1
+    },
+    "evidenceCount": 8,
+    "supportingEvidenceCount": 7,
+    "rejectedEvidenceCount": 1,
     "passedButUnboundEvidenceCount": 0,
-    "rejectionReasons": {},
+    "rejectionReasons": {
+      "discovery_only": 1
+    },
     "sourceClassificationWarnings": []
   },
   "sourceClassificationWarnings": [],
