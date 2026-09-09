@@ -1,0 +1,29 @@
+name: Sync recommendation branch with main
+
+on:
+  push:
+    branches:
+      - feature/recommendation-product-semantics-20260908
+
+permissions:
+  contents: write
+
+jobs:
+  sync-main:
+    if: ${{ !contains(github.event.head_commit.message, '[main-sync-generated]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+
+      - name: Merge current main
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git fetch origin main
+          git merge --no-ff origin/main -m 'chore: merge main security baseline [main-sync-generated]'
+          git push origin HEAD:${{ github.ref_name }}
