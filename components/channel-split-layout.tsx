@@ -31,11 +31,15 @@ export function ChannelSplitLayout({
   icon,
   bodyClassName,
   directoryFirst = false,
-  showUpdates = true,
+  showUpdates,
   beforeResearchSynergy,
   children,
 }: ChannelSplitLayoutProps) {
-  const updatesPanel = showUpdates ? (
+  // Research-library pages should not duplicate the homepage news feed. People
+  // and companies opt out explicitly; technology research defaults to a pure
+  // research-directory layout while other channels retain their update panel.
+  const shouldShowUpdates = showUpdates ?? channel !== "technology";
+  const updatesPanel = shouldShowUpdates ? (
     <div className={styles.updatesPanel}>
       <ChannelUpdateDirectory channel={channel} layout="split" />
     </div>
@@ -67,13 +71,13 @@ export function ChannelSplitLayout({
   return (
     <>
       {beforeResearchSynergy}
-      <div className={`${styles.splitLayout}${showUpdates ? "" : ` ${styles.directoryOnly}`}`}>
-        {showUpdates && directoryFirst ? (
+      <div className={`${styles.splitLayout}${shouldShowUpdates ? "" : ` ${styles.directoryOnly}`}`}>
+        {shouldShowUpdates && directoryFirst ? (
           <>
             {directoryPanel}
             {updatesPanel}
           </>
-        ) : showUpdates ? (
+        ) : shouldShowUpdates ? (
           <>
             {updatesPanel}
             {directoryPanel}
