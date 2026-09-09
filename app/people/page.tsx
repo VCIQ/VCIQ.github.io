@@ -3,7 +3,6 @@ import { RotateCcw, Search, Users } from "lucide-react";
 import Link from "next/link";
 import Script from "next/script";
 import { ChannelSplitLayout } from "@/components/channel-split-layout";
-import { getChannelUpdateDirectory } from "@/lib/channel-updates";
 import { isPersonDirectoryChangeRecent } from "@/lib/person-directory-filter";
 import { peopleGeneratedAt, researchPeople } from "@/lib/people-data";
 import { getPersonResearchSnapshot } from "@/lib/people-research";
@@ -40,7 +39,6 @@ function directoryPreview(value: string, limit: number): string {
 export default function PeoplePage() {
   const trackedCount = researchPeople.filter((person) => person.tracked).length;
   const watchCount = researchPeople.length - trackedCount;
-  const peopleUpdates = getChannelUpdateDirectory("people");
   const sectors = Array.from(new Set(researchPeople.flatMap((person) => person.sectors)))
     .sort((left, right) => left.localeCompare(right, "zh-CN"));
   const sectorTokens = new Map(sectors.map((sector, index) => [sector, `s${index.toString(36)}`]));
@@ -73,7 +71,7 @@ export default function PeoplePage() {
         <div className="hero-chips">
           <span>{trackedCount} 位重点跟踪</span>
           {watchCount > 0 ? <span>{watchCount} 位观察对象</span> : null}
-          <span>{peopleUpdates.items.length} 条人物更新已归入首页</span>
+          <span>最新事件统一进入首页人物频道</span>
           <span>资料更新 {peopleGeneratedAt.slice(0, 10)}</span>
         </div>
       </header>
