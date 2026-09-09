@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
+import { buildSharePreferencePayload } from "../lib/share-preference-sync";
+
 async function source(path: string) {
   return readFile(new URL(`../${path}`, import.meta.url), "utf8");
 }
@@ -39,4 +41,22 @@ test("homepage Share keeps local UX and also sends best-effort private preferenc
   assert.match(sync, /credentials: "include"/u);
   assert.match(sync, /"content-type": "text\/plain;charset=UTF-8"/u);
   assert.match(sync, /vciq:share-preference:pending:v1/u);
+  assert.match(sync, /canonicalHotnessKey/u);
+});
+
+test("Share identity is canonical by article URL rather than surface-local id", () => {
+  const first = buildSharePreferencePayload({
+    id: "homepage-event-123",
+    href: "https://example.com/news/42?utm_source=homepage&ref=feed",
+    title: "Same article",
+  });
+  const second = buildSharePreferencePayload({
+    id: "hot-page-item-987",
+    href: "https://example.com/news/42?utm_medium=hot",
+    title: "Same article",
+  });
+
+  assert.ok(first && second);
+  assert.equal(first.item.id, "https://example.com/news/42");
+  assert.equal(second.item.id, first.item.id);
 });
