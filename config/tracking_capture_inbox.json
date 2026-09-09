@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-09T13:34:55+00:00",
+  "generatedAt": "2026-09-09T14:50:01+00:00",
   "records": [
     {
       "id": "capture-0a3e6bddfad6db7f",
@@ -79,8 +79,11 @@
       },
       "capturedAt": "2026-09-09T13:34:55+00:00",
       "capturedBy": "VCIQ",
-      "status": "queued",
-      "appliedTo": [],
+      "status": "applied",
+      "appliedTo": [
+        "robotics:sampleCompanies",
+        "ai:sampleCompanies"
+      ],
       "reasons": [
         "个人研究兴趣",
         "技术突破",
@@ -144,11 +147,63 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "决策式AI",
-        "targetId": "technology-d99c7d51dbc01f5355b3",
+        "targetId": "topic:决策式ai",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "决策式ai",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-835fb4899a5d8924",
+      "entityType": "company",
+      "canonicalName": "谷歌",
+      "rawSelection": "谷歌",
+      "aliases": [],
+      "trackSlugs": [
+        "robotics",
+        "semiconductor",
+        "ai",
+        "track-1ccjq49",
+        "ai-2"
+      ],
+      "trackNames": [
+        "机器人",
+        "半导体",
+        "AI / AGI",
+        "风险投资",
+        "AI安全"
+      ],
+      "source": {
+        "articleId": "",
+        "title": "谷歌",
+        "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-09/doc-inirfqcq8872289.shtml",
+        "summary": "",
+        "sourceName": "GitHub Actions · 内部手动追踪",
+        "channel": "manual-tracking",
+        "channelLabel": "内部管理",
+        "eventType": "人工追踪"
+      },
+      "capturedAt": "2026-09-09T13:33:44+00:00",
+      "capturedBy": "VCIQ",
+      "status": "queued",
+      "appliedTo": [],
+      "reasons": [
+        "个人研究兴趣",
+        "技术突破"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "谷歌",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "谷歌",
         "reclassified": false
       }
     },
@@ -202,10 +257,10 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "数据中心",
-        "targetId": "technology-04f7acfcd28c1d88f237",
+        "targetId": "topic:数据中心",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "数据中心",
         "reclassified": false
       }
@@ -316,165 +371,6 @@
       }
     },
     {
-      "id": "capture-835fb4899a5d8924",
-      "entityType": "company",
-      "canonicalName": "谷歌",
-      "rawSelection": "谷歌",
-      "aliases": [],
-      "trackSlugs": [
-        "robotics",
-        "semiconductor",
-        "ai",
-        "track-1ccjq49",
-        "ai-2"
-      ],
-      "trackNames": [
-        "机器人",
-        "半导体",
-        "AI / AGI",
-        "风险投资",
-        "AI安全"
-      ],
-      "source": {
-        "articleId": "",
-        "title": "谷歌",
-        "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-09/doc-inirfqcq8872289.shtml",
-        "summary": "",
-        "sourceName": "GitHub Actions · 内部手动追踪",
-        "channel": "manual-tracking",
-        "channelLabel": "内部管理",
-        "eventType": "人工追踪"
-      },
-      "capturedAt": "2026-09-09T13:33:44+00:00",
-      "capturedBy": "VCIQ",
-      "status": "queued",
-      "appliedTo": [],
-      "reasons": [
-        "个人研究兴趣",
-        "技术突破"
-      ],
-      "note": "",
-      "resolution": {
-        "status": "review",
-        "requestedType": "company",
-        "entityType": "company",
-        "canonicalName": "谷歌",
-        "targetId": "",
-        "confidence": "low",
-        "source": "unresolved",
-        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
-        "decisionKey": "谷歌",
-        "reclassified": false
-      }
-    },
-    {
-      "id": "capture-4b80d154b2f2f3b8",
-      "entityType": "topic",
-      "canonicalName": "3DIC物理设计",
-      "rawSelection": "3DIC物理设计",
-      "aliases": [],
-      "trackSlugs": [
-        "robotics",
-        "ai",
-        "semiconductor",
-        "materials"
-      ],
-      "trackNames": [
-        "机器人",
-        "AI / AGI",
-        "半导体",
-        "新材料"
-      ],
-      "source": {
-        "articleId": "",
-        "title": "3DIC物理设计",
-        "url": "https://mp.weixin.qq.com/s?new=1&signature=WZkLVULYINpDwXWhFfZiXOAhjcNevZUIu3YD9HqShQvhSrERWVSE3S5GkMb5DsIIKsoF70DOpXU1BKo8c3%2AVsv6TpkYluzwVZ3vyH5CbhqEyRqCBMsWClF6YLITwKIil&src=11&timestamp=1788348548&ver=6942",
-        "summary": "",
-        "sourceName": "GitHub Actions · 内部手动追踪",
-        "channel": "manual-tracking",
-        "channelLabel": "内部管理",
-        "eventType": "人工追踪"
-      },
-      "capturedAt": "2026-09-09T12:54:16+00:00",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "robotics:keywords",
-        "ai:keywords",
-        "semiconductor:keywords",
-        "materials:keywords"
-      ],
-      "reasons": [
-        "个人研究兴趣",
-        "技术突破"
-      ],
-      "note": "",
-      "resolution": {
-        "status": "resolved",
-        "requestedType": "topic",
-        "entityType": "topic",
-        "canonicalName": "3DIC物理设计",
-        "targetId": "technology-1de222363da413db4676",
-        "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
-        "decisionKey": "3dic物理设计",
-        "reclassified": false
-      }
-    },
-    {
-      "id": "capture-030f289086f2acf3",
-      "entityType": "topic",
-      "canonicalName": "Agentic EDA智能体",
-      "rawSelection": "Agentic EDA智能体",
-      "aliases": [],
-      "trackSlugs": [
-        "robotics",
-        "ai",
-        "semiconductor"
-      ],
-      "trackNames": [
-        "机器人",
-        "AI / AGI",
-        "半导体"
-      ],
-      "source": {
-        "articleId": "",
-        "title": "Agentic EDA智能体",
-        "url": "https://mp.weixin.qq.com/s?new=1&signature=WZkLVULYINpDwXWhFfZiXOAhjcNevZUIu3YD9HqShQvhSrERWVSE3S5GkMb5DsIIKsoF70DOpXU1BKo8c3%2AVsv6TpkYluzwVZ3vyH5CbhqEyRqCBMsWClF6YLITwKIil&src=11&timestamp=1788348548&ver=6942",
-        "summary": "",
-        "sourceName": "GitHub Actions · 内部手动追踪",
-        "channel": "manual-tracking",
-        "channelLabel": "内部管理",
-        "eventType": "人工追踪"
-      },
-      "capturedAt": "2026-09-09T12:54:16+00:00",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "robotics:keywords",
-        "ai:keywords",
-        "semiconductor:keywords"
-      ],
-      "reasons": [
-        "个人研究兴趣",
-        "技术突破"
-      ],
-      "note": "",
-      "resolution": {
-        "status": "resolved",
-        "requestedType": "topic",
-        "entityType": "topic",
-        "canonicalName": "Agentic EDA智能体",
-        "targetId": "technology-7265ae19291356af8e62",
-        "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
-        "decisionKey": "agenticeda智能体",
-        "reclassified": false
-      }
-    },
-    {
       "id": "capture-856516f509ad42b7",
       "entityType": "topic",
       "canonicalName": "集成电路",
@@ -518,10 +414,10 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "集成电路",
-        "targetId": "technology-32f011fda906144c5d65",
+        "targetId": "topic:集成电路",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "集成电路",
         "reclassified": false
       }
@@ -575,38 +471,38 @@
       }
     },
     {
-      "id": "capture-0068d277a71ca85d",
+      "id": "capture-030f289086f2acf3",
       "entityType": "topic",
-      "canonicalName": "CPO",
-      "rawSelection": "CPO",
+      "canonicalName": "Agentic EDA智能体",
+      "rawSelection": "Agentic EDA智能体",
       "aliases": [],
       "trackSlugs": [
-        "semiconductor",
+        "robotics",
         "ai",
-        "ai-4"
+        "semiconductor"
       ],
       "trackNames": [
-        "半导体",
+        "机器人",
         "AI / AGI",
-        "AI网络通信"
+        "半导体"
       ],
       "source": {
         "articleId": "",
-        "title": "CPO",
-        "url": "https://www.eet-china.com/mp/a523228.html",
+        "title": "Agentic EDA智能体",
+        "url": "https://mp.weixin.qq.com/s?new=1&signature=WZkLVULYINpDwXWhFfZiXOAhjcNevZUIu3YD9HqShQvhSrERWVSE3S5GkMb5DsIIKsoF70DOpXU1BKo8c3%2AVsv6TpkYluzwVZ3vyH5CbhqEyRqCBMsWClF6YLITwKIil&src=11&timestamp=1788348548&ver=6942",
         "summary": "",
         "sourceName": "GitHub Actions · 内部手动追踪",
         "channel": "manual-tracking",
         "channelLabel": "内部管理",
         "eventType": "人工追踪"
       },
-      "capturedAt": "2026-09-09T12:52:38+00:00",
+      "capturedAt": "2026-09-09T12:54:16+00:00",
       "capturedBy": "VCIQ",
       "status": "applied",
       "appliedTo": [
-        "semiconductor:keywords",
+        "robotics:keywords",
         "ai:keywords",
-        "ai-4:keywords"
+        "semiconductor:keywords"
       ],
       "reasons": [
         "个人研究兴趣",
@@ -617,12 +513,67 @@
         "status": "resolved",
         "requestedType": "topic",
         "entityType": "topic",
-        "canonicalName": "CPO",
-        "targetId": "technology-98b0de339ac1bf2eae4b",
+        "canonicalName": "Agentic EDA智能体",
+        "targetId": "topic:agenticeda智能体",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
-        "decisionKey": "cpo",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "agenticeda智能体",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-4b80d154b2f2f3b8",
+      "entityType": "topic",
+      "canonicalName": "3DIC物理设计",
+      "rawSelection": "3DIC物理设计",
+      "aliases": [],
+      "trackSlugs": [
+        "robotics",
+        "ai",
+        "semiconductor",
+        "materials"
+      ],
+      "trackNames": [
+        "机器人",
+        "AI / AGI",
+        "半导体",
+        "新材料"
+      ],
+      "source": {
+        "articleId": "",
+        "title": "3DIC物理设计",
+        "url": "https://mp.weixin.qq.com/s?new=1&signature=WZkLVULYINpDwXWhFfZiXOAhjcNevZUIu3YD9HqShQvhSrERWVSE3S5GkMb5DsIIKsoF70DOpXU1BKo8c3%2AVsv6TpkYluzwVZ3vyH5CbhqEyRqCBMsWClF6YLITwKIil&src=11&timestamp=1788348548&ver=6942",
+        "summary": "",
+        "sourceName": "GitHub Actions · 内部手动追踪",
+        "channel": "manual-tracking",
+        "channelLabel": "内部管理",
+        "eventType": "人工追踪"
+      },
+      "capturedAt": "2026-09-09T12:54:16+00:00",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "robotics:keywords",
+        "ai:keywords",
+        "semiconductor:keywords",
+        "materials:keywords"
+      ],
+      "reasons": [
+        "个人研究兴趣",
+        "技术突破"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "3DIC物理设计",
+        "targetId": "topic:3dic物理设计",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "3dic物理设计",
         "reclassified": false
       }
     },
@@ -670,11 +621,115 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "UCIe",
-        "targetId": "technology-6b7068eef0009f753240",
+        "targetId": "topic:ucie",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "ucie",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-0068d277a71ca85d",
+      "entityType": "topic",
+      "canonicalName": "CPO",
+      "rawSelection": "CPO",
+      "aliases": [],
+      "trackSlugs": [
+        "semiconductor",
+        "ai",
+        "ai-4"
+      ],
+      "trackNames": [
+        "半导体",
+        "AI / AGI",
+        "AI网络通信"
+      ],
+      "source": {
+        "articleId": "",
+        "title": "CPO",
+        "url": "https://www.eet-china.com/mp/a523228.html",
+        "summary": "",
+        "sourceName": "GitHub Actions · 内部手动追踪",
+        "channel": "manual-tracking",
+        "channelLabel": "内部管理",
+        "eventType": "人工追踪"
+      },
+      "capturedAt": "2026-09-09T12:52:38+00:00",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "semiconductor:keywords",
+        "ai:keywords",
+        "ai-4:keywords"
+      ],
+      "reasons": [
+        "个人研究兴趣",
+        "技术突破"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "CPO",
+        "targetId": "topic:cpo",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "cpo",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-98d166ef05e07716",
+      "entityType": "topic",
+      "canonicalName": "先进封装",
+      "rawSelection": "先进封装",
+      "aliases": [],
+      "trackSlugs": [
+        "semiconductor",
+        "materials",
+        "manufacturing"
+      ],
+      "trackNames": [
+        "半导体",
+        "新材料",
+        "智能制造"
+      ],
+      "source": {
+        "articleId": "",
+        "title": "先进封装",
+        "url": "https://m.sohu.com/a/1072742683_121948415?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334",
+        "summary": "",
+        "sourceName": "GitHub Actions · 内部手动追踪",
+        "channel": "manual-tracking",
+        "channelLabel": "内部管理",
+        "eventType": "人工追踪"
+      },
+      "capturedAt": "2026-09-09T12:46:50+00:00",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "semiconductor:keywords",
+        "materials:keywords",
+        "manufacturing:keywords"
+      ],
+      "reasons": [
+        "个人研究兴趣",
+        "技术突破"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "先进封装",
+        "targetId": "topic:先进封装",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "先进封装",
         "reclassified": false
       }
     },
@@ -728,10 +783,10 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "GPU",
-        "targetId": "technology-e3c5ba51dba85ab0c990",
+        "targetId": "topic:gpu",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "gpu",
         "reclassified": false
       }
@@ -780,170 +835,11 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "CoWoS",
-        "targetId": "technology-f2b6ed04e07ba2bd6346",
+        "targetId": "topic:cowos",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "cowos",
-        "reclassified": false
-      }
-    },
-    {
-      "id": "capture-98d166ef05e07716",
-      "entityType": "topic",
-      "canonicalName": "先进封装",
-      "rawSelection": "先进封装",
-      "aliases": [],
-      "trackSlugs": [
-        "semiconductor",
-        "materials",
-        "manufacturing"
-      ],
-      "trackNames": [
-        "半导体",
-        "新材料",
-        "智能制造"
-      ],
-      "source": {
-        "articleId": "",
-        "title": "先进封装",
-        "url": "https://m.sohu.com/a/1072742683_121948415?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334",
-        "summary": "",
-        "sourceName": "GitHub Actions · 内部手动追踪",
-        "channel": "manual-tracking",
-        "channelLabel": "内部管理",
-        "eventType": "人工追踪"
-      },
-      "capturedAt": "2026-09-09T12:46:50+00:00",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "semiconductor:keywords",
-        "materials:keywords",
-        "manufacturing:keywords"
-      ],
-      "reasons": [
-        "个人研究兴趣",
-        "技术突破"
-      ],
-      "note": "",
-      "resolution": {
-        "status": "resolved",
-        "requestedType": "topic",
-        "entityType": "topic",
-        "canonicalName": "先进封装",
-        "targetId": "technology-4de01279461ffec1ae5b",
-        "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
-        "decisionKey": "先进封装",
-        "reclassified": false
-      }
-    },
-    {
-      "id": "capture-fb1546db3e712a8b",
-      "entityType": "topic",
-      "canonicalName": "Electron",
-      "rawSelection": "Electron",
-      "aliases": [],
-      "trackSlugs": [
-        "robotics",
-        "ai",
-        "semiconductor",
-        "manufacturing"
-      ],
-      "trackNames": [
-        "机器人",
-        "AI / AGI",
-        "半导体",
-        "智能制造"
-      ],
-      "source": {
-        "articleId": "",
-        "title": "Electron",
-        "url": "https://www.electronicsweekly.com/news/business/asml-and-tsmc-to-lead-transition-to-12-inch-photomasks-for-high-na-euv-2026-09",
-        "summary": "",
-        "sourceName": "GitHub Actions · 内部手动追踪",
-        "channel": "manual-tracking",
-        "channelLabel": "内部管理",
-        "eventType": "人工追踪"
-      },
-      "capturedAt": "2026-09-09T12:45:35+00:00",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "robotics:keywords",
-        "ai:keywords",
-        "semiconductor:keywords",
-        "manufacturing:keywords"
-      ],
-      "reasons": [
-        "个人研究兴趣",
-        "技术突破"
-      ],
-      "note": "",
-      "resolution": {
-        "status": "resolved",
-        "requestedType": "topic",
-        "entityType": "topic",
-        "canonicalName": "Electron",
-        "targetId": "technology-88b1deea6a18cfd0d1df",
-        "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
-        "decisionKey": "electron",
-        "reclassified": false
-      }
-    },
-    {
-      "id": "capture-a8d08e58225465f9",
-      "entityType": "topic",
-      "canonicalName": "EDA",
-      "rawSelection": "EDA",
-      "aliases": [],
-      "trackSlugs": [
-        "semiconductor",
-        "ai",
-        "manufacturing"
-      ],
-      "trackNames": [
-        "半导体",
-        "AI / AGI",
-        "智能制造"
-      ],
-      "source": {
-        "articleId": "",
-        "title": "EDA",
-        "url": "https://www.electronicsweekly.com/news/business/asml-and-tsmc-to-lead-transition-to-12-inch-photomasks-for-high-na-euv-2026-09",
-        "summary": "",
-        "sourceName": "GitHub Actions · 内部手动追踪",
-        "channel": "manual-tracking",
-        "channelLabel": "内部管理",
-        "eventType": "人工追踪"
-      },
-      "capturedAt": "2026-09-09T12:45:35+00:00",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "semiconductor:keywords",
-        "ai:keywords",
-        "manufacturing:keywords"
-      ],
-      "reasons": [
-        "个人研究兴趣",
-        "技术突破"
-      ],
-      "note": "",
-      "resolution": {
-        "status": "resolved",
-        "requestedType": "topic",
-        "entityType": "topic",
-        "canonicalName": "EDA",
-        "targetId": "technology-500e30721a0702fd3b90",
-        "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
-        "decisionKey": "eda",
         "reclassified": false
       }
     },
@@ -998,6 +894,113 @@
       }
     },
     {
+      "id": "capture-fb1546db3e712a8b",
+      "entityType": "topic",
+      "canonicalName": "Electron",
+      "rawSelection": "Electron",
+      "aliases": [],
+      "trackSlugs": [
+        "robotics",
+        "ai",
+        "semiconductor",
+        "manufacturing"
+      ],
+      "trackNames": [
+        "机器人",
+        "AI / AGI",
+        "半导体",
+        "智能制造"
+      ],
+      "source": {
+        "articleId": "",
+        "title": "Electron",
+        "url": "https://www.electronicsweekly.com/news/business/asml-and-tsmc-to-lead-transition-to-12-inch-photomasks-for-high-na-euv-2026-09",
+        "summary": "",
+        "sourceName": "GitHub Actions · 内部手动追踪",
+        "channel": "manual-tracking",
+        "channelLabel": "内部管理",
+        "eventType": "人工追踪"
+      },
+      "capturedAt": "2026-09-09T12:45:35+00:00",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "robotics:keywords",
+        "ai:keywords",
+        "semiconductor:keywords",
+        "manufacturing:keywords"
+      ],
+      "reasons": [
+        "个人研究兴趣",
+        "技术突破"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "Electron",
+        "targetId": "topic:electron",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "electron",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-a8d08e58225465f9",
+      "entityType": "topic",
+      "canonicalName": "EDA",
+      "rawSelection": "EDA",
+      "aliases": [],
+      "trackSlugs": [
+        "semiconductor",
+        "ai",
+        "manufacturing"
+      ],
+      "trackNames": [
+        "半导体",
+        "AI / AGI",
+        "智能制造"
+      ],
+      "source": {
+        "articleId": "",
+        "title": "EDA",
+        "url": "https://www.electronicsweekly.com/news/business/asml-and-tsmc-to-lead-transition-to-12-inch-photomasks-for-high-na-euv-2026-09",
+        "summary": "",
+        "sourceName": "GitHub Actions · 内部手动追踪",
+        "channel": "manual-tracking",
+        "channelLabel": "内部管理",
+        "eventType": "人工追踪"
+      },
+      "capturedAt": "2026-09-09T12:45:35+00:00",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "semiconductor:keywords",
+        "ai:keywords",
+        "manufacturing:keywords"
+      ],
+      "reasons": [
+        "个人研究兴趣",
+        "技术突破"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "EDA",
+        "targetId": "topic:eda",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "eda",
+        "reclassified": false
+      }
+    },
+    {
       "id": "capture-11a432d167b48b1a",
       "entityType": "company",
       "canonicalName": "ASML",
@@ -1048,24 +1051,22 @@
       }
     },
     {
-      "id": "capture-cd3bab86d50755c3",
-      "entityType": "company",
-      "canonicalName": "Amazon",
-      "rawSelection": "Amazon",
+      "id": "capture-a8e22234d3c3de30",
+      "entityType": "topic",
+      "canonicalName": "Tesla",
+      "rawSelection": "Tesla",
       "aliases": [],
       "trackSlugs": [
-        "semiconductor",
         "robotics",
         "ai"
       ],
       "trackNames": [
-        "半导体",
         "机器人",
         "AI / AGI"
       ],
       "source": {
         "articleId": "",
-        "title": "Amazon",
+        "title": "Tesla",
         "url": "https://www.extremetech.com/cars/as-teslas-cybercab-rolls-out-in-texas-a-new-regulatory-probe-rolls-in",
         "summary": "",
         "sourceName": "GitHub Actions · 内部手动追踪",
@@ -1075,8 +1076,11 @@
       },
       "capturedAt": "2026-09-09T12:44:24+00:00",
       "capturedBy": "VCIQ",
-      "status": "queued",
-      "appliedTo": [],
+      "status": "applied",
+      "appliedTo": [
+        "robotics:keywords",
+        "ai:keywords"
+      ],
       "reasons": [
         "个人研究兴趣",
         "技术突破",
@@ -1087,12 +1091,12 @@
         "status": "resolved",
         "requestedType": "company",
         "entityType": "topic",
-        "canonicalName": "Amazon",
-        "targetId": "topic:amazon",
+        "canonicalName": "Tesla",
+        "targetId": "topic:tesla",
         "confidence": "high",
         "source": "tracking-taxonomy",
         "reason": "名称唯一命中已审核追踪赛道或关键词。",
-        "decisionKey": "amazon",
+        "decisionKey": "tesla",
         "reclassified": true
       }
     },
@@ -1144,53 +1148,6 @@
       }
     },
     {
-      "id": "capture-a8e22234d3c3de30",
-      "entityType": "company",
-      "canonicalName": "Tesla",
-      "rawSelection": "Tesla",
-      "aliases": [],
-      "trackSlugs": [
-        "robotics",
-        "ai"
-      ],
-      "trackNames": [
-        "机器人",
-        "AI / AGI"
-      ],
-      "source": {
-        "articleId": "",
-        "title": "Tesla",
-        "url": "https://www.extremetech.com/cars/as-teslas-cybercab-rolls-out-in-texas-a-new-regulatory-probe-rolls-in",
-        "summary": "",
-        "sourceName": "GitHub Actions · 内部手动追踪",
-        "channel": "manual-tracking",
-        "channelLabel": "内部管理",
-        "eventType": "人工追踪"
-      },
-      "capturedAt": "2026-09-09T12:44:24+00:00",
-      "capturedBy": "VCIQ",
-      "status": "queued",
-      "appliedTo": [],
-      "reasons": [
-        "个人研究兴趣",
-        "技术突破",
-        "商业模式创新"
-      ],
-      "note": "",
-      "resolution": {
-        "status": "resolved",
-        "requestedType": "company",
-        "entityType": "topic",
-        "canonicalName": "Tesla",
-        "targetId": "topic:tesla",
-        "confidence": "high",
-        "source": "tracking-taxonomy",
-        "reason": "名称唯一命中已审核追踪赛道或关键词。",
-        "decisionKey": "tesla",
-        "reclassified": true
-      }
-    },
-    {
       "id": "capture-debb9a4b6fe45fdc",
       "entityType": "topic",
       "canonicalName": "Cybercab",
@@ -1232,67 +1189,65 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "Cybercab",
-        "targetId": "technology-6f30866122a740bc11e1",
+        "targetId": "topic:cybercab",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "cybercab",
         "reclassified": false
       }
     },
     {
-      "id": "capture-28ff5519851b48bf",
+      "id": "capture-cd3bab86d50755c3",
       "entityType": "topic",
-      "canonicalName": "Meta",
-      "rawSelection": "Meta",
+      "canonicalName": "Amazon",
+      "rawSelection": "Amazon",
       "aliases": [],
       "trackSlugs": [
-        "ai",
-        "robotics",
         "semiconductor",
-        "ai-2"
+        "robotics",
+        "ai"
       ],
       "trackNames": [
-        "AI / AGI",
-        "机器人",
         "半导体",
-        "AI安全"
+        "机器人",
+        "AI / AGI"
       ],
       "source": {
         "articleId": "",
-        "title": "Meta",
-        "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-09/doc-inirfqcs5636363.shtml",
+        "title": "Amazon",
+        "url": "https://www.extremetech.com/cars/as-teslas-cybercab-rolls-out-in-texas-a-new-regulatory-probe-rolls-in",
         "summary": "",
         "sourceName": "GitHub Actions · 内部手动追踪",
         "channel": "manual-tracking",
         "channelLabel": "内部管理",
         "eventType": "人工追踪"
       },
-      "capturedAt": "2026-09-09T12:43:12+00:00",
+      "capturedAt": "2026-09-09T12:44:24+00:00",
       "capturedBy": "VCIQ",
       "status": "applied",
       "appliedTo": [
-        "ai:keywords",
-        "robotics:keywords",
         "semiconductor:keywords",
-        "ai-2:keywords"
+        "robotics:keywords",
+        "ai:keywords"
       ],
       "reasons": [
         "个人研究兴趣",
-        "技术突破"
+        "技术突破",
+        "商业模式创新"
       ],
       "note": "",
       "resolution": {
         "status": "resolved",
-        "requestedType": "topic",
+        "requestedType": "company",
         "entityType": "topic",
-        "canonicalName": "Meta",
-        "targetId": "technology-ea3bd73e2b506e005272",
+        "canonicalName": "Amazon",
+        "targetId": "topic:amazon",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
-        "decisionKey": "meta",
-        "reclassified": false
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "amazon",
+        "reclassified": true
       }
     },
     {
@@ -1388,17 +1343,72 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "Muse",
-        "targetId": "technology-4016c3db3bc3c731a414",
+        "targetId": "topic:muse",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "muse",
         "reclassified": false
       }
     },
     {
+      "id": "capture-28ff5519851b48bf",
+      "entityType": "topic",
+      "canonicalName": "Meta",
+      "rawSelection": "Meta",
+      "aliases": [],
+      "trackSlugs": [
+        "ai",
+        "robotics",
+        "semiconductor",
+        "ai-2"
+      ],
+      "trackNames": [
+        "AI / AGI",
+        "机器人",
+        "半导体",
+        "AI安全"
+      ],
+      "source": {
+        "articleId": "",
+        "title": "Meta",
+        "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-09/doc-inirfqcs5636363.shtml",
+        "summary": "",
+        "sourceName": "GitHub Actions · 内部手动追踪",
+        "channel": "manual-tracking",
+        "channelLabel": "内部管理",
+        "eventType": "人工追踪"
+      },
+      "capturedAt": "2026-09-09T12:43:12+00:00",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "ai:keywords",
+        "robotics:keywords",
+        "semiconductor:keywords",
+        "ai-2:keywords"
+      ],
+      "reasons": [
+        "个人研究兴趣",
+        "技术突破"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "Meta",
+        "targetId": "topic:meta",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "meta",
+        "reclassified": false
+      }
+    },
+    {
       "id": "capture-b8604b5fc451c43c",
-      "entityType": "company",
+      "entityType": "topic",
       "canonicalName": "Meta",
       "rawSelection": "Meta",
       "aliases": [],
@@ -1426,8 +1436,13 @@
       },
       "capturedAt": "2026-09-09T12:43:12+00:00",
       "capturedBy": "VCIQ",
-      "status": "queued",
-      "appliedTo": [],
+      "status": "applied",
+      "appliedTo": [
+        "robotics:keywords",
+        "ai:keywords",
+        "track-1ccjq49:keywords",
+        "semiconductor:keywords"
+      ],
       "reasons": [
         "个人研究兴趣",
         "技术突破"
@@ -1444,62 +1459,6 @@
         "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "meta",
         "reclassified": true
-      }
-    },
-    {
-      "id": "capture-4657ad17cfd6244e",
-      "entityType": "topic",
-      "canonicalName": "Pliabot",
-      "rawSelection": "Pliabot",
-      "aliases": [],
-      "trackSlugs": [
-        "robotics",
-        "ai",
-        "ai-2",
-        "ai-3"
-      ],
-      "trackNames": [
-        "机器人",
-        "AI / AGI",
-        "AI安全",
-        "AI智能终端"
-      ],
-      "source": {
-        "articleId": "",
-        "title": "Pliabot",
-        "url": "https://www.leiphone.com/category/robot/tEzDlRIgiHsXV8B0.html",
-        "summary": "",
-        "sourceName": "GitHub Actions · 内部手动追踪",
-        "channel": "manual-tracking",
-        "channelLabel": "内部管理",
-        "eventType": "人工追踪"
-      },
-      "capturedAt": "2026-09-09T12:41:51+00:00",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "robotics:keywords",
-        "ai:keywords",
-        "ai-2:keywords",
-        "ai-3:keywords"
-      ],
-      "reasons": [
-        "个人研究兴趣",
-        "技术突破",
-        "融资机会"
-      ],
-      "note": "",
-      "resolution": {
-        "status": "resolved",
-        "requestedType": "topic",
-        "entityType": "topic",
-        "canonicalName": "Pliabot",
-        "targetId": "technology-9260b3347cd84cadc5b8",
-        "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
-        "decisionKey": "pliabot",
-        "reclassified": false
       }
     },
     {
@@ -1550,10 +1509,10 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "肌体智能",
-        "targetId": "technology-8ef92f28bb68f3a4d4f2",
+        "targetId": "topic:肌体智能",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "肌体智能",
         "reclassified": false
       }
@@ -1588,8 +1547,13 @@
       },
       "capturedAt": "2026-09-09T12:41:51+00:00",
       "capturedBy": "VCIQ",
-      "status": "queued",
-      "appliedTo": [],
+      "status": "applied",
+      "appliedTo": [
+        "robotics:sampleCompanies",
+        "ai-2:sampleCompanies",
+        "ai:sampleCompanies",
+        "ai-3:sampleCompanies"
+      ],
       "reasons": [
         "个人研究兴趣",
         "技术突破",
@@ -1606,6 +1570,62 @@
         "source": "source-context",
         "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
         "decisionKey": "万勋科技",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-4657ad17cfd6244e",
+      "entityType": "topic",
+      "canonicalName": "Pliabot",
+      "rawSelection": "Pliabot",
+      "aliases": [],
+      "trackSlugs": [
+        "robotics",
+        "ai",
+        "ai-2",
+        "ai-3"
+      ],
+      "trackNames": [
+        "机器人",
+        "AI / AGI",
+        "AI安全",
+        "AI智能终端"
+      ],
+      "source": {
+        "articleId": "",
+        "title": "Pliabot",
+        "url": "https://www.leiphone.com/category/robot/tEzDlRIgiHsXV8B0.html",
+        "summary": "",
+        "sourceName": "GitHub Actions · 内部手动追踪",
+        "channel": "manual-tracking",
+        "channelLabel": "内部管理",
+        "eventType": "人工追踪"
+      },
+      "capturedAt": "2026-09-09T12:41:51+00:00",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "robotics:keywords",
+        "ai:keywords",
+        "ai-2:keywords",
+        "ai-3:keywords"
+      ],
+      "reasons": [
+        "个人研究兴趣",
+        "技术突破",
+        "融资机会"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "Pliabot",
+        "targetId": "topic:pliabot",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "pliabot",
         "reclassified": false
       }
     },
@@ -1654,10 +1674,10 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "NOVA2.0",
-        "targetId": "technology-bc671c65ef703387274c",
+        "targetId": "topic:nova20",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "nova20",
         "reclassified": false
       }
@@ -1686,8 +1706,10 @@
       },
       "capturedAt": "2026-09-09T12:30:24+00:00",
       "capturedBy": "VCIQ",
-      "status": "queued",
-      "appliedTo": [],
+      "status": "applied",
+      "appliedTo": [
+        "ai:sampleCompanies"
+      ],
       "reasons": [
         "个人研究兴趣",
         "技术突破",
@@ -1704,59 +1726,6 @@
         "source": "source-context",
         "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
         "decisionKey": "cognition",
-        "reclassified": false
-      }
-    },
-    {
-      "id": "capture-fd632e3119acc0db",
-      "entityType": "person",
-      "canonicalName": "Jean-Christophe Eloy",
-      "rawSelection": "Jean-Christophe Eloy",
-      "aliases": [],
-      "trackSlugs": [
-        "track-1ccjq49",
-        "robotics",
-        "ai"
-      ],
-      "trackNames": [
-        "风险投资",
-        "机器人",
-        "AI / AGI"
-      ],
-      "source": {
-        "articleId": "",
-        "title": "Jean-Christophe Eloy",
-        "url": "https://www.semiconductor-today.com/news_items/2026/sep/yole-070926.shtml",
-        "summary": "",
-        "sourceName": "GitHub Actions · 内部手动追踪",
-        "channel": "manual-tracking",
-        "channelLabel": "内部管理",
-        "eventType": "人工追踪"
-      },
-      "capturedAt": "2026-09-09T12:28:59+00:00",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "track-1ccjq49:people",
-        "robotics:people",
-        "ai:people"
-      ],
-      "reasons": [
-        "个人研究兴趣",
-        "技术突破",
-        "融资机会"
-      ],
-      "note": "",
-      "resolution": {
-        "status": "resolved",
-        "requestedType": "person",
-        "entityType": "person",
-        "canonicalName": "Jean-Christophe Eloy",
-        "targetId": "person:jeanchristopheeloy",
-        "confidence": "medium",
-        "source": "explicit-type",
-        "reason": "管理员显式选择“人物”，且未与正式目录冲突。",
-        "decisionKey": "jeanchristopheeloy",
         "reclassified": false
       }
     },
@@ -1851,66 +1820,64 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "optical transceivers",
-        "targetId": "technology-5eddcbe34742cfe7da8b",
+        "targetId": "topic:opticaltransceivers",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "opticaltransceivers",
         "reclassified": false
       }
     },
     {
-      "id": "capture-2b5d0a155ad418c2",
-      "entityType": "topic",
-      "canonicalName": "DDR5",
-      "rawSelection": "DDR5",
+      "id": "capture-fd632e3119acc0db",
+      "entityType": "person",
+      "canonicalName": "Jean-Christophe Eloy",
+      "rawSelection": "Jean-Christophe Eloy",
       "aliases": [],
       "trackSlugs": [
-        "semiconductor",
-        "ai",
-        "ai-4",
-        "materials"
+        "track-1ccjq49",
+        "robotics",
+        "ai"
       ],
       "trackNames": [
-        "半导体",
-        "AI / AGI",
-        "AI网络通信",
-        "新材料"
+        "风险投资",
+        "机器人",
+        "AI / AGI"
       ],
       "source": {
         "articleId": "",
-        "title": "DDR5",
-        "url": "https://zhidx.com/p/590833.html",
+        "title": "Jean-Christophe Eloy",
+        "url": "https://www.semiconductor-today.com/news_items/2026/sep/yole-070926.shtml",
         "summary": "",
         "sourceName": "GitHub Actions · 内部手动追踪",
         "channel": "manual-tracking",
         "channelLabel": "内部管理",
         "eventType": "人工追踪"
       },
-      "capturedAt": "2026-09-09T12:26:35+00:00",
+      "capturedAt": "2026-09-09T12:28:59+00:00",
       "capturedBy": "VCIQ",
       "status": "applied",
       "appliedTo": [
-        "semiconductor:keywords",
-        "ai:keywords",
-        "ai-4:keywords",
-        "materials:keywords"
+        "track-1ccjq49:people",
+        "robotics:people",
+        "ai:people"
       ],
       "reasons": [
         "个人研究兴趣",
-        "技术突破"
+        "技术突破",
+        "融资机会"
       ],
       "note": "",
       "resolution": {
         "status": "resolved",
-        "requestedType": "topic",
-        "entityType": "topic",
-        "canonicalName": "DDR5",
-        "targetId": "technology-3995e3b89c79afaf72e1",
-        "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
-        "decisionKey": "ddr5",
+        "requestedType": "person",
+        "entityType": "person",
+        "canonicalName": "Jean-Christophe Eloy",
+        "targetId": "person:jeanchristopheeloy",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“人物”，且未与正式目录冲突。",
+        "decisionKey": "jeanchristopheeloy",
         "reclassified": false
       }
     },
@@ -1964,11 +1931,66 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "数据中心",
-        "targetId": "technology-04f7acfcd28c1d88f237",
+        "targetId": "topic:数据中心",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "数据中心",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-2b5d0a155ad418c2",
+      "entityType": "topic",
+      "canonicalName": "DDR5",
+      "rawSelection": "DDR5",
+      "aliases": [],
+      "trackSlugs": [
+        "semiconductor",
+        "ai",
+        "ai-4",
+        "materials"
+      ],
+      "trackNames": [
+        "半导体",
+        "AI / AGI",
+        "AI网络通信",
+        "新材料"
+      ],
+      "source": {
+        "articleId": "",
+        "title": "DDR5",
+        "url": "https://zhidx.com/p/590833.html",
+        "summary": "",
+        "sourceName": "GitHub Actions · 内部手动追踪",
+        "channel": "manual-tracking",
+        "channelLabel": "内部管理",
+        "eventType": "人工追踪"
+      },
+      "capturedAt": "2026-09-09T12:26:35+00:00",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "semiconductor:keywords",
+        "ai:keywords",
+        "ai-4:keywords",
+        "materials:keywords"
+      ],
+      "reasons": [
+        "个人研究兴趣",
+        "技术突破"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "DDR5",
+        "targetId": "topic:ddr5",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "ddr5",
         "reclassified": false
       }
     },
@@ -2018,10 +2040,10 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "Starlink",
-        "targetId": "technology-2412f76972451e84978e",
+        "targetId": "topic:starlink",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "starlink",
         "reclassified": false
       }
@@ -2078,10 +2100,10 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "Falcon 9",
-        "targetId": "technology-36458b5e3cbd18f43b30",
+        "targetId": "topic:falcon9",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "falcon9",
         "reclassified": false
       }
