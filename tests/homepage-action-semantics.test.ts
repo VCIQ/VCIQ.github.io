@@ -21,10 +21,13 @@ test("homepage exposes person and company event channels after HBM", async () =>
   );
 });
 
-test("person and company channels route from structured entity fields instead of prose keywords", async () => {
+test("person and company channels use formal entity-library gates instead of prose keywords", async () => {
   const feed = await source("components/homepage-news-feed.tsx");
-  assert.match(feed, /channelId === "people"[\s\S]*Boolean\(item\.personSlug\)[\s\S]*item\.type === "人物观点"[\s\S]*item\.mentionedPeople/u);
-  assert.match(feed, /channelId === "companies"[\s\S]*Boolean\(item\.companySlug\)[\s\S]*item\.mentionedCompanies/u);
+  const policy = await source("lib/homepage-entity-channels.ts");
+  assert.match(feed, /matchesHomepagePersonEntityChannel\(item, entityChannels\)/u);
+  assert.match(feed, /matchesHomepageCompanyEntityChannel\(item, entityChannels\)/u);
+  assert.match(policy, /hasFormalEntityMention\(item\.mentionedPeople, index\.people\.keys\)/u);
+  assert.match(policy, /hasFormalEntityMention\(item\.mentionedCompanies, index\.companies\.keys\)/u);
   assert.doesNotMatch(feed, /id: "people", label: "人物", keywords:/u);
   assert.doesNotMatch(feed, /id: "companies", label: "公司", keywords:/u);
 });
