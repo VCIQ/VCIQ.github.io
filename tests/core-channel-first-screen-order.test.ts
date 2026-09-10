@@ -14,27 +14,27 @@ function assertOrder(sourceText: string, first: string, second: string, message:
   assert.ok(firstIndex < secondIndex, message);
 }
 
-test("1440x900 core-channel contract puts live panels before research methodology", async () => {
+test("1440x900 core-channel contract puts primary research panels before methodology", async () => {
   const layout = await source("components/channel-split-layout.tsx");
   const css = await source("components/channel-split-layout.module.css");
 
   assertOrder(
     layout,
     "{beforeResearchSynergy}",
-    "<div className={styles.splitLayout}>",
-    "technology research-now signal must stay ahead of the live split panels",
+    "styles.splitLayout",
+    "technology research-now signal must stay ahead of the primary research layout",
   );
   assertOrder(
     layout,
-    "<div className={styles.splitLayout}>",
+    "styles.splitLayout",
     "<ResearchSynergyStrip compactOnMobile />",
-    "live directory/update panels must render before the Research Object Graph",
+    "the primary directory/update layout must render before the Research Object Graph",
   );
   assertOrder(
     layout,
     "<ResearchSynergyStrip compactOnMobile />",
     "<details className={styles.directoryNote}>",
-    "directory explanation must remain secondary to live research content",
+    "directory explanation must remain secondary to primary research content",
   );
   assert.doesNotMatch(layout, /className=\{styles\.panelDescription\}/);
 
@@ -43,23 +43,27 @@ test("1440x900 core-channel contract puts live panels before research methodolog
   assert.match(css, /div:first-child\) \{\s*display:\s*none;/);
 });
 
-test("people and company channel headers expose current signals before explanations", async () => {
+test("people and company libraries keep entity directories before explanations", async () => {
   const people = await source("app/people/page.tsx");
   const companies = await source("app/companies/page.tsx");
 
-  assert.match(people, /getChannelUpdateDirectory\("people"\)/);
-  assert.match(people, /peopleUpdates\.items\.length\} 条人物更新/);
+  assert.doesNotMatch(people, /getChannelUpdateDirectory\("people"\)/);
+  assert.match(people, /showUpdates=\{false\}/);
+  assert.match(people, /人物事件新闻统一进入首页“人物”频道/);
+  assert.doesNotMatch(companies, /getChannelUpdateDirectory\("companies"\)/);
+  assert.match(companies, /showUpdates=\{false\}/);
+  assert.match(companies, /事件新闻统一进入首页“公司”频道/);
   assertOrder(
     people,
     "<ChannelSplitLayout",
     "<details className={styles.methodology}>",
-    "people methodology must sit below the live directory and event panels",
+    "people methodology must sit below the entity directory",
   );
   assertOrder(
     companies,
     "<ChannelSplitLayout",
     "<details className={styles.methodology}>",
-    "company methodology must sit below the live directory and event panels",
+    "company methodology must sit below the entity directory",
   );
 
   const peopleHeader = people.slice(
