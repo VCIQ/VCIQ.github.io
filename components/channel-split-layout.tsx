@@ -15,6 +15,7 @@ type ChannelSplitLayoutProps = {
   icon: ReactNode;
   bodyClassName?: string;
   directoryFirst?: boolean;
+  showUpdates?: boolean;
   beforeResearchSynergy?: ReactNode;
   children: ReactNode;
 };
@@ -30,14 +31,19 @@ export function ChannelSplitLayout({
   icon,
   bodyClassName,
   directoryFirst = false,
+  showUpdates,
   beforeResearchSynergy,
   children,
 }: ChannelSplitLayoutProps) {
-  const updatesPanel = (
+  // Research-library pages should not duplicate the homepage news feed. People
+  // and companies opt out explicitly; technology research defaults to a pure
+  // research-directory layout while other channels retain their update panel.
+  const shouldShowUpdates = showUpdates ?? channel !== "technology";
+  const updatesPanel = shouldShowUpdates ? (
     <div className={styles.updatesPanel}>
       <ChannelUpdateDirectory channel={channel} layout="split" />
     </div>
-  );
+  ) : null;
   const directoryPanel = (
     <section className={styles.directoryPanel} aria-labelledby={`${channel}-directory-title`}>
       <header className={styles.panelHeader}>
@@ -65,17 +71,19 @@ export function ChannelSplitLayout({
   return (
     <>
       {beforeResearchSynergy}
-      <div className={styles.splitLayout}>
-        {directoryFirst ? (
+      <div className={`${styles.splitLayout}${shouldShowUpdates ? "" : ` ${styles.directoryOnly}`}`}>
+        {shouldShowUpdates && directoryFirst ? (
           <>
             {directoryPanel}
             {updatesPanel}
+          </>
+        ) : shouldShowUpdates ? (
+          <>
+            {updatesPanel}
+            {directoryPanel}
           </>
         ) : (
-          <>
-            {updatesPanel}
-            {directoryPanel}
-          </>
+          directoryPanel
         )}
       </div>
       {showResearchSynergy ? <ResearchSynergyStrip compactOnMobile /> : null}

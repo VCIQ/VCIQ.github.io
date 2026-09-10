@@ -6,7 +6,15 @@ import {
 import { HomepageTopicBriefs } from "@/components/homepage-topic-briefs";
 import { HomepageTrackingActions } from "@/components/homepage-tracking-actions";
 import unifiedStyles from "@/components/homepage-unified-inbox.module.css";
+import { companies } from "@/lib/catalog-data";
+import { companyEntities } from "@/lib/company-entity-registry";
 import { coreResearchObjectStats } from "@/lib/core-research-objects";
+import {
+  uniqueHomepageEntityKeys,
+  uniqueHomepageEntitySlugs,
+  type HomepageEntityChannelIndex,
+} from "@/lib/homepage-entity-channels";
+import { researchPeople } from "@/lib/people-data";
 import {
   mergeRankedIntelligenceIntoArticlePayload,
   RANKED_INTELLIGENCE_FALLBACK_SECTOR,
@@ -32,6 +40,29 @@ const trackedSectorNames = new Set(trackedSectorAliases);
 const activeArticles = snapshot.articles.filter(
   (item) => item.curated || trackedSectorNames.has(item.sector),
 );
+
+const formalCompanySlugs = new Set(companies.map((company) => company.slug));
+const homepageEntityChannelIndex: HomepageEntityChannelIndex = {
+  people: {
+    slugs: uniqueHomepageEntitySlugs(researchPeople.map((person) => person.slug)),
+    keys: uniqueHomepageEntityKeys(
+      researchPeople.flatMap((person) => [
+        person.name,
+        person.englishName,
+        ...person.aliases,
+      ]),
+    ),
+  },
+  companies: {
+    slugs: uniqueHomepageEntitySlugs(companies.map((company) => company.slug)),
+    keys: uniqueHomepageEntityKeys([
+      ...companies.map((company) => company.name),
+      ...companyEntities
+        .filter((entity) => formalCompanySlugs.has(entity.slug))
+        .flatMap((entity) => [entity.name, ...entity.aliases]),
+    ]),
+  },
+};
 
 function compactHomepageArticle(item: LiveIntelligenceEvent): LiveIntelligenceEvent {
   return {
@@ -122,6 +153,7 @@ const bootstrap: HomepageFeedBootstrap = {
     美国: topSector("美国"),
   },
   researchObjectStats: coreResearchObjectStats,
+  entityChannelIndex: homepageEntityChannelIndex,
 };
 
 export default function Home() {

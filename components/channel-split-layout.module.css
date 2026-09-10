@@ -6,6 +6,15 @@
   align-items: stretch;
 }
 
+.directoryOnly {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.directoryOnly .directoryPanel {
+  height: auto;
+  min-height: 640px;
+}
+
 .updatesPanel {
   display: flex;
   min-width: 0;
@@ -209,7 +218,8 @@
   }
 
   .updatesPanel,
-  .directoryPanel {
+  .directoryPanel,
+  .directoryOnly .directoryPanel {
     height: auto;
     overflow: visible;
   }

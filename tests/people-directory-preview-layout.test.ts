@@ -12,8 +12,9 @@ test("people directory keeps only the two decision-useful preview rows", () => {
   assert.doesNotMatch(page, /<b>下一步观察<\/b>/);
 });
 
-test("fuller person research remains delegated to the detail page", () => {
-  assert.match(page, /完整判断、技术主线、观点演进、组织关系和事件证据进入人物详情查看/);
+test("fuller person research stays in profiles while event news moves to the homepage", () => {
+  assert.match(page, /人物库解释关键人物的技术判断、组织选择和路线演进/);
+  assert.match(page, /统一进入首页“人物”频道/);
 });
 
 test("people directory avoids repeated per-card row classes", () => {

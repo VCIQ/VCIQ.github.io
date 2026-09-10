@@ -63,7 +63,7 @@ test("automation registry keeps four research object types while tracks and tech
   assert.match(header, /科技研究/u);
   assert.match(header, /"\/technologies"/u);
   assert.doesNotMatch(header, /"\/technology"/u);
-  for (const label of ["核心人物", "核心公司"]) {
+  for (const label of ["人物库", "公司库"]) {
     assert.match(header, new RegExp(label, "u"));
   }
   for (const marker of ["核心赛道", "核心技术对象", "core-tracks", "core-technologies"]) {

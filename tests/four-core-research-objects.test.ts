@@ -17,7 +17,7 @@ const read = (relativePath: string) =>
 
 test("primary navigation exposes one technology research channel plus people and companies", () => {
   const source = read("components/site-header.tsx");
-  for (const label of ["科技研究", "核心人物", "核心公司"]) {
+  for (const label of ["科技研究", "人物库", "公司库"]) {
     assert.match(source, new RegExp(label, "u"));
   }
   assert.match(source, /["']\/technologies["']/u);
