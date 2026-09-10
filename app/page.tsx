@@ -16,7 +16,10 @@ import {
   uniqueHomepageEntitySlugs,
   type HomepageEntityChannelIndex,
 } from "@/lib/homepage-entity-channels";
-import { projectHomepagePersonDirectoryEvents } from "@/lib/homepage-person-channel-events";
+import {
+  mergeHomepagePersonChannelEvents,
+  projectHomepagePersonDirectoryEvents,
+} from "@/lib/homepage-person-channel-events";
 import { aggregatePeopleUpdateDirectory } from "@/lib/people-event-updates";
 import { researchPeople } from "@/lib/people-data";
 import {
@@ -70,9 +73,17 @@ const homepageEntityChannelIndex: HomepageEntityChannelIndex = {
   },
 };
 
-const peopleChannelEvents = projectHomepagePersonDirectoryEvents(
+const projectedPeopleChannelEvents = projectHomepagePersonDirectoryEvents(
   aggregatePeopleUpdateDirectory(getChannelUpdateDirectory("people")).items,
   researchPeople,
+);
+// Use the complete server-side canonical article pool before the browser's first
+// interaction. Otherwise a same-URL directory projection can briefly expose its
+// fallback importance/sector until useArticles finishes loading the full archive.
+const peopleChannelEvents = mergeHomepagePersonChannelEvents(
+  [],
+  projectedPeopleChannelEvents,
+  activeArticles,
 );
 
 function compactHomepageArticle(item: LiveIntelligenceEvent): LiveIntelligenceEvent {
