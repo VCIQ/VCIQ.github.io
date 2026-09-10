@@ -1,3 +1,4 @@
+import { findHomepagePersonMaterialReview } from "./homepage-person-material-reviews";
 import { normalizeHomepageEntityKey } from "@/lib/homepage-entity-channels";
 import type {
   IntelligenceSource,
@@ -103,10 +104,9 @@ function hasHomepagePersonSubjectEvidence(
   // useful for research recall but too permissive for a user-facing person
   // feed. Require the formal person to be visible in the title before a
   // generic "人物材料/人物资料" item is projected onto the homepage.
-  // Explicitly person-centric material types (interview, speech, dialogue,
-  // paper, book, shareholder letter, official material) keep their existing
-  // curated admission because the directory label itself carries subject
-  // semantics.
+  // Keep the existing admission of other material types. A label is not
+  // independent subject evidence: source-reviewed exceptions are applied
+  // separately when directory events enter the visible homepage feed.
   if (item.label !== "人物材料" && item.label !== "人物资料") return true;
   return personTitleReferencesProfile(item.title, profile);
 }
@@ -148,11 +148,12 @@ export function projectHomepagePersonDirectoryEvents(
     const publishedAt = item.sortAt.trim();
     if (!profile || !title || !href || !publishedAt) continue;
     if (!hasHomepagePersonSubjectEvidence(item, profile)) continue;
+    const review = findHomepagePersonMaterialReview(profile.slug, href, title);
 
     events.push({
       id: `person-directory:${item.eventClusterId || item.id}`,
       title,
-      summary: item.summary.trim() || `${profile.name} · 人物材料`,
+      summary: review?.summary ?? (item.summary.trim() || `${profile.name} · 人物材料`),
       type: personMaterialEventType(item.label),
       region: normalizedRegion(item.region),
       sector: profile.sectors?.[0]?.trim() || "人物",
@@ -164,12 +165,14 @@ export function projectHomepagePersonDirectoryEvents(
       source: {
         name: item.source || "人物资料",
         url: href,
-        level: personMaterialSourceLevel(item),
+        level: item.sourceGrade === "D"
+          ? "待交叉验证"
+          : review?.sourceLevel ?? personMaterialSourceLevel(item),
         platform: item.source || undefined,
       },
       curated: true,
       qualityStatus: "可用",
-      qualitySignals: ["人物库正式实体", "人物材料目录"],
+      qualitySignals: ["人物库正式实体", "人物材料目录", ...(review ? [review.signal] : [])],
       relatedSources: relatedPersonMaterialSources(item),
       duplicateCount: Math.max(1, item.sourceCount ?? 1),
       eventClusterId: item.eventClusterId,
@@ -219,6 +222,13 @@ export function mergeHomepagePersonChannelEvents(
   );
 
   for (const event of directoryEvents) {
+    // Keep the record resolvable by historical deep-research links, with the
+    // reviewed summary above, but do not present a background mention as that
+    // person's news. Only source-reviewed directory records are affected.
+    const review = event.sourceId === "person-update-directory"
+      ? findHomepagePersonMaterialReview(event.personSlug, event.source.url, event.title)
+      : undefined;
+    if (review?.relation === "context-only") continue;
     const urlKey = normalizedEventUrl(event.source.url);
     const titleKey = normalizedEventTitle(event.title);
     if ((urlKey && seenUrls.has(urlKey)) || (titleKey && seenTitles.has(titleKey))) continue;
