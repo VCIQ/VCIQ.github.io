@@ -35,17 +35,26 @@ class ArticleMetadataReviewTests(unittest.TestCase):
     def test_exact_record_boundary(self):
         for review in metadata_reviews():
             original = self.article(review)
-            for field, value in (("title", "different event"), ("sourceId", "different source")):
+            for field, value in (
+                ("id", "different-article-id"),
+                ("title", "different event"),
+                ("sourceId", "different source"),
+            ):
                 changed = {**original, field: value}
                 self.assertIs(apply_article_metadata_review(changed), changed)
-            for url in (review["sourceUrl"] + "?article=other", "javascript:alert(1)", "not-a-url", review["sourceUrl"].replace("https://", "https://u:p@")):
+            for url in (
+                review["sourceUrl"] + "?article=other",
+                "javascript:alert(1)",
+                "not-a-url",
+                review["sourceUrl"].replace("https://", "https://u:p@"),
+            ):
                 changed = {**original, "source": {**original["source"], "url": url}}
                 self.assertIs(apply_article_metadata_review(changed), changed)
 
     def test_tracking_suffix_does_not_change_material_identity(self):
         for review in metadata_reviews():
             original = self.article(review)
-            original["source"]["url"] += "?utm_source=test#top"
+            original["source"]["url"] += "?utm_source=test&fbclid=tracking#top"
             corrected = apply_article_metadata_review(original)
             for key, change in review["fields"].items():
                 self.assertEqual(corrected[key], change["to"])
