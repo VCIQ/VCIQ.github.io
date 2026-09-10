@@ -35,6 +35,7 @@ function event(overrides: Partial<LiveIntelligenceEvent> = {}): LiveIntelligence
 
 test("bounded article reviews correct only the five reviewed metadata fields", () => {
   const cases: Array<{
+    articleId: string;
     sourceId: string;
     url: string;
     title: string;
@@ -42,6 +43,7 @@ test("bounded article reviews correct only the five reviewed metadata fields", (
     expected: Partial<LiveIntelligenceEvent> & { trackSlugs?: string[] };
   }> = [
     {
+      articleId: "professional-media-computerworld-f1366913d70c811b",
       sourceId: "professional-media-computerworld",
       url: "https://www.computerworld.com/article/4220493/anthropic-maps-three-ai-futures-for-2030-the-most-extreme-could-upend-the-economy.html",
       title: "Anthropic maps three AI futures for 2030; the most extreme could upend the economy",
@@ -49,6 +51,7 @@ test("bounded article reviews correct only the five reviewed metadata fields", (
       expected: { sector: "AI / AGI", trackSlugs: ["other", "ai"] },
     },
     {
+      articleId: "professional-media-tom-s-hardware-f0484c85e0f50275",
       sourceId: "professional-media-tom-s-hardware",
       url: "https://www.tomshardware.com/tech-industry/artificial-intelligence/openai-says-its-next-generation-processors-could-be-made-at-samsung-double-sourcing-with-tsmc-hints-at-massive-volume-requirements",
       title: "OpenAI says its next-generation processors could be made at Samsung — double-sourcing with TSMC hints at massive volume requirements",
@@ -56,6 +59,7 @@ test("bounded article reviews correct only the five reviewed metadata fields", (
       expected: { sector: "半导体", trackSlugs: ["other", "semiconductor"] },
     },
     {
+      articleId: "x-openai-129bdd50d2dc5f99",
       sourceId: "x-openai",
       url: "https://x.com/OpenAI/status/2097741659509584091",
       title: "OpenAI：Paul Christiano, founder of the Alignment Research Center, is joining the OpenAI Foundation Board and its Safety and Security Committee, which provide",
@@ -63,6 +67,7 @@ test("bounded article reviews correct only the five reviewed metadata fields", (
       expected: { type: "公司动态" },
     },
     {
+      articleId: "official-form-energy-7f5377b6174512b9",
       sourceId: "official-form-energy",
       url: "https://formenergy.com/form-energy-launches-technician-hiring-sprint-in-weirton-wv",
       title: "Form Energy Launches Technician Hiring Sprint In Weirton, WV",
@@ -70,6 +75,7 @@ test("bounded article reviews correct only the five reviewed metadata fields", (
       expected: { type: "公司动态" },
     },
     {
+      articleId: "official-user-东方财富-半导体信源-d29f97496d3075ea",
       sourceId: "official-user-东方财富",
       url: "https://finance.eastmoney.com/a/202609073866203674.html",
       title: "华为更新韬定律论文 最新机构解读来了 后道测试设备环节直接受益？",
@@ -78,10 +84,10 @@ test("bounded article reviews correct only the five reviewed metadata fields", (
     },
   ];
 
-  for (const [index, current] of cases.entries()) {
+  for (const current of cases) {
     const original = {
       ...event({
-        id: `reviewed-${index}`,
+        id: current.articleId,
         title: current.title,
         sourceId: current.sourceId,
         source: { name: "source", url: current.url, level: "媒体报道" },
@@ -95,6 +101,9 @@ test("bounded article reviews correct only the five reviewed metadata fields", (
     if (current.expected.sector) assert.equal(corrected.sector, current.expected.sector);
     if (current.expected.type) assert.equal(corrected.type, current.expected.type);
     if (current.expected.trackSlugs) assert.deepEqual(corrected.trackSlugs, current.expected.trackSlugs);
+
+    const wrongId = { ...original, id: `${original.id}-different` };
+    assert.strictEqual(applyArticleMetadataReview(wrongId), wrongId);
   }
 });
 
@@ -203,10 +212,15 @@ test("right-rail identity filtering removes visible material and internal duplic
 test("profile placeholders are not rendered or propagated as event summaries", () => {
   const item = event({
     summary: "杨红新 · 人物档案待补充",
+    sourceId: "person-update-directory",
     mentionedPeople: ["杨红新"],
   });
   assert.equal(homepageEventSummary(item), "暂无可用的事件摘要，请查看来源。");
   assert.equal(homepageEventSummary(event({ summary: "杨红新介绍了新的电池量产计划。" })), "杨红新介绍了新的电池量产计划。");
+  assert.equal(
+    homepageEventSummary(event({ summary: "杨红新 · 新电池量产计划正式启动", mentionedPeople: ["杨红新"] })),
+    "杨红新 · 新电池量产计划正式启动",
+  );
 });
 
 test("source evidence counts distinct links instead of archive duplicateCount", () => {
