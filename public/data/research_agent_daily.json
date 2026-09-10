@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-10T06:07:29+00:00",
+  "generatedAt": "2026-09-10T10:33:12+00:00",
   "asOfDate": "2026-09-10",
-  "runStatus": "no-material-change",
+  "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
   "baselineSource": "snapshot",
   "model": {
@@ -10,27 +10,41 @@
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": false,
-    "usage": {}
+    "used": true,
+    "usage": {
+      "prompt_tokens": 6398,
+      "completion_tokens": 4957,
+      "total_tokens": 11355,
+      "completion_tokens_details": {
+        "reasoning_tokens": 2479
+      },
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 6398
+    }
   },
   "changeSummary": {
-    "totalDetected": 3,
-    "total": 0,
-    "byDataset": {},
-    "byChangeType": {
-      "external_event": 2,
-      "source_refresh": 1
+    "totalDetected": 13,
+    "total": 7,
+    "byDataset": {
+      "intelligenceEvent": 7
     },
-    "externalCandidates": 2,
-    "qualityRejected": 2,
+    "byChangeType": {
+      "external_event": 12,
+      "data_maintenance": 1
+    },
+    "externalCandidates": 12,
+    "qualityRejected": 5,
     "maintenanceExcluded": 1,
     "aggregatedEvents": 0,
-    "highestImportance": 0,
+    "highestImportance": 91,
     "verifiedChangeTotal": 0,
     "candidateTotal": 0,
-    "auxiliaryLeadTotal": 0,
-    "rejectedTotal": 2,
-    "newEvents": 0,
+    "auxiliaryLeadTotal": 7,
+    "rejectedTotal": 5,
+    "newEvents": 7,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
@@ -38,22 +52,1362 @@
     "duplicatesSuppressed": 0
   },
   "analysis": {
-    "mode": "structured-change-only",
-    "isResearchJudgment": false,
-    "executiveSummary": "本轮检测到 2 个外部事实候选，但全部未通过证据质量门。 质量门诊断：缺少发布时间 6、证据合格但未绑定变化字段 2。",
-    "keyDevelopments": [],
-    "thesisUpdates": [],
-    "watchlist": [],
-    "risks": [],
-    "methodologyNote": "结构化变化检查；本期无材料变化。未执行生成式研判。 数据管线提示：追踪实体与公开信源发现=stale、科创板招股书投资者证据刷新=stale。"
+    "mode": "model-analysis",
+    "isResearchJudgment": true,
+    "executiveSummary": "2026-09-10证据包新增8条高价值情报，均为C级外部媒体线索且未经人工复核。主要覆盖四条主线：一是Google宣布在芬兰投入130亿欧元扩建数据中心与能源基础设施（E001）；二是支付宝设立每年1000万“智能体涌现奖”以激励生活场景智能体开发者（E003）；三是新石器无人车首次进入韩国济州岛度假场景运营（E005）；四是中国资本市场政策与AI办公生态竞争（E006、E007、E008）。另有关于AI风险观点的公众人物回应（E004）。由于多为单源、C级证据，结论以方向性观察为主，需后续交叉验证。 质量门诊断：仅为发现线索，不能支持正式主张 5。",
+    "keyDevelopments": [
+      {
+        "title": "Google宣布在芬兰投资130亿欧元扩建数据中心与能源基础设施",
+        "assessment": "该投资将扩展Google在芬兰Hamina、Kajaani等四个地点的数据中心及能源基础设施布局，属于超大规模云与AI基础设施投入的一部分。当前为单源C级证据，投资规模大但未说明时间跨度、资金来源与能源配套细节，需持续跟进。",
+        "importance": 5,
+        "confidence": "medium",
+        "entities": [
+          "Google",
+          "芬兰"
+        ],
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "title": "支付宝设立“智能体涌现奖”，每年投入1000万元激励生活场景智能体开发者",
+        "assessment": "蚂蚁集团CEO韩歆毅称8小时之外的智能体爆发是必然趋势；开发者可用自然语言无代码搭建，获奖作品可接入阿宝服务10亿用户。该举措反映中国互联网大厂正通过奖金与流量生态争夺智能体供给生态。证据为单源C级，具体评审机制与奖金结构待验证。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "支付宝",
+          "蚂蚁集团",
+          "阿宝"
+        ],
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "title": "新石器无人车首次进入韩国济州岛度假场景运营",
+        "assessment": "新石器与韩国本地伙伴NT1合作，在济州岛香樟树酒店度假村为客人提供行李及日用品无人配送；度假村占地约12万平方米、137栋独立客房。报道称这是从试点迈向规模化商业落地的新阶段，但单源C级，未披露部署规模与商业化条件。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "新石器",
+          "NT1",
+          "济州岛香樟树酒店度假村"
+        ],
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "title": "证监会副主席李超谈及上市、稳市与投资者保护政策重点",
+        "assessment": "发言引述“十五五”规划纲要，强调健全投融资协调的资本市场功能，优化发行上市、信息披露、并购重组、退市等基础制度，建立增强内在稳定性长效机制。属政策方向性表述，单源C级，具体执行细则待后续文件验证。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "证监会",
+          "李超"
+        ],
+        "evidenceIds": [
+          "E007"
+        ]
+      },
+      {
+        "title": "AI办公生态竞争成为大厂新战场：腾讯、阿里、字节各有侧重",
+        "assessment": "报道称腾讯以WorkBuddy主攻C端并向企业渗透，阿里以千问办公切入B端，字节以豆包工作依托C端用户。过去两个月主线为内部整合，现在转向外部生态合作。单源C级行业分析，反映竞争格局判断，但非官方披露。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "腾讯",
+          "阿里",
+          "字节跳动",
+          "WorkBuddy",
+          "千问办公",
+          "豆包工作"
+        ],
+        "evidenceIds": [
+          "E008"
+        ]
+      },
+      {
+        "title": "Anthropic研究员“AI十年内可能杀死所有人”言论引发公众讨论",
+        "assessment": "Jimmy Kimmel对Anthropic研究员的AI生存风险言论作出回应。事件本身属于公众舆论反应，C级单源，不构成对AI风险概率的实质性验证。",
+        "importance": 2,
+        "confidence": "low",
+        "entities": [
+          "Anthropic",
+          "Jimmy Kimmel"
+        ],
+        "evidenceIds": [
+          "E004"
+        ]
+      },
+      {
+        "title": "A股板块轮动快，农业、化肥、有色铜、传媒、油气、CRO领涨",
+        "assessment": "9月8日盘面指数温和分化，题材切换较快，未现系统性极端波动。单源C级市场观察，仅描述当日板块表现，不构成投资建议。",
+        "importance": 2,
+        "confidence": "medium",
+        "entities": [
+          "A股"
+        ],
+        "evidenceIds": [
+          "E006"
+        ]
+      }
+    ],
+    "thesisUpdates": [
+      {
+        "entity": "Google云与AI基础设施",
+        "direction": "positive",
+        "statement": "Google在欧洲数据中心枢纽芬兰追加130亿欧元级投入，强化其AI与云基础设施的全球扩张叙事；但C级单源证据尚不足以确认对收入或市场份额的直接影响。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "entity": "蚂蚁集团/支付宝智能体生态",
+        "direction": "positive",
+        "statement": "支付宝以年度1000万奖金池和10亿用户入口激励生活智能体，可能加速其“AI+生活服务”生态供给；但开发者生态的实际活跃度与作品质量仍需观察。",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "entity": "中国自动驾驶无人配送出海",
+        "direction": "positive",
+        "statement": "新石器无人车进入韩国济州岛度假酒店场景，显示中国自动驾驶配送方案在海外旅游细分场景的落地能力增强；但单源报道口径下“规模化商业化”仍需更多订单证据。",
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "entity": "中国资本市场制度建设",
+        "direction": "mixed",
+        "statement": "证监会表态延续“十五五”规划对投融资协调、提高上市公司质量和内在稳定性长效机制的政策方向，属于中性偏正面的政策信号；实际影响取决于细则落地。",
+        "evidenceIds": [
+          "E007"
+        ]
+      },
+      {
+        "entity": "大厂AI办公",
+        "direction": "mixed",
+        "statement": "腾讯、阿里、字节在AI办公上从内部整合转向外部生态合作，竞争维度升级，但生态合作能否形成双赢仍是行业疑问。",
+        "evidenceIds": [
+          "E008"
+        ]
+      },
+      {
+        "entity": "AI生存风险舆论",
+        "direction": "neutral",
+        "statement": "Anthropic研究员的极端风险言论引发媒体与公众人物回应，属舆论事件；未改变AI技术发展的实质性基本面判断。",
+        "evidenceIds": [
+          "E004"
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "item": "Google芬兰数据中心项目细节",
+        "reason": "130亿欧元投资的执行时间表、能源供应安排和对欧洲云服务供给的具体影响尚未披露。",
+        "nextEvidence": "Google官方公告或芬兰政府项目审批、开工信息",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "item": "支付宝智能体涌现奖的参赛与接入数据",
+        "reason": "该奖项是蚂蚁构建生活智能体生态的抓手，需观察开发者报名量、优质作品数量及接入阿宝后的用户使用数据。",
+        "nextEvidence": "支付宝官方赛事页面、获奖名单或蚂蚁集团后续披露",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "item": "新石器韩国业务订单与运营规模",
+        "reason": "济州岛案例被描述为从试点到规模化商业落地的标志，但单次度假村部署不足以验证规模化。",
+        "nextEvidence": "新石器或NT1发布的后续部署数量、合作客户数量",
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "item": "腾讯、阿里、字节AI办公生态合作案例",
+        "reason": "三家大厂从内部整合转向外部生态，合作模式与分成机制将决定AI办公生态竞争格局。",
+        "nextEvidence": "生态伙伴名单、联合产品发布或商业化案例",
+        "evidenceIds": [
+          "E008"
+        ]
+      },
+      {
+        "item": "证监会稳市与投资者保护细则",
+        "reason": "李超所述政策方向需要具体制度文件落地，才能判断对市场流动性和上市公司质量的实际影响。",
+        "nextEvidence": "证监会正式规则、征求意见稿或新闻发布会实录",
+        "evidenceIds": [
+          "E007"
+        ]
+      },
+      {
+        "item": "A股当日涨停板行情的连续性与监管风险",
+        "reason": "板块轮动快，农业、传媒等题材连板股可能存在情绪退潮与监管关注风险。",
+        "nextEvidence": "后续交易日盘面数据、交易所问询或停牌核查公告",
+        "evidenceIds": [
+          "E006"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "证据质量与复核风险",
+        "reason": "全部8条证据均为C级外部媒体线索且automated_unreviewed，无官方公告或二次信源交叉验证，相关事实可能被夸大或存在细节偏差。",
+        "evidenceIds": [
+          "E001",
+          "E003",
+          "E004",
+          "E005",
+          "E006",
+          "E007",
+          "E008"
+        ]
+      },
+      {
+        "risk": "基础设施投资执行不确定性",
+        "reason": "Google的130亿欧元投资可能受芬兰能源供给、环保审批和AI需求节奏影响，且未公布实施周期，存在延期或缩减可能。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "risk": "智能体激励计划的商业转化风险",
+        "reason": "支付宝奖金计划可能吸引大量低质作品，获奖作品接入阿宝后的留存、商业化效果以及开发者持续投入意愿均未验证。",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "risk": "海外无人配送运营的政策与规模风险",
+        "reason": "新石器在韩国济州岛的运营受当地自动驾驶法规、园区运营效率和游客接受度制约，单点案例不能外推为规模化营收。",
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "risk": "AI办公生态合作利益分配风险",
+        "reason": "大厂与生态伙伴的“双赢”可能因数据归属、分成机制、客户资源控制权等问题受阻，生态合作未必能持续深化。",
+        "evidenceIds": [
+          "E008"
+        ]
+      },
+      {
+        "risk": "市场情绪与题材炒作回撤风险",
+        "reason": "A股板块轮动快、连板股集中，若市场情绪逆转或监管收紧，短期涨幅较大的题材股可能剧烈波动。",
+        "evidenceIds": [
+          "E006"
+        ]
+      }
+    ],
+    "methodologyNote": "本分析仅基于2026-09-10证据包中的8条新增高价值情报事件，所有事实、推断与待验证事项均以证据编号标注。证据全部为C级外部媒体线索，且均为automated_unreviewed，因此在重要性判断上保持方向性观察，不构成确定性重大事实；推断部分基于常识性分析，不提供任何买入、卖出、目标价或收益承诺。 数据管线提示：追踪实体与公开信源发现=stale、科创板招股书投资者证据刷新=stale。"
   },
-  "changes": [],
-  "evidence": [],
+  "changes": [
+    {
+      "id": "chg-120ec7ec241f408d7040",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-1db39b101a70a39ad4",
+      "entityName": "Google announces €13 billion infrastructure build-out in burgeoning European data center hub",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Google announces €13 billion infrastructure build-out in burgeoning European data center hub。",
+      "importance": 91,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-10",
+        "summary": "Google is set to expand its footprint in Finland as part of a €13 billion investment in data centers and energy infrastructure. The move will see the tech giant ramp up data center infrastructure investment in four locations across the country: Hamina, Kajaan…",
+        "title": "Google announces €13 billion infrastructure build-out in burgeoning European data center hub"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-10",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Google is set to expand its footprint in Finland as part of a €13 billion investment in data centers and energy infrastructure. The move will see the tech giant ramp up data center infrastructure investment in four locations across the country: Hamina, Kajaan…",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Google announces €13 billion infrastructure build-out in burgeoning European data center hub",
+          "evidenceIds": [
+            "E001"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E001"
+      ],
+      "supportingEvidenceIds": [
+        "E001"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-7107b46435c1210d9ebe"
+      ],
+      "eventLifecycles": {
+        "evt-7107b46435c1210d9ebe": "first_seen"
+      },
+      "eventId": "evt-7107b46435c1210d9ebe",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-10T10:33:12+00:00",
+      "lastSeenAt": "2026-09-10T10:33:12+00:00"
+    },
+    {
+      "id": "chg-2929679f8eb47368b493",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-6aa5523800e0a790c1",
+      "entityName": "首个生活场景智能体大奖：支付宝每年1000万激励开发者",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：首个生活场景智能体大奖：支付宝每年1000万激励开发者。",
+      "importance": 85,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-10",
+        "summary": "在2026 Inclusion外滩大会上，为加快智能服务生态发展，支付宝宣布设立“智能体涌现奖”，每年投入1000万，寻找有用、有趣的生活智能服务，年度大奖奖金100万元。9月10日起，在支付宝内右滑对阿宝说“智能体涌现奖”，即可了解赛事、报名参赛。 开发者无须编写代码，通过自然语言即可搭建，入围或获奖后，除获得现金奖励，适合面向市场的成熟作品还可接入阿宝，为10亿用户提供服务，开展持续经营。 蚂蚁集团CEO韩歆毅认为，8小时之外的智能体爆发是必然趋势。 支付宝表示希望通过智能体涌现奖，促成以“智能服务供给”满足…",
+        "title": "首个生活场景智能体大奖：支付宝每年1000万激励开发者"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-10",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "在2026 Inclusion外滩大会上，为加快智能服务生态发展，支付宝宣布设立“智能体涌现奖”，每年投入1000万，寻找有用、有趣的生活智能服务，年度大奖奖金100万元。9月10日起，在支付宝内右滑对阿宝说“智能体涌现奖”，即可了解赛事、报名参赛。 开发者无须编写代码，通过自然语言即可搭建，入围或获奖后，除获得现金奖励，适合面向市场的成熟作品还可接入阿宝，为10亿用户提供服务，开展持续经营。 蚂蚁集团CEO韩歆毅认为，8小时之外的智能体爆发是必然趋势。 支付宝表示希望通过智能体涌现奖，促成以“智能服务供给”满足…",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "首个生活场景智能体大奖：支付宝每年1000万激励开发者",
+          "evidenceIds": [
+            "E003"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E003"
+      ],
+      "supportingEvidenceIds": [
+        "E003"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-5cff9bfb280c385fce87"
+      ],
+      "eventLifecycles": {
+        "evt-5cff9bfb280c385fce87": "first_seen"
+      },
+      "eventId": "evt-5cff9bfb280c385fce87",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-10T10:33:12+00:00",
+      "lastSeenAt": "2026-09-10T10:33:12+00:00"
+    },
+    {
+      "id": "chg-b65131c30523a438f830",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-30418596225ee9d6da",
+      "entityName": "Jimmy Kimmel responds to Anthropic researcher saying AI could kill us all by the end of the decade",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Jimmy Kimmel responds to Anthropic researcher saying AI could kill us all by the end of the decade。",
+      "importance": 85,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-10",
+        "summary": "Jimmy Kimmel has responded to an Anthropic researcher saying that AI \"could kill us all by the end of the decade.\"",
+        "title": "Jimmy Kimmel responds to Anthropic researcher saying AI could kill us all by the end of the decade"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-10",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Jimmy Kimmel has responded to an Anthropic researcher saying that AI \"could kill us all by the end of the decade.\"",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Jimmy Kimmel responds to Anthropic researcher saying AI could kill us all by the end of the decade",
+          "evidenceIds": [
+            "E004"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E004"
+      ],
+      "supportingEvidenceIds": [
+        "E004"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-2ce4a321e3fb75acc0ea"
+      ],
+      "eventLifecycles": {
+        "evt-2ce4a321e3fb75acc0ea": "first_seen"
+      },
+      "eventId": "evt-2ce4a321e3fb75acc0ea",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-10T10:33:12+00:00",
+      "lastSeenAt": "2026-09-10T10:33:12+00:00"
+    },
+    {
+      "id": "chg-4f0864be65ebd165f85f",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-c9b2198789a20bb773",
+      "entityName": "新石器无人车落地韩国济州岛，在旅游业率先投入运营",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：新石器无人车落地韩国济州岛，在旅游业率先投入运营。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-10",
+        "summary": "近日，韩国济州岛Campertree（香樟树）酒店度假村携手自动驾驶企业NT1，在户外园区启用新石器自动驾驶无人配送车，为宾客运送行李与日常用品。据悉，NT1为新石器在韩国的本地合作伙伴，此次部署也是新石器无人车首次进入济州户外度假场景运营，标志着其在韩国从试点示范迈向规模化商业落地的全新阶段。 济州岛香樟树酒店度假村占地约12万平方米，拥有137栋独立式客房。总经理朴雪姬表示，考虑到场地广阔、客房分散的特点，为消解客人在前台与客房之间搬运物品的不便，度假村引入了自动驾驶无人配送系统，期望同步提升住客体验与园区运…",
+        "title": "新石器无人车落地韩国济州岛，在旅游业率先投入运营"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-10",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "近日，韩国济州岛Campertree（香樟树）酒店度假村携手自动驾驶企业NT1，在户外园区启用新石器自动驾驶无人配送车，为宾客运送行李与日常用品。据悉，NT1为新石器在韩国的本地合作伙伴，此次部署也是新石器无人车首次进入济州户外度假场景运营，标志着其在韩国从试点示范迈向规模化商业落地的全新阶段。 济州岛香樟树酒店度假村占地约12万平方米，拥有137栋独立式客房。总经理朴雪姬表示，考虑到场地广阔、客房分散的特点，为消解客人在前台与客房之间搬运物品的不便，度假村引入了自动驾驶无人配送系统，期望同步提升住客体验与园区运…",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "新石器无人车落地韩国济州岛，在旅游业率先投入运营",
+          "evidenceIds": [
+            "E005"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E005"
+      ],
+      "supportingEvidenceIds": [
+        "E005"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-dd2f953a9c55d6f15b15"
+      ],
+      "eventLifecycles": {
+        "evt-dd2f953a9c55d6f15b15": "first_seen"
+      },
+      "eventId": "evt-dd2f953a9c55d6f15b15",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-10T10:33:12+00:00",
+      "lastSeenAt": "2026-09-10T10:33:12+00:00"
+    },
+    {
+      "id": "chg-4211cfbb6bb1d2a1db51",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-908188b78eab28f68f",
+      "entityName": "价值判断：涨停板的投资机会和风险提示（9月8日）｜上市公司观察",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：价值判断：涨停板的投资机会和风险提示（9月8日）｜上市公司观察。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-10",
+        "summary": "盘面上，农业（农产品加工、种植业、氮肥）、化肥、有色铜、传媒（中国出版3连板、读者传媒2连板）、油气、CRO 等板块领涨，液冷服务器、同花顺果指数、模拟芯片设计、集成电路制造 等板块跌幅居前，指数温和分化、题材结构切换较快，未现系统性极端波动。",
+        "title": "价值判断：涨停板的投资机会和风险提示（9月8日）｜上市公司观察"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-10",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "盘面上，农业（农产品加工、种植业、氮肥）、化肥、有色铜、传媒（中国出版3连板、读者传媒2连板）、油气、CRO 等板块领涨，液冷服务器、同花顺果指数、模拟芯片设计、集成电路制造 等板块跌幅居前，指数温和分化、题材结构切换较快，未现系统性极端波动。",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "价值判断：涨停板的投资机会和风险提示（9月8日）｜上市公司观察",
+          "evidenceIds": [
+            "E006"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E006"
+      ],
+      "supportingEvidenceIds": [
+        "E006"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-c368416282879d18e731"
+      ],
+      "eventLifecycles": {
+        "evt-c368416282879d18e731": "first_seen"
+      },
+      "eventId": "evt-c368416282879d18e731",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-10T10:33:12+00:00",
+      "lastSeenAt": "2026-09-10T10:33:12+00:00"
+    },
+    {
+      "id": "chg-ff6cfb7531ab9c922c6b",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-72cd477658e5d7f351",
+      "entityName": "上市、稳市、投资者保护，证监会副主席李超说了这些重点",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：上市、稳市、投资者保护，证监会副主席李超说了这些重点。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-10",
+        "summary": "“十五五”规划《纲要》提出，健全投资和融资相协调的资本市场功能，优化发行上市、信息披露、并购重组、退市等基础制度，提高上市公司质量，建立增强内在稳定性长效机制。",
+        "title": "上市、稳市、投资者保护，证监会副主席李超说了这些重点"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-10",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "“十五五”规划《纲要》提出，健全投资和融资相协调的资本市场功能，优化发行上市、信息披露、并购重组、退市等基础制度，提高上市公司质量，建立增强内在稳定性长效机制。",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "上市、稳市、投资者保护，证监会副主席李超说了这些重点",
+          "evidenceIds": [
+            "E007"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E007"
+      ],
+      "supportingEvidenceIds": [
+        "E007"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-a3f8c972eea737329f44"
+      ],
+      "eventLifecycles": {
+        "evt-a3f8c972eea737329f44": "first_seen"
+      },
+      "eventId": "evt-a3f8c972eea737329f44",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-10T10:33:12+00:00",
+      "lastSeenAt": "2026-09-10T10:33:12+00:00"
+    },
+    {
+      "id": "chg-2d0e01fd03c9fff88cbd",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-fd08902dd90bc006d1",
+      "entityName": "AI办公生态合作，离真正的「双赢」还有多远？",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：AI办公生态合作，离真正的「双赢」还有多远？。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-10",
+        "summary": "AI办公大战硝烟再起：大厂不仅亲自下场，还跟生态伙伴联起手。 此前雷峰网在《 大厂AI To B大战，这回战场为什么是办公？ 》一文中曾提到，各家手里的牌不同，打法也各有侧重： 腾讯C端基因重，做大WorkBuddy个人用户规模的同时，也在向企业端渗透；阿里手握大批企业客户，千问办公从B端直接切入；字节则把拥有庞大C端用户基数的豆包作为核心抓手，推出豆包工作。 过去两个月，内部整合是三家大厂AI办公大战的主线；如今，战线收拢、押注一个核心办公产品之后，如何调动外部生态形成合力，成为新的主攻方向。 在C端已积累明显…",
+        "title": "AI办公生态合作，离真正的「双赢」还有多远？"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-10",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "AI办公大战硝烟再起：大厂不仅亲自下场，还跟生态伙伴联起手。 此前雷峰网在《 大厂AI To B大战，这回战场为什么是办公？ 》一文中曾提到，各家手里的牌不同，打法也各有侧重： 腾讯C端基因重，做大WorkBuddy个人用户规模的同时，也在向企业端渗透；阿里手握大批企业客户，千问办公从B端直接切入；字节则把拥有庞大C端用户基数的豆包作为核心抓手，推出豆包工作。 过去两个月，内部整合是三家大厂AI办公大战的主线；如今，战线收拢、押注一个核心办公产品之后，如何调动外部生态形成合力，成为新的主攻方向。 在C端已积累明显…",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "AI办公生态合作，离真正的「双赢」还有多远？",
+          "evidenceIds": [
+            "E008"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E008"
+      ],
+      "supportingEvidenceIds": [
+        "E008"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-56a52fdcba1ec6e4a3ad"
+      ],
+      "eventLifecycles": {
+        "evt-56a52fdcba1ec6e4a3ad": "first_seen"
+      },
+      "eventId": "evt-56a52fdcba1ec6e4a3ad",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-10T10:33:12+00:00",
+      "lastSeenAt": "2026-09-10T10:33:12+00:00"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E001",
+      "changeId": "chg-120ec7ec241f408d7040",
+      "entityName": "Google announces €13 billion infrastructure build-out in burgeoning European data center hub",
+      "claim": "新增高价值情报事件记录：Google announces €13 billion infrastructure build-out in burgeoning European data center hub。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "ITPro",
+      "title": "Google announces €13 billion infrastructure build-out in burgeoning European data center hub",
+      "url": "https://www.itpro.com/infrastructure/data-centres/google-announces-eur13-billion-infrastructure-build-out-in-burgeoning-european-data-center-hub",
+      "publishedAt": "2026-09-10",
+      "evidenceGrade": "C",
+      "platformName": "ITPro",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E003",
+      "changeId": "chg-2929679f8eb47368b493",
+      "entityName": "首个生活场景智能体大奖：支付宝每年1000万激励开发者",
+      "claim": "新增高价值情报事件记录：首个生活场景智能体大奖：支付宝每年1000万激励开发者。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "雷峰网",
+      "title": "首个生活场景智能体大奖：支付宝每年1000万激励开发者",
+      "url": "https://www.leiphone.com/category/industrynews/osi55rJJYCUZuY7h.html",
+      "publishedAt": "2026-09-10",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E004",
+      "changeId": "chg-b65131c30523a438f830",
+      "entityName": "Jimmy Kimmel responds to Anthropic researcher saying AI could kill us all by the end of the decade",
+      "claim": "新增高价值情报事件记录：Jimmy Kimmel responds to Anthropic researcher saying AI could kill us all by the end of the decade。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Mashable",
+      "title": "Jimmy Kimmel responds to Anthropic researcher saying AI could kill us all by the end of the decade",
+      "url": "https://mashable.com/entertainment/jimmy-kimmel-anthropic-ai-threat",
+      "publishedAt": "2026-09-10",
+      "evidenceGrade": "C",
+      "platformName": "Mashable",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E005",
+      "changeId": "chg-4f0864be65ebd165f85f",
+      "entityName": "新石器无人车落地韩国济州岛，在旅游业率先投入运营",
+      "claim": "新增高价值情报事件记录：新石器无人车落地韩国济州岛，在旅游业率先投入运营。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "雷峰网",
+      "title": "新石器无人车落地韩国济州岛，在旅游业率先投入运营",
+      "url": "https://www.leiphone.com/category/industrynews/ZeqG40AkPzDYdNWb.html",
+      "publishedAt": "2026-09-10",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E006",
+      "changeId": "chg-4211cfbb6bb1d2a1db51",
+      "entityName": "价值判断：涨停板的投资机会和风险提示（9月8日）｜上市公司观察",
+      "claim": "新增高价值情报事件记录：价值判断：涨停板的投资机会和风险提示（9月8日）｜上市公司观察。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "钛媒体",
+      "title": "价值判断：涨停板的投资机会和风险提示（9月8日）｜上市公司观察",
+      "url": "https://www.tmtpost.com/8135303.html",
+      "publishedAt": "2026-09-10",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E007",
+      "changeId": "chg-ff6cfb7531ab9c922c6b",
+      "entityName": "上市、稳市、投资者保护，证监会副主席李超说了这些重点",
+      "claim": "新增高价值情报事件记录：上市、稳市、投资者保护，证监会副主席李超说了这些重点。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "上市、稳市、投资者保护，证监会副主席李超说了这些重点",
+      "url": "https://finance.sina.com.cn/jjxw/2026-09-10/doc-iniritau7663502.shtml",
+      "publishedAt": "2026-09-10",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E008",
+      "changeId": "chg-2d0e01fd03c9fff88cbd",
+      "entityName": "AI办公生态合作，离真正的「双赢」还有多远？",
+      "claim": "新增高价值情报事件记录：AI办公生态合作，离真正的「双赢」还有多远？。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "雷峰网",
+      "title": "AI办公生态合作，离真正的「双赢」还有多远？",
+      "url": "https://www.leiphone.com/category/industrynews/8fZVRNXEBS8yb6r1.html",
+      "publishedAt": "2026-09-10",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    }
+  ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-10T06:07:29+00:00",
+    "generatedAt": "2026-09-10T10:33:12+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-dd2f953a9c55d6f15b15": {
+        "eventId": "evt-dd2f953a9c55d6f15b15",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-c9b2198789a20bb773",
+        "entityName": "新石器无人车落地韩国济州岛，在旅游业率先投入运营",
+        "title": "新石器无人车落地韩国济州岛，在旅游业率先投入运营",
+        "titleAliases": [
+          "新石器无人车落地韩国济州岛在旅游业率先投入运营"
+        ],
+        "publishedDate": "2026-09-10",
+        "publishedDates": [
+          "2026-09-10"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-26a13999199a5e89a080",
+          "record-6040bd887980b2841cdc",
+          "src-dbd634198af063a6c239"
+        ],
+        "evidenceFingerprints": [
+          "26a13999199a5e89a080"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "新石器无人车落地韩国济州岛，在旅游业率先投入运营",
+            "url": "https://www.leiphone.com/category/industrynews/ZeqG40AkPzDYdNWb.html",
+            "publishedAt": "2026-09-10",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "7e0ab38f96411fb947e1",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-10T10:33:12+00:00",
+        "lastSeenAt": "2026-09-10T10:33:12+00:00",
+        "lastPublishedAt": "2026-09-10T10:33:12+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-c368416282879d18e731": {
+        "eventId": "evt-c368416282879d18e731",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-908188b78eab28f68f",
+        "entityName": "价值判断：涨停板的投资机会和风险提示（9月8日）｜上市公司观察",
+        "title": "价值判断：涨停板的投资机会和风险提示（9月8日）｜上市公司观察",
+        "titleAliases": [
+          "价值判断涨停板的投资机会和风险提示9月8日"
+        ],
+        "publishedDate": "2026-09-10",
+        "publishedDates": [
+          "2026-09-10"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产业投资",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "8",
+          "9"
+        ],
+        "sourceAliases": [
+          "evd-ce5d535f410a9cb8b737",
+          "record-814773c35c0cd89e1f5f",
+          "src-ff2f8557f8d362372970"
+        ],
+        "evidenceFingerprints": [
+          "ce5d535f410a9cb8b737"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "钛媒体",
+            "title": "价值判断：涨停板的投资机会和风险提示（9月8日）｜上市公司观察",
+            "url": "https://www.tmtpost.com/8135303.html",
+            "publishedAt": "2026-09-10",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "e8efd32c73ab44b67918",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-10T10:33:12+00:00",
+        "lastSeenAt": "2026-09-10T10:33:12+00:00",
+        "lastPublishedAt": "2026-09-10T10:33:12+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-a3f8c972eea737329f44": {
+        "eventId": "evt-a3f8c972eea737329f44",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-72cd477658e5d7f351",
+        "entityName": "上市、稳市、投资者保护，证监会副主席李超说了这些重点",
+        "title": "上市、稳市、投资者保护，证监会副主席李超说了这些重点",
+        "titleAliases": [
+          "上市稳市投资者保护证监会副主席李超说了这些重点"
+        ],
+        "publishedDate": "2026-09-10",
+        "publishedDates": [
+          "2026-09-10"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产业投资",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-f030faf7fc49228ff516",
+          "record-61ce47fbb201a392a294",
+          "src-656bf7a7589fc6e41b5e"
+        ],
+        "evidenceFingerprints": [
+          "f030faf7fc49228ff516"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "上市、稳市、投资者保护，证监会副主席李超说了这些重点",
+            "url": "https://finance.sina.com.cn/jjxw/2026-09-10/doc-iniritau7663502.shtml",
+            "publishedAt": "2026-09-10",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "e3ee64e3f448109ceca2",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-10T10:33:12+00:00",
+        "lastSeenAt": "2026-09-10T10:33:12+00:00",
+        "lastPublishedAt": "2026-09-10T10:33:12+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-7107b46435c1210d9ebe": {
+        "eventId": "evt-7107b46435c1210d9ebe",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-1db39b101a70a39ad4",
+        "entityName": "Google announces €13 billion infrastructure build-out in burgeoning European data center hub",
+        "title": "Google announces €13 billion infrastructure build-out in burgeoning European data center hub",
+        "titleAliases": [
+          "googleannounces13billioninfrastructurebuildoutinburgeoningeuropeandatacenterhub"
+        ],
+        "publishedDate": "2026-09-10",
+        "publishedDates": [
+          "2026-09-10"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "13"
+        ],
+        "sourceAliases": [
+          "evd-586ec539e67f58ecd1f9",
+          "record-13eb077aca605ec2d09d",
+          "src-46a6700515f5e853946c"
+        ],
+        "evidenceFingerprints": [
+          "586ec539e67f58ecd1f9"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "ITPro",
+            "title": "Google announces €13 billion infrastructure build-out in burgeoning European data center hub",
+            "url": "https://www.itpro.com/infrastructure/data-centres/google-announces-eur13-billion-infrastructure-build-out-in-burgeoning-european-data-center-hub",
+            "publishedAt": "2026-09-10",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "5c24fb7b4498521f77d0",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-10T10:33:12+00:00",
+        "lastSeenAt": "2026-09-10T10:33:12+00:00",
+        "lastPublishedAt": "2026-09-10T10:33:12+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-5cff9bfb280c385fce87": {
+        "eventId": "evt-5cff9bfb280c385fce87",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-6aa5523800e0a790c1",
+        "entityName": "首个生活场景智能体大奖：支付宝每年1000万激励开发者",
+        "title": "首个生活场景智能体大奖：支付宝每年1000万激励开发者",
+        "titleAliases": [
+          "首个生活场景智能体大奖支付宝每年1000万激励开发者"
+        ],
+        "publishedDate": "2026-09-10",
+        "publishedDates": [
+          "2026-09-10"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "1000"
+        ],
+        "sourceAliases": [
+          "evd-2b9f98d73f0bc637bd32",
+          "record-2749b9d8c59746defea6",
+          "src-030891eb6b1cf0294a94"
+        ],
+        "evidenceFingerprints": [
+          "2b9f98d73f0bc637bd32"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "首个生活场景智能体大奖：支付宝每年1000万激励开发者",
+            "url": "https://www.leiphone.com/category/industrynews/osi55rJJYCUZuY7h.html",
+            "publishedAt": "2026-09-10",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "f8414fc8409f7fe1843d",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-10T10:33:12+00:00",
+        "lastSeenAt": "2026-09-10T10:33:12+00:00",
+        "lastPublishedAt": "2026-09-10T10:33:12+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-56a52fdcba1ec6e4a3ad": {
+        "eventId": "evt-56a52fdcba1ec6e4a3ad",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-fd08902dd90bc006d1",
+        "entityName": "AI办公生态合作，离真正的「双赢」还有多远？",
+        "title": "AI办公生态合作，离真正的「双赢」还有多远？",
+        "titleAliases": [
+          "ai办公生态合作离真正的双赢还有多远"
+        ],
+        "publishedDate": "2026-09-10",
+        "publishedDates": [
+          "2026-09-10"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-bbf5a5fa2f246618f21f",
+          "record-695c81f51dca45a44359",
+          "src-fc2d47d1bd028fe5adfb"
+        ],
+        "evidenceFingerprints": [
+          "bbf5a5fa2f246618f21f"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "AI办公生态合作，离真正的「双赢」还有多远？",
+            "url": "https://www.leiphone.com/category/industrynews/8fZVRNXEBS8yb6r1.html",
+            "publishedAt": "2026-09-10",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "da5975b5d7d415031cbb",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-10T10:33:12+00:00",
+        "lastSeenAt": "2026-09-10T10:33:12+00:00",
+        "lastPublishedAt": "2026-09-10T10:33:12+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-2ce4a321e3fb75acc0ea": {
+        "eventId": "evt-2ce4a321e3fb75acc0ea",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-30418596225ee9d6da",
+        "entityName": "Jimmy Kimmel responds to Anthropic researcher saying AI could kill us all by the end of the decade",
+        "title": "Jimmy Kimmel responds to Anthropic researcher saying AI could kill us all by the end of the decade",
+        "titleAliases": [
+          "jimmykimmelrespondstoanthropicresearchersayingaicouldkillusallbytheendofthedecade"
+        ],
+        "publishedDate": "2026-09-10",
+        "publishedDates": [
+          "2026-09-10"
+        ],
+        "entityKeys": [
+          "company:anthropic"
+        ],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-2e167cbd6898a25704d7",
+          "record-ad4e9fc29f8ea27f527e",
+          "src-d9b8f2013e195745be7c"
+        ],
+        "evidenceFingerprints": [
+          "2e167cbd6898a25704d7"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Mashable",
+            "title": "Jimmy Kimmel responds to Anthropic researcher saying AI could kill us all by the end of the decade",
+            "url": "https://mashable.com/entertainment/jimmy-kimmel-anthropic-ai-threat",
+            "publishedAt": "2026-09-10",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "6adf6dec42444bbf30f0",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-10T10:33:12+00:00",
+        "lastSeenAt": "2026-09-10T10:33:12+00:00",
+        "lastPublishedAt": "2026-09-10T10:33:12+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-f8ec9d8d9c6281037095": {
         "eventId": "evt-f8ec9d8d9c6281037095",
         "dataset": "intelligenceEvent",
@@ -32896,433 +34250,18 @@
         "conflictStatus": "none",
         "conflictReasons": [],
         "relatedEventIds": []
-      },
-      "evt-fd733c24fb061aa0a82b": {
-        "eventId": "evt-fd733c24fb061aa0a82b",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-59feec2f9a9df81170",
-        "entityName": "中熔电气：拟发行不超8亿元可转债用于新能源科技园等项目",
-        "title": "中熔电气：拟发行不超8亿元可转债用于新能源科技园等项目",
-        "titleAliases": [
-          "中熔电气拟发行不超8亿元可转债用于新能源科技园等项目"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "公司动态",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "8"
-        ],
-        "sourceAliases": [
-          "evd-d3f3eae751f8a57789ac",
-          "record-fe0723b3d7ae0359e56d",
-          "src-d63a9d7a62a1e3c5187b"
-        ],
-        "evidenceFingerprints": [
-          "d3f3eae751f8a57789ac"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "东方财富",
-            "title": "中熔电气：拟发行不超8亿元可转债用于新能源科技园等项目",
-            "url": "https://finance.eastmoney.com/a/202608313860237761.html",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "媒体报道"
-          }
-        ],
-        "claimFingerprint": "8659e7de96a1ed4d055c",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T11:54:48+00:00",
-        "lastSeenAt": "2026-08-31T11:54:48+00:00",
-        "lastPublishedAt": "2026-08-31T11:54:48+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-f488904ab30412499a29": {
-        "eventId": "evt-f488904ab30412499a29",
-        "dataset": "marketCompany",
-        "entityId": "catl",
-        "entityName": "宁德时代",
-        "title": "宁德时代8月31日现1笔大宗交易 总成交金额508.97万元 其中机构买入508.97万元 溢价率为0.00%",
-        "titleAliases": [
-          "宁德时代8月31日现1笔大宗交易总成交金额50897万元其中机构买入50897万元溢价率为000"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:catl",
-          "name:宁德时代"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [
-          "0.00%",
-          "1",
-          "31",
-          "508.97",
-          "8"
-        ],
-        "sourceAliases": [
-          "evd-a7844d874a75c7d8ac23",
-          "src-20bfe456ba08a5ec2656"
-        ],
-        "evidenceFingerprints": [
-          "a7844d874a75c7d8ac23"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "宁德时代8月31日现1笔大宗交易 总成交金额508.97万元 其中机构买入508.97万元 溢价率为0.00%",
-            "url": "https://finance.sina.com.cn/stock/ggzz/2026-08-31/doc-iniqfeam7828536.shtml",
-            "publishedAt": "2026-08-31T17:00:00+08:00",
-            "evidenceGrade": "媒体报道"
-          }
-        ],
-        "claimFingerprint": "31bd9abd739b9febb4fa",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T11:54:48+00:00",
-        "lastSeenAt": "2026-08-31T11:54:48+00:00",
-        "lastPublishedAt": "2026-08-31T11:54:48+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-e2f6235599f6539655bb": {
-        "eventId": "evt-e2f6235599f6539655bb",
-        "dataset": "marketCompany",
-        "entityId": "catl",
-        "entityName": "宁德时代",
-        "title": "车企价格战压利润，宁德时代凭什么赚433亿",
-        "titleAliases": [
-          "车企价格战压利润宁德时代凭什么赚433亿"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:catl",
-          "name:宁德时代"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [
-          "433"
-        ],
-        "sourceAliases": [
-          "evd-8dc59c7411688c368c65",
-          "src-cfb0c35aa24d4b47a2f0"
-        ],
-        "evidenceFingerprints": [
-          "8dc59c7411688c368c65"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "车企价格战压利润，宁德时代凭什么赚433亿",
-            "url": "https://cj.sina.cn/articles/view/3684007222/db957d360010289s8",
-            "publishedAt": "2026-08-31T17:10:00+08:00",
-            "evidenceGrade": "媒体报道"
-          }
-        ],
-        "claimFingerprint": "2361ac66a6853d8d218d",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T11:54:48+00:00",
-        "lastSeenAt": "2026-08-31T11:54:48+00:00",
-        "lastPublishedAt": "2026-08-31T11:54:48+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-e0a2a000a640b6c568ef": {
-        "eventId": "evt-e0a2a000a640b6c568ef",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-1ccecb8d3f3b7ae25b",
-        "entityName": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
-        "title": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
-        "titleAliases": [
-          "中塞合作机器人工厂投产国产人形机器人落地欧洲本地化制造"
-        ],
-        "publishedDate": "2026-08-30",
-        "publishedDates": [
-          "2026-08-30"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "商业进展",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-16b077d2d96a2e663e1b",
-          "record-9797c809ebbe7c465ba2",
-          "src-111f2c2cdc83e5f2ba27",
-          "record-9e20f093562ebaf1d333",
-          "src-3c47c57eb2afcc99018f",
-          "record-4ba0cff8506df3a42e57",
-          "src-4e40bdff771d264777c3",
-          "record-022a5d8511dc83709020",
-          "src-865f34c40fcf7dd35619"
-        ],
-        "evidenceFingerprints": [
-          "16b077d2d96a2e663e1b"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "老王-产业观察",
-            "title": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=Lgr7DD9mjcwTjtRLyRQLoxvHTzeZDM9LXJkmS%2Ax-t38EE8Ih2JmCMHvYtLwuOxyyjWqGY1i8i67vBD%2AHWR-TB98d9vfkuJOStbtqFyO4MiQOQIgaQ5sJPK08PV%2ARIiMg&src=11&timestamp=1788106977&ver=6936",
-            "publishedAt": "2026-08-30",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "老王-产业观察",
-            "title": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=j7zWV4nv-lDd9V3elHG45tQesWMRy6ZAdKPwujWKYT86FxDcF3VikWyYs8OUWqM-popubuqsreCmAB8HzE4gxxqUeHq9pfvQi8sgHIzX8Q5Hz5slq%2AynS%2AbjJZuE8Ljl&src=11&timestamp=1788146817&ver=6937",
-            "publishedAt": "2026-08-30",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "老王-产业观察",
-            "title": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=j7zWV4nv-lDd9V3elHG45tQesWMRy6ZAdKPwujWKYT%2APd9uq-8caWOnnPom%2AfblsytCr%2AlqHWwkwF4H8GikYmODtuaeMiXo-qhceFNPxDVmBPaodt99MnB53eb20cZ7z&src=11&timestamp=1788165603&ver=6937",
-            "publishedAt": "2026-08-30",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "老王-产业观察",
-            "title": "中塞合作机器人工厂投产，国产人形机器人落地欧洲本地化制造",
-            "url": "https://mp.weixin.qq.com/s?new=1&signature=H4th8I2v087DrRiW2%2ASgZU0ozTVyXWE4Eh6oFR3AVzjTCdPape5b9CrMyn8hZdrusD40Me3qYu9suC5ZCKsW2v9yS86r1bdhu9AZxoSPPuvPn3xmQMKJlm2HFs3iFHhe&src=11&timestamp=1788175922&ver=6938",
-            "publishedAt": "2026-08-30",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "c86594e60cf287751052",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-30T17:39:58+00:00",
-        "lastSeenAt": "2026-08-31T11:54:48+00:00",
-        "lastPublishedAt": "2026-08-30T17:39:58+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-9e1ce990ae9b856ca4a2": {
-        "eventId": "evt-9e1ce990ae9b856ca4a2",
-        "dataset": "marketCompany",
-        "entityId": "bgi-genomics",
-        "entityName": "华大基因",
-        "title": "华大基因跌1.62%，成交额2.97亿元，近5日主力净流入-3774.57万",
-        "titleAliases": [
-          "华大基因跌162成交额297亿元近5日主力净流入377457万"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "marketCompany:bgi-genomics",
-          "name:华大基因"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [
-          "1.62%",
-          "2.97",
-          "3774.57",
-          "5"
-        ],
-        "sourceAliases": [
-          "evd-a3d9dcd9610ff72c69ca",
-          "src-ae436750dfaeb92f4494"
-        ],
-        "evidenceFingerprints": [
-          "a3d9dcd9610ff72c69ca"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "华大基因跌1.62%，成交额2.97亿元，近5日主力净流入-3774.57万",
-            "url": "https://finance.sina.com.cn/stock/aiassist/ggsp/2026-08-31/doc-iniqexur4660442.shtml",
-            "publishedAt": "2026-08-31T15:51:00+08:00",
-            "evidenceGrade": "媒体报道"
-          }
-        ],
-        "claimFingerprint": "540a1037a56171e4e404",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T11:54:48+00:00",
-        "lastSeenAt": "2026-08-31T11:54:48+00:00",
-        "lastPublishedAt": "2026-08-31T11:54:48+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-886eda7b8d528aea613d": {
-        "eventId": "evt-886eda7b8d528aea613d",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-231e68a6ee5350e171",
-        "entityName": "日本经产省寻求规模空前的490亿美元预算 以期加速AI等产业投资",
-        "title": "日本经产省寻求规模空前的490亿美元预算 以期加速AI等产业投资",
-        "titleAliases": [
-          "日本经产省寻求规模空前的490亿美元预算以期加速ai等产业投资"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "产业投资",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "490"
-        ],
-        "sourceAliases": [
-          "evd-ead84d7e973cfc4327a1",
-          "record-c1a772012a77357ac4a4",
-          "src-5f17a6b6b8be2b4389e6"
-        ],
-        "evidenceFingerprints": [
-          "ead84d7e973cfc4327a1"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "日本经产省寻求规模空前的490亿美元预算 以期加速AI等产业投资",
-            "url": "https://finance.sina.com.cn/world/2026-08-31/doc-iniqfeap4607661.shtml",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "36acf4f3f3a6e3e84956",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T11:54:48+00:00",
-        "lastSeenAt": "2026-08-31T11:54:48+00:00",
-        "lastPublishedAt": "2026-08-31T11:54:48+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-6988665c97b0f344346f": {
-        "eventId": "evt-6988665c97b0f344346f",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-b095afa3e11d3716ee",
-        "entityName": "独家｜字节豆包2.2推迟发布，Coding疯狂补课",
-        "title": "独家｜字节豆包2.2推迟发布，Coding疯狂补课",
-        "titleAliases": [
-          "独家"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [
-          "company:bytedance",
-          "company:字节跳动"
-        ],
-        "typeKeys": [
-          "产品发布",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "2.2"
-        ],
-        "sourceAliases": [
-          "evd-3aca90a5f1548ff6a613",
-          "record-16ec567a27ee99f7a184",
-          "src-24ff90c031fcc11a1834"
-        ],
-        "evidenceFingerprints": [
-          "3aca90a5f1548ff6a613"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "钛媒体",
-            "title": "独家｜字节豆包2.2推迟发布，Coding疯狂补课",
-            "url": "https://www.tmtpost.com/8122882.html",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "f4db592d3cbdb23e1783",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T11:54:48+00:00",
-        "lastSeenAt": "2026-08-31T11:54:48+00:00",
-        "lastPublishedAt": "2026-08-31T11:54:48+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
       }
     },
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 0,
+    "newEvents": 7,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
     "duplicatesSuppressed": 0,
-    "observedEvents": 0,
+    "observedEvents": 7,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -36637,10 +37576,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-10",
-      "generatedAt": "2026-09-10T06:07:29+00:00",
-      "runStatus": "no-material-change",
-      "changeCount": 89,
-      "executiveSummary": "本轮检测到 2 个外部事实候选，但全部未通过证据质量门。",
+      "generatedAt": "2026-09-10T10:33:12+00:00",
+      "runStatus": "model",
+      "changeCount": 96,
+      "executiveSummary": "2026-09-10证据包新增8条高价值情报，均为C级外部媒体线索且未经人工复核。主要覆盖四条主线：一是Google宣布在芬兰投入130亿欧元扩建数据中心与能源基础设施（E001）；二是支付宝设立每年1000万“智能体涌现奖”以激励生活场景智能体开发者（E003）；三是新石器无人车首次进入韩国济州岛度假场景运营（E005）；四是中国资本市场政策与AI办公生态竞争（E006、E007、E008）。另有关于AI风险观点的公众人物回应（E004）。由于多为单源、C级证据，结论以方向性观察为主，需后续交叉验证。",
       "eventIds": [
         "evt-233c1e709437363741f6",
         "evt-c8f6941fb2a65c87ca44",
@@ -36730,7 +37669,14 @@
         "evt-ba82844f03c24d933b22",
         "evt-b946440d5f07dbc318fb",
         "evt-8d41e104aa56014f8526",
-        "evt-f8ec9d8d9c6281037095"
+        "evt-f8ec9d8d9c6281037095",
+        "evt-7107b46435c1210d9ebe",
+        "evt-5cff9bfb280c385fce87",
+        "evt-2ce4a321e3fb75acc0ea",
+        "evt-dd2f953a9c55d6f15b15",
+        "evt-c368416282879d18e731",
+        "evt-a3f8c972eea737329f44",
+        "evt-56a52fdcba1ec6e4a3ad"
       ],
       "eventStates": [
         {
@@ -37088,14 +38034,42 @@
         {
           "eventId": "evt-f8ec9d8d9c6281037095",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-7107b46435c1210d9ebe",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-5cff9bfb280c385fce87",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-2ce4a321e3fb75acc0ea",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-dd2f953a9c55d6f15b15",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-c368416282879d18e731",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-a3f8c972eea737329f44",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-56a52fdcba1ec6e4a3ad",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 1,
       "candidateTotal": 39,
-      "auxiliaryLeadTotal": 49,
-      "rejectedTotal": 10,
+      "auxiliaryLeadTotal": 56,
+      "rejectedTotal": 15,
       "eventSummary": {
-        "newEvents": 89,
+        "newEvents": 96,
         "reconfirmations": 9,
         "updates": 0,
         "corrections": 0,
@@ -37105,18 +38079,18 @@
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 2,
-    "eligibleCandidateCount": 0,
-    "rejectedCandidateCount": 2,
+    "candidateCount": 12,
+    "eligibleCandidateCount": 7,
+    "rejectedCandidateCount": 5,
     "rejectedByDataset": {
-      "ventureCompany": 2
+      "intelligenceEvent": 5
     },
-    "evidenceCount": 8,
-    "supportingEvidenceCount": 0,
-    "rejectedEvidenceCount": 6,
-    "passedButUnboundEvidenceCount": 2,
+    "evidenceCount": 12,
+    "supportingEvidenceCount": 7,
+    "rejectedEvidenceCount": 5,
+    "passedButUnboundEvidenceCount": 0,
     "rejectionReasons": {
-      "missing_published_at": 6
+      "discovery_only": 5
     },
     "sourceClassificationWarnings": []
   },
