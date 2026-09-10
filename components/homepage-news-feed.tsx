@@ -25,6 +25,7 @@ import {
   type HomepageEntityChannelIndex,
   type HomepageEntityChannelSets,
 } from "@/lib/homepage-entity-channels";
+import { mergeHomepagePersonChannelEvents } from "@/lib/homepage-person-channel-events";
 import {
   dismissHomepageEvent,
   toggleHomepageSectorFollow,
@@ -271,9 +272,11 @@ function shareHomepageItem(item: LiveIntelligenceEvent) {
 export function HomepageNewsFeed({
   initialPayload,
   bootstrap,
+  peopleChannelEvents,
 }: {
   initialPayload: ArticlePayload;
   bootstrap: HomepageFeedBootstrap;
+  peopleChannelEvents: LiveIntelligenceEvent[];
 }) {
   const { articles, refreshAudit, isLive } = useArticles(initialPayload);
   const favorites = useFavorites();
@@ -337,7 +340,13 @@ export function HomepageNewsFeed({
   const normalizedQuery = query.trim().toLowerCase();
 
   const visibleArticles = useMemo(() => {
-    const base = qualityScope === "trusted" ? trustedArticles : activeArticles;
+    const articleBase = qualityScope === "trusted" ? trustedArticles : activeArticles;
+    const base = channel === "people"
+      ? mergeHomepagePersonChannelEvents(
+          articleBase.filter((item) => matchesHomepagePersonEntityChannel(item, entityChannels)),
+          peopleChannelEvents,
+        )
+      : articleBase;
     return base
       .filter((item) => !isHomepageEventDismissed(item, preferences))
       .filter((item) => region === "全部" || item.region === region)
@@ -364,6 +373,7 @@ export function HomepageNewsFeed({
     entityChannels,
     favoriteProfile,
     normalizedQuery,
+    peopleChannelEvents,
     preferences,
     qualityScope,
     region,
@@ -430,7 +440,7 @@ export function HomepageNewsFeed({
   const currentChannelDescription = channel === "recommend"
     ? "推荐频道按个性化优先排序；先看最值得知道的变化，再决定是否查看来源、进入追踪、分享或深研此条。"
     : channel === "people"
-      ? "人物频道仅接受已发布人物库实体的结构化关联：正式 personSlug 或与人物库别名精确匹配的人物提及；泛化人名识别不会直接入流。"
+      ? "人物频道合并已发布人物库材料与正式实体关联事件；仅正式 personSlug 或人物库别名精确匹配可入流，泛化人名识别不会直接触发。"
       : channel === "companies"
         ? "公司频道仅接受已发布公司库实体的结构化关联：正式 companySlug 或与公司库别名精确匹配的公司提及；普通公司名文本命中不会直接入流。"
         : "当前频道按最新文章优先展示，个性化推荐仅用于同等新鲜度下的辅助排序。";
