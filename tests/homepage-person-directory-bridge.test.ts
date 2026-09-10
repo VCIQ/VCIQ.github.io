@@ -117,7 +117,7 @@ test("homepage person gate excludes durable references, undated records and roun
     isHomepagePersonDirectoryEvent(
       directoryItem({
         title:
-          "黄仁勋谈 AI；OpenAI 发布新品；Anthropic 更新模型；多家公司公布融资进展",
+          "黄仁勋谈 AI；OpenAI 发布新品并公布模型路线；Anthropic 更新 Claude 企业方案；多家公司公布融资进展与芯片采购计划",
         label: "人物材料",
       }),
       profile,
