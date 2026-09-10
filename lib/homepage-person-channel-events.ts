@@ -248,7 +248,7 @@ function enrichCanonicalPersonEvent(
   return {
     ...canonical,
     summary: review?.summary ?? canonical.summary,
-    personSlug: directory.personSlug ?? canonical.personSlug,
+    personSlug: canonical.personSlug ?? directory.personSlug,
     source,
     qualityStatus: canonical.qualityStatus ?? directory.qualityStatus,
     qualitySignals: qualitySignals.length ? qualitySignals : undefined,
@@ -300,11 +300,12 @@ export function mergeHomepagePersonChannelEvents(
     const titleKey = normalizedEventTitle(event.title);
     const canonical = urlKey ? canonicalByUrl.get(urlKey) : undefined;
     if (canonical) {
-      const enriched = enrichCanonicalPersonEvent(canonical, event);
       const existingIndex = merged.findIndex((item) =>
         item.id === canonical.id ||
         (urlKey && homepageMaterialUrl(item.source.url) === urlKey),
       );
+      const enrichmentBase = existingIndex >= 0 ? merged[existingIndex] : canonical;
+      const enriched = enrichCanonicalPersonEvent(enrichmentBase, event);
       if (existingIndex >= 0) merged[existingIndex] = enriched;
       else merged.push(enriched);
       if (urlKey) seenUrls.add(urlKey);
