@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 import {
+  isHomepagePersonDirectoryEvent,
   mergeHomepagePersonChannelEvents,
   projectHomepagePersonDirectoryEvents,
   type HomepagePersonDirectoryItem,
@@ -15,6 +16,8 @@ const profile: HomepagePersonProfile = {
   name: "黄仁勋",
   englishName: "Jensen Huang",
   aliases: ["Jensen H. Huang"],
+  role: "NVIDIA 创始人兼首席执行官",
+  organizations: ["NVIDIA", "英伟达"],
   sectors: ["AI算力与基础设施"],
 };
 
@@ -75,12 +78,164 @@ test("person directory projection only admits published person profiles", () => 
   assert.equal(accepted[0]?.sector, "AI算力与基础设施");
   assert.equal(accepted[0]?.type, "人物观点");
   assert.equal(accepted[0]?.qualityStatus, "可用");
+  assert.ok(accepted[0]?.qualitySignals?.includes("首页人物事件中心性"));
 
   const rejected = projectHomepagePersonDirectoryEvents(
     [directoryItem({ context: "未收录的人物" })],
     [profile],
   );
   assert.deepEqual(rejected, []);
+});
+
+test("homepage person gate excludes durable references, undated records and roundup headlines", () => {
+  for (const label of ["官方资料", "人物资料", "公开材料"]) {
+    assert.equal(
+      isHomepagePersonDirectoryEvent(directoryItem({ label }), profile),
+      false,
+      `${label} should stay in the person library`,
+    );
+  }
+  assert.equal(
+    isHomepagePersonDirectoryEvent(
+      directoryItem({ sortAt: "0000-01-01T00:00:00.000Z" }),
+      profile,
+    ),
+    false,
+  );
+  assert.equal(
+    isHomepagePersonDirectoryEvent(
+      directoryItem({
+        title:
+          "科技早报：黄仁勋谈 AI；OpenAI 发布新品；多家公司公布融资进展",
+        label: "人物材料",
+      }),
+      profile,
+    ),
+    false,
+  );
+  assert.equal(
+    isHomepagePersonDirectoryEvent(
+      directoryItem({
+        title:
+          "黄仁勋谈 AI；OpenAI 发布新品并公布模型路线；Anthropic 更新 Claude 企业方案；多家公司公布融资进展与芯片采购计划",
+        label: "人物材料",
+      }),
+      profile,
+    ),
+    false,
+  );
+});
+
+test("generic person material must make the person central in the headline", () => {
+  assert.equal(
+    isHomepagePersonDirectoryEvent(
+      directoryItem({
+        title: "OpenAI 推出新一代推理模型",
+        summary: "报道同时提到黄仁勋对 AI 基础设施的看法",
+        label: "人物材料",
+      }),
+      profile,
+    ),
+    false,
+  );
+  assert.equal(
+    isHomepagePersonDirectoryEvent(
+      directoryItem({
+        title: "黄仁勋回应 OpenAI 自研芯片：竞争会推动产业进步",
+        label: "人物材料",
+      }),
+      profile,
+    ),
+    true,
+  );
+});
+
+test("attributed surname and owned primary-source formats remain publishable", () => {
+  const musk: HomepagePersonProfile = {
+    slug: "elon-musk",
+    name: "埃隆·马斯克",
+    englishName: "Elon Musk",
+    role: "企业家、工程与产品负责人",
+    organizations: ["SpaceX", "Tesla", "xAI"],
+    sectors: ["AI / AGI", "商业航天"],
+  };
+  assert.equal(
+    isHomepagePersonDirectoryEvent(
+      directoryItem({
+        context: "埃隆·马斯克",
+        title: "马斯克称 Starship 下一阶段将提高发射频率",
+        label: "人物材料",
+      }),
+      musk,
+    ),
+    true,
+  );
+
+  assert.equal(
+    isHomepagePersonDirectoryEvent(
+      directoryItem({
+        title: "GTC 2026 Opening Keynote",
+        source: "NVIDIA",
+        href: "https://www.nvidia.com/gtc/keynote",
+        label: "演讲",
+      }),
+      profile,
+    ),
+    true,
+  );
+});
+
+test("sparse auto-discovered identities need explicit research-domain evidence and reject Latin homonyms", () => {
+  const rahul: HomepagePersonProfile = {
+    slug: "rahul-patil",
+    name: "Rahul Patil",
+    role: "人物档案待补充",
+    organizations: [],
+    sectors: ["半导体"],
+  };
+  assert.equal(
+    isHomepagePersonDirectoryEvent(
+      directoryItem({
+        context: "Rahul Patil",
+        title: "BJP–MIM Secret Deal Exposed? | Asif Shaikh Interview | Rahul Patil Podcast",
+        source: "YouTube · Hotseat With Rahul Patil",
+        href: "https://www.youtube.com/watch?v=example",
+        label: "采访",
+      }),
+      rahul,
+    ),
+    false,
+  );
+
+  const sparseChineseProfile: HomepagePersonProfile = {
+    slug: "yang-hongxin",
+    name: "杨红新",
+    role: "人物档案待补充",
+    organizations: [],
+    sectors: ["新能源"],
+  };
+  assert.equal(
+    isHomepagePersonDirectoryEvent(
+      directoryItem({
+        context: "杨红新",
+        title: "蜂巢能源杨红新：混合固液电池的低成本量产路径",
+        label: "人物材料",
+      }),
+      sparseChineseProfile,
+    ),
+    true,
+  );
+  assert.equal(
+    isHomepagePersonDirectoryEvent(
+      directoryItem({
+        context: "杨红新",
+        title: "杨红新谈个人旅行与生活方式",
+        label: "采访",
+      }),
+      sparseChineseProfile,
+    ),
+    false,
+  );
 });
 
 test("person directory projection preserves research semantics and related sources", () => {
