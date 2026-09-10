@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-10T18:25:05+00:00",
+  "generatedAt": "2026-09-10T21:15:36+00:00",
   "asOfDate": "2026-09-11",
-  "runStatus": "no-material-change",
+  "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
   "baselineSource": "snapshot",
   "model": {
@@ -10,24 +10,41 @@
     "name": "deepseek-ai/DeepSeek-V4-Flash",
     "baseUrl": "https://api.siliconflow.cn/v1",
     "reasoningEffort": "high",
-    "used": false,
-    "usage": {}
+    "used": true,
+    "usage": {
+      "prompt_tokens": 3332,
+      "completion_tokens": 3952,
+      "total_tokens": 7284,
+      "completion_tokens_details": {
+        "reasoning_tokens": 2056
+      },
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 3332
+    }
   },
   "changeSummary": {
-    "totalDetected": 0,
-    "total": 0,
-    "byDataset": {},
-    "byChangeType": {},
-    "externalCandidates": 0,
-    "qualityRejected": 0,
-    "maintenanceExcluded": 0,
+    "totalDetected": 9,
+    "total": 4,
+    "byDataset": {
+      "intelligenceEvent": 4
+    },
+    "byChangeType": {
+      "external_event": 8,
+      "data_maintenance": 1
+    },
+    "externalCandidates": 8,
+    "qualityRejected": 4,
+    "maintenanceExcluded": 1,
     "aggregatedEvents": 0,
-    "highestImportance": 0,
+    "highestImportance": 89,
     "verifiedChangeTotal": 0,
     "candidateTotal": 0,
-    "auxiliaryLeadTotal": 0,
-    "rejectedTotal": 0,
-    "newEvents": 0,
+    "auxiliaryLeadTotal": 4,
+    "rejectedTotal": 4,
+    "newEvents": 4,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
@@ -35,22 +52,800 @@
     "duplicatesSuppressed": 0
   },
   "analysis": {
-    "mode": "structured-change-only",
-    "isResearchJudgment": false,
-    "executiveSummary": "本轮未检测到新的外部事实候选。",
-    "keyDevelopments": [],
-    "thesisUpdates": [],
-    "watchlist": [],
-    "risks": [],
-    "methodologyNote": "结构化变化检查；本期无材料变化。未执行生成式研判。 数据管线提示：追踪实体与公开信源发现=stale、科创板招股书投资者证据刷新=stale。"
+    "mode": "model-analysis",
+    "isResearchJudgment": true,
+    "executiveSummary": "证据包显示四起高价值事件：Nasuni 收购 DryvIQ（E001）、前 Anthropic 研究员的 AI 灭绝警告被媒体讨论（E002）、阿联酋计划在德国投资 400 亿欧元（E003）、OpenAI 面向金融业推出 ChatGPT for Financial Services（E005）。其中并购事件证据等级相对较高，但四起事件均处于首见状态且多数来源为媒体转载或评述，需要后续官方确认或独立证据交叉验证。本报告仅基于证据包表述，不构成投资建议。 质量门诊断：仅为发现线索，不能支持正式主张 4。",
+    "keyDevelopments": [
+      {
+        "title": "Nasuni 收购 DryvIQ，Carlsquare 担任卖方顾问",
+        "assessment": "据 Carlsquare 发布的新闻稿，Carlsquare 就 DryvIQ 被 Nasuni 收购提供顾问服务；新闻稿称 DryvIQ 是智能非结构化数据管理领域的领导者，Nasuni 是企业团队和 AI 的非结构化数据平台，收购将增加 AI 驱动的内容能力。该事件为单一来源，未披露交易金额、监管条件及交割细节，应视为待验证的并购线索而非已确认的重大交易。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "Nasuni",
+          "DryvIQ",
+          "Carlsquare"
+        ],
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "title": "前 Anthropic 研究员的 AI 灭绝风险警告引发关注",
+        "assessment": "CNET 报道称，一位前 Anthropic 研究员对 AI 可能导致人类灭绝发出警告，并称 AI 公司认为其创造物可能杀死所有人却仍在继续推进。该报道属于媒体解读，证据等级较低；只能作为 AI 安全议题的舆论和叙事信号，不能据此判断 Anthropic 内部模型能力或具体风险。",
+        "importance": 3,
+        "confidence": "low",
+        "entities": [
+          "Anthropic"
+        ],
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "title": "阿联酋计划在德国投资 460 亿美元，覆盖 AI、能源和国防",
+        "assessment": "据新浪财经报道，阿联酋计划在德国投资 400 亿欧元（约 460 亿美元），涉及人工智能、能源和国防等领域，旨在深化与欧洲的战略伙伴关系。由于来源为媒体转载，且证据包中没有官方声明或协议文本，金额、领域和投资节奏均应视为计划性报道，需待官方确认。",
+        "importance": 4,
+        "confidence": "low",
+        "entities": [
+          "阿联酋",
+          "德国"
+        ],
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "title": "OpenAI 推出面向金融业者的 ChatGPT for Financial Services",
+        "assessment": "据新浪财经报道，OpenAI 推出面向投资银行家和股票研究员的新工具 ChatGPT for Financial Services，博客文章称该产品将把 Daloopa 的相关能力纳入其中，但原文在关键处截断。该信息来源为媒体转载，缺乏官方产品文档、功能清单和定价，产品实际能力与市场影响需以 OpenAI 官方发布为准。",
+        "importance": 4,
+        "confidence": "low",
+        "entities": [
+          "OpenAI"
+        ],
+        "evidenceIds": [
+          "E005"
+        ]
+      }
+    ],
+    "thesisUpdates": [
+      {
+        "entity": "Nasuni / DryvIQ",
+        "direction": "positive",
+        "statement": "非结构化数据管理与 AI 内容能力的整合正在成为企业数据平台的并购主线；若交易完成，Nasuni 在 AI 就绪的非结构化数据平台方向上的布局将得到加强。该判断基于新闻稿表述，交易规模和执行细节仍待验证。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "entity": "OpenAI",
+        "direction": "mixed",
+        "statement": "OpenAI 将 AI 工具从通用助手扩展到金融服务业，显示其垂直行业工作流战略在推进；但现有证据缺少产品细节，且金融场景对准确性和合规性要求极高，实际采用率与竞争力尚待观察。",
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "entity": "阿联酋主权资本",
+        "direction": "mixed",
+        "statement": "阿联酋对德国的投资计划涵盖 AI、能源和国防，可能为欧洲 AI 基础设施和能源转型提供外部资本；但该计划处于媒体报道阶段，受政府审批、地缘政治和资金安排影响，存在不确定性。",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "entity": "AI 安全与治理",
+        "direction": "negative",
+        "statement": "前 Anthropic 研究员的灭绝警告经媒体报道后，可能强化公众对 AI 极端风险的关注；这属于舆论信号，而非模型能力变化或具体事故的直接证据，不应被解读为 AI 行业风险已经升级。",
+        "evidenceIds": [
+          "E002"
+        ]
+      }
+    ],
+    "watchlist": [
+      {
+        "item": "Nasuni 与 DryvIQ 收购交易细节",
+        "reason": "新闻稿未披露交易金额、监管条件与交割时间；需要后续官方公告确认交易规模、整合计划及对产品路线图的影响。",
+        "nextEvidence": "Nasuni 或 DryvIQ 的官方公告、监管备案、管理层评论",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "item": "OpenAI ChatGPT for Financial Services 官方信息",
+        "reason": "媒体报道截断且缺少具体功能、可用市场、定价和合规方案；需要 OpenAI 原始博客文章、产品页面或开发者文档。",
+        "nextEvidence": "OpenAI 官方博客、产品文档、客户案例",
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "item": "阿联酋对德投资计划的官方确认",
+        "reason": "媒体报道中的投资金额和领域需要阿联酋或德国政府、主权基金等官方渠道验证；实际投资节奏和 AI 相关资金占比待观察。",
+        "nextEvidence": "政府声明、双边协议文本、主权基金公告",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "item": "前 Anthropic 研究员警告的原始内容",
+        "reason": "CNET 的转述可能省略上下文，需要原始访谈、研究报告或采访记录，以确认警告的具体论据和是否反映 Anthropic 内部评估。",
+        "nextEvidence": "原始采访、研究论文、Anthropic 回应",
+        "evidenceIds": [
+          "E002"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "证据均处于首见状态且多数来源等级偏低",
+        "reason": "除 E001 为公关新闻稿（B 级）外，E002、E003、E005 均为媒体转载或评论（C 级），且四起事件都是自动化未人工复核；缺乏独立来源交叉验证时，事件可能被误报或夸大。",
+        "evidenceIds": [
+          "E001",
+          "E002",
+          "E003",
+          "E005"
+        ]
+      },
+      {
+        "risk": "并购交易细节缺失导致误判",
+        "reason": "E001 未披露交易金额和条款，无法确认交易体量；若后续出现交易调整或失败，基于该新闻稿形成的判断需要修正。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "risk": "AI 安全叙事可能被简化或扭曲",
+        "reason": "E002 是媒体评论，可能将个别研究员的警告简化为“AI 公司明知灭绝风险仍继续推进”；若被当作事实传播，可能引发过度监管或对公司战略的误读。",
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "risk": "主权投资计划存在执行不确定性",
+        "reason": "E003 中的 400 亿欧元投资计划属于媒体报道，可能因地缘政治变化、德国审批流程或阿联酋内部资金决策而无法落地。",
+        "evidenceIds": [
+          "E003"
+        ]
+      }
+    ],
+    "methodologyNote": "本分析仅基于证据包中的四份公开报道快照（E001、E002、E003、E005）。证据等级划分上，E001 为公关新闻稿（B 级），E002、E003、E005 为媒体转载或评述（C 级），且所有事件均处于 first_seen 状态并标记为自动化未人工复核。因此，本报告将“证据包中可见的表述”与“推断”分开：引用事实性内容时使用“新闻稿称”“据报道”等表述，未补充任何外部事实。所有判断均引用至少一个 evidenceIds 中的证据编号，不构成买入、卖出、目标价或收益承诺。 数据管线提示：追踪实体与公开信源发现=stale、科创板招股书投资者证据刷新=stale。"
   },
-  "changes": [],
-  "evidence": [],
+  "changes": [
+    {
+      "id": "chg-f2434df17bed7f1ea11f",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-05f6ce0b016f2e93d8",
+      "entityName": "Carlsquare Advises DryvIQ on its Acquisition by Nasuni",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Carlsquare Advises DryvIQ on its Acquisition by Nasuni。",
+      "importance": 89,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-10",
+        "summary": "SAN FRANCISCO, Sept. 10, 2026 /PRNewswire/ -- Carlsquare has advised DryvIQ, a leader in intelligent unstructured data management, on its acquisition by Nasuni, the unstructured data platform for enterprise teams and AI. The acquisition adds AI-powered conten…",
+        "title": "Carlsquare Advises DryvIQ on its Acquisition by Nasuni"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-10",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "SAN FRANCISCO, Sept. 10, 2026 /PRNewswire/ -- Carlsquare has advised DryvIQ, a leader in intelligent unstructured data management, on its acquisition by Nasuni, the unstructured data platform for enterprise teams and AI. The acquisition adds AI-powered conten…",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Carlsquare Advises DryvIQ on its Acquisition by Nasuni",
+          "evidenceIds": [
+            "E001"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E001"
+      ],
+      "supportingEvidenceIds": [
+        "E001"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-ffcc48b0f13014ed5e7f"
+      ],
+      "eventLifecycles": {
+        "evt-ffcc48b0f13014ed5e7f": "first_seen"
+      },
+      "eventId": "evt-ffcc48b0f13014ed5e7f",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-10T21:15:36+00:00",
+      "lastSeenAt": "2026-09-10T21:15:36+00:00"
+    },
+    {
+      "id": "chg-f522a1b648aad3c956d1",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-d161e7f0fd896572ef",
+      "entityName": "What an Ex-Anthropic Researcher’s Warning About Human Extinction Really Means",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：What an Ex-Anthropic Researcher’s Warning About Human Extinction Really Means。",
+      "importance": 85,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-10",
+        "summary": "AI companies think their creations could kill us all. They’re carrying on anyway.",
+        "title": "What an Ex-Anthropic Researcher’s Warning About Human Extinction Really Means"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-10",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "AI companies think their creations could kill us all. They’re carrying on anyway.",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "What an Ex-Anthropic Researcher’s Warning About Human Extinction Really Means",
+          "evidenceIds": [
+            "E002"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E002"
+      ],
+      "supportingEvidenceIds": [
+        "E002"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-bdedfb3b8fec01370188"
+      ],
+      "eventLifecycles": {
+        "evt-bdedfb3b8fec01370188": "first_seen"
+      },
+      "eventId": "evt-bdedfb3b8fec01370188",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-10T21:15:36+00:00",
+      "lastSeenAt": "2026-09-10T21:15:36+00:00"
+    },
+    {
+      "id": "chg-09f22c7d6c5d60045e87",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-7c89f865f4dc015332",
+      "entityName": "阿联酋计划在德国投资460亿美元 涵盖AI和能源等领域",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：阿联酋计划在德国投资460亿美元 涵盖AI和能源等领域。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-10",
+        "summary": "阿拉伯联合酋长国计划在德国投资400亿欧元（460亿美元），涉及从人工智能到能源和国防等多个领域。目前阿联酋正寻求深化与欧洲各国的战略伙伴关系。",
+        "title": "阿联酋计划在德国投资460亿美元 涵盖AI和能源等领域"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-10",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "阿拉伯联合酋长国计划在德国投资400亿欧元（460亿美元），涉及从人工智能到能源和国防等多个领域。目前阿联酋正寻求深化与欧洲各国的战略伙伴关系。",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "阿联酋计划在德国投资460亿美元 涵盖AI和能源等领域",
+          "evidenceIds": [
+            "E003"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E003"
+      ],
+      "supportingEvidenceIds": [
+        "E003"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-f5f24acf6319676677e9"
+      ],
+      "eventLifecycles": {
+        "evt-f5f24acf6319676677e9": "first_seen"
+      },
+      "eventId": "evt-f5f24acf6319676677e9",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-10T21:15:36+00:00",
+      "lastSeenAt": "2026-09-10T21:15:36+00:00"
+    },
+    {
+      "id": "chg-ec7c7cdbf25ed39231b5",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-a17165e95396b50be9",
+      "entityName": "像分析师一样做研究 OpenAI推出专为金融业者打造的人工智能工具",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：像分析师一样做研究 OpenAI推出专为金融业者打造的人工智能工具。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-10",
+        "summary": "OpenAI推出面向投资银行家和股票研究员的新工具ChatGPT for Financial Services。 该公司周四在一篇博客文章中写到，这款产品将把Daloopa...",
+        "title": "像分析师一样做研究 OpenAI推出专为金融业者打造的人工智能工具"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-10",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "OpenAI推出面向投资银行家和股票研究员的新工具ChatGPT for Financial Services。 该公司周四在一篇博客文章中写到，这款产品将把Daloopa...",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "像分析师一样做研究 OpenAI推出专为金融业者打造的人工智能工具",
+          "evidenceIds": [
+            "E005"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E005"
+      ],
+      "supportingEvidenceIds": [
+        "E005"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-e00cee8f616f54ed890c"
+      ],
+      "eventLifecycles": {
+        "evt-e00cee8f616f54ed890c": "first_seen"
+      },
+      "eventId": "evt-e00cee8f616f54ed890c",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-10T21:15:36+00:00",
+      "lastSeenAt": "2026-09-10T21:15:36+00:00"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E001",
+      "changeId": "chg-f2434df17bed7f1ea11f",
+      "entityName": "Carlsquare Advises DryvIQ on its Acquisition by Nasuni",
+      "claim": "新增高价值情报事件记录：Carlsquare Advises DryvIQ on its Acquisition by Nasuni。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "Carlsquare Advises DryvIQ on its Acquisition by Nasuni",
+      "url": "https://www.prnewswire.com/news-releases/carlsquare-advises-dryviq-on-its-acquisition-by-nasuni-302875778.html",
+      "publishedAt": "2026-09-10",
+      "evidenceGrade": "B",
+      "platformName": "新闻稿",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E002",
+      "changeId": "chg-f522a1b648aad3c956d1",
+      "entityName": "What an Ex-Anthropic Researcher’s Warning About Human Extinction Really Means",
+      "claim": "新增高价值情报事件记录：What an Ex-Anthropic Researcher’s Warning About Human Extinction Really Means。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "CNET",
+      "title": "What an Ex-Anthropic Researcher’s Warning About Human Extinction Really Means",
+      "url": "https://www.cnet.com/tech/services-and-software/ex-anthropic-researcher-warning-human-extinction-ai",
+      "publishedAt": "2026-09-10",
+      "evidenceGrade": "C",
+      "platformName": "CNET",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E003",
+      "changeId": "chg-09f22c7d6c5d60045e87",
+      "entityName": "阿联酋计划在德国投资460亿美元 涵盖AI和能源等领域",
+      "claim": "新增高价值情报事件记录：阿联酋计划在德国投资460亿美元 涵盖AI和能源等领域。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "阿联酋计划在德国投资460亿美元 涵盖AI和能源等领域",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-11/doc-inirkuqm5480799.shtml",
+      "publishedAt": "2026-09-10",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E005",
+      "changeId": "chg-ec7c7cdbf25ed39231b5",
+      "entityName": "像分析师一样做研究 OpenAI推出专为金融业者打造的人工智能工具",
+      "claim": "新增高价值情报事件记录：像分析师一样做研究 OpenAI推出专为金融业者打造的人工智能工具。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "像分析师一样做研究 OpenAI推出专为金融业者打造的人工智能工具",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-11/doc-inirkqhk2540899.shtml",
+      "publishedAt": "2026-09-10",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    }
+  ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-10T18:25:05+00:00",
+    "generatedAt": "2026-09-10T21:15:36+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-ffcc48b0f13014ed5e7f": {
+        "eventId": "evt-ffcc48b0f13014ed5e7f",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-05f6ce0b016f2e93d8",
+        "entityName": "Carlsquare Advises DryvIQ on its Acquisition by Nasuni",
+        "title": "Carlsquare Advises DryvIQ on its Acquisition by Nasuni",
+        "titleAliases": [
+          "carlsquareadvisesdryviqonitsacquisitionbynasuni"
+        ],
+        "publishedDate": "2026-09-10",
+        "publishedDates": [
+          "2026-09-10"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "并购",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-41271e46785a30348ba5",
+          "record-9dc2e5a6ce5b1e64ce78",
+          "src-0c392903d73d91df2873"
+        ],
+        "evidenceFingerprints": [
+          "41271e46785a30348ba5"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "Carlsquare Advises DryvIQ on its Acquisition by Nasuni",
+            "url": "https://www.prnewswire.com/news-releases/carlsquare-advises-dryviq-on-its-acquisition-by-nasuni-302875778.html",
+            "publishedAt": "2026-09-10",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "c2a89e170e04e359ed2c",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-10T21:15:36+00:00",
+        "lastSeenAt": "2026-09-10T21:15:36+00:00",
+        "lastPublishedAt": "2026-09-10T21:15:36+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-f5f24acf6319676677e9": {
+        "eventId": "evt-f5f24acf6319676677e9",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-7c89f865f4dc015332",
+        "entityName": "阿联酋计划在德国投资460亿美元 涵盖AI和能源等领域",
+        "title": "阿联酋计划在德国投资460亿美元 涵盖AI和能源等领域",
+        "titleAliases": [
+          "阿联酋计划在德国投资460亿美元涵盖ai和能源等领域"
+        ],
+        "publishedDate": "2026-09-10",
+        "publishedDates": [
+          "2026-09-10"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产业投资",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "460"
+        ],
+        "sourceAliases": [
+          "evd-9d7a963484d5a7e4bcfe",
+          "record-233d5dd18f12db5fa22f",
+          "src-07d495b32f459681516a"
+        ],
+        "evidenceFingerprints": [
+          "9d7a963484d5a7e4bcfe"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "阿联酋计划在德国投资460亿美元 涵盖AI和能源等领域",
+            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-11/doc-inirkuqm5480799.shtml",
+            "publishedAt": "2026-09-10",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "e77ed0d7ae885a0fa366",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-10T21:15:36+00:00",
+        "lastSeenAt": "2026-09-10T21:15:36+00:00",
+        "lastPublishedAt": "2026-09-10T21:15:36+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-e00cee8f616f54ed890c": {
+        "eventId": "evt-e00cee8f616f54ed890c",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-a17165e95396b50be9",
+        "entityName": "像分析师一样做研究 OpenAI推出专为金融业者打造的人工智能工具",
+        "title": "像分析师一样做研究 OpenAI推出专为金融业者打造的人工智能工具",
+        "titleAliases": [
+          "像分析师一样做研究openai推出专为金融业者打造的人工智能工具"
+        ],
+        "publishedDate": "2026-09-10",
+        "publishedDates": [
+          "2026-09-10"
+        ],
+        "entityKeys": [
+          "company:openai"
+        ],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-68bf487c3bfa91fd1d88",
+          "record-6debb8e88202979b7129",
+          "src-45971e266eea230e62c1"
+        ],
+        "evidenceFingerprints": [
+          "68bf487c3bfa91fd1d88"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "像分析师一样做研究 OpenAI推出专为金融业者打造的人工智能工具",
+            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-11/doc-inirkqhk2540899.shtml",
+            "publishedAt": "2026-09-10",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "eb1900f5488e302f082d",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-10T21:15:36+00:00",
+        "lastSeenAt": "2026-09-10T21:15:36+00:00",
+        "lastPublishedAt": "2026-09-10T21:15:36+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-bdedfb3b8fec01370188": {
+        "eventId": "evt-bdedfb3b8fec01370188",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-d161e7f0fd896572ef",
+        "entityName": "What an Ex-Anthropic Researcher’s Warning About Human Extinction Really Means",
+        "title": "What an Ex-Anthropic Researcher’s Warning About Human Extinction Really Means",
+        "titleAliases": [
+          "whatanexanthropicresearcherswarningabouthumanextinctionreallymeans"
+        ],
+        "publishedDate": "2026-09-10",
+        "publishedDates": [
+          "2026-09-10"
+        ],
+        "entityKeys": [
+          "company:anthropic"
+        ],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-50b5e0de23dc35fde132",
+          "record-d624933f4c833bf5270e",
+          "src-3354899701fc6edb7925"
+        ],
+        "evidenceFingerprints": [
+          "50b5e0de23dc35fde132"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "CNET",
+            "title": "What an Ex-Anthropic Researcher’s Warning About Human Extinction Really Means",
+            "url": "https://www.cnet.com/tech/services-and-software/ex-anthropic-researcher-warning-human-extinction-ai",
+            "publishedAt": "2026-09-10",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "241c6ef3a0441a05491f",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-10T21:15:36+00:00",
+        "lastSeenAt": "2026-09-10T21:15:36+00:00",
+        "lastPublishedAt": "2026-09-10T21:15:36+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-f70408a8fd15fc0568b3": {
         "eventId": "evt-f70408a8fd15fc0568b3",
         "dataset": "intelligenceEvent",
@@ -33181,231 +33976,18 @@
         "conflictStatus": "none",
         "conflictReasons": [],
         "relatedEventIds": []
-      },
-      "evt-8464a744362e1f322ed3": {
-        "eventId": "evt-8464a744362e1f322ed3",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-0e9051322febb8c8e0",
-        "entityName": "INTURAI VENTURES COMPLETES DOMECOMMAND ACQUISITION",
-        "title": "INTURAI VENTURES COMPLETES DOMECOMMAND ACQUISITION",
-        "titleAliases": [
-          "inturaiventurescompletesdomecommandacquisition"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "并购",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-f32801c127c47f511b06",
-          "record-929fe28204091a038aab",
-          "src-40e74410d35812f9874d"
-        ],
-        "evidenceFingerprints": [
-          "f32801c127c47f511b06"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "PR Newswire Consumer Technology",
-            "title": "INTURAI VENTURES COMPLETES DOMECOMMAND ACQUISITION",
-            "url": "https://www.prnewswire.com/news-releases/inturai-ventures-completes-domecommand-acquisition-302865569.html",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "B",
-            "sourceRole": "primary"
-          }
-        ],
-        "claimFingerprint": "6c82d7b72679fe4f6bbd",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T07:52:47+00:00",
-        "lastSeenAt": "2026-09-01T07:52:47+00:00",
-        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 4,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-7fe31f0e39554205db4c": {
-        "eventId": "evt-7fe31f0e39554205db4c",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-afee1ee9f38225a0da",
-        "entityName": "AI 读过一切，却没经历过任何事：Ropedia 发布 HOMIE Gen2，给具身智能补「经验」这一课",
-        "title": "AI 读过一切，却没经历过任何事：Ropedia 发布 HOMIE Gen2，给具身智能补「经验」这一课",
-        "titleAliases": [
-          "ai读过一切却没经历过任何事ropedia发布homiegen2给具身智能补经验这一课"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "产品发布",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "2"
-        ],
-        "sourceAliases": [
-          "evd-381d8496873fd96ca272",
-          "record-1e1fe849857989dd6a10",
-          "src-e78e11d9966ffd2a9f38"
-        ],
-        "evidenceFingerprints": [
-          "381d8496873fd96ca272"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "雷峰网",
-            "title": "AI 读过一切，却没经历过任何事：Ropedia 发布 HOMIE Gen2，给具身智能补「经验」这一课",
-            "url": "https://www.leiphone.com/category/ai/ztrF1BywGGvrxQHt.html",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "d0bd85293089cfb8e674",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T07:52:47+00:00",
-        "lastSeenAt": "2026-09-01T07:52:47+00:00",
-        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-693455c87b5fc3646de5": {
-        "eventId": "evt-693455c87b5fc3646de5",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-23d998896b70bd9a7b",
-        "entityName": "百丽十二年数智化复盘：先把企业工程化，再让AI 读懂它丨2026 ITValue Summit 前瞻：AI系统落地系列直播③",
-        "title": "百丽十二年数智化复盘：先把企业工程化，再让AI 读懂它丨2026 ITValue Summit 前瞻：AI系统落地系列直播③",
-        "titleAliases": [
-          "百丽十二年数智化复盘先把企业工程化再让ai读懂它丨2026itvaluesummit前瞻ai系统落地系列直播3"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "商业进展",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "3"
-        ],
-        "sourceAliases": [
-          "evd-5ac7119d10dffabca82a",
-          "record-f47cd304bce0da4c699a",
-          "src-e3f4f9d96878fead1dfa"
-        ],
-        "evidenceFingerprints": [
-          "5ac7119d10dffabca82a"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "钛媒体",
-            "title": "百丽十二年数智化复盘：先把企业工程化，再让AI 读懂它丨2026 ITValue Summit 前瞻：AI系统落地系列直播③",
-            "url": "https://www.tmtpost.com/8123419.html",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "691a7bf38d346807c1ac",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T07:52:47+00:00",
-        "lastSeenAt": "2026-09-01T07:52:47+00:00",
-        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-6758725ec7a4eb59c9d1": {
-        "eventId": "evt-6758725ec7a4eb59c9d1",
-        "dataset": "institutionEvent",
-        "entityId": "user-source-source-auto-institution-team-131095855545-b2da53704a160472",
-        "entityName": "启明星 | 安澜德健完成近亿元A轮融资，启明创投独家投资 | 启明创投",
-        "title": "启明星 | 安澜德健完成近亿元A轮融资，启明创投独家投资 | 启明创投",
-        "titleAliases": [
-          "启明星"
-        ],
-        "publishedDate": "2026-08-18",
-        "publishedDates": [
-          "2026-08-18"
-        ],
-        "entityKeys": [
-          "institutionEvent:user-source-source-auto-institution-team-131095855545-b2da53704a160472",
-          "name:启明星 | 安澜德健完成近亿元a轮融资,启明创投独家投资 | 启明创投"
-        ],
-        "typeKeys": [
-          "机构/资本事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-695d47e46c548f0f0d81",
-          "record-7c8e024ffeb80d0bf1b1",
-          "src-935289a2f4f2408a3b48"
-        ],
-        "evidenceFingerprints": [
-          "695d47e46c548f0f0d81"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "启明创投 · 核心团队页",
-            "title": "启明星 | 安澜德健完成近亿元A轮融资，启明创投独家投资 | 启明创投",
-            "url": "https://www.qimingvc.com/cn/news/%E5%90%AF%E6%98%8E%E6%98%9F-%E5%AE%89%E6%BE%9C%E5%BE%B7%E5%81%A5%E5%AE%8C%E6%88%90%E8%BF%91%E4%BA%BF%E5%85%83a%E8%BD%AE%E8%9E%8D%E8%B5%84%EF%BC%8C%E5%90%AF%E6%98%8E%E5%88%9B%E6%8A%95%E7%8B%AC%E5%AE%B6%E6%8A%95%E8%B5%84",
-            "publishedAt": "2026-08-18",
-            "evidenceGrade": "B"
-          }
-        ],
-        "claimFingerprint": "1b9f0802db629cd054ec",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T07:52:47+00:00",
-        "lastSeenAt": "2026-09-01T07:52:47+00:00",
-        "lastPublishedAt": "2026-09-01T07:52:47+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 4,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
       }
     },
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 0,
+    "newEvents": 4,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
     "duplicatesSuppressed": 0,
-    "observedEvents": 0,
+    "observedEvents": 4,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -37217,10 +37799,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-11",
-      "generatedAt": "2026-09-10T18:25:05+00:00",
-      "runStatus": "no-material-change",
-      "changeCount": 50,
-      "executiveSummary": "本轮未检测到新的外部事实候选。",
+      "generatedAt": "2026-09-10T21:15:36+00:00",
+      "runStatus": "model",
+      "changeCount": 54,
+      "executiveSummary": "证据包显示四起高价值事件：Nasuni 收购 DryvIQ（E001）、前 Anthropic 研究员的 AI 灭绝警告被媒体讨论（E002）、阿联酋计划在德国投资 400 亿欧元（E003）、OpenAI 面向金融业推出 ChatGPT for Financial Services（E005）。其中并购事件证据等级相对较高，但四起事件均处于首见状态且多数来源为媒体转载或评述，需要后续官方确认或独立证据交叉验证。本报告仅基于证据包表述，不构成投资建议。",
       "eventIds": [
         "evt-959796dfdf65604663a3",
         "evt-4c43b7c8ec9d0c98f992",
@@ -37271,7 +37853,11 @@
         "evt-279047f201a0955def0b",
         "evt-05d74fe5403e40433470",
         "evt-f70408a8fd15fc0568b3",
-        "evt-dcabebe1fe3ce4514fae"
+        "evt-dcabebe1fe3ce4514fae",
+        "evt-ffcc48b0f13014ed5e7f",
+        "evt-bdedfb3b8fec01370188",
+        "evt-f5f24acf6319676677e9",
+        "evt-e00cee8f616f54ed890c"
       ],
       "eventStates": [
         {
@@ -37473,14 +38059,30 @@
         {
           "eventId": "evt-dcabebe1fe3ce4514fae",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-ffcc48b0f13014ed5e7f",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-bdedfb3b8fec01370188",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-f5f24acf6319676677e9",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-e00cee8f616f54ed890c",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 0,
       "candidateTotal": 10,
-      "auxiliaryLeadTotal": 36,
-      "rejectedTotal": 2,
+      "auxiliaryLeadTotal": 40,
+      "rejectedTotal": 6,
       "eventSummary": {
-        "newEvents": 49,
+        "newEvents": 53,
         "reconfirmations": 10,
         "updates": 1,
         "corrections": 0,
@@ -37490,15 +38092,19 @@
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 0,
-    "eligibleCandidateCount": 0,
-    "rejectedCandidateCount": 0,
-    "rejectedByDataset": {},
-    "evidenceCount": 0,
-    "supportingEvidenceCount": 0,
-    "rejectedEvidenceCount": 0,
+    "candidateCount": 8,
+    "eligibleCandidateCount": 4,
+    "rejectedCandidateCount": 4,
+    "rejectedByDataset": {
+      "intelligenceEvent": 4
+    },
+    "evidenceCount": 8,
+    "supportingEvidenceCount": 4,
+    "rejectedEvidenceCount": 4,
     "passedButUnboundEvidenceCount": 0,
-    "rejectionReasons": {},
+    "rejectionReasons": {
+      "discovery_only": 4
+    },
     "sourceClassificationWarnings": []
   },
   "sourceClassificationWarnings": [],
