@@ -5,6 +5,7 @@ import type { ArticlePayload, LiveIntelligenceEvent } from "@/lib/use-articles";
 type ReviewedField = "sector" | "type";
 type MetadataReview = {
   id: string;
+  articleId: string;
   sourceId: string;
   sourceUrl: string;
   expectedTitle: string;
@@ -19,6 +20,7 @@ const titleKey = (title: string) => title.normalize("NFKC").trim().replace(/\s+/
 /** Same bounded manifest as the publication gate. Does not change importance or credibility. */
 export function applyArticleMetadataReview<T extends LiveIntelligenceEvent>(article: T): T {
   const review = reviews.find((candidate) =>
+    candidate.articleId === article.id &&
     candidate.sourceId === article.sourceId &&
     titleKey(candidate.expectedTitle) === titleKey(article.title) &&
     homepageMaterialUrl(candidate.sourceUrl) === homepageMaterialUrl(article.source.url),
