@@ -17,6 +17,11 @@ import { useEffect, useMemo, useState } from "react";
 import { useFavorites } from "@/components/use-favorites";
 import { useHomepagePreferences } from "@/components/use-homepage-preferences";
 import {
+  projectHomepagePersonDirectoryEvents,
+  type HomepagePersonDirectoryItem,
+  type HomepagePersonProfile,
+} from "@/lib/homepage-person-channel-events";
+import {
   buildHomepageFavoriteAffinityProfile,
   homepageFavoriteId,
   isHomepageSectorFollowed,
@@ -51,6 +56,18 @@ type LoadResult = {
 
 type CopyState = "idle" | "copied" | "failed";
 
+type PersonDirectoryArchivePayload = {
+  channels?: {
+    people?: {
+      items?: HomepagePersonDirectoryItem[];
+    };
+  };
+};
+
+type PeoplePayload = {
+  people?: HomepagePersonProfile[];
+};
+
 function unique(values: Array<string | undefined>) {
   return [...new Set(values.map((value) => value?.trim()).filter(Boolean) as string[])];
 }
@@ -79,6 +96,27 @@ async function copyText(text: string) {
   }
 }
 
+async function loadPersonDirectoryResearchEvent(eventId: string) {
+  const [directoryResponse, peopleResponse] = await Promise.all([
+    fetch("/data/channel_update_directories.json", { cache: "default" }),
+    fetch("/data/people.json", { cache: "default" }),
+  ]);
+  if (!directoryResponse.ok || !peopleResponse.ok) return null;
+
+  const directoryPayload = await directoryResponse.json() as PersonDirectoryArchivePayload;
+  const peoplePayload = await peopleResponse.json() as PeoplePayload;
+  const directoryItem = (directoryPayload.channels?.people?.items ?? []).find(
+    (candidate) =>
+      `person-directory:${candidate.eventClusterId || candidate.id}` === eventId,
+  );
+  if (!directoryItem) return null;
+
+  return projectHomepagePersonDirectoryEvents(
+    [directoryItem],
+    peoplePayload.people ?? [],
+  )[0] ?? null;
+}
+
 async function loadResearchEvent(eventId: string) {
   const [articleResponse, rankedValue] = await Promise.all([
     fetch("/data/articles.json", { cache: "default" }),
@@ -101,7 +139,10 @@ async function loadResearchEvent(eventId: string) {
       // The canonical article snapshot is still sufficient for most handoffs.
     }
   }
-  return merged.articles.find((candidate) => candidate.id === eventId) ?? null;
+
+  const canonicalEvent = merged.articles.find((candidate) => candidate.id === eventId) ?? null;
+  if (canonicalEvent || !eventId.startsWith("person-directory:")) return canonicalEvent;
+  return loadPersonDirectoryResearchEvent(eventId);
 }
 
 function relatedSourceLabel(item: NonNullable<LiveIntelligenceEvent["relatedSources"]>[number]) {

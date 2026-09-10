@@ -7,6 +7,7 @@ import { HomepageTopicBriefs } from "@/components/homepage-topic-briefs";
 import { HomepageTrackingActions } from "@/components/homepage-tracking-actions";
 import unifiedStyles from "@/components/homepage-unified-inbox.module.css";
 import { companies } from "@/lib/catalog-data";
+import { getChannelUpdateDirectory } from "@/lib/channel-updates";
 import { companyEntities } from "@/lib/company-entity-registry";
 import { coreResearchObjectStats } from "@/lib/core-research-objects";
 import {
@@ -14,6 +15,8 @@ import {
   uniqueHomepageEntitySlugs,
   type HomepageEntityChannelIndex,
 } from "@/lib/homepage-entity-channels";
+import { projectHomepagePersonDirectoryEvents } from "@/lib/homepage-person-channel-events";
+import { aggregatePeopleUpdateDirectory } from "@/lib/people-event-updates";
 import { researchPeople } from "@/lib/people-data";
 import {
   mergeRankedIntelligenceIntoArticlePayload,
@@ -63,6 +66,11 @@ const homepageEntityChannelIndex: HomepageEntityChannelIndex = {
     ]),
   },
 };
+
+const peopleChannelEvents = projectHomepagePersonDirectoryEvents(
+  aggregatePeopleUpdateDirectory(getChannelUpdateDirectory("people")).items,
+  researchPeople,
+);
 
 function compactHomepageArticle(item: LiveIntelligenceEvent): LiveIntelligenceEvent {
   return {
@@ -163,6 +171,7 @@ export default function Home() {
         <HomepageNewsFeed
           bootstrap={bootstrap}
           initialPayload={initialPayload}
+          peopleChannelEvents={peopleChannelEvents}
         />
         <HomepageTopicBriefs />
         <DailyBriefQuickActions
