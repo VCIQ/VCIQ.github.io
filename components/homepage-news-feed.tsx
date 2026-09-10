@@ -25,6 +25,10 @@ import {
   type HomepageEntityChannelIndex,
   type HomepageEntityChannelSets,
 } from "@/lib/homepage-entity-channels";
+import {
+  excludeDisplayedHomepageEvents,
+  homepageEventSummary,
+} from "@/lib/homepage-event-identity";
 import { mergeHomepagePersonChannelEvents } from "@/lib/homepage-person-channel-events";
 import {
   dismissHomepageEvent,
@@ -231,7 +235,7 @@ function trackingHref(item: LiveIntelligenceEvent) {
   return buildTrackingCaptureLink({
     url: item.source.url,
     title: item.title,
-    summary: item.summary,
+    summary: homepageEventSummary(item),
     keywords: [
       item.type,
       item.region,
@@ -247,11 +251,12 @@ function trackingHref(item: LiveIntelligenceEvent) {
 }
 
 function shareHomepageItem(item: LiveIntelligenceEvent) {
+  const summary = homepageEventSummary(item);
   recordArticleShare({
     id: item.id,
     href: item.source.url,
     title: item.title,
-    summary: item.summary,
+    summary,
     publishedAt: item.publishedAt.slice(0, 10),
     importance: item.importance,
     sourceName: item.source.name,
@@ -262,7 +267,7 @@ function shareHomepageItem(item: LiveIntelligenceEvent) {
     new CustomEvent(SHARE_REQUEST_EVENT, {
       detail: {
         title: item.title,
-        summary: item.summary,
+        summary,
         url: item.source.url,
       },
     }),
@@ -345,6 +350,7 @@ export function HomepageNewsFeed({
       ? mergeHomepagePersonChannelEvents(
           articleBase.filter((item) => matchesHomepagePersonEntityChannel(item, entityChannels)),
           peopleChannelEvents,
+          articleBase,
         )
       : articleBase;
     return base
@@ -403,7 +409,7 @@ export function HomepageNewsFeed({
   const discoveryCutoffMs = Number.isFinite(discoveryAnchorMs)
     ? discoveryAnchorMs - DISCOVERY_WINDOW_DAYS * DAY_MS
     : Number.NEGATIVE_INFINITY;
-  const discoverySignals = trustedVisibleArticles
+  const discoveryCandidates = trustedVisibleArticles
     .filter((item) => Date.parse(item.publishedAt) >= discoveryCutoffMs)
     .filter((item) => !favoriteProfile.favoriteIds.has(homepageFavoriteId(item)))
     .filter((item) => !recommendationFirstPageIds.has(homepageEventKey(item)))
@@ -417,8 +423,11 @@ export function HomepageNewsFeed({
           personalizedHomepageRecommendationScore(left, preferences, favoriteProfile) ||
         right.importance - left.importance ||
         right.publishedAt.localeCompare(left.publishedAt),
-    )
-    .slice(0, DISCOVERY_SIGNAL_LIMIT);
+    );
+  const discoverySignals = excludeDisplayedHomepageEvents(
+    discoveryCandidates,
+    displayedArticles,
+  ).slice(0, DISCOVERY_SIGNAL_LIMIT);
 
   const trendSource = latestDayArticles.length >= 5
     ? latestDayArticles
@@ -604,7 +613,7 @@ export function HomepageNewsFeed({
                       </h2>
 
                       <p className={styles.cardSummary}>
-                        {compactSummary(item.summary, hero ? 230 : major ? 170 : 125)}
+                        {compactSummary(homepageEventSummary(item), hero ? 230 : major ? 170 : 125)}
                       </p>
 
                       <EventQualityIndicator item={item} />
@@ -738,7 +747,7 @@ export function HomepageNewsFeed({
           <section className={styles.railPanel}>
             <header>
               <span>YOU MAY HAVE MISSED</span>
-              <strong>猜你喜欢</strong>
+              <strong>猜你喜欢 · 全站推荐</strong>
             </header>
             <ol className={styles.signalList}>
               {discoverySignals.map((item, index) => (
