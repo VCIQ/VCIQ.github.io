@@ -6,6 +6,7 @@ import {
 import { HomepageTopicBriefs } from "@/components/homepage-topic-briefs";
 import { HomepageTrackingActions } from "@/components/homepage-tracking-actions";
 import unifiedStyles from "@/components/homepage-unified-inbox.module.css";
+import { applyArticleMetadataReviews } from "@/lib/article-metadata-reviews";
 import { companies } from "@/lib/catalog-data";
 import { getChannelUpdateDirectory } from "@/lib/channel-updates";
 import { companyEntities } from "@/lib/company-entity-registry";
@@ -29,9 +30,11 @@ import rawArticles from "@/public/data/articles.json";
 import rawRankedIntelligence from "@/public/data/ranked-intelligence.json";
 
 const INITIAL_KEY_EVENTS_LIMIT = 36;
-const snapshot = mergeRankedIntelligenceIntoArticlePayload(
-  rawArticles as unknown as ArticlePayload,
-  rawRankedIntelligence,
+const snapshot = applyArticleMetadataReviews(
+  mergeRankedIntelligenceIntoArticlePayload(
+    rawArticles as unknown as ArticlePayload,
+    rawRankedIntelligence,
+  ),
 );
 const trackedSectorAliases = [
   ...new Set([

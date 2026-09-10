@@ -13,6 +13,11 @@ from datetime import date
 from typing import Any, Iterable
 from urllib.parse import urlsplit
 
+try:
+    from .article_metadata_reviews import apply_article_metadata_review
+except ImportError:
+    from article_metadata_reviews import apply_article_metadata_review
+
 
 VALID_SOURCE_ROLES = {"primary", "corroboration", "discovery"}
 EXPLICIT_EVENT_TYPES = {
@@ -275,11 +280,11 @@ def filter_publishable_articles(
         role = _role(article)
         if role == "primary":
             report["primary"] += 1
-            published.append(article)
+            published.append(apply_article_metadata_review(article))
             continue
         if role == "corroboration":
             report["corroboration"] += 1
-            published.append(article)
+            published.append(apply_article_metadata_review(article))
             continue
 
         report["discoverySeen"] += 1
@@ -290,7 +295,7 @@ def filter_publishable_articles(
         )
         if allowed:
             report["discoveryPublished"] += 1
-            published.append(article)
+            published.append(apply_article_metadata_review(article))
         else:
             report["discoveryHeld"] += 1
 

@@ -16,7 +16,14 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useFavorites } from "@/components/use-favorites";
 import { useHomepagePreferences } from "@/components/use-homepage-preferences";
+import { applyArticleMetadataReviews } from "@/lib/article-metadata-reviews";
 import {
+  homepageEventSummary,
+  homepageMaterialUrl,
+  homepageSourceEvidence,
+} from "@/lib/homepage-event-identity";
+import {
+  mergeHomepagePersonChannelEvents,
   projectHomepagePersonDirectoryEvents,
   type HomepagePersonDirectoryItem,
   type HomepagePersonProfile,
@@ -96,25 +103,24 @@ async function copyText(text: string) {
   }
 }
 
-async function loadPersonDirectoryResearchEvent(eventId: string) {
+async function loadPersonDirectoryResearchEvents() {
   const [directoryResponse, peopleResponse] = await Promise.all([
     fetch("/data/channel_update_directories.json", { cache: "default" }),
     fetch("/data/people.json", { cache: "default" }),
   ]);
-  if (!directoryResponse.ok || !peopleResponse.ok) return null;
+  if (!directoryResponse.ok || !peopleResponse.ok) return [];
 
   const directoryPayload = await directoryResponse.json() as PersonDirectoryArchivePayload;
   const peoplePayload = await peopleResponse.json() as PeoplePayload;
-  const directoryItem = (directoryPayload.channels?.people?.items ?? []).find(
-    (candidate) =>
-      `person-directory:${candidate.eventClusterId || candidate.id}` === eventId,
-  );
-  if (!directoryItem) return null;
-
   return projectHomepagePersonDirectoryEvents(
-    [directoryItem],
+    directoryPayload.channels?.people?.items ?? [],
     peoplePayload.people ?? [],
-  )[0] ?? null;
+  );
+}
+
+async function loadPersonDirectoryResearchEvent(eventId: string) {
+  const events = await loadPersonDirectoryResearchEvents();
+  return events.find((candidate) => candidate.id === eventId) ?? null;
 }
 
 async function loadResearchEvent(eventId: string) {
@@ -139,9 +145,36 @@ async function loadResearchEvent(eventId: string) {
       // The canonical article snapshot is still sufficient for most handoffs.
     }
   }
+  merged = applyArticleMetadataReviews(merged);
 
   const canonicalEvent = merged.articles.find((candidate) => candidate.id === eventId) ?? null;
-  if (canonicalEvent || !eventId.startsWith("person-directory:")) return canonicalEvent;
+  if (canonicalEvent) {
+    // A visible person-channel card can keep the canonical article ID while
+    // carrying a reviewed relationship from the person directory. Reconstruct
+    // that same view for deep research, but fail open to the canonical article
+    // if the optional directory archive is temporarily unavailable.
+    try {
+      const directoryEvents = await loadPersonDirectoryResearchEvents();
+      const canonicalUrl = homepageMaterialUrl(canonicalEvent.source.url);
+      const sameMaterial = canonicalUrl
+        ? directoryEvents.filter(
+            (candidate) => homepageMaterialUrl(candidate.source.url) === canonicalUrl,
+          )
+        : [];
+      if (sameMaterial.length) {
+        return mergeHomepagePersonChannelEvents(
+          [canonicalEvent],
+          sameMaterial,
+          merged.articles,
+        ).find((candidate) => candidate.id === canonicalEvent.id) ?? canonicalEvent;
+      }
+    } catch {
+      // Person-directory enrichment is optional for a canonical research event.
+    }
+    return canonicalEvent;
+  }
+
+  if (!eventId.startsWith("person-directory:")) return null;
   return loadPersonDirectoryResearchEvent(eventId);
 }
 
@@ -189,6 +222,8 @@ export default function ResearchInvestigationClient() {
     ? "missing"
     : currentResult?.state ?? "loading";
   const item = currentResult?.item ?? null;
+  const eventSummary = item ? homepageEventSummary(item) : "";
+  const sourceEvidence = item ? homepageSourceEvidence(item) : null;
 
   const handoff = useMemo<ResearchWorkspaceHandoff | null>(() => {
     if (!item) return null;
@@ -197,12 +232,12 @@ export default function ResearchInvestigationClient() {
       eventId: item.id,
       title: item.title,
       url: item.source.url,
-      summary: item.summary,
+      summary: homepageEventSummary(item),
       sector: item.sector,
       company: item.company,
       people: unique([...(item.mentionedPeople ?? []), ...(item.authors ?? [])]),
       companies: unique(item.mentionedCompanies ?? []),
-      relatedSources: (item.relatedSources ?? []).map((source) => ({
+      relatedSources: homepageSourceEvidence(item).additionalLinks.map((source) => ({
         name: source.name,
         url: source.url,
         level: source.level,
@@ -295,7 +330,7 @@ export default function ResearchInvestigationClient() {
               <span>重要度 {item.importance}</span>
             </div>
             <h2 id="investigation-title">{item.title}</h2>
-            <p className={styles.summary}>{item.summary}</p>
+            <p className={styles.summary}>{eventSummary}</p>
             <div className={styles.sourceRow}>
               <a href={item.source.url} target="_blank" rel="noreferrer">
                 {item.source.name} · {item.source.level}
@@ -326,8 +361,8 @@ export default function ResearchInvestigationClient() {
             </article>
             <article>
               <header><ShieldCheck size={16} aria-hidden="true" />证据入口</header>
-              <p>主来源 1 个</p>
-              <p>关联来源 {item.relatedSources?.length ?? 0} 个</p>
+              <p>来源链接 {sourceEvidence?.totalLinks ?? 0} 个</p>
+              <p>其他来源链接 {sourceEvidence?.additionalLinks.length ?? 0} 个</p>
               <p>{item.qualityStatus ? `质量状态：${item.qualityStatus}` : "质量状态未标记"}</p>
             </article>
           </section>
@@ -336,9 +371,9 @@ export default function ResearchInvestigationClient() {
             <div className={styles.sectionHeading}>
               <div>
                 <p className="section-index">EVIDENCE STARTING POINTS</p>
-                <h2>关联来源</h2>
+                <h2>来源链接</h2>
               </div>
-              <span>深研时仍应主动寻找独立来源</span>
+              <span>链接数量不等同于独立信源或交叉验证次数</span>
             </div>
             <ol className={styles.sourceList}>
               <li>
@@ -348,7 +383,7 @@ export default function ResearchInvestigationClient() {
                   <ExternalLink size={13} aria-hidden="true" />
                 </a>
               </li>
-              {(item.relatedSources ?? []).slice(0, 8).map((source) => (
+              {(sourceEvidence?.additionalLinks ?? []).slice(0, 8).map((source) => (
                 <li key={`${source.url}-${source.publishedAt}`}>
                   <a href={source.url} target="_blank" rel="noreferrer">
                     <strong>{relatedSourceLabel(source)}</strong>

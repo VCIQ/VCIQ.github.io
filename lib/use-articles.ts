@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { applyArticleMetadataReviews } from "@/lib/article-metadata-reviews";
 import {
   mergeRankedIntelligenceIntoArticlePayload,
   parseRankedIntelligenceProjection,
@@ -194,9 +195,10 @@ async function fetchArticlesFromNetwork(): Promise<ArticlePayload> {
     throw new Error(`Public article data returned ${response.status}`);
   }
   const payload = parseArticlePayload(await response.json());
-  return rankedProjection
+  const merged = rankedProjection
     ? mergeRankedIntelligenceIntoArticlePayload(payload, rankedProjection)
     : payload;
+  return applyArticleMetadataReviews(merged);
 }
 
 async function loadArticles(force = false): Promise<ArticlePayload> {

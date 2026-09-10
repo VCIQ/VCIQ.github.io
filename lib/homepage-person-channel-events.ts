@@ -1,3 +1,4 @@
+import { homepageMaterialUrl } from "./homepage-event-identity";
 import { findHomepagePersonMaterialReview } from "./homepage-person-material-reviews";
 import { normalizeHomepageEntityKey } from "@/lib/homepage-entity-channels";
 import type {
@@ -188,49 +189,131 @@ function normalizedEventTitle(value: string) {
   return normalizeHomepageEntityKey(value);
 }
 
-function normalizedEventUrl(value: string) {
-  const candidate = value.trim();
-  if (!candidate) return "";
-  try {
-    const url = new URL(candidate, "https://vciq.github.io");
-    url.hash = "";
-    for (const key of [...url.searchParams.keys()]) {
-      if (key.toLowerCase().startsWith("utm_")) url.searchParams.delete(key);
-    }
-    return url.toString().replace(/\/$/u, "").toLocaleLowerCase("en-US");
-  } catch {
-    return candidate.toLocaleLowerCase("en-US");
+function uniqueStrings(values: readonly (string | undefined)[]) {
+  const result: string[] = [];
+  const seen = new Set<string>();
+  for (const raw of values) {
+    const value = String(raw ?? "").trim();
+    const key = value.normalize("NFKC").toLocaleLowerCase("zh-CN");
+    if (!value || seen.has(key)) continue;
+    seen.add(key);
+    result.push(value);
   }
+  return result;
+}
+
+function mergeRelatedSources(
+  canonical: LiveIntelligenceEvent,
+  directory: LiveIntelligenceEvent,
+): RelatedArticleSource[] | undefined {
+  const primary = homepageMaterialUrl(canonical.source.url);
+  const seen = new Set(primary ? [primary] : []);
+  const merged: RelatedArticleSource[] = [];
+  for (const source of [...(canonical.relatedSources ?? []), ...(directory.relatedSources ?? [])]) {
+    const key = homepageMaterialUrl(source.url);
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    merged.push(source);
+    if (merged.length >= 3) break;
+  }
+  return merged.length ? merged : undefined;
+}
+
+function enrichCanonicalPersonEvent(
+  canonical: LiveIntelligenceEvent,
+  directory: LiveIntelligenceEvent,
+): LiveIntelligenceEvent {
+  const review = findHomepagePersonMaterialReview(
+    directory.personSlug,
+    directory.source.url,
+    directory.title,
+  );
+  const relatedSources = mergeRelatedSources(canonical, directory);
+  const mentionedPeople = uniqueStrings([
+    ...(canonical.mentionedPeople ?? []),
+    ...(directory.mentionedPeople ?? []),
+  ]);
+  const qualitySignals = uniqueStrings([
+    ...(canonical.qualitySignals ?? []),
+    ...(directory.qualitySignals ?? []),
+  ]);
+  const matchedTrackingTerms = uniqueStrings([
+    ...(canonical.matchedTrackingTerms ?? []),
+    ...(directory.matchedTrackingTerms ?? []),
+  ]);
+  const source = review && canonical.source.level !== "待交叉验证"
+    ? { ...canonical.source, level: review.sourceLevel }
+    : canonical.source;
+
+  return {
+    ...canonical,
+    summary: review?.summary ?? canonical.summary,
+    personSlug: canonical.personSlug ?? directory.personSlug,
+    source,
+    qualityStatus: canonical.qualityStatus ?? directory.qualityStatus,
+    qualitySignals: qualitySignals.length ? qualitySignals : undefined,
+    relatedSources,
+    duplicateCount: Math.max(
+      canonical.duplicateCount ?? 1,
+      directory.duplicateCount ?? 1,
+      (relatedSources?.length ?? 0) + 1,
+    ),
+    eventClusterId: canonical.eventClusterId ?? directory.eventClusterId,
+    mentionedPeople: mentionedPeople.length ? mentionedPeople : undefined,
+    matchedTrackingTerms: matchedTrackingTerms.length ? matchedTrackingTerms : undefined,
+  };
 }
 
 /**
- * Article-derived person events remain canonical when the same material is
- * already present in the main intelligence archive. The directory contributes
- * only person-library material that would otherwise disappear from the new
- * homepage-only event architecture.
+ * Article-derived events stay canonical. The third argument is the complete
+ * quality-scoped article pool, allowing a person-directory relationship to
+ * attach to an existing article even when that article did not already carry
+ * person metadata. Historical directory IDs remain independently recoverable.
  */
 export function mergeHomepagePersonChannelEvents(
   articleEvents: readonly LiveIntelligenceEvent[],
   directoryEvents: readonly LiveIntelligenceEvent[],
+  canonicalArticleEvents: readonly LiveIntelligenceEvent[] = articleEvents,
 ): LiveIntelligenceEvent[] {
   const merged = [...articleEvents];
+  const canonicalByUrl = new Map<string, LiveIntelligenceEvent>();
+  for (const article of canonicalArticleEvents) {
+    const key = homepageMaterialUrl(article.source.url);
+    if (key && !canonicalByUrl.has(key)) canonicalByUrl.set(key, article);
+  }
   const seenUrls = new Set(
-    articleEvents.map((item) => normalizedEventUrl(item.source.url)).filter(Boolean),
+    articleEvents.map((item) => homepageMaterialUrl(item.source.url)).filter(Boolean),
   );
   const seenTitles = new Set(
     articleEvents.map((item) => normalizedEventTitle(item.title)).filter(Boolean),
   );
 
   for (const event of directoryEvents) {
-    // Keep the record resolvable by historical deep-research links, with the
-    // reviewed summary above, but do not present a background mention as that
-    // person's news. Only source-reviewed directory records are affected.
+    // Keep context-only records resolvable by historical deep-research links,
+    // but never surface them as that person's visible news.
     const review = event.sourceId === "person-update-directory"
       ? findHomepagePersonMaterialReview(event.personSlug, event.source.url, event.title)
       : undefined;
     if (review?.relation === "context-only") continue;
-    const urlKey = normalizedEventUrl(event.source.url);
+
+    const urlKey = homepageMaterialUrl(event.source.url);
     const titleKey = normalizedEventTitle(event.title);
+    const canonical = urlKey ? canonicalByUrl.get(urlKey) : undefined;
+    if (canonical) {
+      const existingIndex = merged.findIndex((item) =>
+        item.id === canonical.id ||
+        (urlKey && homepageMaterialUrl(item.source.url) === urlKey),
+      );
+      const enrichmentBase = existingIndex >= 0 ? merged[existingIndex] : canonical;
+      const enriched = enrichCanonicalPersonEvent(enrichmentBase, event);
+      if (existingIndex >= 0) merged[existingIndex] = enriched;
+      else merged.push(enriched);
+      if (urlKey) seenUrls.add(urlKey);
+      const enrichedTitle = normalizedEventTitle(enriched.title);
+      if (enrichedTitle) seenTitles.add(enrichedTitle);
+      continue;
+    }
+
     if ((urlKey && seenUrls.has(urlKey)) || (titleKey && seenTitles.has(titleKey))) continue;
     merged.push(event);
     if (urlKey) seenUrls.add(urlKey);
