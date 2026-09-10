@@ -6,6 +6,14 @@ on:
       - Build and deploy GitHub Pages
     types: [completed]
   workflow_dispatch:
+  # Independent reconciliation also covers missed/chained workflow_run events.
+  schedule:
+    - cron: "17,47 * * * *"
+  # Bootstrap the observer fix on merge, never on its diagnostic-only commits.
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/observe-pages-deployment.yml"
 
 permissions:
   contents: write
@@ -19,6 +27,8 @@ jobs:
   record:
     if: >-
       github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'schedule' ||
+      github.event_name == 'push' ||
       github.event.workflow_run.head_branch == 'main'
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -28,6 +38,7 @@ jobs:
           ref: main
           fetch-depth: 0
       - name: Record latest Pages run and real deployment outcome
+        id: observe
         env:
           GH_TOKEN: ${{ github.token }}
           EVENT_RUN_ID: ${{ github.event.workflow_run.id }}
@@ -35,21 +46,46 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p diagnostics
+          echo "recorded=false" >> "$GITHUB_OUTPUT"
+          RUN_JSON="${RUNNER_TEMP:-/tmp}/pages-observer-run.json"
 
-          RUN_ID="$EVENT_RUN_ID"
+          # Record the latest completed attempt, not merely the event that
+          # happened to wake this job. Do not hide a newer failure by asking
+          # only for successful runs. In-progress runs are not deployments.
+          RUN_ID="$(gh run list --workflow pages.yml --branch main --status completed --limit 1 --json databaseId --jq '.[0].databaseId // empty')"
           if [ -z "$RUN_ID" ]; then
-            RUN_ID="$(gh run list --workflow pages.yml --branch main --limit 1 --json databaseId --jq '.[0].databaseId')"
+            echo "No completed Pages run is available; preserving the diagnostic."
+            exit 0
           fi
-          test -n "$RUN_ID"
+          [[ "$RUN_ID" =~ ^[0-9]+$ ]]
+          if [ -n "$EVENT_RUN_ID" ] && [ "$EVENT_RUN_ID" != "$RUN_ID" ]; then
+            echo "Reconciling latest completed run $RUN_ID instead of delayed event $EVENT_RUN_ID."
+          fi
 
           gh run view "$RUN_ID" \
             --json databaseId,status,conclusion,createdAt,updatedAt,headSha,url,event,workflowName,jobs \
-            > /tmp/pages-run.json
+            > "$RUN_JSON"
+          jq -e --argjson runId "$RUN_ID" \
+            '.databaseId == $runId and .status == "completed" and (.jobs | type) == "array"' \
+            "$RUN_JSON" > /dev/null
 
-          BUILD_CONCLUSION="$(jq -r '[.jobs[] | select(.name == "build") | .conclusion][0] // "missing"' /tmp/pages-run.json)"
-          DEPLOY_CONCLUSION="$(jq -r '[.jobs[] | select(.name == "deploy") | .conclusion][0] // "missing"' /tmp/pages-run.json)"
-          BUILD_JOB_ID="$(jq -r '[.jobs[] | select(.name == "build") | .databaseId][0] // ""' /tmp/pages-run.json)"
-          RUN_CONCLUSION="$(jq -r '.conclusion // ""' /tmp/pages-run.json)"
+          # A delayed event/API response must never move the snapshot backward.
+          # Creation time dominates update time: rerunning an old run is not a
+          # newer publication. For one run, reject older attempt observations.
+          if [ -s diagnostics/pages-latest-status.json ]; then
+            if jq -e --slurpfile previous diagnostics/pages-latest-status.json \
+              '[.createdAt // "", .databaseId // 0, .updatedAt // ""] <
+               [$previous[0].createdAt // "", $previous[0].databaseId // 0, $previous[0].updatedAt // ""]' \
+              "$RUN_JSON" > /dev/null; then
+              echo "Preserving a newer Pages diagnostic."
+              exit 0
+            fi
+          fi
+
+          BUILD_CONCLUSION="$(jq -r '[.jobs[] | select(.name == "build") | .conclusion][0] // "missing"' "$RUN_JSON")"
+          DEPLOY_CONCLUSION="$(jq -r '[.jobs[] | select(.name == "deploy") | .conclusion][0] // "missing"' "$RUN_JSON")"
+          BUILD_JOB_ID="$(jq -r '[.jobs[] | select(.name == "build") | .databaseId][0] // ""' "$RUN_JSON")"
+          RUN_CONCLUSION="$(jq -r '.conclusion // ""' "$RUN_JSON")"
 
           deployment_status="incomplete"
           if [ "$DEPLOY_CONCLUSION" = "success" ]; then
@@ -83,7 +119,7 @@ jobs:
               deploymentStatus: $deploymentStatus,
               deferredReason: (if $deferredReason == "" then null else $deferredReason end)
             }' \
-            /tmp/pages-run.json \
+            "$RUN_JSON" \
             > diagnostics/pages-latest-status.json
 
           if [ "$RUN_CONCLUSION" = "failure" ]; then
@@ -91,13 +127,26 @@ jobs:
           else
             : > diagnostics/pages-latest-failure.txt
           fi
+          echo "recorded=true" >> "$GITHUB_OUTPUT"
+          echo "Recorded Pages run $RUN_ID: $deployment_status."
 
       - name: Recover a deferred stale-tracking publication
+        if: steps.observe.outputs.recorded == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_RUN_ID: ${{ github.event.workflow_run.id }}
         shell: bash
         run: |
           set -euo pipefail
+          # Periodic/bootstrap reconciliation is diagnostic-only. A delayed
+          # event must not dispatch recovery for a different, newer run.
+          if [ "$EVENT_NAME" != "workflow_dispatch" ]; then
+            if [ "$EVENT_NAME" != "workflow_run" ] || [ "$EVENT_RUN_ID" != "$(jq -r '.databaseId' diagnostics/pages-latest-status.json)" ]; then
+              echo "Diagnostic-only reconciliation; no recovery dispatch."
+              exit 0
+            fi
+          fi
           deployment_status="$(jq -r '.deploymentStatus // ""' diagnostics/pages-latest-status.json)"
           deferred_reason="$(jq -r '.deferredReason // ""' diagnostics/pages-latest-status.json)"
 
@@ -113,6 +162,7 @@ jobs:
             --repo "$GITHUB_REPOSITORY"
 
       - name: Publish diagnostic snapshot
+        if: steps.observe.outputs.recorded == 'true'
         shell: bash
         run: |
           set -euo pipefail
