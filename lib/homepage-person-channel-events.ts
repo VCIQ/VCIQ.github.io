@@ -82,6 +82,35 @@ function personMaterialImportance(item: HomepagePersonDirectoryItem) {
   return Math.min(95, (baseByLabel[item.label] ?? 70) + sourceBonus);
 }
 
+function personTitleReferencesProfile(
+  title: string,
+  profile: HomepagePersonProfile,
+) {
+  const titleKey = normalizeHomepageEntityKey(title);
+  if (!titleKey) return false;
+  return [profile.name, profile.englishName, ...(profile.aliases ?? [])]
+    .map((value) => normalizeHomepageEntityKey(value))
+    .filter((value) => value.length >= 2)
+    .some((value) => titleKey.includes(value));
+}
+
+function hasHomepagePersonSubjectEvidence(
+  item: HomepagePersonDirectoryItem,
+  profile: HomepagePersonProfile,
+) {
+  // Generic directory associations are intentionally broad: they can be
+  // created because a tracked person appears somewhere in an article. That is
+  // useful for research recall but too permissive for a user-facing person
+  // feed. Require the formal person to be visible in the title before a
+  // generic "人物材料/人物资料" item is projected onto the homepage.
+  // Explicitly person-centric material types (interview, speech, dialogue,
+  // paper, book, shareholder letter, official material) keep their existing
+  // curated admission because the directory label itself carries subject
+  // semantics.
+  if (item.label !== "人物材料" && item.label !== "人物资料") return true;
+  return personTitleReferencesProfile(item.title, profile);
+}
+
 function relatedPersonMaterialSources(
   item: HomepagePersonDirectoryItem,
 ): RelatedArticleSource[] | undefined {
@@ -118,6 +147,7 @@ export function projectHomepagePersonDirectoryEvents(
     const href = item.href.trim();
     const publishedAt = item.sortAt.trim();
     if (!profile || !title || !href || !publishedAt) continue;
+    if (!hasHomepagePersonSubjectEvidence(item, profile)) continue;
 
     events.push({
       id: `person-directory:${item.eventClusterId || item.id}`,
