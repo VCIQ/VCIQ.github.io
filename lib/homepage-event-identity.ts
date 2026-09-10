@@ -1,5 +1,13 @@
 import type { LiveIntelligenceEvent, RelatedArticleSource } from "@/lib/use-articles";
 
+const NON_IDENTITY_QUERY_KEYS = new Set([
+  "gclid",
+  "fbclid",
+  "mc_cid",
+  "mc_eid",
+  "igshid",
+]);
+
 /** Material identity, not fuzzy topic similarity. Paths and identity query values retain case. */
 export function homepageMaterialUrl(value: string): string {
   try {
@@ -7,9 +15,13 @@ export function homepageMaterialUrl(value: string): string {
     if (!/^https?:$/u.test(url.protocol) || url.username || url.password) return "";
     url.hash = "";
     for (const key of [...url.searchParams.keys()]) {
-      if (key.toLowerCase().startsWith("utm_")) url.searchParams.delete(key);
+      const lowered = key.toLowerCase();
+      if (lowered.startsWith("utm_") || NON_IDENTITY_QUERY_KEYS.has(lowered)) {
+        url.searchParams.delete(key);
+      }
     }
     url.searchParams.sort();
+    if (url.pathname.length > 1) url.pathname = url.pathname.replace(/\/+$/u, "");
     return url.toString();
   } catch {
     return "";
