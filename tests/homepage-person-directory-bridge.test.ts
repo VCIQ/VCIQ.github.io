@@ -130,7 +130,7 @@ test("homepage and deep-research routes consume the published person directory b
     ),
   ]);
 
-  assert.match(homepage, /channel_update_directories\.json/u);
+  assert.match(homepage, /aggregatePeopleUpdateDirectory\(getChannelUpdateDirectory\("people"\)\)/u);
   assert.match(homepage, /projectHomepagePersonDirectoryEvents/u);
   assert.match(homepage, /peopleChannelEvents=\{peopleChannelEvents\}/u);
   assert.match(feed, /mergeHomepagePersonChannelEvents/u);
