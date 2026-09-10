@@ -19,13 +19,19 @@ import { useHomepagePreferences } from "@/components/use-homepage-preferences";
 import { useHotness } from "@/components/use-hotness";
 import { toggleFavorite } from "@/lib/favorites";
 import {
+  buildHomepageEntityChannelSets,
+  matchesHomepageCompanyEntityChannel,
+  matchesHomepagePersonEntityChannel,
+  type HomepageEntityChannelIndex,
+  type HomepageEntityChannelSets,
+} from "@/lib/homepage-entity-channels";
+import {
   dismissHomepageEvent,
   toggleHomepageSectorFollow,
   undoDismissHomepageEvent,
   type HomepagePreferenceState,
 } from "@/lib/homepage-preferences";
 import {
-  baseHomepageRecommendationScore,
   buildHomepageFavoriteAffinityProfile,
   homepageEventKey,
   homepageFeedFavoriteInput,
@@ -136,6 +142,7 @@ export type HomepageFeedBootstrap = {
     personCount: number;
     companyCount: number;
   };
+  entityChannelIndex: HomepageEntityChannelIndex;
 };
 
 function itemSearchText(item: LiveIntelligenceEvent) {
@@ -163,23 +170,21 @@ function matchesChannel(
   item: LiveIntelligenceEvent,
   channelId: ChannelId,
   preferences: HomepagePreferenceState,
+  entityChannels: HomepageEntityChannelSets,
 ) {
   if (channelId === "recommend" || channelId === "latest") return true;
   if (channelId === "follow") {
     return matchesHomepageFollowChannel(item, preferences);
   }
 
-  // Entity channels deliberately use structured entity fields instead of
-  // matching names in titles/summaries. This avoids routing an article into a
-  // person/company stream merely because it mentions a famous name in prose.
+  // Entity channels are gated by the published entity libraries. Raw NER-like
+  // mentions remain searchable metadata but cannot place an event in these
+  // streams unless the mention resolves exactly to a formal profile.
   if (channelId === "people") {
-    return Boolean(item.personSlug)
-      || item.type === "人物观点"
-      || (item.mentionedPeople?.length ?? 0) > 0;
+    return matchesHomepagePersonEntityChannel(item, entityChannels);
   }
   if (channelId === "companies") {
-    return Boolean(item.companySlug)
-      || (item.mentionedCompanies?.length ?? 0) > 0;
+    return matchesHomepageCompanyEntityChannel(item, entityChannels);
   }
 
   const channel = CHANNELS.find((candidate) => candidate.id === channelId);
@@ -294,6 +299,10 @@ export function HomepageNewsFeed({
     void flushPendingSharePreferences();
   }, []);
 
+  const entityChannels = useMemo(
+    () => buildHomepageEntityChannelSets(bootstrap.entityChannelIndex),
+    [bootstrap.entityChannelIndex],
+  );
   const favoriteProfile = useMemo(
     () => buildHomepageFavoriteAffinityProfile(favorites),
     [favorites],
@@ -332,7 +341,7 @@ export function HomepageNewsFeed({
     return base
       .filter((item) => !isHomepageEventDismissed(item, preferences))
       .filter((item) => region === "全部" || item.region === region)
-      .filter((item) => matchesChannel(item, channel, preferences))
+      .filter((item) => matchesChannel(item, channel, preferences, entityChannels))
       .filter((item) => !normalizedQuery || itemSearchText(item).includes(normalizedQuery))
       .sort((left, right) => {
         if (channel === "recommend") {
@@ -352,6 +361,7 @@ export function HomepageNewsFeed({
   }, [
     activeArticles,
     channel,
+    entityChannels,
     favoriteProfile,
     normalizedQuery,
     preferences,
@@ -420,9 +430,9 @@ export function HomepageNewsFeed({
   const currentChannelDescription = channel === "recommend"
     ? "推荐频道按个性化优先排序；先看最值得知道的变化，再决定是否查看来源、进入追踪、分享或深研此条。"
     : channel === "people"
-      ? "人物频道按最新事件优先，使用人物实体 ID、结构化人物提及和人物观点类型路由，不依赖姓名关键词碰撞。"
+      ? "人物频道仅接受已发布人物库实体的结构化关联：正式 personSlug 或与人物库别名精确匹配的人物提及；泛化人名识别不会直接入流。"
       : channel === "companies"
-        ? "公司频道按最新事件优先，使用公司实体 ID 与结构化公司提及路由，不依赖公司名称关键词碰撞。"
+        ? "公司频道仅接受已发布公司库实体的结构化关联：正式 companySlug 或与公司库别名精确匹配的公司提及；普通公司名文本命中不会直接入流。"
         : "当前频道按最新文章优先展示，个性化推荐仅用于同等新鲜度下的辅助排序。";
 
   function changeChannel(nextChannel: ChannelId) {
