@@ -83,6 +83,32 @@ test("person directory projection only admits published person profiles", () => 
   assert.deepEqual(rejected, []);
 });
 
+test("generic person materials need visible subject evidence before entering the homepage", () => {
+  const accepted = projectHomepagePersonDirectoryEvents(
+    [directoryItem({ label: "人物材料", title: "Jensen Huang：AI 基础设施仍将持续扩张" })],
+    [profile],
+  );
+  assert.equal(accepted.length, 1);
+
+  const unrelated = projectHomepagePersonDirectoryEvents(
+    [
+      directoryItem({
+        label: "人物材料",
+        title: "银行业如何有效管理 Token？",
+        summary: "正文曾提到黄仁勋，但报道主体并不是黄仁勋",
+      }),
+    ],
+    [profile],
+  );
+  assert.deepEqual(unrelated, []);
+
+  const explicitInterview = projectHomepagePersonDirectoryEvents(
+    [directoryItem({ label: "采访", title: "AI 基础设施下一阶段怎么走？" })],
+    [profile],
+  );
+  assert.equal(explicitInterview.length, 1);
+});
+
 test("person directory projection preserves research semantics and related sources", () => {
   const [event] = projectHomepagePersonDirectoryEvents(
     [directoryItem({ label: "论文" })],
