@@ -7,6 +7,7 @@ import { HomepageTopicBriefs } from "@/components/homepage-topic-briefs";
 import { HomepageTrackingActions } from "@/components/homepage-tracking-actions";
 import unifiedStyles from "@/components/homepage-unified-inbox.module.css";
 import { companies } from "@/lib/catalog-data";
+import { getChannelUpdateDirectory } from "@/lib/channel-updates";
 import { companyEntities } from "@/lib/company-entity-registry";
 import { coreResearchObjectStats } from "@/lib/core-research-objects";
 import {
@@ -14,10 +15,8 @@ import {
   uniqueHomepageEntitySlugs,
   type HomepageEntityChannelIndex,
 } from "@/lib/homepage-entity-channels";
-import {
-  projectHomepagePersonDirectoryEvents,
-  type HomepagePersonDirectoryItem,
-} from "@/lib/homepage-person-channel-events";
+import { projectHomepagePersonDirectoryEvents } from "@/lib/homepage-person-channel-events";
+import { aggregatePeopleUpdateDirectory } from "@/lib/people-event-updates";
 import { researchPeople } from "@/lib/people-data";
 import {
   mergeRankedIntelligenceIntoArticlePayload,
@@ -27,7 +26,6 @@ import { formatTaipeiDate } from "@/lib/snapshot-freshness";
 import { trackedSectors } from "@/lib/tracked-sectors";
 import type { ArticlePayload, LiveIntelligenceEvent } from "@/lib/use-articles";
 import rawArticles from "@/public/data/articles.json";
-import rawChannelUpdateDirectories from "@/public/data/channel_update_directories.json";
 import rawRankedIntelligence from "@/public/data/ranked-intelligence.json";
 
 const INITIAL_KEY_EVENTS_LIMIT = 36;
@@ -69,13 +67,8 @@ const homepageEntityChannelIndex: HomepageEntityChannelIndex = {
   },
 };
 
-const peopleDirectoryItems = (
-  rawChannelUpdateDirectories as unknown as {
-    channels?: { people?: { items?: HomepagePersonDirectoryItem[] } };
-  }
-).channels?.people?.items ?? [];
 const peopleChannelEvents = projectHomepagePersonDirectoryEvents(
-  peopleDirectoryItems,
+  aggregatePeopleUpdateDirectory(getChannelUpdateDirectory("people")).items,
   researchPeople,
 );
 
