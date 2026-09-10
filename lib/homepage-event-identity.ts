@@ -71,10 +71,11 @@ export function homepageSourceEvidence(item: LiveIntelligenceEvent): {
 /** A biographical directory description is not an event summary. Never invent a replacement fact. */
 export function homepageEventSummary(item: LiveIntelligenceEvent): string {
   const summary = item.summary.trim();
-  const isProfile = (item.mentionedPeople ?? []).some((name) =>
-    summary.startsWith(`${name} ·`) || summary.startsWith(`${name}·`),
-  );
-  if (!summary || isProfile || /人物档案待补充|^新闻资讯$/u.test(summary)) {
+  const isDirectoryProfile = item.sourceId === "person-update-directory" &&
+    (item.mentionedPeople ?? []).some((name) =>
+      summary.startsWith(`${name} ·`) || summary.startsWith(`${name}·`),
+    );
+  if (!summary || isDirectoryProfile || /人物档案待补充|^新闻资讯$/u.test(summary)) {
     return "暂无可用的事件摘要，请查看来源。";
   }
   return summary;
