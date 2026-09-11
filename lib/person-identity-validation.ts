@@ -1,3 +1,5 @@
+import policy from "./person-identity-policy.json";
+
 export type PersonIdentityCandidate = {
   slug?: string;
   name?: string;
@@ -10,22 +12,26 @@ export type PersonIdentityValidation = {
   reason?: string;
 };
 
-const NON_PERSON_TERMS = /(?:模型|算法|架构|平台|系统|芯片|机器人|半导体|研究院|实验室|大学|学院|公司|集团|基金|委员会|协会|中心|政府|部门|证券|科技)/u;
-const TITLE_BLEED = /\b(?:ceo|cto|cfo|presiden\w*|governo\w*|founder|chairman|professor|minister|senator|class|university|institute|laboratory|committee|government|company|group|fund)\b/iu;
-const SENTENCE_PUNCTUATION = /[：:；;！？!?。]|(?:\s[-–—]\s)/u;
+const NON_PERSON_TERMS = new RegExp(policy.patterns.nonPersonTerms, "u");
+const TITLE_BLEED = new RegExp(policy.patterns.titleBleed, "iu");
+const SENTENCE_PUNCTUATION = new RegExp(policy.patterns.sentencePunctuation, "u");
+
+const PERSON_CHARACTERS = new RegExp(policy.patterns.personCharacters, "iu");
+const LATIN_WORDS = new RegExp(policy.patterns.latinWords, "giu");
+const WHITESPACE = new RegExp(policy.patterns.whitespace, "gu");
 
 function clean(value: string | undefined) {
-  return value?.normalize("NFKC").replace(/\s+/gu, " ").trim() ?? "";
+  return value?.normalize(policy.normalizationForm).replace(WHITESPACE, " ").trim() ?? "";
 }
 
 export function validatePersonIdentity(candidate: PersonIdentityCandidate): PersonIdentityValidation {
   const name = clean(candidate.name);
   const englishName = clean(candidate.englishName);
   if (!name) return { valid: false, reason: "missing-name" };
-  if (name.length > 72 || englishName.length > 96) {
+  if (name.length > policy.maxNameUtf16Units || englishName.length > policy.maxEnglishNameUtf16Units) {
     return { valid: false, reason: "name-too-long" };
   }
-  if (!/[a-z\u3400-\u9fff]/iu.test(name)) {
+  if (!PERSON_CHARACTERS.test(name)) {
     return { valid: false, reason: "name-has-no-person-characters" };
   }
   if (NON_PERSON_TERMS.test(name)) {
@@ -38,8 +44,8 @@ export function validatePersonIdentity(candidate: PersonIdentityCandidate): Pers
     return { valid: false, reason: "sentence-like-name" };
   }
 
-  const latinWords = name.match(/[a-z][a-z.'’-]*/giu) ?? [];
-  if (latinWords.length > 6) {
+  const latinWords = name.match(LATIN_WORDS) ?? [];
+  if (latinWords.length > policy.maxLatinWords) {
     return { valid: false, reason: "too-many-name-tokens" };
   }
 

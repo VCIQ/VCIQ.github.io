@@ -14,12 +14,18 @@ import datetime as dt
 import hashlib
 import json
 import re
+import sys
 import tempfile
 from pathlib import Path
 from typing import Any, Iterable
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from tools.person_identity_contract import validate_generated_person_identity
+
 PEOPLE_PATH = ROOT / "public" / "data" / "people.json"
 ARTICLES_PATH = ROOT / "public" / "data" / "articles.json"
 OUTPUT_PATH = ROOT / "public" / "data" / "person_research_agenda.json"
@@ -332,7 +338,7 @@ def build_person_tasks(person: dict[str, Any], articles: list[dict[str, Any]], g
     tasks: list[dict[str, Any]] = []
     name = clean(person.get("name"))
     slug = clean(person.get("slug"))
-    if not name or not slug:
+    if not name or not slug or not validate_generated_person_identity(person)["valid"]:
         return tasks
 
     role = clean(person.get("role"))

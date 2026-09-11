@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "normalizationForm": "NFKC",
+  "maxNameUtf16Units": 72,
+  "maxEnglishNameUtf16Units": 96,
+  "maxLatinWords": 6,
+  "patterns": {
+    "nonPersonTerms": "(?:模型|算法|架构|平台|系统|芯片|机器人|半导体|研究院|实验室|大学|学院|公司|集团|基金|委员会|协会|中心|政府|部门|证券|科技)",
+    "titleBleed": "\\b(?:ceo|cto|cfo|presiden\\w*|governo\\w*|founder|chairman|professor|minister|senator|class|university|institute|laboratory|committee|government|company|group|fund)\\b",
+    "sentencePunctuation": "[：:；;！？!?。]|(?:\\s[-–—]\\s)",
+    "personCharacters": "[a-z\\u3400-\\u9fff]",
+    "latinWords": "[a-z][a-z.'’-]*",
+    "whitespace": "\\s+",
+    "cjk": "[\\u3400-\\u9fff]",
+    "latin": "[A-Za-z\\u00c0-\\u024f]",
+    "handle": "^(.*?)\\s+@([A-Za-z0-9_]{1,30})$",
+    "bilingualLabel": "^(.+?)\\s*[（(]\\s*([^()（）]+?)\\s*[)）]?\\s*$"
+  }
+}
