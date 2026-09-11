@@ -35,6 +35,14 @@ const dateConfidenceLabels: Record<string, string> = {
   unknown: "待判定",
 };
 
+const dateSourceLabels: Record<string, string> = {
+  event_date: "事件日期",
+  page_created_at: "页面创建时间",
+  page_updated_at: "页面更新时间",
+  legacy_published_at: "历史来源时间（语义未解析）",
+  observed_at: "本轮观测时间",
+};
+
 function evidenceAnchorId(id: string) {
   return `evidence-${id.replace(/[^A-Za-z0-9_-]/g, "-")}`;
 }
@@ -79,6 +87,9 @@ function EvidenceTime({ item }: { item: ResearchAgentEvidence }) {
   const confidence = item.dateConfidence
     ? (dateConfidenceLabels[item.dateConfidence] || item.dateConfidence)
     : null;
+  const dateSource = item.dateSource
+    ? (dateSourceLabels[item.dateSource] || item.dateSource)
+    : null;
 
   if (!hasExplicitSemanticTime && !item.publishedAt) {
     return <span>时间待补</span>;
@@ -98,10 +109,10 @@ function EvidenceTime({ item }: { item: ResearchAgentEvidence }) {
       {!item.eventDate && item.publishedAt && (
         <small>事件时间尚未单独解析</small>
       )}
-      {(item.dateSource || confidence) && (
+      {(dateSource || confidence) && (
         <small>
-          {item.dateSource ? `时间来源：${item.dateSource}` : ""}
-          {item.dateSource && confidence ? " · " : ""}
+          {dateSource ? `时间来源：${dateSource}` : ""}
+          {dateSource && confidence ? " · " : ""}
           {confidence ? `时间置信：${confidence}` : ""}
         </small>
       )}
