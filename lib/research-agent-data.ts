@@ -112,6 +112,36 @@ export type ResearchThesisUpdate = {
   evidenceIds: string[];
 };
 
+export type ResearchThesisMemoryEvidence = {
+  title: string;
+  url: string;
+  sourceName: string;
+  publishedAt: string;
+  eventDate?: string;
+  verificationStatus?: ResearchEvidenceVerificationStatus;
+};
+
+export type ResearchThesisMemoryObservation = {
+  id: string;
+  entity: string;
+  direction: ResearchThesisUpdate["direction"];
+  statement: string;
+  firstSeenAt: string;
+  lastSeenAt: string;
+  observationCount: number;
+  lastTransition: "initiated" | "reaffirmed" | "revised" | "direction_changed" | "returned" | string;
+  supersedesId?: string;
+  evidence: ResearchThesisMemoryEvidence[];
+};
+
+export type ResearchThesisMemory = {
+  schemaVersion: number;
+  generatedAt: string;
+  currentObservationIds: string[];
+  observationCount: number;
+  observations: ResearchThesisMemoryObservation[];
+};
+
 export type ResearchWatchItem = {
   item: string;
   reason: string;
@@ -218,6 +248,7 @@ export type ResearchAgentReport = {
     risks: ResearchRisk[];
     methodologyNote: string;
   };
+  thesisMemory?: ResearchThesisMemory;
   changes: ResearchAgentChange[];
   evidence: ResearchAgentEvidence[];
   methodology: {

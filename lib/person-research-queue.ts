@@ -7,6 +7,7 @@ import type {
 } from "@/lib/person-research-agenda";
 
 export type PersonResearchExecutor = "person_video" | "cross_channel" | "official_source";
+export type PersonResearchWorkstream = "research" | "maintenance";
 
 export type PersonResearchQueueScoreBreakdown = {
   priority: number;
@@ -23,6 +24,8 @@ export type PersonResearchQueueScoreBreakdown = {
 
 export type PersonResearchQueueItem = {
   rank: number;
+  workstreamRank: number;
+  workstream: PersonResearchWorkstream;
   personSlug: string;
   personName: string;
   taskId: string;
@@ -63,13 +66,22 @@ export type PersonResearchQueue = {
   limits: {
     people: number;
     tasks: number;
+    researchTasks: number;
+    maintenanceTasks: number;
     tasksPerPerson: number;
     activeQuerySlots: number;
+    maintenanceQuerySlots: number;
   };
   candidateTaskCount: number;
+  candidateResearchTaskCount: number;
+  candidateMaintenanceTaskCount: number;
   selectedPeopleCount: number;
   selectedTaskCount: number;
+  selectedResearchTaskCount: number;
+  selectedMaintenanceTaskCount: number;
   allocatedQuerySlots: number;
+  allocatedResearchQuerySlots: number;
+  allocatedMaintenanceQuerySlots: number;
   outcomeMemoryAttemptCount: number;
   queue: PersonResearchQueueItem[];
   methodology: string;
@@ -88,6 +100,11 @@ const EXECUTORS = new Set<PersonResearchExecutor>([
   "person_video",
   "cross_channel",
   "official_source",
+]);
+const WORKSTREAMS = new Set<PersonResearchWorkstream>(["research", "maintenance"]);
+const MAINTENANCE_TASK_TYPES = new Set<PersonResearchTaskType>([
+  "identity_verification",
+  "freshness_update",
 ]);
 const canonicalPeopleBySlug = new Map(researchPeople.map((person) => [person.slug, person]));
 
@@ -140,6 +157,10 @@ function internalPersonRoute(value: unknown, slug: string) {
   return `/people/${slug}/`;
 }
 
+function inferredWorkstream(taskType: PersonResearchTaskType): PersonResearchWorkstream {
+  return MAINTENANCE_TASK_TYPES.has(taskType) ? "maintenance" : "research";
+}
+
 function scoreBreakdown(value: unknown): PersonResearchQueueScoreBreakdown {
   const row = value && typeof value === "object" ? value as Record<string, unknown> : {};
   return {
@@ -181,6 +202,10 @@ export function normalizePersonResearchQueueItem(value: unknown): PersonResearch
     !EXECUTORS.has(executor)
   ) return null;
 
+  const rawWorkstream = text(row.workstream, 40) as PersonResearchWorkstream;
+  const workstream = WORKSTREAMS.has(rawWorkstream)
+    ? rawWorkstream
+    : inferredWorkstream(taskType);
   const breakdown = scoreBreakdown(row.scoreBreakdown);
   const recomputedScore = Object.values(breakdown).reduce((sum, value) => sum + value, 0);
   const rawQueryBudget = integer(row.queryBudget, 0, 1);
@@ -211,6 +236,8 @@ export function normalizePersonResearchQueueItem(value: unknown): PersonResearch
 
   return {
     rank: integer(row.rank, 1, 10_000),
+    workstreamRank: integer(row.workstreamRank, 1, 10_000),
+    workstream,
     personSlug,
     personName: person?.name ?? rawPersonName,
     taskId,
@@ -245,16 +272,51 @@ export function normalizePersonResearchQueueItem(value: unknown): PersonResearch
   };
 }
 
+function selectLaneAware(
+  normalized: PersonResearchQueueItem[],
+  limits: PersonResearchQueue["limits"],
+) {
+  const research = normalized.filter((item) => item.workstream === "research");
+  const maintenance = normalized.filter((item) => item.workstream === "maintenance");
+  const selected: PersonResearchQueueItem[] = [];
+  const selectedPeople = new Set<string>();
+  const tasksPerPerson = new Map<string, number>();
+
+  const add = (items: PersonResearchQueueItem[], laneLimit: number) => {
+    let laneCount = selected.filter((item) => item.workstream === items[0]?.workstream).length;
+    for (const item of items) {
+      if (selected.length >= limits.tasks || laneCount >= laneLimit) break;
+      if (selected.includes(item)) continue;
+      const personTaskCount = tasksPerPerson.get(item.personSlug) ?? 0;
+      if (personTaskCount >= limits.tasksPerPerson) continue;
+      if (!selectedPeople.has(item.personSlug) && selectedPeople.size >= limits.people) continue;
+      selected.push(item);
+      selectedPeople.add(item.personSlug);
+      tasksPerPerson.set(item.personSlug, personTaskCount + 1);
+      laneCount += 1;
+    }
+  };
+
+  add(research, limits.researchTasks);
+  add(maintenance, limits.maintenanceTasks);
+  if (selected.length < limits.tasks) add(research, limits.tasks);
+  return { selected, selectedPeople };
+}
+
 export function normalizePersonResearchQueue(value: unknown): PersonResearchQueue {
   const row = value && typeof value === "object" ? value as Record<string, unknown> : {};
   const limitsRow = row.limits && typeof row.limits === "object"
     ? row.limits as Record<string, unknown>
     : {};
+  const tasks = integerOr(limitsRow.tasks, 20, 1, 100);
   const limits = {
     people: integerOr(limitsRow.people, 10, 1, 50),
-    tasks: integerOr(limitsRow.tasks, 20, 1, 100),
+    tasks,
+    researchTasks: integerOr(limitsRow.researchTasks, Math.min(14, tasks), 1, tasks),
+    maintenanceTasks: integerOr(limitsRow.maintenanceTasks, Math.min(6, tasks), 0, tasks),
     tasksPerPerson: integerOr(limitsRow.tasksPerPerson, 2, 1, 10),
     activeQuerySlots: integerOr(limitsRow.activeQuerySlots, 10, 1, 50),
+    maintenanceQuerySlots: integerOr(limitsRow.maintenanceQuerySlots, 2, 0, 10),
   };
   const normalized = Array.isArray(row.queue)
     ? row.queue
@@ -263,53 +325,72 @@ export function normalizePersonResearchQueue(value: unknown): PersonResearchQueu
         .sort((a, b) => b.score - a.score || b.allocationUtility - a.allocationUtility || a.rank - b.rank || a.taskId.localeCompare(b.taskId))
     : [];
 
-  const selected: PersonResearchQueueItem[] = [];
-  const selectedPeople = new Set<string>();
-  const tasksPerPerson = new Map<string, number>();
-  for (const item of normalized) {
-    const personTaskCount = tasksPerPerson.get(item.personSlug) ?? 0;
-    if (personTaskCount >= limits.tasksPerPerson) continue;
-    if (!selectedPeople.has(item.personSlug) && selectedPeople.size >= limits.people) continue;
-    selected.push(item);
-    selectedPeople.add(item.personSlug);
-    tasksPerPerson.set(item.personSlug, personTaskCount + 1);
-    if (selected.length >= limits.tasks) break;
-  }
+  const { selected, selectedPeople } = selectLaneAware(normalized, limits);
+  const laneRanks: Record<PersonResearchWorkstream, number> = { research: 0, maintenance: 0 };
+  const reranked = selected.map((item, index) => {
+    laneRanks[item.workstream] += 1;
+    return { ...item, rank: index + 1, workstreamRank: laneRanks[item.workstream] };
+  });
 
   const researchDate = text(row.researchDate, 40);
-  const queryCandidates = selected
+  const queryCandidates = reranked
     .map((item, index) => ({ item, index }))
     .filter(({ item }) => {
       const inCooldown = Boolean(item.cooldownUntil && researchDate && item.cooldownUntil > researchDate);
       return item.executor === "person_video" && item.searchQueries.length > 0 && item.queryBudget > 0 && !inCooldown;
-    })
+    });
+
+  const orderedQueries = (workstream: PersonResearchWorkstream) => queryCandidates
+    .filter(({ item }) => item.workstream === workstream)
     .sort((a, b) => b.item.allocationUtility - a.item.allocationUtility || b.item.score - a.item.score || a.index - b.index);
 
   const allocatedIndexes = new Set<number>();
   const allocatedPeople = new Set<string>();
-  for (const candidate of queryCandidates) {
-    if (allocatedPeople.has(candidate.item.personSlug)) continue;
+  for (const candidate of orderedQueries("research")) {
     if (allocatedIndexes.size >= limits.activeQuerySlots) break;
+    if (allocatedPeople.has(candidate.item.personSlug)) continue;
     allocatedPeople.add(candidate.item.personSlug);
     allocatedIndexes.add(candidate.index);
   }
+  let maintenanceAllocated = 0;
+  for (const candidate of orderedQueries("maintenance")) {
+    if (allocatedIndexes.size >= limits.activeQuerySlots || maintenanceAllocated >= limits.maintenanceQuerySlots) break;
+    if (allocatedPeople.has(candidate.item.personSlug)) continue;
+    allocatedPeople.add(candidate.item.personSlug);
+    allocatedIndexes.add(candidate.index);
+    maintenanceAllocated += 1;
+  }
 
-  const bounded = selected.map((item, index) => ({
+  const bounded = reranked.map((item, index) => ({
     ...item,
-    rank: index + 1,
     searchQueries: allocatedIndexes.has(index) ? item.searchQueries.slice(0, 1) : [],
     queryBudget: allocatedIndexes.has(index) ? 1 : 0,
   }));
+
+  const research = bounded.filter((item) => item.workstream === "research");
+  const maintenance = bounded.filter((item) => item.workstream === "maintenance");
+  const researchQueries = research.filter((item) => item.queryBudget > 0).length;
+  const maintenanceQueries = maintenance.filter((item) => item.queryBudget > 0).length;
+  const rawCandidateResearch = integer(row.candidateResearchTaskCount, 0, 100_000);
+  const rawCandidateMaintenance = integer(row.candidateMaintenanceTaskCount, 0, 100_000);
+  const inferredCandidateResearch = normalized.filter((item) => item.workstream === "research").length;
+  const inferredCandidateMaintenance = normalized.filter((item) => item.workstream === "maintenance").length;
 
   return {
     schemaVersion: integerOr(row.schemaVersion, 1, 1, 10),
     generatedAt: text(row.generatedAt, 80),
     researchDate,
     limits,
-    candidateTaskCount: Math.max(integer(row.candidateTaskCount), bounded.length),
+    candidateTaskCount: Math.max(integer(row.candidateTaskCount), normalized.length),
+    candidateResearchTaskCount: Math.max(rawCandidateResearch, inferredCandidateResearch),
+    candidateMaintenanceTaskCount: Math.max(rawCandidateMaintenance, inferredCandidateMaintenance),
     selectedPeopleCount: selectedPeople.size,
     selectedTaskCount: bounded.length,
-    allocatedQuerySlots: allocatedIndexes.size,
+    selectedResearchTaskCount: research.length,
+    selectedMaintenanceTaskCount: maintenance.length,
+    allocatedQuerySlots: researchQueries + maintenanceQueries,
+    allocatedResearchQuerySlots: researchQueries,
+    allocatedMaintenanceQuerySlots: maintenanceQueries,
     outcomeMemoryAttemptCount: integer(row.outcomeMemoryAttemptCount, 0, 100_000),
     queue: bounded,
     methodology: text(row.methodology, 1_600),

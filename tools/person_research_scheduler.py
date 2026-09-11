@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Schedule a bounded daily queue from the active person research agenda.
+"""Schedule bounded Research and Maintenance queues from the person agenda.
 
-The scheduler does not verify facts. It only ranks already-generated research tasks and
-allocates a small number of active discovery slots. Every score is deterministic and
-published as a component breakdown so the queue remains auditable.
+The scheduler does not verify facts. It ranks already-generated tasks, separates
+substantive research from profile/evidence maintenance, and allocates a bounded
+number of active discovery slots. Maintenance can use spare capacity but cannot
+push high-value research work out of the Research lane.
 """
 
 from __future__ import annotations
@@ -41,8 +42,11 @@ OUTPUT_PATH = ROOT / "public" / "data" / "person_research_queue.json"
 
 MAX_DAILY_PEOPLE = 10
 MAX_DAILY_TASKS = 20
+MAX_DAILY_RESEARCH_TASKS = 14
+MAX_DAILY_MAINTENANCE_TASKS = 6
 MAX_TASKS_PER_PERSON = 2
 MAX_ACTIVE_QUERY_SLOTS = 10
+MAX_MAINTENANCE_QUERY_SLOTS = 2
 RECENT_WINDOW_DAYS = 30
 DAY = 24 * 60 * 60
 
@@ -56,6 +60,15 @@ TYPE_SCORE = {
 }
 STATUS_SCORE = {"candidate_found": 12, "open": 5, "blocked": -20}
 VIDEO_TASK_TYPES = {"first_party_evidence", "viewpoint_verification", "freshness_update"}
+MAINTENANCE_TASK_TYPES = {"identity_verification", "freshness_update"}
+WORKSTREAMS = {"research", "maintenance"}
+
+
+def task_workstream(task: dict[str, Any]) -> str:
+    explicit = clean(task.get("workstream"), 40)
+    if explicit in WORKSTREAMS:
+        return explicit
+    return "maintenance" if clean(task.get("taskType"), 80) in MAINTENANCE_TASK_TYPES else "research"
 
 
 def _person_map(people_payload: dict[str, Any]) -> dict[str, dict[str, Any]]:
@@ -211,8 +224,9 @@ def score_task(
         "researchStrategyROI": strategy_score,
         "researchCostEfficiency": cost_score,
     }
+    lane = "维护" if task_workstream(task) == "maintenance" else "研究"
     reasons = [
-        f"{clean(task.get('priority'))} 研究任务",
+        f"{clean(task.get('priority'))} {lane}任务",
         gap_reason,
         *recency_reasons,
         cross_reason,
@@ -222,6 +236,103 @@ def score_task(
         cost_reason,
     ]
     return sum(breakdown.values()), breakdown, [reason for reason in reasons if reason][:6], cooldown_until
+
+
+def _candidate_sort_key(row: dict[str, Any]) -> tuple[Any, ...]:
+    priority_order = {"P0": 0, "P1": 1, "P2": 2, "P3": 3}
+    return (
+        -int(row["score"]),
+        -float(row.get("allocationUtility") or 0),
+        -float(row.get("expectedYieldPerCost") or 0),
+        priority_order.get(row["priority"], 9),
+        row["personSlug"],
+        row["taskId"],
+    )
+
+
+def _select_workstreams(candidates: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], set[str]]:
+    research = [row for row in candidates if row.get("workstream") == "research"]
+    maintenance = [row for row in candidates if row.get("workstream") == "maintenance"]
+    selected: list[dict[str, Any]] = []
+    selected_people: set[str] = set()
+    tasks_per_person: dict[str, int] = {}
+
+    def add_rows(rows: list[dict[str, Any]], lane_limit: int, *, count_existing_lane: bool = True) -> None:
+        lane_count = sum(1 for row in selected if row.get("workstream") == rows[0].get("workstream")) if rows and count_existing_lane else 0
+        for row in rows:
+            if len(selected) >= MAX_DAILY_TASKS or lane_count >= lane_limit:
+                break
+            slug = row["personSlug"]
+            if tasks_per_person.get(slug, 0) >= MAX_TASKS_PER_PERSON:
+                continue
+            if slug not in selected_people and len(selected_people) >= MAX_DAILY_PEOPLE:
+                continue
+            if row in selected:
+                continue
+            selected.append(row)
+            selected_people.add(slug)
+            tasks_per_person[slug] = tasks_per_person.get(slug, 0) + 1
+            lane_count += 1
+
+    # Substantive research receives first claim on people/task capacity.
+    add_rows(research, MAX_DAILY_RESEARCH_TASKS)
+    add_rows(maintenance, MAX_DAILY_MAINTENANCE_TASKS)
+    # Research can borrow unused maintenance capacity, but maintenance never
+    # expands beyond its dedicated cap and therefore cannot crowd research out.
+    if len(selected) < MAX_DAILY_TASKS:
+        add_rows(research, MAX_DAILY_TASKS)
+    return selected, selected_people
+
+
+def _allocate_query_slots(selected: list[dict[str, Any]], research_date: str) -> set[str]:
+    best_by_lane_person: dict[tuple[str, str], dict[str, Any]] = {}
+    for row in selected:
+        in_cooldown = bool(row.get("cooldownUntil") and row["cooldownUntil"] > research_date)
+        if row["executor"] != "person_video" or not row["searchQueries"] or in_cooldown:
+            continue
+        key = (str(row.get("workstream") or "research"), row["personSlug"])
+        previous = best_by_lane_person.get(key)
+        if not previous or (
+            float(row.get("allocationUtility") or 0),
+            int(row.get("score") or 0),
+            -int(row.get("rank") or 0),
+        ) > (
+            float(previous.get("allocationUtility") or 0),
+            int(previous.get("score") or 0),
+            -int(previous.get("rank") or 0),
+        ):
+            best_by_lane_person[key] = row
+
+    def ordered(workstream: str) -> list[dict[str, Any]]:
+        return sorted(
+            [row for (lane, _), row in best_by_lane_person.items() if lane == workstream],
+            key=lambda row: (
+                -float(row.get("allocationUtility") or 0),
+                -int(row.get("score") or 0),
+                int(row.get("rank") or 0),
+            ),
+        )
+
+    allocated_ids: set[str] = set()
+    allocated_people: set[str] = set()
+    for row in ordered("research"):
+        if len(allocated_ids) >= MAX_ACTIVE_QUERY_SLOTS:
+            break
+        if row["personSlug"] in allocated_people:
+            continue
+        allocated_ids.add(row["taskId"])
+        allocated_people.add(row["personSlug"])
+
+    maintenance_allocated = 0
+    for row in ordered("maintenance"):
+        if len(allocated_ids) >= MAX_ACTIVE_QUERY_SLOTS or maintenance_allocated >= MAX_MAINTENANCE_QUERY_SLOTS:
+            break
+        if row["personSlug"] in allocated_people:
+            continue
+        allocated_ids.add(row["taskId"])
+        allocated_people.add(row["personSlug"])
+        maintenance_allocated += 1
+    return allocated_ids
 
 
 def build_daily_queue(
@@ -258,6 +369,7 @@ def build_daily_queue(
                 "personName": clean(record.get("personName") or person.get("name"), 120),
                 "taskId": clean(task.get("id"), 180),
                 "taskType": clean(task.get("taskType"), 80),
+                "workstream": task_workstream(task),
                 "priority": clean(task.get("priority"), 8),
                 "status": status,
                 "target": clean(task.get("target"), 180),
@@ -286,64 +398,18 @@ def build_daily_queue(
                 "personRoute": f"/people/{slug}/",
             })
 
-    priority_order = {"P0": 0, "P1": 1, "P2": 2, "P3": 3}
-    candidates.sort(key=lambda row: (
-        -int(row["score"]),
-        -float(row.get("allocationUtility") or 0),
-        -float(row.get("expectedYieldPerCost") or 0),
-        priority_order.get(row["priority"], 9),
-        row["personSlug"],
-        row["taskId"],
-    ))
+    candidates.sort(key=_candidate_sort_key)
+    selected, selected_people = _select_workstreams(candidates)
 
-    selected: list[dict[str, Any]] = []
-    selected_people: set[str] = set()
-    tasks_per_person: dict[str, int] = {}
-    for row in candidates:
-        slug = row["personSlug"]
-        if tasks_per_person.get(slug, 0) >= MAX_TASKS_PER_PERSON:
-            continue
-        if slug not in selected_people and len(selected_people) >= MAX_DAILY_PEOPLE:
-            continue
-        selected.append(row)
-        selected_people.add(slug)
-        tasks_per_person[slug] = tasks_per_person.get(slug, 0) + 1
-        if len(selected) >= MAX_DAILY_TASKS:
-            break
-
+    lane_ranks = {"research": 0, "maintenance": 0}
     for rank, row in enumerate(selected, start=1):
         row["rank"] = rank
+        lane = str(row.get("workstream") or "research")
+        lane_ranks[lane] += 1
+        row["workstreamRank"] = lane_ranks[lane]
         row["queryBudget"] = 0
 
-    best_query_per_person: dict[str, dict[str, Any]] = {}
-    for row in selected:
-        in_cooldown = bool(row.get("cooldownUntil") and row["cooldownUntil"] > research_date)
-        if row["executor"] != "person_video" or not row["searchQueries"] or in_cooldown:
-            continue
-        slug = row["personSlug"]
-        previous = best_query_per_person.get(slug)
-        if not previous or (
-            float(row.get("allocationUtility") or 0),
-            int(row.get("score") or 0),
-            -int(row.get("rank") or 0),
-        ) > (
-            float(previous.get("allocationUtility") or 0),
-            int(previous.get("score") or 0),
-            -int(previous.get("rank") or 0),
-        ):
-            best_query_per_person[slug] = row
-
-    query_candidates = sorted(
-        best_query_per_person.values(),
-        key=lambda row: (
-            -float(row.get("allocationUtility") or 0),
-            -int(row.get("score") or 0),
-            int(row.get("rank") or 0),
-        ),
-    )
-    allocated_ids = {
-        row["taskId"] for row in query_candidates[:MAX_ACTIVE_QUERY_SLOTS]
-    }
+    allocated_ids = _allocate_query_slots(selected, research_date)
     for row in selected:
         if row["taskId"] in allocated_ids:
             row["queryBudget"] = 1
@@ -351,30 +417,43 @@ def build_daily_queue(
         elif row["executor"] == "person_video":
             row["searchQueries"] = []
 
-    allocated = len(allocated_ids)
+    research_candidates = sum(row.get("workstream") == "research" for row in candidates)
+    maintenance_candidates = sum(row.get("workstream") == "maintenance" for row in candidates)
+    research_selected = sum(row.get("workstream") == "research" for row in selected)
+    maintenance_selected = sum(row.get("workstream") == "maintenance" for row in selected)
+    research_queries = sum(row.get("workstream") == "research" and row.get("queryBudget") == 1 for row in selected)
+    maintenance_queries = sum(row.get("workstream") == "maintenance" and row.get("queryBudget") == 1 for row in selected)
     memory_attempts = len(memory.get("attempts") or [])
     return {
-        "schemaVersion": 4,
+        "schemaVersion": 5,
         "generatedAt": generated_at,
         "researchDate": research_date,
         "limits": {
             "people": MAX_DAILY_PEOPLE,
             "tasks": MAX_DAILY_TASKS,
+            "researchTasks": MAX_DAILY_RESEARCH_TASKS,
+            "maintenanceTasks": MAX_DAILY_MAINTENANCE_TASKS,
             "tasksPerPerson": MAX_TASKS_PER_PERSON,
             "activeQuerySlots": MAX_ACTIVE_QUERY_SLOTS,
+            "maintenanceQuerySlots": MAX_MAINTENANCE_QUERY_SLOTS,
         },
         "candidateTaskCount": len(candidates),
+        "candidateResearchTaskCount": research_candidates,
+        "candidateMaintenanceTaskCount": maintenance_candidates,
         "selectedPeopleCount": len(selected_people),
         "selectedTaskCount": len(selected),
-        "allocatedQuerySlots": allocated,
+        "selectedResearchTaskCount": research_selected,
+        "selectedMaintenanceTaskCount": maintenance_selected,
+        "allocatedQuerySlots": len(allocated_ids),
+        "allocatedResearchQuerySlots": research_queries,
+        "allocatedMaintenanceQuerySlots": maintenance_queries,
         "outcomeMemoryAttemptCount": memory_attempts,
         "queue": selected,
         "methodology": (
-            "队列只排序开放研究任务并分配有限主动检索槽位，不改变事实状态。"
-            "Research Score 仍以任务价值、证据缺口、近期事件和交叉验证为主，并加入小幅、可解释的历史策略与成本效率修正；"
-            "主动 query slot 再按 Research Score × 单位成本预期候选产出的 allocation utility 分配。"
-            "成本来自真实主动检索耗时的历史折算；无历史策略使用中性成本，不伪造成功率。"
-            "candidate_found 仍只代表候选产出，不能绕过 successCriteria 或自动变成事实 supported。"
+            "开放任务分为 Research 与 Maintenance 两条工作流：观点、执行和一手研究证据进入 Research；"
+            "身份/任职核验与时效补齐进入 Maintenance。Research 先获得人物与任务容量，Maintenance 最多占 6 个日任务，"
+            "且主动检索只使用 Research 未占用的剩余槽位（最多 2 个），因此维护工作不会挤占核心研究。"
+            "两条工作流都继续使用可审计的 Research Score、历史策略与成本效率修正；candidate_found 仍不能绕过 successCriteria。"
         ),
     }
 
@@ -403,6 +482,7 @@ def scheduled_attempts_by_slug(queue: dict[str, Any]) -> dict[str, dict[str, str
             result[slug] = {
                 "taskId": task_id,
                 "taskType": clean(row.get("taskType"), 80),
+                "workstream": task_workstream(row),
                 "query": queries[0],
                 "queryStrategy": clean(row.get("queryStrategy"), 80),
             }
@@ -426,18 +506,29 @@ def main() -> int:
         if queue["selectedPeopleCount"] > MAX_DAILY_PEOPLE or queue["selectedTaskCount"] > MAX_DAILY_TASKS:
             print("Person research queue exceeds daily limits.")
             return 1
+        if queue["selectedResearchTaskCount"] > MAX_DAILY_TASKS:
+            print("Research workstream exceeds total daily limit.")
+            return 1
+        if queue["selectedMaintenanceTaskCount"] > MAX_DAILY_MAINTENANCE_TASKS:
+            print("Maintenance workstream exceeds its daily limit.")
+            return 1
         if queue["allocatedQuerySlots"] > MAX_ACTIVE_QUERY_SLOTS:
             print("Person research queue exceeds active query budget.")
             return 1
+        if queue["allocatedMaintenanceQuerySlots"] > MAX_MAINTENANCE_QUERY_SLOTS:
+            print("Maintenance workstream exceeds active query budget.")
+            return 1
         print(
             f"Validated person research queue: {queue['selectedPeopleCount']} people, "
-            f"{queue['selectedTaskCount']} tasks, {queue['allocatedQuerySlots']} active queries."
+            f"{queue['selectedResearchTaskCount']} research + {queue['selectedMaintenanceTaskCount']} maintenance tasks, "
+            f"{queue['allocatedQuerySlots']} active queries."
         )
         return 0
     atomic_write_json(args.output, queue)
     print(
         f"Wrote daily person research queue: {queue['selectedPeopleCount']} people, "
-        f"{queue['selectedTaskCount']} tasks, {queue['allocatedQuerySlots']} active queries -> {args.output}"
+        f"{queue['selectedResearchTaskCount']} research + {queue['selectedMaintenanceTaskCount']} maintenance tasks, "
+        f"{queue['allocatedQuerySlots']} active queries -> {args.output}"
     )
     return 0
 
