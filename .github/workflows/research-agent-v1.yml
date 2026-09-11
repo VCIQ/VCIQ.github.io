@@ -237,6 +237,74 @@ jobs:
             public/data/data_lineage.json
             public/data/pipeline_health.json
           )
+
+          # A terminal fixed-point run can legitimately detect zero input changes
+          # immediately after publishing a material brief. Do not let that pure
+          # no-op replace the same day's already-published research with an empty
+          # top-level report. Runs that detected any input change still publish
+          # normally, even when evidence/event gates leave no formal changes.
+          python - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+
+          DAILY = "public/data/research_agent_daily.json"
+          SNAPSHOT = "public/data/research_agent_snapshot.json"
+
+          def load_head_json(path: str) -> dict:
+              raw = subprocess.check_output(
+                  ["git", "show", f"HEAD:{path}"], text=True
+              )
+              value = json.loads(raw)
+              return value if isinstance(value, dict) else {}
+
+          current = json.loads(Path(DAILY).read_text(encoding="utf-8"))
+          summary = current.get("changeSummary")
+          summary = summary if isinstance(summary, dict) else {}
+          if (
+              current.get("runStatus") != "no-material-change"
+              or int(summary.get("totalDetected") or 0) != 0
+          ):
+              raise SystemExit(0)
+
+          previous = load_head_json(DAILY)
+          if current.get("asOfDate") != previous.get("asOfDate"):
+              raise SystemExit(0)
+
+          previous_summary = previous.get("changeSummary")
+          previous_summary = (
+              previous_summary if isinstance(previous_summary, dict) else {}
+          )
+          previous_material = bool(previous.get("changes")) or any(
+              int(previous_summary.get(field) or 0) > 0
+              for field in (
+                  "verifiedChangeTotal",
+                  "candidateTotal",
+                  "auxiliaryLeadTotal",
+                  "rejectedTotal",
+                  "total",
+              )
+          )
+          if not previous_material:
+              raise SystemExit(0)
+
+          current_snapshot = json.loads(Path(SNAPSHOT).read_text(encoding="utf-8"))
+          previous_snapshot = load_head_json(SNAPSHOT)
+          current_hash = str(current_snapshot.get("contentHash") or "")
+          previous_hash = str(previous_snapshot.get("contentHash") or "")
+          if not current_hash or current_hash != previous_hash:
+              raise SystemExit(0)
+
+          subprocess.run(
+              ["git", "restore", "--source=HEAD", "--", DAILY, SNAPSHOT],
+              check=True,
+          )
+          print(
+              "Preserved the existing same-day material Research Agent brief: "
+              "this run was a pure fixed-point no-op."
+          )
+          PY
+
           git add "${RESEARCH_PATHS[@]}"
           if git diff --cached --quiet; then
             echo "Research Agent produced no repository changes."

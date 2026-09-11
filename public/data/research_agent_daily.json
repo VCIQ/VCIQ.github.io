@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-11T06:07:54+00:00",
+  "generatedAt": "2026-09-11T11:37:18+00:00",
   "asOfDate": "2026-09-11",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
@@ -12,252 +12,722 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 2604,
-      "completion_tokens": 1931,
-      "total_tokens": 4535,
+      "prompt_tokens": 12238,
+      "completion_tokens": 7067,
+      "total_tokens": 19305,
       "completion_tokens_details": {
-        "reasoning_tokens": 755
+        "reasoning_tokens": 4285
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 2604
+      "prompt_cache_miss_tokens": 12238
     }
   },
   "changeSummary": {
-    "totalDetected": 5,
-    "total": 2,
+    "totalDetected": 17,
+    "total": 14,
     "byDataset": {
-      "ventureCompany": 2
+      "intelligenceEvent": 14
     },
     "byChangeType": {
-      "external_event": 5
+      "external_event": 17
     },
-    "externalCandidates": 5,
-    "qualityRejected": 2,
+    "externalCandidates": 17,
+    "qualityRejected": 3,
     "maintenanceExcluded": 0,
     "aggregatedEvents": 0,
-    "highestImportance": 88,
-    "verifiedChangeTotal": 2,
+    "highestImportance": 91,
+    "verifiedChangeTotal": 0,
     "candidateTotal": 0,
-    "auxiliaryLeadTotal": 0,
-    "rejectedTotal": 2,
-    "newEvents": 1,
+    "auxiliaryLeadTotal": 14,
+    "rejectedTotal": 3,
+    "newEvents": 14,
     "reconfirmations": 0,
-    "updates": 1,
+    "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 1
+    "duplicatesSuppressed": 0
   },
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "证据包显示两家公司发生外部事件驱动的数据变更：Form Energy 的融资记录在官网数据源中出现删减（E005），Rigetti Computing 的技术信息更新涉及 Novera 9-qubit QPU、CTO 任命及二季度财报等表述（E014-E016）。两者均来自官方披露但证据质量为自动化未人工复核，且源页面时间存在异常，需谨慎解读。未发现可支撑确定性投资结论的证据。 质量门诊断：缺少发布时间 9、证据合格但未绑定变化字段 3。",
+    "executiveSummary": "本证据包呈现多条科技与创投线索：网络安全初创FAZE Security出隐身并获600万美元种子融资、宣称约20倍ARR增长；智能体商业化与治理并行推进（蚂蚁发布APASS信任基础设施、金融领域首个智能体安全团体标准、Atlassian升级agentic开发能力）；新浪财经对文远知行与小马智行的盈利前景提出质疑；新能源侧有长时储能行业讨论及河北5万吨锂电池回收项目落地；特斯拉在华推出新款Model Y Performance。多数证据为C级外部线索或公司/媒体自述，需独立验证后才能确认趋势强度。 质量门诊断：仅为发现线索，不能支持正式主张 3。",
     "keyDevelopments": [
       {
-        "title": "Form Energy 融资记录出现数据删减",
-        "assessment": "根据 E005，Form Energy 官网融资信息发生变化：变更前包含两笔均为 7.5 亿美元的 Series G 融资记录（日期分别为 2020-03-04 和 2026-08-12），变更后仅保留 2020-03-04 的条目。该变化可能代表数据更正或页面归档，但不能据此判断实际融资进展。",
+        "title": "FAZE Security出隐身：50家企业客户、约20倍ARR增长与600万美元种子融资",
+        "assessment": "据公司新闻稿，FAZE Security宣布出隐身，拥有50家企业客户（含多家财富500强），18个月内ARR增长约20倍，并获得由New Era Capital Partners领投的600万美元种子融资。这些数据为公司自述，未经独立审计，ARR绝对基数未披露，需谨慎解读。",
         "importance": 4,
         "confidence": "medium",
         "entities": [
-          "Form Energy"
+          "FAZE Security",
+          "New Era Capital Partners"
+        ],
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "title": "蚂蚁集团发布智能体信任基础设施APASS",
+        "assessment": "蚂蚁集团在2026 Inclusion·外滩大会发布APASS，基于KYA理念，提供智能体身份注册、持续核验、意图安全和可信存证等能力，目标是为Agent参与支付和商业活动建立信任基础。发布本身为事实，但采用规模和实际成效尚无数据。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "蚂蚁集团",
+          "APASS"
+        ],
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "title": "金融领域首个智能体安全团体标准发布",
+        "assessment": "北京金融科技产业联盟发布《智能体技术金融应用安全要求》团体标准，明确第三方智能体未经金融机构授权不得自动化操作金融App，并要求“双重授权”。该标准为团体标准，并非强制法规，但对行业实践有引导作用。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "北京金融科技产业联盟",
+          "北京国家金融科技认证中心"
+        ],
+        "evidenceIds": [
+          "E010"
+        ]
+      },
+      {
+        "title": "Atlassian为agentic开发工作流引入‘always-on’能力",
+        "assessment": "Atlassian升级AI编码代理，扩展Jira、Confluence、DX的Code Context，并引入Agentic loops将Jira待办转化为pull request等能力。具体影响需观察实际使用。",
+        "importance": 3,
+        "confidence": "medium",
+        "entities": [
+          "Atlassian",
+          "Jira",
+          "Confluence"
+        ],
+        "evidenceIds": [
+          "E016"
+        ]
+      },
+      {
+        "title": "媒体分析：文远知行与小马智行轻资产叙事分化、盈利仍遥不可及",
+        "assessment": "新浪财经分析文章指出，文远知行偏重营运资金，小马智行依赖合作方，规模化与第二曲线是盈利阻碍。此为媒体分析观点，非公司披露，需结合后续财报验证。",
+        "importance": 3,
+        "confidence": "low",
+        "entities": [
+          "文远知行",
+          "小马智行"
         ],
         "evidenceIds": [
           "E005"
         ]
       },
       {
-        "title": "Rigetti Computing 技术信息更新",
-        "assessment": "根据 E014-E016，Rigetti 官网技术信息从强调 108-qubit 系统及一季度财报，变更为突出 Novera 9-qubit QPU、CTO 任命及二季度财报相关内容。这些表述暗示产品与人事层面的潜在进展，但证据来自 2020 年归档页面摘要，时效性与完整性有限。",
+        "title": "长时储能规模化与河北5万吨锂电池回收项目推进",
+        "assessment": "行业文章讨论长时储能在新能源时代成为标配；河北落地5万吨锂电池回收项目，分三期建设，包含锂电池粉碎分选及退役光伏板拆解线。文章和项目信息均来自行业自媒体/媒体，需核实项目主体与投资规模。",
+        "importance": 3,
+        "confidence": "low",
+        "entities": [
+          "长时储能",
+          "锂电池回收"
+        ],
+        "evidenceIds": [
+          "E006",
+          "E007"
+        ]
+      },
+      {
+        "title": "特斯拉在中国推出新款Model Y Performance AWD，起价36.9万元",
+        "assessment": "TechNode报道特斯拉在华推出新款Model Y Performance AWD，起价36.9万元，CLTC续航659公里，0-100km/h 3.5秒。产品参数为厂商发布，销量影响未明。",
         "importance": 3,
         "confidence": "medium",
         "entities": [
-          "Rigetti Computing"
+          "Tesla",
+          "Model Y"
         ],
         "evidenceIds": [
-          "E014",
-          "E015",
-          "E016"
+          "E011"
+        ]
+      },
+      {
+        "title": "WIRED报道AI研究者对机器风险担忧加剧",
+        "assessment": "WIRED文章称，快速进展、递归自我改进和agentic swarm让大型实验室内部人员感到担忧。属于舆论报道，反映行业情绪，不构成具体事实。",
+        "importance": 2,
+        "confidence": "low",
+        "entities": [
+          "AI安全",
+          "WIRED"
+        ],
+        "evidenceIds": [
+          "E004"
+        ]
+      },
+      {
+        "title": "医疗AI投资人正在香港争夺博士人才",
+        "assessment": "钛媒体文章描述医疗AI投资人在一级市场争抢香港博士人才的现象，反映医疗AI领域人才竞争升温。文章为行业观察，缺少量化数据支撑。",
+        "importance": 2,
+        "confidence": "low",
+        "entities": [
+          "医疗AI",
+          "香港"
+        ],
+        "evidenceIds": [
+          "E008"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "Form Energy",
-        "direction": "neutral",
-        "statement": "融资记录的数据变化无法确认为正面或负面信号；已删除的 2026-08-12 $750M Series G 条目可能为数据修正或页面调整，需进一步核实。",
+        "entity": "FAZE Security",
+        "direction": "positive",
+        "statement": "出隐身即获得50家企业客户与约20倍ARR增长，显示网络安全漏洞管理需求强劲；但600万美元种子融资规模较小，ARR基数不明确，需验证增长质量。",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "entity": "蚂蚁集团",
+        "direction": "positive",
+        "statement": "APASS的发布使蚂蚁在智能体信任基础设施领域占据卡位，有望受益于Agent商业化加速；但生态落地仍需观察。",
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "entity": "智能体安全治理",
+        "direction": "mixed",
+        "statement": "金融领域首个智能体安全标准发布推动规范化，短期内可能增加Agent服务方的合规成本，长期利好安全合规能力强的厂商。",
+        "evidenceIds": [
+          "E010"
+        ]
+      },
+      {
+        "entity": "文远知行/小马智行",
+        "direction": "negative",
+        "statement": "媒体分析指出两家公司轻资产叙事背后存在分化，规模化与第二曲线阻碍使盈利仍遥不可及，盈利预期应更保守。",
         "evidenceIds": [
           "E005"
         ]
       },
       {
-        "entity": "Rigetti Computing",
-        "direction": "mixed",
-        "statement": "技术信息更新包含新产品（Novera QPU）和人事变动的表述，可能反映积极进展；但因证据日期与内容错位，无法确定为事实，整体影响需待验证。",
+        "entity": "长时储能/电池回收",
+        "direction": "positive",
+        "statement": "长时储能规模化落地讨论与河北5万吨锂电池回收项目推进，显示新能源循环经济链条正在延伸，但项目实际进度待核实。",
         "evidenceIds": [
-          "E014",
-          "E015",
+          "E006",
+          "E007"
+        ]
+      },
+      {
+        "entity": "Tesla",
+        "direction": "neutral",
+        "statement": "新款Model Y Performance丰富了产品矩阵，但中国市场竞品密集，价格与性能组合的实际吸引力需销量验证。",
+        "evidenceIds": [
+          "E011"
+        ]
+      },
+      {
+        "entity": "Atlassian",
+        "direction": "positive",
+        "statement": "‘always-on’ agentic开发能力深化了软件开发工作流的自动化，可能增强其开发者平台粘性。",
+        "evidenceIds": [
           "E016"
+        ]
+      },
+      {
+        "entity": "Nebula",
+        "direction": "neutral",
+        "statement": "任命Jack Bell为战略合作伙伴获取经理，显示其加强渠道团队，但人事变动对业绩的影响尚待观察。",
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "entity": "IQbusiness",
+        "direction": "neutral",
+        "statement": "公司寻求可规模化的金融科技平台并拓展英国和中东市场，同时保持AI谨慎，战略执行结果需后续跟踪。",
+        "evidenceIds": [
+          "E003"
         ]
       }
     ],
     "watchlist": [
       {
-        "item": "Form Energy 最新融资状态",
-        "reason": "E005 显示融资记录从两条删减为一条，需确认是否存在融资取消、数据修正或页面更新错误。",
-        "nextEvidence": "Form Energy 官方融资新闻稿、SEC 文件或可靠财经数据库记录",
+        "item": "FAZE Security的客户阵容与ARR绝对数值",
+        "reason": "当前信息来自公司新闻稿，未披露ARR基数、客户留存和付费规模，需独立验证增长质量。",
+        "nextEvidence": "后续融资公告、客户案例或第三方行业报告",
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "item": "蚂蚁APASS的实际采用与金融机构合作",
+        "reason": "APASS刚发布，尚无采用方数据，落地能力未验证。",
+        "nextEvidence": "蚂蚁官方披露的首批合作机构或Agent平台",
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "item": "金融智能体安全标准的监管转化",
+        "reason": "当前为团体标准，约束力有限，若被监管采纳将显著影响Agent金融应用。",
+        "nextEvidence": "金融监管机构或行业协会的后续政策文件",
+        "evidenceIds": [
+          "E010"
+        ]
+      },
+      {
+        "item": "文远知行与小马智行的下一份财报",
+        "reason": "媒体分析提出的营运资金与依赖合作方风险，需要财报数据验证。",
+        "nextEvidence": "两家公司季度/年度财务报告",
         "evidenceIds": [
           "E005"
         ]
       },
       {
-        "item": "Rigetti Novera QPU 的正式发布信息",
-        "reason": "E014-E016 仅提及 Novera 9-qubit QPU，但未提供具体规格、发布时间或商业部署证据。",
-        "nextEvidence": "Rigetti 官方产品公告、技术白皮书或季度报告",
+        "item": "河北5万吨锂电池回收项目的建设进度",
+        "reason": "项目分三期建设，目前仅有规划信息，实际投产和产能爬坡未知。",
+        "nextEvidence": "项目环评公示、设备招标或投产公告",
         "evidenceIds": [
-          "E014",
-          "E015",
+          "E007"
+        ]
+      },
+      {
+        "item": "特斯拉Model Y Performance China的市场反响",
+        "reason": "新车定价与性能参数已公布，但订单和交付量才能反映真实竞争力。",
+        "nextEvidence": "乘联会月度销量或特斯拉官方交付数据",
+        "evidenceIds": [
+          "E011"
+        ]
+      },
+      {
+        "item": "Atlassian agentic功能的开发者采用",
+        "reason": "新产品能力宣发与用户实际工作流价值之间常有差距。",
+        "nextEvidence": "开发者社区反馈或官方客户案例",
+        "evidenceIds": [
           "E016"
         ]
       },
       {
-        "item": "Rigetti CTO 任命细节",
-        "reason": "E014-E016 提到任命 CTO，但未披露任命对象、背景及生效时间。",
-        "nextEvidence": "Rigetti 官方人事公告或管理层页面更新",
+        "item": "医疗AI香港博士人才争夺的后续表现",
+        "reason": "行业观察文章反映趋势，但缺乏量化人才流动与薪资数据。",
+        "nextEvidence": "招聘平台数据或典型公司融资/团队扩张公告",
         "evidenceIds": [
-          "E014"
+          "E008"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "证据时间戳与内容错位",
-        "reason": "E005 的来源 publishedAt 为 2020-03-04，但页面摘要包含 2026 年新闻；E014-E016 分别在 2020 年发布但内容涉及 2026 年季度财报。这可能导致时间线混淆和误导性解读。",
+        "risk": "证据等级整体偏低，多数为C级媒体或自媒体线索",
+        "reason": "除PR Newswire的E001、E017为B级外，其余均为单一来源的C级证据，未经独立核实，存在事实偏差风险。",
         "evidenceIds": [
+          "E001",
+          "E002",
+          "E003",
+          "E004",
           "E005",
-          "E014",
-          "E015",
-          "E016"
+          "E006",
+          "E007",
+          "E008"
         ]
       },
       {
-        "risk": "自动化未人工复核的数据质量风险",
-        "reason": "所有证据均为 automated_unreviewed，变更分类为 verified_change 但未经过深度人工审核，可能存在抓取不完整、字段映射偏差或页面解析错误。",
+        "risk": "公司新闻稿存在自我宣传偏差",
+        "reason": "FAZE Security的客户数、ARR增长及融资信息来自PR Newswire新闻稿，属于公司主动披露，可能选择性强调亮点。",
         "evidenceIds": [
-          "E005",
-          "E014",
-          "E015",
-          "E016"
+          "E001"
         ]
       },
       {
-        "risk": "将数据变更误判为事实事件",
-        "reason": "E005 中融资条目被删除不代表融资事件发生或撤销，可能只是官网结构变化。E014-E016 中“CTO任命”“二季度财报”等表述未提供独立交叉验证，若直接采信可能产生错误判断。",
+        "risk": "团体标准约束力有限，执行存在不确定性",
+        "reason": "金融智能体安全标准为北京金融科技产业联盟发布的团体标准，非强制性法规，不同机构执行尺度可能不一。",
         "evidenceIds": [
-          "E005",
-          "E014",
-          "E015",
-          "E016"
+          "E010"
+        ]
+      },
+      {
+        "risk": "媒体分析带有主观立场",
+        "reason": "新浪财经关于文远知行和小马智行的文章属于分析评论，可能放大负面因素，需以财报为准。",
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "risk": "AI安全风险舆论可能影响监管情绪",
+        "reason": "WIRED等媒体渲染AI风险，可能推动监管收紧或改变公众预期，对AI投资情绪形成扰动。",
+        "evidenceIds": [
+          "E004"
         ]
       }
     ],
-    "methodologyNote": "本报告严格基于证据包中的 evidenceIds，未引入外部事实。事实部分仅描述字段变化，推断部分明确标注为待验证。所有判断均受证据质量限制，尤其注意自动化未复核来源、发布时间与内容不一致、以及字段删除不等同于事件发生。不构成任何投资建议。 数据管线提示：追踪实体与公开信源发现=stale、科创板招股书投资者证据刷新=stale。"
+    "methodologyNote": "本分析仅基于用户提供的证据包（changes与evidence字段），未补充任何外部事实。每个判断均引用evidenceIds中的证据编号。证据等级（B/C）和来源类型（新闻稿、专业媒体、自媒体）已在各条目中注明；公司自述与媒体观点均被标注为未经独立验证。所有重要性评分与方向判断为研究员基于证据包的主观评估，不构成投资建议。 数据管线提示：追踪实体与公开信源发现=stale、科创板招股书投资者证据刷新=stale。"
   },
   "changes": [
     {
-      "id": "chg-8a07b2f901dbd69c52e0",
-      "dataset": "ventureCompany",
-      "entityType": "创业公司",
-      "entityId": "form-energy",
-      "entityName": "Form Energy",
-      "action": "updated",
+      "id": "chg-2c55ae84d53b4f6b8fc9",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-5a791aeb5b77628529",
+      "entityName": "FAZE Security emerged from stealth today with 50 enterprise customers, including several Fortune 500 companies, and ~20X ARR growth in 18 months. The company also announced $6M in seed funding led by New Era Capital Part",
+      "action": "added",
       "changedFields": [
-        "financing"
+        "publishedAt",
+        "summary",
+        "title"
       ],
-      "summary": "Form Energy 的 financing 发生变化。",
-      "importance": 88,
-      "before": {
-        "financing": [
-          {
-            "amount": "$750M",
-            "date": "2020-03-04",
-            "investors": [],
-            "round": "Series G",
-            "sourceUrl": "https://formenergy.com/",
-            "summary": "Form Energy Launches Technician Hiring Sprint In Weirton, WV September 9, 2026 Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form",
-            "title": "Form Energy Launches Technician Hiring Sprint In Weirton, WV September 9, 2026 Form Energy Secures $750M in Series G Fin",
-            "type": "融资"
-          },
-          {
-            "amount": "$750M",
-            "date": "2026-08-12",
-            "investors": [],
-            "round": "Series G",
-            "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
-            "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
-            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
-            "type": "融资"
-          }
-        ]
-      },
+      "summary": "新增高价值情报事件记录：FAZE Security emerged from stealth today with 50 enterprise customers, including several Fortune 500 companies, and ~20X ARR growth in 18 months. The company also announced $6M in seed funding led by New Era Capital Part。",
+      "importance": 91,
+      "before": null,
       "after": {
-        "financing": [
-          {
-            "amount": "$750M",
-            "date": "2020-03-04",
-            "investors": [],
-            "round": "Series G",
-            "sourceUrl": "https://formenergy.com/",
-            "summary": "Form Energy Launches Technician Hiring Sprint In Weirton, WV September 9, 2026 Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form",
-            "title": "Form Energy Launches Technician Hiring Sprint In Weirton, WV September 9, 2026 Form Energy Secures $750M in Series G Fin",
-            "type": "融资"
-          }
-        ]
+        "publishedAt": "2026-09-11",
+        "summary": "NEW YORK and TEL AVIV, Israel, Sept. 11, 2026 /PRNewswire/ -- Enterprises are unable to bridge the gap between the rising number of vulnerabilities and their ability to fix them. Annual pentests are out of date the day the report lands. Scanners generate thou…",
+        "title": "FAZE Security emerged from stealth today with 50 enterprise customers, including several Fortune 500 companies, and ~20X ARR growth in 18 months. The company also announced $6M in seed funding led by New Era Capital Part"
       },
       "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
       "isResearchCandidate": true,
       "claimFields": [
-        "financing"
+        "publishedAt",
+        "summary",
+        "title"
       ],
       "claimBindings": [
         {
-          "field": "financing",
-          "before": [
-            {
-              "amount": "$750M",
-              "date": "2020-03-04",
-              "investors": [],
-              "round": "Series G",
-              "sourceUrl": "https://formenergy.com/",
-              "summary": "Form Energy Launches Technician Hiring Sprint In Weirton, WV September 9, 2026 Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form",
-              "title": "Form Energy Launches Technician Hiring Sprint In Weirton, WV September 9, 2026 Form Energy Secures $750M in Series G Fin",
-              "type": "融资"
-            },
-            {
-              "amount": "$750M",
-              "date": "2026-08-12",
-              "investors": [],
-              "round": "Series G",
-              "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
-              "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
-              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
-              "type": "融资"
-            }
-          ],
-          "after": [
-            {
-              "amount": "$750M",
-              "date": "2020-03-04",
-              "investors": [],
-              "round": "Series G",
-              "sourceUrl": "https://formenergy.com/",
-              "summary": "Form Energy Launches Technician Hiring Sprint In Weirton, WV September 9, 2026 Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form",
-              "title": "Form Energy Launches Technician Hiring Sprint In Weirton, WV September 9, 2026 Form Energy Secures $750M in Series G Fin",
-              "type": "融资"
-            }
-          ],
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-11",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "NEW YORK and TEL AVIV, Israel, Sept. 11, 2026 /PRNewswire/ -- Enterprises are unable to bridge the gap between the rising number of vulnerabilities and their ability to fix them. Annual pentests are out of date the day the report lands. Scanners generate thou…",
+          "evidenceIds": [
+            "E001"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "FAZE Security emerged from stealth today with 50 enterprise customers, including several Fortune 500 companies, and ~20X ARR growth in 18 months. The company also announced $6M in seed funding led by New Era Capital Part",
+          "evidenceIds": [
+            "E001"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E001"
+      ],
+      "supportingEvidenceIds": [
+        "E001"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-c51d5965aaafeab3d49f"
+      ],
+      "eventLifecycles": {
+        "evt-c51d5965aaafeab3d49f": "first_seen"
+      },
+      "eventId": "evt-c51d5965aaafeab3d49f",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-11T11:37:18+00:00",
+      "lastSeenAt": "2026-09-11T11:37:18+00:00"
+    },
+    {
+      "id": "chg-9535123905c1bd782378",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-633d0f6c2f43621ecb",
+      "entityName": "Nebula appoints Jack Bell as strategic partner acquisition manager",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Nebula appoints Jack Bell as strategic partner acquisition manager。",
+      "importance": 89,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-11",
+        "summary": "Nebula has announced the appointment of Jack Bell as strategic partner acquisition manager, as the workplace communications software provider moves to strengthen its channel team. Bell brings eleven years of telecommunications experience to the role and joins…",
+        "title": "Nebula appoints Jack Bell as strategic partner acquisition manager"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-11",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Nebula has announced the appointment of Jack Bell as strategic partner acquisition manager, as the workplace communications software provider moves to strengthen its channel team. Bell brings eleven years of telecommunications experience to the role and joins…",
+          "evidenceIds": [
+            "E002"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Nebula appoints Jack Bell as strategic partner acquisition manager",
+          "evidenceIds": [
+            "E002"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E002"
+      ],
+      "supportingEvidenceIds": [
+        "E002"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-86547d79c612b9110878"
+      ],
+      "eventLifecycles": {
+        "evt-86547d79c612b9110878": "first_seen"
+      },
+      "eventId": "evt-86547d79c612b9110878",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-11T11:37:18+00:00",
+      "lastSeenAt": "2026-09-11T11:37:18+00:00"
+    },
+    {
+      "id": "chg-0557d8e58d7212019c07",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-7c9fc1f7b500d0d8f0",
+      "entityName": "ITWeb TV: IQbusiness balances acquisitions, offshore growth, AI caution",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：ITWeb TV: IQbusiness balances acquisitions, offshore growth, AI caution。",
+      "importance": 89,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-11",
+        "summary": "The consulting and tech services firm seeks fintech platforms it can scale across financial services clients, while taking local capabilities into the UK and Middle East.",
+        "title": "ITWeb TV: IQbusiness balances acquisitions, offshore growth, AI caution"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-11",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "The consulting and tech services firm seeks fintech platforms it can scale across financial services clients, while taking local capabilities into the UK and Middle East.",
+          "evidenceIds": [
+            "E003"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "ITWeb TV: IQbusiness balances acquisitions, offshore growth, AI caution",
+          "evidenceIds": [
+            "E003"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E003"
+      ],
+      "supportingEvidenceIds": [
+        "E003"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-9b5c73dc712f0f193947"
+      ],
+      "eventLifecycles": {
+        "evt-9b5c73dc712f0f193947": "first_seen"
+      },
+      "eventId": "evt-9b5c73dc712f0f193947",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-11T11:37:18+00:00",
+      "lastSeenAt": "2026-09-11T11:37:18+00:00"
+    },
+    {
+      "id": "chg-a4eb241deecbaf111416",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-88cfd77ee5d1ced60d",
+      "entityName": "Why So Many AI Researchers Think the Machines Could Kill Everyone",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Why So Many AI Researchers Think the Machines Could Kill Everyone。",
+      "importance": 85,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-11",
+        "summary": "A combination of rapid advances, recursive self-improvement, and agentic swarms are genuinely “spooking people” inside big labs.",
+        "title": "Why So Many AI Researchers Think the Machines Could Kill Everyone"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-11",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "A combination of rapid advances, recursive self-improvement, and agentic swarms are genuinely “spooking people” inside big labs.",
+          "evidenceIds": [
+            "E004"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Why So Many AI Researchers Think the Machines Could Kill Everyone",
+          "evidenceIds": [
+            "E004"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E004"
+      ],
+      "supportingEvidenceIds": [
+        "E004"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-f06aff5ec4236697b965"
+      ],
+      "eventLifecycles": {
+        "evt-f06aff5ec4236697b965": "first_seen"
+      },
+      "eventId": "evt-f06aff5ec4236697b965",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-11T11:37:18+00:00",
+      "lastSeenAt": "2026-09-11T11:37:18+00:00"
+    },
+    {
+      "id": "chg-e59fccf2c70dcba8f606",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-2aec25e7c68e07d43e",
+      "entityName": "轻资产叙事背后藏分化：文远知行重营运资金 小马智行依赖合作方 规模化与第二曲线阻碍让盈利仍遥不可及",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：轻资产叙事背后藏分化：文远知行重营运资金 小马智行依赖合作方 规模化与第二曲线阻碍让盈利仍遥不可及。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-11",
+        "summary": "出品：新浪财经上市公司研究院/港市多维镜 作者：喜乐 在L4自动驾驶的叙事里，文远知行和小马智行各自都贴着一个“轻资产”标签。文远知行的轻...",
+        "title": "轻资产叙事背后藏分化：文远知行重营运资金 小马智行依赖合作方 规模化与第二曲线阻碍让盈利仍遥不可及"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-11",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "出品：新浪财经上市公司研究院/港市多维镜 作者：喜乐 在L4自动驾驶的叙事里，文远知行和小马智行各自都贴着一个“轻资产”标签。文远知行的轻...",
+          "evidenceIds": [
+            "E005"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "轻资产叙事背后藏分化：文远知行重营运资金 小马智行依赖合作方 规模化与第二曲线阻碍让盈利仍遥不可及",
           "evidenceIds": [
             "E005"
           ]
@@ -274,173 +744,1870 @@
         "supporting": 1,
         "total": 1
       },
-      "publicationTier": "verified_change",
+      "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-8be8280900881dcbec79"
+        "evt-2de96446d853e68a4675"
       ],
       "eventLifecycles": {
-        "evt-8be8280900881dcbec79": "updated"
+        "evt-2de96446d853e68a4675": "first_seen"
       },
-      "eventId": "evt-8be8280900881dcbec79",
-      "lifecycle": "updated",
-      "firstSeenAt": "2026-08-31T09:08:35+00:00",
-      "lastSeenAt": "2026-09-11T06:07:54+00:00"
+      "eventId": "evt-2de96446d853e68a4675",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-11T11:37:18+00:00",
+      "lastSeenAt": "2026-09-11T11:37:18+00:00"
     },
     {
-      "id": "chg-5b6e4bffa34eaed69742",
-      "dataset": "ventureCompany",
-      "entityType": "创业公司",
-      "entityId": "rigetti",
-      "entityName": "Rigetti Computing",
-      "action": "updated",
+      "id": "chg-6170199fc219326357e1",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-877162e0bb1a6cd04c",
+      "entityName": "规模化落地背景下，长时储能正在成为新能源时代标配",
+      "action": "added",
       "changedFields": [
-        "technology"
+        "publishedAt",
+        "summary",
+        "title"
       ],
-      "summary": "Rigetti Computing 的 technology 发生变化。",
-      "importance": 68,
-      "before": {
-        "technology": "Rigetti Computing reports first quarter 2026 financial results Continued execution driven by 108-qubit system availability, customer deployments, and international expansion Rigetti Computing to participate in fireside chat at 21st Annual Needham Technology,…"
-      },
+      "summary": "新增高价值情报事件记录：规模化落地背景下，长时储能正在成为新能源时代标配。",
+      "importance": 84,
+      "before": null,
       "after": {
-        "technology": "The Novera QPU, our 9-qubit QPU, gives you unprecedented access to quantum technology and empowers you to take your research to the next level. appointed Chief Technology Officer Rigetti Computing reports second quarter 2026 financial results Rigetti Computin…"
+        "publishedAt": "2026-09-09",
+        "summary": "储能为什么突然变得重要？长时储能到底解决什么问题？长时储能锂电技术有哪些演进方向？未来三到五年，储能行业会走向哪里？ 当光伏和风电装机越来越多，电网最缺的，其实不是电，而是“把电存起来”的能力。 为什么现在必须谈储能？ 过去十年，新能源的故事主要围绕“发电” 展开：光伏组件效率越来越高，风机越建越大，装机量连年刷新纪录。 但一个被很多人忽略的事实是：电发出来了，不代表能用得上。 光伏只在白天发电，风电出力依赖天气，而用电高峰往往出现在傍晚和夜间。这种“发电时间” 和 “用电时间” 的错配，正在让电网承受越来越大的…",
+        "title": "规模化落地背景下，长时储能正在成为新能源时代标配"
       },
       "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
       "isResearchCandidate": true,
       "claimFields": [
-        "technology"
+        "publishedAt",
+        "summary",
+        "title"
       ],
       "claimBindings": [
         {
-          "field": "technology",
-          "before": "Rigetti Computing reports first quarter 2026 financial results Continued execution driven by 108-qubit system availability, customer deployments, and international expansion Rigetti Computing to participate in fireside chat at 21st Annual Needham Technology,…",
-          "after": "The Novera QPU, our 9-qubit QPU, gives you unprecedented access to quantum technology and empowers you to take your research to the next level. appointed Chief Technology Officer Rigetti Computing reports second quarter 2026 financial results Rigetti Computin…",
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-09",
           "evidenceIds": [
-            "E014",
-            "E015",
+            "E006"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "储能为什么突然变得重要？长时储能到底解决什么问题？长时储能锂电技术有哪些演进方向？未来三到五年，储能行业会走向哪里？ 当光伏和风电装机越来越多，电网最缺的，其实不是电，而是“把电存起来”的能力。 为什么现在必须谈储能？ 过去十年，新能源的故事主要围绕“发电” 展开：光伏组件效率越来越高，风机越建越大，装机量连年刷新纪录。 但一个被很多人忽略的事实是：电发出来了，不代表能用得上。 光伏只在白天发电，风电出力依赖天气，而用电高峰往往出现在傍晚和夜间。这种“发电时间” 和 “用电时间” 的错配，正在让电网承受越来越大的…",
+          "evidenceIds": [
+            "E006"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "规模化落地背景下，长时储能正在成为新能源时代标配",
+          "evidenceIds": [
+            "E006"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E006"
+      ],
+      "supportingEvidenceIds": [
+        "E006"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-4af534a72c69e42d61b6"
+      ],
+      "eventLifecycles": {
+        "evt-4af534a72c69e42d61b6": "first_seen"
+      },
+      "eventId": "evt-4af534a72c69e42d61b6",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-11T11:37:18+00:00",
+      "lastSeenAt": "2026-09-11T11:37:18+00:00"
+    },
+    {
+      "id": "chg-8702bb4692346a0692dd",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-751a34c7f5d879fe1c",
+      "entityName": "河北5万吨锂电池回收项目落地 | 欢迎关注CBIS2026【低碳与循环经济】论坛",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：河北5万吨锂电池回收项目落地 | 欢迎关注CBIS2026【低碳与循环经济】论坛。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-10",
+        "summary": "项目分三期建设：一期购置安装一套锂电池粉碎分选生产线；二期购置安装一套正极片粉碎分选和一套负极片粉碎分选生产线；三期购置安装一套锂电池粉碎分选生产线和一套退役光伏板拆解分选生产线。",
+        "title": "河北5万吨锂电池回收项目落地 | 欢迎关注CBIS2026【低碳与循环经济】论坛"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-10",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "项目分三期建设：一期购置安装一套锂电池粉碎分选生产线；二期购置安装一套正极片粉碎分选和一套负极片粉碎分选生产线；三期购置安装一套锂电池粉碎分选生产线和一套退役光伏板拆解分选生产线。",
+          "evidenceIds": [
+            "E007"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "河北5万吨锂电池回收项目落地 | 欢迎关注CBIS2026【低碳与循环经济】论坛",
+          "evidenceIds": [
+            "E007"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E007"
+      ],
+      "supportingEvidenceIds": [
+        "E007"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-a04c5eb74c48f6d499a8"
+      ],
+      "eventLifecycles": {
+        "evt-a04c5eb74c48f6d499a8": "first_seen"
+      },
+      "eventId": "evt-a04c5eb74c48f6d499a8",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-11T11:37:18+00:00",
+      "lastSeenAt": "2026-09-11T11:37:18+00:00"
+    },
+    {
+      "id": "chg-81ae1afbcb88b15fdd87",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-62eec130c3d52ea147",
+      "entityName": "医疗AI投资人，正在香港抢博士",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：医疗AI投资人，正在香港抢博士。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-11",
+        "summary": "香港博士，在一级市场上杀疯了。",
+        "title": "医疗AI投资人，正在香港抢博士"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-11",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "香港博士，在一级市场上杀疯了。",
+          "evidenceIds": [
+            "E008"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "医疗AI投资人，正在香港抢博士",
+          "evidenceIds": [
+            "E008"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E008"
+      ],
+      "supportingEvidenceIds": [
+        "E008"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-b33a66e9a7d5e2fa6fa4"
+      ],
+      "eventLifecycles": {
+        "evt-b33a66e9a7d5e2fa6fa4": "first_seen"
+      },
+      "eventId": "evt-b33a66e9a7d5e2fa6fa4",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-11T11:37:18+00:00",
+      "lastSeenAt": "2026-09-11T11:37:18+00:00"
+    },
+    {
+      "id": "chg-3e77272819ed3c0d89c2",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-4928259db7741dbae2",
+      "entityName": "Agent商业化驶入深水区，蚂蚁推出APASS补上“信任基础设施”",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Agent商业化驶入深水区，蚂蚁推出APASS补上“信任基础设施”。",
+      "importance": 84,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-11",
+        "summary": "9月11日，在2026 Inclusion·外滩大会AI支付论坛上，蚂蚁集团发布面向智能体（Agent）商业活动的信任基础设施APASS。 基于KYA（Know Your Agent）理念，APASS通过智能体可信身份产品和智能体风控服务，建立身份与行为两条信任链，围绕“Agent是谁、代表谁、被允许做什么、行为是否可信”，提供身份注册、持续核验、意图安全和可信存证等能力，为Agent调用服务、办理业务和参与支付等商业活动提供信任基础。 随着Agent从“工具”走向“行动者”，一套新的商业信任基础设施正在成为AI…",
+        "title": "Agent商业化驶入深水区，蚂蚁推出APASS补上“信任基础设施”"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-11",
+          "evidenceIds": [
+            "E009"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "9月11日，在2026 Inclusion·外滩大会AI支付论坛上，蚂蚁集团发布面向智能体（Agent）商业活动的信任基础设施APASS。 基于KYA（Know Your Agent）理念，APASS通过智能体可信身份产品和智能体风控服务，建立身份与行为两条信任链，围绕“Agent是谁、代表谁、被允许做什么、行为是否可信”，提供身份注册、持续核验、意图安全和可信存证等能力，为Agent调用服务、办理业务和参与支付等商业活动提供信任基础。 随着Agent从“工具”走向“行动者”，一套新的商业信任基础设施正在成为AI…",
+          "evidenceIds": [
+            "E009"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Agent商业化驶入深水区，蚂蚁推出APASS补上“信任基础设施”",
+          "evidenceIds": [
+            "E009"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E009"
+      ],
+      "supportingEvidenceIds": [
+        "E009"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-e86f250f1e4b47ec650e"
+      ],
+      "eventLifecycles": {
+        "evt-e86f250f1e4b47ec650e": "first_seen"
+      },
+      "eventId": "evt-e86f250f1e4b47ec650e",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-11T11:37:18+00:00",
+      "lastSeenAt": "2026-09-11T11:37:18+00:00"
+    },
+    {
+      "id": "chg-8fa9b6b1c586d6012480",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-90d25c24e5dd13d84e",
+      "entityName": "金融领域首个智能体安全标准发布",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：金融领域首个智能体安全标准发布。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-11",
+        "summary": "金融领域首个智能体安全标准发布 明确未经金融机构授权，不得自动化操作金融App 近日（8月27日），北京金融科技产业联盟发布《智能体技术金融应用安全要求》团体标准，为国内首个聚焦金融领域智能体应用安全的团体标准。标准明确：手机端第三方智能体未经金融机构授权，不得利用系统权限自动化读取、操作金融应用软件GUI界面；通过麦克风、截屏、录屏、共享屏幕等权限获取数据时，须遵守被调用方安全策略。业内将上述要求概括为“双重授权”：智能体操作金融App须同时获得用户与机构授权。 该标准由北京国家金融科技认证中心牵头，联合中国邮…",
+        "title": "金融领域首个智能体安全标准发布"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-11",
+          "evidenceIds": [
+            "E010"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "金融领域首个智能体安全标准发布 明确未经金融机构授权，不得自动化操作金融App 近日（8月27日），北京金融科技产业联盟发布《智能体技术金融应用安全要求》团体标准，为国内首个聚焦金融领域智能体应用安全的团体标准。标准明确：手机端第三方智能体未经金融机构授权，不得利用系统权限自动化读取、操作金融应用软件GUI界面；通过麦克风、截屏、录屏、共享屏幕等权限获取数据时，须遵守被调用方安全策略。业内将上述要求概括为“双重授权”：智能体操作金融App须同时获得用户与机构授权。 该标准由北京国家金融科技认证中心牵头，联合中国邮…",
+          "evidenceIds": [
+            "E010"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "金融领域首个智能体安全标准发布",
+          "evidenceIds": [
+            "E010"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E010"
+      ],
+      "supportingEvidenceIds": [
+        "E010"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-f62076495c14b97df309"
+      ],
+      "eventLifecycles": {
+        "evt-f62076495c14b97df309": "first_seen"
+      },
+      "eventId": "evt-f62076495c14b97df309",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-11T11:37:18+00:00",
+      "lastSeenAt": "2026-09-11T11:37:18+00:00"
+    },
+    {
+      "id": "chg-ce75233668c33f5fd91a",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-5e4af31ee755127ace",
+      "entityName": "Tesla launches refreshed Model Y Performance AWD in China from RMB 369,000",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Tesla launches refreshed Model Y Performance AWD in China from RMB 369,000。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-11",
+        "summary": "Tesla has launched the refreshed Model Y Performance all-wheel-drive version in China at a starting price of RMB 369,000. The Model Y Performance has a CLTC range of 659 kilometers, a top speed of 250 kph and a 0–100 kph time of 3.5 seconds. It comes with a d…",
+        "title": "Tesla launches refreshed Model Y Performance AWD in China from RMB 369,000"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-11",
+          "evidenceIds": [
+            "E011"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Tesla has launched the refreshed Model Y Performance all-wheel-drive version in China at a starting price of RMB 369,000. The Model Y Performance has a CLTC range of 659 kilometers, a top speed of 250 kph and a 0–100 kph time of 3.5 seconds. It comes with a d…",
+          "evidenceIds": [
+            "E011"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Tesla launches refreshed Model Y Performance AWD in China from RMB 369,000",
+          "evidenceIds": [
+            "E011"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E011"
+      ],
+      "supportingEvidenceIds": [
+        "E011"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-0101de09b4055f5b34eb"
+      ],
+      "eventLifecycles": {
+        "evt-0101de09b4055f5b34eb": "first_seen"
+      },
+      "eventId": "evt-0101de09b4055f5b34eb",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-11T11:37:18+00:00",
+      "lastSeenAt": "2026-09-11T11:37:18+00:00"
+    },
+    {
+      "id": "chg-626b622f097975389f2a",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-6f58418fcdf3f1e3f9",
+      "entityName": "Gen Z is making room for a different kind of college party. Introducing, the wellness darty.",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Gen Z is making room for a different kind of college party. Introducing, the wellness darty.。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-11",
+        "summary": "College students are gathering for Pilates, cold plunges and matcha at wellness darties. Here’s what’s behind the trend — and the online debate.",
+        "title": "Gen Z is making room for a different kind of college party. Introducing, the wellness darty."
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-11",
+          "evidenceIds": [
+            "E014"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "College students are gathering for Pilates, cold plunges and matcha at wellness darties. Here’s what’s behind the trend — and the online debate.",
+          "evidenceIds": [
+            "E014"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Gen Z is making room for a different kind of college party. Introducing, the wellness darty.",
+          "evidenceIds": [
+            "E014"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E014"
+      ],
+      "supportingEvidenceIds": [
+        "E014"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-59a5ef4e77c41b0d3435"
+      ],
+      "eventLifecycles": {
+        "evt-59a5ef4e77c41b0d3435": "first_seen"
+      },
+      "eventId": "evt-59a5ef4e77c41b0d3435",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-11T11:37:18+00:00",
+      "lastSeenAt": "2026-09-11T11:37:18+00:00"
+    },
+    {
+      "id": "chg-e899269749a760b2bee6",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-5b7d4c5d750d3f8f6b",
+      "entityName": "Atlassian introduces 'always-on' capabilities for agentic development workflows",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Atlassian introduces 'always-on' capabilities for agentic development workflows。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-11",
+        "summary": "Atlassian is upgrading its AI coding agents with new capabilities across Jira, Confluence, and DX. The updates include the extension of Code Context to ground agents in multi-repo codebases, Agentic loops in Jira to convert Jira backlogs into pull requests, a…",
+        "title": "Atlassian introduces 'always-on' capabilities for agentic development workflows"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-11",
+          "evidenceIds": [
+            "E016"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "Atlassian is upgrading its AI coding agents with new capabilities across Jira, Confluence, and DX. The updates include the extension of Code Context to ground agents in multi-repo codebases, Agentic loops in Jira to convert Jira backlogs into pull requests, a…",
+          "evidenceIds": [
+            "E016"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Atlassian introduces 'always-on' capabilities for agentic development workflows",
+          "evidenceIds": [
             "E016"
           ]
         }
       ],
       "evidenceIds": [
-        "E014",
-        "E015",
         "E016"
       ],
       "supportingEvidenceIds": [
-        "E014",
-        "E015",
         "E016"
       ],
       "evidenceQuality": {
         "status": "passed",
-        "supporting": 3,
-        "total": 3
+        "supporting": 1,
+        "total": 1
       },
-      "publicationTier": "verified_change",
+      "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-e6724ded6dc0dde53411"
+        "evt-92b5899d1e755edf0301"
       ],
       "eventLifecycles": {
-        "evt-e6724ded6dc0dde53411": "first_seen"
+        "evt-92b5899d1e755edf0301": "first_seen"
       },
-      "eventId": "evt-e6724ded6dc0dde53411",
+      "eventId": "evt-92b5899d1e755edf0301",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-11T06:07:54+00:00",
-      "lastSeenAt": "2026-09-11T06:07:54+00:00"
+      "firstSeenAt": "2026-09-11T11:37:18+00:00",
+      "lastSeenAt": "2026-09-11T11:37:18+00:00"
+    },
+    {
+      "id": "chg-bb1205f0eb014ed9bb6a",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-e47449326c988cd276",
+      "entityName": "Accelevate Solutions and Brand Engagement Network Launch AI-Powered Passenger Engagement Platform for LAX Off-Airport Shuttle Providers",
+      "action": "added",
+      "changedFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "summary": "新增高价值情报事件记录：Accelevate Solutions and Brand Engagement Network Launch AI-Powered Passenger Engagement Platform for LAX Off-Airport Shuttle Providers。",
+      "importance": 82,
+      "before": null,
+      "after": {
+        "publishedAt": "2026-09-11",
+        "summary": "LOS ANGELES, Sept. 11, 2026 /PRNewswire/ -- Accelevate Solutions and Brand Engagement Network, Inc. (\"BEN\") (Nasdaq: BNAI) today announced the launch of a live AI-powered passenger engagement platform for off-airport parking and shuttle services at Los Angele…",
+        "title": "Accelevate Solutions and Brand Engagement Network Launch AI-Powered Passenger Engagement Platform for LAX Off-Airport Shuttle Providers"
+      },
+      "changeType": "external_event",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-11",
+          "evidenceIds": [
+            "E017"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "LOS ANGELES, Sept. 11, 2026 /PRNewswire/ -- Accelevate Solutions and Brand Engagement Network, Inc. (\"BEN\") (Nasdaq: BNAI) today announced the launch of a live AI-powered passenger engagement platform for off-airport parking and shuttle services at Los Angele…",
+          "evidenceIds": [
+            "E017"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Accelevate Solutions and Brand Engagement Network Launch AI-Powered Passenger Engagement Platform for LAX Off-Airport Shuttle Providers",
+          "evidenceIds": [
+            "E017"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E017"
+      ],
+      "supportingEvidenceIds": [
+        "E017"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-e40267398b8ac6cd48f8"
+      ],
+      "eventLifecycles": {
+        "evt-e40267398b8ac6cd48f8": "first_seen"
+      },
+      "eventId": "evt-e40267398b8ac6cd48f8",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-11T11:37:18+00:00",
+      "lastSeenAt": "2026-09-11T11:37:18+00:00"
     }
   ],
   "evidence": [
     {
-      "id": "E005",
-      "changeId": "chg-8a07b2f901dbd69c52e0",
-      "entityName": "Form Energy",
-      "claim": "Form Energy 的 financing 发生变化。",
-      "publicationTier": "verified_change",
+      "id": "E001",
+      "changeId": "chg-2c55ae84d53b4f6b8fc9",
+      "entityName": "FAZE Security emerged from stealth today with 50 enterprise customers, including several Fortune 500 companies, and ~20X ARR growth in 18 months. The company also announced $6M in seed funding led by New Era Capital Part",
+      "claim": "新增高价值情报事件记录：FAZE Security emerged from stealth today with 50 enterprise customers, including several Fortune 500 companies, and ~20X ARR growth in 18 months. The company also announced $6M in seed funding led by New Era Capital Part。",
+      "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "Form Energy",
-      "title": "Home",
-      "url": "https://formenergy.com/",
-      "publishedAt": "2020-03-04",
-      "evidenceGrade": "官方披露",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "FAZE Security emerged from stealth today with 50 enterprise customers, including several Fortune 500 companies, and ~20X ARR growth in 18 months. The company also announced $6M in seed funding led by New Era Capital Part",
+      "url": "https://www.prnewswire.com/news-releases/faze-security-emerged-from-stealth-today-with-50-enterprise-customers-including-several-fortune-500-companies-and-20x-arr-growth-in-18-months-the-company-also-announced-6m-in-seed-funding-led-by-new-era-capital-partners-with--302875578.html",
+      "publishedAt": "2026-09-11",
+      "evidenceGrade": "B",
+      "platformName": "新闻稿",
+      "sourceRole": "primary",
       "claimFields": [
-        "financing"
+        "publishedAt",
+        "summary",
+        "title"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
       "qualityStatus": "passed",
-      "supportStatus": "supports"
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-11T11:37:18+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
+    },
+    {
+      "id": "E002",
+      "changeId": "chg-9535123905c1bd782378",
+      "entityName": "Nebula appoints Jack Bell as strategic partner acquisition manager",
+      "claim": "新增高价值情报事件记录：Nebula appoints Jack Bell as strategic partner acquisition manager。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "ITPro",
+      "title": "Nebula appoints Jack Bell as strategic partner acquisition manager",
+      "url": "https://www.itpro.com/business/leadership/nebula-appoints-jack-bell-as-strategic-partner-acquisition-manager",
+      "publishedAt": "2026-09-11",
+      "evidenceGrade": "C",
+      "platformName": "ITPro",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-11T11:37:18+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
+    },
+    {
+      "id": "E003",
+      "changeId": "chg-0557d8e58d7212019c07",
+      "entityName": "ITWeb TV: IQbusiness balances acquisitions, offshore growth, AI caution",
+      "claim": "新增高价值情报事件记录：ITWeb TV: IQbusiness balances acquisitions, offshore growth, AI caution。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "ITWeb",
+      "title": "ITWeb TV: IQbusiness balances acquisitions, offshore growth, AI caution",
+      "url": "https://www.itweb.co.za/article/itweb-tv-iqbusiness-balances-acquisitions-offshore-growth-ai-caution/lwrKxv3YyxoMmg1o",
+      "publishedAt": "2026-09-11",
+      "evidenceGrade": "C",
+      "platformName": "ITWeb",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-11T11:37:18+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
+    },
+    {
+      "id": "E004",
+      "changeId": "chg-a4eb241deecbaf111416",
+      "entityName": "Why So Many AI Researchers Think the Machines Could Kill Everyone",
+      "claim": "新增高价值情报事件记录：Why So Many AI Researchers Think the Machines Could Kill Everyone。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "WIRED",
+      "title": "Why So Many AI Researchers Think the Machines Could Kill Everyone",
+      "url": "https://www.wired.com/story/why-so-many-ai-researchers-think-the-machines-could-kill-everyone",
+      "publishedAt": "2026-09-11",
+      "evidenceGrade": "C",
+      "platformName": "WIRED",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-11T11:37:18+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
+    },
+    {
+      "id": "E005",
+      "changeId": "chg-e59fccf2c70dcba8f606",
+      "entityName": "轻资产叙事背后藏分化：文远知行重营运资金 小马智行依赖合作方 规模化与第二曲线阻碍让盈利仍遥不可及",
+      "claim": "新增高价值情报事件记录：轻资产叙事背后藏分化：文远知行重营运资金 小马智行依赖合作方 规模化与第二曲线阻碍让盈利仍遥不可及。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "轻资产叙事背后藏分化：文远知行重营运资金 小马智行依赖合作方 规模化与第二曲线阻碍让盈利仍遥不可及",
+      "url": "https://finance.sina.com.cn/stock/observe/2026-09-11/doc-inirnaka5785405.shtml",
+      "publishedAt": "2026-09-11",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-11T11:37:18+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
+    },
+    {
+      "id": "E006",
+      "changeId": "chg-6170199fc219326357e1",
+      "entityName": "规模化落地背景下，长时储能正在成为新能源时代标配",
+      "claim": "新增高价值情报事件记录：规模化落地背景下，长时储能正在成为新能源时代标配。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "储消科技",
+      "title": "规模化落地背景下，长时储能正在成为新能源时代标配",
+      "url": "https://mp.weixin.qq.com/s?new=1&signature=yGeBDTVZGpKSt8fa%2AsRNoj3juCnANMs37DL4IcxdhekeUcfv9ymfQtIPUSN6imumJPc9NXF8O3UEdVZKJjAg9MLqIp-q0zeRBRZ-sHnJfr7FXIycwqgvc9cfY34m-ODI&src=11&timestamp=1789126339&ver=6960",
+      "publishedAt": "2026-09-09",
+      "evidenceGrade": "C",
+      "platformName": "微信",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-11T11:37:18+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
+    },
+    {
+      "id": "E007",
+      "changeId": "chg-8702bb4692346a0692dd",
+      "entityName": "河北5万吨锂电池回收项目落地 | 欢迎关注CBIS2026【低碳与循环经济】论坛",
+      "claim": "新增高价值情报事件记录：河北5万吨锂电池回收项目落地 | 欢迎关注CBIS2026【低碳与循环经济】论坛。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "电池中国",
+      "title": "河北5万吨锂电池回收项目落地 | 欢迎关注CBIS2026【低碳与循环经济】论坛",
+      "url": "https://mp.weixin.qq.com/s?new=1&signature=ZFdupIxujlAxjv2xfrpfnJuT7-CQ7-VLaJOE1b-5pX%2AIXNi-Y3UbrD%2AVgO6G%2AgMJVC8e69u%2AR0xuL0zc1d17EEnDb0oGXc3l8zXAYlMamIV38J7Ed8Z4dHZB4nC7MGHd&src=11&timestamp=1789126365&ver=6960",
+      "publishedAt": "2026-09-10",
+      "evidenceGrade": "C",
+      "platformName": "微信",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-11T11:37:18+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
+    },
+    {
+      "id": "E008",
+      "changeId": "chg-81ae1afbcb88b15fdd87",
+      "entityName": "医疗AI投资人，正在香港抢博士",
+      "claim": "新增高价值情报事件记录：医疗AI投资人，正在香港抢博士。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "钛媒体",
+      "title": "医疗AI投资人，正在香港抢博士",
+      "url": "https://www.tmtpost.com/8136878.html",
+      "publishedAt": "2026-09-11",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-11T11:37:18+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
+    },
+    {
+      "id": "E009",
+      "changeId": "chg-3e77272819ed3c0d89c2",
+      "entityName": "Agent商业化驶入深水区，蚂蚁推出APASS补上“信任基础设施”",
+      "claim": "新增高价值情报事件记录：Agent商业化驶入深水区，蚂蚁推出APASS补上“信任基础设施”。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "雷峰网",
+      "title": "Agent商业化驶入深水区，蚂蚁推出APASS补上“信任基础设施”",
+      "url": "https://www.leiphone.com/category/industrynews/wH6gNreENqAYh0EW.html",
+      "publishedAt": "2026-09-11",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-11T11:37:18+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
+    },
+    {
+      "id": "E010",
+      "changeId": "chg-8fa9b6b1c586d6012480",
+      "entityName": "金融领域首个智能体安全标准发布",
+      "claim": "新增高价值情报事件记录：金融领域首个智能体安全标准发布。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "雷峰网",
+      "title": "金融领域首个智能体安全标准发布",
+      "url": "https://www.leiphone.com/category/industrynews/tyenZtjsxcp3OzDb.html",
+      "publishedAt": "2026-09-11",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-11T11:37:18+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
+    },
+    {
+      "id": "E011",
+      "changeId": "chg-ce75233668c33f5fd91a",
+      "entityName": "Tesla launches refreshed Model Y Performance AWD in China from RMB 369,000",
+      "claim": "新增高价值情报事件记录：Tesla launches refreshed Model Y Performance AWD in China from RMB 369,000。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "TechNode",
+      "title": "Tesla launches refreshed Model Y Performance AWD in China from RMB 369,000",
+      "url": "https://technode.com/2026/09/11/tesla-launches-refreshed-model-y-performance-awd-in-china-from-rmb-369000",
+      "publishedAt": "2026-09-11",
+      "evidenceGrade": "C",
+      "platformName": "TechNode",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-11T11:37:18+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
     },
     {
       "id": "E014",
-      "changeId": "chg-5b6e4bffa34eaed69742",
-      "entityName": "Rigetti Computing",
-      "claim": "Rigetti Computing 的 technology 发生变化。",
-      "publicationTier": "verified_change",
+      "changeId": "chg-626b622f097975389f2a",
+      "entityName": "Gen Z is making room for a different kind of college party. Introducing, the wellness darty.",
+      "claim": "新增高价值情报事件记录：Gen Z is making room for a different kind of college party. Introducing, the wellness darty.。",
+      "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "Rigetti",
-      "title": "Quantum Computing",
-      "url": "https://www.rigetti.com/",
-      "publishedAt": "2020-01-15",
-      "evidenceGrade": "官方披露",
+      "sourceName": "Mashable",
+      "title": "Gen Z is making room for a different kind of college party. Introducing, the wellness darty.",
+      "url": "https://mashable.com/life/gen-z-wellness-darties-college-party-trend",
+      "publishedAt": "2026-09-11",
+      "evidenceGrade": "C",
+      "platformName": "Mashable",
+      "sourceRole": "corroboration",
       "claimFields": [
-        "technology"
+        "publishedAt",
+        "summary",
+        "title"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
       "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E015",
-      "changeId": "chg-5b6e4bffa34eaed69742",
-      "entityName": "Rigetti Computing",
-      "claim": "Rigetti Computing 的 technology 发生变化。",
-      "publicationTier": "verified_change",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Rigetti",
-      "title": "Quantum computing research",
-      "url": "https://www.rigetti.com/research",
-      "publishedAt": "2020-07-06",
-      "evidenceGrade": "官方披露",
-      "claimFields": [
-        "technology"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-11T11:37:18+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
     },
     {
       "id": "E016",
-      "changeId": "chg-5b6e4bffa34eaed69742",
-      "entityName": "Rigetti Computing",
-      "claim": "Rigetti Computing 的 technology 发生变化。",
-      "publicationTier": "verified_change",
+      "changeId": "chg-e899269749a760b2bee6",
+      "entityName": "Atlassian introduces 'always-on' capabilities for agentic development workflows",
+      "claim": "新增高价值情报事件记录：Atlassian introduces 'always-on' capabilities for agentic development workflows。",
+      "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "Rigetti",
-      "title": "Building scalable, innovative quantum systems",
-      "url": "https://www.rigetti.com/what-we-build",
-      "publishedAt": "2020-06-10",
-      "evidenceGrade": "官方披露",
+      "sourceName": "ITPro",
+      "title": "Atlassian introduces 'always-on' capabilities for agentic development workflows",
+      "url": "https://www.itpro.com/software/development/atlassian-introduces-always-on-capabilities-for-agentic-development-workflows",
+      "publishedAt": "2026-09-11",
+      "evidenceGrade": "C",
+      "platformName": "ITPro",
+      "sourceRole": "corroboration",
       "claimFields": [
-        "technology"
+        "publishedAt",
+        "summary",
+        "title"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
       "qualityStatus": "passed",
-      "supportStatus": "supports"
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-11T11:37:18+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
+    },
+    {
+      "id": "E017",
+      "changeId": "chg-bb1205f0eb014ed9bb6a",
+      "entityName": "Accelevate Solutions and Brand Engagement Network Launch AI-Powered Passenger Engagement Platform for LAX Off-Airport Shuttle Providers",
+      "claim": "新增高价值情报事件记录：Accelevate Solutions and Brand Engagement Network Launch AI-Powered Passenger Engagement Platform for LAX Off-Airport Shuttle Providers。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "PR Newswire Consumer Technology",
+      "title": "Accelevate Solutions and Brand Engagement Network Launch AI-Powered Passenger Engagement Platform for LAX Off-Airport Shuttle Providers",
+      "url": "https://www.prnewswire.com/news-releases/accelevate-solutions-and-brand-engagement-network-launch-ai-powered-passenger-engagement-platform-for-lax-off-airport-shuttle-providers-302876264.html",
+      "publishedAt": "2026-09-11",
+      "evidenceGrade": "B",
+      "platformName": "新闻稿",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-11T11:37:18+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
     }
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-11T06:07:54+00:00",
+    "generatedAt": "2026-09-11T11:37:18+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-f62076495c14b97df309": {
+        "eventId": "evt-f62076495c14b97df309",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-90d25c24e5dd13d84e",
+        "entityName": "金融领域首个智能体安全标准发布",
+        "title": "金融领域首个智能体安全标准发布",
+        "titleAliases": [
+          "金融领域首个智能体安全标准发布"
+        ],
+        "publishedDate": "2026-09-11",
+        "publishedDates": [
+          "2026-09-11"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-1ef4df9a08f224a88c37",
+          "record-05dc4af5bfb1c9731c84",
+          "src-068862c47f5d74d1036e"
+        ],
+        "evidenceFingerprints": [
+          "1ef4df9a08f224a88c37"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "金融领域首个智能体安全标准发布",
+            "url": "https://www.leiphone.com/category/industrynews/tyenZtjsxcp3OzDb.html",
+            "publishedAt": "2026-09-11",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "4a79ecd082d2dcb39288",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastPublishedAt": "2026-09-11T11:37:18+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-f06aff5ec4236697b965": {
+        "eventId": "evt-f06aff5ec4236697b965",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-88cfd77ee5d1ced60d",
+        "entityName": "Why So Many AI Researchers Think the Machines Could Kill Everyone",
+        "title": "Why So Many AI Researchers Think the Machines Could Kill Everyone",
+        "titleAliases": [
+          "whysomanyairesearchersthinkthemachinescouldkilleveryone"
+        ],
+        "publishedDate": "2026-09-11",
+        "publishedDates": [
+          "2026-09-11"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-8db91dd26c6858affa74",
+          "record-32d72f6a23b0588ae927",
+          "src-049f5315c8a89d18b204"
+        ],
+        "evidenceFingerprints": [
+          "8db91dd26c6858affa74"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "WIRED",
+            "title": "Why So Many AI Researchers Think the Machines Could Kill Everyone",
+            "url": "https://www.wired.com/story/why-so-many-ai-researchers-think-the-machines-could-kill-everyone",
+            "publishedAt": "2026-09-11",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "4c5d990fe37742d8fe86",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastPublishedAt": "2026-09-11T11:37:18+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-e86f250f1e4b47ec650e": {
+        "eventId": "evt-e86f250f1e4b47ec650e",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-4928259db7741dbae2",
+        "entityName": "Agent商业化驶入深水区，蚂蚁推出APASS补上“信任基础设施”",
+        "title": "Agent商业化驶入深水区，蚂蚁推出APASS补上“信任基础设施”",
+        "titleAliases": [
+          "agent商业化驶入深水区蚂蚁推出apass补上信任基础设施"
+        ],
+        "publishedDate": "2026-09-11",
+        "publishedDates": [
+          "2026-09-11"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-8e81c1b1101c7a1a65a8",
+          "record-fa8c6f2ac633ac314ad4",
+          "src-74c5f0aec94609738273"
+        ],
+        "evidenceFingerprints": [
+          "8e81c1b1101c7a1a65a8"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "Agent商业化驶入深水区，蚂蚁推出APASS补上“信任基础设施”",
+            "url": "https://www.leiphone.com/category/industrynews/wH6gNreENqAYh0EW.html",
+            "publishedAt": "2026-09-11",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "b32b7dcb115c003c1247",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastPublishedAt": "2026-09-11T11:37:18+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-e40267398b8ac6cd48f8": {
+        "eventId": "evt-e40267398b8ac6cd48f8",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-e47449326c988cd276",
+        "entityName": "Accelevate Solutions and Brand Engagement Network Launch AI-Powered Passenger Engagement Platform for LAX Off-Airport Shuttle Providers",
+        "title": "Accelevate Solutions and Brand Engagement Network Launch AI-Powered Passenger Engagement Platform for LAX Off-Airport Shuttle Providers",
+        "titleAliases": [
+          "accelevatesolutionsandbrandengagementnetworklaunchaipoweredpassengerengagementplatformforlaxoffairportshuttleproviders"
+        ],
+        "publishedDate": "2026-09-11",
+        "publishedDates": [
+          "2026-09-11"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-bee75bcc02401896a536",
+          "record-e8c692af5ccdad6edffa",
+          "src-0dba39d4880d59c125a9"
+        ],
+        "evidenceFingerprints": [
+          "bee75bcc02401896a536"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "Accelevate Solutions and Brand Engagement Network Launch AI-Powered Passenger Engagement Platform for LAX Off-Airport Shuttle Providers",
+            "url": "https://www.prnewswire.com/news-releases/accelevate-solutions-and-brand-engagement-network-launch-ai-powered-passenger-engagement-platform-for-lax-off-airport-shuttle-providers-302876264.html",
+            "publishedAt": "2026-09-11",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "cf2267842ba1dad8486b",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastPublishedAt": "2026-09-11T11:37:18+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-c51d5965aaafeab3d49f": {
+        "eventId": "evt-c51d5965aaafeab3d49f",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-5a791aeb5b77628529",
+        "entityName": "FAZE Security emerged from stealth today with 50 enterprise customers, including several Fortune 500 companies, and ~20X ARR growth in 18 months. The company also announced $6M in seed funding led by New Era Capital Part",
+        "title": "FAZE Security emerged from stealth today with 50 enterprise customers, including several Fortune 500 companies, and ~20X ARR growth in 18 months. The company also announced $6M in seed funding led by New Era Capital Part",
+        "titleAliases": [
+          "fazesecurityemergedfromstealthtodaywith50enterprisecustomersincludingseveralfortune500companiesand20xarrgrowthin18monthsthecompanyalsoannounced6minseedfundingledbyneweracapitalpart"
+        ],
+        "publishedDate": "2026-09-11",
+        "publishedDates": [
+          "2026-09-11"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "融资",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "18",
+          "20",
+          "50",
+          "500",
+          "6"
+        ],
+        "sourceAliases": [
+          "evd-626b603b92c148e04e4d",
+          "record-5b871412d52afbcbbb2e",
+          "src-c9a6275a76f5ac90efdd"
+        ],
+        "evidenceFingerprints": [
+          "626b603b92c148e04e4d"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "PR Newswire Consumer Technology",
+            "title": "FAZE Security emerged from stealth today with 50 enterprise customers, including several Fortune 500 companies, and ~20X ARR growth in 18 months. The company also announced $6M in seed funding led by New Era Capital Part",
+            "url": "https://www.prnewswire.com/news-releases/faze-security-emerged-from-stealth-today-with-50-enterprise-customers-including-several-fortune-500-companies-and-20x-arr-growth-in-18-months-the-company-also-announced-6m-in-seed-funding-led-by-new-era-capital-partners-with--302875578.html",
+            "publishedAt": "2026-09-11",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "5ca32f2ed9951eec626c",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastPublishedAt": "2026-09-11T11:37:18+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-b33a66e9a7d5e2fa6fa4": {
+        "eventId": "evt-b33a66e9a7d5e2fa6fa4",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-62eec130c3d52ea147",
+        "entityName": "医疗AI投资人，正在香港抢博士",
+        "title": "医疗AI投资人，正在香港抢博士",
+        "titleAliases": [
+          "医疗ai投资人正在香港抢博士"
+        ],
+        "publishedDate": "2026-09-11",
+        "publishedDates": [
+          "2026-09-11"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产业投资",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-be1d2497e5656b46c5bf",
+          "record-1fb373f759b054c6154d",
+          "src-58dbcdd5360efd399d25"
+        ],
+        "evidenceFingerprints": [
+          "be1d2497e5656b46c5bf"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "钛媒体",
+            "title": "医疗AI投资人，正在香港抢博士",
+            "url": "https://www.tmtpost.com/8136878.html",
+            "publishedAt": "2026-09-11",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "91941dd0ab885e422b34",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastPublishedAt": "2026-09-11T11:37:18+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-a04c5eb74c48f6d499a8": {
+        "eventId": "evt-a04c5eb74c48f6d499a8",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-751a34c7f5d879fe1c",
+        "entityName": "河北5万吨锂电池回收项目落地 | 欢迎关注CBIS2026【低碳与循环经济】论坛",
+        "title": "河北5万吨锂电池回收项目落地 | 欢迎关注CBIS2026【低碳与循环经济】论坛",
+        "titleAliases": [
+          "河北5万吨锂电池回收项目落地"
+        ],
+        "publishedDate": "2026-09-10",
+        "publishedDates": [
+          "2026-09-10"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "5"
+        ],
+        "sourceAliases": [
+          "evd-47fad1a7207740819ab8",
+          "record-2d5d9da64d3597602626",
+          "src-de749cf62069211080c2"
+        ],
+        "evidenceFingerprints": [
+          "47fad1a7207740819ab8"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "电池中国",
+            "title": "河北5万吨锂电池回收项目落地 | 欢迎关注CBIS2026【低碳与循环经济】论坛",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=ZFdupIxujlAxjv2xfrpfnJuT7-CQ7-VLaJOE1b-5pX%2AIXNi-Y3UbrD%2AVgO6G%2AgMJVC8e69u%2AR0xuL0zc1d17EEnDb0oGXc3l8zXAYlMamIV38J7Ed8Z4dHZB4nC7MGHd&src=11&timestamp=1789126365&ver=6960",
+            "publishedAt": "2026-09-10",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "768f60afe0aecc145f32",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastPublishedAt": "2026-09-11T11:37:18+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-9b5c73dc712f0f193947": {
+        "eventId": "evt-9b5c73dc712f0f193947",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-7c9fc1f7b500d0d8f0",
+        "entityName": "ITWeb TV: IQbusiness balances acquisitions, offshore growth, AI caution",
+        "title": "ITWeb TV: IQbusiness balances acquisitions, offshore growth, AI caution",
+        "titleAliases": [
+          "itwebtviqbusinessbalancesacquisitionsoffshoregrowthaicaution"
+        ],
+        "publishedDate": "2026-09-11",
+        "publishedDates": [
+          "2026-09-11"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "并购",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-ab16c072aeffa6fb287d",
+          "record-3aa353dd8565c1b4a9d4",
+          "src-4d9b51680c35dbbcba66"
+        ],
+        "evidenceFingerprints": [
+          "ab16c072aeffa6fb287d"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "ITWeb",
+            "title": "ITWeb TV: IQbusiness balances acquisitions, offshore growth, AI caution",
+            "url": "https://www.itweb.co.za/article/itweb-tv-iqbusiness-balances-acquisitions-offshore-growth-ai-caution/lwrKxv3YyxoMmg1o",
+            "publishedAt": "2026-09-11",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "eebc2947f88b1a896b09",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastPublishedAt": "2026-09-11T11:37:18+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-92b5899d1e755edf0301": {
+        "eventId": "evt-92b5899d1e755edf0301",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-5b7d4c5d750d3f8f6b",
+        "entityName": "Atlassian introduces 'always-on' capabilities for agentic development workflows",
+        "title": "Atlassian introduces 'always-on' capabilities for agentic development workflows",
+        "titleAliases": [
+          "atlassianintroducesalwaysoncapabilitiesforagenticdevelopmentworkflows"
+        ],
+        "publishedDate": "2026-09-11",
+        "publishedDates": [
+          "2026-09-11"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-5066f239048915cb80ab",
+          "record-bec701e4c61ff7fcbf4b",
+          "src-fe2524206da5098dc175"
+        ],
+        "evidenceFingerprints": [
+          "5066f239048915cb80ab"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "ITPro",
+            "title": "Atlassian introduces 'always-on' capabilities for agentic development workflows",
+            "url": "https://www.itpro.com/software/development/atlassian-introduces-always-on-capabilities-for-agentic-development-workflows",
+            "publishedAt": "2026-09-11",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "42060b6576544e8a9ca2",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastPublishedAt": "2026-09-11T11:37:18+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-86547d79c612b9110878": {
+        "eventId": "evt-86547d79c612b9110878",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-633d0f6c2f43621ecb",
+        "entityName": "Nebula appoints Jack Bell as strategic partner acquisition manager",
+        "title": "Nebula appoints Jack Bell as strategic partner acquisition manager",
+        "titleAliases": [
+          "nebulaappointsjackbellasstrategicpartneracquisitionmanager"
+        ],
+        "publishedDate": "2026-09-11",
+        "publishedDates": [
+          "2026-09-11"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "并购",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-b6630ca1beb8f028ee2e",
+          "record-4d46919141596338bbbf",
+          "src-8084b0b677aaff7f6fb8"
+        ],
+        "evidenceFingerprints": [
+          "b6630ca1beb8f028ee2e"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "ITPro",
+            "title": "Nebula appoints Jack Bell as strategic partner acquisition manager",
+            "url": "https://www.itpro.com/business/leadership/nebula-appoints-jack-bell-as-strategic-partner-acquisition-manager",
+            "publishedAt": "2026-09-11",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "7dc06b5bba5bfe0aaaa1",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastPublishedAt": "2026-09-11T11:37:18+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-59a5ef4e77c41b0d3435": {
+        "eventId": "evt-59a5ef4e77c41b0d3435",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-6f58418fcdf3f1e3f9",
+        "entityName": "Gen Z is making room for a different kind of college party. Introducing, the wellness darty.",
+        "title": "Gen Z is making room for a different kind of college party. Introducing, the wellness darty.",
+        "titleAliases": [
+          "genzismakingroomforadifferentkindofcollegepartyintroducingthewellnessdarty"
+        ],
+        "publishedDate": "2026-09-11",
+        "publishedDates": [
+          "2026-09-11"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-3abec06375fea21209b7",
+          "record-d3639d9dcd98cdcd49b9",
+          "src-3239aa38daaf08ceb4f5"
+        ],
+        "evidenceFingerprints": [
+          "3abec06375fea21209b7"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Mashable",
+            "title": "Gen Z is making room for a different kind of college party. Introducing, the wellness darty.",
+            "url": "https://mashable.com/life/gen-z-wellness-darties-college-party-trend",
+            "publishedAt": "2026-09-11",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "ff9680eab5c287d7892d",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastPublishedAt": "2026-09-11T11:37:18+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-4af534a72c69e42d61b6": {
+        "eventId": "evt-4af534a72c69e42d61b6",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-877162e0bb1a6cd04c",
+        "entityName": "规模化落地背景下，长时储能正在成为新能源时代标配",
+        "title": "规模化落地背景下，长时储能正在成为新能源时代标配",
+        "titleAliases": [
+          "规模化落地背景下长时储能正在成为新能源时代标配"
+        ],
+        "publishedDate": "2026-09-09",
+        "publishedDates": [
+          "2026-09-09"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-652adf420f103b23ea2d",
+          "record-401880bf899ee99686b0",
+          "src-8ceeea8d7d27035db141"
+        ],
+        "evidenceFingerprints": [
+          "652adf420f103b23ea2d"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "储消科技",
+            "title": "规模化落地背景下，长时储能正在成为新能源时代标配",
+            "url": "https://mp.weixin.qq.com/s?new=1&signature=yGeBDTVZGpKSt8fa%2AsRNoj3juCnANMs37DL4IcxdhekeUcfv9ymfQtIPUSN6imumJPc9NXF8O3UEdVZKJjAg9MLqIp-q0zeRBRZ-sHnJfr7FXIycwqgvc9cfY34m-ODI&src=11&timestamp=1789126339&ver=6960",
+            "publishedAt": "2026-09-09",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "1659ee05e57e7469f2d4",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastPublishedAt": "2026-09-11T11:37:18+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-2de96446d853e68a4675": {
+        "eventId": "evt-2de96446d853e68a4675",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-2aec25e7c68e07d43e",
+        "entityName": "轻资产叙事背后藏分化：文远知行重营运资金 小马智行依赖合作方 规模化与第二曲线阻碍让盈利仍遥不可及",
+        "title": "轻资产叙事背后藏分化：文远知行重营运资金 小马智行依赖合作方 规模化与第二曲线阻碍让盈利仍遥不可及",
+        "titleAliases": [
+          "轻资产叙事背后藏分化文远知行重营运资金小马智行依赖合作方规模化与第二曲线阻碍让盈利仍遥不可及"
+        ],
+        "publishedDate": "2026-09-11",
+        "publishedDates": [
+          "2026-09-11"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "商业进展",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-bec7f931e8cf122d67bb",
+          "record-6c3ec10b5b90d98c1db9",
+          "src-bf8556e834db34e84cac"
+        ],
+        "evidenceFingerprints": [
+          "bec7f931e8cf122d67bb"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "轻资产叙事背后藏分化：文远知行重营运资金 小马智行依赖合作方 规模化与第二曲线阻碍让盈利仍遥不可及",
+            "url": "https://finance.sina.com.cn/stock/observe/2026-09-11/doc-inirnaka5785405.shtml",
+            "publishedAt": "2026-09-11",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "02d3c5b7f19d5aa49c24",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastPublishedAt": "2026-09-11T11:37:18+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-0101de09b4055f5b34eb": {
+        "eventId": "evt-0101de09b4055f5b34eb",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-5e4af31ee755127ace",
+        "entityName": "Tesla launches refreshed Model Y Performance AWD in China from RMB 369,000",
+        "title": "Tesla launches refreshed Model Y Performance AWD in China from RMB 369,000",
+        "titleAliases": [
+          "teslalaunchesrefreshedmodelyperformanceawdinchinafromrmb369000"
+        ],
+        "publishedDate": "2026-09-11",
+        "publishedDates": [
+          "2026-09-11"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "000",
+          "369"
+        ],
+        "sourceAliases": [
+          "evd-6158e714f4b21f453c21",
+          "record-d9ac94e94d8a0b83cb17",
+          "src-3d440c000eb460ce1eeb"
+        ],
+        "evidenceFingerprints": [
+          "6158e714f4b21f453c21"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "TechNode",
+            "title": "Tesla launches refreshed Model Y Performance AWD in China from RMB 369,000",
+            "url": "https://technode.com/2026/09/11/tesla-launches-refreshed-model-y-performance-awd-in-china-from-rmb-369000",
+            "publishedAt": "2026-09-11",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "e16490311b1b57668f16",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastSeenAt": "2026-09-11T11:37:18+00:00",
+        "lastPublishedAt": "2026-09-11T11:37:18+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-e6724ded6dc0dde53411": {
         "eventId": "evt-e6724ded6dc0dde53411",
         "dataset": "ventureCompany",
@@ -33128,773 +35295,18 @@
         "conflictStatus": "none",
         "conflictReasons": [],
         "relatedEventIds": []
-      },
-      "evt-cf24c19507ef109f570e": {
-        "eventId": "evt-cf24c19507ef109f570e",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-0e722539562488e9e2",
-        "entityName": "OpenAI lifts the lid on its in-house Jalapeño chip - with benchmarks claiming it beats Nvidia's GB300",
-        "title": "OpenAI lifts the lid on its in-house Jalapeño chip - with benchmarks claiming it beats Nvidia's GB300",
-        "titleAliases": [
-          "openailiftsthelidonitsinhousejalapeochipwithbenchmarksclaimingitbeatsnvidiasgb300"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [
-          "company:openai"
-        ],
-        "typeKeys": [
-          "技术突破",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "300"
-        ],
-        "sourceAliases": [
-          "evd-dd03c8ba81dc5636bb18",
-          "record-568c9e38497535a9eed3",
-          "src-debf09f0d5aca0c56e59"
-        ],
-        "evidenceFingerprints": [
-          "dd03c8ba81dc5636bb18"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "TechRadar",
-            "title": "OpenAI lifts the lid on its in-house Jalapeño chip - with benchmarks claiming it beats Nvidia's GB300",
-            "url": "https://www.techradar.com/pro/openai-lifts-the-lid-on-its-in-house-jalapeno-chip-with-benchmarks-claiming-it-beats-nvidias-gb300",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "afcca0ee61dd70c6be7e",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T21:19:36+00:00",
-        "lastSeenAt": "2026-09-01T21:19:36+00:00",
-        "lastPublishedAt": "2026-09-01T21:19:36+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-82bcd7b1d1660b20507c": {
-        "eventId": "evt-82bcd7b1d1660b20507c",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-d6b1a652ce919c9850",
-        "entityName": "No ‘DMV for AI’: US Pushes Against AI Regulations at Global Forum",
-        "title": "No ‘DMV for AI’: US Pushes Against AI Regulations at Global Forum",
-        "titleAliases": [
-          "nodmvforaiuspushesagainstairegulationsatglobalforum"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "政策",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-22d7aa267299d43da199",
-          "record-a9c67b7bc540f726aa9f",
-          "src-9c0f43260d57460707ef"
-        ],
-        "evidenceFingerprints": [
-          "22d7aa267299d43da199"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "CNET",
-            "title": "No ‘DMV for AI’: US Pushes Against AI Regulations at Global Forum",
-            "url": "https://www.cnet.com/tech/services-and-software/g20-innovation-ministerial-ai-regulation-us-news",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "2414de9be2fea8da2ec3",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T21:19:36+00:00",
-        "lastSeenAt": "2026-09-01T21:19:36+00:00",
-        "lastPublishedAt": "2026-09-01T21:19:36+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-5a01a296d6caa5b088b8": {
-        "eventId": "evt-5a01a296d6caa5b088b8",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-462379f3f4a0579777",
-        "entityName": "ASUR CLOSES ACQUISITION OF MOTIVA'S INTERESTS IN AIRPORTS IN BRAZIL, ECUADOR, COSTA RICA AND CURAÇAO",
-        "title": "ASUR CLOSES ACQUISITION OF MOTIVA'S INTERESTS IN AIRPORTS IN BRAZIL, ECUADOR, COSTA RICA AND CURAÇAO",
-        "titleAliases": [
-          "asurclosesacquisitionofmotivasinterestsinairportsinbrazilecuadorcostaricaandcuraao"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "并购",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-14cb5e61828ff060afba",
-          "record-21085aeb336bfbcdb9ce",
-          "src-af467ec42095a39e2fc3"
-        ],
-        "evidenceFingerprints": [
-          "14cb5e61828ff060afba"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "PR Newswire Consumer Technology",
-            "title": "ASUR CLOSES ACQUISITION OF MOTIVA'S INTERESTS IN AIRPORTS IN BRAZIL, ECUADOR, COSTA RICA AND CURAÇAO",
-            "url": "https://www.prnewswire.com/news-releases/asur-closes-acquisition-of-motivas-interests-in-airports-in-brazil-ecuador-costa-rica-and-curacao-302866774.html",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "B",
-            "sourceRole": "primary"
-          }
-        ],
-        "claimFingerprint": "592f8b9102c2b2ac4492",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T21:19:36+00:00",
-        "lastSeenAt": "2026-09-01T21:19:36+00:00",
-        "lastPublishedAt": "2026-09-01T21:19:36+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 4,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-4e9f27a1e31f8482fda1": {
-        "eventId": "evt-4e9f27a1e31f8482fda1",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-4a5f5eb0ff4ce0a4cb",
-        "entityName": "Introducing agentic video understanding with Gemini",
-        "title": "Introducing agentic video understanding with Gemini",
-        "titleAliases": [
-          "introducingagenticvideounderstandingwithgemini"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [
-          "company:google"
-        ],
-        "typeKeys": [
-          "产品发布",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-2e5a29158b8b82895bb7",
-          "record-1c2200da3db0858df5b6",
-          "src-bb47a285f9124bca1244"
-        ],
-        "evidenceFingerprints": [
-          "2e5a29158b8b82895bb7"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Google DeepMind",
-            "title": "Introducing agentic video understanding with Gemini",
-            "url": "https://deepmind.google/blog/introducing-agentic-video-in-gemini",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "B",
-            "sourceRole": "primary"
-          }
-        ],
-        "claimFingerprint": "4fcb9e77d6d7fc4b4b9d",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T21:19:36+00:00",
-        "lastSeenAt": "2026-09-01T21:19:36+00:00",
-        "lastPublishedAt": "2026-09-01T21:19:36+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 4,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-b791546189599634677d": {
-        "eventId": "evt-b791546189599634677d",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-72dc45b8c6445dc667",
-        "entityName": "从 Token 到扭矩，AI 落地东盟的四道「硬」关｜SEA Frontline",
-        "title": "从 Token 到扭矩，AI 落地东盟的四道「硬」关｜SEA Frontline",
-        "titleAliases": [
-          "从token到扭矩ai落地东盟的四道硬关"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "商业进展",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-c4c37157099ef59b04cf",
-          "record-3ca181341042c8b6b413",
-          "src-1c0460c1fba7bec3b7c2"
-        ],
-        "evidenceFingerprints": [
-          "c4c37157099ef59b04cf"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "钛媒体",
-            "title": "从 Token 到扭矩，AI 落地东盟的四道「硬」关｜SEA Frontline",
-            "url": "https://www.tmtpost.com/8124037.html",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "ccbe8ace2c218b404f0f",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T17:18:19+00:00",
-        "lastSeenAt": "2026-09-01T17:18:19+00:00",
-        "lastPublishedAt": "2026-09-01T17:18:19+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-adadd02ad12c1797d8b5": {
-        "eventId": "evt-adadd02ad12c1797d8b5",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-a9b9114cca73efa29a",
-        "entityName": "Nvidia's controversial DLSS 5 will launch September 3 with NBA2K27, company shares first benchmarks — available on all RTX 50 series GPUs, laptops, and GeForce NOW",
-        "title": "Nvidia's controversial DLSS 5 will launch September 3 with NBA2K27, company shares first benchmarks — available on all RTX 50 series GPUs, laptops, and GeForce NOW",
-        "titleAliases": [
-          "nvidiascontroversialdlss5willlaunchseptember3withnba2k27companysharesfirstbenchmarksavailableonallrtx50seriesgpuslaptopsandgeforcenow"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "产品发布",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "2",
-          "27",
-          "3",
-          "5",
-          "50"
-        ],
-        "sourceAliases": [
-          "evd-51ca3c1c5bb8e757b084",
-          "record-755d0f67d376e9594aa2",
-          "src-8da12f502d6136090653"
-        ],
-        "evidenceFingerprints": [
-          "51ca3c1c5bb8e757b084"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Tom's Hardware",
-            "title": "Nvidia's controversial DLSS 5 will launch September 3 with NBA2K27, company shares first benchmarks — available on all RTX 50 series GPUs, laptops, and GeForce NOW",
-            "url": "https://www.tomshardware.com/pc-components/gpus/nvidias-controversial-dlss-5-will-launch-september-3-with-nba2k27-available-on-all-rtx-50-series-gpus-laptops-and-geforce-now",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "0332430caca2cca939e5",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T17:18:19+00:00",
-        "lastSeenAt": "2026-09-01T17:18:19+00:00",
-        "lastPublishedAt": "2026-09-01T17:18:19+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-973f579139dc001e0d59": {
-        "eventId": "evt-973f579139dc001e0d59",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-5e38274285f87bed91",
-        "entityName": "S&P Global Completes Acquisition of datacenterHawk",
-        "title": "S&P Global Completes Acquisition of datacenterHawk",
-        "titleAliases": [
-          "spglobalcompletesacquisitionofdatacenterhawk"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "并购",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-33730ad8c92efe53aa25",
-          "record-15214e4d0fb545aa2a1f",
-          "src-1d62d603e1da2fa45a8e"
-        ],
-        "evidenceFingerprints": [
-          "33730ad8c92efe53aa25"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "PR Newswire Consumer Technology",
-            "title": "S&P Global Completes Acquisition of datacenterHawk",
-            "url": "https://www.prnewswire.com/news-releases/sp-global-completes-acquisition-of-datacenterhawk-302866559.html",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "B",
-            "sourceRole": "primary"
-          }
-        ],
-        "claimFingerprint": "8b0db739d37e8d1d18b8",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T17:18:19+00:00",
-        "lastSeenAt": "2026-09-01T17:18:19+00:00",
-        "lastPublishedAt": "2026-09-01T17:18:19+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 4,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-956da7ac42d6cbb98c53": {
-        "eventId": "evt-956da7ac42d6cbb98c53",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-ae7c3508dc6cece56d",
-        "entityName": "Startup launches 27-inch glasses-free spatial 3D display for under $1200 on Kickstarter",
-        "title": "Startup launches 27-inch glasses-free spatial 3D display for under $1200 on Kickstarter",
-        "titleAliases": [
-          "startuplaunches27inchglassesfreespatial3ddisplayforunder1200onkickstarter"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "产品发布",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "1200",
-          "27",
-          "3"
-        ],
-        "sourceAliases": [
-          "evd-d9c64e182cb1779f7c3a",
-          "record-16a28f78faf93e1998d1",
-          "src-fdaf5e05944d7e35a545"
-        ],
-        "evidenceFingerprints": [
-          "d9c64e182cb1779f7c3a"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "TechRadar",
-            "title": "Startup launches 27-inch glasses-free spatial 3D display for under $1200 on Kickstarter",
-            "url": "https://www.techradar.com/pro/startup-launches-27-inch-glasses-free-spatial-3d-display-for-under-usd1200-on-kickstarter",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "0dea54367b6d37fe0ed8",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T17:18:19+00:00",
-        "lastSeenAt": "2026-09-01T17:18:19+00:00",
-        "lastPublishedAt": "2026-09-01T17:18:19+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-90802cef087749b92580": {
-        "eventId": "evt-90802cef087749b92580",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-09def93fd63fc1dec4",
-        "entityName": "GoPro says it's moving into AI data centers as part of a $285 million merger",
-        "title": "GoPro says it's moving into AI data centers as part of a $285 million merger",
-        "titleAliases": [
-          "goprosaysitsmovingintoaidatacentersaspartofa285millionmerger"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "并购",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "285"
-        ],
-        "sourceAliases": [
-          "evd-65dc56d68eab9c471004",
-          "record-f6ea31952cd6241094d2",
-          "src-7a5aada884fb9ba9fd02"
-        ],
-        "evidenceFingerprints": [
-          "65dc56d68eab9c471004"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Engadget",
-            "title": "GoPro says it's moving into AI data centers as part of a $285 million merger",
-            "url": "https://www.engadget.com/2248633/gopro-says-its-moving-into-ai-data-centers-as-part-of-a-dollar285-million-merger",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "452049412ba0c1fcbadf",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T17:18:19+00:00",
-        "lastSeenAt": "2026-09-01T17:18:19+00:00",
-        "lastPublishedAt": "2026-09-01T17:18:19+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-8521bc308e57723579c3": {
-        "eventId": "evt-8521bc308e57723579c3",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-f20b74e2d86527be3f",
-        "entityName": "奥特曼在儿童聊天机器人法案过关前致电加州州长，议会已通过、待签署",
-        "title": "奥特曼在儿童聊天机器人法案过关前致电加州州长，议会已通过、待签署",
-        "titleAliases": [
-          "奥特曼在儿童聊天机器人法案过关前致电加州州长议会已通过待签署"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "商业进展",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-46ff15ddf2f65e7caa01",
-          "record-86f753948078ce53076d",
-          "src-eb5d2487e8a00dc73a2e"
-        ],
-        "evidenceFingerprints": [
-          "46ff15ddf2f65e7caa01"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "奥特曼在儿童聊天机器人法案过关前致电加州州长，议会已通过、待签署",
-            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-01/doc-iniqitru8339828.shtml",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "87a80991bc1cb46089de",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T17:18:19+00:00",
-        "lastSeenAt": "2026-09-01T17:18:19+00:00",
-        "lastPublishedAt": "2026-09-01T17:18:19+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-795facae8534f762318e": {
-        "eventId": "evt-795facae8534f762318e",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-6c2e28515c7c4d37c7",
-        "entityName": "Optimizely Debuts Marketing AI Models & Open Benchmark",
-        "title": "Optimizely Debuts Marketing AI Models & Open Benchmark",
-        "titleAliases": [
-          "optimizelydebutsmarketingaimodelsopenbenchmark"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "技术突破",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-82296b58c03ffaff2ec2",
-          "record-59a84e94b6419c07559b",
-          "src-28bf4aed116428279447"
-        ],
-        "evidenceFingerprints": [
-          "82296b58c03ffaff2ec2"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "CMSWire",
-            "title": "Optimizely Debuts Marketing AI Models & Open Benchmark",
-            "url": "https://www.cmswire.com/digital-experience/optimizely-debuts-marketing-ai-models-open-benchmark",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "86126bc17ad281b7dfd6",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T17:18:19+00:00",
-        "lastSeenAt": "2026-09-01T17:18:19+00:00",
-        "lastPublishedAt": "2026-09-01T17:18:19+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-1b08e031f192557cdb7d": {
-        "eventId": "evt-1b08e031f192557cdb7d",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-67b0daca2d99c0f5b5",
-        "entityName": "China's CXMT makes important breakthrough to produce HBM3E memory chips",
-        "title": "China's CXMT makes important breakthrough to produce HBM3E memory chips",
-        "titleAliases": [
-          "chinascxmtmakesimportantbreakthroughtoproducehbm3ememorychips"
-        ],
-        "publishedDate": "2026-08-31",
-        "publishedDates": [
-          "2026-08-31"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "技术突破",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "3"
-        ],
-        "sourceAliases": [
-          "evd-63a81721b2f1181cee1b",
-          "record-f603d2705df87a8be006",
-          "src-3241e82b17f850cee045"
-        ],
-        "evidenceFingerprints": [
-          "63a81721b2f1181cee1b"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Notebookcheck",
-            "title": "China's CXMT makes important breakthrough to produce HBM3E memory chips",
-            "url": "https://www.notebookcheck.net/China-s-CXMT-makes-important-breakthrough-to-produce-HBM3E-memory-chips.1384267.0.html",
-            "publishedAt": "2026-08-31",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "234579c655327d9b4e6f",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T17:18:19+00:00",
-        "lastSeenAt": "2026-09-01T17:18:19+00:00",
-        "lastPublishedAt": "2026-09-01T17:18:19+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-192741eb43a613fa33eb": {
-        "eventId": "evt-192741eb43a613fa33eb",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-85045ca940998d7a02",
-        "entityName": "美敦力上调业绩展望，逾7亿美元布局心脏技术与外科机器人",
-        "title": "美敦力上调业绩展望，逾7亿美元布局心脏技术与外科机器人",
-        "titleAliases": [
-          "美敦力上调业绩展望逾7亿美元布局心脏技术与外科机器人"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "财报",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "7"
-        ],
-        "sourceAliases": [
-          "evd-9d8c9c832a97c2d8a154",
-          "record-f25bb422dbf5c59a108d",
-          "src-1fa9358fe12e6b28b464"
-        ],
-        "evidenceFingerprints": [
-          "9d8c9c832a97c2d8a154"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "美敦力上调业绩展望，逾7亿美元布局心脏技术与外科机器人",
-            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-02/doc-iniqkefq8143640.shtml",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "8fc2d8e302af0bb3b531",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T17:18:19+00:00",
-        "lastSeenAt": "2026-09-01T17:18:19+00:00",
-        "lastPublishedAt": "2026-09-01T17:18:19+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-e1e649ce5e8777123cc5": {
-        "eventId": "evt-e1e649ce5e8777123cc5",
-        "dataset": "marketCompany",
-        "entityId": "bgi-genomics",
-        "entityName": "华大基因",
-        "title": "华大基因跌0.44%，成交额2.59亿元，近3日主力净流入-5293.11万",
-        "titleAliases": [
-          "华大基因跌044成交额259亿元近3日主力净流入529311万"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [
-          "marketCompany:bgi-genomics",
-          "name:华大基因"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [
-          "0.44%",
-          "2.59",
-          "3",
-          "5293.11"
-        ],
-        "sourceAliases": [
-          "evd-f95f436b3ecf846c237b",
-          "src-66aded6afe1743899e75"
-        ],
-        "evidenceFingerprints": [
-          "f95f436b3ecf846c237b"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "华大基因跌0.44%，成交额2.59亿元，近3日主力净流入-5293.11万",
-            "url": "https://finance.sina.com.cn/stock/aiassist/ggsp/2026-09-01/doc-iniqiaty1622434.shtml",
-            "publishedAt": "2026-09-01T15:27:00+08:00",
-            "evidenceGrade": "媒体报道"
-          }
-        ],
-        "claimFingerprint": "48f630e7a23d9891df61",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T12:24:14+00:00",
-        "lastSeenAt": "2026-09-01T12:24:14+00:00",
-        "lastPublishedAt": "2026-09-01T12:24:14+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
       }
     },
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 1,
+    "newEvents": 14,
     "reconfirmations": 0,
-    "updates": 1,
+    "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 1,
-    "observedEvents": 3,
+    "duplicatesSuppressed": 0,
+    "observedEvents": 14,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -37706,10 +39118,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-11",
-      "generatedAt": "2026-09-11T06:07:54+00:00",
+      "generatedAt": "2026-09-11T11:37:18+00:00",
       "runStatus": "model",
-      "changeCount": 78,
-      "executiveSummary": "证据包显示两家公司发生外部事件驱动的数据变更：Form Energy 的融资记录在官网数据源中出现删减（E005），Rigetti Computing 的技术信息更新涉及 Novera 9-qubit QPU、CTO 任命及二季度财报等表述（E014-E016）。两者均来自官方披露但证据质量为自动化未人工复核，且源页面时间存在异常，需谨慎解读。未发现可支撑确定性投资结论的证据。",
+      "changeCount": 92,
+      "executiveSummary": "本证据包呈现多条科技与创投线索：网络安全初创FAZE Security出隐身并获600万美元种子融资、宣称约20倍ARR增长；智能体商业化与治理并行推进（蚂蚁发布APASS信任基础设施、金融领域首个智能体安全团体标准、Atlassian升级agentic开发能力）；新浪财经对文远知行与小马智行的盈利前景提出质疑；新能源侧有长时储能行业讨论及河北5万吨锂电池回收项目落地；特斯拉在华推出新款Model Y Performance。多数证据为C级外部线索或公司/媒体自述，需独立验证后才能确认趋势强度。",
       "eventIds": [
         "evt-959796dfdf65604663a3",
         "evt-4c43b7c8ec9d0c98f992",
@@ -37788,7 +39200,21 @@
         "evt-a09e931344d19e4e8e6f",
         "evt-e5ebdb01340f084c118e",
         "evt-8be8280900881dcbec79",
-        "evt-e6724ded6dc0dde53411"
+        "evt-e6724ded6dc0dde53411",
+        "evt-c51d5965aaafeab3d49f",
+        "evt-86547d79c612b9110878",
+        "evt-9b5c73dc712f0f193947",
+        "evt-f06aff5ec4236697b965",
+        "evt-2de96446d853e68a4675",
+        "evt-4af534a72c69e42d61b6",
+        "evt-a04c5eb74c48f6d499a8",
+        "evt-b33a66e9a7d5e2fa6fa4",
+        "evt-e86f250f1e4b47ec650e",
+        "evt-f62076495c14b97df309",
+        "evt-0101de09b4055f5b34eb",
+        "evt-59a5ef4e77c41b0d3435",
+        "evt-92b5899d1e755edf0301",
+        "evt-e40267398b8ac6cd48f8"
       ],
       "eventStates": [
         {
@@ -38102,14 +39528,70 @@
         {
           "eventId": "evt-e6724ded6dc0dde53411",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-c51d5965aaafeab3d49f",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-86547d79c612b9110878",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-9b5c73dc712f0f193947",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-f06aff5ec4236697b965",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-2de96446d853e68a4675",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-4af534a72c69e42d61b6",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-a04c5eb74c48f6d499a8",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-b33a66e9a7d5e2fa6fa4",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-e86f250f1e4b47ec650e",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-f62076495c14b97df309",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-0101de09b4055f5b34eb",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-59a5ef4e77c41b0d3435",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-92b5899d1e755edf0301",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-e40267398b8ac6cd48f8",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 2,
       "candidateTotal": 14,
-      "auxiliaryLeadTotal": 54,
-      "rejectedTotal": 14,
+      "auxiliaryLeadTotal": 68,
+      "rejectedTotal": 17,
       "eventSummary": {
-        "newEvents": 76,
+        "newEvents": 90,
         "reconfirmations": 12,
         "updates": 3,
         "corrections": 0,
@@ -38119,18 +39601,18 @@
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 5,
-    "eligibleCandidateCount": 3,
-    "rejectedCandidateCount": 2,
+    "candidateCount": 17,
+    "eligibleCandidateCount": 14,
+    "rejectedCandidateCount": 3,
     "rejectedByDataset": {
-      "ventureCompany": 2
+      "intelligenceEvent": 3
     },
     "evidenceCount": 17,
-    "supportingEvidenceCount": 5,
-    "rejectedEvidenceCount": 9,
-    "passedButUnboundEvidenceCount": 3,
+    "supportingEvidenceCount": 14,
+    "rejectedEvidenceCount": 3,
+    "passedButUnboundEvidenceCount": 0,
     "rejectionReasons": {
-      "missing_published_at": 9
+      "discovery_only": 3
     },
     "sourceClassificationWarnings": []
   },
@@ -38179,5 +39661,6 @@
         "lastCompletedAt": "2026-09-01T07:06:24Z"
       }
     ]
-  }
+  },
+  "evidenceContractVersion": 2
 }
