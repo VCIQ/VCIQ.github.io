@@ -117,6 +117,22 @@ class ResearchAgentResearchObjectTests(unittest.TestCase):
         self.assertEqual(changes[0]["changeType"], "data_maintenance")
         self.assertFalse(changes[0]["isResearchCandidate"])
 
+    def test_same_canonical_url_with_regenerated_id_is_not_a_new_event(self) -> None:
+        previous = event("old-id")
+        current = {
+            **event("new-id"),
+            "url": "https://example.com/shared?utm_source=refresh",
+            "title": previous["title"],
+        }
+        previous["url"] = "https://example.com/shared?utm_source=original"
+        before = snapshot("technology", [previous])
+        after = snapshot("technology", [current])
+        with mock.patch.object(target, "_ORIGINAL_DIFF_SNAPSHOTS", agent.diff_snapshots):
+            changes = target.diff_snapshots(before, after)
+        self.assertEqual(len(changes), 1)
+        self.assertEqual(changes[0]["changeType"], "data_maintenance")
+        self.assertFalse(changes[0]["isResearchCandidate"])
+
     def test_core_object_publication_tier_respects_source_strength(self) -> None:
         official = {
             "supportStatus": "supports",
