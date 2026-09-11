@@ -12,7 +12,7 @@ import traceback
 from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import urljoin, urlsplit
+from urllib.parse import urljoin, urlsplit, urlunsplit
 from urllib.request import Request, urlopen
 
 BASE = "https://vciq.github.io"
@@ -21,6 +21,7 @@ BLOBS = {
     "daily": "27e66b741689a8bc724ab06ed8358a6ad5145189",
     "snapshot": "2cfc8cbf61641b0496c64dd44c2d148b18bd1a99",
 }
+HTML_SHA256 = "5f00d2e7b0fbe4fc38d3e7c691c7dad8ae3c199940daaa1737390a5de15dc438"
 COUNTS = {"technology": 19, "track": 27, "person": 138, "ventureCompany": 63}
 LABELS = {"technology": "核心技术", "track": "核心赛道", "person": "核心人物", "ventureCompany": "核心公司"}
 INVALID = ("class-presiden-thomas-sonderman", "massachusetts-governo-chris-ballance")
@@ -31,7 +32,8 @@ RESULT = {
     "expectedSourceSha": RELEASE,
     "origin": BASE,
     "runUrl": f"https://github.com/{os.environ.get('GITHUB_REPOSITORY', 'VCIQ/VCIQ.github.io')}/actions/runs/{os.environ.get('GITHUB_RUN_ID', '')}",
-    "scope": "Read-only public CDN and fresh Chromium contexts; no production changes, model calls, or private admin navigation.",
+    "scope": "Read-only public CDN and fresh Chromium contexts; no production changes, model calls, or private admin navigation. Transient URL query strings are omitted from browser diagnostics.",
+    "previewContract": "research-thesis-memory.tsx renders primary.slice(0, 3); other current observations remain persisted. Only superseded historical observations have an expander.",
     "checks": [], "http": {}, "browser": [],
 }
 
@@ -39,6 +41,11 @@ RESULT = {
 def check(name: str, passed: bool, detail: object = None) -> None:
     RESULT["checks"].append({"name": name, "passed": bool(passed), "detail": detail})
     print(json.dumps({"check": name, "passed": bool(passed), "detail": detail}, ensure_ascii=False), flush=True)
+
+
+def safe_url(value: str) -> str:
+    parts = urlsplit(value)
+    return urlunsplit((parts.scheme, parts.netloc, parts.path, "", ""))
 
 
 def fetch(path: str, key: str) -> bytes | None:
@@ -53,7 +60,7 @@ def fetch(path: str, key: str) -> bytes | None:
                 if len(raw) > 12_000_000:
                     raise ValueError("Response exceeds bounded audit size")
                 RESULT["http"][key] = {
-                    "url": url, "finalUrl": response.url, "status": response.status,
+                    "url": url, "finalUrl": safe_url(response.url), "status": response.status,
                     "bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest(),
                     "headers": {k: response.headers.get(k) for k in ("Date", "Age", "ETag", "Last-Modified", "Cache-Control", "X-Cache")},
                 }
@@ -100,6 +107,8 @@ def audit_http() -> tuple[dict, dict]:
     for key, expected in BLOBS.items():
         actual = blob_sha(raw[key]) if raw[key] is not None else None
         check(f"live.{key}.matches_published_blob", actual == expected, {"actual": actual, "expected": expected})
+    html_hash = hashlib.sha256(raw["html"]).hexdigest() if raw["html"] is not None else None
+    check("live.html.matches_deployed_artifact", html_hash == HTML_SHA256, html_hash)
     for key, expected in COUNTS.items():
         scope = daily.get("researchScope", {}).get(key, {})
         rows = snapshot.get("datasets", {}).get(key)
@@ -132,6 +141,18 @@ def audit_http() -> tuple[dict, dict]:
 def audit_browser(daily: dict) -> None:
     from playwright.sync_api import sync_playwright
 
+    # Reproduce the production component's bounded preview, not a hypothetical
+    # show-all-current control. Persistence is independently checked above.
+    memory_data = daily.get("thesisMemory", {})
+    observations = sorted(memory_data.get("observations", []), key=lambda item: item.get("id", ""))
+    observations.sort(key=lambda item: item.get("lastSeenAt", ""), reverse=True)
+    current_ids = set(memory_data.get("currentObservationIds", []))
+    current = [item for item in observations if item.get("id") in current_ids]
+    historical = [item for item in observations if item.get("id") not in current_ids]
+    preview = (current or observations[:3])[:3]
+    expected_entities = [item.get("entity") for item in preview]
+    expected_evidence_urls = [evidence["url"] for item in preview for evidence in item.get("evidence", [])[-3:] if evidence.get("url")]
+
     with sync_playwright() as pw:
         browser = pw.chromium.launch()
         for name, width, height in (("desktop", 1440, 1000), ("tablet", 768, 1024), ("mobile", 390, 844), ("small-mobile", 360, 800)):
@@ -140,15 +161,15 @@ def audit_browser(daily: dict) -> None:
             context = browser.new_context(viewport={"width": width, "height": height}, device_scale_factor=1, locale="zh-CN", timezone_id="Asia/Shanghai", service_workers="block")
             def read_only_route(route):
                 if route.request.method not in ("GET", "HEAD", "OPTIONS"):
-                    row["blockedWriteMethods"].append({"method": route.request.method, "url": route.request.url})
+                    row["blockedWriteMethods"].append({"method": route.request.method, "url": safe_url(route.request.url)})
                     route.abort()
                 else:
                     route.continue_()
             context.route("**/*", read_only_route)
             page = context.new_page()
             page.on("pageerror", lambda error: row["pageErrors"].append(str(error)))
-            page.on("requestfailed", lambda request: row["requestFailures"].append({"url": request.url, "failure": request.failure, "method": request.method}))
-            page.on("response", lambda response: row["assetErrors"].append({"url": response.url, "status": response.status}) if response.status >= 400 and response.url.startswith(BASE + "/_next/") else None)
+            page.on("requestfailed", lambda request: row["requestFailures"].append({"url": safe_url(request.url), "failure": request.failure, "method": request.method}))
+            page.on("response", lambda response: row["assetErrors"].append({"url": safe_url(response.url), "status": response.status}) if response.status >= 400 and response.url.startswith(BASE + "/_next/") else None)
             try:
                 response = page.goto(BASE + "/research-agent/", wait_until="networkidle", timeout=60000)
                 page.locator("main").wait_for()
@@ -171,18 +192,28 @@ def audit_browser(daily: dict) -> None:
                 memory.scroll_into_view_if_needed()
                 check(f"browser.{name}.memory_nonempty", memory.locator("article").count() >= 3 and "Joby Aviation" in memory.inner_text())
                 memory.screenshot(path=str(OUT / f"{name}-memory.png"))
+                actual_entities = memory.locator("article:visible strong").all_text_contents()
+                actual_urls = memory.locator("article:visible a[href]").evaluate_all("elements => elements.map(element => element.getAttribute('href'))")
+                check(f"browser.{name}.memory_preview_matches_persisted_records", actual_entities == expected_entities and len(actual_entities) == 3, {"actual": actual_entities, "expected": expected_entities, "persistedCount": len(observations)})
+                check(f"browser.{name}.memory_evidence_links_match_snapshots", actual_urls == expected_evidence_urls, actual_urls)
                 expanded = memory.locator("details")
-                if expanded.count():
+                if historical:
                     expanded.first.locator("summary").click()
-                visible = memory.locator("article:visible").count()
-                check(f"browser.{name}.all_memory_observations_visible", visible == 9, visible)
+                    check(f"browser.{name}.historical_memory_expands", memory.locator("article:visible").count() == len(preview) + min(len(historical), 12))
+                else:
+                    check(f"browser.{name}.no_fabricated_historical_memory", expanded.count() == 0)
                 for target in ("brief", "theses", "changes", "queue", "history"):
                     page.locator(f'main a[href="#{target}"]').first.click()
                     page.wait_for_timeout(400)
                     rect = page.locator(f"#{target}").bounding_box()
                     navigated = page.evaluate("location.hash") == "#" + target
                     check(f"browser.{name}.navigation.{target}", navigated and rect is not None and rect["y"] < height and rect["y"] + rect["height"] > 0, rect)
+                history_details = page.locator("#history details").first
+                if history_details.count():
+                    history_details.locator("summary").click()
+                    check(f"browser.{name}.history_summary_expands", history_details.get_attribute("open") is not None)
                 row["historyText"] = page.locator("#history").inner_text()
+                check(f"browser.{name}.history_includes_release_record", "2026/09/1122:14" in re.sub(r"\s+", "", row["historyText"]))
                 page.screenshot(path=str(OUT / f"{name}-history.png"))
                 citation = page.locator('main a[href^="#evidence-"]').first
                 if citation.count():
