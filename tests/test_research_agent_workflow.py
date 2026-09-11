@@ -24,12 +24,37 @@ class ResearchAgentWorkflowTest(unittest.TestCase):
         self.assertIn('timezone: "Asia/Taipei"', text)
         self.assertIn("  workflow_dispatch:", text)
         self.assertIn("  push:\n", text)
-        self.assertIn("      - tools/research_agent.py", text)
-        self.assertIn("      - tools/research_agent_evidence_policy.py", text)
-        self.assertIn("      - tools/research_agent_article_events.py", text)
-        self.assertIn("      - tools/research_agent_enhanced_runtime.py", text)
+        for path in (
+            "tools/research_agent.py",
+            "tools/research_agent_evidence_policy.py",
+            "tools/research_agent_evidence_contract_v2.py",
+            "tools/research_agent_article_events.py",
+            "tools/research_agent_research_objects.py",
+            "tools/research_agent_thesis_memory.py",
+            "tools/research_agent_enhanced_runtime.py",
+            "scripts/build-research-agent-object-snapshot.ts",
+        ):
+            self.assertIn(f"      - {path}", text)
         self.assertNotIn("workflow_run:", text)
         self.assertNotIn('workflows: ["Refresh public intelligence"]', text)
+
+    def test_canonical_object_snapshot_is_built_before_research_generation(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("actions/setup-node@v4", text)
+        self.assertIn("node-version: 22", text)
+        self.assertIn("Install locked frontend dependencies", text)
+        self.assertIn("run: npm ci", text)
+        self.assertIn("Build canonical Research Agent object snapshot", text)
+        self.assertIn(
+            "node --import tsx scripts/build-research-agent-object-snapshot.ts",
+            text,
+        )
+        self.assertLess(
+            text.index("Build canonical Research Agent object snapshot"),
+            text.index("Generate evidence-linked daily research"),
+        )
+        # The bridge is transient input; only durable Research Agent outputs are committed.
+        self.assertNotIn('public/data/research_agent_objects.json\n          )', text)
 
     def test_api_fallback_is_published_as_degraded_and_can_raise_a_persistent_alert(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
@@ -80,12 +105,23 @@ class ResearchAgentWorkflowTest(unittest.TestCase):
             "python -m unittest tests.test_research_agent tests.test_research_agent_workflow",
             text,
         )
-        self.assertIn("tools/research_agent_article_events.py", text)
-        self.assertIn("python -m unittest tests.test_research_agent_runtime", text)
-        self.assertIn("python -m unittest tests.test_research_agent_evidence_policy", text)
-        self.assertIn("python -m unittest tests.test_research_agent_article_events", text)
-        self.assertIn("python -m unittest tests.test_research_agent_event_history", text)
-        self.assertIn("python -m unittest tests.test_research_agent_publication_handoff", text)
+        for module in (
+            "tools/research_agent_article_events.py",
+            "tools/research_agent_research_objects.py",
+            "tools/research_agent_thesis_memory.py",
+        ):
+            self.assertIn(module, text)
+        for suite in (
+            "tests.test_research_agent_runtime",
+            "tests.test_research_agent_evidence_policy",
+            "tests.test_research_agent_evidence_contract_v2",
+            "tests.test_research_agent_article_events",
+            "tests.test_research_agent_research_objects",
+            "tests.test_research_agent_thesis_memory",
+            "tests.test_research_agent_event_history",
+            "tests.test_research_agent_publication_handoff",
+        ):
+            self.assertIn(f"python -m unittest {suite}", text)
         self.assertIn("python tools/run_pipeline.py check", text)
 
 

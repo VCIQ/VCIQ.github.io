@@ -10,8 +10,15 @@ on:
       - tools/research_agent.py
       - tools/research_agent_runtime.py
       - tools/research_agent_evidence_policy.py
+      - tools/research_agent_evidence_contract_v2.py
       - tools/research_agent_article_events.py
+      - tools/research_agent_research_objects.py
+      - tools/research_agent_thesis_memory.py
       - tools/research_agent_enhanced_runtime.py
+      - scripts/build-research-agent-object-snapshot.ts
+      - lib/core-research-objects.ts
+      - lib/tracked-sectors.ts
+      - lib/technology-topics.ts
       - .github/workflows/research-agent-v1.yml
   # Keep a daily research checkpoint even when the full-refresh/Pages handoff has
   # no semantic data commit to dispatch. The shared writer queue still serializes
@@ -44,6 +51,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install locked frontend dependencies
+        run: npm ci
 
       - name: Validate Research Agent implementation
         run: |
@@ -51,18 +63,27 @@ jobs:
             tools/research_agent.py \
             tools/research_agent_runtime.py \
             tools/research_agent_evidence_policy.py \
+            tools/research_agent_evidence_contract_v2.py \
             tools/research_agent_article_events.py \
+            tools/research_agent_research_objects.py \
+            tools/research_agent_thesis_memory.py \
             tools/research_agent_enhanced_runtime.py \
             tools/run_pipeline.py \
             tools/build_pipeline_health.py
           python -m unittest tests.test_research_agent tests.test_research_agent_workflow
           python -m unittest tests.test_research_agent_runtime
           python -m unittest tests.test_research_agent_evidence_policy
+          python -m unittest tests.test_research_agent_evidence_contract_v2
           python -m unittest tests.test_research_agent_article_events
+          python -m unittest tests.test_research_agent_research_objects
+          python -m unittest tests.test_research_agent_thesis_memory
           python -m unittest tests.test_research_agent_event_history
           python -m unittest tests.test_research_agent_publication_handoff
           python -m unittest tests.test_pipeline_control
           python tools/run_pipeline.py check
+
+      - name: Build canonical Research Agent object snapshot
+        run: node --import tsx scripts/build-research-agent-object-snapshot.ts
 
       - name: Generate evidence-linked daily research
         env:
