@@ -34,6 +34,29 @@ def report(generated_at: str, direction: str, statement: str, evidence_id: str =
     }
 
 
+def multi_report(generated_at: str, updates: list[dict]) -> dict:
+    evidence_rows = []
+    normalized_updates = []
+    for index, raw in enumerate(updates, start=1):
+        evidence_id = str(raw.get("evidenceId") or f"E{index:03d}")
+        evidence_rows.append(
+            evidence(evidence_id, f"https://example.com/{evidence_id.lower()}")
+        )
+        normalized_updates.append(
+            {
+                "entity": raw["entity"],
+                "direction": raw["direction"],
+                "statement": raw["statement"],
+                "evidenceIds": [evidence_id],
+            }
+        )
+    return {
+        "generatedAt": generated_at,
+        "analysis": {"thesisUpdates": normalized_updates},
+        "evidence": evidence_rows,
+    }
+
+
 class ResearchAgentThesisMemoryTests(unittest.TestCase):
     def test_identical_thesis_is_reaffirmed_without_duplicate_observation(self) -> None:
         first_report = report(
@@ -98,6 +121,79 @@ class ResearchAgentThesisMemoryTests(unittest.TestCase):
         self.assertNotIn("evidenceIds", observation)
         self.assertEqual(observation["evidence"][0]["url"], "https://example.com/e001")
         self.assertEqual(observation["evidence"][0]["verificationStatus"], "auto_verified")
+
+    def test_run_without_thesis_updates_preserves_current_observation(self) -> None:
+        first_memory = build_thesis_memory(
+            {},
+            report(
+                "2026-09-10T00:00:00Z",
+                "positive",
+                "Commercial adoption is accelerating.",
+            ),
+        )
+        current_id = first_memory["currentObservationIds"][0]
+        second_memory = build_thesis_memory(
+            {"thesisMemory": first_memory},
+            {
+                "generatedAt": "2026-09-11T00:00:00Z",
+                "analysis": {"thesisUpdates": []},
+                "evidence": [],
+            },
+        )
+        self.assertEqual(second_memory["currentObservationIds"], [current_id])
+        self.assertEqual(second_memory["observationCount"], 1)
+        self.assertEqual(second_memory["observations"][0]["lastSeenAt"], "2026-09-10T00:00:00Z")
+
+    def test_partial_update_replaces_only_that_entity_current_thesis(self) -> None:
+        first_memory = build_thesis_memory(
+            {},
+            multi_report(
+                "2026-09-10T00:00:00Z",
+                [
+                    {
+                        "entity": "Alpha Co",
+                        "direction": "positive",
+                        "statement": "Alpha demand is accelerating.",
+                        "evidenceId": "EA1",
+                    },
+                    {
+                        "entity": "Beta Co",
+                        "direction": "neutral",
+                        "statement": "Beta remains range-bound.",
+                        "evidenceId": "EB1",
+                    },
+                ],
+            ),
+        )
+        first_current = {
+            row["entity"]: row["id"]
+            for row in first_memory["observations"]
+            if row["id"] in first_memory["currentObservationIds"]
+        }
+
+        second_memory = build_thesis_memory(
+            {"thesisMemory": first_memory},
+            multi_report(
+                "2026-09-11T00:00:00Z",
+                [
+                    {
+                        "entity": "Alpha Co",
+                        "direction": "negative",
+                        "statement": "Alpha deployment friction is rising.",
+                        "evidenceId": "EA2",
+                    }
+                ],
+            ),
+        )
+        second_current = {
+            row["entity"]: row["id"]
+            for row in second_memory["observations"]
+            if row["id"] in second_memory["currentObservationIds"]
+        }
+        self.assertEqual(set(second_current), {"Alpha Co", "Beta Co"})
+        self.assertEqual(second_current["Beta Co"], first_current["Beta Co"])
+        self.assertNotEqual(second_current["Alpha Co"], first_current["Alpha Co"])
+        self.assertEqual(second_memory["observationCount"], 3)
 
 
 if __name__ == "__main__":
