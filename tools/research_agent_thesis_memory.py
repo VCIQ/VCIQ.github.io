@@ -130,6 +130,35 @@ def build_thesis_memory(
         if previous is None or _text(row.get("lastSeenAt"), 80) >= _text(previous.get("lastSeenAt"), 80):
             latest_by_entity[entity_key] = row
 
+    previous_memory = previous_report.get("thesisMemory")
+    raw_current_ids = (
+        previous_memory.get("currentObservationIds")
+        if isinstance(previous_memory, Mapping)
+        and isinstance(previous_memory.get("currentObservationIds"), list)
+        else []
+    )
+    current_ids: list[str] = []
+    for raw_id in raw_current_ids:
+        observation_id = _text(raw_id, 100)
+        if observation_id in by_id and observation_id not in current_ids:
+            current_ids.append(observation_id)
+    # Migrate older/buggy memory that retained observations but lost its current
+    # pointers. The most recently seen observation per entity is the safest
+    # recoverable current state; later updates replace only their own entity.
+    if not current_ids and observations:
+        current_ids = [
+            _text(row.get("id"), 100)
+            for _, row in sorted(latest_by_entity.items(), key=lambda item: item[0])
+            if _text(row.get("id"), 100)
+        ]
+
+    current_by_entity: dict[str, dict[str, Any]] = {}
+    for observation_id in current_ids:
+        row = by_id.get(observation_id)
+        entity_key = _normalized((row or {}).get("entity"))
+        if row is not None and entity_key:
+            current_by_entity[entity_key] = row
+
     evidence_rows = current_report.get("evidence")
     evidence_by_id = {
         _text(row.get("id"), 100): row
@@ -142,7 +171,6 @@ def build_thesis_memory(
     if not isinstance(updates, list):
         updates = []
 
-    current_ids: list[str] = []
     for raw in updates:
         if not isinstance(raw, Mapping):
             continue
@@ -153,7 +181,7 @@ def build_thesis_memory(
             continue
         observation_id = _observation_id(entity, direction, statement)
         entity_key = _normalized(entity)
-        prior = latest_by_entity.get(entity_key)
+        prior = current_by_entity.get(entity_key) or latest_by_entity.get(entity_key)
         evidence_ids = raw.get("evidenceIds") if isinstance(raw.get("evidenceIds"), list) else []
         current_evidence = [
             _evidence_snapshot(evidence_by_id[evidence_id])
@@ -198,16 +226,26 @@ def build_thesis_memory(
             observations.append(row)
             by_id[observation_id] = row
 
+        # Thesis updates are deltas, not a full replacement snapshot. Preserve
+        # current theses for untouched entities and replace only this entity's
+        # current pointer.
+        current_ids = [
+            item
+            for item in current_ids
+            if _normalized((by_id.get(item) or {}).get("entity")) != entity_key
+        ]
+        current_ids.append(observation_id)
+        current_by_entity[entity_key] = row
         latest_by_entity[entity_key] = row
-        if observation_id not in current_ids:
-            current_ids.append(observation_id)
 
     observations.sort(
         key=lambda row: (_text(row.get("lastSeenAt"), 80), _text(row.get("id"), 100))
     )
     observations = observations[-MAX_THESIS_OBSERVATIONS:]
     retained_ids = {_text(row.get("id"), 100) for row in observations}
-    current_ids = [item for item in current_ids if item in retained_ids]
+    current_ids = list(dict.fromkeys(
+        item for item in current_ids if item in retained_ids
+    ))
     return {
         "schemaVersion": THESIS_MEMORY_SCHEMA_VERSION,
         "generatedAt": generated_at,
