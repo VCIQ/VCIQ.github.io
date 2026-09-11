@@ -14,6 +14,21 @@ export type ResearchReviewStatus =
   | "rejected"
   | string;
 
+export type ResearchEvidenceVerificationStatus =
+  | "candidate"
+  | "auto_verified"
+  | "cross_verified"
+  | "reviewed"
+  | "rejected"
+  | string;
+
+export type ResearchEvidenceDateConfidence =
+  | "high"
+  | "medium"
+  | "low"
+  | "unknown"
+  | string;
+
 export type ResearchAgentEvidence = {
   id: string;
   changeId: string;
@@ -22,7 +37,14 @@ export type ResearchAgentEvidence = {
   sourceName: string;
   title: string;
   url: string;
+  /** Legacy source timestamp. Do not assume this is the event date. */
   publishedAt: string;
+  eventDate?: string;
+  pageCreatedAt?: string;
+  pageUpdatedAt?: string;
+  observedAt?: string;
+  dateSource?: string;
+  dateConfidence?: ResearchEvidenceDateConfidence;
   evidenceGrade: string;
   claimFields?: string[];
   qualityIssues?: string[];
@@ -31,6 +53,7 @@ export type ResearchAgentEvidence = {
   entityMatchStatus?: "matched" | "mismatched" | "not_applicable";
   publicationTier?: ResearchPublicationTier;
   reviewStatus?: ResearchReviewStatus;
+  verificationStatus?: ResearchEvidenceVerificationStatus;
   publisherName?: string;
   originalPublisherName?: string;
   platformName?: string;
@@ -145,6 +168,7 @@ export type ResearchDatasetMetric = number | string;
 
 export type ResearchAgentReport = {
   schemaVersion: number;
+  evidenceContractVersion?: number;
   generatedAt: string;
   asOfDate: string;
   runStatus: string;
@@ -163,6 +187,7 @@ export type ResearchAgentReport = {
     total: number;
     byDataset: Record<string, ResearchDatasetMetric>;
     byChangeType?: Record<string, number>;
+    byPublicationTier?: Record<string, number>;
     externalCandidates?: number;
     qualityRejected?: number;
     maintenanceExcluded?: number;
