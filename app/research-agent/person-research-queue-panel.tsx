@@ -6,6 +6,8 @@ import {
   type PersonResearchQueueItem,
   type PersonResearchQueueScoreBreakdown,
 } from "@/lib/person-research-queue";
+import { researchAgentReport } from "@/lib/research-agent-data";
+import ResearchThesisMemoryPanel from "./research-thesis-memory";
 import styles from "./person-research-queue-panel.module.css";
 
 const taskTypeLabels = {
@@ -27,6 +29,11 @@ const statusLabels = {
   candidate_found: "已有候选",
 };
 
+const workstreamLabels = {
+  research: "Research",
+  maintenance: "Maintenance",
+};
+
 function scoreSummary(breakdown: PersonResearchQueueScoreBreakdown) {
   return [
     ["优先级", breakdown.priority],
@@ -45,13 +52,13 @@ function scoreSummary(breakdown: PersonResearchQueueScoreBreakdown) {
 function QueueItem({ item }: { item: PersonResearchQueueItem }) {
   return (
     <article className={styles.queueItem}>
-      <div className={styles.queueRank} aria-label={`队列第 ${item.rank} 位`}>
-        {String(item.rank).padStart(2, "0")}
+      <div className={styles.queueRank} aria-label={`${workstreamLabels[item.workstream]} 队列第 ${item.workstreamRank} 位`}>
+        {String(item.workstreamRank).padStart(2, "0")}
       </div>
       <div className={styles.queueBody}>
         <div className={styles.itemMeta}>
           <span>
-            {item.priority} · {taskTypeLabels[item.taskType]} · {statusLabels[item.status]}
+            {workstreamLabels[item.workstream]} · {item.priority} · {taskTypeLabels[item.taskType]} · {statusLabels[item.status]}
           </span>
           <span>Research Score {item.score}</span>
         </div>
@@ -121,78 +128,112 @@ function QueueItem({ item }: { item: PersonResearchQueueItem }) {
   );
 }
 
+function CompactQueueItems({ items }: { items: PersonResearchQueueItem[] }) {
+  return (
+    <div>
+      {items.map((item) => (
+        <article key={item.taskId}>
+          <span>
+            {String(item.workstreamRank).padStart(2, "0")} · {item.priority} · {taskTypeLabels[item.taskType]} · {statusLabels[item.status]}
+          </span>
+          <h3>
+            <Link href={item.personRoute}>{item.personName}</Link>
+            {item.target ? ` · ${item.target}` : ""}
+          </h3>
+          <p>{item.question}</p>
+        </article>
+      ))}
+    </div>
+  );
+}
+
 export default function PersonResearchQueuePanel() {
   const queue = personResearchQueue;
-  const primaryQueue = queue.queue.slice(0, 3);
-  const remainingQueue = queue.queue.slice(3);
+  const researchQueue = queue.queue.filter((item) => item.workstream === "research");
+  const maintenanceQueue = queue.queue.filter((item) => item.workstream === "maintenance");
+  const primaryResearch = researchQueue.slice(0, 3);
+  const remainingResearch = researchQueue.slice(3);
+  const primaryMaintenance = maintenanceQueue.slice(0, 2);
+  const remainingMaintenance = maintenanceQueue.slice(2);
 
   return (
-    <section className={styles.queuePanel} id="queue" aria-labelledby="queue-title">
-      <div className={styles.sectionHeading}>
-        <div>
-          <p className="section-index">TODAY&apos;S RESEARCH QUEUE</p>
-          <h2 id="queue-title">研究队列</h2>
-        </div>
-        <div className={styles.headingActions}>
-          <span>{queue.researchDate || "等待生成"}</span>
-          <Link href="/research-agent/strategy/">查看研究策略 →</Link>
-        </div>
-      </div>
+    <>
+      <ResearchThesisMemoryPanel memory={researchAgentReport.thesisMemory} />
 
-      <p className={styles.queueIntro}>
-        默认展示优先级最高的 3 项；检索成本、评分拆解和成功判据按需展开。
-      </p>
-
-      <div className={styles.queueStats}>
-        <article>
-          <span>候选任务池</span>
-          <strong>{queue.candidateTaskCount}</strong>
-          <small>未关闭、未阻塞</small>
-        </article>
-        <article>
-          <span>今日任务</span>
-          <strong>{queue.selectedTaskCount}/{queue.limits.tasks}</strong>
-          <small>{queue.selectedPeopleCount} 位人物</small>
-        </article>
-        <article>
-          <span>主动检索槽位</span>
-          <strong>{queue.allocatedQuerySlots}/{queue.limits.activeQuerySlots}</strong>
-          <small>按成本效用分配</small>
-        </article>
-        <article>
-          <span>历史主动尝试</span>
-          <strong>{queue.outcomeMemoryAttemptCount}</strong>
-          <small>只影响排序与预算</small>
-        </article>
-      </div>
-
-      <div className={styles.queueList}>
-        {primaryQueue.map((item) => <QueueItem item={item} key={item.taskId} />)}
-        {!primaryQueue.length && <p className={styles.empty}>等待人物主动研究任务生成后形成今日队列。</p>}
-      </div>
-
-      {remainingQueue.length > 0 && (
-        <details className={styles.remainingQueue}>
-          <summary>查看其余 {remainingQueue.length} 项任务</summary>
+      <section className={styles.queuePanel} id="queue" aria-labelledby="queue-title">
+        <div className={styles.sectionHeading}>
           <div>
-            {remainingQueue.map((item) => (
-              <article key={item.taskId}>
-                <span>{String(item.rank).padStart(2, "0")} · {item.priority} · {statusLabels[item.status]}</span>
-                <h3>
-                  <Link href={item.personRoute}>{item.personName}</Link>
-                  {item.target ? ` · ${item.target}` : ""}
-                </h3>
-                <p>{item.question}</p>
-              </article>
-            ))}
+            <p className="section-index">TODAY&apos;S RESEARCH WORKSTREAMS</p>
+            <h2 id="queue-title">研究任务</h2>
           </div>
-        </details>
-      )}
+          <div className={styles.headingActions}>
+            <span>{queue.researchDate || "等待生成"}</span>
+            <Link href="/research-agent/strategy/">查看研究策略 →</Link>
+          </div>
+        </div>
 
-      <details className={styles.queueMethodology}>
-        <summary>查看队列排序说明</summary>
-        <p>{queue.methodology}</p>
-      </details>
-    </section>
+        <p className={styles.queueIntro}>
+          Research 处理观点、执行和一手研究证据；Maintenance 处理身份/任职与时效补齐。调度层先保证 Research，不再让资料维护挤占核心研究任务。
+        </p>
+
+        <div className={styles.queueStats}>
+          <article>
+            <span>Research 候选 / 今日</span>
+            <strong>{queue.candidateResearchTaskCount}/{queue.selectedResearchTaskCount}</strong>
+            <small>核心研究 lane</small>
+          </article>
+          <article>
+            <span>Maintenance 候选 / 今日</span>
+            <strong>{queue.candidateMaintenanceTaskCount}/{queue.selectedMaintenanceTaskCount}</strong>
+            <small>最多 {queue.limits.maintenanceTasks} 项</small>
+          </article>
+          <article>
+            <span>主动检索槽位</span>
+            <strong>{queue.allocatedResearchQuerySlots}+{queue.allocatedMaintenanceQuerySlots}/{queue.limits.activeQuerySlots}</strong>
+            <small>Research + Maintenance</small>
+          </article>
+          <article>
+            <span>历史主动尝试</span>
+            <strong>{queue.outcomeMemoryAttemptCount}</strong>
+            <small>只影响排序与预算</small>
+          </article>
+        </div>
+
+        <p className={styles.queueIntro}>
+          <strong>Research Queue</strong> · 默认展开最高价值的实质研究任务。
+        </p>
+        <div className={styles.queueList}>
+          {primaryResearch.map((item) => <QueueItem item={item} key={item.taskId} />)}
+          {!primaryResearch.length && <p className={styles.empty}>当前没有开放的实质研究任务。</p>}
+        </div>
+
+        {remainingResearch.length > 0 && (
+          <details className={styles.remainingQueue}>
+            <summary>查看其余 Research 任务（{remainingResearch.length}）</summary>
+            <CompactQueueItems items={remainingResearch} />
+          </details>
+        )}
+
+        <p className={styles.queueIntro}>
+          <strong>Maintenance Queue</strong> · 身份、任职和证据时效维护使用独立 lane。
+        </p>
+        <div className={styles.queueList}>
+          {primaryMaintenance.map((item) => <QueueItem item={item} key={item.taskId} />)}
+          {!primaryMaintenance.length && <p className={styles.empty}>当前没有开放的资料维护任务。</p>}
+        </div>
+
+        {remainingMaintenance.length > 0 && (
+          <details className={styles.remainingQueue}>
+            <summary>查看其余 Maintenance 任务（{remainingMaintenance.length}）</summary>
+            <CompactQueueItems items={remainingMaintenance} />
+          </details>
+        )}
+
+        <details className={styles.queueMethodology}>
+          <summary>查看队列排序说明</summary>
+          <p>{queue.methodology}</p>
+        </details>
+      </section>
+    </>
   );
 }
