@@ -28,13 +28,13 @@ export function EventQualityIndicator({ item }: { item: LiveIntelligenceEvent })
         <span className={styles.qualityBadge}>质量分 {item.qualityScore}</span>
       )}
       {totalLinks > 0 && (
-        <span title="可查看的去重来源链接数；不代表独立信源数或事实已获交叉验证。">
-          来源链接 {totalLinks}
+        <span title="可查看的去重来源数量；点击下方“查看来源”打开主来源。数量不代表独立信源数或事实已获交叉验证。">
+          可用来源 {totalLinks} 个
         </span>
       )}
       {additionalLinks.length > 0 && (
         <details className={styles.evidence}>
-          <summary>其他来源链接 {additionalLinks.length}</summary>
+          <summary>其他来源 {additionalLinks.length} 个</summary>
           <div className={styles.evidenceList}>
             {additionalLinks.map((source, index) => (
               <a
