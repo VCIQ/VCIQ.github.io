@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-11T00:56:01+00:00",
+  "generatedAt": "2026-09-11T05:27:40+00:00",
   "asOfDate": "2026-09-11",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
@@ -12,365 +12,357 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 10700,
-      "completion_tokens": 9852,
-      "total_tokens": 20552,
+      "prompt_tokens": 6336,
+      "completion_tokens": 5941,
+      "total_tokens": 12277,
       "completion_tokens_details": {
-        "reasoning_tokens": 7146
+        "reasoning_tokens": 3510
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 10700
+      "prompt_cache_miss_tokens": 6336
     }
   },
   "changeSummary": {
-    "totalDetected": 81,
-    "total": 11,
+    "totalDetected": 31,
+    "total": 7,
     "byDataset": {
-      "intelligenceEvent": 8,
-      "marketCompany": 3
+      "marketCompany": 1,
+      "intelligenceEvent": 6
     },
     "byChangeType": {
-      "external_event": 28,
-      "data_maintenance": 29,
-      "source_refresh": 24
+      "external_event": 10,
+      "data_maintenance": 21
     },
-    "externalCandidates": 28,
-    "qualityRejected": 2,
-    "maintenanceExcluded": 53,
+    "externalCandidates": 10,
+    "qualityRejected": 4,
+    "maintenanceExcluded": 21,
     "aggregatedEvents": 0,
-    "highestImportance": 91,
+    "highestImportance": 85,
     "verifiedChangeTotal": 0,
-    "candidateTotal": 3,
-    "auxiliaryLeadTotal": 8,
-    "rejectedTotal": 2,
-    "newEvents": 15,
-    "reconfirmations": 2,
-    "updates": 1,
+    "candidateTotal": 1,
+    "auxiliaryLeadTotal": 6,
+    "rejectedTotal": 4,
+    "newEvents": 7,
+    "reconfirmations": 0,
+    "updates": 0,
     "corrections": 0,
-    "possibleConflicts": 24,
-    "duplicatesSuppressed": 6
+    "possibleConflicts": 0,
+    "duplicatesSuppressed": 0
   },
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "本证据包聚焦2026年9月8-11日期间的多项科技与资本市场动态。核心线索包括：DeepSeek发布V4.1 Flash模型；Enigmata携加密数据AI推理技术获650万美元种子融资；OpenAI呼吁全美强制性AI安全法规，Anthropic披露Claude被用于生物武器研究；加州签署儿童AI安全法规；IonQ发布量子破解256位加密的研究；Rocket Lab推出高效太阳能电池；宁德时代获得多项专利授权；此外The Boring Company据称完成30亿美元D轮融资。整体上，AI安全监管、隐私计算、量子计算威胁与垂直技术进展形成本轮信息主轴。需注意多数事件为单一媒体或公司自述，证据等级以B/C为主，事实细节尚待独立验证。 质量门诊断：缺少发布时间 13、缺少标题 13、证据未分级 13、仅为发现线索，不能支持正式主张 1、证据合格但未绑定变化字段 16。",
+    "executiveSummary": "证据包共包含7条新增/变更事件。最重要的线索是OpenAI正在向金融服务业垂直化推进：新浪财经报道其推出整合LSEG、PitchBook、Daloopa数据的金融业版ChatGPT，OpenAI官方X账号也展示了基于Excel/Word/PowerPoint模板生成可编辑金融产出的能力。Rocket Lab官方确认完成今年第16次Electron发射，属于高置信度运营事实。蚂蚁InTech奖在外滩大会揭晓，申报量较首届增长近4倍，显示该奖项影响力扩大，但证据为C级媒体。Recursion Pharmaceuticals仅有单篇媒体报道称当日跌幅超大盘，缺乏数据细节，只能作为弱信号。其余OpenAI Data agent和Google DeepMind多智能体事件均因内容截断，暂无法形成可靠判断。 质量门诊断：仅为发现线索，不能支持正式主张 4。",
     "keyDevelopments": [
       {
-        "title": "DeepSeek发布V4.1 Flash模型",
-        "assessment": "事实：钛媒体晨报标题显示DeepSeek正式发布V4.1 Flash模型。推断：模型迭代显示DeepSeek持续投入AI竞争。待验证：模型参数、性能与开放方式均未在证据中披露。",
-        "importance": 4,
-        "confidence": "low",
-        "entities": [
-          "DeepSeek"
-        ],
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "title": "Enigmata隐身亮相，获650万美元种子融资",
-        "assessment": "事实：Enigmata宣布从隐身模式中走出，获650万美元种子融资，并推出可直接在加密数据上运行AI的Enigmata Cipher。推断：该事件指向隐私计算与AI训练数据合规的结合。待验证：生产速度与商业化能力属于公司自述，需独立测试。",
-        "importance": 3,
+        "title": "OpenAI推出金融业版ChatGPT，整合LSEG、PitchBook和Daloopa数据服务",
+        "assessment": "新浪财经报道称，OpenAI周四推出专为金融服务业打造的ChatGPT版本，将其最新模型与来自LSEG、PitchBook、Daloopa等数据提供商的内置数据结合。OpenAI官方X也发布信息称可用企业自己的Excel、Word和PowerPoint模板创建可编辑金融模型、研究笔记和pitchbooks。事实层面两者方向一致；推断是OpenAI正将产品能力垂直化延伸至金融场景。待验证：具体功能边界、定价、客户可用范围。",
+        "importance": 5,
         "confidence": "medium",
         "entities": [
-          "Enigmata"
+          "OpenAI",
+          "LSEG",
+          "PitchBook",
+          "Daloopa"
         ],
         "evidenceIds": [
+          "E008",
           "E002"
         ]
       },
       {
-        "title": "OpenAI呼吁制定全美强制性AI安全法规",
-        "assessment": "事实：OpenAI全球事务主管声称AI已进入能力发展新阶段，要求AI政策开启新篇章，呼吁全美范围强制性安全法规。推断：OpenAI寻求主动影响监管框架。待验证：具体立法建议和适用范围未在证据中给出。",
-        "importance": 3,
-        "confidence": "medium",
-        "entities": [
-          "OpenAI"
-        ],
-        "evidenceIds": [
-          "E003"
-        ]
-      },
-      {
-        "title": "Anthropic披露科学家使用Claude推进生物武器研究",
-        "assessment": "事实：Anthropic发布案件研究，显示当前AI模型被滥用，包括科学家使用Claude辅助生物武器研究。推断：该案例可能强化AI安全监管呼声。待验证：研究细节、模型版本及后续处理措施未见证据。",
+        "title": "OpenAI在ChatGPT Work中推出Data agent",
+        "assessment": "OpenAI官方X账号转述ChatGPT公告称，正在ChatGPT Work中引入新的Data agent，使企业可以将公司数据转化为可用的工作产出。这是官方一手信息，但内容被截断，缺少支持的数据源类型、安全性和部署方式。推断该功能面向企业工作场景，可能与金融业版ChatGPT形成协同。待验证：产品文档和正式公告。",
         "importance": 4,
         "confidence": "medium",
         "entities": [
-          "Anthropic",
-          "Claude"
+          "OpenAI"
         ],
         "evidenceIds": [
-          "E004"
+          "E006"
         ]
       },
       {
-        "title": "加州签署儿童社交媒体与AI安全法规",
-        "assessment": "事实：加州州长批准针对社交媒体和AI聊天机器人的儿童安全新规，其中包含获OpenAI CEO支持的法案。推断：州级监管将影响AI产品面向未成年人的设计。待验证：法规具体条款和执行时间未在证据中列出。",
-        "importance": 3,
-        "confidence": "medium",
+        "title": "Rocket Lab成功完成今年第16次Electron发射任务",
+        "assessment": "Rocket Lab官方投资者关系新闻稿确认，旗下Electron火箭在2026年完成第16次发射，此次为保密客户的专用任务，并称其巩固了全球领先小型发射供应商的地位。这是官方一手事实。推断：若全年发射节奏保持，年度发射次数可能进一步攀升，但证据未提供全年目标或对比数据。",
+        "importance": 4,
+        "confidence": "high",
         "entities": [
-          "加州政府",
-          "OpenAI"
+          "Rocket Lab",
+          "Electron"
         ],
         "evidenceIds": [
           "E005"
         ]
       },
       {
-        "title": "IonQ发布量子威胁研究：声称可破解256位加密",
-        "assessment": "事实：IonQ发布论文，称用20,000量子比特可在26天内破解256位椭圆曲线签名。推断：若成立，将大幅提升后量子密码迁移的紧迫性。待验证：该研究仅为公司官方声明，尚未经独立同行评议。",
-        "importance": 4,
+        "title": "2026蚂蚁InTech奖在外滩大会揭晓，申报量较首届增长近4倍",
+        "assessment": "雷峰网报道，2026蚂蚁InTech奖在Inclusion·外滩大会期间揭晓：10位青年科学家获InTech科技奖，每人20万元奖金；10位来自全球顶尖学府的中国籍在读博士生获InTech奖学金，每人5万元奖金；申报量较首届增长近4倍。这是C级专业媒体旁证，基本事实可参考。推断该奖项的参与度和影响力显著提升。待验证：具体申报数字和完整获奖名单。",
+        "importance": 3,
         "confidence": "medium",
         "entities": [
-          "IonQ"
-        ],
-        "evidenceIds": [
-          "E013"
-        ]
-      },
-      {
-        "title": "Rocket Lab推出高效太阳能电池以减少关键矿物依赖",
-        "assessment": "事实：Rocket Lab推出高能效太阳能电池，宣称减少对供应受限关键矿物的依赖。推断：该举措有利于航天供应链自主。待验证：转换效率与量产时间等具体指标未披露。",
-        "importance": 3,
-        "confidence": "low",
-        "entities": [
-          "Rocket Lab"
-        ],
-        "evidenceIds": [
-          "E017"
-        ]
-      },
-      {
-        "title": "宁德时代获得多项电池相关专利授权",
-        "assessment": "事实：宁德时代获得电池单体及其制造方法、下料系统、电池装置、离子阻隔材料等四项专利授权。推断：显示其在电池制造工艺与材料领域的持续积累。待验证：专利转化为产品的节奏未知。",
-        "importance": 2,
-        "confidence": "medium",
-        "entities": [
-          "宁德时代"
-        ],
-        "evidenceIds": [
-          "E029",
-          "E030",
-          "E031",
-          "E032"
-        ]
-      },
-      {
-        "title": "The Boring Company完成30亿美元D轮融资",
-        "assessment": "事实：钛晨报标题显示The Boring Company完成30亿美元D轮融资，估值达230亿美元。推断：融资表明基础设施隧道业务获资本支持。待验证：融资方、资金用途及估值口径均未提供。",
-        "importance": 3,
-        "confidence": "low",
-        "entities": [
-          "The Boring Company"
+          "蚂蚁集团",
+          "蚂蚁InTech奖",
+          "外滩大会"
         ],
         "evidenceIds": [
           "E001"
+        ]
+      },
+      {
+        "title": "Recursion Pharmaceuticals出现“跌幅超大盘”媒体报道，但缺乏细节",
+        "assessment": "Yahoo财经发布标题为“Why Recursion Pharmaceuticals (RXRX) Dipped More Than Broader Market Today”的文章，但证据包仅收录标题和URL，未提供跌幅幅度、具体原因或任何财务数据。因此不能将该新闻标题视为已确认的下跌事实，只能作为需要进一步验证的观察信号。",
+        "importance": 2,
+        "confidence": "low",
+        "entities": [
+          "Recursion Pharmaceuticals"
+        ],
+        "evidenceIds": [
+          "RPE001"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "DeepSeek",
-        "direction": "positive",
-        "statement": "V4.1 Flash模型的发布显示其模型迭代节奏加快，但证据仅为媒体标题，实际性能与竞争力差异待验证。",
-        "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "entity": "Enigmata",
-        "direction": "positive",
-        "statement": "获得650万美元融资并推出加密数据AI方案，表明隐私计算在新一代AI训练/推理中的应用受到资本关注。",
-        "evidenceIds": [
-          "E002"
-        ]
-      },
-      {
         "entity": "OpenAI",
-        "direction": "mixed",
-        "statement": "一方面主动呼吁全美强制AI安全法规，可能降低政策不确定性；另一方面其支持的加州法规和Anthropic滥用案例将给头部AI公司带来合规压力。",
+        "direction": "positive",
+        "statement": "OpenAI正将生成式AI能力向金融服务业垂直延伸：媒体报道其推出整合LSEG、PitchBook和Daloopa数据的金融业版ChatGPT，官方X也展示基于企业自有Office模板生成可编辑金融产出的能力，显示其企业级商业化布局在加速。但目前产品影响未被客户采用数据证实。",
         "evidenceIds": [
-          "E003",
-          "E004",
-          "E005"
-        ]
-      },
-      {
-        "entity": "Anthropic",
-        "direction": "negative",
-        "statement": "Claude被用于生物武器研究的案例可能恶化公众对前沿AI安全性的认知，增加监管和品牌风险。",
-        "evidenceIds": [
-          "E004"
-        ]
-      },
-      {
-        "entity": "IonQ",
-        "direction": "mixed",
-        "statement": "量子破解研究提升了技术叙事，但相关主题股在新闻驱动下波动明显（E057-E059），研究声明与市场表现需分开评估。",
-        "evidenceIds": [
-          "E013",
-          "E057",
-          "E058",
-          "E059"
+          "E008",
+          "E002",
+          "E006"
         ]
       },
       {
         "entity": "Rocket Lab",
         "direction": "positive",
-        "statement": "推出高效太阳能电池以减少关键矿物依赖，有助于提升垂直整合与供应链韧性，但需等待具体指标。",
+        "statement": "官方确认完成2026年第16次Electron发射，并强调其全球领先小型发射供应商地位，说明发射节奏与执行能力保持高位。该事件对运营和客户覆盖是正面信号，但未涉及财务量化影响。",
         "evidenceIds": [
-          "E017"
+          "E005"
         ]
       },
       {
-        "entity": "宁德时代",
-        "direction": "neutral",
-        "statement": "多项专利授权属于常规技术积累，短期不改变竞争格局，但长期可能支撑制造工艺与材料创新。",
+        "entity": "蚂蚁集团",
+        "direction": "positive",
+        "statement": "蚂蚁InTech奖申报量较首届增长近4倍，显示该奖项在青年科学家和博士生群体中的影响力和认可度扩大，有助于蚂蚁集团在AI和前沿科技领域构建人才生态。证据为C级媒体，需后续官方信息确认。",
         "evidenceIds": [
-          "E029",
-          "E030",
-          "E031",
-          "E032"
+          "E001"
+        ]
+      },
+      {
+        "entity": "Recursion Pharmaceuticals",
+        "direction": "negative",
+        "statement": "存在单篇媒体报道称RXRX当日跌幅超过大盘，但证据只有标题，没有跌幅数据和原因。此方向判断置信度极低，不能作为投资或基本面的确定性结论。",
+        "evidenceIds": [
+          "RPE001"
+        ]
+      },
+      {
+        "entity": "Google DeepMind",
+        "direction": "neutral",
+        "statement": "Google DeepMind转发了一项涉及100个智能体解决数学问题的实验，提到当一小部分（9%）智能体开始某种行为，但帖子内容截断，实验结论和意义无法判断。暂不形成方向性观点。",
+        "evidenceIds": [
+          "E010"
         ]
       }
     ],
     "watchlist": [
       {
-        "item": "DeepSeek V4.1 Flash的官方参数与第三方评测",
-        "reason": "目前仅有媒体标题线索，模型的性能、推理成本和开放方式直接影响AI竞争格局判断。",
-        "nextEvidence": "DeepSeek官方发布文档或第三方基准测试",
+        "item": "OpenAI金融业版ChatGPT的正式产品文档与定价",
+        "reason": "目前仅有C级媒体报道和官方X摘要，缺少产品功能细节、可用地区、数据接入方式和企业客户范围。",
+        "nextEvidence": "OpenAI官网产品说明、开发者文档或第三方实测",
         "evidenceIds": [
-          "E001"
+          "E008",
+          "E002"
         ]
       },
       {
-        "item": "The Boring Company D轮融资的投资方与估值依据",
-        "reason": "融资额和估值来自单条媒体综合晨报，需核实交易真实性及资金用途。",
-        "nextEvidence": "公司公告或专业投资媒体详细报道",
+        "item": "ChatGPT Work中Data agent的详细能力与合规信息",
+        "reason": "官方X仅给出公告标题，未说明支持的数据源类型、数据安全机制以及与现有企业工作流的集成方式。",
+        "nextEvidence": "OpenAI官方博客、白皮书或产品更新日志",
         "evidenceIds": [
-          "E001"
+          "E006"
         ]
       },
       {
-        "item": "Anthropic滥用案例的原始报告",
-        "reason": "生物武器研究属于高风险滥用，需确认案例细节、涉及模型版本与应对措施。",
-        "nextEvidence": "Anthropic官方公开的案例研究全文",
-        "evidenceIds": [
-          "E004"
-        ]
-      },
-      {
-        "item": "IonQ量子破解研究的独立验证",
-        "reason": "公司自研声明未经同行评议，需关注学术共同体和密码学家的反馈，以判断真实威胁时间线。",
-        "nextEvidence": "论文预印本、同行评议或独立复现结果",
-        "evidenceIds": [
-          "E013"
-        ]
-      },
-      {
-        "item": "加州儿童AI安全法规的具体条款",
-        "reason": "州长签署后仍可能存在细则和过渡期，条款范围影响AI产品合规设计。",
-        "nextEvidence": "加州立法机构发布的法案文本或官方新闻稿",
+        "item": "Rocket Lab年度发射统计及订单影响",
+        "reason": "第16次发射是运营事实，但未提及任务金额、客户身份或对全年财务展望的量化影响。",
+        "nextEvidence": "Rocket Lab下一份财报或年度发射统计更新",
         "evidenceIds": [
           "E005"
         ]
       },
       {
-        "item": "Rocket Lab太阳能电池的技术数据",
-        "reason": "目前报道未提供转换效率、成本及供货条件，无法评估实际竞争力。",
-        "nextEvidence": "Rocket Lab产品页面或测试报告",
+        "item": "蚂蚁InTech奖完整申报数据与获奖名单",
+        "reason": "报道称申报量较首届增长近4倍，但未给出具体数字；获奖者名单也被截断。",
+        "nextEvidence": "外滩大会主办方公告、蚂蚁集团官方信息或完整媒体报道",
         "evidenceIds": [
-          "E017"
+          "E001"
         ]
       },
       {
-        "item": "Enigmata加密AI技术的独立基准测试",
-        "reason": "在加密数据上直接运行AI的声称需验证推理速度、精度与安全边界。",
-        "nextEvidence": "客户案例或第三方安全审计",
+        "item": "Recursion Pharmaceuticals当日下跌的具体原因和幅度",
+        "reason": "单一标题无法确认下跌规模，也无法区分公司特定因素与市场整体波动。",
+        "nextEvidence": "公司SEC文件、财报公告、完整财经报道或行情数据",
         "evidenceIds": [
-          "E002"
+          "RPE001"
         ]
       },
       {
-        "item": "宁德时代专利的应用转化",
-        "reason": "专利授权与产品落地存在时滞，需观察后续量产或电池产品发布。",
-        "nextEvidence": "宁德时代财报电话会或新品发布",
+        "item": "Google DeepMind多智能体实验完整结论",
+        "reason": "帖子被截断，9%智能体开始某行为后的结果未知，无法评估实验对AI智能体协作研究的启示。",
+        "nextEvidence": "完整论文、arXiv预印本或官方博客",
         "evidenceIds": [
-          "E029",
-          "E030",
-          "E031",
-          "E032"
+          "E010"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "先进AI模型滥用可能引发更严格监管",
-        "reason": "Anthropic披露的Claude滥用案例显示，前沿模型有被用于高风险研究的可能，可能导致监管急转弯并增加合规成本。",
-        "evidenceIds": [
-          "E004"
-        ]
-      },
-      {
-        "risk": "AI监管政策不确定性上升",
-        "reason": "OpenAI呼吁全美强制法规与加州州级立法同时出现，表明美国AI政策进入快速演变期，企业可能面临多州合规摩擦。",
-        "evidenceIds": [
-          "E003",
-          "E005"
-        ]
-      },
-      {
-        "risk": "量子破解威胁可能冲击现有加密信任体系",
-        "reason": "IonQ研究若被进一步验证，意味着当前256位加密体系面临终局风险，相关行业需提前迁移，但过度解读研究结论也可能引发非理性恐慌。",
-        "evidenceIds": [
-          "E013"
-        ]
-      },
-      {
-        "risk": "单一来源或公司自述证据造成误判",
-        "reason": "本包中多个关键事件仅来自媒体标题或公司新闻稿，缺少独立验证，依据这些信息进行投资判断存在失真风险。",
+        "risk": "证据等级差异可能导致误判",
+        "reason": "E001、E008均为C级媒体来源，属于旁证；RPE001为单一媒体报道且未经人工审核。高置信度结论主要依赖官方一手来源，媒体类线索不应被视为确定性重大事实。",
         "evidenceIds": [
           "E001",
-          "E002",
-          "E013"
+          "E008",
+          "RPE001"
         ]
       },
       {
-        "risk": "量子主题股价受新闻驱动波动剧烈",
-        "reason": "IonQ及相关公司股价在量子消息后出现明显上涨和回落，表明市场情绪主导，研究结论不应直接线性映射到股价表现。",
+        "risk": "关键信息截断导致解读偏差",
+        "reason": "E006和E010的官方X内容均为不完整摘要，尤其E010在“当9%的智能体开始…”处截断，无法判断实验结论；E006的产品能力描述也不完整。",
         "evidenceIds": [
-          "E057",
-          "E058",
-          "E059"
+          "E006",
+          "E010"
+        ]
+      },
+      {
+        "risk": "产品发布事实与商业影响脱节",
+        "reason": "OpenAI金融业版ChatGPT和Data agent的发布不代表已产生收入或客户采用；证据中没有采购意向、使用量或财务影响数据，不能据此推断商业成功。",
+        "evidenceIds": [
+          "E008",
+          "E002",
+          "E006"
+        ]
+      },
+      {
+        "risk": "媒体标题不能作为股票下跌的确认证据",
+        "reason": "Recursion Pharmaceuticals的新闻仅有标题，未提供跌幅、时段或原因；标题可能由市场整体波动、标题党或非基本面因素驱动，需避免据此形成任何投资判断。",
+        "evidenceIds": [
+          "RPE001"
+        ]
+      },
+      {
+        "risk": "外部信源可能失效或被更正",
+        "reason": "所有证据均处于自动化未人工审核状态，X帖子和新闻链接存在被删除、修改或断章取义的可能，随着时间推移可能影响结论可复现性。",
+        "evidenceIds": [
+          "E002",
+          "E005",
+          "E006",
+          "E010",
+          "E008"
         ]
       }
     ],
-    "methodologyNote": "本分析严格限定于证据包内的changes与evidence，未补充外部事实。证据等级以B/C为主，其中公司新闻稿和官方披露作为一手来源但存在利益相关，媒体线索作为二级佐证。分析将事实、推断与待验证事项分开表述；对于低置信度信息，使用low或medium予以标注。所有内容均为研究性观察，不构成买卖建议、目标价或收益承诺。 数据管线提示：追踪实体与公开信源发现=stale、科创板招股书投资者证据刷新=stale。"
+    "methodologyNote": "本报告仅基于证据包中的changes与evidence字段进行分析，不补充任何外部事实。每个判断至少引用一个evidenceIds中的证据编号；事实、推断与待验证事项已在相应字段中明确区分。证据来源包括官方账号、官方网站和专业媒体，等级从B到C不等，全部处于automated_unreviewed状态，因此C级媒体和单一媒体报道仅作为线索，不构成确定性结论。本报告不构成投资建议，不提供买入、卖出、目标价或收益承诺。 数据管线提示：追踪实体与公开信源发现=stale、科创板招股书投资者证据刷新=stale。"
   },
   "changes": [
     {
-      "id": "chg-a88b76a603bd7e07787a",
+      "id": "pending-b2d87400c3812224b186",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "recursion",
+      "entityName": "Recursion Pharmaceuticals, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "news"
+      ],
+      "summary": "Recursion Pharmaceuticals, Inc. 的 news、quote 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": []
+      },
+      "after": {
+        "news": [
+          {
+            "publishedAt": "2026-09-10T21:50:05+00:00",
+            "source": "Yahoo财经",
+            "title": "Why Recursion Pharmaceuticals (RXRX) Dipped More Than Broader Market Today",
+            "url": "https://finance.yahoo.com/markets/stocks/articles/why-recursion-pharmaceuticals-rxrx-dipped-215005134.html?.tsrc=rss"
+          }
+        ]
+      },
+      "changeType": "external_event",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "news"
+      ],
+      "claimBindings": [
+        {
+          "field": "news",
+          "before": [],
+          "after": [
+            {
+              "publishedAt": "2026-09-10T21:50:05+00:00",
+              "source": "Yahoo财经",
+              "title": "Why Recursion Pharmaceuticals (RXRX) Dipped More Than Broader Market Today",
+              "url": "https://finance.yahoo.com/markets/stocks/articles/why-recursion-pharmaceuticals-rxrx-dipped-215005134.html?.tsrc=rss"
+            }
+          ],
+          "evidenceIds": [
+            "RPE001"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "RPE001"
+      ],
+      "supportingEvidenceIds": [
+        "RPE001"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-9a6ad594179187f62729"
+      ],
+      "eventLifecycles": {
+        "evt-9a6ad594179187f62729": "first_seen"
+      },
+      "eventId": "evt-9a6ad594179187f62729",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-11T00:56:01+00:00",
+      "lastSeenAt": "2026-09-11T05:27:40+00:00",
+      "sourceChangeId": "chg-3fc08b42e596db8b3931",
+      "replayedFromPending": true
+    },
+    {
+      "id": "chg-dcc4284bf80aad66dafd",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-05c88a47123498c4e0",
-      "entityName": "【钛晨报】证监会发声，事关“十五五”资本市场工作；DeepSeek V4.1 Flash模型正式发布；马斯克旗下The Boring Company完成30亿美元D轮融资，估值达230亿美元",
+      "entityId": "intelligence-event-d391f5421328601d67",
+      "entityName": "申报量较首届增长近4倍，2026蚂蚁InTech奖在外滩大会揭晓",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：【钛晨报】证监会发声，事关“十五五”资本市场工作；DeepSeek V4.1 Flash模型正式发布；马斯克旗下The Boring Company完成30亿美元D轮融资，估值达230亿美元。",
-      "importance": 91,
+      "summary": "新增高价值情报事件记录：申报量较首届增长近4倍，2026蚂蚁InTech奖在外滩大会揭晓。",
+      "importance": 85,
       "before": null,
       "after": {
         "publishedAt": "2026-09-11",
-        "summary": "高德回应“扫雷榜”传闻：正式发布“避雷指南1.0”；A股龙头进入苹果首款折叠屏手机iPhone Duo供应链；HD现代重工将投资8336亿韩元建设新发动机工厂；星巴克拟斥资10亿美元改造多达9000家门店；《金融强国建设“十五五”规划》正式出台；国务院办公厅印发《关于加强中小企业回款难问题治理有关工作的通知》；农业农村部：到2030年，畜牧业高质量发展迈上新台阶；打破国外长期垄断，中国小型液质联用仪研发取得重要突破；乘联分会：9月1-6日中国乘用车新能源市场零售同比去年9月同期下降3%，较上月同期增长15%",
-        "title": "【钛晨报】证监会发声，事关“十五五”资本市场工作；DeepSeek V4.1 Flash模型正式发布；马斯克旗下The Boring Company完成30亿美元D轮融资，估值达230亿美元"
+        "summary": "9月10日，在2026 Inclusion·外滩大会期间，2026蚂蚁InTech奖正式揭晓。10位青年科学家获“InTech科技奖”，每人20万元奖金。同时，10位来自全球顶尖学府的中国籍在读博士生获得“InTech奖学金”，每人获5万元奖金。 （图：2026“InTech科技奖”获奖者与颁奖嘉宾合影） 中国工程院院士、浙江大学教授陈纯，新加坡科学院院士、新加坡国立大学计算机学院创始院长、KITHCT讲席教授蔡达成，美国科学院、工程院、艺术与科学院三院院士Michael I. Jordan，美国国家工程院外籍院…",
+        "title": "申报量较首届增长近4倍，2026蚂蚁InTech奖在外滩大会揭晓"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -392,7 +384,7 @@
         {
           "field": "summary",
           "before": null,
-          "after": "高德回应“扫雷榜”传闻：正式发布“避雷指南1.0”；A股龙头进入苹果首款折叠屏手机iPhone Duo供应链；HD现代重工将投资8336亿韩元建设新发动机工厂；星巴克拟斥资10亿美元改造多达9000家门店；《金融强国建设“十五五”规划》正式出台；国务院办公厅印发《关于加强中小企业回款难问题治理有关工作的通知》；农业农村部：到2030年，畜牧业高质量发展迈上新台阶；打破国外长期垄断，中国小型液质联用仪研发取得重要突破；乘联分会：9月1-6日中国乘用车新能源市场零售同比去年9月同期下降3%，较上月同期增长15%",
+          "after": "9月10日，在2026 Inclusion·外滩大会期间，2026蚂蚁InTech奖正式揭晓。10位青年科学家获“InTech科技奖”，每人20万元奖金。同时，10位来自全球顶尖学府的中国籍在读博士生获得“InTech奖学金”，每人获5万元奖金。 （图：2026“InTech科技奖”获奖者与颁奖嘉宾合影） 中国工程院院士、浙江大学教授陈纯，新加坡科学院院士、新加坡国立大学计算机学院创始院长、KITHCT讲席教授蔡达成，美国科学院、工程院、艺术与科学院三院院士Michael I. Jordan，美国国家工程院外籍院…",
           "evidenceIds": [
             "E001"
           ]
@@ -400,7 +392,7 @@
         {
           "field": "title",
           "before": null,
-          "after": "【钛晨报】证监会发声，事关“十五五”资本市场工作；DeepSeek V4.1 Flash模型正式发布；马斯克旗下The Boring Company完成30亿美元D轮融资，估值达230亿美元",
+          "after": "申报量较首届增长近4倍，2026蚂蚁InTech奖在外滩大会揭晓",
           "evidenceIds": [
             "E001"
           ]
@@ -421,193 +413,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-a6a2e7df1a1c6bc9e544"
+        "evt-b1fa8b18107dd56b8348"
       ],
       "eventLifecycles": {
-        "evt-a6a2e7df1a1c6bc9e544": "first_seen"
+        "evt-b1fa8b18107dd56b8348": "first_seen"
       },
-      "eventId": "evt-a6a2e7df1a1c6bc9e544",
+      "eventId": "evt-b1fa8b18107dd56b8348",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-11T00:56:01+00:00",
-      "lastSeenAt": "2026-09-11T00:56:01+00:00"
+      "firstSeenAt": "2026-09-11T05:27:40+00:00",
+      "lastSeenAt": "2026-09-11T05:27:40+00:00"
     },
     {
-      "id": "chg-9ac7050ccbf1933f2eac",
+      "id": "chg-9cf236b7a649b1a07e88",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-dc848447ee945a0594",
-      "entityName": "Enigmata Emerges from Stealth with $6.5 Million to Let AI Learn Without Exposing Sensitive Data",
+      "entityId": "intelligence-event-ab91fe4f81690770a9",
+      "entityName": "OpenAI：You can also create editable financial models, research notes, and pitchbooks using your firm's own Excel, Word, and PowerPoint templates. https://t.c",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：Enigmata Emerges from Stealth with $6.5 Million to Let AI Learn Without Exposing Sensitive Data。",
-      "importance": 91,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-10",
-        "summary": "Enigmata Cipher runs AI directly on encrypted data at production speed, turning the world's locked-away data into fuel for AI NASHVILLE, Tenn., Sept. 10, 2026 /PRNewswire/ -- Enigmata, Inc. emerged from stealth today with $6.5 million in seed funding led by B…",
-        "title": "Enigmata Emerges from Stealth with $6.5 Million to Let AI Learn Without Exposing Sensitive Data"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-10",
-          "evidenceIds": [
-            "E002"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "Enigmata Cipher runs AI directly on encrypted data at production speed, turning the world's locked-away data into fuel for AI NASHVILLE, Tenn., Sept. 10, 2026 /PRNewswire/ -- Enigmata, Inc. emerged from stealth today with $6.5 million in seed funding led by B…",
-          "evidenceIds": [
-            "E002"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Enigmata Emerges from Stealth with $6.5 Million to Let AI Learn Without Exposing Sensitive Data",
-          "evidenceIds": [
-            "E002"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E002"
-      ],
-      "supportingEvidenceIds": [
-        "E002"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-1ac870a5926d0f188190"
-      ],
-      "eventLifecycles": {
-        "evt-1ac870a5926d0f188190": "first_seen"
-      },
-      "eventId": "evt-1ac870a5926d0f188190",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-11T00:56:01+00:00",
-      "lastSeenAt": "2026-09-11T00:56:01+00:00"
-    },
-    {
-      "id": "chg-bd9b5f41f0a7d59b5442",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-366b2c48ec849020a9",
-      "entityName": "OpenAI呼吁制定全美范围的强制性人工智能安全法规",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：OpenAI呼吁制定全美范围的强制性人工智能安全法规。",
-      "importance": 86,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-10",
-        "summary": "OpenAI全球事务主管克里斯・勒海恩（Chris LeHane）在周三的一篇博客文章中表示，人工智能行业 “已经迈入AI能力发展的新阶段”，这就 “要求AI政策也开启新的篇章”。",
-        "title": "OpenAI呼吁制定全美范围的强制性人工智能安全法规"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-10",
-          "evidenceIds": [
-            "E003"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "OpenAI全球事务主管克里斯・勒海恩（Chris LeHane）在周三的一篇博客文章中表示，人工智能行业 “已经迈入AI能力发展的新阶段”，这就 “要求AI政策也开启新的篇章”。",
-          "evidenceIds": [
-            "E003"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "OpenAI呼吁制定全美范围的强制性人工智能安全法规",
-          "evidenceIds": [
-            "E003"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E003"
-      ],
-      "supportingEvidenceIds": [
-        "E003"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-09aa7da3deda1388ea32"
-      ],
-      "eventLifecycles": {
-        "evt-09aa7da3deda1388ea32": "first_seen"
-      },
-      "eventId": "evt-09aa7da3deda1388ea32",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-11T00:56:01+00:00",
-      "lastSeenAt": "2026-09-11T00:56:01+00:00"
-    },
-    {
-      "id": "chg-8bcfa3af4f38c28e96c2",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-d509c2cf5405dc8701",
-      "entityName": "Anthropic caught scientists using Claude to further biological weapon research",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Anthropic caught scientists using Claude to further biological weapon research。",
+      "summary": "新增高价值情报事件记录：OpenAI：You can also create editable financial models, research notes, and pitchbooks using your firm's own Excel, Word, and PowerPoint templates. https://t.c。",
       "importance": 85,
       "before": null,
       "after": {
         "publishedAt": "2026-09-10",
-        "summary": "Anthropic produced an extensive collection of case studies covering the ways its current AI models have been misused.",
-        "title": "Anthropic caught scientists using Claude to further biological weapon research"
+        "summary": "You can also create editable financial models, research notes, and pitchbooks using your firm's own Excel, Word, and PowerPoint templates. https://t.co/x4wxaX8Khq",
+        "title": "OpenAI：You can also create editable financial models, research notes, and pitchbooks using your firm's own Excel, Word, and PowerPoint templates. https://t.c"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -623,31 +457,31 @@
           "before": null,
           "after": "2026-09-10",
           "evidenceIds": [
-            "E004"
+            "E002"
           ]
         },
         {
           "field": "summary",
           "before": null,
-          "after": "Anthropic produced an extensive collection of case studies covering the ways its current AI models have been misused.",
+          "after": "You can also create editable financial models, research notes, and pitchbooks using your firm's own Excel, Word, and PowerPoint templates. https://t.co/x4wxaX8Khq",
           "evidenceIds": [
-            "E004"
+            "E002"
           ]
         },
         {
           "field": "title",
           "before": null,
-          "after": "Anthropic caught scientists using Claude to further biological weapon research",
+          "after": "OpenAI：You can also create editable financial models, research notes, and pitchbooks using your firm's own Excel, Word, and PowerPoint templates. https://t.c",
           "evidenceIds": [
-            "E004"
+            "E002"
           ]
         }
       ],
       "evidenceIds": [
-        "E004"
+        "E002"
       ],
       "supportingEvidenceIds": [
-        "E004"
+        "E002"
       ],
       "evidenceQuality": {
         "status": "passed",
@@ -658,114 +492,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-b18a8997121e751117d3"
+        "evt-0472dd9ebef0f69a09bd"
       ],
       "eventLifecycles": {
-        "evt-b18a8997121e751117d3": "first_seen"
+        "evt-0472dd9ebef0f69a09bd": "first_seen"
       },
-      "eventId": "evt-b18a8997121e751117d3",
+      "eventId": "evt-0472dd9ebef0f69a09bd",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-11T00:56:01+00:00",
-      "lastSeenAt": "2026-09-11T00:56:01+00:00"
+      "firstSeenAt": "2026-09-11T05:27:40+00:00",
+      "lastSeenAt": "2026-09-11T05:27:40+00:00"
     },
     {
-      "id": "chg-577cf2bc65d3d566bc4f",
+      "id": "chg-239f049665c76d8b8713",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-dd0f53ae36e931b75a",
-      "entityName": "美国加州州长签署一系列法规，保护儿童免受社交媒体和人工智能侵害",
+      "entityId": "intelligence-event-d06e183676d2bb8011",
+      "entityName": "Rocket Lab Successfully Launches 16th Electron Mission Of The Year, Solidifies Status as World’s Leading Small Launch Provider",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：美国加州州长签署一系列法规，保护儿童免受社交媒体和人工智能侵害。",
-      "importance": 84,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-10",
-        "summary": "美国加利福尼亚州州长加文·纽森周四批准了针对社交媒体和人工智能聊天机器人的全面儿童安全新规，其中包括一项获得OpenAI首席执行官萨姆·奥特曼支持的法案。",
-        "title": "美国加州州长签署一系列法规，保护儿童免受社交媒体和人工智能侵害"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-10",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "美国加利福尼亚州州长加文·纽森周四批准了针对社交媒体和人工智能聊天机器人的全面儿童安全新规，其中包括一项获得OpenAI首席执行官萨姆·奥特曼支持的法案。",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "美国加州州长签署一系列法规，保护儿童免受社交媒体和人工智能侵害",
-          "evidenceIds": [
-            "E005"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E005"
-      ],
-      "supportingEvidenceIds": [
-        "E005"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-7e8f68eb66d2c55dcb7c"
-      ],
-      "eventLifecycles": {
-        "evt-7e8f68eb66d2c55dcb7c": "first_seen"
-      },
-      "eventId": "evt-7e8f68eb66d2c55dcb7c",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-11T00:56:01+00:00",
-      "lastSeenAt": "2026-09-11T00:56:01+00:00"
-    },
-    {
-      "id": "chg-adebac527c285be05aeb",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-53bb66d6eefea3fe81",
-      "entityName": "谷歌推出谷歌云开发者插件 用于人工智能编码助手",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：谷歌推出谷歌云开发者插件 用于人工智能编码助手。",
+      "summary": "新增高价值情报事件记录：Rocket Lab Successfully Launches 16th Electron Mission Of The Year, Solidifies Status as World’s Leading Small Launch Provider。",
       "importance": 82,
       "before": null,
       "after": {
         "publishedAt": "2026-09-11",
-        "summary": "谷歌推出谷歌云开发者插件，用于 人工智能 编码助手。",
-        "title": "谷歌推出谷歌云开发者插件 用于人工智能编码助手"
+        "summary": "AUCKLAND, New Zealand, Sept. 11, 2026 (GLOBE NEWSWIRE) -- Rocket Lab Corporation (Nasdaq: RKLB), a global leader in launch services and space systems, today launched its 16 th Electron rocket of the year with a dedicated mission for a confidential customer.",
+        "title": "Rocket Lab Successfully Launches 16th Electron Mission Of The Year, Solidifies Status as World’s Leading Small Launch Provider"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -781,31 +536,31 @@
           "before": null,
           "after": "2026-09-11",
           "evidenceIds": [
-            "E007"
+            "E005"
           ]
         },
         {
           "field": "summary",
           "before": null,
-          "after": "谷歌推出谷歌云开发者插件，用于 人工智能 编码助手。",
+          "after": "AUCKLAND, New Zealand, Sept. 11, 2026 (GLOBE NEWSWIRE) -- Rocket Lab Corporation (Nasdaq: RKLB), a global leader in launch services and space systems, today launched its 16 th Electron rocket of the year with a dedicated mission for a confidential customer.",
           "evidenceIds": [
-            "E007"
+            "E005"
           ]
         },
         {
           "field": "title",
           "before": null,
-          "after": "谷歌推出谷歌云开发者插件 用于人工智能编码助手",
+          "after": "Rocket Lab Successfully Launches 16th Electron Mission Of The Year, Solidifies Status as World’s Leading Small Launch Provider",
           "evidenceIds": [
-            "E007"
+            "E005"
           ]
         }
       ],
       "evidenceIds": [
-        "E007"
+        "E005"
       ],
       "supportingEvidenceIds": [
-        "E007"
+        "E005"
       ],
       "evidenceQuality": {
         "status": "passed",
@@ -816,35 +571,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-2a6034f9b1e229f77154"
+        "evt-89ec8387026c18381160"
       ],
       "eventLifecycles": {
-        "evt-2a6034f9b1e229f77154": "first_seen"
+        "evt-89ec8387026c18381160": "first_seen"
       },
-      "eventId": "evt-2a6034f9b1e229f77154",
+      "eventId": "evt-89ec8387026c18381160",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-11T00:56:01+00:00",
-      "lastSeenAt": "2026-09-11T00:56:01+00:00"
+      "firstSeenAt": "2026-09-11T05:27:40+00:00",
+      "lastSeenAt": "2026-09-11T05:27:40+00:00"
     },
     {
-      "id": "chg-31639195a39c922d5d57",
+      "id": "chg-903586884098f275c3c9",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-2bef069a97f0628466",
-      "entityName": "Inaugural AI Music Awards Coming to Los Angeles This November as SIQA Launches Verified Registry for AI Music Provenance",
+      "entityId": "intelligence-event-9e7cb389e07ad03f40",
+      "entityName": "OpenAI：RT @ChatGPT: Now everyone can put data to work. We’re introducing a new Data agent in ChatGPT Work so you can turn your company’s data int…",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：Inaugural AI Music Awards Coming to Los Angeles This November as SIQA Launches Verified Registry for AI Music Provenance。",
+      "summary": "新增高价值情报事件记录：OpenAI：RT @ChatGPT: Now everyone can put data to work. We’re introducing a new Data agent in ChatGPT Work so you can turn your company’s data int…。",
       "importance": 82,
       "before": null,
       "after": {
         "publishedAt": "2026-09-10",
-        "summary": "The Sonic Intelligence Academy unveils the SIQA Verified Registry and the SIQA Verified app, giving artists, industry, and fans a single source of truth for identifying AI music. The company will also host the inaugural AI Music Awards on November 13, a red-c…",
-        "title": "Inaugural AI Music Awards Coming to Los Angeles This November as SIQA Launches Verified Registry for AI Music Provenance"
+        "summary": "RT @ChatGPT: Now everyone can put data to work. We’re introducing a new Data agent in ChatGPT Work so you can turn your company’s data int…",
+        "title": "OpenAI：RT @ChatGPT: Now everyone can put data to work. We’re introducing a new Data agent in ChatGPT Work so you can turn your company’s data int…"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -860,31 +615,31 @@
           "before": null,
           "after": "2026-09-10",
           "evidenceIds": [
-            "E009"
+            "E006"
           ]
         },
         {
           "field": "summary",
           "before": null,
-          "after": "The Sonic Intelligence Academy unveils the SIQA Verified Registry and the SIQA Verified app, giving artists, industry, and fans a single source of truth for identifying AI music. The company will also host the inaugural AI Music Awards on November 13, a red-c…",
+          "after": "RT @ChatGPT: Now everyone can put data to work. We’re introducing a new Data agent in ChatGPT Work so you can turn your company’s data int…",
           "evidenceIds": [
-            "E009"
+            "E006"
           ]
         },
         {
           "field": "title",
           "before": null,
-          "after": "Inaugural AI Music Awards Coming to Los Angeles This November as SIQA Launches Verified Registry for AI Music Provenance",
+          "after": "OpenAI：RT @ChatGPT: Now everyone can put data to work. We’re introducing a new Data agent in ChatGPT Work so you can turn your company’s data int…",
           "evidenceIds": [
-            "E009"
+            "E006"
           ]
         }
       ],
       "evidenceIds": [
-        "E009"
+        "E006"
       ],
       "supportingEvidenceIds": [
-        "E009"
+        "E006"
       ],
       "evidenceQuality": {
         "status": "passed",
@@ -895,35 +650,35 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-533515cbe668608ac9e4"
+        "evt-fe98105f299fbef67559"
       ],
       "eventLifecycles": {
-        "evt-533515cbe668608ac9e4": "first_seen"
+        "evt-fe98105f299fbef67559": "first_seen"
       },
-      "eventId": "evt-533515cbe668608ac9e4",
+      "eventId": "evt-fe98105f299fbef67559",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-11T00:56:01+00:00",
-      "lastSeenAt": "2026-09-11T00:56:01+00:00"
+      "firstSeenAt": "2026-09-11T05:27:40+00:00",
+      "lastSeenAt": "2026-09-11T05:27:40+00:00"
     },
     {
-      "id": "chg-9e0170635f4cb869c07e",
+      "id": "chg-1cb150ebe32f66b465f1",
       "dataset": "intelligenceEvent",
       "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-05409b7f5606740cf3",
-      "entityName": "IonQ | IonQ Models Quantum Threat to 256-Bit Encryption in New Study",
+      "entityId": "intelligence-event-2d6a8c4995cb9cc0bd",
+      "entityName": "OpenAI推出金融业版ChatGPT，整合LSEG等数据服务",
       "action": "added",
       "changedFields": [
         "publishedAt",
         "summary",
         "title"
       ],
-      "summary": "新增高价值情报事件记录：IonQ | IonQ Models Quantum Threat to 256-Bit Encryption in New Study。",
-      "importance": 80,
+      "summary": "新增高价值情报事件记录：OpenAI推出金融业版ChatGPT，整合LSEG等数据服务。",
+      "importance": 82,
       "before": null,
       "after": {
-        "publishedAt": "2026-09-08",
-        "summary": "New IonQ paper models breaking 256-bit encryption in under 26 days with 20,000 qubits, signaling urgent need for post-quantum cryptography migration.",
-        "title": "IonQ | IonQ Models Quantum Threat to 256-Bit Encryption in New Study"
+        "publishedAt": "2026-09-11",
+        "summary": "OpenAI周四推出专为金融服务业打造的ChatGPT版本，该版本将其最新的模型与来自 LSEG LSEG.L 、PitchBook 和 Daloopa 等数据提供商的内置数据相结合...",
+        "title": "OpenAI推出金融业版ChatGPT，整合LSEG等数据服务"
       },
       "changeType": "external_event",
       "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
@@ -937,33 +692,33 @@
         {
           "field": "publishedAt",
           "before": null,
-          "after": "2026-09-08",
+          "after": "2026-09-11",
           "evidenceIds": [
-            "E013"
+            "E008"
           ]
         },
         {
           "field": "summary",
           "before": null,
-          "after": "New IonQ paper models breaking 256-bit encryption in under 26 days with 20,000 qubits, signaling urgent need for post-quantum cryptography migration.",
+          "after": "OpenAI周四推出专为金融服务业打造的ChatGPT版本，该版本将其最新的模型与来自 LSEG LSEG.L 、PitchBook 和 Daloopa 等数据提供商的内置数据相结合...",
           "evidenceIds": [
-            "E013"
+            "E008"
           ]
         },
         {
           "field": "title",
           "before": null,
-          "after": "IonQ | IonQ Models Quantum Threat to 256-Bit Encryption in New Study",
+          "after": "OpenAI推出金融业版ChatGPT，整合LSEG等数据服务",
           "evidenceIds": [
-            "E013"
+            "E008"
           ]
         }
       ],
       "evidenceIds": [
-        "E013"
+        "E008"
       ],
       "supportingEvidenceIds": [
-        "E013"
+        "E008"
       ],
       "evidenceQuality": {
         "status": "passed",
@@ -974,330 +729,107 @@
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-9f44224c19bb33e4b12f"
+        "evt-a09e931344d19e4e8e6f"
       ],
       "eventLifecycles": {
-        "evt-9f44224c19bb33e4b12f": "updated"
+        "evt-a09e931344d19e4e8e6f": "first_seen"
       },
-      "eventId": "evt-9f44224c19bb33e4b12f",
-      "lifecycle": "updated",
-      "firstSeenAt": "2026-09-10T01:17:20+00:00",
-      "lastSeenAt": "2026-09-11T00:56:01+00:00"
+      "eventId": "evt-a09e931344d19e4e8e6f",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-11T05:27:40+00:00",
+      "lastSeenAt": "2026-09-11T05:27:40+00:00"
     },
     {
-      "id": "chg-7b4a9c7d3cd997556e86",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "rocket-lab",
-      "entityName": "Rocket Lab Corporation",
-      "action": "updated",
+      "id": "chg-585d7142c4bc2bc0476e",
+      "dataset": "intelligenceEvent",
+      "entityType": "高价值情报事件",
+      "entityId": "intelligence-event-f2c9eb3a98939c0c41",
+      "entityName": "Google DeepMind：RT @PaglieriDavide: 🧵We conducted an experiment with 100 agents by giving them math problems to solve. When a small group (9%) started to c…",
+      "action": "added",
       "changedFields": [
-        "news"
+        "publishedAt",
+        "summary",
+        "title"
       ],
-      "summary": "Rocket Lab Corporation 的 news、quote 发生变化。",
-      "importance": 72,
-      "before": {
-        "news": []
-      },
+      "summary": "新增高价值情报事件记录：Google DeepMind：RT @PaglieriDavide: 🧵We conducted an experiment with 100 agents by giving them math problems to solve. When a small group (9%) started to c…。",
+      "importance": 81,
+      "before": null,
       "after": {
-        "news": [
-          {
-            "publishedAt": "2026-09-08T20:20:00+00:00",
-            "source": "Yahoo财经",
-            "title": "Rocket Lab Introduces High-Efficiency Solar Cell to Reduce Reliance on Supply-Constrained Critical Minerals",
-            "url": "https://finance.yahoo.com/technology/articles/rocket-lab-introduces-high-efficiency-202000264.html?.tsrc=rss"
-          }
-        ]
+        "publishedAt": "2026-09-10",
+        "summary": "RT @PaglieriDavide: 🧵We conducted an experiment with 100 agents by giving them math problems to solve. When a small group (9%) started to c…",
+        "title": "Google DeepMind：RT @PaglieriDavide: 🧵We conducted an experiment with 100 agents by giving them math problems to solve. When a small group (9%) started to c…"
       },
       "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
       "isResearchCandidate": true,
       "claimFields": [
-        "news"
+        "publishedAt",
+        "summary",
+        "title"
       ],
       "claimBindings": [
         {
-          "field": "news",
-          "before": [],
-          "after": [
-            {
-              "publishedAt": "2026-09-08T20:20:00+00:00",
-              "source": "Yahoo财经",
-              "title": "Rocket Lab Introduces High-Efficiency Solar Cell to Reduce Reliance on Supply-Constrained Critical Minerals",
-              "url": "https://finance.yahoo.com/technology/articles/rocket-lab-introduces-high-efficiency-202000264.html?.tsrc=rss"
-            }
-          ],
+          "field": "publishedAt",
+          "before": null,
+          "after": "2026-09-10",
           "evidenceIds": [
-            "E017"
+            "E010"
+          ]
+        },
+        {
+          "field": "summary",
+          "before": null,
+          "after": "RT @PaglieriDavide: 🧵We conducted an experiment with 100 agents by giving them math problems to solve. When a small group (9%) started to c…",
+          "evidenceIds": [
+            "E010"
+          ]
+        },
+        {
+          "field": "title",
+          "before": null,
+          "after": "Google DeepMind：RT @PaglieriDavide: 🧵We conducted an experiment with 100 agents by giving them math problems to solve. When a small group (9%) started to c…",
+          "evidenceIds": [
+            "E010"
           ]
         }
       ],
       "evidenceIds": [
-        "E017"
+        "E010"
       ],
       "supportingEvidenceIds": [
-        "E017"
+        "E010"
       ],
       "evidenceQuality": {
         "status": "passed",
         "supporting": 1,
         "total": 1
       },
-      "publicationTier": "candidate",
+      "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-9b743986ab9888c7ec5c"
+        "evt-e5ebdb01340f084c118e"
       ],
       "eventLifecycles": {
-        "evt-9b743986ab9888c7ec5c": "first_seen"
+        "evt-e5ebdb01340f084c118e": "first_seen"
       },
-      "eventId": "evt-9b743986ab9888c7ec5c",
+      "eventId": "evt-e5ebdb01340f084c118e",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-11T00:56:01+00:00",
-      "lastSeenAt": "2026-09-11T00:56:01+00:00"
-    },
-    {
-      "id": "chg-75145d97f0597123c33c",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "catl",
-      "entityName": "宁德时代",
-      "action": "updated",
-      "changedFields": [
-        "news"
-      ],
-      "summary": "宁德时代 的 news 发生变化。",
-      "importance": 48,
-      "before": {
-        "news": []
-      },
-      "after": {
-        "news": [
-          {
-            "publishedAt": "2026-09-11T03:47:00+08:00",
-            "source": "新浪财经",
-            "title": "宁德时代获得发明专利授权：“电池单体及其制造方法和制造系统、电池以及用电装置”",
-            "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002j42w"
-          },
-          {
-            "publishedAt": "2026-09-11T03:47:00+08:00",
-            "source": "新浪财经",
-            "title": "宁德时代获得实用新型专利授权：“用于电极组件的下料装置以及下料系统”",
-            "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002j46c"
-          },
-          {
-            "publishedAt": "2026-09-11T03:47:00+08:00",
-            "source": "新浪财经",
-            "title": "宁德时代获得实用新型专利授权：“电池单体、电池装置以及用电设备”",
-            "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002j470"
-          },
-          {
-            "publishedAt": "2026-09-11T03:47:00+08:00",
-            "source": "新浪财经",
-            "title": "宁德时代获得发明专利授权：“离子阻隔材料及其制备方法、太阳能电池和用电设备”",
-            "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002j47y"
-          }
-        ]
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "news"
-      ],
-      "claimBindings": [
-        {
-          "field": "news",
-          "before": [],
-          "after": [
-            {
-              "publishedAt": "2026-09-11T03:47:00+08:00",
-              "source": "新浪财经",
-              "title": "宁德时代获得发明专利授权：“电池单体及其制造方法和制造系统、电池以及用电装置”",
-              "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002j42w"
-            },
-            {
-              "publishedAt": "2026-09-11T03:47:00+08:00",
-              "source": "新浪财经",
-              "title": "宁德时代获得实用新型专利授权：“用于电极组件的下料装置以及下料系统”",
-              "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002j46c"
-            },
-            {
-              "publishedAt": "2026-09-11T03:47:00+08:00",
-              "source": "新浪财经",
-              "title": "宁德时代获得实用新型专利授权：“电池单体、电池装置以及用电设备”",
-              "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002j470"
-            },
-            {
-              "publishedAt": "2026-09-11T03:47:00+08:00",
-              "source": "新浪财经",
-              "title": "宁德时代获得发明专利授权：“离子阻隔材料及其制备方法、太阳能电池和用电设备”",
-              "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002j47y"
-            }
-          ],
-          "evidenceIds": [
-            "E029",
-            "E030",
-            "E031",
-            "E032"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E029",
-        "E030",
-        "E031",
-        "E032"
-      ],
-      "supportingEvidenceIds": [
-        "E029",
-        "E030",
-        "E031",
-        "E032"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 4,
-        "total": 4
-      },
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-31e86ebd6281ea31fb74",
-        "evt-c12aaa4b1ed982a550c1",
-        "evt-b7e901647a9e0a8d264d",
-        "evt-4b3df72bc87e61556504"
-      ],
-      "eventLifecycles": {
-        "evt-31e86ebd6281ea31fb74": "first_seen",
-        "evt-c12aaa4b1ed982a550c1": "first_seen",
-        "evt-b7e901647a9e0a8d264d": "first_seen",
-        "evt-4b3df72bc87e61556504": "first_seen"
-      },
-      "lifecycle": "mixed",
-      "firstSeenAt": "2026-09-11T00:56:01+00:00",
-      "lastSeenAt": "2026-09-11T00:56:01+00:00"
-    },
-    {
-      "id": "chg-e9af88458f088f16bb00",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "ionq",
-      "entityName": "IonQ, Inc.",
-      "action": "updated",
-      "changedFields": [
-        "news"
-      ],
-      "summary": "IonQ, Inc. 的 news、quote 发生变化。",
-      "importance": 48,
-      "before": {
-        "news": []
-      },
-      "after": {
-        "news": [
-          {
-            "publishedAt": "2026-09-09T12:59:04+00:00",
-            "source": "Yahoo财经",
-            "title": "D-Wave, Rigetti and IonQ Stocks Rally on $100 Million Quantum Boost",
-            "url": "https://finance.yahoo.com/markets/stocks/articles/d-wave-rigetti-ionq-stocks-125904784.html?.tsrc=rss"
-          },
-          {
-            "publishedAt": "2026-09-10T21:50:02+00:00",
-            "source": "Yahoo财经",
-            "title": "IonQ, Inc. (IONQ) Suffers a Larger Drop Than the General Market: Key Insights",
-            "url": "https://finance.yahoo.com/markets/stocks/articles/ionq-inc-ionq-suffers-larger-215002716.html?.tsrc=rss"
-          },
-          {
-            "publishedAt": "2026-09-08T17:19:21+00:00",
-            "source": "Yahoo财经",
-            "title": "IonQ Stock Soars -- SkyWater Deal Fuels Higher Revenue Outlook",
-            "url": "https://finance.yahoo.com/markets/stocks/articles/ionq-stock-soars-skywater-deal-171921452.html?.tsrc=rss"
-          }
-        ]
-      },
-      "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "news"
-      ],
-      "claimBindings": [
-        {
-          "field": "news",
-          "before": [],
-          "after": [
-            {
-              "publishedAt": "2026-09-09T12:59:04+00:00",
-              "source": "Yahoo财经",
-              "title": "D-Wave, Rigetti and IonQ Stocks Rally on $100 Million Quantum Boost",
-              "url": "https://finance.yahoo.com/markets/stocks/articles/d-wave-rigetti-ionq-stocks-125904784.html?.tsrc=rss"
-            },
-            {
-              "publishedAt": "2026-09-10T21:50:02+00:00",
-              "source": "Yahoo财经",
-              "title": "IonQ, Inc. (IONQ) Suffers a Larger Drop Than the General Market: Key Insights",
-              "url": "https://finance.yahoo.com/markets/stocks/articles/ionq-inc-ionq-suffers-larger-215002716.html?.tsrc=rss"
-            },
-            {
-              "publishedAt": "2026-09-08T17:19:21+00:00",
-              "source": "Yahoo财经",
-              "title": "IonQ Stock Soars -- SkyWater Deal Fuels Higher Revenue Outlook",
-              "url": "https://finance.yahoo.com/markets/stocks/articles/ionq-stock-soars-skywater-deal-171921452.html?.tsrc=rss"
-            }
-          ],
-          "evidenceIds": [
-            "E057",
-            "E058",
-            "E059"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E057",
-        "E058",
-        "E059"
-      ],
-      "supportingEvidenceIds": [
-        "E057",
-        "E058",
-        "E059"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 3,
-        "total": 3
-      },
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-fc7851a319a17faeb95d",
-        "evt-f8f914c417bd4e92c64f",
-        "evt-a6ac821ac60b81e11540"
-      ],
-      "eventLifecycles": {
-        "evt-fc7851a319a17faeb95d": "first_seen",
-        "evt-f8f914c417bd4e92c64f": "first_seen",
-        "evt-a6ac821ac60b81e11540": "first_seen"
-      },
-      "lifecycle": "mixed",
-      "firstSeenAt": "2026-09-11T00:56:01+00:00",
-      "lastSeenAt": "2026-09-11T00:56:01+00:00"
+      "firstSeenAt": "2026-09-11T05:27:40+00:00",
+      "lastSeenAt": "2026-09-11T05:27:40+00:00"
     }
   ],
   "evidence": [
     {
       "id": "E001",
-      "changeId": "chg-a88b76a603bd7e07787a",
-      "entityName": "【钛晨报】证监会发声，事关“十五五”资本市场工作；DeepSeek V4.1 Flash模型正式发布；马斯克旗下The Boring Company完成30亿美元D轮融资，估值达230亿美元",
-      "claim": "新增高价值情报事件记录：【钛晨报】证监会发声，事关“十五五”资本市场工作；DeepSeek V4.1 Flash模型正式发布；马斯克旗下The Boring Company完成30亿美元D轮融资，估值达230亿美元。",
+      "changeId": "chg-dcc4284bf80aad66dafd",
+      "entityName": "申报量较首届增长近4倍，2026蚂蚁InTech奖在外滩大会揭晓",
+      "claim": "新增高价值情报事件记录：申报量较首届增长近4倍，2026蚂蚁InTech奖在外滩大会揭晓。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "钛媒体",
-      "title": "【钛晨报】证监会发声，事关“十五五”资本市场工作；DeepSeek V4.1 Flash模型正式发布；马斯克旗下The Boring Company完成30亿美元D轮融资，估值达230亿美元",
-      "url": "https://www.tmtpost.com/8135740.html",
+      "sourceName": "雷峰网",
+      "title": "申报量较首届增长近4倍，2026蚂蚁InTech奖在外滩大会揭晓",
+      "url": "https://www.leiphone.com/category/industrynews/udT6VNcjzp53ZOxl.html",
       "publishedAt": "2026-09-11",
       "evidenceGrade": "C",
       "platformName": "专业媒体",
@@ -1314,66 +846,18 @@
     },
     {
       "id": "E002",
-      "changeId": "chg-9ac7050ccbf1933f2eac",
-      "entityName": "Enigmata Emerges from Stealth with $6.5 Million to Let AI Learn Without Exposing Sensitive Data",
-      "claim": "新增高价值情报事件记录：Enigmata Emerges from Stealth with $6.5 Million to Let AI Learn Without Exposing Sensitive Data。",
+      "changeId": "chg-9cf236b7a649b1a07e88",
+      "entityName": "OpenAI：You can also create editable financial models, research notes, and pitchbooks using your firm's own Excel, Word, and PowerPoint templates. https://t.c",
+      "claim": "新增高价值情报事件记录：OpenAI：You can also create editable financial models, research notes, and pitchbooks using your firm's own Excel, Word, and PowerPoint templates. https://t.c。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "PR Newswire Consumer Technology",
-      "title": "Enigmata Emerges from Stealth with $6.5 Million to Let AI Learn Without Exposing Sensitive Data",
-      "url": "https://www.prnewswire.com/news-releases/enigmata-emerges-from-stealth-with-6-5-million-to-let-ai-learn-without-exposing-sensitive-data-302875807.html",
+      "sourceName": "OpenAI on X",
+      "title": "OpenAI：You can also create editable financial models, research notes, and pitchbooks using your firm's own Excel, Word, and PowerPoint templates. https://t.c",
+      "url": "https://x.com/OpenAI/status/2098118249582035348",
       "publishedAt": "2026-09-10",
       "evidenceGrade": "B",
-      "platformName": "新闻稿",
+      "platformName": "X",
       "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E003",
-      "changeId": "chg-bd9b5f41f0a7d59b5442",
-      "entityName": "OpenAI呼吁制定全美范围的强制性人工智能安全法规",
-      "claim": "新增高价值情报事件记录：OpenAI呼吁制定全美范围的强制性人工智能安全法规。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "OpenAI呼吁制定全美范围的强制性人工智能安全法规",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-11/doc-inirmfef5318321.shtml",
-      "publishedAt": "2026-09-10",
-      "evidenceGrade": "C",
-      "platformName": "新浪",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E004",
-      "changeId": "chg-8bcfa3af4f38c28e96c2",
-      "entityName": "Anthropic caught scientists using Claude to further biological weapon research",
-      "claim": "新增高价值情报事件记录：Anthropic caught scientists using Claude to further biological weapon research。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Engadget",
-      "title": "Anthropic caught scientists using Claude to further biological weapon research",
-      "url": "https://www.engadget.com/2255473/anthropic-caught-scientists-using-claude-to-further-biological-weapon-research",
-      "publishedAt": "2026-09-10",
-      "evidenceGrade": "C",
-      "platformName": "Engadget",
-      "sourceRole": "corroboration",
       "claimFields": [
         "publishedAt",
         "summary",
@@ -1386,88 +870,16 @@
     },
     {
       "id": "E005",
-      "changeId": "chg-577cf2bc65d3d566bc4f",
-      "entityName": "美国加州州长签署一系列法规，保护儿童免受社交媒体和人工智能侵害",
-      "claim": "新增高价值情报事件记录：美国加州州长签署一系列法规，保护儿童免受社交媒体和人工智能侵害。",
+      "changeId": "chg-239f049665c76d8b8713",
+      "entityName": "Rocket Lab Successfully Launches 16th Electron Mission Of The Year, Solidifies Status as World’s Leading Small Launch Provider",
+      "claim": "新增高价值情报事件记录：Rocket Lab Successfully Launches 16th Electron Mission Of The Year, Solidifies Status as World’s Leading Small Launch Provider。",
       "publicationTier": "external_clue",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "美国加州州长签署一系列法规，保护儿童免受社交媒体和人工智能侵害",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-11/doc-inirkywe2348297.shtml",
-      "publishedAt": "2026-09-10",
-      "evidenceGrade": "C",
-      "platformName": "新浪",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E007",
-      "changeId": "chg-adebac527c285be05aeb",
-      "entityName": "谷歌推出谷歌云开发者插件 用于人工智能编码助手",
-      "claim": "新增高价值情报事件记录：谷歌推出谷歌云开发者插件 用于人工智能编码助手。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "东方财富",
-      "title": "谷歌推出谷歌云开发者插件 用于人工智能编码助手",
-      "url": "https://finance.eastmoney.com/a/202609113870958450.html",
+      "sourceName": "Rocket Lab Investor Relations",
+      "title": "Rocket Lab Successfully Launches 16th Electron Mission Of The Year, Solidifies Status as World’s Leading Small Launch Provider",
+      "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-successfully-launches-16th-electron-mission-year",
       "publishedAt": "2026-09-11",
-      "evidenceGrade": "C",
-      "platformName": "东方财富",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E009",
-      "changeId": "chg-31639195a39c922d5d57",
-      "entityName": "Inaugural AI Music Awards Coming to Los Angeles This November as SIQA Launches Verified Registry for AI Music Provenance",
-      "claim": "新增高价值情报事件记录：Inaugural AI Music Awards Coming to Los Angeles This November as SIQA Launches Verified Registry for AI Music Provenance。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "PR Newswire Consumer Technology",
-      "title": "Inaugural AI Music Awards Coming to Los Angeles This November as SIQA Launches Verified Registry for AI Music Provenance",
-      "url": "https://www.prnewswire.com/news-releases/inaugural-ai-music-awards-coming-to-los-angeles-this-november-as-siqa-launches-verified-registry-for-ai-music-provenance-302875791.html",
-      "publishedAt": "2026-09-10",
       "evidenceGrade": "B",
-      "platformName": "新闻稿",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E013",
-      "changeId": "chg-9e0170635f4cb869c07e",
-      "entityName": "IonQ | IonQ Models Quantum Threat to 256-Bit Encryption in New Study",
-      "claim": "新增高价值情报事件记录：IonQ | IonQ Models Quantum Threat to 256-Bit Encryption in New Study。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "IonQ",
-      "title": "IonQ | IonQ Models Quantum Threat to 256-Bit Encryption in New Study",
-      "url": "https://ionq.com/news/ionq-publishes-worlds-first-fully-compiled-end-to-end-blueprint-for-breaking-256-bit-elliptic-curve-signatures",
-      "publishedAt": "2026-09-08",
-      "evidenceGrade": "官方披露",
       "platformName": "官方网站",
       "sourceRole": "primary",
       "claimFields": [
@@ -1481,156 +893,88 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E017",
-      "changeId": "chg-7b4a9c7d3cd997556e86",
-      "entityName": "Rocket Lab Corporation",
-      "claim": "Rocket Lab Corporation 的 news、quote 发生变化。",
+      "id": "E006",
+      "changeId": "chg-903586884098f275c3c9",
+      "entityName": "OpenAI：RT @ChatGPT: Now everyone can put data to work. We’re introducing a new Data agent in ChatGPT Work so you can turn your company’s data int…",
+      "claim": "新增高价值情报事件记录：OpenAI：RT @ChatGPT: Now everyone can put data to work. We’re introducing a new Data agent in ChatGPT Work so you can turn your company’s data int…。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "OpenAI on X",
+      "title": "OpenAI：RT @ChatGPT: Now everyone can put data to work. We’re introducing a new Data agent in ChatGPT Work so you can turn your company’s data int…",
+      "url": "https://x.com/OpenAI/status/2098153609234104818",
+      "publishedAt": "2026-09-10",
+      "evidenceGrade": "B",
+      "platformName": "X",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E008",
+      "changeId": "chg-1cb150ebe32f66b465f1",
+      "entityName": "OpenAI推出金融业版ChatGPT，整合LSEG等数据服务",
+      "claim": "新增高价值情报事件记录：OpenAI推出金融业版ChatGPT，整合LSEG等数据服务。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "OpenAI推出金融业版ChatGPT，整合LSEG等数据服务",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-11/doc-inirmmmy6997815.shtml",
+      "publishedAt": "2026-09-11",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "sourceRole": "corroboration",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "E010",
+      "changeId": "chg-585d7142c4bc2bc0476e",
+      "entityName": "Google DeepMind：RT @PaglieriDavide: 🧵We conducted an experiment with 100 agents by giving them math problems to solve. When a small group (9%) started to c…",
+      "claim": "新增高价值情报事件记录：Google DeepMind：RT @PaglieriDavide: 🧵We conducted an experiment with 100 agents by giving them math problems to solve. When a small group (9%) started to c…。",
+      "publicationTier": "external_clue",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "Google DeepMind on X",
+      "title": "Google DeepMind：RT @PaglieriDavide: 🧵We conducted an experiment with 100 agents by giving them math problems to solve. When a small group (9%) started to c…",
+      "url": "https://x.com/GoogleDeepMind/status/2098004438359154969",
+      "publishedAt": "2026-09-10",
+      "evidenceGrade": "B",
+      "platformName": "X",
+      "sourceRole": "primary",
+      "claimFields": [
+        "publishedAt",
+        "summary",
+        "title"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports"
+    },
+    {
+      "id": "RPE001",
+      "changeId": "pending-b2d87400c3812224b186",
+      "entityName": "Recursion Pharmaceuticals, Inc.",
+      "claim": "Recursion Pharmaceuticals, Inc. 的 news、quote 发生变化。",
       "publicationTier": "candidate",
       "reviewStatus": "automated_unreviewed",
       "sourceName": "Yahoo财经",
-      "title": "Rocket Lab Introduces High-Efficiency Solar Cell to Reduce Reliance on Supply-Constrained Critical Minerals",
-      "url": "https://finance.yahoo.com/technology/articles/rocket-lab-introduces-high-efficiency-202000264.html?.tsrc=rss",
-      "publishedAt": "2026-09-08T20:20:00+00:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "entityMatchStatus": "matched",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E029",
-      "changeId": "chg-75145d97f0597123c33c",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 的 news 发生变化。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "宁德时代获得发明专利授权：“电池单体及其制造方法和制造系统、电池以及用电装置”",
-      "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002j42w",
-      "publishedAt": "2026-09-11T03:47:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "entityMatchStatus": "matched",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E030",
-      "changeId": "chg-75145d97f0597123c33c",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 的 news 发生变化。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "宁德时代获得实用新型专利授权：“用于电极组件的下料装置以及下料系统”",
-      "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002j46c",
-      "publishedAt": "2026-09-11T03:47:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "entityMatchStatus": "matched",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E031",
-      "changeId": "chg-75145d97f0597123c33c",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 的 news 发生变化。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "宁德时代获得实用新型专利授权：“电池单体、电池装置以及用电设备”",
-      "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002j470",
-      "publishedAt": "2026-09-11T03:47:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "entityMatchStatus": "matched",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E032",
-      "changeId": "chg-75145d97f0597123c33c",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 的 news 发生变化。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "宁德时代获得发明专利授权：“离子阻隔材料及其制备方法、太阳能电池和用电设备”",
-      "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002j47y",
-      "publishedAt": "2026-09-11T03:47:00+08:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "entityMatchStatus": "matched",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E057",
-      "changeId": "chg-e9af88458f088f16bb00",
-      "entityName": "IonQ, Inc.",
-      "claim": "IonQ, Inc. 的 news、quote 发生变化。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Yahoo财经",
-      "title": "D-Wave, Rigetti and IonQ Stocks Rally on $100 Million Quantum Boost",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/d-wave-rigetti-ionq-stocks-125904784.html?.tsrc=rss",
-      "publishedAt": "2026-09-09T12:59:04+00:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "entityMatchStatus": "matched",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E058",
-      "changeId": "chg-e9af88458f088f16bb00",
-      "entityName": "IonQ, Inc.",
-      "claim": "IonQ, Inc. 的 news、quote 发生变化。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Yahoo财经",
-      "title": "IonQ, Inc. (IONQ) Suffers a Larger Drop Than the General Market: Key Insights",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/ionq-inc-ionq-suffers-larger-215002716.html?.tsrc=rss",
-      "publishedAt": "2026-09-10T21:50:02+00:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "entityMatchStatus": "matched",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E059",
-      "changeId": "chg-e9af88458f088f16bb00",
-      "entityName": "IonQ, Inc.",
-      "claim": "IonQ, Inc. 的 news、quote 发生变化。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Yahoo财经",
-      "title": "IonQ Stock Soars -- SkyWater Deal Fuels Higher Revenue Outlook",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/ionq-stock-soars-skywater-deal-171921452.html?.tsrc=rss",
-      "publishedAt": "2026-09-08T17:19:21+00:00",
+      "title": "Why Recursion Pharmaceuticals (RXRX) Dipped More Than Broader Market Today",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/why-recursion-pharmaceuticals-rxrx-dipped-215005134.html?.tsrc=rss",
+      "publishedAt": "2026-09-10T21:50:05+00:00",
       "evidenceGrade": "媒体报道",
       "claimFields": [
         "news"
@@ -1643,9 +987,337 @@
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-11T00:56:01+00:00",
+    "generatedAt": "2026-09-11T05:27:40+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-fe98105f299fbef67559": {
+        "eventId": "evt-fe98105f299fbef67559",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-9e7cb389e07ad03f40",
+        "entityName": "OpenAI：RT @ChatGPT: Now everyone can put data to work. We’re introducing a new Data agent in ChatGPT Work so you can turn your company’s data int…",
+        "title": "OpenAI：RT @ChatGPT: Now everyone can put data to work. We’re introducing a new Data agent in ChatGPT Work so you can turn your company’s data int…",
+        "titleAliases": [
+          "openairtchatgptnoweveryonecanputdatatoworkwereintroducinganewdataagentinchatgptworksoyoucanturnyourcompanysdataint"
+        ],
+        "publishedDate": "2026-09-10",
+        "publishedDates": [
+          "2026-09-10"
+        ],
+        "entityKeys": [
+          "company:openai"
+        ],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-e901b3821b7e36ec5558",
+          "record-8540a8bfe681f856dfe7",
+          "src-efdc6c3473edfabd3bce"
+        ],
+        "evidenceFingerprints": [
+          "e901b3821b7e36ec5558"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "OpenAI on X",
+            "title": "OpenAI：RT @ChatGPT: Now everyone can put data to work. We’re introducing a new Data agent in ChatGPT Work so you can turn your company’s data int…",
+            "url": "https://x.com/OpenAI/status/2098153609234104818",
+            "publishedAt": "2026-09-10",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "271a04b6284be665c5fe",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-11T05:27:40+00:00",
+        "lastSeenAt": "2026-09-11T05:27:40+00:00",
+        "lastPublishedAt": "2026-09-11T05:27:40+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-e5ebdb01340f084c118e": {
+        "eventId": "evt-e5ebdb01340f084c118e",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-f2c9eb3a98939c0c41",
+        "entityName": "Google DeepMind：RT @PaglieriDavide: 🧵We conducted an experiment with 100 agents by giving them math problems to solve. When a small group (9%) started to c…",
+        "title": "Google DeepMind：RT @PaglieriDavide: 🧵We conducted an experiment with 100 agents by giving them math problems to solve. When a small group (9%) started to c…",
+        "titleAliases": [
+          "googledeepmindrtpaglieridavideweconductedanexperimentwith100agentsbygivingthemmathproblemstosolvewhenasmallgroup9startedtoc"
+        ],
+        "publishedDate": "2026-09-10",
+        "publishedDates": [
+          "2026-09-10"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "人物观点",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "100",
+          "9%"
+        ],
+        "sourceAliases": [
+          "evd-97071bfde2800bfee5ff",
+          "record-d54d64a8b75cd1535877",
+          "src-f616f608b7c548f985c4"
+        ],
+        "evidenceFingerprints": [
+          "97071bfde2800bfee5ff"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Google DeepMind on X",
+            "title": "Google DeepMind：RT @PaglieriDavide: 🧵We conducted an experiment with 100 agents by giving them math problems to solve. When a small group (9%) started to c…",
+            "url": "https://x.com/GoogleDeepMind/status/2098004438359154969",
+            "publishedAt": "2026-09-10",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "c1467e49402e0976c133",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-11T05:27:40+00:00",
+        "lastSeenAt": "2026-09-11T05:27:40+00:00",
+        "lastPublishedAt": "2026-09-11T05:27:40+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-b1fa8b18107dd56b8348": {
+        "eventId": "evt-b1fa8b18107dd56b8348",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-d391f5421328601d67",
+        "entityName": "申报量较首届增长近4倍，2026蚂蚁InTech奖在外滩大会揭晓",
+        "title": "申报量较首届增长近4倍，2026蚂蚁InTech奖在外滩大会揭晓",
+        "titleAliases": [
+          "申报量较首届增长近4倍2026蚂蚁intech奖在外滩大会揭晓"
+        ],
+        "publishedDate": "2026-09-11",
+        "publishedDates": [
+          "2026-09-11"
+        ],
+        "entityKeys": [],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "4"
+        ],
+        "sourceAliases": [
+          "evd-45a1eb67dd26ccb504a5",
+          "record-5a46598e817d885e1662",
+          "src-065630ddb186c3797bd9"
+        ],
+        "evidenceFingerprints": [
+          "45a1eb67dd26ccb504a5"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "申报量较首届增长近4倍，2026蚂蚁InTech奖在外滩大会揭晓",
+            "url": "https://www.leiphone.com/category/industrynews/udT6VNcjzp53ZOxl.html",
+            "publishedAt": "2026-09-11",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "69408d8c10dd96119a90",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-11T05:27:40+00:00",
+        "lastSeenAt": "2026-09-11T05:27:40+00:00",
+        "lastPublishedAt": "2026-09-11T05:27:40+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-a09e931344d19e4e8e6f": {
+        "eventId": "evt-a09e931344d19e4e8e6f",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-2d6a8c4995cb9cc0bd",
+        "entityName": "OpenAI推出金融业版ChatGPT，整合LSEG等数据服务",
+        "title": "OpenAI推出金融业版ChatGPT，整合LSEG等数据服务",
+        "titleAliases": [
+          "openai推出金融业版chatgpt整合lseg等数据服务"
+        ],
+        "publishedDate": "2026-09-11",
+        "publishedDates": [
+          "2026-09-11"
+        ],
+        "entityKeys": [
+          "company:openai"
+        ],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-8ab00cb9e569ae389571",
+          "record-11d5e48b84e56da5c6eb",
+          "src-64c68b31cf8e273da453"
+        ],
+        "evidenceFingerprints": [
+          "8ab00cb9e569ae389571"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "OpenAI推出金融业版ChatGPT，整合LSEG等数据服务",
+            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-11/doc-inirmmmy6997815.shtml",
+            "publishedAt": "2026-09-11",
+            "evidenceGrade": "C",
+            "sourceRole": "corroboration"
+          }
+        ],
+        "claimFingerprint": "4f113ff6db97c45646d8",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-11T05:27:40+00:00",
+        "lastSeenAt": "2026-09-11T05:27:40+00:00",
+        "lastPublishedAt": "2026-09-11T05:27:40+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-89ec8387026c18381160": {
+        "eventId": "evt-89ec8387026c18381160",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-d06e183676d2bb8011",
+        "entityName": "Rocket Lab Successfully Launches 16th Electron Mission Of The Year, Solidifies Status as World’s Leading Small Launch Provider",
+        "title": "Rocket Lab Successfully Launches 16th Electron Mission Of The Year, Solidifies Status as World’s Leading Small Launch Provider",
+        "titleAliases": [
+          "rocketlabsuccessfullylaunches16thelectronmissionoftheyearsolidifiesstatusasworldsleadingsmalllaunchprovider"
+        ],
+        "publishedDate": "2026-09-11",
+        "publishedDates": [
+          "2026-09-11"
+        ],
+        "entityKeys": [
+          "company:rocket lab",
+          "company:rocket-lab"
+        ],
+        "typeKeys": [
+          "产品发布",
+          "高价值情报事件"
+        ],
+        "numericCues": [
+          "16"
+        ],
+        "sourceAliases": [
+          "evd-76ecdcae95cd55771459",
+          "record-8e9887d16addb5e264d0",
+          "src-f70ce00ad017f3780de8"
+        ],
+        "evidenceFingerprints": [
+          "76ecdcae95cd55771459"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Rocket Lab Investor Relations",
+            "title": "Rocket Lab Successfully Launches 16th Electron Mission Of The Year, Solidifies Status as World’s Leading Small Launch Provider",
+            "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-successfully-launches-16th-electron-mission-year",
+            "publishedAt": "2026-09-11",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "993db12af983a1a111e6",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-11T05:27:40+00:00",
+        "lastSeenAt": "2026-09-11T05:27:40+00:00",
+        "lastPublishedAt": "2026-09-11T05:27:40+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-0472dd9ebef0f69a09bd": {
+        "eventId": "evt-0472dd9ebef0f69a09bd",
+        "dataset": "intelligenceEvent",
+        "entityId": "intelligence-event-ab91fe4f81690770a9",
+        "entityName": "OpenAI：You can also create editable financial models, research notes, and pitchbooks using your firm's own Excel, Word, and PowerPoint templates. https://t.c",
+        "title": "OpenAI：You can also create editable financial models, research notes, and pitchbooks using your firm's own Excel, Word, and PowerPoint templates. https://t.c",
+        "titleAliases": [
+          "openaiyoucanalsocreateeditablefinancialmodelsresearchnotesandpitchbooksusingyourfirmsownexcelwordandpowerpointtemplateshttpstc"
+        ],
+        "publishedDate": "2026-09-10",
+        "publishedDates": [
+          "2026-09-10"
+        ],
+        "entityKeys": [
+          "company:openai"
+        ],
+        "typeKeys": [
+          "技术突破",
+          "高价值情报事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-d020d93b78ba74861434",
+          "record-583c1eadefd16baf4c31",
+          "src-9c4da1e9e60e58d190c4"
+        ],
+        "evidenceFingerprints": [
+          "d020d93b78ba74861434"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "OpenAI on X",
+            "title": "OpenAI：You can also create editable financial models, research notes, and pitchbooks using your firm's own Excel, Word, and PowerPoint templates. https://t.c",
+            "url": "https://x.com/OpenAI/status/2098118249582035348",
+            "publishedAt": "2026-09-10",
+            "evidenceGrade": "B",
+            "sourceRole": "primary"
+          }
+        ],
+        "claimFingerprint": "bd36c360e6993219d7aa",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-11T05:27:40+00:00",
+        "lastSeenAt": "2026-09-11T05:27:40+00:00",
+        "lastPublishedAt": "2026-09-11T05:27:40+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-fc7851a319a17faeb95d": {
         "eventId": "evt-fc7851a319a17faeb95d",
         "dataset": "marketCompany",
@@ -2596,7 +2268,7 @@
         "ipoStage": null,
         "firstSeenAt": "2026-09-11T00:56:01+00:00",
         "lastSeenAt": "2026-09-11T00:56:01+00:00",
-        "lastPublishedAt": "",
+        "lastPublishedAt": "2026-09-11T05:27:40+00:00",
         "lastLifecycle": "first_seen",
         "observationCount": 1,
         "confirmationCount": 0,
@@ -2604,9 +2276,7 @@
         "status": "active",
         "conflictStatus": "none",
         "conflictReasons": [],
-        "relatedEventIds": [],
-        "pendingLifecycle": "first_seen",
-        "pendingSinceAt": "2026-09-11T00:56:01+00:00"
+        "relatedEventIds": []
       },
       "evt-8ec136c03f15c710ec21": {
         "eventId": "evt-8ec136c03f15c710ec21",
@@ -34740,1045 +34410,20 @@
         "conflictStatus": "none",
         "conflictReasons": [],
         "relatedEventIds": []
-      },
-      "evt-d144df151d0d7f396205": {
-        "eventId": "evt-d144df151d0d7f396205",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-ea92af416c637691e4",
-        "entityName": "中国上市公司协会发布关于驰援西藏日喀则吉隆灾区、践行上市公司社会责任的倡议书",
-        "title": "中国上市公司协会发布关于驰援西藏日喀则吉隆灾区、践行上市公司社会责任的倡议书",
-        "titleAliases": [
-          "中国上市公司协会发布关于驰援西藏日喀则吉隆灾区践行上市公司社会责任的倡议书"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "产品发布",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-e355f906d1d437cf6115",
-          "record-c332fe27b7e47a42248f",
-          "src-f96649414ef2908a77ac"
-        ],
-        "evidenceFingerprints": [
-          "e355f906d1d437cf6115"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "中国上市公司协会发布关于驰援西藏日喀则吉隆灾区、践行上市公司社会责任的倡议书",
-            "url": "https://finance.sina.com.cn/china/2026-09-01/doc-iniqihzt8146263.shtml",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "fcdc3595d562b618a92c",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T12:24:14+00:00",
-        "lastSeenAt": "2026-09-01T12:24:14+00:00",
-        "lastPublishedAt": "2026-09-01T12:24:14+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-d07643c02ba8a6886ab7": {
-        "eventId": "evt-d07643c02ba8a6886ab7",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-ab9ce0ad8fefa8cf44",
-        "entityName": "Amazon seller sends $1,400 RTX 5080 customer a cheap \"gift\" and fake instructions claiming the GPU is still coming",
-        "title": "Amazon seller sends $1,400 RTX 5080 customer a cheap \"gift\" and fake instructions claiming the GPU is still coming",
-        "titleAliases": [
-          "amazonsellersends1400rtx5080customeracheapgiftandfakeinstructionsclaimingthegpuisstillcoming"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "商业进展",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "1",
-          "400",
-          "5080"
-        ],
-        "sourceAliases": [
-          "evd-2d2ebda5541bf1c19818",
-          "record-e9945399e13851ba9a64",
-          "src-54c4d748064e576ac012"
-        ],
-        "evidenceFingerprints": [
-          "2d2ebda5541bf1c19818"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "TechSpot",
-            "title": "Amazon seller sends $1,400 RTX 5080 customer a cheap \"gift\" and fake instructions claiming the GPU is still coming",
-            "url": "https://www.techspot.com/news/113694-amazon-seller-sends-1400-rtx-5080-customer-cheap.html",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "943250e9fe4d629d45ad",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T12:24:14+00:00",
-        "lastSeenAt": "2026-09-01T12:24:14+00:00",
-        "lastPublishedAt": "2026-09-01T12:24:14+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-ceb3aa8c667194fff670": {
-        "eventId": "evt-ceb3aa8c667194fff670",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-0e22e308ed049ec184",
-        "entityName": "手握三家上市公司，宁波“并购王”又要把AI装进香山股份",
-        "title": "手握三家上市公司，宁波“并购王”又要把AI装进香山股份",
-        "titleAliases": [
-          "手握三家上市公司宁波并购王又要把ai装进香山股份"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "并购",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-1ba70a7783da8d93f46a",
-          "record-6083d3d8c550da0705b7",
-          "src-cd6c04390268cd0235ce"
-        ],
-        "evidenceFingerprints": [
-          "1ba70a7783da8d93f46a"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "手握三家上市公司，宁波“并购王”又要把AI装进香山股份",
-            "url": "https://finance.sina.com.cn/stock/s/2026-09-01/doc-iniqipiw3574301.shtml",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "b41d27b99ba4c5118f05",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T12:24:14+00:00",
-        "lastSeenAt": "2026-09-01T12:24:14+00:00",
-        "lastPublishedAt": "2026-09-01T12:24:14+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-c5a38754c430056e09d2": {
-        "eventId": "evt-c5a38754c430056e09d2",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-50e430d3af939ec1da",
-        "entityName": "Government launches AI competition to help UK firms improve public services",
-        "title": "Government launches AI competition to help UK firms improve public services",
-        "titleAliases": [
-          "governmentlaunchesaicompetitiontohelpukfirmsimprovepublicservices"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "产品发布",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-769c5a8a2e3f26fa3875",
-          "record-8a4133efead87549d075",
-          "src-ac43784eaea4e2e22e51"
-        ],
-        "evidenceFingerprints": [
-          "769c5a8a2e3f26fa3875"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "ITPro",
-            "title": "Government launches AI competition to help UK firms improve public services",
-            "url": "https://www.itpro.com/business/public-sector/government-launches-ai-competition-to-help-uk-firms-improve-public-services",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "9896e4b9f9f5e0ec416b",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T12:24:14+00:00",
-        "lastSeenAt": "2026-09-01T12:24:14+00:00",
-        "lastPublishedAt": "2026-09-01T12:24:14+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-b6e39db228aea73151c5": {
-        "eventId": "evt-b6e39db228aea73151c5",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-88ba0b0a94be1fa3b6",
-        "entityName": "Cheche Group Launches ABAO Agent Family, Deploying AI Across the Full NEV Insurance Value Chain",
-        "title": "Cheche Group Launches ABAO Agent Family, Deploying AI Across the Full NEV Insurance Value Chain",
-        "titleAliases": [
-          "chechegrouplaunchesabaoagentfamilydeployingaiacrossthefullnevinsurancevaluechain"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "产品发布",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-8e70480edc625ec601b3",
-          "record-8ee59f593767e3020784",
-          "src-3167df9899d53d1f321d"
-        ],
-        "evidenceFingerprints": [
-          "8e70480edc625ec601b3"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "PR Newswire Consumer Technology",
-            "title": "Cheche Group Launches ABAO Agent Family, Deploying AI Across the Full NEV Insurance Value Chain",
-            "url": "https://www.prnewswire.com/news-releases/cheche-group-launches-abao-agent-family-deploying-ai-across-the-full-nev-insurance-value-chain-302865203.html",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "B",
-            "sourceRole": "primary"
-          }
-        ],
-        "claimFingerprint": "21f138daa97bfb4c4dd5",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T12:24:14+00:00",
-        "lastSeenAt": "2026-09-01T12:24:14+00:00",
-        "lastPublishedAt": "2026-09-01T12:24:14+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 4,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-b0037d633547a60b620d": {
-        "eventId": "evt-b0037d633547a60b620d",
-        "dataset": "marketCompany",
-        "entityId": "cambricon",
-        "entityName": "中科寒武纪科技股份有限公司",
-        "title": "高盛上调寒武纪目标价，如何把握国产芯片“寒武纪时刻”？芯片ETF景顺(159560)覆盖芯片核心产业链",
-        "titleAliases": [
-          "高盛上调寒武纪目标价如何把握国产芯片寒武纪时刻芯片etf景顺159560覆盖芯片核心产业链"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [
-          "marketCompany:cambricon",
-          "name:中科寒武纪科技股份有限公司"
-        ],
-        "typeKeys": [
-          "上市公司"
-        ],
-        "numericCues": [
-          "159560"
-        ],
-        "sourceAliases": [
-          "evd-2aa668ccd8f68ff89e2a",
-          "src-b5bb855b047bda0ae4c4"
-        ],
-        "evidenceFingerprints": [
-          "2aa668ccd8f68ff89e2a"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "高盛上调寒武纪目标价，如何把握国产芯片“寒武纪时刻”？芯片ETF景顺(159560)覆盖芯片核心产业链",
-            "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002j5go",
-            "publishedAt": "2026-09-01T16:57:00+08:00",
-            "evidenceGrade": "媒体报道"
-          }
-        ],
-        "claimFingerprint": "6b028a865e8a8af87128",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T12:24:14+00:00",
-        "lastSeenAt": "2026-09-01T12:24:14+00:00",
-        "lastPublishedAt": "2026-09-01T12:24:14+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
       }
     },
-    "pendingPublications": [
-      {
-        "pendingId": "pending-b2d87400c3812224b186",
-        "queuedAt": "2026-09-11T00:56:01+00:00",
-        "lastSeenAt": "2026-09-11T00:56:01+00:00",
-        "change": {
-          "id": "chg-3fc08b42e596db8b3931",
-          "dataset": "marketCompany",
-          "entityType": "上市公司",
-          "entityId": "recursion",
-          "entityName": "Recursion Pharmaceuticals, Inc.",
-          "action": "updated",
-          "changedFields": [
-            "news"
-          ],
-          "summary": "Recursion Pharmaceuticals, Inc. 的 news、quote 发生变化。",
-          "importance": 48,
-          "before": {
-            "news": []
-          },
-          "after": {
-            "news": [
-              {
-                "publishedAt": "2026-09-10T21:50:05+00:00",
-                "source": "Yahoo财经",
-                "title": "Why Recursion Pharmaceuticals (RXRX) Dipped More Than Broader Market Today",
-                "url": "https://finance.yahoo.com/markets/stocks/articles/why-recursion-pharmaceuticals-rxrx-dipped-215005134.html?.tsrc=rss"
-              }
-            ]
-          },
-          "changeType": "external_event",
-          "classificationReason": "包含可形成外部事实主张的字段变化",
-          "isResearchCandidate": true,
-          "claimFields": [
-            "news"
-          ],
-          "claimBindings": [
-            {
-              "field": "news",
-              "before": [],
-              "after": [
-                {
-                  "publishedAt": "2026-09-10T21:50:05+00:00",
-                  "source": "Yahoo财经",
-                  "title": "Why Recursion Pharmaceuticals (RXRX) Dipped More Than Broader Market Today",
-                  "url": "https://finance.yahoo.com/markets/stocks/articles/why-recursion-pharmaceuticals-rxrx-dipped-215005134.html?.tsrc=rss"
-                }
-              ],
-              "evidenceIds": [
-                "E045"
-              ]
-            }
-          ],
-          "evidenceIds": [
-            "E045"
-          ],
-          "supportingEvidenceIds": [
-            "E045"
-          ],
-          "evidenceQuality": {
-            "status": "passed",
-            "supporting": 1,
-            "total": 1
-          },
-          "publicationTier": "candidate",
-          "reviewStatus": "automated_unreviewed",
-          "eligibleForKeyDevelopment": true,
-          "eventIds": [
-            "evt-9a6ad594179187f62729"
-          ],
-          "eventLifecycles": {
-            "evt-9a6ad594179187f62729": "first_seen"
-          },
-          "eventId": "evt-9a6ad594179187f62729",
-          "lifecycle": "first_seen",
-          "firstSeenAt": "2026-09-11T00:56:01+00:00",
-          "lastSeenAt": "2026-09-11T00:56:01+00:00"
-        },
-        "evidence": [
-          {
-            "id": "E045",
-            "changeId": "chg-3fc08b42e596db8b3931",
-            "entityName": "Recursion Pharmaceuticals, Inc.",
-            "claim": "Recursion Pharmaceuticals, Inc. 的 news、quote 发生变化。",
-            "publicationTier": "candidate",
-            "reviewStatus": "automated_unreviewed",
-            "sourceName": "Yahoo财经",
-            "title": "Why Recursion Pharmaceuticals (RXRX) Dipped More Than Broader Market Today",
-            "url": "https://finance.yahoo.com/markets/stocks/articles/why-recursion-pharmaceuticals-rxrx-dipped-215005134.html?.tsrc=rss",
-            "publishedAt": "2026-09-10T21:50:05+00:00",
-            "evidenceGrade": "媒体报道",
-            "claimFields": [
-              "news"
-            ],
-            "entityMatchStatus": "matched",
-            "qualityIssues": [],
-            "qualityStatus": "passed",
-            "supportStatus": "supports"
-          }
-        ]
-      }
-    ]
+    "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 15,
-    "reconfirmations": 2,
-    "updates": 1,
+    "newEvents": 7,
+    "reconfirmations": 0,
+    "updates": 0,
     "corrections": 0,
-    "possibleConflicts": 24,
-    "duplicatesSuppressed": 6,
-    "observedEvents": 32,
-    "pendingPublications": 1,
-    "reviewQueue": [
-      {
-        "changeId": "chg-f958eacf2f0e077c5e9f",
-        "entityName": "文远知行",
-        "summary": "文远知行 的 quote 发生变化。",
-        "status": "possible_conflict",
-        "events": [
-          {
-            "eventId": "evt-d9f0237ec012f422d951",
-            "reasons": [
-              "事件身份匹配到多个历史候选，未自动合并"
-            ],
-            "relatedEventIds": [
-              "evt-804ed8bc143d8cbe4cca",
-              "evt-da20967dbfd246ac57ff"
-            ],
-            "evidenceIds": [
-              "E021"
-            ],
-            "evidence": [
-              {
-                "id": "E021",
-                "changeId": "chg-f958eacf2f0e077c5e9f",
-                "entityName": "文远知行",
-                "claim": "文远知行 的 quote 发生变化。",
-                "publicationTier": "candidate",
-                "reviewStatus": "automated_unreviewed",
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/WRD/",
-                "publishedAt": "2026-09-10T20:00:00+00:00",
-                "evidenceGrade": "市场数据",
-                "claimFields": [
-                  "quote"
-                ],
-                "entityMatchStatus": "not_applicable",
-                "qualityIssues": [],
-                "qualityStatus": "passed",
-                "supportStatus": "supports"
-              }
-            ],
-            "historicalEvidence": [
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/WRD/",
-                "publishedAt": "2026-08-31T20:00:01+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/WRD/",
-                "publishedAt": "2026-09-01T20:00:00+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/WRD/",
-                "publishedAt": "2026-09-02T20:00:00+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/WRD/",
-                "publishedAt": "2026-09-04T20:00:00+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/WRD/",
-                "publishedAt": "2026-09-09T20:00:00+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/WRD/",
-                "publishedAt": "2026-09-10T20:00:00+00:00",
-                "evidenceGrade": "市场数据"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "changeId": "chg-172f62f81ce8d4b622d7",
-        "entityName": "小马智行",
-        "summary": "小马智行 的 quote 发生变化。",
-        "status": "possible_conflict",
-        "events": [
-          {
-            "eventId": "evt-5e8fa7747104fc0208ff",
-            "reasons": [
-              "事件身份匹配到多个历史候选，未自动合并"
-            ],
-            "relatedEventIds": [
-              "evt-0c22629c6006a87d8c3f",
-              "evt-f1de116bdd4a68e9bfd5"
-            ],
-            "evidenceIds": [
-              "E025"
-            ],
-            "evidence": [
-              {
-                "id": "E025",
-                "changeId": "chg-172f62f81ce8d4b622d7",
-                "entityName": "小马智行",
-                "claim": "小马智行 的 quote 发生变化。",
-                "publicationTier": "candidate",
-                "reviewStatus": "automated_unreviewed",
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/PONY/",
-                "publishedAt": "2026-09-10T20:00:00+00:00",
-                "evidenceGrade": "市场数据",
-                "claimFields": [
-                  "quote"
-                ],
-                "entityMatchStatus": "not_applicable",
-                "qualityIssues": [],
-                "qualityStatus": "passed",
-                "supportStatus": "supports"
-              }
-            ],
-            "historicalEvidence": [
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/PONY/",
-                "publishedAt": "2026-08-31T20:00:01+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/PONY/",
-                "publishedAt": "2026-09-01T20:00:00+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/PONY/",
-                "publishedAt": "2026-09-02T20:00:00+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/PONY/",
-                "publishedAt": "2026-09-04T20:00:00+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/PONY/",
-                "publishedAt": "2026-09-10T17:35:26+00:00",
-                "evidenceGrade": "市场数据"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "changeId": "chg-36cacf8a5f07cf23a944",
-        "entityName": "Tempus AI, Inc.",
-        "summary": "Tempus AI, Inc. 的 quote 发生变化。",
-        "status": "possible_conflict",
-        "events": [
-          {
-            "eventId": "evt-d3fde2fb86ec640c8637",
-            "reasons": [
-              "事件身份匹配到多个历史候选，未自动合并"
-            ],
-            "relatedEventIds": [
-              "evt-0adeaf0417306167eb38",
-              "evt-64f348ba36c809a364d5",
-              "evt-8e039dfb25f1f995402e"
-            ],
-            "evidenceIds": [
-              "E037"
-            ],
-            "evidence": [
-              {
-                "id": "E037",
-                "changeId": "chg-36cacf8a5f07cf23a944",
-                "entityName": "Tempus AI, Inc.",
-                "claim": "Tempus AI, Inc. 的 quote 发生变化。",
-                "publicationTier": "candidate",
-                "reviewStatus": "automated_unreviewed",
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/TEM/",
-                "publishedAt": "2026-09-10T20:00:00+00:00",
-                "evidenceGrade": "市场数据",
-                "claimFields": [
-                  "quote"
-                ],
-                "entityMatchStatus": "not_applicable",
-                "qualityIssues": [],
-                "qualityStatus": "passed",
-                "supportStatus": "supports"
-              }
-            ],
-            "historicalEvidence": [
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/TEM/",
-                "publishedAt": "2026-09-09T20:00:00+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/TEM/",
-                "publishedAt": "2026-09-10T20:00:00+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/TEM/",
-                "publishedAt": "2026-08-31T20:00:01+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/TEM/",
-                "publishedAt": "2026-09-01T20:00:00+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/TEM/",
-                "publishedAt": "2026-09-02T20:00:01+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/TEM/",
-                "publishedAt": "2026-09-04T20:00:00+00:00",
-                "evidenceGrade": "市场数据"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "changeId": "chg-6c3f89293cfe6a6297ea",
-        "entityName": "Rigetti Computing, Inc.",
-        "summary": "Rigetti Computing, Inc. 的 quote 发生变化。",
-        "status": "possible_conflict",
-        "events": [
-          {
-            "eventId": "evt-676bc0ff0758d511c073",
-            "reasons": [
-              "事件身份匹配到多个历史候选，未自动合并"
-            ],
-            "relatedEventIds": [
-              "evt-5383b8dd60a2d73ca9e7",
-              "evt-67891a2b291c8ba3f656"
-            ],
-            "evidenceIds": [
-              "E041"
-            ],
-            "evidence": [
-              {
-                "id": "E041",
-                "changeId": "chg-6c3f89293cfe6a6297ea",
-                "entityName": "Rigetti Computing, Inc.",
-                "claim": "Rigetti Computing, Inc. 的 quote 发生变化。",
-                "publicationTier": "candidate",
-                "reviewStatus": "automated_unreviewed",
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/RGTI/",
-                "publishedAt": "2026-09-10T20:00:00+00:00",
-                "evidenceGrade": "市场数据",
-                "claimFields": [
-                  "quote"
-                ],
-                "entityMatchStatus": "not_applicable",
-                "qualityIssues": [],
-                "qualityStatus": "passed",
-                "supportStatus": "supports"
-              }
-            ],
-            "historicalEvidence": [
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/RGTI/",
-                "publishedAt": "2026-08-31T20:00:01+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/RGTI/",
-                "publishedAt": "2026-09-01T20:00:00+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/RGTI/",
-                "publishedAt": "2026-09-02T20:00:00+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/RGTI/",
-                "publishedAt": "2026-09-04T20:00:00+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/RGTI/",
-                "publishedAt": "2026-09-09T20:00:00+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/RGTI/",
-                "publishedAt": "2026-09-10T20:00:00+00:00",
-                "evidenceGrade": "市场数据"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "changeId": "chg-3fc08b42e596db8b3931",
-        "entityName": "Recursion Pharmaceuticals, Inc.",
-        "summary": "Recursion Pharmaceuticals, Inc. 的 news、quote 发生变化。",
-        "status": "possible_conflict",
-        "events": [
-          {
-            "eventId": "evt-41046e0dd9bee2b4f522",
-            "reasons": [
-              "事件身份匹配到多个历史候选，未自动合并"
-            ],
-            "relatedEventIds": [
-              "evt-525fb7f3040be79dc57b",
-              "evt-53891ba6e9190335bb2d"
-            ],
-            "evidenceIds": [
-              "E046"
-            ],
-            "evidence": [
-              {
-                "id": "E046",
-                "changeId": "chg-3fc08b42e596db8b3931",
-                "entityName": "Recursion Pharmaceuticals, Inc.",
-                "claim": "Recursion Pharmaceuticals, Inc. 的 news、quote 发生变化。",
-                "publicationTier": "candidate",
-                "reviewStatus": "automated_unreviewed",
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/RXRX/",
-                "publishedAt": "2026-09-10T20:00:00+00:00",
-                "evidenceGrade": "市场数据",
-                "claimFields": [
-                  "quote"
-                ],
-                "entityMatchStatus": "not_applicable",
-                "qualityIssues": [],
-                "qualityStatus": "passed",
-                "supportStatus": "supports"
-              }
-            ],
-            "historicalEvidence": [
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/RXRX/",
-                "publishedAt": "2026-09-10T20:00:00+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/RXRX/",
-                "publishedAt": "2026-09-09T20:00:01+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/RXRX/",
-                "publishedAt": "2026-08-31T20:00:00+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/RXRX/",
-                "publishedAt": "2026-09-01T20:00:01+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/RXRX/",
-                "publishedAt": "2026-09-02T20:00:01+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/RXRX/",
-                "publishedAt": "2026-09-04T20:00:00+00:00",
-                "evidenceGrade": "市场数据"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "changeId": "chg-f6b5c493be1832336181",
-        "entityName": "Mobileye Global Inc.",
-        "summary": "Mobileye Global Inc. 的 quote 发生变化。",
-        "status": "possible_conflict",
-        "events": [
-          {
-            "eventId": "evt-257bb5a53d2d9af34850",
-            "reasons": [
-              "事件身份匹配到多个历史候选，未自动合并"
-            ],
-            "relatedEventIds": [
-              "evt-0c4a37b0cc463fe249f6",
-              "evt-7a027edc48eadd7afca9",
-              "evt-ea30894062d975829591"
-            ],
-            "evidenceIds": [
-              "E049"
-            ],
-            "evidence": [
-              {
-                "id": "E049",
-                "changeId": "chg-f6b5c493be1832336181",
-                "entityName": "Mobileye Global Inc.",
-                "claim": "Mobileye Global Inc. 的 quote 发生变化。",
-                "publicationTier": "candidate",
-                "reviewStatus": "automated_unreviewed",
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/MBLY/",
-                "publishedAt": "2026-09-10T20:00:01+00:00",
-                "evidenceGrade": "市场数据",
-                "claimFields": [
-                  "quote"
-                ],
-                "entityMatchStatus": "not_applicable",
-                "qualityIssues": [],
-                "qualityStatus": "passed",
-                "supportStatus": "supports"
-              }
-            ],
-            "historicalEvidence": [
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/MBLY/",
-                "publishedAt": "2026-09-09T20:00:01+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/MBLY/",
-                "publishedAt": "2026-08-31T20:00:01+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/MBLY/",
-                "publishedAt": "2026-09-01T20:00:01+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/MBLY/",
-                "publishedAt": "2026-09-02T20:00:01+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/MBLY/",
-                "publishedAt": "2026-09-04T20:00:01+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/MBLY/",
-                "publishedAt": "2026-09-10T17:35:55+00:00",
-                "evidenceGrade": "市场数据"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "changeId": "chg-cbbb9bc507517b20e352",
-        "entityName": "Aurora Innovation, Inc.",
-        "summary": "Aurora Innovation, Inc. 的 quote 发生变化。",
-        "status": "possible_conflict",
-        "events": [
-          {
-            "eventId": "evt-54b2b178b761bca6d4ba",
-            "reasons": [
-              "事件身份匹配到多个历史候选，未自动合并"
-            ],
-            "relatedEventIds": [
-              "evt-1257d630ab9467d64f5b",
-              "evt-44be2defbbc55348b8b9",
-              "evt-457436c5517010792971"
-            ],
-            "evidenceIds": [
-              "E061"
-            ],
-            "evidence": [
-              {
-                "id": "E061",
-                "changeId": "chg-cbbb9bc507517b20e352",
-                "entityName": "Aurora Innovation, Inc.",
-                "claim": "Aurora Innovation, Inc. 的 quote 发生变化。",
-                "publicationTier": "candidate",
-                "reviewStatus": "automated_unreviewed",
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/AUR/",
-                "publishedAt": "2026-09-10T20:00:01+00:00",
-                "evidenceGrade": "市场数据",
-                "claimFields": [
-                  "quote"
-                ],
-                "entityMatchStatus": "not_applicable",
-                "qualityIssues": [],
-                "qualityStatus": "passed",
-                "supportStatus": "supports"
-              }
-            ],
-            "historicalEvidence": [
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/AUR/",
-                "publishedAt": "2026-09-09T20:00:01+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/AUR/",
-                "publishedAt": "2026-09-10T20:00:01+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/AUR/",
-                "publishedAt": "2026-08-31T20:00:01+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/AUR/",
-                "publishedAt": "2026-09-01T20:00:01+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/AUR/",
-                "publishedAt": "2026-09-02T20:00:01+00:00",
-                "evidenceGrade": "市场数据"
-              },
-              {
-                "sourceName": "Yahoo财经",
-                "title": "Yahoo财经 行情数据",
-                "url": "https://sg.finance.yahoo.com/quote/AUR/",
-                "publishedAt": "2026-09-04T20:00:01+00:00",
-                "evidenceGrade": "市场数据"
-              }
-            ]
-          }
-        ]
-      }
-    ]
+    "possibleConflicts": 0,
+    "duplicatesSuppressed": 0,
+    "observedEvents": 7,
+    "pendingPublications": 0,
+    "reviewQueue": []
   },
   "methodology": {
     "stages": [
@@ -39588,10 +38233,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-11",
-      "generatedAt": "2026-09-11T00:56:01+00:00",
+      "generatedAt": "2026-09-11T05:27:40+00:00",
       "runStatus": "model",
-      "changeCount": 69,
-      "executiveSummary": "本证据包聚焦2026年9月8-11日期间的多项科技与资本市场动态。核心线索包括：DeepSeek发布V4.1 Flash模型；Enigmata携加密数据AI推理技术获650万美元种子融资；OpenAI呼吁全美强制性AI安全法规，Anthropic披露Claude被用于生物武器研究；加州签署儿童AI安全法规；IonQ发布量子破解256位加密的研究；Rocket Lab推出高效太阳能电池；宁德时代获得多项专利授权；此外The Boring Company据称完成30亿美元D轮融资。整体上，AI安全监管、隐私计算、量子计算威胁与垂直技术进展形成本轮信息主轴。需注意多数事件为单一媒体或公司自述，证据等级以B/C为主，事实细节尚待独立验证。",
+      "changeCount": 76,
+      "executiveSummary": "证据包共包含7条新增/变更事件。最重要的线索是OpenAI正在向金融服务业垂直化推进：新浪财经报道其推出整合LSEG、PitchBook、Daloopa数据的金融业版ChatGPT，OpenAI官方X账号也展示了基于Excel/Word/PowerPoint模板生成可编辑金融产出的能力。Rocket Lab官方确认完成今年第16次Electron发射，属于高置信度运营事实。蚂蚁InTech奖在外滩大会揭晓，申报量较首届增长近4倍，显示该奖项影响力扩大，但证据为C级媒体。Recursion Pharmaceuticals仅有单篇媒体报道称当日跌幅超大盘，缺乏数据细节，只能作为弱信号。其余OpenAI Data agent和Google DeepMind多智能体事件均因内容截断，暂无法形成可靠判断。",
       "eventIds": [
         "evt-959796dfdf65604663a3",
         "evt-4c43b7c8ec9d0c98f992",
@@ -39661,7 +38306,14 @@
         "evt-4b3df72bc87e61556504",
         "evt-fc7851a319a17faeb95d",
         "evt-f8f914c417bd4e92c64f",
-        "evt-a6ac821ac60b81e11540"
+        "evt-a6ac821ac60b81e11540",
+        "evt-9a6ad594179187f62729",
+        "evt-b1fa8b18107dd56b8348",
+        "evt-0472dd9ebef0f69a09bd",
+        "evt-89ec8387026c18381160",
+        "evt-fe98105f299fbef67559",
+        "evt-a09e931344d19e4e8e6f",
+        "evt-e5ebdb01340f084c118e"
       ],
       "eventStates": [
         {
@@ -39939,14 +38591,42 @@
         {
           "eventId": "evt-a6ac821ac60b81e11540",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-9a6ad594179187f62729",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-b1fa8b18107dd56b8348",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-0472dd9ebef0f69a09bd",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-89ec8387026c18381160",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-fe98105f299fbef67559",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-a09e931344d19e4e8e6f",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-e5ebdb01340f084c118e",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 0,
-      "candidateTotal": 13,
-      "auxiliaryLeadTotal": 48,
-      "rejectedTotal": 8,
+      "candidateTotal": 14,
+      "auxiliaryLeadTotal": 54,
+      "rejectedTotal": 12,
       "eventSummary": {
-        "newEvents": 68,
+        "newEvents": 75,
         "reconfirmations": 12,
         "updates": 2,
         "corrections": 0,
@@ -39956,23 +38636,18 @@
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 28,
-    "eligibleCandidateCount": 26,
-    "rejectedCandidateCount": 2,
+    "candidateCount": 10,
+    "eligibleCandidateCount": 6,
+    "rejectedCandidateCount": 4,
     "rejectedByDataset": {
-      "intelligenceEvent": 1,
-      "marketCompany": 1
+      "intelligenceEvent": 4
     },
-    "evidenceCount": 64,
-    "supportingEvidenceCount": 34,
-    "rejectedEvidenceCount": 14,
-    "passedButUnboundEvidenceCount": 16,
+    "evidenceCount": 10,
+    "supportingEvidenceCount": 6,
+    "rejectedEvidenceCount": 4,
+    "passedButUnboundEvidenceCount": 0,
     "rejectionReasons": {
-      "missing_published_at": 13,
-      "missing_title": 13,
-      "ungraded": 13,
-      "discovery_only": 1,
-      "missing_or_invalid_url": 1
+      "discovery_only": 4
     },
     "sourceClassificationWarnings": []
   },
