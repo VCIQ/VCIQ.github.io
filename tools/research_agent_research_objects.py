@@ -95,7 +95,17 @@ def _canonical_event_url(value: Any) -> str:
         parts = urlsplit(text)
     except ValueError:
         return ""
-    tracking_keys = {"utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "ref", "source", "spm", "from"}
+    tracking_keys = {
+        "utm_source",
+        "utm_medium",
+        "utm_campaign",
+        "utm_term",
+        "utm_content",
+        "ref",
+        "source",
+        "spm",
+        "from",
+    }
     query = urlencode(
         sorted(
             (key, item)
@@ -103,18 +113,29 @@ def _canonical_event_url(value: Any) -> str:
             if key.casefold() not in tracking_keys
         )
     )
-    return urlunsplit((parts.scheme.casefold(), parts.netloc.casefold(), parts.path.rstrip("/") or "/", query, ""))
+    return urlunsplit(
+        (
+            parts.scheme.casefold(),
+            parts.netloc.casefold(),
+            parts.path.rstrip("/") or "/",
+            query,
+            "",
+        )
+    )
 
 
 def _event_identity(value: Any) -> str:
     if not isinstance(value, Mapping):
         return ""
-    event_id = str(value.get("id") or "").strip()
-    if event_id:
-        return f"id:{event_id}"
+    # URL is the strongest cross-run identity available here because upstream
+    # event IDs may be regenerated while the underlying published item is the
+    # same. Strip tracking parameters before falling back to stored IDs/titles.
     url = _canonical_event_url(value.get("url"))
     if url:
         return f"url:{url}"
+    event_id = str(value.get("id") or "").strip()
+    if event_id:
+        return f"id:{event_id}"
     title = str(value.get("title") or "").strip().casefold()
     return f"title:{title}" if title else ""
 
