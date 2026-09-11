@@ -10,7 +10,7 @@ const DEGRADED_STATUSES = new Set([
   "api-fallback",
 ]);
 
-const CORE_DATASETS = new Set(["person", "ventureCompany"]);
+const CORE_DATASETS = new Set(["technology", "track", "person", "ventureCompany"]);
 const COMPANY_DATASETS = new Set(["marketCompany", "ventureCompany"]);
 
 type TieredChange = ResearchAgentChange & { publicationTier?: string };
