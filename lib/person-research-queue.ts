@@ -303,7 +303,10 @@ function selectLaneAware(
   return { selected, selectedPeople };
 }
 
-export function normalizePersonResearchQueue(value: unknown): PersonResearchQueue {
+export function normalizePersonResearchQueue(
+  value: unknown,
+  options: { requirePublishedPerson?: boolean } = {},
+): PersonResearchQueue {
   const row = value && typeof value === "object" ? value as Record<string, unknown> : {};
   const limitsRow = row.limits && typeof row.limits === "object"
     ? row.limits as Record<string, unknown>
@@ -322,6 +325,7 @@ export function normalizePersonResearchQueue(value: unknown): PersonResearchQueu
     ? row.queue
         .map(normalizePersonResearchQueueItem)
         .filter((item): item is PersonResearchQueueItem => Boolean(item))
+        .filter((item) => !options.requirePublishedPerson || canonicalPeopleBySlug.has(item.personSlug))
         .sort((a, b) => b.score - a.score || b.allocationUtility - a.allocationUtility || a.rank - b.rank || a.taskId.localeCompare(b.taskId))
     : [];
 
@@ -397,4 +401,6 @@ export function normalizePersonResearchQueue(value: unknown): PersonResearchQueu
   };
 }
 
-export const personResearchQueue = normalizePersonResearchQueue(publicQueue);
+export const personResearchQueue = normalizePersonResearchQueue(publicQueue, {
+  requirePublishedPerson: true,
+});
