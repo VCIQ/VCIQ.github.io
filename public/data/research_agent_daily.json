@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-11T05:27:40+00:00",
+  "generatedAt": "2026-09-11T06:07:54+00:00",
   "asOfDate": "2026-09-11",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
@@ -12,285 +12,206 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 6336,
-      "completion_tokens": 5941,
-      "total_tokens": 12277,
+      "prompt_tokens": 2604,
+      "completion_tokens": 1931,
+      "total_tokens": 4535,
       "completion_tokens_details": {
-        "reasoning_tokens": 3510
+        "reasoning_tokens": 755
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 6336
+      "prompt_cache_miss_tokens": 2604
     }
   },
   "changeSummary": {
-    "totalDetected": 31,
-    "total": 7,
+    "totalDetected": 5,
+    "total": 2,
     "byDataset": {
-      "marketCompany": 1,
-      "intelligenceEvent": 6
+      "ventureCompany": 2
     },
     "byChangeType": {
-      "external_event": 10,
-      "data_maintenance": 21
+      "external_event": 5
     },
-    "externalCandidates": 10,
-    "qualityRejected": 4,
-    "maintenanceExcluded": 21,
+    "externalCandidates": 5,
+    "qualityRejected": 2,
+    "maintenanceExcluded": 0,
     "aggregatedEvents": 0,
-    "highestImportance": 85,
-    "verifiedChangeTotal": 0,
-    "candidateTotal": 1,
-    "auxiliaryLeadTotal": 6,
-    "rejectedTotal": 4,
-    "newEvents": 7,
+    "highestImportance": 88,
+    "verifiedChangeTotal": 2,
+    "candidateTotal": 0,
+    "auxiliaryLeadTotal": 0,
+    "rejectedTotal": 2,
+    "newEvents": 1,
     "reconfirmations": 0,
-    "updates": 0,
+    "updates": 1,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 0
+    "duplicatesSuppressed": 1
   },
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "证据包共包含7条新增/变更事件。最重要的线索是OpenAI正在向金融服务业垂直化推进：新浪财经报道其推出整合LSEG、PitchBook、Daloopa数据的金融业版ChatGPT，OpenAI官方X账号也展示了基于Excel/Word/PowerPoint模板生成可编辑金融产出的能力。Rocket Lab官方确认完成今年第16次Electron发射，属于高置信度运营事实。蚂蚁InTech奖在外滩大会揭晓，申报量较首届增长近4倍，显示该奖项影响力扩大，但证据为C级媒体。Recursion Pharmaceuticals仅有单篇媒体报道称当日跌幅超大盘，缺乏数据细节，只能作为弱信号。其余OpenAI Data agent和Google DeepMind多智能体事件均因内容截断，暂无法形成可靠判断。 质量门诊断：仅为发现线索，不能支持正式主张 4。",
+    "executiveSummary": "证据包显示两家公司发生外部事件驱动的数据变更：Form Energy 的融资记录在官网数据源中出现删减（E005），Rigetti Computing 的技术信息更新涉及 Novera 9-qubit QPU、CTO 任命及二季度财报等表述（E014-E016）。两者均来自官方披露但证据质量为自动化未人工复核，且源页面时间存在异常，需谨慎解读。未发现可支撑确定性投资结论的证据。 质量门诊断：缺少发布时间 9、证据合格但未绑定变化字段 3。",
     "keyDevelopments": [
       {
-        "title": "OpenAI推出金融业版ChatGPT，整合LSEG、PitchBook和Daloopa数据服务",
-        "assessment": "新浪财经报道称，OpenAI周四推出专为金融服务业打造的ChatGPT版本，将其最新模型与来自LSEG、PitchBook、Daloopa等数据提供商的内置数据结合。OpenAI官方X也发布信息称可用企业自己的Excel、Word和PowerPoint模板创建可编辑金融模型、研究笔记和pitchbooks。事实层面两者方向一致；推断是OpenAI正将产品能力垂直化延伸至金融场景。待验证：具体功能边界、定价、客户可用范围。",
-        "importance": 5,
-        "confidence": "medium",
-        "entities": [
-          "OpenAI",
-          "LSEG",
-          "PitchBook",
-          "Daloopa"
-        ],
-        "evidenceIds": [
-          "E008",
-          "E002"
-        ]
-      },
-      {
-        "title": "OpenAI在ChatGPT Work中推出Data agent",
-        "assessment": "OpenAI官方X账号转述ChatGPT公告称，正在ChatGPT Work中引入新的Data agent，使企业可以将公司数据转化为可用的工作产出。这是官方一手信息，但内容被截断，缺少支持的数据源类型、安全性和部署方式。推断该功能面向企业工作场景，可能与金融业版ChatGPT形成协同。待验证：产品文档和正式公告。",
+        "title": "Form Energy 融资记录出现数据删减",
+        "assessment": "根据 E005，Form Energy 官网融资信息发生变化：变更前包含两笔均为 7.5 亿美元的 Series G 融资记录（日期分别为 2020-03-04 和 2026-08-12），变更后仅保留 2020-03-04 的条目。该变化可能代表数据更正或页面归档，但不能据此判断实际融资进展。",
         "importance": 4,
         "confidence": "medium",
         "entities": [
-          "OpenAI"
-        ],
-        "evidenceIds": [
-          "E006"
-        ]
-      },
-      {
-        "title": "Rocket Lab成功完成今年第16次Electron发射任务",
-        "assessment": "Rocket Lab官方投资者关系新闻稿确认，旗下Electron火箭在2026年完成第16次发射，此次为保密客户的专用任务，并称其巩固了全球领先小型发射供应商的地位。这是官方一手事实。推断：若全年发射节奏保持，年度发射次数可能进一步攀升，但证据未提供全年目标或对比数据。",
-        "importance": 4,
-        "confidence": "high",
-        "entities": [
-          "Rocket Lab",
-          "Electron"
+          "Form Energy"
         ],
         "evidenceIds": [
           "E005"
         ]
       },
       {
-        "title": "2026蚂蚁InTech奖在外滩大会揭晓，申报量较首届增长近4倍",
-        "assessment": "雷峰网报道，2026蚂蚁InTech奖在Inclusion·外滩大会期间揭晓：10位青年科学家获InTech科技奖，每人20万元奖金；10位来自全球顶尖学府的中国籍在读博士生获InTech奖学金，每人5万元奖金；申报量较首届增长近4倍。这是C级专业媒体旁证，基本事实可参考。推断该奖项的参与度和影响力显著提升。待验证：具体申报数字和完整获奖名单。",
+        "title": "Rigetti Computing 技术信息更新",
+        "assessment": "根据 E014-E016，Rigetti 官网技术信息从强调 108-qubit 系统及一季度财报，变更为突出 Novera 9-qubit QPU、CTO 任命及二季度财报相关内容。这些表述暗示产品与人事层面的潜在进展，但证据来自 2020 年归档页面摘要，时效性与完整性有限。",
         "importance": 3,
         "confidence": "medium",
         "entities": [
-          "蚂蚁集团",
-          "蚂蚁InTech奖",
-          "外滩大会"
+          "Rigetti Computing"
         ],
         "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "title": "Recursion Pharmaceuticals出现“跌幅超大盘”媒体报道，但缺乏细节",
-        "assessment": "Yahoo财经发布标题为“Why Recursion Pharmaceuticals (RXRX) Dipped More Than Broader Market Today”的文章，但证据包仅收录标题和URL，未提供跌幅幅度、具体原因或任何财务数据。因此不能将该新闻标题视为已确认的下跌事实，只能作为需要进一步验证的观察信号。",
-        "importance": 2,
-        "confidence": "low",
-        "entities": [
-          "Recursion Pharmaceuticals"
-        ],
-        "evidenceIds": [
-          "RPE001"
+          "E014",
+          "E015",
+          "E016"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "OpenAI",
-        "direction": "positive",
-        "statement": "OpenAI正将生成式AI能力向金融服务业垂直延伸：媒体报道其推出整合LSEG、PitchBook和Daloopa数据的金融业版ChatGPT，官方X也展示基于企业自有Office模板生成可编辑金融产出的能力，显示其企业级商业化布局在加速。但目前产品影响未被客户采用数据证实。",
-        "evidenceIds": [
-          "E008",
-          "E002",
-          "E006"
-        ]
-      },
-      {
-        "entity": "Rocket Lab",
-        "direction": "positive",
-        "statement": "官方确认完成2026年第16次Electron发射，并强调其全球领先小型发射供应商地位，说明发射节奏与执行能力保持高位。该事件对运营和客户覆盖是正面信号，但未涉及财务量化影响。",
+        "entity": "Form Energy",
+        "direction": "neutral",
+        "statement": "融资记录的数据变化无法确认为正面或负面信号；已删除的 2026-08-12 $750M Series G 条目可能为数据修正或页面调整，需进一步核实。",
         "evidenceIds": [
           "E005"
         ]
       },
       {
-        "entity": "蚂蚁集团",
-        "direction": "positive",
-        "statement": "蚂蚁InTech奖申报量较首届增长近4倍，显示该奖项在青年科学家和博士生群体中的影响力和认可度扩大，有助于蚂蚁集团在AI和前沿科技领域构建人才生态。证据为C级媒体，需后续官方信息确认。",
+        "entity": "Rigetti Computing",
+        "direction": "mixed",
+        "statement": "技术信息更新包含新产品（Novera QPU）和人事变动的表述，可能反映积极进展；但因证据日期与内容错位，无法确定为事实，整体影响需待验证。",
         "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "entity": "Recursion Pharmaceuticals",
-        "direction": "negative",
-        "statement": "存在单篇媒体报道称RXRX当日跌幅超过大盘，但证据只有标题，没有跌幅数据和原因。此方向判断置信度极低，不能作为投资或基本面的确定性结论。",
-        "evidenceIds": [
-          "RPE001"
-        ]
-      },
-      {
-        "entity": "Google DeepMind",
-        "direction": "neutral",
-        "statement": "Google DeepMind转发了一项涉及100个智能体解决数学问题的实验，提到当一小部分（9%）智能体开始某种行为，但帖子内容截断，实验结论和意义无法判断。暂不形成方向性观点。",
-        "evidenceIds": [
-          "E010"
+          "E014",
+          "E015",
+          "E016"
         ]
       }
     ],
     "watchlist": [
       {
-        "item": "OpenAI金融业版ChatGPT的正式产品文档与定价",
-        "reason": "目前仅有C级媒体报道和官方X摘要，缺少产品功能细节、可用地区、数据接入方式和企业客户范围。",
-        "nextEvidence": "OpenAI官网产品说明、开发者文档或第三方实测",
-        "evidenceIds": [
-          "E008",
-          "E002"
-        ]
-      },
-      {
-        "item": "ChatGPT Work中Data agent的详细能力与合规信息",
-        "reason": "官方X仅给出公告标题，未说明支持的数据源类型、数据安全机制以及与现有企业工作流的集成方式。",
-        "nextEvidence": "OpenAI官方博客、白皮书或产品更新日志",
-        "evidenceIds": [
-          "E006"
-        ]
-      },
-      {
-        "item": "Rocket Lab年度发射统计及订单影响",
-        "reason": "第16次发射是运营事实，但未提及任务金额、客户身份或对全年财务展望的量化影响。",
-        "nextEvidence": "Rocket Lab下一份财报或年度发射统计更新",
+        "item": "Form Energy 最新融资状态",
+        "reason": "E005 显示融资记录从两条删减为一条，需确认是否存在融资取消、数据修正或页面更新错误。",
+        "nextEvidence": "Form Energy 官方融资新闻稿、SEC 文件或可靠财经数据库记录",
         "evidenceIds": [
           "E005"
         ]
       },
       {
-        "item": "蚂蚁InTech奖完整申报数据与获奖名单",
-        "reason": "报道称申报量较首届增长近4倍，但未给出具体数字；获奖者名单也被截断。",
-        "nextEvidence": "外滩大会主办方公告、蚂蚁集团官方信息或完整媒体报道",
+        "item": "Rigetti Novera QPU 的正式发布信息",
+        "reason": "E014-E016 仅提及 Novera 9-qubit QPU，但未提供具体规格、发布时间或商业部署证据。",
+        "nextEvidence": "Rigetti 官方产品公告、技术白皮书或季度报告",
         "evidenceIds": [
-          "E001"
+          "E014",
+          "E015",
+          "E016"
         ]
       },
       {
-        "item": "Recursion Pharmaceuticals当日下跌的具体原因和幅度",
-        "reason": "单一标题无法确认下跌规模，也无法区分公司特定因素与市场整体波动。",
-        "nextEvidence": "公司SEC文件、财报公告、完整财经报道或行情数据",
+        "item": "Rigetti CTO 任命细节",
+        "reason": "E014-E016 提到任命 CTO，但未披露任命对象、背景及生效时间。",
+        "nextEvidence": "Rigetti 官方人事公告或管理层页面更新",
         "evidenceIds": [
-          "RPE001"
-        ]
-      },
-      {
-        "item": "Google DeepMind多智能体实验完整结论",
-        "reason": "帖子被截断，9%智能体开始某行为后的结果未知，无法评估实验对AI智能体协作研究的启示。",
-        "nextEvidence": "完整论文、arXiv预印本或官方博客",
-        "evidenceIds": [
-          "E010"
+          "E014"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "证据等级差异可能导致误判",
-        "reason": "E001、E008均为C级媒体来源，属于旁证；RPE001为单一媒体报道且未经人工审核。高置信度结论主要依赖官方一手来源，媒体类线索不应被视为确定性重大事实。",
+        "risk": "证据时间戳与内容错位",
+        "reason": "E005 的来源 publishedAt 为 2020-03-04，但页面摘要包含 2026 年新闻；E014-E016 分别在 2020 年发布但内容涉及 2026 年季度财报。这可能导致时间线混淆和误导性解读。",
         "evidenceIds": [
-          "E001",
-          "E008",
-          "RPE001"
-        ]
-      },
-      {
-        "risk": "关键信息截断导致解读偏差",
-        "reason": "E006和E010的官方X内容均为不完整摘要，尤其E010在“当9%的智能体开始…”处截断，无法判断实验结论；E006的产品能力描述也不完整。",
-        "evidenceIds": [
-          "E006",
-          "E010"
-        ]
-      },
-      {
-        "risk": "产品发布事实与商业影响脱节",
-        "reason": "OpenAI金融业版ChatGPT和Data agent的发布不代表已产生收入或客户采用；证据中没有采购意向、使用量或财务影响数据，不能据此推断商业成功。",
-        "evidenceIds": [
-          "E008",
-          "E002",
-          "E006"
-        ]
-      },
-      {
-        "risk": "媒体标题不能作为股票下跌的确认证据",
-        "reason": "Recursion Pharmaceuticals的新闻仅有标题，未提供跌幅、时段或原因；标题可能由市场整体波动、标题党或非基本面因素驱动，需避免据此形成任何投资判断。",
-        "evidenceIds": [
-          "RPE001"
-        ]
-      },
-      {
-        "risk": "外部信源可能失效或被更正",
-        "reason": "所有证据均处于自动化未人工审核状态，X帖子和新闻链接存在被删除、修改或断章取义的可能，随着时间推移可能影响结论可复现性。",
-        "evidenceIds": [
-          "E002",
           "E005",
-          "E006",
-          "E010",
-          "E008"
+          "E014",
+          "E015",
+          "E016"
+        ]
+      },
+      {
+        "risk": "自动化未人工复核的数据质量风险",
+        "reason": "所有证据均为 automated_unreviewed，变更分类为 verified_change 但未经过深度人工审核，可能存在抓取不完整、字段映射偏差或页面解析错误。",
+        "evidenceIds": [
+          "E005",
+          "E014",
+          "E015",
+          "E016"
+        ]
+      },
+      {
+        "risk": "将数据变更误判为事实事件",
+        "reason": "E005 中融资条目被删除不代表融资事件发生或撤销，可能只是官网结构变化。E014-E016 中“CTO任命”“二季度财报”等表述未提供独立交叉验证，若直接采信可能产生错误判断。",
+        "evidenceIds": [
+          "E005",
+          "E014",
+          "E015",
+          "E016"
         ]
       }
     ],
-    "methodologyNote": "本报告仅基于证据包中的changes与evidence字段进行分析，不补充任何外部事实。每个判断至少引用一个evidenceIds中的证据编号；事实、推断与待验证事项已在相应字段中明确区分。证据来源包括官方账号、官方网站和专业媒体，等级从B到C不等，全部处于automated_unreviewed状态，因此C级媒体和单一媒体报道仅作为线索，不构成确定性结论。本报告不构成投资建议，不提供买入、卖出、目标价或收益承诺。 数据管线提示：追踪实体与公开信源发现=stale、科创板招股书投资者证据刷新=stale。"
+    "methodologyNote": "本报告严格基于证据包中的 evidenceIds，未引入外部事实。事实部分仅描述字段变化，推断部分明确标注为待验证。所有判断均受证据质量限制，尤其注意自动化未复核来源、发布时间与内容不一致、以及字段删除不等同于事件发生。不构成任何投资建议。 数据管线提示：追踪实体与公开信源发现=stale、科创板招股书投资者证据刷新=stale。"
   },
   "changes": [
     {
-      "id": "pending-b2d87400c3812224b186",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "recursion",
-      "entityName": "Recursion Pharmaceuticals, Inc.",
+      "id": "chg-8a07b2f901dbd69c52e0",
+      "dataset": "ventureCompany",
+      "entityType": "创业公司",
+      "entityId": "form-energy",
+      "entityName": "Form Energy",
       "action": "updated",
       "changedFields": [
-        "news"
+        "financing"
       ],
-      "summary": "Recursion Pharmaceuticals, Inc. 的 news、quote 发生变化。",
-      "importance": 48,
+      "summary": "Form Energy 的 financing 发生变化。",
+      "importance": 88,
       "before": {
-        "news": []
+        "financing": [
+          {
+            "amount": "$750M",
+            "date": "2020-03-04",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/",
+            "summary": "Form Energy Launches Technician Hiring Sprint In Weirton, WV September 9, 2026 Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form",
+            "title": "Form Energy Launches Technician Hiring Sprint In Weirton, WV September 9, 2026 Form Energy Secures $750M in Series G Fin",
+            "type": "融资"
+          },
+          {
+            "amount": "$750M",
+            "date": "2026-08-12",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+            "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+            "type": "融资"
+          }
+        ]
       },
       "after": {
-        "news": [
+        "financing": [
           {
-            "publishedAt": "2026-09-10T21:50:05+00:00",
-            "source": "Yahoo财经",
-            "title": "Why Recursion Pharmaceuticals (RXRX) Dipped More Than Broader Market Today",
-            "url": "https://finance.yahoo.com/markets/stocks/articles/why-recursion-pharmaceuticals-rxrx-dipped-215005134.html?.tsrc=rss"
+            "amount": "$750M",
+            "date": "2020-03-04",
+            "investors": [],
+            "round": "Series G",
+            "sourceUrl": "https://formenergy.com/",
+            "summary": "Form Energy Launches Technician Hiring Sprint In Weirton, WV September 9, 2026 Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form",
+            "title": "Form Energy Launches Technician Hiring Sprint In Weirton, WV September 9, 2026 Form Energy Secures $750M in Series G Fin",
+            "type": "融资"
           }
         ]
       },
@@ -298,260 +219,46 @@
       "classificationReason": "包含可形成外部事实主张的字段变化",
       "isResearchCandidate": true,
       "claimFields": [
-        "news"
+        "financing"
       ],
       "claimBindings": [
         {
-          "field": "news",
-          "before": [],
+          "field": "financing",
+          "before": [
+            {
+              "amount": "$750M",
+              "date": "2020-03-04",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/",
+              "summary": "Form Energy Launches Technician Hiring Sprint In Weirton, WV September 9, 2026 Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form",
+              "title": "Form Energy Launches Technician Hiring Sprint In Weirton, WV September 9, 2026 Form Energy Secures $750M in Series G Fin",
+              "type": "融资"
+            },
+            {
+              "amount": "$750M",
+              "date": "2026-08-12",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+              "summary": "This round brings Form Energy’s total […] Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments | Form Energy Our Leadership Our Operations Our Progress Our Investors About Our Leadership Our Operations Our Progress Our Investor",
+              "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+              "type": "融资"
+            }
+          ],
           "after": [
             {
-              "publishedAt": "2026-09-10T21:50:05+00:00",
-              "source": "Yahoo财经",
-              "title": "Why Recursion Pharmaceuticals (RXRX) Dipped More Than Broader Market Today",
-              "url": "https://finance.yahoo.com/markets/stocks/articles/why-recursion-pharmaceuticals-rxrx-dipped-215005134.html?.tsrc=rss"
+              "amount": "$750M",
+              "date": "2020-03-04",
+              "investors": [],
+              "round": "Series G",
+              "sourceUrl": "https://formenergy.com/",
+              "summary": "Form Energy Launches Technician Hiring Sprint In Weirton, WV September 9, 2026 Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments August 12, 2026 Strengthening New England’s Grid with Innovative Batteries August 10, 2026 Form",
+              "title": "Form Energy Launches Technician Hiring Sprint In Weirton, WV September 9, 2026 Form Energy Secures $750M in Series G Fin",
+              "type": "融资"
             }
           ],
           "evidenceIds": [
-            "RPE001"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "RPE001"
-      ],
-      "supportingEvidenceIds": [
-        "RPE001"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-9a6ad594179187f62729"
-      ],
-      "eventLifecycles": {
-        "evt-9a6ad594179187f62729": "first_seen"
-      },
-      "eventId": "evt-9a6ad594179187f62729",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-11T00:56:01+00:00",
-      "lastSeenAt": "2026-09-11T05:27:40+00:00",
-      "sourceChangeId": "chg-3fc08b42e596db8b3931",
-      "replayedFromPending": true
-    },
-    {
-      "id": "chg-dcc4284bf80aad66dafd",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-d391f5421328601d67",
-      "entityName": "申报量较首届增长近4倍，2026蚂蚁InTech奖在外滩大会揭晓",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：申报量较首届增长近4倍，2026蚂蚁InTech奖在外滩大会揭晓。",
-      "importance": 85,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-11",
-        "summary": "9月10日，在2026 Inclusion·外滩大会期间，2026蚂蚁InTech奖正式揭晓。10位青年科学家获“InTech科技奖”，每人20万元奖金。同时，10位来自全球顶尖学府的中国籍在读博士生获得“InTech奖学金”，每人获5万元奖金。 （图：2026“InTech科技奖”获奖者与颁奖嘉宾合影） 中国工程院院士、浙江大学教授陈纯，新加坡科学院院士、新加坡国立大学计算机学院创始院长、KITHCT讲席教授蔡达成，美国科学院、工程院、艺术与科学院三院院士Michael I. Jordan，美国国家工程院外籍院…",
-        "title": "申报量较首届增长近4倍，2026蚂蚁InTech奖在外滩大会揭晓"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-11",
-          "evidenceIds": [
-            "E001"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "9月10日，在2026 Inclusion·外滩大会期间，2026蚂蚁InTech奖正式揭晓。10位青年科学家获“InTech科技奖”，每人20万元奖金。同时，10位来自全球顶尖学府的中国籍在读博士生获得“InTech奖学金”，每人获5万元奖金。 （图：2026“InTech科技奖”获奖者与颁奖嘉宾合影） 中国工程院院士、浙江大学教授陈纯，新加坡科学院院士、新加坡国立大学计算机学院创始院长、KITHCT讲席教授蔡达成，美国科学院、工程院、艺术与科学院三院院士Michael I. Jordan，美国国家工程院外籍院…",
-          "evidenceIds": [
-            "E001"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "申报量较首届增长近4倍，2026蚂蚁InTech奖在外滩大会揭晓",
-          "evidenceIds": [
-            "E001"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E001"
-      ],
-      "supportingEvidenceIds": [
-        "E001"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-b1fa8b18107dd56b8348"
-      ],
-      "eventLifecycles": {
-        "evt-b1fa8b18107dd56b8348": "first_seen"
-      },
-      "eventId": "evt-b1fa8b18107dd56b8348",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-11T05:27:40+00:00",
-      "lastSeenAt": "2026-09-11T05:27:40+00:00"
-    },
-    {
-      "id": "chg-9cf236b7a649b1a07e88",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-ab91fe4f81690770a9",
-      "entityName": "OpenAI：You can also create editable financial models, research notes, and pitchbooks using your firm's own Excel, Word, and PowerPoint templates. https://t.c",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：OpenAI：You can also create editable financial models, research notes, and pitchbooks using your firm's own Excel, Word, and PowerPoint templates. https://t.c。",
-      "importance": 85,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-10",
-        "summary": "You can also create editable financial models, research notes, and pitchbooks using your firm's own Excel, Word, and PowerPoint templates. https://t.co/x4wxaX8Khq",
-        "title": "OpenAI：You can also create editable financial models, research notes, and pitchbooks using your firm's own Excel, Word, and PowerPoint templates. https://t.c"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-10",
-          "evidenceIds": [
-            "E002"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "You can also create editable financial models, research notes, and pitchbooks using your firm's own Excel, Word, and PowerPoint templates. https://t.co/x4wxaX8Khq",
-          "evidenceIds": [
-            "E002"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "OpenAI：You can also create editable financial models, research notes, and pitchbooks using your firm's own Excel, Word, and PowerPoint templates. https://t.c",
-          "evidenceIds": [
-            "E002"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E002"
-      ],
-      "supportingEvidenceIds": [
-        "E002"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-0472dd9ebef0f69a09bd"
-      ],
-      "eventLifecycles": {
-        "evt-0472dd9ebef0f69a09bd": "first_seen"
-      },
-      "eventId": "evt-0472dd9ebef0f69a09bd",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-11T05:27:40+00:00",
-      "lastSeenAt": "2026-09-11T05:27:40+00:00"
-    },
-    {
-      "id": "chg-239f049665c76d8b8713",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-d06e183676d2bb8011",
-      "entityName": "Rocket Lab Successfully Launches 16th Electron Mission Of The Year, Solidifies Status as World’s Leading Small Launch Provider",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Rocket Lab Successfully Launches 16th Electron Mission Of The Year, Solidifies Status as World’s Leading Small Launch Provider。",
-      "importance": 82,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-11",
-        "summary": "AUCKLAND, New Zealand, Sept. 11, 2026 (GLOBE NEWSWIRE) -- Rocket Lab Corporation (Nasdaq: RKLB), a global leader in launch services and space systems, today launched its 16 th Electron rocket of the year with a dedicated mission for a confidential customer.",
-        "title": "Rocket Lab Successfully Launches 16th Electron Mission Of The Year, Solidifies Status as World’s Leading Small Launch Provider"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-11",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "AUCKLAND, New Zealand, Sept. 11, 2026 (GLOBE NEWSWIRE) -- Rocket Lab Corporation (Nasdaq: RKLB), a global leader in launch services and space systems, today launched its 16 th Electron rocket of the year with a dedicated mission for a confidential customer.",
-          "evidenceIds": [
-            "E005"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Rocket Lab Successfully Launches 16th Electron Mission Of The Year, Solidifies Status as World’s Leading Small Launch Provider",
-          "evidenceIds": [
             "E005"
           ]
         }
@@ -567,325 +274,101 @@
         "supporting": 1,
         "total": 1
       },
-      "publicationTier": "external_clue",
+      "publicationTier": "verified_change",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-89ec8387026c18381160"
+        "evt-8be8280900881dcbec79"
       ],
       "eventLifecycles": {
-        "evt-89ec8387026c18381160": "first_seen"
+        "evt-8be8280900881dcbec79": "updated"
       },
-      "eventId": "evt-89ec8387026c18381160",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-11T05:27:40+00:00",
-      "lastSeenAt": "2026-09-11T05:27:40+00:00"
+      "eventId": "evt-8be8280900881dcbec79",
+      "lifecycle": "updated",
+      "firstSeenAt": "2026-08-31T09:08:35+00:00",
+      "lastSeenAt": "2026-09-11T06:07:54+00:00"
     },
     {
-      "id": "chg-903586884098f275c3c9",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-9e7cb389e07ad03f40",
-      "entityName": "OpenAI：RT @ChatGPT: Now everyone can put data to work. We’re introducing a new Data agent in ChatGPT Work so you can turn your company’s data int…",
-      "action": "added",
+      "id": "chg-5b6e4bffa34eaed69742",
+      "dataset": "ventureCompany",
+      "entityType": "创业公司",
+      "entityId": "rigetti",
+      "entityName": "Rigetti Computing",
+      "action": "updated",
       "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "technology"
       ],
-      "summary": "新增高价值情报事件记录：OpenAI：RT @ChatGPT: Now everyone can put data to work. We’re introducing a new Data agent in ChatGPT Work so you can turn your company’s data int…。",
-      "importance": 82,
-      "before": null,
+      "summary": "Rigetti Computing 的 technology 发生变化。",
+      "importance": 68,
+      "before": {
+        "technology": "Rigetti Computing reports first quarter 2026 financial results Continued execution driven by 108-qubit system availability, customer deployments, and international expansion Rigetti Computing to participate in fireside chat at 21st Annual Needham Technology,…"
+      },
       "after": {
-        "publishedAt": "2026-09-10",
-        "summary": "RT @ChatGPT: Now everyone can put data to work. We’re introducing a new Data agent in ChatGPT Work so you can turn your company’s data int…",
-        "title": "OpenAI：RT @ChatGPT: Now everyone can put data to work. We’re introducing a new Data agent in ChatGPT Work so you can turn your company’s data int…"
+        "technology": "The Novera QPU, our 9-qubit QPU, gives you unprecedented access to quantum technology and empowers you to take your research to the next level. appointed Chief Technology Officer Rigetti Computing reports second quarter 2026 financial results Rigetti Computin…"
       },
       "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
+      "classificationReason": "包含可形成外部事实主张的字段变化",
       "isResearchCandidate": true,
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "technology"
       ],
       "claimBindings": [
         {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-10",
+          "field": "technology",
+          "before": "Rigetti Computing reports first quarter 2026 financial results Continued execution driven by 108-qubit system availability, customer deployments, and international expansion Rigetti Computing to participate in fireside chat at 21st Annual Needham Technology,…",
+          "after": "The Novera QPU, our 9-qubit QPU, gives you unprecedented access to quantum technology and empowers you to take your research to the next level. appointed Chief Technology Officer Rigetti Computing reports second quarter 2026 financial results Rigetti Computin…",
           "evidenceIds": [
-            "E006"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "RT @ChatGPT: Now everyone can put data to work. We’re introducing a new Data agent in ChatGPT Work so you can turn your company’s data int…",
-          "evidenceIds": [
-            "E006"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "OpenAI：RT @ChatGPT: Now everyone can put data to work. We’re introducing a new Data agent in ChatGPT Work so you can turn your company’s data int…",
-          "evidenceIds": [
-            "E006"
+            "E014",
+            "E015",
+            "E016"
           ]
         }
       ],
       "evidenceIds": [
-        "E006"
+        "E014",
+        "E015",
+        "E016"
       ],
       "supportingEvidenceIds": [
-        "E006"
+        "E014",
+        "E015",
+        "E016"
       ],
       "evidenceQuality": {
         "status": "passed",
-        "supporting": 1,
-        "total": 1
+        "supporting": 3,
+        "total": 3
       },
-      "publicationTier": "external_clue",
+      "publicationTier": "verified_change",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-fe98105f299fbef67559"
+        "evt-e6724ded6dc0dde53411"
       ],
       "eventLifecycles": {
-        "evt-fe98105f299fbef67559": "first_seen"
+        "evt-e6724ded6dc0dde53411": "first_seen"
       },
-      "eventId": "evt-fe98105f299fbef67559",
+      "eventId": "evt-e6724ded6dc0dde53411",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-11T05:27:40+00:00",
-      "lastSeenAt": "2026-09-11T05:27:40+00:00"
-    },
-    {
-      "id": "chg-1cb150ebe32f66b465f1",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-2d6a8c4995cb9cc0bd",
-      "entityName": "OpenAI推出金融业版ChatGPT，整合LSEG等数据服务",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：OpenAI推出金融业版ChatGPT，整合LSEG等数据服务。",
-      "importance": 82,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-11",
-        "summary": "OpenAI周四推出专为金融服务业打造的ChatGPT版本，该版本将其最新的模型与来自 LSEG LSEG.L 、PitchBook 和 Daloopa 等数据提供商的内置数据相结合...",
-        "title": "OpenAI推出金融业版ChatGPT，整合LSEG等数据服务"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-11",
-          "evidenceIds": [
-            "E008"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "OpenAI周四推出专为金融服务业打造的ChatGPT版本，该版本将其最新的模型与来自 LSEG LSEG.L 、PitchBook 和 Daloopa 等数据提供商的内置数据相结合...",
-          "evidenceIds": [
-            "E008"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "OpenAI推出金融业版ChatGPT，整合LSEG等数据服务",
-          "evidenceIds": [
-            "E008"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E008"
-      ],
-      "supportingEvidenceIds": [
-        "E008"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-a09e931344d19e4e8e6f"
-      ],
-      "eventLifecycles": {
-        "evt-a09e931344d19e4e8e6f": "first_seen"
-      },
-      "eventId": "evt-a09e931344d19e4e8e6f",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-11T05:27:40+00:00",
-      "lastSeenAt": "2026-09-11T05:27:40+00:00"
-    },
-    {
-      "id": "chg-585d7142c4bc2bc0476e",
-      "dataset": "intelligenceEvent",
-      "entityType": "高价值情报事件",
-      "entityId": "intelligence-event-f2c9eb3a98939c0c41",
-      "entityName": "Google DeepMind：RT @PaglieriDavide: 🧵We conducted an experiment with 100 agents by giving them math problems to solve. When a small group (9%) started to c…",
-      "action": "added",
-      "changedFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "summary": "新增高价值情报事件记录：Google DeepMind：RT @PaglieriDavide: 🧵We conducted an experiment with 100 agents by giving them math problems to solve. When a small group (9%) started to c…。",
-      "importance": 81,
-      "before": null,
-      "after": {
-        "publishedAt": "2026-09-10",
-        "summary": "RT @PaglieriDavide: 🧵We conducted an experiment with 100 agents by giving them math problems to solve. When a small group (9%) started to c…",
-        "title": "Google DeepMind：RT @PaglieriDavide: 🧵We conducted an experiment with 100 agents by giving them math problems to solve. When a small group (9%) started to c…"
-      },
-      "changeType": "external_event",
-      "classificationReason": "公开文章快照已通过质量门，高价值事件完成事件级去重",
-      "isResearchCandidate": true,
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "claimBindings": [
-        {
-          "field": "publishedAt",
-          "before": null,
-          "after": "2026-09-10",
-          "evidenceIds": [
-            "E010"
-          ]
-        },
-        {
-          "field": "summary",
-          "before": null,
-          "after": "RT @PaglieriDavide: 🧵We conducted an experiment with 100 agents by giving them math problems to solve. When a small group (9%) started to c…",
-          "evidenceIds": [
-            "E010"
-          ]
-        },
-        {
-          "field": "title",
-          "before": null,
-          "after": "Google DeepMind：RT @PaglieriDavide: 🧵We conducted an experiment with 100 agents by giving them math problems to solve. When a small group (9%) started to c…",
-          "evidenceIds": [
-            "E010"
-          ]
-        }
-      ],
-      "evidenceIds": [
-        "E010"
-      ],
-      "supportingEvidenceIds": [
-        "E010"
-      ],
-      "evidenceQuality": {
-        "status": "passed",
-        "supporting": 1,
-        "total": 1
-      },
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "eligibleForKeyDevelopment": true,
-      "eventIds": [
-        "evt-e5ebdb01340f084c118e"
-      ],
-      "eventLifecycles": {
-        "evt-e5ebdb01340f084c118e": "first_seen"
-      },
-      "eventId": "evt-e5ebdb01340f084c118e",
-      "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-11T05:27:40+00:00",
-      "lastSeenAt": "2026-09-11T05:27:40+00:00"
+      "firstSeenAt": "2026-09-11T06:07:54+00:00",
+      "lastSeenAt": "2026-09-11T06:07:54+00:00"
     }
   ],
   "evidence": [
     {
-      "id": "E001",
-      "changeId": "chg-dcc4284bf80aad66dafd",
-      "entityName": "申报量较首届增长近4倍，2026蚂蚁InTech奖在外滩大会揭晓",
-      "claim": "新增高价值情报事件记录：申报量较首届增长近4倍，2026蚂蚁InTech奖在外滩大会揭晓。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "雷峰网",
-      "title": "申报量较首届增长近4倍，2026蚂蚁InTech奖在外滩大会揭晓",
-      "url": "https://www.leiphone.com/category/industrynews/udT6VNcjzp53ZOxl.html",
-      "publishedAt": "2026-09-11",
-      "evidenceGrade": "C",
-      "platformName": "专业媒体",
-      "sourceRole": "corroboration",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "E002",
-      "changeId": "chg-9cf236b7a649b1a07e88",
-      "entityName": "OpenAI：You can also create editable financial models, research notes, and pitchbooks using your firm's own Excel, Word, and PowerPoint templates. https://t.c",
-      "claim": "新增高价值情报事件记录：OpenAI：You can also create editable financial models, research notes, and pitchbooks using your firm's own Excel, Word, and PowerPoint templates. https://t.c。",
-      "publicationTier": "external_clue",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "OpenAI on X",
-      "title": "OpenAI：You can also create editable financial models, research notes, and pitchbooks using your firm's own Excel, Word, and PowerPoint templates. https://t.c",
-      "url": "https://x.com/OpenAI/status/2098118249582035348",
-      "publishedAt": "2026-09-10",
-      "evidenceGrade": "B",
-      "platformName": "X",
-      "sourceRole": "primary",
-      "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
-      ],
-      "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
       "id": "E005",
-      "changeId": "chg-239f049665c76d8b8713",
-      "entityName": "Rocket Lab Successfully Launches 16th Electron Mission Of The Year, Solidifies Status as World’s Leading Small Launch Provider",
-      "claim": "新增高价值情报事件记录：Rocket Lab Successfully Launches 16th Electron Mission Of The Year, Solidifies Status as World’s Leading Small Launch Provider。",
-      "publicationTier": "external_clue",
+      "changeId": "chg-8a07b2f901dbd69c52e0",
+      "entityName": "Form Energy",
+      "claim": "Form Energy 的 financing 发生变化。",
+      "publicationTier": "verified_change",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "Rocket Lab Investor Relations",
-      "title": "Rocket Lab Successfully Launches 16th Electron Mission Of The Year, Solidifies Status as World’s Leading Small Launch Provider",
-      "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-successfully-launches-16th-electron-mission-year",
-      "publishedAt": "2026-09-11",
-      "evidenceGrade": "B",
-      "platformName": "官方网站",
-      "sourceRole": "primary",
+      "sourceName": "Form Energy",
+      "title": "Home",
+      "url": "https://formenergy.com/",
+      "publishedAt": "2020-03-04",
+      "evidenceGrade": "官方披露",
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "financing"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
@@ -893,23 +376,19 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E006",
-      "changeId": "chg-903586884098f275c3c9",
-      "entityName": "OpenAI：RT @ChatGPT: Now everyone can put data to work. We’re introducing a new Data agent in ChatGPT Work so you can turn your company’s data int…",
-      "claim": "新增高价值情报事件记录：OpenAI：RT @ChatGPT: Now everyone can put data to work. We’re introducing a new Data agent in ChatGPT Work so you can turn your company’s data int…。",
-      "publicationTier": "external_clue",
+      "id": "E014",
+      "changeId": "chg-5b6e4bffa34eaed69742",
+      "entityName": "Rigetti Computing",
+      "claim": "Rigetti Computing 的 technology 发生变化。",
+      "publicationTier": "verified_change",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "OpenAI on X",
-      "title": "OpenAI：RT @ChatGPT: Now everyone can put data to work. We’re introducing a new Data agent in ChatGPT Work so you can turn your company’s data int…",
-      "url": "https://x.com/OpenAI/status/2098153609234104818",
-      "publishedAt": "2026-09-10",
-      "evidenceGrade": "B",
-      "platformName": "X",
-      "sourceRole": "primary",
+      "sourceName": "Rigetti",
+      "title": "Quantum Computing",
+      "url": "https://www.rigetti.com/",
+      "publishedAt": "2020-01-15",
+      "evidenceGrade": "官方披露",
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "technology"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
@@ -917,23 +396,19 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E008",
-      "changeId": "chg-1cb150ebe32f66b465f1",
-      "entityName": "OpenAI推出金融业版ChatGPT，整合LSEG等数据服务",
-      "claim": "新增高价值情报事件记录：OpenAI推出金融业版ChatGPT，整合LSEG等数据服务。",
-      "publicationTier": "external_clue",
+      "id": "E015",
+      "changeId": "chg-5b6e4bffa34eaed69742",
+      "entityName": "Rigetti Computing",
+      "claim": "Rigetti Computing 的 technology 发生变化。",
+      "publicationTier": "verified_change",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "新浪财经",
-      "title": "OpenAI推出金融业版ChatGPT，整合LSEG等数据服务",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-11/doc-inirmmmy6997815.shtml",
-      "publishedAt": "2026-09-11",
-      "evidenceGrade": "C",
-      "platformName": "新浪",
-      "sourceRole": "corroboration",
+      "sourceName": "Rigetti",
+      "title": "Quantum computing research",
+      "url": "https://www.rigetti.com/research",
+      "publishedAt": "2020-07-06",
+      "evidenceGrade": "官方披露",
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "technology"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
@@ -941,45 +416,21 @@
       "supportStatus": "supports"
     },
     {
-      "id": "E010",
-      "changeId": "chg-585d7142c4bc2bc0476e",
-      "entityName": "Google DeepMind：RT @PaglieriDavide: 🧵We conducted an experiment with 100 agents by giving them math problems to solve. When a small group (9%) started to c…",
-      "claim": "新增高价值情报事件记录：Google DeepMind：RT @PaglieriDavide: 🧵We conducted an experiment with 100 agents by giving them math problems to solve. When a small group (9%) started to c…。",
-      "publicationTier": "external_clue",
+      "id": "E016",
+      "changeId": "chg-5b6e4bffa34eaed69742",
+      "entityName": "Rigetti Computing",
+      "claim": "Rigetti Computing 的 technology 发生变化。",
+      "publicationTier": "verified_change",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "Google DeepMind on X",
-      "title": "Google DeepMind：RT @PaglieriDavide: 🧵We conducted an experiment with 100 agents by giving them math problems to solve. When a small group (9%) started to c…",
-      "url": "https://x.com/GoogleDeepMind/status/2098004438359154969",
-      "publishedAt": "2026-09-10",
-      "evidenceGrade": "B",
-      "platformName": "X",
-      "sourceRole": "primary",
+      "sourceName": "Rigetti",
+      "title": "Building scalable, innovative quantum systems",
+      "url": "https://www.rigetti.com/what-we-build",
+      "publishedAt": "2020-06-10",
+      "evidenceGrade": "官方披露",
       "claimFields": [
-        "publishedAt",
-        "summary",
-        "title"
+        "technology"
       ],
       "entityMatchStatus": "not_applicable",
-      "qualityIssues": [],
-      "qualityStatus": "passed",
-      "supportStatus": "supports"
-    },
-    {
-      "id": "RPE001",
-      "changeId": "pending-b2d87400c3812224b186",
-      "entityName": "Recursion Pharmaceuticals, Inc.",
-      "claim": "Recursion Pharmaceuticals, Inc. 的 news、quote 发生变化。",
-      "publicationTier": "candidate",
-      "reviewStatus": "automated_unreviewed",
-      "sourceName": "Yahoo财经",
-      "title": "Why Recursion Pharmaceuticals (RXRX) Dipped More Than Broader Market Today",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/why-recursion-pharmaceuticals-rxrx-dipped-215005134.html?.tsrc=rss",
-      "publishedAt": "2026-09-10T21:50:05+00:00",
-      "evidenceGrade": "媒体报道",
-      "claimFields": [
-        "news"
-      ],
-      "entityMatchStatus": "matched",
       "qualityIssues": [],
       "qualityStatus": "passed",
       "supportStatus": "supports"
@@ -987,9 +438,215 @@
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-11T05:27:40+00:00",
+    "generatedAt": "2026-09-11T06:07:54+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-e6724ded6dc0dde53411": {
+        "eventId": "evt-e6724ded6dc0dde53411",
+        "dataset": "ventureCompany",
+        "entityId": "rigetti",
+        "entityName": "Rigetti Computing",
+        "title": "Building scalable, innovative quantum systems",
+        "titleAliases": [
+          "buildingscalableinnovativequantumsystems",
+          "quantumcomputing",
+          "quantumcomputingresearch"
+        ],
+        "publishedDate": "2020-01-15",
+        "publishedDates": [
+          "2020-01-15",
+          "2020-07-06",
+          "2020-06-10"
+        ],
+        "entityKeys": [
+          "name:rigetti computing",
+          "ventureCompany:rigetti"
+        ],
+        "typeKeys": [
+          "创业公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-6f9969a923dbdc16ec19",
+          "evd-9fe010e55bd6c8bf756a",
+          "evd-f82ab282819f74a5be6d",
+          "src-47977f545bbf76ee6526",
+          "src-6957d7a5eb76840fcc06",
+          "src-6a9774ca89518dfaf421"
+        ],
+        "evidenceFingerprints": [
+          "f82ab282819f74a5be6d",
+          "6f9969a923dbdc16ec19",
+          "9fe010e55bd6c8bf756a"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Rigetti",
+            "title": "Quantum Computing",
+            "url": "https://www.rigetti.com/",
+            "publishedAt": "2020-01-15",
+            "evidenceGrade": "官方披露"
+          },
+          {
+            "sourceName": "Rigetti",
+            "title": "Quantum computing research",
+            "url": "https://www.rigetti.com/research",
+            "publishedAt": "2020-07-06",
+            "evidenceGrade": "官方披露"
+          },
+          {
+            "sourceName": "Rigetti",
+            "title": "Building scalable, innovative quantum systems",
+            "url": "https://www.rigetti.com/what-we-build",
+            "publishedAt": "2020-06-10",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "e66173cf7a923359f238",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-11T06:07:54+00:00",
+        "lastSeenAt": "2026-09-11T06:07:54+00:00",
+        "lastPublishedAt": "2026-09-11T06:07:54+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 3,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-8be8280900881dcbec79": {
+        "eventId": "evt-8be8280900881dcbec79",
+        "dataset": "ventureCompany",
+        "entityId": "form-energy",
+        "entityName": "Form Energy",
+        "title": "Home",
+        "titleAliases": [
+          "formenergysecures750minseriesgfinancingtoscaleironairbatterymanufacturingandacceleratecommercialdeployments",
+          "home",
+          "newsroom"
+        ],
+        "publishedDate": "2020-03-04",
+        "publishedDates": [
+          "2020-03-04",
+          "2026-08-12",
+          "2021-03-19"
+        ],
+        "entityKeys": [
+          "name:form energy",
+          "ventureCompany:form-energy"
+        ],
+        "typeKeys": [
+          "创业公司"
+        ],
+        "numericCues": [
+          "750"
+        ],
+        "sourceAliases": [
+          "evd-240d920c958998b9e698",
+          "evd-260ebca9594e10735828",
+          "evd-bbce94b49783f715f8ec",
+          "src-ae6596fda7c340d262d4",
+          "src-ce905be3bc5d52aa35cf",
+          "src-dc62ab01be9344185861"
+        ],
+        "evidenceFingerprints": [
+          "260ebca9594e10735828",
+          "240d920c958998b9e698",
+          "bbce94b49783f715f8ec"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Form Energy",
+            "title": "Home",
+            "url": "https://formenergy.com/",
+            "publishedAt": "2020-03-04",
+            "evidenceGrade": "官方披露"
+          },
+          {
+            "sourceName": "Form Energy",
+            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
+            "url": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
+            "publishedAt": "2026-08-12",
+            "evidenceGrade": "官方披露"
+          },
+          {
+            "sourceName": "Form Energy",
+            "title": "Newsroom",
+            "url": "https://formenergy.com/newsroom/",
+            "publishedAt": "2021-03-19",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "fb674ef849e12bf7834c",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T09:08:35+00:00",
+        "lastSeenAt": "2026-09-11T06:07:54+00:00",
+        "lastPublishedAt": "2026-09-11T06:07:54+00:00",
+        "lastLifecycle": "updated",
+        "observationCount": 3,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-6d0d17f79898a08012a6": {
+        "eventId": "evt-6d0d17f79898a08012a6",
+        "dataset": "ventureCompany",
+        "entityId": "joby",
+        "entityName": "Joby Aviation",
+        "title": "2025 Impact Report | Joby Aviation",
+        "titleAliases": [
+          "2025impactreport"
+        ],
+        "publishedDate": "2026-07-16",
+        "publishedDates": [
+          "2026-07-16"
+        ],
+        "entityKeys": [
+          "name:joby aviation",
+          "ventureCompany:joby"
+        ],
+        "typeKeys": [
+          "创业公司"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-23994f7a5a56f142cced",
+          "src-669a587c662ca12eb4c8"
+        ],
+        "evidenceFingerprints": [
+          "23994f7a5a56f142cced"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "Joby Aviation",
+            "title": "2025 Impact Report | Joby Aviation",
+            "url": "https://www.jobyaviation.com/news/2025-impact-report",
+            "publishedAt": "2026-07-16",
+            "evidenceGrade": "官方披露"
+          }
+        ],
+        "claimFingerprint": "0b0ccadef2c34b240e44",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-08-31T09:08:35+00:00",
+        "lastSeenAt": "2026-09-11T06:07:54+00:00",
+        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
+        "lastLifecycle": "duplicate",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-fe98105f299fbef67559": {
         "eventId": "evt-fe98105f299fbef67559",
         "dataset": "intelligenceEvent",
@@ -9697,84 +9354,6 @@
         "conflictReasons": [],
         "relatedEventIds": []
       },
-      "evt-8be8280900881dcbec79": {
-        "eventId": "evt-8be8280900881dcbec79",
-        "dataset": "ventureCompany",
-        "entityId": "form-energy",
-        "entityName": "Form Energy",
-        "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
-        "titleAliases": [
-          "formenergysecures750minseriesgfinancingtoscaleironairbatterymanufacturingandacceleratecommercialdeployments",
-          "home",
-          "newsroom"
-        ],
-        "publishedDate": "2020-03-04",
-        "publishedDates": [
-          "2020-03-04",
-          "2026-08-12",
-          "2021-03-19"
-        ],
-        "entityKeys": [
-          "name:form energy",
-          "ventureCompany:form-energy"
-        ],
-        "typeKeys": [
-          "创业公司"
-        ],
-        "numericCues": [
-          "750"
-        ],
-        "sourceAliases": [
-          "evd-240d920c958998b9e698",
-          "evd-260ebca9594e10735828",
-          "evd-bbce94b49783f715f8ec",
-          "src-ae6596fda7c340d262d4",
-          "src-ce905be3bc5d52aa35cf",
-          "src-dc62ab01be9344185861"
-        ],
-        "evidenceFingerprints": [
-          "260ebca9594e10735828",
-          "240d920c958998b9e698",
-          "bbce94b49783f715f8ec"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Form Energy",
-            "title": "Home",
-            "url": "https://formenergy.com/",
-            "publishedAt": "2020-03-04",
-            "evidenceGrade": "官方披露"
-          },
-          {
-            "sourceName": "Form Energy",
-            "title": "Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments",
-            "url": "https://formenergy.com/form-energy-secures-750m-in-series-g-financing/",
-            "publishedAt": "2026-08-12",
-            "evidenceGrade": "官方披露"
-          },
-          {
-            "sourceName": "Form Energy",
-            "title": "Newsroom",
-            "url": "https://formenergy.com/newsroom/",
-            "publishedAt": "2021-03-19",
-            "evidenceGrade": "官方披露"
-          }
-        ],
-        "claimFingerprint": "ab53829200fcf80ab3ce",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastSeenAt": "2026-09-10T01:17:20+00:00",
-        "lastPublishedAt": "2026-09-05T05:53:26+00:00",
-        "lastLifecycle": "duplicate",
-        "observationCount": 3,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 4,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
       "evt-8aa8b7fc75c9df582a7a": {
         "eventId": "evt-8aa8b7fc75c9df582a7a",
         "dataset": "marketCompany",
@@ -15706,58 +15285,6 @@
         "lastSeenAt": "2026-09-08T11:37:38+00:00",
         "lastPublishedAt": "2026-09-08T11:37:38+00:00",
         "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 4,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-6d0d17f79898a08012a6": {
-        "eventId": "evt-6d0d17f79898a08012a6",
-        "dataset": "ventureCompany",
-        "entityId": "joby",
-        "entityName": "Joby Aviation",
-        "title": "2025 Impact Report | Joby Aviation",
-        "titleAliases": [
-          "2025impactreport"
-        ],
-        "publishedDate": "2026-07-16",
-        "publishedDates": [
-          "2026-07-16"
-        ],
-        "entityKeys": [
-          "name:joby aviation",
-          "ventureCompany:joby"
-        ],
-        "typeKeys": [
-          "创业公司"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-23994f7a5a56f142cced",
-          "src-669a587c662ca12eb4c8"
-        ],
-        "evidenceFingerprints": [
-          "23994f7a5a56f142cced"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "Joby Aviation",
-            "title": "2025 Impact Report | Joby Aviation",
-            "url": "https://www.jobyaviation.com/news/2025-impact-report",
-            "publishedAt": "2026-07-16",
-            "evidenceGrade": "官方披露"
-          }
-        ],
-        "claimFingerprint": "0b0ccadef2c34b240e44",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-08-31T09:08:35+00:00",
-        "lastSeenAt": "2026-09-08T06:08:20+00:00",
-        "lastPublishedAt": "2026-08-31T09:08:35+00:00",
-        "lastLifecycle": "duplicate",
         "observationCount": 1,
         "confirmationCount": 0,
         "bestEvidenceStrength": 4,
@@ -34356,72 +33883,18 @@
         "conflictStatus": "none",
         "conflictReasons": [],
         "relatedEventIds": []
-      },
-      "evt-dda7bb10e4d18ec4181e": {
-        "eventId": "evt-dda7bb10e4d18ec4181e",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-e2946b67490f6b5e28",
-        "entityName": "EuroHPC selects Bull to lead €387m Lumi-AI supercomputer contract",
-        "title": "EuroHPC selects Bull to lead €387m Lumi-AI supercomputer contract",
-        "titleAliases": [
-          "eurohpcselectsbulltolead387mlumiaisupercomputercontract"
-        ],
-        "publishedDate": "2026-09-01",
-        "publishedDates": [
-          "2026-09-01"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "商业进展",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "387"
-        ],
-        "sourceAliases": [
-          "evd-1620733a65bca83765b1",
-          "record-7efdc1133e604f690720",
-          "src-559bda189ac21919370c"
-        ],
-        "evidenceFingerprints": [
-          "1620733a65bca83765b1"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "ITPro",
-            "title": "EuroHPC selects Bull to lead €387m Lumi-AI supercomputer contract",
-            "url": "https://www.itpro.com/infrastructure/eurohpc-selects-bull-to-lead-eur387m-lumi-ai-supercomputer-contract",
-            "publishedAt": "2026-09-01",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "2e6f4bd5dd3983290adc",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-01T12:24:14+00:00",
-        "lastSeenAt": "2026-09-01T12:24:14+00:00",
-        "lastPublishedAt": "2026-09-01T12:24:14+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
       }
     },
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 7,
+    "newEvents": 1,
     "reconfirmations": 0,
-    "updates": 0,
+    "updates": 1,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 0,
-    "observedEvents": 7,
+    "duplicatesSuppressed": 1,
+    "observedEvents": 3,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -38233,10 +37706,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-11",
-      "generatedAt": "2026-09-11T05:27:40+00:00",
+      "generatedAt": "2026-09-11T06:07:54+00:00",
       "runStatus": "model",
-      "changeCount": 76,
-      "executiveSummary": "证据包共包含7条新增/变更事件。最重要的线索是OpenAI正在向金融服务业垂直化推进：新浪财经报道其推出整合LSEG、PitchBook、Daloopa数据的金融业版ChatGPT，OpenAI官方X账号也展示了基于Excel/Word/PowerPoint模板生成可编辑金融产出的能力。Rocket Lab官方确认完成今年第16次Electron发射，属于高置信度运营事实。蚂蚁InTech奖在外滩大会揭晓，申报量较首届增长近4倍，显示该奖项影响力扩大，但证据为C级媒体。Recursion Pharmaceuticals仅有单篇媒体报道称当日跌幅超大盘，缺乏数据细节，只能作为弱信号。其余OpenAI Data agent和Google DeepMind多智能体事件均因内容截断，暂无法形成可靠判断。",
+      "changeCount": 78,
+      "executiveSummary": "证据包显示两家公司发生外部事件驱动的数据变更：Form Energy 的融资记录在官网数据源中出现删减（E005），Rigetti Computing 的技术信息更新涉及 Novera 9-qubit QPU、CTO 任命及二季度财报等表述（E014-E016）。两者均来自官方披露但证据质量为自动化未人工复核，且源页面时间存在异常，需谨慎解读。未发现可支撑确定性投资结论的证据。",
       "eventIds": [
         "evt-959796dfdf65604663a3",
         "evt-4c43b7c8ec9d0c98f992",
@@ -38313,7 +37786,9 @@
         "evt-89ec8387026c18381160",
         "evt-fe98105f299fbef67559",
         "evt-a09e931344d19e4e8e6f",
-        "evt-e5ebdb01340f084c118e"
+        "evt-e5ebdb01340f084c118e",
+        "evt-8be8280900881dcbec79",
+        "evt-e6724ded6dc0dde53411"
       ],
       "eventStates": [
         {
@@ -38619,35 +38094,43 @@
         {
           "eventId": "evt-e5ebdb01340f084c118e",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-8be8280900881dcbec79",
+          "lifecycle": "updated"
+        },
+        {
+          "eventId": "evt-e6724ded6dc0dde53411",
+          "lifecycle": "first_seen"
         }
       ],
-      "verifiedChangeTotal": 0,
+      "verifiedChangeTotal": 2,
       "candidateTotal": 14,
       "auxiliaryLeadTotal": 54,
-      "rejectedTotal": 12,
+      "rejectedTotal": 14,
       "eventSummary": {
-        "newEvents": 75,
+        "newEvents": 76,
         "reconfirmations": 12,
-        "updates": 2,
+        "updates": 3,
         "corrections": 0,
         "possibleConflicts": 36,
-        "duplicatesSuppressed": 6
+        "duplicatesSuppressed": 7
       }
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 10,
-    "eligibleCandidateCount": 6,
-    "rejectedCandidateCount": 4,
+    "candidateCount": 5,
+    "eligibleCandidateCount": 3,
+    "rejectedCandidateCount": 2,
     "rejectedByDataset": {
-      "intelligenceEvent": 4
+      "ventureCompany": 2
     },
-    "evidenceCount": 10,
-    "supportingEvidenceCount": 6,
-    "rejectedEvidenceCount": 4,
-    "passedButUnboundEvidenceCount": 0,
+    "evidenceCount": 17,
+    "supportingEvidenceCount": 5,
+    "rejectedEvidenceCount": 9,
+    "passedButUnboundEvidenceCount": 3,
     "rejectionReasons": {
-      "discovery_only": 4
+      "missing_published_at": 9
     },
     "sourceClassificationWarnings": []
   },
