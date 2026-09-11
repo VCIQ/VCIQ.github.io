@@ -155,6 +155,7 @@ export default function PersonResearchQueuePanel() {
   const remainingResearch = researchQueue.slice(3);
   const primaryMaintenance = maintenanceQueue.slice(0, 2);
   const remainingMaintenance = maintenanceQueue.slice(2);
+  const hasLaneCandidateTotals = queue.schemaVersion >= 5;
 
   return (
     <>
@@ -178,13 +179,21 @@ export default function PersonResearchQueuePanel() {
 
         <div className={styles.queueStats}>
           <article>
-            <span>Research 候选 / 今日</span>
-            <strong>{queue.candidateResearchTaskCount}/{queue.selectedResearchTaskCount}</strong>
-            <small>核心研究 lane</small>
+            <span>{hasLaneCandidateTotals ? "Research 候选 / 今日" : "Research 今日任务"}</span>
+            <strong>
+              {hasLaneCandidateTotals
+                ? `${queue.candidateResearchTaskCount}/${queue.selectedResearchTaskCount}`
+                : queue.selectedResearchTaskCount}
+            </strong>
+            <small>{hasLaneCandidateTotals ? "核心研究 lane" : "旧工件仅能可靠拆分已入队任务"}</small>
           </article>
           <article>
-            <span>Maintenance 候选 / 今日</span>
-            <strong>{queue.candidateMaintenanceTaskCount}/{queue.selectedMaintenanceTaskCount}</strong>
+            <span>{hasLaneCandidateTotals ? "Maintenance 候选 / 今日" : "Maintenance 今日任务"}</span>
+            <strong>
+              {hasLaneCandidateTotals
+                ? `${queue.candidateMaintenanceTaskCount}/${queue.selectedMaintenanceTaskCount}`
+                : queue.selectedMaintenanceTaskCount}
+            </strong>
             <small>最多 {queue.limits.maintenanceTasks} 项</small>
           </article>
           <article>
