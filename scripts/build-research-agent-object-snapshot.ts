@@ -56,6 +56,9 @@ function eventEvidence(event: (typeof intelligenceEvents)[number]) {
     importance: event.importance,
     publishedAt: event.publishedAt,
     url: event.source.url,
+    // Keep both the public descriptive field and the source-walker-compatible
+    // name field so evidence attribution survives the Python bridge unchanged.
+    name: event.source.name,
     sourceName: event.source.name,
     platformName: event.source.platform ?? "",
     evidenceGrade: event.source.level,
@@ -130,6 +133,7 @@ const technologies = Object.fromEntries(
             observedAt: item.observedAt,
             publishedAt: item.eventDate || item.observedAt,
             url: item.url,
+            name: item.sourceName,
             sourceName: item.sourceName,
             evidenceGrade: item.origin === "manual-capture" ? "人工核验材料" : "媒体报道",
             sourceRole: "corroboration",
