@@ -1,0 +1,25 @@
+name: Person identity pinned source audit
+on:
+  push:
+    branches: [fix/person-research-planner-identity-parity-20260911]
+    paths: [.github/workflows/person-identity-source-audit-20260911.yml]
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fbe5111df6adcc13bb3fe19de288a06b58d8343c
+      - name: Archive tracked source only
+        run: |
+          mkdir -p /tmp/person-identity-audit
+          git rev-parse HEAD > /tmp/person-identity-audit/source-sha.txt
+          git archive --format=tar.gz --output=/tmp/person-identity-audit/source.tar.gz HEAD
+      - uses: actions/upload-artifact@v4
+        with:
+          name: person-identity-pinned-source
+          path: /tmp/person-identity-audit/
+          retention-days: 3
