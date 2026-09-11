@@ -15,6 +15,7 @@ def event(event_id: str, *, grade: str = "媒体报道", importance: int = 70) -
         "publishedAt": "2026-09-11",
         "importance": importance,
         "url": f"https://example.com/{event_id}",
+        "name": "Example Source",
         "sourceName": "Example Source",
         "evidenceGrade": grade,
         "sourceRole": "primary" if grade == "官方披露" else "corroboration",
@@ -77,6 +78,35 @@ class ResearchAgentResearchObjectTests(unittest.TestCase):
             [row["id"] for row in change["record"]["latestEvents"]],
             ["new"],
         )
+
+    def test_new_official_event_survives_real_evidence_package(self) -> None:
+        before = snapshot("technology", [event("old")])
+        after = snapshot(
+            "technology",
+            [event("new", grade="官方披露", importance=94), event("old")],
+        )
+        with (
+            mock.patch.object(target, "_AGENT", agent),
+            mock.patch.object(target, "_ORIGINAL_DIFF_SNAPSHOTS", agent.diff_snapshots),
+            mock.patch.object(agent, "_publication_tier", target.publication_tier),
+        ):
+            changes = target.diff_snapshots(before, after)
+            public_changes, evidence_rows = agent.build_evidence_package(
+                changes,
+                as_of="2026-09-11T23:59:59Z",
+            )
+
+        self.assertEqual(len(public_changes), 1)
+        self.assertEqual(public_changes[0]["publicationTier"], "verified_change")
+        self.assertTrue(public_changes[0]["eligibleForKeyDevelopment"])
+        self.assertEqual(public_changes[0]["claimFields"], ["latestEvents"])
+        supporting = [
+            row for row in evidence_rows if row.get("supportStatus") == "supports"
+        ]
+        self.assertEqual(len(supporting), 1)
+        self.assertEqual(supporting[0]["sourceName"], "Example Source")
+        self.assertEqual(supporting[0]["claimFields"], ["latestEvents"])
+        self.assertEqual(supporting[0]["publicationTier"], "verified_change")
 
     def test_window_rotation_without_new_event_is_maintenance(self) -> None:
         before = snapshot("track", [event("same")])
