@@ -95,6 +95,24 @@ function scopeCoverage(report: ResearchAgentReport, key: string) {
   return "待接入";
 }
 
+function normalizedCount(value: unknown, fallback: number) {
+  return typeof value === "number" && Number.isFinite(value)
+    ? Math.max(0, Math.trunc(value))
+    : fallback;
+}
+
+function publicationCount(
+  tierSummary: Record<string, number> | undefined,
+  tier: string,
+  directValue: unknown,
+  fallback: number,
+) {
+  if (typeof directValue === "number" && Number.isFinite(directValue)) {
+    return normalizedCount(directValue, fallback);
+  }
+  return normalizedCount(tierSummary?.[tier], fallback);
+}
+
 export function buildResearchAgentViewModel(report: ResearchAgentReport) {
   const isDegraded = DEGRADED_STATUSES.has(report.runStatus);
   const qualityContract = hasEvidenceQualityContract(report);
@@ -153,6 +171,40 @@ export function buildResearchAgentViewModel(report: ResearchAgentReport) {
   const otherCandidateChanges = candidateChanges.filter(
     (change) => !companyCandidateChanges.includes(change),
   );
+  const rejectedTierCount = report.changes.filter(
+    (change) => (change as TieredChange).publicationTier === "rejected",
+  ).length;
+
+  // Publication totals describe the entire run. The visible arrays below are a
+  // curated public subset and must not be used as a substitute for run totals.
+  // This distinction prevents the headline from saying “0 candidates” while
+  // the same run history reports, for example, 14 candidate rows.
+  const publicationTotals = {
+    verifiedChangeCount: publicationCount(
+      publicationTierSummary,
+      "verified_change",
+      tierTotals.verifiedChangeTotal,
+      formalChanges.length,
+    ),
+    candidateCount: publicationCount(
+      publicationTierSummary,
+      "candidate",
+      tierTotals.candidateTotal,
+      candidateChanges.length,
+    ),
+    externalClueCount: publicationCount(
+      publicationTierSummary,
+      "external_clue",
+      tierTotals.auxiliaryLeadTotal,
+      externalClueChanges.length,
+    ),
+    rejectedCount: publicationCount(
+      publicationTierSummary,
+      "rejected",
+      tierTotals.rejectedTotal,
+      rejectedTierCount,
+    ),
+  };
 
   const topDevelopments = suppressLegacyDegradedOutput
     ? []
@@ -187,6 +239,13 @@ export function buildResearchAgentViewModel(report: ResearchAgentReport) {
     candidateChanges,
     externalClueChanges,
     otherCandidateChanges,
+    publicationTotals,
+    visibleMetrics: {
+      formalChangeCount: formalChanges.length,
+      companyCandidateCount: companyCandidateChanges.length,
+      candidateCount: candidateChanges.length,
+      externalClueCount: externalClueChanges.length,
+    },
     coverage: {
       technology: scopeCoverage(report, "technology"),
       track: scopeCoverage(report, "track"),
@@ -195,10 +254,13 @@ export function buildResearchAgentViewModel(report: ResearchAgentReport) {
     },
     reviewStatus,
     metrics: {
-      formalChangeCount: formalChanges.length,
+      // Keep the existing page API, but make these headline counts use the
+      // authoritative whole-run publication totals when the new contract exists.
+      formalChangeCount: publicationTotals.verifiedChangeCount,
       companyCandidateCount: companyCandidateChanges.length,
-      candidateCount: candidateChanges.length,
-      externalClueCount: externalClueChanges.length,
+      candidateCount: publicationTotals.candidateCount,
+      externalClueCount: publicationTotals.externalClueCount,
+      rejectedCount: publicationTotals.rejectedCount,
       pipelineHealthyCount: report.pipelineHealth?.healthyJobs ?? null,
       pipelineJobCount: report.pipelineHealth?.jobCount ?? null,
     },

@@ -5,20 +5,24 @@ from __future__ import annotations
 
 try:
     from . import research_agent_article_events as article_events
+    from . import research_agent_evidence_contract_v2 as evidence_contract_v2
     from . import research_agent_evidence_policy as evidence_policy
     from . import research_agent_runtime as runtime
 except ImportError:  # Direct execution: python tools/research_agent_enhanced_runtime.py
     import research_agent_article_events as article_events  # type: ignore
+    import research_agent_evidence_contract_v2 as evidence_contract_v2  # type: ignore
     import research_agent_evidence_policy as evidence_policy  # type: ignore
     import research_agent_runtime as runtime  # type: ignore
 
 
 def main() -> int:
     runtime.install_runtime_policy()
-    # Install the event bridge before the evidence wrapper. The strict evidence
-    # policy therefore remains the outer/final eligibility gate.
+    # Install the event bridge before the strict evidence wrapper. The evidence
+    # policy remains the eligibility gate; contract v2 only annotates the final
+    # report with verification and temporal semantics after that decision.
     article_events.install_article_event_policy(runtime.agent)
     evidence_policy.install_evidence_policy(runtime.agent)
+    evidence_contract_v2.install_evidence_contract(runtime.agent)
     return runtime.agent.main()
 
 

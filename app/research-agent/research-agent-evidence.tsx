@@ -1,6 +1,9 @@
 import { ExternalLink } from "lucide-react";
 
-import type { ResearchAgentEvidence } from "@/lib/research-agent-data";
+import type {
+  ResearchAgentEvidence,
+  ResearchEvidenceVerificationStatus,
+} from "@/lib/research-agent-data";
 import styles from "./research-agent.module.css";
 
 type EvidenceWithSourceDetails = ResearchAgentEvidence & {
@@ -17,12 +20,104 @@ const sourceRoleLabels: Record<string, string> = {
   discovery: "发现线索",
 };
 
+const verificationStatusLabels: Record<string, string> = {
+  candidate: "候选证据",
+  auto_verified: "自动核验通过",
+  cross_verified: "已交叉验证",
+  reviewed: "已人工复核",
+  rejected: "未通过证据门",
+};
+
+const dateConfidenceLabels: Record<string, string> = {
+  high: "高",
+  medium: "中",
+  low: "低",
+  unknown: "待判定",
+};
+
+const dateSourceLabels: Record<string, string> = {
+  event_date: "事件日期",
+  page_created_at: "页面创建时间",
+  page_updated_at: "页面更新时间",
+  legacy_published_at: "历史来源时间（语义未解析）",
+  observed_at: "本轮观测时间",
+};
+
 function evidenceAnchorId(id: string) {
   return `evidence-${id.replace(/[^A-Za-z0-9_-]/g, "-")}`;
 }
 
 function uniqueIds(ids: string[]) {
   return [...new Set(ids.filter(Boolean))];
+}
+
+function evidenceVerificationStatus(
+  item: ResearchAgentEvidence,
+): ResearchEvidenceVerificationStatus {
+  if (
+    item.reviewStatus === "rejected" ||
+    item.qualityStatus === "rejected" ||
+    item.publicationTier === "rejected"
+  ) {
+    return "rejected";
+  }
+  if (item.reviewStatus === "reviewed" || item.reviewStatus === "approved") {
+    return "reviewed";
+  }
+  if (item.verificationStatus) return item.verificationStatus;
+  if (
+    item.publicationTier === "verified_change" &&
+    item.qualityStatus === "passed" &&
+    item.supportStatus === "supports"
+  ) {
+    return "auto_verified";
+  }
+  return "candidate";
+}
+
+function verificationLabel(item: ResearchAgentEvidence) {
+  const status = evidenceVerificationStatus(item);
+  return verificationStatusLabels[status] || status;
+}
+
+function EvidenceTime({ item }: { item: ResearchAgentEvidence }) {
+  const hasExplicitSemanticTime = Boolean(
+    item.eventDate || item.pageCreatedAt || item.pageUpdatedAt || item.observedAt,
+  );
+  const confidence = item.dateConfidence
+    ? (dateConfidenceLabels[item.dateConfidence] || item.dateConfidence)
+    : null;
+  const dateSource = item.dateSource
+    ? (dateSourceLabels[item.dateSource] || item.dateSource)
+    : null;
+
+  if (!hasExplicitSemanticTime && !item.publishedAt) {
+    return <span>时间待补</span>;
+  }
+
+  return (
+    <>
+      {item.eventDate && <strong>事件：{item.eventDate}</strong>}
+      {item.pageCreatedAt && <small>页面创建：{item.pageCreatedAt}</small>}
+      {item.pageUpdatedAt && <small>页面更新：{item.pageUpdatedAt}</small>}
+      {item.publishedAt && (
+        <small>
+          {item.eventDate ? "来源记录" : "来源记录（非事件时间）"}：{item.publishedAt}
+        </small>
+      )}
+      {item.observedAt && <small>本轮观测：{item.observedAt}</small>}
+      {!item.eventDate && item.publishedAt && (
+        <small>事件时间尚未单独解析</small>
+      )}
+      {(dateSource || confidence) && (
+        <small>
+          {dateSource ? `时间来源：${dateSource}` : ""}
+          {dateSource && confidence ? " · " : ""}
+          {confidence ? `时间置信：${confidence}` : ""}
+        </small>
+      )}
+    </>
+  );
 }
 
 export function EvidenceRefs({
@@ -42,7 +137,7 @@ export function EvidenceRefs({
         if (!item) return <span key={id}>{id} · 证据待同步</span>;
         return (
           <a href={`#${evidenceAnchorId(id)}`} key={id}>
-            {id} · {item.sourceName || "来源待补"} · {item.evidenceGrade || "未分级"}
+            {id} · {item.sourceName || "来源待补"} · {item.evidenceGrade || "未分级"} · {verificationLabel(item)}
           </a>
         );
       })}
@@ -63,14 +158,17 @@ export function EvidenceLedger({ evidence }: { evidence: ResearchAgentEvidence[]
       tabIndex={0}
     >
       <table className={styles.evidenceTable}>
-        <caption>本期唯一证据台账；上方内容仅通过证据编号引用此处记录。</caption>
+        <caption>
+          本期唯一证据台账；发布层级表示自动准入状态，不等同于事实已经人工确认。
+        </caption>
         <thead>
           <tr>
             <th scope="col">证据</th>
             <th scope="col">标题与原始链接</th>
             <th scope="col">发布方 / 承载平台</th>
+            <th scope="col">核验状态</th>
             <th scope="col">来源分类</th>
-            <th scope="col">发布日期</th>
+            <th scope="col">时间语义</th>
             <th scope="col">支持对象 / 字段</th>
           </tr>
         </thead>
@@ -121,8 +219,16 @@ export function EvidenceLedger({ evidence }: { evidence: ResearchAgentEvidence[]
                   <strong>{attribution[0]}</strong>
                   {attribution.slice(1).map((label) => <small key={label}>{label}</small>)}
                 </td>
+                <td>
+                  <strong>{verificationLabel(item)}</strong>
+                  <small>
+                    {item.reviewStatus === "reviewed" || item.reviewStatus === "approved"
+                      ? "人工状态已确认"
+                      : "人工复核状态另行记录"}
+                  </small>
+                </td>
                 <td>{quality}</td>
-                <td>{item.publishedAt || "日期待补"}</td>
+                <td><EvidenceTime item={item} /></td>
                 <td>
                   <strong>{item.entityName || "对象待补"}</strong>
                   <small>{claimFields}</small>

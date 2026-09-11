@@ -16,7 +16,10 @@ test("Research Agent core coverage is never masked by degraded run output", () =
 
   assert.doesNotMatch(page, /count:\s*suppressLegacyDegradedOutput\s*\?\s*0/);
   assert.match(page, /当前研究对象覆盖/);
-  assert.match(page, /只表示本轮增量/);
+  assert.match(page, /存量覆盖来自 researchScope/);
+  assert.match(page, /changeSummary 的整轮统计/);
+  assert.match(page, /可见子集/);
+  assert.match(page, /存量覆盖、流水线总量与公开展示量，不互相反推/);
   assert.match(page, /不会把历史研究对象清零/);
 });
 
