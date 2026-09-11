@@ -31,6 +31,11 @@ jobs:
             tests.test_tracking_manual_feedback \
             tests.test_expand_tracking_entities \
             tests.test_pipeline_health_runtime
+      - name: Run Research Agent contract unit tests
+        run: |
+          python -m unittest \
+            tests.test_research_agent_evidence_contract_v2 \
+            tests.test_research_agent_evidence_policy
       - name: Run person identity unit tests
         run: python -m unittest tests.test_jensen_canonical_identity_anchor
       - name: Require a normalized automatic source registry
