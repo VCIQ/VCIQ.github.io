@@ -68,6 +68,7 @@ const fieldLabels: Record<string, string> = {
   discoveredVia: "发现渠道",
   documentType: "文件类型",
   englishName: "英文名",
+  eventDate: "事件日期",
   exchange: "交易所",
   fallback: "降级标识",
   financing: "融资进展",
@@ -77,9 +78,12 @@ const fieldLabels: Record<string, string> = {
   market: "市场",
   materials: "研究材料",
   name: "名称",
+  observedAt: "观测时间",
   organizations: "相关组织",
+  pageCreatedAt: "页面创建时间",
+  pageUpdatedAt: "页面更新时间",
   products: "产品",
-  publishedAt: "发布时间",
+  publishedAt: "来源记录时间",
   role: "职务",
   sectors: "所属赛道",
   slug: "对象标识",
@@ -177,12 +181,11 @@ export default function ResearchAgentPage() {
     typeof changeSummary.maintenanceExcluded === "number" ||
     typeof changeSummary.qualityRejected === "number";
   const deterministicSummary = [
-    view.metrics.formalChangeCount > 0
-      ? `${view.metrics.formalChangeCount} 项核心变化通过正式发布门`
-      : "核心对象暂无通过正式发布门的重大变化",
+    `${view.metrics.formalChangeCount} 项自动核验通过`,
     `${view.metrics.candidateCount} 项候选更新`,
     `${view.metrics.externalClueCount} 项外部行业线索`,
-  ].join("；") + "。候选与线索均不计入正式变化。";
+    `${view.metrics.rejectedCount} 项未通过或隔离`,
+  ].join("；") + "。以上为整轮发布流水线总量；下方变化卡片只展示符合公开条件的子集。";
 
   return (
     <main className={`page-shell subpage ${styles.page}`}>
@@ -191,7 +194,7 @@ export default function ResearchAgentPage() {
         <h1>每日研究变化</h1>
         <div className={styles.heroLead}>
           <p>
-            先看核心人物与核心公司的证据充分变化；候选更新和行业线索单独计数，不混入正式变化。
+            首屏数字使用整轮发布流水线口径；下方变化卡片只展示可公开子集。自动核验表示达到公开展示门，不等于事实已经人工确认。
           </p>
           <div className={styles.reportMeta} aria-label="报告状态">
             <span>{status}</span>
@@ -247,26 +250,28 @@ export default function ResearchAgentPage() {
           <span>{researchAgentReport.baselineSource}</span>
         </div>
 
-        <dl className={styles.statusGrid} aria-label="本期分类统计">
+        <dl className={styles.statusGrid} aria-label="本轮发布流水线统计">
           <div>
-            <dt><ShieldCheck size={18} aria-hidden="true" />证据门通过的核心变化</dt>
+            <dt><ShieldCheck size={18} aria-hidden="true" />自动核验通过</dt>
             <dd>
               <strong>{view.metrics.formalChangeCount}</strong>
-              <small>自动证据核验；人工状态见上方</small>
+              <small>当前页面公开展示 {view.visibleMetrics.formalChangeCount} 项；不等于人工确认</small>
             </dd>
           </div>
           <div>
             <dt><Building2 size={18} aria-hidden="true" />候选更新</dt>
             <dd>
               <strong>{view.metrics.candidateCount}</strong>
-              <small>其中公司 {view.metrics.companyCandidateCount} 项；不计入正式变化</small>
+              <small>
+                当前页面公开展示 {view.visibleMetrics.candidateCount} 项，其中公司 {view.visibleMetrics.companyCandidateCount} 项
+              </small>
             </dd>
           </div>
           <div>
             <dt><Radar size={18} aria-hidden="true" />外部行业线索</dt>
             <dd>
               <strong>{view.metrics.externalClueCount}</strong>
-              <small>行业与市场背景，不计入正式变化</small>
+              <small>当前页面公开展示 {view.visibleMetrics.externalClueCount} 项；不计入自动核验通过</small>
             </dd>
           </div>
           <div>
@@ -280,11 +285,11 @@ export default function ResearchAgentPage() {
 
         <p className={styles.primaryFinding}>
           {view.metrics.formalChangeCount > 0
-            ? `本期有 ${view.metrics.formalChangeCount} 项核心对象变化通过正式发布门。`
-            : "本期核心对象暂无证据充分、可计入正式口径的重大变化。"}
+            ? `本轮有 ${view.metrics.formalChangeCount} 项变化达到自动公开展示门；人工复核状态单独记录。`
+            : "本轮暂无变化达到自动公开展示门；这不影响候选与行业线索继续保留。"}
         </p>
         <div className={styles.executiveBlock}>
-          <strong>按发布层级生成的口径摘要</strong>
+          <strong>整轮发布流水线口径</strong>
           <p className={styles.executiveSummary}>{deterministicSummary}</p>
         </div>
         {view.hasPublicationTierContract ? (
@@ -314,11 +319,15 @@ export default function ResearchAgentPage() {
               ))}
             </div>
             <p>
-              存量覆盖来自 researchScope；本期统计只从 changes 派生，只表示本轮增量，两者不混用。
+              存量覆盖来自 researchScope；首屏发布层级数字来自 changeSummary 的整轮统计；
+              下方变化与证据只展示通过公开条件的可见子集。三者分别表示存量覆盖、流水线总量与公开展示量，不互相反推。
               即使本轮无新增重大变化或进入降级模式，也不会把历史研究对象清零。
               {hasQualityBreakdown
                 ? ` 原始检测 ${changeSummary.totalDetected} 条，维护排除 ${changeSummary.maintenanceExcluded ?? 0} 条，证据未通过 ${changeSummary.qualityRejected ?? 0} 条。`
                 : ` 原始检测 ${changeSummary.totalDetected} 条。`}
+              {view.metrics.pipelineJobCount !== null
+                ? ` 数据管线 ${pipelineValue}${pipelineHealth?.overallStatus ? `（${pipelineHealth.overallStatus}）` : ""}。`
+                : ""}
             </p>
             {pipelineHealth && pipelineHealth.issueJobs.length > 0 && (
               <p>
