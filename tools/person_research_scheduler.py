@@ -20,6 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from tools.person_identity_contract import validate_generated_person_identity
 from tools.person_research_agent import (
     OUTPUT_PATH as AGENDA_PATH,
     PEOPLE_PATH,
@@ -348,7 +349,11 @@ def build_daily_queue(
     for slug, record in (agenda.get("people") or {}).items():
         if not isinstance(record, dict):
             continue
-        person = people.get(str(slug), {})
+        person = people.get(str(slug))
+        # Reject stale agenda rows before ranking or allocating either workstream.
+        # A display label in an old agenda is not a current person identity.
+        if person is None or not validate_generated_person_identity(person)["valid"]:
+            continue
         for task in record.get("tasks") or []:
             if not isinstance(task, dict):
                 continue

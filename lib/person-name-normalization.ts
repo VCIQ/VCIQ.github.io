@@ -1,3 +1,5 @@
+import identityPolicy from "./person-identity-policy.json";
+
 type GeneratedIdentityShape = {
   name: string;
   englishName: string;
@@ -17,8 +19,14 @@ export type CanonicalPersonIdentity = {
   aliases?: string[];
 };
 
+const WHITESPACE = new RegExp(identityPolicy.patterns.whitespace, "g");
+const CJK = new RegExp(identityPolicy.patterns.cjk);
+const LATIN = new RegExp(identityPolicy.patterns.latin);
+const HANDLE = new RegExp(identityPolicy.patterns.handle);
+const BILINGUAL_LABEL = new RegExp(identityPolicy.patterns.bilingualLabel);
+
 function clean(value: string): string {
-  return String(value ?? "").replace(/\s+/g, " ").trim();
+  return String(value ?? "").replace(WHITESPACE, " ").trim();
 }
 
 function key(value: string): string {
@@ -39,16 +47,16 @@ function unique(values: string[]): string[] {
 }
 
 function hasCjk(value: string): boolean {
-  return /[\u3400-\u9fff]/.test(value);
+  return CJK.test(value);
 }
 
 function hasLatin(value: string): boolean {
-  return /[A-Za-z\u00c0-\u024f]/.test(value);
+  return LATIN.test(value);
 }
 
 function splitHandle(raw: string): { label: string; handle: string } {
   const value = clean(raw);
-  const match = value.match(/^(.*?)\s+@([A-Za-z0-9_]{1,30})$/);
+  const match = value.match(HANDLE);
   if (!match) return { label: value, handle: "" };
   return { label: clean(match[1]), handle: clean(match[2]) };
 }
@@ -68,7 +76,7 @@ function splitHandle(raw: string): { label: string; handle: string } {
  */
 export function parsePersonIdentityLabel(raw: string): ParsedPersonIdentityLabel {
   const { label, handle } = splitHandle(raw);
-  const match = label.match(/^(.+?)\s*[（(]\s*([^()（）]+?)\s*[)）]?\s*$/);
+  const match = label.match(BILINGUAL_LABEL);
   if (match) {
     const left = clean(match[1]);
     const right = clean(match[2]);
