@@ -193,6 +193,7 @@ test("publication tier contract is authoritative and rejected rows stay private"
   assert.equal(view.metrics.companyCandidateCount, 1);
   assert.equal(view.metrics.candidateCount, 2);
   assert.equal(view.metrics.externalClueCount, 1);
+  assert.equal(view.metrics.rejectedCount, 1);
   assert.deepEqual(view.visibleChanges.map((item) => item.id), [
     "formal",
     "candidate",
@@ -201,6 +202,52 @@ test("publication tier contract is authoritative and rejected rows stay private"
   ]);
   assert.deepEqual(view.otherCandidateChanges.map((item) => item.id), ["malformed-candidate"]);
   assert.equal(view.reviewStatus, "automated_unreviewed");
+});
+
+test("whole-run publication totals do not collapse to the visible public subset", () => {
+  const fixture = report([
+    change("formal", "person", {
+      changeType: "external_event",
+      eligibleForKeyDevelopment: true,
+      publicationTier: "verified_change",
+    }),
+  ], {
+    changeSummary: {
+      totalDetected: 84,
+      total: 84,
+      byDataset: { person: 1 },
+      byChangeType: { external_event: 84 },
+      byPublicationTier: {
+        verified_change: 2,
+        candidate: 14,
+        external_clue: 54,
+        rejected: 14,
+      },
+      verifiedChangeTotal: 2,
+      candidateTotal: 14,
+      auxiliaryLeadTotal: 54,
+      rejectedTotal: 14,
+      highestImportance: 80,
+    },
+  });
+
+  const view = buildResearchAgentViewModel(fixture);
+  assert.deepEqual(view.publicationTotals, {
+    verifiedChangeCount: 2,
+    candidateCount: 14,
+    externalClueCount: 54,
+    rejectedCount: 14,
+  });
+  assert.equal(view.metrics.formalChangeCount, 2);
+  assert.equal(view.metrics.candidateCount, 14);
+  assert.equal(view.metrics.externalClueCount, 54);
+  assert.equal(view.metrics.rejectedCount, 14);
+  assert.deepEqual(view.visibleMetrics, {
+    formalChangeCount: 1,
+    companyCandidateCount: 0,
+    candidateCount: 0,
+    externalClueCount: 0,
+  });
 });
 
 test("new tier totals identify a healthy empty report as new-schema output", () => {
@@ -224,6 +271,7 @@ test("new tier totals identify a healthy empty report as new-schema output", () 
   assert.equal(view.metrics.companyCandidateCount, 0);
   assert.equal(view.metrics.candidateCount, 0);
   assert.equal(view.metrics.externalClueCount, 0);
+  assert.equal(view.metrics.rejectedCount, 0);
 });
 
 test("pre-contract JSON remains readable but a degraded legacy run is isolated", () => {
