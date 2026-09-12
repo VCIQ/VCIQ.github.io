@@ -1,0 +1,99 @@
+name: Read-only frequent recovery acceptance 20260912
+on:
+  push:
+    branches: [audit/pipeline-refresh-health-20260912]
+    paths: [.github/workflows/frequent-recovery-acceptance-20260912.yml]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Read producer result, handoff and exact live public data
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/frequent-recovery-acceptance
+          python - <<'PY'
+          import datetime, hashlib, json, pathlib, re, subprocess, urllib.request
+          out = pathlib.Path('/tmp/frequent-recovery-acceptance')
+          repo = 'VCIQ/VCIQ.github.io'
+          def api(path):
+              return json.loads(subprocess.check_output(['gh','api',path],text=True,timeout=60))
+          def live(path):
+              req=urllib.request.Request('https://vciq.github.io/'+path,headers={'Cache-Control':'no-cache','User-Agent':'VCIQ-read-only-recovery-audit'})
+              with urllib.request.urlopen(req,timeout=35) as res:
+                  return res.read()
+          def git_bytes(ref,path):
+              return subprocess.check_output(['git','show',f'{ref}:{path}'],timeout=35)
+          def run_summary(row):
+              return {k:row.get(k) for k in ['id','name','event','status','conclusion','head_sha','created_at','updated_at','html_url']}
+          report={'checkedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'mainSha':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'productionWrites':False}
+          run=api(f'repos/{repo}/actions/runs/34667884180')
+          report['recoveryRun']=run_summary(run)
+          jobs=api(f'repos/{repo}/actions/runs/34667884180/jobs?per_page=100')['jobs']
+          report['recoveryJobs']=[{k:j.get(k) for k in ['id','name','status','conclusion','steps']} for j in jobs]
+          report['producerLogSignals']=[]
+          for job in jobs:
+              if job['status']!='completed': continue
+              p=subprocess.run(['gh','run','view','34667884180','--repo',repo,'--job',str(job['id']),'--log'],capture_output=True,text=True,timeout=90)
+              for line in p.stdout.splitlines():
+                  if '\x1b[' in line: continue
+                  if re.search(r'(\[main |HEAD -> main|completedAt|lastNewsCrawlAt|actions/runs/[0-9]+|Preserved|changed=false|nothing to commit|::error|\[error\])',line):
+                      report['producerLogSignals'].append(re.sub(r'(https?://[^\s?]+)\?[^\s]+',r'\1?[redacted]',line))
+          report['workflows']={}
+          for name in ['frequent-intelligence-refresh.yml','company-candidate-discovery.yml','pages.yml','research-agent-v1.yml']:
+              rows=api(f'repos/{repo}/actions/workflows/{name}/runs?branch=main&per_page=4')['workflow_runs']
+              report['workflows'][name]=[]
+              for row in rows:
+                  compact=run_summary(row)
+                  if name in ['company-candidate-discovery.yml','pages.yml']:
+                      compact['jobs']=[{k:j.get(k) for k in ['name','status','conclusion']} for j in api(f'repos/{repo}/actions/runs/{row["id"]}/jobs?per_page=100')['jobs']]
+                  report['workflows'][name].append(compact)
+          mainhealth=json.loads(pathlib.Path('public/data/pipeline_health.json').read_text())
+          mainlineage=json.loads(pathlib.Path('public/data/data_lineage.json').read_text())
+          report['mainHealth']={'generatedAt':mainhealth.get('generatedAt'),'summary':mainhealth.get('summary'),'jobs':[{k:r.get(k) for k in ['jobId','status','lastCompletedAt','lastSuccessfulRunAt','freshnessStatus']} for r in mainhealth.get('jobs',[])]}
+          report['mainArticleProducer']=mainlineage['artifacts']['public/data/articles.json'].get('producer')
+          report['mainArticleRefreshAudit']=json.loads(pathlib.Path('public/data/articles.json').read_text()).get('refreshAudit')
+          report['liveChecks']=[]
+          try:
+              provenance=json.loads(live('build-provenance.json'))
+              report['liveProvenance']=provenance
+              sha=provenance['sourceSha']
+              assert re.fullmatch('[0-9a-f]{40}',sha)
+              for path in ['articles.json','source_health.json','person_research_agenda.json','person_research_queue.json','research_agent_daily.json']:
+                  raw=live('data/'+path)
+                  original=git_bytes(sha,'public/data/'+path)
+                  report['liveChecks'].append({'path':path,'matchesSource':raw==original,'sha256':hashlib.sha256(raw).hexdigest(),'bytes':len(raw)})
+                  value=json.loads(raw)
+                  if path=='articles.json':report['liveArticleRefreshAudit']=value.get('refreshAudit')
+                  if path=='research_agent_daily.json':report['liveResearchSummary']={'researchScope':value.get('researchScope'),'thesisObservationCount':len((value.get('thesisMemory') or {}).get('observations') or [])}
+              h=json.loads(live('data/pipeline_health.json'))
+              report['liveHealth']={'generatedAt':h.get('generatedAt'),'summary':h.get('summary'),'jobs':[{k:r.get(k) for k in ['jobId','status','lastCompletedAt','lastSuccessfulRunAt','freshnessStatus']} for r in h.get('jobs',[])]}
+              lineage=json.loads(live('data/data_lineage.json'))
+              report['liveArticleProducer']=lineage['artifacts']['public/data/articles.json'].get('producer')
+              report['sameLiveVersionAtEnd']=json.loads(live('build-provenance.json'))['sourceSha']==sha
+          except Exception as exc:
+              report['liveError']=str(exc)
+          (out/'recovery-audit.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+          print(json.dumps({k:report.get(k) for k in ['checkedAt','mainSha','recoveryRun','producerLogSignals','mainArticleProducer','liveArticleProducer','sameLiveVersionAtEnd','liveError']},ensure_ascii=False))
+          PY
+          git diff --exit-code
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: frequent-recovery-acceptance-20260912
+          path: /tmp/frequent-recovery-acceptance
+          retention-days: 14
