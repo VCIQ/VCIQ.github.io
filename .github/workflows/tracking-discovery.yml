@@ -228,7 +228,7 @@ jobs:
           commit_current_config() {
             HAS_PUBLICATION=false
             CONFIG_CHANGED=false
-            git add "${CONFIG_PATHS[@]}" public/data/source_health.json
+            git add config/user_tracking.json config/tracking_auto_discovery.json public/data/source_health.json
             if ! git diff --cached --quiet -- "${CONFIG_PATHS[@]}"; then
               CONFIG_CHANGED=true
             fi
