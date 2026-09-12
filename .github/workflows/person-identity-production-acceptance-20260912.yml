@@ -1,0 +1,55 @@
+name: Person identity production acceptance 20260912
+on:
+  push:
+    branches: [audit/person-identity-production-acceptance-20260912]
+    paths:
+      - tools/audit_person_identity_production_20260912.py
+      - .github/workflows/person-identity-production-acceptance-20260912.yml
+permissions:
+  contents: read
+jobs:
+  accept:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: audit
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: b4542b7d863715109176283c2058f87cf8149d07
+          fetch-depth: 0
+          path: source
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install locked test dependencies
+        working-directory: source
+        run: npm ci
+      - name: Test Python and TypeScript identity contracts on actual production inputs
+        working-directory: source
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$GITHUB_WORKSPACE/acceptance"
+          python -m unittest tests.test_person_identity_contract tests.test_person_research_agent tests.test_person_research_scheduler tests.test_person_research_workstreams tests.test_full_refresh_input_guard 2>&1 | tee "$GITHUB_WORKSPACE/acceptance/python-tests.txt"
+          node --import tsx --test tests/person-identity-parity.test.ts tests/person-research-public-route-gate.test.ts 2>&1 | tee "$GITHUB_WORKSPACE/acceptance/typescript-tests.txt"
+      - name: Verify real agenda, allocation, lineage and production CDN without writing
+        working-directory: source
+        shell: bash
+        run: |
+          set -euo pipefail
+          AUDIT_OUTPUT="$GITHUB_WORKSPACE/acceptance" python ../audit/tools/audit_person_identity_production_20260912.py 2>&1 | tee "$GITHUB_WORKSPACE/acceptance/audit-log.txt"
+      - name: Preserve acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: person-identity-production-acceptance-20260912
+          path: acceptance/
+          retention-days: 14
+          if-no-files-found: error
