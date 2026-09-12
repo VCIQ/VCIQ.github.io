@@ -1,0 +1,50 @@
+name: Read-only STAR CNINFO dependency probe 20260912
+on:
+  push:
+    branches: [audit/pipeline-refresh-health-20260912]
+    paths: [.github/workflows/star-cninfo-probe-20260912.yml]
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Read the exact official dependency with existing bounded request logic
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/star-cninfo-probe
+          python - <<'PY'
+          import datetime, json, pathlib, subprocess, time
+          from tools import cninfo_structured_disclosures as cninfo
+          config = json.loads(pathlib.Path('config/star_market_investor_sources.json').read_text())
+          settings = config.get('settings', {})
+          result = {'checkedAt': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'sourceSha': subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(), 'url': cninfo.STOCK_LIST_URL, 'productionWrites': False}
+          started = time.monotonic()
+          try:
+              payload = cninfo.fetch_json(cninfo.STOCK_LIST_URL, timeout=int(settings.get('requestTimeout',24)), attempts=int(settings.get('requestAttempts',2)))
+              ids = cninfo.parse_org_ids(payload)
+              result.update({'status': 'ok' if ids else 'invalid-response', 'organizationCount': len(ids), 'starOrganizationCount': sum(code.startswith('688') for code in ids)})
+          except Exception as exc:
+              result.update({'status': 'failed', 'errorType': type(exc).__name__, 'error': str(exc)})
+          result['elapsedSeconds'] = round(time.monotonic()-started, 3)
+          pathlib.Path('/tmp/star-cninfo-probe/result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+          print(json.dumps(result,ensure_ascii=False))
+          if result['status'] != 'ok':
+              raise SystemExit(1)
+          PY
+          git diff --exit-code
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: star-cninfo-dependency-probe
+          path: /tmp/star-cninfo-probe
+          retention-days: 14
