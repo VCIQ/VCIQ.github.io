@@ -1,0 +1,52 @@
+name: Read-only recovery handoff and errors 20260912
+on:
+  push:
+    branches: [audit/pipeline-refresh-health-20260912]
+    paths: [.github/workflows/recovery-handoff-errors-20260912.yml]
+permissions:
+  actions: read
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Collect bounded diagnostic excerpts without modifying production
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/handoff-errors
+          python3 - <<'PY'
+          import datetime, json, pathlib, re, subprocess
+          repo='VCIQ/VCIQ.github.io'
+          def api(path):
+              return json.loads(subprocess.check_output(['gh','api',path],text=True,timeout=45))
+          def brief(row):
+              return {k:row.get(k) for k in ['id','name','event','status','conclusion','created_at','updated_at','head_sha','html_url']}
+          output={'checkedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'productionWrites':False,'logs':{},'workflows':{}}
+          for run,job in [(34668420099,103484966946),(34664146072,103472542581)]:
+              proc=subprocess.run(['gh','run','view',str(run),'--repo',repo,'--job',str(job),'--log'],capture_output=True,text=True,timeout=60)
+              lines=proc.stdout.splitlines()
+              kept=[]
+              for i,line in enumerate(lines):
+                  if re.search(r'(Traceback|Error:|\[error\]|\[main |actions/runs/[0-9]+|reached a fixed point|Candidate .*changed|Tracking inputs changed|post_onboarding_handoff|research_agent_model_success|research_agent_model_failure)',line):
+                      kept.extend(lines[max(0,i-2):min(len(lines),i+6)])
+              output['logs'][str(run)]={'jobId':job,'readStatus':proc.returncode,'excerpts':list(dict.fromkeys(re.sub(r'(https?://[^\s?]+)\?[^\s]+',r'\1?[redacted]',x) for x in kept))}
+          for name in ['company-candidate-onboarding.yml','scheduled-sync.yml','pages.yml']:
+              rows=api(f'repos/{repo}/actions/workflows/{name}/runs?branch=main&per_page=3')['workflow_runs']
+              output['workflows'][name]=[]
+              for row in rows:
+                  b=brief(row)
+                  b['jobs']=[{k:j.get(k) for k in ['id','name','status','conclusion','steps']} for j in api(f'repos/{repo}/actions/runs/{row["id"]}/jobs?per_page=100')['jobs']]
+                  output['workflows'][name].append(b)
+          pathlib.Path('/tmp/handoff-errors/diagnostics.json').write_text(json.dumps(output,ensure_ascii=False,indent=2)+'\n')
+          print(json.dumps({k:v for k,v in output.items() if k!='workflows'},ensure_ascii=False))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: recovery-handoff-errors-20260912
+          path: /tmp/handoff-errors
+          retention-days: 14
