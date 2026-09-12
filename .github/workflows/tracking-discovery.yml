@@ -30,6 +30,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: vciq-repository-writer-${{ github.ref }}
@@ -42,6 +43,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          # Resolve main only after acquiring the shared writer queue.
+          ref: main
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
@@ -67,7 +70,11 @@ jobs:
             tests.test_tracking_source_governance \
             tests.test_tracking_institution_people \
             tests.test_tracking_sample_company_people \
-            tests.test_tracking_person_channels
+            tests.test_tracking_person_channels \
+            tests.test_tracking_discovery_workflow \
+            tests.test_tracking_discovery_publication \
+            tests.test_pipeline_control \
+            tests.test_pipeline_health_runtime
 
       - name: Govern tracking seeds before discovery
         id: seed-governance-before
@@ -191,7 +198,6 @@ jobs:
           fi
 
       - name: Validate the expanded config before committing
-        if: steps.changes.outputs.changed == 'true'
         run: |
           python tools/tracking_seed_governance.py --check
           python tools/tracking_source_governance.py --check
@@ -200,7 +206,7 @@ jobs:
           npm run validate:taxonomy
 
       - name: Commit expanded tracking config
-        if: steps.changes.outputs.changed == 'true'
+        id: publish
         env:
           EVENT_NAME: ${{ github.event_name }}
           EXPAND_MODE: ${{ steps.expand.outputs.mode }}
@@ -215,19 +221,36 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+          echo "published=false" >> "$GITHUB_OUTPUT"
+          CONFIG_PATHS=(config/user_tracking.json config/tracking_auto_discovery.json)
+          CONTROL_PATHS=(public/data/data_lineage.json public/data/pipeline_health.json)
+
           commit_current_config() {
-            git add \
-              config/user_tracking.json \
-              config/tracking_auto_discovery.json \
-              public/data/source_health.json
-            if git diff --cached --quiet; then
-              return 1
+            HAS_PUBLICATION=false
+            CONFIG_CHANGED=false
+            git add config/user_tracking.json config/tracking_auto_discovery.json public/data/source_health.json
+            if ! git diff --cached --quiet -- "${CONFIG_PATHS[@]}"; then
+              CONFIG_CHANGED=true
             fi
-            if [ "$DISCOVERY_MODE" = "govern-only" ]; then
+
+            # Only a completed full discovery is this producer's heartbeat.
+            # Governance-only and seed-only passes must not impersonate it.
+            # Keep source-health business timestamps unchanged on a no-op.
+            if [ "$DISCOVERY_MODE" = "full" ]; then
+              python tools/run_pipeline.py finalize tracking-entity-discovery --quality-gate passed
+              git add "${CONTROL_PATHS[@]}"
+            fi
+            if git diff --cached --quiet; then
+              return 0
+            fi
+            if [ "$CONFIG_CHANGED" != "true" ]; then
+              git commit -m "ci: record completed tracking discovery"
+            elif [ "$DISCOVERY_MODE" = "govern-only" ]; then
               git commit -m "config: govern automatic tracking seed lifecycle"
             else
               git commit -m "config: expand tracking entities from public web sources [auto-discovery]"
             fi
+            HAS_PUBLICATION=true
           }
 
           regenerate_from_latest_main() {
@@ -269,13 +292,16 @@ jobs:
             npm run validate:taxonomy
           }
 
-          if ! commit_current_config; then
+          commit_current_config
+          if [ "$HAS_PUBLICATION" != "true" ]; then
             echo "nothing to commit"
             exit 0
           fi
 
           for attempt in 1 2 3; do
             if git push origin HEAD:main; then
+              echo "published=true" >> "$GITHUB_OUTPUT"
+              echo "config_changed=$CONFIG_CHANGED" >> "$GITHUB_OUTPUT"
               exit 0
             fi
 
@@ -285,8 +311,26 @@ jobs:
 
             echo "main advanced; replaying discovery from latest main (attempt $((attempt + 1))/3)"
             regenerate_from_latest_main
-            if ! commit_current_config; then
+            commit_current_config
+            if [ "$HAS_PUBLICATION" != "true" ]; then
               echo "latest main already contains all discovery changes"
               exit 0
             fi
           done
+
+      - name: Hand off the committed discovery result
+        if: steps.publish.outputs.published == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CONFIG_CHANGED: ${{ steps.publish.outputs.config_changed }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          # GITHUB_TOKEN pushes do not trigger the full-refresh push workflow.
+          # Changed crawler inputs need a real refresh before terminal Pages;
+          # a validated heartbeat-only commit only needs publication.
+          if [ "$CONFIG_CHANGED" = "true" ]; then
+            gh workflow run scheduled-sync.yml --ref main --repo "$GITHUB_REPOSITORY"
+          else
+            gh workflow run pages.yml --ref main --repo "$GITHUB_REPOSITORY"
+          fi

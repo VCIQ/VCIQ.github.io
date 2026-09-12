@@ -85,10 +85,12 @@ class TrackingDiscoveryWorkflowTests(unittest.TestCase):
         self.assertIn(guard, replay)
         self.assertLess(replay.index(guard), replay.index("npm run validate:taxonomy"))
 
-    def test_successful_push_relies_on_the_full_refresh_push_trigger(self) -> None:
+    def test_successful_bot_push_explicitly_dispatches_the_full_refresh(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("if git push origin HEAD:main; then", text)
-        self.assertNotIn("gh workflow run scheduled-sync.yml --ref main", text)
+        self.assertIn("gh workflow run scheduled-sync.yml --ref main", text)
+        self.assertIn("actions: write", text)
+        self.assertIn("steps.publish.outputs.published == 'true'", text)
 
     def test_workflow_keeps_the_shared_writer_queue(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
