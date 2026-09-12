@@ -1,0 +1,26 @@
+name: Request current lightweight refresh 20260912
+on:
+  push:
+    branches: [audit/pipeline-refresh-health-20260912]
+    paths: [.github/workflows/recover-frequent-refresh-20260912.yml]
+permissions:
+  actions: write
+  contents: read
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Avoid duplicate writers and request the normal due-checked crawl
+        shell: bash
+        run: |
+          set -euo pipefail
+          runs=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow frequent-intelligence-refresh.yml --branch main --limit 10 --json databaseId,status,createdAt,url)
+          printf '%s\n' "$runs"
+          if printf '%s' "$runs" | jq -e 'any(.[]; .status == "in_progress" or .status == "queued" or .status == "pending" or .status == "waiting")' >/dev/null; then
+            echo 'A lightweight refresh is already active; no duplicate dispatched.'
+            exit 0
+          fi
+          gh workflow run frequent-intelligence-refresh.yml --repo "$GITHUB_REPOSITORY" --ref main -f force_crawl=false
