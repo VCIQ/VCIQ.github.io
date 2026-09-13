@@ -63,6 +63,32 @@ class ResearchAgentDatasetIsolationTest(unittest.TestCase):
         self.assertIsNone(target)
         self.assertEqual(ambiguous, [])
 
+    def test_cross_dataset_event_does_not_create_conflict(self) -> None:
+        observation = self._observation("intelligenceEvent")
+        observation["scalarClaims"] = {"role": "cto"}
+        entry = self._entry("person")
+        entry["scalarClaims"] = {"role": "ceo"}
+        reasons, related = agent._event_conflicts(
+            observation,
+            None,
+            {"evt-other-dataset": entry},
+        )
+        self.assertEqual(reasons, [])
+        self.assertEqual(related, [])
+
+    def test_same_dataset_conflict_still_detected(self) -> None:
+        observation = self._observation("person")
+        observation["scalarClaims"] = {"role": "cto"}
+        entry = self._entry("person")
+        entry["scalarClaims"] = {"role": "ceo"}
+        reasons, related = agent._event_conflicts(
+            observation,
+            None,
+            {"evt-same-dataset": entry},
+        )
+        self.assertTrue(reasons)
+        self.assertEqual(related, ["evt-same-dataset"])
+
     def test_missing_legacy_dataset_remains_compatible(self) -> None:
         observation = self._observation("person")
         entry = self._entry("")

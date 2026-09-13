@@ -2745,6 +2745,8 @@ def _event_conflicts(
         current_claims = {}
 
     for event_id, entry in events.items():
+        if not _event_datasets_compatible(observation, entry):
+            continue
         prior_dates = _ledger_entry_dates(entry)
         same_effective_date = bool(current_date and current_date in prior_dates)
         prior_claims = entry.get("scalarClaims")
