@@ -35,8 +35,8 @@ jobs:
           new = '''def _event_datasets_compatible(
               observation: Mapping[str, Any], entry: Mapping[str, Any]
           ) -> bool:
-              observation_dataset = _event_dataset(observation)
-              entry_dataset = _event_dataset(entry)
+              observation_dataset = str(observation.get("dataset") or "").strip()
+              entry_dataset = str(entry.get("dataset") or "").strip()
               return not (
                   observation_dataset
                   and entry_dataset
