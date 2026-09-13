@@ -1,0 +1,57 @@
+name: Patch Research Agent validation policy parity
+
+on:
+  push:
+    branches:
+      - fix/research-agent-validation-policy-parity-20260913
+
+permissions:
+  contents: write
+
+jobs:
+  patch-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/research-agent-validation-policy-parity-20260913
+          fetch-depth: 0
+
+      - name: Patch production checker entrypoint and workflow regression
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          workflow = Path('.github/workflows/research-agent-v1.yml')
+          text = workflow.read_text(encoding='utf-8')
+          old = '      - name: Validate published research contract\n        run: python tools/research_agent.py --check\n'
+          new = '      - name: Validate published research contract\n        # Validate under the same composed policy stack used to generate the report.\n        # In particular, track/technology publication tiers are installed by the\n        # research-object bridge and must not be reinterpreted by the bare core agent.\n        run: python tools/research_agent_enhanced_runtime.py --check\n'
+          if old not in text:
+              raise SystemExit('published contract checker anchor not found')
+          workflow.write_text(text.replace(old, new, 1), encoding='utf-8')
+
+          test_path = Path('tests/test_research_agent_workflow.py')
+          test_text = test_path.read_text(encoding='utf-8')
+          anchor = '''    def test_publication_race_fails_instead_of_rebasing_a_stale_report(self) -> None:\n'''
+          addition = '''    def test_published_contract_uses_the_same_enhanced_policy_stack_as_generation(self) -> None:\n        text = WORKFLOW.read_text(encoding="utf-8")\n        self.assertIn(\n            "run: python tools/research_agent_enhanced_runtime.py --check", text\n        )\n        self.assertNotIn(\n            "run: python tools/research_agent.py --check", text\n        )\n        self.assertLess(\n            text.index("Generate evidence-linked daily research"),\n            text.index("Validate published research contract"),\n        )\n\n'''
+          if anchor not in test_text:
+              raise SystemExit('workflow test anchor not found')
+          test_path.write_text(test_text.replace(anchor, addition + anchor, 1), encoding='utf-8')
+          PY
+
+      - name: Run focused parity regressions
+        run: |
+          python -m unittest tests.test_research_agent_workflow
+          python -m unittest tests.test_research_agent_research_objects
+          python -m unittest tests.test_research_agent_event_history
+
+      - name: Commit parity fix and remove bootstrap workflow
+        shell: bash
+        run: |
+          rm .github/workflows/patch-research-agent-validation-policy-parity.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/workflows/research-agent-v1.yml tests/test_research_agent_workflow.py .github/workflows/patch-research-agent-validation-policy-parity.yml
+          git commit -m "fix: validate research output with production policy stack"
+          git push origin HEAD:fix/research-agent-validation-policy-parity-20260913
