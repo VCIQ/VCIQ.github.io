@@ -1,0 +1,97 @@
+name: Patch Research Agent dataset conflict isolation
+
+on:
+  push:
+    branches:
+      - fix/research-agent-dataset-isolation-20260913
+
+permissions:
+  contents: write
+
+jobs:
+  patch-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/research-agent-dataset-isolation-20260913
+          fetch-depth: 0
+
+      - name: Patch conflict isolation and regression test
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('tools/research_agent.py')
+          text = path.read_text()
+          old = '''    for event_id, entry in events.items():
+                  prior_dates = _ledger_entry_dates(entry)
+                  same_effective_date = bool(current_date and current_date in prior_dates)
+          '''
+          new = '''    for event_id, entry in events.items():
+                  if not _event_datasets_compatible(observation, entry):
+                      continue
+                  prior_dates = _ledger_entry_dates(entry)
+                  same_effective_date = bool(current_date and current_date in prior_dates)
+          '''
+          if old not in text:
+              raise SystemExit('event conflict anchor not found')
+          path.write_text(text.replace(old, new, 1))
+
+          test_path = Path('tests/test_research_agent_dataset_isolation.py')
+          test_text = test_path.read_text()
+          anchor = '''    def test_missing_legacy_dataset_remains_compatible(self) -> None:
+                  observation = self._observation("person")
+                  entry = self._entry("")
+                  self.assertTrue(agent._event_datasets_compatible(observation, entry))
+          '''
+          replacement = '''    def test_cross_dataset_event_does_not_create_conflict(self) -> None:
+                  observation = self._observation("intelligenceEvent")
+                  observation["scalarClaims"] = {"role": "cto"}
+                  entry = self._entry("person")
+                  entry["scalarClaims"] = {"role": "ceo"}
+                  reasons, related = agent._event_conflicts(
+                      observation,
+                      None,
+                      {"evt-other-dataset": entry},
+                  )
+                  self.assertEqual(reasons, [])
+                  self.assertEqual(related, [])
+
+              def test_same_dataset_conflict_still_detected(self) -> None:
+                  observation = self._observation("person")
+                  observation["scalarClaims"] = {"role": "cto"}
+                  entry = self._entry("person")
+                  entry["scalarClaims"] = {"role": "ceo"}
+                  reasons, related = agent._event_conflicts(
+                      observation,
+                      None,
+                      {"evt-same-dataset": entry},
+                  )
+                  self.assertTrue(reasons)
+                  self.assertEqual(related, ["evt-same-dataset"])
+
+              def test_missing_legacy_dataset_remains_compatible(self) -> None:
+                  observation = self._observation("person")
+                  entry = self._entry("")
+                  self.assertTrue(agent._event_datasets_compatible(observation, entry))
+          '''
+          if anchor not in test_text:
+              raise SystemExit('dataset test anchor not found')
+          test_path.write_text(test_text.replace(anchor, replacement, 1))
+          PY
+
+      - name: Run focused regression tests
+        run: |
+          python -m unittest tests.test_research_agent_dataset_isolation tests.test_research_agent_event_history
+
+      - name: Commit conflict isolation and remove bootstrap workflow
+        shell: bash
+        run: |
+          rm .github/workflows/patch-research-agent-dataset-conflicts.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/research_agent.py tests/test_research_agent_dataset_isolation.py .github/workflows/patch-research-agent-dataset-conflicts.yml
+          git commit -m "test: isolate cross-dataset event conflicts"
+          git push origin HEAD:fix/research-agent-dataset-isolation-20260913
