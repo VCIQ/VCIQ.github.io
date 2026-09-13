@@ -1,0 +1,196 @@
+name: Patch Research Agent dataset isolation
+
+on:
+  push:
+    branches:
+      - fix/research-agent-dataset-isolation-20260913
+
+permissions:
+  contents: write
+
+jobs:
+  patch-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/research-agent-dataset-isolation-20260913
+          fetch-depth: 0
+
+      - name: Patch dataset-aware event reconciliation
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('tools/research_agent.py')
+          text = path.read_text()
+
+          old = '''def _observation_matches_entry(
+              observation: Mapping[str, Any], entry: Mapping[str, Any]
+          ) -> tuple[int, float, str] | None:
+              if not _event_entities_compatible(observation, entry):
+                  return None
+          '''
+          new = '''def _event_datasets_compatible(
+              observation: Mapping[str, Any], entry: Mapping[str, Any]
+          ) -> bool:
+              observation_dataset = _event_dataset(observation)
+              entry_dataset = _event_dataset(entry)
+              return not (
+                  observation_dataset
+                  and entry_dataset
+                  and observation_dataset != entry_dataset
+              )
+
+
+          def _observation_matches_entry(
+              observation: Mapping[str, Any], entry: Mapping[str, Any]
+          ) -> tuple[int, float, str] | None:
+              if not _event_datasets_compatible(observation, entry):
+                  return None
+              if not _event_entities_compatible(observation, entry):
+                  return None
+          '''
+          if old not in text:
+              raise SystemExit('observation matcher anchor not found')
+          text = text.replace(old, new, 1)
+
+          old = '''    if not candidates:
+                  seeded_id = _new_event_id(observation)
+                  if seeded_id in events:
+                      return seeded_id, "seed", []
+                  return None, "new", []
+          '''
+          new = '''    if not candidates:
+                  seeded_id = _new_event_id(observation)
+                  if seeded_id in events and _event_datasets_compatible(
+                      observation, events[seeded_id]
+                  ):
+                      return seeded_id, "seed", []
+                  return None, "new", []
+          '''
+          if old not in text:
+              raise SystemExit('seed matcher anchor not found')
+          text = text.replace(old, new, 1)
+
+          old = '''    candidates: list[str] = []
+              for event_id, entry in events.items():
+                  if not _event_entities_compatible(observation, entry):
+                      continue
+          '''
+          new = '''    candidates: list[str] = []
+              for event_id, entry in events.items():
+                  if not _event_datasets_compatible(observation, entry):
+                      continue
+                  if not _event_entities_compatible(observation, entry):
+                      continue
+          '''
+          if old not in text:
+              raise SystemExit('correction matcher anchor not found')
+          text = text.replace(old, new, 1)
+
+          old = '''        event_id = _new_event_id(observation)
+                  if event_id in events:
+                      event_id = f"evt-{stable_hash([event_id, observation.get('sourceAlias')])}"
+          '''
+          new = '''        event_id = _new_event_id(observation)
+                  if event_id in events:
+                      event_id = f"evt-{stable_hash([event_id, observation.get('dataset'), observation.get('sourceAlias')])}"
+          '''
+          if old not in text:
+              raise SystemExit('collision fallback anchor not found')
+          text = text.replace(old, new, 1)
+
+          path.write_text(text)
+          PY
+
+          cat > tests/test_research_agent_dataset_isolation.py <<'PY'
+          from __future__ import annotations
+
+          import unittest
+
+          from tools import research_agent as agent
+
+
+          class ResearchAgentDatasetIsolationTest(unittest.TestCase):
+              def _observation(self, dataset: str) -> dict[str, object]:
+                  return {
+                      "dataset": dataset,
+                      "normalizedTitle": "示例人物发布重大更新",
+                      "publishedDate": "2026-09-13",
+                      "publishedDates": ["2026-09-13"],
+                      "entityKeys": ["entity:example"],
+                      "numericCues": [],
+                      "typeKeys": ["type:update"],
+                      "aliases": ["src-example"],
+                      "sourceAlias": "src-example",
+                      "sourceAliasNeedsTitleMatch": False,
+                      "fuzzyMatchThreshold": 0.86,
+                      "scalarClaims": {"role": "cto"},
+                  }
+
+              def _entry(self, dataset: str) -> dict[str, object]:
+                  return {
+                      "dataset": dataset,
+                      "titleAliases": ["示例人物发布重大更新"],
+                      "publishedDate": "2026-09-13",
+                      "publishedDates": ["2026-09-13"],
+                      "entityKeys": ["entity:example"],
+                      "numericCues": [],
+                      "typeKeys": ["type:update"],
+                      "sourceAliases": ["src-example"],
+                      "scalarClaims": {"role": "cto"},
+                  }
+
+              def test_regular_match_rejects_cross_dataset_event(self) -> None:
+                  observation = self._observation("intelligenceEvent")
+                  entry = self._entry("person")
+                  self.assertIsNone(agent._observation_matches_entry(observation, entry))
+
+              def test_regular_match_preserves_same_dataset_behavior(self) -> None:
+                  observation = self._observation("person")
+                  entry = self._entry("person")
+                  self.assertIsNotNone(agent._observation_matches_entry(observation, entry))
+
+              def test_seed_reuse_cannot_bypass_dataset_gate(self) -> None:
+                  observation = self._observation("intelligenceEvent")
+                  seeded_id = agent._new_event_id(observation)
+                  events = {seeded_id: self._entry("person")}
+                  matched_id, kind, ambiguous = agent._match_event_entry(observation, events)
+                  self.assertIsNone(matched_id)
+                  self.assertEqual(kind, "new")
+                  self.assertEqual(ambiguous, [])
+
+              def test_correction_target_rejects_cross_dataset_event(self) -> None:
+                  observation = self._observation("intelligenceEvent")
+                  observation["correctionCue"] = True
+                  observation["correctionStrength"] = 4
+                  events = {"evt-old": self._entry("person")}
+                  target, ambiguous = agent._event_correction_target(observation, events)
+                  self.assertIsNone(target)
+                  self.assertEqual(ambiguous, [])
+
+              def test_missing_legacy_dataset_remains_compatible(self) -> None:
+                  observation = self._observation("person")
+                  entry = self._entry("")
+                  self.assertTrue(agent._event_datasets_compatible(observation, entry))
+
+
+          if __name__ == "__main__":
+              unittest.main()
+          PY
+
+      - name: Run focused regression tests
+        run: |
+          python -m unittest tests.test_research_agent_dataset_isolation tests.test_research_agent_event_history
+
+      - name: Commit production patch and remove bootstrap workflow
+        shell: bash
+        run: |
+          rm .github/workflows/patch-research-agent-dataset-isolation.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/research_agent.py tests/test_research_agent_dataset_isolation.py .github/workflows/patch-research-agent-dataset-isolation.yml
+          git commit -m "fix: isolate research-agent ledger events by dataset"
+          git push origin HEAD:fix/research-agent-dataset-isolation-20260913
