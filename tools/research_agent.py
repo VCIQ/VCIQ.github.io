@@ -1404,7 +1404,7 @@ def _publication_tier(dataset: str, sources: Iterable[Mapping[str, Any]]) -> str
         return "rejected"
     if dataset == "intelligenceEvent":
         return "external_clue"
-    if dataset in {"person", "ventureCompany"} and any(
+    if dataset in {"person", "ventureCompany", "track", "technology"} and any(
         _is_verified_source(source) for source in supporting
     ):
         return "verified_change"
