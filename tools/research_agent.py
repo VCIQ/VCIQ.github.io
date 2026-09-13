@@ -2572,9 +2572,23 @@ def _ledger_entry_dates(entry: Mapping[str, Any]) -> list[str]:
     return values
 
 
+def _event_datasets_compatible(
+    observation: Mapping[str, Any], entry: Mapping[str, Any]
+) -> bool:
+    observation_dataset = str(observation.get("dataset") or "").strip()
+    entry_dataset = str(entry.get("dataset") or "").strip()
+    return not (
+        observation_dataset
+        and entry_dataset
+        and observation_dataset != entry_dataset
+    )
+
+
 def _observation_matches_entry(
     observation: Mapping[str, Any], entry: Mapping[str, Any]
 ) -> tuple[int, float, str] | None:
+    if not _event_datasets_compatible(observation, entry):
+        return None
     if not _event_entities_compatible(observation, entry):
         return None
     aliases = {str(value) for value in observation.get("aliases", []) if value}
@@ -2651,7 +2665,9 @@ def _match_event_entry(
         candidates.append((score, similarity, str(event_id), kind))
     if not candidates:
         seeded_id = _new_event_id(observation)
-        if seeded_id in events:
+        if seeded_id in events and _event_datasets_compatible(
+            observation, events[seeded_id]
+        ):
             return seeded_id, "seed", []
         return None, "new", []
     candidates.sort(reverse=True)
@@ -2671,6 +2687,8 @@ def _event_correction_target(
         return None, []
     candidates: list[str] = []
     for event_id, entry in events.items():
+        if not _event_datasets_compatible(observation, entry):
+            continue
         if not _event_entities_compatible(observation, entry):
             continue
         dates_close = any(
@@ -2727,6 +2745,8 @@ def _event_conflicts(
         current_claims = {}
 
     for event_id, entry in events.items():
+        if not _event_datasets_compatible(observation, entry):
+            continue
         prior_dates = _ledger_entry_dates(entry)
         same_effective_date = bool(current_date and current_date in prior_dates)
         prior_claims = entry.get("scalarClaims")
@@ -2922,7 +2942,7 @@ def _classify_event_observation(
     if matched_event_id is None:
         event_id = _new_event_id(observation)
         if event_id in events:
-            event_id = f"evt-{stable_hash([event_id, observation.get('sourceAlias')])}"
+            event_id = f"evt-{stable_hash([event_id, observation.get('dataset'), observation.get('sourceAlias')])}"
         entry = _new_ledger_entry(event_id, observation, generated_at)
         events[event_id] = entry
         lifecycle = "correction" if strong_correction and supersedes_event_id else "first_seen"
