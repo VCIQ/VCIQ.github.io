@@ -149,6 +149,10 @@ class ResearchAgentResearchObjectTests(unittest.TestCase):
         with mock.patch.object(target, "_AGENT", agent):
             self.assertEqual(target.publication_tier("technology", [official]), "verified_change")
             self.assertEqual(target.publication_tier("track", [media]), "candidate")
+        self.assertEqual(agent._publication_tier("technology", [official]), "verified_change")
+        self.assertEqual(agent._publication_tier("track", [official]), "verified_change")
+        self.assertEqual(agent._publication_tier("technology", [media]), "candidate")
+        self.assertEqual(agent._publication_tier("track", [media]), "candidate")
 
     def test_scope_becomes_active_only_when_object_datasets_exist(self) -> None:
         active = target.research_scope(
