@@ -1,20 +1,42 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { LiveStatus } from "@/components/live-status";
+import { PwaRegister } from "@/components/pwa-register";
 import { SiteClientControls } from "@/components/site-client-controls";
 import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
 import "./fixed-light-scheme.css";
 import "./header-responsive.css";
 import "./detail-visual.css";
+import "./pwa.css";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#f3f2ec",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://vciq.github.io"),
+  applicationName: "丽泽路1号",
+  manifest: "/manifest.webmanifest",
   title: {
     default: "丽泽路1号｜一级市场科技研究",
     template: "%s｜丽泽路1号",
   },
   description: "围绕核心赛道、重点技术主题、核心技术对象、核心人物与核心公司的可追溯一级市场科技研究。",
-  icons: { icon: "/favicon.svg" },
+  icons: {
+    icon: "/favicon.svg",
+    apple: "/apple-touch-icon.png",
+  },
+  appleWebApp: {
+    capable: true,
+    title: "丽泽路1号",
+    statusBarStyle: "default",
+  },
+  formatDetection: {
+    telephone: false,
+  },
   openGraph: {
     title: "丽泽路1号",
     description: "以核心赛道、技术主题和具体技术对象分层组织公开、克制、可追溯的一级市场科技研究。",
@@ -29,6 +51,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <SiteHeader status={<LiveStatus />} />
         {children}
+        <PwaRegister />
         <SiteClientControls />
         <footer className="site-footer">
           <div>

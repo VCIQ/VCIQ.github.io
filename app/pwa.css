@@ -1,0 +1,20 @@
+/* Standalone/PWA-only adjustments. Normal browser rendering is unchanged. */
+@media (display-mode: standalone) {
+  html,
+  body {
+    min-height: 100%;
+    min-height: 100dvh;
+  }
+
+  body {
+    overscroll-behavior-y: none;
+  }
+
+  .site-header {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .site-footer {
+    padding-bottom: calc(45px + env(safe-area-inset-bottom));
+  }
+}
