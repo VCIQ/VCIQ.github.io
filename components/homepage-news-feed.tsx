@@ -84,6 +84,8 @@ type DismissedNotice = {
   title: string;
 };
 
+// Homepage channels answer “what topic/object do I want to read?”. Priority (P0/P1/P2)
+// stays orthogonal as ranking/filter metadata and must not become a top-level channel.
 const CHANNELS: ReadonlyArray<{
   id: ChannelId;
   label: string;
@@ -515,7 +517,7 @@ export function HomepageNewsFeed({
       </div>
 
       <div className={styles.channelBar}>
-        <nav className={styles.channelRail} aria-label="情报频道">
+        <nav className={styles.channelRail} aria-label="情报频道（主题与对象；优先级不作为频道）">
           {CHANNELS.map((item) => (
             <button
               type="button"

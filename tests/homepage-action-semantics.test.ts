@@ -59,3 +59,14 @@ test("homepage utility actions offer share and event-specific deep research", as
   assert.match(feed, />\s*深研此条\s*</u);
   assert.doesNotMatch(feed, />\s*深度研究\s*</u);
 });
+
+
+test("homepage keeps P0/P1/P2 as priority metadata rather than top-level channels", async () => {
+  const feed = await source("components/homepage-news-feed.tsx");
+  assert.match(feed, /情报频道（主题与对象；优先级不作为频道）/u);
+  assert.match(feed, /label: "AI \/ AGI"/u);
+  assert.match(feed, /label: "人物"/u);
+  assert.match(feed, /label: "公司"/u);
+  assert.doesNotMatch(feed, /\{ id: "p[012]", label: "P[012]"/u);
+  assert.doesNotMatch(feed, /label: "P0"|label: "P1"|label: "P2"/u);
+});
