@@ -18,14 +18,3 @@
     padding-bottom: calc(45px + env(safe-area-inset-bottom));
   }
 }
-
-@supports (padding: max(0px)) {
-  @media (max-width: 900px) {
-    .header-inner,
-    .page-shell,
-    .site-footer {
-      padding-left: env(safe-area-inset-left);
-      padding-right: env(safe-area-inset-right);
-    }
-  }
-}
