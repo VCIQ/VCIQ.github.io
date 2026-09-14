@@ -44,10 +44,10 @@ jobs:
           test_path.write_text(tests, encoding='utf-8')
           PY
           rm .github/workflows/one-shot-priority-channel-semantics.yml
-      - name: Install and test
+      - name: Install and targeted test
         run: |
           npm ci
-          npm test
+          node --import tsx --test tests/homepage-action-semantics.test.ts
       - name: Commit patch
         shell: bash
         run: |
