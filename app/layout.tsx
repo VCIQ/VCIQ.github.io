@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   description: "围绕核心赛道、重点技术主题、核心技术对象、核心人物与核心公司的可追溯一级市场科技研究。",
   icons: {
     icon: "/favicon.svg",
-    apple: "/favicon.svg",
+    apple: "/apple-touch-icon.png",
   },
   appleWebApp: {
     capable: true,
