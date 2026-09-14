@@ -5,8 +5,7 @@ enum AppConfiguration {
     static let allowedHost = "vciq.github.io"
 
     static func isInternal(_ url: URL) -> Bool {
-        guard let scheme = url.scheme?.lowercased(),
-              scheme == "https" || scheme == "http" else {
+        guard url.scheme?.lowercased() == "https" else {
             return false
         }
         return url.host?.lowercased() == allowedHost
