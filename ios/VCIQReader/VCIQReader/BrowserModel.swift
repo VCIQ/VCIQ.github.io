@@ -2,7 +2,6 @@ import Combine
 import Foundation
 import WebKit
 
-@MainActor
 final class BrowserModel: ObservableObject {
     @Published private(set) var currentURL: URL = AppConfiguration.homeURL
     @Published private(set) var canGoBack = false
