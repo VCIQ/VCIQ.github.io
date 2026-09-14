@@ -1,0 +1,31 @@
+/* Standalone/PWA-only adjustments. Normal browser rendering is unchanged. */
+@media (display-mode: standalone) {
+  html,
+  body {
+    min-height: 100%;
+    min-height: 100dvh;
+  }
+
+  body {
+    overscroll-behavior-y: none;
+  }
+
+  .site-header {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .site-footer {
+    padding-bottom: calc(45px + env(safe-area-inset-bottom));
+  }
+}
+
+@supports (padding: max(0px)) {
+  @media (max-width: 900px) {
+    .header-inner,
+    .page-shell,
+    .site-footer {
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+    }
+  }
+}
