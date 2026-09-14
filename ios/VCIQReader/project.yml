@@ -1,0 +1,38 @@
+name: VCIQReader
+
+options:
+  createIntermediateGroups: true
+  developmentLanguage: zh-Hans
+
+settings:
+  base:
+    SWIFT_VERSION: 5.10
+    CODE_SIGN_STYLE: Automatic
+
+targets:
+  VCIQReader:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: VCIQReader
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.vciq.reader
+        PRODUCT_NAME: VCIQ
+        MARKETING_VERSION: 0.1.0
+        CURRENT_PROJECT_VERSION: 1
+        TARGETED_DEVICE_FAMILY: "1,2"
+        INFOPLIST_FILE: VCIQReader/Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+
+schemes:
+  VCIQReader:
+    build:
+      targets:
+        VCIQReader: all
+    run:
+      config: Debug
+    archive:
+      config: Release
