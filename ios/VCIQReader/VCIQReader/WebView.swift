@@ -37,7 +37,6 @@ struct VCIQWebView: UIViewRepresentable {
         context.coordinator.webView = webView
     }
 
-    @MainActor
     final class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate {
         let model: BrowserModel
         weak var webView: WKWebView?
