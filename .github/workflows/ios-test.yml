@@ -1,0 +1,52 @@
+name: iOS checks
+
+on:
+  pull_request:
+    paths:
+      - "ios/VCIQReader/**"
+      - ".github/workflows/ios-test.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Validate Info.plist
+        working-directory: ios/VCIQReader
+        run: plutil -lint VCIQReader/Info.plist
+
+      - name: Generate Xcode project
+        working-directory: ios/VCIQReader
+        run: xcodegen generate
+
+      - name: Compile iOS Simulator app
+        working-directory: ios/VCIQReader
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project VCIQReader.xcodeproj \
+            -scheme VCIQReader \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath "$RUNNER_TEMP/VCIQDerivedData" \
+            CODE_SIGNING_ALLOWED=NO \
+            build
