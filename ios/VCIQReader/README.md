@@ -14,6 +14,7 @@ VCIQ 的原生 iPhone/iPad 阅读壳。它保留 `https://vciq.github.io/` 作�
 - `WKWebView` WebContent 进程异常后自动恢复
 - 使用默认持久化 Website Data Store，保留 Cookie 和 Web 会话
 - iPhone / iPad，横竖屏均支持
+- 正式 1024×1024 VCIQ App Icon（RGB、无透明通道）
 
 ## 生成 Xcode 工程
 
@@ -44,20 +45,29 @@ open VCIQReader.xcodeproj
 
 ## 导航边界
 
-- `vciq.github.io`：在当前 `WKWebView` 内导航。
-- `https/http` 外部域名：调用系统打开，默认进入 Safari / 默认浏览器。
+- `https://vciq.github.io`：在当前 `WKWebView` 内导航。
+- 其它 `https/http` 域名：调用系统打开，默认进入 Safari / 默认浏览器。
 - `mailto:` / `tel:`：交给系统处理。
 
 这样可以避免把第三方新闻站、登录页或支付/下载页面强行嵌在 VCIQ 的 WebView 里。
 
+## 自动编译验证
+
+仓库包含 `.github/workflows/ios-test.yml`。当 iOS 工程变更时，它会在 macOS runner 上：
+
+1. 校验 `Info.plist`；
+2. 用 XcodeGen 生成 `.xcodeproj`；
+3. 使用 `xcodebuild` 对 iOS Simulator target 做无签名编译。
+
+这能提前发现 Swift / WebKit / asset catalog / Xcode 工程配置错误，但不能替代真实 iPhone 上的交互、登录态和弱网验收。
+
 ## TestFlight 前还需要完成
 
-V0.2 先完成可运行的原生阅读壳，不在仓库里伪造最终 App Store 素材。进入 TestFlight 前还需要：
+源码与 App Icon 可以在仓库内准备；以下步骤依赖实际 Apple Developer / App Store Connect 账号，因此进入 TestFlight 前还需要：
 
-1. 准备正式的 **1024×1024 App Icon** 并添加到 `Assets.xcassets/AppIcon.appiconset`。
-2. 确认 Apple Developer Team 与最终 Bundle Identifier。
-3. 在 App Store Connect 创建 App 记录。
-4. Archive 后通过 Xcode Organizer 上传 TestFlight 构建。
-5. 用至少一台真实 iPhone 验证：登录状态、收藏、分享、站外链接、横竖屏、弱网/断网恢复。
+1. 确认 Apple Developer Team 与最终 Bundle Identifier。
+2. 在 App Store Connect 创建 App 记录。
+3. Archive 后通过 Xcode Organizer 上传 TestFlight 构建。
+4. 用至少一台真实 iPhone 验证：登录状态、收藏、分享、站外链接、横竖屏、弱网/断网恢复。
 
 > 公开提交 App Store 之前还应补充足够的原生价值（例如原生推送、Share Extension、阅读队列或离线收藏）。单纯网站包装壳可能面临 Minimum Functionality 审核风险；TestFlight 内测不以此作为当前阻塞项。
