@@ -2,14 +2,14 @@
 
 ## Purpose
 
-The public homepage accepts a small, public-safe projection of the private VCIQ Intelligence Inbox. The bridge is deliberately one-way and display-only: it can raise homepage attention for high-relevance public articles, but it cannot create tracking objects or mutate the tracking catalog.
+The public homepage accepts a bounded, public-safe projection of the private VCIQ Intelligence Inbox. The bridge is deliberately one-way and display-only: it can raise homepage attention for high-relevance public articles, while a small number of explicit human editorial selections may reserve slots inside the same projection. Neither path can create tracking objects or mutate the tracking catalog.
 
 ```text
 tracking-admin /alerts/inbox
   → Google Alerts RSS + canonical dedupe
   → Entity/Event/Track Resolver
   → feedback-aware Relevance Score
-  → public-safe projection (max 24)
+  → public-safe projection (max 36, including up to 8 manually curated slots from the private admin producer)
   → workflow_dispatch
   → strict public validator
   → public/data/ranked-intelligence.json

@@ -7,7 +7,7 @@ import type {
 
 export const RANKED_INTELLIGENCE_SOURCE = "google-alerts-rss" as const;
 export const RANKED_INTELLIGENCE_PLATFORM = "Google Alerts RSS";
-export const RANKED_INTELLIGENCE_MAX_ITEMS = 24;
+export const RANKED_INTELLIGENCE_MAX_ITEMS = 36;
 export const RANKED_INTELLIGENCE_FALLBACK_SECTOR = "跨赛道精选";
 const EVENT_WINDOW_MS = 48 * 60 * 60 * 1000;
 const GENERIC_LATIN_TOKENS = new Set([

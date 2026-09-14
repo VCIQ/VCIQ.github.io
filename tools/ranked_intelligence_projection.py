@@ -39,7 +39,7 @@ ENTITY_KEYS = {"objectType", "name"}
 RELATED_SOURCE_KEYS = {"source", "href", "title", "publishedAt"}
 ALLOWED_PRIORITIES = {"P0", "P1", "P2"}
 ALLOWED_ENTITY_TYPES = {"company", "person", "technology"}
-MAX_ITEMS = 24
+MAX_ITEMS = 36
 MAX_RELATED_SOURCES = 3
 
 
