@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-15T14:46:38+00:00",
+  "generatedAt": "2026-09-15T14:48:06+00:00",
   "records": [
     {
       "id": "capture-ee0d679b18c9bdf7",
@@ -43,10 +43,10 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "Qwen2.5-3B",
-        "targetId": "technology-38c4f3a064c9b2a47621",
+        "targetId": "topic:qwen253b",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "qwen253b",
         "reclassified": false
       }
@@ -92,10 +92,10 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "Pythia-2.8B",
-        "targetId": "technology-5d44ad9fe81f472e8dfe",
+        "targetId": "topic:pythia28b",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "pythia28b",
         "reclassified": false
       }
@@ -141,10 +141,10 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "LOCUS",
-        "targetId": "technology-0b597595a01aaa0863d9",
+        "targetId": "topic:locus",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "locus",
         "reclassified": false
       }
@@ -179,8 +179,13 @@
       },
       "capturedAt": "2026-09-15T14:37:55+00:00",
       "capturedBy": "VCIQ",
-      "status": "queued",
-      "appliedTo": [],
+      "status": "applied",
+      "appliedTo": [
+        "semiconductor:sampleCompanies",
+        "ai:sampleCompanies",
+        "space:sampleCompanies",
+        "manufacturing:sampleCompanies"
+      ],
       "reasons": [
         "个人研究兴趣",
         "融资机会"
