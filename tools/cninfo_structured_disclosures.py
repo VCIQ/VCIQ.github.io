@@ -1,17 +1,21 @@
 #!/usr/bin/env python3
 """Enrich the listed-company snapshot through CNINFO's structured announcement data.
 
-The browser-facing CNINFO search page does not expose final document URLs in its
-server-rendered HTML. This module uses the same structured announcement endpoint
-behind that page, resolves each ``adjunctUrl`` to the original CNINFO document,
-and merges only classified capital-market disclosures into the formal snapshot.
+CNINFO remains the preferred A-share disclosure enrichment source. The transport is
+intentionally resilient because public CI egress can be throttled independently from
+normal browser traffic:
 
-The module is deliberately narrow:
-* A-share listings only;
-* metadata and short factual snippets only;
-* original ``static.cninfo.com.cn`` document URLs only;
-* bounded pages, article count and request retries;
-* previous verified events are retained when the endpoint is temporarily down.
+* prefer HTTPS, then retry the documented public HTTP endpoint;
+* warm a browser-like cookie session before structured requests;
+* seed orgId values for the small tracked A-share universe from reviewed config;
+* merge a live registry over those seeds when the registry is available;
+* retain previously verified CNINFO documents when a live endpoint is temporarily
+  unavailable;
+* always continue to direct SSE/SZSE observations so the company channel keeps an
+  independent official-exchange health path.
+
+Only metadata and short factual snippets are retained; document links continue to
+point at CNINFO's original static document host.
 """
 
 from __future__ import annotations
@@ -20,11 +24,12 @@ import argparse
 import json
 import time
 from datetime import UTC, date, datetime, timedelta
+from http.cookiejar import CookieJar
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any, Callable, Iterable
 from urllib.error import HTTPError, URLError
-from urllib.parse import urlencode
-from urllib.request import Request, urlopen
+from urllib.parse import urlencode, urlsplit
+from urllib.request import HTTPCookieProcessor, Request, build_opener, urlopen
 
 try:
     from . import crawl_listed_company_disclosures as base
@@ -33,14 +38,33 @@ except ImportError:
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_PATH = ROOT / "public" / "data" / "listed_company_disclosures.json"
-STOCK_LIST_URL = "https://www.cninfo.com.cn/new/data/szse_stock.json"
-QUERY_URL = "https://www.cninfo.com.cn/new/hisAnnouncement/query"
-STATIC_DOCUMENT_ROOT = "https://static.cninfo.com.cn/"
-REFERER = (
-    "https://www.cninfo.com.cn/new/commonUrl/pageOfSearch?"
-    "url=disclosure/list/search&lastPage=index"
+
+CNINFO_HOME_URLS = (
+    "https://www.cninfo.com.cn/new/index.jsp",
+    "http://www.cninfo.com.cn/new/index.jsp",
 )
+STOCK_LIST_URLS = (
+    "https://www.cninfo.com.cn/new/data/szse_stock.json",
+    "http://www.cninfo.com.cn/new/data/szse_stock.json",
+)
+QUERY_URLS = (
+    "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "http://www.cninfo.com.cn/new/hisAnnouncement/query",
+)
+STATIC_DOCUMENT_ROOT = "https://static.cninfo.com.cn/"
 PROVIDER = "cninfo-structured-api"
+USER_AGENT = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36"
+)
+
+
+def _referer_for(url: str) -> str:
+    scheme = urlsplit(url).scheme or "https"
+    return (
+        f"{scheme}://www.cninfo.com.cn/new/commonUrl/pageOfSearch?"
+        "url=disclosure/list/search&lastPage=index"
+    )
 
 
 def _decode_json(payload: bytes, charset: str | None = None) -> dict[str, Any]:
@@ -57,37 +81,78 @@ def _decode_json(payload: bytes, charset: str | None = None) -> dict[str, Any]:
     return {}
 
 
+def _request_headers(url: str, *, form: bool) -> dict[str, str]:
+    scheme = urlsplit(url).scheme or "https"
+    headers = {
+        "User-Agent": USER_AGENT,
+        "Accept": "application/json, text/javascript, */*; q=0.01",
+        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.7",
+        "Accept-Encoding": "identity",
+        "Referer": _referer_for(url),
+        "Origin": f"{scheme}://www.cninfo.com.cn",
+        "X-Requested-With": "XMLHttpRequest",
+        "Cache-Control": "no-cache",
+        "Pragma": "no-cache",
+        "Connection": "close",
+    }
+    if form:
+        headers["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8"
+    return headers
+
+
+def build_session(timeout: int = 18) -> tuple[Any, list[str]]:
+    """Warm a browser-like cookie jar, but never make warm-up itself fatal."""
+    opener = build_opener(HTTPCookieProcessor(CookieJar()))
+    errors: list[str] = []
+    for url in CNINFO_HOME_URLS:
+        scheme = urlsplit(url).scheme or "https"
+        try:
+            request = Request(
+                url,
+                headers={
+                    "User-Agent": USER_AGENT,
+                    "Accept": "text/html,application/xhtml+xml,*/*;q=0.8",
+                    "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.7",
+                    "Accept-Encoding": "identity",
+                    "Referer": f"{scheme}://www.cninfo.com.cn/",
+                    "Cache-Control": "no-cache",
+                    "Pragma": "no-cache",
+                    "Connection": "close",
+                },
+            )
+            with opener.open(request, timeout=timeout) as response:
+                response.read(64_000)
+            return opener, errors
+        except (HTTPError, URLError, TimeoutError, OSError) as exc:
+            errors.append(f"preflight:{url}:{type(exc).__name__}:{exc}")
+    return opener, errors
+
+
 def fetch_json(
     url: str,
     *,
     form: dict[str, Any] | None = None,
     timeout: int = 18,
     attempts: int = 2,
+    opener: Any | None = None,
 ) -> dict[str, Any]:
+    """Fetch one CNINFO JSON endpoint with bounded retries."""
     last_error: Exception | None = None
     data = urlencode(form).encode("utf-8") if form is not None else None
+    client = opener
     for attempt in range(max(1, min(attempts, 3))):
         request = Request(
             url,
             data=data,
-            headers={
-                "User-Agent": (
-                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                    "AppleWebKit/537.36 (KHTML, like Gecko) "
-                    "Chrome/131.0 Safari/537.36"
-                ),
-                "Accept": "application/json, text/javascript, */*; q=0.01",
-                "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.7",
-                "Accept-Encoding": "identity",
-                "Referer": REFERER,
-                "Origin": "https://www.cninfo.com.cn",
-                "X-Requested-With": "XMLHttpRequest",
-                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-            },
+            headers=_request_headers(url, form=form is not None),
             method="POST" if form is not None else "GET",
         )
         try:
-            with urlopen(request, timeout=timeout) as response:
+            if client is None:
+                response_context = urlopen(request, timeout=timeout)
+            else:
+                response_context = client.open(request, timeout=timeout)
+            with response_context as response:
                 result = _decode_json(
                     response.read(4_000_000),
                     response.headers.get_content_charset(),
@@ -100,6 +165,34 @@ def fetch_json(
             if attempt + 1 < attempts:
                 time.sleep(1.2 * (attempt + 1))
     raise RuntimeError(f"CNINFO request failed for {url}: {last_error}")
+
+
+def fetch_first_json(
+    urls: Iterable[str],
+    *,
+    form: dict[str, Any] | None = None,
+    timeout: int = 18,
+    attempts: int = 2,
+    opener: Any | None = None,
+) -> tuple[dict[str, Any], str, list[str]]:
+    """Try the preferred endpoint followed by protocol-compatible fallbacks."""
+    errors: list[str] = []
+    for url in urls:
+        try:
+            return (
+                fetch_json(
+                    url,
+                    form=form,
+                    timeout=timeout,
+                    attempts=attempts,
+                    opener=opener,
+                ),
+                url,
+                errors,
+            )
+        except Exception as exc:  # noqa: BLE001 - preserve transport evidence.
+            errors.append(f"{url}:{type(exc).__name__}:{exc}")
+    raise RuntimeError(" | ".join(errors) or "CNINFO endpoint list is empty")
 
 
 def parse_org_ids(payload: dict[str, Any]) -> dict[str, str]:
@@ -115,6 +208,65 @@ def parse_org_ids(payload: dict[str, Any]) -> dict[str, str]:
         if code and org_id:
             result[code] = org_id
     return result
+
+
+def configured_org_ids(config: dict[str, Any]) -> dict[str, str]:
+    raw = config.get("cninfoOrgIds", {})
+    if not isinstance(raw, dict):
+        return {}
+    result: dict[str, str] = {}
+    for ticker, org_id in raw.items():
+        code = base.normalize_ticker("A股", ticker)
+        value = base.clean_text(org_id, 100)
+        if code and value:
+            result[code] = value
+    return result
+
+
+def resolve_org_ids(
+    config: dict[str, Any],
+    settings: dict[str, Any],
+    *,
+    fetcher: Callable[..., tuple[dict[str, Any], str, list[str]]] = fetch_first_json,
+    session_builder: Callable[[int], tuple[Any, list[str]]] = build_session,
+) -> tuple[dict[str, str], dict[str, Any]]:
+    """Resolve orgIds without letting a registry outage erase reviewed identities."""
+    seeded = configured_org_ids(config)
+    merged = dict(seeded)
+    timeout = int(settings.get("requestTimeout", 18))
+    attempts = int(settings.get("requestAttempts", 2))
+    opener, warmup_errors = session_builder(timeout)
+    diagnostics: dict[str, Any] = {
+        "status": "seeded" if seeded else "unavailable",
+        "endpoint": "",
+        "seededOrgIdCount": len(seeded),
+        "liveOrgIdCount": 0,
+        "errors": list(warmup_errors),
+    }
+    try:
+        payload, endpoint, transport_errors = fetcher(
+            STOCK_LIST_URLS,
+            timeout=timeout,
+            attempts=attempts,
+            opener=opener,
+        )
+        live = parse_org_ids(payload)
+        if live:
+            merged.update(live)
+            diagnostics["status"] = "live"
+            diagnostics["endpoint"] = endpoint
+            diagnostics["liveOrgIdCount"] = len(live)
+        elif seeded:
+            diagnostics["status"] = "seeded"
+            diagnostics["errors"].append("registry returned no usable orgId rows")
+        else:
+            diagnostics["errors"].append("registry returned no usable orgId rows")
+        diagnostics["errors"].extend(transport_errors)
+    except Exception as exc:  # noqa: BLE001 - seed cache is the intended fallback.
+        diagnostics["status"] = "seeded" if seeded else "unavailable"
+        diagnostics["errors"].append(f"registry:{type(exc).__name__}:{exc}")
+    diagnostics["_opener"] = opener
+    return merged, diagnostics
 
 
 def query_payload(
@@ -202,6 +354,9 @@ def query_listing(
     listing: base.Listing,
     org_id: str,
     settings: dict[str, Any],
+    *,
+    opener: Any | None = None,
+    fetcher: Callable[..., tuple[dict[str, Any], str, list[str]]] = fetch_first_json,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     timeout = int(settings.get("requestTimeout", 18))
     attempts = int(settings.get("requestAttempts", 2))
@@ -214,11 +369,12 @@ def query_listing(
     candidates: list[base.Candidate] = []
     errors: list[str] = []
     scanned = 0
+    endpoint = ""
 
     for page_num in range(1, max_pages + 1):
         try:
-            payload = fetch_json(
-                QUERY_URL,
+            payload, used_endpoint, transport_errors = fetcher(
+                QUERY_URLS,
                 form=query_payload(
                     listing,
                     org_id,
@@ -229,7 +385,10 @@ def query_listing(
                 ),
                 timeout=timeout,
                 attempts=attempts,
+                opener=opener,
             )
+            endpoint = used_endpoint or endpoint
+            errors.extend(transport_errors)
         except Exception as exc:  # noqa: BLE001 - retain previous verified data.
             errors.append(f"page-{page_num}:{type(exc).__name__}:{exc}")
             break
@@ -255,6 +414,7 @@ def query_listing(
         "attempted": True,
         "provider": PROVIDER,
         "orgIdResolved": True,
+        "endpoint": endpoint,
         "scanned": scanned,
         "qualified": len(accepted),
         "accepted": len(events),
@@ -265,6 +425,44 @@ def query_listing(
 def _event_url(event: dict[str, Any]) -> str:
     source = event.get("source") if isinstance(event.get("source"), dict) else {}
     return base.clean_text(source.get("url"), 1200)
+
+
+def _is_cninfo_a_share_event(event: dict[str, Any]) -> bool:
+    if str(event.get("market") or "") != "A股":
+        return False
+    source = event.get("source") if isinstance(event.get("source"), dict) else {}
+    source_name = base.clean_text(source.get("name"), 80)
+    source_url = base.clean_text(source.get("url"), 1200)
+    return (
+        str(event.get("discoveredVia") or "") == PROVIDER
+        or source_name == "巨潮资讯"
+        or base.normalized_host(source_url).endswith("cninfo.com.cn")
+    )
+
+
+def count_available_cninfo_events(
+    snapshot: dict[str, Any],
+    listings: Iterable[base.Listing] | None = None,
+) -> int:
+    allowed_slugs = {
+        listing.catalog_slug
+        for listing in (list(listings) if listings is not None else base.load_listings())
+        if listing.market == "A股"
+    }
+    urls: set[str] = set()
+    companies = snapshot.get("companies", {})
+    if not isinstance(companies, dict):
+        return 0
+    for slug, company in companies.items():
+        if slug not in allowed_slugs or not isinstance(company, dict):
+            continue
+        for event in company.get("events", []):
+            if not isinstance(event, dict) or not _is_cninfo_a_share_event(event):
+                continue
+            url = _event_url(event)
+            if url:
+                urls.add(url)
+    return len(urls)
 
 
 def _merge_events(
@@ -295,7 +493,9 @@ def enrich_snapshot(
     settings: dict[str, Any],
     *,
     query_fn=query_listing,
+    registry_diagnostics: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
+    rows = list(listings)
     result = json.loads(json.dumps(snapshot, ensure_ascii=False))
     companies = result.setdefault("companies", {})
     statuses = [
@@ -305,8 +505,11 @@ def enrich_snapshot(
     per_listing_limit = max(1, min(int(settings.get("maxItemsPerListing", 18)), 30))
     company_limit = max(1, min(per_listing_limit * 2, 48))
     generated_at = datetime.now(UTC).replace(microsecond=0).isoformat()
+    diagnostics = dict(registry_diagnostics or {})
+    opener = diagnostics.pop("_opener", None)
+    live_accepted = 0
 
-    for listing in listings:
+    for listing in rows:
         if listing.market != "A股":
             continue
         status = status_by_id.get(listing.source_id)
@@ -334,21 +537,33 @@ def enrich_snapshot(
                 "attempted": True,
                 "provider": PROVIDER,
                 "orgIdResolved": False,
+                "endpoint": "",
                 "scanned": 0,
                 "qualified": 0,
                 "accepted": 0,
-                "errors": ["CNINFO orgId not found"],
+                "errors": ["CNINFO orgId not found in live registry or reviewed seed cache"],
             }
             events: list[dict[str, Any]] = []
         else:
             try:
-                events, structured = query_fn(listing, org_id, settings)
+                try:
+                    events, structured = query_fn(
+                        listing,
+                        org_id,
+                        settings,
+                        opener=opener,
+                    )
+                except TypeError as exc:
+                    if "opener" not in str(exc):
+                        raise
+                    events, structured = query_fn(listing, org_id, settings)
             except Exception as exc:  # noqa: BLE001 - retain prior company events.
                 events = []
                 structured = {
                     "attempted": True,
                     "provider": PROVIDER,
                     "orgIdResolved": True,
+                    "endpoint": "",
                     "scanned": 0,
                     "qualified": 0,
                     "accepted": 0,
@@ -358,10 +573,12 @@ def enrich_snapshot(
         status["structuredProvider"] = structured["provider"]
         status["structuredAttempted"] = structured["attempted"]
         status["structuredOrgIdResolved"] = structured["orgIdResolved"]
+        status["structuredEndpoint"] = structured.get("endpoint", "")
         status["structuredScanned"] = structured["scanned"]
         status["structuredQualified"] = structured.get("qualified", structured["accepted"])
         status["structuredAccepted"] = structured["accepted"]
         status["structuredErrors"] = structured["errors"]
+        live_accepted += int(structured["accepted"] or 0)
         if events:
             status["provider"] = "official+cninfo-structured"
             status["status"] = "ok"
@@ -413,18 +630,26 @@ def enrich_snapshot(
         for company in companies.values()
         if isinstance(company, dict)
     )
+    available = count_available_cninfo_events(result, rows)
     result["cninfoStructured"] = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "provider": PROVIDER,
-        "attemptedListingCount": sum(
-            1 for listing in listings if listing.market == "A股"
-        ),
+        "attemptedListingCount": sum(1 for listing in rows if listing.market == "A股"),
         "qualifiedEventCount": sum(
             int(status.get("structuredQualified", 0) or 0) for status in statuses
         ),
-        "acceptedEventCount": sum(
-            int(status.get("structuredAccepted", 0) or 0) for status in statuses
-        ),
+        "acceptedEventCount": live_accepted,
+        "liveAcceptedEventCount": live_accepted,
+        "availableEventCount": available,
+        "registryStatus": str(diagnostics.get("status") or "unknown"),
+        "registryEndpoint": str(diagnostics.get("endpoint") or ""),
+        "seededOrgIdCount": int(diagnostics.get("seededOrgIdCount", 0) or 0),
+        "liveOrgIdCount": int(diagnostics.get("liveOrgIdCount", 0) or 0),
+        "registryErrors": [
+            str(value)
+            for value in diagnostics.get("errors", [])
+            if str(value).strip()
+        ],
     }
     return result
 
@@ -450,13 +675,23 @@ def validate_enrichment(
             errors.append(f"CNINFO structured source not attempted: {listing.source_id}")
         if not status.get("structuredProvider"):
             errors.append(f"CNINFO structured provider missing: {listing.source_id}")
-    accepted = int(
-        snapshot.get("cninfoStructured", {}).get("acceptedEventCount", 0)
+
+    cninfo_summary = (
+        snapshot.get("cninfoStructured", {})
         if isinstance(snapshot.get("cninfoStructured"), dict)
-        else 0
+        else {}
     )
-    if require_events and accepted <= 0:
-        errors.append("CNINFO structured query produced no A-share disclosure events")
+    available = int(
+        cninfo_summary.get(
+            "availableEventCount",
+            count_available_cninfo_events(snapshot, rows),
+        )
+        or 0
+    )
+    if require_events and available <= 0:
+        errors.append(
+            "no verified CNINFO A-share disclosure events are available after live/retained fallback"
+        )
     return errors
 
 
@@ -480,14 +715,15 @@ def write_snapshot(snapshot: dict[str, Any], path: Path = OUTPUT_PATH) -> bool:
         json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+    summary = snapshot.get("cninfoStructured", {})
     print(
         json.dumps(
             {
                 "companyCount": snapshot.get("companyCount", 0),
                 "eventCount": snapshot.get("eventCount", 0),
-                "cninfoAccepted": snapshot.get("cninfoStructured", {}).get(
-                    "acceptedEventCount", 0
-                ),
+                "cninfoLiveAccepted": summary.get("liveAcceptedEventCount", 0),
+                "cninfoAvailable": summary.get("availableEventCount", 0),
+                "cninfoRegistryStatus": summary.get("registryStatus", "unknown"),
             },
             ensure_ascii=False,
         )
@@ -510,13 +746,20 @@ def main() -> int:
         )
         if errors:
             raise SystemExit("; ".join(errors))
+        summary = snapshot.get("cninfoStructured", {})
         print(
             json.dumps(
                 {
                     "passed": True,
-                    "acceptedEventCount": snapshot.get("cninfoStructured", {}).get(
-                        "acceptedEventCount", 0
+                    "liveAcceptedEventCount": summary.get(
+                        "liveAcceptedEventCount",
+                        summary.get("acceptedEventCount", 0),
                     ),
+                    "availableEventCount": summary.get(
+                        "availableEventCount",
+                        count_available_cninfo_events(snapshot, listings),
+                    ),
+                    "registryStatus": summary.get("registryStatus", "legacy"),
                 },
                 ensure_ascii=False,
             )
@@ -525,26 +768,18 @@ def main() -> int:
 
     config = base.load_config()
     settings = config["settings"]
-    stock_payload = fetch_json(
-        STOCK_LIST_URL,
-        timeout=int(settings.get("requestTimeout", 18)),
-        attempts=int(settings.get("requestAttempts", 2)),
-    )
-    org_ids = parse_org_ids(stock_payload)
+    org_ids, registry_diagnostics = resolve_org_ids(config, settings)
     snapshot = enrich_snapshot(
         base.load_previous(OUTPUT_PATH),
         listings,
         org_ids,
         settings,
+        registry_diagnostics=registry_diagnostics,
     )
     errors = validate_enrichment(snapshot, listings, require_events=args.require_events)
     if errors:
         raise SystemExit("; ".join(errors))
 
-    # The content pipeline may mix CNINFO and exchange discovery, so collect
-    # exchange health separately through the exchanges' own structured endpoints.
-    # This augments sourceStatus only; it does not replace CNINFO events or mutate
-    # the aggregate listing counters above.
     try:
         from . import exchange_direct_observations as exchange_direct
     except ImportError:
