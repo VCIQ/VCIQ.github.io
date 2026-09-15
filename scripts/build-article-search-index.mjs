@@ -2,42 +2,49 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import process from "node:process";
+import { cleanSearchText, formatSearchDate } from "./search-index-format.mjs";
 
 const ROOT = process.cwd();
 const ARTICLE_INPUT = path.join(ROOT, "public", "data", "articles.json");
 const RANKED_INPUT = path.join(ROOT, "public", "data", "ranked-intelligence.json");
 const OUTPUT = path.join(ROOT, "public", "data", "article_search_index.json");
 
-function cleanText(value, maxLength = 320) {
-  if (typeof value !== "string") return "";
-  return value.normalize("NFKC").replace(/\s+/g, " ").trim().slice(0, maxLength);
-}
-
 function cleanList(value, itemLength = 120, maxItems = 12) {
   if (!Array.isArray(value)) return [];
   return value
-    .map((item) => cleanText(item, itemLength))
+    .map((item) => cleanSearchText(item, itemLength))
     .filter(Boolean)
     .slice(0, maxItems);
 }
 
+function uniqueText(values) {
+  const seen = new Set();
+  return values.filter((value) => {
+    const cleaned = cleanSearchText(value, 160);
+    const key = cleaned.toLocaleLowerCase("zh-CN");
+    if (!cleaned || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 function buildArticleRecord(article) {
-  const title = cleanText(article?.title, 220);
-  const company = cleanText(article?.company, 100);
-  const sector = cleanText(article?.sector, 80);
-  const eventType = cleanText(article?.type, 40);
-  const region = cleanText(article?.region, 24) || "全球";
-  const sourceName = cleanText(article?.source?.name, 90);
-  const publishedAt = cleanText(article?.publishedAt, 12);
-  const summary = cleanText(article?.summary, 180);
+  const title = cleanSearchText(article?.title, 220);
+  const company = cleanSearchText(article?.company, 100);
+  const sector = cleanSearchText(article?.sector, 80);
+  const eventType = cleanSearchText(article?.type, 40);
+  const region = cleanSearchText(article?.region, 24) || "全球";
+  const sourceName = cleanSearchText(article?.source?.name, 90);
+  const publishedAt = formatSearchDate(article?.publishedAt);
+  const summary = cleanSearchText(article?.summary, 180);
   const href = article?.companySlug
-    ? `/companies/${cleanText(article.companySlug, 160)}`
-    : cleanText(article?.source?.url, 1000);
+    ? `/companies/${cleanSearchText(article.companySlug, 160)}`
+    : cleanSearchText(article?.source?.url, 1000);
 
   if (!title || !href) return null;
 
-  const text = cleanText(
-    [company, sector, eventType, region, sourceName, publishedAt, summary]
+  const text = cleanSearchText(
+    uniqueText([company, sector, eventType, sourceName, publishedAt, summary])
       .filter(Boolean)
       .join(" · "),
     420,
@@ -53,31 +60,31 @@ function buildArticleRecord(article) {
 }
 
 function buildRankedRecord(item) {
-  const title = cleanText(item?.title, 220);
-  const href = cleanText(item?.href, 1000);
+  const title = cleanSearchText(item?.title, 220);
+  const href = cleanSearchText(item?.href, 1000);
   if (!title || !href) return null;
 
-  const sourceName = cleanText(item?.source, 90);
-  const publishedAt = cleanText(item?.publishedAt, 12);
-  const summary = cleanText(item?.summary, 180);
-  const tracks = cleanList(item?.tracks, 80, 6);
-  const eventTypes = cleanList(item?.eventTypes, 60, 8);
+  const sourceName = cleanSearchText(item?.source, 90);
+  const publishedAt = formatSearchDate(item?.publishedAt);
+  const summary = cleanSearchText(item?.summary, 180);
+  const tracks = cleanList(item?.tracks, 80, 2);
+  const eventTypes = cleanList(item?.eventTypes, 60, 2);
   const entities = Array.isArray(item?.entities)
     ? item.entities
-      .map((entity) => cleanText(entity?.name, 120))
+      .map((entity) => cleanSearchText(entity?.name, 120))
       .filter(Boolean)
-      .slice(0, 10)
+      .slice(0, 2)
     : [];
 
-  const text = cleanText(
-    [
+  const text = cleanSearchText(
+    uniqueText([
       ...entities,
       ...tracks,
       ...eventTypes,
       sourceName,
       publishedAt,
       summary,
-    ]
+    ])
       .filter(Boolean)
       .join(" · "),
     420,
