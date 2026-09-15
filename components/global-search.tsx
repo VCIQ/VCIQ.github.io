@@ -4,13 +4,14 @@ import { Search } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { ArticleSearchIndexPayload, SearchRecord } from "@/lib/search-index";
+import { normalizeSearchText, searchTextIncludesQuery } from "@/lib/search-normalization";
 
 const SEARCH_LIMIT = 30;
 const EVENT_QUERY_MIN_LENGTH = 2;
 const SEARCH_DEBOUNCE_MS = 120;
 
 function normalizeQuery(value: string): string {
-  return value.normalize("NFKC").trim().toLocaleLowerCase("zh-CN");
+  return normalizeSearchText(value);
 }
 
 function parseArticleSearchIndex(value: unknown): ArticleSearchIndexPayload {
@@ -23,9 +24,20 @@ function parseArticleSearchIndex(value: unknown): ArticleSearchIndexPayload {
 }
 
 function recordMatches(record: SearchRecord, query: string): boolean {
-  return `${record.title} ${record.text} ${record.region}`
-    .toLocaleLowerCase("zh-CN")
-    .includes(query);
+  return searchTextIncludesQuery(
+    `${record.title} ${record.text} ${record.region}`,
+    query,
+  );
+}
+
+function uniqueRecords(records: SearchRecord[]): SearchRecord[] {
+  const seen = new Set<string>();
+  return records.filter((record) => {
+    const key = `${record.type}\u0000${record.href}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
 function ResultLink({ record }: { record: SearchRecord }) {
@@ -107,7 +119,7 @@ export function GlobalSearch({ staticRecords }: { staticRecords: SearchRecord[] 
       type === "全部" || type === "事件"
         ? eventRecords.filter((item) => recordMatches(item, debouncedQuery))
         : [];
-    return [...staticMatches, ...dynamicMatches].slice(0, SEARCH_LIMIT);
+    return uniqueRecords([...staticMatches, ...dynamicMatches]).slice(0, SEARCH_LIMIT);
   }, [debouncedQuery, eventRecords, staticRecords, type]);
 
   const waitingForEvents = shouldLoadEvents && eventStatus === "idle";
