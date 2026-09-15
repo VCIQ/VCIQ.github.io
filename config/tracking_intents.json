@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-15T06:55:58+00:00",
+  "updatedAt": "2026-09-15T07:02:19+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -12854,8 +12854,10 @@
     {
       "id": "source-273bf27089629fa2ccf3",
       "kind": "source",
-      "name": "搜狐",
-      "aliases": [],
+      "name": "待交叉验证 · 搜狐",
+      "aliases": [
+        "搜狐"
+      ],
       "keywords": [],
       "state": "active",
       "resolutionSource": "authenticated-manual-intent",
@@ -13327,6 +13329,34 @@
       "resolutionSource": "source-context",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-15T06:55:58+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "company-aacca8bcb37aefa0c533",
+      "kind": "company",
+      "name": "Verizon",
+      "aliases": [],
+      "keywords": [
+        "Verizon"
+      ],
+      "state": "review",
+      "resolutionSource": "source-context",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-09-15T07:02:19+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-fe6f25babb061f60a417",
+      "kind": "technology",
+      "name": "通信与感知融合技术(ISAC)",
+      "aliases": [],
+      "keywords": [
+        "通信与感知融合技术(ISAC)"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-09-15T07:02:19+00:00",
       "createdBy": "VCIQ"
     }
   ],
@@ -70300,6 +70330,116 @@
             "个人研究兴趣"
           ],
           "note": "人工补充公司对象;来源文章:安徽解锁服务贸易新场景_中安在线"
+        }
+      ]
+    },
+    {
+      "id": "membership-bfa58712f267c14e982f",
+      "trackId": "track:ai-4",
+      "entityId": "source-273bf27089629fa2ccf3",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-de8c62a8349c57e88323",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-15T07:02:19+00:00",
+          "evidenceUrl": "https://m.sohu.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "membership-1c6d07d01433e67180a8",
+      "trackId": "track:fusion",
+      "entityId": "source-273bf27089629fa2ccf3",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-de8c62a8349c57e88323",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-15T07:02:19+00:00",
+          "evidenceUrl": "https://m.sohu.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "membership-7240ac6267116c566f35",
+      "trackId": "track:6g",
+      "entityId": "source-273bf27089629fa2ccf3",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-de8c62a8349c57e88323",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-15T07:02:19+00:00",
+          "evidenceUrl": "https://m.sohu.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "membership-fa7b1a5994eb313e43f6",
+      "trackId": "track:6g",
+      "entityId": "company-aacca8bcb37aefa0c533",
+      "role": "actor",
+      "state": "review",
+      "pinned": true,
+      "confidence": "medium",
+      "origins": [
+        {
+          "id": "origin-1003e0ab09a1272a6a81",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-15T07:02:19+00:00",
+          "evidenceUrl": "https://m.sohu.com/a/1076126981_115831?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "人工补充公司对象;来源文章:不换硬件也能上 6G !三星与Verizon完成 6G ISAC实证"
+        }
+      ]
+    },
+    {
+      "id": "membership-892003f4b1b7ca429976",
+      "trackId": "track:6g",
+      "entityId": "technology-fe6f25babb061f60a417",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-529f5f7f318cce5aff56",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-15T07:02:19+00:00",
+          "evidenceUrl": "https://m.sohu.com/a/1076126981_115831?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "人工补充技术对象;来源文章:不换硬件也能上 6G !三星与Verizon完成 6G ISAC实证"
         }
       ]
     }
