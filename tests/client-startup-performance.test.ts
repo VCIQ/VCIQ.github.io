@@ -97,7 +97,8 @@ test("global search does not bundle research datasets or load the full article a
   assert.match(globalSearch, /SEARCH_DEBOUNCE_MS = 120/);
   assert.match(packageJson, /build:search-index/);
   assert.match(packageJson, /build-article-search-index\.mjs/);
-  assert.match(searchIndexBuilder, /cleanText\([\s\S]*420/);
+  assert.match(searchIndexBuilder, /cleanSearchText\([\s\S]*420/);
+  assert.match(searchIndexBuilder, /formatSearchDate/);
 });
 
 test("channel update directories hydrate only a bounded latest window", () => {
