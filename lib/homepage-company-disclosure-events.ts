@@ -166,6 +166,12 @@ function normalizedTitle(value: string) {
     .slice(0, 180);
 }
 
+function titleIdentity(event: LiveIntelligenceEvent) {
+  const title = normalizedTitle(event.title);
+  if (!title) return "";
+  return `${event.companySlug ?? event.company ?? "unknown"}:${title}`;
+}
+
 function enrichCanonicalCompanyEvent(
   canonical: LiveIntelligenceEvent,
   disclosure: LiveIntelligenceEvent,
@@ -211,12 +217,12 @@ export function mergeHomepageCompanyChannelEvents(
     articleEvents.map((event) => homepageMaterialUrl(event.source.url)).filter(Boolean),
   );
   const seenTitles = new Set(
-    articleEvents.map((event) => normalizedTitle(event.title)).filter(Boolean),
+    articleEvents.map(titleIdentity).filter(Boolean),
   );
 
   for (const event of disclosureEvents) {
     const urlKey = homepageMaterialUrl(event.source.url);
-    const titleKey = normalizedTitle(event.title);
+    const titleKey = titleIdentity(event);
     const canonical = urlKey ? canonicalByUrl.get(urlKey) : undefined;
     if (canonical) {
       const existingIndex = merged.findIndex((item) =>
