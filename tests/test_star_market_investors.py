@@ -2,6 +2,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from tools import crawl_star_market_investors as star
 
@@ -10,14 +11,77 @@ class StarMarketInvestorTests(unittest.TestCase):
     def _write_json(self, path: Path, payload: object) -> None:
         path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
 
-    def test_wrapper_preserves_legacy_cninfo_scalar_endpoint_aliases(self):
-        self.assertEqual(
-            star.legacy.cninfo.STOCK_LIST_URL,
-            star.legacy.cninfo.STOCK_LIST_URLS[0],
+    def test_wrapper_routes_stock_list_through_endpoint_tuple_fallback(self):
+        payload = {"stockList": []}
+        with patch.object(
+            star._cninfo_module,
+            "fetch_first_json",
+            return_value=(
+                payload,
+                star._cninfo_module.STOCK_LIST_URLS[-1],
+                ["https endpoint blocked with 403"],
+            ),
+        ) as fetcher:
+            result = star.legacy.cninfo.fetch_json(
+                star.legacy.cninfo.STOCK_LIST_URL,
+                timeout=9,
+                attempts=1,
+            )
+
+        self.assertIs(result, payload)
+        fetcher.assert_called_once_with(
+            star._cninfo_module.STOCK_LIST_URLS,
+            form=None,
+            timeout=9,
+            attempts=1,
+            opener=None,
         )
-        self.assertEqual(
-            star.legacy.cninfo.QUERY_URL,
-            star.legacy.cninfo.QUERY_URLS[0],
+
+    def test_wrapper_routes_prospectus_query_through_endpoint_tuple_fallback(self):
+        payload = {"announcements": [], "hasMore": False}
+        form = {"stock": "688001,gssz0000001"}
+        with patch.object(
+            star._cninfo_module,
+            "fetch_first_json",
+            return_value=(
+                payload,
+                star._cninfo_module.QUERY_URLS[-1],
+                ["https endpoint blocked with 403"],
+            ),
+        ) as fetcher:
+            result = star.legacy.cninfo.fetch_json(
+                star.legacy.cninfo.QUERY_URL,
+                form=form,
+                timeout=11,
+                attempts=2,
+            )
+
+        self.assertIs(result, payload)
+        fetcher.assert_called_once_with(
+            star._cninfo_module.QUERY_URLS,
+            form=form,
+            timeout=11,
+            attempts=2,
+            opener=None,
+        )
+
+    def test_wrapper_leaves_unrelated_cninfo_requests_on_direct_transport(self):
+        url = "https://example.com/cninfo-compatible-test.json"
+        payload = {"ok": True}
+        with patch.object(
+            star._cninfo_module,
+            "fetch_json",
+            return_value=payload,
+        ) as fetcher:
+            result = star.legacy.cninfo.fetch_json(url, timeout=7, attempts=1)
+
+        self.assertIs(result, payload)
+        fetcher.assert_called_once_with(
+            url,
+            form=None,
+            timeout=7,
+            attempts=1,
+            opener=None,
         )
 
     def test_load_star_listings_only_accepts_enabled_688_a_share(self):
