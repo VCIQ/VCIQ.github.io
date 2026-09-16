@@ -28,7 +28,7 @@ export default function CompaniesPage() {
           <span>{listedDisclosureStats.companyCount} 家上市公司有监管披露</span>
           <span>CNINFO {listedDisclosureStats.cninfoAcceptedEventCount} 条结构化公告</span>
           <span>{researchSynergySummary.trackCount} 个核心赛道</span>
-          <span>公司事件统一进入首页“公司”频道</span>
+          <span>事件新闻统一进入首页“公司”频道</span>
         </div>
       </header>
 
