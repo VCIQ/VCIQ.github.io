@@ -10,6 +10,16 @@ class StarMarketInvestorTests(unittest.TestCase):
     def _write_json(self, path: Path, payload: object) -> None:
         path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
 
+    def test_wrapper_preserves_legacy_cninfo_scalar_endpoint_aliases(self):
+        self.assertEqual(
+            star.legacy.cninfo.STOCK_LIST_URL,
+            star.legacy.cninfo.STOCK_LIST_URLS[0],
+        )
+        self.assertEqual(
+            star.legacy.cninfo.QUERY_URL,
+            star.legacy.cninfo.QUERY_URLS[0],
+        )
+
     def test_load_star_listings_only_accepts_enabled_688_a_share(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
