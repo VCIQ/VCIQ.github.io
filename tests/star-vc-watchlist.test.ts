@@ -106,9 +106,9 @@ test("watchlist admits only verified investment institutions", () => {
   );
 
   assert.deepEqual(names(payload), [
-    "Intel Capital Corporation",
     "深创投集团",
     "珠海融英股权投资合伙企业（有限合伙）",
+    "Intel Capital Corporation",
   ]);
   assert.equal(payload.stats.verifiedRelationshipCount, 4);
   assert.equal(payload.stats.trackedInstitutionCount, 3);
