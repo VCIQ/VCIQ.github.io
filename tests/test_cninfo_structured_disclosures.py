@@ -409,6 +409,169 @@ class CninfoStructuredDisclosuresTest(unittest.TestCase):
             [],
         )
 
+    def test_exchange_official_event_satisfies_requirement_when_cninfo_is_unavailable(self) -> None:
+        exchange_event = {
+            "id": "szse-event",
+            "companySlug": "catl",
+            "companyName": "宁德时代",
+            "market": "A股",
+            "ticker": "300750",
+            "exchange": "深圳证券交易所",
+            "listingRole": "primary",
+            "publishedAt": "2026-08-01",
+            "documentType": "定期报告与业绩",
+            "title": "2026年半年度报告",
+            "summary": "深圳证券交易所官方披露",
+            "source": {
+                "name": "深圳证券交易所",
+                "url": "https://www.szse.cn/disclosure/listed/bulletinDetail/index.html?example=1",
+                "level": "监管文件",
+            },
+            "discoveredVia": "official-direct-index",
+            "fallback": False,
+        }
+        snapshot = {
+            "schemaVersion": 1,
+            "companies": {
+                "catl": {
+                    "slug": "catl",
+                    "name": "宁德时代",
+                    "events": [exchange_event],
+                    "listings": [
+                        {
+                            "market": "A股",
+                            "ticker": "300750",
+                            "exchange": "深圳证券交易所",
+                            "listingRole": "primary",
+                        }
+                    ],
+                }
+            },
+            "sourceStatus": [
+                {
+                    "id": self.listing.source_id,
+                    "companySlug": "catl",
+                    "name": "宁德时代",
+                    "market": "A股",
+                    "ticker": "300750",
+                    "exchange": "深圳证券交易所",
+                    "provider": "official",
+                    "status": "ok",
+                    "scanned": 1,
+                    "accepted": 1,
+                    "fallback": False,
+                    "errors": [],
+                }
+            ],
+        }
+
+        def unavailable_query(listing, org_id, settings):
+            return [], {
+                "attempted": True,
+                "provider": "cninfo-structured-api",
+                "orgIdResolved": True,
+                "endpoint": "",
+                "scanned": 0,
+                "qualified": 0,
+                "accepted": 0,
+                "errors": ["HTTP Error 403: Forbidden"],
+            }
+
+        enriched = cninfo.enrich_snapshot(
+            snapshot,
+            [self.listing],
+            {"300750": "GD165627"},
+            {"maxItemsPerListing": 18},
+            query_fn=unavailable_query,
+            registry_diagnostics={
+                "status": "seeded",
+                "seededOrgIdCount": 1,
+                "liveOrgIdCount": 0,
+                "errors": ["registry: HTTP Error 403: Forbidden"],
+            },
+        )
+        self.assertEqual(enriched["cninfoStructured"]["availableEventCount"], 0)
+        self.assertEqual(cninfo.count_available_a_share_official_events(enriched, [self.listing]), 1)
+        self.assertEqual(
+            cninfo.validate_enrichment(enriched, [self.listing], require_events=True),
+            [],
+        )
+
+    def test_no_official_a_share_coverage_still_fails_closed(self) -> None:
+        snapshot = {
+            "schemaVersion": 1,
+            "companies": {
+                "catl": {
+                    "slug": "catl",
+                    "name": "宁德时代",
+                    "events": [],
+                    "listings": [
+                        {
+                            "market": "A股",
+                            "ticker": "300750",
+                            "exchange": "深圳证券交易所",
+                            "listingRole": "primary",
+                        }
+                    ],
+                }
+            },
+            "sourceStatus": [
+                {
+                    "id": self.listing.source_id,
+                    "companySlug": "catl",
+                    "name": "宁德时代",
+                    "market": "A股",
+                    "ticker": "300750",
+                    "exchange": "深圳证券交易所",
+                    "provider": "official",
+                    "status": "error",
+                    "scanned": 0,
+                    "accepted": 0,
+                    "fallback": False,
+                    "errors": ["official source unavailable"],
+                    "structuredProvider": "cninfo-structured-api",
+                    "structuredAttempted": True,
+                    "structuredOrgIdResolved": True,
+                    "structuredScanned": 0,
+                    "structuredAccepted": 0,
+                    "structuredErrors": ["HTTP Error 403: Forbidden"],
+                }
+            ],
+            "cninfoStructured": {
+                "schemaVersion": 2,
+                "provider": "cninfo-structured-api",
+                "availableEventCount": 0,
+            },
+        }
+        errors = cninfo.validate_enrichment(snapshot, [self.listing], require_events=True)
+        self.assertTrue(
+            any("no verified A-share official disclosure events" in error for error in errors)
+        )
+
+    def test_lookalike_cninfo_host_is_not_verified(self) -> None:
+        event = {
+            "market": "A股",
+            "ticker": "300750",
+            "source": {
+                "name": "未知来源",
+                "url": "https://static.fakecninfo.com.cn/finalpage/2026-08-01/fake.PDF",
+            },
+            "discoveredVia": "unknown",
+            "fallback": False,
+        }
+        snapshot = {
+            "companies": {
+                "catl": {
+                    "events": [event],
+                }
+            }
+        }
+        self.assertEqual(cninfo.count_available_cninfo_events(snapshot, [self.listing]), 0)
+        self.assertEqual(
+            cninfo.count_available_a_share_official_events(snapshot, [self.listing]),
+            0,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
