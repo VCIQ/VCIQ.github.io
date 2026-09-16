@@ -18,6 +18,7 @@ import { useFavorites } from "@/components/use-favorites";
 import { useHomepagePreferences } from "@/components/use-homepage-preferences";
 import { useHotness } from "@/components/use-hotness";
 import { toggleFavorite } from "@/lib/favorites";
+import { mergeHomepageCompanyChannelEvents } from "@/lib/homepage-company-disclosure-events";
 import {
   buildHomepageEntityChannelSets,
   matchesHomepageCompanyEntityChannel,
@@ -280,10 +281,12 @@ export function HomepageNewsFeed({
   initialPayload,
   bootstrap,
   peopleChannelEvents,
+  companyChannelEvents,
 }: {
   initialPayload: ArticlePayload;
   bootstrap: HomepageFeedBootstrap;
   peopleChannelEvents: LiveIntelligenceEvent[];
+  companyChannelEvents: LiveIntelligenceEvent[];
 }) {
   const { articles, refreshAudit, isLive } = useArticles(initialPayload);
   const favorites = useFavorites();
@@ -354,7 +357,13 @@ export function HomepageNewsFeed({
           peopleChannelEvents,
           articleBase,
         )
-      : articleBase;
+      : channel === "companies"
+        ? mergeHomepageCompanyChannelEvents(
+            articleBase.filter((item) => matchesHomepageCompanyEntityChannel(item, entityChannels)),
+            companyChannelEvents,
+            articleBase,
+          )
+        : articleBase;
     return base
       .filter((item) => !isHomepageEventDismissed(item, preferences))
       .filter((item) => region === "全部" || item.region === region)
@@ -378,6 +387,7 @@ export function HomepageNewsFeed({
   }, [
     activeArticles,
     channel,
+    companyChannelEvents,
     entityChannels,
     favoriteProfile,
     normalizedQuery,
@@ -453,7 +463,7 @@ export function HomepageNewsFeed({
     : channel === "people"
       ? "人物频道合并已发布人物库材料与正式实体关联事件；仅正式 personSlug 或人物库别名精确匹配可入流，泛化人名识别不会直接触发。"
       : channel === "companies"
-        ? "公司频道仅接受已发布公司库实体的结构化关联：正式 companySlug 或与公司库别名精确匹配的公司提及；普通公司名文本命中不会直接入流。"
+        ? "公司频道合并已发布公司库的结构化关联事件与高价值官方监管披露；CNINFO、SSE、SZSE、SEC 仅在正式 companySlug 绑定且通过重要性门槛时入流，普通公司名文本命中不会直接触发。"
         : "当前频道按最新文章优先展示，个性化推荐仅用于同等新鲜度下的辅助排序。";
 
   function changeChannel(nextChannel: ChannelId) {
@@ -601,7 +611,7 @@ export function HomepageNewsFeed({
                           }`}
                           onClick={() => toggleHomepageSectorFollow(item.sector)}
                           aria-pressed={followed}
-                          title={followed ? `取消关注 ${item.sector}` : `关注 ${item.sector}`}
+                          title={followed ? `取消关注 ${item.sector}` : `关注赛道 ${item.sector}`}
                         >
                           <Radar size={11} aria-hidden="true" />
                           {followed ? "已关注赛道" : "关注赛道"}
