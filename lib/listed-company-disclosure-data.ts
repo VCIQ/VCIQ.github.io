@@ -53,6 +53,7 @@ type ListedDisclosureSnapshot = {
     schemaVersion: number;
     provider: string;
     attemptedListingCount: number;
+    qualifiedEventCount?: number;
     acceptedEventCount: number;
   };
   secStructured?: {
@@ -66,6 +67,26 @@ type ListedDisclosureSnapshot = {
 const snapshot = rawDisclosureSnapshot as ListedDisclosureSnapshot;
 
 export const listedDisclosureGeneratedAt = snapshot.generatedAt || "";
+export const listedCompanyDisclosures = Object.values(snapshot.companies ?? {});
+export const listedDisclosureStats = {
+  generatedAt: listedDisclosureGeneratedAt,
+  companyCount: snapshot.companyCount ?? listedCompanyDisclosures.length,
+  eventCount: snapshot.eventCount ?? listedCompanyDisclosures.reduce(
+    (total, company) => total + company.events.length,
+    0,
+  ),
+  officialEventCount: listedCompanyDisclosures.reduce(
+    (total, company) => total + company.officialEventCount,
+    0,
+  ),
+  fallbackEventCount: listedCompanyDisclosures.reduce(
+    (total, company) => total + company.fallbackEventCount,
+    0,
+  ),
+  cninfoAcceptedEventCount: snapshot.cninfoStructured?.acceptedEventCount ?? 0,
+  cninfoQualifiedEventCount: snapshot.cninfoStructured?.qualifiedEventCount ?? 0,
+  cninfoAttemptedListingCount: snapshot.cninfoStructured?.attemptedListingCount ?? 0,
+} as const;
 
 export function getListedCompanyDisclosure(
   slug: string,
