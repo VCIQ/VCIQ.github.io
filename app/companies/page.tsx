@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Building2 } from "lucide-react";
 import { ChannelSplitLayout } from "@/components/channel-split-layout";
 import { CompanyDirectory } from "@/components/company-directory";
+import starVcWatchlist from "@/config/star_vc_watchlist.json";
 import { companies } from "@/lib/catalog-data";
 import { projectHomepageCompanyDisclosureEvents } from "@/lib/homepage-company-disclosure-events";
 import { listedDisclosureStats } from "@/lib/listed-company-disclosure-data";
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
 
 const latestOfficialDisclosures = projectHomepageCompanyDisclosureEvents(6);
 const latestDisclosureDate = latestOfficialDisclosures[0]?.publishedAt ?? "持续更新";
+const starVcStats = starVcWatchlist.stats;
 
 export default function CompaniesPage() {
   return (
@@ -31,6 +33,17 @@ export default function CompaniesPage() {
           <span>事件新闻统一进入首页“公司”频道</span>
         </div>
       </header>
+
+      <section className={styles.ventureBridge} aria-labelledby="star-vc-bridge-heading">
+        <div>
+          <span>STAR VC / VERIFIED RELATIONSHIPS</span>
+          <h2 id="star-vc-bridge-heading">科创板投资机构</h2>
+          <p>
+            {starVcStats.trackedInstitutionCount} 家机构 · {starVcStats.verifiedRelationshipCount} 条已核验投资关系
+          </p>
+        </div>
+        <Link href="/technology/track-1ccjq49">查看风险投资频道 →</Link>
+      </section>
 
       <section className={styles.disclosurePanel} aria-labelledby="listed-disclosure-heading">
         <header className={styles.disclosureHeader}>
