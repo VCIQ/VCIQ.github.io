@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-14T00:30:51+00:00",
+  "generatedAt": "2026-09-16T00:34:26+00:00",
   "companyCount": 15,
   "eventCount": 155,
   "companies": {
     "bgi-genomics": {
       "slug": "bgi-genomics",
       "name": "华大基因",
-      "updatedAt": "2026-09-14T00:30:20+00:00",
+      "updatedAt": "2026-09-16T00:33:39+00:00",
       "status": "ok",
       "listings": [
         {
@@ -445,7 +445,7 @@
     "cambricon": {
       "slug": "cambricon",
       "name": "寒武纪",
-      "updatedAt": "2026-09-14T00:30:20+00:00",
+      "updatedAt": "2026-09-16T00:33:39+00:00",
       "status": "ok",
       "listings": [
         {
@@ -903,7 +903,7 @@
     "catl": {
       "slug": "catl",
       "name": "宁德时代",
-      "updatedAt": "2026-09-14T00:30:20+00:00",
+      "updatedAt": "2026-09-16T00:33:39+00:00",
       "status": "ok",
       "listings": [
         {
@@ -1647,7 +1647,7 @@
     "horizon-robotics": {
       "slug": "horizon-robotics",
       "name": "地平线机器人",
-      "updatedAt": "2026-09-14T00:30:14+00:00",
+      "updatedAt": "2026-09-16T00:33:34+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2085,7 +2085,7 @@
     "xtalpi": {
       "slug": "xtalpi",
       "name": "晶泰科技",
-      "updatedAt": "2026-09-14T00:30:14+00:00",
+      "updatedAt": "2026-09-16T00:33:34+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2483,7 +2483,7 @@
     "pony-ai": {
       "slug": "pony-ai",
       "name": "小马智行",
-      "updatedAt": "2026-09-14T00:30:51+00:00",
+      "updatedAt": "2026-09-16T00:34:26+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2525,7 +2525,7 @@
     "weride": {
       "slug": "weride",
       "name": "文远知行",
-      "updatedAt": "2026-09-14T00:30:51+00:00",
+      "updatedAt": "2026-09-16T00:34:26+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2567,7 +2567,7 @@
     "rigetti": {
       "slug": "rigetti",
       "name": "Rigetti Computing",
-      "updatedAt": "2026-09-14T00:30:51+00:00",
+      "updatedAt": "2026-09-16T00:34:26+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2609,7 +2609,7 @@
     "ionq": {
       "slug": "ionq",
       "name": "IonQ",
-      "updatedAt": "2026-09-14T00:30:51+00:00",
+      "updatedAt": "2026-09-16T00:34:26+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2651,7 +2651,7 @@
     "rocket-lab": {
       "slug": "rocket-lab",
       "name": "Rocket Lab",
-      "updatedAt": "2026-09-14T00:30:51+00:00",
+      "updatedAt": "2026-09-16T00:34:26+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2693,7 +2693,7 @@
     "tempus-ai": {
       "slug": "tempus-ai",
       "name": "Tempus AI",
-      "updatedAt": "2026-09-14T00:30:51+00:00",
+      "updatedAt": "2026-09-16T00:34:26+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2735,7 +2735,7 @@
     "recursion": {
       "slug": "recursion",
       "name": "Recursion Pharmaceuticals",
-      "updatedAt": "2026-09-14T00:30:51+00:00",
+      "updatedAt": "2026-09-16T00:34:26+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2777,7 +2777,7 @@
     "mobileye": {
       "slug": "mobileye",
       "name": "Mobileye",
-      "updatedAt": "2026-09-14T00:30:51+00:00",
+      "updatedAt": "2026-09-16T00:34:26+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2819,7 +2819,7 @@
     "aurora": {
       "slug": "aurora",
       "name": "Aurora Innovation",
-      "updatedAt": "2026-09-14T00:30:51+00:00",
+      "updatedAt": "2026-09-16T00:34:26+00:00",
       "status": "ok",
       "listings": [
         {
@@ -3235,7 +3235,7 @@
     "joby": {
       "slug": "joby",
       "name": "Joby Aviation",
-      "updatedAt": "2026-09-14T00:30:51+00:00",
+      "updatedAt": "2026-09-16T00:34:26+00:00",
       "status": "ok",
       "listings": [
         {
@@ -3483,11 +3483,13 @@
       "exchange": "上海证券交易所",
       "provider": "official+cninfo-structured",
       "status": "ok",
-      "scanned": 72,
+      "scanned": 0,
       "qualified": 0,
       "accepted": 17,
       "fallback": false,
-      "errors": [],
+      "errors": [
+        "direct:RuntimeError:fetch failed for https://www.cninfo.com.cn/new/fulltextSearch?keyWord=688256: HTTP Error 403: Forbidden"
+      ],
       "fallbackScanned": 0,
       "fallbackQualified": 0,
       "fallbackAccepted": 0,
@@ -3495,10 +3497,16 @@
       "structuredProvider": "cninfo-structured-api",
       "structuredAttempted": true,
       "structuredOrgIdResolved": true,
+      "structuredEndpoint": "http://www.cninfo.com.cn/new/hisAnnouncement/query",
       "structuredScanned": 120,
       "structuredQualified": 17,
       "structuredAccepted": 17,
-      "structuredErrors": [],
+      "structuredErrors": [
+        "https://www.cninfo.com.cn/new/hisAnnouncement/query:RuntimeError:CNINFO request failed for https://www.cninfo.com.cn/new/hisAnnouncement/query: HTTP Error 403: Forbidden",
+        "https://www.cninfo.com.cn/new/hisAnnouncement/query:RuntimeError:CNINFO request failed for https://www.cninfo.com.cn/new/hisAnnouncement/query: HTTP Error 403: Forbidden",
+        "https://www.cninfo.com.cn/new/hisAnnouncement/query:RuntimeError:CNINFO request failed for https://www.cninfo.com.cn/new/hisAnnouncement/query: HTTP Error 403: Forbidden",
+        "https://www.cninfo.com.cn/new/hisAnnouncement/query:RuntimeError:CNINFO request failed for https://www.cninfo.com.cn/new/hisAnnouncement/query: HTTP Error 403: Forbidden"
+      ],
       "exchangeDirectAttempted": true,
       "exchangeDirectInstitution": "sse",
       "exchangeDirectProvider": "sse-company-bulletin-api",
@@ -3516,11 +3524,13 @@
       "exchange": "深圳证券交易所",
       "provider": "official+cninfo-structured",
       "status": "ok",
-      "scanned": 72,
+      "scanned": 0,
       "qualified": 0,
       "accepted": 18,
       "fallback": false,
-      "errors": [],
+      "errors": [
+        "direct:RuntimeError:fetch failed for https://www.cninfo.com.cn/new/fulltextSearch?keyWord=300750: HTTP Error 403: Forbidden"
+      ],
       "fallbackScanned": 0,
       "fallbackQualified": 0,
       "fallbackAccepted": 0,
@@ -3528,10 +3538,16 @@
       "structuredProvider": "cninfo-structured-api",
       "structuredAttempted": true,
       "structuredOrgIdResolved": true,
+      "structuredEndpoint": "http://www.cninfo.com.cn/new/hisAnnouncement/query",
       "structuredScanned": 120,
-      "structuredQualified": 30,
+      "structuredQualified": 29,
       "structuredAccepted": 18,
-      "structuredErrors": [],
+      "structuredErrors": [
+        "https://www.cninfo.com.cn/new/hisAnnouncement/query:RuntimeError:CNINFO request failed for https://www.cninfo.com.cn/new/hisAnnouncement/query: HTTP Error 403: Forbidden",
+        "https://www.cninfo.com.cn/new/hisAnnouncement/query:RuntimeError:CNINFO request failed for https://www.cninfo.com.cn/new/hisAnnouncement/query: HTTP Error 403: Forbidden",
+        "https://www.cninfo.com.cn/new/hisAnnouncement/query:RuntimeError:CNINFO request failed for https://www.cninfo.com.cn/new/hisAnnouncement/query: HTTP Error 403: Forbidden",
+        "https://www.cninfo.com.cn/new/hisAnnouncement/query:RuntimeError:CNINFO request failed for https://www.cninfo.com.cn/new/hisAnnouncement/query: HTTP Error 403: Forbidden"
+      ],
       "exchangeDirectAttempted": true,
       "exchangeDirectInstitution": "szse",
       "exchangeDirectProvider": "szse-announcement-api",
@@ -3549,11 +3565,13 @@
       "exchange": "深圳证券交易所",
       "provider": "official+cninfo-structured",
       "status": "ok",
-      "scanned": 72,
+      "scanned": 0,
       "qualified": 0,
       "accepted": 18,
       "fallback": false,
-      "errors": [],
+      "errors": [
+        "direct:RuntimeError:fetch failed for https://www.cninfo.com.cn/new/fulltextSearch?keyWord=300676: HTTP Error 403: Forbidden"
+      ],
       "fallbackScanned": 0,
       "fallbackQualified": 0,
       "fallbackAccepted": 0,
@@ -3561,10 +3579,16 @@
       "structuredProvider": "cninfo-structured-api",
       "structuredAttempted": true,
       "structuredOrgIdResolved": true,
+      "structuredEndpoint": "http://www.cninfo.com.cn/new/hisAnnouncement/query",
       "structuredScanned": 120,
       "structuredQualified": 18,
       "structuredAccepted": 18,
-      "structuredErrors": [],
+      "structuredErrors": [
+        "https://www.cninfo.com.cn/new/hisAnnouncement/query:RuntimeError:CNINFO request failed for https://www.cninfo.com.cn/new/hisAnnouncement/query: HTTP Error 403: Forbidden",
+        "https://www.cninfo.com.cn/new/hisAnnouncement/query:RuntimeError:CNINFO request failed for https://www.cninfo.com.cn/new/hisAnnouncement/query: HTTP Error 403: Forbidden",
+        "https://www.cninfo.com.cn/new/hisAnnouncement/query:RuntimeError:CNINFO request failed for https://www.cninfo.com.cn/new/hisAnnouncement/query: HTTP Error 403: Forbidden",
+        "https://www.cninfo.com.cn/new/hisAnnouncement/query:RuntimeError:CNINFO request failed for https://www.cninfo.com.cn/new/hisAnnouncement/query: HTTP Error 403: Forbidden"
+      ],
       "exchangeDirectAttempted": true,
       "exchangeDirectInstitution": "szse",
       "exchangeDirectProvider": "szse-announcement-api",
@@ -3613,7 +3637,7 @@
       "provider": "official",
       "status": "ok",
       "scanned": 105,
-      "qualified": 25,
+      "qualified": 24,
       "accepted": 18,
       "fallback": false,
       "errors": []
@@ -3935,7 +3959,7 @@
         "RuntimeError:SEC request failed for https://data.sec.gov/submissions/CIK0001969302.json: HTTP Error 403: Forbidden"
       ],
       "cikSource": "configured-official-registry",
-      "observedAt": "2026-09-14T00:30:38+00:00"
+      "observedAt": "2026-09-16T00:34:13+00:00"
     },
     {
       "id": "sec-disclosure-weride-wrd",
@@ -3956,7 +3980,7 @@
         "RuntimeError:SEC request failed for https://data.sec.gov/submissions/CIK0001867729.json: HTTP Error 403: Forbidden"
       ],
       "cikSource": "configured-official-registry",
-      "observedAt": "2026-09-14T00:30:38+00:00"
+      "observedAt": "2026-09-16T00:34:13+00:00"
     },
     {
       "id": "sec-disclosure-rigetti-rgti",
@@ -3977,7 +4001,7 @@
         "RuntimeError:SEC request failed for https://data.sec.gov/submissions/CIK0001838359.json: HTTP Error 403: Forbidden"
       ],
       "cikSource": "configured-official-registry",
-      "observedAt": "2026-09-14T00:30:38+00:00"
+      "observedAt": "2026-09-16T00:34:13+00:00"
     },
     {
       "id": "sec-disclosure-ionq-ionq",
@@ -3998,7 +4022,7 @@
         "RuntimeError:SEC request failed for https://data.sec.gov/submissions/CIK0001824920.json: HTTP Error 403: Forbidden"
       ],
       "cikSource": "configured-official-registry",
-      "observedAt": "2026-09-14T00:30:38+00:00"
+      "observedAt": "2026-09-16T00:34:13+00:00"
     },
     {
       "id": "sec-disclosure-rocket-lab-rklb",
@@ -4019,7 +4043,7 @@
         "RuntimeError:SEC request failed for https://data.sec.gov/submissions/CIK0001819994.json: HTTP Error 403: Forbidden"
       ],
       "cikSource": "configured-official-registry",
-      "observedAt": "2026-09-14T00:30:38+00:00"
+      "observedAt": "2026-09-16T00:34:13+00:00"
     },
     {
       "id": "sec-disclosure-tempus-ai-tem",
@@ -4040,7 +4064,7 @@
         "RuntimeError:SEC request failed for https://data.sec.gov/submissions/CIK0001717115.json: HTTP Error 403: Forbidden"
       ],
       "cikSource": "configured-official-registry",
-      "observedAt": "2026-09-14T00:30:38+00:00"
+      "observedAt": "2026-09-16T00:34:13+00:00"
     },
     {
       "id": "sec-disclosure-recursion-rxrx",
@@ -4061,7 +4085,7 @@
         "RuntimeError:SEC request failed for https://data.sec.gov/submissions/CIK0001601830.json: HTTP Error 403: Forbidden"
       ],
       "cikSource": "configured-official-registry",
-      "observedAt": "2026-09-14T00:30:38+00:00"
+      "observedAt": "2026-09-16T00:34:13+00:00"
     },
     {
       "id": "sec-disclosure-mobileye-mbly",
@@ -4082,7 +4106,7 @@
         "RuntimeError:SEC request failed for https://data.sec.gov/submissions/CIK0001910139.json: HTTP Error 403: Forbidden"
       ],
       "cikSource": "configured-official-registry",
-      "observedAt": "2026-09-14T00:30:38+00:00"
+      "observedAt": "2026-09-16T00:34:13+00:00"
     },
     {
       "id": "sec-disclosure-aurora-aur",
@@ -4103,7 +4127,7 @@
         "RuntimeError:SEC request failed for https://data.sec.gov/submissions/CIK0001828108.json: HTTP Error 403: Forbidden"
       ],
       "cikSource": "configured-official-registry",
-      "observedAt": "2026-09-14T00:30:38+00:00"
+      "observedAt": "2026-09-16T00:34:13+00:00"
     },
     {
       "id": "sec-disclosure-joby-joby",
@@ -4124,15 +4148,25 @@
         "RuntimeError:SEC request failed for https://data.sec.gov/submissions/CIK0001819848.json: HTTP Error 403: Forbidden"
       ],
       "cikSource": "configured-official-registry",
-      "observedAt": "2026-09-14T00:30:38+00:00"
+      "observedAt": "2026-09-16T00:34:13+00:00"
     }
   ],
   "cninfoStructured": {
-    "schemaVersion": 1,
+    "schemaVersion": 2,
     "provider": "cninfo-structured-api",
     "attemptedListingCount": 3,
-    "qualifiedEventCount": 65,
-    "acceptedEventCount": 53
+    "qualifiedEventCount": 64,
+    "acceptedEventCount": 53,
+    "liveAcceptedEventCount": 53,
+    "availableEventCount": 57,
+    "registryStatus": "live",
+    "registryEndpoint": "http://www.cninfo.com.cn/new/data/szse_stock.json",
+    "seededOrgIdCount": 3,
+    "liveOrgIdCount": 6253,
+    "registryErrors": [
+      "preflight:https://www.cninfo.com.cn/new/index.jsp:HTTPError:HTTP Error 403: Forbidden",
+      "https://www.cninfo.com.cn/new/data/szse_stock.json:RuntimeError:CNINFO request failed for https://www.cninfo.com.cn/new/data/szse_stock.json: HTTP Error 403: Forbidden"
+    ]
   },
   "exchangeDirect": {
     "schemaVersion": 1,
@@ -4176,6 +4210,6 @@
       "dynamicLookupErrors": []
     },
     "observationOnly": true,
-    "observedAt": "2026-09-14T00:30:38+00:00"
+    "observedAt": "2026-09-16T00:34:13+00:00"
   }
 }
