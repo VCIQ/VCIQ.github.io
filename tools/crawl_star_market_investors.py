@@ -20,6 +20,14 @@ except ImportError:
     import crawl_star_market_investors_legacy as legacy
     import star_market_prospectus_parser as prospectus_parser
 
+# CNINFO's resilient transport now exposes ordered endpoint tuples. The legacy STAR
+# network layer still resolves the pre-refactor scalar names, so retain those names
+# as aliases for the preferred HTTPS endpoints until that layer is migrated.
+if not hasattr(legacy.cninfo, "STOCK_LIST_URL"):
+    legacy.cninfo.STOCK_LIST_URL = legacy.cninfo.STOCK_LIST_URLS[0]
+if not hasattr(legacy.cninfo, "QUERY_URL"):
+    legacy.cninfo.QUERY_URL = legacy.cninfo.QUERY_URLS[0]
+
 # Re-export the stable crawler API used by tests and downstream tools.
 for _name in dir(legacy):
     if not _name.startswith("__"):
