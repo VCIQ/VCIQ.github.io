@@ -28,6 +28,68 @@ class CninfoStructuredDisclosuresTest(unittest.TestCase):
         )
         self.assertEqual(result, {"300750": "9900023766"})
 
+    def test_reviewed_org_id_seeds_are_normalized(self) -> None:
+        result = cninfo.configured_org_ids(
+            {
+                "cninfoOrgIds": {
+                    "300750": "GD165627",
+                    " 300676 ": "9900031781",
+                    "bad": "ignored",
+                }
+            }
+        )
+        self.assertEqual(
+            result,
+            {
+                "300750": "GD165627",
+                "300676": "9900031781",
+            },
+        )
+
+    def test_registry_failure_falls_back_to_reviewed_org_ids(self) -> None:
+        def failing_fetcher(urls, **kwargs):
+            raise RuntimeError("HTTP Error 403: Forbidden")
+
+        org_ids, diagnostics = cninfo.resolve_org_ids(
+            {
+                "cninfoOrgIds": {
+                    "300750": "GD165627",
+                    "300676": "9900031781",
+                }
+            },
+            {"requestTimeout": 1, "requestAttempts": 1},
+            fetcher=failing_fetcher,
+            session_builder=lambda timeout: (None, []),
+        )
+        self.assertEqual(org_ids["300750"], "GD165627")
+        self.assertEqual(org_ids["300676"], "9900031781")
+        self.assertEqual(diagnostics["status"], "seeded")
+        self.assertEqual(diagnostics["seededOrgIdCount"], 2)
+        self.assertEqual(diagnostics["liveOrgIdCount"], 0)
+        self.assertTrue(any("403" in error for error in diagnostics["errors"]))
+
+    def test_live_registry_overrides_reviewed_seed(self) -> None:
+        def live_fetcher(urls, **kwargs):
+            return (
+                {"stockList": [{"code": "300750", "orgId": "live-org-id"}]},
+                "http://www.cninfo.com.cn/new/data/szse_stock.json",
+                ["https registry returned 403"],
+            )
+
+        org_ids, diagnostics = cninfo.resolve_org_ids(
+            {"cninfoOrgIds": {"300750": "seed-org-id"}},
+            {"requestTimeout": 1, "requestAttempts": 1},
+            fetcher=live_fetcher,
+            session_builder=lambda timeout: (None, []),
+        )
+        self.assertEqual(org_ids["300750"], "live-org-id")
+        self.assertEqual(diagnostics["status"], "live")
+        self.assertEqual(diagnostics["liveOrgIdCount"], 1)
+        self.assertEqual(
+            diagnostics["endpoint"],
+            "http://www.cninfo.com.cn/new/data/szse_stock.json",
+        )
+
     def test_query_payload_uses_exchange_column_and_bounded_dates(self) -> None:
         payload = cninfo.query_payload(
             self.listing,
@@ -80,6 +142,51 @@ class CninfoStructuredDisclosuresTest(unittest.TestCase):
         self.assertEqual(event["documentType"], "定期报告与业绩")
         self.assertEqual(event["source"]["name"], "巨潮资讯")
         self.assertEqual(event["source"]["level"], "监管文件")
+
+    def test_query_endpoint_can_succeed_after_preferred_transport_fails(self) -> None:
+        calls = []
+
+        def fallback_fetcher(urls, **kwargs):
+            calls.append(tuple(urls))
+            payload = {
+                "announcements": [
+                    {
+                        "secCode": "300750",
+                        "secName": "宁德时代",
+                        "announcementTitle": "2026年一季度报告",
+                        "announcementTime": 1774396800000,
+                        "announcementId": "1212345678",
+                        "adjunctType": "PDF",
+                        "adjunctUrl": "finalpage/2026-03-25/1212345678.PDF",
+                    }
+                ],
+                "hasMore": False,
+            }
+            return (
+                payload,
+                "http://www.cninfo.com.cn/new/hisAnnouncement/query",
+                ["https endpoint returned 403"],
+            )
+
+        events, status = cninfo.query_listing(
+            self.listing,
+            "GD165627",
+            {
+                "maxAgeDays": 1095,
+                "maxItemsPerListing": 18,
+                "cninfoMaxPages": 1,
+                "requestTimeout": 1,
+                "requestAttempts": 1,
+            },
+            fetcher=fallback_fetcher,
+        )
+        self.assertEqual(len(events), 1)
+        self.assertEqual(
+            status["endpoint"],
+            "http://www.cninfo.com.cn/new/hisAnnouncement/query",
+        )
+        self.assertTrue(any("403" in error for error in status["errors"]))
+        self.assertEqual(calls, [cninfo.QUERY_URLS])
 
     def test_enrichment_merges_a_share_events_without_removing_hk_events(self) -> None:
         hk_listing = base.Listing(
@@ -199,6 +306,7 @@ class CninfoStructuredDisclosuresTest(unittest.TestCase):
         self.assertEqual(status["status"], "ok")
         self.assertEqual(status["structuredAccepted"], 1)
         self.assertEqual(enriched["cninfoStructured"]["acceptedEventCount"], 1)
+        self.assertEqual(enriched["cninfoStructured"]["availableEventCount"], 1)
         self.assertEqual(
             cninfo.validate_enrichment(
                 enriched,
@@ -206,6 +314,262 @@ class CninfoStructuredDisclosuresTest(unittest.TestCase):
                 require_events=True,
             ),
             [],
+        )
+
+    def test_live_cninfo_outage_retains_verified_events_and_passes_requirement(self) -> None:
+        retained = {
+            "id": "retained-cninfo",
+            "companySlug": "catl",
+            "companyName": "宁德时代",
+            "market": "A股",
+            "ticker": "300750",
+            "exchange": "深圳证券交易所",
+            "listingRole": "primary",
+            "publishedAt": "2026-07-31",
+            "documentType": "定期报告与业绩",
+            "title": "2026年半年度报告",
+            "summary": "已验证巨潮历史快照",
+            "source": {
+                "name": "巨潮资讯",
+                "url": "https://static.cninfo.com.cn/finalpage/2026-07-31/retained.PDF",
+                "level": "监管文件",
+            },
+            "discoveredVia": "cninfo-structured-api",
+            "fallback": False,
+        }
+        snapshot = {
+            "schemaVersion": 1,
+            "companies": {
+                "catl": {
+                    "slug": "catl",
+                    "name": "宁德时代",
+                    "events": [retained],
+                    "listings": [
+                        {
+                            "market": "A股",
+                            "ticker": "300750",
+                            "exchange": "深圳证券交易所",
+                            "listingRole": "primary",
+                        }
+                    ],
+                }
+            },
+            "sourceStatus": [
+                {
+                    "id": self.listing.source_id,
+                    "companySlug": "catl",
+                    "name": "宁德时代",
+                    "market": "A股",
+                    "ticker": "300750",
+                    "exchange": "深圳证券交易所",
+                    "provider": "official",
+                    "status": "ok",
+                    "scanned": 1,
+                    "accepted": 1,
+                    "fallback": False,
+                    "errors": [],
+                }
+            ],
+        }
+
+        def unavailable_query(listing, org_id, settings):
+            return [], {
+                "attempted": True,
+                "provider": "cninfo-structured-api",
+                "orgIdResolved": True,
+                "endpoint": "",
+                "scanned": 0,
+                "qualified": 0,
+                "accepted": 0,
+                "errors": ["HTTP Error 403: Forbidden"],
+            }
+
+        enriched = cninfo.enrich_snapshot(
+            snapshot,
+            [self.listing],
+            {"300750": "GD165627"},
+            {"maxItemsPerListing": 18},
+            query_fn=unavailable_query,
+            registry_diagnostics={
+                "status": "seeded",
+                "seededOrgIdCount": 1,
+                "liveOrgIdCount": 0,
+                "errors": ["registry: HTTP Error 403: Forbidden"],
+            },
+        )
+        self.assertEqual(enriched["cninfoStructured"]["liveAcceptedEventCount"], 0)
+        self.assertEqual(enriched["cninfoStructured"]["availableEventCount"], 1)
+        self.assertEqual(enriched["cninfoStructured"]["registryStatus"], "seeded")
+        self.assertEqual(
+            cninfo.validate_enrichment(
+                enriched,
+                [self.listing],
+                require_events=True,
+            ),
+            [],
+        )
+
+    def test_exchange_official_event_satisfies_requirement_when_cninfo_is_unavailable(self) -> None:
+        exchange_event = {
+            "id": "szse-event",
+            "companySlug": "catl",
+            "companyName": "宁德时代",
+            "market": "A股",
+            "ticker": "300750",
+            "exchange": "深圳证券交易所",
+            "listingRole": "primary",
+            "publishedAt": "2026-08-01",
+            "documentType": "定期报告与业绩",
+            "title": "2026年半年度报告",
+            "summary": "深圳证券交易所官方披露",
+            "source": {
+                "name": "深圳证券交易所",
+                "url": "https://www.szse.cn/disclosure/listed/bulletinDetail/index.html?example=1",
+                "level": "监管文件",
+            },
+            "discoveredVia": "official-direct-index",
+            "fallback": False,
+        }
+        snapshot = {
+            "schemaVersion": 1,
+            "companies": {
+                "catl": {
+                    "slug": "catl",
+                    "name": "宁德时代",
+                    "events": [exchange_event],
+                    "listings": [
+                        {
+                            "market": "A股",
+                            "ticker": "300750",
+                            "exchange": "深圳证券交易所",
+                            "listingRole": "primary",
+                        }
+                    ],
+                }
+            },
+            "sourceStatus": [
+                {
+                    "id": self.listing.source_id,
+                    "companySlug": "catl",
+                    "name": "宁德时代",
+                    "market": "A股",
+                    "ticker": "300750",
+                    "exchange": "深圳证券交易所",
+                    "provider": "official",
+                    "status": "ok",
+                    "scanned": 1,
+                    "accepted": 1,
+                    "fallback": False,
+                    "errors": [],
+                }
+            ],
+        }
+
+        def unavailable_query(listing, org_id, settings):
+            return [], {
+                "attempted": True,
+                "provider": "cninfo-structured-api",
+                "orgIdResolved": True,
+                "endpoint": "",
+                "scanned": 0,
+                "qualified": 0,
+                "accepted": 0,
+                "errors": ["HTTP Error 403: Forbidden"],
+            }
+
+        enriched = cninfo.enrich_snapshot(
+            snapshot,
+            [self.listing],
+            {"300750": "GD165627"},
+            {"maxItemsPerListing": 18},
+            query_fn=unavailable_query,
+            registry_diagnostics={
+                "status": "seeded",
+                "seededOrgIdCount": 1,
+                "liveOrgIdCount": 0,
+                "errors": ["registry: HTTP Error 403: Forbidden"],
+            },
+        )
+        self.assertEqual(enriched["cninfoStructured"]["availableEventCount"], 0)
+        self.assertEqual(cninfo.count_available_a_share_official_events(enriched, [self.listing]), 1)
+        self.assertEqual(
+            cninfo.validate_enrichment(enriched, [self.listing], require_events=True),
+            [],
+        )
+
+    def test_no_official_a_share_coverage_still_fails_closed(self) -> None:
+        snapshot = {
+            "schemaVersion": 1,
+            "companies": {
+                "catl": {
+                    "slug": "catl",
+                    "name": "宁德时代",
+                    "events": [],
+                    "listings": [
+                        {
+                            "market": "A股",
+                            "ticker": "300750",
+                            "exchange": "深圳证券交易所",
+                            "listingRole": "primary",
+                        }
+                    ],
+                }
+            },
+            "sourceStatus": [
+                {
+                    "id": self.listing.source_id,
+                    "companySlug": "catl",
+                    "name": "宁德时代",
+                    "market": "A股",
+                    "ticker": "300750",
+                    "exchange": "深圳证券交易所",
+                    "provider": "official",
+                    "status": "error",
+                    "scanned": 0,
+                    "accepted": 0,
+                    "fallback": False,
+                    "errors": ["official source unavailable"],
+                    "structuredProvider": "cninfo-structured-api",
+                    "structuredAttempted": True,
+                    "structuredOrgIdResolved": True,
+                    "structuredScanned": 0,
+                    "structuredAccepted": 0,
+                    "structuredErrors": ["HTTP Error 403: Forbidden"],
+                }
+            ],
+            "cninfoStructured": {
+                "schemaVersion": 2,
+                "provider": "cninfo-structured-api",
+                "availableEventCount": 0,
+            },
+        }
+        errors = cninfo.validate_enrichment(snapshot, [self.listing], require_events=True)
+        self.assertTrue(
+            any("no verified A-share official disclosure events" in error for error in errors)
+        )
+
+    def test_lookalike_cninfo_host_is_not_verified(self) -> None:
+        event = {
+            "market": "A股",
+            "ticker": "300750",
+            "source": {
+                "name": "未知来源",
+                "url": "https://static.fakecninfo.com.cn/finalpage/2026-08-01/fake.PDF",
+            },
+            "discoveredVia": "unknown",
+            "fallback": False,
+        }
+        snapshot = {
+            "companies": {
+                "catl": {
+                    "events": [event],
+                }
+            }
+        }
+        self.assertEqual(cninfo.count_available_cninfo_events(snapshot, [self.listing]), 0)
+        self.assertEqual(
+            cninfo.count_available_a_share_official_events(snapshot, [self.listing]),
+            0,
         )
 
 
