@@ -9,7 +9,7 @@ import {
 } from "../lib/star-market-investor-data";
 
 const ROOT = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
-const OUTPUT_PATH = path.join(ROOT, "public/data/star_vc_watchlist.json");
+const OUTPUT_PATH = path.join(ROOT, "config/star_vc_watchlist.json");
 const QUERY_SHARD_SIZE = 8;
 
 const VC_RANKING_CATEGORIES = new Set([
