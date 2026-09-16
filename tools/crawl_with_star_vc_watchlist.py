@@ -2,7 +2,7 @@
 """Run the standard intelligence crawler with verified STAR VC watchlist shards.
 
 The STAR Market investor pipeline publishes a small derived watchlist from
-manifest-verified prospectus shareholder relationships.  This adapter adds those
+manifest-verified prospectus shareholder relationships. This adapter adds those
 institution-name shards as independent public discovery sources without writing
 them into browser-managed ``config/user_tracking.json``.
 """
@@ -19,7 +19,7 @@ except ImportError:  # Executed directly with python tools/...
     import crawl_with_wechat_registry as base
 
 tracking = base.base.tracking
-WATCHLIST_PATH = tracking.crawler.ROOT / "public/data/star_vc_watchlist.json"
+WATCHLIST_PATH = tracking.crawler.ROOT / "config/star_vc_watchlist.json"
 SOURCE_PREFIX = "star-vc-watchlist-"
 EVENT_TERMS = (
     "投资 OR 融资 OR 募资 OR 新基金 OR 并购 OR IPO OR 退出 OR "
