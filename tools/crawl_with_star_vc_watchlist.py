@@ -5,6 +5,11 @@ The STAR Market investor pipeline publishes a small derived watchlist from
 manifest-verified prospectus shareholder relationships. This adapter adds those
 institution-name shards as independent public discovery sources without writing
 them into browser-managed ``config/user_tracking.json``.
+
+Google News RSS is used for discovery because the repository's existing Bing RSS
+sources currently complete successfully but return zero scanned items on hosted
+runners. Each logical watchlist shard therefore gets a Chinese and an English
+Google News source while retaining the same verified institution membership.
 """
 
 from __future__ import annotations
@@ -15,8 +20,10 @@ from typing import Any
 
 try:  # Imported by tests as tools.crawl_with_star_vc_watchlist.
     from . import crawl_with_wechat_registry as base
+    from . import tracking_taxonomy as taxonomy
 except ImportError:  # Executed directly with python tools/...
     import crawl_with_wechat_registry as base
+    import tracking_taxonomy as taxonomy
 
 tracking = base.base.tracking
 WATCHLIST_PATH = tracking.crawler.ROOT / "config/star_vc_watchlist.json"
@@ -49,22 +56,34 @@ def generated_star_vc_sources(payload: dict[str, Any]) -> list[dict[str, Any]]:
             continue
         shard_id = tracking._slug(raw.get("id") or f"{index:03d}")
         query = f"({tracking._quoted_or_query(names, 8)}) ({EVENT_TERMS})"
-        sources.append(
-            {
-                "id": f"{SOURCE_PREFIX}{shard_id}",
-                "name": f"科创板投资机构 · 风险投资 · {index}",
-                "url": tracking._bing_rss(query),
-                "adapter": "rss",
-                "platform": "科创板投资机构追踪",
-                "sourceLevel": "待交叉验证",
-                "sourceCategory": "company",
-                "region": "全球",
-                "sector": "风险投资",
-                "maxItems": 8,
-                "keywords": names,
-                "strictTitleKeywords": False,
-                "enabled": True,
-            }
+        common = {
+            "adapter": "rss",
+            "platform": "Google News",
+            "sourceLevel": "待交叉验证",
+            "sourceCategory": "company",
+            "sector": "风险投资",
+            "maxItems": 8,
+            "keywords": names,
+            "strictTitleKeywords": False,
+            "enabled": True,
+        }
+        sources.extend(
+            [
+                {
+                    **common,
+                    "id": f"{SOURCE_PREFIX}{shard_id}-google-cn",
+                    "name": f"科创板投资机构 · 风险投资 · {index} · Google News 中文",
+                    "url": taxonomy._google_news_url(query, chinese=True),
+                    "region": "中国",
+                },
+                {
+                    **common,
+                    "id": f"{SOURCE_PREFIX}{shard_id}-google-us",
+                    "name": f"科创板投资机构 · 风险投资 · {index} · Google News 英文",
+                    "url": taxonomy._google_news_url(query, chinese=False),
+                    "region": "美国",
+                },
+            ]
         )
     return sources
 
