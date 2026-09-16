@@ -433,10 +433,12 @@ def _is_cninfo_a_share_event(event: dict[str, Any]) -> bool:
     source = event.get("source") if isinstance(event.get("source"), dict) else {}
     source_name = base.clean_text(source.get("name"), 80)
     source_url = base.clean_text(source.get("url"), 1200)
+    host = base.normalized_host(source_url)
     return (
         str(event.get("discoveredVia") or "") == PROVIDER
         or source_name == "巨潮资讯"
-        or base.normalized_host(source_url).endswith("cninfo.com.cn")
+        or host == "cninfo.com.cn"
+        or host.endswith(".cninfo.com.cn")
     )
 
 
@@ -461,6 +463,37 @@ def count_available_cninfo_events(
                 continue
             url = _event_url(event)
             if url:
+                urls.add(url)
+    return len(urls)
+
+
+def count_available_a_share_official_events(
+    snapshot: dict[str, Any],
+    listings: Iterable[base.Listing] | None = None,
+) -> int:
+    """Count verified A-share disclosure URLs across CNINFO and the exchanges."""
+    rows = list(listings) if listings is not None else base.load_listings()
+    companies = snapshot.get("companies", {})
+    if not isinstance(companies, dict):
+        return 0
+    urls: set[str] = set()
+    for listing in rows:
+        if listing.market != "A股":
+            continue
+        company = companies.get(listing.catalog_slug)
+        if not isinstance(company, dict):
+            continue
+        for event in company.get("events", []):
+            if not isinstance(event, dict):
+                continue
+            if str(event.get("market") or "") != "A股":
+                continue
+            if base.normalize_ticker("A股", event.get("ticker")) != listing.ticker:
+                continue
+            if bool(event.get("fallback")):
+                continue
+            url = _event_url(event)
+            if url and base.allowed_url(listing, url, fallback=False):
                 urls.add(url)
     return len(urls)
 
@@ -676,21 +709,10 @@ def validate_enrichment(
         if not status.get("structuredProvider"):
             errors.append(f"CNINFO structured provider missing: {listing.source_id}")
 
-    cninfo_summary = (
-        snapshot.get("cninfoStructured", {})
-        if isinstance(snapshot.get("cninfoStructured"), dict)
-        else {}
-    )
-    available = int(
-        cninfo_summary.get(
-            "availableEventCount",
-            count_available_cninfo_events(snapshot, rows),
-        )
-        or 0
-    )
+    available = count_available_a_share_official_events(snapshot, rows)
     if require_events and available <= 0:
         errors.append(
-            "no verified CNINFO A-share disclosure events are available after live/retained fallback"
+            "no verified A-share official disclosure events are available after CNINFO/exchange fallback"
         )
     return errors
 
@@ -776,9 +798,6 @@ def main() -> int:
         settings,
         registry_diagnostics=registry_diagnostics,
     )
-    errors = validate_enrichment(snapshot, listings, require_events=args.require_events)
-    if errors:
-        raise SystemExit("; ".join(errors))
 
     try:
         from . import exchange_direct_observations as exchange_direct
@@ -790,6 +809,10 @@ def main() -> int:
     )
     if exchange_errors:
         raise SystemExit("; ".join(exchange_errors))
+
+    errors = validate_enrichment(snapshot, listings, require_events=args.require_events)
+    if errors:
+        raise SystemExit("; ".join(errors))
 
     write_snapshot(snapshot)
     return 0
