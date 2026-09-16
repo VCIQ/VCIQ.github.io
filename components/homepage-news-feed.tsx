@@ -18,7 +18,10 @@ import { useFavorites } from "@/components/use-favorites";
 import { useHomepagePreferences } from "@/components/use-homepage-preferences";
 import { useHotness } from "@/components/use-hotness";
 import { toggleFavorite } from "@/lib/favorites";
-import { mergeHomepageCompanyChannelEvents } from "@/lib/homepage-company-disclosure-events";
+import {
+  interleaveHomepageCompanyDisclosureEvents,
+  mergeHomepageCompanyChannelEvents,
+} from "@/lib/homepage-company-disclosure-events";
 import {
   buildHomepageEntityChannelSets,
   matchesHomepageCompanyEntityChannel,
@@ -364,7 +367,7 @@ export function HomepageNewsFeed({
             articleBase,
           )
         : articleBase;
-    return base
+    const ranked = base
       .filter((item) => !isHomepageEventDismissed(item, preferences))
       .filter((item) => region === "全部" || item.region === region)
       .filter((item) => matchesChannel(item, channel, preferences, entityChannels))
@@ -384,6 +387,9 @@ export function HomepageNewsFeed({
           right.importance - left.importance
         );
       });
+    return channel === "companies"
+      ? interleaveHomepageCompanyDisclosureEvents(ranked, INITIAL_FEED_LIMIT)
+      : ranked;
   }, [
     activeArticles,
     channel,
@@ -463,7 +469,7 @@ export function HomepageNewsFeed({
     : channel === "people"
       ? "人物频道合并已发布人物库材料与正式实体关联事件；仅正式 personSlug 或人物库别名精确匹配可入流，泛化人名识别不会直接触发。"
       : channel === "companies"
-        ? "公司频道合并已发布公司库的结构化关联事件与高价值官方监管披露；CNINFO、SSE、SZSE、SEC 仅在正式 companySlug 绑定且通过重要性门槛时入流，普通公司名文本命中不会直接触发。"
+        ? "公司频道合并已发布公司库的结构化关联事件与高价值官方监管披露；CNINFO、SSE、SZSE、SEC 仅在正式 companySlug 绑定且通过重要性门槛时入流，首屏对近 45 天的重要监管披露进行受控混排，普通公司名文本命中不会直接触发。"
         : "当前频道按最新文章优先展示，个性化推荐仅用于同等新鲜度下的辅助排序。";
 
   function changeChannel(nextChannel: ChannelId) {
