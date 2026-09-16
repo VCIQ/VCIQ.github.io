@@ -11,6 +11,7 @@ import { companies } from "@/lib/catalog-data";
 import { getChannelUpdateDirectory } from "@/lib/channel-updates";
 import { companyEntities } from "@/lib/company-entity-registry";
 import { coreResearchObjectStats } from "@/lib/core-research-objects";
+import { projectHomepageCompanyDisclosureEvents } from "@/lib/homepage-company-disclosure-events";
 import {
   uniqueHomepageEntityKeys,
   uniqueHomepageEntitySlugs,
@@ -85,6 +86,7 @@ const peopleChannelEvents = mergeHomepagePersonChannelEvents(
   projectedPeopleChannelEvents,
   activeArticles,
 );
+const companyChannelEvents = projectHomepageCompanyDisclosureEvents(36);
 
 function compactHomepageArticle(item: LiveIntelligenceEvent): LiveIntelligenceEvent {
   return {
@@ -186,6 +188,7 @@ export default function Home() {
           bootstrap={bootstrap}
           initialPayload={initialPayload}
           peopleChannelEvents={peopleChannelEvents}
+          companyChannelEvents={companyChannelEvents}
         />
         <HomepageTopicBriefs />
         <DailyBriefQuickActions
