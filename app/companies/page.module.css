@@ -21,6 +21,55 @@
   margin: 0;
 }
 
+.ventureBridge {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 4px 0 14px;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 92%, var(--green) 8%);
+}
+
+.ventureBridge > div {
+  min-width: 0;
+}
+
+.ventureBridge span {
+  color: var(--green);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .14em;
+}
+
+.ventureBridge h2 {
+  margin: 4px 0 3px;
+  font-size: 18px;
+}
+
+.ventureBridge p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.ventureBridge > a {
+  flex: 0 0 auto;
+  padding: 9px 12px;
+  border: 1px solid color-mix(in srgb, var(--green) 42%, var(--border));
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.ventureBridge > a:hover {
+  background: color-mix(in srgb, var(--green) 8%, transparent);
+}
+
 .disclosurePanel {
   margin: 4px 0 18px;
   border: 1px solid var(--border);
@@ -361,6 +410,18 @@
 @media (max-width: 600px) {
   .channelHeader h1 {
     font-size: 34px;
+  }
+
+  .ventureBridge {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px 16px;
+  }
+
+  .ventureBridge > a {
+    align-self: stretch;
+    text-align: center;
   }
 
   .disclosureGrid {
