@@ -20,13 +20,57 @@ except ImportError:
     import crawl_star_market_investors_legacy as legacy
     import star_market_prospectus_parser as prospectus_parser
 
-# CNINFO's resilient transport now exposes ordered endpoint tuples. The legacy STAR
-# network layer still resolves the pre-refactor scalar names, so retain those names
-# as aliases for the preferred HTTPS endpoints until that layer is migrated.
-if not hasattr(legacy.cninfo, "STOCK_LIST_URL"):
-    legacy.cninfo.STOCK_LIST_URL = legacy.cninfo.STOCK_LIST_URLS[0]
-if not hasattr(legacy.cninfo, "QUERY_URL"):
-    legacy.cninfo.QUERY_URL = legacy.cninfo.QUERY_URLS[0]
+
+# CNINFO's current transport exposes ordered endpoint tuples and an explicit
+# ``fetch_first_json`` fallback helper. The legacy STAR crawler still passes the
+# pre-refactor scalar endpoint names to ``fetch_json``. Keep those scalar names as
+# compatibility selectors, but route the request through the complete endpoint
+# tuple so a blocked HTTPS endpoint can fall through to the protocol-compatible
+# HTTP endpoint. A proxy keeps this compatibility local to the STAR crawler and
+# does not monkeypatch the shared CNINFO module used by other pipelines.
+_cninfo_module = legacy.cninfo
+
+
+class _LegacyCninfoTransport:
+    STOCK_LIST_URL = _cninfo_module.STOCK_LIST_URLS[0]
+    QUERY_URL = _cninfo_module.QUERY_URLS[0]
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(_cninfo_module, name)
+
+    def fetch_json(
+        self,
+        url: str,
+        *,
+        form: dict[str, Any] | None = None,
+        timeout: int = 18,
+        attempts: int = 2,
+        opener: Any | None = None,
+    ) -> dict[str, Any]:
+        if url == self.STOCK_LIST_URL:
+            endpoints = _cninfo_module.STOCK_LIST_URLS
+        elif url == self.QUERY_URL:
+            endpoints = _cninfo_module.QUERY_URLS
+        else:
+            return _cninfo_module.fetch_json(
+                url,
+                form=form,
+                timeout=timeout,
+                attempts=attempts,
+                opener=opener,
+            )
+
+        payload, _, _ = _cninfo_module.fetch_first_json(
+            endpoints,
+            form=form,
+            timeout=timeout,
+            attempts=attempts,
+            opener=opener,
+        )
+        return payload
+
+
+legacy.cninfo = _LegacyCninfoTransport()
 
 # Re-export the stable crawler API used by tests and downstream tools.
 for _name in dir(legacy):
