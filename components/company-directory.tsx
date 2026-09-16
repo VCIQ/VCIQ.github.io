@@ -1,5 +1,6 @@
 import { buildCompanyResearchSnapshot } from "@/lib/company-research";
 import { companies } from "@/lib/catalog-data";
+import { projectHomepageCompanyDisclosureEvents } from "@/lib/homepage-company-disclosure-events";
 import { snapshotDate } from "@/lib/intelligence-data";
 import { getCompanyResearchRelations } from "@/lib/research-relations";
 import {
@@ -15,9 +16,35 @@ function recentChange(date: string | undefined) {
   return asOf - changedAt <= 90 * 86_400_000;
 }
 
+const latestDisclosureByCompany = new Map<string, ReturnType<typeof projectHomepageCompanyDisclosureEvents>[number]>();
+for (const event of projectHomepageCompanyDisclosureEvents(120)) {
+  if (event.companySlug && !latestDisclosureByCompany.has(event.companySlug)) {
+    latestDisclosureByCompany.set(event.companySlug, event);
+  }
+}
+
 export function CompanyDirectory({ pageSize = 12 }: { pageSize?: number }) {
   const records: CompanyDirectoryRecord[] = companies.map((company) => {
     const research = buildCompanyResearchSnapshot(company);
+    const disclosure = latestDisclosureByCompany.get(company.slug);
+    const disclosureChange = disclosure
+      ? {
+          date: disclosure.publishedAt,
+          title: disclosure.title,
+          summary: disclosure.summary,
+          type: disclosure.type,
+          source: disclosure.source.name,
+          href: disclosure.source.url,
+          importance: disclosure.importance,
+        }
+      : undefined;
+    const latestChange = [research.latestChange, disclosureChange]
+      .filter((item): item is NonNullable<typeof item> => Boolean(item))
+      .sort(
+        (left, right) =>
+          right.date.localeCompare(left.date) ||
+          right.importance - left.importance,
+      )[0];
     const relations = getCompanyResearchRelations(company.slug);
     const relatedTracks = relations.tracks.map((item) => item.name);
     const relatedTopics = relations.topics.map((item) => item.name);
@@ -32,11 +59,11 @@ export function CompanyDirectory({ pageSize = 12 }: { pageSize?: number }) {
       status: company.status,
       whyImportant: research.whyImportant,
       nextWatch: research.nextWatch,
-      latestChange: research.latestChange
+      latestChange: latestChange
         ? {
-            date: research.latestChange.date,
-            title: research.latestChange.title,
-            type: research.latestChange.type,
+            date: latestChange.date,
+            title: latestChange.title,
+            type: latestChange.type,
           }
         : undefined,
       priorityScore: research.priority.score,
@@ -47,7 +74,7 @@ export function CompanyDirectory({ pageSize = 12 }: { pageSize?: number }) {
       hasProfile: research.coverage.hasProfile,
       identityConfidence: research.coverage.identityConfidence,
       updatedAt: research.updatedAt,
-      recentChange: recentChange(research.latestChange?.date),
+      recentChange: recentChange(latestChange?.date),
       relatedTracks: relatedTracks.slice(0, 4),
       relatedTopics: relatedTopics.slice(0, 4),
       relatedPeople: relatedPeople.slice(0, 4),
@@ -59,6 +86,8 @@ export function CompanyDirectory({ pageSize = 12 }: { pageSize?: number }) {
         company.region,
         company.sector,
         company.stage,
+        disclosure?.title,
+        disclosure?.source.name,
         ...relatedTracks,
         ...relatedTopics,
         ...relatedPeople.slice(0, 6),
@@ -66,7 +95,7 @@ export function CompanyDirectory({ pageSize = 12 }: { pageSize?: number }) {
         .filter(Boolean)
         .join(" ")
         .toLocaleLowerCase("zh-CN")
-        .slice(0, 520),
+        .slice(0, 620),
     };
   });
 
