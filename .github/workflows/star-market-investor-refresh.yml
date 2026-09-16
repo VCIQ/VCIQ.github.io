@@ -9,6 +9,7 @@ on:
       - tools/star_market_prospectus_parser.py
       - tools/star_investor_quality.py
       - tools/review_star_market_investors.py
+      - scripts/build-star-vc-watchlist.ts
       - config/star_market_investor_sources.json
       - config/star_market_investor_reviews.json
       - requirements-star-investors.txt
@@ -25,6 +26,7 @@ on:
       - tests/test_review_star_market_investors.py
       - tests/star-market-investor-data.test.ts
       - tests/star-market-investor-review.test.ts
+      - tests/star-vc-watchlist.test.ts
       - .github/workflows/star-market-investor-refresh.yml
   schedule:
   - cron: "10 3 * * 1"
@@ -108,6 +110,9 @@ jobs:
       - name: Install locked frontend dependencies
         run: npm ci
 
+      - name: Build verified STAR VC watchlist
+        run: node --import tsx scripts/build-star-vc-watchlist.ts
+
       - name: Run deterministic site gates
         run: |
           npm run lint
@@ -118,19 +123,26 @@ jobs:
       - name: Finalize automation control plane
         run: python tools/run_pipeline.py finalize star-market-investor-refresh
 
-      - name: Commit prospectus directory and heartbeat
+      - name: Commit prospectus directory, VC watchlist and heartbeat
         id: data-update
         shell: bash
         run: |
           set -euo pipefail
           DATA_PATHS=(
             public/data/star_market_investors.json
+            config/star_vc_watchlist.json
             public/data/data_lineage.json
             public/data/pipeline_health.json
           )
+          WATCHLIST_CHANGED=false
+          if [ -n "$(git status --porcelain -- config/star_vc_watchlist.json)" ]; then
+            WATCHLIST_CHANGED=true
+          fi
+          echo "watchlist_changed=$WATCHLIST_CHANGED" >> "$GITHUB_OUTPUT"
+
           git add "${DATA_PATHS[@]}"
           if git diff --cached --quiet; then
-            echo "No STAR Market investor or control-plane changes."
+            echo "No STAR Market investor, VC watchlist or control-plane changes."
             echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -144,6 +156,10 @@ jobs:
             python tools/review_star_market_investors.py
             python tools/crawl_star_market_investors.py --check --require-companies
             python tools/review_star_market_investors.py --check
+            node --import tsx scripts/build-star-vc-watchlist.ts
+            if [ -n "$(git status --porcelain -- config/star_vc_watchlist.json)" ]; then
+              WATCHLIST_CHANGED=true
+            fi
             python -m unittest \
               tests.test_star_market_investors \
               tests.test_star_market_prospectus_parser \
@@ -163,4 +179,15 @@ jobs:
               exit 1
             fi
           done
+          echo "watchlist_changed=$WATCHLIST_CHANGED" >> "$GITHUB_OUTPUT"
           echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Refresh intelligence for a changed STAR VC watchlist
+        if: steps.data-update.outputs.watchlist_changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "Verified STAR VC watchlist changed; force one lightweight intelligence crawl."
+          gh workflow run frequent-intelligence-refresh.yml --ref main \
+            --repo "$GITHUB_REPOSITORY" \
+            -f force_crawl=true
