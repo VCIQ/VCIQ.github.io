@@ -12,6 +12,8 @@ import type {
 
 const MAX_DISCLOSURE_AGE_DAYS = 400;
 const DEFAULT_DISCLOSURE_LIMIT = 48;
+const COMPANY_FIRST_PAGE_DISCLOSURE_TARGET = 6;
+const COMPANY_DISCLOSURE_PROMOTION_WINDOW_DAYS = 45;
 
 const MATERIAL_RULES: Record<
   string,
@@ -245,4 +247,74 @@ export function mergeHomepageCompanyChannelEvents(
   }
 
   return merged;
+}
+
+export function isOfficialCompanyDisclosureEvent(event: LiveIntelligenceEvent) {
+  return event.sourceId === "listed-company-disclosures" ||
+    event.qualitySignals?.includes("官方监管披露") === true;
+}
+
+/**
+ * The company channel is primarily a recency feed, but a pure newest-first sort
+ * can bury the official filings that make the channel materially different from
+ * the generic recommendation feed. Promote a bounded set of recent, material
+ * regulatory disclosures into the first page without changing their timestamps
+ * or removing any ordinary company events.
+ */
+export function interleaveHomepageCompanyDisclosureEvents(
+  rankedEvents: readonly LiveIntelligenceEvent[],
+  firstPageLimit = 24,
+): LiveIntelligenceEvent[] {
+  const result = [...rankedEvents];
+  if (firstPageLimit <= 0 || result.length <= 1) return result;
+
+  const timestamps = result
+    .map((event) => Date.parse(event.publishedAt))
+    .filter(Number.isFinite);
+  const anchor = timestamps.length ? Math.max(...timestamps) : Number.NaN;
+  const cutoff = Number.isFinite(anchor)
+    ? anchor - COMPANY_DISCLOSURE_PROMOTION_WINDOW_DAYS * 86_400_000
+    : Number.NEGATIVE_INFINITY;
+  const eligible = (event: LiveIntelligenceEvent) => {
+    if (!isOfficialCompanyDisclosureEvent(event)) return false;
+    const timestamp = Date.parse(event.publishedAt);
+    return !Number.isFinite(timestamp) || timestamp >= cutoff;
+  };
+
+  const pageSize = Math.min(firstPageLimit, result.length);
+  const eligibleCount = result.filter(eligible).length;
+  const target = Math.min(
+    COMPANY_FIRST_PAGE_DISCLOSURE_TARGET,
+    eligibleCount,
+    pageSize,
+  );
+  const currentCount = result.slice(0, pageSize).filter(eligible).length;
+  const needed = Math.max(0, target - currentCount);
+  if (!needed) return result;
+
+  const promotions = result.slice(pageSize).filter(eligible).slice(0, needed);
+  if (!promotions.length) return result;
+  const promotionIds = new Set(promotions.map((event) => event.id));
+  const mixed = result.filter((event) => !promotionIds.has(event.id));
+  const slots = Array.from({ length: target }, (_, index) =>
+    Math.min(
+      pageSize - 1,
+      Math.max(0, Math.floor(((index + 1) * pageSize) / (target + 1))),
+    ),
+  );
+
+  let slotCursor = 0;
+  for (const promotion of promotions) {
+    while (
+      slotCursor < slots.length &&
+      isOfficialCompanyDisclosureEvent(mixed[slots[slotCursor]] as LiveIntelligenceEvent)
+    ) {
+      slotCursor += 1;
+    }
+    const slot = slots[slotCursor] ?? pageSize - 1;
+    mixed.splice(Math.min(slot, mixed.length), 0, promotion);
+    slotCursor += 1;
+  }
+
+  return mixed;
 }
