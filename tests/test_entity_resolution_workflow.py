@@ -18,16 +18,39 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
         text = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
         trigger = text.split("permissions:", 1)[0]
         self.assertIn("tools/reconcile_legacy_manual_confirmed_tracking.py", trigger)
-        reconcile = text.index("python tools/reconcile_entity_resolution.py")
-        legacy = text.index("python tools/reconcile_legacy_manual_confirmed_tracking.py")
-        build = text.index("python tools/build_resolved_company_candidates.py")
-        self.assertLess(reconcile, build)
-        self.assertLess(legacy, build)
+        body = text.split(
+            "- name: Reconcile entities, auto-trust manual additions and build private review snapshot",
+            1,
+        )[1].split("- name: Commit resolved tracking and private candidate evidence", 1)[0]
+        first_reconcile = body.index("python tools/reconcile_entity_resolution.py")
+        legacy = body.index("python tools/reconcile_legacy_manual_confirmed_tracking.py")
+        second_reconcile = body.index(
+            "python tools/reconcile_entity_resolution.py", first_reconcile + 1
+        )
+        build = body.index("python tools/build_resolved_company_candidates.py")
+        self.assertLess(first_reconcile, legacy)
+        self.assertLess(legacy, second_reconcile)
+        self.assertLess(second_reconcile, build)
         self.assertIn("python tools/reconcile_entity_resolution.py --check", text)
         self.assertIn("python tools/reconcile_legacy_manual_confirmed_tracking.py --check", text)
         self.assertIn("--output \"$CANDIDATE_QUEUE\"", text)
         self.assertIn("--candidates \"$CANDIDATE_QUEUE\"", text)
         self.assertIn("--check", text)
+
+    def test_candidate_retry_restabilizes_after_legacy_migration(self) -> None:
+        text = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
+        retry = text.split("for attempt in 1 2 3; do", 1)[1].split(
+            "git add \"${changed_paths[@]}\"", 1
+        )[0]
+        first_reconcile = retry.index("python tools/reconcile_entity_resolution.py")
+        legacy = retry.index("python tools/reconcile_legacy_manual_confirmed_tracking.py")
+        second_reconcile = retry.index(
+            "python tools/reconcile_entity_resolution.py", first_reconcile + 1
+        )
+        check = retry.index("python tools/reconcile_entity_resolution.py --check")
+        self.assertLess(first_reconcile, legacy)
+        self.assertLess(legacy, second_reconcile)
+        self.assertLess(second_reconcile, check)
 
     def test_candidate_workflow_commits_private_review_state_and_tracks_scope_changes(self) -> None:
         text = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
