@@ -91,6 +91,8 @@ def _accepted_count(status: dict[str, Any]) -> int:
 
     if status.get("newAccepted") is not None:
         return _integer(status.get("newAccepted"))
+    if status.get("acceptedBeforeRetention") is not None:
+        return _integer(status.get("acceptedBeforeRetention"))
     return _integer(status.get("accepted"))
 
 

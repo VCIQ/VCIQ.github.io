@@ -356,11 +356,12 @@ def _run_sample(
         return None
     retained = bool(status.get("retainedPrevious"))
     successful = state in {"ok", "partial", "empty"} and not retained
-    accepted = _integer(
-        status.get("newAccepted")
-        if status.get("newAccepted") is not None
-        else status.get("accepted")
-    )
+    accepted_raw = status.get("newAccepted")
+    if accepted_raw is None:
+        accepted_raw = status.get("acceptedBeforeRetention")
+    if accepted_raw is None:
+        accepted_raw = status.get("accepted")
+    accepted = _integer(accepted_raw)
     productive = accepted > 0 and state in {"ok", "partial"} and not retained
     article_metric = article_metric or {}
     sample = {
