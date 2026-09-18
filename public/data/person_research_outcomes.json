@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-09-18T01:02:14+00:00",
-  "attemptCount": 217,
+  "generatedAt": "2026-09-18T04:13:45+00:00",
+  "attemptCount": 219,
   "attempts": [
     {
       "taskId": "person-research-fcb717642c97",
@@ -3534,6 +3534,42 @@
       },
       "durationMs": 2262,
       "queryCostUnits": 1.0
+    },
+    {
+      "taskId": "person-research-8d43df7af313",
+      "taskType": "first_party_evidence",
+      "personSlug": "anthropicai",
+      "researchDate": "2026-09-18",
+      "query": "Dario Amodei AI / AGI 演讲",
+      "queryStrategy": "topic_speech",
+      "outcome": "candidate_found",
+      "candidateCount": 4,
+      "sourceHosts": [
+        "youtube.com"
+      ],
+      "sourceTypes": [
+        "video_platform"
+      ],
+      "sourceTypeCounts": {
+        "video_platform": 4
+      },
+      "durationMs": 2376,
+      "queryCostUnits": 1.0
+    },
+    {
+      "taskId": "person-research-678dbc519a78",
+      "taskType": "first_party_evidence",
+      "personSlug": "sebastian-duesterhoeft-close-sign",
+      "researchDate": "2026-09-18",
+      "query": "Sebastian Duesterhoeft Close Sign 风险投资 演讲",
+      "queryStrategy": "topic_speech",
+      "outcome": "no_evidence",
+      "candidateCount": 0,
+      "sourceHosts": [],
+      "sourceTypes": [],
+      "sourceTypeCounts": {},
+      "durationMs": 2142,
+      "queryCostUnits": 1.0
     }
   ],
   "taskStats": {
@@ -4094,12 +4130,24 @@
       "candidateFound": 0,
       "noEvidence": 1,
       "errors": 0
+    },
+    "person-research-8d43df7af313": {
+      "attempts": 1,
+      "candidateFound": 1,
+      "noEvidence": 0,
+      "errors": 0
+    },
+    "person-research-678dbc519a78": {
+      "attempts": 1,
+      "candidateFound": 0,
+      "noEvidence": 1,
+      "errors": 0
     }
   },
   "sourceStats": {
     "youtube.com": {
-      "candidateAttempts": 46,
-      "candidates": 141
+      "candidateAttempts": 47,
+      "candidates": 145
     },
     "bilibili.com": {
       "candidateAttempts": 1,
@@ -4108,13 +4156,13 @@
   },
   "queryStrategyStats": {
     "topic_speech": {
-      "attempts": 187,
-      "candidateFound": 40,
-      "noEvidence": 147,
+      "attempts": 189,
+      "candidateFound": 41,
+      "noEvidence": 148,
       "errors": 0,
-      "candidates": 128,
-      "successRate": 0.214,
-      "averageCandidates": 0.684
+      "candidates": 132,
+      "successRate": 0.217,
+      "averageCandidates": 0.698
     },
     "topic_interview": {
       "attempts": 16,
@@ -4138,13 +4186,13 @@
   "taskStrategyStats": {
     "first_party_evidence": {
       "topic_speech": {
-        "attempts": 187,
-        "candidateFound": 40,
-        "noEvidence": 147,
+        "attempts": 189,
+        "candidateFound": 41,
+        "noEvidence": 148,
         "errors": 0,
-        "candidates": 128,
-        "successRate": 0.214,
-        "averageCandidates": 0.684
+        "candidates": 132,
+        "successRate": 0.217,
+        "averageCandidates": 0.698
       },
       "topic_interview": {
         "attempts": 16,
@@ -4168,28 +4216,28 @@
   },
   "sourceTypeStats": {
     "video_platform": {
-      "yieldAttempts": 46,
-      "candidates": 141,
-      "averageCandidatesPerYield": 3.065
+      "yieldAttempts": 47,
+      "candidates": 145,
+      "averageCandidatesPerYield": 3.085
     }
   },
   "taskSourceMatrix": {
     "first_party_evidence": {
       "video_platform": {
-        "attempts": 217,
-        "yieldAttempts": 46,
-        "yieldRate": 0.212,
-        "candidates": 141
+        "attempts": 219,
+        "yieldAttempts": 47,
+        "yieldRate": 0.215,
+        "candidates": 145
       }
     }
   },
   "queryStrategyCostStats": {
     "topic_speech": {
-      "attempts": 187,
-      "costUnits": 187.0,
-      "durationMs": 385612,
+      "attempts": 189,
+      "costUnits": 189.0,
+      "durationMs": 390130,
       "averageCostUnits": 1.0,
-      "averageDurationMs": 2062
+      "averageDurationMs": 2064
     },
     "topic_interview": {
       "attempts": 16,
@@ -4209,11 +4257,11 @@
   "taskStrategyCostStats": {
     "first_party_evidence": {
       "topic_speech": {
-        "attempts": 187,
-        "costUnits": 187.0,
-        "durationMs": 385612,
+        "attempts": 189,
+        "costUnits": 189.0,
+        "durationMs": 390130,
         "averageCostUnits": 1.0,
-        "averageDurationMs": 2062
+        "averageDurationMs": 2064
       },
       "topic_interview": {
         "attempts": 16,
