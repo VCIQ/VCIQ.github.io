@@ -94,6 +94,7 @@ jobs:
           python tools/company_registry.py --check
 
       - name: Prepare verified automatic company profiles
+        id: preparation
         env:
           SILICONFLOW_API_KEY: ${{ secrets.SILICONFLOW_API_KEY }}
           SILICONFLOW_BASE_URL: https://api.siliconflow.cn/v1
@@ -110,6 +111,7 @@ jobs:
             | tee /tmp/company-auto-profile-report.json
           python - <<'PY'
           import json
+          import os
           from pathlib import Path
 
           report = json.loads(
@@ -127,6 +129,12 @@ jobs:
               print(
                   f"::notice title=Company auto-onboarding held::"
                   f"{hold.get('candidateKey', '?')}: {hold.get('reason', 'unknown reason')}"
+              )
+          with Path(os.environ['GITHUB_OUTPUT']).open('a', encoding='utf-8') as output:
+              output.write(
+                  'unattempted_remaining='
+                  + str(int(report.get('unattemptedRemainingCount', 0)))
+                  + '\n'
               )
           PY
 
@@ -247,6 +255,7 @@ jobs:
         env:
           PUBLISHED_COUNT: ${{ steps.onboarding.outputs.published_count }}
           MERGED_COUNT: ${{ steps.onboarding.outputs.merged_count }}
+          UNATTEMPTED_REMAINING: ${{ steps.preparation.outputs.unattempted_remaining }}
         shell: bash
         run: |
           set -euo pipefail
@@ -317,6 +326,14 @@ jobs:
               exit 1
               ;;
           esac
+
+          if [ "${UNATTEMPTED_REMAINING:-0}" -gt 0 ]; then
+            echo "Accepted candidate backlog still has ${UNATTEMPTED_REMAINING} never-attempted rows; queue one bounded continuation pass."
+            gh workflow run company-candidate-onboarding.yml --ref main \
+              -f post_onboarding_handoff=none
+          else
+            echo "Every accepted unresolved candidate has received at least one automatic onboarding attempt; no continuation is needed."
+          fi
 
   terminal-publication-fallback:
     # Candidate onboarding must remain fail-closed, but a failed private/profile

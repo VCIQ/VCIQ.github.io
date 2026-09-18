@@ -192,7 +192,7 @@ def normalize_decisions(payload: Any) -> dict[str, Any]:
         onboarding = raw.get("onboarding") if isinstance(raw.get("onboarding"), dict) else {}
         if onboarding:
             onboarding_status = clean(onboarding.get("status"), 40)
-            row["onboarding"] = {
+            normalized_onboarding = {
                 "status": onboarding_status
                 if onboarding_status in VALID_ONBOARDING_STATUSES
                 else "awaiting_profile",
@@ -205,6 +205,10 @@ def normalize_decisions(payload: Any) -> dict[str, Any]:
                 "publishedSlug": clean(onboarding.get("publishedSlug"), 120),
                 "error": clean(onboarding.get("error"), 1_000),
             }
+            attempted_at = clean(onboarding.get("attemptedAt"), 80)
+            if attempted_at:
+                normalized_onboarding["attemptedAt"] = attempted_at
+            row["onboarding"] = normalized_onboarding
         decisions[key] = row
     return {
         "schemaVersion": max(1, int(root.get("schemaVersion", 1) or 1)),

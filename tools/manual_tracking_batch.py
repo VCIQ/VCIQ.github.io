@@ -335,6 +335,7 @@ def simulate_batch(
         try:
             args = namespace_for(candidate_row, "validate")
             request = manual._normalized_input(args, tracking)
+            request["origin"] = origin
             manual_profile = manual.build_manual_feedback(inbox, intents, tracking)
             recs = manual.recommendations(tracking, intents, request, manual_profile)
             applied = manual.apply_request(tracking, inbox, intents, request, actor, now)
@@ -410,6 +411,7 @@ def apply_batch(
         origin = clean(candidate_row.get("origin"), 40)
         args = namespace_for(candidate_row, "apply")
         request = manual._normalized_input(args, tracking)
+        request["origin"] = origin
         manual_profile = manual.build_manual_feedback(inbox, intents, tracking)
         recs = manual.recommendations(tracking, intents, request, manual_profile)
         applied = manual.apply_request(tracking, inbox, intents, request, actor, now)

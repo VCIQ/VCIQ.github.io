@@ -18,6 +18,7 @@ on:
       - tools/build_company_candidates.py
       - tools/build_resolved_company_candidates.py
       - tools/entity_resolution.py
+      - tools/reconcile_legacy_manual_confirmed_tracking.py
       - tools/reconcile_entity_resolution.py
       - tools/resolved_company_captures.py
       - tools/resolve_company_entities.py
@@ -62,12 +63,14 @@ jobs:
             tools/build_company_candidates.py \
             tools/build_resolved_company_candidates.py \
             tools/entity_resolution.py \
+            tools/reconcile_legacy_manual_confirmed_tracking.py \
             tools/reconcile_entity_resolution.py \
             tools/resolved_company_captures.py \
             tools/tracking_entity_integrity.py
           python -m unittest \
             tests.test_company_candidates \
             tests.test_manual_company_trust \
+            tests.test_legacy_manual_confirmed_tracking \
             tests.test_entity_resolution \
             tests.test_entity_resolution_workflow \
             tests.test_resolved_company_candidates
@@ -90,10 +93,12 @@ jobs:
       - name: Reconcile entities, auto-trust manual additions and build private review snapshot
         run: |
           python tools/reconcile_entity_resolution.py
+          python tools/reconcile_legacy_manual_confirmed_tracking.py
           python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
           python tools/apply_manual_company_trust.py --candidates "$CANDIDATE_QUEUE"
           python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
           python tools/reconcile_entity_resolution.py --check
+          python tools/reconcile_legacy_manual_confirmed_tracking.py --check
           python tools/tracking_entity_integrity.py
           python tools/apply_manual_company_trust.py \
             --candidates "$CANDIDATE_QUEUE" \
@@ -109,6 +114,7 @@ jobs:
           changed_paths=(
             config/user_tracking.json
             config/tracking_capture_inbox.json
+            config/tracking_intents.json
             config/company_candidate_decisions.json
             "$CANDIDATE_QUEUE"
           )
@@ -127,10 +133,12 @@ jobs:
           for attempt in 1 2 3; do
             git pull --rebase -X theirs origin main
             python tools/reconcile_entity_resolution.py
+            python tools/reconcile_legacy_manual_confirmed_tracking.py
             python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
             python tools/apply_manual_company_trust.py --candidates "$CANDIDATE_QUEUE"
             python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
             python tools/reconcile_entity_resolution.py --check
+            python tools/reconcile_legacy_manual_confirmed_tracking.py --check
             python tools/tracking_entity_integrity.py
             python tools/apply_manual_company_trust.py \
               --candidates "$CANDIDATE_QUEUE" \
@@ -145,8 +153,10 @@ jobs:
             if git push origin HEAD:main; then
               tracking_changed=false
               candidate_changed=false
-              if git diff-tree --no-commit-id --name-only -r HEAD -- config/user_tracking.json \
-                | grep -qx 'config/user_tracking.json'; then
+              if git diff-tree --no-commit-id --name-only -r HEAD -- \
+                config/user_tracking.json \
+                config/tracking_intents.json \
+                | grep -Eq '^(config/user_tracking.json|config/tracking_intents.json)$'; then
                 tracking_changed=true
               fi
               if git diff-tree --no-commit-id --name-only -r HEAD -- \

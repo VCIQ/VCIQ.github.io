@@ -1445,6 +1445,33 @@ def _resolution_is_compatible(
     return True
 
 
+def _promote_manual_confirmed_company_resolution(
+    request: Mapping[str, Any], resolution: Mapping[str, Any]
+) -> dict[str, Any]:
+    """Project an explicit operator-confirmed company through the human trust gate.
+
+    This never turns an unresolved or rejected guess into an accepted company. It
+    only upgrades an already resolved, type-compatible company after the request
+    crossed the authenticated ``manual-confirmed`` Apply boundary.
+    """
+
+    promoted = dict(resolution)
+    if (
+        request.get("kind") == "company"
+        and clean(request.get("origin"), 40) == "manual-confirmed"
+        and promoted.get("status") == "resolved"
+        and promoted.get("entityType") == LEGACY_TYPE_BY_KIND["company"]
+    ):
+        previous_reason = clean(promoted.get("reason"), 600)
+        promoted["source"] = "human-decision"
+        promoted["reason"] = clean(
+            "管理员已在自动候选列表显式确认该公司为持续关注对象。"
+            + (f" 原解析：{previous_reason}" if previous_reason else ""),
+            800,
+        )
+    return promoted
+
+
 def _capture_record(
     inbox: dict[str, Any],
     tracking: Mapping[str, Any],
@@ -1572,6 +1599,7 @@ def apply_request(
                 tracking_payload=tracking,
             )
         )
+        resolution = _promote_manual_confirmed_company_resolution(request, resolution)
         if request["kind"] == "technology" and _resolution_is_compatible(
             request, resolution
         ):

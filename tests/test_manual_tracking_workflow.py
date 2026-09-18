@@ -29,7 +29,7 @@ class ManualTrackingWorkflowTests(unittest.TestCase):
         )
         self.assertIn("keyword is a search seed, not a technology entity", trigger)
 
-    def test_validate_is_read_only_and_apply_alone_gets_write_permissions(self) -> None:
+    def test_validate_is_read_only_and_handoff_only_gets_actions_write(self) -> None:
         self.assertIn("permissions: {}", self.text)
         validate = self.text.split("  validate:\n", 1)[1].split("\n  apply:\n", 1)[0]
         apply = self.text.split("  apply:\n", 1)[1]
@@ -39,9 +39,12 @@ class ManualTrackingWorkflowTests(unittest.TestCase):
         handoff = apply.split("\n  handoff:\n", 1)[1]
         self.assertIn("permissions:\n      contents: write", apply_job)
         self.assertNotIn("actions: write", apply_job)
-        self.assertIn("permissions: {}", handoff)
-        self.assertNotIn("actions: write", handoff)
+        self.assertIn("permissions:\n      actions: write", handoff)
         self.assertNotIn("contents: write", handoff)
+        self.assertIn(
+            "gh workflow run manual-tracking-reconciliation.yml --ref main",
+            handoff,
+        )
         self.assertIn("--mode validate", validate)
         self.assertNotIn("git push", validate)
 
@@ -158,13 +161,16 @@ class ManualTrackingWorkflowTests(unittest.TestCase):
         handoff = self.text.split("\n  handoff:\n", 1)[1]
         self.assertIn("Defer heavy tracking reconciliation", handoff)
         self.assertIn("coalesced", handoff)
-        self.assertNotIn("gh workflow run", handoff)
+        self.assertIn(
+            "gh workflow run manual-tracking-reconciliation.yml --ref main",
+            handoff,
+        )
         for workflow in (
             "scheduled-sync.yml",
             "company-candidate-discovery.yml",
             "tracking-discovery.yml",
         ):
-            self.assertNotIn(f"gh workflow run {workflow}", self.text)
+            self.assertNotIn(f"gh workflow run {workflow}", handoff)
 
     def test_public_repository_confidentiality_warning_is_prominent(self) -> None:
         self.assertIn("repository is public", self.text)

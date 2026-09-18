@@ -58,6 +58,12 @@ class WriterQueueCompactionTests(unittest.TestCase):
         for handoff in ("none", "refresh", "publish-with-research"):
             self.assertIn(f"          - {handoff}", text)
         self.assertIn('handoff="${POST_ONBOARDING_HANDOFF:-none}"', text)
+        self.assertIn("id: preparation", text)
+        self.assertIn("unattempted_remaining", text)
+        self.assertIn(
+            "gh workflow run company-candidate-onboarding.yml --ref main",
+            text,
+        )
 
     def test_full_refresh_checks_currentness_before_waiting_for_writer_lock(self) -> None:
         text = REFRESH.read_text(encoding="utf-8")

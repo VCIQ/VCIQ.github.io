@@ -852,11 +852,10 @@ def prepare_automatic_onboarding(
     holds: list[dict[str, str]] = []
     processed = 0
 
-    for key, decision in decisions["decisions"].items():
+    pending = ordered_pending_onboarding_decisions(decisions)
+    for key, decision in pending:
         if processed >= max(1, limit):
             break
-        if decision.get("status") != "accepted":
-            continue
         onboarding_state = (
             decision.get("onboarding")
             if isinstance(decision.get("onboarding"), dict)
@@ -871,17 +870,22 @@ def prepare_automatic_onboarding(
             continue
         candidate = candidates.get(key)
         if not candidate:
+            processed += 1
+            reason = "candidate absent from current snapshot"
+            mark_onboarding_hold(decision, reason=reason, attempted_at=timestamp)
             holds.append(
-                {"candidateKey": key, "reason": "candidate absent from current snapshot"}
+                {"candidateKey": key, "reason": reason}
             )
             continue
         processed += 1
 
         if candidate_is_institution_like(candidate):
+            reason = "candidate appears to be an investment institution, not a company profile"
+            mark_onboarding_hold(decision, reason=reason, attempted_at=timestamp)
             holds.append(
                 {
                     "candidateKey": key,
-                    "reason": "candidate appears to be an investment institution, not a company profile",
+                    "reason": reason,
                 }
             )
             continue
@@ -902,29 +906,35 @@ def prepare_automatic_onboarding(
         if metadata is None:
             metadata, reason = resolver(clean(candidate.get("name"), 240))
         if metadata is None:
+            hold_reason = reason or "no verified official homepage"
+            mark_onboarding_hold(decision, reason=hold_reason, attempted_at=timestamp)
             holds.append(
                 {
                     "candidateKey": key,
-                    "reason": reason or "no verified official homepage",
+                    "reason": hold_reason,
                 }
             )
             continue
         homepage = safe_http_url(metadata.get("homepage"))
         if not homepage:
+            hold_reason = "verified identity has no valid homepage"
+            mark_onboarding_hold(decision, reason=hold_reason, attempted_at=timestamp)
             holds.append(
                 {
                     "candidateKey": key,
-                    "reason": "verified identity has no valid homepage",
+                    "reason": hold_reason,
                 }
             )
             continue
         try:
             page = page_fetcher(homepage)
         except (HTTPError, URLError, TimeoutError, OSError, ValueError) as exc:
+            hold_reason = f"official homepage fetch {type(exc).__name__}"
+            mark_onboarding_hold(decision, reason=hold_reason, attempted_at=timestamp)
             holds.append(
                 {
                     "candidateKey": key,
-                    "reason": f"official homepage fetch {type(exc).__name__}",
+                    "reason": hold_reason,
                 }
             )
             continue
@@ -945,18 +955,22 @@ def prepare_automatic_onboarding(
             30,
         )
         if not page_supports_identity(page, names):
+            hold_reason = "official homepage does not name the resolved candidate"
+            mark_onboarding_hold(decision, reason=hold_reason, attempted_at=timestamp)
             holds.append(
                 {
                     "candidateKey": key,
-                    "reason": "official homepage does not name the resolved candidate",
+                    "reason": hold_reason,
                 }
             )
             continue
         if not page_supports_sector(page, clean(candidate.get("sector"), 120)):
+            hold_reason = "official homepage does not support the candidate sector"
+            mark_onboarding_hold(decision, reason=hold_reason, attempted_at=timestamp)
             holds.append(
                 {
                     "candidateKey": key,
-                    "reason": "official homepage does not support the candidate sector",
+                    "reason": hold_reason,
                 }
             )
             continue
@@ -968,26 +982,32 @@ def prepare_automatic_onboarding(
             capture_context=_capture_context(candidate, captures_payload),
         )
         if synthesis is None:
+            hold_reason = synthesis_reason or "official profile synthesis failed"
+            mark_onboarding_hold(decision, reason=hold_reason, attempted_at=timestamp)
             holds.append(
                 {
                     "candidateKey": key,
-                    "reason": synthesis_reason or "official profile synthesis failed",
+                    "reason": hold_reason,
                 }
             )
             continue
         profile = _profile_from_verified_sources(candidate, metadata, page, synthesis)
         if _registry_slug_exists(registry_payload, profile["slug"]):
+            hold_reason = f"generated slug {profile['slug']} already belongs to another company"
+            mark_onboarding_hold(decision, reason=hold_reason, attempted_at=timestamp)
             holds.append(
                 {
                     "candidateKey": key,
-                    "reason": f"generated slug {profile['slug']} already belongs to another company",
+                    "reason": hold_reason,
                 }
             )
             continue
         errors = onboarding.validate_profile(profile, candidate)
         if errors:
+            hold_reason = "; ".join(errors[:4])
+            mark_onboarding_hold(decision, reason=hold_reason, attempted_at=timestamp)
             holds.append(
-                {"candidateKey": key, "reason": "; ".join(errors[:4])}
+                {"candidateKey": key, "reason": hold_reason}
             )
             continue
         decision["onboarding"] = {
@@ -995,6 +1015,7 @@ def prepare_automatic_onboarding(
             "mode": "create",
             "profile": profile,
             "evidenceFingerprint": onboarding.evidence_fingerprint(candidate),
+            "attemptedAt": timestamp,
             "requestedAt": timestamp,
             "requestedBy": "VCIQ/auto-profile",
             "publishedAt": "",
@@ -1003,6 +1024,10 @@ def prepare_automatic_onboarding(
         }
         requested.append(key)
 
+    remaining = ordered_pending_onboarding_decisions(decisions)
+    unattempted_remaining = [
+        key for key, decision in remaining if not onboarding_attempted_at(decision)
+    ]
     report = {
         "processedCount": processed,
         "requestedCount": len(requested),
@@ -1011,8 +1036,66 @@ def prepare_automatic_onboarding(
         "mergedKeys": sorted(merged),
         "holdCount": len(holds),
         "holds": sorted(holds, key=lambda row: row["candidateKey"]),
+        "unattemptedRemainingCount": len(unattempted_remaining),
+        "unattemptedRemainingKeys": unattempted_remaining,
     }
     return decisions, report
+
+
+def onboarding_attempted_at(decision: Mapping[str, Any]) -> str:
+    state = decision.get("onboarding")
+    if not isinstance(state, Mapping):
+        return ""
+    return clean(state.get("attemptedAt"), 80)
+
+
+def ordered_pending_onboarding_decisions(
+    decisions_payload: Mapping[str, Any],
+) -> list[tuple[str, dict[str, Any]]]:
+    """Return accepted unresolved decisions without letting old holds starve the queue.
+
+    Never-attempted candidates are visited first in their existing stable order.
+    Once every candidate has been attempted, held candidates rotate oldest-first.
+    """
+
+    decisions = decisions_payload.get("decisions")
+    if not isinstance(decisions, Mapping):
+        return []
+    rows: list[tuple[int, str, int, str, dict[str, Any]]] = []
+    for index, (raw_key, raw_decision) in enumerate(decisions.items()):
+        if not isinstance(raw_decision, dict) or raw_decision.get("status") != "accepted":
+            continue
+        state = raw_decision.get("onboarding")
+        state = state if isinstance(state, Mapping) else {}
+        if state.get("status") in {"requested", "published", "failed", "merged"}:
+            continue
+        attempted_at = clean(state.get("attemptedAt"), 80)
+        rows.append((
+            1 if attempted_at else 0,
+            attempted_at,
+            index,
+            str(raw_key),
+            raw_decision,
+        ))
+    rows.sort(key=lambda row: (row[0], row[1], row[2]))
+    return [(key, decision) for _, _, _, key, decision in rows]
+
+
+def mark_onboarding_hold(
+    decision: dict[str, Any],
+    *,
+    reason: str,
+    attempted_at: str,
+) -> None:
+    previous = decision.get("onboarding")
+    previous = previous if isinstance(previous, dict) else {}
+    decision["onboarding"] = {
+        **previous,
+        "status": "awaiting_profile",
+        "mode": clean(previous.get("mode"), 20) or "create",
+        "attemptedAt": attempted_at,
+        "error": clean(reason, 1_000),
+    }
 
 
 def write_json(path: Path, payload: Mapping[str, Any]) -> None:

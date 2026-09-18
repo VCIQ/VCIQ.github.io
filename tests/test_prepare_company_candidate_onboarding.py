@@ -187,9 +187,88 @@ class AutomaticCompanyOnboardingTests(unittest.TestCase):
 
         next_decisions, report = self.prepare(candidate, resolver=resolver)
         decision = next_decisions["decisions"][candidate["decisionKey"]]
-        self.assertNotIn("onboarding", decision)
+        self.assertEqual(decision["onboarding"]["status"], "awaiting_profile")
+        self.assertEqual(decision["onboarding"]["attemptedAt"], "2026-08-08T01:00:00+00:00")
+        self.assertIn("investment institution", decision["onboarding"]["error"])
         self.assertEqual(report["requestedCount"], 0)
         self.assertIn("investment institution", report["holds"][0]["reason"])
+
+    def test_previous_hold_does_not_starve_unattempted_candidate(self) -> None:
+        held = self.candidate("Expedition Growth Capital", sector="风险投资")
+        fresh = self.candidate("Sample AI")
+        decisions = {
+            "schemaVersion": 1,
+            "decisions": {
+                held["decisionKey"]: {
+                    "status": "accepted",
+                    "note": "人工确认。",
+                    "mergedSlug": "",
+                    "decidedAt": "2026-08-08T00:00:00Z",
+                    "reviewedBy": "VCIQ",
+                    "onboarding": {
+                        "status": "awaiting_profile",
+                        "attemptedAt": "2026-08-08T00:30:00Z",
+                        "error": "previous hold",
+                    },
+                },
+                fresh["decisionKey"]: {
+                    "status": "accepted",
+                    "note": "人工确认。",
+                    "mergedSlug": "",
+                    "decidedAt": "2026-08-08T00:01:00Z",
+                    "reviewedBy": "VCIQ",
+                },
+            },
+        }
+        next_decisions, report = auto.prepare_automatic_onboarding(
+            {"schemaVersion": 1, "candidates": [held, fresh]},
+            decisions,
+            {"schemaVersion": 1, "companies": []},
+            {"schemaVersion": 1, "companies": []},
+            {"schemaVersion": 1, "records": []},
+            resolver=lambda name: (self.metadata(name), ""),
+            page_fetcher=lambda _url: self.page("Sample AI"),
+            synthesizer=lambda **_kwargs: (self.synthesis(), ""),
+            now=datetime(2026, 8, 8, 1, tzinfo=UTC),
+            limit=1,
+        )
+        self.assertEqual(report["processedCount"], 1)
+        self.assertEqual(report["requestedKeys"], [fresh["decisionKey"]])
+        self.assertEqual(report["unattemptedRemainingCount"], 0)
+        self.assertEqual(
+            next_decisions["decisions"][held["decisionKey"]]["onboarding"]["status"],
+            "awaiting_profile",
+        )
+
+    def test_first_hold_leaves_later_candidate_as_unattempted_backlog(self) -> None:
+        held = self.candidate("Expedition Growth Capital", sector="风险投资")
+        fresh = self.candidate("Sample AI")
+        decisions = {
+            "schemaVersion": 1,
+            "decisions": {
+                held["decisionKey"]: self.decisions(held)["decisions"][held["decisionKey"]],
+                fresh["decisionKey"]: self.decisions(fresh)["decisions"][fresh["decisionKey"]],
+            },
+        }
+        next_decisions, report = auto.prepare_automatic_onboarding(
+            {"schemaVersion": 1, "candidates": [held, fresh]},
+            decisions,
+            {"schemaVersion": 1, "companies": []},
+            {"schemaVersion": 1, "companies": []},
+            {"schemaVersion": 1, "records": []},
+            resolver=lambda name: (self.metadata(name), ""),
+            page_fetcher=lambda _url: self.page("Sample AI"),
+            synthesizer=lambda **_kwargs: (self.synthesis(), ""),
+            now=datetime(2026, 8, 8, 1, tzinfo=UTC),
+            limit=1,
+        )
+        self.assertEqual(report["processedCount"], 1)
+        self.assertEqual(report["unattemptedRemainingCount"], 1)
+        self.assertEqual(report["unattemptedRemainingKeys"], [fresh["decisionKey"]])
+        self.assertEqual(
+            next_decisions["decisions"][held["decisionKey"]]["onboarding"]["status"],
+            "awaiting_profile",
+        )
 
     def test_same_name_wrong_sector_homepage_is_held(self) -> None:
         candidate = self.candidate("Movida", sector="AI / AGI", region="全球")
@@ -216,9 +295,9 @@ class AutomaticCompanyOnboardingTests(unittest.TestCase):
             page_fetcher=lambda _url: wrong_page,
             synthesizer=synthesizer,
         )
-        self.assertNotIn(
-            "onboarding", next_decisions["decisions"][candidate["decisionKey"]]
-        )
+        hold = next_decisions["decisions"][candidate["decisionKey"]]["onboarding"]
+        self.assertEqual(hold["status"], "awaiting_profile")
+        self.assertIn("does not support the candidate sector", hold["error"])
         self.assertEqual(synth_calls, [])
         self.assertIn("does not support the candidate sector", report["holds"][0]["reason"])
 
@@ -253,9 +332,9 @@ class AutomaticCompanyOnboardingTests(unittest.TestCase):
             ]
         }
         next_decisions, report = self.prepare(candidate, registry=registry)
-        self.assertNotIn(
-            "onboarding", next_decisions["decisions"][candidate["decisionKey"]]
-        )
+        hold = next_decisions["decisions"][candidate["decisionKey"]]["onboarding"]
+        self.assertEqual(hold["status"], "awaiting_profile")
+        self.assertIn("already belongs to another company", hold["error"])
         self.assertIn("already belongs to another company", report["holds"][0]["reason"])
 
     def test_existing_requested_onboarding_is_never_overwritten(self) -> None:

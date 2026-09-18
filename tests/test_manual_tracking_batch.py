@@ -232,6 +232,41 @@ class ManualTrackingBatchTests(unittest.TestCase):
         self.assertIn("审核", report["outcomes"][0]["reason"])
         self.assertNotIn("星河智算科技有限公司", self._read("tracking")["tracks"][0]["sampleCompanies"])
 
+    def test_manual_confirmed_resolved_company_projects_directly_to_fixed_watch(self) -> None:
+        row = self.company("星河智算科技有限公司", origin="manual-confirmed")
+        report = self._run([row], "apply")
+
+        self.assertTrue(report["ok"])
+        self.assertEqual(report["appliedCount"], 1)
+        self.assertEqual(report["reviewQueuedCount"], 0)
+        self.assertEqual(report["outcomes"][0]["outcome"], "applied")
+        self.assertEqual(report["items"][0]["request"]["origin"], "manual-confirmed")
+        self.assertIn(
+            "星河智算科技有限公司",
+            self._read("tracking")["tracks"][0]["sampleCompanies"],
+        )
+        intents = self._read("intents")
+        self.assertEqual(intents["entities"][0]["state"], "active")
+        self.assertEqual(intents["entities"][0]["resolutionSource"], "human-decision")
+        self.assertEqual(intents["memberships"][0]["state"], "active")
+
+    def test_manual_confirmed_unresolved_company_stays_review_gated(self) -> None:
+        request = {
+            "kind": "company",
+            "origin": "manual-confirmed",
+        }
+        unresolved = {
+            "status": "review",
+            "entityType": "company",
+            "source": "unresolved",
+            "reason": "identity ambiguous",
+        }
+        promoted = manual._promote_manual_confirmed_company_resolution(
+            request, unresolved
+        )
+        self.assertEqual(promoted["status"], "review")
+        self.assertEqual(promoted["source"], "unresolved")
+
     def test_apply_distinguishes_recorded_from_unchanged(self) -> None:
         row = self.technology("端侧多模态", ["ai"])
         first = self._run([row], "apply")
