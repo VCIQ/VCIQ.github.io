@@ -94,6 +94,10 @@ jobs:
         run: |
           python tools/reconcile_entity_resolution.py
           python tools/reconcile_legacy_manual_confirmed_tracking.py
+          # Legacy migration can change capture/runtime projection after the first
+          # resolver fixed point. Re-stabilize those shared resolver inputs before
+          # asserting the terminal fixed point below.
+          python tools/reconcile_entity_resolution.py
           python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
           python tools/apply_manual_company_trust.py --candidates "$CANDIDATE_QUEUE"
           python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
@@ -134,6 +138,7 @@ jobs:
             git pull --rebase -X theirs origin main
             python tools/reconcile_entity_resolution.py
             python tools/reconcile_legacy_manual_confirmed_tracking.py
+            python tools/reconcile_entity_resolution.py
             python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
             python tools/apply_manual_company_trust.py --candidates "$CANDIDATE_QUEUE"
             python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
