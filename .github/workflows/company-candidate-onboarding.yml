@@ -180,6 +180,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # Partial per-slug crawls still enforce the global venture-profile
+          # coverage gate. Seed transparent fallback rows for every company
+          # newly added to the registry before crawling them one by one, so the
+          # first slug is not rejected merely because a later slug has not run yet.
+          python tools/ensure_venture_profile_coverage.py
           for slug in $PUBLISHED_SLUGS; do
             echo "Building first formal profile for $slug"
             python tools/crawl_venture_profiles.py \
