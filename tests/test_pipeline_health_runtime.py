@@ -7,10 +7,73 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from tools.build_pipeline_health import validate_health_snapshot
-from tools.pipeline_health_runtime import build_snapshots
+from tools.pipeline_health_runtime import (
+    _merge_previous_health,
+    _merge_previous_lineage,
+    build_snapshots,
+)
 
 
 class PipelineRuntimeHealthTests(unittest.TestCase):
+    def test_concurrent_health_merge_keeps_newest_job_heartbeat(self) -> None:
+        older = {
+            "jobs": [
+                {
+                    "jobId": "tracking",
+                    "status": "stale",
+                    "lastSuccessfulRunAt": "2026-09-01T00:00:00Z",
+                },
+                {
+                    "jobId": "refresh",
+                    "status": "healthy",
+                    "lastSuccessfulRunAt": "2026-09-18T04:00:00Z",
+                },
+            ]
+        }
+        newer = {
+            "jobs": [
+                {
+                    "jobId": "tracking",
+                    "status": "healthy",
+                    "lastSuccessfulRunAt": "2026-09-18T03:55:00Z",
+                },
+                {
+                    "jobId": "refresh",
+                    "status": "stale",
+                    "lastSuccessfulRunAt": "2026-09-17T21:00:00Z",
+                },
+            ]
+        }
+        merged = _merge_previous_health(older, newer)
+        rows = {row["jobId"]: row for row in merged["jobs"]}
+        self.assertEqual(
+            rows["tracking"]["lastSuccessfulRunAt"], "2026-09-18T03:55:00Z"
+        )
+        self.assertEqual(
+            rows["refresh"]["lastSuccessfulRunAt"], "2026-09-18T04:00:00Z"
+        )
+
+    def test_concurrent_lineage_merge_keeps_newer_producer_for_same_content(self) -> None:
+        older = {
+            "artifacts": {
+                "public/data/shared.json": {
+                    "contentSha256": "same",
+                    "producer": {"completedAt": "2026-09-01T00:00:00Z"},
+                }
+            }
+        }
+        newer = {
+            "artifacts": {
+                "public/data/shared.json": {
+                    "contentSha256": "same",
+                    "producer": {"completedAt": "2026-09-18T03:55:00Z"},
+                }
+            }
+        }
+        merged = _merge_previous_lineage(older, newer)
+        producer = merged["artifacts"]["public/data/shared.json"]["producer"]
+        self.assertEqual(producer["completedAt"], "2026-09-18T03:55:00Z")
+
     def test_successful_heartbeat_keeps_runtime_healthy_when_data_is_stale(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)

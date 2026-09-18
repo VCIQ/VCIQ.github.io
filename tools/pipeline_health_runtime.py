@@ -10,6 +10,8 @@ reported separately through ``freshnessStatus``.
 
 from __future__ import annotations
 
+import json
+import subprocess
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Mapping
@@ -46,8 +48,114 @@ def _freshness_status(outputs: list[Mapping[str, Any]]) -> str:
     return "unknown"
 
 
+def _git_json(root: Path, path: str, ref: str = "origin/main") -> dict[str, Any]:
+    result = subprocess.run(
+        ["git", "show", f"{ref}:{path}"],
+        cwd=root,
+        capture_output=True,
+        check=False,
+        text=True,
+        encoding="utf-8",
+    )
+    if result.returncode != 0 or not result.stdout.strip():
+        return {}
+    try:
+        payload = json.loads(result.stdout)
+    except json.JSONDecodeError:
+        return {}
+    return payload if isinstance(payload, dict) else {}
+
+
+def _heartbeat_time(row: Mapping[str, Any] | None) -> datetime | None:
+    if not isinstance(row, Mapping):
+        return None
+    return legacy.parse_datetime(
+        row.get("lastSuccessfulRunAt") or row.get("lastCompletedAt")
+    )
+
+
+def _merge_previous_health(
+    primary: Mapping[str, Any],
+    secondary: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Keep the newest per-job runtime heartbeat across concurrent writers."""
+
+    merged = dict(primary)
+    primary_jobs = _jobs_by_id(primary)
+    secondary_jobs = _jobs_by_id(secondary)
+    job_ids = list(primary_jobs)
+    job_ids.extend(job_id for job_id in secondary_jobs if job_id not in primary_jobs)
+    jobs: list[dict[str, Any]] = []
+    for job_id in job_ids:
+        first = primary_jobs.get(job_id)
+        second = secondary_jobs.get(job_id)
+        first_time = _heartbeat_time(first)
+        second_time = _heartbeat_time(second)
+        if second is not None and (
+            first is None
+            or first_time is None
+            or (second_time is not None and second_time > first_time)
+        ):
+            jobs.append(dict(second))
+        elif first is not None:
+            jobs.append(dict(first))
+    if jobs:
+        merged["jobs"] = jobs
+    return merged
+
+
 def _previous_health(root: Path) -> dict[str, Any]:
-    return legacy.load_json(root / "public/data/pipeline_health.json", required=False)
+    local = legacy.load_json(root / "public/data/pipeline_health.json", required=False)
+    remote = _git_json(root, "public/data/pipeline_health.json")
+    return _merge_previous_health(local, remote)
+
+
+def _producer_time(record: Mapping[str, Any] | None) -> datetime | None:
+    if not isinstance(record, Mapping):
+        return None
+    producer = record.get("producer")
+    if not isinstance(producer, Mapping):
+        return None
+    return legacy.parse_datetime(producer.get("completedAt"))
+
+
+def _merge_previous_lineage(
+    primary: Mapping[str, Any],
+    secondary: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Preserve newer producer metadata for unchanged concurrent artifacts."""
+
+    merged = dict(primary)
+    first_artifacts = primary.get("artifacts")
+    second_artifacts = secondary.get("artifacts")
+    if not isinstance(first_artifacts, Mapping):
+        first_artifacts = {}
+    if not isinstance(second_artifacts, Mapping):
+        second_artifacts = {}
+    artifacts: dict[str, Any] = {
+        str(path): dict(record)
+        for path, record in first_artifacts.items()
+        if isinstance(record, Mapping)
+    }
+    for path, record in second_artifacts.items():
+        if not isinstance(record, Mapping):
+            continue
+        key = str(path)
+        current = artifacts.get(key)
+        same_content = (
+            isinstance(current, Mapping)
+            and current.get("contentSha256")
+            and current.get("contentSha256") == record.get("contentSha256")
+        )
+        if current is None or (
+            same_content
+            and (_producer_time(record) or datetime.min.replace(tzinfo=legacy.UTC))
+            > (_producer_time(current) or datetime.min.replace(tzinfo=legacy.UTC))
+        ):
+            artifacts[key] = dict(record)
+    if artifacts:
+        merged["artifacts"] = artifacts
+    return merged
 
 
 def _jobs_by_id(health: Mapping[str, Any]) -> dict[str, Mapping[str, Any]]:
@@ -359,8 +467,12 @@ def write_snapshots(
     current_run: Mapping[str, Any] | None = None,
     now: datetime | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
-    previous_lineage = legacy.load_json(lineage_output, required=False)
-    previous_health = legacy.load_json(health_output, required=False)
+    local_lineage = legacy.load_json(lineage_output, required=False)
+    remote_lineage = _git_json(root, "public/data/data_lineage.json")
+    previous_lineage = _merge_previous_lineage(local_lineage, remote_lineage)
+    local_health = legacy.load_json(health_output, required=False)
+    remote_health = _git_json(root, "public/data/pipeline_health.json")
+    previous_health = _merge_previous_health(local_health, remote_health)
     lineage, health = build_snapshots(
         root,
         registry,
