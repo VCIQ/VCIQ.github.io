@@ -296,7 +296,10 @@ jobs:
     if: needs.apply.outputs.changed == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    permissions: {}
+    permissions:
+      actions: write
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
       - name: Record deferred reconciliation policy
         shell: bash
@@ -306,6 +309,9 @@ jobs:
             echo
             echo "The atomic batch write is complete."
             echo "Heavy discovery and full refresh are intentionally not started from this interactive workflow."
-            echo "Multiple manual batches can accumulate and are coalesced by the low-priority reconciliation workflow."
+            echo "Multiple manual batches can accumulate and are coalesced by the low-priority reconciliation workflow; this job only nudges that cheap coordinator immediately."
             echo "The 20-object limit remains a per-transaction safety boundary, not a background throughput limit."
           } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Nudge the coalesced reconciliation coordinator
+        run: gh workflow run manual-tracking-reconciliation.yml --ref main

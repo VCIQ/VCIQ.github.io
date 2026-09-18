@@ -9,13 +9,24 @@ WORKFLOWS = ROOT / ".github" / "workflows"
 
 
 class ManualTrackingReconciliationWorkflowTests(unittest.TestCase):
-    def test_interactive_writers_do_not_dispatch_heavy_work(self) -> None:
+    def test_interactive_writers_only_nudge_the_cheap_coordinator(self) -> None:
         for name in ("manual-tracking.yml", "manual-tracking-batch.yml"):
             text = (WORKFLOWS / name).read_text(encoding="utf-8")
             handoff = text.split("\n  handoff:\n", 1)[1]
             self.assertIn("Defer heavy tracking reconciliation", handoff)
-            self.assertNotIn("gh workflow run", handoff)
-            self.assertIn("permissions: {}", handoff)
+            self.assertIn(
+                "gh workflow run manual-tracking-reconciliation.yml --ref main",
+                handoff,
+            )
+            self.assertIn("actions: write", handoff)
+            for workflow in (
+                "scheduled-sync.yml",
+                "frequent-intelligence-refresh.yml",
+                "tracking-discovery.yml",
+                "company-candidate-discovery.yml",
+                "company-candidate-onboarding.yml",
+            ):
+                self.assertNotIn(f"gh workflow run {workflow}", handoff)
 
     def test_atomic_batch_limit_is_documented_as_transaction_not_throughput(self) -> None:
         text = (WORKFLOWS / "manual-tracking-batch.yml").read_text(encoding="utf-8")

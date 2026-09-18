@@ -261,9 +261,9 @@ class CompanyOfficialSourceDiscoveryTests(unittest.TestCase):
                 captures_payload={"records": []},
                 limit=6,
             )
-        self.assertNotIn(
-            "onboarding", next_decisions["decisions"]["unresolvedai"]
-        )
+        hold = next_decisions["decisions"]["unresolvedai"]["onboarding"]
+        self.assertEqual(hold["status"], "awaiting_profile")
+        self.assertIn("no verified official site", hold["error"])
         self.assertEqual(report["sourceDiscovery"]["attemptedFailureCount"], 1)
         self.assertIn(
             "wikidata has no exact identity",

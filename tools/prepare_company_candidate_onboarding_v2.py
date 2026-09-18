@@ -110,11 +110,9 @@ def discover_candidate_identities(
     holds: list[dict[str, str]] = []
     checked = 0
 
-    for key, decision in decisions["decisions"].items():
+    for key, decision in preparation.ordered_pending_onboarding_decisions(decisions):
         if checked >= max(1, limit):
             break
-        if decision.get("status") != "accepted":
-            continue
         state = (
             decision.get("onboarding")
             if isinstance(decision.get("onboarding"), dict)

@@ -350,7 +350,10 @@ jobs:
     if: needs.apply.outputs.changed == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    permissions: {}
+    permissions:
+      actions: write
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
       - name: Record deferred reconciliation policy
         shell: bash
@@ -360,6 +363,9 @@ jobs:
             echo
             echo "The authenticated tracking write is complete."
             echo "Heavy discovery and full refresh are intentionally not started from this interactive workflow."
-            echo "Pending review/intents are coalesced by the low-priority manual-tracking reconciliation workflow."
+            echo "Pending review/intents are coalesced by the low-priority manual-tracking reconciliation workflow; this job only nudges that cheap coordinator immediately."
             echo "Applied tracking configuration is consumed by the regular lightweight/daily refresh cadence."
           } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Nudge the coalesced reconciliation coordinator
+        run: gh workflow run manual-tracking-reconciliation.yml --ref main
