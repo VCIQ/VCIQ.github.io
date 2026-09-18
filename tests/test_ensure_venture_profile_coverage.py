@@ -74,6 +74,29 @@ class EnsureVentureProfileCoverageTests(unittest.TestCase):
         self.assertEqual(len(statuses), 3)
         self.assertTrue(quality["passed"])
 
+    def test_missing_company_fallback_uses_the_same_product_sanitizer_as_crawl(self) -> None:
+        noisy_catalog = '''
+export const companies: Company[] = [
+  { slug:"noisy", name:"Noisy", region:"美国", sector:"AI / AGI", stage:"成长期", status:"运营中", summary:"Noisy summary", product:"product, products", source:official("Noisy","https://noisy.example/") },
+];
+export type Institution = {};
+export const institutionCatalog: Institution[] = [
+  { slug:"sample-capital", name:"Sample Capital", region:"美国", type:"风险投资", stages:"种子至成长期", sectors:["AI"], source:official("Sample Capital","https://capital.example/") },
+];
+export type IpoCompany = {};
+'''
+        companies, institutions = parse_catalog(noisy_catalog)
+        company_profiles, _, _, quality, report = ensure_catalog_coverage(
+            {"companies": {}, "institutions": {}, "sourceStatus": []},
+            companies,
+            institutions,
+            updated_at="2026-08-03T15:45:00+00:00",
+        )
+
+        self.assertEqual(company_profiles["noisy"]["products"], [])
+        self.assertTrue(quality["passed"])
+        self.assertTrue(report["qualityPassed"])
+
     def test_repair_is_idempotent_when_coverage_is_complete(self) -> None:
         empty = {"companies": {}, "institutions": {}, "sourceStatus": []}
         companies, institutions, statuses, quality, _ = ensure_catalog_coverage(
