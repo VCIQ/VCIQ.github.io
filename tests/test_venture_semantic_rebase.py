@@ -14,6 +14,17 @@ class VentureSemanticRebaseTests(unittest.TestCase):
         self.assertTrue(semantics._valid_product("企业 API"))
         self.assertTrue(semantics._valid_product("Claude Platform"))
 
+    def test_rejects_multi_sentence_product_names_without_rejecting_trailing_punctuation(self) -> None:
+        self.assertFalse(
+            semantics._valid_product("500 家组织信任。它自主执行了超过 250")
+        )
+        self.assertFalse(
+            semantics._valid_product(
+                "即推理的内存层。其技术方案是将数据中心改造为 token 生产线"
+            )
+        )
+        self.assertTrue(semantics._valid_product("灵犀等机器人系列。"))
+
     def test_accepts_official_short_brand_financing_subject(self) -> None:
         row = {
             "title": "SambaNova Completes First Close of $1B Financing",
