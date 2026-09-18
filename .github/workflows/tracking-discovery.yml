@@ -199,11 +199,14 @@ jobs:
           node --import tsx scripts/validate-new-tracking-entities.ts --base-ref HEAD
           npm run validate:taxonomy
 
+      - name: Finalize tracking discovery control plane heartbeat
+        run: python tools/run_pipeline.py finalize tracking-entity-discovery
+
       - name: Commit expanded tracking config
-        if: steps.changes.outputs.changed == 'true'
         env:
           EVENT_NAME: ${{ github.event_name }}
           EXPAND_MODE: ${{ steps.expand.outputs.mode }}
+          DATA_CHANGED: ${{ steps.changes.outputs.changed }}
         shell: bash
         run: |
           set -euo pipefail
@@ -219,11 +222,15 @@ jobs:
             git add \
               config/user_tracking.json \
               config/tracking_auto_discovery.json \
-              public/data/source_health.json
+              public/data/source_health.json \
+              public/data/data_lineage.json \
+              public/data/pipeline_health.json
             if git diff --cached --quiet; then
               return 1
             fi
-            if [ "$DISCOVERY_MODE" = "govern-only" ]; then
+            if [ "$DATA_CHANGED" != "true" ]; then
+              git commit -m "chore: record tracking discovery heartbeat"
+            elif [ "$DISCOVERY_MODE" = "govern-only" ]; then
               git commit -m "config: govern automatic tracking seed lifecycle"
             else
               git commit -m "config: expand tracking entities from public web sources [auto-discovery]"
@@ -267,6 +274,7 @@ jobs:
             npm run validate:tracking
             node --import tsx scripts/validate-new-tracking-entities.ts --base-ref HEAD
             npm run validate:taxonomy
+            python tools/run_pipeline.py finalize tracking-entity-discovery
           }
 
           if ! commit_current_config; then

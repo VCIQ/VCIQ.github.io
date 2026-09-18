@@ -90,6 +90,29 @@ class TrackingDiscoveryWorkflowTests(unittest.TestCase):
         self.assertIn("if git push origin HEAD:main; then", text)
         self.assertNotIn("gh workflow run scheduled-sync.yml --ref main", text)
 
+    def test_successful_run_always_records_control_plane_heartbeat(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn(
+            "- name: Finalize tracking discovery control plane heartbeat",
+            text,
+        )
+        self.assertIn(
+            "python tools/run_pipeline.py finalize tracking-entity-discovery",
+            text,
+        )
+        self.assertIn("public/data/data_lineage.json", text)
+        self.assertIn("public/data/pipeline_health.json", text)
+        commit_step = text.split("- name: Commit expanded tracking config", 1)[1]
+        self.assertNotIn(
+            "if: steps.changes.outputs.changed == 'true'",
+            commit_step.split("shell: bash", 1)[0],
+        )
+        replay = text.split("regenerate_from_latest_main()", 1)[1]
+        self.assertIn(
+            "python tools/run_pipeline.py finalize tracking-entity-discovery",
+            replay,
+        )
+
     def test_workflow_keeps_the_shared_writer_queue(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("group: vciq-repository-writer-${{ github.ref }}", text)
