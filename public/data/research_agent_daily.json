@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-18T06:09:38+00:00",
+  "generatedAt": "2026-09-18T06:20:08+00:00",
   "asOfDate": "2026-09-18",
   "runStatus": "model",
   "reviewStatus": "automated_unreviewed",
@@ -12,145 +12,738 @@
     "reasoningEffort": "high",
     "used": true,
     "usage": {
-      "prompt_tokens": 883,
-      "completion_tokens": 803,
-      "total_tokens": 1686,
+      "prompt_tokens": 7113,
+      "completion_tokens": 9665,
+      "total_tokens": 16778,
       "completion_tokens_details": {
-        "reasoning_tokens": 298
+        "reasoning_tokens": 6635
       },
       "prompt_tokens_details": {
         "cached_tokens": 0
       },
       "prompt_cache_hit_tokens": 0,
-      "prompt_cache_miss_tokens": 883
+      "prompt_cache_miss_tokens": 7113
     }
   },
   "changeSummary": {
-    "totalDetected": 6,
-    "total": 1,
+    "totalDetected": 17,
+    "total": 12,
     "byDataset": {
-      "ventureCompany": 1
+      "institutionEvent": 12
     },
     "byChangeType": {
-      "external_event": 4,
-      "source_refresh": 1,
-      "entity_reconciliation": 1
+      "external_event": 12,
+      "data_maintenance": 5
     },
-    "externalCandidates": 4,
-    "qualityRejected": 2,
-    "maintenanceExcluded": 2,
+    "externalCandidates": 12,
+    "qualityRejected": 0,
+    "maintenanceExcluded": 5,
     "aggregatedEvents": 0,
-    "highestImportance": 68,
-    "verifiedChangeTotal": 1,
-    "candidateTotal": 0,
+    "highestImportance": 86,
+    "verifiedChangeTotal": 0,
+    "candidateTotal": 12,
     "auxiliaryLeadTotal": 0,
-    "rejectedTotal": 2,
-    "newEvents": 1,
+    "rejectedTotal": 0,
+    "newEvents": 12,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 1
+    "duplicatesSuppressed": 0
   },
   "analysis": {
     "mode": "model-analysis",
     "isResearchJudgment": true,
-    "executiveSummary": "根据证据包，Harvey 的产品列表发生变更，新增了“AIUC-1 Details”与“SOC2 II Details”两项，同时保留了原有产品。该信息来自 Harvey 官方博客，属于官方披露，但为自动化未复核状态，建议关注后续确认。 质量门诊断：缺少发布时间 8、证据合格但未绑定变化字段 1。",
+    "executiveSummary": "本证据包覆盖2026年9月14-18日的12条新增机构/资本事件（E001-E012），显示资本继续向AI基础设施、早期大模型、机器人量产及自动驾驶出行集中，同时AI应用正在向智能座舱和企业办公场景渗透。其中，E001（超衍智能天使系列融资）和E003（CATL埃及技术许可）为B级官方来源，置信度中等；E007（地瓜机器人C轮）、E010（Crusoe融资）等9条为C级媒体来源，置信度低。整体而言，这些事件多为方向性信号，具体金额、交割、量产效果等仍需官方文件或后续财报验证。本报告不构成投资建议。（主要依据：E001、E003、E007、E010等）",
     "keyDevelopments": [
       {
-        "title": "Harvey 产品列表新增两项条目",
-        "assessment": "Harvey 的产品列表从原有的“工作流自动化、文档分析、法律研究”扩展为包含“AIUC-1 Details、SOC2 II Details”在内的五项目录。这暗示其产品范围可能涉及新的合规或认证相关模块，但具体含义和功能尚未由证据明确说明。",
-        "importance": 3,
-        "confidence": "medium",
+        "title": "Crusoe融资39亿美元，用于大型数据中心和模块化“AI工厂”",
+        "assessment": "事实（依据E010）：TechCrunch报道Crusoe完成约39亿美元融资，用于建设大规模数据中心和小型模块化AI工厂。推断：AI基础设施领域的资本集中度进一步提高，算力供给仍是行业瓶颈。待验证：该证据为C级媒体来源且未经审核，融资交割、项目选址及客户合同需官方确认。",
+        "importance": 5,
+        "confidence": "low",
         "entities": [
-          "Harvey"
+          "Crusoe"
         ],
         "evidenceIds": [
-          "E008"
+          "E010"
+        ]
+      },
+      {
+        "title": "超衍智能完成近4亿人民币天使系列融资，构建自进化基础大模型",
+        "assessment": "事实（依据E001）：晶泰科技官网官宣超衍智能完成近4亿人民币天使系列融资，方向为构建自进化基础大模型。推断：大模型早期融资热度持续，技术路线强调“自进化”差异化。待验证：具体投资方、估值、产品发布时间与技术细节尚未披露。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "超衍智能",
+          "晶泰科技"
+        ],
+        "evidenceIds": [
+          "E001"
+        ]
+      },
+      {
+        "title": "地瓜机器人C轮融资4亿美元，资本聚焦量产",
+        "assessment": "事实（依据E007）：钛媒体报道地瓜机器人完成C轮融资4亿美元，并提出“资本不再为Demo买单，只为量产续费”的观察。推断：机器人赛道估值逻辑从演示原型转向交付与量产能力。待验证：该证据为C级媒体来源，融资金额、投资方及实际量产数据需官方确认。",
+        "importance": 4,
+        "confidence": "low",
+        "entities": [
+          "地瓜机器人"
+        ],
+        "evidenceIds": [
+          "E007"
+        ]
+      },
+      {
+        "title": "CATL与BME合作，通过技术许可在埃及推进电池包制造",
+        "assessment": "事实（依据E003）：CATL官网宣布与BME合作，以技术许可模式在埃及推进电池包制造。推断：中国动力电池企业正以轻资产方式拓展海外市场。待验证：许可产能规模、产线建设时间表及双方权责分工未在证据中披露。",
+        "importance": 4,
+        "confidence": "medium",
+        "entities": [
+          "CATL",
+          "BME"
+        ],
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "title": "Hello Robotaxi融资约1亿美元，估值近30亿美元",
+        "assessment": "事实（依据E009）：TechNode报道Hello Robotaxi融资约1亿美元，估值接近30亿美元。推断：Robotaxi赛道仍能获得大额资本支持。待验证：该报道为C级媒体来源，投资方、资金用途及运营扩张计划未知。",
+        "importance": 4,
+        "confidence": "low",
+        "entities": [
+          "Hello Robotaxi"
+        ],
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "title": "AI应用向座舱与企业办公场景落地：豆包座舱助手与蚂蚁集团千问办公",
+        "assessment": "事实（依据E004、E006）：雷峰网报道豆包座舱助手发布、首款合作车型即将预售，以及蚂蚁集团全员接入千问办公。推断：AI助手开始进入智能座舱和大型企业内部办公的常态化部署阶段。待验证：合作车型品牌、预售时间、接入范围及实际效率提升均未见官方数据。",
+        "importance": 3,
+        "confidence": "low",
+        "entities": [
+          "豆包",
+          "蚂蚁集团",
+          "千问办公",
+          "智能座舱"
+        ],
+        "evidenceIds": [
+          "E004",
+          "E006"
         ]
       }
     ],
     "thesisUpdates": [
       {
-        "entity": "Harvey",
-        "direction": "mixed",
-        "statement": "产品目录新增两项内容，可能反映其在合规、安全或专业化能力上的扩展，但证据未提供足够细节，无法判断是否构成实质性业务升级。",
+        "entity": "超衍智能",
+        "direction": "positive",
+        "statement": "天使系列融资近4亿人民币，表明资本对其自进化基础大模型方向给予早期背书；但该技术路线的成熟度和商业化路径尚未验证，需观察后续模型发布与客户采用情况。",
         "evidenceIds": [
-          "E008"
+          "E001"
+        ]
+      },
+      {
+        "entity": "地瓜机器人",
+        "direction": "positive",
+        "statement": "C轮融资4亿美元，结合媒体“为量产续费”的评论，反映资本认可其从原型走向量产的方向；但实际交付和订单增长仍需跟踪，量产不及预期可能带来估值压力。",
+        "evidenceIds": [
+          "E007"
+        ]
+      },
+      {
+        "entity": "Crusoe",
+        "direction": "positive",
+        "statement": "39亿美元融资用于建设数据中心和模块化AI工厂，表明其处于AI算力基础设施的核心赛道，需求旺盛；但项目规模庞大，建设周期和资金使用效率是主要执行风险。",
+        "evidenceIds": [
+          "E010"
+        ]
+      },
+      {
+        "entity": "CATL",
+        "direction": "positive",
+        "statement": "技术许可方式进入埃及电池包制造，有利于以轻资产模式拓展中东市场；但合作的具体产能、许可费用和地缘政治合规风险尚不明确。",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "entity": "Hello Robotaxi",
+        "direction": "mixed",
+        "statement": "完成约1亿美元融资且估值近30亿美元，显示资本关注；但自动驾驶出行商业化仍面临监管和运营成本挑战，融资能否转化为规模化运营待观察。",
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "entity": "蚂蚁集团",
+        "direction": "neutral",
+        "statement": "全员接入千问办公可作为大型企业AI应用案例，但该事件暂未提供员工效率、成本节约等量化结果，对业务基本面的影响尚不能确定。",
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "entity": "豆包",
+        "direction": "positive",
+        "statement": "豆包座舱助手发布并计划合作车型预售，为AI语音交互进入汽车座舱场景打开通道，但车型和预售节奏未公布，落地效果需实测数据验证。",
+        "evidenceIds": [
+          "E004"
         ]
       }
     ],
     "watchlist": [
       {
-        "item": "AIUC-1 Details 与 SOC2 II Details 的具体功能与商业用途",
-        "reason": "当前证据仅显示产品字段变更，未说明这两项条目的含义、市场定位或对收入的影响。",
-        "nextEvidence": "Harvey 官方后续公告、产品文档或相关认证文件",
+        "item": "超衍智能的后续产品发布与融资细节",
+        "reason": "天使系列融资近4亿，但投资方、估值、自进化模型评测等关键信息缺失。",
+        "nextEvidence": "官方发布的产品技术报告、模型评测或新一轮融资公告。",
         "evidenceIds": [
-          "E008"
+          "E001"
+        ]
+      },
+      {
+        "item": "地瓜机器人量产订单与交付数据",
+        "reason": "媒体评论称资本为量产续费，若实际订单和交付不能兑现，估值逻辑可能受挫。",
+        "nextEvidence": "公司公布的出货量、客户名单、工厂产能或财务数据。",
+        "evidenceIds": [
+          "E007"
+        ]
+      },
+      {
+        "item": "Crusoe数据中心建设进度与客户签约",
+        "reason": "39亿美元融资与模块化AI工厂模式需要长期建设，能否获得大型云厂商或AI公司长期合同是关键。",
+        "nextEvidence": "项目选址、动工公告、电力合作协议或客户案例。",
+        "evidenceIds": [
+          "E010"
+        ]
+      },
+      {
+        "item": "CATL与BME埃及合作的落地与产能",
+        "reason": "技术许可模式出海，具体产线建设时间、产能规模与收入分成模式尚待披露。",
+        "nextEvidence": "CATL官方关于埃及工厂的后续公告或BME的生产规划。",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "item": "Hello Robotaxi的运营扩张与后续融资",
+        "reason": "融资成功但商业化运营城市、车队规模、盈亏改善情况仍不明朗。",
+        "nextEvidence": "运营城市数量、每日订单量或新一轮融资披露。",
+        "evidenceIds": [
+          "E009"
+        ]
+      },
+      {
+        "item": "蚂蚁集团千问办公的实际效果",
+        "reason": "全员接入是大企业案例，但缺乏效率提升、成本节约等量化指标。",
+        "nextEvidence": "蚂蚁集团或千问办公官方发布的部署效果报告、更多标杆客户案例。",
+        "evidenceIds": [
+          "E006"
+        ]
+      },
+      {
+        "item": "豆包座舱助手合作车型预售进展",
+        "reason": "首款合作车型即将预售，但车型、品牌和预售时间未明确，产品竞争力待实测。",
+        "nextEvidence": "车企发布预售公告或豆包座舱助手的功能实测与用户反馈。",
+        "evidenceIds": [
+          "E004"
+        ]
+      },
+      {
+        "item": "启明创投Robochallenge全球化生态共建成果",
+        "reason": "WAIC 2026发布相关进展，但具体的赛事规模、开发者生态和社会影响力数据没有公开。",
+        "nextEvidence": "赛事报名数据、合作方名单或生态运营报告。",
+        "evidenceIds": [
+          "E002"
+        ]
+      },
+      {
+        "item": "蚂蚁集团世界技能大赛战略合作的后续项目",
+        "reason": "国家战略合作伙伴关系可能涉及技能培训与AI赋能，但具体项目未披露。",
+        "nextEvidence": "合作落地活动、技能培训项目或大赛相关AI应用案例。",
+        "evidenceIds": [
+          "E005"
+        ]
+      },
+      {
+        "item": "国内财经媒体头版头条潜在政策信号",
+        "reason": "E012为媒体摘要，未包含具体条目，可能隐含宏观政策或市场导向，需要查阅原始内容。",
+        "nextEvidence": "四大证券报纸原文、政府或监管机构正式文件。",
+        "evidenceIds": [
+          "E012"
         ]
       }
     ],
     "risks": [
       {
-        "risk": "证据复核状态为自动化未复核，字段提取可能存在偏差或遗漏背景信息。",
-        "reason": "该变更记录的 reviewStatus 为 automated_unreviewed，虽然来源为官方博客，但需警惕自动解析导致的产品名称或字段含义失真。",
+        "risk": "证据质量与审核不足风险",
+        "reason": "12条记录均处于candidate且automated_unreviewed状态，其中9条为C级媒体来源，事实可能与官方公告存在偏差。",
         "evidenceIds": [
-          "E008"
+          "E004",
+          "E007",
+          "E010"
+        ]
+      },
+      {
+        "risk": "融资事件未获官方正式确认",
+        "reason": "地瓜机器人、Hello Robotaxi、Crusoe等融资信息多来自媒体，融资金额、交割状态和估值可能存在误差或后期调整。",
+        "evidenceIds": [
+          "E007",
+          "E009",
+          "E010"
+        ]
+      },
+      {
+        "risk": "大规模资本开支回报不确定",
+        "reason": "Crusoe融资39亿美元用于数据中心和AI工厂，若AI算力需求增速放缓或项目建设超支，资产利用率可能低于预期。",
+        "evidenceIds": [
+          "E010"
+        ]
+      },
+      {
+        "risk": "海外技术合作的合规与地缘政治风险",
+        "reason": "CATL通过技术许可进入埃及制造电池包，可能面临当地法规、知识产权保护或国际贸易政策变化的影响。",
+        "evidenceIds": [
+          "E003"
+        ]
+      },
+      {
+        "risk": "机器人量产不及预期风险",
+        "reason": "地瓜机器人C轮融资聚焦量产，若实际订单、良率或交付能力不足，市场对其估值可能重估。",
+        "evidenceIds": [
+          "E007"
+        ]
+      },
+      {
+        "risk": "AI应用落地效果低于预期",
+        "reason": "豆包座舱助手和蚂蚁集团千问办公均未提供量化效果指标，用户接受度与投资回报仍需验证。",
+        "evidenceIds": [
+          "E004",
+          "E006"
+        ]
+      },
+      {
+        "risk": "信息聚合摘要的噪声风险",
+        "reason": "E012为财经媒体头版头条摘要，未提供具体条目，可能存在片面或诱导性信息，仅凭该证据无法形成可靠判断。",
+        "evidenceIds": [
+          "E012"
         ]
       }
     ],
-    "methodologyNote": "本报告仅基于证据包中的 E008 进行事实描述与推断；所有判断均引用该证据编号。因证据仅提供变更后的字段列表而未包含原文细节，故对新增条目的解释保持谨慎，不构成投资建议。 数据管线提示：追踪实体与公开信源发现=stale。"
+    "methodologyNote": "本报告基于证据包中12条新增机构/资本事件记录（E001-E012）。其中E001-E003为B级官方来源，置信度设为medium；E004-E012为C级媒体或聚合来源，置信度设为low；全部记录均处于candidate且automated_unreviewed状态，未经人工审核。报告严格区分事实（依据证据直接表述）、推断（基于事件方向的合理推论）与待验证事项（需更多数据或官方公告确认），未补充外部事实，不构成任何买入、卖出、目标价或收益承诺。"
   },
   "changes": [
     {
-      "id": "chg-01d24f27536d3ed12921",
-      "dataset": "ventureCompany",
-      "entityType": "创业公司",
-      "entityId": "harvey",
-      "entityName": "Harvey",
-      "action": "updated",
+      "id": "chg-5163843232fabc258f5f",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "official-xtalpi-451071ace85fb99c",
+      "entityName": "官宣｜超衍智能完成近4亿人民币天使系列融资，构建自进化基础大模型",
+      "action": "added",
       "changedFields": [
-        "products"
+        "publishedAt"
       ],
-      "summary": "Harvey 的 products 发生变化。",
-      "importance": 68,
-      "before": {
-        "products": [
-          "工作流自动化",
-          "文档分析",
-          "法律研究"
-        ]
-      },
-      "after": {
-        "products": [
-          "AIUC-1 Details",
-          "SOC2 II Details",
-          "工作流自动化",
-          "文档分析",
-          "法律研究"
-        ]
-      },
+      "summary": "新增机构/资本事件记录：官宣｜超衍智能完成近4亿人民币天使系列融资，构建自进化基础大模型。",
+      "importance": 86,
+      "before": null,
+      "after": {},
       "changeType": "external_event",
-      "classificationReason": "包含可形成外部事实主张的字段变化",
+      "classificationReason": "新增事件型记录",
       "isResearchCandidate": true,
       "claimFields": [
-        "products"
+        "publishedAt"
       ],
       "claimBindings": [
         {
-          "field": "products",
-          "before": [
-            "工作流自动化",
-            "文档分析",
-            "法律研究"
-          ],
-          "after": [
-            "AIUC-1 Details",
-            "SOC2 II Details",
-            "工作流自动化",
-            "文档分析",
-            "法律研究"
-          ],
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E001"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E001"
+      ],
+      "supportingEvidenceIds": [
+        "E001"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-f9b57d7e21cfc67dadf7"
+      ],
+      "eventLifecycles": {
+        "evt-f9b57d7e21cfc67dadf7": "first_seen"
+      },
+      "eventId": "evt-f9b57d7e21cfc67dadf7",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-18T06:20:08+00:00",
+      "lastSeenAt": "2026-09-18T06:20:08+00:00"
+    },
+    {
+      "id": "chg-61fd56a12d06c95f529c",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "user-source-source-auto-institution-team-131095855545-4b1561ba3cfdd04e",
+      "entityName": "启明星 | Robochallenge全球化进展与生态共建发布| WAIC 2026 | 启明创投",
+      "action": "added",
+      "changedFields": [
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：启明星 | Robochallenge全球化进展与生态共建发布| WAIC 2026 | 启明创投。",
+      "importance": 86,
+      "before": null,
+      "after": {},
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E002"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E002"
+      ],
+      "supportingEvidenceIds": [
+        "E002"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-a8a593fe8130d622dc00"
+      ],
+      "eventLifecycles": {
+        "evt-a8a593fe8130d622dc00": "first_seen"
+      },
+      "eventId": "evt-a8a593fe8130d622dc00",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-18T06:20:08+00:00",
+      "lastSeenAt": "2026-09-18T06:20:08+00:00"
+    },
+    {
+      "id": "chg-b1340d32942d0eac0233",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "catl-d3f6b4d5622ccf82",
+      "entityName": "CATL Partners with BME to Advance Battery Pack Manufacturing in Egypt Through Technology Licensing",
+      "action": "added",
+      "changedFields": [
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：CATL Partners with BME to Advance Battery Pack Manufacturing in Egypt Through Technology Licensing。",
+      "importance": 86,
+      "before": null,
+      "after": {},
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E003"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E003"
+      ],
+      "supportingEvidenceIds": [
+        "E003"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-3838df8314c0b1983a30"
+      ],
+      "eventLifecycles": {
+        "evt-3838df8314c0b1983a30": "first_seen"
+      },
+      "eventId": "evt-3838df8314c0b1983a30",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-18T06:20:08+00:00",
+      "lastSeenAt": "2026-09-18T06:20:08+00:00"
+    },
+    {
+      "id": "chg-8dab3c8e350100b91eb8",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "leiphone-9fa7671e211fade4",
+      "entityName": "豆包座舱助手发布，首款合作车型即将开启预售",
+      "action": "added",
+      "changedFields": [
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：豆包座舱助手发布，首款合作车型即将开启预售。",
+      "importance": 70,
+      "before": null,
+      "after": {},
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E004"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E004"
+      ],
+      "supportingEvidenceIds": [
+        "E004"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-0ea08a32f7825d9ba85b"
+      ],
+      "eventLifecycles": {
+        "evt-0ea08a32f7825d9ba85b": "first_seen"
+      },
+      "eventId": "evt-0ea08a32f7825d9ba85b",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-18T06:20:08+00:00",
+      "lastSeenAt": "2026-09-18T06:20:08+00:00"
+    },
+    {
+      "id": "chg-0e21c37aaa18fdba2fe7",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "leiphone-3059448600e34cc3",
+      "entityName": "蚂蚁集团成为上海第48届世界技能大赛国家战略合作伙伴",
+      "action": "added",
+      "changedFields": [
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：蚂蚁集团成为上海第48届世界技能大赛国家战略合作伙伴。",
+      "importance": 70,
+      "before": null,
+      "after": {},
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E005"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E005"
+      ],
+      "supportingEvidenceIds": [
+        "E005"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-dd2216b806bb2429f3cc"
+      ],
+      "eventLifecycles": {
+        "evt-dd2216b806bb2429f3cc": "first_seen"
+      },
+      "eventId": "evt-dd2216b806bb2429f3cc",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-18T06:20:08+00:00",
+      "lastSeenAt": "2026-09-18T06:20:08+00:00"
+    },
+    {
+      "id": "chg-f986c7820e97c39f4e31",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "leiphone-2af2b4a7f95944fc",
+      "entityName": "蚂蚁集团全员接入千问办公，打造大型企业办公标杆",
+      "action": "added",
+      "changedFields": [
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：蚂蚁集团全员接入千问办公，打造大型企业办公标杆。",
+      "importance": 70,
+      "before": null,
+      "after": {},
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E006"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E006"
+      ],
+      "supportingEvidenceIds": [
+        "E006"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-6ee72e7a359f37129475"
+      ],
+      "eventLifecycles": {
+        "evt-6ee72e7a359f37129475": "first_seen"
+      },
+      "eventId": "evt-6ee72e7a359f37129475",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-18T06:20:08+00:00",
+      "lastSeenAt": "2026-09-18T06:20:08+00:00"
+    },
+    {
+      "id": "chg-dbe7e30d8f82ad349f04",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "tmtpost-d139fef25dbc4784",
+      "entityName": "地瓜机器人C轮融资4亿美元：资本不再为Demo买单，只为量产续费",
+      "action": "added",
+      "changedFields": [
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：地瓜机器人C轮融资4亿美元：资本不再为Demo买单，只为量产续费。",
+      "importance": 70,
+      "before": null,
+      "after": {},
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E007"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E007"
+      ],
+      "supportingEvidenceIds": [
+        "E007"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-3e7bb78fe29764bf857d"
+      ],
+      "eventLifecycles": {
+        "evt-3e7bb78fe29764bf857d": "first_seen"
+      },
+      "eventId": "evt-3e7bb78fe29764bf857d",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-18T06:20:08+00:00",
+      "lastSeenAt": "2026-09-18T06:20:08+00:00"
+    },
+    {
+      "id": "chg-774259b002941d4eb8ae",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "sina-finance-deddc237f8fa0577",
+      "entityName": "俊知集团盘中涨超13% 收购青海中利光纤技术有望打开AI算力相关光纤产品增量空间",
+      "action": "added",
+      "changedFields": [
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：俊知集团盘中涨超13% 收购青海中利光纤技术有望打开AI算力相关光纤产品增量空间。",
+      "importance": 70,
+      "before": null,
+      "after": {},
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
           "evidenceIds": [
             "E008"
           ]
@@ -167,52 +760,1208 @@
         "supporting": 1,
         "total": 1
       },
-      "publicationTier": "verified_change",
+      "publicationTier": "candidate",
       "reviewStatus": "automated_unreviewed",
       "eligibleForKeyDevelopment": true,
       "eventIds": [
-        "evt-ac8221e57a43a1e73cb2"
+        "evt-f92065de6be80180a07d"
       ],
       "eventLifecycles": {
-        "evt-ac8221e57a43a1e73cb2": "first_seen"
+        "evt-f92065de6be80180a07d": "first_seen"
       },
-      "eventId": "evt-ac8221e57a43a1e73cb2",
+      "eventId": "evt-f92065de6be80180a07d",
       "lifecycle": "first_seen",
-      "firstSeenAt": "2026-09-18T06:09:38+00:00",
-      "lastSeenAt": "2026-09-18T06:09:38+00:00"
+      "firstSeenAt": "2026-09-18T06:20:08+00:00",
+      "lastSeenAt": "2026-09-18T06:20:08+00:00"
+    },
+    {
+      "id": "chg-12f0f3f37c5ee4dce4fd",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "professional-media-technode-71e0760b5fcd853b",
+      "entityName": "Hello Robotaxi raises about $100 million at nearly $3 billion valuation",
+      "action": "added",
+      "changedFields": [
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：Hello Robotaxi raises about $100 million at nearly $3 billion valuation。",
+      "importance": 70,
+      "before": null,
+      "after": {},
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E009"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E009"
+      ],
+      "supportingEvidenceIds": [
+        "E009"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-e19544092af12f6249ed"
+      ],
+      "eventLifecycles": {
+        "evt-e19544092af12f6249ed": "first_seen"
+      },
+      "eventId": "evt-e19544092af12f6249ed",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-18T06:20:08+00:00",
+      "lastSeenAt": "2026-09-18T06:20:08+00:00"
+    },
+    {
+      "id": "chg-992913c6563fc0e262ae",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "techcrunch-venture-34d15ad3ce6de8dc",
+      "entityName": "Crusoe raises $3.9B to build massive data centers and small modular ‘AI factories’",
+      "action": "added",
+      "changedFields": [
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：Crusoe raises $3.9B to build massive data centers and small modular ‘AI factories’。",
+      "importance": 70,
+      "before": null,
+      "after": {},
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E010"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E010"
+      ],
+      "supportingEvidenceIds": [
+        "E010"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-1b1f841856fa90e24155"
+      ],
+      "eventLifecycles": {
+        "evt-1b1f841856fa90e24155": "first_seen"
+      },
+      "eventId": "evt-1b1f841856fa90e24155",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-18T06:20:08+00:00",
+      "lastSeenAt": "2026-09-18T06:20:08+00:00"
+    },
+    {
+      "id": "chg-80a60a0b3043ea335fb9",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "techcrunch-venture-8fe9bd78c69ad5a9",
+      "entityName": "Comp AI sets eyes on a continuously agentic future for security and compliance",
+      "action": "added",
+      "changedFields": [
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：Comp AI sets eyes on a continuously agentic future for security and compliance。",
+      "importance": 70,
+      "before": null,
+      "after": {},
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E011"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E011"
+      ],
+      "supportingEvidenceIds": [
+        "E011"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-8c550a574696ad364f74"
+      ],
+      "eventLifecycles": {
+        "evt-8c550a574696ad364f74": "first_seen"
+      },
+      "eventId": "evt-8c550a574696ad364f74",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-18T06:20:08+00:00",
+      "lastSeenAt": "2026-09-18T06:20:08+00:00"
+    },
+    {
+      "id": "chg-d2fb0114f84cd6a0f5d4",
+      "dataset": "institutionEvent",
+      "entityType": "机构/资本事件",
+      "entityId": "official-user-东方财富-半导体信源-389faafe7b8e6b7f",
+      "entityName": "9月18日国内四大证券报纸、重要财经媒体头版头条内容精华摘要",
+      "action": "added",
+      "changedFields": [
+        "publishedAt"
+      ],
+      "summary": "新增机构/资本事件记录：9月18日国内四大证券报纸、重要财经媒体头版头条内容精华摘要。",
+      "importance": 70,
+      "before": null,
+      "after": {},
+      "changeType": "external_event",
+      "classificationReason": "新增事件型记录",
+      "isResearchCandidate": true,
+      "claimFields": [
+        "publishedAt"
+      ],
+      "claimBindings": [
+        {
+          "field": "publishedAt",
+          "before": null,
+          "after": null,
+          "evidenceIds": [
+            "E012"
+          ]
+        }
+      ],
+      "evidenceIds": [
+        "E012"
+      ],
+      "supportingEvidenceIds": [
+        "E012"
+      ],
+      "evidenceQuality": {
+        "status": "passed",
+        "supporting": 1,
+        "total": 1
+      },
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "eligibleForKeyDevelopment": true,
+      "eventIds": [
+        "evt-ca9e6568a78176530935"
+      ],
+      "eventLifecycles": {
+        "evt-ca9e6568a78176530935": "first_seen"
+      },
+      "eventId": "evt-ca9e6568a78176530935",
+      "lifecycle": "first_seen",
+      "firstSeenAt": "2026-09-18T06:20:08+00:00",
+      "lastSeenAt": "2026-09-18T06:20:08+00:00"
     }
   ],
   "evidence": [
     {
-      "id": "E008",
-      "changeId": "chg-01d24f27536d3ed12921",
-      "entityName": "Harvey",
-      "claim": "Harvey 的 products 发生变化。",
-      "publicationTier": "verified_change",
+      "id": "E001",
+      "changeId": "chg-5163843232fabc258f5f",
+      "entityName": "官宣｜超衍智能完成近4亿人民币天使系列融资，构建自进化基础大模型",
+      "claim": "新增机构/资本事件记录：官宣｜超衍智能完成近4亿人民币天使系列融资，构建自进化基础大模型。",
+      "publicationTier": "candidate",
       "reviewStatus": "automated_unreviewed",
-      "sourceName": "Harvey",
-      "title": "A New Era of Collaboration for Legal and Professional Services",
-      "url": "https://www.harvey.ai/blog/a-new-era-of-collaboration-for-legal-and-professional-services",
-      "publishedAt": "2026-02-19",
-      "evidenceGrade": "官方披露",
+      "sourceName": "晶泰科技",
+      "title": "官宣｜超衍智能完成近4亿人民币天使系列融资，构建自进化基础大模型",
+      "url": "https://www.xtalpi.com/官宣｜超衍智能完成近4亿人民币天使系列融资，构",
+      "publishedAt": "2026-09-16",
+      "evidenceGrade": "B",
+      "platformName": "官方网站",
       "claimFields": [
-        "products"
+        "publishedAt"
       ],
       "entityMatchStatus": "not_applicable",
       "qualityIssues": [],
       "qualityStatus": "passed",
       "supportStatus": "supports",
-      "verificationStatus": "auto_verified",
-      "observedAt": "2026-09-18T06:09:38+00:00",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-18T06:20:08+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
+    },
+    {
+      "id": "E002",
+      "changeId": "chg-61fd56a12d06c95f529c",
+      "entityName": "启明星 | Robochallenge全球化进展与生态共建发布| WAIC 2026 | 启明创投",
+      "claim": "新增机构/资本事件记录：启明星 | Robochallenge全球化进展与生态共建发布| WAIC 2026 | 启明创投。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "启明创投 · 核心团队页",
+      "title": "启明星 | Robochallenge全球化进展与生态共建发布| WAIC 2026 | 启明创投",
+      "url": "https://www.qimingvc.com/cn/news/%E5%90%AF%E6%98%8E%E6%98%9F-robochallenge%E5%85%A8%E7%90%83%E5%8C%96%E8%BF%9B%E5%B1%95%E4%B8%8E%E7%94%9F%E6%80%81%E5%85%B1%E5%BB%BA%E5%8F%91%E5%B8%83-waic-2026",
+      "publishedAt": "2026-09-14",
+      "evidenceGrade": "B",
+      "platformName": "启明创投 · 核心团队页",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-18T06:20:08+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
+    },
+    {
+      "id": "E003",
+      "changeId": "chg-b1340d32942d0eac0233",
+      "entityName": "CATL Partners with BME to Advance Battery Pack Manufacturing in Egypt Through Technology Licensing",
+      "claim": "新增机构/资本事件记录：CATL Partners with BME to Advance Battery Pack Manufacturing in Egypt Through Technology Licensing。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "CATL",
+      "title": "CATL Partners with BME to Advance Battery Pack Manufacturing in Egypt Through Technology Licensing",
+      "url": "https://www.catl.com/en/news/6998.html",
+      "publishedAt": "2026-09-16",
+      "evidenceGrade": "B",
+      "platformName": "官方网站",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-18T06:20:08+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
+    },
+    {
+      "id": "E004",
+      "changeId": "chg-8dab3c8e350100b91eb8",
+      "entityName": "豆包座舱助手发布，首款合作车型即将开启预售",
+      "claim": "新增机构/资本事件记录：豆包座舱助手发布，首款合作车型即将开启预售。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "雷峰网",
+      "title": "豆包座舱助手发布，首款合作车型即将开启预售",
+      "url": "https://www.leiphone.com/category/industrynews/4zVPQ7JUQYXHp2wh.html",
+      "publishedAt": "2026-09-17",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-18T06:20:08+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
+    },
+    {
+      "id": "E005",
+      "changeId": "chg-0e21c37aaa18fdba2fe7",
+      "entityName": "蚂蚁集团成为上海第48届世界技能大赛国家战略合作伙伴",
+      "claim": "新增机构/资本事件记录：蚂蚁集团成为上海第48届世界技能大赛国家战略合作伙伴。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "雷峰网",
+      "title": "蚂蚁集团成为上海第48届世界技能大赛国家战略合作伙伴",
+      "url": "https://www.leiphone.com/category/industrynews/85VHkGZ7UcQiHnEs.html",
+      "publishedAt": "2026-09-17",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-18T06:20:08+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
+    },
+    {
+      "id": "E006",
+      "changeId": "chg-f986c7820e97c39f4e31",
+      "entityName": "蚂蚁集团全员接入千问办公，打造大型企业办公标杆",
+      "claim": "新增机构/资本事件记录：蚂蚁集团全员接入千问办公，打造大型企业办公标杆。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "雷峰网",
+      "title": "蚂蚁集团全员接入千问办公，打造大型企业办公标杆",
+      "url": "https://www.leiphone.com/category/industrynews/U3X9WHILcYX0kh4l.html",
+      "publishedAt": "2026-09-17",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-18T06:20:08+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
+    },
+    {
+      "id": "E007",
+      "changeId": "chg-dbe7e30d8f82ad349f04",
+      "entityName": "地瓜机器人C轮融资4亿美元：资本不再为Demo买单，只为量产续费",
+      "claim": "新增机构/资本事件记录：地瓜机器人C轮融资4亿美元：资本不再为Demo买单，只为量产续费。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "钛媒体",
+      "title": "地瓜机器人C轮融资4亿美元：资本不再为Demo买单，只为量产续费",
+      "url": "https://www.tmtpost.com/8144105.html",
+      "publishedAt": "2026-09-18",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-18T06:20:08+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
+    },
+    {
+      "id": "E008",
+      "changeId": "chg-774259b002941d4eb8ae",
+      "entityName": "俊知集团盘中涨超13% 收购青海中利光纤技术有望打开AI算力相关光纤产品增量空间",
+      "claim": "新增机构/资本事件记录：俊知集团盘中涨超13% 收购青海中利光纤技术有望打开AI算力相关光纤产品增量空间。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "新浪财经",
+      "title": "俊知集团盘中涨超13% 收购青海中利光纤技术有望打开AI算力相关光纤产品增量空间",
+      "url": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-09-18/doc-inisfiif3386391.shtml",
+      "publishedAt": "2026-09-18",
+      "evidenceGrade": "C",
+      "platformName": "新浪",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-18T06:20:08+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
+    },
+    {
+      "id": "E009",
+      "changeId": "chg-12f0f3f37c5ee4dce4fd",
+      "entityName": "Hello Robotaxi raises about $100 million at nearly $3 billion valuation",
+      "claim": "新增机构/资本事件记录：Hello Robotaxi raises about $100 million at nearly $3 billion valuation。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "TechNode",
+      "title": "Hello Robotaxi raises about $100 million at nearly $3 billion valuation",
+      "url": "https://technode.com/2026/09/17/hello-robotaxi-100-million-financing",
+      "publishedAt": "2026-09-17",
+      "evidenceGrade": "C",
+      "platformName": "TechNode",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-18T06:20:08+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
+    },
+    {
+      "id": "E010",
+      "changeId": "chg-992913c6563fc0e262ae",
+      "entityName": "Crusoe raises $3.9B to build massive data centers and small modular ‘AI factories’",
+      "claim": "新增机构/资本事件记录：Crusoe raises $3.9B to build massive data centers and small modular ‘AI factories’。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "TechCrunch Venture",
+      "title": "Crusoe raises $3.9B to build massive data centers and small modular ‘AI factories’",
+      "url": "https://techcrunch.com/2026/09/17/crusoe-raises-3-9b-to-build-massive-data-centers-and-small-modular-ai-factories",
+      "publishedAt": "2026-09-17",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-18T06:20:08+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
+    },
+    {
+      "id": "E011",
+      "changeId": "chg-80a60a0b3043ea335fb9",
+      "entityName": "Comp AI sets eyes on a continuously agentic future for security and compliance",
+      "claim": "新增机构/资本事件记录：Comp AI sets eyes on a continuously agentic future for security and compliance。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "TechCrunch Venture",
+      "title": "Comp AI sets eyes on a continuously agentic future for security and compliance",
+      "url": "https://techcrunch.com/2026/09/17/comp-ai-sets-eyes-on-a-continiously-agentic-future-for-security-and-complaince",
+      "publishedAt": "2026-09-17",
+      "evidenceGrade": "C",
+      "platformName": "专业媒体",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-18T06:20:08+00:00",
+      "dateSource": "legacy_published_at",
+      "dateConfidence": "unknown"
+    },
+    {
+      "id": "E012",
+      "changeId": "chg-d2fb0114f84cd6a0f5d4",
+      "entityName": "9月18日国内四大证券报纸、重要财经媒体头版头条内容精华摘要",
+      "claim": "新增机构/资本事件记录：9月18日国内四大证券报纸、重要财经媒体头版头条内容精华摘要。",
+      "publicationTier": "candidate",
+      "reviewStatus": "automated_unreviewed",
+      "sourceName": "东方财富",
+      "title": "9月18日国内四大证券报纸、重要财经媒体头版头条内容精华摘要",
+      "url": "https://finance.eastmoney.com/a/202609183877691830.html",
+      "publishedAt": "2026-09-18",
+      "evidenceGrade": "C",
+      "platformName": "东方财富",
+      "claimFields": [
+        "publishedAt"
+      ],
+      "entityMatchStatus": "not_applicable",
+      "qualityIssues": [],
+      "qualityStatus": "passed",
+      "supportStatus": "supports",
+      "verificationStatus": "candidate",
+      "observedAt": "2026-09-18T06:20:08+00:00",
       "dateSource": "legacy_published_at",
       "dateConfidence": "unknown"
     }
   ],
   "eventLedger": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-18T06:09:38+00:00",
+    "generatedAt": "2026-09-18T06:20:08+00:00",
     "retentionDays": 180,
     "events": {
+      "evt-f9b57d7e21cfc67dadf7": {
+        "eventId": "evt-f9b57d7e21cfc67dadf7",
+        "dataset": "institutionEvent",
+        "entityId": "official-xtalpi-451071ace85fb99c",
+        "entityName": "官宣｜超衍智能完成近4亿人民币天使系列融资，构建自进化基础大模型",
+        "title": "官宣｜超衍智能完成近4亿人民币天使系列融资，构建自进化基础大模型",
+        "titleAliases": [
+          "官宣"
+        ],
+        "publishedDate": "2026-09-16",
+        "publishedDates": [
+          "2026-09-16"
+        ],
+        "entityKeys": [
+          "company:xtalpi",
+          "company:晶泰科技",
+          "institutionEvent:official-xtalpi-451071ace85fb99c",
+          "name:官宣|超衍智能完成近4亿人民币天使系列融资,构建自进化基础大模型"
+        ],
+        "typeKeys": [
+          "机构/资本事件"
+        ],
+        "numericCues": [
+          "4"
+        ],
+        "sourceAliases": [
+          "evd-d61b4fe40bd92accdd64",
+          "record-0c812bd9b3847e6c0f2f",
+          "src-29cdbb577c8fbf23d18b"
+        ],
+        "evidenceFingerprints": [
+          "d61b4fe40bd92accdd64"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "晶泰科技",
+            "title": "官宣｜超衍智能完成近4亿人民币天使系列融资，构建自进化基础大模型",
+            "url": "https://www.xtalpi.com/官宣｜超衍智能完成近4亿人民币天使系列融资，构",
+            "publishedAt": "2026-09-16",
+            "evidenceGrade": "B"
+          }
+        ],
+        "claimFingerprint": "23c6e34d423db5dd813b",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastPublishedAt": "2026-09-18T06:20:08+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-f92065de6be80180a07d": {
+        "eventId": "evt-f92065de6be80180a07d",
+        "dataset": "institutionEvent",
+        "entityId": "sina-finance-deddc237f8fa0577",
+        "entityName": "俊知集团盘中涨超13% 收购青海中利光纤技术有望打开AI算力相关光纤产品增量空间",
+        "title": "俊知集团盘中涨超13% 收购青海中利光纤技术有望打开AI算力相关光纤产品增量空间",
+        "titleAliases": [
+          "俊知集团盘中涨超13收购青海中利光纤技术有望打开ai算力相关光纤产品增量空间"
+        ],
+        "publishedDate": "2026-09-18",
+        "publishedDates": [
+          "2026-09-18"
+        ],
+        "entityKeys": [
+          "institutionEvent:sina-finance-deddc237f8fa0577",
+          "name:俊知集团盘中涨超13% 收购青海中利光纤技术有望打开ai算力相关光纤产品增量空间"
+        ],
+        "typeKeys": [
+          "机构/资本事件"
+        ],
+        "numericCues": [
+          "13%"
+        ],
+        "sourceAliases": [
+          "evd-5db0db4c065cae9a609c",
+          "record-a404fd41d4aec4b02e77",
+          "src-0056b0881dfb82000f19"
+        ],
+        "evidenceFingerprints": [
+          "5db0db4c065cae9a609c"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "新浪财经",
+            "title": "俊知集团盘中涨超13% 收购青海中利光纤技术有望打开AI算力相关光纤产品增量空间",
+            "url": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-09-18/doc-inisfiif3386391.shtml",
+            "publishedAt": "2026-09-18",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "d734540f62d5d690c9d6",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastPublishedAt": "2026-09-18T06:20:08+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-e19544092af12f6249ed": {
+        "eventId": "evt-e19544092af12f6249ed",
+        "dataset": "institutionEvent",
+        "entityId": "professional-media-technode-71e0760b5fcd853b",
+        "entityName": "Hello Robotaxi raises about $100 million at nearly $3 billion valuation",
+        "title": "Hello Robotaxi raises about $100 million at nearly $3 billion valuation",
+        "titleAliases": [
+          "hellorobotaxiraisesabout100millionatnearly3billionvaluation"
+        ],
+        "publishedDate": "2026-09-17",
+        "publishedDates": [
+          "2026-09-17"
+        ],
+        "entityKeys": [
+          "institutionEvent:professional-media-technode-71e0760b5fcd853b",
+          "name:hello robotaxi raises about $100 million at nearly $3 billion valuation"
+        ],
+        "typeKeys": [
+          "机构/资本事件"
+        ],
+        "numericCues": [
+          "100",
+          "3"
+        ],
+        "sourceAliases": [
+          "evd-125cda3efb3b67a84a98",
+          "record-be11658243d1175fc0d8",
+          "src-eca1791a6c73dd7b76d8"
+        ],
+        "evidenceFingerprints": [
+          "125cda3efb3b67a84a98"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "TechNode",
+            "title": "Hello Robotaxi raises about $100 million at nearly $3 billion valuation",
+            "url": "https://technode.com/2026/09/17/hello-robotaxi-100-million-financing",
+            "publishedAt": "2026-09-17",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "80e85f56cc745557c5ad",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastPublishedAt": "2026-09-18T06:20:08+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-dd2216b806bb2429f3cc": {
+        "eventId": "evt-dd2216b806bb2429f3cc",
+        "dataset": "institutionEvent",
+        "entityId": "leiphone-3059448600e34cc3",
+        "entityName": "蚂蚁集团成为上海第48届世界技能大赛国家战略合作伙伴",
+        "title": "蚂蚁集团成为上海第48届世界技能大赛国家战略合作伙伴",
+        "titleAliases": [
+          "蚂蚁集团成为上海第48届世界技能大赛国家战略合作伙伴"
+        ],
+        "publishedDate": "2026-09-17",
+        "publishedDates": [
+          "2026-09-17"
+        ],
+        "entityKeys": [
+          "institutionEvent:leiphone-3059448600e34cc3",
+          "name:蚂蚁集团成为上海第48届世界技能大赛国家战略合作伙伴"
+        ],
+        "typeKeys": [
+          "机构/资本事件"
+        ],
+        "numericCues": [
+          "48"
+        ],
+        "sourceAliases": [
+          "evd-e2fc7f1f2096af39e62f",
+          "record-1c016024c285dd4eaa03",
+          "src-ccb5c912c83dcc2bdafc"
+        ],
+        "evidenceFingerprints": [
+          "e2fc7f1f2096af39e62f"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "蚂蚁集团成为上海第48届世界技能大赛国家战略合作伙伴",
+            "url": "https://www.leiphone.com/category/industrynews/85VHkGZ7UcQiHnEs.html",
+            "publishedAt": "2026-09-17",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "ebc33f9b52ca22afb268",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastPublishedAt": "2026-09-18T06:20:08+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-ca9e6568a78176530935": {
+        "eventId": "evt-ca9e6568a78176530935",
+        "dataset": "institutionEvent",
+        "entityId": "official-user-东方财富-半导体信源-389faafe7b8e6b7f",
+        "entityName": "9月18日国内四大证券报纸、重要财经媒体头版头条内容精华摘要",
+        "title": "9月18日国内四大证券报纸、重要财经媒体头版头条内容精华摘要",
+        "titleAliases": [
+          "9月18日国内四大证券报纸重要财经媒体头版头条内容精华摘要"
+        ],
+        "publishedDate": "2026-09-18",
+        "publishedDates": [
+          "2026-09-18"
+        ],
+        "entityKeys": [
+          "company:catl",
+          "company:宁德时代",
+          "institutionEvent:official-user-东方财富-半导体信源-389faafe7b8e6b7f",
+          "name:9月18日国内四大证券报纸、重要财经媒体头版头条内容精华摘要"
+        ],
+        "typeKeys": [
+          "机构/资本事件"
+        ],
+        "numericCues": [
+          "18",
+          "9"
+        ],
+        "sourceAliases": [
+          "evd-74529a842f30ef50d0c7",
+          "record-f739045b468d070db63f",
+          "src-681c4efd3058f563d3d6"
+        ],
+        "evidenceFingerprints": [
+          "74529a842f30ef50d0c7"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "东方财富",
+            "title": "9月18日国内四大证券报纸、重要财经媒体头版头条内容精华摘要",
+            "url": "https://finance.eastmoney.com/a/202609183877691830.html",
+            "publishedAt": "2026-09-18",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "554e4666f80d5367b84d",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastPublishedAt": "2026-09-18T06:20:08+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-a8a593fe8130d622dc00": {
+        "eventId": "evt-a8a593fe8130d622dc00",
+        "dataset": "institutionEvent",
+        "entityId": "user-source-source-auto-institution-team-131095855545-4b1561ba3cfdd04e",
+        "entityName": "启明星 | Robochallenge全球化进展与生态共建发布| WAIC 2026 | 启明创投",
+        "title": "启明星 | Robochallenge全球化进展与生态共建发布| WAIC 2026 | 启明创投",
+        "titleAliases": [
+          "启明星"
+        ],
+        "publishedDate": "2026-09-14",
+        "publishedDates": [
+          "2026-09-14"
+        ],
+        "entityKeys": [
+          "institutionEvent:user-source-source-auto-institution-team-131095855545-4b1561ba3cfdd04e",
+          "name:启明星 | robochallenge全球化进展与生态共建发布| waic 2026 | 启明创投"
+        ],
+        "typeKeys": [
+          "机构/资本事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-0471ced3588855afb428",
+          "record-5df01fdef7d4c07d4d76",
+          "src-b6bc0bff6b9705960a1c"
+        ],
+        "evidenceFingerprints": [
+          "0471ced3588855afb428"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "启明创投 · 核心团队页",
+            "title": "启明星 | Robochallenge全球化进展与生态共建发布| WAIC 2026 | 启明创投",
+            "url": "https://www.qimingvc.com/cn/news/%E5%90%AF%E6%98%8E%E6%98%9F-robochallenge%E5%85%A8%E7%90%83%E5%8C%96%E8%BF%9B%E5%B1%95%E4%B8%8E%E7%94%9F%E6%80%81%E5%85%B1%E5%BB%BA%E5%8F%91%E5%B8%83-waic-2026",
+            "publishedAt": "2026-09-14",
+            "evidenceGrade": "B"
+          }
+        ],
+        "claimFingerprint": "1b9f0802db629cd054ec",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastPublishedAt": "2026-09-18T06:20:08+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-8c550a574696ad364f74": {
+        "eventId": "evt-8c550a574696ad364f74",
+        "dataset": "institutionEvent",
+        "entityId": "techcrunch-venture-8fe9bd78c69ad5a9",
+        "entityName": "Comp AI sets eyes on a continuously agentic future for security and compliance",
+        "title": "Comp AI sets eyes on a continuously agentic future for security and compliance",
+        "titleAliases": [
+          "compaisetseyesonacontinuouslyagenticfutureforsecurityandcompliance"
+        ],
+        "publishedDate": "2026-09-17",
+        "publishedDates": [
+          "2026-09-17"
+        ],
+        "entityKeys": [
+          "institutionEvent:techcrunch-venture-8fe9bd78c69ad5a9",
+          "name:comp ai sets eyes on a continuously agentic future for security and compliance"
+        ],
+        "typeKeys": [
+          "机构/资本事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-9c64de794fc039ff55f4",
+          "record-0c52d5aab28450096ac6",
+          "src-af7a24910ab9f1f7f0a3"
+        ],
+        "evidenceFingerprints": [
+          "9c64de794fc039ff55f4"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "TechCrunch Venture",
+            "title": "Comp AI sets eyes on a continuously agentic future for security and compliance",
+            "url": "https://techcrunch.com/2026/09/17/comp-ai-sets-eyes-on-a-continiously-agentic-future-for-security-and-complaince",
+            "publishedAt": "2026-09-17",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "298820881c354e044885",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastPublishedAt": "2026-09-18T06:20:08+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-6ee72e7a359f37129475": {
+        "eventId": "evt-6ee72e7a359f37129475",
+        "dataset": "institutionEvent",
+        "entityId": "leiphone-2af2b4a7f95944fc",
+        "entityName": "蚂蚁集团全员接入千问办公，打造大型企业办公标杆",
+        "title": "蚂蚁集团全员接入千问办公，打造大型企业办公标杆",
+        "titleAliases": [
+          "蚂蚁集团全员接入千问办公打造大型企业办公标杆"
+        ],
+        "publishedDate": "2026-09-17",
+        "publishedDates": [
+          "2026-09-17"
+        ],
+        "entityKeys": [
+          "institutionEvent:leiphone-2af2b4a7f95944fc",
+          "name:蚂蚁集团全员接入千问办公,打造大型企业办公标杆"
+        ],
+        "typeKeys": [
+          "机构/资本事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-b7683ae1b1452388aa4b",
+          "record-3f886d749a1e17437d3b",
+          "src-85d8d0cd4cafb3aab6f2"
+        ],
+        "evidenceFingerprints": [
+          "b7683ae1b1452388aa4b"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "蚂蚁集团全员接入千问办公，打造大型企业办公标杆",
+            "url": "https://www.leiphone.com/category/industrynews/U3X9WHILcYX0kh4l.html",
+            "publishedAt": "2026-09-17",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "fd3bf1aeaa61f0a6afce",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastPublishedAt": "2026-09-18T06:20:08+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-3e7bb78fe29764bf857d": {
+        "eventId": "evt-3e7bb78fe29764bf857d",
+        "dataset": "institutionEvent",
+        "entityId": "tmtpost-d139fef25dbc4784",
+        "entityName": "地瓜机器人C轮融资4亿美元：资本不再为Demo买单，只为量产续费",
+        "title": "地瓜机器人C轮融资4亿美元：资本不再为Demo买单，只为量产续费",
+        "titleAliases": [
+          "地瓜机器人c轮融资4亿美元资本不再为demo买单只为量产续费"
+        ],
+        "publishedDate": "2026-09-18",
+        "publishedDates": [
+          "2026-09-18"
+        ],
+        "entityKeys": [
+          "institutionEvent:tmtpost-d139fef25dbc4784",
+          "name:地瓜机器人c轮融资4亿美元:资本不再为demo买单,只为量产续费"
+        ],
+        "typeKeys": [
+          "机构/资本事件"
+        ],
+        "numericCues": [
+          "4"
+        ],
+        "sourceAliases": [
+          "evd-d4a8f6cc9cccee7f9e85",
+          "record-4d2b30c70febbc87b38b",
+          "src-ff8f263f10f05cfea23b"
+        ],
+        "evidenceFingerprints": [
+          "d4a8f6cc9cccee7f9e85"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "钛媒体",
+            "title": "地瓜机器人C轮融资4亿美元：资本不再为Demo买单，只为量产续费",
+            "url": "https://www.tmtpost.com/8144105.html",
+            "publishedAt": "2026-09-18",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "fd5e3f9d6223d056613c",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastPublishedAt": "2026-09-18T06:20:08+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-3838df8314c0b1983a30": {
+        "eventId": "evt-3838df8314c0b1983a30",
+        "dataset": "institutionEvent",
+        "entityId": "catl-d3f6b4d5622ccf82",
+        "entityName": "CATL Partners with BME to Advance Battery Pack Manufacturing in Egypt Through Technology Licensing",
+        "title": "CATL Partners with BME to Advance Battery Pack Manufacturing in Egypt Through Technology Licensing",
+        "titleAliases": [
+          "catlpartnerswithbmetoadvancebatterypackmanufacturinginegyptthroughtechnologylicensing"
+        ],
+        "publishedDate": "2026-09-16",
+        "publishedDates": [
+          "2026-09-16"
+        ],
+        "entityKeys": [
+          "company:catl",
+          "company:宁德时代",
+          "institutionEvent:catl-d3f6b4d5622ccf82",
+          "name:catl partners with bme to advance battery pack manufacturing in egypt through technology licensing"
+        ],
+        "typeKeys": [
+          "机构/资本事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-0415d96608d337dd175c",
+          "record-4e4db287f8b413f89a40",
+          "src-559e18c71a6aa7254d75"
+        ],
+        "evidenceFingerprints": [
+          "0415d96608d337dd175c"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "CATL",
+            "title": "CATL Partners with BME to Advance Battery Pack Manufacturing in Egypt Through Technology Licensing",
+            "url": "https://www.catl.com/en/news/6998.html",
+            "publishedAt": "2026-09-16",
+            "evidenceGrade": "B"
+          }
+        ],
+        "claimFingerprint": "e0a5bd4abd47939bbf5d",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastPublishedAt": "2026-09-18T06:20:08+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 4,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-1b1f841856fa90e24155": {
+        "eventId": "evt-1b1f841856fa90e24155",
+        "dataset": "institutionEvent",
+        "entityId": "techcrunch-venture-34d15ad3ce6de8dc",
+        "entityName": "Crusoe raises $3.9B to build massive data centers and small modular ‘AI factories’",
+        "title": "Crusoe raises $3.9B to build massive data centers and small modular ‘AI factories’",
+        "titleAliases": [
+          "crusoeraises39btobuildmassivedatacentersandsmallmodularaifactories"
+        ],
+        "publishedDate": "2026-09-17",
+        "publishedDates": [
+          "2026-09-17"
+        ],
+        "entityKeys": [
+          "institutionEvent:techcrunch-venture-34d15ad3ce6de8dc",
+          "name:crusoe raises $3.9b to build massive data centers and small modular ‘ai factories’"
+        ],
+        "typeKeys": [
+          "机构/资本事件"
+        ],
+        "numericCues": [
+          "3.9"
+        ],
+        "sourceAliases": [
+          "evd-bee13df0c6af787f18ee",
+          "record-74d4137e4eb184d1efe4",
+          "src-4c56a6fb28d524bf26b1"
+        ],
+        "evidenceFingerprints": [
+          "bee13df0c6af787f18ee"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "TechCrunch Venture",
+            "title": "Crusoe raises $3.9B to build massive data centers and small modular ‘AI factories’",
+            "url": "https://techcrunch.com/2026/09/17/crusoe-raises-3-9b-to-build-massive-data-centers-and-small-modular-ai-factories",
+            "publishedAt": "2026-09-17",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "3b33d0c53962ed0a7dd1",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastPublishedAt": "2026-09-18T06:20:08+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
+      "evt-0ea08a32f7825d9ba85b": {
+        "eventId": "evt-0ea08a32f7825d9ba85b",
+        "dataset": "institutionEvent",
+        "entityId": "leiphone-9fa7671e211fade4",
+        "entityName": "豆包座舱助手发布，首款合作车型即将开启预售",
+        "title": "豆包座舱助手发布，首款合作车型即将开启预售",
+        "titleAliases": [
+          "豆包座舱助手发布首款合作车型即将开启预售"
+        ],
+        "publishedDate": "2026-09-17",
+        "publishedDates": [
+          "2026-09-17"
+        ],
+        "entityKeys": [
+          "company:bytedance",
+          "company:字节跳动",
+          "institutionEvent:leiphone-9fa7671e211fade4",
+          "name:豆包座舱助手发布,首款合作车型即将开启预售"
+        ],
+        "typeKeys": [
+          "机构/资本事件"
+        ],
+        "numericCues": [],
+        "sourceAliases": [
+          "evd-cb1be45243fcdb7a27f8",
+          "record-ff41bc259c88d2dbb3a6",
+          "src-2d48d41ef0ba293eeb1e"
+        ],
+        "evidenceFingerprints": [
+          "cb1be45243fcdb7a27f8"
+        ],
+        "evidenceSummaries": [
+          {
+            "sourceName": "雷峰网",
+            "title": "豆包座舱助手发布，首款合作车型即将开启预售",
+            "url": "https://www.leiphone.com/category/industrynews/4zVPQ7JUQYXHp2wh.html",
+            "publishedAt": "2026-09-17",
+            "evidenceGrade": "C"
+          }
+        ],
+        "claimFingerprint": "9ec9285a24b47767505c",
+        "scalarClaims": {},
+        "ipoStage": null,
+        "firstSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastPublishedAt": "2026-09-18T06:20:08+00:00",
+        "lastLifecycle": "first_seen",
+        "observationCount": 1,
+        "confirmationCount": 0,
+        "bestEvidenceStrength": 2,
+        "status": "active",
+        "conflictStatus": "none",
+        "conflictReasons": [],
+        "relatedEventIds": []
+      },
       "evt-ac8221e57a43a1e73cb2": {
         "eventId": "evt-ac8221e57a43a1e73cb2",
         "dataset": "ventureCompany",
@@ -38815,793 +40564,18 @@
         "conflictStatus": "none",
         "conflictReasons": [],
         "relatedEventIds": []
-      },
-      "evt-e6928dec3682f292e338": {
-        "eventId": "evt-e6928dec3682f292e338",
-        "dataset": "track",
-        "entityId": "track-23sb7b",
-        "entityName": "人形机器人",
-        "title": "Unitree launches upgraded G1+ humanoid robot with six major upgrades",
-        "titleAliases": [
-          "unitreelaunchesupgradedg1humanoidrobotwithsixmajorupgrades"
-        ],
-        "publishedDate": "2026-09-15",
-        "publishedDates": [
-          "2026-09-15"
-        ],
-        "entityKeys": [
-          "name:人形机器人",
-          "track:track-23sb7b"
-        ],
-        "typeKeys": [
-          "核心赛道"
-        ],
-        "numericCues": [
-          "1"
-        ],
-        "sourceAliases": [
-          "evd-8cfd61726f98db528e1b",
-          "src-7539f4f5e3751781ad70"
-        ],
-        "evidenceFingerprints": [
-          "8cfd61726f98db528e1b"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "TechNode",
-            "title": "Unitree launches upgraded G1+ humanoid robot with six major upgrades",
-            "url": "https://technode.com/2026/09/15/unitree-g1-plus-humanoid-robot",
-            "publishedAt": "2026-09-15",
-            "evidenceGrade": "媒体报道",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "877ed54b268586b54de4",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastPublishedAt": "2026-09-15T09:33:00+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-d45c4602607b920b0b2b": {
-        "eventId": "evt-d45c4602607b920b0b2b",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-181672c05ff3629690",
-        "entityName": "欧盟拟限制15岁以下儿童独立注册社交平台，AI聊天机器人纳入安全监管",
-        "title": "欧盟拟限制15岁以下儿童独立注册社交平台，AI聊天机器人纳入安全监管",
-        "titleAliases": [
-          "欧盟拟限制15岁以下儿童独立注册社交平台ai聊天机器人纳入安全监管"
-        ],
-        "publishedDate": "2026-09-15",
-        "publishedDates": [
-          "2026-09-15"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "政策",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "15"
-        ],
-        "sourceAliases": [
-          "evd-72a97666ed9607e90a50",
-          "record-46bb167cd61719edbde1",
-          "src-785d2de82fb275093418"
-        ],
-        "evidenceFingerprints": [
-          "72a97666ed9607e90a50"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "欧盟拟限制15岁以下儿童独立注册社交平台，AI聊天机器人纳入安全监管",
-            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-15/doc-inirxatw3680072.shtml",
-            "publishedAt": "2026-09-15",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "a04bbba39dddd3599fd7",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastPublishedAt": "2026-09-15T09:33:00+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-cc525cb92e43f137dde8": {
-        "eventId": "evt-cc525cb92e43f137dde8",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-40245d5f3e30ea172b",
-        "entityName": "美银调查：投资者仍看好宏观与AI资本开支",
-        "title": "美银调查：投资者仍看好宏观与AI资本开支",
-        "titleAliases": [
-          "美银调查投资者仍看好宏观与ai资本开支"
-        ],
-        "publishedDate": "2026-09-15",
-        "publishedDates": [
-          "2026-09-15"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "产业投资",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-e4393cbe4320824fd3dc",
-          "record-27ad4c6b8efabd76a028",
-          "src-3d2086891d6bb24eb96d"
-        ],
-        "evidenceFingerprints": [
-          "e4393cbe4320824fd3dc"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "美银调查：投资者仍看好宏观与AI资本开支",
-            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-15/doc-inirxatu6912367.shtml",
-            "publishedAt": "2026-09-15",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "7dc3aec1c4daef82cab3",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastPublishedAt": "2026-09-15T09:33:00+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-c6cbea3dd83e5a88df97": {
-        "eventId": "evt-c6cbea3dd83e5a88df97",
-        "dataset": "technology",
-        "entityId": "codex-80vt19",
-        "entityName": "Codex",
-        "title": "The best IDE for agentic AI may not be an IDE at all",
-        "titleAliases": [
-          "thebestideforagenticaimaynotbeanideatall"
-        ],
-        "publishedDate": "2026-09-15",
-        "publishedDates": [
-          "2026-09-15"
-        ],
-        "entityKeys": [
-          "name:codex",
-          "technology:codex-80vt19"
-        ],
-        "typeKeys": [
-          "核心技术"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-d4367ff3ff5cc01cc498",
-          "src-6f008e58688e6c1cc7fd"
-        ],
-        "evidenceFingerprints": [
-          "d4367ff3ff5cc01cc498"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "InfoWorld",
-            "title": "The best IDE for agentic AI may not be an IDE at all",
-            "url": "https://www.infoworld.com/article/4221481/the-best-ide-for-agentic-ai-may-not-be-an-ide-at-all.html",
-            "publishedAt": "2026-09-15",
-            "evidenceGrade": "媒体报道",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "ba93e43d5c93a1133f22",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastPublishedAt": "2026-09-15T09:33:00+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-b93e2a49b8d91a9523dc": {
-        "eventId": "evt-b93e2a49b8d91a9523dc",
-        "dataset": "track",
-        "entityId": "energy",
-        "entityName": "新能源",
-        "title": "宁德时代收购“吉利系”电池厂，专家解读 - 东方财富",
-        "titleAliases": [
-          "宁德时代收购吉利系电池厂专家解读东方财富",
-          "超级智能体迪迪虾上车比亚迪携手阿里云推进智能座舱升级"
-        ],
-        "publishedDate": "2026-09-15",
-        "publishedDates": [
-          "2026-09-15"
-        ],
-        "entityKeys": [
-          "name:新能源",
-          "track:energy"
-        ],
-        "typeKeys": [
-          "核心赛道"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-45738f20e61d07b2deb7",
-          "evd-81e40fb1409e58d24e2a",
-          "src-51b9a53c0cbe706a302e",
-          "src-b2bf53031f56e37e6f5b"
-        ],
-        "evidenceFingerprints": [
-          "45738f20e61d07b2deb7",
-          "81e40fb1409e58d24e2a"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新能源 · Google News 中文",
-            "title": "宁德时代收购“吉利系”电池厂，专家解读 - 东方财富",
-            "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE9OMWRJbk9KeWR2Z2RVMzhsZWU1b001dWs4eGZkR1VwV2tUX1ZPclgzczRnN3cxTmVhZzdMMXRCWUVFUzNTcFlzT2tmZGxqY1lnR0hpQUFSY0xiYWsxcnpvMzZHRFNFQQ?oc=5",
-            "publishedAt": "2026-09-15",
-            "evidenceGrade": "待交叉验证",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "雷峰网",
-            "title": "超级智能体“迪迪虾”上车，比亚迪携手阿里云推进智能座舱升级",
-            "url": "https://www.leiphone.com/category/industrynews/8XZ8Ji8sV6zGMGu0.html",
-            "publishedAt": "2026-09-15",
-            "evidenceGrade": "媒体报道",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "0459fb03b16e7a42b3b1",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastPublishedAt": "2026-09-15T09:33:00+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 2,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-b6be85d326e2de081802": {
-        "eventId": "evt-b6be85d326e2de081802",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-a867121182fa30cec5",
-        "entityName": "超级智能体“迪迪虾”上车，比亚迪携手阿里云推进智能座舱升级",
-        "title": "超级智能体“迪迪虾”上车，比亚迪携手阿里云推进智能座舱升级",
-        "titleAliases": [
-          "超级智能体迪迪虾上车比亚迪携手阿里云推进智能座舱升级"
-        ],
-        "publishedDate": "2026-09-15",
-        "publishedDates": [
-          "2026-09-15"
-        ],
-        "entityKeys": [
-          "company:阿里云 / qwen"
-        ],
-        "typeKeys": [
-          "商业进展",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-8da2f82d3776305c1d85",
-          "record-3d27edde130ae75b754b",
-          "src-b2bf53031f56e37e6f5b"
-        ],
-        "evidenceFingerprints": [
-          "8da2f82d3776305c1d85"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "雷峰网",
-            "title": "超级智能体“迪迪虾”上车，比亚迪携手阿里云推进智能座舱升级",
-            "url": "https://www.leiphone.com/category/industrynews/8XZ8Ji8sV6zGMGu0.html",
-            "publishedAt": "2026-09-15",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "d0f9e4982a1bcccad10b",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastPublishedAt": "2026-09-15T09:33:00+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-b3133131a7db60dc79bb": {
-        "eventId": "evt-b3133131a7db60dc79bb",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-687387369e725df0fc",
-        "entityName": "MGI Tech Launches VisiOmics in Europe and Unveils AI-Enabled Pathology Portfolio at ECP 2026",
-        "title": "MGI Tech Launches VisiOmics in Europe and Unveils AI-Enabled Pathology Portfolio at ECP 2026",
-        "titleAliases": [
-          "mgitechlaunchesvisiomicsineuropeandunveilsaienabledpathologyportfolioatecp2026"
-        ],
-        "publishedDate": "2026-09-15",
-        "publishedDates": [
-          "2026-09-15"
-        ],
-        "entityKeys": [],
-        "typeKeys": [
-          "产品发布",
-          "高价值情报事件"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-ddb0a9146f45b6420cda",
-          "record-0860c7e04a020c7ca7ca",
-          "src-20fb96f970f9a0b7017c"
-        ],
-        "evidenceFingerprints": [
-          "ddb0a9146f45b6420cda"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "PR Newswire Consumer Technology",
-            "title": "MGI Tech Launches VisiOmics in Europe and Unveils AI-Enabled Pathology Portfolio at ECP 2026",
-            "url": "https://www.prnewswire.com/news-releases/mgi-tech-launches-visiomics-in-europe-and-unveils-ai-enabled-pathology-portfolio-at-ecp-2026-302878642.html",
-            "publishedAt": "2026-09-15",
-            "evidenceGrade": "C",
-            "sourceRole": "primary"
-          }
-        ],
-        "claimFingerprint": "60ac8caf30247dd19134",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastPublishedAt": "2026-09-15T09:33:00+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-a897f1b50abc8c97ed17": {
-        "eventId": "evt-a897f1b50abc8c97ed17",
-        "dataset": "track",
-        "entityId": "manufacturing",
-        "entityName": "智能制造",
-        "title": "China issues first AI-plus-brain-computer interface medical-device standard",
-        "titleAliases": [
-          "chinaissuesfirstaiplusbraincomputerinterfacemedicaldevicestandard",
-          "howtogetbetterresultsfromlocalllmswithollama",
-          "learnpianowithoutleavingyourhousethankstothisaipoweredappnowforlessthan20ayear",
-          "传openai斥资3亿美元收购初创企业glassimaging"
-        ],
-        "publishedDate": "2026-09-15",
-        "publishedDates": [
-          "2026-09-15"
-        ],
-        "entityKeys": [
-          "name:智能制造",
-          "track:manufacturing"
-        ],
-        "typeKeys": [
-          "核心赛道"
-        ],
-        "numericCues": [
-          "20",
-          "3"
-        ],
-        "sourceAliases": [
-          "evd-460e4eb9874f1a441c36",
-          "evd-8aa36f797920444c99f7",
-          "evd-bc779c8403411af78b9a",
-          "evd-c6793920bc9c40c199c2",
-          "src-0d96d46010f96969de34",
-          "src-51330b3b20fd35ab69a0",
-          "src-96e2092b35e294f0eda0",
-          "src-c1c5765743cf96db1ee5"
-        ],
-        "evidenceFingerprints": [
-          "460e4eb9874f1a441c36",
-          "bc779c8403411af78b9a",
-          "c6793920bc9c40c199c2",
-          "8aa36f797920444c99f7"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "传OpenAI斥资3亿美元收购初创企业Glass Imaging",
-            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-15/doc-inirxatw3685948.shtml",
-            "publishedAt": "2026-09-15",
-            "evidenceGrade": "媒体报道",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "Mashable",
-            "title": "Learn piano without leaving your house thanks to this AI-powered app — now for less than $20 a year",
-            "url": "https://mashable.com/life/sept-15-flowkey-classic-plan-5-year-subscription",
-            "publishedAt": "2026-09-15",
-            "evidenceGrade": "媒体报道",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "TechNode",
-            "title": "China issues first AI-plus-brain-computer interface medical-device standard",
-            "url": "https://technode.com/2026/09/15/china-ai-brain-computer-interface-standard",
-            "publishedAt": "2026-09-15",
-            "evidenceGrade": "媒体报道",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "InfoWorld",
-            "title": "How to get better results from local LLMs with Ollama",
-            "url": "https://www.infoworld.com/article/4218328/how-to-get-better-results-from-local-llms-with-ollama.html",
-            "publishedAt": "2026-09-15",
-            "evidenceGrade": "媒体报道",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "18396f296719592c0073",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastPublishedAt": "2026-09-15T09:33:00+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 4,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "needs_review",
-        "conflictStatus": "possible",
-        "conflictReasons": [
-          "事件身份匹配到多个历史候选，未自动合并"
-        ],
-        "relatedEventIds": [
-          "evt-281626e963e4423df9fb",
-          "evt-91f06059cab642a8ad52"
-        ]
-      },
-      "evt-9eef2359001fa1e36abc": {
-        "eventId": "evt-9eef2359001fa1e36abc",
-        "dataset": "track",
-        "entityId": "track-1ccjq49",
-        "entityName": "风险投资",
-        "title": "Unitree launches upgraded G1+ humanoid robot with six major upgrades",
-        "titleAliases": [
-          "unitreelaunchesupgradedg1humanoidrobotwithsixmajorupgrades",
-          "传openai斥资3亿美元收购初创企业glassimaging",
-          "欧盟拟限制15岁以下儿童独立注册社交平台ai聊天机器人纳入安全监管",
-          "美银调查投资者仍看好宏观与ai资本开支"
-        ],
-        "publishedDate": "2026-09-15",
-        "publishedDates": [
-          "2026-09-15"
-        ],
-        "entityKeys": [
-          "name:风险投资",
-          "track:track-1ccjq49"
-        ],
-        "typeKeys": [
-          "核心赛道"
-        ],
-        "numericCues": [
-          "1",
-          "15",
-          "3"
-        ],
-        "sourceAliases": [
-          "evd-3bbbf754a1a94d8ed615",
-          "evd-a11c5fbfe9bc3828b789",
-          "evd-dfe6b3ecf09212a9c112",
-          "evd-eae6f8abc7a9d51b9436",
-          "src-3d2086891d6bb24eb96d",
-          "src-51330b3b20fd35ab69a0",
-          "src-7539f4f5e3751781ad70",
-          "src-785d2de82fb275093418"
-        ],
-        "evidenceFingerprints": [
-          "3bbbf754a1a94d8ed615",
-          "dfe6b3ecf09212a9c112",
-          "eae6f8abc7a9d51b9436",
-          "a11c5fbfe9bc3828b789"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "美银调查：投资者仍看好宏观与AI资本开支",
-            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-15/doc-inirxatu6912367.shtml",
-            "publishedAt": "2026-09-15",
-            "evidenceGrade": "媒体报道",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "欧盟拟限制15岁以下儿童独立注册社交平台，AI聊天机器人纳入安全监管",
-            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-15/doc-inirxatw3680072.shtml",
-            "publishedAt": "2026-09-15",
-            "evidenceGrade": "媒体报道",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "传OpenAI斥资3亿美元收购初创企业Glass Imaging",
-            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-15/doc-inirxatw3685948.shtml",
-            "publishedAt": "2026-09-15",
-            "evidenceGrade": "媒体报道",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "TechNode",
-            "title": "Unitree launches upgraded G1+ humanoid robot with six major upgrades",
-            "url": "https://technode.com/2026/09/15/unitree-g1-plus-humanoid-robot",
-            "publishedAt": "2026-09-15",
-            "evidenceGrade": "媒体报道",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "877ed54b268586b54de4",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastPublishedAt": "2026-09-15T09:33:00+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 4,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-9d5d9fba9e88f3c67e8e": {
-        "eventId": "evt-9d5d9fba9e88f3c67e8e",
-        "dataset": "technology",
-        "entityId": "ai-1jn6zh",
-        "entityName": "AI 智能体",
-        "title": "超级智能体“迪迪虾”上车，比亚迪携手阿里云推进智能座舱升级",
-        "titleAliases": [
-          "超级智能体迪迪虾上车比亚迪携手阿里云推进智能座舱升级"
-        ],
-        "publishedDate": "2026-09-15",
-        "publishedDates": [
-          "2026-09-15"
-        ],
-        "entityKeys": [
-          "name:ai 智能体",
-          "technology:ai-1jn6zh"
-        ],
-        "typeKeys": [
-          "核心技术"
-        ],
-        "numericCues": [],
-        "sourceAliases": [
-          "evd-8f9a3f96a50f760e278f",
-          "src-b2bf53031f56e37e6f5b"
-        ],
-        "evidenceFingerprints": [
-          "8f9a3f96a50f760e278f"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "雷峰网",
-            "title": "超级智能体“迪迪虾”上车，比亚迪携手阿里云推进智能座舱升级",
-            "url": "https://www.leiphone.com/category/industrynews/8XZ8Ji8sV6zGMGu0.html",
-            "publishedAt": "2026-09-15",
-            "evidenceGrade": "媒体报道",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "d0f9e4982a1bcccad10b",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastPublishedAt": "2026-09-15T09:33:00+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-9a4ee7fae480220e84a6": {
-        "eventId": "evt-9a4ee7fae480220e84a6",
-        "dataset": "track",
-        "entityId": "ai",
-        "entityName": "AI / AGI",
-        "title": "Mint Group achieves 2026-2027 Microsoft AI Business Solutions Inner Circle award",
-        "titleAliases": [
-          "mintgroupachieves20262027microsoftaibusinesssolutionsinnercircleaward",
-          "传openai斥资3亿美元收购初创企业glassimaging",
-          "美银调查投资者仍看好宏观与ai资本开支",
-          "超级智能体迪迪虾上车比亚迪携手阿里云推进智能座舱升级"
-        ],
-        "publishedDate": "2026-09-15",
-        "publishedDates": [
-          "2026-09-15"
-        ],
-        "entityKeys": [
-          "name:ai / agi",
-          "track:ai"
-        ],
-        "typeKeys": [
-          "核心赛道"
-        ],
-        "numericCues": [
-          "3"
-        ],
-        "sourceAliases": [
-          "evd-3ca80792f4701b5c0bfd",
-          "evd-3f94ea958ee8183ffb2c",
-          "evd-42d9a07310a3ad7cfddc",
-          "evd-5da4f18b183e1108294e",
-          "src-3d2086891d6bb24eb96d",
-          "src-51330b3b20fd35ab69a0",
-          "src-b2bf53031f56e37e6f5b",
-          "src-e4573a6bd7734f9444c2"
-        ],
-        "evidenceFingerprints": [
-          "3f94ea958ee8183ffb2c",
-          "42d9a07310a3ad7cfddc",
-          "3ca80792f4701b5c0bfd",
-          "5da4f18b183e1108294e"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "美银调查：投资者仍看好宏观与AI资本开支",
-            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-15/doc-inirxatu6912367.shtml",
-            "publishedAt": "2026-09-15",
-            "evidenceGrade": "媒体报道",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "新浪财经",
-            "title": "传OpenAI斥资3亿美元收购初创企业Glass Imaging",
-            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-15/doc-inirxatw3685948.shtml",
-            "publishedAt": "2026-09-15",
-            "evidenceGrade": "媒体报道",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "ITWeb",
-            "title": "Mint Group achieves 2026-2027 Microsoft AI Business Solutions Inner Circle award",
-            "url": "https://www.itweb.co.za/article/mint-group-achieves-2026-2027-microsoft-ai-business-solutions-inner-circle-award/8OKdWqDXLkYqbznQ",
-            "publishedAt": "2026-09-15",
-            "evidenceGrade": "媒体报道",
-            "sourceRole": "corroboration"
-          },
-          {
-            "sourceName": "雷峰网",
-            "title": "超级智能体“迪迪虾”上车，比亚迪携手阿里云推进智能座舱升级",
-            "url": "https://www.leiphone.com/category/industrynews/8XZ8Ji8sV6zGMGu0.html",
-            "publishedAt": "2026-09-15",
-            "evidenceGrade": "媒体报道",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "29c08e80f8b7866ae659",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastPublishedAt": "2026-09-15T09:33:00+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 4,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
-      },
-      "evt-9516172ef41eefa1abd2": {
-        "eventId": "evt-9516172ef41eefa1abd2",
-        "dataset": "intelligenceEvent",
-        "entityId": "intelligence-event-de88f6f9118ff20804",
-        "entityName": "传OpenAI斥资3亿美元收购初创企业Glass Imaging",
-        "title": "传OpenAI斥资3亿美元收购初创企业Glass Imaging",
-        "titleAliases": [
-          "传openai斥资3亿美元收购初创企业glassimaging"
-        ],
-        "publishedDate": "2026-09-15",
-        "publishedDates": [
-          "2026-09-15"
-        ],
-        "entityKeys": [
-          "company:openai"
-        ],
-        "typeKeys": [
-          "并购",
-          "高价值情报事件"
-        ],
-        "numericCues": [
-          "3"
-        ],
-        "sourceAliases": [
-          "evd-03b384a8b65fdc9d1093",
-          "record-1b2a3070f6323be9cc17",
-          "src-51330b3b20fd35ab69a0"
-        ],
-        "evidenceFingerprints": [
-          "03b384a8b65fdc9d1093"
-        ],
-        "evidenceSummaries": [
-          {
-            "sourceName": "新浪财经",
-            "title": "传OpenAI斥资3亿美元收购初创企业Glass Imaging",
-            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-09-15/doc-inirxatw3685948.shtml",
-            "publishedAt": "2026-09-15",
-            "evidenceGrade": "C",
-            "sourceRole": "corroboration"
-          }
-        ],
-        "claimFingerprint": "77c4efd451ddfa5a248b",
-        "scalarClaims": {},
-        "ipoStage": null,
-        "firstSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastSeenAt": "2026-09-15T09:33:00+00:00",
-        "lastPublishedAt": "2026-09-15T09:33:00+00:00",
-        "lastLifecycle": "first_seen",
-        "observationCount": 1,
-        "confirmationCount": 0,
-        "bestEvidenceStrength": 2,
-        "status": "active",
-        "conflictStatus": "none",
-        "conflictReasons": [],
-        "relatedEventIds": []
       }
     },
     "pendingPublications": []
   },
   "eventDiagnostics": {
-    "newEvents": 1,
+    "newEvents": 12,
     "reconfirmations": 0,
     "updates": 0,
     "corrections": 0,
     "possibleConflicts": 0,
-    "duplicatesSuppressed": 1,
-    "observedEvents": 2,
+    "duplicatesSuppressed": 0,
+    "observedEvents": 12,
     "pendingPublications": 0,
     "reviewQueue": []
   },
@@ -47500,10 +48474,10 @@
     {
       "metricsVersion": 2,
       "date": "2026-09-18",
-      "generatedAt": "2026-09-18T06:09:38+00:00",
+      "generatedAt": "2026-09-18T06:20:08+00:00",
       "runStatus": "model",
-      "changeCount": 155,
-      "executiveSummary": "根据证据包，Harvey 的产品列表发生变更，新增了“AIUC-1 Details”与“SOC2 II Details”两项，同时保留了原有产品。该信息来自 Harvey 官方博客，属于官方披露，但为自动化未复核状态，建议关注后续确认。",
+      "changeCount": 167,
+      "executiveSummary": "本证据包覆盖2026年9月14-18日的12条新增机构/资本事件（E001-E012），显示资本继续向AI基础设施、早期大模型、机器人量产及自动驾驶出行集中，同时AI应用正在向智能座舱和企业办公场景渗透。其中，E001（超衍智能天使系列融资）和E003（CATL埃及技术许可）为B级官方来源，置信度中等；E007（地瓜机器人C轮）、E010（Crusoe融资）等9条为C级媒体来源，置信度低。整体而言，这些事件多为方向性信号，具体金额、交割、量产效果等仍需官方文件或后续财报验证。本报告不构成投资建议。（主要依据：E001、E003、E007、E010等）",
       "eventIds": [
         "evt-e118126c7e6f5e1f0b17",
         "evt-06b394907b3b0c5a136c",
@@ -47659,7 +48633,19 @@
         "evt-61ba07b5b78983e3a1a7",
         "evt-15b9e1be08d6cd478b10",
         "evt-73067d9384149147959d",
-        "evt-ac8221e57a43a1e73cb2"
+        "evt-ac8221e57a43a1e73cb2",
+        "evt-f9b57d7e21cfc67dadf7",
+        "evt-a8a593fe8130d622dc00",
+        "evt-3838df8314c0b1983a30",
+        "evt-0ea08a32f7825d9ba85b",
+        "evt-dd2216b806bb2429f3cc",
+        "evt-6ee72e7a359f37129475",
+        "evt-3e7bb78fe29764bf857d",
+        "evt-f92065de6be80180a07d",
+        "evt-e19544092af12f6249ed",
+        "evt-1b1f841856fa90e24155",
+        "evt-8c550a574696ad364f74",
+        "evt-ca9e6568a78176530935"
       ],
       "eventStates": [
         {
@@ -48281,14 +49267,62 @@
         {
           "eventId": "evt-ac8221e57a43a1e73cb2",
           "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-f9b57d7e21cfc67dadf7",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-a8a593fe8130d622dc00",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-3838df8314c0b1983a30",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-0ea08a32f7825d9ba85b",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-dd2216b806bb2429f3cc",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-6ee72e7a359f37129475",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-3e7bb78fe29764bf857d",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-f92065de6be80180a07d",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-e19544092af12f6249ed",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-1b1f841856fa90e24155",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-8c550a574696ad364f74",
+          "lifecycle": "first_seen"
+        },
+        {
+          "eventId": "evt-ca9e6568a78176530935",
+          "lifecycle": "first_seen"
         }
       ],
       "verifiedChangeTotal": 11,
-      "candidateTotal": 88,
+      "candidateTotal": 100,
       "auxiliaryLeadTotal": 54,
       "rejectedTotal": 16,
       "eventSummary": {
-        "newEvents": 148,
+        "newEvents": 160,
         "reconfirmations": 19,
         "updates": 12,
         "corrections": 0,
@@ -48298,19 +49332,15 @@
     }
   ],
   "qualityDiagnostics": {
-    "candidateCount": 4,
-    "eligibleCandidateCount": 2,
-    "rejectedCandidateCount": 2,
-    "rejectedByDataset": {
-      "ventureCompany": 2
-    },
-    "evidenceCount": 11,
-    "supportingEvidenceCount": 2,
-    "rejectedEvidenceCount": 8,
-    "passedButUnboundEvidenceCount": 1,
-    "rejectionReasons": {
-      "missing_published_at": 8
-    },
+    "candidateCount": 12,
+    "eligibleCandidateCount": 12,
+    "rejectedCandidateCount": 0,
+    "rejectedByDataset": {},
+    "evidenceCount": 12,
+    "supportingEvidenceCount": 12,
+    "rejectedEvidenceCount": 0,
+    "passedButUnboundEvidenceCount": 0,
+    "rejectionReasons": {},
     "sourceClassificationWarnings": []
   },
   "sourceClassificationWarnings": [],
@@ -48341,28 +49371,16 @@
     }
   },
   "pipelineHealth": {
-    "overallStatus": "stale",
-    "healthyJobs": 8,
+    "overallStatus": "healthy",
+    "healthyJobs": 9,
     "jobCount": 9,
-    "issueJobs": [
-      {
-        "jobId": "tracking-entity-discovery",
-        "name": "追踪实体与公开信源发现",
-        "status": "stale",
-        "lastCompletedAt": "2026-09-01T05:21:50Z"
-      }
-    ]
+    "issueJobs": []
   },
   "evidenceContractVersion": 2,
   "thesisMemory": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-18T06:09:38+00:00",
+    "generatedAt": "2026-09-18T06:20:08+00:00",
     "currentObservationIds": [
-      "thesis-bb80dba24e4f00fd",
-      "thesis-5516dc9dbe0b0f9a",
-      "thesis-a831604ddbdc78a5",
-      "thesis-4e2a83bd9b852b89",
-      "thesis-77bb9bc71b753aeb",
       "thesis-a737c25e65e5b644",
       "thesis-3d99c88dcdb86b25",
       "thesis-679dc28a5a0dab74",
@@ -48433,207 +49451,17 @@
       "thesis-669c5ce5311d92f9",
       "thesis-6cb2f83f91aa580b",
       "thesis-b234df4936b4225a",
-      "thesis-2d387670e1dba9e3"
+      "thesis-2d387670e1dba9e3",
+      "thesis-f70a3f18be0287e8",
+      "thesis-cad19384cb698448",
+      "thesis-fda074b512f1c811",
+      "thesis-a32c1fc5a82386e6",
+      "thesis-e9c2881e7115641e",
+      "thesis-ca9429cc3e0cee5f",
+      "thesis-1e00c6aad8baa110"
     ],
     "observationCount": 120,
     "observations": [
-      {
-        "id": "thesis-4e2a83bd9b852b89",
-        "entity": "社交平台与AI订阅",
-        "direction": "neutral",
-        "statement": "Meta推出One订阅服务，将社交与AI功能定价，预示平台型AI商业化探索提速，但长期接受度待观察。",
-        "firstSeenAt": "2026-09-15T15:29:57+00:00",
-        "lastSeenAt": "2026-09-15T15:29:57+00:00",
-        "observationCount": 1,
-        "lastTransition": "initiated",
-        "evidence": [
-          {
-            "title": "Meta’s new One subscriptions put a price on social media and AI",
-            "url": "https://www.theverge.com/tech/995453/meta-one-subscriptions-ai",
-            "sourceName": "The Verge",
-            "publishedAt": "2026-09-15",
-            "eventDate": "",
-            "verificationStatus": "candidate"
-          }
-        ]
-      },
-      {
-        "id": "thesis-5516dc9dbe0b0f9a",
-        "entity": "国产算力互连",
-        "direction": "positive",
-        "statement": "媒体报道指出PCIe Switch是国产算力最稀缺的互连芯片之一，AI服务器扩展对PCIe Switch等互连环节形成需求，国产替代机会值得关注。",
-        "firstSeenAt": "2026-09-15T15:29:57+00:00",
-        "lastSeenAt": "2026-09-15T15:29:57+00:00",
-        "observationCount": 1,
-        "lastTransition": "initiated",
-        "evidence": [
-          {
-            "title": "AI服务器的“通道总管”：PCIe Switch为何成为国产算力最稀缺的互连芯片？",
-            "url": "https://mp.weixin.qq.com/s?src=11&timestamp=1789173529&ver=6961&signature=mDR%2AUpFwdUwuBDWxujOUfaGHuT8zXgtaLrRHUJ-%2AHCZv8xMLCfSfaY-Fex9bcrONfZEhwWgPIDpfbvif3fZzDNNNL6gN%2AsYLMboP2BaYRMZBH1UsCK6h2OQV1eq3NIFR&new=1",
-            "sourceName": "时来才来",
-            "publishedAt": "2026-08-29",
-            "eventDate": "",
-            "verificationStatus": "candidate"
-          }
-        ]
-      },
-      {
-        "id": "thesis-77bb9bc71b753aeb",
-        "entity": "商业航天与跨界动态",
-        "direction": "neutral",
-        "statement": "马斯克在X预告New Tesla Roadster发布，该信息被纳入商业航天赛道追踪，显示航天与出行跨界动态存在重叠，需按后续信息判断影响。",
-        "firstSeenAt": "2026-09-15T15:29:57+00:00",
-        "lastSeenAt": "2026-09-15T15:29:57+00:00",
-        "observationCount": 1,
-        "lastTransition": "initiated",
-        "evidence": [
-          {
-            "title": "埃隆·马斯克：New Tesla Roadster Unveil 10.01",
-            "url": "https://x.com/elonmusk/status/2098932438055469451",
-            "sourceName": "埃隆·马斯克 on X",
-            "publishedAt": "2026-09-13",
-            "eventDate": "",
-            "verificationStatus": "auto_verified"
-          }
-        ]
-      },
-      {
-        "id": "thesis-79d6cd8a01f32e1b",
-        "entity": "AI基础设施",
-        "direction": "positive",
-        "statement": "Delos Data完成超1亿美元融资并扩展弹性AI集群产品组合，显示AI容量与韧性基础设施仍是一级市场关注和投入方向。",
-        "firstSeenAt": "2026-09-15T15:29:57+00:00",
-        "lastSeenAt": "2026-09-15T15:29:57+00:00",
-        "observationCount": 1,
-        "lastTransition": "initiated",
-        "evidence": [
-          {
-            "title": "Delos Data Closes over $100 Million to Deliver Delos Nonstop AI™ for Faster, Stronger, More Efficient AI Capacity",
-            "url": "https://www.prnewswire.com/news-releases/delos-data-closes-over-100-million-to-deliver-delos-nonstop-ai-for-faster-stronger-more-efficient-ai-capacity-302879199.html",
-            "sourceName": "PR Newswire Consumer Technology",
-            "publishedAt": "2026-09-15",
-            "eventDate": "",
-            "verificationStatus": "candidate"
-          },
-          {
-            "title": "Delos Data Closes over $100 Million to Deliver Delos Nonstop AI™ for Faster, Stronger, More Efficient AI Capacity",
-            "url": "https://www.prnewswire.com/news-releases/delos-data-closes-over-100-million-to-deliver-delos-nonstop-ai-for-faster-stronger-more-efficient-ai-capacity-302879199.html",
-            "sourceName": "PR Newswire Consumer Technology",
-            "publishedAt": "2026-09-15",
-            "eventDate": "",
-            "verificationStatus": "candidate"
-          },
-          {
-            "title": "Delos Data Unveils Nonstop AI™ to Build and Scale Resilient AI Clusters to Deliver Nonstop Tokens",
-            "url": "https://www.prnewswire.com/news-releases/delos-data-unveils-nonstop-ai-to-build-and-scale-resilient-ai-clusters-to-deliver-nonstop-tokens-302878474.html",
-            "sourceName": "PR Newswire Consumer Technology",
-            "publishedAt": "2026-09-15",
-            "eventDate": "",
-            "verificationStatus": "candidate"
-          },
-          {
-            "title": "Delos Data Unveils Nonstop AI™ to Build and Scale Resilient AI Clusters to Deliver Nonstop Tokens",
-            "url": "https://www.prnewswire.com/news-releases/delos-data-unveils-nonstop-ai-to-build-and-scale-resilient-ai-clusters-to-deliver-nonstop-tokens-302878474.html",
-            "sourceName": "PR Newswire Consumer Technology",
-            "publishedAt": "2026-09-15",
-            "eventDate": "",
-            "verificationStatus": "candidate"
-          }
-        ]
-      },
-      {
-        "id": "thesis-a831604ddbdc78a5",
-        "entity": "消费电子定价",
-        "direction": "mixed",
-        "statement": "分析文章称廉价智能手机市场萎缩、苹果不受影响；推断终端市场可能进一步向高端AI设备集中，对性价比品牌构成压力。",
-        "firstSeenAt": "2026-09-15T15:29:57+00:00",
-        "lastSeenAt": "2026-09-15T15:29:57+00:00",
-        "observationCount": 1,
-        "lastTransition": "initiated",
-        "evidence": [
-          {
-            "title": "Cheap smartphones are dead. Apple doesn’t care",
-            "url": "https://www.computerworld.com/article/4215364/cheap-smartphones-are-dead-apple-doesnt-care.html",
-            "sourceName": "Computerworld",
-            "publishedAt": "2026-08-28",
-            "eventDate": "",
-            "verificationStatus": "candidate"
-          }
-        ]
-      },
-      {
-        "id": "thesis-bb80dba24e4f00fd",
-        "entity": "AI模型与应用层",
-        "direction": "mixed",
-        "statement": "OpenAI官方推出GPT-6 Astra并有多项产品线扩展报道，但多条信息待交叉验证；同时字节跳动因AI投资利润承压，显示技术推进与商业化回报之间存在张力。",
-        "firstSeenAt": "2026-09-15T15:29:57+00:00",
-        "lastSeenAt": "2026-09-15T15:29:57+00:00",
-        "observationCount": 1,
-        "lastTransition": "initiated",
-        "evidence": [
-          {
-            "title": "字节跳动被曝上半年因AI投资致净利同比下滑，净利润率降至16.7% - 新浪财经",
-            "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTFBtLTVGNV9UdXJlOUJlb1lPUVpORjNxenhNbE4xTzVFOGJIVVBvSnJwQjdWYlRGNjBIN2ZNVFlTOVhtdkFXRnFzMXo5MlJBaE9xemgwemU2Q2F2NDdxcmpTUnZMcjhDeEJtZmdESk5tUFhxbHVJeGVGdg?oc=5",
-            "sourceName": "AI / AGI · Google News 中文",
-            "publishedAt": "2026-09-15",
-            "eventDate": "",
-            "verificationStatus": "candidate"
-          },
-          {
-            "title": "OpenAI 发布适用于编程和计算机应用的 GPT-6 Astra - InfoQ-CN",
-            "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFAzQllwWWVYbmdieXpnQTEycUFjQ0lhdUJjakx1OXVpd3p3TEs3eGw4SHFMcnFUTGxSUGtYUmNKeWVWUUxVYlVmOEdqVVFhNjVzNjVJYjlnWGx1aUpvc0E?oc=5",
-            "sourceName": "AI智能终端 · Google News 中文",
-            "publishedAt": "2026-09-15",
-            "eventDate": "",
-            "verificationStatus": "auto_verified"
-          },
-          {
-            "title": "OpenAI：This is GPT-6 Astra. Anything you can do on a computer, Astra can do for you. Fast. https://t.co/gDd0IsewJw",
-            "url": "https://x.com/OpenAI/status/2095595741528125780",
-            "sourceName": "OpenAI on X",
-            "publishedAt": "2026-09-03",
-            "eventDate": "",
-            "verificationStatus": "auto_verified"
-          },
-          {
-            "title": "OpenAI 发布适用于编程和计算机应用的 GPT-6 Astra - InfoQ-CN",
-            "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFAzQllwWWVYbmdieXpnQTEycUFjQ0lhdUJjakx1OXVpd3p3TEs3eGw4SHFMcnFUTGxSUGtYUmNKeWVWUUxVYlVmOEdqVVFhNjVzNjVJYjlnWGx1aUpvc0E?oc=5",
-            "sourceName": "AI智能终端 · Google News 中文",
-            "publishedAt": "2026-09-15",
-            "eventDate": "",
-            "verificationStatus": "candidate"
-          }
-        ]
-      },
-      {
-        "id": "thesis-fd6e147b2969597b",
-        "entity": "OpenAI",
-        "direction": "neutral",
-        "statement": "OpenAI产品发布活跃（GPT-6 Astra），但IPO申请仅为单一待验证信源，无法确认其资本路径。",
-        "firstSeenAt": "2026-09-15T15:29:57+00:00",
-        "lastSeenAt": "2026-09-15T15:29:57+00:00",
-        "observationCount": 1,
-        "lastTransition": "direction_changed",
-        "evidence": [
-          {
-            "title": "ChatGPT maker OpenAI files for IPO as AI rivals race to go public - Euronews.com",
-            "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOYzEtWkpPTDhkQVR0dnBsNFlCQlR1amlnZzV3MXl5OFpzaTFVR3haSVMxWTlpMWZ5aVMwYzZrUVJjVWV6aTFKdnlJZlRmeDhteEhNcTZXOTV6dW9oeGNYdWJlUEVMbHFXY1UtS1NCdVJNSnFJRWJpdWZ2Qi1zQmo4cUE3a2MxbEUtaWw2ZzBRajFheVNJS3NNSzM2OXFaSWNUWm40UHBtT2dGM01rUDVYTkNNZm1yY1ZrMW1xRnRtM1dJUXhoSHBueg?oc=5",
-            "sourceName": "GEO · Google News 英文",
-            "publishedAt": "2026-09-06",
-            "eventDate": "",
-            "verificationStatus": "candidate"
-          },
-          {
-            "title": "OpenAI：This is GPT-6 Astra. Anything you can do on a computer, Astra can do for you. Fast. https://t.co/gDd0IsewJw",
-            "url": "https://x.com/OpenAI/status/2095595741528125780",
-            "sourceName": "OpenAI on X",
-            "publishedAt": "2026-09-03",
-            "eventDate": "",
-            "verificationStatus": "auto_verified"
-          }
-        ],
-        "supersedesId": "thesis-9c4c29f3ec65f1fa"
-      },
       {
         "id": "thesis-058cec1bbcc4ef4c",
         "entity": "人形机器人",
@@ -51838,6 +52666,146 @@
             "publishedAt": "2026-02-19",
             "eventDate": "",
             "verificationStatus": "auto_verified"
+          }
+        ]
+      },
+      {
+        "id": "thesis-1e00c6aad8baa110",
+        "entity": "豆包",
+        "direction": "positive",
+        "statement": "豆包座舱助手发布并计划合作车型预售，为AI语音交互进入汽车座舱场景打开通道，但车型和预售节奏未公布，落地效果需实测数据验证。",
+        "firstSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastSeenAt": "2026-09-18T06:20:08+00:00",
+        "observationCount": 1,
+        "lastTransition": "initiated",
+        "evidence": [
+          {
+            "title": "豆包座舱助手发布，首款合作车型即将开启预售",
+            "url": "https://www.leiphone.com/category/industrynews/4zVPQ7JUQYXHp2wh.html",
+            "sourceName": "雷峰网",
+            "publishedAt": "2026-09-17",
+            "eventDate": "",
+            "verificationStatus": "candidate"
+          }
+        ]
+      },
+      {
+        "id": "thesis-a32c1fc5a82386e6",
+        "entity": "CATL",
+        "direction": "positive",
+        "statement": "技术许可方式进入埃及电池包制造，有利于以轻资产模式拓展中东市场；但合作的具体产能、许可费用和地缘政治合规风险尚不明确。",
+        "firstSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastSeenAt": "2026-09-18T06:20:08+00:00",
+        "observationCount": 1,
+        "lastTransition": "initiated",
+        "evidence": [
+          {
+            "title": "CATL Partners with BME to Advance Battery Pack Manufacturing in Egypt Through Technology Licensing",
+            "url": "https://www.catl.com/en/news/6998.html",
+            "sourceName": "CATL",
+            "publishedAt": "2026-09-16",
+            "eventDate": "",
+            "verificationStatus": "candidate"
+          }
+        ]
+      },
+      {
+        "id": "thesis-ca9429cc3e0cee5f",
+        "entity": "蚂蚁集团",
+        "direction": "neutral",
+        "statement": "全员接入千问办公可作为大型企业AI应用案例，但该事件暂未提供员工效率、成本节约等量化结果，对业务基本面的影响尚不能确定。",
+        "firstSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastSeenAt": "2026-09-18T06:20:08+00:00",
+        "observationCount": 1,
+        "lastTransition": "initiated",
+        "evidence": [
+          {
+            "title": "蚂蚁集团全员接入千问办公，打造大型企业办公标杆",
+            "url": "https://www.leiphone.com/category/industrynews/U3X9WHILcYX0kh4l.html",
+            "sourceName": "雷峰网",
+            "publishedAt": "2026-09-17",
+            "eventDate": "",
+            "verificationStatus": "candidate"
+          }
+        ]
+      },
+      {
+        "id": "thesis-cad19384cb698448",
+        "entity": "地瓜机器人",
+        "direction": "positive",
+        "statement": "C轮融资4亿美元，结合媒体“为量产续费”的评论，反映资本认可其从原型走向量产的方向；但实际交付和订单增长仍需跟踪，量产不及预期可能带来估值压力。",
+        "firstSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastSeenAt": "2026-09-18T06:20:08+00:00",
+        "observationCount": 1,
+        "lastTransition": "initiated",
+        "evidence": [
+          {
+            "title": "地瓜机器人C轮融资4亿美元：资本不再为Demo买单，只为量产续费",
+            "url": "https://www.tmtpost.com/8144105.html",
+            "sourceName": "钛媒体",
+            "publishedAt": "2026-09-18",
+            "eventDate": "",
+            "verificationStatus": "candidate"
+          }
+        ]
+      },
+      {
+        "id": "thesis-e9c2881e7115641e",
+        "entity": "Hello Robotaxi",
+        "direction": "mixed",
+        "statement": "完成约1亿美元融资且估值近30亿美元，显示资本关注；但自动驾驶出行商业化仍面临监管和运营成本挑战，融资能否转化为规模化运营待观察。",
+        "firstSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastSeenAt": "2026-09-18T06:20:08+00:00",
+        "observationCount": 1,
+        "lastTransition": "initiated",
+        "evidence": [
+          {
+            "title": "Hello Robotaxi raises about $100 million at nearly $3 billion valuation",
+            "url": "https://technode.com/2026/09/17/hello-robotaxi-100-million-financing",
+            "sourceName": "TechNode",
+            "publishedAt": "2026-09-17",
+            "eventDate": "",
+            "verificationStatus": "candidate"
+          }
+        ]
+      },
+      {
+        "id": "thesis-f70a3f18be0287e8",
+        "entity": "超衍智能",
+        "direction": "positive",
+        "statement": "天使系列融资近4亿人民币，表明资本对其自进化基础大模型方向给予早期背书；但该技术路线的成熟度和商业化路径尚未验证，需观察后续模型发布与客户采用情况。",
+        "firstSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastSeenAt": "2026-09-18T06:20:08+00:00",
+        "observationCount": 1,
+        "lastTransition": "initiated",
+        "evidence": [
+          {
+            "title": "官宣｜超衍智能完成近4亿人民币天使系列融资，构建自进化基础大模型",
+            "url": "https://www.xtalpi.com/官宣｜超衍智能完成近4亿人民币天使系列融资，构",
+            "sourceName": "晶泰科技",
+            "publishedAt": "2026-09-16",
+            "eventDate": "",
+            "verificationStatus": "candidate"
+          }
+        ]
+      },
+      {
+        "id": "thesis-fda074b512f1c811",
+        "entity": "Crusoe",
+        "direction": "positive",
+        "statement": "39亿美元融资用于建设数据中心和模块化AI工厂，表明其处于AI算力基础设施的核心赛道，需求旺盛；但项目规模庞大，建设周期和资金使用效率是主要执行风险。",
+        "firstSeenAt": "2026-09-18T06:20:08+00:00",
+        "lastSeenAt": "2026-09-18T06:20:08+00:00",
+        "observationCount": 1,
+        "lastTransition": "initiated",
+        "evidence": [
+          {
+            "title": "Crusoe raises $3.9B to build massive data centers and small modular ‘AI factories’",
+            "url": "https://techcrunch.com/2026/09/17/crusoe-raises-3-9b-to-build-massive-data-centers-and-small-modular-ai-factories",
+            "sourceName": "TechCrunch Venture",
+            "publishedAt": "2026-09-17",
+            "eventDate": "",
+            "verificationStatus": "candidate"
           }
         ]
       }
