@@ -1,6 +1,17 @@
 name: Reconcile deferred manual tracking
 
 on:
+  push:
+    branches: [main]
+    paths:
+      # A reconciliation/control-path repair should immediately revisit durable
+      # pending state already written before the fix; data commits themselves are
+      # intentionally excluded so this cannot form a push loop.
+      - tools/manual_tracking.py
+      - tools/manual_tracking_batch.py
+      - .github/workflows/manual-tracking.yml
+      - .github/workflows/manual-tracking-batch.yml
+      - .github/workflows/manual-tracking-reconciliation.yml
   schedule:
     # Cheap coordinator only. Multiple interactive submissions accumulate in the
     # durable tracking state and are collapsed into at most one heavy handoff per pass.

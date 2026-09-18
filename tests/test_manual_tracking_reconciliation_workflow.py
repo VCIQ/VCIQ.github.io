@@ -52,6 +52,13 @@ class ManualTrackingReconciliationWorkflowTests(unittest.TestCase):
 
     def test_reconciliation_is_coalesced_low_priority_and_busy_aware(self) -> None:
         text = (WORKFLOWS / "manual-tracking-reconciliation.yml").read_text(encoding="utf-8")
+        trigger = text.split("permissions:", 1)[0]
+        self.assertIn("push:", trigger)
+        self.assertIn("branches: [main]", trigger)
+        self.assertIn("tools/manual_tracking.py", trigger)
+        self.assertIn("tools/manual_tracking_batch.py", trigger)
+        self.assertNotIn("config/tracking_intents.json", trigger)
+        self.assertNotIn("config/tracking_capture_inbox.json", trigger)
         self.assertIn('cron: "47 * * * *"', text)
         self.assertIn('timezone: "Asia/Taipei"', text)
         self.assertIn("group: vciq-manual-tracking-reconciliation", text)
