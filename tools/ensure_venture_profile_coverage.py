@@ -198,6 +198,11 @@ def ensure_catalog_coverage(
         "institutionCoverage": len(institution_profiles),
         "runtimeStatusCoverage": len(statuses),
         "qualityPassed": bool(quality.get("passed")),
+        # The CLI prints the report, not the full quality object. Preserve the
+        # failed gate and entity-level evidence even when no snapshot is written.
+        "qualityChecks": copy.deepcopy(quality.get("checks", {})),
+        "semanticErrors": list(quality.get("semanticErrors", [])),
+        "invalidSourceUrls": list(quality.get("invalidSourceUrls", [])),
     }
     return company_profiles, institution_profiles, statuses, quality, report
 
