@@ -139,14 +139,18 @@ def _output_rows(job: Mapping[str, Any]) -> list[dict[str, Any]]:
             continue
         if not isinstance(item, dict) or not str(item.get("path") or "").strip():
             raise ValueError(f"job {job.get('id')} has invalid output declaration")
-        normalized.append(
-            {
-                "path": str(item["path"]).strip(),
-                "required": bool(item.get("required", True)),
-                "shared": bool(item.get("shared", False)),
-                "public": bool(item.get("public", True)),
-            }
-        )
+        row = {
+            "path": str(item["path"]).strip(),
+            "required": bool(item.get("required", True)),
+            "shared": bool(item.get("shared", False)),
+            "public": bool(item.get("public", True)),
+        }
+        if item.get("freshnessSlaHours") is not None:
+            row["freshnessSlaHours"] = _number(
+                item.get("freshnessSlaHours"),
+                f"{job.get('id')}.{row['path']}.freshnessSlaHours",
+            )
+        normalized.append(row)
     return normalized
 
 
@@ -307,7 +311,9 @@ def artifact_owners(registry: Mapping[str, Any]) -> dict[str, list[ArtifactOwner
                 path=str(output["path"]),
                 required=bool(output["required"]),
                 shared=bool(output["shared"]),
-                freshness_sla_hours=float(job["freshnessSlaHours"]),
+                freshness_sla_hours=float(
+                    output.get("freshnessSlaHours", job["freshnessSlaHours"])
+                ),
             )
             result.setdefault(owner.path, []).append(owner)
     return result

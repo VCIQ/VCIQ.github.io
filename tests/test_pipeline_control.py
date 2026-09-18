@@ -141,6 +141,36 @@ class PipelineControlPlaneTest(unittest.TestCase):
         )
         self.assertEqual(stale_health["overallStatus"], "stale")
 
+    def test_output_can_override_job_freshness_sla(self) -> None:
+        output = self.root / "public/data/source.json"
+        output.write_text(
+            json.dumps({"generatedAt": "2026-08-01T00:00:00Z", "rows": [1]}) + "\n",
+            encoding="utf-8",
+        )
+        payload = fixture_registry()
+        payload["jobs"][0]["outputs"][0]["freshnessSlaHours"] = 240
+        (self.root / "config/automation_jobs.json").write_text(
+            json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        registry = load_registry(self.root)
+
+        lineage, health = build_snapshots(
+            self.root,
+            registry,
+            now=datetime(2026, 8, 6, 0, tzinfo=UTC),
+        )
+        artifact = lineage["artifacts"]["public/data/source.json"]
+        self.assertEqual(artifact["freshnessSlaHours"], 240)
+        self.assertEqual(artifact["status"], "healthy")
+        self.assertEqual(health["overallStatus"], "healthy")
+
+    def test_output_freshness_sla_must_be_positive(self) -> None:
+        payload = fixture_registry()
+        payload["jobs"][0]["outputs"][0]["freshnessSlaHours"] = 0
+        with self.assertRaisesRegex(ValueError, "freshnessSlaHours must be positive"):
+            validate_registry(payload, self.root)
+
     def test_missing_required_output_is_fail_closed(self) -> None:
         registry = load_registry(self.root)
         _, health = build_snapshots(
