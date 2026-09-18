@@ -132,6 +132,7 @@ PRODUCT_NAV_PREFIX_RE = re.compile(
     r"^(?:view|explore|discover|read|learn|watch|see|find|download|get started)\b",
     re.IGNORECASE,
 )
+PRODUCT_INTERNAL_SENTENCE_BREAK_RE = re.compile(r"[。！？!?；;]\s*\S")
 PRODUCT_FRAGMENT_RE = re.compile(r"^\d{2,}\s+[A-Za-z]", re.IGNORECASE)
 PRODUCT_GENERIC_RE = re.compile(
     r"^(?:b2b marketing|b2c marketing|marketing|工艺革新|技术创新|"
@@ -277,6 +278,7 @@ def _valid_product(value: Any, aliases: Sequence[str] = ()) -> bool:
         or PRODUCT_SENTENCE_RE.search(item)
         or PRODUCT_DATE_LABEL_RE.fullmatch(item)
         or PRODUCT_NAV_PREFIX_RE.search(item)
+        or PRODUCT_INTERNAL_SENTENCE_BREAK_RE.search(item)
         or PRODUCT_FRAGMENT_RE.search(item)
         or PRODUCT_GENERIC_RE.fullmatch(item)
         or item.casefold().strip(" .") in PRODUCT_EXACT_NOISE
