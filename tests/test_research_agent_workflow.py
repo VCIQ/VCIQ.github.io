@@ -83,11 +83,17 @@ class ResearchAgentWorkflowTest(unittest.TestCase):
             text.index("Validate published research contract"),
         )
 
-    def test_publication_race_fails_instead_of_rebasing_a_stale_report(self) -> None:
+    def test_publication_race_reschedules_fresh_run_instead_of_rebasing_stale_report(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
 
         self.assertIn("if ! git push origin HEAD:main; then", text)
         self.assertIn("Refusing to rebase and publish stale research", text)
+        self.assertIn("GH_TOKEN: ${{ github.token }}", text)
+        self.assertIn("gh run list", text)
+        self.assertIn("--workflow research-agent-v1.yml", text)
+        self.assertIn('grep -vx "$GITHUB_RUN_ID"', text)
+        self.assertIn("gh workflow run research-agent-v1.yml --ref main", text)
+        self.assertIn("already queued/running", text)
         self.assertNotIn("git pull --rebase", text)
         self.assertNotIn("for attempt in 1 2 3", text)
 

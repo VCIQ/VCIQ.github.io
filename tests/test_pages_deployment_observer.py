@@ -52,6 +52,14 @@ class PagesDeploymentObserverWorkflowTests(unittest.TestCase):
         self.assertIn("group: vciq-pages-observer", self.source)
         self.assertIn("cancel-in-progress: false", self.source)
 
+    def test_diagnostic_writer_shares_the_repository_writer_lock(self):
+        record_job = self.source.split("  record:\n", 1)[1]
+        self.assertIn(
+            "group: vciq-repository-writer-${{ github.ref }}",
+            record_job,
+        )
+        self.assertIn("queue: max", record_job)
+
 
 class PagesObserverShellTests(unittest.TestCase):
     @classmethod
