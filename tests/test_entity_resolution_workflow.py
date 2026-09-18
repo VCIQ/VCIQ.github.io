@@ -16,10 +16,15 @@ RESEARCH_WORKFLOW = ROOT / ".github" / "workflows" / "research-agent-v1.yml"
 class EntityResolutionWorkflowTests(unittest.TestCase):
     def test_candidate_workflow_reconciles_before_candidate_generation(self) -> None:
         text = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
+        trigger = text.split("permissions:", 1)[0]
+        self.assertIn("tools/reconcile_legacy_manual_confirmed_tracking.py", trigger)
         reconcile = text.index("python tools/reconcile_entity_resolution.py")
+        legacy = text.index("python tools/reconcile_legacy_manual_confirmed_tracking.py")
         build = text.index("python tools/build_resolved_company_candidates.py")
         self.assertLess(reconcile, build)
+        self.assertLess(legacy, build)
         self.assertIn("python tools/reconcile_entity_resolution.py --check", text)
+        self.assertIn("python tools/reconcile_legacy_manual_confirmed_tracking.py --check", text)
         self.assertIn("--output \"$CANDIDATE_QUEUE\"", text)
         self.assertIn("--candidates \"$CANDIDATE_QUEUE\"", text)
         self.assertIn("--check", text)
@@ -28,14 +33,13 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
         text = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("config/user_tracking.json", text)
         self.assertIn("config/tracking_capture_inbox.json", text)
+        self.assertIn("config/tracking_intents.json", text)
         self.assertIn("config/company_candidate_review_queue.json", text)
         self.assertIn("config/company_candidate_decisions.json", text)
         self.assertNotIn("public/data/company_candidates.json", text)
         self.assertIn("actions: write", text)
-        self.assertIn(
-            "git diff-tree --no-commit-id --name-only -r HEAD -- config/user_tracking.json",
-            text,
-        )
+        self.assertIn("config/tracking_intents.json", text)
+        self.assertIn("grep -Eq '^(config/user_tracking.json|config/tracking_intents.json)$'", text)
 
     def test_candidate_and_tracking_changes_serialize_onboarding_before_light_refresh(self) -> None:
         candidate = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
