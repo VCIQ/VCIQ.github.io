@@ -75,6 +75,22 @@ class WriterQueueCompactionTests(unittest.TestCase):
         self.assertIn("unattempted_remaining", text)
         self.assertIn('if [ "${UNATTEMPTED_REMAINING:-0}" -gt 0 ]; then', text)
 
+    def test_candidate_onboarding_repairs_global_profile_coverage_before_partial_crawls(self) -> None:
+        text = ONBOARDING.read_text(encoding="utf-8")
+        profile_step = text.split(
+            "      - name: Crawl and validate newly published company profiles\n",
+            1,
+        )[1].split("\n      - name: Rebuild private candidate status snapshot", 1)[0]
+
+        repair = profile_step.index("python tools/ensure_venture_profile_coverage.py")
+        loop = profile_step.index("for slug in $PUBLISHED_SLUGS; do")
+        crawl = profile_step.index("python tools/crawl_venture_profiles.py", loop)
+        check = profile_step.index("python tools/ensure_venture_profile_coverage.py --check")
+
+        self.assertLess(repair, loop)
+        self.assertLess(loop, crawl)
+        self.assertLess(crawl, check)
+
     def test_full_refresh_checks_currentness_before_waiting_for_writer_lock(self) -> None:
         text = REFRESH.read_text(encoding="utf-8")
         top = text.split("\njobs:\n", 1)[0]
