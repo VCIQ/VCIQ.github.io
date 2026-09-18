@@ -247,6 +247,7 @@ jobs:
         id: publish
         shell: bash
         env:
+          GH_TOKEN: ${{ github.token }}
           RESEARCH_HEALTH_STATUS: ${{ steps.research-status.outputs.health_status }}
         run: |
           set -euo pipefail
@@ -343,7 +344,38 @@ jobs:
           git add "${CONTROL_PATHS[@]}"
           git commit -m "data: publish daily research agent brief"
           if ! git push origin HEAD:main; then
-            echo "::error title=Research Agent publication race::origin/main advanced or the push failed after this report was generated. Refusing to rebase and publish stale research; a newer main-triggered run must regenerate it."
+            # The generated report is bound to the checked-out main snapshot. Never
+            # rebase it onto a newer repository state. Instead, guarantee that one
+            # fresh main-based Research Agent run will regenerate the report after
+            # this writer releases the shared repository lock.
+            successor_run_id="$(
+              {
+                gh run list \
+                  --workflow research-agent-v1.yml \
+                  --branch main \
+                  --status queued \
+                  --limit 20 \
+                  --json databaseId \
+                  --jq '.[].databaseId' || true
+                gh run list \
+                  --workflow research-agent-v1.yml \
+                  --branch main \
+                  --status in_progress \
+                  --limit 20 \
+                  --json databaseId \
+                  --jq '.[].databaseId' || true
+              } \
+                | grep -vx "$GITHUB_RUN_ID" \
+                | head -n 1 \
+                || true
+            )"
+            if [ -n "$successor_run_id" ]; then
+              echo "A newer Research Agent run is already queued/running: $successor_run_id"
+            else
+              echo "Queueing one fresh Research Agent run against current main after publication race."
+              gh workflow run research-agent-v1.yml --ref main
+            fi
+            echo "::error title=Research Agent publication race::origin/main advanced or the push failed after this report was generated. Refusing to rebase and publish stale research; a fresh main-based run has been queued (or was already pending) to regenerate it."
             exit 1
           fi
           echo "changed=true" >> "$GITHUB_OUTPUT"

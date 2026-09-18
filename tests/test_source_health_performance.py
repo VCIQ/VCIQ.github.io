@@ -177,6 +177,38 @@ class SourceHealthPerformanceIntegrationTest(unittest.TestCase):
         self.assertIsNone(entry["lastProductiveAt"])
         self.assertEqual(entry["performance"]["productiveRuns"], 0)
 
+    def test_official_retention_uses_pre_retention_acceptance_for_current_run(self) -> None:
+        state, _ = update_health(
+            {},
+            {
+                "sourceStatus": [
+                    {
+                        "id": "official-form-energy",
+                        "name": "Form Energy 官方动态",
+                        "platform": "官方网站",
+                        "status": "ok",
+                        "scanned": 0,
+                        "accepted": 1,
+                        "acceptedBeforeRetention": 0,
+                    }
+                ],
+                "articles": [
+                    {
+                        "sourceId": "official-form-energy",
+                        "source": {"evidenceGrade": "B"},
+                    }
+                ],
+            },
+            DEFAULT_POLICY,
+            now=datetime(2026, 9, 18, tzinfo=UTC),
+        )
+
+        entry = state["sources"]["official-form-energy"]
+        self.assertEqual(entry["scanned"], 0)
+        self.assertEqual(entry["accepted"], 0)
+        self.assertIsNone(entry["lastProductiveAt"])
+        self.assertEqual(entry["performance"]["productiveRuns"], 0)
+
 
 if __name__ == "__main__":
     unittest.main()
