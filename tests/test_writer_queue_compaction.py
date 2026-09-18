@@ -65,6 +65,16 @@ class WriterQueueCompactionTests(unittest.TestCase):
             text,
         )
 
+    def test_candidate_onboarding_uses_bounded_twelve_item_drain_batches(self) -> None:
+        text = ONBOARDING.read_text(encoding="utf-8")
+        onboard = text.split("  onboard:\n", 1)[1]
+
+        self.assertIn("timeout-minutes: 65", onboard.split("steps:", 1)[0])
+        self.assertIn("--limit 12", text)
+        self.assertNotIn("--limit 6", text)
+        self.assertIn("unattempted_remaining", text)
+        self.assertIn('if [ "${UNATTEMPTED_REMAINING:-0}" -gt 0 ]; then', text)
+
     def test_full_refresh_checks_currentness_before_waiting_for_writer_lock(self) -> None:
         text = REFRESH.read_text(encoding="utf-8")
         top = text.split("\njobs:\n", 1)[0]

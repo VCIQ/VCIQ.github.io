@@ -107,7 +107,7 @@ jobs:
           set -euo pipefail
           python tools/prepare_company_candidate_onboarding_v2.py \
             --candidates "$CANDIDATE_QUEUE" \
-            --limit 6 \
+            --limit 12 \
             | tee /tmp/company-auto-profile-report.json
           python - <<'PY'
           import json
