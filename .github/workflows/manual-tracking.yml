@@ -368,4 +368,4 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Nudge the coalesced reconciliation coordinator
-        run: gh workflow run manual-tracking-reconciliation.yml --ref main
+        run: gh workflow run manual-tracking-reconciliation.yml --ref main --repo "$GITHUB_REPOSITORY"
