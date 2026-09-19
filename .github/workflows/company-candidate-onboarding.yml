@@ -12,6 +12,7 @@ on:
       - tools/prepare_company_candidate_onboarding.py
       - tools/prepare_company_candidate_onboarding_v2.py
       - tools/onboard_company_candidates.py
+      - tools/publish_verified_company_candidates.py
       - tools/company_registry.py
       - tools/build_company_candidates.py
       - tools/research_agent.py
@@ -78,6 +79,7 @@ jobs:
             tools/prepare_company_candidate_onboarding.py \
             tools/prepare_company_candidate_onboarding_v2.py \
             tools/onboard_company_candidates.py \
+            tools/publish_verified_company_candidates.py \
             tools/build_company_candidates.py \
             tools/ensure_venture_profile_coverage.py \
             tools/research_agent.py
@@ -86,6 +88,7 @@ jobs:
             tests.test_company_official_source_discovery \
             tests.test_prepare_company_candidate_onboarding \
             tests.test_onboard_company_candidates \
+            tests.test_verified_company_publication \
             tests.test_company_candidates \
             tests.test_ensure_venture_profile_coverage
           node --import tsx --test \
@@ -140,10 +143,12 @@ jobs:
 
       - name: Apply reviewed onboarding and merge decisions
         id: onboarding
+        env:
+          VENTURE_PROFILE_USER_AGENT: ${{ vars.VENTURE_PROFILE_USER_AGENT }}
         shell: bash
         run: |
           set -euo pipefail
-          python tools/onboard_company_candidates.py \
+          python tools/publish_verified_company_candidates.py \
             --candidates "$CANDIDATE_QUEUE" \
             --report "$ONBOARDING_STATE" \
             | tee /tmp/company-onboarding-report.json
@@ -169,6 +174,7 @@ jobs:
               output.write(
                   'merged_count=' + str(int(report.get('mergedCount', 0))) + '\n'
               )
+              output.write('held_count=' + str(int(report.get('heldCount', 0))) + '\n')
           print(json.dumps(report, ensure_ascii=False, indent=2))
           PY
 
@@ -180,19 +186,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          # Partial per-slug crawls still enforce the global venture-profile
-          # coverage gate. Seed transparent fallback rows for every company
-          # newly added to the registry before crawling them one by one, so the
-          # first slug is not rejected merely because a later slug has not run yet.
-          python tools/ensure_venture_profile_coverage.py
-          for slug in $PUBLISHED_SLUGS; do
-            echo "Building first formal profile for $slug"
-            python tools/crawl_venture_profiles.py \
-              --kind company \
-              --slug "$slug" \
-              --workers 1 \
-              --max-pages 6
-          done
+          # Formal crawls were verified before registry writes in the transaction.
+          # Do not recrawl here and replace that verified evidence with a second,
+          # potentially partial result. Keep every existing terminal profile gate.
           python tools/ensure_venture_profile_coverage.py --check
           python tools/crawl_venture_profiles.py --validate-only
           python - <<'PY'
@@ -260,6 +256,7 @@ jobs:
         env:
           PUBLISHED_COUNT: ${{ steps.onboarding.outputs.published_count }}
           MERGED_COUNT: ${{ steps.onboarding.outputs.merged_count }}
+          HELD_COUNT: ${{ steps.onboarding.outputs.held_count }}
           UNATTEMPTED_REMAINING: ${{ steps.preparation.outputs.unattempted_remaining }}
         shell: bash
         run: |
@@ -289,6 +286,8 @@ jobs:
                 --candidates "$CANDIDATE_QUEUE" \
                 --report "$ONBOARDING_STATE" \
                 --check
+              python tools/ensure_venture_profile_coverage.py --check
+              python tools/crawl_venture_profiles.py --validate-only
               npx tsc --noEmit
               if git push origin HEAD:main; then
                 pushed=true
@@ -299,6 +298,14 @@ jobs:
               fi
             done
           fi
+          echo "Company transaction commit: $(git rev-parse HEAD); pushed=$pushed"
+          {
+            echo '## Verified company onboarding transaction'
+            echo "- Commit: $(git rev-parse HEAD); pushed=$pushed"
+            echo "- Verified publications: ${PUBLISHED_COUNT:-0}"
+            echo "- Formal-profile holds: ${HELD_COUNT:-0}"
+            echo "- Never-attempted candidates remaining: ${UNATTEMPTED_REMAINING:-0}"
+          } >> "$GITHUB_STEP_SUMMARY"
 
           public_changed=false
           if [ "${PUBLISHED_COUNT:-0}" -gt 0 ] || [ "${MERGED_COUNT:-0}" -gt 0 ]; then
@@ -340,6 +347,17 @@ jobs:
             echo "Every accepted unresolved candidate has received at least one automatic onboarding attempt; no continuation is needed."
           fi
 
+      - name: Retain onboarding transaction evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: company-onboarding-transaction-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            /tmp/company-auto-profile-report.json
+            /tmp/company-onboarding-report.json
+          if-no-files-found: warn
+          retention-days: 7
+
   terminal-publication-fallback:
     # Candidate onboarding must remain fail-closed, but a failed private/profile
     # mutation must not block publication of an already fixed-point public snapshot.
@@ -353,5 +371,5 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           echo "Candidate onboarding failed closed; publish the unchanged fixed-point repository state through the normal Pages gate."
-          gh workflow run pages.yml --ref main \
+          gh workflow run pages.yml --repo "$GITHUB_REPOSITORY" --ref main \
             -f run_research_after_deploy=true
