@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-19T03:39:12+00:00",
+  "updatedAt": "2026-09-19T06:26:22+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -14763,6 +14763,20 @@
       "resolutionSource": "explicit-type",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-18T09:11:56+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-6654408b7c8a9c82eb7c",
+      "kind": "technology",
+      "name": "4G",
+      "aliases": [],
+      "keywords": [
+        "4G"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-09-19T06:26:22+00:00",
       "createdBy": "VCIQ"
     }
   ],
@@ -76816,6 +76830,53 @@
           "note": ""
         }
       ]
+    },
+    {
+      "id": "membership-7cbcc3cb71ed749b5e6e",
+      "trackId": "track:6g",
+      "entityId": "technology-6654408b7c8a9c82eb7c",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-eec871d69d7acd1835d8",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-19T06:26:22+00:00",
+          "evidenceUrl": "",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "赛道关注对象管理器:确认自动扩展为持续关注(6G)"
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-1255def946b739e0e85ea6d2",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-19T06:26:22+00:00",
+        "trackId": "track:6g",
+        "entityId": "technology-6654408b7c8a9c82eb7c",
+        "requestedName": "4G",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "4G",
+        "targetId": "topic:4g",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "4g",
+        "reclassified": false
+      },
+      "executionState": "applied"
     }
   ]
 }
