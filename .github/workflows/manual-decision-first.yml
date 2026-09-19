@@ -1,0 +1,88 @@
+name: Manual decision first checks
+
+on:
+  pull_request:
+    paths:
+      - 'tools/**'
+      - 'tests/**'
+      - 'lib/entity-resolution.ts'
+      - 'lib/institution-tracking-identity.ts'
+      - 'config/institution*.json'
+      - '.github/workflows/company-candidate-discovery.yml'
+      - '.github/workflows/manual-decision-first.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'tools/manual_follow_decision.py'
+      - 'tools/manual_tracking.py'
+      - 'tools/manual_tracking_batch.py'
+      - 'tools/reconcile_entity_resolution.py'
+      - 'tools/reconcile_legacy_manual_confirmed_tracking.py'
+      - 'tools/reconcile_manual_institution_intents.py'
+      - '.github/workflows/manual-decision-first.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  manual-decision-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test real manual writer, reconciliation, provenance and revocation
+        run: |
+          set -o pipefail
+          python -m unittest -v \
+            tests.test_manual_decision_first \
+            tests.test_manual_institution_intents \
+            tests.test_entity_resolution \
+            tests.test_entity_resolution_workflow \
+            tests.test_legacy_manual_confirmed_tracking \
+            tests.test_manual_company_trust \
+            tests.test_resolved_company_candidates \
+            tests.test_company_candidates \
+            tests.test_manual_tracking \
+            tests.test_manual_tracking_batch \
+            tests.test_manual_tracking_reconciliation_workflow \
+            tests.test_manual_tracking_ignore \
+            tests.test_manual_tracking_remove 2>&1 | tee /tmp/manual-decision-tests.log
+      - run: npm ci
+      - name: Verify cross-language identity and TypeScript contracts
+        run: |
+          node --import tsx --test tests/institution-tracking-resolution.test.ts
+          npx tsc --noEmit
+      - name: Replay real repository state without committing it
+        run: |
+          set -euo pipefail
+          python tools/reconcile_entity_resolution.py
+          python tools/reconcile_manual_institution_intents.py --apply
+          python tools/reconcile_legacy_manual_confirmed_tracking.py
+          python tools/reconcile_entity_resolution.py
+          python tools/build_resolved_company_candidates.py --output config/company_candidate_review_queue.json
+          python tools/apply_manual_company_trust.py --candidates config/company_candidate_review_queue.json
+          python tools/build_resolved_company_candidates.py --output config/company_candidate_review_queue.json
+          python tools/reconcile_entity_resolution.py --check
+          python tools/reconcile_manual_institution_intents.py --check
+          python tools/reconcile_legacy_manual_confirmed_tracking.py --check
+          python tools/tracking_entity_integrity.py
+          python tools/apply_manual_company_trust.py --candidates config/company_candidate_review_queue.json --check
+          python tools/build_resolved_company_candidates.py --output config/company_candidate_review_queue.json --check
+          # Automatic discoveries must not become fabricated human approvals.
+          git diff --exit-code -- config/tracking_auto_discovery.json
+      - name: Retain regression evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: manual-decision-first-regressions
+          path: /tmp/manual-decision-tests.log
+          if-no-files-found: warn
+          retention-days: 7

@@ -18,6 +18,12 @@ on:
       - tools/build_company_candidates.py
       - tools/build_resolved_company_candidates.py
       - tools/entity_resolution.py
+      - tools/institution_identity.py
+      - tools/manual_follow_decision.py
+      - tools/reconcile_manual_institution_intents.py
+      - config/institution_rankings.json
+      - config/institution_entity_aliases.json
+      - config/institution_identity_overrides.json
       - tools/reconcile_legacy_manual_confirmed_tracking.py
       - tools/reconcile_entity_resolution.py
       - tools/resolved_company_captures.py
@@ -63,6 +69,9 @@ jobs:
             tools/build_company_candidates.py \
             tools/build_resolved_company_candidates.py \
             tools/entity_resolution.py \
+            tools/institution_identity.py \
+            tools/manual_follow_decision.py \
+            tools/reconcile_manual_institution_intents.py \
             tools/reconcile_legacy_manual_confirmed_tracking.py \
             tools/reconcile_entity_resolution.py \
             tools/resolved_company_captures.py \
@@ -70,6 +79,8 @@ jobs:
           python -m unittest \
             tests.test_company_candidates \
             tests.test_manual_company_trust \
+            tests.test_manual_decision_first \
+            tests.test_manual_institution_intents \
             tests.test_legacy_manual_confirmed_tracking \
             tests.test_entity_resolution \
             tests.test_entity_resolution_workflow \
@@ -93,6 +104,7 @@ jobs:
       - name: Reconcile entities, auto-trust manual additions and build private review snapshot
         run: |
           python tools/reconcile_entity_resolution.py
+          python tools/reconcile_manual_institution_intents.py --apply
           python tools/reconcile_legacy_manual_confirmed_tracking.py
           # Legacy migration can change capture/runtime projection after the first
           # resolver fixed point. Re-stabilize those shared resolver inputs before
@@ -102,6 +114,7 @@ jobs:
           python tools/apply_manual_company_trust.py --candidates "$CANDIDATE_QUEUE"
           python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
           python tools/reconcile_entity_resolution.py --check
+          python tools/reconcile_manual_institution_intents.py --check
           python tools/reconcile_legacy_manual_confirmed_tracking.py --check
           python tools/tracking_entity_integrity.py
           python tools/apply_manual_company_trust.py \
@@ -137,12 +150,14 @@ jobs:
           for attempt in 1 2 3; do
             git pull --rebase -X theirs origin main
             python tools/reconcile_entity_resolution.py
+            python tools/reconcile_manual_institution_intents.py --apply
             python tools/reconcile_legacy_manual_confirmed_tracking.py
             python tools/reconcile_entity_resolution.py
             python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
             python tools/apply_manual_company_trust.py --candidates "$CANDIDATE_QUEUE"
             python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
             python tools/reconcile_entity_resolution.py --check
+            python tools/reconcile_manual_institution_intents.py --check
             python tools/reconcile_legacy_manual_confirmed_tracking.py --check
             python tools/tracking_entity_integrity.py
             python tools/apply_manual_company_trust.py \
