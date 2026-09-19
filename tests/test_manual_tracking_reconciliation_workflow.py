@@ -1,5 +1,12 @@
 from __future__ import annotations
 
+import json
+import os
+import re
+import subprocess
+import sys
+import tempfile
+import textwrap
 import unittest
 from pathlib import Path
 
@@ -107,6 +114,121 @@ class ManualTrackingReconciliationWorkflowTests(unittest.TestCase):
         self.assertNotIn("gh workflow run scheduled-sync.yml --ref main", discovery)
         self.assertIn("gh workflow run frequent-intelligence-refresh.yml --ref main", onboarding)
         self.assertNotIn("gh workflow run scheduled-sync.yml --ref main", onboarding)
+
+
+
+class CheckoutFreeManualHandoffTests(unittest.TestCase):
+    """Execute the actual workflow commands outside Git, not just string-match.
+
+    The gh stand-in checks repository selection and failure propagation without
+    credentials or a network call. Real coordinator recovery is checked separately.
+    """
+
+    WORKFLOW_NAMES = ("manual-tracking.yml", "manual-tracking-batch.yml")
+
+    def command(self, name: str) -> str:
+        handoff = (WORKFLOWS / name).read_text(encoding="utf-8").split("\n  handoff:\n", 1)[1]
+        commands = re.findall(r"^\s+run: (gh workflow run .+)$", handoff, re.MULTILINE)
+        self.assertEqual(len(commands), 1, name)
+        return commands[0]
+
+    def execute(self, command: str, *, exit_code: int = 0, ambient_repo: str = ""):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            bin_dir = root / "bin"
+            bin_dir.mkdir()
+            gh = bin_dir / "gh"
+            gh.write_text(f"#!{sys.executable}\n" + textwrap.dedent("""\
+                import json, os, sys
+                from pathlib import Path
+                args = sys.argv[1:]
+                with Path(os.environ["CALLS_FILE"]).open("a") as output:
+                    output.write(json.dumps(args) + "\\n")
+                if "--repo" not in args:
+                    print("failed to run git: fatal: not a git repository", file=sys.stderr)
+                    raise SystemExit(1)
+                if args != ["workflow", "run", "manual-tracking-reconciliation.yml",
+                            "--ref", "main", "--repo", "VCIQ/VCIQ.github.io"]:
+                    print("unexpected dispatch target or arguments", file=sys.stderr)
+                    raise SystemExit(2)
+                failure = int(os.environ["GH_TEST_EXIT"])
+                if failure:
+                    print("simulated API authorization or provider failure", file=sys.stderr)
+                    raise SystemExit(failure)
+                print("coordinator dispatch accepted (test double)")
+                """))
+            gh.chmod(0o755)
+            env = {key: value for key, value in os.environ.items()
+                   if not key.startswith(("GIT_", "GH_", "GITHUB_"))}
+            env.update({
+                "PATH": str(bin_dir) + os.pathsep + env.get("PATH", os.defpath),
+                "GITHUB_REPOSITORY": "VCIQ/VCIQ.github.io",
+                "GH_TEST_EXIT": str(exit_code),
+                "CALLS_FILE": str(root / "calls.jsonl"),
+                "GH_TOKEN": "test-only-not-a-credential",
+            })
+            if ambient_repo:
+                env["GH_REPO"] = ambient_repo
+            self.assertFalse((root / ".git").exists())
+            # A failed handoff must never retry or modify the completed Apply.
+            approved = root / "already-approved.json"
+            approved.write_text('{"manualDecision":"approved","state":"active"}')
+            before = approved.read_bytes()
+            result = subprocess.run(
+                ["bash", "--noprofile", "--norc", "-e", "-o", "pipefail", "-c", command],
+                cwd=root, env=env, capture_output=True, text=True, timeout=10, check=False,
+            )
+            self.assertTrue((root / "calls.jsonl").exists(), result.stderr)
+            calls = [json.loads(line) for line in (root / "calls.jsonl").read_text().splitlines()]
+            self.assertEqual(approved.read_bytes(), before)
+            return result, calls
+
+    def test_both_writers_dispatch_once_without_a_checkout(self) -> None:
+        for name in self.WORKFLOW_NAMES:
+            with self.subTest(workflow=name):
+                result, calls = self.execute(self.command(name))
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(len(calls), 1)
+                self.assertIn("accepted", result.stdout)
+
+    def test_repository_is_explicit_even_with_conflicting_cli_defaults(self) -> None:
+        for name in self.WORKFLOW_NAMES:
+            with self.subTest(workflow=name):
+                result, calls = self.execute(self.command(name), ambient_repo="unrelated/other")
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(calls[0][-2:], ["--repo", "VCIQ/VCIQ.github.io"])
+
+    def test_missing_repo_reproduces_the_reported_failure(self) -> None:
+        for name in self.WORKFLOW_NAMES:
+            with self.subTest(workflow=name):
+                old_command = self.command(name).replace(' --repo "$GITHUB_REPOSITORY"', "")
+                result, calls = self.execute(old_command)
+                self.assertEqual(result.returncode, 1)
+                self.assertIn("fatal: not a git repository", result.stderr)
+                self.assertEqual(len(calls), 1)
+
+    def test_real_dispatch_failure_is_not_hidden_or_retried(self) -> None:
+        for name in self.WORKFLOW_NAMES:
+            for exit_code in (1, 4):
+                with self.subTest(workflow=name, code=exit_code):
+                    result, calls = self.execute(self.command(name), exit_code=exit_code)
+                    self.assertEqual(result.returncode, exit_code)
+                    self.assertEqual(len(calls), 1)
+                    self.assertNotIn("accepted", result.stdout)
+
+    def test_success_gate_and_least_privilege_are_preserved(self) -> None:
+        for name in self.WORKFLOW_NAMES:
+            with self.subTest(workflow=name):
+                handoff = (WORKFLOWS / name).read_text(encoding="utf-8").split("\n  handoff:\n", 1)[1]
+                self.assertIn("needs: apply", handoff)
+                self.assertIn("if: needs.apply.outputs.changed == 'true'", handoff)
+                self.assertIn("actions: write", handoff)
+                self.assertNotIn("contents: write", handoff)
+                self.assertNotIn("actions/checkout@", handoff)
+                self.assertNotIn("continue-on-error", handoff)
+                self.assertNotIn("always()", handoff)
+                self.assertNotIn("--mode apply", handoff)
+
 
 
 if __name__ == "__main__":
