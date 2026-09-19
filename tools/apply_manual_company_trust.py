@@ -141,6 +141,9 @@ def _candidate_capture_resolution(
             people_payload=people_payload,
             tracking_payload=tracking_payload,
         )
+        if resolution.targetId.startswith("institution:"):
+            last_reason = "投资机构身份已解析；不进入经营公司自动建档通道"
+            continue
         resolved_key = normalize_identity(resolution.canonicalName)
         if (
             resolution.status == "resolved"

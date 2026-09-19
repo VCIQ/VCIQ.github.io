@@ -317,6 +317,26 @@ def resolve_entity(
             reason="名称同时命中多个人物别名，需要人工消歧。",
         )
 
+    # Institution identity is distinct from operating-company publication.
+    if requested_type == "company":
+        try:
+            from .institution_identity import lookup as institution_lookup
+        except ImportError:
+            from institution_identity import lookup as institution_lookup
+        institutions = institution_lookup(name)
+        if institutions:
+            unique = len(institutions) == 1
+            institution = institutions[0]
+            return _result(
+                requested_type=requested_type, name=name,
+                status="resolved" if unique else "review", entity_type="company",
+                canonical_name=institution["name"] if unique else name,
+                target_id=institution["targetId"] if unique else "",
+                confidence="verified" if unique else "low", source="institution-directory",
+                reason=("名称唯一命中已核验投资机构目录；仅解析机构身份，不代表公司档案发布。"
+                        if unique else "名称命中多个投资机构，需要人工消歧。"),
+            )
+
     topics = topic_index(
         tracking_payload if tracking_payload is not None else load_json(TRACKING_PATH, {})
     ).get(key, [])

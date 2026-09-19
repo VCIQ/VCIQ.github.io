@@ -134,31 +134,28 @@ class LegacyManualConfirmedTrackingTests(unittest.TestCase):
         self.assertEqual(len(next_intents["memberships"]), 1)
         self.assertEqual(next_intents["entities"][0]["state"], "active")
         self.assertEqual(
-            next_intents["entities"][0]["id"], "company-candidate:九合创投"
+            next_intents["entities"][0]["id"], "institution:九合创投"
         )
         self.assertEqual(next_intents["memberships"][0]["state"], "active")
         self.assertEqual(
             next_intents["memberships"][0]["entityId"],
-            "company-candidate:九合创投",
+            "institution:九合创投",
         )
 
-    def test_unresolved_legacy_confirmation_remains_review_gated(self) -> None:
-        inbox = {"schemaVersion": 1, "records": [self.capture("美团龙珠")]}
+    def test_unknown_but_explicit_legacy_confirmation_is_not_reviewed_twice(self) -> None:
+        name = "尚无核验的机构名字"
         tracking, inbox, intents, report = legacy.reconcile_legacy_manual_confirmed_tracking(
-            self.tracking,
-            inbox,
-            self.review_intents("美团龙珠", source="unresolved"),
-            self.admins,
+            self.tracking, {"schemaVersion": 1, "records": [self.capture(name)]},
+            self.review_intents(name, source="unresolved"), self.admins,
             now="2026-09-18T09:00:00+00:00",
         )
-
-        self.assertEqual(report["promotedCount"], 0)
-        self.assertEqual(report["heldNames"], ["美团龙珠"])
-        self.assertNotIn("美团龙珠", tracking["tracks"][0]["sampleCompanies"])
-        self.assertEqual(intents["entities"][0]["state"], "review")
-        self.assertEqual(intents["memberships"][0]["state"], "review")
-        self.assertTrue(intents["memberships"][0]["pinned"])
-        self.assertEqual(inbox["records"][0]["status"], "queued")
+        self.assertEqual(report["promotedCount"], 1)
+        self.assertEqual(report["heldNames"], [])
+        self.assertIn(name, tracking["tracks"][0]["sampleCompanies"])
+        self.assertEqual(intents["memberships"][0]["state"], "active")
+        self.assertEqual(intents["memberships"][0]["identityState"], "needs_enrichment")
+        self.assertEqual(inbox["records"][0]["resolution"]["status"], "review")
+        self.assertEqual(inbox["records"][0]["status"], "applied")
 
     def test_rejected_pin_is_never_revived_by_legacy_capture(self) -> None:
         intents = self.review_intents("九合创投")

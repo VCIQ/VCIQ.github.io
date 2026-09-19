@@ -175,7 +175,7 @@ def applied_outcome(item: Mapping[str, Any]) -> dict[str, Any]:
     resolution = applied.get("resolution")
     resolution = resolution if isinstance(resolution, Mapping) else {}
 
-    if applied.get("reviewQueued") is True or clean(resolution.get("status"), 30) == "review":
+    if applied.get("manualDecisionStatus") != "approved" and (applied.get("reviewQueued") is True or clean(resolution.get("status"), 30) == "review"):
         outcome = "review"
     elif applied.get("configChanged") is True:
         outcome = "applied"
@@ -190,9 +190,13 @@ def applied_outcome(item: Mapping[str, Any]) -> dict[str, Any]:
         "name": clean(request.get("name"), 160),
         "origin": clean(request.get("origin"), 40),
         "outcome": outcome,
-        "reason": outcome_reason(outcome, applied),
-        "targetId": clean(resolution.get("targetId"), 240)
-        or clean(applied.get("entityId"), 240),
+        "manualDecisionStatus": applied.get("manualDecisionStatus", "unreviewed"),
+        "identityState": applied.get("identityState", ""),
+        "executionState": applied.get("executionState", ""),
+        "reason": ("已人工确认并生效，后台补全身份资料。" if applied.get("manualDecisionStatus") == "approved"
+                   and applied.get("identityState") != "complete" else outcome_reason(outcome, applied)),
+        "targetId": (clean(applied.get("entityId"), 240) if applied.get("manualDecisionStatus") == "approved"
+                     else clean(resolution.get("targetId"), 240) or clean(applied.get("entityId"), 240)),
         "configChanged": applied.get("configChanged") is True,
         "inboxChanged": applied.get("inboxChanged") is True,
         "intentsChanged": applied.get("intentsChanged") is True,
