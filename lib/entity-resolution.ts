@@ -1,3 +1,4 @@
+import { institutionTrackingMatches } from "@/lib/institution-tracking-identity";
 import rawDecisions from "@/config/entity_resolution_decisions.json";
 import { people as catalogPeople } from "@/lib/catalog-data";
 import { companyRegistryEntries } from "@/lib/company-registry";
@@ -9,6 +10,7 @@ export type EntityResolutionConfidence = "verified" | "high" | "medium" | "low";
 export type EntityResolutionSource =
   | "human-decision"
   | "company-registry"
+  | "institution-directory"
   | "people-registry"
   | "tracking-taxonomy"
   | "source-context"
@@ -348,6 +350,19 @@ export function resolveTrackingEntity(input: ResolveTrackingEntityInput): Tracki
     });
   }
 
+  if (requestedType === "company") {
+    const matches = institutionTrackingMatches(name);
+    if (matches.length) {
+      const unique = matches.length === 1;
+      return result(normalizedInput, {
+        status: unique ? "resolved" : "review", entityType: "company",
+        canonicalName: unique ? matches[0].name : name,
+        targetId: unique ? matches[0].targetId : "", confidence: unique ? "verified" : "low",
+        source: "institution-directory",
+        reason: unique ? "名称唯一命中已核验投资机构目录；仅解析机构身份，不代表公司档案发布。" : "名称命中多个投资机构，需要人工消歧。",
+      });
+    }
+  }
   const topics = topicIndex.get(key) ?? [];
   if (topics.length === 1) {
     return result(normalizedInput, {
@@ -437,6 +452,7 @@ export function normalizeTrackingEntityResolution(value: unknown): TrackingEntit
     source: [
       "human-decision",
       "company-registry",
+      "institution-directory",
       "people-registry",
       "tracking-taxonomy",
       "source-context",

@@ -20,8 +20,10 @@ from typing import Any, Iterable
 from urllib.parse import urlsplit
 
 try:
+    from .institution_identity import lookup as institution_lookup
     from .resolve_company_entities import CompanyRegistry, load_registry, normalize_identity
 except ImportError:
+    from institution_identity import lookup as institution_lookup
     from resolve_company_entities import CompanyRegistry, load_registry, normalize_identity
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -236,6 +238,8 @@ def build_candidate_snapshot(
 
         for name in structured_names(article):
             key = normalize_identity(name)
+            if key not in known and institution_lookup(name):
+                continue
             if not key or (key in known and key not in decisions):
                 continue
             row = groups.setdefault(
@@ -281,6 +285,8 @@ def build_candidate_snapshot(
             continue
         name = safe_candidate_name(capture.get("canonicalName"))
         key = normalize_identity(name)
+        if key not in known and institution_lookup(name):
+            continue
         if not name or not key or (key in known and key not in decisions):
             continue
 

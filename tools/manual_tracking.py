@@ -65,6 +65,11 @@ except ImportError:  # pragma: no cover - supports ``python -m tools.manual_trac
     )
 
 
+try:
+    from . import manual_follow_decision as follow_policy
+except ImportError:
+    import manual_follow_decision as follow_policy
+
 ROOT = Path(__file__).resolve().parents[1]
 TRACKING_PATH = ROOT / "config" / "user_tracking.json"
 INBOX_PATH = ROOT / "config" / "tracking_capture_inbox.json"
@@ -575,6 +580,7 @@ def _normalized_input(args: argparse.Namespace, tracking: Mapping[str, Any]) -> 
 
     return {
         "kind": kind,
+        "origin": "manual",
         "name": name,
         "trackSlugs": target_slugs,
         "trackSlug": track_slug,
@@ -1413,9 +1419,9 @@ def _apply_v1(
     # A registry-backed reclassification is valuable, but must never put a
     # person/topic into sampleCompanies or vice versa.  Unreviewed company
     # candidates also stay out of the runtime projection.
-    if not _resolution_is_compatible(request, resolution):
+    if not _resolution_is_compatible(request, resolution) and not follow_policy.explicit_request(request):
         return False
-    value = clean(resolution.get("canonicalName"), 160) or request["name"]
+    value = follow_policy.tracking_name(request, resolution)
     field = FIELD_BY_KIND[request["kind"]]
     for slug in request["trackSlugs"]:
         values = by_slug[slug].setdefault(field, [])
@@ -1489,9 +1495,9 @@ def _capture_record(
         return False, False
     by_slug, _ = _track_index(tracking)
     legacy_type = LEGACY_TYPE_BY_KIND[request["kind"]]
-    compatible = _resolution_is_compatible(request, resolution)
+    compatible = _resolution_is_compatible(request, resolution) or follow_policy.explicit_request(request)
     status = "applied" if compatible else "queued"
-    canonical = clean(resolution.get("canonicalName"), 160) or request["name"]
+    canonical = follow_policy.tracking_name(request, resolution)
     capture_id = stable_id(
         "capture",
         legacy_type,
@@ -1533,6 +1539,8 @@ def _capture_record(
     if existing_record is not None:
         before = json.dumps(existing_record, sort_keys=True, ensure_ascii=False)
         existing_record["id"] = capture_id
+        if follow_policy.explicit_request(request):
+            existing_record["entityType"] = legacy_type
         existing_record["canonicalName"] = canonical
         existing_record["rawSelection"] = request["name"]
         existing_record["status"] = status
@@ -1585,6 +1593,8 @@ def apply_request(
     actor: str,
     now: str,
 ) -> dict[str, Any]:
+    explicit = follow_policy.explicit_request(request)
+    previous_intents = copy.deepcopy(intents) if explicit else {}
     if request["kind"] in LEGACY_TYPE_BY_KIND:
         resolution = asdict(
             resolve_entity(
@@ -1599,6 +1609,7 @@ def apply_request(
                 tracking_payload=tracking,
             )
         )
+        machine_resolution = copy.deepcopy(resolution)
         resolution = _promote_manual_confirmed_company_resolution(request, resolution)
         if request["kind"] == "technology" and _resolution_is_compatible(
             request, resolution
@@ -1612,7 +1623,7 @@ def apply_request(
                 }
             )
         compatible = _resolution_is_compatible(request, resolution)
-        if compatible:
+        if compatible or explicit:
             state = "active"
         elif resolution["status"] == "rejected":
             state = "rejected"
@@ -1635,19 +1646,29 @@ def apply_request(
         state = "active"
         confidence = "verified"
 
-    entity_id = _entity_id(request, resolution)
+    if request["kind"] not in LEGACY_TYPE_BY_KIND:
+        machine_resolution = copy.deepcopy(resolution)
+    identity_resolution = resolution
+    if explicit and follow_policy.identity_state(machine_resolution, request["kind"]) == "conflict":
+        # Retain the chosen object as a provisional identity; never merge the
+        # user's decision into a conflicting canonical person/company record.
+        identity_resolution = {**resolution, "targetId": "", "canonicalName": request["name"]}
+    entity_id = _entity_id(request, identity_resolution)
     migration_changed = _migrate_provisional_entity(intents, request, entity_id)
     entity_id, entity_changed = _upsert_entity(
-        intents, request, resolution, entity_id, actor, now, state
+        intents, request, identity_resolution, entity_id, actor, now, state
     )
     membership_changed = _upsert_memberships(
         intents, request, entity_id, actor, now, state, confidence
+    )
+    decision_changed = follow_policy.stamp_decision(
+        intents, previous_intents, request, entity_id, actor, now, machine_resolution
     )
     config_changed = _apply_v1(tracking, request, resolution)
     inbox_changed, review_queued = _capture_record(
         inbox, tracking, request, resolution, actor, now
     )
-    intents_changed = migration_changed or entity_changed or membership_changed
+    intents_changed = migration_changed or entity_changed or membership_changed or decision_changed
     if intents_changed:
         try:
             schema_version = int(intents.get("schemaVersion", 1) or 1)
@@ -1663,7 +1684,10 @@ def apply_request(
         "configChanged": config_changed,
         "inboxChanged": inbox_changed,
         "intentsChanged": intents_changed,
-        "reviewQueued": review_queued or state == "review",
+        "reviewQueued": False if explicit else review_queued or state == "review",
+        "manualDecisionStatus": "approved" if explicit else "unreviewed",
+        "identityState": follow_policy.identity_state(machine_resolution, request["kind"]),
+        "executionState": "applied" if explicit else state,
         "resolution": resolution,
         "entityId": entity_id,
     }

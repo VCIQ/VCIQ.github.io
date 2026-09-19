@@ -203,7 +203,7 @@ class ManualTrackingTests(unittest.TestCase):
         for value in values:
             self.assertIn(value, keywords)
 
-    def test_verified_company_applies_but_unreviewed_company_does_not(self) -> None:
+    def test_explicit_follow_applies_without_claiming_identity_verified(self) -> None:
         verified = self._run(
             "--mode",
             "apply",
@@ -236,13 +236,15 @@ class ManualTrackingTests(unittest.TestCase):
         self.assertTrue(verified["configChanged"])
         self.assertEqual(verified["resolution"]["source"], "company-registry")
         self.assertEqual(verified["entityId"], "company:anthropic")
-        self.assertTrue(proposed["reviewQueued"])
-        self.assertFalse(proposed["configChanged"])
+        self.assertFalse(proposed["reviewQueued"])
+        self.assertTrue(proposed["configChanged"])
+        self.assertEqual(proposed["manualDecisionStatus"], "approved")
+        self.assertEqual(proposed["identityState"], "needs_enrichment")
         companies = self._read("tracking")["tracks"][0]["sampleCompanies"]
         self.assertIn("Anthropic", companies)
-        self.assertNotIn("Imaginary Frontier Labs", companies)
+        self.assertIn("Imaginary Frontier Labs", companies)
         records = self._read("inbox")["records"]
-        self.assertEqual({row["status"] for row in records}, {"applied", "queued"})
+        self.assertEqual({row["status"] for row in records}, {"applied"})
 
     def test_person_guard_rejects_historical_explicit_type_pollution(self) -> None:
         before = self.paths["tracking"].read_bytes()
@@ -348,8 +350,9 @@ class ManualTrackingTests(unittest.TestCase):
             "融资机会",
         )
         queued = self._run(*args)
-        self.assertTrue(queued["reviewQueued"])
-        self.assertFalse(queued["configChanged"])
+        self.assertFalse(queued["reviewQueued"])
+        self.assertTrue(queued["configChanged"])
+        self.assertEqual(queued["manualDecisionStatus"], "approved")
 
         decision = Resolution(
             status="resolved",

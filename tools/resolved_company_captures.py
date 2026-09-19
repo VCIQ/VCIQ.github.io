@@ -57,6 +57,9 @@ def resolved_company_captures(
         if resolution.status == "rejected":
             stats["rejectedCount"] += 1
             continue
+        if resolution.targetId.startswith("institution:"):
+            stats["institutionCount"] = stats.get("institutionCount", 0) + 1
+            continue
         if resolution.entityType != "company":
             continue
         row = copy.deepcopy(capture)

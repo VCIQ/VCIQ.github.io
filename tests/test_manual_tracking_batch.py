@@ -217,20 +217,22 @@ class ManualTrackingBatchTests(unittest.TestCase):
         self.assertEqual(len(intents["entities"]), 2)
         self.assertEqual(len(intents["memberships"]), 2)
 
-    def test_apply_reports_review_queue_separately_from_formal_config(self) -> None:
+    def test_apply_separates_missing_identity_from_approved_follow(self) -> None:
         report = self._run([self.company("星河智算科技有限公司")], "apply")
 
         self.assertTrue(report["ok"])
         self.assertEqual(report["acceptedCount"], 1)
-        self.assertEqual(report["appliedCount"], 0)
-        self.assertEqual(report["reviewQueuedCount"], 1)
+        self.assertEqual(report["appliedCount"], 1)
+        self.assertEqual(report["reviewQueuedCount"], 0)
         self.assertEqual(report["recordedCount"], 0)
         self.assertEqual(report["unchangedCount"], 0)
-        self.assertEqual(report["outcomes"][0]["outcome"], "review")
-        self.assertTrue(report["outcomes"][0]["reviewQueued"])
-        self.assertFalse(report["outcomes"][0]["configChanged"])
-        self.assertIn("审核", report["outcomes"][0]["reason"])
-        self.assertNotIn("星河智算科技有限公司", self._read("tracking")["tracks"][0]["sampleCompanies"])
+        self.assertEqual(report["outcomes"][0]["outcome"], "applied")
+        self.assertFalse(report["outcomes"][0]["reviewQueued"])
+        self.assertTrue(report["outcomes"][0]["configChanged"])
+        self.assertEqual(report["outcomes"][0]["manualDecisionStatus"], "approved")
+        self.assertEqual(report["outcomes"][0]["identityState"], "needs_enrichment")
+        self.assertIn("补全", report["outcomes"][0]["reason"])
+        self.assertIn("星河智算科技有限公司", self._read("tracking")["tracks"][0]["sampleCompanies"])
 
     def test_manual_confirmed_resolved_company_projects_directly_to_fixed_watch(self) -> None:
         row = self.company("星河智算科技有限公司", origin="manual-confirmed")

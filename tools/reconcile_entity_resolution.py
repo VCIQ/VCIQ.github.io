@@ -33,6 +33,11 @@ except ImportError:
         resolve_entity,
     )
 
+try:
+    from . import manual_follow_decision as follow_policy
+except ImportError:
+    import manual_follow_decision as follow_policy
+
 ROOT = Path(__file__).resolve().parents[1]
 INBOX_PATH = ROOT / "config" / "tracking_capture_inbox.json"
 FIELDS = {"sampleCompanies", "people", "keywords"}
@@ -106,10 +111,13 @@ def reconcile_payloads(
     decisions_payload: dict[str, Any],
     company_registry_payload: dict[str, Any],
     people_payload: dict[str, Any],
+    intents_payload: dict[str, Any] | None = None,
+    admins_payload: dict[str, Any] | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any], dict[str, int]]:
     config = copy.deepcopy(config_payload)
     inbox = copy.deepcopy(inbox_payload)
     tracks = track_map(config)
+    follow_states = follow_policy.scoped_follow_states(intents_payload or {}, admins_payload or {})
     records = inbox.get("records", []) if isinstance(inbox.get("records"), list) else []
 
     # Remove only values whose original capture explicitly recorded that placement.
@@ -210,17 +218,39 @@ def reconcile_payloads(
         )
         applied_to: list[str] = []
         track_names: list[str] = []
-        if resolution.status == "resolved":
-            field = FIELD_FOR_TYPE[resolution.entityType]
-            for slug in track_slugs:
-                track = tracks.get(slug)
-                if not track:
+        requested_field = FIELD_FOR_TYPE.get(requested_type, "")
+        approved_tracks = {
+            slug for slug in track_slugs
+            if follow_states.get((slug, requested_field, follow_policy.identity(raw_name, requested_field))) == "approved"
+        }
+        follow_name = canonical_name if resolution.status == "resolved" and resolution.entityType == requested_type else raw_name
+        blocked_tracks = set()
+        for slug in track_slugs:
+            track = tracks.get(slug)
+            if not track:
+                continue
+            owner_state = follow_states.get((slug, requested_field, follow_policy.identity(raw_name, requested_field)))
+            if owner_state == "blocked":
+                blocked_tracks.add(slug)
+                continue
+            if slug in approved_tracks:
+                field = requested_field
+                value = follow_name
+            elif resolution.status == "resolved":
+                field = FIELD_FOR_TYPE[resolution.entityType]
+                value = canonical_name
+                if follow_states.get((slug, field, follow_policy.identity(value, field))) == "blocked":
                     continue
-                track[field] = append_name(track.get(field), canonical_name)
-                applied_to.append(f"{slug}:{field}")
-                track_name = clean(track.get("name"), 120)
-                if track_name:
-                    track_names.append(track_name)
+                # One legacy capture cannot represent two conflicting kinds.
+                if approved_tracks and resolution.entityType != requested_type:
+                    continue
+            else:
+                continue
+            track[field] = append_name(track.get(field), value)
+            applied_to.append(f"{slug}:{field}")
+            track_name = clean(track.get("name"), 120)
+            if track_name:
+                track_names.append(track_name)
 
         next_record.update(
             {
@@ -235,6 +265,20 @@ def reconcile_payloads(
                 "resolution": resolution.to_dict(),
             }
         )
+        if approved_tracks:
+            # The real machine result remains in resolution, even when review is
+            # needed for identity enrichment. Follow approval has separate scope.
+            next_record.update({
+                "entityType": requested_type, "canonicalName": follow_name,
+                "status": "applied", "manualDecisionStatus": "approved",
+                "identityState": follow_policy.identity_state(resolution.to_dict(),
+                    "technology" if requested_type == "topic" else requested_type),
+            })
+        else:
+            next_record.pop("manualDecisionStatus", None)
+            next_record.pop("identityState", None)
+            if track_slugs and (blocked_tracks == set(track_slugs) or (resolution.status == "resolved" and not applied_to)):
+                next_record["status"] = "dismissed"
         next_records.append(next_record)
 
     next_records.sort(
@@ -246,6 +290,7 @@ def reconcile_payloads(
     )
     inbox["schemaVersion"] = 1
     inbox["records"] = next_records
+    follow_policy.project_follow_states(config, intents_payload or {}, admins_payload or {})
     return config, inbox, stats
 
 
@@ -265,6 +310,8 @@ def stabilize_payloads(
     decisions_payload: dict[str, Any],
     company_registry_payload: dict[str, Any],
     people_payload: dict[str, Any],
+    intents_payload: dict[str, Any] | None = None,
+    admins_payload: dict[str, Any] | None = None,
     max_rounds: int = MAX_RECONCILIATION_ROUNDS,
 ) -> tuple[dict[str, Any], dict[str, Any], dict[str, int]]:
     """Run reconciliation until taxonomy-dependent resolutions reach one fixed point."""
@@ -280,6 +327,7 @@ def stabilize_payloads(
             decisions_payload=decisions_payload,
             company_registry_payload=company_registry_payload,
             people_payload=people_payload,
+            intents_payload=intents_payload, admins_payload=admins_payload,
         )
         if (
             semantic(current_config) == semantic(next_config)
@@ -311,7 +359,16 @@ def main() -> int:
     parser.add_argument("--decisions", type=Path, default=DECISIONS_PATH)
     parser.add_argument("--companies", type=Path, default=COMPANY_REGISTRY_PATH)
     parser.add_argument("--people", type=Path, default=PEOPLE_PATH)
+    parser.add_argument("--intents", type=Path, default=ROOT / "config/tracking_intents.json")
+    parser.add_argument("--admins", type=Path, default=ROOT / "config/tracking_admins.json")
     args = parser.parse_args()
+    # Do not silently discard durable manual approvals on a broken graph read.
+    intents = json.loads(args.intents.read_text(encoding="utf-8"))
+    admins = json.loads(args.admins.read_text(encoding="utf-8"))
+    if not isinstance(intents, dict) or any(not isinstance(intents.get(k), list) for k in ("entities", "memberships")):
+        raise SystemExit("invalid manual intent graph; refusing to reconcile")
+    if not isinstance(admins, dict) or not isinstance(admins.get("actors"), list):
+        raise SystemExit("invalid manual actor registry; refusing to reconcile")
 
     original_config = load_json(args.config, {"schemaVersion": 1, "tracks": []})
     original_inbox = load_json(args.inbox, {"schemaVersion": 1, "generatedAt": "", "records": []})
@@ -321,6 +378,7 @@ def main() -> int:
         decisions_payload=load_json(args.decisions, {"decisions": {}}),
         company_registry_payload=load_json(args.companies, {"companies": []}),
         people_payload=load_json(args.people, {"people": []}),
+        intents_payload=intents, admins_payload=admins,
     )
 
     config_changed = semantic(original_config) != semantic(next_config)

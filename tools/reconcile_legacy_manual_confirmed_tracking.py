@@ -4,8 +4,8 @@
 Older manual-tracking batches lost ``origin=manual-confirmed`` before the request
 reached the canonical writer.  The affected rows are still auditable because the
 admin UI wrote a distinct capture note.  This migration replays only those
-allowlisted manual captures.  The current resolver remains authoritative:
-resolved companies become active/pinned; unresolved identities stay in review.
+allowlisted manual captures.  The explicit follow decision is authoritative; machine identity enrichment
+remains separate and cannot send that decision back for a second review.
 """
 
 from __future__ import annotations
@@ -130,6 +130,15 @@ def _review_track_slugs(
         for slug in row.get("trackSlugs", [])
         if manual.clean(slug, 120)
     }
+    vetoed = {
+        str(m.get("trackId", "")).removeprefix("track:")
+        for m in memberships if isinstance(m, Mapping)
+        and m.get("entityId") in matching_ids
+        and m.get("state") in {"rejected", "held", "disabled", "removed", "ignored"}
+    }
+    if any(isinstance(e, Mapping) and e.get("id") in matching_ids
+           and e.get("state") in {"rejected", "held", "disabled", "removed", "ignored"} for e in entities):
+        return []
     eligible: list[str] = []
     for membership in memberships:
         if not isinstance(membership, Mapping):
@@ -139,6 +148,7 @@ def _review_track_slugs(
         if (
             membership.get("entityId") in matching_ids
             and slug in requested
+            and slug not in vetoed
             and membership.get("pinned") is True
             and manual.clean(membership.get("state"), 30) == "review"
         ):
@@ -196,11 +206,7 @@ def reconcile_legacy_manual_confirmed_tracking(
         attempted.append(name)
         resolution = applied.get("resolution")
         resolution = resolution if isinstance(resolution, Mapping) else {}
-        if (
-            resolution.get("status") == "resolved"
-            and resolution.get("entityType") == "company"
-            and resolution.get("source") == "human-decision"
-        ):
+        if applied.get("manualDecisionStatus") == "approved":
             promoted.append(name)
         else:
             held.append(name)
