@@ -26,6 +26,8 @@ try:
         build_institution_profile,
         evaluate_quality,
         load_snapshot,
+        sanitize_product_items,
+        sanitize_team_members,
         write_snapshot,
     )
     from .venture_profile_extraction import CatalogCompany, CatalogInstitution, parse_catalog
@@ -38,6 +40,8 @@ except ImportError:
         build_institution_profile,
         evaluate_quality,
         load_snapshot,
+        sanitize_product_items,
+        sanitize_team_members,
         write_snapshot,
     )
     from venture_profile_extraction import CatalogCompany, CatalogInstitution, parse_catalog
@@ -127,6 +131,16 @@ def ensure_catalog_coverage(
                 ["目录已收录，但尚未完成首次公开页面档案抓取。"],
                 updated_at,
             )
+            # ``crawl_company`` applies these semantic guards after building a
+            # profile. Coverage fallbacks bypass that crawler path, so mirror the
+            # same guards here or a newly onboarded company's fallback can fail
+            # the global semantic-noise gate before its first partial crawl runs.
+            profile["team"] = sanitize_team_members(
+                profile.get("team", []), company.aliases
+            )
+            profile["products"] = sanitize_product_items(
+                profile.get("products", [])
+            )
             company_profiles[company.slug] = profile
             added_companies.append(company.slug)
         key = ("company", company.slug)
@@ -184,6 +198,11 @@ def ensure_catalog_coverage(
         "institutionCoverage": len(institution_profiles),
         "runtimeStatusCoverage": len(statuses),
         "qualityPassed": bool(quality.get("passed")),
+        # The CLI prints the report, not the full quality object. Preserve the
+        # failed gate and entity-level evidence even when no snapshot is written.
+        "qualityChecks": copy.deepcopy(quality.get("checks", {})),
+        "semanticErrors": list(quality.get("semanticErrors", [])),
+        "invalidSourceUrls": list(quality.get("invalidSourceUrls", [])),
     }
     return company_profiles, institution_profiles, statuses, quality, report
 
