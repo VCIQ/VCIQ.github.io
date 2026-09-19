@@ -1,0 +1,97 @@
+name: Audit track review state
+
+on:
+  push:
+    branches: [fix/vc-track-review-reconciliation]
+    paths:
+      - .github/workflows/track-review-state-audit.yml
+      - tools/reconcile_manual_institution_intents.py
+      - tests/test_manual_institution_intents.py
+  workflow_dispatch:
+    inputs:
+      track:
+        description: Track slug to inspect without changing data
+        default: track-1ccjq49
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Inspect durable intent, runtime, and discovery state
+        env:
+          AUDIT_TRACK: ${{ inputs.track || 'track-1ccjq49' }}
+        run: |
+          python - <<'PY'
+          import json, os, re, unicodedata
+          from collections import Counter
+          from pathlib import Path
+          from tools.entity_resolution import resolve_entity
+
+          def load(path):
+              return json.loads(Path(path).read_text(encoding='utf-8'))
+          def identity(value):
+              return re.sub(r'[^a-z0-9\u3400-\u9fff]+', '', unicodedata.normalize('NFKC', str(value or '')).lower())
+          def emit(label, value):
+              print(label + '=' + json.dumps(value, ensure_ascii=False, sort_keys=True))
+          slug = os.environ['AUDIT_TRACK']
+          config = load('config/user_tracking.json')
+          intent = load('config/tracking_intents.json')
+          ledger = load('config/tracking_auto_discovery.json')
+          inbox = load('config/tracking_capture_inbox.json')
+          tracks = [r for r in config['tracks'] if r.get('slug') == slug]
+          assert len(tracks) == 1, 'Track is missing or ambiguous'
+          track = tracks[0]
+          entities = {r['id']: r for r in intent.get('entities', [])}
+          memberships = [r for r in intent.get('memberships', []) if r.get('trackId') == 'track:' + slug]
+          emit('AUDIT_REVISION', os.environ['GITHUB_SHA'])
+          emit('RUNTIME_COUNTS', {k: len(track.get(k, [])) for k in ('keywords','people','sampleCompanies')})
+          emit('MEMBERSHIP_STATES', dict(Counter(r.get('state') for r in memberships)))
+          emit('CAPTURE_ROOT_KEYS', list(inbox))
+          captures = inbox.get('records', inbox.get('captures', []))
+          reviews = []
+          for membership in memberships:
+              if membership.get('state') not in ('review', 'pending', 'recorded'):
+                  continue
+              entity = entities.get(membership.get('entityId'), {})
+              names = {identity(v) for v in [entity.get('name'), *entity.get('aliases', [])] if v}
+              matching = [r for r in captures if names & {identity(r.get('rawSelection')), identity(r.get('canonicalName'))}]
+              row = {'name': entity.get('name'), 'entityId': entity.get('id'),
+                     'kind': entity.get('kind'), 'membershipState': membership.get('state'),
+                     'pinned': membership.get('pinned'), 'resolutionSource': entity.get('resolutionSource'),
+                     'resolutionStatus': entity.get('resolutionStatus'),
+                     'origins': [{k:o.get(k) for k in ('origin','at','evidenceUrl')} for o in membership.get('origins', [])],
+                     'currentResolution': resolve_entity('company' if entity.get('kind') == 'company' else 'person', entity.get('name','')).to_dict(),
+                     'captures': [{k:r.get(k) for k in ('id','status','entityType','canonicalName','entityResolution','resolution')} for r in matching]}
+              reviews.append(row)
+          emit('REVIEW_MEMBERSHIPS', reviews)
+          automatic = [r for r in ledger.get('added', []) if r.get('track') == slug]
+          emit('LEDGER_COUNTS', dict(Counter(r.get('kind') for r in automatic)))
+          emit('LEDGER_EXAMPLES', automatic[:3])
+          emit('EXPIRY_EQUALS_ADDITION', sum(bool(r.get('expiresAt')) and r.get('expiresAt') == r.get('addedAt') for r in automatic))
+          institution_paths = sorted(Path('config').glob('*institution*.json'))
+          emit('INSTITUTION_FILES', [str(p) for p in institution_paths])
+          for path in institution_paths:
+              data = load(path)
+              if not isinstance(data, dict):
+                  continue
+              emit('INSTITUTION_SCHEMA_' + path.stem, {k: len(v) if isinstance(v,(list,dict)) else v for k,v in data.items()})
+              rows = data.get('institutions', [])
+              if isinstance(rows, dict): rows = list(rows.values())
+              for review in reviews:
+                  key = identity(review['name'])
+                  matches = [r for r in rows if isinstance(r,dict) and key in {identity(v) for v in [r.get('name'),r.get('fullName'),r.get('displayName'),r.get('canonicalName'), *r.get('aliases',[])] if v}]
+                  if matches:
+                      emit('INSTITUTION_MATCH', {'requested':review['name'],'matches':matches})
+          PY
