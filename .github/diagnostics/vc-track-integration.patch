@@ -1,0 +1,261 @@
+diff --git a/.github/workflows/company-candidate-discovery.yml b/.github/workflows/company-candidate-discovery.yml
+index 6f889e2..60d49b8 100644
+--- a/.github/workflows/company-candidate-discovery.yml
++++ b/.github/workflows/company-candidate-discovery.yml
+@@ -18,6 +18,11 @@ on:
+       - tools/build_company_candidates.py
+       - tools/build_resolved_company_candidates.py
+       - tools/entity_resolution.py
++      - tools/institution_identity.py
++      - tools/reconcile_manual_institution_intents.py
++      - config/institution_rankings.json
++      - config/institution_entity_aliases.json
++      - config/institution_identity_overrides.json
+       - tools/reconcile_legacy_manual_confirmed_tracking.py
+       - tools/reconcile_entity_resolution.py
+       - tools/resolved_company_captures.py
+@@ -63,6 +68,8 @@ jobs:
+             tools/build_company_candidates.py \
+             tools/build_resolved_company_candidates.py \
+             tools/entity_resolution.py \
++            tools/institution_identity.py \
++            tools/reconcile_manual_institution_intents.py \
+             tools/reconcile_legacy_manual_confirmed_tracking.py \
+             tools/reconcile_entity_resolution.py \
+             tools/resolved_company_captures.py \
+@@ -70,6 +77,7 @@ jobs:
+           python -m unittest \
+             tests.test_company_candidates \
+             tests.test_manual_company_trust \
++            tests.test_manual_institution_intents \
+             tests.test_legacy_manual_confirmed_tracking \
+             tests.test_entity_resolution \
+             tests.test_entity_resolution_workflow \
+@@ -93,6 +101,7 @@ jobs:
+       - name: Reconcile entities, auto-trust manual additions and build private review snapshot
+         run: |
+           python tools/reconcile_entity_resolution.py
++          python tools/reconcile_manual_institution_intents.py --apply
+           python tools/reconcile_legacy_manual_confirmed_tracking.py
+           # Legacy migration can change capture/runtime projection after the first
+           # resolver fixed point. Re-stabilize those shared resolver inputs before
+@@ -102,6 +111,7 @@ jobs:
+           python tools/apply_manual_company_trust.py --candidates "$CANDIDATE_QUEUE"
+           python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
+           python tools/reconcile_entity_resolution.py --check
++          python tools/reconcile_manual_institution_intents.py --check
+           python tools/reconcile_legacy_manual_confirmed_tracking.py --check
+           python tools/tracking_entity_integrity.py
+           python tools/apply_manual_company_trust.py \
+@@ -137,12 +147,14 @@ jobs:
+           for attempt in 1 2 3; do
+             git pull --rebase -X theirs origin main
+             python tools/reconcile_entity_resolution.py
++            python tools/reconcile_manual_institution_intents.py --apply
+             python tools/reconcile_legacy_manual_confirmed_tracking.py
+             python tools/reconcile_entity_resolution.py
+             python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
+             python tools/apply_manual_company_trust.py --candidates "$CANDIDATE_QUEUE"
+             python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
+             python tools/reconcile_entity_resolution.py --check
++            python tools/reconcile_manual_institution_intents.py --check
+             python tools/reconcile_legacy_manual_confirmed_tracking.py --check
+             python tools/tracking_entity_integrity.py
+             python tools/apply_manual_company_trust.py \
+diff --git a/.github/workflows/track-review-state-audit.yml b/.github/workflows/track-review-state-audit.yml
+index 01b1963..0cd3c61 100644
+--- a/.github/workflows/track-review-state-audit.yml
++++ b/.github/workflows/track-review-state-audit.yml
+@@ -6,7 +6,7 @@ on:
+     paths:
+       - .github/workflows/track-review-state-audit.yml
+       - tools/reconcile_manual_institution_intents.py
+-      - tools/manual_institution_identity.py
++      - tools/institution_identity.py
+       - tools/manual_tracking.py
+       - tests/test_manual_institution_intents.py
+   workflow_dispatch:
+diff --git a/lib/entity-resolution.ts b/lib/entity-resolution.ts
+index 63a6335..06a7171 100644
+--- a/lib/entity-resolution.ts
++++ b/lib/entity-resolution.ts
+@@ -1,3 +1,4 @@
++import { institutionTrackingMatches } from "@/lib/institution-tracking-identity";
+ import rawDecisions from "@/config/entity_resolution_decisions.json";
+ import { people as catalogPeople } from "@/lib/catalog-data";
+ import { companyRegistryEntries } from "@/lib/company-registry";
+@@ -9,6 +10,7 @@ export type EntityResolutionConfidence = "verified" | "high" | "medium" | "low";
+ export type EntityResolutionSource =
+   | "human-decision"
+   | "company-registry"
++  | "institution-directory"
+   | "people-registry"
+   | "tracking-taxonomy"
+   | "source-context"
+@@ -348,6 +350,24 @@ export function resolveTrackingEntity(input: ResolveTrackingEntityInput): Tracki
+     });
+   }
+ 
++  if (requestedType === "company") {
++    const matches = institutionTrackingMatches(name);
++    if (matches.length) {
++      const unique = matches.length === 1;
++      return result(normalizedInput, {
++        status: unique ? "resolved" : "review",
++        entityType: "company",
++        canonicalName: unique ? matches[0].name : name,
++        targetId: unique ? matches[0].targetId : "",
++        confidence: unique ? "verified" : "low",
++        source: "institution-directory",
++        reason: unique
++          ? "名称唯一命中已核验投资机构目录；仅解析机构身份，不代表公司档案发布。"
++          : "名称命中多个投资机构，需要人工消歧。",
++      });
++    }
++  }
++
+   const topics = topicIndex.get(key) ?? [];
+   if (topics.length === 1) {
+     return result(normalizedInput, {
+@@ -437,6 +457,7 @@ export function normalizeTrackingEntityResolution(value: unknown): TrackingEntit
+     source: [
+       "human-decision",
+       "company-registry",
++      "institution-directory",
+       "people-registry",
+       "tracking-taxonomy",
+       "source-context",
+diff --git a/tests/test_legacy_manual_confirmed_tracking.py b/tests/test_legacy_manual_confirmed_tracking.py
+index c03add0..9b4829c 100644
+--- a/tests/test_legacy_manual_confirmed_tracking.py
++++ b/tests/test_legacy_manual_confirmed_tracking.py
+@@ -134,27 +134,27 @@ class LegacyManualConfirmedTrackingTests(unittest.TestCase):
+         self.assertEqual(len(next_intents["memberships"]), 1)
+         self.assertEqual(next_intents["entities"][0]["state"], "active")
+         self.assertEqual(
+-            next_intents["entities"][0]["id"], "company-candidate:九合创投"
++            next_intents["entities"][0]["id"], "institution:九合创投"
+         )
+         self.assertEqual(next_intents["memberships"][0]["state"], "active")
+         self.assertEqual(
+             next_intents["memberships"][0]["entityId"],
+-            "company-candidate:九合创投",
++            "institution:九合创投",
+         )
+ 
+     def test_unresolved_legacy_confirmation_remains_review_gated(self) -> None:
+-        inbox = {"schemaVersion": 1, "records": [self.capture("美团龙珠")]}
++        inbox = {"schemaVersion": 1, "records": [self.capture("尚无核验的机构名字")]}
+         tracking, inbox, intents, report = legacy.reconcile_legacy_manual_confirmed_tracking(
+             self.tracking,
+             inbox,
+-            self.review_intents("美团龙珠", source="unresolved"),
++            self.review_intents("尚无核验的机构名字", source="unresolved"),
+             self.admins,
+             now="2026-09-18T09:00:00+00:00",
+         )
+ 
+         self.assertEqual(report["promotedCount"], 0)
+-        self.assertEqual(report["heldNames"], ["美团龙珠"])
+-        self.assertNotIn("美团龙珠", tracking["tracks"][0]["sampleCompanies"])
++        self.assertEqual(report["heldNames"], ["尚无核验的机构名字"])
++        self.assertNotIn("尚无核验的机构名字", tracking["tracks"][0]["sampleCompanies"])
+         self.assertEqual(intents["entities"][0]["state"], "review")
+         self.assertEqual(intents["memberships"][0]["state"], "review")
+         self.assertTrue(intents["memberships"][0]["pinned"])
+diff --git a/tools/apply_manual_company_trust.py b/tools/apply_manual_company_trust.py
+index ddc724f..19eb263 100644
+--- a/tools/apply_manual_company_trust.py
++++ b/tools/apply_manual_company_trust.py
+@@ -141,6 +141,9 @@ def _candidate_capture_resolution(
+             people_payload=people_payload,
+             tracking_payload=tracking_payload,
+         )
++        if resolution.targetId.startswith("institution:"):
++            last_reason = "投资机构身份已解析；不进入经营公司自动建档通道"
++            continue
+         resolved_key = normalize_identity(resolution.canonicalName)
+         if (
+             resolution.status == "resolved"
+diff --git a/tools/build_company_candidates.py b/tools/build_company_candidates.py
+index 0fc08df..055a897 100755
+--- a/tools/build_company_candidates.py
++++ b/tools/build_company_candidates.py
+@@ -20,8 +20,10 @@ from typing import Any, Iterable
+ from urllib.parse import urlsplit
+ 
+ try:
++    from .institution_identity import lookup as institution_lookup
+     from .resolve_company_entities import CompanyRegistry, load_registry, normalize_identity
+ except ImportError:
++    from institution_identity import lookup as institution_lookup
+     from resolve_company_entities import CompanyRegistry, load_registry, normalize_identity
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+@@ -236,6 +238,8 @@ def build_candidate_snapshot(
+ 
+         for name in structured_names(article):
+             key = normalize_identity(name)
++            if key not in known and institution_lookup(name):
++                continue  # An investment institution is not a new operating company.
+             if not key or (key in known and key not in decisions):
+                 continue
+             row = groups.setdefault(
+@@ -281,6 +285,8 @@ def build_candidate_snapshot(
+             continue
+         name = safe_candidate_name(capture.get("canonicalName"))
+         key = normalize_identity(name)
++        if key not in known and institution_lookup(name):
++            continue  # Raw and resolver-filtered builders share this boundary.
+         if not name or not key or (key in known and key not in decisions):
+             continue
+ 
+diff --git a/tools/entity_resolution.py b/tools/entity_resolution.py
+index 262a820..56f447f 100644
+--- a/tools/entity_resolution.py
++++ b/tools/entity_resolution.py
+@@ -317,6 +317,29 @@ def resolve_entity(
+             reason="名称同时命中多个人物别名，需要人工消歧。",
+         )
+ 
++    # Investment firms belong to the organization tracking bucket, but are not
++    # operating-company onboarding candidates. Use only exact audited directory
++    # identities, after explicit decisions and company/person conflict checks.
++    if requested_type == "company":
++        try:
++            from .institution_identity import lookup as institution_lookup
++        except ImportError:
++            from institution_identity import lookup as institution_lookup
++        institutions = institution_lookup(name)
++        if institutions:
++            unique = len(institutions) == 1
++            institution = institutions[0]
++            return _result(
++                requested_type=requested_type, name=name,
++                status="resolved" if unique else "review", entity_type="company",
++                canonical_name=institution["name"] if unique else name,
++                target_id=institution["targetId"] if unique else "",
++                confidence="verified" if unique else "low",
++                source="institution-directory",
++                reason=("名称唯一命中已核验投资机构目录；仅解析机构身份，不代表公司档案发布。"
++                        if unique else "名称命中多个投资机构，需要人工消歧。"),
++            )
++
+     topics = topic_index(
+         tracking_payload if tracking_payload is not None else load_json(TRACKING_PATH, {})
+     ).get(key, [])
+diff --git a/tools/resolved_company_captures.py b/tools/resolved_company_captures.py
+index df7fbcf..4b536de 100644
+--- a/tools/resolved_company_captures.py
++++ b/tools/resolved_company_captures.py
+@@ -57,6 +57,10 @@ def resolved_company_captures(
+         if resolution.status == "rejected":
+             stats["rejectedCount"] += 1
+             continue
++        if resolution.targetId.startswith("institution:"):
++            # Institutional tracking must not mint an operating-company page.
++            stats["institutionCount"] = stats.get("institutionCount", 0) + 1
++            continue
+         if resolution.entityType != "company":
+             continue
+         row = copy.deepcopy(capture)
