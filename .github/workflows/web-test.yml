@@ -88,3 +88,71 @@ jobs:
           fi
 
           exit "$build_status"
+
+  venture-profile-preflight:
+    name: Venture profile preflight (${{ matrix.order }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        order: [production, reversed]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile profile pipeline and regression tests
+        run: |
+          python -m py_compile \
+            tools/company_profile_refresh_queue.py \
+            tools/ensure_venture_profile_coverage.py \
+            tools/normalize_venture_publication.py \
+            tools/guard_venture_cross_field_noise.py \
+            tools/stabilize_venture_research_evidence.py \
+            tools/stabilize_venture_publication_pipeline.py \
+            tools/stabilize_venture_guarded_publication.py \
+            tools/crawl_venture_profiles.py \
+            tools/enrich_venture_profiles.py \
+            tests/test_venture_financing_contract.py
+      - name: Run complete profile preflight with shared-rule regressions
+        shell: bash
+        env:
+          TEST_ORDER: ${{ matrix.order }}
+        run: |
+          set -euo pipefail
+          # Mirror the complete preflight in company-profile-incremental-refresh.yml,
+          # then include regressions that explicitly install the shared rules.
+          modules=(
+            tests.test_company_profile_refresh_queue
+            tests.test_ensure_venture_profile_coverage
+            tests.test_stabilize_venture_research_evidence
+            tests.test_stabilize_venture_publication_pipeline
+            tests.test_stabilize_venture_guarded_publication
+            tests.test_venture_cross_field_guard
+            tests.test_venture_profile_extraction
+            tests.test_venture_profile_enrichment
+            tests.test_venture_profile_postprocess
+            tests.test_finalize_venture_profiles
+            tests.test_venture_entity_semantics
+            tests.test_stabilize_venture_profiles
+            tests.test_venture_financing_contract
+          )
+          if [ "$TEST_ORDER" = reversed ]; then
+            reverse_modules=()
+            for ((i=${#modules[@]}-1; i>=0; i--)); do
+              reverse_modules+=("${modules[i]}")
+            done
+            modules=("${reverse_modules[@]}")
+          fi
+          python -m unittest -v "${modules[@]}" 2>&1 | tee venture-profile-preflight.log
+      - name: Retain profile preflight evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: venture-profile-preflight-${{ matrix.order }}
+          path: venture-profile-preflight.log
+          if-no-files-found: warn
+          retention-days: 7

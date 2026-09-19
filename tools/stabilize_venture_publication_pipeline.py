@@ -53,7 +53,9 @@ CROSS_GATE_FINANCING_ACTION_RE = re.compile(
     r"(?:"
     r"\brais(?:e|ed|es|ing)\b(?!\s+(?:full[- ]year\s+)?guidance\b)|"
     r"\bfunding round\b|\bfinancing round\b|\binvestment round\b|"
-    r"\bseries\s+(?:[a-z]\d*|\d+)(?:\s+(?:funding|financing|round))?\b|"
+    # Bare Series C/C2/7 labels can name products, not financing events.
+    # Require round context; retain explicit B+ funding and action-led evidence.
+    r"\bseries\s+(?:[a-z]\d*|\d+)\+?\s+(?:funding|financing|round)\b|"
     r"\bseed round\b|\bpre-seed\b|"
     r"\bfirst close.{0,80}(?:funding|financing)\b|"
     r"\bcomplet(?:e|ed|es|ing).{0,80}(?:funding|financing)\b|"
