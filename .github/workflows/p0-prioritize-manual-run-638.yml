@@ -1,0 +1,67 @@
+name: Prioritize P0 manual reconciliation 638
+
+on:
+  push:
+    branches: [ops/p0-prioritize-manual-run-638]
+    paths: [.github/workflows/p0-prioritize-manual-run-638.yml]
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  prioritize:
+    if: github.repository == 'VCIQ/VCIQ.github.io' && github.ref == 'refs/heads/ops/p0-prioritize-manual-run-638'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Yield only the verified uncommitted automatic preparation
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          import json, os, time, urllib.request
+          REPO = 'VCIQ/VCIQ.github.io'
+          SHA = '50138cb3633d828e883dc3e22ec85adbf1588a88'
+          LOW = 35418951676
+          HIGH = 35418951738
+          assert os.environ['GITHUB_REPOSITORY'] == REPO
+          def api(path, method='GET'):
+              req = urllib.request.Request('https://api.github.com/repos/' + REPO + path,
+                  method=method, headers={'Authorization': 'Bearer ' + os.environ['GH_TOKEN'],
+                  'Accept': 'application/vnd.github+json', 'User-Agent': 'vciq-p0-manual-priority',
+                  'X-GitHub-Api-Version': '2022-11-28'})
+              with urllib.request.urlopen(req, timeout=15) as response:
+                  data = response.read()
+                  return json.loads(data) if data else {'httpStatus': response.status}
+          low = api(f'/actions/runs/{LOW}')
+          high = api(f'/actions/runs/{HIGH}')
+          for run in (low, high):
+              assert run['repository']['full_name'] == REPO and run['head_branch'] == 'main'
+              assert run['head_sha'] == SHA and run['event'] == 'push'
+          assert low['path'] == '.github/workflows/company-candidate-onboarding.yml'
+          assert high['path'] == '.github/workflows/company-candidate-discovery.yml'
+          print(json.dumps({'lowRun': LOW, 'lowStatus': low['status'], 'highRun': HIGH, 'highStatus': high['status'], 'headSha': SHA}))
+          if high['status'] not in {'pending', 'queued', 'waiting', 'requested'} or low['status'] == 'completed':
+              print('No preemption needed; neither restart nor duplicate dispatch requested.')
+              raise SystemExit(0)
+          jobs = api(f'/actions/runs/{LOW}/jobs')['jobs']
+          onboard = next(j for j in jobs if j['name'] == 'onboard')
+          steps = {s['name']: s for s in onboard.get('steps', [])}
+          preparation = steps['Prepare verified automatic company profiles']
+          assert preparation['status'] == 'in_progress', 'Only preparation may yield; do not interrupt a transaction'
+          for name in ('Apply reviewed onboarding and merge decisions', 'Commit published profiles and continue the requested handoff'):
+              step = steps[name]
+              assert step['status'] in {'pending', 'queued'} and not step.get('started_at'), name
+          print('Priority requested by owner: yield automatic preparation before any apply/commit; keep the repository writer lock intact.')
+          print(json.dumps(api(f'/actions/runs/{LOW}/cancel', 'POST')))
+          for _ in range(18):
+              status = api(f'/actions/runs/{LOW}')
+              if status['status'] == 'completed':
+                  break
+              time.sleep(5)
+          print(json.dumps({'yieldedRun': LOW, 'status': status['status'], 'conclusion': status['conclusion']}))
+          status = api(f'/actions/runs/{HIGH}')
+          print(json.dumps({'priorityRun': HIGH, 'status': status['status'], 'conclusion': status['conclusion']}))
+          print('Existing queued discovery owns the next transaction and its normal onboarding/refresh handoff; no data files or concurrency settings were changed.')
+          PY
