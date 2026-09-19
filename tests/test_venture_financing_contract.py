@@ -64,6 +64,16 @@ class SharedFinancingContractTests(unittest.TestCase):
         }
 
     @staticmethod
+    def _capital_patterns() -> dict[str, re.Pattern[str]]:
+        return {
+            "research": research_evidence.CAPITAL_MARKET_RE,
+            "normalization": base_normalization.CAPITAL_MARKET_ACTION_PATTERN,
+            "sanitization": low_level_sanitization.CAPITAL_ACTION_RE,
+            "finalization": finalizer.CAPITAL_EVIDENCE_RE,
+            "entity_semantics": entity_semantics.CAPITAL_ACTION_RE,
+        }
+
+    @staticmethod
     def _event(title: str, **fields: Any) -> dict[str, Any]:
         return {
             "date": "2026-01-02",
@@ -136,6 +146,46 @@ class SharedFinancingContractTests(unittest.TestCase):
                     self.assertIs(pattern, shared)
                     self.assertIsNone(pattern.search(PRODUCT_COPY[0]))
                     self.assertIsNotNone(pattern.search(FINANCING_EVIDENCE[0]))
+
+    def test_recruiting_is_not_a_capital_market_action_after_alignment(self) -> None:
+        values = (
+            "Hannah Pritchett leads Anthropic's talent acquisition, organizational development, and workplace experience.",
+            "Chief People Officer oversees Talent Acquisition and employee development.",
+            "Our talent-acquisition team attracts world-class researchers.",
+        )
+        for text in values:
+            for gate, pattern in self._capital_patterns().items():
+                with self.subTest(gate=gate, text=text):
+                    self.assertIsNone(pattern.search(text))
+            with self.subTest(finalizer=text):
+                row = self._event("Leadership at Anthropic", type="并购/退出", summary=text,
+                                  sourceUrl="https://www.anthropic.com/company/leadership")
+                self.assertEqual(finalizer.finalize_capital_markets([row]), [])
+
+    def test_genuine_acquisition_evidence_survives_recruiting_mentions(self) -> None:
+        values = (
+            "Example completed the acquisition of Acme for $50 million.",
+            "Example acquired Acme and expanded its talent acquisition team.",
+            "Example announced the acquisition of a talent acquisition software business.",
+        )
+        for text in values:
+            for gate, pattern in self._capital_patterns().items():
+                with self.subTest(gate=gate, text=text):
+                    self.assertIsNotNone(pattern.search(text))
+            with self.subTest(finalizer=text):
+                rows = finalizer.finalize_capital_markets([self._event(text, type="并购/退出")])
+                self.assertEqual([row["title"] for row in rows], [text])
+
+    def test_capital_finalization_removes_hr_without_mutating_other_evidence(self) -> None:
+        good = self._event("Example completed the acquisition of Acme", type="并购/退出")
+        hr = self._event("Leadership at Anthropic", type="并购/退出",
+                         summary="Hannah leads talent acquisition and organizational development.")
+        values = [good, hr]
+        before = copy.deepcopy(values)
+        rows = finalizer.finalize_capital_markets(values)
+        self.assertEqual([row["title"] for row in rows], [good["title"]])
+        self.assertEqual(values, before)
+        self.assertEqual(finalizer.finalize_capital_markets(rows), rows)
 
 
 if __name__ == "__main__":
