@@ -1,0 +1,53 @@
+name: Publication contract checks
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/publication-contract-checks.yml'
+      - 'lib/**'
+      - 'tests/**'
+      - 'tools/**'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publication-contract-checks.yml'
+      - 'lib/**'
+      - 'tests/intelligence.test.ts'
+
+permissions:
+  contents: read
+
+jobs:
+  research-material-labels:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - name: Verify research-material label contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --import tsx --test --test-name-pattern='news and communication wrappers normalize to research material labels' tests/intelligence.test.ts
+      - name: Show bounded regression source on failure
+        if: failure()
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('tests/intelligence.test.ts')
+          if path.exists():
+              lines = path.read_text(encoding='utf-8').splitlines()
+              for start, end in ((1, 85), (430, 520)):
+                  print(f'::group::{path}:{start}-{end}')
+                  for index in range(start - 1, min(end, len(lines))):
+                      print(f'{index + 1}: {lines[index]}')
+                  print('::endgroup::')
+          for path in sorted(Path('lib').glob('*intelligence*')):
+              print('Relevant module:', path)
+          PY
