@@ -146,6 +146,28 @@ class ManualDecisionFirstTests(unittest.TestCase):
             company_registry_payload={'companies': []}, people_payload={'people': []}, tracking_payload=values[0])
         self.assertEqual(captures['records'], [])
 
+    def test_identity_migration_preserves_other_scopes_and_their_decision_time(self):
+        values = fixture(); apply(values, request(tracks=['vc', 'other']))
+        original = copy.deepcopy(values[2]['memberships'][1]['manualDecision'])
+        resolved = Resolution('resolved', 'company', 'company', request()['name'], 'company:registered',
+            'verified', 'company-registry', 'Now registered', request()['name'], False)
+        apply(values, request(tracks=['vc']), resolution=resolved, now='2026-09-20T03:00:00+00:00')
+        other = next(m for m in values[2]['memberships'] if m['trackId'] == 'track:other')
+        self.assertEqual(other['manualDecision']['at'], original['at'])
+        self.assertEqual(other['manualDecision']['id'], original['id'])
+        self.assertEqual(other['manualDecision']['originalEntityId'], original['entityId'])
+        self.assertEqual(other['manualDecision']['entityId'], other['entityId'])
+        self.assertEqual(policy.scoped_follow_states(values[2], ADMINS)[('other', 'sampleCompanies', request()['name'])], 'approved')
+
+    def test_identity_migration_does_not_reenable_another_revoked_scope(self):
+        values = fixture(); apply(values, request(tracks=['vc', 'other']))
+        values[2]['memberships'][1]['state'] = 'rejected'
+        resolved = Resolution('resolved', 'company', 'company', request()['name'], 'company:registered',
+            'verified', 'company-registry', 'Now registered', request()['name'], False)
+        apply(values, request(tracks=['vc']), resolution=resolved)
+        self.assertEqual(policy.scoped_follow_states(values[2], ADMINS)[('other', 'sampleCompanies', request()['name'])], 'blocked')
+        self.assertEqual(reconcile(values)[0]['tracks'][1]['sampleCompanies'], [])
+
     def test_failed_identity_evidence_does_not_remove_user_decision(self):
         values = fixture(); apply(values)
         before = copy.deepcopy(values[2])

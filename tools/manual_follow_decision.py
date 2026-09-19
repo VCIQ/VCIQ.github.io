@@ -50,13 +50,57 @@ def tracking_name(request: Mapping[str, Any], resolution: Mapping[str, Any]) -> 
     return str(request['name'])
 
 
+def _rebind_migrated_decisions(intents: dict[str, Any], previous: Mapping[str, Any], entity_id: str) -> bool:
+    """Keep other scoped decisions when the writer canonicalizes a provisional ID.
+
+    The writer has already validated the identity migration. Only disappeared
+    same-kind IDs with an exact retained alias can transfer an existing decision;
+    this helper cannot create approval for an unrelated or still-separate entity.
+    """
+    current = {e.get('id'): e for e in intents.get('entities', [])}
+    entity = current.get(entity_id, {})
+    field = FIELDS.get(entity.get('kind'), '')
+    names = {identity(v, field) for v in [entity.get('name'), *entity.get('aliases', [])]} - {''}
+    removed = {e['id'] for e in previous.get('entities', [])
+               if e.get('id') not in current and e.get('kind') == entity.get('kind')
+               and names & {identity(v, field) for v in [e.get('name'), *e.get('aliases', [])]}}
+    changed = False
+    for former in previous.get('memberships', []):
+        if former.get('entityId') not in removed:
+            continue
+        for member in intents.get('memberships', []):
+            if (member.get('entityId'), member.get('trackId'), member.get('role')) != (
+                entity_id, former.get('trackId'), former.get('role')
+            ):
+                continue
+            before = copy.deepcopy(member)
+            # Automatic canonicalization cannot resurrect a revoked edge.
+            # A new explicit request for this exact track may re-enable it below.
+            if former.get('state') in BLOCKED:
+                member['state'] = former['state']
+            prior = former.get('manualDecision', {})
+            if (isinstance(prior, dict) and prior.get('version') == 1
+                and prior.get('entityId') == former.get('entityId')
+                and prior.get('trackId') == former.get('trackId')
+                and prior.get('kind') == entity.get('kind')
+                and identity(prior.get('requestedName'), field) in names
+                and prior.get('status') == 'approved' and prior.get('id') and prior.get('at')
+                and any(o.get('origin') == 'manual' and o.get('actor') == prior.get('actor')
+                        for o in former.get('origins', []) if isinstance(o, dict))
+                and (not member.get('manualDecision') or member['manualDecision'] == prior)):
+                member['manualDecision'] = {**copy.deepcopy(prior), 'entityId': entity_id,
+                    'originalEntityId': prior.get('originalEntityId', former['entityId'])}
+            changed = changed or member != before
+    return changed
+
+
 def stamp_decision(intents: dict[str, Any], previous: Mapping[str, Any], request: Mapping[str, Any],
                    entity_id: str, actor: str, now: str, resolution: Mapping[str, Any]) -> bool:
     """Persist approval on the existing scoped edge, preserving retry timestamps."""
     if not explicit_request(request):
         return False
     old = {m['id']: m for m in previous.get('memberships', []) if isinstance(m, dict)}
-    changed = False
+    changed = _rebind_migrated_decisions(intents, previous, entity_id)
     for member in intents.get('memberships', []):
         if member.get('entityId') != entity_id or member.get('trackId') not in {'track:' + s for s in request['trackSlugs']}:
             continue
