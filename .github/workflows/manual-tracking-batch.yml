@@ -1,4 +1,5 @@
 name: Internal manual tracking batch
+run-name: ${{ inputs.dispatch_token != '' && format('VCIQ durable apply {0} {1}', inputs.dispatch_token, inputs.dispatch_digest) || '' }}
 
 # Authenticated batch companion to manual-tracking.yml. The input JSON and job
 # summaries are visible because this repository is public; never submit secrets,
@@ -21,6 +22,17 @@ on:
       batch_json:
         description: "Up to 20 normalized requests per atomic writer transaction; background reconciliation is separate"
         required: true
+        type: string
+
+      dispatch_token:
+        description: "Optional random UUIDv4 transport correlation; never an actor or private operation ID"
+        required: false
+        default: ""
+        type: string
+      dispatch_digest:
+        description: "Optional SHA256 of v1 LF policy LF exact public batch_json UTF-8 bytes"
+        required: false
+        default: ""
         type: string
 
 permissions: {}
@@ -81,6 +93,15 @@ jobs:
             raise SystemExit("manual tracking actor is not allowlisted: " + ", ".join(denied))
           print("authorized actors: " + ", ".join(checked.values()))
           PY
+
+      - name: Validate durable dispatch correlation v1
+        env:
+          DISPATCH_TOKEN: ${{ inputs.dispatch_token }}
+          DISPATCH_DIGEST: ${{ inputs.dispatch_digest }}
+          OPERATION: ${{ inputs.operation }}
+          INVALID_POLICY: ${{ inputs.invalid_policy }}
+          BATCH_JSON: ${{ inputs.batch_json }}
+        run: python tools/manual_tracking_correlation.py
 
   validate:
     name: Validate batch manual tracking request

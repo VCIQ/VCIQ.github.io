@@ -1,0 +1,33 @@
+name: Manual tracking correlation contract
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/manual-tracking-batch.yml"
+      - ".github/workflows/manual-correlation-check.yml"
+      - "tools/manual_tracking_correlation.py"
+      - "tests/test_manual_tracking_correlation.py"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/manual-tracking-batch.yml"
+      - ".github/workflows/manual-correlation-check.yml"
+      - "tools/manual_tracking_correlation.py"
+      - "tests/test_manual_tracking_correlation.py"
+permissions:
+  contents: read
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+      - name: Check optional correlation without any business dispatch
+        run: python -m unittest discover -s tests -p test_manual_tracking_correlation.py -v
