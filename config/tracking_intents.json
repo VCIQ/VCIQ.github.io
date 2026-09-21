@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-20T12:35:09+00:00",
+  "updatedAt": "2026-09-21T03:31:56+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -15137,6 +15137,18 @@
       "resolutionSource": "human-decision",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-20T12:35:09+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "keyword-d4b1d903ec48be09b79b",
+      "kind": "keyword",
+      "name": "推理芯片",
+      "aliases": [],
+      "keywords": [],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-09-21T03:31:56+00:00",
       "createdBy": "VCIQ"
     }
   ],
@@ -78644,6 +78656,53 @@
         "source": "institution-directory",
         "reason": "名称唯一命中已核验投资机构目录；仅解析机构身份，不代表公司档案发布。",
         "decisionKey": "generalcatalyst",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-189d100f18419bc47aff",
+      "trackId": "track:semiconductor",
+      "entityId": "keyword-d4b1d903ec48be09b79b",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-5f4b51d793056a359456",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-21T03:31:56+00:00",
+          "evidenceUrl": "",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-af16f245677a04ca586f8e87",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-21T03:31:56+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "keyword-d4b1d903ec48be09b79b",
+        "requestedName": "推理芯片",
+        "kind": "keyword"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "keyword",
+        "entityType": "keyword",
+        "canonicalName": "推理芯片",
+        "targetId": "keyword-d4b1d903ec48be09b79b",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "推理芯片",
         "reclassified": false
       },
       "executionState": "applied"
