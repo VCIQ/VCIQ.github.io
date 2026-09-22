@@ -35,6 +35,8 @@ const policySectorTags: Record<string, string[]> = {
   "智能制造": ["高端装备"],
 };
 
+const nonIndependentCompanySlugs = new Set(["doubao", "volcengine"]);
+
 const lateStageRound = /(?:Series\s*[DEFG]|(?:^|[^A-Za-z])[DEFG](?:\+{0,2})?(?:轮|\b)|D轮|D\+轮|D\+\+轮|E轮|E\+轮|E\+\+轮|Pre[- ]?IPO|Growth|战略融资)/iu;
 
 function record(value: unknown): JsonRecord {
@@ -172,8 +174,21 @@ export function buildInnovationOpportunityPool(): InnovationOpportunity[] {
     const stage = text(company.stage, 80);
     const status = text(company.status, 80);
     if (!slug || !name || !["中国", "中國", "香港"].includes(region)) continue;
-    if (status === "已上市" || stage === "已上市") continue;
-    if (companyKeys(name).some((key) => reviewed.has(key))) continue;
+    if (status === "已上市" || stage === "已上市" || nonIndependentCompanySlugs.has(slug)) continue;
+    const identityKeys = new Set([
+      ...companyKeys(name),
+      ...companyKeys(company.englishName),
+      ...list(company.aliases).flatMap((alias) => companyKeys(alias)),
+    ]);
+    const overlapsReviewed = [...identityKeys].some((key) =>
+      reviewed.has(key)
+      || (
+        key.length >= 5
+        && [...reviewed].some((reviewedKey) =>
+          reviewedKey.length >= 5
+          && (key.includes(reviewedKey) || reviewedKey.includes(key)))
+      ));
+    if (overlapsReviewed) continue;
 
     const policyThemes = policySectorTags[sector] ?? [];
     if (!policyThemes.length) continue;
