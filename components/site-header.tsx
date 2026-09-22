@@ -7,6 +7,7 @@ import { useState, type ReactNode } from "react";
 const navItems = [
   ["研究首页", "/"],
   ["科技研究", "/technologies"],
+  ["科创频道", "/innovation-capital"],
   ["研究简报", "/reports"],
   ["人物库", "/people"],
   ["公司库", "/companies"],
@@ -37,7 +38,7 @@ export function SiteHeader({ status }: { status: ReactNode }) {
             </Link>
           ))}
           <Link className="mobile-nav-utility" href="/search" onClick={() => setOpen(false)}>
-            <span>07</span>
+            <span>08</span>
             全局搜索
           </Link>
           <a
@@ -45,7 +46,7 @@ export function SiteHeader({ status }: { status: ReactNode }) {
             href={TRACKING_ADMIN_URL}
             onClick={() => setOpen(false)}
           >
-            <span>08</span>
+            <span>09</span>
             追踪管理台
           </a>
         </nav>
