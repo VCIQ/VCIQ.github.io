@@ -163,6 +163,54 @@ class TrackingSeedGovernanceTests(unittest.TestCase):
         self.assertIn(("people", "Class Presiden Thomas Sonderman"), removed)
         self.assertIn(("people", "Massachusetts Governo Chris Ballance"), removed)
 
+    def test_invalid_person_tombstone_prunes_stale_reintroduction(self) -> None:
+        config = self._config()
+        config["tracks"][0]["keywords"] = ["大模型"]
+        config["tracks"][0]["people"] = [
+            "Sam Altman",
+            "Massachusetts Governo Chris Ballance",
+            "Manual Class Example",
+        ]
+        ledger = {
+            "schemaVersion": 1,
+            "updatedAt": "",
+            "tracks": {},
+            "added": [],
+            "removed": [
+                {
+                    "track": "ai",
+                    "kind": "people",
+                    "value": "Massachusetts Governo Chris Ballance",
+                    "removedAt": "2026-08-07T00:00:00+00:00",
+                    "reason": "seed-governance-invalid-person",
+                }
+            ],
+        }
+
+        report = governance.govern(
+            config,
+            ledger,
+            now=datetime(2026, 8, 8, tzinfo=timezone.utc),
+        )
+
+        self.assertEqual(
+            config["tracks"][0]["people"],
+            ["Sam Altman", "Manual Class Example"],
+        )
+        self.assertEqual(
+            report["invalidAutomaticPeopleRemoved"],
+            [{"track": "ai", "value": "Massachusetts Governo Chris Ballance"}],
+        )
+        self.assertEqual(report["tombstonesAdded"], 0)
+        self.assertEqual(len(ledger["removed"]), 1)
+
+        second = governance.govern(
+            config,
+            ledger,
+            now=datetime(2026, 8, 8, tzinfo=timezone.utc),
+        )
+        self.assertFalse(second["changed"])
+
     def test_expired_entries_are_removed_without_permanent_tombstone(self) -> None:
         config = self._config()
         config["tracks"][0]["keywords"] = ["大模型", "agentic ai"]

@@ -29,6 +29,7 @@ on:
       - tools/resolved_company_captures.py
       - tools/resolve_company_entities.py
       - tools/tracking_entity_integrity.py
+      - tools/tracking_seed_governance.py
       - config/company_candidate_decisions.json
       - config/entity_resolution_decisions.json
       - config/official_company_sources.json
@@ -75,7 +76,8 @@ jobs:
             tools/reconcile_legacy_manual_confirmed_tracking.py \
             tools/reconcile_entity_resolution.py \
             tools/resolved_company_captures.py \
-            tools/tracking_entity_integrity.py
+            tools/tracking_entity_integrity.py \
+            tools/tracking_seed_governance.py
           python -m unittest \
             tests.test_company_candidates \
             tests.test_manual_company_trust \
@@ -84,7 +86,8 @@ jobs:
             tests.test_legacy_manual_confirmed_tracking \
             tests.test_entity_resolution \
             tests.test_entity_resolution_workflow \
-            tests.test_resolved_company_candidates
+            tests.test_resolved_company_candidates \
+            tests.test_tracking_seed_governance
       - name: Detect pushed tracking inputs
         id: push-inputs
         if: github.event_name == 'push'
@@ -110,12 +113,16 @@ jobs:
           # resolver fixed point. Re-stabilize those shared resolver inputs before
           # asserting the terminal fixed point below.
           python tools/reconcile_entity_resolution.py
+          # Automatic quality tombstones are authoritative against stale writer
+          # snapshots. Enforce them after every resolver pass that may touch tracking.
+          python tools/tracking_seed_governance.py
           python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
           python tools/apply_manual_company_trust.py --candidates "$CANDIDATE_QUEUE"
           python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
           python tools/reconcile_entity_resolution.py --check
           python tools/reconcile_manual_institution_intents.py --check
           python tools/reconcile_legacy_manual_confirmed_tracking.py --check
+          python tools/tracking_seed_governance.py --check
           python tools/tracking_entity_integrity.py
           python tools/apply_manual_company_trust.py \
             --candidates "$CANDIDATE_QUEUE" \
@@ -132,6 +139,7 @@ jobs:
             config/user_tracking.json
             config/tracking_capture_inbox.json
             config/tracking_intents.json
+            config/tracking_auto_discovery.json
             config/company_candidate_decisions.json
             "$CANDIDATE_QUEUE"
           )
@@ -153,12 +161,16 @@ jobs:
             python tools/reconcile_manual_institution_intents.py --apply
             python tools/reconcile_legacy_manual_confirmed_tracking.py
             python tools/reconcile_entity_resolution.py
+            # A concurrent writer may have replayed a stale automatic person after
+            # this run started. Re-apply sticky quality tombstones after the rebase.
+            python tools/tracking_seed_governance.py
             python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
             python tools/apply_manual_company_trust.py --candidates "$CANDIDATE_QUEUE"
             python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
             python tools/reconcile_entity_resolution.py --check
             python tools/reconcile_manual_institution_intents.py --check
             python tools/reconcile_legacy_manual_confirmed_tracking.py --check
+            python tools/tracking_seed_governance.py --check
             python tools/tracking_entity_integrity.py
             python tools/apply_manual_company_trust.py \
               --candidates "$CANDIDATE_QUEUE" \
