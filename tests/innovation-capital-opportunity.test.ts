@@ -50,6 +50,20 @@ test("late-stage hard-tech signals are promoted for review without becoming list
   assert.doesNotMatch(client, /上市概率\s*\d|成功率\s*\d/u);
 });
 
+test("researched mature candidates surface with evidence while broker and route stay unassigned", () => {
+  const rows = buildInnovationOpportunityPool();
+  const elite = rows.find((item) => item.name === "艾利特机器人");
+  const galbot = rows.find((item) => item.name === "银河通用");
+  assert.ok(elite);
+  assert.ok(galbot);
+  assert.equal(elite.latestRound, "D+轮");
+  assert.equal(elite.financingAmount, "6亿元人民币");
+  assert.ok(elite.institutionBackers.includes("达晨财智"));
+  assert.ok(elite.gaps.some((gap) => gap.includes("五大券商")));
+  assert.equal(galbot.financingAmount, "25亿元人民币");
+  assert.ok(galbot.institutionBackers.includes("启明创投"));
+});
+
 test("innovation capital channel renders the institution-derived opportunity source", () => {
   assert.match(page, /buildInnovationOpportunityPool/u);
   assert.match(page, /InnovationOpportunityPool/u);
