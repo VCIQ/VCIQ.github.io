@@ -49,6 +49,8 @@ POLICY_SECTOR_TAGS: dict[str, tuple[str, ...]] = {
     "生物科技": ("生物医药", "生物制造"),
     "智能制造": ("高端装备",),
 }
+NON_INDEPENDENT_COMPANY_SLUGS = {"doubao", "volcengine"}
+
 LATE_STAGE_RE = re.compile(
     r"(?:Series\s*[DEFG]|(?:^|[^A-Za-z])[DEFG](?:\+{0,2})?(?:轮|\b)|"
     r"D轮|D\+轮|D\+\+轮|E轮|E\+轮|E\+\+轮|Pre[- ]?IPO|Growth|战略融资)",
@@ -151,7 +153,22 @@ def opportunity_rows(
         sector = clean(company.get("sector"), 80)
         status = clean(company.get("status"), 80)
         stage = clean(company.get("stage"), 80)
-        if not name or not slug or not company_keys(name).isdisjoint(reviewed_keys):
+        company_identity_keys = set(company_keys(name))
+        company_identity_keys.update(company_keys(company.get("englishName")))
+        for alias in company.get("aliases", []) if isinstance(company.get("aliases"), list) else []:
+            company_identity_keys.update(company_keys(alias))
+        overlaps_reviewed = any(
+            key in reviewed_keys
+            or (
+                len(key) >= 5
+                and any(
+                    len(reviewed) >= 5 and (key in reviewed or reviewed in key)
+                    for reviewed in reviewed_keys
+                )
+            )
+            for key in company_identity_keys
+        )
+        if not name or not slug or slug in NON_INDEPENDENT_COMPANY_SLUGS or overlaps_reviewed:
             continue
         if region not in {"中国", "中國", "香港"}:
             continue
