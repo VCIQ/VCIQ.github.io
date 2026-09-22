@@ -123,6 +123,7 @@ export function InnovationOpportunityPool({ opportunities }: Props) {
               <div><dt>公司阶段</dt><dd>{item.stage || "待核验"}</dd></div>
               <div><dt>所在地</dt><dd>{item.headquarters || "—"}</dd></div>
               <div><dt>最新融资</dt><dd>{item.latestRound || "待补证"}</dd></div>
+              <div><dt>融资规模</dt><dd>{item.financingAmount || "—"}</dd></div>
               <div><dt>融资日期</dt><dd>{item.latestDate || "—"}</dd></div>
             </dl>
 
