@@ -3,6 +3,7 @@ import { Building2, Landmark, Radar, Route, ShieldCheck } from "lucide-react";
 import watchlist from "@/config/innovation_listing_watchlist.json";
 import { buildInnovationOpportunityPool } from "@/lib/innovation-capital-opportunity";
 import { InnovationDirectory } from "./innovation-directory";
+import { InnovationListingLifecycle } from "./innovation-listing-lifecycle";
 import { InnovationOpportunityPool } from "./innovation-opportunity-pool";
 import styles from "./page.module.css";
 
@@ -43,6 +44,8 @@ export default function InnovationCapitalPage() {
       </header>
 
       <InnovationDirectory />
+
+      <InnovationListingLifecycle />
 
       <InnovationOpportunityPool opportunities={opportunities} />
 
