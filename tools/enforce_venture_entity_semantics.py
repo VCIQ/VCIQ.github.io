@@ -152,7 +152,7 @@ PERSON_NOISE_TOKENS = {
     "spotlight", "hear", "read", "view", "more", "team", "leadership",
     "newsroom", "profile", "people", "about", "featured", "general",
     "partner", "managing", "principal", "director", "founder", "cofounder",
-    "chief", "officer", "president", "executive",
+    "chief", "officer", "president", "presiden", "governo", "governor", "government", "class", "executive",
     "the", "next", "black", "history", "awards", "solutions", "platform",
     "overview", "providers", "program", "programs", "events", "resources",
     "discover", "explore", "learn", "browse", "build", "create", "support",
