@@ -147,14 +147,26 @@ test("innovation capital remains a derived public channel while backend tracking
 test("listing lifecycle migrates accepted or listed hard-tech projects without losing broker lineage", () => {
   const unitree = lifecycle.projects.find((item) => item.company.includes("宇树科技"));
   const landspace = lifecycle.projects.find((item) => item.company.includes("蓝箭航天"));
+  const mthreads = lifecycle.projects.find((item) => item.company.includes("摩尔线程"));
+  const metax = lifecycle.projects.find((item) => item.company.includes("沐曦"));
+  const enflame = lifecycle.projects.find((item) => item.company.includes("燧原科技"));
   assert.ok(unitree);
   assert.ok(landspace);
+  assert.ok(mthreads);
+  assert.ok(metax);
+  assert.ok(enflame);
   assert.equal(unitree.broker, "中信证券");
   assert.equal(unitree.route, "STAR");
   assert.equal(unitree.lifecycleStatus, "listed");
   assert.equal(unitree.stockCode, "688836");
   assert.equal(landspace.broker, "中金公司");
   assert.equal(landspace.lifecycleStatus, "exchange-review");
+  assert.equal(mthreads.broker, "中信证券");
+  assert.equal(mthreads.stockCode, "688795");
+  assert.equal(metax.broker, "华泰联合");
+  assert.equal(metax.stockCode, "688802");
+  assert.equal(enflame.broker, "中信证券");
+  assert.equal(enflame.lifecycleStatus, "registration-review");
   for (const project of lifecycle.projects) {
     assert.ok(["中信证券", "中信建投", "中金公司", "国泰海通", "华泰联合"].includes(project.broker));
     assert.ok(project.sources.some((source) => source.level === "regulatory"));
