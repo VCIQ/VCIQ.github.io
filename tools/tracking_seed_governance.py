@@ -59,6 +59,10 @@ BLOCKED_PEOPLE = {
     "关注前沿科技",
 }
 DATE_ONLY_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+AUTOMATIC_PERSON_NOISE_RE = re.compile(
+    r"\b(?:class|presiden(?:t)?|governo(?:r)?|government)\b",
+    re.IGNORECASE,
+)
 
 KIND_TTL_DAYS = {
     "keywords": 90,
@@ -104,6 +108,12 @@ def _is_low_signal_keyword(value: Any) -> bool:
 
 def _is_blocked_person(value: Any) -> bool:
     return _normalize(value) in BLOCKED_PEOPLE
+
+
+def _is_invalid_automatic_person(value: Any) -> bool:
+    """Reject obvious role/page fragments only for audit-ledger automatic people."""
+    raw = re.sub(r"\s+", " ", str(value or "")).strip()
+    return bool(AUTOMATIC_PERSON_NOISE_RE.search(raw))
 
 
 def _provenance(evidence: set[str]) -> tuple[str, float, int | None]:
@@ -240,6 +250,7 @@ def govern(
         "metadataBackfilled": 0,
         "lowSignalRemoved": [],
         "blockedPeopleRemoved": [],
+        "invalidAutomaticPeopleRemoved": [],
         "expiredRemoved": [],
         "tombstonesAdded": 0,
     }
@@ -287,9 +298,12 @@ def govern(
 
         low_signal = kind == "keywords" and _is_low_signal_keyword(value)
         blocked_person = kind == "people" and _is_blocked_person(value)
-        if low_signal or blocked_person:
+        invalid_automatic_person = kind == "people" and _is_invalid_automatic_person(value)
+        if low_signal or blocked_person or invalid_automatic_person:
             if track:
-                _remove_config_value(config, track, kind, value)
+                removed = _remove_config_value(config, track, kind, value)
+                if removed and invalid_automatic_person and not blocked_person:
+                    report["invalidAutomaticPeopleRemoved"].append({"track": slug, "value": value})
             if _tombstone(
                 ledger,
                 track=slug,
@@ -336,6 +350,7 @@ def govern(
             "metadataBackfilled",
             "lowSignalRemoved",
             "blockedPeopleRemoved",
+            "invalidAutomaticPeopleRemoved",
             "expiredRemoved",
             "tombstonesAdded",
         )
@@ -345,6 +360,7 @@ def govern(
         report["metadataBackfilled"]
         or report["lowSignalRemoved"]
         or report["blockedPeopleRemoved"]
+        or report["invalidAutomaticPeopleRemoved"]
         or report["expiredRemoved"]
         or report["tombstonesAdded"]
     )

@@ -212,7 +212,7 @@ def slugify(value: str) -> str:
 
 PERSON_NAME_NOISE_RE = re.compile(
     r"(?:\b(?:company|business|corporate|global|development|sales|marketing|"
-    r"supply\s+chain|manufacturing|technologies?|systems?|senior|vice|president|"
+    r"supply\s+chain|manufacturing|technologies?|systems?|senior|vice|presiden(?:t)?|governo(?:r)?|government|class|"
     r"officer|cfo|cto|ceo|team|leadership|management|press|news|post|co)\b|"
     r"关注|作为|参加|出席|共同|同創|同创|創業者|创业者|創始|创始|董事|主席|"
     r"主题演讲|演讲|负责|負責|表示|介绍|介紹|宣布|致辞|致辭|担任|擔任|"

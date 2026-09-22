@@ -72,6 +72,8 @@ class SampleCompanyPeopleDiscoveryTests(unittest.TestCase):
             "Company Development",
             "Business Development",
             "Autonomous Vehicles Senior Vice",
+            "Class Presiden Thomas Sonderman",
+            "Massachusetts Governo Chris Ballance",
             "作为自动驾",
             "主题演讲全",
             "杨永旺共同",

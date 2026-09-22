@@ -141,7 +141,7 @@ LOW_SIGNAL_TECHNOLOGIES = {
 }
 PERSON_NOISE_RE = re.compile(
     r"(?:\b(?:company|business|corporate|development|sales|marketing|senior|"
-    r"vice|president|officer|cfo|cto|ceo|team|leadership|management|class|"
+    r"vice|presiden(?:t)?|governo(?:r)?|government|officer|cfo|cto|ceo|team|leadership|management|class|"
     r"deepmind|anthropic|openai|post|times|news|media|university|institute|"
     r"foundation|labs?|inc|corp)\b|"
     r"模型|技术|系统|平台|算法|公司|集团|实验室|团队|研究|产品|新闻|网络|芯片|"

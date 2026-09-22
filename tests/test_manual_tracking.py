@@ -265,6 +265,27 @@ class ManualTrackingTests(unittest.TestCase):
         self.assertIn("实体消歧", report["error"])
         self.assertEqual(before, self.paths["tracking"].read_bytes())
 
+    def test_person_guard_rejects_truncated_role_prefixes(self) -> None:
+        for name in (
+            "Class Presiden Thomas Sonderman",
+            "Massachusetts Governo Chris Ballance",
+        ):
+            report = self._run(
+                "--mode",
+                "validate",
+                "--kind",
+                "person",
+                "--name",
+                name,
+                "--tracks",
+                "ai",
+                "--reasons",
+                "个人研究兴趣",
+                expected=2,
+            )
+            self.assertFalse(report["ok"], name)
+            self.assertIn("实体消歧", report["error"])
+
     def test_valid_person_is_added_to_graph_and_runtime(self) -> None:
         report = self._run(
             "--mode",

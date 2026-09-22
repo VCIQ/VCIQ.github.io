@@ -241,6 +241,38 @@ class VentureEntitySemanticTests(unittest.TestCase):
             cleaned["companies"]["galactic-energy"].get("technology", ""),
         )
 
+    def test_rejects_personnel_acquisition_as_capital_event(self) -> None:
+        payload = {
+            "companies": {
+                "anthropic": {
+                    "slug": "anthropic",
+                    "name": "Anthropic",
+                    "background": "Anthropic builds reliable AI systems.",
+                    "technology": "Anthropic develops Claude Platform.",
+                    "products": ["Claude Platform"],
+                    "team": [],
+                    "financing": [],
+                    "capitalMarkets": [{
+                        "date": "",
+                        "type": "并购/退出",
+                        "title": "Leadership at Anthropic",
+                        "summary": (
+                            "Chief People Officer Hannah Pritchett leads Anthropic's "
+                            "talent acquisition, organizational development, and workplace experience."
+                        ),
+                        "sourceUrl": "https://www.anthropic.com/company/leadership",
+                    }],
+                    "technologyProducts": [],
+                    "sources": [],
+                }
+            },
+            "institutions": {},
+            "qualityGate": {"passed": True, "checks": {}},
+        }
+        cleaned, diagnostics = semantics.enforce_snapshot(payload, CATALOG)
+        self.assertEqual(cleaned["companies"]["anthropic"]["capitalMarkets"], [])
+        self.assertEqual(diagnostics["removedCapitalMarkets"], 1)
+
     def test_rejects_official_aggregation_and_clickbait_capital_events(self) -> None:
         payload = {
             "companies": {
