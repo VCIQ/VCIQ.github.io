@@ -15,6 +15,11 @@ on:
       # current main. The config commit itself does not match these paths, so this
       # cannot recurse. Normal entity expansion remains scheduled/manual.
       - tools/tracking_seed_governance.py
+      - tools/sync_innovation_capital_tracking.py
+      - config/innovation_capital_tracking_seeds.json
+      - config/innovation_listing_watchlist.json
+      - config/company_registry.json
+      - public/data/venture_profiles.json
       - .github/workflows/tracking-discovery.yml
   schedule:
     # Discover entities before the next daily full refresh consumes them.
@@ -59,15 +64,26 @@ jobs:
           node --import tsx scripts/sync-tracking-institution-directory.ts --dry-run
           python -m py_compile tools/tracking_seed_governance.py
           python -m py_compile tools/tracking_source_governance.py
+          python -m py_compile tools/sync_innovation_capital_tracking.py
           python -m py_compile tools/enrich_tracking_institutions.py
           python -m py_compile tools/enrich_tracking_people_from_sample_companies.py
           python -m py_compile tools/enrich_tracking_person_channels.py
           python -m unittest \
             tests.test_tracking_seed_governance \
             tests.test_tracking_source_governance \
+            tests.test_sync_innovation_capital_tracking \
             tests.test_tracking_institution_people \
             tests.test_tracking_sample_company_people \
             tests.test_tracking_person_channels
+
+      - name: Sync reviewed innovation capital tracking universe
+        id: innovation-capital
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/sync_innovation_capital_tracking.py | tee /tmp/innovation-capital-tracking.json
+          CHANGED=$(python -c "import json;print(str(json.load(open('/tmp/innovation-capital-tracking.json'))['changed']).lower())")
+          echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
 
       - name: Govern tracking seeds before discovery
         id: seed-governance-before
@@ -176,7 +192,8 @@ jobs:
         id: changes
         shell: bash
         run: |
-          if [ "${{ steps.seed-governance-before.outputs.changed }}" = "true" ] || \
+          if [ "${{ steps.innovation-capital.outputs.changed }}" = "true" ] || \
+             [ "${{ steps.seed-governance-before.outputs.changed }}" = "true" ] || \
              [ "${{ steps.source-governance-before.outputs.changed }}" = "true" ] || \
              [ "${{ steps.expand.outputs.changed }}" = "true" ] || \
              [ "${{ steps.directory.outputs.changed }}" = "true" ] || \
@@ -240,6 +257,8 @@ jobs:
           regenerate_from_latest_main() {
             git fetch origin main
             git reset --hard origin/main
+            python tools/sync_innovation_capital_tracking.py \
+              | tee /tmp/innovation-capital-tracking-replay.json
             python tools/tracking_seed_governance.py \
               | tee /tmp/seed-governance-before-replay.json
             python tools/tracking_source_governance.py \
