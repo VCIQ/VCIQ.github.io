@@ -255,6 +255,23 @@ def govern(
         "tombstonesAdded": 0,
     }
 
+    # Quality tombstones are sticky against stale concurrent writers. They are
+    # deliberately narrower than ordinary owner removals: only values previously
+    # rejected by seed governance as invalid person identities are force-pruned.
+    invalid_person_tombstones: dict[str, set[str]] = {}
+    for raw in ledger.get("removed", []):
+        if not isinstance(raw, dict):
+            continue
+        if (
+            str(raw.get("kind") or "") != "people"
+            or str(raw.get("reason") or "") != "seed-governance-invalid-person"
+        ):
+            continue
+        slug = str(raw.get("track") or "")
+        value = _normalize(raw.get("value"))
+        if slug and value:
+            invalid_person_tombstones.setdefault(slug, set()).add(value)
+
     # Immediate defensive cleanup also covers values that predate the audit ledger.
     for slug, track in tracks.items():
         for value in list(_config_values(track, "keywords", config)):
@@ -272,11 +289,18 @@ def govern(
             ):
                 report["tombstonesAdded"] += 1
         for value in list(_config_values(track, "people", config)):
-            if not _is_blocked_person(value):
+            blocked_person = _is_blocked_person(value)
+            invalid_tombstone = _normalize(value) in invalid_person_tombstones.get(slug, set())
+            if not blocked_person and not invalid_tombstone:
                 continue
             if _remove_config_value(config, track, "people", value):
-                report["blockedPeopleRemoved"].append({"track": slug, "value": value})
-            if _tombstone(
+                target = (
+                    report["blockedPeopleRemoved"]
+                    if blocked_person
+                    else report["invalidAutomaticPeopleRemoved"]
+                )
+                target.append({"track": slug, "value": value})
+            if blocked_person and _tombstone(
                 ledger,
                 track=slug,
                 kind="people",
