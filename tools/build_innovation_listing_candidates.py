@@ -409,7 +409,10 @@ def score_evidence(
     if route in {"STAR", "ChiNext"}:
         score += 20
         reasons.append("正文明确出现科创板/创业板路径")
-    elif "A股" in text or "IPO" in text:
+    elif "A股" in text or (
+        "IPO" in text
+        and not source_id.startswith(CAPITAL_PORTFOLIO_PREFIX)
+    ):
         score += 10
         reasons.append("出现A股/IPO路径信号")
 
@@ -590,7 +593,11 @@ def build_candidate_snapshot(
                 row["score"] = max(int(row["score"]), score)
                 row["reasons"] = unique([*row["reasons"], *reasons], 8)
                 row["routes"][route_for(text)] += 1
-                if candidate_class == "mature-opportunity" and not has_listing_signal:
+                explicit_route = route_for(text) in {"STAR", "ChiNext"} or any(
+                    term in text
+                    for term in ("A股", *A_PLUS_H_TERMS)
+                )
+                if candidate_class == "mature-opportunity" and not explicit_route:
                     row["paths"]["unassigned"] += 1
                     row["stages"]["成熟期融资候选"] += 1
                 else:
@@ -599,7 +606,15 @@ def build_candidate_snapshot(
                         if any(term in text for term in A_PLUS_H_TERMS)
                         else "A"
                     ] += 1
-                    row["stages"][stage_for(text)] += 1
+                    detected_stage = stage_for(text)
+                    row["stages"][
+                        "成熟期融资候选"
+                        if (
+                            candidate_class == "mature-opportunity"
+                            and detected_stage == "待核验"
+                        )
+                        else detected_stage
+                    ] += 1
                 sector = clean(article.get("sector"), 160)
                 if sector and sector != "风险投资":
                     row["sectors"][sector] += 1
