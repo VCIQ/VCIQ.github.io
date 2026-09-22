@@ -151,6 +151,18 @@ def generated_at(payload: Any, rows: list[dict[str, Any]]) -> str:
 
 def safe_company_name(value: Any, brokers: set[str]) -> str:
     name = clean(value, 120).strip(" ,，:：;；|｜-—·")
+    for broker in sorted(brokers, key=len, reverse=True):
+        if not name.startswith(broker) or name == broker:
+            continue
+        remainder = name[len(broker) :].lstrip(" ：:，,、-—")
+        remainder = re.sub(
+            r"^(?:担任|作为|辅导|保荐|推进|助力|携手|服务|支持|拟|完成|启动|开启)+",
+            "",
+            remainder,
+        ).lstrip(" ：:，,、-—")
+        if remainder:
+            name = remainder
+            break
     key = identity(name)
     if not name or name in GENERIC_NAMES or len(key) < 2:
         return ""
