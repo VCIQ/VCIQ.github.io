@@ -107,8 +107,10 @@ def alias_index(seeds: dict[str, Any]) -> dict[str, str]:
                     index[key] = canonical
     for row in rows(seeds.get("projects")):
         canonical = clean(row.get("name"), 160)
-        for key in company_keys(canonical):
-            index.setdefault(key, canonical)
+        aliases = [canonical, *(row.get("aliases") or [])]
+        for alias in aliases:
+            for key in company_keys(alias):
+                index.setdefault(key, canonical)
     return index
 
 
@@ -137,6 +139,8 @@ def opportunity_rows(
     reviewed_keys: set[str] = set()
     for row in rows(seeds.get("projects")):
         reviewed_keys.update(company_keys(row.get("name")))
+        for alias in row.get("aliases", []) if isinstance(row.get("aliases"), list) else []:
+            reviewed_keys.update(company_keys(alias))
 
     institution_aliases = alias_index({"institutions": seeds.get("institutions", [])})
     portfolio_links: dict[str, set[str]] = {}
@@ -441,6 +445,7 @@ def main() -> int:
                 "route": row.get("route", ""),
                 "pool": row.get("pool", ""),
                 "stage": row.get("stage", ""),
+                "aliases": row.get("aliases", []),
                 "sourceUrl": (
                     row.get("source", {}).get("url", "")
                     if isinstance(row.get("source"), dict)
