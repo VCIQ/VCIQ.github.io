@@ -34,6 +34,20 @@ const watchlist = JSON.parse(
   read("config/innovation_listing_watchlist.json"),
 ) as Watchlist;
 
+const lifecycle = JSON.parse(
+  read("config/innovation_listing_lifecycle.json"),
+) as {
+  projects: Array<{
+    company: string;
+    broker: string;
+    route: string;
+    lifecycleStatus: string;
+    stage: string;
+    stockCode: string;
+    sources: Array<{ url: string; level: string }>;
+  }>;
+};
+
 const trackingSeeds = JSON.parse(
   read("config/innovation_capital_tracking_seeds.json"),
 ) as {
@@ -127,4 +141,23 @@ test("innovation capital remains a derived public channel while backend tracking
   assert.match(sync, /TRACK_SLUG = "innovation-capital"/u);
   assert.match(sync, /relationship-candidate-does-not-imply-confirmed/u);
   assert.doesNotMatch(automation, /"id": "innovation-capital"[\s\S]*"publicObjectTypes"/u);
+});
+
+
+test("listing lifecycle migrates accepted or listed hard-tech projects without losing broker lineage", () => {
+  const unitree = lifecycle.projects.find((item) => item.company.includes("宇树科技"));
+  const landspace = lifecycle.projects.find((item) => item.company.includes("蓝箭航天"));
+  assert.ok(unitree);
+  assert.ok(landspace);
+  assert.equal(unitree.broker, "中信证券");
+  assert.equal(unitree.route, "STAR");
+  assert.equal(unitree.lifecycleStatus, "listed");
+  assert.equal(unitree.stockCode, "688836");
+  assert.equal(landspace.broker, "中金公司");
+  assert.equal(landspace.lifecycleStatus, "exchange-review");
+  for (const project of lifecycle.projects) {
+    assert.ok(["中信证券", "中信建投", "中金公司", "国泰海通", "华泰联合"].includes(project.broker));
+    assert.ok(project.sources.some((source) => source.level === "regulatory"));
+    assert.ok(project.sources.every((source) => /^https:\/\//u.test(source.url)));
+  }
 });
