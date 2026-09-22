@@ -41,6 +41,21 @@ A_PLUS_H_TERMS = (
 PROJECT_SHARD_SIZE = 6
 POLICY_THEME_SHARD_SIZE = 4
 
+# Primary-source discovery is intentionally bounded to official domains. Search
+# indexes are used only as an index; allowedHosts keeps accepted result URLs on
+# the regulator / broker domain itself.
+PRIMARY_BROKER_HOSTS: dict[str, tuple[str, ...]] = {
+    "中信证券": ("citics.com", "ecitic.com"),
+    "中信建投": ("csc108.com",),
+    "中金公司": ("cicc.com",),
+    "国泰海通": ("gtja.com", "haitong.com"),
+    "华泰联合": ("htsc.com", "htsc.com.cn"),
+}
+PRIMARY_REGULATORY_HOSTS = ("eid.csrc.gov.cn",)
+REGULATORY_EVENT_TERMS = (
+    "辅导备案 OR 辅导进展 OR 辅导验收 OR 上市辅导 OR 辅导机构 OR IPO"
+)
+
 
 def load_watchlist(path: Path = WATCHLIST_PATH) -> dict[str, Any]:
     if not path.exists():
@@ -74,6 +89,35 @@ def _source(source_id: str, name: str, query: str, keywords: list[str]) -> dict[
     }
 
 
+def _bounded_primary_source(
+    source_id: str,
+    name: str,
+    query: str,
+    keywords: list[str],
+    *,
+    host: str,
+    source_level: str,
+    platform: str,
+) -> dict[str, Any]:
+    return {
+        "id": source_id,
+        "name": name,
+        "url": tracking._bing_rss(query),
+        "sourceUrl": f"https://{host}/",
+        "adapter": "rss",
+        "platform": platform,
+        "sourceLevel": source_level,
+        "sourceCategory": "company",
+        "sector": "风险投资",
+        "region": "中国",
+        "maxItems": 10,
+        "keywords": keywords,
+        "strictTitleKeywords": False,
+        "allowedHosts": [host],
+        "enabled": True,
+    }
+
+
 def generated_innovation_sources(payload: dict[str, Any]) -> list[dict[str, Any]]:
     sources: list[dict[str, Any]] = []
 
@@ -92,6 +136,36 @@ def generated_innovation_sources(payload: dict[str, Any]) -> list[dict[str, Any]
                 [broker],
             )
         )
+
+    # 1b) Regulatory / broker official discovery. These sources are accepted
+    # only when the result URL remains on the configured official domain.
+    for index, broker in enumerate(brokers, start=1):
+        for host_index, host in enumerate(PRIMARY_BROKER_HOSTS.get(broker, ()), start=1):
+            query = f'site:{host} ("{broker}") ({BROKER_EVENT_TERMS})'
+            sources.append(
+                _bounded_primary_source(
+                    f"{SOURCE_PREFIX}primary-broker-{index:02d}-{host_index:02d}",
+                    f"科创项目储备 · {broker} · 券商官方",
+                    query,
+                    [broker],
+                    host=host,
+                    source_level="官方披露",
+                    platform="券商官方网站",
+                )
+            )
+        for host_index, host in enumerate(PRIMARY_REGULATORY_HOSTS, start=1):
+            query = f'site:{host} ("{broker}") ({REGULATORY_EVENT_TERMS})'
+            sources.append(
+                _bounded_primary_source(
+                    f"{SOURCE_PREFIX}primary-regulatory-{index:02d}-{host_index:02d}",
+                    f"科创项目储备 · {broker} · 监管辅导公示",
+                    query,
+                    [broker],
+                    host=host,
+                    source_level="监管文件",
+                    platform="证监会辅导公示",
+                )
+            )
 
     # 2) A+H/H-share discovery: keep the broker identity explicit so a later
     # deterministic candidate builder can preserve the broker relationship.
