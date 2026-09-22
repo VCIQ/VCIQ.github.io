@@ -233,9 +233,16 @@ def source_host(article: dict[str, Any]) -> str:
 
 def broker_from_source(source_id: str, brokers: list[str]) -> str:
     match = re.fullmatch(
-        rf"{re.escape(SOURCE_PREFIX)}(?:broker|a-plus-h)-(\d{{2}})",
+        rf"{re.escape(SOURCE_PREFIX)}"
+        rf"(?:broker|a-plus-h)-(\d{{2}})",
         source_id,
     )
+    if not match:
+        match = re.fullmatch(
+            rf"{re.escape(SOURCE_PREFIX)}"
+            rf"(?:primary-broker|primary-regulatory)-(\d{{2}})-\d{{2}}",
+            source_id,
+        )
     if not match:
         return ""
     index = int(match.group(1)) - 1
@@ -342,7 +349,19 @@ def score_evidence(
     score = 0
     reasons: list[str] = []
 
-    if re.fullmatch(rf"{re.escape(SOURCE_PREFIX)}(?:broker|a-plus-h)-\d{{2}}", source_id):
+    if re.fullmatch(
+        rf"{re.escape(SOURCE_PREFIX)}primary-regulatory-\d{{2}}-\d{{2}}",
+        source_id,
+    ):
+        score += 32
+        reasons.append("命中证监会辅导公示定向源")
+    elif re.fullmatch(
+        rf"{re.escape(SOURCE_PREFIX)}primary-broker-\d{{2}}-\d{{2}}",
+        source_id,
+    ):
+        score += 28
+        reasons.append("命中券商官方定向源")
+    elif re.fullmatch(rf"{re.escape(SOURCE_PREFIX)}(?:broker|a-plus-h)-\d{{2}}", source_id):
         score += 20
         reasons.append("命中五大券商定向发现源")
     elif source_id.startswith(f"{SOURCE_PREFIX}policy-"):
@@ -577,6 +596,7 @@ def build_candidate_snapshot(
             "score": min(100, int(raw["score"]) + min(10, max(0, len(evidence) - 1) * 3)),
             "reasons": raw["reasons"],
             "evidenceClass": "primary-backed" if primary_count else "discovery-only",
+            "reviewPriority": "primary-first" if primary_count else "needs-primary-evidence",
             "primaryEvidenceCount": primary_count,
             "evidenceCount": len(evidence),
             "evidence": evidence,
@@ -618,6 +638,7 @@ def build_candidate_snapshot(
             "rule": (
                 "自动发现只进入候选队列；不得自动写入 innovation_listing_watchlist.json。"
                 "十五五主题只决定发现范围，不推断上市板块。"
+                "监管/券商官方证据优先进入人工复核；仅发现型证据须先补一级来源。"
             ),
         },
     }
