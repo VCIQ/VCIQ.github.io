@@ -117,6 +117,13 @@ def _is_invalid_automatic_person(value: Any) -> bool:
 
 
 def _provenance(evidence: set[str]) -> tuple[str, float, int | None]:
+    if evidence & {
+        "verified-innovation-listing-project",
+        "verified-innovation-broker",
+        "verified-innovation-capital-institution",
+        "verified-innovation-capital-taxonomy",
+    }:
+        return "auto:reviewed-innovation-capital", 0.99, 3650
     if any(
         marker.startswith("verified-")
         or marker in {
