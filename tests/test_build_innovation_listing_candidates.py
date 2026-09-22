@@ -117,6 +117,35 @@ class InnovationListingCandidateBuilderTests(unittest.TestCase):
         ah = by_name["星海生物科技股份有限公司"]
         self.assertEqual(ah["capitalMarketPath"], "A+H")
 
+    def test_primary_regulatory_source_is_primary_backed_and_broker_bound(self):
+        payload = {
+            "generatedAt": "2026-09-22T08:00:00+00:00",
+            "articles": [
+                {
+                    "id": "reg-1",
+                    "sourceId": "innovation-listing-primary-regulatory-01-01",
+                    "title": "星核半导体科技股份有限公司完成IPO辅导备案",
+                    "summary": "中信证券为辅导机构，公司聚焦人工智能芯片。",
+                    "publishedAt": "2026-09-22",
+                    "sector": "半导体",
+                    "source": {
+                        "name": "证监会辅导公示",
+                        "url": "https://eid.csrc.gov.cn/example/reg-1",
+                        "level": "监管文件",
+                    },
+                }
+            ],
+        }
+        snapshot = builder.build_candidate_snapshot(payload, self.watchlist(), {})
+        self.assertEqual(snapshot["pendingCount"], 1)
+        row = snapshot["candidates"][0]
+        self.assertEqual(row["company"], "星核半导体科技股份有限公司")
+        self.assertEqual(row["broker"], "中信证券")
+        self.assertEqual(row["evidenceClass"], "primary-backed")
+        self.assertEqual(row["reviewPriority"], "primary-first")
+        self.assertEqual(row["primaryEvidenceCount"], 1)
+        self.assertIn("命中证监会辅导公示定向源", row["reasons"])
+
     def test_human_decision_is_sticky_but_does_not_mutate_watchlist(self):
         initial = builder.build_candidate_snapshot(self.payload(), self.watchlist(), {})
         key = next(
