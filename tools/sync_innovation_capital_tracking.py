@@ -464,6 +464,7 @@ def main() -> int:
                 "route": row.get("route", ""),
                 "pool": "lifecycle",
                 "stage": row.get("stage", ""),
+                "aliases": row.get("aliases", []),
                 "sourceUrl": (
                     row.get("sources", [{}])[0].get("url", "")
                     if isinstance(row.get("sources"), list)
