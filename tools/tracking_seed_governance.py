@@ -120,7 +120,7 @@ def _provenance(evidence: set[str]) -> tuple[str, float, int | None]:
     if evidence & {
         "verified-innovation-listing-project",
         "verified-innovation-broker",
-        "verified-innovation-capital-institution",
+        "innovation-capital-institution-watch",
         "verified-innovation-capital-taxonomy",
     }:
         return "auto:reviewed-innovation-capital", 0.99, 3650
