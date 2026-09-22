@@ -35,6 +35,7 @@ CONFIG_PATH = ROOT / "config" / "user_tracking.json"
 LEDGER_PATH = ROOT / "config" / "tracking_auto_discovery.json"
 COMPANY_REGISTRY_PATH = ROOT / "config" / "company_registry.json"
 VENTURE_PROFILES_PATH = ROOT / "public" / "data" / "venture_profiles.json"
+WATCHLIST_PATH = ROOT / "config" / "innovation_listing_watchlist.json"
 
 TRACK_SLUG = "innovation-capital"
 TRACK_NAME = "科创资本"
@@ -401,6 +402,26 @@ def main() -> int:
     )
     registry = load_json(COMPANY_REGISTRY_PATH, {})
     venture = load_json(VENTURE_PROFILES_PATH, {})
+    watchlist = load_json(WATCHLIST_PATH, {})
+    if isinstance(watchlist, dict) and isinstance(watchlist.get("projects"), list):
+        seeds = dict(seeds)
+        seeds["projects"] = [
+            {
+                "name": row.get("company", ""),
+                "broker": row.get("broker", ""),
+                "sector": row.get("sector", ""),
+                "route": row.get("route", ""),
+                "pool": row.get("pool", ""),
+                "stage": row.get("stage", ""),
+                "sourceUrl": (
+                    row.get("source", {}).get("url", "")
+                    if isinstance(row.get("source"), dict)
+                    else ""
+                ),
+            }
+            for row in watchlist["projects"]
+            if isinstance(row, dict)
+        ]
     if not isinstance(seeds, dict) or seeds.get("schemaVersion") != 1:
         raise SystemExit("innovation capital tracking seeds are missing or invalid")
     if not isinstance(config, dict) or not isinstance(config.get("tracks"), list):
