@@ -325,7 +325,7 @@ def sync(
         )
     for row in rows(seeds.get("institutions")):
         evidence = [
-            "verified-innovation-capital-institution",
+            "innovation-capital-institution-watch",
             "relationship-candidate-does-not-imply-confirmed",
         ]
         evidence.extend(
