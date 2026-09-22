@@ -54,6 +54,7 @@ jobs:
         if: steps.due.outputs.due == 'true'
         run: |
           python -m py_compile \
+            tools/crawl_with_innovation_listing_watchlist.py \
             tools/crawl_with_star_vc_watchlist.py \
             tools/crawl_with_wechat_registry.py \
             tools/prepare_frequent_refresh.py \
@@ -72,15 +73,16 @@ jobs:
             tests.test_frequent_refresh_audit \
             tests.test_frequent_refresh_due \
             tests.test_star_vc_watchlist_bridge \
+            tests.test_innovation_listing_watchlist_bridge \
             tests.test_pipeline_control
       - name: Record the pre-refresh article baseline
         if: steps.due.outputs.due == 'true'
         run: python tools/prepare_frequent_refresh.py
-      - name: Crawl news, tracking, STAR VC watchlist, professional media, X and WeChat sources
+      - name: Crawl news, tracking, innovation listing watchlist, STAR VC watchlist, professional media, X and WeChat sources
         if: steps.due.outputs.due == 'true'
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
-        run: python tools/crawl_with_star_vc_watchlist.py --source news
+        run: python tools/crawl_with_innovation_listing_watchlist.py --source news
       - name: Apply deterministic article enrichment and retention
         if: steps.due.outputs.due == 'true'
         run: |

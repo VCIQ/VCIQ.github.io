@@ -43,8 +43,10 @@ class FrequentRefreshWorkflowTests(unittest.TestCase):
 
     def test_lightweight_refresh_only_crawls_news_families(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
-        self.assertIn("python tools/crawl_with_star_vc_watchlist.py --source news", text)
+        self.assertIn("python tools/crawl_with_innovation_listing_watchlist.py --source news", text)
+        self.assertIn("tools/crawl_with_innovation_listing_watchlist.py", text)
         self.assertIn("tools/crawl_with_star_vc_watchlist.py", text)
+        self.assertIn("tests.test_innovation_listing_watchlist_bridge", text)
         self.assertIn("tests.test_star_vc_watchlist_bridge", text)
         self.assertIn("python tools/finalize_frequent_refresh.py", text)
         self.assertNotIn("python -m tools.us_ir_baseline_disclosures", text)

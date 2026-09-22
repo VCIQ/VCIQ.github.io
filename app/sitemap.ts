@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
     "",
     "/technologies",
+    "/innovation-capital",
     "/people",
     "/companies",
     "/sources",
