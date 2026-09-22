@@ -1,6 +1,7 @@
 import companyRegistry from "@/config/company_registry.json";
 import trackingSeeds from "@/config/innovation_capital_tracking_seeds.json";
 import listingWatchlist from "@/config/innovation_listing_watchlist.json";
+import listingLifecycle from "@/config/innovation_listing_lifecycle.json";
 import ventureProfiles from "@/public/data/venture_profiles.json";
 
 type JsonRecord = Record<string, unknown>;
@@ -148,6 +149,9 @@ function roundValues(profile: JsonRecord): string[] {
 function reviewedCompanyKeys(): Set<string> {
   const result = new Set<string>();
   for (const project of listingWatchlist.projects) {
+    for (const key of companyKeys(project.company)) result.add(key);
+  }
+  for (const project of listingLifecycle.projects) {
     for (const key of companyKeys(project.company)) result.add(key);
   }
   return result;
