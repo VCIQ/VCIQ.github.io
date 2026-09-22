@@ -1,4 +1,5 @@
 import companyRegistry from "@/config/company_registry.json";
+import matureCandidates from "@/config/innovation_capital_mature_candidates.json";
 import trackingSeeds from "@/config/innovation_capital_tracking_seeds.json";
 import listingWatchlist from "@/config/innovation_listing_watchlist.json";
 import listingLifecycle from "@/config/innovation_listing_lifecycle.json";
@@ -15,6 +16,7 @@ export type InnovationOpportunity = {
   policyThemes: string[];
   latestRound: string;
   latestDate: string;
+  financingAmount: string;
   lateStageRounds: string[];
   institutionBackers: string[];
   evidenceScore: number;
@@ -262,6 +264,7 @@ export function buildInnovationOpportunityPool(): InnovationOpportunity[] {
       policyThemes,
       latestRound: text(capital.latestRound, 80),
       latestDate: text(capital.latestDate, 40),
+      financingAmount: "",
       lateStageRounds,
       institutionBackers,
       evidenceScore: scoreEvidence,
@@ -271,6 +274,78 @@ export function buildInnovationOpportunityPool(): InnovationOpportunity[] {
       signals,
       gaps,
     });
+  }
+
+  for (const raw of matureCandidates.candidates) {
+    const candidate = record(raw);
+    const name = text(candidate.name, 160);
+    const aliases = [name, ...list(candidate.aliases).map((value) => text(value, 160))];
+    const candidateKeys = new Set(aliases.flatMap((value) => companyKeys(value)));
+    if (!name || [...candidateKeys].some((key) => reviewed.has(key))) continue;
+
+    const institutionBackers = list(candidate.institutionBackers)
+      .map((value) => text(value, 160))
+      .filter(Boolean);
+    const financingRound = text(candidate.financingRound, 100);
+    const maturityClass = text(candidate.maturityClass, 80);
+    const source = record(candidate.source);
+    const sourceUrl = text(source.url, 1200);
+    const sourceLevel = text(source.level, 80);
+
+    let readinessScore = 0;
+    const signals: string[] = [];
+    const gaps: string[] = [];
+    const lateStageRounds = lateStageRound.test(financingRound) ? [financingRound] : [];
+
+    if (lateStageRounds.length) {
+      readinessScore += 35;
+      signals.push("已有 D/E/Pre-IPO 等成熟期融资一级证据");
+    } else if (maturityClass === "large-growth") {
+      readinessScore += 20;
+      signals.push("已有大额成长融资一级证据，具体轮次未公开");
+    }
+    if (institutionBackers.length) {
+      readinessScore += 18;
+      signals.push("已命中科创资本机构种子的公开投资关系");
+    }
+    if (["官方披露", "投资机构官方", "监管文件", "交易所公告"].includes(sourceLevel)) {
+      readinessScore += 12;
+      signals.push("融资事实具备一级公开来源");
+    }
+    if (!list(candidate.brokerEvidence).length) {
+      gaps.push("尚未发现五大券商一级辅导证据");
+    }
+    if (text(candidate.routeEvidence, 80) === "unassigned") {
+      gaps.push("尚未锁定上交所科创板或深交所创业板路径");
+    }
+
+    readinessScore = Math.min(100, readinessScore);
+    const manualRow: InnovationOpportunity = {
+      slug: text(candidate.id, 160) || normalize(name),
+      name,
+      sector: text(candidate.sector, 80),
+      stage: "成熟期融资候选",
+      headquarters: "",
+      policyThemes: list(candidate.policyThemes).map((value) => text(value, 80)).filter(Boolean),
+      latestRound: financingRound,
+      latestDate: text(candidate.financingDate, 40),
+      financingAmount: text(candidate.financingAmount, 100),
+      lateStageRounds,
+      institutionBackers,
+      evidenceScore: sourceUrl ? 90 : 60,
+      readinessScore,
+      readinessBand: readinessScore >= 65 ? "重点复核" : readinessScore >= 40 ? "持续跟踪" : "资料补全",
+      sourceUrl,
+      signals,
+      gaps,
+    };
+
+    for (let index = result.length - 1; index >= 0; index -= 1) {
+      if (companyKeys(result[index].name).some((key) => candidateKeys.has(key))) {
+        result.splice(index, 1);
+      }
+    }
+    result.push(manualRow);
   }
 
   return result.sort((left, right) =>
