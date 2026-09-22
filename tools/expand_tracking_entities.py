@@ -280,7 +280,7 @@ def validate_keyword(value: str) -> str:
 
 PERSON_NAME_NOISE_RE = re.compile(
     r"(?:\b(?:company|business|corporate|global|development|sales|marketing|"
-    r"supply\s+chain|manufacturing|technologies?|systems?|senior|vice|president|"
+    r"supply\s+chain|manufacturing|technologies?|systems?|senior|vice|presiden(?:t)?|governo(?:r)?|government|class|"
     r"officer|cfo|cto|ceo|team|leadership|management|press|news|post|co)\b|"
     r"关注|作为|参加|出席|共同|主题演讲|演讲|负责|表示|介绍|宣布|致辞|担任|"
     r"现任|曾任|来自|团队|公司|集团|部门|供应链|业务发展)",
