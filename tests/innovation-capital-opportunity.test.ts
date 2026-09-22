@@ -25,6 +25,8 @@ test("hard-tech opportunity pool stays separate from reviewed listing watchlist"
   assert.ok(rows.every((item) => item.policyThemes.length > 0));
   assert.ok(rows.every((item) => !reviewed.has(key(item.name))));
   assert.ok(rows.every((item) => item.readinessScore >= 0 && item.readinessScore <= 100));
+  assert.equal(rows.some((item) => item.slug === "unitree"), false);
+  assert.equal(rows.some((item) => item.slug === "landspace"), false);
 });
 
 test("late-stage hard-tech signals are promoted for review without becoming listing probability", () => {
@@ -43,4 +45,15 @@ test("innovation capital channel renders the institution-derived opportunity sou
   assert.match(client, /硬科技潜在项目源/u);
   assert.match(client, /机构组合线索/u);
   assert.match(client, /D \/ E \/ Pre-IPO/u);
+});
+
+
+test("post-counselling lifecycle projects are rendered separately from the opportunity pool", () => {
+  const lifecycle = fs.readFileSync(
+    new URL("../app/innovation-capital/innovation-listing-lifecycle.tsx", import.meta.url),
+    "utf8",
+  );
+  assert.match(lifecycle, /科创上市生命周期/u);
+  assert.match(lifecycle, /交易所\/监管一级公开证据/u);
+  assert.match(page, /InnovationListingLifecycle/u);
 });
