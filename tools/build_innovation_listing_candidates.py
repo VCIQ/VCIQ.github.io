@@ -17,6 +17,7 @@ import argparse
 import hashlib
 import json
 import re
+import unicodedata
 from collections import Counter
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
@@ -83,12 +84,7 @@ def clean(value: Any, limit: int = 2000) -> str:
 
 
 def normalize(value: Any) -> str:
-    return (
-        clean(value, 500)
-        .normalize("NFKC")
-        .casefold()
-        .replace("＆", "&")
-    )
+    return unicodedata.normalize("NFKC", clean(value, 500)).casefold().replace("＆", "&")
 
 
 def identity(value: Any) -> str:
