@@ -144,6 +144,21 @@ class InnovationCapitalTrackingSyncTests(unittest.TestCase):
         self.assertIn("具身智能", row["policyThemes"])
         self.assertGreaterEqual(row["readinessScore"], 80)
 
+    def test_opportunity_projects_are_first_in_tracking_runtime_window(self):
+        config = {"schemaVersion": 1, "tracks": [], "sources": []}
+        syncer.sync(
+            config,
+            self.ledger(),
+            self.seeds(),
+            self.registry(),
+            self.venture(),
+        )
+        track = next(row for row in config["tracks"] if row["slug"] == "innovation-capital")
+        self.assertEqual(track["sampleCompanies"][0], "银河通用")
+        self.assertIn("甲硬科技股份有限公司", track["sampleCompanies"])
+        self.assertIn("中金公司", track["sampleCompanies"])
+        self.assertIn("启明创投", track["sampleCompanies"])
+
     def test_removed_seed_is_not_silently_restored(self):
         config = {
             "schemaVersion": 1,
