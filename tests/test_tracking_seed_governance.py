@@ -115,6 +115,54 @@ class TrackingSeedGovernanceTests(unittest.TestCase):
         self.assertEqual(row["confidence"], 0.97)
         self.assertEqual(row["expiresAt"], "2027-08-01T00:00:00+00:00")
 
+    def test_malformed_automatic_people_are_removed_and_tombstoned(self) -> None:
+        config = self._config()
+        config["tracks"][0]["keywords"] = ["大模型"]
+        config["tracks"][0]["people"] = [
+            "Sam Altman",
+            "Class Presiden Thomas Sonderman",
+            "Massachusetts Governo Chris Ballance",
+            "Manual Class Example",
+        ]
+        ledger = {
+            "schemaVersion": 1,
+            "updatedAt": "",
+            "tracks": {},
+            "added": [
+                {
+                    "track": "ai",
+                    "kind": "people",
+                    "value": "Class Presiden Thomas Sonderman",
+                    "addedAt": "2026-08-01T00:00:00+00:00",
+                    "evidence": ["sample-company-core-team", "verified-company-profile"],
+                },
+                {
+                    "track": "ai",
+                    "kind": "people",
+                    "value": "Massachusetts Governo Chris Ballance",
+                    "addedAt": "2026-08-01T00:00:00+00:00",
+                    "evidence": ["sample-company-core-team", "verified-company-profile"],
+                },
+            ],
+            "removed": [],
+        }
+
+        report = governance.govern(
+            config,
+            ledger,
+            now=datetime(2026, 8, 8, tzinfo=timezone.utc),
+        )
+
+        self.assertEqual(
+            config["tracks"][0]["people"],
+            ["Sam Altman", "Manual Class Example"],
+        )
+        self.assertEqual(len(report["invalidAutomaticPeopleRemoved"]), 2)
+        self.assertEqual(ledger["added"], [])
+        removed = {(row["kind"], row["value"]) for row in ledger["removed"]}
+        self.assertIn(("people", "Class Presiden Thomas Sonderman"), removed)
+        self.assertIn(("people", "Massachusetts Governo Chris Ballance"), removed)
+
     def test_expired_entries_are_removed_without_permanent_tombstone(self) -> None:
         config = self._config()
         config["tracks"][0]["keywords"] = ["大模型", "agentic ai"]
