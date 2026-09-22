@@ -170,6 +170,7 @@ jobs:
             python tools/reconcile_entity_resolution.py --check
             python tools/reconcile_manual_institution_intents.py --check
             python tools/reconcile_legacy_manual_confirmed_tracking.py --check
+            python tools/tracking_seed_governance.py --check
             python tools/tracking_entity_integrity.py
             python tools/apply_manual_company_trust.py \
               --candidates "$CANDIDATE_QUEUE" \
