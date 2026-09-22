@@ -67,6 +67,37 @@ class InnovationListingCandidateReviewTests(unittest.TestCase):
         )
         self.assertEqual(report["promotionStatus"], "ready-for-mechanical-promotion")
 
+    def test_mature_opportunity_accept_waits_for_broker_evidence(self):
+        mature = {
+            **self.candidate,
+            "decisionKey": "成熟机器人科技|unassigned",
+            "candidateFingerprint": "c" * 64,
+            "candidateClass": "mature-opportunity",
+            "company": "成熟机器人科技",
+            "broker": "",
+            "evidenceClass": "primary-backed",
+        }
+        queue = {"candidates": [mature]}
+        request = validate_request(
+            candidate_key=mature["decisionKey"],
+            candidate_fingerprint=mature["candidateFingerprint"],
+            decision="accepted",
+            note="人工确认成熟期融资事实，辅导券商仍待补证。",
+            reviewed_by="VCIQ/tracking-console",
+        )
+        updated, report = apply_decision(
+            queue,
+            self.decisions,
+            request,
+            now=self.now,
+        )
+        self.assertEqual(
+            updated["decisions"][mature["decisionKey"]]["promotionStatus"],
+            "awaiting-broker-evidence",
+        )
+        self.assertEqual(report["promotionStatus"], "awaiting-broker-evidence")
+        self.assertEqual(report["broker"], "")
+
     def test_reject_is_sticky(self):
         request = self.request(decision="rejected", note="人工确认误匹配。")
         updated, report = apply_decision(
