@@ -1,0 +1,245 @@
+name: Internal innovation listing candidate review
+
+# Authenticated control-plane entry. Inputs, logs and notes are public audit data.
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: "Validate previews; apply records the final human decision"
+        required: true
+        default: apply
+        type: choice
+        options: [validate, apply]
+      candidate_key:
+        description: "Fingerprint-bound innovation listing candidate key"
+        required: true
+        type: string
+      candidate_fingerprint:
+        description: "Candidate SHA-256 evidence fingerprint"
+        required: true
+        type: string
+      decision:
+        description: "Final human decision"
+        required: true
+        type: choice
+        options: [accepted, rejected]
+      note:
+        description: "Optional PUBLIC audit note; never enter confidential information"
+        required: false
+        default: ""
+        type: string
+
+permissions: {}
+
+env:
+  EXPECTED_REPOSITORY: VCIQ/VCIQ.github.io
+
+jobs:
+  authorize:
+    name: Authorize innovation listing reviewer
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: Require canonical repository, main and workflow dispatch
+        env:
+          ACTUAL_REPOSITORY: ${{ github.repository }}
+          ACTUAL_REF: ${{ github.ref }}
+          ACTUAL_EVENT: ${{ github.event_name }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$ACTUAL_REPOSITORY" = "$EXPECTED_REPOSITORY"
+          test "$ACTUAL_REF" = "refs/heads/main"
+          test "$ACTUAL_EVENT" = "workflow_dispatch"
+
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Require initiator and rerun actor to be allowlisted
+        env:
+          ACTOR: ${{ github.actor }}
+          TRIGGERING_ACTOR: ${{ github.triggering_actor }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          admins = json.loads(Path("config/tracking_admins.json").read_text(encoding="utf-8"))
+          allowed = {
+              str(actor).strip().casefold()
+              for actor in admins.get("actors", [])
+              if str(actor).strip()
+          }
+          checked = {
+              "github.actor": os.environ.get("ACTOR", "").strip(),
+              "github.triggering_actor": os.environ.get("TRIGGERING_ACTOR", "").strip(),
+          }
+          denied = [label for label, actor in checked.items() if actor.casefold() not in allowed]
+          if denied:
+              raise SystemExit(
+                  "innovation listing review actor is not allowlisted: " + ", ".join(denied)
+              )
+          print("authorized actors: " + ", ".join(checked.values()))
+          PY
+
+  validate:
+    name: Validate innovation listing candidate review
+    needs: authorize
+    if: inputs.operation == 'validate'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: tracking-admin
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 1
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Validate fingerprint-bound decision
+        env:
+          CANDIDATE_KEY: ${{ inputs.candidate_key }}
+          CANDIDATE_FINGERPRINT: ${{ inputs.candidate_fingerprint }}
+          DECISION: ${{ inputs.decision }}
+          NOTE: ${{ inputs.note }}
+          ACTOR: ${{ github.actor }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile tools/innovation_listing_candidate_review.py
+          python tools/innovation_listing_candidate_review.py \
+            --mode validate \
+            --candidate-key "$CANDIDATE_KEY" \
+            --candidate-fingerprint "$CANDIDATE_FINGERPRINT" \
+            --decision "$DECISION" \
+            --note "$NOTE" \
+            --reviewed-by "$ACTOR/tracking-console" \
+            | tee /tmp/innovation-listing-review.json
+          {
+            echo "## Innovation listing candidate review validation"
+            echo
+            echo '~~~json'
+            cat /tmp/innovation-listing-review.json
+            echo '~~~'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  apply:
+    name: Apply innovation listing candidate review
+    needs: authorize
+    if: inputs.operation == 'apply'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: tracking-admin
+    concurrency:
+      group: vciq-repository-writer-${{ github.ref }}
+      queue: max
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Capture writer base
+        id: base
+        shell: bash
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Apply fingerprint-bound final decision
+        id: decision
+        env:
+          CANDIDATE_KEY: ${{ inputs.candidate_key }}
+          CANDIDATE_FINGERPRINT: ${{ inputs.candidate_fingerprint }}
+          DECISION: ${{ inputs.decision }}
+          NOTE: ${{ inputs.note }}
+          ACTOR: ${{ github.actor }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            tools/innovation_listing_candidate_review.py \
+            tools/build_innovation_listing_candidates.py
+          python tools/innovation_listing_candidate_review.py \
+            --mode apply \
+            --candidate-key "$CANDIDATE_KEY" \
+            --candidate-fingerprint "$CANDIDATE_FINGERPRINT" \
+            --decision "$DECISION" \
+            --note "$NOTE" \
+            --reviewed-by "$ACTOR/tracking-console" \
+            | tee /tmp/innovation-listing-review.json
+
+          changed="$(python -c "import json; print(str(bool(json.load(open('/tmp/innovation-listing-review.json'))['changed'])).lower())")"
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+
+          if [ "$changed" = "true" ]; then
+            python tools/build_innovation_listing_candidates.py
+            python tools/build_innovation_listing_candidates.py --check
+          fi
+
+      - name: Run review regressions
+        if: steps.decision.outputs.changed == 'true'
+        run: |
+          python -m unittest \
+            tests.test_innovation_listing_candidate_review \
+            tests.test_build_innovation_listing_candidates
+
+      - name: Commit only decision and derived review queue
+        if: steps.decision.outputs.changed == 'true'
+        env:
+          BASE_SHA: ${{ steps.base.outputs.sha }}
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- \
+            config/innovation_listing_candidate_decisions.json \
+            config/innovation_listing_candidate_review_queue.json
+          git diff --cached --quiet && {
+            echo "review reported a change but approved files are unchanged" >&2
+            exit 1
+          }
+          git commit -m "config: apply innovation listing candidate review"
+
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "$BASE_SHA" || {
+            echo "main advanced during the short writer section; retry this review" >&2
+            exit 1
+          }
+          gh auth setup-git
+          git push origin HEAD:main
+
+      - name: Summarize public audit record
+        if: always() && steps.decision.outcome != 'skipped'
+        shell: bash
+        run: |
+          {
+            echo "## Innovation listing candidate review"
+            echo
+            echo "> This human decision is final. Accepted candidates proceed only through mechanical evidence gates; no second human approval is required."
+            echo
+            echo "> Inputs, logs and review notes in this public repository are not confidential."
+            echo
+            echo '~~~json'
+            cat /tmp/innovation-listing-review.json 2>/dev/null || true
+            echo '~~~'
+          } >> "$GITHUB_STEP_SUMMARY"
