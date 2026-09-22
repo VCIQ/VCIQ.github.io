@@ -150,6 +150,9 @@ function reviewedCompanyKeys(): Set<string> {
   const result = new Set<string>();
   for (const project of listingWatchlist.projects) {
     for (const key of companyKeys(project.company)) result.add(key);
+    for (const alias of project.aliases ?? []) {
+      for (const key of companyKeys(alias)) result.add(key);
+    }
   }
   for (const project of listingLifecycle.projects) {
     for (const key of companyKeys(project.company)) result.add(key);
