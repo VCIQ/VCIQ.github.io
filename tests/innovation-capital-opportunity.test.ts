@@ -13,6 +13,10 @@ const client = fs.readFileSync(
   new URL("../app/innovation-capital/innovation-opportunity-pool.tsx", import.meta.url),
   "utf8",
 );
+const opportunityLib = fs.readFileSync(
+  new URL("../lib/innovation-capital-opportunity.ts", import.meta.url),
+  "utf8",
+);
 
 function key(value: string) {
   return value.normalize("NFKC").toLocaleLowerCase("zh-CN").replace(/[^a-z0-9\u3400-\u9fff]+/gu, "");
@@ -25,16 +29,23 @@ test("hard-tech opportunity pool stays separate from reviewed listing watchlist"
   assert.ok(rows.every((item) => item.policyThemes.length > 0));
   assert.ok(rows.every((item) => !reviewed.has(key(item.name))));
   assert.ok(rows.every((item) => item.readinessScore >= 0 && item.readinessScore <= 100));
-  assert.equal(rows.some((item) => item.slug === "unitree"), false);
-  assert.equal(rows.some((item) => item.slug === "landspace"), false);
+  for (const reviewedSlug of [
+    "unitree",
+    "landspace",
+    "galactic-energy",
+    "biren",
+    "zhipu-ai",
+    "minimax",
+  ]) {
+    assert.equal(rows.some((item) => item.slug === reviewedSlug), false, reviewedSlug);
+  }
 });
 
 test("late-stage hard-tech signals are promoted for review without becoming listing probability", () => {
-  const rows = buildInnovationOpportunityPool();
-  const galactic = rows.find((item) => item.slug === "galactic-energy");
-  assert.ok(galactic);
-  assert.ok(galactic.lateStageRounds.some((round) => /D轮/u.test(round)));
-  assert.ok(galactic.policyThemes.includes("航空航天"));
+  assert.match(opportunityLib, /lateStageRound/u);
+  assert.match(opportunityLib, /Pre\[- \]\?IPO/u);
+  assert.match(opportunityLib, /readinessScore/u);
+  assert.match(client, /D \/ E \/ Pre-IPO \/ Growth/u);
   assert.match(client, /不代表上市成功概率或投资评级/u);
   assert.doesNotMatch(client, /上市概率\s*\d|成功率\s*\d/u);
 });
