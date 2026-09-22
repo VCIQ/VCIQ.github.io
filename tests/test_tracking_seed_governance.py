@@ -115,6 +115,35 @@ class TrackingSeedGovernanceTests(unittest.TestCase):
         self.assertEqual(row["confidence"], 0.97)
         self.assertEqual(row["expiresAt"], "2027-08-01T00:00:00+00:00")
 
+    def test_reviewed_innovation_capital_seeds_get_long_retention(self) -> None:
+        config = self._config()
+        config["tracks"][0]["keywords"] = ["大模型"]
+        config["tracks"][0]["sampleCompanies"] = ["星河动力"]
+        ledger = {
+            "schemaVersion": 1,
+            "updatedAt": "",
+            "tracks": {},
+            "added": [
+                {
+                    "track": "ai",
+                    "kind": "sampleCompanies",
+                    "value": "星河动力",
+                    "addedAt": "2026-08-01T00:00:00+00:00",
+                    "evidence": ["verified-innovation-listing-project"],
+                }
+            ],
+            "removed": [],
+        }
+        governance.govern(
+            config,
+            ledger,
+            now=datetime(2026, 8, 8, tzinfo=timezone.utc),
+        )
+        row = ledger["added"][0]
+        self.assertEqual(row["termProvenance"], "auto:reviewed-innovation-capital")
+        self.assertEqual(row["confidence"], 0.99)
+        self.assertEqual(row["expiresAt"], "2036-07-29T00:00:00+00:00")
+
     def test_malformed_automatic_people_are_removed_and_tombstoned(self) -> None:
         config = self._config()
         config["tracks"][0]["keywords"] = ["大模型"]
