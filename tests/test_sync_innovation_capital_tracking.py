@@ -130,6 +130,43 @@ class InnovationCapitalTrackingSyncTests(unittest.TestCase):
         self.assertIn("银河通用", track["sampleCompanies"])
         self.assertGreaterEqual(len(result["mergedAliases"]), 1)
 
+    def test_researched_mature_candidate_overrides_weaker_registry_row(self):
+        mature = {
+            "candidates": [
+                {
+                    "id": "galbot-mature",
+                    "name": "银河通用",
+                    "aliases": ["银河通用", "Galbot"],
+                    "sector": "机器人",
+                    "policyThemes": ["智能机器人", "具身智能"],
+                    "financingRound": "D+轮",
+                    "financingAmount": "25亿元人民币",
+                    "financingDate": "2026-03-02",
+                    "maturityClass": "late-stage",
+                    "institutionBackers": ["启明创投"],
+                    "source": {
+                        "url": "https://example.com/galbot-dplus",
+                        "level": "投资机构官方",
+                    },
+                }
+            ]
+        }
+        rows = syncer.opportunity_rows(
+            self.registry(),
+            self.venture(),
+            self.seeds(),
+            mature,
+        )
+        galbot = next(row for row in rows if row["name"] == "银河通用")
+        self.assertEqual(galbot["latestRound"], "D+轮")
+        self.assertEqual(galbot["financingAmount"], "25亿元人民币")
+        self.assertEqual(galbot["institutionBackers"], ["启明创投"])
+        self.assertGreaterEqual(galbot["readinessScore"], 65)
+        self.assertEqual(
+            len([row for row in rows if row["name"] == "银河通用"]),
+            1,
+        )
+
     def test_opportunity_pool_prioritizes_late_stage_institution_backed_hard_tech(self):
         rows = syncer.opportunity_rows(
             self.registry(),
