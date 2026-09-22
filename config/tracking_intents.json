@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-22T00:50:33+00:00",
+  "updatedAt": "2026-09-22T00:59:17+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -15417,6 +15417,58 @@
       "resolutionSource": "human-decision",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-22T00:50:33+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "person:bill-ford",
+      "kind": "person",
+      "name": "Bill Ford",
+      "aliases": [],
+      "keywords": [],
+      "state": "active",
+      "resolutionSource": "people-registry",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-09-22T00:59:17+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "person:massachusetts-governo-chris-ballance",
+      "kind": "person",
+      "name": "Massachusetts Governo Chris Ballance",
+      "aliases": [],
+      "keywords": [],
+      "state": "active",
+      "resolutionSource": "people-registry",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-09-22T00:59:17+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-931c7615d1b81448b160",
+      "kind": "technology",
+      "name": "核聚变",
+      "aliases": [],
+      "keywords": [
+        "核聚变"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-09-22T00:59:17+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-86f00987511150137192",
+      "kind": "technology",
+      "name": "电子",
+      "aliases": [],
+      "keywords": [
+        "电子"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-09-22T00:59:17+00:00",
       "createdBy": "VCIQ"
     }
   ],
@@ -79911,6 +79963,194 @@
         "source": "institution-directory",
         "reason": "名称唯一命中已核验投资机构目录；仅解析机构身份，不代表公司档案发布。",
         "decisionKey": "红杉中国",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-6b660e83cab821116043",
+      "trackId": "track:fusion",
+      "entityId": "person:bill-ford",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-4a7f73501a4ee4b5a951",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-22T00:59:17+00:00",
+          "evidenceUrl": "",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "赛道关注对象管理器:批量确认自动扩展为持续关注(可控核聚变)"
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-8723760a872c1820217b5316",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-22T00:59:17+00:00",
+        "trackId": "track:fusion",
+        "entityId": "person:bill-ford",
+        "requestedName": "Bill Ford",
+        "kind": "person"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "person",
+        "entityType": "person",
+        "canonicalName": "Bill Ford",
+        "targetId": "person:bill-ford",
+        "confidence": "high",
+        "source": "people-registry",
+        "reason": "名称唯一命中正式人物目录。",
+        "decisionKey": "billford",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-e90cc90caa7e4dcd015a",
+      "trackId": "track:fusion",
+      "entityId": "person:massachusetts-governo-chris-ballance",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-b5874023262fca4fadac",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-22T00:59:17+00:00",
+          "evidenceUrl": "",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "赛道关注对象管理器:批量确认自动扩展为持续关注(可控核聚变)"
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-4a4da206592c192122105e59",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-22T00:59:17+00:00",
+        "trackId": "track:fusion",
+        "entityId": "person:massachusetts-governo-chris-ballance",
+        "requestedName": "Massachusetts Governo Chris Ballance",
+        "kind": "person"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "person",
+        "entityType": "person",
+        "canonicalName": "Massachusetts Governo Chris Ballance",
+        "targetId": "person:massachusetts-governo-chris-ballance",
+        "confidence": "high",
+        "source": "people-registry",
+        "reason": "名称唯一命中正式人物目录。",
+        "decisionKey": "massachusettsgovernochrisballance",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-33990996d7feea351334",
+      "trackId": "track:fusion",
+      "entityId": "technology-931c7615d1b81448b160",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-a056ca03e7b6885735f2",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-22T00:59:17+00:00",
+          "evidenceUrl": "",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "赛道关注对象管理器:批量确认自动扩展为持续关注(可控核聚变)"
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-3cf0196efbd72017a5fb26df",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-22T00:59:17+00:00",
+        "trackId": "track:fusion",
+        "entityId": "technology-931c7615d1b81448b160",
+        "requestedName": "核聚变",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "核聚变",
+        "targetId": "topic:核聚变",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "核聚变",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-6805e06cd0cb0eb176dd",
+      "trackId": "track:fusion",
+      "entityId": "technology-86f00987511150137192",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-7477d09bb8f9075b4afa",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-22T00:59:17+00:00",
+          "evidenceUrl": "",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "赛道关注对象管理器:批量确认自动扩展为持续关注(可控核聚变)"
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-d30f271af667fb9a2da002b7",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-22T00:59:17+00:00",
+        "trackId": "track:fusion",
+        "entityId": "technology-86f00987511150137192",
+        "requestedName": "电子",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "电子",
+        "targetId": "topic:电子",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "电子",
         "reclassified": false
       },
       "executionState": "applied"
