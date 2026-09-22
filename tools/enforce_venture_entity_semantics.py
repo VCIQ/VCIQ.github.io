@@ -61,6 +61,11 @@ CAPITAL_ACTION_RE = re.compile(
     r"(?:完成上市|正式上市|申请上市|挂牌|并购|收购|完成退出|退市|公开市场)",
     re.IGNORECASE,
 )
+PERSONNEL_CAPITAL_FALSE_POSITIVE_RE = re.compile(
+    r"\b(?:leadership|chief people officer|talent acquisition|"
+    r"organizational development|workplace experience|human resources?)\b",
+    re.IGNORECASE,
+)
 FIRST_PERSON_FINANCING_RE = re.compile(
     r"\b(?:we|our company)\s+(?:raised|raises|secured|closed)\b|"
     r"(?:本公司|公司).{0,16}(?:完成|获得|宣布).{0,20}(?:融资|投资)",
@@ -325,6 +330,15 @@ def _subject_evidence(
     evidence = f"{title} {summary}".strip()
     action = action_re.search(evidence)
     if not evidence or action is None:
+        return False
+
+    # "Acquisition" on leadership/HR pages commonly means talent acquisition,
+    # not a corporate transaction. Reject that polysemy before subject matching.
+    if (
+        action_re is CAPITAL_ACTION_RE
+        and action.group(0).casefold() == "acquisition"
+        and PERSONNEL_CAPITAL_FALSE_POSITIVE_RE.search(evidence)
+    ):
         return False
 
     lowered = evidence.casefold()
