@@ -90,9 +90,56 @@ jobs:
           print("authorized actors: " + ", ".join(checked.values()))
           PY
 
-  review:
+  validate:
+    name: Validate innovation listing candidate review
+    needs: authorize
+    if: inputs.operation == 'validate'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: tracking-admin
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 1
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Validate fingerprint-bound decision
+        env:
+          CANDIDATE_KEY: ${{ inputs.candidate_key }}
+          CANDIDATE_FINGERPRINT: ${{ inputs.candidate_fingerprint }}
+          DECISION: ${{ inputs.decision }}
+          NOTE: ${{ inputs.note }}
+          ACTOR: ${{ github.actor }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile tools/innovation_listing_candidate_review.py
+          python tools/innovation_listing_candidate_review.py \
+            --mode validate \
+            --candidate-key "$CANDIDATE_KEY" \
+            --candidate-fingerprint "$CANDIDATE_FINGERPRINT" \
+            --decision "$DECISION" \
+            --note "$NOTE" \
+            --reviewed-by "$ACTOR/tracking-console" \
+            | tee /tmp/innovation-listing-review.json
+          {
+            echo "## Innovation listing candidate review validation"
+            echo
+            echo '~~~json'
+            cat /tmp/innovation-listing-review.json
+            echo '~~~'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  apply:
     name: Apply innovation listing candidate review
     needs: authorize
+    if: inputs.operation == 'apply'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment: tracking-admin
@@ -100,7 +147,7 @@ jobs:
       group: vciq-repository-writer-${{ github.ref }}
       queue: max
     permissions:
-      contents: ${{ inputs.operation == 'apply' && 'write' || 'read' }}
+      contents: write
     steps:
       - uses: actions/checkout@v7
         with:
@@ -116,10 +163,9 @@ jobs:
         shell: bash
         run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
-      - name: Validate or apply fingerprint-bound decision
+      - name: Apply fingerprint-bound final decision
         id: decision
         env:
-          OPERATION: ${{ inputs.operation }}
           CANDIDATE_KEY: ${{ inputs.candidate_key }}
           CANDIDATE_FINGERPRINT: ${{ inputs.candidate_fingerprint }}
           DECISION: ${{ inputs.decision }}
@@ -132,7 +178,7 @@ jobs:
             tools/innovation_listing_candidate_review.py \
             tools/build_innovation_listing_candidates.py
           python tools/innovation_listing_candidate_review.py \
-            --mode "$OPERATION" \
+            --mode apply \
             --candidate-key "$CANDIDATE_KEY" \
             --candidate-fingerprint "$CANDIDATE_FINGERPRINT" \
             --decision "$DECISION" \
@@ -143,20 +189,20 @@ jobs:
           changed="$(python -c "import json; print(str(bool(json.load(open('/tmp/innovation-listing-review.json'))['changed'])).lower())")"
           echo "changed=$changed" >> "$GITHUB_OUTPUT"
 
-          if [ "$OPERATION" = "apply" ] && [ "$changed" = "true" ]; then
+          if [ "$changed" = "true" ]; then
             python tools/build_innovation_listing_candidates.py
             python tools/build_innovation_listing_candidates.py --check
           fi
 
       - name: Run review regressions
-        if: inputs.operation == 'apply' && steps.decision.outputs.changed == 'true'
+        if: steps.decision.outputs.changed == 'true'
         run: |
           python -m unittest \
             tests.test_innovation_listing_candidate_review \
             tests.test_build_innovation_listing_candidates
 
       - name: Commit only decision and derived review queue
-        if: inputs.operation == 'apply' && steps.decision.outputs.changed == 'true'
+        if: steps.decision.outputs.changed == 'true'
         env:
           BASE_SHA: ${{ steps.base.outputs.sha }}
           GH_TOKEN: ${{ github.token }}
@@ -183,7 +229,7 @@ jobs:
           git push origin HEAD:main
 
       - name: Summarize public audit record
-        if: always()
+        if: always() && steps.decision.outcome != 'skipped'
         shell: bash
         run: |
           {
