@@ -10,6 +10,7 @@ const routeLabels: Record<string, string> = {
 
 const statusLabels: Record<string, string> = {
   "exchange-review": "交易所审核",
+  "registration-review": "注册阶段",
   registered: "注册",
   issuing: "发行",
   listed: "已上市",
