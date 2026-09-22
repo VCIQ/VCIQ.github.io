@@ -45,6 +45,7 @@ LEDGER_PATH = ROOT / "config" / "tracking_auto_discovery.json"
 COMPANY_REGISTRY_PATH = ROOT / "config" / "company_registry.json"
 VENTURE_PROFILES_PATH = ROOT / "public" / "data" / "venture_profiles.json"
 WATCHLIST_PATH = ROOT / "config" / "innovation_listing_watchlist.json"
+LIFECYCLE_PATH = ROOT / "config" / "innovation_listing_lifecycle.json"
 
 TRACK_SLUG = "innovation-capital"
 TRACK_NAME = "科创资本"
@@ -429,9 +430,10 @@ def main() -> int:
     registry = load_json(COMPANY_REGISTRY_PATH, {})
     venture = load_json(VENTURE_PROFILES_PATH, {})
     watchlist = load_json(WATCHLIST_PATH, {})
+    lifecycle = load_json(LIFECYCLE_PATH, {})
+    reviewed_projects: list[dict[str, Any]] = []
     if isinstance(watchlist, dict) and isinstance(watchlist.get("projects"), list):
-        seeds = dict(seeds)
-        seeds["projects"] = [
+        reviewed_projects.extend(
             {
                 "name": row.get("company", ""),
                 "broker": row.get("broker", ""),
@@ -447,7 +449,30 @@ def main() -> int:
             }
             for row in watchlist["projects"]
             if isinstance(row, dict)
-        ]
+        )
+    if isinstance(lifecycle, dict) and isinstance(lifecycle.get("projects"), list):
+        reviewed_projects.extend(
+            {
+                "name": row.get("company", ""),
+                "broker": row.get("broker", ""),
+                "sector": row.get("sector", ""),
+                "route": row.get("route", ""),
+                "pool": "lifecycle",
+                "stage": row.get("stage", ""),
+                "sourceUrl": (
+                    row.get("sources", [{}])[0].get("url", "")
+                    if isinstance(row.get("sources"), list)
+                    and row.get("sources")
+                    and isinstance(row.get("sources")[0], dict)
+                    else ""
+                ),
+            }
+            for row in lifecycle["projects"]
+            if isinstance(row, dict)
+        )
+    if reviewed_projects:
+        seeds = dict(seeds)
+        seeds["projects"] = reviewed_projects
     if not isinstance(seeds, dict) or seeds.get("schemaVersion") != 1:
         raise SystemExit("innovation capital tracking seeds are missing or invalid")
     if not isinstance(config, dict) or not isinstance(config.get("tracks"), list):
