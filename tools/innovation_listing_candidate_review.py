@@ -164,7 +164,14 @@ def apply_decision(
                 "promotionStatus": clean(
                     persisted.get("promotionStatus"), 80
                 ) or (
-                    "awaiting-primary-evidence"
+                    "awaiting-broker-evidence"
+                    if (
+                        request["decision"] == "accepted"
+                        and clean(candidate.get("candidateClass"), 40)
+                        == "mature-opportunity"
+                        and not clean(candidate.get("broker"), 160)
+                    )
+                    else "awaiting-primary-evidence"
                     if request["decision"] == "accepted"
                     else "rejected"
                 ),
@@ -192,8 +199,16 @@ def apply_decision(
         root["decisions"] = {}
 
     evidence_class = clean(candidate.get("evidenceClass"), 40)
+    candidate_class = clean(candidate.get("candidateClass"), 40) or "listing-candidate"
+    broker = clean(candidate.get("broker"), 160)
     promotion_status = (
-        "ready-for-mechanical-promotion"
+        "awaiting-broker-evidence"
+        if (
+            request["decision"] == "accepted"
+            and candidate_class == "mature-opportunity"
+            and not broker
+        )
+        else "ready-for-mechanical-promotion"
         if request["decision"] == "accepted" and evidence_class == "primary-backed"
         else "awaiting-primary-evidence"
         if request["decision"] == "accepted"
