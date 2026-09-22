@@ -33,6 +33,8 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
         self.assertLess(second_reconcile, build)
         self.assertIn("python tools/reconcile_entity_resolution.py --check", text)
         self.assertIn("python tools/reconcile_legacy_manual_confirmed_tracking.py --check", text)
+        self.assertIn("python tools/tracking_seed_governance.py", body)
+        self.assertIn("python tools/tracking_seed_governance.py --check", text)
         self.assertIn("--output \"$CANDIDATE_QUEUE\"", text)
         self.assertIn("--candidates \"$CANDIDATE_QUEUE\"", text)
         self.assertIn("--check", text)
@@ -47,16 +49,21 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
         second_reconcile = retry.index(
             "python tools/reconcile_entity_resolution.py", first_reconcile + 1
         )
+        governance = retry.index("python tools/tracking_seed_governance.py")
         check = retry.index("python tools/reconcile_entity_resolution.py --check")
+        governance_check = retry.index("python tools/tracking_seed_governance.py --check")
         self.assertLess(first_reconcile, legacy)
         self.assertLess(legacy, second_reconcile)
-        self.assertLess(second_reconcile, check)
+        self.assertLess(second_reconcile, governance)
+        self.assertLess(governance, check)
+        self.assertLess(check, governance_check)
 
     def test_candidate_workflow_commits_private_review_state_and_tracks_scope_changes(self) -> None:
         text = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("config/user_tracking.json", text)
         self.assertIn("config/tracking_capture_inbox.json", text)
         self.assertIn("config/tracking_intents.json", text)
+        self.assertIn("config/tracking_auto_discovery.json", text)
         self.assertIn("config/company_candidate_review_queue.json", text)
         self.assertIn("config/company_candidate_decisions.json", text)
         self.assertNotIn("public/data/company_candidates.json", text)
