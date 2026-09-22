@@ -44,6 +44,7 @@
 }
 
 .directorySection,
+.lifecycleSection,
 .opportunitySection,
 .policySection,
 .methodSection {
@@ -241,6 +242,69 @@
 
 .evidence:hover,
 .policyCard:hover {
+  text-decoration: underline;
+}
+
+.lifecycleGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.lifecycleCard {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 16px;
+  background: var(--card, #fff);
+}
+
+.lifecycleCard > header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.lifecycleCard h3 {
+  margin: 5px 0 0;
+  font-size: 1.03rem;
+  line-height: 1.45;
+}
+
+.lifecycleStatus {
+  flex: 0 0 auto;
+  padding: 5px 8px;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 999px;
+  font-size: .7rem;
+  font-weight: 700;
+}
+
+.lifecycleSources {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid var(--border, #e5e7eb);
+}
+
+.lifecycleSources a {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  color: inherit;
+  text-decoration: none;
+  font-size: .72rem;
+  line-height: 1.5;
+}
+
+.lifecycleSources a:hover {
   text-decoration: underline;
 }
 
@@ -455,6 +519,7 @@
   }
 
   .projectGrid,
+  .lifecycleGrid,
   .opportunityGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -475,6 +540,7 @@
 @media (max-width: 720px) {
   .statsGrid,
   .projectGrid,
+  .lifecycleGrid,
   .opportunityGrid,
   .opportunitySummary,
   .policyGrid,
