@@ -295,6 +295,20 @@ def sync(
     stamp = now_iso()
 
     desired: list[tuple[str, list[str]]] = []
+
+    # Keep opportunity companies first: the generic tracking crawler intentionally
+    # caps one track's broad sample-company query, while projects/institutions have
+    # dedicated sharded discovery sources below. This guarantees the smaller
+    # opportunity pool stays inside the active broad-monitoring window.
+    opportunities = opportunity_rows(registry_payload, venture_payload, seeds)
+    for row in opportunities:
+        evidence = ["verified-company-profile", "innovation-capital-opportunity-pool"]
+        if row["institutionBackers"]:
+            evidence.append("verified-institution-portfolio-link")
+        if row["lateStageRounds"]:
+            evidence.append("late-stage-financing-signal")
+        desired.append((row["name"], evidence))
+
     for row in rows(seeds.get("projects")):
         desired.append(
             (
@@ -320,15 +334,6 @@ def sync(
             if clean(value, 80)
         )
         desired.append((canonical_name(row.get("name"), aliases), evidence))
-
-    opportunities = opportunity_rows(registry_payload, venture_payload, seeds)
-    for row in opportunities:
-        evidence = ["verified-company-profile", "innovation-capital-opportunity-pool"]
-        if row["institutionBackers"]:
-            evidence.append("verified-institution-portfolio-link")
-        if row["lateStageRounds"]:
-            evidence.append("late-stage-financing-signal")
-        desired.append((row["name"], evidence))
 
     existing = track.setdefault("sampleCompanies", [])
     canonical_existing: list[str] = []
