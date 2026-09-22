@@ -21,13 +21,22 @@ import re
 from pathlib import Path
 from typing import Any
 
-from tools.enrich_tracking_people_from_sample_companies import (
-    add_ledger_entry,
-    company_keys,
-    load_json,
-    normalized_key,
-    now_iso,
-)
+try:
+    from .enrich_tracking_people_from_sample_companies import (
+        add_ledger_entry,
+        company_keys,
+        load_json,
+        normalized_key,
+        now_iso,
+    )
+except ImportError:
+    from enrich_tracking_people_from_sample_companies import (
+        add_ledger_entry,
+        company_keys,
+        load_json,
+        normalized_key,
+        now_iso,
+    )
 
 ROOT = Path(__file__).resolve().parents[1]
 SEEDS_PATH = ROOT / "config" / "innovation_capital_tracking_seeds.json"
