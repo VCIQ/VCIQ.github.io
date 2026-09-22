@@ -46,6 +46,7 @@ COMPANY_REGISTRY_PATH = ROOT / "config" / "company_registry.json"
 VENTURE_PROFILES_PATH = ROOT / "public" / "data" / "venture_profiles.json"
 WATCHLIST_PATH = ROOT / "config" / "innovation_listing_watchlist.json"
 LIFECYCLE_PATH = ROOT / "config" / "innovation_listing_lifecycle.json"
+MATURE_CANDIDATES_PATH = ROOT / "config" / "innovation_capital_mature_candidates.json"
 
 TRACK_SLUG = "innovation-capital"
 TRACK_NAME = "科创资本"
@@ -126,6 +127,7 @@ def opportunity_rows(
     registry_payload: Any,
     venture_payload: Any,
     seeds: dict[str, Any],
+    mature_payload: Any | None = None,
 ) -> list[dict[str, Any]]:
     companies = rows(registry_payload.get("companies") if isinstance(registry_payload, dict) else None)
     profiles = rows(venture_payload.get("companies") if isinstance(venture_payload, dict) else None)
@@ -251,6 +253,81 @@ def opportunity_rows(
                 "sourceUrl": clean(source.get("url"), 1200),
             }
         )
+    mature_rows = rows(
+        mature_payload.get("candidates")
+        if isinstance(mature_payload, dict)
+        else None
+    )
+    for candidate in mature_rows:
+        name = clean(candidate.get("name"), 160)
+        aliases = [name, *(
+            candidate.get("aliases", [])
+            if isinstance(candidate.get("aliases"), list)
+            else []
+        )]
+        candidate_keys: set[str] = set()
+        for alias in aliases:
+            candidate_keys.update(company_keys(alias))
+        if not name or candidate_keys & reviewed_keys:
+            continue
+
+        institution_backers = [
+            clean(value, 160)
+            for value in candidate.get("institutionBackers", [])
+            if clean(value, 160)
+        ] if isinstance(candidate.get("institutionBackers"), list) else []
+        financing_round = clean(candidate.get("financingRound"), 100)
+        maturity_class = clean(candidate.get("maturityClass"), 80)
+        source = (
+            candidate.get("source")
+            if isinstance(candidate.get("source"), dict)
+            else {}
+        )
+        source_url = clean(source.get("url"), 1200)
+        source_level = clean(source.get("level"), 80)
+
+        score = 0
+        signals: list[str] = []
+        late_rounds = [financing_round] if LATE_STAGE_RE.search(financing_round) else []
+        if late_rounds:
+            score += 35
+            signals.append("已有D/E/Pre-IPO等成熟期融资一级证据")
+        elif maturity_class == "large-growth":
+            score += 20
+            signals.append("已有大额成长融资一级证据，具体轮次未公开")
+        if institution_backers:
+            score += 18
+            signals.append("已命中科创资本机构种子的公开投资关系")
+        if source_level in {"官方披露", "投资机构官方", "监管文件", "交易所公告"}:
+            score += 12
+            signals.append("融资事实具备一级公开来源")
+
+        row = {
+            "name": name,
+            "slug": clean(candidate.get("id"), 160) or normalized_key(name),
+            "sector": clean(candidate.get("sector"), 80),
+            "policyThemes": [
+                clean(value, 80)
+                for value in candidate.get("policyThemes", [])
+                if clean(value, 80)
+            ] if isinstance(candidate.get("policyThemes"), list) else [],
+            "latestRound": financing_round,
+            "latestDate": clean(candidate.get("financingDate"), 40),
+            "financingAmount": clean(candidate.get("financingAmount"), 100),
+            "lateStageRounds": late_rounds,
+            "institutionBackers": institution_backers,
+            "evidenceScore": 90 if source_url else 60,
+            "readinessScore": min(100, score),
+            "signals": signals,
+            "sourceUrl": source_url,
+        }
+        result = [
+            existing
+            for existing in result
+            if company_keys(existing.get("name")).isdisjoint(candidate_keys)
+        ]
+        result.append(row)
+
     result.sort(
         key=lambda row: (
             -int(bool(row["lateStageRounds"])),
@@ -268,6 +345,7 @@ def sync(
     seeds: dict[str, Any],
     registry_payload: Any,
     venture_payload: Any,
+    mature_payload: Any | None = None,
 ) -> dict[str, Any]:
     tracks = config.setdefault("tracks", [])
     track = next(
@@ -300,7 +378,12 @@ def sync(
     # caps one track's broad sample-company query, while projects/institutions have
     # dedicated sharded discovery sources below. This guarantees the smaller
     # opportunity pool stays inside the active broad-monitoring window.
-    opportunities = opportunity_rows(registry_payload, venture_payload, seeds)
+    opportunities = opportunity_rows(
+        registry_payload,
+        venture_payload,
+        seeds,
+        mature_payload,
+    )
     for row in opportunities:
         evidence = ["verified-company-profile", "innovation-capital-opportunity-pool"]
         if row["institutionBackers"]:
@@ -438,6 +521,7 @@ def main() -> int:
     )
     registry = load_json(COMPANY_REGISTRY_PATH, {})
     venture = load_json(VENTURE_PROFILES_PATH, {})
+    mature_candidates = load_json(MATURE_CANDIDATES_PATH, {})
     watchlist = load_json(WATCHLIST_PATH, {})
     lifecycle = load_json(LIFECYCLE_PATH, {})
     reviewed_projects: list[dict[str, Any]] = []
@@ -493,7 +577,14 @@ def main() -> int:
 
     before_config = json.dumps(config, ensure_ascii=False, sort_keys=True)
     before_ledger = json.dumps(ledger, ensure_ascii=False, sort_keys=True)
-    result = sync(config, ledger, seeds, registry, venture)
+    result = sync(
+        config,
+        ledger,
+        seeds,
+        registry,
+        venture,
+        mature_candidates,
+    )
     changed = (
         before_config != json.dumps(config, ensure_ascii=False, sort_keys=True)
         or before_ledger != json.dumps(ledger, ensure_ascii=False, sort_keys=True)
