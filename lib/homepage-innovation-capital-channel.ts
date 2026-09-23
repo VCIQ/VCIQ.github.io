@@ -73,8 +73,6 @@ const FUNDING_RE =
 const TECHNOLOGY_RE =
   /发布|推出|量产|订单|中标|签约|商业化|产能|技术突破|芯片|GPU|机器人|具身智能|火箭|卫星|脑机|6G|新药|细胞治疗|储能|固态电池|新材料|量子|高端装备/iu;
 const POLICY_RE = /十五五|监管|政策|规则|指引|审核标准|上市标准/iu;
-const HARD_TECH_RE =
-  /人工智能|AI|AGI|大模型|集成电路|半导体|芯片|GPU|航空航天|商业航天|低空经济|机器人|具身智能|生物医药|生物制造|储能|固态电池|新材料|量子|脑机接口|6G|高端装备|氢能|核聚变/iu;
 
 const PRIMARY_LEVELS = new Set([
   "监管文件",
@@ -382,14 +380,8 @@ function qualifies(
   const technology = reasons.includes("TECHNOLOGY_EVENT");
   const policy = reasons.includes("POLICY_EVENT");
   const discoverySource = reasons.includes("INNOVATION_DISCOVERY_SOURCE");
-  const hardTech = HARD_TECH_RE.test([
-    event.title,
-    event.summary,
-    event.sector,
-  ].filter(Boolean).join(" "));
-
   if (directProject && (listing || funding || technology || policy || discoverySource)) return true;
-  if (institution && (listing || funding || (technology && hardTech))) return true;
+  if (institution && (listing || funding)) return true;
   if (broker && (listing || funding)) return true;
   if (discoverySource && (listing || funding)) return true;
   return false;
