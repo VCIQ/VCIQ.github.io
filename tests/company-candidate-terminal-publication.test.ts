@@ -22,7 +22,7 @@ test("terminal publication survives an isolated onboarding failure without weake
   );
   assert.match(
     text,
-    /gh workflow run pages\.yml --ref main[\s\S]*-f run_research_after_deploy=true/,
+    /gh workflow run pages\.yml[\s\S]*--repo "\$GITHUB_REPOSITORY"[\s\S]*--ref main[\s\S]*-f run_research_after_deploy=true/,
   );
 
   const fallbackStart = text.indexOf("terminal-publication-fallback:");
@@ -30,6 +30,7 @@ test("terminal publication survives an isolated onboarding failure without weake
   const fallback = text.slice(fallbackStart);
   assert.doesNotMatch(fallback, /frequent-intelligence-refresh\.yml/);
   assert.doesNotMatch(fallback, /onboard_company_candidates\.py/);
+  assert.match(fallback, /--repo "\$GITHUB_REPOSITORY"/);
   assert.match(
     text,
     /python tools\/onboard_company_candidates\.py[\s\S]*--report \"\$ONBOARDING_STATE\"/,
