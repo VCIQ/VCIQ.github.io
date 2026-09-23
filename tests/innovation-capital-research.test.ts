@@ -32,7 +32,7 @@ test("research model preserves unknown-route and non-ranking governance", () => 
   assert.match(model.methodology, /券商排名/u);
   const maintenance = model.tasks.find((item) => item.taskType === "evidence_maintenance");
   assert.ok(maintenance);
-  assert.match(maintenance.successCriteria, /不得推断/u);
+  assert.match(maintenance.successCriteria, /不得根据行业属性推断/u);
 });
 
 test("research agent exposes a dedicated innovation capital queue anchor", () => {
