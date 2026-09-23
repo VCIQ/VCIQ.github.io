@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Building2, Landmark, Radar, Route, ShieldCheck } from "lucide-react";
 import watchlist from "@/config/innovation_listing_watchlist.json";
 import { buildInnovationOpportunityPool } from "@/lib/innovation-capital-opportunity";
+import { buildInnovationCapitalResearchModel } from "@/lib/innovation-capital-research";
 import { InnovationDirectory } from "./innovation-directory";
 import { InnovationListingLifecycle } from "./innovation-listing-lifecycle";
 import { InnovationOpportunityPool } from "./innovation-opportunity-pool";
@@ -15,6 +17,7 @@ export const metadata: Metadata = {
 export default function InnovationCapitalPage() {
   const projects = watchlist.projects;
   const opportunities = buildInnovationOpportunityPool();
+  const research = buildInnovationCapitalResearchModel();
   const coreCount = projects.filter((item) => item.pool === "core").length;
   const observationCount = projects.filter((item) => item.pool === "observation").length;
   const refileCount = projects.filter((item) => item.pool === "refile").length;
@@ -48,6 +51,38 @@ export default function InnovationCapitalPage() {
       <InnovationListingLifecycle />
 
       <InnovationOpportunityPool opportunities={opportunities} />
+
+      <section className={styles.researchSection} id="research-patterns">
+        <div className={styles.sectionHeader}>
+          <div>
+            <span>RESEARCH PATTERNS</span>
+            <h2>从项目监控升级为规律研究</h2>
+          </div>
+          <p>
+            Research Agent 持续验证券商×赛道集中度、状态跳变、A+H / H→A、路线迁移、机构资本重复命中与成熟项目转化；
+            当前样本只用于提出和更新研究假设，不输出上市概率、券商排名或投资评级。
+          </p>
+        </div>
+        <div className={styles.researchSummary}>
+          <article><strong>{research.tasks.length}</strong><span>当前结构化研究任务</span></article>
+          <article><strong>{research.hypotheses.length}</strong><span>持续验证研究假设</span></article>
+          <article><strong>{research.institutionCount}</strong><span>机构资本网络节点</span></article>
+          <article><strong>{research.unknownRouteCount}</strong><span>保持板块未定的项目</span></article>
+        </div>
+        <div className={styles.researchHypotheses}>
+          {research.hypotheses.slice(0, 4).map((item) => (
+            <article key={item.id}>
+              <span>{item.status === "observed" ? "已观察到样本信号" : "持续验证"}</span>
+              <h3>{item.title}</h3>
+              <p>{item.evidence}</p>
+              <small>下一验证：{item.nextCheck}</small>
+            </article>
+          ))}
+        </div>
+        <Link className={styles.researchLink} href="/research-agent/#queuecf">
+          进入 Research Agent 科创规律研究队列 →
+        </Link>
+      </section>
 
       <section className={styles.policySection} id="policy">
         <div className={styles.sectionHeader}>
