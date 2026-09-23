@@ -28,9 +28,10 @@ test("innovation homepage channel uses projection membership instead of keyword-
   assert.match(component, /matchesHomepageInnovationCapitalChannel/);
   assert.match(component, /buildHomepageInnovationCapitalIndex/);
   assert.match(component, /homepageInnovationCapitalAnnotation/);
+  assert.match(component, /\{ id: "innovation", label: "科创" \}/u);
   assert.doesNotMatch(
     component,
-    /id: "innovation"[\s\S]{0,160}keywords:/u,
+    /\{ id: "innovation", label: "科创", keywords:/u,
   );
   assert.match(component, /五大券商项目、上市生命周期、硬科技投资机构和成熟期候选/u);
   assert.match(component, /未核验证据不会自动推断辅导券商或上市板块/u);
