@@ -31,6 +31,11 @@ const typeLabels: Record<InnovationResearchTask["taskType"], string> = {
   evidence_maintenance: "证据维护",
 };
 
+function deltaLabel(value: number, suffix = "") {
+  if (!Number.isFinite(value) || value === 0) return `0${suffix}`;
+  return `${value > 0 ? "+" : ""}${value}${suffix}`;
+}
+
 function iconFor(type: InnovationResearchTask["taskType"]) {
   if (type === "cross_market_path") return <Landmark size={14} aria-hidden="true" />;
   if (type === "route_migration") return <GitBranch size={14} aria-hidden="true" />;
@@ -131,6 +136,29 @@ export default function InnovationCapitalResearchPanel() {
                 </div>
                 <h4>{item.title}</h4>
                 <p>{item.evidence}</p>
+                <div className={styles.metricGrid} aria-label="量化证据">
+                  <span><strong>{item.metrics.supportCount}</strong> 支持样本</span>
+                  <span><strong>{item.metrics.contrastCount}</strong> 对照/未支持</span>
+                  <span><strong>{item.metrics.universeCount}</strong> 样本宇宙</span>
+                  <span><strong>{item.metrics.evidenceCoveragePct.toFixed(1)}%</strong> 证据覆盖</span>
+                  <span><strong>{item.metrics.supportSharePct.toFixed(1)}%</strong> 支持样本占比</span>
+                </div>
+                {observation?.metricDelta ? (
+                  <div className={styles.metricDelta}>
+                    <span>较上版：</span>
+                    <span>支持 {deltaLabel(observation.metricDelta.supportDelta)}</span>
+                    <span>对照 {deltaLabel(observation.metricDelta.contrastDelta)}</span>
+                    <span>样本 {deltaLabel(observation.metricDelta.universeDelta)}</span>
+                    <span>覆盖 {deltaLabel(observation.metricDelta.evidenceCoverageDeltaPct, "pct")}</span>
+                  </div>
+                ) : null}
+                <details className={styles.metricMethod}>
+                  <summary>查看量化口径</summary>
+                  <p><strong>支持：</strong>{item.metrics.supportDefinition}</p>
+                  <p><strong>对照/未支持：</strong>{item.metrics.contrastDefinition}</p>
+                  {item.metrics.neutralCount > 0 ? <p><strong>中性/未分类：</strong>{item.metrics.neutralCount} 个</p> : null}
+                  <p>这些数字只描述当前已纳入样本，不代表概率、评级或因果结论。</p>
+                </details>
                 <small>下一验证：{item.nextCheck}</small>
                 {observation ? (
                   <div className={styles.memoryMeta}>
@@ -145,6 +173,12 @@ export default function InnovationCapitalResearchPanel() {
                         <section key={row.id}>
                           <strong>{transitionLabels[row.lastTransition]} · {row.firstSeenAt}</strong>
                           <p>{row.evidence}</p>
+                          {row.metrics ? (
+                            <small>
+                              支持 {row.metrics.supportCount} · 对照 {row.metrics.contrastCount} ·
+                              样本 {row.metrics.universeCount} · 覆盖 {row.metrics.evidenceCoveragePct.toFixed(1)}%
+                            </small>
+                          ) : null}
                         </section>
                       ))}
                     </div>
