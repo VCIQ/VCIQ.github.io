@@ -220,7 +220,7 @@ export function buildInnovationCapitalResearchModel(): InnovationCapitalResearch
       `${unknownRoute.length} 个 A-share-TBD 项目`,
       "哪些观察池项目已经出现能够公开确认科创板或创业板路线的一手材料？",
       ["保持“未知”优于猜测", "优先核对辅导报告、交易所文件和公司正式公告"],
-      "没有一级证据时保持 A-share-TBD，不根据行业属性推断板块。",
+      "没有一级证据时保持 A-share-TBD，不得根据行业属性推断板块。",
       "/innovation-capital/#projects",
       64,
     ));
