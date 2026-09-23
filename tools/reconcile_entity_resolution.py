@@ -106,15 +106,17 @@ def track_map(config: dict[str, Any]) -> dict[str, dict[str, Any]]:
 
 
 def quality_tombstones(payload: dict[str, Any] | None) -> set[tuple[str, str, str]]:
-    """Return sticky seed-governance removals that stale captures must not replay."""
+    """Return hard identity tombstones that no stale projection may restore."""
 
     rows = payload.get("removed", []) if isinstance(payload, dict) else []
     result: set[tuple[str, str, str]] = set()
     for row in rows if isinstance(rows, list) else []:
         if not isinstance(row, dict):
             continue
-        reason = clean(row.get("reason"), 120)
-        if not reason.startswith("seed-governance-"):
+        # Keep ordinary user preference decisions authoritative. This hard gate is
+        # intentionally limited to identities that the shared person contract has
+        # already rejected as malformed automatic people.
+        if clean(row.get("reason"), 120) != "seed-governance-invalid-person":
             continue
         slug = clean(row.get("track"), 120)
         field = clean(row.get("kind"), 40)
@@ -122,6 +124,22 @@ def quality_tombstones(payload: dict[str, Any] | None) -> set[tuple[str, str, st
         if slug and field in FIELDS and value:
             result.add((slug, field, value))
     return result
+
+
+def prune_quality_tombstones(
+    config: dict[str, Any], tombstones: set[tuple[str, str, str]]
+) -> None:
+    """Enforce hard identity tombstones after every runtime projection layer."""
+
+    tracks = track_map(config)
+    for slug, field, value in tombstones:
+        track = tracks.get(slug)
+        if not track or field not in FIELDS or not isinstance(track.get(field), list):
+            continue
+        track[field] = [
+            item for item in track[field]
+            if normalize_identity(item) != value
+        ]
 
 
 def reconcile_payloads(
@@ -241,9 +259,11 @@ def reconcile_payloads(
         applied_to: list[str] = []
         track_names: list[str] = []
         requested_field = FIELD_FOR_TYPE.get(requested_type, "")
+        requested_identity = normalize_identity(raw_name)
         approved_tracks = {
             slug for slug in track_slugs
             if follow_states.get((slug, requested_field, follow_policy.identity(raw_name, requested_field))) == "approved"
+            and (slug, requested_field, requested_identity) not in tombstones
         }
         follow_name = canonical_name if resolution.status == "resolved" and resolution.entityType == requested_type else raw_name
         blocked_tracks = set()
@@ -268,13 +288,10 @@ def reconcile_payloads(
                     continue
             else:
                 continue
-            # Seed-governance tombstones are sticky against stale automatic captures.
-            # A durable owner approval remains authoritative and may intentionally
-            # restore the exact value later.
-            if (
-                slug not in approved_tracks
-                and (slug, field, normalize_identity(value)) in tombstones
-            ):
+            # Hard invalid-person tombstones are identity invariants, not a
+            # machine-vs-owner preference decision. Historical approvals created
+            # before the person guard existed cannot resurrect the malformed value.
+            if (slug, field, normalize_identity(value)) in tombstones:
                 continue
             track[field] = append_name(track.get(field), value)
             applied_to.append(f"{slug}:{field}")
@@ -321,6 +338,10 @@ def reconcile_payloads(
     inbox["schemaVersion"] = 1
     inbox["records"] = next_records
     follow_policy.project_follow_states(config, intents_payload or {}, admins_payload or {})
+    # Owner projection is normally authoritative, but hard invalid-person
+    # tombstones must also survive legacy approvals created before the identity
+    # guard existed.
+    prune_quality_tombstones(config, tombstones)
     return config, inbox, stats
 
 
