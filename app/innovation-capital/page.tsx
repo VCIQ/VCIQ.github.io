@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Building2, Landmark, Radar, Route, ShieldCheck } from "lucide-react";
 import watchlist from "@/config/innovation_listing_watchlist.json";
 import { buildInnovationOpportunityPool } from "@/lib/innovation-capital-opportunity";
+import { InnovationCapitalResearchPanel } from "@/components/innovation-capital-research-panel";
 import { InnovationDirectory } from "./innovation-directory";
 import { InnovationListingLifecycle } from "./innovation-listing-lifecycle";
 import { InnovationOpportunityPool } from "./innovation-opportunity-pool";
@@ -42,6 +43,8 @@ export default function InnovationCapitalPage() {
           数据时点 {watchlist.asOf} · 首批数据为人工核验种子集，后续应由证监会辅导公示、交易所审核状态与券商公告持续更新。
         </div>
       </header>
+
+      <InnovationCapitalResearchPanel />
 
       <InnovationDirectory />
 
