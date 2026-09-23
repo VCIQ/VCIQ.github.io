@@ -17,6 +17,7 @@ import {
   type ResearchAgentEvidence,
 } from "@/lib/research-agent-data";
 import { buildResearchAgentViewModel } from "@/lib/research-agent-view-model";
+import { InnovationCapitalResearchPanel } from "@/components/innovation-capital-research-panel";
 import PersonResearchQueuePanel from "./person-research-queue-panel";
 import { EvidenceLedger, EvidenceRefs } from "./research-agent-evidence";
 import ResearchRunHistory from "./research-run-history";
@@ -210,7 +211,8 @@ export default function ResearchAgentPage() {
         <a href="#brief">今日简报</a>
         <a href="#theses">研究假设</a>
         <a href="#changes">变化与证据</a>
-        <a href="#queue">研究队列</a>
+        <a href="#queue">人物研究队列</a>
+        <a href="#innovation-capital-queue">科创研究队列</a>
         <a href="#history">运行记录</a>
       </nav>
 
@@ -545,6 +547,8 @@ export default function ResearchAgentPage() {
       </section>
 
       <PersonResearchQueuePanel />
+
+      <InnovationCapitalResearchPanel anchorId="innovation-capital-queue" context="research-agent" />
 
       <ResearchRunHistory history={history} />
 
