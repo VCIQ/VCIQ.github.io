@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import fs from "node:fs";
 import test from "node:test";
 
 import {
@@ -85,8 +86,10 @@ test("innovation capital thesis memory records a return to an earlier thesis ver
   assert.equal(returned.observationCount, 3);
 });
 
-test("published memory contract keeps current pointers valid", async () => {
-  const raw = (await import("../public/data/innovation_capital_thesis_memory.json", { with: { type: "json" } })).default as InnovationCapitalThesisMemory;
+test("published memory contract keeps current pointers valid", () => {
+  const raw = JSON.parse(
+    fs.readFileSync(new URL("../public/data/innovation_capital_thesis_memory.json", import.meta.url), "utf8"),
+  ) as InnovationCapitalThesisMemory;
   const ids = new Set(raw.observations.map((item) => item.id));
   assert.equal(raw.schemaVersion, 1);
   assert.ok(raw.generatedAt);
