@@ -31,6 +31,8 @@ const favorites = read("lib/favorites.ts");
 const domRuntime = read("lib/intelligence-dom-runtime.ts");
 const channelArchiveBuilder = read("scripts/build-channel-update-archives.ts");
 const searchIndexBuilder = read("scripts/build-article-search-index.mjs");
+const innovationProjection = read("lib/homepage-innovation-capital-channel.ts");
+const innovationProjectionBuilder = read("scripts/build-innovation-capital-feed.ts");
 const routeBudget = read("scripts/check-route-performance-budget.mjs");
 const packageJson = read("package.json");
 
@@ -51,6 +53,16 @@ test("homepage bootstrap stays compact before the lazy full archive loads", () =
   assert.match(recommendationFeed, /INITIAL_FEED_LIMIT = 24/);
   assert.match(recommendationFeed, /visibleArticles\.slice\(0, feedLimit\)/);
   assert.match(recommendationFeed, /继续加载下一批情报/);
+});
+
+test("homepage innovation channel uses a bounded build-derived projection", () => {
+  assert.match(page, /innovation-capital-feed\.json/);
+  assert.match(recommendationFeed, /matchesHomepageInnovationCapitalChannel/);
+  assert.doesNotMatch(recommendationFeed, /innovation_listing_watchlist\.json/);
+  assert.doesNotMatch(recommendationFeed, /innovation_capital_tracking_seeds\.json/);
+  assert.match(innovationProjection, /\.slice\(0, 240\)/);
+  assert.match(innovationProjectionBuilder, /innovation-capital-feed\.json/);
+  assert.match(packageJson, /build:innovation-capital-feed/);
 });
 
 test("global header status is build-time and cannot trigger the article archive fetch", () => {
