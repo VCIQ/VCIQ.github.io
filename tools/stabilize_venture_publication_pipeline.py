@@ -75,7 +75,11 @@ CROSS_GATE_CAPITAL_ACTION_RE = re.compile(
     r"\bwent public\b|\bgo(?:es|ing)? public\b|"
     r"\bbecom(?:e|es|ing) (?:a )?public company\b|"
     r"\b(?:list(?:ed|ing)|debut(?:ed|s)?) on\b|"
-    r"\bacquir(?:e|es|ed)\b|\bacquired by\b|\bacquisition\b|"
+    r"\bacquir(?:e|es|ed)\b|\bacquired by\b|"
+    # Talent acquisition in leadership/recruiting prose is not an M&A action.
+    # Filter that phrase rather than vetoing a whole record: genuine acquisition
+    # evidence elsewhere in the same text must remain eligible for normal gates.
+    r"(?<!\btalent[\s-])\bacquisition\b|"
     r"\bmerger\b|\bmerg(?:e|ed|ing)\s+(?:with|into)\b|"
     r"\bbusiness combination\b|\bdelist(?:ed|ing)?\b|"
     r"完成上市|正式上市|申请上市|拟上市|启动上市|成为上市公司|已上市公司|"

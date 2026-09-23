@@ -116,6 +116,8 @@ jobs:
             tools/stabilize_venture_guarded_publication.py \
             tools/crawl_venture_profiles.py \
             tools/enrich_venture_profiles.py \
+            tools/publish_verified_company_candidates.py \
+            tests/test_verified_company_publication.py \
             tests/test_venture_financing_contract.py
       - name: Run complete profile preflight with shared-rule regressions
         shell: bash
@@ -139,6 +141,10 @@ jobs:
             tests.test_venture_entity_semantics
             tests.test_stabilize_venture_profiles
             tests.test_venture_financing_contract
+            tests.test_onboard_company_candidates
+            tests.test_prepare_company_candidate_onboarding
+            tests.test_entity_resolution_workflow
+            tests.test_verified_company_publication
           )
           if [ "$TEST_ORDER" = reversed ]; then
             reverse_modules=()
