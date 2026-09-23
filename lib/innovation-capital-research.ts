@@ -58,21 +58,8 @@ function text(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
 }
 
-function list(value: unknown) {
-  return Array.isArray(value) ? value.map(text).filter(Boolean) : [];
-}
-
 function numberValue(value: unknown) {
   return typeof value === "number" && Number.isFinite(value) ? value : 0;
-}
-
-function countBy(items: AnyRecord[], key: string) {
-  const counts = new Map<string, number>();
-  for (const item of items) {
-    const value = text(item[key]) || "未分类";
-    counts.set(value, (counts.get(value) ?? 0) + 1);
-  }
-  return [...counts.entries()].sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0], "zh-CN"));
 }
 
 function topBrokerSector(projects: AnyRecord[]) {
