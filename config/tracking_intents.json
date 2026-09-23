@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-23T09:18:26+00:00",
+  "updatedAt": "2026-09-23T11:19:01+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -9869,15 +9869,20 @@
       "id": "company:unitree",
       "kind": "company",
       "name": "宇树科技",
-      "aliases": [],
+      "aliases": [
+        "Unitree"
+      ],
       "keywords": [
         "Unitree Robotics",
         "四足机器人",
         "人形机器人",
-        "运动控制系统"
+        "运动控制系统",
+        "宇树科技",
+        "Unitree",
+        "Yushu Technology"
       ],
       "state": "active",
-      "resolutionSource": "company-registry",
+      "resolutionSource": "human-decision",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-05T06:42:59+00:00",
       "createdBy": "VCIQ"
@@ -17015,6 +17020,36 @@
       "resolutionSource": "authenticated-manual-intent",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-23T09:18:26+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-8155b9ce09deef8c9a46",
+      "kind": "technology",
+      "name": "4D LiDAR",
+      "aliases": [],
+      "keywords": [
+        "LiDAR",
+        "感知"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-09-23T11:19:01+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-9cabaf1b4ddf524e468d",
+      "kind": "technology",
+      "name": "UniFolm OS",
+      "aliases": [],
+      "keywords": [
+        "OS",
+        "操作系统"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-09-23T11:19:01+00:00",
       "createdBy": "VCIQ"
     }
   ],
@@ -56558,8 +56593,45 @@
             "监管变化"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-236a6785df7ca10971ab",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-23T11:19:01+00:00",
+          "evidenceUrl": "https://www.unitree.com/news/38/",
+          "reasons": [
+            "个人研究兴趣",
+            "技术突破"
+          ],
+          "note": ""
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-7a7b7d3d1bdf10e03e22d52e",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-23T11:19:01+00:00",
+        "trackId": "track:robotics",
+        "entityId": "company:unitree",
+        "requestedName": "Unitree",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "宇树科技",
+        "targetId": "company:unitree",
+        "confidence": "verified",
+        "source": "company-registry",
+        "reason": "名称唯一命中正式公司注册表。",
+        "decisionKey": "unitree",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-b30c278ed37eacf9c8f9",
@@ -87704,6 +87776,342 @@
         "source": "people-registry",
         "reason": "名称唯一命中正式人物目录。",
         "decisionKey": "sunghunkim",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-6525cf4b5b02cb124e1c",
+      "trackId": "track:track-23sb7b",
+      "entityId": "technology-8155b9ce09deef8c9a46",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-94c9b725ff3af8bf351e",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-23T11:19:01+00:00",
+          "evidenceUrl": "https://www.unitree.com/news/38/",
+          "reasons": [
+            "个人研究兴趣",
+            "技术突破"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-007b5bd312d3527d31820d36",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-23T11:19:01+00:00",
+        "trackId": "track:track-23sb7b",
+        "entityId": "technology-8155b9ce09deef8c9a46",
+        "requestedName": "4D LiDAR",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "4D LiDAR",
+        "targetId": "topic:4dlidar",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "4dlidar",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-fbbe45557f565033a541",
+      "trackId": "track:semiconductor",
+      "entityId": "technology-8155b9ce09deef8c9a46",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-94c9b725ff3af8bf351e",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-23T11:19:01+00:00",
+          "evidenceUrl": "https://www.unitree.com/news/38/",
+          "reasons": [
+            "个人研究兴趣",
+            "技术突破"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-fbad4b1a28f4b222d913d870",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-23T11:19:01+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "technology-8155b9ce09deef8c9a46",
+        "requestedName": "4D LiDAR",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "4D LiDAR",
+        "targetId": "topic:4dlidar",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "4dlidar",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-1be4e22c8dfd4bf9eeb2",
+      "trackId": "track:robotics",
+      "entityId": "technology-8155b9ce09deef8c9a46",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-94c9b725ff3af8bf351e",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-23T11:19:01+00:00",
+          "evidenceUrl": "https://www.unitree.com/news/38/",
+          "reasons": [
+            "个人研究兴趣",
+            "技术突破"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-368e6c1f7d09c124c783f380",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-23T11:19:01+00:00",
+        "trackId": "track:robotics",
+        "entityId": "technology-8155b9ce09deef8c9a46",
+        "requestedName": "4D LiDAR",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "4D LiDAR",
+        "targetId": "topic:4dlidar",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "4dlidar",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-e7c0a6c57820ec403005",
+      "trackId": "track:track-23sb7b",
+      "entityId": "technology-9cabaf1b4ddf524e468d",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-eabc6f08969e0cd42356",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-23T11:19:01+00:00",
+          "evidenceUrl": "https://www.unitree.com/news/38/",
+          "reasons": [
+            "个人研究兴趣",
+            "技术突破"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-466b657ae30e64def24c041a",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-23T11:19:01+00:00",
+        "trackId": "track:track-23sb7b",
+        "entityId": "technology-9cabaf1b4ddf524e468d",
+        "requestedName": "UniFolm OS",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "UniFolm OS",
+        "targetId": "topic:unifolmos",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "unifolmos",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-92c4bdc6b1513b58e7b1",
+      "trackId": "track:semiconductor",
+      "entityId": "technology-9cabaf1b4ddf524e468d",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-eabc6f08969e0cd42356",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-23T11:19:01+00:00",
+          "evidenceUrl": "https://www.unitree.com/news/38/",
+          "reasons": [
+            "个人研究兴趣",
+            "技术突破"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-e78ade42b479d18ae3781761",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-23T11:19:01+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "technology-9cabaf1b4ddf524e468d",
+        "requestedName": "UniFolm OS",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "UniFolm OS",
+        "targetId": "topic:unifolmos",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "unifolmos",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-2fe095978ce50a5c7643",
+      "trackId": "track:robotics",
+      "entityId": "technology-9cabaf1b4ddf524e468d",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-eabc6f08969e0cd42356",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-23T11:19:01+00:00",
+          "evidenceUrl": "https://www.unitree.com/news/38/",
+          "reasons": [
+            "个人研究兴趣",
+            "技术突破"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-01ce109391f7d6882ab4067a",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-23T11:19:01+00:00",
+        "trackId": "track:robotics",
+        "entityId": "technology-9cabaf1b4ddf524e468d",
+        "requestedName": "UniFolm OS",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "UniFolm OS",
+        "targetId": "topic:unifolmos",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "unifolmos",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-7b1a42a0ceaf480b1405",
+      "trackId": "track:semiconductor",
+      "entityId": "company:unitree",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-236a6785df7ca10971ab",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-23T11:19:01+00:00",
+          "evidenceUrl": "https://www.unitree.com/news/38/",
+          "reasons": [
+            "个人研究兴趣",
+            "技术突破"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-6e62017a9b1a11db8f82be61",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-23T11:19:01+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "company:unitree",
+        "requestedName": "Unitree",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "宇树科技",
+        "targetId": "company:unitree",
+        "confidence": "verified",
+        "source": "company-registry",
+        "reason": "名称唯一命中正式公司注册表。",
+        "decisionKey": "unitree",
         "reclassified": false
       },
       "executionState": "applied"
