@@ -157,12 +157,6 @@ function urlKey(value: unknown): string {
   }
 }
 
-function rows(value: unknown): JsonRecord[] {
-  if (Array.isArray(value)) return value.map(record);
-  const root = record(value);
-  return Object.values(root).map(record);
-}
-
 function aliasesFrom(row: JsonRecord, canonicalField: string): string[] {
   return unique([
     text(row[canonicalField], 240),
