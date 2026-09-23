@@ -269,6 +269,48 @@ class EntityResolutionTests(unittest.TestCase):
             ],
         }
 
+        intents = {
+            "schemaVersion": 1,
+            "entities": [
+                {
+                    "id": "person:stale-invalid-capture",
+                    "kind": "person",
+                    "name": bad_name,
+                    "aliases": [],
+                    "state": "active",
+                }
+            ],
+            "memberships": [
+                {
+                    "id": "membership-stale-invalid-person",
+                    "entityId": "person:stale-invalid-capture",
+                    "trackId": "track:fusion",
+                    "role": "follow",
+                    "state": "active",
+                    "pinned": True,
+                    "origins": [
+                        {
+                            "origin": "manual",
+                            "actor": "VCIQ",
+                            "at": "2026-09-12T21:20:00+00:00",
+                        }
+                    ],
+                    "manualDecision": {
+                        "version": 1,
+                        "id": "follow-stale-invalid-person",
+                        "status": "approved",
+                        "actor": "VCIQ",
+                        "at": "2026-09-12T21:20:00+00:00",
+                        "trackId": "track:fusion",
+                        "entityId": "person:stale-invalid-capture",
+                        "requestedName": bad_name,
+                        "kind": "person",
+                    },
+                }
+            ],
+        }
+        admins = {"actors": ["VCIQ"]}
+
         stable_config, stable_inbox, _ = stabilize_payloads(
             config,
             inbox,
@@ -276,10 +318,13 @@ class EntityResolutionTests(unittest.TestCase):
             company_registry_payload={"companies": []},
             people_payload={"people": []},
             auto_discovery_payload=ledger,
+            intents_payload=intents,
+            admins_payload=admins,
         )
         self.assertEqual(stable_config["tracks"][0]["people"], [])
         self.assertEqual(stable_inbox["records"][0]["appliedTo"], [])
         self.assertEqual(stable_inbox["records"][0]["status"], "dismissed")
+        self.assertEqual(intents["memberships"][0]["manualDecision"]["status"], "approved")
 
         fixed_config, fixed_inbox, fixed_stats = stabilize_payloads(
             stable_config,
@@ -288,6 +333,8 @@ class EntityResolutionTests(unittest.TestCase):
             company_registry_payload={"companies": []},
             people_payload={"people": []},
             auto_discovery_payload=ledger,
+            intents_payload=intents,
+            admins_payload=admins,
         )
         self.assertEqual(fixed_stats["rounds"], 0)
         self.assertEqual(fixed_config, stable_config)
