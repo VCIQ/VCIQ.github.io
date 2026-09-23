@@ -33,6 +33,9 @@ class ResearchAgentWorkflowTest(unittest.TestCase):
             "tools/research_agent_thesis_memory.py",
             "tools/research_agent_enhanced_runtime.py",
             "scripts/build-research-agent-object-snapshot.ts",
+            "scripts/build-innovation-capital-thesis-memory.ts",
+            "lib/innovation-capital-research.ts",
+            "lib/innovation-capital-thesis-memory.ts",
         ):
             self.assertIn(f"      - {path}", text)
         self.assertNotIn("workflow_run:", text)
@@ -51,7 +54,15 @@ class ResearchAgentWorkflowTest(unittest.TestCase):
         )
         self.assertLess(
             text.index("Build canonical Research Agent object snapshot"),
+            text.index("Update persistent Innovation Capital thesis memory"),
+        )
+        self.assertLess(
+            text.index("Update persistent Innovation Capital thesis memory"),
             text.index("Generate evidence-linked daily research"),
+        )
+        self.assertIn(
+            "node --import tsx scripts/build-innovation-capital-thesis-memory.ts",
+            text,
         )
         # The bridge is transient input; only durable Research Agent outputs are committed.
         self.assertNotIn('public/data/research_agent_objects.json\n          )', text)
@@ -128,6 +139,11 @@ class ResearchAgentWorkflowTest(unittest.TestCase):
             "tests.test_research_agent_publication_handoff",
         ):
             self.assertIn(f"python -m unittest {suite}", text)
+        self.assertIn(
+            "node --import tsx --test tests/innovation-capital-thesis-memory.test.ts",
+            text,
+        )
+        self.assertIn("public/data/innovation_capital_thesis_memory.json", text)
         self.assertIn("python tools/run_pipeline.py check", text)
 
 
