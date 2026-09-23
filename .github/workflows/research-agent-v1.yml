@@ -16,6 +16,13 @@ on:
       - tools/research_agent_thesis_memory.py
       - tools/research_agent_enhanced_runtime.py
       - scripts/build-research-agent-object-snapshot.ts
+      - scripts/build-innovation-capital-thesis-memory.ts
+      - lib/innovation-capital-research.ts
+      - lib/innovation-capital-thesis-memory.ts
+      - config/innovation_listing_watchlist.json
+      - config/innovation_listing_lifecycle.json
+      - config/innovation_capital_mature_candidates.json
+      - config/innovation_capital_tracking_seeds.json
       - lib/core-research-objects.ts
       - lib/tracked-sectors.ts
       - lib/technology-topics.ts
@@ -80,10 +87,14 @@ jobs:
           python -m unittest tests.test_research_agent_event_history
           python -m unittest tests.test_research_agent_publication_handoff
           python -m unittest tests.test_pipeline_control
+          node --import tsx --test tests/innovation-capital-thesis-memory.test.ts
           python tools/run_pipeline.py check
 
       - name: Build canonical Research Agent object snapshot
         run: node --import tsx scripts/build-research-agent-object-snapshot.ts
+
+      - name: Update persistent Innovation Capital thesis memory
+        run: node --import tsx scripts/build-innovation-capital-thesis-memory.ts
 
       - name: Generate evidence-linked daily research
         env:
@@ -254,6 +265,7 @@ jobs:
           RESEARCH_PATHS=(
             public/data/research_agent_daily.json
             public/data/research_agent_snapshot.json
+            public/data/innovation_capital_thesis_memory.json
           )
           CONTROL_PATHS=(
             public/data/data_lineage.json

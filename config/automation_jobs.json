@@ -335,7 +335,11 @@
         "public/data/market_profiles.json",
         "public/data/people.json",
         "public/data/institution_events.json",
-        "public/data/listed_company_disclosures.json"
+        "public/data/listed_company_disclosures.json",
+        "config/innovation_listing_watchlist.json",
+        "config/innovation_listing_lifecycle.json",
+        "config/innovation_capital_mature_candidates.json",
+        "config/innovation_capital_tracking_seeds.json"
       ],
       "outputs": [
         {
@@ -346,6 +350,12 @@
         },
         {
           "path": "public/data/research_agent_snapshot.json",
+          "required": true,
+          "shared": false,
+          "public": true
+        },
+        {
+          "path": "public/data/innovation_capital_thesis_memory.json",
           "required": true,
           "shared": false,
           "public": true

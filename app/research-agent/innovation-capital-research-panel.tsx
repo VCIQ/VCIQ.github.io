@@ -5,7 +5,21 @@ import {
   buildInnovationCapitalResearchModel,
   type InnovationResearchTask,
 } from "@/lib/innovation-capital-research";
+import {
+  currentInnovationCapitalThesisObservations,
+  type InnovationCapitalThesisMemory,
+  type InnovationCapitalThesisTransition,
+} from "@/lib/innovation-capital-thesis-memory";
+import rawInnovationCapitalThesisMemory from "@/public/data/innovation_capital_thesis_memory.json";
 import styles from "./innovation-capital-research-panel.module.css";
+
+const transitionLabels: Record<InnovationCapitalThesisTransition, string> = {
+  initiated: "首次建立",
+  reaffirmed: "持续强化",
+  revised: "证据修订",
+  direction_changed: "状态转向",
+  returned: "回到历史版本",
+};
 
 const typeLabels: Record<InnovationResearchTask["taskType"], string> = {
   lifecycle_validation: "生命周期",
@@ -27,6 +41,16 @@ function iconFor(type: InnovationResearchTask["taskType"]) {
 
 export default function InnovationCapitalResearchPanel() {
   const model = buildInnovationCapitalResearchModel();
+  const memory = rawInnovationCapitalThesisMemory as unknown as InnovationCapitalThesisMemory;
+  const currentMemory = new Map(
+    currentInnovationCapitalThesisObservations(memory).map((item) => [item.hypothesisId, item]),
+  );
+  const historyByHypothesis = new Map<string, InnovationCapitalThesisMemory["observations"]>();
+  for (const observation of memory.observations) {
+    const rows = historyByHypothesis.get(observation.hypothesisId) ?? [];
+    rows.push(observation);
+    historyByHypothesis.set(observation.hypothesisId, rows);
+  }
   const researchTasks = model.tasks.filter((item) => item.taskType !== "evidence_maintenance");
   const maintenanceTasks = model.tasks.filter((item) => item.taskType === "evidence_maintenance");
 
@@ -89,19 +113,46 @@ export default function InnovationCapitalResearchPanel() {
         <aside className={styles.hypotheses}>
           <div className={styles.subheading}>
             <h3>Thesis Watch</h3>
-            <span>{model.hypotheses.length} 条</span>
+            <span>{model.hypotheses.length} 条 · 历史观察 {memory.observationCount}</span>
           </div>
-          {model.hypotheses.map((item) => (
-            <article key={item.id}>
-              <div className={styles.thesisMeta}>
-                <Activity size={13} aria-hidden="true" />
-                <span>{item.status === "observed" ? "已观察到样本信号" : "持续验证"}</span>
-              </div>
-              <h4>{item.title}</h4>
-              <p>{item.evidence}</p>
-              <small>下一验证：{item.nextCheck}</small>
-            </article>
-          ))}
+          {model.hypotheses.map((item) => {
+            const observation = currentMemory.get(item.id);
+            const history = historyByHypothesis.get(item.id) ?? [];
+            return (
+              <article key={item.id}>
+                <div className={styles.thesisMeta}>
+                  <Activity size={13} aria-hidden="true" />
+                  <span>{item.status === "observed" ? "已观察到样本信号" : "持续验证"}</span>
+                  {observation ? (
+                    <span className={styles.transition}>
+                      {transitionLabels[observation.lastTransition]} · {observation.observationCount} 次观测
+                    </span>
+                  ) : null}
+                </div>
+                <h4>{item.title}</h4>
+                <p>{item.evidence}</p>
+                <small>下一验证：{item.nextCheck}</small>
+                {observation ? (
+                  <div className={styles.memoryMeta}>
+                    首次 {observation.firstSeenAt || "—"} · 最近 {observation.lastSeenAt || "—"}
+                  </div>
+                ) : null}
+                {history.length > 1 ? (
+                  <details className={styles.thesisHistory}>
+                    <summary>查看历史演化（{history.length} 个版本）</summary>
+                    <div>
+                      {[...history].reverse().map((row) => (
+                        <section key={row.id}>
+                          <strong>{transitionLabels[row.lastTransition]} · {row.firstSeenAt}</strong>
+                          <p>{row.evidence}</p>
+                        </section>
+                      ))}
+                    </div>
+                  </details>
+                ) : null}
+              </article>
+            );
+          })}
         </aside>
       </div>
 

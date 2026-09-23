@@ -153,6 +153,18 @@ test("research automation declares current object coverage and persistent person
   assert.deepEqual(research.researchObjectCoverage, ["person", "company"]);
   assert.deepEqual(research.pendingObjectCoverage, ["technology", "track"]);
   assert.ok(research.schedule);
+  assert.equal(
+    research.outputs.some((row) => row.path === "public/data/innovation_capital_thesis_memory.json"),
+    true,
+  );
+  for (const input of [
+    "config/innovation_listing_watchlist.json",
+    "config/innovation_listing_lifecycle.json",
+    "config/innovation_capital_mature_candidates.json",
+    "config/innovation_capital_tracking_seeds.json",
+  ]) {
+    assert.equal(research.inputs.includes(input), true, input);
+  }
   for (const output of [
     "public/data/person_research_agenda.json",
     "public/data/person_research_queue.json",
