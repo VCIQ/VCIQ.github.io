@@ -330,16 +330,31 @@ function evidenceTier(event: HomepageInnovationEvent): InnovationCapitalFeedItem
   return "discovery";
 }
 
-function reasonCodes(
-  event: HomepageInnovationEvent,
-  matched: InnovationCapitalMatchedObject[],
-): string[] {
-  const haystack = [
+function materialSignalText(event: HomepageInnovationEvent): string {
+  const raw = [
     event.title,
     event.summary,
     event.type,
     event.sector,
   ].filter(Boolean).join(" ");
+
+  // Discovery summaries often explicitly say that a financing/listing event did
+  // not occur. Remove the whole negated clause before event classification so
+  // strings such as “没有投资、融资或上市事件” cannot become positive signals.
+  return raw
+    .replace(
+      /(?:没有|并无|未发生|不存在|尚无|未有|尚未发生|并未发生)[^。；;！？!?]{0,48}(?:。|；|;|！|!|？|\?|$)/giu,
+      " ",
+    )
+    .replace(/\s+/gu, " ")
+    .trim();
+}
+
+function reasonCodes(
+  event: HomepageInnovationEvent,
+  matched: InnovationCapitalMatchedObject[],
+): string[] {
+  const haystack = materialSignalText(event);
   const result: string[] = [];
 
   if (matched.some((item) => item.type === "project")) result.push("TRACKED_PROJECT");
