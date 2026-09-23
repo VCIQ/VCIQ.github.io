@@ -111,6 +111,20 @@ function project() {
           },
         },
         {
+          id: "institution-tech-noise",
+          title: "红杉中国发布AI行业研究观点",
+          summary: "讨论人工智能技术演进，但没有投资、融资或上市事件。",
+          sector: "AI / AGI",
+          type: "研究",
+          publishedAt: "2026-09-23T00:25:00Z",
+          importance: 79,
+          source: {
+            name: "投资机构官网",
+            url: "https://example.com/hongshan-tech-noise",
+            level: "投资机构官方",
+          },
+        },
+        {
           id: "mature",
           title: "艾利特机器人完成D+轮融资",
           summary: "艾利特机器人继续扩大协作机器人产能。",
@@ -190,6 +204,7 @@ test("innovation projection requires tracked-object context plus a material even
   assert.ok(ids.has("lifecycle"));
   assert.ok(ids.has("institution-funding"));
   assert.ok(ids.has("mature"));
+  assert.equal(ids.has("institution-tech-noise"), false);
   assert.ok(ids.has("discovery"));
 
   assert.equal(ids.has("broker-noise"), false);
