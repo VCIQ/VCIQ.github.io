@@ -121,6 +121,29 @@ test("innovation capital thesis memory records a return to an earlier thesis ver
   assert.equal(returned.observationCount, 3);
 });
 
+test("metric-definition wording updates metadata without inventing a thesis revision", () => {
+  const first = buildInnovationCapitalThesisMemory({}, model("2026-09-22", baseHypothesis), "2026-09-23T00:00:00Z");
+  const wordingOnly = {
+    ...baseHypothesis,
+    metrics: {
+      ...baseMetrics,
+      supportDefinition: "支持口径（文字优化）",
+      contrastDefinition: "对照口径（文字优化）",
+    },
+  };
+  const updated = buildInnovationCapitalThesisMemory(
+    first,
+    model("2026-09-22", wordingOnly),
+    "2026-09-23T01:00:00Z",
+  );
+  const current = currentInnovationCapitalThesisObservations(updated)[0];
+  assert.equal(updated.observationCount, 1);
+  assert.equal(current.id, first.observations[0].id);
+  assert.equal(current.lastTransition, "initiated");
+  assert.equal(current.metrics?.supportDefinition, "支持口径（文字优化）");
+  assert.equal(current.metricDelta?.supportDelta, 0);
+});
+
 test("legacy thesis observations are metric-backfilled without inventing a revision", () => {
   const first = buildInnovationCapitalThesisMemory({}, model("2026-09-22", baseHypothesis), "2026-09-23T00:00:00Z");
   const legacy = structuredClone(first);

@@ -68,8 +68,6 @@ function metricFingerprint(value: InnovationResearchEvidenceMetrics | undefined)
     value.evidenceCoveredCount,
     value.evidenceCoveragePct,
     value.supportSharePct,
-    value.supportDefinition,
-    value.contrastDefinition,
   ]);
 }
 
@@ -223,6 +221,13 @@ export function buildInnovationCapitalThesisMemory(
     }
 
     if (prior && priorFingerprint === currentFingerprint) {
+      const metricMetadataChanged =
+        JSON.stringify(prior.metrics ?? null) !== JSON.stringify(hypothesis.metrics);
+      if (metricMetadataChanged) {
+        prior.metrics = { ...hypothesis.metrics };
+        prior.metricDelta = prior.metricDelta ?? zeroMetricDelta();
+        changed = true;
+      }
       if (model.asOf && prior.lastSeenAt !== model.asOf) {
         prior.lastSeenAt = model.asOf;
         prior.observationCount = Math.max(1, Number(prior.observationCount) || 1) + 1;
