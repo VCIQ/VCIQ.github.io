@@ -40,6 +40,10 @@ test("innovation homepage channel uses projection membership instead of keyword-
 test("innovation cards expose auditable context and research navigation", () => {
   assert.match(component, /科创关联/u);
   assert.match(component, /科创优先度/u);
+  assert.match(component, /一级证据/u);
+  assert.match(component, /可信来源/u);
+  assert.match(component, /发现证据/u);
+  assert.match(component, /object\.broker/u);
   assert.match(component, /查看科创项目/u);
   assert.match(component, /href="\/innovation-capital\//u);
 });
