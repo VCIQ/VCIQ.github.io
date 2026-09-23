@@ -18,6 +18,10 @@ import {
   type HomepageEntityChannelIndex,
 } from "@/lib/homepage-entity-channels";
 import {
+  buildHomepageInnovationCapitalIndex,
+  matchesHomepageInnovationCapitalChannel,
+} from "@/lib/homepage-innovation-capital-channel";
+import {
   mergeHomepagePersonChannelEvents,
   projectHomepagePersonDirectoryEvents,
 } from "@/lib/homepage-person-channel-events";
@@ -31,6 +35,7 @@ import { formatTaipeiDate } from "@/lib/snapshot-freshness";
 import { trackedSectors } from "@/lib/tracked-sectors";
 import type { ArticlePayload, LiveIntelligenceEvent } from "@/lib/use-articles";
 import rawArticles from "@/public/data/articles.json";
+import rawInnovationCapitalFeed from "@/public/data/innovation-capital-feed.json";
 import rawRankedIntelligence from "@/public/data/ranked-intelligence.json";
 
 const INITIAL_KEY_EVENTS_LIMIT = 36;
@@ -47,8 +52,12 @@ const trackedSectorAliases = [
   ]),
 ];
 const trackedSectorNames = new Set(trackedSectorAliases);
+const innovationCapitalIndex = buildHomepageInnovationCapitalIndex(rawInnovationCapitalFeed);
 const activeArticles = snapshot.articles.filter(
-  (item) => item.curated || trackedSectorNames.has(item.sector),
+  (item) =>
+    item.curated
+    || trackedSectorNames.has(item.sector)
+    || matchesHomepageInnovationCapitalChannel(item, innovationCapitalIndex),
 );
 
 const formalCompanySlugs = new Set(companies.map((company) => company.slug));
@@ -178,6 +187,8 @@ const bootstrap: HomepageFeedBootstrap = {
   },
   researchObjectStats: coreResearchObjectStats,
   entityChannelIndex: homepageEntityChannelIndex,
+  innovationCapitalFeed:
+    rawInnovationCapitalFeed as unknown as HomepageFeedBootstrap["innovationCapitalFeed"],
 };
 
 export default function Home() {
