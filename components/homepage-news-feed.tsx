@@ -690,10 +690,19 @@ export function HomepageNewsFeed({
                             <strong>
                               {innovationAnnotation.matchedObjects
                                 .slice(0, 3)
-                                .map((object) => object.name)
+                                .map((object) =>
+                                  object.broker
+                                    ? `${object.name} → ${object.broker}`
+                                    : object.name)
                                 .join(" · ") || "科创发现候选"}
                             </strong>
                             <small>
+                              {innovationAnnotation.evidenceTier === "primary"
+                                ? "一级证据"
+                                : innovationAnnotation.evidenceTier === "trusted"
+                                  ? "可信来源"
+                                  : "发现证据"}
+                              {" · "}
                               {homepageInnovationReasonLabels(innovationAnnotation).join(" · ")}
                               {" · "}科创优先度 {innovationAnnotation.innovationPriority}
                             </small>
