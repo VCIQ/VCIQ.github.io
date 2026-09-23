@@ -117,6 +117,66 @@ class InnovationListingCandidateBuilderTests(unittest.TestCase):
         ah = by_name["星海生物科技股份有限公司"]
         self.assertEqual(ah["capitalMarketPath"], "A+H")
 
+    def test_portfolio_mature_source_enters_review_without_inventing_broker(self):
+        payload = {
+            "generatedAt": "2026-09-22T08:00:00+00:00",
+            "articles": [
+                {
+                    "id": "portfolio-1",
+                    "sourceId": "innovation-capital-portfolio-01",
+                    "title": "新锐具身智能科技股份有限公司完成D+轮融资",
+                    "summary": "项目聚焦具身智能和智能机器人，投资机构继续加码。",
+                    "publishedAt": "2026-09-22",
+                    "sector": "智能机器人",
+                    "company": "新锐具身智能科技股份有限公司",
+                    "source": {
+                        "name": "投资机构公开动态",
+                        "url": "https://example.com/portfolio-1",
+                        "level": "待交叉验证",
+                    },
+                }
+            ],
+        }
+        snapshot = builder.build_candidate_snapshot(payload, self.watchlist(), {})
+        self.assertEqual(snapshot["pendingCount"], 1)
+        row = snapshot["candidates"][0]
+        self.assertEqual(row["company"], "新锐具身智能科技股份有限公司")
+        self.assertEqual(row["candidateClass"], "mature-opportunity")
+        self.assertEqual(row["broker"], "")
+        self.assertEqual(row["brokerEvidenceStatus"], "unassigned")
+        self.assertEqual(row["route"], "A-share-TBD")
+        self.assertEqual(row["routeConfidence"], "unassigned")
+        self.assertEqual(row["capitalMarketPath"], "unassigned")
+        self.assertEqual(row["stage"], "成熟期融资候选")
+        self.assertIn("具身智能", row["fifteenthTags"])
+        self.assertIn("命中硬科技机构组合成熟项目发现源", row["reasons"])
+        self.assertIn("出现D/E/Pre-IPO/Growth等成熟期融资信号", row["reasons"])
+
+    def test_reviewed_alias_is_not_rediscovered_from_portfolio_source(self):
+        watchlist = self.watchlist()
+        watchlist["projects"][0]["aliases"] = ["已跟踪科技"]
+        payload = {
+            "generatedAt": "2026-09-22T08:00:00+00:00",
+            "articles": [
+                {
+                    "id": "portfolio-known",
+                    "sourceId": "innovation-capital-portfolio-01",
+                    "title": "已跟踪科技完成D轮融资",
+                    "summary": "具身智能项目。",
+                    "company": "已跟踪科技",
+                    "publishedAt": "2026-09-22",
+                    "sector": "智能机器人",
+                    "source": {
+                        "name": "公开发现",
+                        "url": "https://example.com/known",
+                        "level": "待交叉验证",
+                    },
+                }
+            ],
+        }
+        snapshot = builder.build_candidate_snapshot(payload, watchlist, {})
+        self.assertEqual(snapshot["candidateCount"], 0)
+
     def test_primary_regulatory_source_is_primary_backed_and_broker_bound(self):
         payload = {
             "generatedAt": "2026-09-22T08:00:00+00:00",

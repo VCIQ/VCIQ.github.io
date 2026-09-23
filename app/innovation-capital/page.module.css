@@ -44,6 +44,8 @@
 }
 
 .directorySection,
+.lifecycleSection,
+.opportunitySection,
 .policySection,
 .methodSection {
   margin-top: 48px;
@@ -243,6 +245,188 @@
   text-decoration: underline;
 }
 
+.lifecycleGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.lifecycleCard {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 16px;
+  background: var(--card, #fff);
+}
+
+.lifecycleCard > header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.lifecycleCard h3 {
+  margin: 5px 0 0;
+  font-size: 1.03rem;
+  line-height: 1.45;
+}
+
+.lifecycleStatus {
+  flex: 0 0 auto;
+  padding: 5px 8px;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 999px;
+  font-size: .7rem;
+  font-weight: 700;
+}
+
+.lifecycleSources {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid var(--border, #e5e7eb);
+}
+
+.lifecycleSources a {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  color: inherit;
+  text-decoration: none;
+  font-size: .72rem;
+  line-height: 1.5;
+}
+
+.lifecycleSources a:hover {
+  text-decoration: underline;
+}
+
+.opportunitySummary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.opportunitySummary article {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 13px 15px;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 12px;
+  background: var(--card, #fff);
+}
+
+.opportunitySummary strong {
+  font-size: 1.35rem;
+}
+
+.opportunitySummary span {
+  color: var(--muted-foreground, #667085);
+  font-size: .72rem;
+}
+
+.opportunityFilters {
+  display: grid;
+  grid-template-columns: minmax(260px, 2fr) minmax(160px, .8fr) minmax(180px, .9fr);
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.opportunityFilters select {
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 10px;
+  background: var(--card, #fff);
+  color: inherit;
+}
+
+.opportunityGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.opportunityCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 16px;
+  background: var(--card, #fff);
+}
+
+.opportunityCard > header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.opportunityCard h3 {
+  margin: 5px 0 0;
+  font-size: 1.02rem;
+  line-height: 1.45;
+}
+
+.opportunityBand {
+  color: var(--muted-foreground, #667085);
+  font-size: .7rem;
+  font-weight: 700;
+}
+
+.readinessScore {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.readinessScore strong {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.readinessScore span {
+  margin-top: 4px;
+  color: var(--muted-foreground, #667085);
+  font-size: .62rem;
+}
+
+.opportunityEvidence,
+.opportunityGaps {
+  padding-top: 9px;
+  border-top: 1px solid var(--border, #e5e7eb);
+}
+
+.opportunityEvidence strong,
+.opportunityGaps strong {
+  font-size: .72rem;
+}
+
+.opportunityEvidence p,
+.opportunityGaps p {
+  margin: 5px 0 0;
+  color: var(--muted-foreground, #667085);
+  font-size: .76rem;
+  line-height: 1.6;
+}
+
+.opportunityGaps {
+  border-top-style: dashed;
+}
+
 .policyGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -334,21 +518,40 @@
     grid-column: 1 / -1;
   }
 
-  .projectGrid {
+  .projectGrid,
+  .lifecycleGrid,
+  .opportunityGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .opportunitySummary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .opportunityFilters {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .opportunityFilters .searchBox {
+    grid-column: 1 / -1;
   }
 }
 
 @media (max-width: 720px) {
   .statsGrid,
   .projectGrid,
+  .lifecycleGrid,
+  .opportunityGrid,
+  .opportunitySummary,
   .policyGrid,
   .methodGrid,
-  .filters {
+  .filters,
+  .opportunityFilters {
     grid-template-columns: 1fr;
   }
 
-  .searchBox {
+  .searchBox,
+  .opportunityFilters .searchBox {
     grid-column: auto;
   }
 

@@ -34,6 +34,30 @@ const watchlist = JSON.parse(
   read("config/innovation_listing_watchlist.json"),
 ) as Watchlist;
 
+const lifecycle = JSON.parse(
+  read("config/innovation_listing_lifecycle.json"),
+) as {
+  projects: Array<{
+    company: string;
+    broker: string;
+    route: string;
+    lifecycleStatus: string;
+    stage: string;
+    stockCode: string;
+    sources: Array<{ url: string; level: string }>;
+  }>;
+};
+
+const trackingSeeds = JSON.parse(
+  read("config/innovation_capital_tracking_seeds.json"),
+) as {
+  track: { slug: string; name: string };
+  brokers: Array<{ name: string; aliases: string[] }>;
+  projects: Array<{ name: string }>;
+  institutions: Array<{ name: string; institutionTypes: string[] }>;
+  governance: { duplicateRule: string; opportunityRule: string };
+};
+
 test("innovation listing watchlist has five target brokers and unique projects", () => {
   assert.deepEqual(watchlist.brokers, [
     "中信证券",
@@ -90,4 +114,62 @@ test("innovation discovery bridge remains evidence-only", () => {
   assert.match(bridge, /discovery-only/u);
   assert.match(bridge, /待交叉验证/u);
   assert.doesNotMatch(bridge, /write_text\([^)]*innovation_listing_watchlist/u);
+});
+
+
+test("innovation capital tracking seeds cover reviewed projects, brokers and capital institutions", () => {
+  assert.equal(trackingSeeds.track.slug, "innovation-capital");
+  assert.equal(trackingSeeds.track.name, "科创资本");
+  assert.equal(trackingSeeds.brokers.length, 5);
+  assert.ok(trackingSeeds.projects.length >= 46);
+  assert.ok(trackingSeeds.institutions.length >= 150);
+  assert.ok(
+    trackingSeeds.institutions.every(
+      (item) => !item.institutionTypes.includes("strategic-shareholder"),
+    ),
+  );
+  assert.match(trackingSeeds.governance.duplicateRule, /aliases/u);
+  assert.match(trackingSeeds.governance.opportunityRule, /潜在项目源/u);
+});
+
+test("innovation capital remains a derived public channel while backend tracking gets its own lane", () => {
+  const automation = read("config/automation_jobs.json");
+  const workflow = read(".github/workflows/tracking-discovery.yml");
+  const sync = read("tools/sync_innovation_capital_tracking.py");
+
+  assert.match(workflow, /sync_innovation_capital_tracking\.py/u);
+  assert.match(sync, /TRACK_SLUG = "innovation-capital"/u);
+  assert.match(sync, /relationship-candidate-does-not-imply-confirmed/u);
+  assert.doesNotMatch(automation, /"id": "innovation-capital"[\s\S]*"publicObjectTypes"/u);
+});
+
+
+test("listing lifecycle migrates accepted or listed hard-tech projects without losing broker lineage", () => {
+  const unitree = lifecycle.projects.find((item) => item.company.includes("宇树科技"));
+  const landspace = lifecycle.projects.find((item) => item.company.includes("蓝箭航天"));
+  const mthreads = lifecycle.projects.find((item) => item.company.includes("摩尔线程"));
+  const metax = lifecycle.projects.find((item) => item.company.includes("沐曦"));
+  const enflame = lifecycle.projects.find((item) => item.company.includes("燧原科技"));
+  assert.ok(unitree);
+  assert.ok(landspace);
+  assert.ok(mthreads);
+  assert.ok(metax);
+  assert.ok(enflame);
+  assert.equal(unitree.broker, "中信证券");
+  assert.equal(unitree.route, "STAR");
+  assert.equal(unitree.lifecycleStatus, "listed");
+  assert.equal(unitree.stockCode, "688836");
+  assert.equal(landspace.broker, "中金公司");
+  assert.equal(landspace.lifecycleStatus, "exchange-review");
+  assert.equal(mthreads.broker, "中信证券");
+  assert.equal(mthreads.stockCode, "688795");
+  assert.equal(metax.broker, "华泰联合");
+  assert.equal(metax.stockCode, "688802");
+  assert.equal(enflame.broker, "中信证券");
+  assert.equal(enflame.lifecycleStatus, "registration-review");
+  for (const project of lifecycle.projects) {
+    assert.ok(["中信证券", "中信建投", "中金公司", "国泰海通", "华泰联合"].includes(project.broker));
+    assert.ok(project.sources.some((source) => source.level === "regulatory"));
+    assert.ok(project.sources.every((source) => /^https:\/\//u.test(source.url)));
+  }
 });

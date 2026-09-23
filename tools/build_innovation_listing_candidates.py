@@ -31,6 +31,7 @@ DECISIONS_PATH = ROOT / "config" / "innovation_listing_candidate_decisions.json"
 OUTPUT_PATH = ROOT / "config" / "innovation_listing_candidate_review_queue.json"
 
 SOURCE_PREFIX = "innovation-listing-"
+CAPITAL_PORTFOLIO_PREFIX = "innovation-capital-portfolio-"
 MINIMUM_SCORE = 45
 VALID_DECISIONS = {"pending", "accepted", "rejected"}
 PRIMARY_SOURCE_LEVELS = {
@@ -53,6 +54,18 @@ LISTING_TERMS = (
     "A+H",
 )
 A_PLUS_H_TERMS = ("A+H", "H股", "港股", "港交所", "18C", "特专科技")
+MATURITY_TERMS = (
+    "D轮",
+    "D+轮",
+    "D++轮",
+    "E轮",
+    "E+轮",
+    "E++轮",
+    "Pre-IPO",
+    "Pre IPO",
+    "Growth",
+    "战略融资",
+)
 GENERIC_NAMES = {
     "",
     "公司",
@@ -194,11 +207,24 @@ def structured_names(article: dict[str, Any], brokers: set[str]) -> list[str]:
     return unique(names, 12)
 
 
-def title_names(article: dict[str, Any], brokers: set[str]) -> list[str]:
+def title_names(
+    article: dict[str, Any],
+    brokers: set[str],
+    *,
+    allow_maturity: bool = False,
+) -> list[str]:
     title = clean(article.get("title"), 500)
     summary = clean(article.get("summary"), 900)
     text = f"{title} {summary}"
-    if not any(term.casefold() in text.casefold() for term in LISTING_TERMS):
+    has_listing_signal = any(
+        term.casefold() in text.casefold()
+        for term in LISTING_TERMS
+    )
+    has_maturity_signal = allow_maturity and any(
+        term.casefold() in text.casefold()
+        for term in MATURITY_TERMS
+    )
+    if not has_listing_signal and not has_maturity_signal:
         return []
 
     values: list[str] = []
@@ -320,6 +346,7 @@ def candidate_id(key: str) -> str:
 def candidate_fingerprint(candidate: dict[str, Any]) -> str:
     payload = {
         "decisionKey": candidate["decisionKey"],
+        "candidateClass": candidate.get("candidateClass", "listing-candidate"),
         "broker": candidate["broker"],
         "route": candidate["route"],
         "capitalMarketPath": candidate["capitalMarketPath"],
@@ -349,7 +376,10 @@ def score_evidence(
     score = 0
     reasons: list[str] = []
 
-    if re.fullmatch(
+    if source_id.startswith(CAPITAL_PORTFOLIO_PREFIX):
+        score += 20
+        reasons.append("命中硬科技机构组合成熟项目发现源")
+    elif re.fullmatch(
         rf"{re.escape(SOURCE_PREFIX)}primary-regulatory-\d{{2}}-\d{{2}}",
         source_id,
     ):
@@ -379,7 +409,10 @@ def score_evidence(
     if route in {"STAR", "ChiNext"}:
         score += 20
         reasons.append("正文明确出现科创板/创业板路径")
-    elif "A股" in text or "IPO" in text:
+    elif "A股" in text or (
+        "IPO" in text
+        and not source_id.startswith(CAPITAL_PORTFOLIO_PREFIX)
+    ):
         score += 10
         reasons.append("出现A股/IPO路径信号")
 
@@ -398,6 +431,13 @@ def score_evidence(
     if tags:
         score += 12
         reasons.append(f"命中十五五主题：{'、'.join(tags[:3])}")
+
+    if source_id.startswith(CAPITAL_PORTFOLIO_PREFIX) and any(
+        term.casefold() in text.casefold()
+        for term in MATURITY_TERMS
+    ):
+        score += 25
+        reasons.append("出现D/E/Pre-IPO/Growth等成熟期融资信号")
 
     if source_level(article) in PRIMARY_SOURCE_LEVELS:
         score += 25
@@ -428,11 +468,21 @@ def build_candidate_snapshot(
         for value in watchlist_payload.get("policyThemes", [])
         if clean(value, 120)
     ][:80]
-    known = {
-        identity(project.get("company"))
-        for project in watchlist_payload.get("projects", [])
-        if isinstance(project, dict) and identity(project.get("company"))
-    }
+    known: set[str] = set()
+    for project in watchlist_payload.get("projects", []):
+        if not isinstance(project, dict):
+            continue
+        for value in [
+            project.get("company"),
+            *(
+                project.get("aliases", [])
+                if isinstance(project.get("aliases"), list)
+                else []
+            ),
+        ]:
+            key = identity(value)
+            if key:
+                known.add(key)
     decisions = decision_map(decisions_payload or {})
     generated = generated_at(articles_payload, rows)
     reference = parse_date(generated)
@@ -441,7 +491,8 @@ def build_candidate_snapshot(
 
     for article in rows:
         source_id = clean(article.get("sourceId"), 240)
-        if not source_id.startswith(SOURCE_PREFIX):
+        portfolio_source = source_id.startswith(CAPITAL_PORTFOLIO_PREFIX)
+        if not source_id.startswith(SOURCE_PREFIX) and not portfolio_source:
             continue
         # Existing-project shards are for lifecycle monitoring, not candidate
         # creation. Never re-create reviewed projects from those articles.
@@ -454,15 +505,33 @@ def build_candidate_snapshot(
                 clean(article.get("summary"), 900),
             )
         )
-        if not any(term.casefold() in text.casefold() for term in LISTING_TERMS):
+        has_listing_signal = any(
+            term.casefold() in text.casefold()
+            for term in LISTING_TERMS
+        )
+        has_maturity_signal = portfolio_source and any(
+            term.casefold() in text.casefold()
+            for term in MATURITY_TERMS
+        )
+        if not has_listing_signal and not has_maturity_signal:
             continue
 
         article_brokers = brokers_for_article(article, brokers)
         if not article_brokers:
-            continue
+            if portfolio_source:
+                article_brokers = [""]
+            else:
+                continue
 
         structured = structured_names(article, broker_set)
-        extracted = unique([*structured, *title_names(article, broker_set)], 16)
+        extracted = unique([
+            *structured,
+            *title_names(
+                article,
+                broker_set,
+                allow_maturity=portfolio_source,
+            ),
+        ], 16)
         if not extracted:
             continue
 
@@ -494,11 +563,18 @@ def build_candidate_snapshot(
                 key_company = identity(company)
                 if not key_company or key_company in known:
                     continue
-                decision_key = f"{key_company}|{identity(broker)}"
+                broker_identity = identity(broker) or "unassigned"
+                decision_key = f"{key_company}|{broker_identity}"
+                candidate_class = (
+                    "mature-opportunity"
+                    if portfolio_source and not broker
+                    else "listing-candidate"
+                )
                 row = groups.setdefault(
                     decision_key,
                     {
                         "decisionKey": decision_key,
+                        "candidateClass": candidate_class,
                         "names": Counter(),
                         "broker": broker,
                         "score": 0,
@@ -517,8 +593,28 @@ def build_candidate_snapshot(
                 row["score"] = max(int(row["score"]), score)
                 row["reasons"] = unique([*row["reasons"], *reasons], 8)
                 row["routes"][route_for(text)] += 1
-                row["paths"]["A+H" if any(term in text for term in A_PLUS_H_TERMS) else "A"] += 1
-                row["stages"][stage_for(text)] += 1
+                explicit_route = route_for(text) in {"STAR", "ChiNext"} or any(
+                    term in text
+                    for term in ("A股", *A_PLUS_H_TERMS)
+                )
+                if candidate_class == "mature-opportunity" and not explicit_route:
+                    row["paths"]["unassigned"] += 1
+                    row["stages"]["成熟期融资候选"] += 1
+                else:
+                    row["paths"][
+                        "A+H"
+                        if any(term in text for term in A_PLUS_H_TERMS)
+                        else "A"
+                    ] += 1
+                    detected_stage = stage_for(text)
+                    row["stages"][
+                        "成熟期融资候选"
+                        if (
+                            candidate_class == "mature-opportunity"
+                            and detected_stage == "待核验"
+                        )
+                        else detected_stage
+                    ] += 1
                 sector = clean(article.get("sector"), 160)
                 if sector and sector != "风险投资":
                     row["sectors"][sector] += 1
@@ -578,15 +674,23 @@ def build_candidate_snapshot(
             1 for item in evidence if item.get("level") in PRIMARY_SOURCE_LEVELS
         )
         decision = decisions.get(decision_key, {})
+        candidate_class = clean(raw.get("candidateClass"), 40) or "listing-candidate"
+        broker = clean(raw.get("broker"), 160)
         candidate = {
             "id": candidate_id(decision_key),
             "decisionKey": decision_key,
+            "candidateClass": candidate_class,
             "company": company,
             "aliases": sorted(names, key=lambda value: (-names[value], value.casefold()))[:8],
-            "broker": raw["broker"],
+            "broker": broker,
+            "brokerEvidenceStatus": "matched" if broker else "unassigned",
             "sector": sector,
             "route": route,
-            "routeConfidence": "discovery",
+            "routeConfidence": (
+                "unassigned"
+                if candidate_class == "mature-opportunity" and not broker
+                else "discovery"
+            ),
             "capitalMarketPath": path,
             "stage": stage,
             "firstSeenAt": dates[0] if dates else "",
@@ -639,6 +743,7 @@ def build_candidate_snapshot(
                 "自动发现只进入候选队列；不得自动写入 innovation_listing_watchlist.json。"
                 "十五五主题只决定发现范围，不推断上市板块。"
                 "监管/券商官方证据优先进入人工复核；仅发现型证据须先补一级来源。"
+                "机构组合成熟项目可在券商尚未匹配时进入候选，但不得据此推断辅导机构或上市板块。"
             ),
         },
     }

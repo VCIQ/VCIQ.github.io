@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Building2, Landmark, Radar, Route, ShieldCheck } from "lucide-react";
 import watchlist from "@/config/innovation_listing_watchlist.json";
+import { buildInnovationOpportunityPool } from "@/lib/innovation-capital-opportunity";
 import { InnovationDirectory } from "./innovation-directory";
+import { InnovationListingLifecycle } from "./innovation-listing-lifecycle";
+import { InnovationOpportunityPool } from "./innovation-opportunity-pool";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -11,6 +14,7 @@ export const metadata: Metadata = {
 
 export default function InnovationCapitalPage() {
   const projects = watchlist.projects;
+  const opportunities = buildInnovationOpportunityPool();
   const coreCount = projects.filter((item) => item.pool === "core").length;
   const observationCount = projects.filter((item) => item.pool === "observation").length;
   const refileCount = projects.filter((item) => item.pool === "refile").length;
@@ -40,6 +44,10 @@ export default function InnovationCapitalPage() {
       </header>
 
       <InnovationDirectory />
+
+      <InnovationListingLifecycle />
+
+      <InnovationOpportunityPool opportunities={opportunities} />
 
       <section className={styles.policySection} id="policy">
         <div className={styles.sectionHeader}>

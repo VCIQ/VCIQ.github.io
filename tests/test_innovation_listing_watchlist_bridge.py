@@ -15,6 +15,35 @@ class InnovationListingWatchlistBridgeTests(unittest.TestCase):
                 {"brokers": [], "projects": [], "policyThemes": []},
             )
 
+    def test_load_capital_seeds_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            missing = Path(tmp) / "missing-capital.json"
+            self.assertEqual(
+                bridge.load_capital_seeds(missing),
+                {"institutions": []},
+            )
+
+    def test_generates_sharded_late_stage_hard_tech_portfolio_sources(self) -> None:
+        payload = {
+            "institutions": [
+                {"name": "深创投"},
+                {"name": "红杉中国"},
+                {"name": "启明创投"},
+            ]
+        }
+        sources = bridge.generated_portfolio_sources(payload)
+        self.assertEqual(len(sources), 1)
+        source = sources[0]
+        self.assertEqual(source["id"], "innovation-capital-portfolio-01")
+        decoded = unquote_plus(source["url"])
+        self.assertIn("深创投", decoded)
+        self.assertIn("红杉中国", decoded)
+        self.assertIn("D轮", decoded)
+        self.assertIn("E轮", decoded)
+        self.assertIn("Pre-IPO", decoded)
+        self.assertIn("具身智能", decoded)
+        self.assertEqual(source["sourceLevel"], "待交叉验证")
+
     def test_generates_broker_ah_policy_and_project_discovery_sources(self) -> None:
         payload = {
             "brokers": ["中信证券", "中金公司"],
