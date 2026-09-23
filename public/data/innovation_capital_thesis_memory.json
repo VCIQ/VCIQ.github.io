@@ -23,19 +23,57 @@
       "firstSeenAt": "2026-09-22",
       "lastSeenAt": "2026-09-22",
       "observationCount": 1,
-      "lastTransition": "initiated"
+      "lastTransition": "initiated",
+      "metrics": {
+        "sampleUnit": "project",
+        "universeCount": 23,
+        "supportCount": 5,
+        "contrastCount": 18,
+        "neutralCount": 0,
+        "evidenceCoveredCount": 23,
+        "evidenceCoveragePct": 100,
+        "supportSharePct": 21.7,
+        "supportDefinition": "中信证券当前归入集成电路的已跟踪项目",
+        "contrastDefinition": "中信证券当前归入其他赛道的已跟踪项目"
+      },
+      "metricDelta": {
+        "supportDelta": 0,
+        "contrastDelta": 0,
+        "universeDelta": 0,
+        "evidenceCoverageDeltaPct": 0,
+        "supportShareDeltaPct": 0
+      }
     },
     {
       "id": "innovation-thesis:state-jump-over-duration:r1",
       "hypothesisId": "state-jump-over-duration",
-      "title": "状态跳变比辅导时长更适合作为项目成熟度信号",
-      "status": "watch",
-      "evidence": "当前 49 个储备项目中，辅导验收 8 个；生命周期池另有 6 个项目。",
-      "nextCheck": "记录辅导验收→受理→问询→注册的实际转化时间，而不是仅使用辅导持续天数。",
+      "title": "长期辅导并不等于已进入下游监管阶段，状态跳变需要单独跟踪",
+      "status": "observed",
+      "evidence": "当前有 14 个项目的已记录辅导跨度达到 365 天，其中 13 个仍为“辅导中”，1 个已到“辅导验收”。",
+      "nextCheck": "继续记录长期辅导项目何时出现辅导验收、交易所受理等状态跃迁，不把时间本身当成成熟度结论。",
       "firstSeenAt": "2026-09-22",
       "lastSeenAt": "2026-09-22",
       "observationCount": 1,
-      "lastTransition": "initiated"
+      "lastTransition": "initiated",
+      "metrics": {
+        "sampleUnit": "project",
+        "universeCount": 14,
+        "supportCount": 13,
+        "contrastCount": 1,
+        "neutralCount": 0,
+        "evidenceCoveredCount": 14,
+        "evidenceCoveragePct": 100,
+        "supportSharePct": 92.9,
+        "supportDefinition": "已记录辅导跨度≥365天但当前仍处于“辅导中”的项目",
+        "contrastDefinition": "已记录辅导跨度≥365天且当前已到“辅导验收”的项目"
+      },
+      "metricDelta": {
+        "supportDelta": 0,
+        "contrastDelta": 0,
+        "universeDelta": 0,
+        "evidenceCoverageDeltaPct": 0,
+        "supportShareDeltaPct": 0
+      }
     },
     {
       "id": "innovation-thesis:cross-market:r1",
@@ -47,19 +85,57 @@
       "firstSeenAt": "2026-09-22",
       "lastSeenAt": "2026-09-22",
       "observationCount": 1,
-      "lastTransition": "initiated"
+      "lastTransition": "initiated",
+      "metrics": {
+        "sampleUnit": "project",
+        "universeCount": 49,
+        "supportCount": 5,
+        "contrastCount": 44,
+        "neutralCount": 0,
+        "evidenceCoveredCount": 49,
+        "evidenceCoveragePct": 100,
+        "supportSharePct": 10.2,
+        "supportDefinition": "明确标记 capitalMarketPath=A+H 的已跟踪项目",
+        "contrastDefinition": "当前仅标记 capitalMarketPath=A 的已跟踪项目；这是对照样本，不代表否定未来跨市场路径"
+      },
+      "metricDelta": {
+        "supportDelta": 0,
+        "contrastDelta": 0,
+        "universeDelta": 0,
+        "evidenceCoverageDeltaPct": 0,
+        "supportShareDeltaPct": 0
+      }
     },
     {
       "id": "innovation-thesis:route-migration:r1",
       "hypothesisId": "route-migration",
       "title": "撤回后的二次申报与板块迁移值得单独建模",
       "status": "observed",
-      "evidence": "当前二次申报/历史递表样本 3 个。",
+      "evidence": "当前二次申报/历史递表样本 3 个，其中 1 个已能从公开历史识别出科创板↔创业板的跨板迁移。",
       "nextCheck": "维护 route_history，并识别撤回前后券商、板块和审核节点变化。",
       "firstSeenAt": "2026-09-22",
       "lastSeenAt": "2026-09-22",
       "observationCount": 1,
-      "lastTransition": "initiated"
+      "lastTransition": "initiated",
+      "metrics": {
+        "sampleUnit": "project",
+        "universeCount": 3,
+        "supportCount": 1,
+        "contrastCount": 2,
+        "neutralCount": 0,
+        "evidenceCoveredCount": 3,
+        "evidenceCoveragePct": 100,
+        "supportSharePct": 33.3,
+        "supportDefinition": "历史公开申报板块与当前公开确认板块不同的二次申报项目",
+        "contrastDefinition": "存在历史申报/重启，但当前未形成可确认跨板迁移的项目"
+      },
+      "metricDelta": {
+        "supportDelta": 0,
+        "contrastDelta": 0,
+        "universeDelta": 0,
+        "evidenceCoverageDeltaPct": 0,
+        "supportShareDeltaPct": 0
+      }
     },
     {
       "id": "innovation-thesis:hard-tech-lifecycle:r1",
@@ -71,31 +147,88 @@
       "firstSeenAt": "2026-09-22",
       "lastSeenAt": "2026-09-22",
       "observationCount": 1,
-      "lastTransition": "initiated"
+      "lastTransition": "initiated",
+      "metrics": {
+        "sampleUnit": "project",
+        "universeCount": 6,
+        "supportCount": 6,
+        "contrastCount": 0,
+        "neutralCount": 0,
+        "evidenceCoveredCount": 6,
+        "evidenceCoveragePct": 100,
+        "supportSharePct": 100,
+        "supportDefinition": "后续生命周期池中公开路线为科创板的项目",
+        "contrastDefinition": "后续生命周期池中公开路线不是科创板的项目"
+      },
+      "metricDelta": {
+        "supportDelta": 0,
+        "contrastDelta": 0,
+        "universeDelta": 0,
+        "evidenceCoverageDeltaPct": 0,
+        "supportShareDeltaPct": 0
+      }
     },
     {
       "id": "innovation-thesis:capital-repeat:r1",
       "hypothesisId": "capital-repeat",
       "title": "少数机构可能反复出现在成熟硬科技IPO管线中",
       "status": "watch",
-      "evidence": "当前关联项目最多的机构为 深创投（6 个）。",
+      "evidence": "当前关联项目最多的机构为 深创投（6 个）；共有 16 家机构关联至少 2 个项目。",
       "nextCheck": "按确认关系、候选关系和证据等级分别统计，避免把同名基金或品牌误合并。",
       "firstSeenAt": "2026-09-22",
       "lastSeenAt": "2026-09-22",
       "observationCount": 1,
-      "lastTransition": "initiated"
+      "lastTransition": "initiated",
+      "metrics": {
+        "sampleUnit": "institution",
+        "universeCount": 190,
+        "supportCount": 16,
+        "contrastCount": 174,
+        "neutralCount": 0,
+        "evidenceCoveredCount": 190,
+        "evidenceCoveragePct": 100,
+        "supportSharePct": 8.4,
+        "supportDefinition": "linkedProjectCount≥2 的机构节点",
+        "contrastDefinition": "当前仅关联 1 个已跟踪项目的机构节点"
+      },
+      "metricDelta": {
+        "supportDelta": 0,
+        "contrastDelta": 0,
+        "universeDelta": 0,
+        "evidenceCoverageDeltaPct": 0,
+        "supportShareDeltaPct": 0
+      }
     },
     {
       "id": "innovation-thesis:late-stage-to-guidance:r1",
       "hypothesisId": "late-stage-to-guidance",
       "title": "大额成长轮融资→股改/辅导可能构成成熟项目发现链",
-      "status": "observed",
-      "evidence": "当前成熟候选池 2 个，均未因融资信息被自动推断上市板块。",
-      "nextCheck": "持续寻找券商聘任、辅导备案和公司治理变化等一级证据。",
+      "status": "watch",
+      "evidence": "当前成熟候选池 2 个，其中 0 个已出现券商/上市路线一级证据，2 个仍停留在成熟候选阶段。",
+      "nextCheck": "持续寻找券商聘任、辅导备案和公司治理变化等一级证据；没有一级证据时不得把融资成熟度当成上市路线。",
       "firstSeenAt": "2026-09-22",
       "lastSeenAt": "2026-09-22",
       "observationCount": 1,
-      "lastTransition": "initiated"
+      "lastTransition": "initiated",
+      "metrics": {
+        "sampleUnit": "candidate",
+        "universeCount": 2,
+        "supportCount": 0,
+        "contrastCount": 2,
+        "neutralCount": 0,
+        "evidenceCoveredCount": 2,
+        "evidenceCoveragePct": 100,
+        "supportSharePct": 0,
+        "supportDefinition": "成熟候选中已出现 brokerEvidence 或已分配 routeEvidence 的项目",
+        "contrastDefinition": "成熟候选中仍无券商/上市路线一级证据的项目"
+      },
+      "metricDelta": {
+        "supportDelta": 0,
+        "contrastDelta": 0,
+        "universeDelta": 0,
+        "evidenceCoverageDeltaPct": 0,
+        "supportShareDeltaPct": 0
+      }
     }
   ]
 }
