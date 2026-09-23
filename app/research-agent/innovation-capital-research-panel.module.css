@@ -1,0 +1,171 @@
+.panel {
+  scroll-margin-top: 140px;
+  margin-bottom: 32px;
+  padding: clamp(20px, 2.5vw, 34px);
+  border: 1px solid var(--border);
+  background: linear-gradient(145deg, var(--surface-2), var(--surface));
+}
+
+.heading,
+.subheading,
+.meta,
+.thesisMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.heading {
+  align-items: flex-start;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.heading h2 { margin-bottom: 0; font: 500 23px/1.25 "Noto Serif SC", serif; }
+
+.headingActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.headingActions a { color: var(--muted); border-bottom: 1px solid var(--border); }
+
+.intro,
+.methodology {
+  max-width: 1000px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.intro { margin: 18px 0; }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 22px;
+}
+.stats article {
+  padding: 13px 15px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+}
+.stats strong { display: block; font: 500 21px/1.2 "Noto Serif SC", serif; }
+.stats span { color: var(--muted); font-size: 12px; }
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(300px, .8fr);
+  gap: 24px;
+}
+
+.subheading {
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-soft);
+}
+.subheading h3 { margin: 0; font-size: 15px; }
+.subheading span { color: var(--muted); font-size: 12px; }
+
+.task {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+.rank {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--green) 48%, var(--border));
+  color: var(--green-bright);
+  font: 600 12px/1 monospace;
+}
+.meta { color: var(--muted); font-size: 11px; }
+.task h4,
+.hypotheses h4 { margin: 7px 0; font-size: 14px; }
+.task p,
+.hypotheses p,
+.maintenance p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
+
+.why {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.why span {
+  padding: 4px 7px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.task details { margin-top: 9px; }
+.task summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  cursor: pointer;
+  color: var(--blue);
+  font-size: 11px;
+}
+.task details p { margin: 4px 0 7px; }
+.task details a { color: var(--blue); font-size: 11px; }
+
+.hypotheses article {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+.thesisMeta {
+  justify-content: flex-start;
+  color: var(--muted);
+  font-size: 11px;
+}
+.thesisMeta svg { color: var(--green); }
+.hypotheses small,
+.maintenance small { display: block; margin-top: 7px; color: var(--muted); font-size: 11px; line-height: 1.55; }
+
+.maintenance {
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-soft);
+}
+.maintenance > summary {
+  min-height: 40px;
+  cursor: pointer;
+  color: var(--blue);
+  font-size: 12px;
+}
+.maintenance article {
+  padding: 10px 0;
+  border-top: 1px solid var(--border-soft);
+}
+.maintenance strong { font-size: 12px; }
+
+.methodology {
+  margin: 18px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-soft);
+}
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 560px) {
+  .panel { scroll-margin-top: 132px; padding: 18px; }
+  .heading { flex-direction: column; }
+  .headingActions { width: 100%; justify-content: space-between; }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .task { grid-template-columns: 36px minmax(0, 1fr); gap: 10px; }
+  .rank { width: 32px; height: 32px; }
+}
