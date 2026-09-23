@@ -201,6 +201,98 @@ class EntityResolutionTests(unittest.TestCase):
         self.assertEqual(fixed_config, next_config)
         self.assertEqual(fixed_inbox, next_inbox)
 
+    def test_reconciliation_does_not_replay_seed_governance_tombstones(self) -> None:
+        bad_name = "Massachusetts Governo Chris Ballance"
+        decisions = {
+            "decisions": {
+                "massachusetts governo chris ballance": {
+                    "status": "resolved",
+                    "requestedType": "person",
+                    "entityType": "person",
+                    "canonicalName": bad_name,
+                    "targetId": "person:stale-invalid-capture",
+                    "confidence": "verified",
+                    "aliases": [],
+                    "note": "Synthetic stale capture for fixed-point regression.",
+                }
+            }
+        }
+        config = {
+            "schemaVersion": 1,
+            "tracks": [
+                {
+                    "slug": "fusion",
+                    "name": "Fusion",
+                    "enabled": True,
+                    "custom": False,
+                    "keywords": [],
+                    "people": [],
+                    "sampleCompanies": [],
+                }
+            ],
+            "listedCompanies": [],
+            "sources": [],
+        }
+        inbox = {
+            "schemaVersion": 1,
+            "generatedAt": "",
+            "records": [
+                {
+                    "id": "capture-invalid-person",
+                    "entityType": "person",
+                    "canonicalName": bad_name,
+                    "rawSelection": bad_name,
+                    "aliases": [],
+                    "trackSlugs": ["fusion"],
+                    "trackNames": ["Fusion"],
+                    "source": {"title": "Stale automatic discovery"},
+                    "capturedAt": "2026-09-12T21:20:00Z",
+                    "capturedBy": "automatic-discovery",
+                    "status": "applied",
+                    "appliedTo": ["fusion:people"],
+                    "reasons": [],
+                    "note": "",
+                }
+            ],
+        }
+        ledger = {
+            "schemaVersion": 1,
+            "added": [],
+            "removed": [
+                {
+                    "track": "fusion",
+                    "kind": "people",
+                    "value": bad_name,
+                    "removedAt": "2026-09-22T01:58:39+00:00",
+                    "reason": "seed-governance-invalid-person",
+                }
+            ],
+        }
+
+        stable_config, stable_inbox, _ = stabilize_payloads(
+            config,
+            inbox,
+            decisions_payload=decisions,
+            company_registry_payload={"companies": []},
+            people_payload={"people": []},
+            auto_discovery_payload=ledger,
+        )
+        self.assertEqual(stable_config["tracks"][0]["people"], [])
+        self.assertEqual(stable_inbox["records"][0]["appliedTo"], [])
+        self.assertEqual(stable_inbox["records"][0]["status"], "dismissed")
+
+        fixed_config, fixed_inbox, fixed_stats = stabilize_payloads(
+            stable_config,
+            stable_inbox,
+            decisions_payload=decisions,
+            company_registry_payload={"companies": []},
+            people_payload={"people": []},
+            auto_discovery_payload=ledger,
+        )
+        self.assertEqual(fixed_stats["rounds"], 0)
+        self.assertEqual(fixed_config, stable_config)
+        self.assertEqual(fixed_inbox, stable_inbox)
+
     def test_stabilizer_converges_after_a_later_capture_introduces_a_topic(self) -> None:
         config = {
             "schemaVersion": 1,
