@@ -8,7 +8,9 @@ The `推荐` channel is the only channel whose primary ordering is the personali
 
 ## Follow and topic channels
 
-`关注流`, `快讯`, and named topic channels (`AI / AGI`, `具身智能`, `半导体`, `商业航天`, `固态电池`, `HBM`) are recency-first views. Personalized recommendation score remains a secondary tie-breaker so similarly fresh items can still be ordered usefully, but personalization must not move older content ahead of newer content in these channels.
+`关注流`, `快讯`, `科创`, and named topic channels (`AI / AGI`, `具身智能`, `半导体`, `商业航天`, `固态电池`, `HBM`) are recency-first views. Personalized recommendation score remains a secondary tie-breaker so similarly fresh items can still be ordered usefully, but personalization must not move older content ahead of newer content in these channels.
+
+`科创` is not a keyword channel. Membership is supplied by the build-derived `innovation-capital-feed.json` projection. An item must be tied to the reviewed innovation-capital universe (project, lifecycle project, target broker, capital institution, mature candidate, or a dedicated innovation discovery source) and must also carry a material listing, funding/investment, technology/commercialization, or policy event signal. Within the channel, recency stays first; `innovationPriority` is only the first tie-breaker after recency.
 
 ## Guess-you-like rail
 
