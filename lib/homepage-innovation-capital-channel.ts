@@ -18,6 +18,7 @@ export type InnovationCapitalMatchedObject = {
 export type InnovationCapitalFeedItem = {
   eventId: string;
   sourceUrl: string;
+  publishedAt: string;
   eventClusterId: string;
   matchedObjects: InnovationCapitalMatchedObject[];
   reasonCodes: string[];
@@ -530,6 +531,7 @@ export function buildInnovationCapitalFeedProjection(input: {
     items.push({
       eventId: event.id,
       sourceUrl: event.source.url,
+      publishedAt: event.publishedAt ?? "",
       eventClusterId: event.eventClusterId ?? "",
       matchedObjects: matched,
       reasonCodes: reasons,
@@ -549,9 +551,10 @@ export function buildInnovationCapitalFeedProjection(input: {
 
   const output = [...deduped.values()]
     .sort((left, right) =>
-      right.innovationPriority - left.innovationPriority
+      right.publishedAt.localeCompare(left.publishedAt)
+      || right.innovationPriority - left.innovationPriority
       || left.eventId.localeCompare(right.eventId))
-    .slice(0, 600);
+    .slice(0, 240);
 
   return {
     schemaVersion: 1,
@@ -596,6 +599,7 @@ export function parseInnovationCapitalFeedProjection(
     return [{
       eventId,
       sourceUrl,
+      publishedAt: text(row.publishedAt, 80),
       eventClusterId: text(row.eventClusterId, 240),
       matchedObjects,
       reasonCodes: unique(list(row.reasonCodes).map((item) => text(item, 80)), 20),
