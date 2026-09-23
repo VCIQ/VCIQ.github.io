@@ -9,6 +9,17 @@ const root = process.cwd();
 const configPath = path.join(root, "config", "user_tracking.json");
 const snapshotPath = path.join(root, "public", "data", "articles.json");
 
+const DEDICATED_DISCOVERY_TRACKS = new Map([
+  [
+    "innovation-capital",
+    [
+      path.join(root, "tools", "crawl_with_innovation_listing_watchlist.py"),
+      path.join(root, "config", "innovation_capital_tracking_seeds.json"),
+      path.join(root, "config", "innovation_listing_watchlist.json"),
+    ],
+  ],
+]);
+
 function fail(messages) {
   for (const message of messages) {
     console.error(`TRACKING_SNAPSHOT_ERROR: ${message}`);
@@ -87,6 +98,19 @@ for (const track of tracks) {
     errors.push(`${track.name}: missing crawler coverage record`);
     continue;
   }
+  const dedicatedInputs = DEDICATED_DISCOVERY_TRACKS.get(track.slug);
+  if (dedicatedInputs) {
+    const missingDedicatedInputs = dedicatedInputs.filter((input) => !fs.existsSync(input));
+    if (missingDedicatedInputs.length) {
+      errors.push(
+        `${track.name}: dedicated discovery contract is incomplete (${missingDedicatedInputs
+          .map((input) => path.relative(root, input))
+          .join(", ")})`,
+      );
+    }
+    continue;
+  }
+
   const expectedSources = Number(row.expectedSources ?? 0);
   const completedSources = Number(row.completedSources ?? 0);
   if (expectedSources < 3) {
@@ -101,5 +125,5 @@ for (const track of tracks) {
 
 if (errors.length) fail(errors);
 console.log(
-  `Tracking snapshot valid: ${tracks.length} tracks match ${actualHash.slice(0, 12)} and all discovery routes were attempted.`,
+  `Tracking snapshot valid: ${tracks.length} tracks match ${actualHash.slice(0, 12)}; generic routes and dedicated discovery contracts are complete.`,
 );
