@@ -1,5 +1,6 @@
 import type {
   InnovationCapitalResearchModel,
+  InnovationResearchEvidenceMetrics,
   InnovationResearchHypothesis,
 } from "@/lib/innovation-capital-research";
 
@@ -10,6 +11,14 @@ export type InnovationCapitalThesisTransition =
   | "direction_changed"
   | "returned";
 
+export type InnovationCapitalThesisMetricDelta = {
+  supportDelta: number;
+  contrastDelta: number;
+  universeDelta: number;
+  evidenceCoverageDeltaPct: number;
+  supportShareDeltaPct: number;
+};
+
 export type InnovationCapitalThesisObservation = {
   id: string;
   hypothesisId: string;
@@ -17,6 +26,8 @@ export type InnovationCapitalThesisObservation = {
   status: InnovationResearchHypothesis["status"];
   evidence: string;
   nextCheck: string;
+  metrics?: InnovationResearchEvidenceMetrics;
+  metricDelta?: InnovationCapitalThesisMetricDelta;
   firstSeenAt: string;
   lastSeenAt: string;
   observationCount: number;
@@ -40,8 +51,60 @@ function text(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
 }
 
-function fingerprint(value: Pick<InnovationResearchHypothesis, "title" | "status" | "evidence" | "nextCheck">) {
+function baseFingerprint(
+  value: Pick<InnovationResearchHypothesis, "title" | "status" | "evidence" | "nextCheck">,
+) {
   return JSON.stringify([value.title, value.status, value.evidence, value.nextCheck]);
+}
+
+function metricFingerprint(value: InnovationResearchEvidenceMetrics | undefined) {
+  if (!value) return "";
+  return JSON.stringify([
+    value.sampleUnit,
+    value.universeCount,
+    value.supportCount,
+    value.contrastCount,
+    value.neutralCount,
+    value.evidenceCoveredCount,
+    value.evidenceCoveragePct,
+    value.supportSharePct,
+    value.supportDefinition,
+    value.contrastDefinition,
+  ]);
+}
+
+function fingerprint(
+  value: Pick<InnovationResearchHypothesis, "title" | "status" | "evidence" | "nextCheck"> & {
+    metrics?: InnovationResearchEvidenceMetrics;
+  },
+) {
+  return JSON.stringify([baseFingerprint(value), metricFingerprint(value.metrics)]);
+}
+
+function zeroMetricDelta(): InnovationCapitalThesisMetricDelta {
+  return {
+    supportDelta: 0,
+    contrastDelta: 0,
+    universeDelta: 0,
+    evidenceCoverageDeltaPct: 0,
+    supportShareDeltaPct: 0,
+  };
+}
+
+function metricDelta(
+  current: InnovationResearchEvidenceMetrics,
+  previous?: InnovationResearchEvidenceMetrics,
+): InnovationCapitalThesisMetricDelta {
+  if (!previous) return zeroMetricDelta();
+  return {
+    supportDelta: current.supportCount - previous.supportCount,
+    contrastDelta: current.contrastCount - previous.contrastCount,
+    universeDelta: current.universeCount - previous.universeCount,
+    evidenceCoverageDeltaPct:
+      Math.round((current.evidenceCoveragePct - previous.evidenceCoveragePct) * 10) / 10,
+    supportShareDeltaPct:
+      Math.round((current.supportSharePct - previous.supportSharePct) * 10) / 10,
+  };
 }
 
 function normalizePrevious(value: unknown): InnovationCapitalThesisMemory {
@@ -125,8 +188,18 @@ export function buildInnovationCapitalThesisMemory(
   for (const hypothesis of model.hypotheses) {
     const prior = currentByHypothesis.get(hypothesis.id);
     const currentFingerprint = fingerprint(hypothesis);
+    const currentBaseFingerprint = baseFingerprint(hypothesis);
     const priorFingerprint = prior
       ? fingerprint({
+          title: prior.title,
+          status: prior.status,
+          evidence: prior.evidence,
+          nextCheck: prior.nextCheck,
+          metrics: prior.metrics,
+        })
+      : "";
+    const priorBaseFingerprint = prior
+      ? baseFingerprint({
           title: prior.title,
           status: prior.status,
           evidence: prior.evidence,
@@ -134,11 +207,27 @@ export function buildInnovationCapitalThesisMemory(
         })
       : "";
 
+    // Schema migration: backfill quantitative metrics onto an otherwise
+    // identical current observation without manufacturing a new thesis revision.
+    if (prior && !prior.metrics && priorBaseFingerprint === currentBaseFingerprint) {
+      prior.metrics = { ...hypothesis.metrics };
+      prior.metricDelta = zeroMetricDelta();
+      if (model.asOf && prior.lastSeenAt !== model.asOf) {
+        prior.lastSeenAt = model.asOf;
+        prior.observationCount = Math.max(1, Number(prior.observationCount) || 1) + 1;
+        prior.lastTransition = "reaffirmed";
+      }
+      changed = true;
+      nextCurrentIds.push(prior.id);
+      continue;
+    }
+
     if (prior && priorFingerprint === currentFingerprint) {
       if (model.asOf && prior.lastSeenAt !== model.asOf) {
         prior.lastSeenAt = model.asOf;
         prior.observationCount = Math.max(1, Number(prior.observationCount) || 1) + 1;
         prior.lastTransition = "reaffirmed";
+        prior.metricDelta = zeroMetricDelta();
         changed = true;
       }
       nextCurrentIds.push(prior.id);
@@ -154,6 +243,7 @@ export function buildInnovationCapitalThesisMemory(
           status: item.status,
           evidence: item.evidence,
           nextCheck: item.nextCheck,
+          metrics: item.metrics,
         }) === currentFingerprint,
       );
 
@@ -171,6 +261,8 @@ export function buildInnovationCapitalThesisMemory(
       status: hypothesis.status,
       evidence: hypothesis.evidence,
       nextCheck: hypothesis.nextCheck,
+      metrics: { ...hypothesis.metrics },
+      metricDelta: metricDelta(hypothesis.metrics, prior?.metrics),
       firstSeenAt: model.asOf,
       lastSeenAt: model.asOf,
       observationCount: 1,
