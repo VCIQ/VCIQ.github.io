@@ -123,6 +123,17 @@ test("tracking snapshot coverage has no environment bypass", () => {
   assert.match(validator, /errors\.push/u);
 });
 
+test("innovation capital uses its dedicated discovery contract without weakening generic track gates", () => {
+  const validator = read("scripts/validate-tracking-snapshot.mjs");
+  assert.match(validator, /DEDICATED_DISCOVERY_TRACKS/u);
+  assert.match(validator, /innovation-capital/u);
+  assert.match(validator, /crawl_with_innovation_listing_watchlist\.py/u);
+  assert.match(validator, /innovation_capital_tracking_seeds\.json/u);
+  assert.match(validator, /innovation_listing_watchlist\.json/u);
+  assert.match(validator, /missingDedicatedInputs/u);
+  assert.match(validator, /completedSources < expectedSources/u);
+});
+
 test("Pages build audits the final public artifact and rejects private review files", () => {
   const packageJson = JSON.parse(read("package.json")) as {
     scripts: Record<string, string>;

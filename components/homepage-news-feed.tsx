@@ -33,6 +33,14 @@ import {
   excludeDisplayedHomepageEvents,
   homepageEventSummary,
 } from "@/lib/homepage-event-identity";
+import {
+  buildHomepageInnovationCapitalIndex,
+  homepageInnovationCapitalAnnotation,
+  homepageInnovationReasonLabels,
+  matchesHomepageInnovationCapitalChannel,
+  type HomepageInnovationCapitalIndex,
+  type InnovationCapitalFeedProjection,
+} from "@/lib/homepage-innovation-capital-channel";
 import { mergeHomepagePersonChannelEvents } from "@/lib/homepage-person-channel-events";
 import {
   dismissHomepageEvent,
@@ -70,6 +78,7 @@ type ChannelId =
   | "follow"
   | "recommend"
   | "latest"
+  | "innovation"
   | "ai"
   | "embodied"
   | "semiconductor"
@@ -98,6 +107,7 @@ const CHANNELS: ReadonlyArray<{
   { id: "follow", label: "关注流" },
   { id: "recommend", label: "推荐" },
   { id: "latest", label: "快讯" },
+  { id: "innovation", label: "科创" },
   { id: "ai", label: "AI / AGI", keywords: ["AI", "AGI", "人工智能", "大模型", "基础模型", "算力"] },
   { id: "embodied", label: "具身智能", keywords: ["具身", "人形机器人", "机器人", "灵巧手", "Physical AI", "物理AI"] },
   { id: "semiconductor", label: "半导体", keywords: ["半导体", "芯片", "GPU", "DRAM", "晶圆", "封装", "光刻"] },
@@ -154,6 +164,7 @@ export type HomepageFeedBootstrap = {
     companyCount: number;
   };
   entityChannelIndex: HomepageEntityChannelIndex;
+  innovationCapitalFeed: InnovationCapitalFeedProjection;
 };
 
 function itemSearchText(item: LiveIntelligenceEvent) {
@@ -182,10 +193,14 @@ function matchesChannel(
   channelId: ChannelId,
   preferences: HomepagePreferenceState,
   entityChannels: HomepageEntityChannelSets,
+  innovationCapital: HomepageInnovationCapitalIndex,
 ) {
   if (channelId === "recommend" || channelId === "latest") return true;
   if (channelId === "follow") {
     return matchesHomepageFollowChannel(item, preferences);
+  }
+  if (channelId === "innovation") {
+    return matchesHomepageInnovationCapitalChannel(item, innovationCapital);
   }
 
   // Entity channels are gated by the published entity libraries. Raw NER-like
@@ -319,6 +334,10 @@ export function HomepageNewsFeed({
     () => buildHomepageEntityChannelSets(bootstrap.entityChannelIndex),
     [bootstrap.entityChannelIndex],
   );
+  const innovationCapital = useMemo(
+    () => buildHomepageInnovationCapitalIndex(bootstrap.innovationCapitalFeed),
+    [bootstrap.innovationCapitalFeed],
+  );
   const favoriteProfile = useMemo(
     () => buildHomepageFavoriteAffinityProfile(favorites),
     [favorites],
@@ -332,8 +351,12 @@ export function HomepageNewsFeed({
     [bootstrap.trackedSectorAliases],
   );
   const activeArticles = useMemo(
-    () => articles.filter((item) => enabledSectorNames.has(item.sector)),
-    [articles, enabledSectorNames],
+    () => articles.filter(
+      (item) =>
+        enabledSectorNames.has(item.sector)
+        || matchesHomepageInnovationCapitalChannel(item, innovationCapital),
+    ),
+    [articles, enabledSectorNames, innovationCapital],
   );
   const trustedArticles = useMemo(
     () => activeArticles.filter((item) => item.qualityStatus !== "低可信"),
@@ -370,7 +393,13 @@ export function HomepageNewsFeed({
     const ranked = base
       .filter((item) => !isHomepageEventDismissed(item, preferences))
       .filter((item) => region === "全部" || item.region === region)
-      .filter((item) => matchesChannel(item, channel, preferences, entityChannels))
+      .filter((item) => matchesChannel(
+        item,
+        channel,
+        preferences,
+        entityChannels,
+        innovationCapital,
+      ))
       .filter((item) => !normalizedQuery || itemSearchText(item).includes(normalizedQuery))
       .sort((left, right) => {
         if (channel === "recommend") {
@@ -378,6 +407,18 @@ export function HomepageNewsFeed({
             personalizedHomepageRecommendationScore(right, preferences, favoriteProfile) -
               personalizedHomepageRecommendationScore(left, preferences, favoriteProfile) ||
             right.publishedAt.localeCompare(left.publishedAt)
+          );
+        }
+        if (channel === "innovation") {
+          const leftInnovation = homepageInnovationCapitalAnnotation(left, innovationCapital);
+          const rightInnovation = homepageInnovationCapitalAnnotation(right, innovationCapital);
+          return (
+            right.publishedAt.localeCompare(left.publishedAt) ||
+            (rightInnovation?.innovationPriority ?? 0) -
+              (leftInnovation?.innovationPriority ?? 0) ||
+            personalizedHomepageRecommendationScore(right, preferences, favoriteProfile) -
+              personalizedHomepageRecommendationScore(left, preferences, favoriteProfile) ||
+            right.importance - left.importance
           );
         }
         return (
@@ -396,6 +437,7 @@ export function HomepageNewsFeed({
     companyChannelEvents,
     entityChannels,
     favoriteProfile,
+    innovationCapital,
     normalizedQuery,
     peopleChannelEvents,
     preferences,
@@ -466,6 +508,8 @@ export function HomepageNewsFeed({
     CHANNELS.find((candidate) => candidate.id === channel)?.label ?? "推荐";
   const currentChannelDescription = channel === "recommend"
     ? "推荐频道按个性化优先排序；先看最值得知道的变化，再决定是否查看来源、进入追踪、分享或深研此条。"
+    : channel === "innovation"
+      ? "科创频道由五大券商项目、上市生命周期、硬科技投资机构和成熟期候选的精确对象关系驱动；按最新事件优先，未核验证据不会自动推断辅导券商或上市板块。"
     : channel === "people"
       ? "人物频道合并已发布人物库材料与正式实体关联事件；仅正式 personSlug 或人物库别名精确匹配可入流，泛化人名识别不会直接触发。"
       : channel === "companies"
@@ -598,6 +642,9 @@ export function HomepageNewsFeed({
                 const saved = favoriteProfile.favoriteIds.has(homepageFavoriteId(item));
                 const followed = isHomepageSectorFollowed(item, preferences);
                 const reasonOpen = expandedReasonKey === eventKey;
+                const innovationAnnotation = channel === "innovation"
+                  ? homepageInnovationCapitalAnnotation(item, innovationCapital)
+                  : null;
 
                 return (
                   <article
@@ -635,6 +682,34 @@ export function HomepageNewsFeed({
                       </p>
 
                       <EventQualityIndicator item={item} />
+
+                      {innovationAnnotation ? (
+                        <div className={styles.innovationContext}>
+                          <div>
+                            <span>科创关联</span>
+                            <strong>
+                              {innovationAnnotation.matchedObjects
+                                .slice(0, 3)
+                                .map((object) =>
+                                  object.broker
+                                    ? `${object.name} → ${object.broker}`
+                                    : object.name)
+                                .join(" · ") || "科创发现候选"}
+                            </strong>
+                            <small>
+                              {innovationAnnotation.evidenceTier === "primary"
+                                ? "一级证据"
+                                : innovationAnnotation.evidenceTier === "trusted"
+                                  ? "可信来源"
+                                  : "发现证据"}
+                              {" · "}
+                              {homepageInnovationReasonLabels(innovationAnnotation).join(" · ")}
+                              {" · "}科创优先度 {innovationAnnotation.innovationPriority}
+                            </small>
+                          </div>
+                          <Link href="/innovation-capital/">查看科创项目 →</Link>
+                        </div>
+                      ) : null}
 
                       <div className={`${styles.cardMeta} ${polishStyles.cardMeta}`}>
                         <span>{item.source.name}</span>
