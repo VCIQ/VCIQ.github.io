@@ -153,6 +153,21 @@ class PagesWorkflowTests(unittest.TestCase):
             self.workflow.count("git diff --exit-code -- config public/data"),
             2,
         )
+        self.assertIn(
+            "git restore -- public/data/innovation-capital-feed.json",
+            self.workflow,
+        )
+        read_only = self.workflow.split(
+            "- name: Verify the build stayed read-only", 1
+        )[1]
+        self.assertIn(
+            "git restore -- public/data/innovation-capital-feed.json",
+            read_only,
+        )
+        self.assertLess(
+            read_only.index("git restore -- public/data/innovation-capital-feed.json"),
+            read_only.index("git diff --exit-code -- config public/data"),
+        )
 
     def test_tracking_coverage_cannot_be_bypassed(self):
         self.assertNotIn("ALLOW_INCOMPLETE_TRACKING_COVERAGE", self.workflow)

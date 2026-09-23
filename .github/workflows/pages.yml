@@ -164,7 +164,13 @@ jobs:
         run: npm run build:pages
       - name: Verify the build stayed read-only
         if: steps.publication_readiness.outputs.ready == 'true'
-        run: git diff --exit-code -- config public/data
+        run: |
+          # The homepage innovation feed is intentionally build-derived and is
+          # embedded into the static artifact. Restore only that approved
+          # projection before enforcing the read-only invariant on every other
+          # committed config/public-data input.
+          git restore -- public/data/innovation-capital-feed.json
+          git diff --exit-code -- config public/data
       - name: Build deploy-time lineage and health
         if: steps.publication_readiness.outputs.ready == 'true'
         run: |
