@@ -195,18 +195,17 @@ export function buildInnovationCapitalThesisMemory(
 
   const retainedIds = new Set(retained.map((item) => item.id));
   const currentObservationIds = nextCurrentIds.filter((id) => retainedIds.has(id));
+  const pointerChanged =
+    JSON.stringify(previous.currentObservationIds) !== JSON.stringify(currentObservationIds);
+  const materialChanged = changed || previous.asOf !== model.asOf || pointerChanged;
   const candidate: InnovationCapitalThesisMemory = {
     schemaVersion: 1,
-    generatedAt: changed ? generatedAt : previous.generatedAt,
+    generatedAt: materialChanged ? generatedAt : previous.generatedAt,
     asOf: model.asOf,
     currentObservationIds,
     observationCount: retained.length,
     observations: retained,
   };
 
-  if (!changed && previous.asOf === candidate.asOf
-      && JSON.stringify(previous.currentObservationIds) === JSON.stringify(candidate.currentObservationIds)) {
-    return previous;
-  }
-  return candidate;
+  return materialChanged ? candidate : previous;
 }
