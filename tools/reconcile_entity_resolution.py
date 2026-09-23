@@ -40,6 +40,7 @@ except ImportError:
 
 ROOT = Path(__file__).resolve().parents[1]
 INBOX_PATH = ROOT / "config" / "tracking_capture_inbox.json"
+AUTO_DISCOVERY_PATH = ROOT / "config" / "tracking_auto_discovery.json"
 FIELDS = {"sampleCompanies", "people", "keywords"}
 FIELD_FOR_TYPE = {
     "company": "sampleCompanies",
@@ -104,6 +105,25 @@ def track_map(config: dict[str, Any]) -> dict[str, dict[str, Any]]:
     } if isinstance(tracks, list) else {}
 
 
+def quality_tombstones(payload: dict[str, Any] | None) -> set[tuple[str, str, str]]:
+    """Return sticky seed-governance removals that stale captures must not replay."""
+
+    rows = payload.get("removed", []) if isinstance(payload, dict) else []
+    result: set[tuple[str, str, str]] = set()
+    for row in rows if isinstance(rows, list) else []:
+        if not isinstance(row, dict):
+            continue
+        reason = clean(row.get("reason"), 120)
+        if not reason.startswith("seed-governance-"):
+            continue
+        slug = clean(row.get("track"), 120)
+        field = clean(row.get("kind"), 40)
+        value = normalize_identity(row.get("value"))
+        if slug and field in FIELDS and value:
+            result.add((slug, field, value))
+    return result
+
+
 def reconcile_payloads(
     config_payload: dict[str, Any],
     inbox_payload: dict[str, Any],
@@ -111,6 +131,7 @@ def reconcile_payloads(
     decisions_payload: dict[str, Any],
     company_registry_payload: dict[str, Any],
     people_payload: dict[str, Any],
+    auto_discovery_payload: dict[str, Any] | None = None,
     intents_payload: dict[str, Any] | None = None,
     admins_payload: dict[str, Any] | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any], dict[str, int]]:
@@ -118,6 +139,7 @@ def reconcile_payloads(
     inbox = copy.deepcopy(inbox_payload)
     tracks = track_map(config)
     follow_states = follow_policy.scoped_follow_states(intents_payload or {}, admins_payload or {})
+    tombstones = quality_tombstones(auto_discovery_payload)
     records = inbox.get("records", []) if isinstance(inbox.get("records"), list) else []
 
     # Remove only values whose original capture explicitly recorded that placement.
@@ -246,6 +268,14 @@ def reconcile_payloads(
                     continue
             else:
                 continue
+            # Seed-governance tombstones are sticky against stale automatic captures.
+            # A durable owner approval remains authoritative and may intentionally
+            # restore the exact value later.
+            if (
+                slug not in approved_tracks
+                and (slug, field, normalize_identity(value)) in tombstones
+            ):
+                continue
             track[field] = append_name(track.get(field), value)
             applied_to.append(f"{slug}:{field}")
             track_name = clean(track.get("name"), 120)
@@ -310,6 +340,7 @@ def stabilize_payloads(
     decisions_payload: dict[str, Any],
     company_registry_payload: dict[str, Any],
     people_payload: dict[str, Any],
+    auto_discovery_payload: dict[str, Any] | None = None,
     intents_payload: dict[str, Any] | None = None,
     admins_payload: dict[str, Any] | None = None,
     max_rounds: int = MAX_RECONCILIATION_ROUNDS,
@@ -327,6 +358,7 @@ def stabilize_payloads(
             decisions_payload=decisions_payload,
             company_registry_payload=company_registry_payload,
             people_payload=people_payload,
+            auto_discovery_payload=auto_discovery_payload,
             intents_payload=intents_payload, admins_payload=admins_payload,
         )
         if (
@@ -359,6 +391,7 @@ def main() -> int:
     parser.add_argument("--decisions", type=Path, default=DECISIONS_PATH)
     parser.add_argument("--companies", type=Path, default=COMPANY_REGISTRY_PATH)
     parser.add_argument("--people", type=Path, default=PEOPLE_PATH)
+    parser.add_argument("--auto-discovery", type=Path, default=AUTO_DISCOVERY_PATH)
     parser.add_argument("--intents", type=Path, default=ROOT / "config/tracking_intents.json")
     parser.add_argument("--admins", type=Path, default=ROOT / "config/tracking_admins.json")
     args = parser.parse_args()
@@ -378,6 +411,10 @@ def main() -> int:
         decisions_payload=load_json(args.decisions, {"decisions": {}}),
         company_registry_payload=load_json(args.companies, {"companies": []}),
         people_payload=load_json(args.people, {"people": []}),
+        auto_discovery_payload=load_json(
+            args.auto_discovery,
+            {"schemaVersion": 1, "added": [], "removed": []},
+        ),
         intents_payload=intents, admins_payload=admins,
     )
 
