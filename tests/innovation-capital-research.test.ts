@@ -23,6 +23,9 @@ test("innovation capital research model creates bounded evidence-safe research t
   assert.ok(model.tasks.some((item) => item.taskType === "mature_discovery"));
   assert.ok(model.tasks.every((item, index) => item.rank === index + 1));
   assert.ok(model.tasks.every((item) => item.score >= 0 && item.score <= 100));
+  assert.ok(model.hypotheses.every((item) => item.metrics.universeCount >= item.metrics.supportCount + item.metrics.contrastCount));
+  assert.ok(model.hypotheses.every((item) => item.metrics.evidenceCoveragePct >= 0 && item.metrics.evidenceCoveragePct <= 100));
+  assert.ok(model.hypotheses.every((item) => item.metrics.supportSharePct >= 0 && item.metrics.supportSharePct <= 100));
 });
 
 test("research model preserves unknown-route and non-ranking governance", () => {
@@ -48,4 +51,19 @@ test("innovation capital page links its dataset to the research queue", () => {
   assert.match(capitalPage, /buildInnovationCapitalResearchModel/u);
   assert.match(capitalPage, /\/research-agent\/#queuecf/u);
   assert.match(capitalPage, /规律研究/u);
+});
+
+
+test("quantitative thesis metrics use explicit support and contrast definitions", () => {
+  const model = buildInnovationCapitalResearchModel();
+  const byId = new Map(model.hypotheses.map((item) => [item.id, item]));
+  assert.equal(byId.get("broker-sector-specialization")?.metrics.supportCount, 5);
+  assert.equal(byId.get("broker-sector-specialization")?.metrics.universeCount, 23);
+  assert.equal(byId.get("state-jump-over-duration")?.metrics.supportCount, 13);
+  assert.equal(byId.get("state-jump-over-duration")?.metrics.contrastCount, 1);
+  assert.equal(byId.get("route-migration")?.metrics.supportCount, 1);
+  assert.equal(byId.get("hard-tech-lifecycle")?.metrics.supportCount, 6);
+  assert.equal(byId.get("capital-repeat")?.metrics.supportCount, 16);
+  assert.equal(byId.get("late-stage-to-guidance")?.metrics.supportCount, 0);
+  assert.equal(byId.get("late-stage-to-guidance")?.status, "watch");
 });
