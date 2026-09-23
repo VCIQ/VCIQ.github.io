@@ -169,3 +169,53 @@
   .task { grid-template-columns: 36px minmax(0, 1fr); gap: 10px; }
   .rank { width: 32px; height: 32px; }
 }
+
+
+.transition {
+  margin-left: auto;
+  padding: 2px 6px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+}
+
+.memoryMeta {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.thesisHistory {
+  margin-top: 8px;
+  border-top: 1px dashed var(--border-soft);
+}
+
+.thesisHistory > summary {
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: var(--blue);
+  font-size: 11px;
+}
+
+.thesisHistory > div {
+  display: grid;
+  gap: 8px;
+}
+
+.thesisHistory section {
+  padding: 8px 10px;
+  border-left: 2px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 76%, transparent);
+}
+
+.thesisHistory strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.thesisHistory p {
+  font-size: 11px;
+}
