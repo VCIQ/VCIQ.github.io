@@ -16,13 +16,9 @@ on:
       - public/data/star_market_investors.json
       - scripts/build-institution-data-layers.ts
       - .github/workflows/institution-data-layers.yml
-  workflow_run:
-    workflows: ["Refresh STAR Market investors"]
-    types: [completed]
-    branches: [main]
-  # GITHUB_TOKEN-authored data commits do not reliably fan out into another
-  # workflow run. Keep an independent twice-weekly checkpoint comfortably inside
-  # the 168-hour freshness SLA.
+  # STAR Market refresh explicitly dispatches this workflow after a successful
+  # producer commit. Keep an independent twice-weekly checkpoint as a recovery
+  # path comfortably inside the 168-hour freshness SLA.
   schedule:
     - cron: "40 7 * * 1,4"
       timezone: "Asia/Taipei"
@@ -38,7 +34,6 @@ concurrency:
 
 jobs:
   build:
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -117,7 +112,12 @@ jobs:
             fi
           done
 
-      - name: Refresh Research Agent after institution checkpoint
+      - name: Publish terminal institution checkpoint
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run research-agent-v1.yml --ref main --repo "$GITHUB_REPOSITORY"
+        run: |
+          # Publish the refreshed institution snapshot first. Pages then starts
+          # Research Agent from the exact terminal revision, and Research Agent
+          # republishes only if its derived research artifacts change.
+          gh workflow run pages.yml --ref main --repo "$GITHUB_REPOSITORY" \
+            -f run_research_after_deploy=true
