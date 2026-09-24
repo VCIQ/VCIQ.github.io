@@ -176,6 +176,7 @@ class InnovationListingLifecycleReconcilerTests(unittest.TestCase):
                             "articleId": "reg-newchip",
                             "sourceId": "innovation-listing-primary-regulatory-01-01",
                             "title": "新芯半导体股份有限公司完成IPO辅导备案",
+                            "summary": "中信证券为辅导机构，公司聚焦集成电路。",
                             "url": "https://eid.csrc.gov.cn/example/newchip",
                             "sourceName": "证监会辅导公示",
                             "level": "监管文件",
@@ -289,6 +290,110 @@ class InnovationListingLifecycleReconcilerTests(unittest.TestCase):
         self.assertFalse(second_report["changed"])
         self.assertEqual(first_watchlist, second_watchlist)
         self.assertEqual(first_lifecycle, second_lifecycle)
+
+
+    def test_primary_candidate_does_not_auto_promote_when_official_evidence_omits_broker(self):
+        queue = {
+            "candidates": [
+                {
+                    "id": "innovation-listing-no-broker-proof",
+                    "status": "pending",
+                    "candidateClass": "listing-candidate",
+                    "company": "谨慎芯片股份有限公司",
+                    "aliases": ["谨慎芯片股份有限公司"],
+                    "broker": "中信证券",
+                    "sector": "集成电路",
+                    "route": "A-share-TBD",
+                    "capitalMarketPath": "A",
+                    "stage": "辅导备案",
+                    "firstSeenAt": "2026-09-24",
+                    "latestEvent": "完成IPO辅导备案",
+                    "fifteenthTags": ["集成电路"],
+                    "evidenceClass": "primary-backed",
+                    "evidence": [
+                        {
+                            "articleId": "reg-no-broker",
+                            "sourceId": "innovation-listing-primary-regulatory-01-01",
+                            "title": "谨慎芯片股份有限公司完成IPO辅导备案",
+                            "summary": "公司聚焦集成电路。",
+                            "url": "https://eid.csrc.gov.cn/example/no-broker",
+                            "sourceName": "证监会辅导公示",
+                            "level": "监管文件",
+                            "publishedAt": "2026-09-24",
+                        }
+                    ],
+                }
+            ]
+        }
+        watchlist, lifecycle, report = reconciler.reconcile(
+            {"articles": []},
+            self.watchlist(),
+            self.lifecycle(),
+            queue,
+        )
+        self.assertFalse(
+            any(row["company"] == "谨慎芯片股份有限公司" for row in watchlist["projects"])
+        )
+        self.assertEqual(len(lifecycle["projects"]), 1)
+        self.assertEqual(report["appliedCount"], 0)
+
+    def test_newer_explicit_other_market_route_can_update_parallel_ah_path(self):
+        lifecycle = self.lifecycle()
+        row = lifecycle["projects"][0]
+        row["route"] = "HK"
+        row["capitalMarketPath"] = "A+H"
+        row["stage"] = "已上市"
+        row["lifecycleStatus"] = "listed"
+        row["latestEventDate"] = "2026-09-20"
+        article = self.article(
+            title="广东法特迪精密科技股份有限公司首次公开发行股票并在创业板上市审核问询函",
+            summary="中信证券保荐，创业板项目进入新一轮问询。",
+            publishedAt="2026-09-24",
+            source={
+                "name": "深圳证券交易所",
+                "url": "https://reportdocs.static.szse.cn/parallel-a.pdf",
+                "level": "监管文件",
+            },
+        )
+        _watchlist, updated, report = reconciler.reconcile(
+            {"articles": [article]},
+            self.watchlist(),
+            lifecycle,
+            {"candidates": []},
+        )
+        current = updated["projects"][0]
+        self.assertEqual(current["route"], "ChiNext")
+        self.assertEqual(current["stage"], "新一轮问询")
+        self.assertEqual(current["capitalMarketPath"], "A+H")
+        self.assertEqual(report["appliedCount"], 1)
+
+    def test_newer_primary_restart_can_follow_terminal_state(self):
+        lifecycle = self.lifecycle()
+        row = lifecycle["projects"][0]
+        row["stage"] = "终止审核"
+        row["lifecycleStatus"] = "terminated"
+        row["latestEventDate"] = "2026-09-20"
+        article = self.article(
+            title="广东法特迪精密科技股份有限公司重新启动IPO辅导备案",
+            summary="中信证券继续担任辅导机构。",
+            publishedAt="2026-09-24",
+            source={
+                "name": "证监会辅导公示",
+                "url": "https://eid.csrc.gov.cn/example/restart",
+                "level": "监管文件",
+            },
+        )
+        _watchlist, updated, report = reconciler.reconcile(
+            {"articles": [article]},
+            self.watchlist(),
+            lifecycle,
+            {"candidates": []},
+        )
+        current = updated["projects"][0]
+        self.assertEqual(current["stage"], "辅导备案")
+        self.assertEqual(current["lifecycleStatus"], "counselling")
+        self.assertEqual(current["latestEventDate"], "2026-09-24")
+        self.assertEqual(report["appliedCount"], 1)
 
 
 if __name__ == "__main__":
