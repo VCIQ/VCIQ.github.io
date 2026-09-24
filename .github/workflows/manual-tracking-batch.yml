@@ -304,8 +304,9 @@ jobs:
               cat "$push_log"
               rm -f "$push_log"
               break
+            else
+              push_status=$?
             fi
-            push_status=$?
             cat "$push_log" >&2
 
             # A transport error can happen after GitHub accepted the commit but
