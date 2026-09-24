@@ -186,14 +186,49 @@ def _bounded_primary_source(
     }
 
 
-def generated_innovation_sources(payload: dict[str, Any]) -> list[dict[str, Any]]:
+def _bounded_primary_multi_source(
+    source_id: str,
+    name: str,
+    query: str,
+    keywords: list[str],
+    *,
+    hosts: tuple[str, ...],
+    source_level: str,
+    platform: str,
+) -> dict[str, Any]:
+    return {
+        "id": source_id,
+        "name": name,
+        "url": tracking._bing_rss(query),
+        "sourceUrl": f"https://{hosts[0]}/",
+        "adapter": "rss",
+        "platform": platform,
+        "sourceLevel": source_level,
+        "sourceCategory": "company",
+        "sector": "风险投资",
+        "region": "中国",
+        "maxItems": 10,
+        "keywords": keywords,
+        "strictTitleKeywords": False,
+        "allowedHosts": list(hosts),
+        "enabled": True,
+    }
+
+
+def generated_innovation_sources(
+    payload: dict[str, Any],
+    lifecycle_payload: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
     sources: list[dict[str, Any]] = []
 
     brokers = tracking._unique(payload.get("brokers", []), 10)
     broker_query = tracking._quoted_or_query(brokers, 10) if brokers else ""
+    policy_themes = tracking._unique(payload.get("policyThemes", []), 80)
+    hard_tech_query = tracking._quoted_or_query(policy_themes, 80) if policy_themes else ""
+    official_site_query = " OR ".join(f"site:{host}" for host in PRIMARY_LISTING_HOSTS)
 
-    # 1) Broker-centric discovery: new counselling / IPO events for the five
-    # selected brokers.
+    # 1) Broker-centric discovery: new counselling / IPO events for the
+    # configured priority brokers.
     for index, broker in enumerate(brokers, start=1):
         query = f'("{broker}") ({BROKER_EVENT_TERMS})'
         sources.append(
@@ -251,7 +286,6 @@ def generated_innovation_sources(payload: dict[str, Any]) -> list[dict[str, Any]
     # 3) "十五五" hard-tech discovery: query the existing policy theme taxonomy
     # together with the five-broker set. These are discovery candidates only;
     # theme fit never implies an IPO route or formal pool membership.
-    policy_themes = tracking._unique(payload.get("policyThemes", []), 80)
     for offset in range(0, len(policy_themes), POLICY_THEME_SHARD_SIZE):
         themes = policy_themes[offset : offset + POLICY_THEME_SHARD_SIZE]
         if not themes or not broker_query:
@@ -309,7 +343,7 @@ def install() -> None:
     ) -> tuple[dict[str, Any], dict[str, tuple[str, str, str, str]], set[str]]:
         config, sec_specs, active_ids = original_build(base_config, tracking_config)
         generated = [
-            *generated_innovation_sources(load_watchlist()),
+            *generated_innovation_sources(load_watchlist(), load_lifecycle()),
             *generated_portfolio_sources(load_capital_seeds()),
         ]
         config.setdefault("publicDiscovery", []).extend(generated)
