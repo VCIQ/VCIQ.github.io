@@ -77,6 +77,18 @@ STAGE_RANK = {
     "终止审核": 110,
     "不予注册": 110,
 }
+ROUTE_CHANGE_TERMS = (
+    "改道",
+    "转向",
+    "转板",
+    "变更申报板块",
+    "调整申报板块",
+    "更换上市板块",
+    "路线变更",
+    "A+H",
+    "H+A",
+)
+
 STATUS_RANK = {
     "counselling": 10,
     "exchange-review": 40,
@@ -275,6 +287,17 @@ def classify_event(text: str) -> dict[str, Any] | None:
     elif any(term in value for term in ("辅导备案", "上市辅导", "IPO辅导")):
         stage, status = "辅导备案", "counselling"
     else:
+        route = route_for(value)
+        capital_path = "A+H" if "A+H" in value else ("H+A" if "H+A" in value else "")
+        if any(term in value for term in ROUTE_CHANGE_TERMS) and (route or capital_path):
+            return {
+                "stage": "",
+                "lifecycleStatus": "",
+                "rank": 0,
+                "route": route,
+                "capitalMarketPath": capital_path,
+                "routeOnly": True,
+            }
         return None
 
     return {
@@ -282,6 +305,8 @@ def classify_event(text: str) -> dict[str, Any] | None:
         "lifecycleStatus": status,
         "rank": STAGE_RANK[stage],
         "route": route_for(value, stage),
+        "capitalMarketPath": "",
+        "routeOnly": False,
     }
 
 
@@ -416,6 +441,16 @@ def should_apply(
     current_rank = current_stage_rank(project)
     current_route = clean(project.get("route"), 60)
     incoming_route = effective_event_route(project, event)
+    if event.get("routeOnly"):
+        incoming_path = clean(event.get("capitalMarketPath"), 40)
+        current_path = clean(project.get("capitalMarketPath"), 40)
+        route_changed = bool(incoming_route and incoming_route != current_route)
+        path_changed = bool(incoming_path and incoming_path != current_path)
+        if not route_changed and not path_changed:
+            return False
+        if existing_date and incoming_date < existing_date:
+            return False
+        return True
     explicit_route_switch = bool(
         incoming_route
         and current_route
@@ -504,12 +539,13 @@ def update_existing_project(
 ) -> None:
     text = article_text(article)
     route = effective_event_route(project, event)
-    project["stage"] = event["stage"]
-    if (
-        event["lifecycleStatus"] != "counselling"
-        or clean(project.get("lifecycleStatus"), 80) == "terminated"
-    ):
-        project["lifecycleStatus"] = event["lifecycleStatus"]
+    if not event.get("routeOnly"):
+        project["stage"] = event["stage"]
+        if (
+            event["lifecycleStatus"] != "counselling"
+            or clean(project.get("lifecycleStatus"), 80) == "terminated"
+        ):
+            project["lifecycleStatus"] = event["lifecycleStatus"]
     project["latestEventDate"] = date_text(article.get("publishedAt"))
     project["latestEvent"] = event_summary(article, event)
     if route:
@@ -559,7 +595,8 @@ def update_watchlist_project(
     event: dict[str, Any],
 ) -> None:
     route = effective_event_route(project, event)
-    project["stage"] = event["stage"]
+    if not event.get("routeOnly"):
+        project["stage"] = event["stage"]
     project["latestEventDate"] = date_text(article.get("publishedAt"))
     project["latestEvent"] = event_summary(article, event)
     if route:
@@ -675,7 +712,9 @@ def promotable_candidate(
             # requires the retrieved official evidence itself to name the broker.
             continue
         event = classify_event(text)
-        if not event:
+        if not event or event.get("routeOnly"):
+            # Route/path-only discoveries can update already tracked entities,
+            # but are not sufficient to auto-admit a brand-new project.
             continue
         route = candidate_route(candidate, article, event)
         if event["lifecycleStatus"] != "counselling" and not route:
@@ -810,7 +849,7 @@ def reconcile(
             continue
 
         if collection == "watchlist":
-            if event["lifecycleStatus"] == "counselling":
+            if event.get("routeOnly") or event["lifecycleStatus"] == "counselling":
                 update_watchlist_project(target, article, event)
             else:
                 migrated = migrate_watchlist_project(target, article, event)
@@ -833,7 +872,7 @@ def reconcile(
             {
                 "company": clean(target.get("company"), 300),
                 "action": "update",
-                "stage": event["stage"],
+                "stage": event["stage"] or "路线变更",
                 "date": date_text(article.get("publishedAt")),
             }
         )
