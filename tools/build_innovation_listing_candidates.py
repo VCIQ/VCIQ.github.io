@@ -27,6 +27,7 @@ from urllib.parse import urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 ARTICLES_PATH = ROOT / "public" / "data" / "articles.json"
 WATCHLIST_PATH = ROOT / "config" / "innovation_listing_watchlist.json"
+LIFECYCLE_PATH = ROOT / "config" / "innovation_listing_lifecycle.json"
 DECISIONS_PATH = ROOT / "config" / "innovation_listing_candidate_decisions.json"
 OUTPUT_PATH = ROOT / "config" / "innovation_listing_candidate_review_queue.json"
 
@@ -260,7 +261,7 @@ def source_host(article: dict[str, Any]) -> str:
 def broker_from_source(source_id: str, brokers: list[str]) -> str:
     match = re.fullmatch(
         rf"{re.escape(SOURCE_PREFIX)}"
-        rf"(?:broker|a-plus-h)-(\d{{2}})",
+        rf"(?:broker|a-plus-h|primary-market-broker)-(\d{{2}})",
         source_id,
     )
     if not match:
@@ -455,6 +456,7 @@ def build_candidate_snapshot(
     articles_payload: Any,
     watchlist_payload: dict[str, Any],
     decisions_payload: Any | None = None,
+    lifecycle_payload: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     rows = article_rows(articles_payload)
     brokers = [
@@ -469,7 +471,11 @@ def build_candidate_snapshot(
         if clean(value, 120)
     ][:80]
     known: set[str] = set()
-    for project in watchlist_payload.get("projects", []):
+    lifecycle_payload = lifecycle_payload if isinstance(lifecycle_payload, dict) else {}
+    for project in [
+        *watchlist_payload.get("projects", []),
+        *lifecycle_payload.get("projects", []),
+    ]:
         if not isinstance(project, dict):
             continue
         for value in [
@@ -496,7 +502,10 @@ def build_candidate_snapshot(
             continue
         # Existing-project shards are for lifecycle monitoring, not candidate
         # creation. Never re-create reviewed projects from those articles.
-        if source_id.startswith(f"{SOURCE_PREFIX}projects-"):
+        if (
+            source_id.startswith(f"{SOURCE_PREFIX}projects-")
+            or source_id.startswith(f"{SOURCE_PREFIX}primary-projects-")
+        ):
             continue
 
         text = " ".join(
@@ -738,11 +747,12 @@ def build_candidate_snapshot(
         ),
         "candidates": candidates,
         "governance": {
-            "mode": "human-review-required",
+            "mode": "primary-evidence-auto-reconcile",
             "rule": (
-                "自动发现只进入候选队列；不得自动写入 innovation_listing_watchlist.json。"
-                "十五五主题只决定发现范围，不推断上市板块。"
-                "监管/券商官方证据优先进入人工复核；仅发现型证据须先补一级来源。"
+                "自动发现先进入候选队列。满足重点券商、硬科技标签、一级官方URL、"
+                "明确实体与可识别生命周期事件的候选，可由生命周期reconciler自动晋级；"
+                "板块仍必须由原文明确，不得按交易所域名或行业属性推断。"
+                "仅发现型证据、实体歧义或缺少硬科技标签的候选继续人工复核。"
                 "机构组合成熟项目可在券商尚未匹配时进入候选，但不得据此推断辅导机构或上市板块。"
             ),
         },
@@ -757,6 +767,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--articles", type=Path, default=ARTICLES_PATH)
     parser.add_argument("--watchlist", type=Path, default=WATCHLIST_PATH)
+    parser.add_argument("--lifecycle", type=Path, default=LIFECYCLE_PATH)
     parser.add_argument("--decisions", type=Path, default=DECISIONS_PATH)
     parser.add_argument("--output", type=Path, default=OUTPUT_PATH)
     parser.add_argument("--check", action="store_true")
@@ -764,11 +775,19 @@ def main() -> int:
 
     articles = load_json(args.articles, {"articles": []})
     watchlist = load_json(args.watchlist, {"brokers": [], "projects": [], "policyThemes": []})
+    lifecycle = load_json(args.lifecycle, {"projects": []})
     decisions = load_json(args.decisions, {"decisions": {}})
     if not isinstance(watchlist, dict):
         raise SystemExit("innovation listing watchlist must be an object")
+    if not isinstance(lifecycle, dict):
+        raise SystemExit("innovation listing lifecycle must be an object")
 
-    snapshot = build_candidate_snapshot(articles, watchlist, decisions)
+    snapshot = build_candidate_snapshot(
+        articles,
+        watchlist,
+        decisions,
+        lifecycle_payload=lifecycle,
+    )
     rendered = serialize(snapshot)
 
     if args.check:
