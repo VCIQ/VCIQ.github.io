@@ -7,8 +7,9 @@ all-or-nothing semantics. ``skip`` mode is origin-aware:
 
 * ``automatic`` rows may have discardable keyword noise removed and may be
   omitted if the canonical validator still rejects them.
-* ``manual-confirmed`` rows may have machine-generated keyword noise removed,
-  but any remaining validation error fails the whole batch.
+* ``manual-confirmed`` rows may have machine-generated keyword noise removed.
+  If the extracted candidate itself is still invalid, it is reported and omitted
+  so one bad reviewed candidate cannot block the other reviewed objects.
 * ``manual`` rows are never rewritten or silently skipped; any validation error
   fails the whole batch.
 
@@ -37,7 +38,7 @@ MAX_BATCH_JSON_BYTES = 45_000
 INVALID_POLICIES = {"strict", "skip"}
 TRACKING_ORIGINS = {"automatic", "manual", "manual-confirmed"}
 REPAIRABLE_ORIGINS = {"automatic", "manual-confirmed"}
-SKIPPABLE_ORIGINS = {"automatic"}
+SKIPPABLE_ORIGINS = {"automatic", "manual-confirmed"}
 OUTCOMES = {"applied", "review", "recorded", "unchanged", "skipped"}
 ORIGIN_LABELS = {
     "automatic": "自动候选",
@@ -322,9 +323,9 @@ def simulate_batch(
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
     """Normalize and apply in memory so later rows can reference earlier rows.
 
-    ``skip`` never weakens direct human input. Only ``automatic`` rows may be
-    omitted after canonical validation fails. ``manual`` and
-    ``manual-confirmed`` errors fail the whole transaction.
+    ``skip`` never weakens direct human input. Invalid ``automatic`` and
+    ``manual-confirmed`` candidates may be omitted after canonical validation
+    fails, while direct ``manual`` input remains fail-closed.
     """
 
     if invalid_policy not in INVALID_POLICIES:
@@ -443,8 +444,9 @@ def build_parser() -> argparse.ArgumentParser:
         default="strict",
         choices=sorted(INVALID_POLICIES),
         help=(
-            "strict rejects the whole batch; skip may sanitize and omit only "
-            "origin=automatic rows, while manual rows remain fail-closed"
+            "strict rejects the whole batch; skip may sanitize and omit invalid "
+            "origin=automatic or origin=manual-confirmed rows, while direct "
+            "manual rows remain fail-closed"
         ),
     )
     parser.add_argument("--now", default="", help=argparse.SUPPRESS)
