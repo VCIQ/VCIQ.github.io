@@ -6,6 +6,7 @@ const routeLabels: Record<string, string> = {
   STAR: "科创板",
   ChiNext: "创业板",
   "A-share-TBD": "A股待定",
+  HK: "港股",
 };
 
 const statusLabels: Record<string, string> = {
