@@ -295,7 +295,53 @@ jobs:
             exit 1
           }
           gh auth setup-git
-          git push origin HEAD:main
+          local_sha="$(git rev-parse HEAD)"
+          max_push_attempts=3
+          push_attempt=1
+          while true; do
+            push_log="$(mktemp)"
+            if git push origin HEAD:main >"$push_log" 2>&1; then
+              cat "$push_log"
+              rm -f "$push_log"
+              break
+            else
+              push_status=$?
+            fi
+            cat "$push_log" >&2
+
+            # A transport error can happen after GitHub accepted the commit but
+            # before the runner received the success response. Resolve that
+            # uncertainty before deciding whether a retry is safe.
+            git fetch origin main
+            remote_sha="$(git rev-parse origin/main)"
+            if [ "$remote_sha" = "$local_sha" ]; then
+              echo "push response was unsuccessful, but main already contains the exact local commit"
+              rm -f "$push_log"
+              break
+            fi
+            if [ "$remote_sha" != "$BASE_SHA" ]; then
+              echo "main advanced after a failed push; refusing to replay, rebase, force, or overwrite it"
+              rm -f "$push_log"
+              exit 1
+            fi
+
+            if [ "$push_attempt" -ge "$max_push_attempts" ]; then
+              echo "push failed after $push_attempt attempts"
+              rm -f "$push_log"
+              exit "$push_status"
+            fi
+            if ! grep -Eqi 'Internal Server Error|HTTP[^0-9]*(500|502|503|504)|remote:.*(500|502|503|504)|RPC failed.*(500|502|503|504)|connection reset|timed? out|temporar(il)?y unavailable' "$push_log"; then
+              echo "push failed with a non-transient error; not retrying"
+              rm -f "$push_log"
+              exit "$push_status"
+            fi
+
+            rm -f "$push_log"
+            delay=$((push_attempt * 5))
+            push_attempt=$((push_attempt + 1))
+            echo "transient GitHub push failure; retrying attempt $push_attempt/$max_push_attempts after ${delay}s"
+            sleep "$delay"
+          done
 
       - name: Summarize the public audit record
         if: always() && steps.manual.outcome != 'skipped'
