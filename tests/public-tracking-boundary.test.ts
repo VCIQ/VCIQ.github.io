@@ -130,6 +130,7 @@ test("innovation capital uses its dedicated discovery contract without weakening
   assert.match(validator, /crawl_with_innovation_listing_watchlist\.py/u);
   assert.match(validator, /innovation_capital_tracking_seeds\.json/u);
   assert.match(validator, /innovation_listing_watchlist\.json/u);
+  assert.match(validator, /innovation_listing_lifecycle\.json/u);
   assert.match(validator, /missingDedicatedInputs/u);
   assert.match(validator, /completedSources < expectedSources/u);
 });

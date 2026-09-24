@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """Add innovation-listing discovery sources to the standard intelligence crawler.
 
-This adapter is deliberately discovery-only. It watches the five selected
-broker names for new IPO-counselling announcements, watches the reviewed company
-watchlist for listing-progress events, and adds focused discovery shards for
-"十五五" hard-tech and A+H/H-share paths.
+This adapter discovers evidence for the configured priority-broker set, watches
+both the reviewed reserve pool and lifecycle pool for listing-progress events,
+and adds focused discovery shards for "十五五" hard-tech and A+H/H-share paths.
 
 Results enter the ordinary article/candidate pipeline as unverified discovery
 evidence. This module never mutates the reviewed listing route, counselling
@@ -26,6 +25,7 @@ except ImportError:
 
 tracking = base.tracking
 WATCHLIST_PATH = tracking.crawler.ROOT / "config/innovation_listing_watchlist.json"
+LIFECYCLE_PATH = tracking.crawler.ROOT / "config/innovation_listing_lifecycle.json"
 CAPITAL_SEEDS_PATH = tracking.crawler.ROOT / "config/innovation_capital_tracking_seeds.json"
 SOURCE_PREFIX = "innovation-listing-"
 CAPITAL_SOURCE_PREFIX = "innovation-capital-portfolio-"
@@ -34,8 +34,9 @@ BROKER_EVENT_TERMS = (
     "科创板 OR 创业板 OR A股 OR A+H"
 )
 PROJECT_EVENT_TERMS = (
-    "辅导 OR 验收 OR 受理 OR 问询 OR 上市委 OR 注册 OR 撤回 OR 终止 OR "
-    "发行 OR 上市 OR 港交所 OR 聆讯 OR A+H"
+    "辅导 OR 验收 OR 受理 OR 问询 OR 回复 OR 上市委 OR 提交注册 OR 注册结果 OR "
+    "注册 OR 撤回 OR 终止 OR 递表 OR 聆讯 OR 招股 OR 发行 OR 上市 OR 港交所 OR A+H OR "
+    "改道 OR 转向 OR 转板 OR 申报板块 OR 路线变更"
 )
 A_PLUS_H_TERMS = (
     '"A+H" OR "H股" OR "港股" OR "港交所" OR "18C" OR "特专科技"'
@@ -62,8 +63,10 @@ PRIMARY_BROKER_HOSTS: dict[str, tuple[str, ...]] = {
     "中金公司": ("cicc.com",),
     "国泰海通": ("gtja.com", "haitong.com"),
     "华泰联合": ("htsc.com", "htsc.com.cn"),
+    "广发证券": ("gf.com.cn",),
 }
 PRIMARY_REGULATORY_HOSTS = ("eid.csrc.gov.cn",)
+PRIMARY_LISTING_HOSTS = ("eid.csrc.gov.cn", "csrc.gov.cn", "sse.com.cn", "szse.cn", "hkexnews.hk")
 REGULATORY_EVENT_TERMS = (
     "辅导备案 OR 辅导进展 OR 辅导验收 OR 上市辅导 OR 辅导机构 OR IPO"
 )
@@ -79,6 +82,16 @@ def load_watchlist(path: Path = WATCHLIST_PATH) -> dict[str, Any]:
     if not isinstance(payload, dict):
         return {"brokers": [], "projects": [], "policyThemes": []}
     return payload
+
+
+def load_lifecycle(path: Path = LIFECYCLE_PATH) -> dict[str, Any]:
+    if not path.exists():
+        return {"projects": []}
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {"projects": []}
+    return payload if isinstance(payload, dict) else {"projects": []}
 
 
 def load_capital_seeds(path: Path = CAPITAL_SEEDS_PATH) -> dict[str, Any]:
@@ -174,14 +187,49 @@ def _bounded_primary_source(
     }
 
 
-def generated_innovation_sources(payload: dict[str, Any]) -> list[dict[str, Any]]:
+def _bounded_primary_multi_source(
+    source_id: str,
+    name: str,
+    query: str,
+    keywords: list[str],
+    *,
+    hosts: tuple[str, ...],
+    source_level: str,
+    platform: str,
+) -> dict[str, Any]:
+    return {
+        "id": source_id,
+        "name": name,
+        "url": tracking._bing_rss(query),
+        "sourceUrl": f"https://{hosts[0]}/",
+        "adapter": "rss",
+        "platform": platform,
+        "sourceLevel": source_level,
+        "sourceCategory": "company",
+        "sector": "风险投资",
+        "region": "中国",
+        "maxItems": 10,
+        "keywords": keywords,
+        "strictTitleKeywords": False,
+        "allowedHosts": list(hosts),
+        "enabled": True,
+    }
+
+
+def generated_innovation_sources(
+    payload: dict[str, Any],
+    lifecycle_payload: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
     sources: list[dict[str, Any]] = []
 
     brokers = tracking._unique(payload.get("brokers", []), 10)
     broker_query = tracking._quoted_or_query(brokers, 10) if brokers else ""
+    policy_themes = tracking._unique(payload.get("policyThemes", []), 80)
+    hard_tech_query = tracking._quoted_or_query(policy_themes, 80) if policy_themes else ""
+    official_site_query = " OR ".join(f"site:{host}" for host in PRIMARY_LISTING_HOSTS)
 
-    # 1) Broker-centric discovery: new counselling / IPO events for the five
-    # selected brokers.
+    # 1) Broker-centric discovery: new counselling / IPO events for the
+    # configured priority brokers.
     for index, broker in enumerate(brokers, start=1):
         query = f'("{broker}") ({BROKER_EVENT_TERMS})'
         sources.append(
@@ -223,6 +271,27 @@ def generated_innovation_sources(payload: dict[str, Any]) -> list[dict[str, Any]
                 )
             )
 
+        # Primary regulator/exchange discovery for new hard-tech IPO projects.
+        # Search indexes only locate documents; accepted URLs must remain on
+        # the official hosts below, and the reconciler independently verifies
+        # source host, entity identity, event semantics and route evidence.
+        if hard_tech_query:
+            query = (
+                f"({official_site_query}) (\"{broker}\") ({PROJECT_EVENT_TERMS}) "
+                f"({hard_tech_query})"
+            )
+            sources.append(
+                _bounded_primary_multi_source(
+                    f"{SOURCE_PREFIX}primary-market-broker-{index:02d}",
+                    f"科创项目储备 · {broker} · 监管/交易所硬科技IPO",
+                    query,
+                    [broker, *policy_themes],
+                    hosts=PRIMARY_LISTING_HOSTS,
+                    source_level="监管文件",
+                    platform="监管/交易所官方",
+                )
+            )
+
     # 2) A+H/H-share discovery: keep the broker identity explicit so a later
     # deterministic candidate builder can preserve the broker relationship.
     for index, broker in enumerate(brokers, start=1):
@@ -237,9 +306,8 @@ def generated_innovation_sources(payload: dict[str, Any]) -> list[dict[str, Any]
         )
 
     # 3) "十五五" hard-tech discovery: query the existing policy theme taxonomy
-    # together with the five-broker set. These are discovery candidates only;
+    # together with the priority-broker set. These are discovery candidates only;
     # theme fit never implies an IPO route or formal pool membership.
-    policy_themes = tracking._unique(payload.get("policyThemes", []), 80)
     for offset in range(0, len(policy_themes), POLICY_THEME_SHARD_SIZE):
         themes = policy_themes[offset : offset + POLICY_THEME_SHARD_SIZE]
         if not themes or not broker_query:
@@ -259,14 +327,17 @@ def generated_innovation_sources(payload: dict[str, Any]) -> list[dict[str, Any]
             )
         )
 
-    # 4) Progress monitoring for the reviewed seed pool.
+    # 4) Progress monitoring for both the reserve pool and lifecycle pool.
+    # Lifecycle projects must remain watched after migration out of the reserve
+    # pool, otherwise later question/registration/listing events would be lost.
+    lifecycle_payload = lifecycle_payload if isinstance(lifecycle_payload, dict) else {}
+    monitored_projects = [
+        *[row for row in payload.get("projects", []) if isinstance(row, dict)],
+        *[row for row in lifecycle_payload.get("projects", []) if isinstance(row, dict)],
+    ]
     company_names = tracking._unique(
-        [
-            str(project.get("company", "")).strip()
-            for project in payload.get("projects", [])
-            if isinstance(project, dict)
-        ],
-        160,
+        [str(project.get("company", "")).strip() for project in monitored_projects],
+        240,
     )
     for offset in range(0, len(company_names), PROJECT_SHARD_SIZE):
         names = company_names[offset : offset + PROJECT_SHARD_SIZE]
@@ -280,6 +351,22 @@ def generated_innovation_sources(payload: dict[str, Any]) -> list[dict[str, Any]
                 f"科创项目储备 · 已跟踪项目进展 · {shard}",
                 query,
                 names,
+            )
+        )
+        primary_query = (
+            f"({official_site_query}) "
+            f"({tracking._quoted_or_query(names, PROJECT_SHARD_SIZE)}) "
+            f"({PROJECT_EVENT_TERMS})"
+        )
+        sources.append(
+            _bounded_primary_multi_source(
+                f"{SOURCE_PREFIX}primary-projects-{shard:02d}",
+                f"科创项目储备 · 已跟踪项目官方进展 · {shard}",
+                primary_query,
+                names,
+                hosts=PRIMARY_LISTING_HOSTS,
+                source_level="监管文件",
+                platform="监管/交易所官方",
             )
         )
 
@@ -297,7 +384,7 @@ def install() -> None:
     ) -> tuple[dict[str, Any], dict[str, tuple[str, str, str, str]], set[str]]:
         config, sec_specs, active_ids = original_build(base_config, tracking_config)
         generated = [
-            *generated_innovation_sources(load_watchlist()),
+            *generated_innovation_sources(load_watchlist(), load_lifecycle()),
             *generated_portfolio_sources(load_capital_seeds()),
         ]
         config.setdefault("publicDiscovery", []).extend(generated)

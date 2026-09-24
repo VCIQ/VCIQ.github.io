@@ -16,6 +16,7 @@ const DEDICATED_DISCOVERY_TRACKS = new Map([
       path.join(root, "tools", "crawl_with_innovation_listing_watchlist.py"),
       path.join(root, "config", "innovation_capital_tracking_seeds.json"),
       path.join(root, "config", "innovation_listing_watchlist.json"),
+      path.join(root, "config", "innovation_listing_lifecycle.json"),
     ],
   ],
 ]);

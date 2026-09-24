@@ -50,7 +50,7 @@
 
 - 已核验重点券商科创项目
 - 审核 / 注册 / 发行 / 上市生命周期项目
-- 五大目标券商
+- 重点券商
 - 硬科技资本机构 watch
 - D/E/Pre-IPO/Growth 等成熟期候选
 - `innovation-listing-*` / `innovation-capital-portfolio-*` 专用发现源
@@ -95,6 +95,20 @@ projection 可以展示 discovery 事件，但它不改变任何正式项目、�
 
 `innovationPriority` 是信息处置优先度，不是上市成功率、投资评级或公司价值判断。
 
+## Lifecycle auto reconciliation
+
+两小时公开情报刷新会在候选构建之后执行
+`tools/reconcile_innovation_listing_lifecycle.py`。该步骤只允许一级公开证据改变正式状态：
+
+- URL 必须落在证监会/证监局、上交所、深交所、港交所披露易或重点券商官方域名；
+- 公司必须与已跟踪项目的法定名称/别名唯一匹配，或来自满足机械证据门槛的 primary-backed 硬科技候选；
+- 同一资本市场路径按“辅导 → 受理 → 问询/回复 → 上市委/聆讯 → 注册 → 发行/招股 → 上市”单向推进；更旧或更低阶段事件不会覆盖当前状态；若一级证据明确出现 A↔H 平行路径切换或终止后的重新辅导，则允许记录新的路径生命周期，但板块未知时只写 `A-share-TBD`；
+- 新项目只有在重点券商、硬科技标签、一级官方证据和可识别事件同时满足时才可自动晋级；
+- 科创板/创业板必须由原文明确出现，绝不根据交易所域名、行业或关键词推断板块；
+- discovery-only、实体歧义、缺少硬科技标签或缺少明确板块的交易所阶段候选继续留在人工复核队列。
+
+已进入 `innovation_listing_lifecycle.json` 的项目继续保留在官方进展抓取范围内，不会因从储备池迁出而停止跟踪。
+
 ## Publication
 
 `npm run build` 与 `npm run build:pages` 都会先执行：
@@ -103,7 +117,7 @@ projection 可以展示 discovery 事件，但它不改变任何正式项目、�
 
 这样每次 Pages 构建都会从当前 repository revision 的 canonical data 重建 projection。
 
-该 projection 是 build-derived artifact，不新增独立 repository writer；现有 full refresh、frequent refresh、tracking discovery 等 writer 仍只负责各自 canonical outputs，从而避免新的 main 写入竞争。
+该 projection 仍是 build-derived artifact，不新增独立 repository writer。生命周期 reconciler 作为 frequent refresh 同一原子写入事务中的确定性步骤更新 canonical watchlist/lifecycle，因此不增加新的并发 main writer。
 
 ## UI
 

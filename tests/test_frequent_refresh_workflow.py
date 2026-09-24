@@ -91,5 +91,21 @@ class FrequentRefreshWorkflowTests(unittest.TestCase):
         self.assertIn("actions: write", text)
 
 
+    def test_lightweight_refresh_reconciles_primary_listing_lifecycle_before_commit(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("tools/reconcile_innovation_listing_lifecycle.py", text)
+        self.assertIn("tests.test_reconcile_innovation_listing_lifecycle", text)
+        self.assertIn("python tools/reconcile_innovation_listing_lifecycle.py", text)
+        self.assertIn("python tools/reconcile_innovation_listing_lifecycle.py --check", text)
+        self.assertIn("config/innovation_listing_watchlist.json", text)
+        self.assertIn("config/innovation_listing_lifecycle.json", text)
+        first_reconcile = text.index("python tools/reconcile_innovation_listing_lifecycle.py")
+        first_rebuild = text.index(
+            "python tools/build_innovation_listing_candidates.py",
+            first_reconcile,
+        )
+        self.assertLess(first_reconcile, first_rebuild)
+
+
 if __name__ == "__main__":
     unittest.main()

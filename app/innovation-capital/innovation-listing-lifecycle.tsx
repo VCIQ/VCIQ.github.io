@@ -15,6 +15,7 @@ const statusLabels: Record<string, string> = {
   registered: "注册",
   issuing: "发行",
   listed: "已上市",
+  terminated: "终止/撤回",
 };
 
 export function InnovationListingLifecycle() {
