@@ -2,8 +2,8 @@
 """Sync the reviewed innovation-capital universe into one backend tracking lane.
 
 The lane is a tracking surface, not a new public research object. It combines:
-- the reviewed five-broker innovation listing watchlist;
-- the five counselling brokers themselves;
+- the reviewed priority-broker innovation listing watchlist;
+- the priority counselling brokers themselves;
 - capital institutions linked to those reviewed projects; and
 - evidence-backed private Chinese hard-tech companies discovered from verified
   institution portfolios / company profiles.
@@ -396,14 +396,14 @@ def sync(
         desired.append(
             (
                 clean(row.get("name"), 160),
-                ["verified-innovation-listing-project", "five-broker-project"],
+                ["verified-innovation-listing-project", "priority-broker-project"],
             )
         )
     for row in rows(seeds.get("brokers")):
         desired.append(
             (
                 canonical_name(row.get("name"), aliases),
-                ["verified-innovation-broker", "five-broker-counselling"],
+                ["verified-innovation-broker", "priority-broker-counselling"],
             )
         )
     for row in rows(seeds.get("institutions")):
