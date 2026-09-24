@@ -388,6 +388,7 @@ def candidate_fingerprint(candidate: dict[str, Any]) -> str:
             {
                 "articleId": row.get("articleId", ""),
                 "url": row.get("url", ""),
+                "summary": row.get("summary", ""),
                 "level": row.get("level", ""),
             }
             for row in candidate.get("evidence", [])
@@ -598,6 +599,7 @@ def build_candidate_snapshot(
             "articleId": clean(article.get("id"), 260),
             "sourceId": source_id,
             "title": clean(article.get("title"), 500),
+            "summary": clean(article.get("summary"), 900),
             "url": source_url(article),
             "sourceName": source_name(article),
             "host": source_host(article),
