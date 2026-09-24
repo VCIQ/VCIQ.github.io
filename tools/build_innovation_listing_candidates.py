@@ -393,7 +393,7 @@ def score_evidence(
         reasons.append("命中券商官方定向源")
     elif re.fullmatch(rf"{re.escape(SOURCE_PREFIX)}(?:broker|a-plus-h)-\d{{2}}", source_id):
         score += 20
-        reasons.append("命中五大券商定向发现源")
+        reasons.append("命中重点券商定向发现源")
     elif source_id.startswith(f"{SOURCE_PREFIX}policy-"):
         score += 12
         reasons.append("命中十五五硬科技定向发现源")
