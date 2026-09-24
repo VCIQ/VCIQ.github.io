@@ -224,7 +224,7 @@ def classify_event(text: str) -> dict[str, Any] | None:
         stage, status = "终止审核", "terminated"
     elif any(term in value for term in ("上市交易", "正式上市", "挂牌上市", "开始上市")):
         stage, status = "已上市", "listed"
-    elif hk and any(term in value for term in ("全球发售", "开始招股", "启动招股", "招股章程", "招股书")):
+    elif hk and any(term in value for term in ("全球发售", "开始招股", "启动招股", "招股章程")):
         stage, status = "H股招股", "issuing"
     elif any(term in value for term in ("发行公告", "发行结果", "网上发行", "网下发行")):
         stage, status = "发行", "issuing"
@@ -244,7 +244,17 @@ def classify_event(text: str) -> dict[str, Any] | None:
         r"第[二三四五六七八九十0-9]+轮问询", value
     ):
         stage, status = "新一轮问询", "exchange-review"
-    elif any(term in value for term in ("问询回复", "回复审核问询", "审核问询回复", "回复问询")):
+    elif any(
+        term in value
+        for term in (
+            "问询回复",
+            "回复审核问询",
+            "审核问询回复",
+            "回复问询",
+            "问询函的回复",
+            "问询函回复",
+        )
+    ):
         stage, status = "问询回复", "exchange-review"
     elif "问询" in value:
         stage, status = "已问询", "exchange-review"
@@ -382,12 +392,32 @@ def should_apply(
     if existing_date and incoming_date < existing_date:
         return False
     current_rank = current_stage_rank(project)
-    if event["rank"] < current_rank:
+    current_route = clean(project.get("route"), 60)
+    incoming_route = clean(event.get("route"), 60)
+    explicit_route_switch = bool(
+        incoming_route
+        and current_route
+        and incoming_route != current_route
+    )
+    restart_after_terminal = bool(
+        clean(project.get("lifecycleStatus"), 80) == "terminated"
+        and existing_date
+        and incoming_date > existing_date
+    )
+    if (
+        event["rank"] < current_rank
+        and not explicit_route_switch
+        and not restart_after_terminal
+    ):
         return False
     if existing_date and incoming_date == existing_date:
         if has_source(project, url) and clean(project.get("stage"), 80) == event["stage"]:
             return False
-        if event["rank"] == current_rank and clean(project.get("stage"), 80) == event["stage"]:
+        if (
+            event["rank"] == current_rank
+            and clean(project.get("stage"), 80) == event["stage"]
+            and not explicit_route_switch
+        ):
             return False
     return True
 
@@ -454,7 +484,10 @@ def update_existing_project(
     text = article_text(article)
     route = event.get("route", "")
     project["stage"] = event["stage"]
-    if event["lifecycleStatus"] != "counselling":
+    if (
+        event["lifecycleStatus"] != "counselling"
+        or clean(project.get("lifecycleStatus"), 80) == "terminated"
+    ):
         project["lifecycleStatus"] = event["lifecycleStatus"]
     project["latestEventDate"] = date_text(article.get("publishedAt"))
     project["latestEvent"] = event_summary(article, event)
@@ -561,7 +594,10 @@ def article_from_candidate_evidence(
         "id": clean(evidence.get("articleId"), 260),
         "sourceId": clean(evidence.get("sourceId"), 240),
         "title": clean(evidence.get("title"), 700),
-        "summary": clean(candidate.get("latestEvent"), 900),
+        "summary": clean(
+            evidence.get("summary") or candidate.get("latestEvent"),
+            1600,
+        ),
         "company": clean(candidate.get("company"), 300),
         "mentionedCompanies": candidate.get("aliases", []),
         "publishedAt": clean(evidence.get("publishedAt"), 80),
@@ -608,7 +644,12 @@ def promotable_candidate(
 
     for evidence in candidate_primary_evidence(candidate):
         article = article_from_candidate_evidence(candidate, evidence)
-        event = classify_event(article_text(article))
+        text = article_text(article)
+        if broker not in text:
+            # The source query may be broker-scoped, but formal promotion also
+            # requires the retrieved official evidence itself to name the broker.
+            continue
+        event = classify_event(text)
         if not event:
             continue
         route = candidate_route(candidate, article, event)
