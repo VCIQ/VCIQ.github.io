@@ -58,13 +58,14 @@ const trackingSeeds = JSON.parse(
   governance: { duplicateRule: string; opportunityRule: string };
 };
 
-test("innovation listing watchlist has five target brokers and unique projects", () => {
+test("innovation listing watchlist has six target brokers and unique projects", () => {
   assert.deepEqual(watchlist.brokers, [
     "中信证券",
     "中信建投",
     "中金公司",
     "国泰海通",
     "华泰联合",
+    "广发证券",
   ]);
   assert.match(watchlist.asOf, /^\d{4}-\d{2}-\d{2}$/u);
   assert.ok(watchlist.projects.length >= 25);
@@ -120,7 +121,7 @@ test("innovation discovery bridge remains evidence-only", () => {
 test("innovation capital tracking seeds cover reviewed projects, brokers and capital institutions", () => {
   assert.equal(trackingSeeds.track.slug, "innovation-capital");
   assert.equal(trackingSeeds.track.name, "科创资本");
-  assert.equal(trackingSeeds.brokers.length, 5);
+  assert.equal(trackingSeeds.brokers.length, 6);
   assert.ok(trackingSeeds.projects.length >= 46);
   assert.ok(trackingSeeds.institutions.length >= 150);
   assert.ok(
@@ -168,7 +169,7 @@ test("listing lifecycle migrates accepted or listed hard-tech projects without l
   assert.equal(enflame.broker, "中信证券");
   assert.equal(enflame.lifecycleStatus, "registration-review");
   for (const project of lifecycle.projects) {
-    assert.ok(["中信证券", "中信建投", "中金公司", "国泰海通", "华泰联合"].includes(project.broker));
+    assert.ok(["中信证券", "中信建投", "中金公司", "国泰海通", "华泰联合", "广发证券"].includes(project.broker));
     assert.ok(project.sources.some((source) => source.level === "regulatory"));
     assert.ok(project.sources.every((source) => /^https:\/\//u.test(source.url)));
   }
