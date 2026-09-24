@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """Add innovation-listing discovery sources to the standard intelligence crawler.
 
-This adapter is deliberately discovery-only. It watches the five selected
-broker names for new IPO-counselling announcements, watches the reviewed company
-watchlist for listing-progress events, and adds focused discovery shards for
-"十五五" hard-tech and A+H/H-share paths.
+This adapter discovers evidence for the configured priority-broker set, watches
+both the reviewed reserve pool and lifecycle pool for listing-progress events,
+and adds focused discovery shards for "十五五" hard-tech and A+H/H-share paths.
 
 Results enter the ordinary article/candidate pipeline as unverified discovery
 evidence. This module never mutates the reviewed listing route, counselling
@@ -26,6 +25,7 @@ except ImportError:
 
 tracking = base.tracking
 WATCHLIST_PATH = tracking.crawler.ROOT / "config/innovation_listing_watchlist.json"
+LIFECYCLE_PATH = tracking.crawler.ROOT / "config/innovation_listing_lifecycle.json"
 CAPITAL_SEEDS_PATH = tracking.crawler.ROOT / "config/innovation_capital_tracking_seeds.json"
 SOURCE_PREFIX = "innovation-listing-"
 CAPITAL_SOURCE_PREFIX = "innovation-capital-portfolio-"
@@ -34,8 +34,8 @@ BROKER_EVENT_TERMS = (
     "科创板 OR 创业板 OR A股 OR A+H"
 )
 PROJECT_EVENT_TERMS = (
-    "辅导 OR 验收 OR 受理 OR 问询 OR 上市委 OR 注册 OR 撤回 OR 终止 OR "
-    "发行 OR 上市 OR 港交所 OR 聆讯 OR A+H"
+    "辅导 OR 验收 OR 受理 OR 问询 OR 回复 OR 上市委 OR 提交注册 OR 注册结果 OR "
+    "注册 OR 撤回 OR 终止 OR 递表 OR 聆讯 OR 招股 OR 发行 OR 上市 OR 港交所 OR A+H"
 )
 A_PLUS_H_TERMS = (
     '"A+H" OR "H股" OR "港股" OR "港交所" OR "18C" OR "特专科技"'
@@ -62,8 +62,10 @@ PRIMARY_BROKER_HOSTS: dict[str, tuple[str, ...]] = {
     "中金公司": ("cicc.com",),
     "国泰海通": ("gtja.com", "haitong.com"),
     "华泰联合": ("htsc.com", "htsc.com.cn"),
+    "广发证券": ("gf.com.cn",),
 }
 PRIMARY_REGULATORY_HOSTS = ("eid.csrc.gov.cn",)
+PRIMARY_LISTING_HOSTS = ("eid.csrc.gov.cn", "sse.com.cn", "szse.cn", "hkexnews.hk")
 REGULATORY_EVENT_TERMS = (
     "辅导备案 OR 辅导进展 OR 辅导验收 OR 上市辅导 OR 辅导机构 OR IPO"
 )
@@ -79,6 +81,16 @@ def load_watchlist(path: Path = WATCHLIST_PATH) -> dict[str, Any]:
     if not isinstance(payload, dict):
         return {"brokers": [], "projects": [], "policyThemes": []}
     return payload
+
+
+def load_lifecycle(path: Path = LIFECYCLE_PATH) -> dict[str, Any]:
+    if not path.exists():
+        return {"projects": []}
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {"projects": []}
+    return payload if isinstance(payload, dict) else {"projects": []}
 
 
 def load_capital_seeds(path: Path = CAPITAL_SEEDS_PATH) -> dict[str, Any]:
