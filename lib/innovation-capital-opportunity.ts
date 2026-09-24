@@ -313,7 +313,7 @@ export function buildInnovationOpportunityPool(): InnovationOpportunity[] {
       signals.push("融资事实具备一级公开来源");
     }
     if (!list(candidate.brokerEvidence).length) {
-      gaps.push("尚未发现五大券商一级辅导证据");
+      gaps.push("尚未发现重点券商一级辅导证据");
     }
     if (text(candidate.routeEvidence, 80) === "unassigned") {
       gaps.push("尚未锁定上交所科创板或深交所创业板路径");

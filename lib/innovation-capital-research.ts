@@ -293,7 +293,7 @@ export function buildInnovationCapitalResearchModel(): InnovationCapitalResearch
       "broker-specialization",
       "P1",
       "broker_pattern",
-      "五大券商硬科技赛道集中度",
+      "重点券商硬科技赛道集中度",
       brokerSector.broker,
       `新增项目是否继续强化“${brokerSector.broker}—${brokerSector.sector}”的样本集中现象，还是出现结构性扩散？`,
       [`当前该组合样本数：${brokerSector.count}`, "只描述样本分布，不将集中度解释为券商能力排名"],
@@ -312,7 +312,7 @@ export function buildInnovationCapitalResearchModel(): InnovationCapitalResearch
       "capital_network",
       "机构资本重复命中",
       name,
-      `${name} 是否继续出现在进入五大券商IPO辅导或后续审核阶段的硬科技项目中？`,
+      `${name} 是否继续出现在进入重点券商IPO辅导或后续审核阶段的硬科技项目中？`,
       [`当前关联已跟踪项目：${linked} 个`, "机构关系必须保留证据层级，不把候选关系自动晋级为确认关系"],
       "新关联必须有公司、投资机构、监管或可信媒体证据，并记录关系类型与证据等级。",
       "/innovation-capital/#opportunities",
@@ -357,7 +357,7 @@ export function buildInnovationCapitalResearchModel(): InnovationCapitalResearch
   const hypotheses: InnovationResearchHypothesis[] = [
     {
       id: "broker-sector-specialization",
-      title: "五大券商的硬科技项目储备可能存在稳定赛道集中度",
+      title: "重点券商的硬科技项目储备可能存在稳定赛道集中度",
       status: "watch",
       evidence: brokerSector
         ? `当前最高频券商×赛道组合为 ${brokerSector.broker} × ${brokerSector.sector}（${brokerSector.count} 个样本）。`

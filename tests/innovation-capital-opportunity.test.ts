@@ -59,7 +59,7 @@ test("researched mature candidates surface with evidence while broker and route 
   assert.equal(elite.latestRound, "D+轮");
   assert.equal(elite.financingAmount, "6亿元人民币");
   assert.ok(elite.institutionBackers.includes("达晨财智"));
-  assert.ok(elite.gaps.some((gap) => gap.includes("五大券商")));
+  assert.ok(elite.gaps.some((gap) => gap.includes("重点券商")));
   assert.equal(galbot.financingAmount, "25亿元人民币");
   assert.ok(galbot.institutionBackers.includes("启明创投"));
 });
