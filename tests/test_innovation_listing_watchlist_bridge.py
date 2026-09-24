@@ -140,5 +140,63 @@ class InnovationListingWatchlistBridgeTests(unittest.TestCase):
         self.assertIn("A+H", decoded)
 
 
+    def test_load_lifecycle_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            missing = Path(tmp) / "missing-lifecycle.json"
+            self.assertEqual(bridge.load_lifecycle(missing), {"projects": []})
+
+    def test_primary_market_sources_cover_priority_broker_and_official_hosts(self) -> None:
+        payload = {
+            "brokers": ["广发证券"],
+            "policyThemes": ["集成电路", "具身智能"],
+            "projects": [{"company": "测试芯片股份有限公司"}],
+        }
+        sources = {
+            item["id"]: item
+            for item in bridge.generated_innovation_sources(payload, {"projects": []})
+        }
+        market = sources["innovation-listing-primary-market-broker-01"]
+        self.assertEqual(
+            market["allowedHosts"],
+            ["eid.csrc.gov.cn", "sse.com.cn", "szse.cn", "hkexnews.hk"],
+        )
+        self.assertIn("广发证券", unquote_plus(market["url"]))
+        self.assertIn("集成电路", unquote_plus(market["url"]))
+        broker_official = sources["innovation-listing-primary-broker-01-01"]
+        self.assertEqual(broker_official["allowedHosts"], ["gf.com.cn"])
+
+    def test_lifecycle_projects_remain_in_progress_monitoring_after_migration(self) -> None:
+        payload = {
+            "brokers": [],
+            "policyThemes": [],
+            "projects": [{"company": "储备项目股份有限公司"}],
+        }
+        lifecycle = {
+            "projects": [{"company": "已受理项目股份有限公司"}],
+        }
+        sources = bridge.generated_innovation_sources(payload, lifecycle)
+        progress = [
+            item
+            for item in sources
+            if item["id"].startswith("innovation-listing-projects-")
+        ]
+        primary = [
+            item
+            for item in sources
+            if item["id"].startswith("innovation-listing-primary-projects-")
+        ]
+        self.assertEqual(len(progress), 1)
+        self.assertEqual(len(primary), 1)
+        decoded = unquote_plus(progress[0]["url"])
+        self.assertIn("储备项目股份有限公司", decoded)
+        self.assertIn("已受理项目股份有限公司", decoded)
+        self.assertIn("问询", decoded)
+        self.assertIn("回复", decoded)
+        self.assertEqual(
+            primary[0]["allowedHosts"],
+            ["eid.csrc.gov.cn", "sse.com.cn", "szse.cn", "hkexnews.hk"],
+        )
+
+
 if __name__ == "__main__":
     unittest.main()
