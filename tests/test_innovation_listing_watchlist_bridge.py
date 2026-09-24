@@ -15,6 +15,14 @@ class InnovationListingWatchlistBridgeTests(unittest.TestCase):
                 {"brokers": [], "projects": [], "policyThemes": []},
             )
 
+    def test_load_lifecycle_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            missing = Path(tmp) / "missing-lifecycle.json"
+            self.assertEqual(
+                bridge.load_lifecycle(missing),
+                {"projects": []},
+            )
+
     def test_load_capital_seeds_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             missing = Path(tmp) / "missing-capital.json"
@@ -70,6 +78,34 @@ class InnovationListingWatchlistBridgeTests(unittest.TestCase):
         ]
         self.assertTrue(all(item["sourceLevel"] == "待交叉验证" for item in discovery))
         self.assertTrue(all(item["sourceCategory"] == "company" for item in sources))
+
+    def test_generates_official_project_progress_sources_for_reviewed_universe(self) -> None:
+        watchlist = {
+            "projects": [
+                {"company": "甲科技股份有限公司"},
+                {"company": "乙航天股份有限公司"},
+            ]
+        }
+        lifecycle = {
+            "projects": [
+                {"company": "丙芯片股份有限公司"},
+            ]
+        }
+        sources = bridge.generated_primary_project_sources(watchlist, lifecycle)
+        self.assertEqual(len(sources), 4)
+        ids = {item["id"] for item in sources}
+        self.assertIn("innovation-listing-primary-project-01-01", ids)
+        self.assertIn("innovation-listing-primary-project-02-01", ids)
+        self.assertIn("innovation-listing-primary-project-03-01", ids)
+        self.assertIn("innovation-listing-primary-project-04-01", ids)
+        sse = next(item for item in sources if item["id"] == "innovation-listing-primary-project-01-01")
+        self.assertEqual(sse["sourceLevel"], "交易所公告")
+        self.assertEqual(sse["allowedHosts"], ["sse.com.cn"])
+        decoded = unquote_plus(sse["url"])
+        self.assertIn("甲科技股份有限公司", decoded)
+        self.assertIn("丙芯片股份有限公司", decoded)
+        self.assertIn("问询", decoded)
+        self.assertIn("提交", decoded) if "提交" in decoded else self.assertIn("注册", decoded)
 
     def test_primary_sources_are_host_bounded_and_promoted_as_primary_evidence(self) -> None:
         payload = {
