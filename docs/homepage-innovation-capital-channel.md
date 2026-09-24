@@ -50,7 +50,7 @@
 
 - 已核验重点券商科创项目
 - 审核 / 注册 / 发行 / 上市生命周期项目
-- 五大目标券商
+- 六家目标券商（中信证券、中信建投、中金公司、国泰海通、华泰联合、广发证券）
 - 硬科技资本机构 watch
 - D/E/Pre-IPO/Growth 等成熟期候选
 - `innovation-listing-*` / `innovation-capital-portfolio-*` 专用发现源
