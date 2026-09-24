@@ -138,6 +138,8 @@ class InnovationListingWatchlistBridgeTests(unittest.TestCase):
         self.assertIn("受理", decoded)
         self.assertIn("撤回", decoded)
         self.assertIn("A+H", decoded)
+        self.assertIn("改道", decoded)
+        self.assertIn("申报板块", decoded)
 
 
     def test_load_lifecycle_fails_closed(self) -> None:
