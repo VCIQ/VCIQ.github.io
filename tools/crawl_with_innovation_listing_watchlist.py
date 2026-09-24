@@ -35,7 +35,8 @@ BROKER_EVENT_TERMS = (
 )
 PROJECT_EVENT_TERMS = (
     "辅导 OR 验收 OR 受理 OR 问询 OR 回复 OR 上市委 OR 提交注册 OR 注册结果 OR "
-    "注册 OR 撤回 OR 终止 OR 递表 OR 聆讯 OR 招股 OR 发行 OR 上市 OR 港交所 OR A+H"
+    "注册 OR 撤回 OR 终止 OR 递表 OR 聆讯 OR 招股 OR 发行 OR 上市 OR 港交所 OR A+H OR "
+    "改道 OR 转板 OR 申报板块 OR 路线变更"
 )
 A_PLUS_H_TERMS = (
     '"A+H" OR "H股" OR "港股" OR "港交所" OR "18C" OR "特专科技"'
