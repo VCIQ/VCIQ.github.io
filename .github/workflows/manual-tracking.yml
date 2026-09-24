@@ -30,9 +30,15 @@ on:
         required: false
         type: string
       source_url:
-        description: "Public evidence URL; required for company/source"
+        description: "Public evidence URL; required for direct company/source; manual-confirmed company may defer enrichment"
         required: false
         type: string
+      origin:
+        description: "Authenticated request provenance"
+        required: true
+        default: manual
+        type: choice
+        options: [manual, manual-confirmed]
       source_category:
         description: "Source owner/category (used only for source)"
         required: true
@@ -142,6 +148,7 @@ jobs:
           TARGET_TRACKS: ${{ inputs.target_tracks }}
           KEYWORDS: ${{ inputs.keywords }}
           SOURCE_URL: ${{ inputs.source_url }}
+          ORIGIN: ${{ inputs.origin }}
           SOURCE_CATEGORY: ${{ inputs.source_category }}
           REGION: ${{ inputs.region }}
           REASONS: ${{ inputs.reasons }}
@@ -165,6 +172,7 @@ jobs:
             --tracks "$TARGET_TRACKS" \
             --keywords "$KEYWORDS" \
             --source-url "$SOURCE_URL" \
+            --origin "$ORIGIN" \
             --source-category "$SOURCE_CATEGORY" \
             --region "$REGION" \
             --reasons "$REASONS" \
@@ -224,6 +232,7 @@ jobs:
           TARGET_TRACKS: ${{ inputs.target_tracks }}
           KEYWORDS: ${{ inputs.keywords }}
           SOURCE_URL: ${{ inputs.source_url }}
+          ORIGIN: ${{ inputs.origin }}
           SOURCE_CATEGORY: ${{ inputs.source_category }}
           REGION: ${{ inputs.region }}
           REASONS: ${{ inputs.reasons }}
@@ -247,6 +256,7 @@ jobs:
             --tracks "$TARGET_TRACKS" \
             --keywords "$KEYWORDS" \
             --source-url "$SOURCE_URL" \
+            --origin "$ORIGIN" \
             --source-category "$SOURCE_CATEGORY" \
             --region "$REGION" \
             --reasons "$REASONS" \

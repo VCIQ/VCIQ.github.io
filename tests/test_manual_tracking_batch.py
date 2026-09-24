@@ -234,6 +234,39 @@ class ManualTrackingBatchTests(unittest.TestCase):
         self.assertIn("补全", report["outcomes"][0]["reason"])
         self.assertIn("星河智算科技有限公司", self._read("tracking")["tracks"][0]["sampleCompanies"])
 
+    def test_manual_confirmed_company_without_evidence_url_is_approved_and_enriched_later(self) -> None:
+        row = self.company("星河智算科技有限公司", origin="manual-confirmed")
+        row["sourceUrl"] = ""
+
+        report = self._run([row], "apply", invalid_policy="skip")
+
+        self.assertTrue(report["ok"])
+        self.assertEqual(report["acceptedCount"], 1)
+        self.assertEqual(report["skippedCount"], 0)
+        self.assertEqual(report["appliedCount"], 1)
+        self.assertEqual(report["outcomes"][0]["outcome"], "applied")
+        self.assertEqual(report["outcomes"][0]["manualDecisionStatus"], "approved")
+        self.assertEqual(report["outcomes"][0]["identityState"], "needs_enrichment")
+        self.assertIn("补全", report["outcomes"][0]["reason"])
+        self.assertFalse(report["items"][0]["applied"]["inboxChanged"])
+        self.assertTrue(report["items"][0]["applied"]["intentsChanged"])
+        self.assertIn(
+            "星河智算科技有限公司",
+            self._read("tracking")["tracks"][0]["sampleCompanies"],
+        )
+        intents = self._read("intents")
+        self.assertEqual(intents["entities"][0]["state"], "active")
+        self.assertEqual(intents["memberships"][0]["state"], "active")
+
+    def test_direct_manual_company_without_evidence_url_remains_fail_closed(self) -> None:
+        row = self.company("星河智算科技有限公司", origin="manual")
+        row["sourceUrl"] = ""
+
+        report = self._run([row], "apply", expected=2, invalid_policy="strict")
+
+        self.assertFalse(report["ok"])
+        self.assertIn("信源 URL 不能为空", report["error"])
+
     def test_manual_confirmed_resolved_company_projects_directly_to_fixed_watch(self) -> None:
         row = self.company("星河智算科技有限公司", origin="manual-confirmed")
         report = self._run([row], "apply")

@@ -533,7 +533,14 @@ def _normalized_input(args: argparse.Namespace, tracking: Mapping[str, Any]) -> 
     elif kind == "track" and not keywords and not known_track_name:
         raise ManualTrackingError("新赛道必须至少提供一个有效关键字。")
 
-    source_url = normalize_url(args.source_url, required=kind in {"company", "source"})
+    request_origin = clean(getattr(args, "origin", "manual"), 40).casefold() or "manual"
+    source_url = normalize_url(
+        args.source_url,
+        required=(
+            kind == "source"
+            or (kind == "company" and request_origin != "manual-confirmed")
+        ),
+    )
     category = clean(args.source_category, 30).casefold() or "media"
     if category not in SOURCE_CATEGORIES:
         raise ManualTrackingError("source-category 必须是 media/company/person。")
@@ -580,7 +587,7 @@ def _normalized_input(args: argparse.Namespace, tracking: Mapping[str, Any]) -> 
 
     return {
         "kind": kind,
-        "origin": "manual",
+        "origin": request_origin,
         "name": name,
         "trackSlugs": target_slugs,
         "trackSlug": track_slug,
@@ -1723,6 +1730,12 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--region", default="global")
     parser.add_argument("--reasons", default="")
     parser.add_argument("--note", default="")
+    parser.add_argument(
+        "--origin",
+        default="manual",
+        choices=["manual", "manual-confirmed"],
+        help=argparse.SUPPRESS,
+    )
     parser.add_argument("--actor", required=True)
     parser.add_argument("--triggering-actor", default="")
     parser.add_argument("--now", default="", help=argparse.SUPPRESS)
