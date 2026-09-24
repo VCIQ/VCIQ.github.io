@@ -564,7 +564,11 @@ def update_watchlist_project(
     project["latestEvent"] = event_summary(article, event)
     if route:
         project["route"] = route
-        project["routeConfidence"] = "official"
+        project["routeConfidence"] = (
+            "official"
+            if route in {"STAR", "ChiNext", "HK"}
+            else "official-a-share-only"
+        )
     elif clean(project.get("route"), 60) == "A-share-TBD":
         project["routeConfidence"] = (
             clean(project.get("routeConfidence"), 80) or "official-a-share-only"
