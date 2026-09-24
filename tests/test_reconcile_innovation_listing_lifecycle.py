@@ -396,5 +396,91 @@ class InnovationListingLifecycleReconcilerTests(unittest.TestCase):
         self.assertEqual(report["appliedCount"], 1)
 
 
+    def test_hk_listed_project_can_enter_new_a_share_counselling_without_board_inference(self):
+        lifecycle = self.lifecycle()
+        row = lifecycle["projects"][0]
+        row["route"] = "HK"
+        row["capitalMarketPath"] = "H"
+        row["stage"] = "已上市"
+        row["lifecycleStatus"] = "listed"
+        row["latestEventDate"] = "2026-09-20"
+        article = self.article(
+            title="广东法特迪精密科技股份有限公司首次公开发行股票并上市辅导备案报告",
+            summary="中信证券为辅导机构，申报板块尚未公开确认。",
+            publishedAt="2026-09-24",
+            source={
+                "name": "证监会辅导公示",
+                "url": "https://eid.csrc.gov.cn/example/h-to-a",
+                "level": "监管文件",
+            },
+        )
+        _watchlist, updated, report = reconciler.reconcile(
+            {"articles": [article]},
+            self.watchlist(),
+            lifecycle,
+            {"candidates": []},
+        )
+        current = updated["projects"][0]
+        self.assertEqual(current["route"], "A-share-TBD")
+        self.assertEqual(current["stage"], "辅导备案")
+        self.assertEqual(current["capitalMarketPath"], "H+A")
+        # Existing H listing remains a real terminal fact while the new A-side
+        # event becomes the latest stage; no STAR/ChiNext board is invented.
+        self.assertEqual(current["lifecycleStatus"], "listed")
+        self.assertEqual(report["appliedCount"], 1)
+
+    def test_multi_round_inquiry_reply_is_a_distinct_material_transition(self):
+        lifecycle = self.lifecycle()
+        row = lifecycle["projects"][0]
+        row["stage"] = "新一轮问询"
+        row["lifecycleStatus"] = "exchange-review"
+        row["latestEventDate"] = "2026-09-23"
+        article = self.article(
+            title="广东法特迪精密科技股份有限公司第二轮审核问询函的回复",
+            summary="中信证券保荐，公司完成第二轮问询回复。",
+            publishedAt="2026-09-24",
+            source={
+                "name": "深圳证券交易所",
+                "url": "https://reportdocs.static.szse.cn/second-round-reply.pdf",
+                "level": "监管文件",
+            },
+        )
+        _watchlist, updated, report = reconciler.reconcile(
+            {"articles": [article]},
+            self.watchlist(),
+            lifecycle,
+            {"candidates": []},
+        )
+        current = updated["projects"][0]
+        self.assertEqual(current["stage"], "新一轮问询回复")
+        self.assertEqual(current["latestEventDate"], "2026-09-24")
+        self.assertEqual(report["appliedCount"], 1)
+
+    def test_same_stage_resurfacing_is_deduplicated_even_with_new_feed_date(self):
+        lifecycle = self.lifecycle()
+        row = lifecycle["projects"][0]
+        row["stage"] = "问询回复"
+        row["lifecycleStatus"] = "exchange-review"
+        row["latestEventDate"] = "2026-09-23"
+        article = self.article(
+            title="广东法特迪精密科技股份有限公司审核问询函的回复",
+            summary="中信证券保荐，同一问询回复文件被搜索索引重新发现。",
+            publishedAt="2026-09-24",
+            source={
+                "name": "深圳证券交易所",
+                "url": "https://reportdocs.static.szse.cn/reindexed-reply.pdf",
+                "level": "监管文件",
+            },
+        )
+        _watchlist, updated, report = reconciler.reconcile(
+            {"articles": [article]},
+            self.watchlist(),
+            lifecycle,
+            {"candidates": []},
+        )
+        self.assertEqual(updated["projects"][0]["latestEventDate"], "2026-09-23")
+        self.assertEqual(report["appliedCount"], 0)
+
+
 if __name__ == "__main__":
     unittest.main()
