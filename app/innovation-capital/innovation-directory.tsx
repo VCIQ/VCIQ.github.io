@@ -70,7 +70,7 @@ export function InnovationDirectory() {
       <div className={styles.sectionHeader}>
         <div>
           <span>PROJECT PIPELINE</span>
-          <h2>五大券商科创项目储备</h2>
+          <h2>重点券商科创项目储备</h2>
         </div>
         <p>
           当前显示 {filtered.length} / {projects.length} 个项目。路线、辅导阶段、历史递表与港股状态分别记录，避免把“科技属性”误当成“已确定科创板”。
@@ -124,7 +124,7 @@ export function InnovationDirectory() {
               <span className={styles.routeBadge}>{routeLabels[project.route] ?? project.route}</span>
               <span>{poolLabels[project.pool] ?? project.pool}</span>
               <span>{confidenceLabel(project.routeConfidence)}</span>
-              {project.capitalMarketPath === "A+H" ? <span>A+H</span> : null}
+              {project.capitalMarketPath === "A+H" || project.capitalMarketPath === "H+A" ? <span>{project.capitalMarketPath}</span> : null}
               {project.everFiledBefore ? <span>历史曾递表</span> : null}
             </div>
 
