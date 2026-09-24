@@ -28,6 +28,8 @@ class ManualTrackingWorkflowTests(unittest.TestCase):
             trigger,
         )
         self.assertIn("keyword is a search seed, not a technology entity", trigger)
+        self.assertIn("options: [manual, manual-confirmed]", trigger)
+        self.assertIn("manual-confirmed company may defer enrichment", trigger)
 
     def test_validate_is_read_only_and_handoff_only_gets_actions_write(self) -> None:
         self.assertIn("permissions: {}", self.text)
@@ -65,6 +67,7 @@ class ManualTrackingWorkflowTests(unittest.TestCase):
             "${{ inputs.target_tracks }}",
             "${{ inputs.keywords }}",
             "${{ inputs.source_url }}",
+            "${{ inputs.origin }}",
             "${{ inputs.note }}",
         ):
             self.assertIn(expression, self.text)
@@ -75,6 +78,7 @@ class ManualTrackingWorkflowTests(unittest.TestCase):
 
         self.assertIn('--kind "$OBJECT_TYPE"', self.text)
         self.assertIn('--note "$NOTE"', self.text)
+        self.assertIn('--origin "$ORIGIN"', self.text)
         self.assertIn('--actor "$ACTOR"', self.text)
         self.assertIn('--triggering-actor "$TRIGGERING_ACTOR"', self.text)
         self.assertIn("python tools/manual_tracking_entrypoint.py", self.text)
