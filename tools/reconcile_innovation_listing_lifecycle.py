@@ -85,6 +85,8 @@ ROUTE_CHANGE_TERMS = (
     "调整申报板块",
     "更换上市板块",
     "路线变更",
+    "转科创板",
+    "转创业板",
     "A+H",
     "H+A",
 )
@@ -225,6 +227,20 @@ def route_for(text: str, stage: str = "") -> str:
     return ""
 
 
+def route_change_target(text: str) -> str:
+    value = clean(text, 4000)
+    destination_patterns = (
+        ("ChiNext", r"(?:改道|转向|转板|变更为|调整为|更换为|转至|转到)[^。；，,]{0,24}创业板"),
+        ("STAR", r"(?:改道|转向|转板|变更为|调整为|更换为|转至|转到)[^。；，,]{0,24}科创板"),
+        ("ChiNext", r"由[^。；，,]{0,20}(?:科创板|其他板块)[^。；，,]{0,20}(?:转|改)[^。；，,]{0,16}创业板"),
+        ("STAR", r"由[^。；，,]{0,20}(?:创业板|其他板块)[^。；，,]{0,20}(?:转|改)[^。；，,]{0,16}科创板"),
+    )
+    for route, pattern in destination_patterns:
+        if re.search(pattern, value):
+            return route
+    return ""
+
+
 def classify_event(text: str) -> dict[str, Any] | None:
     value = clean(text, 4000)
     if not value:
@@ -287,7 +303,7 @@ def classify_event(text: str) -> dict[str, Any] | None:
     elif any(term in value for term in ("辅导备案", "上市辅导", "IPO辅导")):
         stage, status = "辅导备案", "counselling"
     else:
-        route = route_for(value)
+        route = route_change_target(value) or route_for(value)
         capital_path = "A+H" if "A+H" in value else ("H+A" if "H+A" in value else "")
         if any(term in value for term in ROUTE_CHANGE_TERMS) and (route or capital_path):
             return {
