@@ -50,6 +50,14 @@ LISTING_TERMS = (
     "创业板",
     "A股",
     "受理",
+    "问询",
+    "上市委",
+    "注册",
+    "撤回",
+    "终止",
+    "递表",
+    "聆讯",
+    "招股",
     "港交所",
     "H股",
     "A+H",
@@ -300,12 +308,36 @@ def route_for(text: str) -> str:
 
 
 def stage_for(text: str) -> str:
+    if "不予注册" in text:
+        return "不予注册"
+    if "终止审核" in text or "撤回上市申请" in text or "撤回IPO" in text:
+        return "终止审核"
+    if "上市交易" in text or "正式上市" in text or "挂牌上市" in text:
+        return "已上市"
+    if ("港交所" in text or "H股" in text or "港股" in text) and (
+        "招股" in text or "全球发售" in text
+    ):
+        return "H股招股"
+    if "同意注册" in text or "注册生效" in text or "予以注册" in text:
+        return "注册生效"
+    if "提交注册" in text or "注册稿" in text:
+        return "提交注册"
+    if "上市委审议通过" in text or "上市委会议通过" in text:
+        return "上市委审议通过"
+    if "上市委" in text:
+        return "上市委审议"
+    if "问询回复" in text or "回复审核问询" in text or "审核问询回复" in text:
+        return "问询回复"
+    if "问询" in text:
+        return "已问询"
+    if ("港交所" in text or "H股" in text or "港股" in text) and "递表" in text:
+        return "H股递表"
+    if "受理" in text and ("交易所" in text or "IPO" in text or "上市" in text or "首发" in text):
+        return "交易所受理"
     if "辅导验收" in text:
         return "辅导验收"
     if "辅导备案" in text:
         return "辅导备案"
-    if "受理" in text and ("交易所" in text or "IPO" in text or "上市" in text):
-        return "交易所受理"
     if "上市辅导" in text or "IPO辅导" in text or "辅导" in text:
         return "辅导中"
     return "待核验"
@@ -392,6 +424,12 @@ def score_evidence(
     ):
         score += 28
         reasons.append("命中券商官方定向源")
+    elif re.fullmatch(
+        rf"{re.escape(SOURCE_PREFIX)}primary-market-broker-\d{{2}}",
+        source_id,
+    ):
+        score += 32
+        reasons.append("命中监管/交易所官方硬科技IPO源")
     elif re.fullmatch(rf"{re.escape(SOURCE_PREFIX)}(?:broker|a-plus-h)-\d{{2}}", source_id):
         score += 20
         reasons.append("命中重点券商定向发现源")
