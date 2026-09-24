@@ -65,7 +65,7 @@ PRIMARY_BROKER_HOSTS: dict[str, tuple[str, ...]] = {
     "广发证券": ("gf.com.cn",),
 }
 PRIMARY_REGULATORY_HOSTS = ("eid.csrc.gov.cn",)
-PRIMARY_LISTING_HOSTS = ("eid.csrc.gov.cn", "sse.com.cn", "szse.cn", "hkexnews.hk")
+PRIMARY_LISTING_HOSTS = ("eid.csrc.gov.cn", "csrc.gov.cn", "sse.com.cn", "szse.cn", "hkexnews.hk")
 REGULATORY_EVENT_TERMS = (
     "辅导备案 OR 辅导进展 OR 辅导验收 OR 上市辅导 OR 辅导机构 OR IPO"
 )
