@@ -509,7 +509,7 @@ export function HomepageNewsFeed({
   const currentChannelDescription = channel === "recommend"
     ? "推荐频道按个性化优先排序；先看最值得知道的变化，再决定是否查看来源、进入追踪、分享或深研此条。"
     : channel === "innovation"
-      ? "科创频道由五大券商项目、上市生命周期、硬科技投资机构和成熟期候选的精确对象关系驱动；按最新事件优先，未核验证据不会自动推断辅导券商或上市板块。"
+      ? "科创频道由重点券商项目、上市生命周期、硬科技投资机构和成熟期候选的精确对象关系驱动；按最新事件优先，未核验证据不会自动推断辅导券商或上市板块。"
     : channel === "people"
       ? "人物频道合并已发布人物库材料与正式实体关联事件；仅正式 personSlug 或人物库别名精确匹配可入流，泛化人名识别不会直接触发。"
       : channel === "companies"
