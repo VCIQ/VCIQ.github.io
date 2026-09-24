@@ -87,7 +87,7 @@ const PRIMARY_LEVELS = new Set([
 const REASON_LABELS: Record<string, string> = {
   TRACKED_PROJECT: "已追踪科创项目",
   LIFECYCLE_PROJECT: "上市生命周期项目",
-  TARGET_BROKER: "五大券商",
+  TARGET_BROKER: "重点券商",
   CAPITAL_INSTITUTION: "硬科技投资机构",
   MATURE_CANDIDATE: "成熟期潜在项目",
   DISCOVERED_COMPANY: "科创发现候选",
