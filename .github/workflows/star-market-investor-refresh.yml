@@ -128,6 +128,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # build:pages intentionally rewrites the build-derived homepage
+          # innovation projection. This STAR writer does not own that artifact,
+          # and leaving it dirty makes the following rebase fail.
+          git restore -- public/data/innovation-capital-feed.json
           DATA_PATHS=(
             public/data/star_market_investors.json
             config/star_vc_watchlist.json
@@ -167,6 +171,8 @@ jobs:
               tests.test_review_star_market_investors
             npm run test:unit
             ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages
+            # Keep retries rebase-safe after the read-only site gate.
+            git restore -- public/data/innovation-capital-feed.json
             python tools/run_pipeline.py finalize star-market-investor-refresh
             git add "${DATA_PATHS[@]}"
             if ! git diff --cached --quiet; then
