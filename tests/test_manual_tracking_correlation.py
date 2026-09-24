@@ -52,4 +52,19 @@ class CorrelationTests(unittest.TestCase):
         got=subprocess.check_output(["node","-e",js,BATCH],text=True)
         self.assertEqual(got,digest())
 
+    def test_batch_apply_retries_transient_push_failures_without_overwriting_main(self):
+        text=(ROOT/".github/workflows/manual-tracking-batch.yml").read_text()
+        commit=text.split("- name: Commit and push only approved configuration files",1)[1].split("- name:",1)[0]
+        self.assertIn("max_push_attempts=3",commit)
+        self.assertIn('local_sha="$(git rev-parse HEAD)"',commit)
+        self.assertIn('remote_sha="$(git rev-parse origin/main)"',commit)
+        self.assertIn('if [ "$remote_sha" = "$local_sha" ]; then',commit)
+        self.assertIn('if [ "$remote_sha" != "$BASE_SHA" ]; then',commit)
+        self.assertIn("Internal Server Error",commit)
+        self.assertIn("500|502|503|504",commit)
+        self.assertIn("push failed with a non-transient error; not retrying",commit)
+        self.assertIn("transient GitHub push failure; retrying attempt",commit)
+        for unsafe in ("--force", "pull --rebase", "rebase origin", "reset --hard"):
+            self.assertNotIn(unsafe,commit)
+
 if __name__ == "__main__": unittest.main()
