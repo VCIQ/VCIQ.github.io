@@ -11,6 +11,7 @@ ONBOARDING = WORKFLOWS / "company-candidate-onboarding.yml"
 REFRESH = WORKFLOWS / "scheduled-sync.yml"
 MANUAL = WORKFLOWS / "manual-tracking.yml"
 MANUAL_BATCH = WORKFLOWS / "manual-tracking-batch.yml"
+RANKED_PROJECTION = WORKFLOWS / "publish-ranked-intelligence.yml"
 
 WRITER_GROUP = "group: vciq-repository-writer-${{ github.ref }}"
 
@@ -106,6 +107,17 @@ class WriterQueueCompactionTests(unittest.TestCase):
         self.assertIn("if: needs.preflight.outputs.current == 'true'", crawl)
         self.assertIn(WRITER_GROUP, crawl)
         self.assertIn("queue: max", crawl.split("steps:", 1)[0])
+
+    def test_ranked_projection_keeps_its_own_coalescing_key_but_shares_the_writer_queue(self) -> None:
+        text = RANKED_PROJECTION.read_text(encoding="utf-8")
+        top = text.split("\njobs:\n", 1)[0]
+        publish = text.split("  publish:\n", 1)[1]
+
+        self.assertIn("group: ranked-intelligence-homepage-main", top)
+        self.assertNotIn(WRITER_GROUP, top)
+        self.assertIn(WRITER_GROUP, publish.split("steps:", 1)[0])
+        self.assertIn("queue: max", publish.split("steps:", 1)[0])
+        self.assertIn("git push origin HEAD:main", publish)
 
     def test_manual_writes_remain_fifo_and_are_never_coalesced(self) -> None:
         for workflow in (MANUAL, MANUAL_BATCH):
