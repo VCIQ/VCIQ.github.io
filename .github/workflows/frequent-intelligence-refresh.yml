@@ -56,6 +56,7 @@ jobs:
           python -m py_compile \
             tools/crawl_with_innovation_listing_watchlist.py \
             tools/build_innovation_listing_candidates.py \
+            tools/reconcile_innovation_listing_lifecycle.py \
             tools/crawl_with_star_vc_watchlist.py \
             tools/crawl_with_wechat_registry.py \
             tools/prepare_frequent_refresh.py \
@@ -76,6 +77,7 @@ jobs:
             tests.test_star_vc_watchlist_bridge \
             tests.test_innovation_listing_watchlist_bridge \
             tests.test_build_innovation_listing_candidates \
+            tests.test_reconcile_innovation_listing_lifecycle \
             tests.test_pipeline_control
       - name: Record the pre-refresh article baseline
         if: steps.due.outputs.due == 'true'
@@ -92,6 +94,11 @@ jobs:
           python tools/enrich_tracking_snapshot.py
           python tools/snapshot_retention.py
           python tools/build_innovation_listing_candidates.py
+          python tools/reconcile_innovation_listing_lifecycle.py
+          # Rebuild the queue after primary-backed candidates are promoted so
+          # canonical projects cannot remain as stale pending candidates.
+          python tools/build_innovation_listing_candidates.py
+          python tools/reconcile_innovation_listing_lifecycle.py --check
           python tools/build_innovation_listing_candidates.py --check
       - name: Validate the lightweight article snapshot
         if: steps.due.outputs.due == 'true'
@@ -116,6 +123,10 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           ARTICLE_PATHS=(public/data/articles.json)
           REVIEW_PATHS=(config/innovation_listing_candidate_review_queue.json)
+          LIFECYCLE_PATHS=(
+            config/innovation_listing_watchlist.json
+            config/innovation_listing_lifecycle.json
+          )
           HEALTH_PATHS=(public/data/source_health.json)
           CONTROL_PATHS=(
             public/data/data_lineage.json
@@ -133,7 +144,7 @@ jobs:
             --quality-gate passed
 
           git add "${ARTICLE_PATHS[@]}" "${HEALTH_PATHS[@]}" "${CONTROL_PATHS[@]}"
-          git add "${REVIEW_PATHS[@]}"
+          git add "${REVIEW_PATHS[@]}" "${LIFECYCLE_PATHS[@]}"
           if git diff --cached --quiet; then
             echo "No crawl-audit, source-health or intelligence changes to publish."
             echo "changed=false" >> "$GITHUB_OUTPUT"
@@ -153,6 +164,9 @@ jobs:
             python tools/enrich_tracking_snapshot.py
             python tools/snapshot_retention.py
             python tools/build_innovation_listing_candidates.py
+            python tools/reconcile_innovation_listing_lifecycle.py
+            python tools/build_innovation_listing_candidates.py
+            python tools/reconcile_innovation_listing_lifecycle.py --check
             python tools/build_innovation_listing_candidates.py --check
             python tools/validate_professional_media_snapshot.py --require-articles
             python tools/snapshot_retention.py --check
@@ -163,7 +177,7 @@ jobs:
               public-intelligence-frequent-refresh \
               --quality-gate passed
             git add "${ARTICLE_PATHS[@]}" "${HEALTH_PATHS[@]}" "${CONTROL_PATHS[@]}"
-          git add "${REVIEW_PATHS[@]}"
+            git add "${REVIEW_PATHS[@]}" "${LIFECYCLE_PATHS[@]}"
             if ! git diff --cached --quiet; then
               git commit --amend --no-edit
             fi
