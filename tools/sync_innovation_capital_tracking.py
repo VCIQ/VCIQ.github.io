@@ -396,14 +396,14 @@ def sync(
         desired.append(
             (
                 clean(row.get("name"), 160),
-                ["verified-innovation-listing-project", "priority-broker-project"],
+                ["verified-innovation-listing-project", "five-broker-project"],
             )
         )
     for row in rows(seeds.get("brokers")):
         desired.append(
             (
                 canonical_name(row.get("name"), aliases),
-                ["verified-innovation-broker", "priority-broker-counselling"],
+                ["verified-innovation-broker", "five-broker-counselling"],
             )
         )
     for row in rows(seeds.get("institutions")):
