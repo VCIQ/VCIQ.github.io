@@ -482,5 +482,62 @@ class InnovationListingLifecycleReconcilerTests(unittest.TestCase):
         self.assertEqual(report["appliedCount"], 0)
 
 
+    def test_primary_route_change_updates_board_without_rewriting_stage(self):
+        lifecycle = self.lifecycle()
+        row = lifecycle["projects"][0]
+        row["route"] = "STAR"
+        row["stage"] = "已问询"
+        row["lifecycleStatus"] = "exchange-review"
+        row["latestEventDate"] = "2026-09-23"
+        article = self.article(
+            title="广东法特迪精密科技股份有限公司申报板块由科创板改道创业板",
+            summary="中信证券保荐，官方材料明确披露申报板块路线变更。",
+            publishedAt="2026-09-24",
+            source={
+                "name": "深圳证券交易所",
+                "url": "https://reportdocs.static.szse.cn/route-change.pdf",
+                "level": "监管文件",
+            },
+        )
+        _watchlist, updated, report = reconciler.reconcile(
+            {"articles": [article]},
+            self.watchlist(),
+            lifecycle,
+            {"candidates": []},
+        )
+        current = updated["projects"][0]
+        self.assertEqual(current["route"], "ChiNext")
+        self.assertEqual(current["stage"], "已问询")
+        self.assertEqual(current["lifecycleStatus"], "exchange-review")
+        self.assertEqual(current["latestEventDate"], "2026-09-24")
+        self.assertEqual(report["applied"][0]["stage"], "路线变更")
+
+    def test_primary_ah_path_change_updates_capital_path_without_new_stage(self):
+        lifecycle = self.lifecycle()
+        row = lifecycle["projects"][0]
+        row["capitalMarketPath"] = "A"
+        row["latestEventDate"] = "2026-09-23"
+        article = self.article(
+            title="广东法特迪精密科技股份有限公司启动A+H路线变更",
+            summary="中信证券保荐，公司公告资本市场路径调整为A+H。",
+            publishedAt="2026-09-24",
+            source={
+                "name": "深圳证券交易所",
+                "url": "https://reportdocs.static.szse.cn/ah-route.pdf",
+                "level": "监管文件",
+            },
+        )
+        _watchlist, updated, report = reconciler.reconcile(
+            {"articles": [article]},
+            self.watchlist(),
+            lifecycle,
+            {"candidates": []},
+        )
+        current = updated["projects"][0]
+        self.assertEqual(current["capitalMarketPath"], "A+H")
+        self.assertEqual(current["stage"], "已问询")
+        self.assertEqual(report["appliedCount"], 1)
+
+
 if __name__ == "__main__":
     unittest.main()
