@@ -11,7 +11,7 @@ import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "科创频道",
-  description: "跟踪五大头部券商科创板、创业板、A+H及十五五硬科技拟上市项目储备与上市政策。",
+  description: "跟踪六家重点券商科创板、创业板、A+H及十五五硬科技拟上市项目储备与上市政策。",
 };
 
 export default function InnovationCapitalPage() {
@@ -29,7 +29,7 @@ export default function InnovationCapitalPage() {
         <p className="eyebrow">03 / INNOVATION CAPITAL</p>
         <h1>科创频道</h1>
         <p className={styles.headerIntro}>
-          面向一级市场与PE/VC项目挖掘，持续跟踪中信证券、中信建投、中金公司、国泰海通、华泰联合的
+          面向一级市场与PE/VC项目挖掘，持续跟踪中信证券、中信建投、中金公司、国泰海通、华泰联合、广发证券的
           科创板、创业板及A+H硬科技项目储备。项目进入交易所审核后不删除，而是继续转入上市审核生命周期跟踪。
         </p>
 
