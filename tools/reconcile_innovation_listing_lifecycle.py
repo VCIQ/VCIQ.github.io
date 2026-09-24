@@ -64,6 +64,7 @@ STAGE_RANK = {
     "已问询": 50,
     "问询回复": 55,
     "新一轮问询": 56,
+    "新一轮问询回复": 57,
     "港股聆讯": 60,
     "上市委审议": 60,
     "港股聆讯通过": 65,
@@ -240,6 +241,11 @@ def classify_event(text: str) -> dict[str, Any] | None:
         stage, status = "港股聆讯", "exchange-review"
     elif any(term in value for term in ("上市委会议", "上市委审议", "上市审核委员会会议")):
         stage, status = "上市委审议", "exchange-review"
+    elif (
+        any(term in value for term in ("第二轮问询", "二轮问询", "第三轮问询", "三轮问询"))
+        or re.search(r"第[二三四五六七八九十0-9]+轮问询", value)
+    ) and any(term in value for term in ("回复", "答复")):
+        stage, status = "新一轮问询回复", "exchange-review"
     elif any(term in value for term in ("新一轮问询", "第二轮问询", "二轮问询", "第三轮问询", "三轮问询")) or re.search(
         r"第[二三四五六七八九十0-9]+轮问询", value
     ):
@@ -379,6 +385,22 @@ def has_source(project: dict[str, Any], url: str) -> bool:
     return False
 
 
+def effective_event_route(project: dict[str, Any], event: dict[str, Any]) -> str:
+    route = clean(event.get("route"), 60)
+    if route:
+        return route
+    if event.get("lifecycleStatus") == "counselling":
+        current_route = clean(project.get("route"), 60)
+        current_status = clean(project.get("lifecycleStatus"), 80)
+        # A mainland IPO counselling filing after an HK listing is an A-side
+        # lifecycle restart, but the board remains unknown until evidence says
+        # STAR or ChiNext. A terminal A-share project restarting counselling is
+        # likewise reset to A-share-TBD rather than inheriting its old board.
+        if current_route == "HK" or current_status == "terminated":
+            return "A-share-TBD"
+    return ""
+
+
 def should_apply(
     project: dict[str, Any],
     event: dict[str, Any],
@@ -393,7 +415,7 @@ def should_apply(
         return False
     current_rank = current_stage_rank(project)
     current_route = clean(project.get("route"), 60)
-    incoming_route = clean(event.get("route"), 60)
+    incoming_route = effective_event_route(project, event)
     explicit_route_switch = bool(
         incoming_route
         and current_route
@@ -410,14 +432,13 @@ def should_apply(
         and not restart_after_terminal
     ):
         return False
+    same_stage = clean(project.get("stage"), 80) == event["stage"]
+    if same_stage and event["rank"] == current_rank and not explicit_route_switch:
+        # Re-surfacing the same official stage is not a new material transition.
+        # Multi-round inquiries use distinct classified stages above.
+        return False
     if existing_date and incoming_date == existing_date:
-        if has_source(project, url) and clean(project.get("stage"), 80) == event["stage"]:
-            return False
-        if (
-            event["rank"] == current_rank
-            and clean(project.get("stage"), 80) == event["stage"]
-            and not explicit_route_switch
-        ):
+        if has_source(project, url) and same_stage:
             return False
     return True
 
@@ -482,7 +503,7 @@ def update_existing_project(
     event: dict[str, Any],
 ) -> None:
     text = article_text(article)
-    route = event.get("route", "")
+    route = effective_event_route(project, event)
     project["stage"] = event["stage"]
     if (
         event["lifecycleStatus"] != "counselling"
@@ -521,7 +542,7 @@ def migrate_watchlist_project(
         "sources": merge_source_list(project, evidence_entry(article)),
         "aliases": unique(project_aliases(project), 20),
     }
-    route = event.get("route", "")
+    route = effective_event_route(project, event)
     if route:
         migrated["route"] = route
     migrated["capitalMarketPath"] = apply_capital_path(
@@ -537,7 +558,7 @@ def update_watchlist_project(
     article: dict[str, Any],
     event: dict[str, Any],
 ) -> None:
-    route = event.get("route", "")
+    route = effective_event_route(project, event)
     project["stage"] = event["stage"]
     project["latestEventDate"] = date_text(article.get("publishedAt"))
     project["latestEvent"] = event_summary(article, event)
