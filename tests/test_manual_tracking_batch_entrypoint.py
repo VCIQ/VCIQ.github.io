@@ -52,7 +52,7 @@ class ManualTrackingBatchEntrypointTests(unittest.TestCase):
         }
 
     def test_all_invalid_automatic_batch_becomes_audited_noop(self) -> None:
-        report = entrypoint._automatic_noop_report(
+        report = entrypoint._skippable_noop_report(
             self.argv([self.automatic_source()]),
             2,
             self.rejected_report(),
@@ -69,11 +69,28 @@ class ManualTrackingBatchEntrypointTests(unittest.TestCase):
         self.assertIn("名称必须是单一", report["skipped"][0]["error"])
         self.assertIn("没有写入任何状态", report["detail"])
 
-    def test_human_confirmed_failure_remains_fail_closed(self) -> None:
+    def test_human_confirmed_all_invalid_batch_becomes_audited_noop(self) -> None:
         row = self.automatic_source()
         row["origin"] = "manual-confirmed"
 
-        report = entrypoint._automatic_noop_report(
+        report = entrypoint._skippable_noop_report(
+            self.argv([row]),
+            2,
+            self.rejected_report(),
+        )
+
+        self.assertIsNotNone(report)
+        assert report is not None
+        self.assertTrue(report["ok"])
+        self.assertEqual(report["skippedCount"], 1)
+        self.assertEqual(report["skipped"][0]["origin"], "manual-confirmed")
+        self.assertIn("暂缓", report["detail"])
+
+    def test_direct_manual_failure_remains_fail_closed(self) -> None:
+        row = self.automatic_source()
+        row["origin"] = "manual"
+
+        report = entrypoint._skippable_noop_report(
             self.argv([row]),
             2,
             self.rejected_report(),
