@@ -158,7 +158,7 @@ class InnovationListingWatchlistBridgeTests(unittest.TestCase):
         market = sources["innovation-listing-primary-market-broker-01"]
         self.assertEqual(
             market["allowedHosts"],
-            ["eid.csrc.gov.cn", "sse.com.cn", "szse.cn", "hkexnews.hk"],
+            ["eid.csrc.gov.cn", "csrc.gov.cn", "sse.com.cn", "szse.cn", "hkexnews.hk"],
         )
         self.assertIn("广发证券", unquote_plus(market["url"]))
         self.assertIn("集成电路", unquote_plus(market["url"]))
@@ -194,7 +194,7 @@ class InnovationListingWatchlistBridgeTests(unittest.TestCase):
         self.assertIn("回复", decoded)
         self.assertEqual(
             primary[0]["allowedHosts"],
-            ["eid.csrc.gov.cn", "sse.com.cn", "szse.cn", "hkexnews.hk"],
+            ["eid.csrc.gov.cn", "csrc.gov.cn", "sse.com.cn", "szse.cn", "hkexnews.hk"],
         )
 
 
