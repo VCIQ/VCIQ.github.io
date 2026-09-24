@@ -419,7 +419,7 @@ class ManualTrackingBatchTests(unittest.TestCase):
         self.assertIn("第 2 个对象", report["error"])
         self.assertEqual(before, {key: path.read_bytes() for key, path in self.paths.items()})
 
-    def test_skip_policy_repairs_manual_confirmed_keywords_but_does_not_skip_entity(self) -> None:
+    def test_skip_policy_repairs_manual_confirmed_keywords_and_defers_invalid_entity(self) -> None:
         row = self.technology("端侧多模态", ["ai"], origin="manual-confirmed")
         row["keywords"] = ["端侧多模态", "平台", "视觉语言动作模型"]
 
@@ -432,15 +432,40 @@ class ManualTrackingBatchTests(unittest.TestCase):
 
         before = {key: path.read_bytes() for key, path in self.paths.items()}
         invalid = self._run(
-            [self.invalid_person(origin="manual-confirmed")],
+            [self.technology("人工智能", ["ai"], origin="manual-confirmed")],
             "apply",
             expected=2,
             invalid_policy="skip",
         )
         self.assertFalse(invalid["ok"])
-        self.assertIn("人工确认候选", invalid["error"])
-        self.assertNotIn("均未通过验证", invalid["error"])
+        self.assertIn("均未通过验证", invalid["error"])
+        self.assertIn("人工智能", invalid["error"])
         self.assertEqual(before, {key: path.read_bytes() for key, path in self.paths.items()})
+
+    def test_skip_policy_keeps_valid_confirmed_rows_when_one_confirmed_candidate_is_invalid(self) -> None:
+        rows = [
+            self.technology("端侧多模态", ["ai"], origin="manual-confirmed"),
+            self.technology("人工智能", ["ai"], origin="manual-confirmed"),
+            self.technology("视觉语言动作模型", ["ai"], origin="manual-confirmed"),
+        ]
+
+        report = self._run(rows, "apply", invalid_policy="skip")
+
+        self.assertTrue(report["ok"])
+        self.assertEqual(report["acceptedCount"], 2)
+        self.assertEqual(report["skippedCount"], 1)
+        self.assertEqual(report["skipped"][0]["index"], 2)
+        self.assertEqual(report["skipped"][0]["name"], "人工智能")
+        self.assertEqual(report["skipped"][0]["origin"], "manual-confirmed")
+        self.assertIn("过于宽泛", report["skipped"][0]["error"])
+        self.assertEqual(
+            [item["outcome"] for item in report["outcomes"]],
+            ["applied", "skipped", "applied"],
+        )
+        keywords = self._read("tracking")["tracks"][0]["keywords"]
+        self.assertIn("端侧多模态", keywords)
+        self.assertIn("视觉语言动作模型", keywords)
+        self.assertNotIn("人工智能", keywords)
 
     def test_skip_policy_requires_origin_for_every_row(self) -> None:
         row = self.technology("端侧多模态", ["ai"])

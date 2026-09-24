@@ -2,11 +2,11 @@
 """Origin-aware batch writer entrypoint with first-class keyword support.
 
 The canonical batch engine remains fail-closed for direct/manual callers. The
-web capture flow uses ``invalid-policy=skip`` for machine-generated candidates;
-when every row in such a batch is an invalid ``origin=automatic`` suggestion,
-the safe result is a successful no-op with an explicit skipped audit rather
-than a failed GitHub Actions run. Human and human-confirmed rows are never
-converted into this no-op path.
+web capture flow uses ``invalid-policy=skip`` for extracted candidates. When
+every row in such a batch is invalid but belongs to a skippable extracted origin
+(``automatic`` or ``manual-confirmed``), the safe result is a successful
+no-op with an explicit skipped audit rather than a failed GitHub Actions run.
+Direct ``manual`` rows remain fail-closed.
 """
 
 from __future__ import annotations
@@ -31,7 +31,7 @@ except ImportError:  # pragma: no cover
 # comma and parentheses in user-facing errors to their ASCII forms. Normalize
 # the sentinel once as well so the safe-noop boundary is stable across both
 # direct tests and GitHub Actions logs.
-ALL_AUTOMATIC_SKIPPED_PREFIX = manual.clean(
+ALL_SKIPPABLE_SKIPPED_PREFIX = manual.clean(
     "整批对象均未通过验证，没有可安全写入的对象。",
     200,
 )
@@ -63,18 +63,18 @@ def _skip_reason(error: str) -> str:
     return manual.clean(detail, 500) or "未通过规范校验，已安全跳过。"
 
 
-def _automatic_noop_report(
+def _skippable_noop_report(
     argv: list[str],
     exit_code: int,
     report: dict[str, Any] | None,
 ) -> dict[str, Any] | None:
-    """Convert only an all-invalid automatic skip batch into a successful no-op."""
+    """Convert an all-invalid skippable extracted batch into a successful no-op."""
 
     if exit_code == 0 or not report:
         return None
     invalid_policy = _argument_value(argv, "--invalid-policy", "strict")
     error = manual.clean(report.get("error"), 1200)
-    if invalid_policy != "skip" or not error.startswith(ALL_AUTOMATIC_SKIPPED_PREFIX):
+    if invalid_policy != "skip" or not error.startswith(ALL_SKIPPABLE_SKIPPED_PREFIX):
         return None
 
     try:
@@ -85,7 +85,7 @@ def _automatic_noop_report(
         ]
     except manual.ManualTrackingError:
         return None
-    if not rows or any(origin != "automatic" for origin in origins):
+    if not rows or any(origin not in batch.SKIPPABLE_ORIGINS for origin in origins):
         return None
 
     reason = _skip_reason(error)
@@ -94,7 +94,7 @@ def _automatic_noop_report(
             "index": index,
             "objectType": manual.clean(row.get("objectType"), 30),
             "name": manual.clean(row.get("name"), 160),
-            "origin": "automatic",
+            "origin": origins[index - 1],
             "error": reason,
         }
         for index, row in enumerate(rows, start=1)
@@ -126,7 +126,7 @@ def _automatic_noop_report(
         "outcomes": outcomes,
         "skipped": skipped,
         "repaired": [],
-        "detail": f"全部 {len(skipped)} 个自动候选未通过规范校验，已安全跳过；没有写入任何状态。",
+        "detail": f"全部 {len(skipped)} 个候选未通过规范校验，已暂缓且没有写入任何状态。",
     }
 
 
@@ -137,7 +137,7 @@ def main(argv: list[str] | None = None) -> int:
     with contextlib.redirect_stdout(captured):
         exit_code = batch.main(effective_argv)
     output = captured.getvalue()
-    noop_report = _automatic_noop_report(
+    noop_report = _skippable_noop_report(
         effective_argv,
         exit_code,
         _last_json_report(output),
