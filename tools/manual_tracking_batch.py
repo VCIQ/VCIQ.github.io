@@ -125,6 +125,7 @@ def namespace_for(row: Mapping[str, Any], mode: str) -> argparse.Namespace:
         region=clean(row.get("region"), 30) or "全球",
         reasons="|".join(string_list(row.get("reasons"), 12)),
         note=clean(row.get("note"), 800),
+        origin=clean(row.get("origin"), 40) or "manual",
         actor="",
         triggering_actor="",
         now="",
