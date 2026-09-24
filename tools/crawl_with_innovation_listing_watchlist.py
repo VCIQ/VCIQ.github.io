@@ -270,6 +270,27 @@ def generated_innovation_sources(
                 )
             )
 
+        # Primary regulator/exchange discovery for new hard-tech IPO projects.
+        # Search indexes only locate documents; accepted URLs must remain on
+        # the official hosts below, and the reconciler independently verifies
+        # source host, entity identity, event semantics and route evidence.
+        if hard_tech_query:
+            query = (
+                f"({official_site_query}) (\"{broker}\") ({PROJECT_EVENT_TERMS}) "
+                f"({hard_tech_query})"
+            )
+            sources.append(
+                _bounded_primary_multi_source(
+                    f"{SOURCE_PREFIX}primary-market-broker-{index:02d}",
+                    f"科创项目储备 · {broker} · 监管/交易所硬科技IPO",
+                    query,
+                    [broker, *policy_themes],
+                    hosts=PRIMARY_LISTING_HOSTS,
+                    source_level="监管文件",
+                    platform="监管/交易所官方",
+                )
+            )
+
     # 2) A+H/H-share discovery: keep the broker identity explicit so a later
     # deterministic candidate builder can preserve the broker relationship.
     for index, broker in enumerate(brokers, start=1):
@@ -284,7 +305,7 @@ def generated_innovation_sources(
         )
 
     # 3) "十五五" hard-tech discovery: query the existing policy theme taxonomy
-    # together with the five-broker set. These are discovery candidates only;
+    # together with the priority-broker set. These are discovery candidates only;
     # theme fit never implies an IPO route or formal pool membership.
     for offset in range(0, len(policy_themes), POLICY_THEME_SHARD_SIZE):
         themes = policy_themes[offset : offset + POLICY_THEME_SHARD_SIZE]
@@ -305,14 +326,17 @@ def generated_innovation_sources(
             )
         )
 
-    # 4) Progress monitoring for the reviewed seed pool.
+    # 4) Progress monitoring for both the reserve pool and lifecycle pool.
+    # Lifecycle projects must remain watched after migration out of the reserve
+    # pool, otherwise later question/registration/listing events would be lost.
+    lifecycle_payload = lifecycle_payload if isinstance(lifecycle_payload, dict) else {}
+    monitored_projects = [
+        *[row for row in payload.get("projects", []) if isinstance(row, dict)],
+        *[row for row in lifecycle_payload.get("projects", []) if isinstance(row, dict)],
+    ]
     company_names = tracking._unique(
-        [
-            str(project.get("company", "")).strip()
-            for project in payload.get("projects", [])
-            if isinstance(project, dict)
-        ],
-        160,
+        [str(project.get("company", "")).strip() for project in monitored_projects],
+        240,
     )
     for offset in range(0, len(company_names), PROJECT_SHARD_SIZE):
         names = company_names[offset : offset + PROJECT_SHARD_SIZE]
@@ -326,6 +350,22 @@ def generated_innovation_sources(
                 f"科创项目储备 · 已跟踪项目进展 · {shard}",
                 query,
                 names,
+            )
+        )
+        primary_query = (
+            f"({official_site_query}) "
+            f"({tracking._quoted_or_query(names, PROJECT_SHARD_SIZE)}) "
+            f"({PROJECT_EVENT_TERMS})"
+        )
+        sources.append(
+            _bounded_primary_multi_source(
+                f"{SOURCE_PREFIX}primary-projects-{shard:02d}",
+                f"科创项目储备 · 已跟踪项目官方进展 · {shard}",
+                primary_query,
+                names,
+                hosts=PRIMARY_LISTING_HOSTS,
+                source_level="监管文件",
+                platform="监管/交易所官方",
             )
         )
 
