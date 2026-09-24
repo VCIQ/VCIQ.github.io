@@ -62,6 +62,11 @@ jobs:
   publish:
     name: Validate and publish homepage projection
     needs: authorize
+    concurrency:
+      # The projection writes public/data/ranked-intelligence.json to main.
+      # Serialize that mutation with manual tracking and every other repository writer.
+      group: vciq-repository-writer-${{ github.ref }}
+      queue: max
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
