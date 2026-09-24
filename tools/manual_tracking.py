@@ -1730,6 +1730,12 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--region", default="global")
     parser.add_argument("--reasons", default="")
     parser.add_argument("--note", default="")
+    parser.add_argument(
+        "--origin",
+        default="manual",
+        choices=["manual", "manual-confirmed"],
+        help=argparse.SUPPRESS,
+    )
     parser.add_argument("--actor", required=True)
     parser.add_argument("--triggering-actor", default="")
     parser.add_argument("--now", default="", help=argparse.SUPPRESS)
