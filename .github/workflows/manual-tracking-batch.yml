@@ -14,7 +14,7 @@ on:
         type: choice
         options: [validate, apply]
       invalid_policy:
-        description: "strict rejects the whole batch; skip may omit only invalid origin=automatic candidates"
+        description: "strict rejects the whole batch; skip may omit invalid automatic/manual-confirmed candidates; direct manual stays fail-closed"
         required: true
         default: strict
         type: choice
