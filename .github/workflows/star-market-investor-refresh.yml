@@ -197,3 +197,14 @@ jobs:
           gh workflow run frequent-intelligence-refresh.yml --ref main \
             --repo "$GITHUB_REPOSITORY" \
             -f force_crawl=true
+
+      - name: Rebuild institution layers after successful STAR refresh
+        if: steps.data-update.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # GITHUB_TOKEN-authored data commits do not trigger ordinary push
+          # workflows. Hand the refreshed prospectus evidence explicitly to the
+          # audited institution-layer builder, which owns terminal Pages publish.
+          gh workflow run institution-data-layers.yml --ref main \
+            --repo "$GITHUB_REPOSITORY"
