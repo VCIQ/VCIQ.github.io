@@ -241,5 +241,89 @@ class InnovationListingCandidateBuilderTests(unittest.TestCase):
         self.assertNotEqual(row["candidateFingerprint"], changed["candidateFingerprint"])
 
 
+    def test_primary_market_broker_source_preserves_broker_identity(self):
+        payload = {
+            "generatedAt": "2026-09-24T08:00:00+00:00",
+            "articles": [
+                {
+                    "id": "market-1",
+                    "sourceId": "innovation-listing-primary-market-broker-01",
+                    "title": "新锐芯片股份有限公司创业板审核问询回复",
+                    "summary": "中信证券保荐，项目聚焦集成电路与人工智能。",
+                    "publishedAt": "2026-09-24",
+                    "sector": "集成电路",
+                    "source": {
+                        "name": "深圳证券交易所",
+                        "url": "https://reportdocs.static.szse.cn/example/market-1.pdf",
+                        "level": "监管文件",
+                    },
+                }
+            ],
+        }
+        snapshot = builder.build_candidate_snapshot(payload, self.watchlist(), {})
+        self.assertEqual(snapshot["pendingCount"], 1)
+        row = snapshot["candidates"][0]
+        self.assertEqual(row["broker"], "中信证券")
+        self.assertEqual(row["route"], "ChiNext")
+        self.assertEqual(row["evidenceClass"], "primary-backed")
+
+    def test_lifecycle_project_is_not_rediscovered_as_new_candidate(self):
+        payload = {
+            "generatedAt": "2026-09-24T08:00:00+00:00",
+            "articles": [
+                {
+                    "id": "market-known",
+                    "sourceId": "innovation-listing-primary-market-broker-01",
+                    "title": "生命周期科技股份有限公司创业板审核问询回复",
+                    "summary": "中信证券保荐，项目聚焦人工智能。",
+                    "publishedAt": "2026-09-24",
+                    "sector": "人工智能",
+                    "source": {
+                        "name": "深圳证券交易所",
+                        "url": "https://reportdocs.static.szse.cn/example/known.pdf",
+                        "level": "监管文件",
+                    },
+                }
+            ],
+        }
+        lifecycle = {
+            "projects": [
+                {
+                    "company": "生命周期科技股份有限公司",
+                    "aliases": ["生命周期科技"],
+                }
+            ]
+        }
+        snapshot = builder.build_candidate_snapshot(
+            payload,
+            self.watchlist(),
+            {},
+            lifecycle_payload=lifecycle,
+        )
+        self.assertEqual(snapshot["candidateCount"], 0)
+
+    def test_primary_project_monitor_source_never_creates_candidate(self):
+        payload = {
+            "generatedAt": "2026-09-24T08:00:00+00:00",
+            "articles": [
+                {
+                    "id": "project-monitor",
+                    "sourceId": "innovation-listing-primary-projects-01",
+                    "title": "陌生科技股份有限公司创业板审核问询回复",
+                    "summary": "人工智能项目。",
+                    "publishedAt": "2026-09-24",
+                    "sector": "人工智能",
+                    "source": {
+                        "name": "深圳证券交易所",
+                        "url": "https://reportdocs.static.szse.cn/example/project-monitor.pdf",
+                        "level": "监管文件",
+                    },
+                }
+            ],
+        }
+        snapshot = builder.build_candidate_snapshot(payload, self.watchlist(), {})
+        self.assertEqual(snapshot["candidateCount"], 0)
+
+
 if __name__ == "__main__":
     unittest.main()
