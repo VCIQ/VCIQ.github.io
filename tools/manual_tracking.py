@@ -1310,6 +1310,20 @@ def _upsert_memberships(
             None,
         )
         if membership is None:
+            membership = next(
+                (
+                    row
+                    for row in intents["memberships"]
+                    if isinstance(row, dict)
+                    and clean(row.get("trackId"), 160) == f"track:{slug}"
+                    and clean(row.get("entityId"), 240) == entity_id
+                    and clean(row.get("role"), 40) == role
+                ),
+                None,
+            )
+            if membership is not None:
+                membership["id"] = membership_id
+        if membership is None:
             membership = {
                 "id": membership_id,
                 "trackId": f"track:{slug}",
