@@ -1058,21 +1058,31 @@ def _merge_membership_rows(target: dict[str, Any], source: Mapping[str, Any]) ->
 def _migrate_provisional_entity(
     intents: dict[str, Any], request: Mapping[str, Any], canonical_id: str
 ) -> bool:
-    """Collapse a review-time ID into the later canonical registry ID."""
+    """Collapse a provisional/candidate ID into the later canonical registry ID."""
 
     if request["kind"] not in {"company", "person"}:
         return False
     provisional_id = stable_id(request["kind"], request["name"])
     provisional_sources = {"explicit-type", "source-context", "unresolved"}
+    candidate_sources = provisional_sources | {"human-decision"}
+    candidate_prefix = f"{request['kind']}-candidate:"
     entities = intents["entities"]
     matches = [
         row
         for row in entities
         if isinstance(row, dict)
         and clean(row.get("id"), 240) != canonical_id
-        and clean(row.get("id"), 240) == provisional_id
-        and clean(row.get("resolutionSource"), 40) in provisional_sources
         and _same_entity_identity(row, request)
+        and (
+            (
+                clean(row.get("id"), 240) == provisional_id
+                and clean(row.get("resolutionSource"), 40) in provisional_sources
+            )
+            or (
+                clean(row.get("id"), 240).startswith(candidate_prefix)
+                and clean(row.get("resolutionSource"), 40) in candidate_sources
+            )
+        )
     ]
     if not matches:
         return False
