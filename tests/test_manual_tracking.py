@@ -452,6 +452,81 @@ class ManualTrackingTests(unittest.TestCase):
             intents["memberships"][0]["entityId"], "company:other"
         )
 
+    def test_manual_confirmed_candidate_migrates_to_canonical_institution(self) -> None:
+        old_id = "company-candidate:深创投集团"
+        canonical_id = "institution:深创投集团"
+        intents = {
+            "schemaVersion": 1,
+            "updatedAt": "",
+            "entities": [
+                {
+                    "id": old_id,
+                    "kind": "company",
+                    "name": "深创投集团",
+                    "aliases": [],
+                    "keywords": ["创投"],
+                    "state": "active",
+                    "resolutionSource": "human-decision",
+                },
+                {
+                    "id": canonical_id,
+                    "kind": "company",
+                    "name": "深创投集团",
+                    "aliases": ["深创投"],
+                    "keywords": [],
+                    "state": "active",
+                    "resolutionSource": "human-decision",
+                },
+            ],
+            "memberships": [
+                {
+                    "id": "membership:old",
+                    "trackId": "track:innovation-capital",
+                    "entityId": old_id,
+                    "role": "actor",
+                    "state": "active",
+                    "pinned": True,
+                    "confidence": "medium",
+                    "origins": [{"id": "origin:old"}],
+                },
+                {
+                    "id": manual.stable_id(
+                        "membership",
+                        "track:innovation-capital",
+                        canonical_id,
+                        "actor",
+                    ),
+                    "trackId": "track:innovation-capital",
+                    "entityId": canonical_id,
+                    "role": "actor",
+                    "state": "active",
+                    "pinned": True,
+                    "confidence": "verified",
+                    "origins": [{"id": "origin:new"}],
+                },
+            ],
+        }
+        request = {"kind": "company", "name": "深创投集团"}
+
+        changed = manual._migrate_provisional_entity(
+            intents, request, canonical_id
+        )
+
+        self.assertTrue(changed)
+        self.assertEqual(
+            [row["id"] for row in intents["entities"]],
+            [canonical_id],
+        )
+        self.assertIn("创投", intents["entities"][0]["keywords"])
+        self.assertEqual(len(intents["memberships"]), 1)
+        self.assertEqual(intents["memberships"][0]["entityId"], canonical_id)
+        self.assertEqual(
+            {row["id"] for row in intents["memberships"][0]["origins"]},
+            {"origin:old", "origin:new"},
+        )
+        self.assertEqual(intents["memberships"][0]["confidence"], "verified")
+
+
     def test_security_and_quality_guards_fail_closed(self) -> None:
         bad_cases = [
             ("technology", "OpenAI，Anthropic", "ai", "", "技术突破"),
