@@ -103,15 +103,29 @@ test("public capture descriptor uses only the final resolved identity", () => {
   );
 });
 
-test("production applied records all carry a resolved canonical identity", () => {
+test("production applied records without a final identity stay out of the public graph", () => {
   const inbox = normalizeTrackingCaptureInbox(rawInbox);
   const applied = inbox.records.filter((record) => record.status === "applied");
   assert.ok(applied.length > 0, "expected at least one production applied record");
+
   for (const record of applied) {
+    if (record.resolution?.status === "resolved") {
+      assert.ok(
+        publishedTrackingCaptureDescriptor(record),
+        `${record.id} (${record.canonicalName}) has a resolved identity but is not publishable`,
+      );
+      continue;
+    }
+
     assert.equal(
-      record.resolution?.status,
-      "resolved",
-      `${record.id} (${record.canonicalName}) is applied without a final resolution`,
+      isPublishableTrackingCapture(record),
+      false,
+      `${record.id} (${record.canonicalName}) must remain private until identity resolution is final`,
+    );
+    assert.equal(
+      publishedTrackingCaptureDescriptor(record),
+      undefined,
+      `${record.id} (${record.canonicalName}) leaked an unresolved identity into the public graph`,
     );
   }
 });
