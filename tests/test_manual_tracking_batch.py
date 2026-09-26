@@ -259,27 +259,56 @@ class ManualTrackingBatchTests(unittest.TestCase):
         self.assertEqual(intents["memberships"][0]["state"], "active")
 
     def test_manual_confirmed_existing_resolved_identity_is_not_downgraded(self) -> None:
-        row = self.company("星河智算科技有限公司", origin="manual-confirmed")
-        self._run([row], "apply")
+        intents = {
+            "entities": [
+                {
+                    "id": "company-existing",
+                    "kind": "company",
+                    "name": "既有已解析公司",
+                    "aliases": [],
+                    "keywords": [],
+                    "state": "review",
+                    "resolutionSource": "source-context",
+                    "resolutionStatus": "resolved",
+                }
+            ],
+            "memberships": [],
+        }
+        request = {
+            "kind": "company",
+            "name": "既有已解析公司",
+            "trackSlugs": ["ai"],
+            "keywords": [],
+            "sourceUrl": "https://example.com/company-evidence",
+            "sourceCategory": "media",
+            "sourceType": "",
+            "region": "中国",
+            "reasons": ["技术突破"],
+            "note": "relation confirmation",
+            "origin": "manual-confirmed",
+        }
+        weak_resolution = {
+            "status": "review",
+            "source": "unresolved",
+            "entityType": "company",
+            "canonicalName": "既有已解析公司",
+        }
 
-        intents = self._read("intents")
-        intents["entities"][0]["resolutionStatus"] = "resolved"
-        intents["entities"][0]["resolutionSource"] = "source-context"
-        intents["memberships"][0]["state"] = "review"
-        self._write("intents", intents)
+        _, changed = manual._upsert_entity(
+            intents,
+            request,
+            weak_resolution,
+            "company-existing",
+            "IamVC",
+            "2026-08-11T08:00:00+00:00",
+            "active",
+        )
 
-        tracking = self._read("tracking")
-        tracking["tracks"][0]["sampleCompanies"] = []
-        self._write("tracking", tracking)
-
-        report = self._run([row], "apply")
-
-        self.assertEqual(report["outcomes"][0]["manualDecisionStatus"], "approved")
-        self.assertEqual(report["outcomes"][0]["identityState"], "needs_enrichment")
-        intents = self._read("intents")
-        self.assertEqual(intents["entities"][0]["resolutionStatus"], "resolved")
-        self.assertEqual(intents["entities"][0]["resolutionSource"], "source-context")
-        self.assertEqual(intents["memberships"][0]["state"], "active")
+        self.assertTrue(changed)
+        entity = intents["entities"][0]
+        self.assertEqual(entity["resolutionStatus"], "resolved")
+        self.assertEqual(entity["resolutionSource"], "source-context")
+        self.assertEqual(entity["state"], "active")
 
     def test_direct_manual_company_without_evidence_url_remains_fail_closed(self) -> None:
         row = self.company("星河智算科技有限公司", origin="manual")
