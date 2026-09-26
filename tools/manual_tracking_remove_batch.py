@@ -10,17 +10,30 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
-from tools.manual_tracking_remove import (
-    DEFAULT_INTENTS,
-    DEFAULT_TRACKING,
-    FIELD_BY_KIND,
-    ManualTrackingRemovalError,
-    apply_removal,
-    atomic_write_json,
-    clean,
-    load_json,
-    split_pipe,
-)
+try:
+    from tools.manual_tracking_remove import (
+        DEFAULT_INTENTS,
+        DEFAULT_TRACKING,
+        FIELD_BY_KIND,
+        ManualTrackingRemovalError,
+        apply_removal,
+        atomic_write_json,
+        clean,
+        load_json,
+        split_pipe,
+    )
+except ModuleNotFoundError:
+    from manual_tracking_remove import (
+        DEFAULT_INTENTS,
+        DEFAULT_TRACKING,
+        FIELD_BY_KIND,
+        ManualTrackingRemovalError,
+        apply_removal,
+        atomic_write_json,
+        clean,
+        load_json,
+        split_pipe,
+    )
 
 MAX_BATCH = 20
 
