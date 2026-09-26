@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-26T10:22:51+00:00",
+  "generatedAt": "2026-09-26T10:24:45+00:00",
   "records": [
     {
       "id": "capture-1a6c0104629c569d",
@@ -45,7 +45,9 @@
         "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
         "decisionKey": "physicalintelligence",
         "reclassified": false
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "needs_enrichment"
     },
     {
       "id": "capture-1586193a71bcd40b",
@@ -90,7 +92,9 @@
         "reason": "原文邻近语境更像技术、项目或工具，不能直接作为公司写入。",
         "decisionKey": "physicalintelligence",
         "reclassified": false
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "needs_enrichment"
     },
     {
       "id": "capture-531f4d46723fca2b",
@@ -135,7 +139,9 @@
         "reason": "名称唯一命中正式公司注册表。",
         "decisionKey": "openai",
         "reclassified": true
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "conflict"
     },
     {
       "id": "capture-e52c8acad2d73455",
@@ -180,7 +186,9 @@
         "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "nvidia",
         "reclassified": true
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "conflict"
     },
     {
       "id": "capture-9bd38a7bbafe584a",
@@ -225,7 +233,9 @@
         "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "nvidia",
         "reclassified": true
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "conflict"
     },
     {
       "id": "capture-cefa347f4bdb9502",
@@ -270,7 +280,9 @@
         "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "amd",
         "reclassified": true
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "conflict"
     },
     {
       "id": "capture-bb4e46c861cc5c9b",
@@ -13285,7 +13297,7 @@
     },
     {
       "id": "capture-0b66a038f3fdf1d8",
-      "entityType": "topic",
+      "entityType": "company",
       "canonicalName": "AMD",
       "rawSelection": "AMD",
       "aliases": [],
@@ -13296,10 +13308,7 @@
         "ai-2"
       ],
       "trackNames": [
-        "半导体",
-        "风险投资",
-        "AI / AGI",
-        "AI安全"
+        "半导体"
       ],
       "source": {
         "articleId": "",
@@ -13315,10 +13324,7 @@
       "capturedBy": "VCIQ",
       "status": "applied",
       "appliedTo": [
-        "semiconductor:keywords",
-        "track-1ccjq49:keywords",
-        "ai:keywords",
-        "ai-2:keywords"
+        "semiconductor:sampleCompanies"
       ],
       "reasons": [
         "个人研究兴趣"
@@ -13335,7 +13341,9 @@
         "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "amd",
         "reclassified": true
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "conflict"
     },
     {
       "id": "capture-80911a546d8c3ece",
@@ -15882,7 +15890,7 @@
     },
     {
       "id": "capture-95767b8b09112900",
-      "entityType": "company",
+      "entityType": "topic",
       "canonicalName": "OpenAI",
       "rawSelection": "OpenAI",
       "aliases": [],
@@ -15893,10 +15901,7 @@
         "ai-3"
       ],
       "trackNames": [
-        "AI / AGI",
-        "半导体",
-        "机器人",
-        "AI智能终端"
+        "AI / AGI"
       ],
       "source": {
         "articleId": "",
@@ -15912,10 +15917,7 @@
       "capturedBy": "VCIQ",
       "status": "applied",
       "appliedTo": [
-        "ai:sampleCompanies",
-        "semiconductor:sampleCompanies",
-        "robotics:sampleCompanies",
-        "ai-3:sampleCompanies"
+        "ai:keywords"
       ],
       "reasons": [
         "个人研究兴趣",
@@ -15934,7 +15936,9 @@
         "reason": "名称唯一命中正式公司注册表。",
         "decisionKey": "openai",
         "reclassified": true
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "conflict"
     },
     {
       "id": "capture-58dc6a7468e1c590",
@@ -16043,8 +16047,8 @@
     },
     {
       "id": "capture-eeb5ee6449147d2c",
-      "entityType": "topic",
-      "canonicalName": "Nvidia",
+      "entityType": "company",
+      "canonicalName": "NVIDIA",
       "rawSelection": "NVIDIA",
       "aliases": [],
       "trackSlugs": [
@@ -16056,10 +16060,7 @@
       ],
       "trackNames": [
         "半导体",
-        "AI / AGI",
-        "风险投资",
-        "机器人",
-        "AI智能终端"
+        "AI / AGI"
       ],
       "source": {
         "articleId": "",
@@ -16075,11 +16076,8 @@
       "capturedBy": "VCIQ",
       "status": "applied",
       "appliedTo": [
-        "semiconductor:keywords",
-        "ai:keywords",
-        "track-1ccjq49:keywords",
-        "robotics:keywords",
-        "ai-3:keywords"
+        "semiconductor:sampleCompanies",
+        "ai:sampleCompanies"
       ],
       "reasons": [
         "个人研究兴趣",
@@ -16097,7 +16095,9 @@
         "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "nvidia",
         "reclassified": true
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "conflict"
     },
     {
       "id": "capture-3ae5803f5e04c2fa",
@@ -26047,8 +26047,8 @@
     },
     {
       "id": "capture-38491af44ddb2b59",
-      "entityType": "topic",
-      "canonicalName": "Nvidia",
+      "entityType": "company",
+      "canonicalName": "NVIDIA",
       "rawSelection": "NVIDIA",
       "aliases": [],
       "trackSlugs": [
@@ -26073,8 +26073,8 @@
       "capturedBy": "VCIQ",
       "status": "applied",
       "appliedTo": [
-        "semiconductor:keywords",
-        "ai:keywords"
+        "semiconductor:sampleCompanies",
+        "ai:sampleCompanies"
       ],
       "reasons": [
         "个人研究兴趣"
@@ -26091,7 +26091,9 @@
         "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "nvidia",
         "reclassified": true
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "conflict"
     },
     {
       "id": "capture-308b6b01df29af4c",
@@ -26494,8 +26496,7 @@
         "track-1ccjq49"
       ],
       "trackNames": [
-        "AI / AGI",
-        "风险投资"
+        "AI / AGI"
       ],
       "source": {
         "articleId": "",
@@ -26511,8 +26512,7 @@
       "capturedBy": "VCIQ",
       "status": "applied",
       "appliedTo": [
-        "ai:sampleCompanies",
-        "track-1ccjq49:sampleCompanies"
+        "ai:sampleCompanies"
       ],
       "reasons": [
         "个人研究兴趣",
@@ -26902,8 +26902,7 @@
         "track-1ccjq49"
       ],
       "trackNames": [
-        "AI / AGI",
-        "风险投资"
+        "AI / AGI"
       ],
       "source": {
         "articleId": "",
@@ -26919,8 +26918,7 @@
       "capturedBy": "VCIQ",
       "status": "applied",
       "appliedTo": [
-        "ai:sampleCompanies",
-        "track-1ccjq49:sampleCompanies"
+        "ai:sampleCompanies"
       ],
       "reasons": [
         "个人研究兴趣",
@@ -27004,8 +27002,7 @@
         "track-1ccjq49"
       ],
       "trackNames": [
-        "AI / AGI",
-        "风险投资"
+        "AI / AGI"
       ],
       "source": {
         "articleId": "",
@@ -27021,8 +27018,7 @@
       "capturedBy": "VCIQ",
       "status": "applied",
       "appliedTo": [
-        "ai:sampleCompanies",
-        "track-1ccjq49:sampleCompanies"
+        "ai:sampleCompanies"
       ],
       "reasons": [
         "个人研究兴趣",
@@ -27157,8 +27153,7 @@
         "track-1ccjq49"
       ],
       "trackNames": [
-        "AI / AGI",
-        "风险投资"
+        "AI / AGI"
       ],
       "source": {
         "articleId": "",
@@ -27174,8 +27169,7 @@
       "capturedBy": "VCIQ",
       "status": "applied",
       "appliedTo": [
-        "ai:sampleCompanies",
-        "track-1ccjq49:sampleCompanies"
+        "ai:sampleCompanies"
       ],
       "reasons": [
         "个人研究兴趣",
@@ -27310,8 +27304,7 @@
         "track-1ccjq49"
       ],
       "trackNames": [
-        "AI / AGI",
-        "风险投资"
+        "AI / AGI"
       ],
       "source": {
         "articleId": "",
@@ -27327,8 +27320,7 @@
       "capturedBy": "VCIQ",
       "status": "applied",
       "appliedTo": [
-        "ai:sampleCompanies",
-        "track-1ccjq49:sampleCompanies"
+        "ai:sampleCompanies"
       ],
       "reasons": [
         "个人研究兴趣",
@@ -31642,7 +31634,9 @@
         "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
         "decisionKey": "physicalintelligence",
         "reclassified": false
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "needs_enrichment"
     },
     {
       "id": "capture-543183095879662a",
@@ -35953,11 +35947,8 @@
       },
       "capturedAt": "2026-08-17T07:58:25+00:00",
       "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "semiconductor:sampleCompanies",
-        "ai:sampleCompanies"
-      ],
+      "status": "dismissed",
+      "appliedTo": [],
       "reasons": [
         "个人研究兴趣"
       ],
@@ -43265,8 +43256,6 @@
         "ai"
       ],
       "trackNames": [
-        "半导体",
-        "机器人",
         "AI / AGI"
       ],
       "source": {
@@ -43283,8 +43272,6 @@
       "capturedBy": "VCIQ",
       "status": "applied",
       "appliedTo": [
-        "semiconductor:sampleCompanies",
-        "robotics:sampleCompanies",
         "ai:sampleCompanies"
       ],
       "reasons": [
@@ -44257,7 +44244,7 @@
     },
     {
       "id": "capture-8cfb10b142eba275",
-      "entityType": "topic",
+      "entityType": "company",
       "canonicalName": "AMD",
       "rawSelection": "AMD",
       "aliases": [],
@@ -44267,9 +44254,7 @@
         "robotics"
       ],
       "trackNames": [
-        "半导体",
-        "风险投资",
-        "机器人"
+        "半导体"
       ],
       "source": {
         "articleId": "",
@@ -44285,9 +44270,7 @@
       "capturedBy": "VCIQ",
       "status": "applied",
       "appliedTo": [
-        "semiconductor:keywords",
-        "track-1ccjq49:keywords",
-        "robotics:keywords"
+        "semiconductor:sampleCompanies"
       ],
       "reasons": [
         "个人研究兴趣"
@@ -44304,7 +44287,9 @@
         "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "amd",
         "reclassified": true
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "conflict"
     },
     {
       "id": "capture-81a563847ac9baab",
@@ -50901,9 +50886,7 @@
         "track-1ccjq49"
       ],
       "trackNames": [
-        "半导体",
-        "AI / AGI",
-        "风险投资"
+        "AI / AGI"
       ],
       "source": {
         "articleId": "",
@@ -50917,8 +50900,10 @@
       },
       "capturedAt": "2026-08-12T03:43:15+00:00",
       "capturedBy": "VCIQ",
-      "status": "queued",
-      "appliedTo": [],
+      "status": "applied",
+      "appliedTo": [
+        "ai:sampleCompanies"
+      ],
       "reasons": [
         "个人研究兴趣"
       ],
@@ -50934,7 +50919,9 @@
         "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
         "decisionKey": "physicalintelligence",
         "reclassified": false
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "needs_enrichment"
     },
     {
       "id": "capture-f52c49ed9252c2e4",
@@ -56220,7 +56207,7 @@
     },
     {
       "id": "capture-1jcvyxm",
-      "entityType": "topic",
+      "entityType": "company",
       "canonicalName": "AMD",
       "rawSelection": "AMD",
       "aliases": [],
@@ -56230,9 +56217,7 @@
         "robotics"
       ],
       "trackNames": [
-        "AI / AGI",
-        "半导体",
-        "机器人"
+        "半导体"
       ],
       "source": {
         "articleId": "article-k6tl0m",
@@ -56248,9 +56233,7 @@
       "capturedBy": "VCIQ",
       "status": "applied",
       "appliedTo": [
-        "ai:keywords",
-        "semiconductor:keywords",
-        "robotics:keywords"
+        "semiconductor:sampleCompanies"
       ],
       "reasons": [],
       "note": "",
@@ -56265,7 +56248,9 @@
         "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "amd",
         "reclassified": true
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "conflict"
     },
     {
       "id": "capture-1ethjwr",
