@@ -54,6 +54,7 @@ jobs:
             tests.test_manual_tracking_batch \
             tests.test_manual_tracking_reconciliation_workflow \
             tests.test_manual_tracking_ignore \
+            tests.test_manual_tracking_remove_batch \
             tests.test_manual_tracking_remove 2>&1 | tee /tmp/manual-decision-tests.log
       - run: npm ci
       - name: Verify cross-language identity and TypeScript contracts
