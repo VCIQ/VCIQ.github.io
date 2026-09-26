@@ -1237,8 +1237,15 @@ def _upsert_entity(
         raise ManualTrackingError(f"实体 {entity_id} 的 keywords 不是数组。")
     for keyword in request["keywords"]:
         unique_append(keywords, keyword, field="keywords")
-    entity["resolutionSource"] = clean(resolution.get("source"), 40)
-    entity["resolutionStatus"] = clean(resolution.get("status"), 30)
+    incoming_resolution_status = clean(resolution.get("status"), 30)
+    preserve_resolved_identity = (
+        follow_policy.explicit_request(request)
+        and clean(entity.get("resolutionStatus"), 30) == "resolved"
+        and incoming_resolution_status != "resolved"
+    )
+    if not preserve_resolved_identity:
+        entity["resolutionSource"] = clean(resolution.get("source"), 40)
+        entity["resolutionStatus"] = incoming_resolution_status
     if state == "active" or (state == "rejected" and entity.get("state") != "active"):
         entity["state"] = state
     if request["kind"] == "source":
