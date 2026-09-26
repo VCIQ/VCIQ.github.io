@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-26T10:34:36+00:00",
+  "updatedAt": "2026-09-26T10:47:55+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -6289,7 +6289,7 @@
       "keywords": [
         "MTK"
       ],
-      "state": "review",
+      "state": "active",
       "resolutionSource": "source-context",
       "resolutionStatus": "resolved",
       "createdAt": "2026-08-24T08:18:15+00:00",
@@ -10276,15 +10276,15 @@
       "createdBy": "VCIQ"
     },
     {
-      "id": "company-f69ccadb84988deb9fa5",
+      "id": "company-candidate:中科类脑",
       "kind": "company",
       "name": "中科类脑",
       "aliases": [],
       "keywords": [
         "中科类脑"
       ],
-      "state": "review",
-      "resolutionSource": "source-context",
+      "state": "active",
+      "resolutionSource": "human-decision",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-07T03:41:21+00:00",
       "createdBy": "VCIQ"
@@ -11400,7 +11400,7 @@
       "createdBy": "VCIQ"
     },
     {
-      "id": "company-ee51906f84ac5c05dc5c",
+      "id": "company-candidate:ssiinc",
       "kind": "company",
       "name": "SSI Inc.",
       "aliases": [],
@@ -11408,8 +11408,8 @@
         "SSI",
         "SSI Inc."
       ],
-      "state": "review",
-      "resolutionSource": "source-context",
+      "state": "active",
+      "resolutionSource": "human-decision",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-09T09:25:07+00:00",
       "createdBy": "VCIQ"
@@ -11998,7 +11998,7 @@
       "createdBy": "VCIQ"
     },
     {
-      "id": "company-97a5c201193a9bb73596",
+      "id": "company-candidate:杉数科技",
       "kind": "company",
       "name": "杉数科技",
       "aliases": [],
@@ -12008,8 +12008,8 @@
         "COPT",
         "擎天"
       ],
-      "state": "review",
-      "resolutionSource": "source-context",
+      "state": "active",
+      "resolutionSource": "human-decision",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-09T13:34:55+00:00",
       "createdBy": "VCIQ"
@@ -12725,7 +12725,7 @@
         "AI infrastructure",
         "Strategic partnership"
       ],
-      "state": "review",
+      "state": "active",
       "resolutionSource": "tracking-taxonomy",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-14T08:55:28+00:00",
@@ -44374,9 +44374,9 @@
       "trackId": "track:semiconductor",
       "entityId": "company-fd6555ead448df068937",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
-      "confidence": "medium",
+      "confidence": "low",
       "origins": [
         {
           "id": "origin-ca6851637018bc59aef8",
@@ -44391,8 +44391,44 @@
             "IPO可能"
           ],
           "note": "人工补充公司对象;来源文章:光联芯科一个月融资近5亿,OIO光互连为何受资本追捧?"
+        },
+        {
+          "id": "origin-f44627115d4d2fec4b37",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T10:47:55+00:00",
+          "evidenceUrl": "https://mp.weixin.qq.com/mp/wappoc_appmsgcaptcha?poc_token=HOb8i2qjUSKK_dgLKZH7H-m8yzgS2IxOCapousrY&target_url=https%3A%2F%2Fmp.weixin.qq.com%2Fs%2Fkb8iLCQ_xfWt1Q-vjMezSw",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "关系审核确认:MTK/MediaTek is intrinsically a semiconductor company and the captured OIO hardware context is consistent with that relation."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-9254f903cc7347e13dcc9d6a",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T10:47:55+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "company-fd6555ead448df068937",
+        "requestedName": "MTK",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "MTK",
+        "targetId": "",
+        "confidence": "low",
+        "source": "source-context",
+        "reason": "原文邻近语境更像人物，不能直接作为公司写入。",
+        "decisionKey": "mtk",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-8265c84bbc383ba44bd6",
@@ -64774,11 +64810,11 @@
       ]
     },
     {
-      "id": "membership-041955dba3661304f40d",
+      "id": "membership-148007cc914fcbb277f9",
       "trackId": "track:ai",
-      "entityId": "company-f69ccadb84988deb9fa5",
+      "entityId": "company-candidate:中科类脑",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "medium",
       "origins": [
@@ -64792,13 +64828,49 @@
             "个人研究兴趣"
           ],
           "note": "人工补充公司对象;来源文章:独家丨央企领投,中科类脑完成B+轮融资,布局“Token工厂”"
+        },
+        {
+          "id": "origin-a729412e2ca389dd2e48",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T10:47:55+00:00",
+          "evidenceUrl": "https://www.tmtpost.com/8130178.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "关系审核确认:The reviewed source directly concerns the company's Token/AI-computing business, supporting the AI/AGI relation."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-7a5239adfe7dada9ba6f9f9b",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T10:47:55+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-candidate:中科类脑",
+        "requestedName": "中科类脑",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "中科类脑",
+        "targetId": "company-candidate:中科类脑",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "中科类脑",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
-      "id": "membership-be79ed2a27bbac23984d",
+      "id": "membership-5ab06937500df3adb087",
       "trackId": "track:robotics",
-      "entityId": "company-f69ccadb84988deb9fa5",
+      "entityId": "company-candidate:中科类脑",
       "role": "actor",
       "state": "review",
       "pinned": true,
@@ -71923,9 +71995,9 @@
       ]
     },
     {
-      "id": "membership-d5d818d30b6a4e52ca3e",
+      "id": "membership-8a7911035c97d4658e93",
       "trackId": "track:semiconductor",
-      "entityId": "company-ee51906f84ac5c05dc5c",
+      "entityId": "company-candidate:ssiinc",
       "role": "actor",
       "state": "rejected",
       "pinned": true,
@@ -71957,11 +72029,11 @@
       ]
     },
     {
-      "id": "membership-a951f3b042d7aa26d44d",
+      "id": "membership-3b17dbb1921b616da4ab",
       "trackId": "track:ai",
-      "entityId": "company-ee51906f84ac5c05dc5c",
+      "entityId": "company-candidate:ssiinc",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "medium",
       "origins": [
@@ -71976,13 +72048,49 @@
             "技术突破"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-76e5c8fbbae211f43add",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T10:47:55+00:00",
+          "evidenceUrl": "https://x.com/ilyasut",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "关系审核确认:SSI is directly an AI research company and the captured source is tied to its AI founder/context."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-6f754b7e26f7fc5377686f17",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T10:47:55+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-candidate:ssiinc",
+        "requestedName": "SSI Inc.",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "SSI Inc.",
+        "targetId": "company-candidate:ssiinc",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "ssiinc",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
-      "id": "membership-d355420bd7a2b0a175ea",
+      "id": "membership-7ac72e5f77ecec954767",
       "trackId": "track:robotics",
-      "entityId": "company-ee51906f84ac5c05dc5c",
+      "entityId": "company-candidate:ssiinc",
       "role": "actor",
       "state": "rejected",
       "pinned": true,
@@ -75661,9 +75769,9 @@
       ]
     },
     {
-      "id": "membership-1047833f4076ed8b0a81",
+      "id": "membership-dc1bb703a71f734a6ec9",
       "trackId": "track:robotics",
-      "entityId": "company-97a5c201193a9bb73596",
+      "entityId": "company-candidate:杉数科技",
       "role": "actor",
       "state": "rejected",
       "pinned": true,
@@ -75697,11 +75805,11 @@
       ]
     },
     {
-      "id": "membership-710d831de636eb819852",
+      "id": "membership-c43d7da11d091e802dc5",
       "trackId": "track:ai",
-      "entityId": "company-97a5c201193a9bb73596",
+      "entityId": "company-candidate:杉数科技",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "medium",
       "origins": [
@@ -75718,8 +75826,44 @@
             "IPO可能"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-d11aec01a5d7879b0211",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T10:47:55+00:00",
+          "evidenceUrl": "https://www.tmtpost.com/8132305.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "关系审核确认:杉数科技's core decision-intelligence and optimization software business directly supports the AI/AGI relation."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-a6b23079b5a217a4125e69ba",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T10:47:55+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-candidate:杉数科技",
+        "requestedName": "杉数科技",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "杉数科技",
+        "targetId": "company-candidate:杉数科技",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "杉数科技",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-58216355b10ca11fe4e2",
@@ -78786,7 +78930,7 @@
       "trackId": "track:ai",
       "entityId": "company-c21b962e71f1969d6aea",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "high",
       "origins": [
@@ -78802,8 +78946,44 @@
             "商业模式创新"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-f716f9a84c02c8732028",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T10:47:55+00:00",
+          "evidenceUrl": "https://seekingalpha.com/article/4945817-nebius-and-palantir-implications-of-the-new-partnership",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "关系审核确认:The reviewed Palantir partnership context directly concerns AI infrastructure and supports the AI/AGI relation."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-75ea7409280c9ec797a199ce",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T10:47:55+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-c21b962e71f1969d6aea",
+        "requestedName": "Palantir",
+        "kind": "company"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "Palantir",
+        "targetId": "topic:palantir",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "palantir",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-1ca0d3edbc93806426dd",
