@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-26T05:59:58+00:00",
+  "updatedAt": "2026-09-26T06:17:53+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -7201,7 +7201,7 @@
       "createdBy": "VCIQ"
     },
     {
-      "id": "company-6416272bf06ab3ec25bf",
+      "id": "company-candidate:商汤",
       "kind": "company",
       "name": "商汤",
       "aliases": [],
@@ -7209,8 +7209,8 @@
         "商汤"
       ],
       "state": "active",
-      "resolutionSource": "unresolved",
-      "resolutionStatus": "review",
+      "resolutionSource": "human-decision",
+      "resolutionStatus": "resolved",
       "createdAt": "2026-08-28T14:11:07+00:00",
       "createdBy": "VCIQ"
     },
@@ -46046,9 +46046,9 @@
       ]
     },
     {
-      "id": "membership-45ad092f734e711db645",
+      "id": "membership-25a178327d479d905ef4",
       "trackId": "track:ai",
-      "entityId": "company-6416272bf06ab3ec25bf",
+      "entityId": "company-candidate:商汤",
       "role": "actor",
       "state": "active",
       "pinned": true,
@@ -46075,29 +46075,40 @@
             "技术突破"
           ],
           "note": "关系审核:来源为商汤首席科学家关于多模态 AI 的访谈。"
+        },
+        {
+          "id": "origin-1a273241fe14c4d5928e",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T06:17:53+00:00",
+          "evidenceUrl": "https://www.36kr.com/p/3958827634179205",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核:商汤科技有限公司是一家人工智能公司;来源为商汤首席科学家关于多模态 AI 的访谈。"
         }
       ],
       "manualDecision": {
         "version": 1,
-        "id": "follow-9d407bed79b8f7eefb439139",
+        "id": "follow-c609d43579d6803b6fa52edf",
         "status": "approved",
         "actor": "VCIQ",
-        "at": "2026-09-26T05:59:58+00:00",
+        "at": "2026-09-26T06:17:53+00:00",
         "trackId": "track:ai",
-        "entityId": "company-6416272bf06ab3ec25bf",
+        "entityId": "company-candidate:商汤",
         "requestedName": "商汤",
         "kind": "company"
       },
       "identityState": "needs_enrichment",
       "identityResolution": {
-        "status": "review",
+        "status": "resolved",
         "requestedType": "company",
         "entityType": "company",
         "canonicalName": "商汤",
-        "targetId": "",
-        "confidence": "low",
-        "source": "unresolved",
-        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "targetId": "company-candidate:商汤",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
         "decisionKey": "商汤",
         "reclassified": false
       },
