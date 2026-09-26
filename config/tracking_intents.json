@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-26T14:51:42+00:00",
+  "updatedAt": "2026-09-26T15:28:00+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -12966,7 +12966,7 @@
       "createdBy": "VCIQ"
     },
     {
-      "id": "company-candidate:euclyd",
+      "id": "company-0ab04bcfc3de286b2bd1",
       "kind": "company",
       "name": "Euclyd",
       "aliases": [],
@@ -72540,7 +72540,7 @@
       "trackId": "track:robotics",
       "entityId": "company-ea3bd73e2b506e005272",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "high",
       "origins": [
@@ -72567,8 +72567,44 @@
             "技术突破"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-9c826fc1e1fd4ea02957",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T15:28:00+00:00",
+          "evidenceUrl": "https://ai.meta.com/research/vjepa/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:Meta AI maintains an active robotics research program and explicitly develops world models intended for robotic assistants and physical-world reasoning."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-8bb7dc45899614611f1549e6",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T15:28:00+00:00",
+        "trackId": "track:robotics",
+        "entityId": "company-ea3bd73e2b506e005272",
+        "requestedName": "Meta",
+        "kind": "company"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "Meta",
+        "targetId": "topic:meta",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "meta",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-46a5da8d804a6c6cfb8f",
@@ -73499,7 +73535,7 @@
       "trackId": "track:ai-3",
       "entityId": "technology-7d3194f79e645c42e439",
       "role": "keyword",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "verified",
       "origins": [
@@ -73515,8 +73551,44 @@
             "IPO可能"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-f8e30957b08f42157e71",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T15:28:00+00:00",
+          "evidenceUrl": "https://openai.com/index/the-full-stack-behind-abundant-intelligence/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:OpenAI's official 2026 full-stack strategy explicitly includes AI-native devices as a product layer, supporting the AI intelligent-terminal relation."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-25d7914856b22bb7a2eaac2d",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T15:28:00+00:00",
+        "trackId": "track:ai-3",
+        "entityId": "technology-7d3194f79e645c42e439",
+        "requestedName": "OpenAI",
+        "kind": "technology"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "company",
+        "canonicalName": "OpenAI",
+        "targetId": "company:openai",
+        "confidence": "verified",
+        "source": "company-registry",
+        "reason": "名称唯一命中正式公司注册表。",
+        "decisionKey": "openai",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-0af1c3828d0efba17c17",
@@ -78315,9 +78387,9 @@
       "trackId": "track:robotics",
       "entityId": "company-9fbf261b62c1d7c00db7",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
-      "confidence": "high",
+      "confidence": "low",
       "origins": [
         {
           "id": "origin-ed93c767a2a3e1070cb7",
@@ -78329,8 +78401,44 @@
             "个人研究兴趣"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-4e624c9d094278853d89",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T15:28:00+00:00",
+          "evidenceUrl": "https://www.microsoft.com/en-us/research/story/advancing-ai-for-the-physical-world/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:Microsoft Research directly develops physical-AI robotics, including its Rho-alpha robotics model and robotic systems for real-world operations."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-303434ec090b591b70dd2994",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T15:28:00+00:00",
+        "trackId": "track:robotics",
+        "entityId": "company-9fbf261b62c1d7c00db7",
+        "requestedName": "Microsoft",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Microsoft",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "microsoft",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-dbf47e868e40cd10157f",
@@ -81781,13 +81889,13 @@
       ]
     },
     {
-      "id": "membership-b1599be6240946033699",
+      "id": "membership-5450180deae9f4ed8584",
       "trackId": "track:ai",
-      "entityId": "company-candidate:euclyd",
+      "entityId": "company-0ab04bcfc3de286b2bd1",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
-      "confidence": "medium",
+      "confidence": "low",
       "origins": [
         {
           "id": "origin-d7b512e9f6f2e917864a",
@@ -81799,13 +81907,49 @@
             "个人研究兴趣"
           ],
           "note": "人工补充公司对象;来源文章:三星参与荷兰AI芯片初创公司Euclyd的2亿欧元融资"
+        },
+        {
+          "id": "origin-818c93299872f2af0e27",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T15:28:00+00:00",
+          "evidenceUrl": "https://www.euclyd.ai/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:Euclyd explicitly describes itself as AI infrastructure and builds agentic AI silicon plus exascale AI-factory systems, supporting the AI/AGI relation."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-1de904a8d27c394a52cf42ed",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T15:28:00+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-0ab04bcfc3de286b2bd1",
+        "requestedName": "Euclyd",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Euclyd",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "euclyd",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
-      "id": "membership-d4a59bf9f06523c8bf42",
+      "id": "membership-b2b6a21246f31d0caab8",
       "trackId": "track:semiconductor",
-      "entityId": "company-candidate:euclyd",
+      "entityId": "company-0ab04bcfc3de286b2bd1",
       "role": "actor",
       "state": "active",
       "pinned": true,
@@ -81841,9 +81985,10 @@
         "actor": "VCIQ",
         "at": "2026-09-26T10:01:08+00:00",
         "trackId": "track:semiconductor",
-        "entityId": "company-candidate:euclyd",
+        "entityId": "company-0ab04bcfc3de286b2bd1",
         "requestedName": "Euclyd",
-        "kind": "company"
+        "kind": "company",
+        "originalEntityId": "company-candidate:euclyd"
       },
       "identityState": "needs_enrichment",
       "identityResolution": {
