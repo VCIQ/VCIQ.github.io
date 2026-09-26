@@ -27,6 +27,7 @@ except ImportError:
 tracking = base.tracking
 WATCHLIST_PATH = tracking.crawler.ROOT / "config/innovation_listing_watchlist.json"
 CAPITAL_SEEDS_PATH = tracking.crawler.ROOT / "config/innovation_capital_tracking_seeds.json"
+LIFECYCLE_PATH = tracking.crawler.ROOT / "config/innovation_listing_lifecycle.json"
 SOURCE_PREFIX = "innovation-listing-"
 CAPITAL_SOURCE_PREFIX = "innovation-capital-portfolio-"
 BROKER_EVENT_TERMS = (
@@ -64,6 +65,12 @@ PRIMARY_BROKER_HOSTS: dict[str, tuple[str, ...]] = {
     "华泰联合": ("htsc.com", "htsc.com.cn"),
 }
 PRIMARY_REGULATORY_HOSTS = ("eid.csrc.gov.cn",)
+PRIMARY_PROJECT_HOSTS: dict[str, tuple[str, str]] = {
+    "sse.com.cn": ("上海证券交易所", "交易所公告"),
+    "szse.cn": ("深圳证券交易所", "交易所公告"),
+    "hkexnews.hk": ("香港交易所", "交易所公告"),
+    "csrc.gov.cn": ("中国证监会", "监管文件"),
+}
 REGULATORY_EVENT_TERMS = (
     "辅导备案 OR 辅导进展 OR 辅导验收 OR 上市辅导 OR 辅导机构 OR IPO"
 )
@@ -79,6 +86,16 @@ def load_watchlist(path: Path = WATCHLIST_PATH) -> dict[str, Any]:
     if not isinstance(payload, dict):
         return {"brokers": [], "projects": [], "policyThemes": []}
     return payload
+
+
+def load_lifecycle(path: Path = LIFECYCLE_PATH) -> dict[str, Any]:
+    if not path.exists():
+        return {"projects": []}
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {"projects": []}
+    return payload if isinstance(payload, dict) else {"projects": []}
 
 
 def load_capital_seeds(path: Path = CAPITAL_SEEDS_PATH) -> dict[str, Any]:
@@ -172,6 +189,44 @@ def _bounded_primary_source(
         "allowedHosts": [host],
         "enabled": True,
     }
+
+
+def generated_primary_project_sources(
+    watchlist_payload: dict[str, Any],
+    lifecycle_payload: dict[str, Any],
+) -> list[dict[str, Any]]:
+    """Generate official-domain searches for already reviewed projects only."""
+    names = tracking._unique(
+        [
+            str(project.get("company", "")).strip()
+            for payload in (watchlist_payload, lifecycle_payload)
+            for project in payload.get("projects", [])
+            if isinstance(project, dict)
+        ],
+        240,
+    )
+    sources: list[dict[str, Any]] = []
+    for offset in range(0, len(names), PROJECT_SHARD_SIZE):
+        shard_names = names[offset : offset + PROJECT_SHARD_SIZE]
+        if not shard_names:
+            continue
+        shard = offset // PROJECT_SHARD_SIZE + 1
+        company_query = tracking._quoted_or_query(shard_names, PROJECT_SHARD_SIZE)
+        for host_index, (host, meta) in enumerate(PRIMARY_PROJECT_HOSTS.items(), start=1):
+            platform, source_level = meta
+            query = f"site:{host} ({company_query}) ({PROJECT_EVENT_TERMS})"
+            source = _bounded_primary_source(
+                f"{SOURCE_PREFIX}primary-project-{host_index:02d}-{shard:02d}",
+                f"科创项目储备 · 已跟踪项目官方进展 · {platform} · {shard}",
+                query,
+                shard_names,
+                host=host,
+                source_level=source_level,
+                platform=platform,
+            )
+            source["maxItems"] = 12
+            sources.append(source)
+    return sources
 
 
 def generated_innovation_sources(payload: dict[str, Any]) -> list[dict[str, Any]]:
@@ -298,6 +353,7 @@ def install() -> None:
         config, sec_specs, active_ids = original_build(base_config, tracking_config)
         generated = [
             *generated_innovation_sources(load_watchlist()),
+            *generated_primary_project_sources(load_watchlist(), load_lifecycle()),
             *generated_portfolio_sources(load_capital_seeds()),
         ]
         config.setdefault("publicDiscovery", []).extend(generated)
