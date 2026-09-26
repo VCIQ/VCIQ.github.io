@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-26T11:50:07+00:00",
+  "updatedAt": "2026-09-26T14:51:42+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -7970,15 +7970,15 @@
       "createdBy": "VCIQ"
     },
     {
-      "id": "company-8d635a4145546600a49f",
+      "id": "company-candidate:蓝色光标",
       "kind": "company",
       "name": "蓝色光标",
       "aliases": [],
       "keywords": [
         "蓝色光标"
       ],
-      "state": "review",
-      "resolutionSource": "source-context",
+      "state": "active",
+      "resolutionSource": "human-decision",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-01T06:53:56+00:00",
       "createdBy": "VCIQ"
@@ -8012,15 +8012,15 @@
       "createdBy": "VCIQ"
     },
     {
-      "id": "company-3d1930c4cd505d56a00e",
+      "id": "company-candidate:中科创达",
       "kind": "company",
       "name": "中科创达",
       "aliases": [],
       "keywords": [
         "中科创达"
       ],
-      "state": "review",
-      "resolutionSource": "source-context",
+      "state": "active",
+      "resolutionSource": "human-decision",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-01T06:53:56+00:00",
       "createdBy": "VCIQ"
@@ -8550,7 +8550,7 @@
       "createdBy": "VCIQ"
     },
     {
-      "id": "company-4c992298922bdbd9a826",
+      "id": "company-candidate:全晓得医疗科技",
       "kind": "company",
       "name": "全晓得医疗科技",
       "aliases": [],
@@ -8561,7 +8561,7 @@
         "王烁"
       ],
       "state": "active",
-      "resolutionSource": "source-context",
+      "resolutionSource": "human-decision",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-02T04:06:36+00:00",
       "createdBy": "VCIQ"
@@ -10276,7 +10276,7 @@
       "createdBy": "VCIQ"
     },
     {
-      "id": "company-candidate:中科类脑",
+      "id": "company-f69ccadb84988deb9fa5",
       "kind": "company",
       "name": "中科类脑",
       "aliases": [],
@@ -12880,7 +12880,7 @@
       "createdBy": "VCIQ"
     },
     {
-      "id": "company-candidate:深圳超维动力",
+      "id": "company-9f540a22be49b2250a9b",
       "kind": "company",
       "name": "深圳超维动力",
       "aliases": [],
@@ -13384,7 +13384,7 @@
       "createdBy": "VCIQ"
     },
     {
-      "id": "company-candidate:分子之心",
+      "id": "company-4b62589ba40f56e4e4ec",
       "kind": "company",
       "name": "分子之心",
       "aliases": [],
@@ -41563,9 +41563,9 @@
       "trackId": "track:ai",
       "entityId": "company-b8e4c1750253712a7614",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
-      "confidence": "medium",
+      "confidence": "low",
       "origins": [
         {
           "id": "origin-faa859603d451ec05b13",
@@ -41577,8 +41577,44 @@
             "个人研究兴趣"
           ],
           "note": "人工补充公司对象;来源文章:共生知行发布人形机器人赛车Demo:以卡丁车测试双足机器人的“全身智能”"
+        },
+        {
+          "id": "origin-eb96f858180b64645f8a",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T14:51:42+00:00",
+          "evidenceUrl": "https://symbiosis-robotics.com/research/dpc/en/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:SYMBIOSIS directly develops unified perception-control intelligent models mapping vision, language and body state to executable robot actions, supporting the AI/AGI relation."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-401c4997578ed58d9f9ce7e6",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T14:51:42+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-b8e4c1750253712a7614",
+        "requestedName": "Symbiosis Robotics",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Symbiosis Robotics",
+        "targetId": "",
+        "confidence": "low",
+        "source": "source-context",
+        "reason": "原文邻近语境更像技术、项目或工具，不能直接作为公司写入。",
+        "decisionKey": "symbiosisrobotics",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-9167abeb4a90f03bd315",
@@ -50890,9 +50926,9 @@
       "trackId": "track:ai",
       "entityId": "company-42edb14400710c2df5b9",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
-      "confidence": "medium",
+      "confidence": "low",
       "origins": [
         {
           "id": "origin-65fb0a44b8d197f533be",
@@ -50904,17 +50940,53 @@
             "个人研究兴趣"
           ],
           "note": "人工补充公司对象;来源文章:小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速"
+        },
+        {
+          "id": "origin-3a598f2a0991d6002839",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T14:51:42+00:00",
+          "evidenceUrl": "https://www.xpeng.com/news/019f12539bff9f1220b48a028223000e",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:XPENG directly develops AI-defined mobility, autonomous-driving world models, AI chips and Physical AI systems, supporting an AI/AGI relation."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-e6c974039d111bf6beca29b2",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T14:51:42+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-42edb14400710c2df5b9",
+        "requestedName": "小鹏",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "小鹏",
+        "targetId": "",
+        "confidence": "low",
+        "source": "source-context",
+        "reason": "原文邻近语境更像技术、项目或工具，不能直接作为公司写入。",
+        "decisionKey": "小鹏",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-401fbbfb8bfb8beb852b",
       "trackId": "track:track-15shkgi",
       "entityId": "company-42edb14400710c2df5b9",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
-      "confidence": "medium",
+      "confidence": "low",
       "origins": [
         {
           "id": "origin-65fb0a44b8d197f533be",
@@ -50926,8 +50998,44 @@
             "个人研究兴趣"
           ],
           "note": "人工补充公司对象;来源文章:小鹏机器人获超9亿美元融资 中国通用人形机器人商业化加速"
+        },
+        {
+          "id": "origin-65c13415be96cb526a77",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T14:51:42+00:00",
+          "evidenceUrl": "https://www.xpeng.com/news/019e3ad2f9789dd703de8a0282290180",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:XPENG directly develops and mass-produces L4-oriented Robotaxi and autonomous-driving systems, supporting the intelligent-transport relation."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-d0a30ba23d2bdc5b0d4b3fe4",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T14:51:42+00:00",
+        "trackId": "track:track-15shkgi",
+        "entityId": "company-42edb14400710c2df5b9",
+        "requestedName": "小鹏",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "小鹏",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "小鹏",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-5f95eab92102e040e17e",
@@ -51686,11 +51794,11 @@
       ]
     },
     {
-      "id": "membership-2ada5f28488a2c6a589d",
+      "id": "membership-d700d7fb8f1526cb69fc",
       "trackId": "track:ai",
-      "entityId": "company-8d635a4145546600a49f",
+      "entityId": "company-candidate:蓝色光标",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "medium",
       "origins": [
@@ -51707,13 +51815,49 @@
             "融资机会"
           ],
           "note": "人工补充公司对象;来源文章:VAST完成约30亿元B和B+轮融资,经纬创投领投,同步发布Tripo P2.0"
+        },
+        {
+          "id": "origin-53f0a331889eb64c14b5",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T14:51:42+00:00",
+          "evidenceUrl": "https://en.bluefocus.com/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:BlueFocus directly operates the Blue AI multimodal marketing platform and identifies AI as a core company strategy and revenue driver."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-ec841059cb5130e9fb835451",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T14:51:42+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-candidate:蓝色光标",
+        "requestedName": "蓝色光标",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "蓝色光标",
+        "targetId": "company-candidate:蓝色光标",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "蓝色光标",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
-      "id": "membership-9d2fbecf1507cfd1f26c",
+      "id": "membership-7ebdd8907b59927fd5ea",
       "trackId": "track:track-1ccjq49",
-      "entityId": "company-8d635a4145546600a49f",
+      "entityId": "company-candidate:蓝色光标",
       "role": "actor",
       "state": "rejected",
       "pinned": true,
@@ -51905,11 +52049,11 @@
       ]
     },
     {
-      "id": "membership-8b1b39b8e3e47d3f830b",
+      "id": "membership-d8b872296addeeae8ef6",
       "trackId": "track:ai",
-      "entityId": "company-3d1930c4cd505d56a00e",
+      "entityId": "company-candidate:中科创达",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "medium",
       "origins": [
@@ -51926,13 +52070,49 @@
             "融资机会"
           ],
           "note": "人工补充公司对象;来源文章:VAST完成约30亿元B和B+轮融资,经纬创投领投,同步发布Tripo P2.0"
+        },
+        {
+          "id": "origin-4a2f907308e29fdd779f",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T14:51:42+00:00",
+          "evidenceUrl": "https://en.thundersoft.com/company-overview/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:ThunderSoft identifies itself as a global AIOS products and technologies provider and directly ships AI-native operating systems and AI-agent platforms."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-e8c498527a21fe0717830fda",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T14:51:42+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-candidate:中科创达",
+        "requestedName": "中科创达",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "中科创达",
+        "targetId": "company-candidate:中科创达",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "中科创达",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
-      "id": "membership-319872b9eceb438e3e02",
+      "id": "membership-63a9e9647bffdf2de529",
       "trackId": "track:track-1ccjq49",
-      "entityId": "company-3d1930c4cd505d56a00e",
+      "entityId": "company-candidate:中科创达",
       "role": "actor",
       "state": "rejected",
       "pinned": true,
@@ -54648,9 +54828,9 @@
       ]
     },
     {
-      "id": "membership-a2f025f6a635711e9856",
+      "id": "membership-6c9f7acaa580ce0a8841",
       "trackId": "track:biotech",
-      "entityId": "company-4c992298922bdbd9a826",
+      "entityId": "company-candidate:全晓得医疗科技",
       "role": "actor",
       "state": "review",
       "pinned": true,
@@ -54674,9 +54854,9 @@
       ]
     },
     {
-      "id": "membership-5eb35f0495ef2cdcb95b",
+      "id": "membership-09b66e92c0ce8d73df89",
       "trackId": "track:track-1wmwa8m",
-      "entityId": "company-4c992298922bdbd9a826",
+      "entityId": "company-candidate:全晓得医疗科技",
       "role": "actor",
       "state": "active",
       "pinned": true,
@@ -54716,9 +54896,10 @@
         "actor": "VCIQ",
         "at": "2026-09-26T10:34:36+00:00",
         "trackId": "track:track-1wmwa8m",
-        "entityId": "company-4c992298922bdbd9a826",
+        "entityId": "company-candidate:全晓得医疗科技",
         "requestedName": "全晓得医疗科技",
-        "kind": "company"
+        "kind": "company",
+        "originalEntityId": "company-4c992298922bdbd9a826"
       },
       "identityState": "needs_enrichment",
       "identityResolution": {
@@ -54736,11 +54917,11 @@
       "executionState": "applied"
     },
     {
-      "id": "membership-b0a95e5df0155dcdedda",
+      "id": "membership-42d75a3795446fc3af82",
       "trackId": "track:ai",
-      "entityId": "company-4c992298922bdbd9a826",
+      "entityId": "company-candidate:全晓得医疗科技",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "medium",
       "origins": [
@@ -54758,8 +54939,44 @@
             "商业模式创新"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-5e5b1e2b54461828bea9",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T14:51:42+00:00",
+          "evidenceUrl": "https://quanxiaode.com/about/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:The company's official profile identifies it as a medical artificial-intelligence technology company developing AI-assisted endoscopy systems."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-f48d2ee41b2bef9b30a9ef59",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T14:51:42+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-candidate:全晓得医疗科技",
+        "requestedName": "全晓得医疗科技",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "全晓得医疗科技",
+        "targetId": "company-candidate:全晓得医疗科技",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "全晓得医疗科技",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-02923bae8f1361c87f93",
@@ -65542,9 +65759,9 @@
       ]
     },
     {
-      "id": "membership-148007cc914fcbb277f9",
+      "id": "membership-041955dba3661304f40d",
       "trackId": "track:ai",
-      "entityId": "company-candidate:中科类脑",
+      "entityId": "company-f69ccadb84988deb9fa5",
       "role": "actor",
       "state": "active",
       "pinned": true,
@@ -65580,9 +65797,10 @@
         "actor": "VCIQ",
         "at": "2026-09-26T10:47:55+00:00",
         "trackId": "track:ai",
-        "entityId": "company-candidate:中科类脑",
+        "entityId": "company-f69ccadb84988deb9fa5",
         "requestedName": "中科类脑",
-        "kind": "company"
+        "kind": "company",
+        "originalEntityId": "company-candidate:中科类脑"
       },
       "identityState": "needs_enrichment",
       "identityResolution": {
@@ -65600,13 +65818,13 @@
       "executionState": "applied"
     },
     {
-      "id": "membership-5ab06937500df3adb087",
+      "id": "membership-be79ed2a27bbac23984d",
       "trackId": "track:robotics",
-      "entityId": "company-candidate:中科类脑",
+      "entityId": "company-f69ccadb84988deb9fa5",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
-      "confidence": "medium",
+      "confidence": "low",
       "origins": [
         {
           "id": "origin-5195e9d4c6d4c3914877",
@@ -65618,8 +65836,44 @@
             "个人研究兴趣"
           ],
           "note": "人工补充公司对象;来源文章:独家丨央企领投,中科类脑完成B+轮融资,布局“Token工厂”"
+        },
+        {
+          "id": "origin-6bd0a03dd1082871c127",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T14:51:42+00:00",
+          "evidenceUrl": "https://www.leinao.ai/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:中科类脑 directly lists intelligent rail robots and unmanned inspection solutions among its products and AI-powered energy applications."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-a198311a338019239db6f5d2",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T14:51:42+00:00",
+        "trackId": "track:robotics",
+        "entityId": "company-f69ccadb84988deb9fa5",
+        "requestedName": "中科类脑",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "中科类脑",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "中科类脑",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-ad6f7270b97f91399e78",
@@ -74611,7 +74865,7 @@
       "trackId": "track:ai",
       "entityId": "company-candidate:万勋科技",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "medium",
       "origins": [
@@ -74627,8 +74881,44 @@
             "融资机会"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-f244d2b5fbb79b696534",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T14:51:42+00:00",
+          "evidenceUrl": "https://www.wissonrobotics.com/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:Wisson Robotics directly develops embodied-intelligence architectures, multimodal AI and its NOVA embodied brain as core technology, supporting AI/AGI."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-401a33a80c3ad68a9eba5427",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T14:51:42+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-candidate:万勋科技",
+        "requestedName": "万勋科技",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "万勋科技",
+        "targetId": "company-candidate:万勋科技",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "万勋科技",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-eabb12feb8e13ee4c95b",
@@ -77080,7 +77370,7 @@
       "trackId": "track:ai",
       "entityId": "company-240389f4b730bad41f21",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "high",
       "origins": [
@@ -77094,8 +77384,44 @@
             "个人研究兴趣"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-d79c6f4ab4ce98ccc443",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T14:51:42+00:00",
+          "evidenceUrl": "https://www.amd.com/en/solutions/ai.html",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:AMD directly develops full-stack AI solutions spanning hardware, ROCm software, AI models and deployment platforms from cloud to edge and endpoints."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-e6cb0e19c1d39cab39d00309",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T14:51:42+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-240389f4b730bad41f21",
+        "requestedName": "AMD",
+        "kind": "company"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "AMD",
+        "targetId": "topic:amd",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "amd",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-d68d3829a7707b1b6f70",
@@ -80280,9 +80606,9 @@
       "trackId": "track:ai",
       "entityId": "company-3827974708ce7acbd334",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
-      "confidence": "medium",
+      "confidence": "low",
       "origins": [
         {
           "id": "origin-a702381e2b63872c9bf1",
@@ -80294,8 +80620,44 @@
             "个人研究兴趣"
           ],
           "note": "人工补充公司对象;来源文章:深信服HR: AI 安全是网安行业风口,当前网信人才缺口较大"
+        },
+        {
+          "id": "origin-89e9132d8e28e0e428b9",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T14:51:42+00:00",
+          "evidenceUrl": "https://www.sangfor.com.cn/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:Sangfor directly offers production AI deployment products and AI-agent tooling alongside its AI security portfolio, supporting the broader AI/AGI relation."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-835daee6febc1f447608f670",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T14:51:42+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-3827974708ce7acbd334",
+        "requestedName": "深信服",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "深信服",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "深信服",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-c3a29b2e514febbe4da5",
@@ -80858,9 +81220,9 @@
       "executionState": "applied"
     },
     {
-      "id": "membership-3433bcf7adde215d0f37",
+      "id": "membership-6791bdfba4a63d2d3e21",
       "trackId": "track:robotics",
-      "entityId": "company-candidate:深圳超维动力",
+      "entityId": "company-9f540a22be49b2250a9b",
       "role": "actor",
       "state": "active",
       "pinned": true,
@@ -80898,9 +81260,10 @@
         "actor": "VCIQ",
         "at": "2026-09-26T10:01:08+00:00",
         "trackId": "track:robotics",
-        "entityId": "company-candidate:深圳超维动力",
+        "entityId": "company-9f540a22be49b2250a9b",
         "requestedName": "深圳超维动力",
-        "kind": "company"
+        "kind": "company",
+        "originalEntityId": "company-candidate:深圳超维动力"
       },
       "identityState": "needs_enrichment",
       "identityResolution": {
@@ -80918,13 +81281,13 @@
       "executionState": "applied"
     },
     {
-      "id": "membership-2dd090029ca8e3ee8ab6",
+      "id": "membership-b1f3fe1d9fef06ce1670",
       "trackId": "track:ai",
-      "entityId": "company-candidate:深圳超维动力",
+      "entityId": "company-9f540a22be49b2250a9b",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
-      "confidence": "medium",
+      "confidence": "low",
       "origins": [
         {
           "id": "origin-c476e728673a538bfc1c",
@@ -80938,8 +81301,44 @@
             "IPO可能"
           ],
           "note": "人工补充公司对象;来源文章:深圳超维动力成立一年拿下淡马锡5亿!具身智能资本转向数据成色"
+        },
+        {
+          "id": "origin-b3e6d55677eecf62dfb7",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T14:51:42+00:00",
+          "evidenceUrl": "https://www.kinetixai.tech/zh",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:Kinetix AI describes itself as a full-stack embodied-intelligence foundation-model company developing world models and embodied-AI infrastructure, supporting AI/AGI."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-116119d33b0e3200a53906b5",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T14:51:42+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-9f540a22be49b2250a9b",
+        "requestedName": "深圳超维动力",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "深圳超维动力",
+        "targetId": "",
+        "confidence": "low",
+        "source": "source-context",
+        "reason": "原文邻近语境更像技术、项目或工具，不能直接作为公司写入。",
+        "decisionKey": "深圳超维动力",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-e5878b4510924550e64c",
@@ -83662,9 +84061,9 @@
       ]
     },
     {
-      "id": "membership-1e6f3dc2e11a527f1e80",
+      "id": "membership-35c08fa3014e0326beda",
       "trackId": "track:track-1wmwa8m",
-      "entityId": "company-candidate:分子之心",
+      "entityId": "company-4b62589ba40f56e4e4ec",
       "role": "actor",
       "state": "review",
       "pinned": true,
@@ -83686,13 +84085,13 @@
       ]
     },
     {
-      "id": "membership-4e4b140507396550dca0",
+      "id": "membership-935f59eb37291e381954",
       "trackId": "track:biotech",
-      "entityId": "company-candidate:分子之心",
+      "entityId": "company-4b62589ba40f56e4e4ec",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
-      "confidence": "medium",
+      "confidence": "low",
       "origins": [
         {
           "id": "origin-84f78557067785bfc5a4",
@@ -83706,13 +84105,49 @@
             "技术突破"
           ],
           "note": "人工补充公司对象;来源文章:推动AI4S 迈向“可计算化学反应”:分子之心QuantaMind 动态模拟新引擎登国际顶刊"
+        },
+        {
+          "id": "origin-5220fc673016454608bb",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T14:51:42+00:00",
+          "evidenceUrl": "https://moleculemind.com/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:MoleculeMind directly develops AI-driven protein, biologics and therapeutic design platforms and describes its work as precision biotech."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-8bebee1a1ee56861c87031c4",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T14:51:42+00:00",
+        "trackId": "track:biotech",
+        "entityId": "company-4b62589ba40f56e4e4ec",
+        "requestedName": "分子之心",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "分子之心",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "分子之心",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
-      "id": "membership-572050564cf2f2595bc3",
+      "id": "membership-dd7bb7c593114233dc22",
       "trackId": "track:ai",
-      "entityId": "company-candidate:分子之心",
+      "entityId": "company-4b62589ba40f56e4e4ec",
       "role": "actor",
       "state": "active",
       "pinned": true,
@@ -83750,9 +84185,10 @@
         "actor": "VCIQ",
         "at": "2026-09-26T10:34:36+00:00",
         "trackId": "track:ai",
-        "entityId": "company-candidate:分子之心",
+        "entityId": "company-4b62589ba40f56e4e4ec",
         "requestedName": "分子之心",
-        "kind": "company"
+        "kind": "company",
+        "originalEntityId": "company-candidate:分子之心"
       },
       "identityState": "needs_enrichment",
       "identityResolution": {
