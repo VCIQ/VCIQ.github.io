@@ -11,6 +11,7 @@ type Output = {
   path: string;
   shared?: boolean;
   public?: boolean;
+  freshnessSlaHours?: number;
 };
 
 type AutomationJob = {
