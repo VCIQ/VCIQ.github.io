@@ -39,6 +39,7 @@ test("terminal publication survives an isolated onboarding failure without weake
 });
 
 test("candidate onboarding accepts productive partial venture profiles", async () => {
+  const text = await workflow();
   assert.match(
     text,
     /status'\) in \{'ok', 'partial', 'retained', 'fallback'\}/,
