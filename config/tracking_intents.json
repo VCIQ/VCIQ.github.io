@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-26T10:01:08+00:00",
+  "updatedAt": "2026-09-26T10:22:51+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -156,7 +156,7 @@
         "robotics company",
         "AI bets"
       ],
-      "state": "review",
+      "state": "active",
       "resolutionSource": "source-context",
       "resolutionStatus": "resolved",
       "createdAt": "2026-08-12T03:43:15+00:00",
@@ -2404,7 +2404,7 @@
         "战略合作",
         "战略投资"
       ],
-      "state": "review",
+      "state": "active",
       "resolutionSource": "tracking-taxonomy",
       "resolutionStatus": "resolved",
       "createdAt": "2026-08-14T12:34:56+00:00",
@@ -8354,7 +8354,7 @@
         "NVIDIA accelerated computing",
         "NVIDIA Cloud Partner"
       ],
-      "state": "review",
+      "state": "active",
       "resolutionSource": "tracking-taxonomy",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-01T15:04:09+00:00",
@@ -11422,7 +11422,7 @@
       "keywords": [
         "OpenAI"
       ],
-      "state": "review",
+      "state": "active",
       "resolutionSource": "company-registry",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-09T09:26:23+00:00",
@@ -21314,7 +21314,7 @@
       "trackId": "track:ai",
       "entityId": "company-ee9fd5c9894d1ae21334",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "low",
       "origins": [
@@ -21339,8 +21339,44 @@
             "个人研究兴趣"
           ],
           "note": "人工补充公司对象;来源文章:Physical Intelligence联创最新访谈:机器人尚未进入可预测的Scaling阶段"
+        },
+        {
+          "id": "origin-50a27d16f179bd296f2c",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T10:22:51+00:00",
+          "evidenceUrl": "https://mp.weixin.qq.com/mp/wappoc_appmsgcaptcha?poc_token=HBGIjmqj5E-geeJPUop2yG4W6mopSUyy62JB0r5l&target_url=https%3A%2F%2Fmp.weixin.qq.com%2Fs%2FC4Ths3WfhInHnhu4KgaFWQ",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "关系审核确认:The captured interview directly concerns Physical Intelligence's general AI models for robot intelligence."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-f75b3b5f712dc551c0166aad",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T10:22:51+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-ee9fd5c9894d1ae21334",
+        "requestedName": "Physical Intelligence",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Physical Intelligence",
+        "targetId": "",
+        "confidence": "low",
+        "source": "source-context",
+        "reason": "原文邻近语境更像技术、项目或工具，不能直接作为公司写入。",
+        "decisionKey": "physicalintelligence",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-4dc5ea0d37e9a58c01cb",
@@ -29918,7 +29954,7 @@
       "trackId": "track:semiconductor",
       "entityId": "company-240389f4b730bad41f21",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "high",
       "origins": [
@@ -29943,8 +29979,44 @@
             "个人研究兴趣"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-a55aac531e913ef4ab71",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T10:22:51+00:00",
+          "evidenceUrl": "https://finance.sina.com.cn/stock/usstock/c/2026-09-10/doc-inirihnu8576173.shtml",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "关系审核确认:AMD is directly a semiconductor company; the captured sources concern AMD chips and AI-compute hardware."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-79ddae59d81572b0b12865d2",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T10:22:51+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "company-240389f4b730bad41f21",
+        "requestedName": "AMD",
+        "kind": "company"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "AMD",
+        "targetId": "topic:amd",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "amd",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-c85530864514a82fcdd8",
@@ -45461,9 +45533,9 @@
       "trackId": "track:robotics",
       "entityId": "company-ee9fd5c9894d1ae21334",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
-      "confidence": "medium",
+      "confidence": "low",
       "origins": [
         {
           "id": "origin-c748e921b3fa81eee338",
@@ -45475,8 +45547,44 @@
             "个人研究兴趣"
           ],
           "note": "人工补充公司对象;来源文章:Physical Intelligence联创最新访谈:机器人尚未进入可预测的Scaling阶段"
+        },
+        {
+          "id": "origin-43bd3cd1395d6735b888",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T10:22:51+00:00",
+          "evidenceUrl": "https://mp.weixin.qq.com/mp/wappoc_appmsgcaptcha?poc_token=HBGIjmqj5E-geeJPUop2yG4W6mopSUyy62JB0r5l&target_url=https%3A%2F%2Fmp.weixin.qq.com%2Fs%2FC4Ths3WfhInHnhu4KgaFWQ",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "关系审核确认:The captured interview directly discusses Physical Intelligence's robot-intelligence work, supporting the robotics relation."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-96296c1ec7ce47cf0fcf71ad",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T10:22:51+00:00",
+        "trackId": "track:robotics",
+        "entityId": "company-ee9fd5c9894d1ae21334",
+        "requestedName": "Physical Intelligence",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Physical Intelligence",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "physicalintelligence",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-ba25fae7fa7c2c70282c",
@@ -52803,7 +52911,7 @@
       "trackId": "track:semiconductor",
       "entityId": "company-8d4321d9363208023863",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "high",
       "origins": [
@@ -52829,15 +52937,51 @@
             "技术突破"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-8abf976ffa372459c5a9",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T10:22:51+00:00",
+          "evidenceUrl": "https://x.com/ilyasut",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "关系审核确认:NVIDIA is directly a semiconductor and accelerated-computing company."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-e1b76176030eab7476042b9c",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T10:22:51+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "company-8d4321d9363208023863",
+        "requestedName": "NVIDIA",
+        "kind": "company"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "Nvidia",
+        "targetId": "topic:nvidia",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "nvidia",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-f70c161013546cca7e1e",
       "trackId": "track:ai",
       "entityId": "company-8d4321d9363208023863",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "high",
       "origins": [
@@ -52863,8 +53007,44 @@
             "技术突破"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-992c7a647461b2fe5358",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T10:22:51+00:00",
+          "evidenceUrl": "https://x.com/ilyasut",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "关系审核确认:NVIDIA directly develops and supplies core AI computing platforms and software, supporting the AI/AGI relation."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-ad4e0cd7ef67dd2ea69c5fe1",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T10:22:51+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-8d4321d9363208023863",
+        "requestedName": "NVIDIA",
+        "kind": "company"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "Nvidia",
+        "targetId": "topic:nvidia",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "nvidia",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-8761d7ed8a7501581810",
@@ -71236,7 +71416,7 @@
       "trackId": "track:ai",
       "entityId": "technology-7d3194f79e645c42e439",
       "role": "keyword",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "verified",
       "origins": [
@@ -71252,8 +71432,44 @@
             "IPO可能"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-d8642f3a1ca8f47e0be2",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T10:22:51+00:00",
+          "evidenceUrl": "https://x.com/sama",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "关系审核确认:OpenAI is directly an AI research and product organization, so the AI/AGI relation is intrinsic."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-793664fd565200feee281735",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T10:22:51+00:00",
+        "trackId": "track:ai",
+        "entityId": "technology-7d3194f79e645c42e439",
+        "requestedName": "OpenAI",
+        "kind": "technology"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "company",
+        "canonicalName": "OpenAI",
+        "targetId": "company:openai",
+        "confidence": "verified",
+        "source": "company-registry",
+        "reason": "名称唯一命中正式公司注册表。",
+        "decisionKey": "openai",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-6e706e42948dd71b3038",
