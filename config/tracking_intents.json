@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-26T06:17:53+00:00",
+  "updatedAt": "2026-09-26T06:51:56+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -12885,7 +12885,7 @@
       "keywords": [
         "真迈生物"
       ],
-      "state": "review",
+      "state": "active",
       "resolutionSource": "source-context",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-15T01:00:01+00:00",
@@ -75545,9 +75545,9 @@
       "trackId": "track:biotech",
       "entityId": "company-a616fb827e698f1b3a2e",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
-      "confidence": "medium",
+      "confidence": "low",
       "origins": [
         {
           "id": "origin-3be56eb42dd6e3b57ae5",
@@ -75559,8 +75559,44 @@
             "个人研究兴趣"
           ],
           "note": "人工补充公司对象;来源文章:基因 测序设备自主研发制造商真迈生物完成近6亿元D轮融资_手机网易网"
+        },
+        {
+          "id": "origin-1a0233c921bf9ea26d29",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T06:51:56+00:00",
+          "evidenceUrl": "https://m.163.com/news/article/L6PVLQHB05118HJE.html?clickfrom=subscribe",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核:真迈生物→生物科技。"
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-f23711b16afbf2fe2c8e2959",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T06:51:56+00:00",
+        "trackId": "track:biotech",
+        "entityId": "company-a616fb827e698f1b3a2e",
+        "requestedName": "真迈生物",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "真迈生物",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "真迈生物",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-6791bdfba4a63d2d3e21",
