@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-25T15:00:00+00:00",
+  "updatedAt": "2026-09-26T05:59:58+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -7208,9 +7208,9 @@
       "keywords": [
         "商汤"
       ],
-      "state": "review",
-      "resolutionSource": "source-context",
-      "resolutionStatus": "resolved",
+      "state": "active",
+      "resolutionSource": "unresolved",
+      "resolutionStatus": "review",
       "createdAt": "2026-08-28T14:11:07+00:00",
       "createdBy": "VCIQ"
     },
@@ -46039,9 +46039,9 @@
       "trackId": "track:ai",
       "entityId": "company-6416272bf06ab3ec25bf",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
-      "confidence": "medium",
+      "confidence": "low",
       "origins": [
         {
           "id": "origin-65c5bba65d00d5e95a8c",
@@ -46053,8 +46053,44 @@
             "个人研究兴趣"
           ],
           "note": "人工补充公司对象;来源文章:专访商汤首席科学家林达华: 多模态 的涌现时刻会在一两年内到来-36氪"
+        },
+        {
+          "id": "origin-2f6f651617482e0da932",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T05:59:58+00:00",
+          "evidenceUrl": "https://www.36kr.com/p/3958827634179205",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核:来源为商汤首席科学家关于多模态 AI 的访谈。"
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-9d407bed79b8f7eefb439139",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T05:59:58+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-6416272bf06ab3ec25bf",
+        "requestedName": "商汤",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "商汤",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "商汤",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-2fb21579c0e590a9eb2b",
