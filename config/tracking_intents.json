@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-26T11:19:29+00:00",
+  "updatedAt": "2026-09-26T11:50:07+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -2838,7 +2838,7 @@
         "GitHub",
         "HuggingFace"
       ],
-      "state": "review",
+      "state": "active",
       "resolutionSource": "human-decision",
       "resolutionStatus": "resolved",
       "createdAt": "2026-08-15T04:41:52+00:00",
@@ -6282,7 +6282,7 @@
       "createdBy": "VCIQ"
     },
     {
-      "id": "company-fd6555ead448df068937",
+      "id": "company-candidate:mtk",
       "kind": "company",
       "name": "MTK",
       "aliases": [],
@@ -6290,7 +6290,7 @@
         "MTK"
       ],
       "state": "active",
-      "resolutionSource": "source-context",
+      "resolutionSource": "human-decision",
       "resolutionStatus": "resolved",
       "createdAt": "2026-08-24T08:18:15+00:00",
       "createdBy": "VCIQ"
@@ -6710,7 +6710,7 @@
         "Cupertino",
         "ex-Apple employees"
       ],
-      "state": "review",
+      "state": "active",
       "resolutionSource": "tracking-taxonomy",
       "resolutionStatus": "resolved",
       "createdAt": "2026-08-26T15:53:17+00:00",
@@ -11297,7 +11297,7 @@
         "Meta AI实验室",
         "Meta AI"
       ],
-      "state": "review",
+      "state": "active",
       "resolutionSource": "tracking-taxonomy",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-09T09:16:24+00:00",
@@ -11776,7 +11776,7 @@
         "Amazon",
         "Zoox"
       ],
-      "state": "review",
+      "state": "active",
       "resolutionSource": "tracking-taxonomy",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-09T12:44:24+00:00",
@@ -12257,7 +12257,7 @@
       "keywords": [
         "Microsoft"
       ],
-      "state": "review",
+      "state": "active",
       "resolutionSource": "tracking-taxonomy",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-11T02:58:48+00:00",
@@ -32321,7 +32321,7 @@
       "trackId": "track:ai",
       "entityId": "technology-c0b0109d9439de57fe3c",
       "role": "keyword",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "verified",
       "origins": [
@@ -32335,8 +32335,44 @@
             "个人研究兴趣"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-03f9dd0c875971264930",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T11:50:07+00:00",
+          "evidenceUrl": "https://github.com/features/copilot",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:GitHub directly operates Copilot, an AI coding and agent platform integrated throughout GitHub's developer workflow."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-0544b91f000c76afef82e703",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T11:50:07+00:00",
+        "trackId": "track:ai",
+        "entityId": "technology-c0b0109d9439de57fe3c",
+        "requestedName": "GitHub",
+        "kind": "technology"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "company",
+        "canonicalName": "GitHub",
+        "targetId": "company:github",
+        "confidence": "verified",
+        "source": "human-decision",
+        "reason": "人工确认 GitHub 是公司／平台实体；后续同名采集复用该结论。",
+        "decisionKey": "github",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-e4063063ba7db15daa16",
@@ -44552,9 +44588,9 @@
       ]
     },
     {
-      "id": "membership-bd80b43b53286093667e",
+      "id": "membership-bee45898d5e484c07693",
       "trackId": "track:semiconductor",
-      "entityId": "company-fd6555ead448df068937",
+      "entityId": "company-candidate:mtk",
       "role": "actor",
       "state": "active",
       "pinned": true,
@@ -44593,9 +44629,10 @@
         "actor": "VCIQ",
         "at": "2026-09-26T10:47:55+00:00",
         "trackId": "track:semiconductor",
-        "entityId": "company-fd6555ead448df068937",
+        "entityId": "company-candidate:mtk",
         "requestedName": "MTK",
-        "kind": "company"
+        "kind": "company",
+        "originalEntityId": "company-fd6555ead448df068937"
       },
       "identityState": "needs_enrichment",
       "identityResolution": {
@@ -44613,9 +44650,9 @@
       "executionState": "applied"
     },
     {
-      "id": "membership-8265c84bbc383ba44bd6",
+      "id": "membership-7a4fe4697cb035552b8c",
       "trackId": "track:materials",
-      "entityId": "company-fd6555ead448df068937",
+      "entityId": "company-candidate:mtk",
       "role": "actor",
       "state": "review",
       "pinned": true,
@@ -44638,11 +44675,11 @@
       ]
     },
     {
-      "id": "membership-cb145cf651ce1008a604",
+      "id": "membership-91a0d4eae5f442340967",
       "trackId": "track:ai",
-      "entityId": "company-fd6555ead448df068937",
+      "entityId": "company-candidate:mtk",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "medium",
       "origins": [
@@ -44659,13 +44696,49 @@
             "IPO可能"
           ],
           "note": "人工补充公司对象;来源文章:光联芯科一个月融资近5亿,OIO光互连为何受资本追捧?"
+        },
+        {
+          "id": "origin-78401fe9b0fd945f6358",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T11:50:07+00:00",
+          "evidenceUrl": "https://www.mediatek.com/tek-talk-blogs/one-mediatek-evolving-our-brand-for-the-ai-edge-to-cloud-future",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:MediaTek directly develops generative-AI engines and AI compute platforms spanning edge devices through data-center infrastructure."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-0007d285a2301e8b4196e760",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T11:50:07+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-candidate:mtk",
+        "requestedName": "MTK",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "MTK",
+        "targetId": "company-candidate:mtk",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "mtk",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
-      "id": "membership-77b43dec2ec4e79d6850",
+      "id": "membership-ec72bb00273de8529dc5",
       "trackId": "track:track-1ccjq49",
-      "entityId": "company-fd6555ead448df068937",
+      "entityId": "company-candidate:mtk",
       "role": "actor",
       "state": "rejected",
       "pinned": true,
@@ -45345,7 +45418,7 @@
       "trackId": "track:robotics",
       "entityId": "company-968e2d5b08687bf42997",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "high",
       "origins": [
@@ -45359,8 +45432,44 @@
             "个人研究兴趣"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-d14d5841d7a243974751",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T11:50:07+00:00",
+          "evidenceUrl": "https://news.samsung.com/us/tag/ballie/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:Samsung's official newsroom directly identifies Ballie as a home AI companion robot developed by Samsung."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-e04c9312ec6e8bbf4336b77a",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T11:50:07+00:00",
+        "trackId": "track:robotics",
+        "entityId": "company-968e2d5b08687bf42997",
+        "requestedName": "Samsung",
+        "kind": "company"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "Samsung",
+        "targetId": "topic:samsung",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "samsung",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-a0c64119d13edf0b6b26",
@@ -45425,7 +45534,7 @@
       "trackId": "track:ai",
       "entityId": "company-968e2d5b08687bf42997",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "high",
       "origins": [
@@ -45439,8 +45548,44 @@
             "个人研究兴趣"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-031bef43f3cc4f1d1523",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T11:50:07+00:00",
+          "evidenceUrl": "https://news.samsung.com/us/samsung-advances-galaxy-ai-connected-ecosystem-mwc-2026/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:Samsung's official 2026 materials directly describe Galaxy AI and its agentic-AI ecosystem across Samsung devices."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-9eda98ddbce208f91b7e7f8d",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T11:50:07+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-968e2d5b08687bf42997",
+        "requestedName": "Samsung",
+        "kind": "company"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "Samsung",
+        "targetId": "topic:samsung",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "samsung",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-452acf076995d442794f",
@@ -46300,7 +46445,7 @@
       "trackId": "track:ai",
       "entityId": "company-3a7bd3e2360a3d29eea4",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "high",
       "origins": [
@@ -46314,8 +46459,44 @@
             "个人研究兴趣"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-3283cf648a251d5befb0",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T11:50:07+00:00",
+          "evidenceUrl": "https://developer.apple.com/apple-intelligence/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:Apple directly develops Apple Intelligence and Apple Foundation Models as an integrated generative-AI system across its products."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-98a2aadd40ddecdd20c0dc43",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T11:50:07+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-3a7bd3e2360a3d29eea4",
+        "requestedName": "Apple",
+        "kind": "company"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "Apple",
+        "targetId": "topic:apple",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "apple",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-025d75c093a5effa9324",
@@ -46344,7 +46525,7 @@
       "trackId": "track:semiconductor",
       "entityId": "company-3a7bd3e2360a3d29eea4",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "high",
       "origins": [
@@ -46358,8 +46539,44 @@
             "个人研究兴趣"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-e7ac0d40751383d325b0",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T11:50:07+00:00",
+          "evidenceUrl": "https://www.apple.com/newsroom/2026/07/apple-to-increase-spend-with-broadcom-to-produce-billions-more-us-chips/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:Apple directly designs custom Apple silicon and custom silicon components for its product portfolio."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-412209288742254b331e5e16",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T11:50:07+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "company-3a7bd3e2360a3d29eea4",
+        "requestedName": "Apple",
+        "kind": "company"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "Apple",
+        "targetId": "topic:apple",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "apple",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-c229c41445b5c62c21f6",
@@ -55700,7 +55917,7 @@
       "trackId": "track:robotics",
       "entityId": "company-e3ce9cc5efa9354c42b3",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "high",
       "origins": [
@@ -55716,8 +55933,44 @@
             "技术突破"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-d422e50bd16d576c98b0",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T11:50:07+00:00",
+          "evidenceUrl": "https://huggingface.co/docs/lerobot/index",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:Hugging Face's official LeRobot documentation directly describes state-of-the-art machine learning for real-world robotics and control of real robots."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-65d6f40f937b6deac1ca2ccb",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T11:50:07+00:00",
+        "trackId": "track:robotics",
+        "entityId": "company-e3ce9cc5efa9354c42b3",
+        "requestedName": "Hugging Face",
+        "kind": "company"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "HuggingFace",
+        "targetId": "topic:huggingface",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "huggingface",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-55399ce8d75ea1e4b773",
@@ -71790,7 +72043,7 @@
       "trackId": "track:ai",
       "entityId": "company-ea3bd73e2b506e005272",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "high",
       "origins": [
@@ -71817,15 +72070,51 @@
             "技术突破"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-adbd1daf0ec558ed1eb3",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T11:50:07+00:00",
+          "evidenceUrl": "https://about.fb.com/news/2025/04/introducing-meta-ai-app-new-way-access-ai-assistant/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:Meta directly develops and operates Meta AI, its AI assistant built on Meta's own model stack."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-efabc7ae07cd7100f8cddeec",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T11:50:07+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-ea3bd73e2b506e005272",
+        "requestedName": "Meta",
+        "kind": "company"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "Meta",
+        "targetId": "topic:meta",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "meta",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-46535fbced80b56548e7",
       "trackId": "track:semiconductor",
       "entityId": "company-ea3bd73e2b506e005272",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "high",
       "origins": [
@@ -71852,8 +72141,44 @@
             "技术突破"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-d3c6341b93f8eedd469b",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T11:50:07+00:00",
+          "evidenceUrl": "https://ai.meta.com/blog/meta-mtia-scale-ai-chips-for-billions/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:Meta directly designs its in-house MTIA family of custom AI accelerator chips, establishing a semiconductor-design relation."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-880dfb4d2e156294b5a849ce",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T11:50:07+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "company-ea3bd73e2b506e005272",
+        "requestedName": "Meta",
+        "kind": "company"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "Meta",
+        "targetId": "topic:meta",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "meta",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-d2371cbf24132be1e077",
@@ -72628,7 +72953,7 @@
       "trackId": "track:robotics",
       "entityId": "company-8d4321d9363208023863",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "high",
       "origins": [
@@ -72643,15 +72968,51 @@
             "技术突破"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-634b3d7079d01b930edc",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T11:50:07+00:00",
+          "evidenceUrl": "https://www.nvidia.com/en-us/industries/robotics/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:NVIDIA's official robotics platform directly provides models, simulation frameworks, libraries and deployment systems for robotics."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-e52e3181de1848d4afea4829",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T11:50:07+00:00",
+        "trackId": "track:robotics",
+        "entityId": "company-8d4321d9363208023863",
+        "requestedName": "NVIDIA",
+        "kind": "company"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "Nvidia",
+        "targetId": "topic:nvidia",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "nvidia",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-ebfab71487347d34943f",
       "trackId": "track:ai-3",
       "entityId": "company-8d4321d9363208023863",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "high",
       "origins": [
@@ -72666,8 +73027,44 @@
             "技术突破"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-95bc3ecf2cc93f44f5bb",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T11:50:07+00:00",
+          "evidenceUrl": "https://developer.nvidia.com/embedded-computing/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:NVIDIA's official Jetson platform is a compact embedded edge-AI computing platform used to build and deploy intelligent autonomous devices."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-fe9e6eac98084b22b4c2a2cc",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T11:50:07+00:00",
+        "trackId": "track:ai-3",
+        "entityId": "company-8d4321d9363208023863",
+        "requestedName": "NVIDIA",
+        "kind": "company"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "Nvidia",
+        "targetId": "topic:nvidia",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "nvidia",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-3d1f4d36a388ff057ec6",
@@ -74831,7 +75228,7 @@
       "trackId": "track:semiconductor",
       "entityId": "company-cbc62794911ff31b2864",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "high",
       "origins": [
@@ -74847,15 +75244,51 @@
             "商业模式创新"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-dca954a806f7ea307842",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T11:50:07+00:00",
+          "evidenceUrl": "https://aws.amazon.com/ec2/instance-types/trn3/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:AWS directly develops Trainium, including its own 3nm Trainium3 AI chips for model training and inference."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-c131b78bb60a58797cbd2258",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T11:50:07+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "company-cbc62794911ff31b2864",
+        "requestedName": "Amazon",
+        "kind": "company"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "Amazon",
+        "targetId": "topic:amazon",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "amazon",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-6f0776b630bf5b03234f",
       "trackId": "track:robotics",
       "entityId": "company-cbc62794911ff31b2864",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "high",
       "origins": [
@@ -74871,15 +75304,51 @@
             "商业模式创新"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-cd09d00d84ddc72371d4",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T11:50:07+00:00",
+          "evidenceUrl": "https://www.aboutamazon.com/news/operations/amazon-robotics-robots-fulfillment-center",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:Amazon directly develops, produces and deploys Amazon Robotics systems across its operations network."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-c55ef126df827001cbc7d81b",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T11:50:07+00:00",
+        "trackId": "track:robotics",
+        "entityId": "company-cbc62794911ff31b2864",
+        "requestedName": "Amazon",
+        "kind": "company"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "Amazon",
+        "targetId": "topic:amazon",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "amazon",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-794ae9ea7581dd9fd312",
       "trackId": "track:ai",
       "entityId": "company-cbc62794911ff31b2864",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "high",
       "origins": [
@@ -74895,8 +75364,44 @@
             "商业模式创新"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-4c788bdaded147d828a3",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T11:50:07+00:00",
+          "evidenceUrl": "https://aws.amazon.com/about-aws/whats-new/2026/06/amazon-bedrock-redesigned-console-optimized-openai-anthropic-compatible-apis/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:AWS directly operates Amazon Bedrock, a managed platform for foundation models and generative-AI applications."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-02a6c3b9b543ca9c94f15de3",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T11:50:07+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-cbc62794911ff31b2864",
+        "requestedName": "Amazon",
+        "kind": "company"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "Amazon",
+        "targetId": "topic:amazon",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "amazon",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-61607bba3b2debb29967",
@@ -77291,7 +77796,7 @@
       "trackId": "track:ai",
       "entityId": "company-9fbf261b62c1d7c00db7",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "high",
       "origins": [
@@ -77305,8 +77810,44 @@
             "个人研究兴趣"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-9dd38e111a9385781e20",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T11:50:07+00:00",
+          "evidenceUrl": "https://www.microsoft.com/en-us/copilot",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:Microsoft directly develops and operates Copilot as an AI product platform for work and consumer workflows."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-4203b8cf9a0c35d171ab8188",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T11:50:07+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-9fbf261b62c1d7c00db7",
+        "requestedName": "Microsoft",
+        "kind": "company"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "Microsoft",
+        "targetId": "topic:microsoft",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "microsoft",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-587deae2aa8d84032d1b",
@@ -77335,7 +77876,7 @@
       "trackId": "track:semiconductor",
       "entityId": "company-9fbf261b62c1d7c00db7",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "high",
       "origins": [
@@ -77349,8 +77890,44 @@
             "个人研究兴趣"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-492ae4b211d0c91111c0",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T11:50:07+00:00",
+          "evidenceUrl": "https://blogs.microsoft.com/blog/2026/01/26/maia-200-the-ai-accelerator-built-for-inference/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:Microsoft directly engineers first-party Maia AI accelerator silicon, including the 3nm Maia 200 inference chip."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-adcda8ed8bd212a74e49f6d8",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T11:50:07+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "company-9fbf261b62c1d7c00db7",
+        "requestedName": "Microsoft",
+        "kind": "company"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "Microsoft",
+        "targetId": "topic:microsoft",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "microsoft",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-5fcdf44fcc0816f3f739",
@@ -77379,7 +77956,7 @@
       "trackId": "track:ai-3",
       "entityId": "company-9fbf261b62c1d7c00db7",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "high",
       "origins": [
@@ -77393,8 +77970,44 @@
             "个人研究兴趣"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-02eea40a743ae59124a9",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T11:50:07+00:00",
+          "evidenceUrl": "https://www.microsoft.com/en-us/surface/do-more-with-surface/copilot-plus-pcs-unleash-the-power-of-ai",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:Microsoft directly sells Surface Copilot+ PCs with built-in AI experiences and dedicated AI-computing capabilities."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-d3a88504847636cf0ca70ce9",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T11:50:07+00:00",
+        "trackId": "track:ai-3",
+        "entityId": "company-9fbf261b62c1d7c00db7",
+        "requestedName": "Microsoft",
+        "kind": "company"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "Microsoft",
+        "targetId": "topic:microsoft",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "microsoft",
+        "reclassified": true
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-41de17c1d600ebd276f8",
