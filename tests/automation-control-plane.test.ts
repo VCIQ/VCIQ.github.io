@@ -11,6 +11,7 @@ type Output = {
   path: string;
   shared?: boolean;
   public?: boolean;
+  freshnessSlaHours?: number;
 };
 
 type AutomationJob = {
@@ -157,6 +158,10 @@ test("research automation declares current object coverage and persistent person
     research.outputs.some((row) => row.path === "public/data/innovation_capital_thesis_memory.json"),
     true,
   );
+  const thesisMemory = research.outputs.find(
+    (row) => row.path === "public/data/innovation_capital_thesis_memory.json",
+  );
+  assert.equal(thesisMemory?.freshnessSlaHours, 168);
   for (const input of [
     "config/innovation_listing_watchlist.json",
     "config/innovation_listing_lifecycle.json",
