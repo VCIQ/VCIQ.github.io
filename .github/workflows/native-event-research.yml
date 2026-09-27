@@ -1,0 +1,85 @@
+name: Generate Native Event Research
+run-name: VCIQ native ${{ inputs.request_id }} ${{ inputs.event_id }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      event_id:
+        description: Public VCIQ event ID
+        required: true
+        type: string
+      request_id:
+        description: Unique request UUID from the authenticated VCIQ gateway
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  actions: write
+
+# All repository publication writers share this queue. Do not cancel accepted work.
+concurrency:
+  group: vciq-repository-writer-${{ github.ref }}
+  queue: max
+
+jobs:
+  native-research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate native research contract before model access
+        run: |
+          python -m py_compile tools/native_event_research.py tools/native_event_research_workflow.py
+          python -m unittest tests.test_native_event_research
+          python tools/run_pipeline.py check
+      - name: Generate one event-specific research draft
+        env:
+          NATIVE_RESEARCH_EVENT_ID: ${{ inputs.event_id }}
+          NATIVE_RESEARCH_REQUEST_ID: ${{ inputs.request_id }}
+          SILICONFLOW_API_KEY: ${{ secrets.SILICONFLOW_API_KEY }}
+          SILICONFLOW_BASE_URL: https://api.siliconflow.cn/v1
+          SILICONFLOW_MODEL: deepseek-ai/DeepSeek-V4-Flash
+          RESEARCH_AGENT_API_TIMEOUT: "180"
+          RESEARCH_AGENT_API_RETRIES: "1"
+        run: python tools/native_event_research_workflow.py
+      - name: Validate all report evidence bindings
+        run: python tools/validate_native_research_reports.py
+      - name: Publish validated draft index through the production quality gate
+        id: publish
+        env:
+          NATIVE_RESEARCH_REQUEST_ID: ${{ inputs.request_id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add public/data/native_research_reports.json
+          if git diff --cached --quiet; then
+            echo 'changed=false' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          HEALTH_STATUS=$(python - <<'PY'
+          import json, os
+          from pathlib import Path
+          records = json.loads(Path('public/data/native_research_reports.json').read_text())['results']
+          row = next(r for r in records if r['requestId'] == os.environ['NATIVE_RESEARCH_REQUEST_ID'])
+          print('degraded' if row['status'] == 'model-unavailable' else 'success')
+          PY
+          )
+          python tools/run_pipeline.py finalize native-event-research --quality-gate passed --status "$HEALTH_STATUS"
+          git add public/data/data_lineage.json public/data/pipeline_health.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'data: publish validated native event research draft'
+          # Refuse to rebase an evidence-bound report onto newer source datasets.
+          git push origin HEAD:main
+          echo 'changed=true' >> "$GITHUB_OUTPUT"
+      - name: Continue existing Pages publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main

@@ -3,26 +3,10 @@
   "pipelineVersion": "automation-control-plane-v1",
   "timezone": "Asia/Taipei",
   "publicObjectTypes": [
-    {
-      "id": "technology",
-      "label": "核心技术",
-      "route": "/technologies#core-technologies"
-    },
-    {
-      "id": "track",
-      "label": "核心赛道",
-      "route": "/technologies#core-tracks"
-    },
-    {
-      "id": "person",
-      "label": "核心人物",
-      "route": "/people"
-    },
-    {
-      "id": "company",
-      "label": "核心公司",
-      "route": "/companies"
-    }
+    { "id": "technology", "label": "核心技术", "route": "/technologies#core-technologies" },
+    { "id": "track", "label": "核心赛道", "route": "/technologies#core-tracks" },
+    { "id": "person", "label": "核心人物", "route": "/people" },
+    { "id": "company", "label": "核心公司", "route": "/companies" }
   ],
   "jobs": [
     {
@@ -33,32 +17,13 @@
       "schedule": "17 0,2,4,8,10,12,14,16,18,20,22 * * * @ Asia/Taipei",
       "trigger": "scheduled-and-manual",
       "dependencies": [],
-      "inputs": [
-        "config/intelligence_sources.json",
-        "config/user_tracking.json",
-        "public/data/source_health.json",
-        "config/innovation_listing_watchlist.json",
-        "config/innovation_listing_candidate_decisions.json"
-      ],
+      "inputs": ["config/intelligence_sources.json", "config/user_tracking.json", "public/data/source_health.json", "config/innovation_listing_watchlist.json", "config/innovation_listing_candidate_decisions.json"],
       "outputs": [
-        {
-          "path": "public/data/articles.json",
-          "required": true,
-          "shared": true,
-          "public": true
-        },
-        {
-          "path": "config/innovation_listing_candidate_review_queue.json",
-          "required": false,
-          "shared": false,
-          "public": false
-        }
+        { "path": "public/data/articles.json", "required": true, "shared": true, "public": true },
+        { "path": "config/innovation_listing_candidate_review_queue.json", "required": false, "shared": false, "public": false }
       ],
-      "freshnessSlaHours": 4,
-      "timeoutMinutes": 45,
-      "retry": 3,
-      "failurePolicy": "retain-last-good",
-      "qualityGate": "frequent-refresh-quality"
+      "freshnessSlaHours": 4, "timeoutMinutes": 45, "retry": 3,
+      "failurePolicy": "retain-last-good", "qualityGate": "frequent-refresh-quality"
     },
     {
       "id": "tracking-entity-discovery",
@@ -68,43 +33,14 @@
       "schedule": "0 3 * * 0 @ Asia/Taipei",
       "trigger": "scheduled-and-manual",
       "dependencies": [],
-      "inputs": [
-        "config/user_tracking.json",
-        "config/tracking_auto_discovery.json",
-        "public/data/articles.json",
-        "public/data/venture_profiles.json",
-        "public/data/institution_entities.json",
-        "config/innovation_capital_tracking_seeds.json",
-        "config/innovation_listing_watchlist.json",
-        "config/company_registry.json",
-        "config/innovation_listing_lifecycle.json",
-        "config/innovation_capital_mature_candidates.json"
-      ],
+      "inputs": ["config/user_tracking.json", "config/tracking_auto_discovery.json", "public/data/articles.json", "public/data/venture_profiles.json", "public/data/institution_entities.json", "config/innovation_capital_tracking_seeds.json", "config/innovation_listing_watchlist.json", "config/company_registry.json", "config/innovation_listing_lifecycle.json", "config/innovation_capital_mature_candidates.json"],
       "outputs": [
-        {
-          "path": "config/user_tracking.json",
-          "required": true,
-          "shared": false,
-          "public": false
-        },
-        {
-          "path": "config/tracking_auto_discovery.json",
-          "required": true,
-          "shared": false,
-          "public": false
-        },
-        {
-          "path": "public/data/source_health.json",
-          "required": true,
-          "shared": true,
-          "public": true
-        }
+        { "path": "config/user_tracking.json", "required": true, "shared": false, "public": false },
+        { "path": "config/tracking_auto_discovery.json", "required": true, "shared": false, "public": false },
+        { "path": "public/data/source_health.json", "required": true, "shared": true, "public": true }
       ],
-      "freshnessSlaHours": 192,
-      "timeoutMinutes": 45,
-      "retry": 3,
-      "failurePolicy": "retain-last-good",
-      "qualityGate": "tracking-discovery-quality"
+      "freshnessSlaHours": 192, "timeoutMinutes": 45, "retry": 3,
+      "failurePolicy": "retain-last-good", "qualityGate": "tracking-discovery-quality"
     },
     {
       "id": "public-intelligence-full-refresh",
@@ -114,67 +50,19 @@
       "schedule": "30 6 * * * @ Asia/Taipei",
       "trigger": "scheduled-change-driven-and-manual",
       "dependencies": [],
-      "inputs": [
-        "config/intelligence_sources.json",
-        "config/user_tracking.json",
-        "config/listed_company_disclosure_sources.json",
-        "config/source_health_policy.json"
-      ],
+      "inputs": ["config/intelligence_sources.json", "config/user_tracking.json", "config/listed_company_disclosure_sources.json", "config/source_health_policy.json"],
       "outputs": [
-        {
-          "path": "public/data/articles.json",
-          "required": true,
-          "shared": true,
-          "public": true
-        },
-        {
-          "path": "public/data/listed_company_disclosures.json",
-          "required": true,
-          "shared": false,
-          "public": true
-        },
-        {
-          "path": "public/data/market_profiles.json",
-          "required": true,
-          "shared": false,
-          "public": true
-        },
-        {
-          "path": "public/data/people.json",
-          "required": true,
-          "shared": false,
-          "public": true
-        },
-        {
-          "path": "public/data/person_research_agenda.json",
-          "required": true,
-          "shared": false,
-          "public": true
-        },
-        {
-          "path": "public/data/person_research_queue.json",
-          "required": true,
-          "shared": false,
-          "public": true
-        },
-        {
-          "path": "public/data/person_research_outcomes.json",
-          "required": true,
-          "shared": false,
-          "public": true
-        },
-        {
-          "path": "public/data/source_health.json",
-          "required": true,
-          "shared": true,
-          "public": true
-        }
+        { "path": "public/data/articles.json", "required": true, "shared": true, "public": true },
+        { "path": "public/data/listed_company_disclosures.json", "required": true, "shared": false, "public": true },
+        { "path": "public/data/market_profiles.json", "required": true, "shared": false, "public": true },
+        { "path": "public/data/people.json", "required": true, "shared": false, "public": true },
+        { "path": "public/data/person_research_agenda.json", "required": true, "shared": false, "public": true },
+        { "path": "public/data/person_research_queue.json", "required": true, "shared": false, "public": true },
+        { "path": "public/data/person_research_outcomes.json", "required": true, "shared": false, "public": true },
+        { "path": "public/data/source_health.json", "required": true, "shared": true, "public": true }
       ],
-      "freshnessSlaHours": 30,
-      "timeoutMinutes": 65,
-      "retry": 3,
-      "failurePolicy": "retain-last-good",
-      "qualityGate": "full-refresh-quality"
+      "freshnessSlaHours": 30, "timeoutMinutes": 65, "retry": 3,
+      "failurePolicy": "retain-last-good", "qualityGate": "full-refresh-quality"
     },
     {
       "id": "venture-profile-refresh",
@@ -183,27 +71,11 @@
       "workflow": ".github/workflows/refresh-venture-profiles.yml",
       "schedule": "15 9 * * * @ Asia/Taipei",
       "trigger": "scheduled-change-driven-and-manual",
-      "dependencies": [
-        "public-intelligence-full-refresh"
-      ],
-      "inputs": [
-        "lib/catalog-data.ts",
-        "public/data/articles.json",
-        "public/data/listed_company_disclosures.json"
-      ],
-      "outputs": [
-        {
-          "path": "public/data/venture_profiles.json",
-          "required": true,
-          "shared": false,
-          "public": true
-        }
-      ],
-      "freshnessSlaHours": 30,
-      "timeoutMinutes": 40,
-      "retry": 3,
-      "failurePolicy": "retain-last-good",
-      "qualityGate": "venture-profile-quality"
+      "dependencies": ["public-intelligence-full-refresh"],
+      "inputs": ["lib/catalog-data.ts", "public/data/articles.json", "public/data/listed_company_disclosures.json"],
+      "outputs": [{ "path": "public/data/venture_profiles.json", "required": true, "shared": false, "public": true }],
+      "freshnessSlaHours": 30, "timeoutMinutes": 40, "retry": 3,
+      "failurePolicy": "retain-last-good", "qualityGate": "venture-profile-quality"
     },
     {
       "id": "institution-data-layers",
@@ -212,41 +84,15 @@
       "workflow": ".github/workflows/institution-data-layers.yml",
       "schedule": "40 7 * * 1,4 @ Asia/Taipei",
       "trigger": "scheduled-change-driven-and-manual",
-      "dependencies": [
-        "public-intelligence-full-refresh"
-      ],
-      "inputs": [
-        "public/data/articles.json",
-        "public/data/star_market_investors.json",
-        "config/institution_rankings.json",
-        "config/institution_entity_aliases.json"
-      ],
+      "dependencies": ["public-intelligence-full-refresh"],
+      "inputs": ["public/data/articles.json", "public/data/star_market_investors.json", "config/institution_rankings.json", "config/institution_entity_aliases.json"],
       "outputs": [
-        {
-          "path": "public/data/institution_entities.json",
-          "required": true,
-          "shared": false,
-          "public": true,
-          "freshnessSlaHours": 8760
-        },
-        {
-          "path": "public/data/institution_events.json",
-          "required": true,
-          "shared": false,
-          "public": true
-        },
-        {
-          "path": "public/data/institution_equity_relationships.json",
-          "required": true,
-          "shared": false,
-          "public": true
-        }
+        { "path": "public/data/institution_entities.json", "required": true, "shared": false, "public": true, "freshnessSlaHours": 8760 },
+        { "path": "public/data/institution_events.json", "required": true, "shared": false, "public": true },
+        { "path": "public/data/institution_equity_relationships.json", "required": true, "shared": false, "public": true }
       ],
-      "freshnessSlaHours": 168,
-      "timeoutMinutes": 30,
-      "retry": 3,
-      "failurePolicy": "retain-last-good",
-      "qualityGate": "institution-layer-quality"
+      "freshnessSlaHours": 168, "timeoutMinutes": 30, "retry": 3,
+      "failurePolicy": "retain-last-good", "qualityGate": "institution-layer-quality"
     },
     {
       "id": "star-market-investor-refresh",
@@ -256,24 +102,10 @@
       "schedule": "10 3 * * 1,4 @ Asia/Taipei",
       "trigger": "scheduled-change-driven-and-manual",
       "dependencies": [],
-      "inputs": [
-        "config/star_market_investor_sources.json",
-        "config/star_market_investor_reviews.json",
-        "lib/catalog-data.ts"
-      ],
-      "outputs": [
-        {
-          "path": "public/data/star_market_investors.json",
-          "required": true,
-          "shared": false,
-          "public": true
-        }
-      ],
-      "freshnessSlaHours": 192,
-      "timeoutMinutes": 55,
-      "retry": 3,
-      "failurePolicy": "retain-last-good",
-      "qualityGate": "star-market-investor-quality"
+      "inputs": ["config/star_market_investor_sources.json", "config/star_market_investor_reviews.json", "lib/catalog-data.ts"],
+      "outputs": [{ "path": "public/data/star_market_investors.json", "required": true, "shared": false, "public": true }],
+      "freshnessSlaHours": 192, "timeoutMinutes": 55, "retry": 3,
+      "failurePolicy": "retain-last-good", "qualityGate": "star-market-investor-quality"
     },
     {
       "id": "source-performance-review",
@@ -282,34 +114,14 @@
       "workflow": ".github/workflows/source-performance-review.yml",
       "schedule": "30 8 1 * * @ Asia/Taipei",
       "trigger": "scheduled-and-manual",
-      "dependencies": [
-        "public-intelligence-full-refresh"
-      ],
-      "inputs": [
-        "public/data/articles.json",
-        "public/data/source_health.json",
-        "config/source_health_policy.json",
-        "config/source_quality_reviews.json"
-      ],
+      "dependencies": ["public-intelligence-full-refresh"],
+      "inputs": ["public/data/articles.json", "public/data/source_health.json", "config/source_health_policy.json", "config/source_quality_reviews.json"],
       "outputs": [
-        {
-          "path": "public/data/source_performance_review.json",
-          "required": false,
-          "shared": false,
-          "public": true
-        },
-        {
-          "path": "docs/source-performance-review.md",
-          "required": true,
-          "shared": false,
-          "public": false
-        }
+        { "path": "public/data/source_performance_review.json", "required": false, "shared": false, "public": true },
+        { "path": "docs/source-performance-review.md", "required": true, "shared": false, "public": false }
       ],
-      "freshnessSlaHours": 840,
-      "timeoutMinutes": 20,
-      "retry": 3,
-      "failurePolicy": "advisory-only",
-      "qualityGate": "source-performance-review-quality"
+      "freshnessSlaHours": 840, "timeoutMinutes": 20, "retry": 3,
+      "failurePolicy": "advisory-only", "qualityGate": "source-performance-review-quality"
     },
     {
       "id": "research-agent-daily",
@@ -318,62 +130,31 @@
       "workflow": ".github/workflows/research-agent-v1.yml",
       "schedule": "30 21 * * * @ Asia/Taipei",
       "trigger": "scheduled-reusable-and-manual",
-      "researchObjectCoverage": [
-        "person",
-        "company"
-      ],
-      "pendingObjectCoverage": [
-        "technology",
-        "track"
-      ],
-      "dependencies": [
-        "public-intelligence-full-refresh"
-      ],
-      "inputs": [
-        "public/data/venture_profiles.json",
-        "public/data/institution_entities.json",
-        "public/data/market_profiles.json",
-        "public/data/people.json",
-        "public/data/institution_events.json",
-        "public/data/listed_company_disclosures.json",
-        "config/innovation_listing_watchlist.json",
-        "config/innovation_listing_lifecycle.json",
-        "config/innovation_capital_mature_candidates.json",
-        "config/innovation_capital_tracking_seeds.json"
-      ],
+      "researchObjectCoverage": ["person", "company"],
+      "pendingObjectCoverage": ["technology", "track"],
+      "dependencies": ["public-intelligence-full-refresh"],
+      "inputs": ["public/data/venture_profiles.json", "public/data/institution_entities.json", "public/data/market_profiles.json", "public/data/people.json", "public/data/institution_events.json", "public/data/listed_company_disclosures.json", "config/innovation_listing_watchlist.json", "config/innovation_listing_lifecycle.json", "config/innovation_capital_mature_candidates.json", "config/innovation_capital_tracking_seeds.json"],
       "outputs": [
-        {
-          "path": "public/data/research_agent_daily.json",
-          "required": true,
-          "shared": false,
-          "public": true
-        },
-        {
-          "path": "public/data/research_agent_snapshot.json",
-          "required": true,
-          "shared": false,
-          "public": true
-        },
-        {
-          "path": "public/data/innovation_capital_thesis_memory.json",
-          "required": true,
-          "shared": false,
-          "public": true,
-          "freshnessSlaHours": 168
-        },
-        {
-          "path": "public/data/native_research_results.json",
-          "required": false,
-          "shared": false,
-          "public": true,
-          "freshnessSlaHours": 720
-        }
+        { "path": "public/data/research_agent_daily.json", "required": true, "shared": false, "public": true },
+        { "path": "public/data/research_agent_snapshot.json", "required": true, "shared": false, "public": true },
+        { "path": "public/data/innovation_capital_thesis_memory.json", "required": true, "shared": false, "public": true, "freshnessSlaHours": 168 },
+        { "path": "public/data/native_research_results.json", "required": false, "shared": false, "public": true, "freshnessSlaHours": 720 }
       ],
-      "freshnessSlaHours": 36,
-      "timeoutMinutes": 18,
-      "retry": 3,
-      "failurePolicy": "retain-last-good",
-      "qualityGate": "research-agent-evidence-contract"
+      "freshnessSlaHours": 36, "timeoutMinutes": 18, "retry": 3,
+      "failurePolicy": "retain-last-good", "qualityGate": "research-agent-evidence-contract"
+    },
+    {
+      "id": "native-event-research",
+      "name": "按需专题深研报告",
+      "owner": "research",
+      "workflow": ".github/workflows/native-event-research.yml",
+      "schedule": null,
+      "trigger": "manual",
+      "dependencies": [],
+      "inputs": ["public/data/articles.json", "public/data/ranked-intelligence.json", "public/data/research_agent_daily.json"],
+      "outputs": [{ "path": "public/data/native_research_reports.json", "required": false, "shared": false, "public": true }],
+      "freshnessSlaHours": 8760, "timeoutMinutes": 15, "retry": 0,
+      "failurePolicy": "retain-last-good", "qualityGate": "native-event-evidence-contract"
     },
     {
       "id": "pages-deploy",
@@ -382,21 +163,11 @@
       "workflow": ".github/workflows/pages.yml",
       "schedule": null,
       "trigger": "commit-dispatch-and-manual",
-      "dependencies": [
-        "public-intelligence-full-refresh"
-      ],
-      "inputs": [
-        "config/automation_jobs.json",
-        "public/data/data_lineage.json",
-        "public/data/pipeline_health.json"
-      ],
-      "outputs": [],
-      "healthMode": "dependencies",
-      "freshnessSlaHours": 30,
-      "timeoutMinutes": 30,
-      "retry": 1,
-      "failurePolicy": "retain-last-good",
-      "qualityGate": "pages-build-and-artifact-audit"
+      "dependencies": ["public-intelligence-full-refresh"],
+      "inputs": ["config/automation_jobs.json", "public/data/data_lineage.json", "public/data/pipeline_health.json"],
+      "outputs": [], "healthMode": "dependencies",
+      "freshnessSlaHours": 30, "timeoutMinutes": 30, "retry": 1,
+      "failurePolicy": "retain-last-good", "qualityGate": "pages-build-and-artifact-audit"
     }
   ]
 }
