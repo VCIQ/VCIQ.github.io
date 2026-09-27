@@ -86,6 +86,10 @@ test("contextual research page resolves public data and does not fabricate a wor
   assert.match(client, /fetch\("\/data\/articles\.json"/u);
   assert.match(client, /fetch\("\/data\/ranked-intelligence\.json"/u);
   assert.match(client, /buildResearchWorkspaceLaunchUrl/u);
-  assert.match(client, /Research Workspace 尚未发布/u);
-  assert.match(client, /复制上下文并进入工作台/u);
+  assert.match(client, /QM Research Workspace 为可选增强/u);
+  assert.match(client, /VCIQ Native Research Flow/u);
+  assert.match(client, /提交深研/u);
+  assert.match(client, /导出研究包/u);
+  assert.match(client, /查看研究结果/u);
+  assert.match(client, /复制上下文并进入 QM/u);
 });
