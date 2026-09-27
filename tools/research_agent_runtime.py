@@ -16,6 +16,7 @@ import json
 import os
 import sys
 import time
+from pathlib import Path
 from typing import Any, Mapping
 from urllib.error import HTTPError, URLError
 
@@ -281,7 +282,40 @@ def model_prompt(
         ),
         flush=True,
     )
-    return _ORIGINAL_MODEL_PROMPT(selected_changes, selected_evidence, as_of)
+    prompt = _ORIGINAL_MODEL_PROMPT(selected_changes, selected_evidence, as_of)
+    request_path = os.environ.get("RESEARCH_AGENT_NATIVE_REQUEST_PATH", "").strip()
+    if not request_path:
+        return prompt
+    try:
+        request = json.loads(Path(request_path).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return prompt
+    if not isinstance(request, Mapping) or not str(request.get("eventId") or "").strip():
+        return prompt
+    try:
+        package = json.loads(prompt)
+    except json.JSONDecodeError:
+        return prompt
+    if not isinstance(package, dict):
+        return prompt
+    package["nativeResearchRequest"] = {
+        "eventId": str(request.get("eventId") or ""),
+        "title": str(request.get("title") or ""),
+        "url": str(request.get("url") or ""),
+        "summary": str(request.get("summary") or ""),
+        "sector": str(request.get("sector") or ""),
+        "company": str(request.get("company") or ""),
+        "publishedAt": str(request.get("publishedAt") or ""),
+        "sourceName": str(request.get("sourceName") or ""),
+        "sourceLevel": str(request.get("sourceLevel") or ""),
+        "instruction": str(request.get("instruction") or ""),
+    }
+    package.setdefault("instructions", {})["nativeRequestPolicy"] = [
+        "优先检查 nativeResearchRequest 是否能与本轮 evidence/changes 建立证据关系。",
+        "若证据不足，必须明确写为待验证，不得用通用日报内容冒充事件专属结论。",
+        "保持原 evidenceIds 约束；nativeResearchRequest 本身只是研究任务上下文，不是已验证证据。",
+    ]
+    return json.dumps(package, ensure_ascii=False, separators=(",", ":"))
 
 
 def fallback_analysis(
