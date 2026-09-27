@@ -1,0 +1,156 @@
+.page {
+  min-height: 100vh;
+  padding: 24px clamp(18px, 4vw, 56px) 72px;
+  background: var(--background);
+  color: var(--text);
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border-soft);
+  font-size: 11px;
+}
+
+.topbar a,
+.resultCard a,
+.grid a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--green-bright);
+}
+
+.hero {
+  padding: 34px 0 24px;
+}
+
+.hero small,
+.section small {
+  color: var(--green-bright);
+  font: 700 10px/1.2 monospace;
+  letter-spacing: .12em;
+}
+
+.hero h1,
+.section h2 {
+  margin: 7px 0 10px;
+}
+
+.hero p,
+.resultCard p,
+.section p {
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.state,
+.resultCard,
+.section {
+  margin-top: 18px;
+  padding: 20px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+}
+
+.state {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.state p {
+  margin: 0;
+}
+
+.statusRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.statusRow span {
+  padding: 4px 7px;
+  border: 1px solid var(--border-soft);
+  font: 700 10px/1.2 monospace;
+}
+
+.ready {
+  color: var(--green-bright);
+}
+
+.pending {
+  color: var(--muted);
+}
+
+.resultCard h2 {
+  margin: 0 0 10px;
+  font-size: clamp(22px, 3vw, 34px);
+}
+
+.resultCard dl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.resultCard dl div {
+  padding: 10px;
+  border: 1px solid var(--border-soft);
+}
+
+.resultCard dt {
+  color: var(--faint);
+  font-size: 9px;
+  text-transform: uppercase;
+}
+
+.resultCard dd {
+  margin: 5px 0 0;
+  overflow-wrap: anywhere;
+  font-size: 11px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.grid article {
+  padding: 14px;
+  border: 1px solid var(--border-soft);
+}
+
+.grid b,
+.grid span,
+.grid p {
+  display: block;
+}
+
+.grid span {
+  margin-top: 8px;
+  color: var(--faint);
+  font-size: 10px;
+}
+
+.grid a {
+  margin-top: 10px;
+  font-size: 10px;
+}
+
+.empty {
+  margin-bottom: 0;
+}
+
+@media (max-width: 760px) {
+  .resultCard dl,
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
