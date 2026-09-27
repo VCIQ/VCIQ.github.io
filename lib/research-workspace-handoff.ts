@@ -151,6 +151,8 @@ export function buildNativeResearchMarkdown(input: ResearchWorkspaceHandoff) {
     "",
     "## Execution",
     "",
+    `Workflow command: ${buildNativeResearchWorkflowCommand(input.eventId)}`,
+    "",
     "This package is read-only input. Research output must preserve source URLs, evidence boundaries, and explicit unknowns.",
   ].join("\n");
 }
