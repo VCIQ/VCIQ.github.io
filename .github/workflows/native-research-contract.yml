@@ -4,23 +4,25 @@ on:
     paths:
       - 'tools/native_event_research*.py'
       - 'tools/validate_native_research_reports.py'
-      - 'tests/test_native_event_research.py'
-      - 'tests/native-research-flow.test.ts'
-      - 'lib/native-research-contract.ts'
+      - 'tests/test_native_event_research*.py'
+      - 'tests/native-research*.test.ts'
+      - 'lib/native-research*.ts'
       - 'lib/research-workspace-handoff.ts'
       - 'app/research-agent/**'
       - 'components/use-native-research-reports.ts'
       - '.github/workflows/native*.yml'
       - 'config/automation_jobs.json'
+      - 'config/native_research_event_archives.json'
   push:
     branches: [main]
     paths:
       - 'tools/native_event_research*.py'
       - 'tools/validate_native_research_reports.py'
-      - 'tests/test_native_event_research.py'
-      - 'tests/native-research-flow.test.ts'
-      - 'lib/native-research-contract.ts'
+      - 'tests/test_native_event_research*.py'
+      - 'tests/native-research*.test.ts'
+      - 'lib/native-research*.ts'
       - '.github/workflows/native*.yml'
+      - 'config/native_research_event_archives.json'
 permissions:
   contents: read
 jobs:
@@ -39,8 +41,8 @@ jobs:
         with:
           node-version: 22
       - run: npm ci
-      - run: python -m unittest tests.test_native_event_research
-      - run: node --import tsx --test tests/native-research-flow.test.ts tests/research-workspace-handoff.test.ts tests/research-investigation-event-consistency.test.ts
+      - run: python -m unittest discover -s tests -p 'test_native_event_research*.py'
+      - run: node --import tsx --test tests/native-research-flow.test.ts tests/native-research-event-archive.test.ts tests/research-workspace-handoff.test.ts tests/research-investigation-event-consistency.test.ts
       - run: python tools/validate_native_research_reports.py
       - name: Build auditable control-plane bootstrap (no model execution)
         run: |
