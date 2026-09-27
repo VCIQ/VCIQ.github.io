@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-27T00:37:34+00:00",
+  "updatedAt": "2026-09-27T00:56:03+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -8676,15 +8676,15 @@
       "region": "全球"
     },
     {
-      "id": "company-9fcf173d571993fcc96c",
+      "id": "company-candidate:纳境科技",
       "kind": "company",
       "name": "纳境科技",
       "aliases": [],
       "keywords": [
         "纳境科技"
       ],
-      "state": "review",
-      "resolutionSource": "source-context",
+      "state": "active",
+      "resolutionSource": "human-decision",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-02T08:41:50+00:00",
       "createdBy": "VCIQ"
@@ -55839,9 +55839,9 @@
       ]
     },
     {
-      "id": "membership-f1c819d368362aaa23f7",
+      "id": "membership-8e9345fd9cfd796fe03d",
       "trackId": "track:ai",
-      "entityId": "company-9fcf173d571993fcc96c",
+      "entityId": "company-candidate:纳境科技",
       "role": "actor",
       "state": "rejected",
       "pinned": true,
@@ -55875,11 +55875,11 @@
       ]
     },
     {
-      "id": "membership-543a02f0e5d9ba7f6c38",
+      "id": "membership-59c6418a4fa386cc3909",
       "trackId": "track:semiconductor",
-      "entityId": "company-9fcf173d571993fcc96c",
+      "entityId": "company-candidate:纳境科技",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
       "confidence": "medium",
       "origins": [
@@ -55896,8 +55896,44 @@
             "IPO可能"
           ],
           "note": "人工补充公司对象;来源文章:杭州纳境科技有限公司是一家专注于超表面光学器件设计、制造的硬科技企业"
+        },
+        {
+          "id": "origin-fc4e5aaf08f3976b858f",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-27T00:56:03+00:00",
+          "evidenceUrl": "https://www.najing.cn/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:Najing directly states that it designs and manufactures metasurface optical chips using semiconductor processes, supporting a semiconductor relation."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-d8ff166ff1bff0f9c272eade",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-27T00:56:03+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "company-candidate:纳境科技",
+        "requestedName": "纳境科技",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "纳境科技",
+        "targetId": "company-candidate:纳境科技",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "纳境科技",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-5380a678e8398bf39597",
