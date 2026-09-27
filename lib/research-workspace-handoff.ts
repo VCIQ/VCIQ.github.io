@@ -118,3 +118,39 @@ export function buildResearchWorkspacePrompt(input: ResearchWorkspaceHandoff) {
     "输出时优先引用原始 URL 与高质量独立来源；对每个关键判断标注证据强弱。",
   ].join("\n");
 }
+
+
+export const NATIVE_RESEARCH_WORKFLOW_URL =
+  "https://github.com/VCIQ/VCIQ.github.io/actions/workflows/research-agent-v1.yml";
+
+export function buildNativeResearchResultHref(eventId: string) {
+  const params = new URLSearchParams();
+  params.set("event", eventId);
+  return `/research-agent/investigate/result/?${params.toString()}`;
+}
+
+export function buildNativeResearchWorkflowCommand(eventId: string) {
+  const safeEventId = eventId.replace(/["\\\n\r]/g, "");
+  return `gh workflow run research-agent-v1.yml --ref main -f event_id="${safeEventId}" --repo VCIQ/VCIQ.github.io`;
+}
+
+export function buildNativeResearchMarkdown(input: ResearchWorkspaceHandoff) {
+  const prompt = buildResearchWorkspacePrompt(input);
+  const contextUrl = buildResearchContextUrl(input.eventId);
+  return [
+    `# VCIQ Native Research Request — ${clean(input.title) || clean(input.eventId)}`,
+    "",
+    `- Event ID: ${clean(input.eventId)}`,
+    `- Context: ${contextUrl}`,
+    `- Source: ${clean(input.url)}`,
+    `- Generated from: VCIQ /research-agent/investigate/`,
+    "",
+    "## Research Brief",
+    "",
+    prompt,
+    "",
+    "## Execution",
+    "",
+    "This package is read-only input. Research output must preserve source URLs, evidence boundaries, and explicit unknowns.",
+  ].join("\n");
+}
