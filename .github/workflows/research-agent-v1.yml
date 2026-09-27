@@ -34,6 +34,12 @@ on:
     - cron: "30 21 * * *"
       timezone: "Asia/Taipei"
   workflow_dispatch:
+    inputs:
+      event_id:
+        description: "Optional VCIQ event id for one event-specific native research request"
+        required: false
+        type: string
+        default: ""
 
 permissions:
   contents: write
@@ -90,6 +96,12 @@ jobs:
           node --import tsx --test tests/innovation-capital-thesis-memory.test.ts
           python tools/run_pipeline.py check
 
+      - name: Prepare native event-specific research request
+        if: github.event_name == 'workflow_dispatch' && inputs.event_id != ''
+        env:
+          NATIVE_RESEARCH_EVENT_ID: ${{ inputs.event_id }}
+        run: node --import tsx scripts/build-native-research-request.ts
+
       - name: Build canonical Research Agent object snapshot
         run: node --import tsx scripts/build-research-agent-object-snapshot.ts
 
@@ -106,7 +118,12 @@ jobs:
           RESEARCH_AGENT_API_TIMEOUT: "180"
           RESEARCH_AGENT_API_RETRIES: "1"
           RESEARCH_AGENT_MODEL_CHANGE_LIMIT: "16"
+          RESEARCH_AGENT_NATIVE_REQUEST_PATH: ${{ inputs.event_id != '' && 'work/research-agent/native_request.json' || '' }}
         run: python tools/research_agent_enhanced_runtime.py --bootstrap-git-ref HEAD^
+
+      - name: Publish native event-specific research result
+        if: github.event_name == 'workflow_dispatch' && inputs.event_id != ''
+        run: node --import tsx scripts/build-native-research-result.ts
 
       - name: Report model execution status
         id: research-status
@@ -266,6 +283,7 @@ jobs:
             public/data/research_agent_daily.json
             public/data/research_agent_snapshot.json
             public/data/innovation_capital_thesis_memory.json
+            public/data/native_research_results.json
           )
           CONTROL_PATHS=(
             public/data/data_lineage.json
