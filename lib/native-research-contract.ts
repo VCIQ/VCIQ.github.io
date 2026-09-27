@@ -1,7 +1,7 @@
 export const NATIVE_RESEARCH_ADMIN_ORIGIN = "https://vciq-tracking-console.pages.dev";
 export const NATIVE_RESEARCH_PUBLIC_ORIGIN = "https://vciq.github.io";
 export const NATIVE_RESEARCH_REPORTS_PATH = "/data/native_research_reports.json";
-export const NATIVE_RESEARCH_WORKFLOW_FILE = "research-agent-v1.yml";
+export const NATIVE_RESEARCH_WORKFLOW_FILE = "native-event-research.yml";
 
 export function validResearchEventId(value: unknown): value is string {
   return typeof value === "string" && /^[A-Za-z0-9][A-Za-z0-9._:/-]{0,179}$/.test(value);
