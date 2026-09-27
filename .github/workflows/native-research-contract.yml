@@ -1,0 +1,44 @@
+name: Native research contract
+on:
+  pull_request:
+    paths:
+      - 'tools/native_event_research*.py'
+      - 'tools/validate_native_research_reports.py'
+      - 'tests/test_native_event_research.py'
+      - 'tests/native-research-flow.test.ts'
+      - 'lib/native-research-contract.ts'
+      - 'lib/research-workspace-handoff.ts'
+      - 'app/research-agent/**'
+      - 'components/use-native-research-reports.ts'
+      - '.github/workflows/native*.yml'
+      - 'config/automation_jobs.json'
+  push:
+    branches: [main]
+    paths:
+      - 'tools/native_event_research*.py'
+      - 'tools/validate_native_research_reports.py'
+      - 'tests/test_native_event_research.py'
+      - 'tests/native-research-flow.test.ts'
+      - 'lib/native-research-contract.ts'
+      - '.github/workflows/native*.yml'
+permissions:
+  contents: read
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: python -m unittest tests.test_native_event_research
+      - run: node --import tsx --test tests/native-research-flow.test.ts tests/research-workspace-handoff.test.ts tests/research-investigation-event-consistency.test.ts
+      - run: python tools/validate_native_research_reports.py
+      - run: python tools/run_pipeline.py check
