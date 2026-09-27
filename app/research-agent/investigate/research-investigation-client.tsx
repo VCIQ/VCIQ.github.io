@@ -5,8 +5,10 @@ import {
   Bot,
   Check,
   Clipboard,
+  Download,
   ExternalLink,
   FileSearch,
+  Play,
   Link2,
   Radar,
   ShieldCheck,
@@ -38,9 +40,13 @@ import {
   parseRankedIntelligenceProjection,
 } from "@/lib/ranked-intelligence";
 import {
+  buildNativeResearchMarkdown,
+  buildNativeResearchResultHref,
+  buildNativeResearchWorkflowCommand,
   buildResearchContextUrl,
   buildResearchWorkspaceLaunchUrl,
   buildResearchWorkspacePrompt,
+  NATIVE_RESEARCH_WORKFLOW_URL,
   type ResearchWorkspaceHandoff,
 } from "@/lib/research-workspace-handoff";
 import {
@@ -62,6 +68,7 @@ type LoadResult = {
 };
 
 type CopyState = "idle" | "copied" | "failed";
+type SubmitState = "idle" | "ready" | "failed";
 
 type PersonDirectoryArchivePayload = {
   channels?: {
@@ -193,6 +200,7 @@ export default function ResearchInvestigationClient() {
   );
   const [result, setResult] = useState<LoadResult | null>(null);
   const [copyState, setCopyState] = useState<CopyState>("idle");
+  const [submitState, setSubmitState] = useState<SubmitState>("idle");
 
   useEffect(() => {
     if (!eventId) return;
@@ -275,6 +283,30 @@ export default function ResearchInvestigationClient() {
     void copyResearchPrompt();
     window.open(workspaceLaunchUrl, "_blank", "noopener,noreferrer");
   }
+  function exportResearchPackage() {
+    if (!handoff) return;
+    const markdown = buildNativeResearchMarkdown(handoff);
+    const blob = new Blob([markdown], { type: "text/markdown;charset=utf-8" });
+    const href = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = href;
+    link.download = `vciq-research-${handoff.eventId.replace(/[^a-z0-9_-]+/gi, "-").slice(0, 80) || "event"}.md`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.setTimeout(() => URL.revokeObjectURL(href), 0);
+  }
+
+  async function submitNativeResearch() {
+    if (!handoff) return;
+    const copied = await copyText(buildNativeResearchWorkflowCommand(handoff.eventId));
+    setSubmitState(copied ? "ready" : "failed");
+    if (copied) {
+      window.open(NATIVE_RESEARCH_WORKFLOW_URL, "_blank", "noopener,noreferrer");
+    }
+    window.setTimeout(() => setSubmitState("idle"), 3200);
+  }
+
 
   return (
     <main className={`page-shell subpage ${styles.page}`}>
@@ -409,19 +441,43 @@ export default function ResearchInvestigationClient() {
             <pre>{researchPrompt}</pre>
           </section>
 
+          <section className={styles.nativePanel}>
+            <Bot size={22} aria-hidden="true" />
+            <div className={styles.nativeCopy}>
+              <strong>VCIQ Native Research Flow</strong>
+              <p>
+                不依赖 QM。先导出可复核研究包；需要执行深研时，提交按钮会复制带 event_id 的 GitHub Actions 命令并打开 Research Agent workflow。结果页只展示已经进入公开 Research Agent 产物的证据，不会伪造“已完成”。
+              </p>
+            </div>
+            <div className={styles.nativeActions}>
+              <button type="button" onClick={() => void submitNativeResearch()}>
+                <Play size={14} aria-hidden="true" />
+                {submitState === "ready" ? "命令已复制 · 打开 Actions" : submitState === "failed" ? "复制失败" : "提交深研"}
+              </button>
+              <button type="button" onClick={exportResearchPackage}>
+                <Download size={14} aria-hidden="true" />
+                导出研究包
+              </button>
+              <Link href={buildNativeResearchResultHref(item.id)}>
+                查看研究结果
+                <ExternalLink size={14} aria-hidden="true" />
+              </Link>
+            </div>
+          </section>
+
           <section className={styles.workspacePanel}>
             <Bot size={22} aria-hidden="true" />
             <div>
-              <strong>{workspaceLaunchUrl ? "Research Workspace 上下文入口已准备" : "Research Workspace 尚未发布"}</strong>
+              <strong>{workspaceLaunchUrl ? "QM Research Workspace 上下文入口已准备" : "QM Research Workspace 为可选增强"}</strong>
               <p>
                 {workspaceLaunchUrl
-                  ? "打开工作台时会附带事件 ID、VCIQ 上下文页和公开数据集地址，并同时把结构化研究指令复制到剪贴板。"
-                  : "当前仍可复制上面的完整研究指令。工作台部署完成并配置 QM_WORKSPACE_URL 后，此处会自动启用上下文入口。"}
+                  ? "QM 已配置时可继续长会话、Memory、Watch 和 Sandbox；VCIQ Native Research Flow 仍保持独立可用。"
+                  : "当前无需部署 QM 也可提交深研、导出研究包和查看 Research Agent 结果。未来配置 QM_WORKSPACE_URL 后，这里只增加交互增强，不阻塞原生研究链路。"}
               </p>
             </div>
             {workspaceLaunchUrl ? (
               <button type="button" onClick={openWorkspace}>
-                复制上下文并进入工作台
+                复制上下文并进入 QM
                 <ExternalLink size={14} aria-hidden="true" />
               </button>
             ) : null}
