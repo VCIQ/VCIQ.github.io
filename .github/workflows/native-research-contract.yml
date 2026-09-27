@@ -31,6 +31,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -41,4 +42,15 @@ jobs:
       - run: python -m unittest tests.test_native_event_research
       - run: node --import tsx --test tests/native-research-flow.test.ts tests/research-workspace-handoff.test.ts tests/research-investigation-event-consistency.test.ts
       - run: python tools/validate_native_research_reports.py
-      - run: python tools/run_pipeline.py check
+      - name: Build auditable control-plane bootstrap (no model execution)
+        run: |
+          python tools/run_pipeline.py refresh --lineage-output work/native-control/data_lineage.json --health-output work/native-control/pipeline_health.json
+          python tools/run_pipeline.py check --lineage work/native-control/data_lineage.json --health work/native-control/pipeline_health.json
+      - name: Retain canonical control-plane bootstrap
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-control-plane-bootstrap
+          path: work/native-control/*.json
+          retention-days: 3
+      - name: Require committed control-plane coverage
+        run: python tools/run_pipeline.py check
