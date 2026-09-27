@@ -1,166 +1,95 @@
 "use client";
 
-import { ArrowLeft, ExternalLink, FileSearch, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
+import { useNativeResearchReports } from "@/components/use-native-research-reports";
+import { NATIVE_RESEARCH_WORKFLOW_FILE, RESEARCH_SECTIONS, validResearchEventId, validResearchRequestId, type NativeResearchReport, type ResearchClaim } from "@/lib/native-research-contract";
 import styles from "./native-research-result.module.css";
 
-type NativeResearchResult = {
-  eventId: string;
-  title: string;
-  sourceUrl: string;
-  requestedAt: string;
-  completedAt: string;
-  runStatus: string;
-  status: "evidence-linked" | "no-event-specific-evidence" | string;
-  executiveSummary: string;
-  changeIds: string[];
-  evidenceIds: string[];
-  changes: Array<Record<string, unknown>>;
-  evidence: Array<Record<string, unknown>>;
-  note: string;
-};
+function EvidenceRefs({ claim }: { claim: ResearchClaim }) {
+  const label = claim.kind === "source_statement" ? "来源陈述 · 未独立核实" : claim.kind === "inference" ? "推断" : "待验证";
+  return <div><small>{label}</small><p>{claim.text}</p><span>{claim.evidenceIds.map((id) => <a href={`#evidence-${id}`} key={id}>[{id}] </a>)}</span></div>;
+}
 
-type Payload = {
-  schemaVersion: number;
-  generatedAt: string;
-  results: NativeResearchResult[];
-};
-
-function text(value: unknown) {
-  return typeof value === "string" ? value : "";
+function exportReport(report: NativeResearchReport) {
+  const analysis = report.analysis;
+  const lines = [`# ${report.title}`, "", `Event ID: ${report.eventId}`, `Request ID: ${report.requestId}`, `状态: ${report.status} / 自动草稿未人工复核`, "", report.methodology, "", "## 摘要", analysis?.executiveSummary.text || report.note];
+  if (analysis) for (const section of Object.keys(RESEARCH_SECTIONS) as Array<keyof typeof RESEARCH_SECTIONS>) {
+    lines.push("", `## ${RESEARCH_SECTIONS[section]}`, ...analysis.sections[section].map((row) => `${row.kind}: ${row.text} [${row.evidenceIds.join(", ")}]`));
+  }
+  lines.push("", "## 来源材料", ...report.evidence.map((row) => `[${row.id}] ${row.title}\n${row.url}\n${row.excerpt}`));
+  const href = URL.createObjectURL(new Blob([lines.join("\n\n")], { type: "text/markdown;charset=utf-8" }));
+  const link = document.createElement("a");
+  link.href = href; link.download = `vciq-report-${report.eventId.replace(/[^a-z0-9_-]/gi, "-").slice(0, 100)}.md`;
+  link.click(); window.setTimeout(() => URL.revokeObjectURL(href), 1000);
 }
 
 export default function NativeResearchResultClient() {
-  const searchParams = useSearchParams();
-  const eventId = searchParams.get("event")?.trim() || "";
-  const [payload, setPayload] = useState<Payload | null>(null);
-  const [error, setError] = useState("");
+  const params = useSearchParams();
+  const eventId = params.get("event")?.trim() || "";
+  const requestId = params.get("request")?.trim() || "";
+  const runId = Number(params.get("run") || 0);
+  const { reports, error, checkedAt } = useNativeResearchReports(Boolean(requestId));
+  const [progress, setProgress] = useState("等待核对研究任务与公开结果…");
+  const result = reports?.find((row) => row.eventId === eventId && (!requestId || row.requestId === requestId)) ?? null;
 
   useEffect(() => {
+    if (result || !validResearchEventId(eventId) || !validResearchRequestId(requestId) || !Number.isSafeInteger(runId) || runId <= 0) return;
     let active = true;
-    fetch("/data/native_research_results.json", { cache: "no-store" })
-      .then(async (response) => {
-        if (!response.ok) throw new Error(`native_research_results.json returned ${response.status}`);
-        return response.json() as Promise<Payload>;
-      })
-      .then((value) => {
+    let reading = false;
+    const deadline = Date.now() + 20 * 60_000;
+    const controller = new AbortController();
+    const read = async () => {
+      if (!active || reading || document.hidden) return;
+      if (Date.now() > deadline) { setProgress("本页自动核对已暂停；任务可能仍在排队或等待发布。稍后刷新即可，不必重新提交。"); return; }
+      reading = true;
+      try {
+        // Public repository status only; no GitHub credentials or admin cookies.
+        const response = await fetch(`https://api.github.com/repos/VCIQ/VCIQ.github.io/actions/runs/${runId}`, {
+          cache: "no-store", signal: AbortSignal.any([controller.signal, AbortSignal.timeout(15_000)]), headers: { accept: "application/vnd.github+json" },
+        });
+        if (!response.ok) throw new Error("公开任务状态暂不可读；仍在核对已发布报告，不自动重提。");
+        const run = await response.json() as Record<string, unknown>;
+        if (run.display_title !== `VCIQ native ${requestId} ${eventId}` || run.head_branch !== "main" || run.event !== "workflow_dispatch" || String(run.path).split("@")[0] !== `.github/workflows/${NATIVE_RESEARCH_WORKFLOW_FILE}`) throw new Error("任务回执与本事件不匹配；没有认领其他研究结果。");
         if (!active) return;
-        setPayload(value);
-        setError("");
-      })
-      .catch(() => {
-        if (!active) return;
-        setError("暂时无法读取 Native Research 结果索引。");
-      });
-    return () => {
-      active = false;
+        if (run.status === "completed") setProgress(run.conclusion === "success"
+          ? "研究运行已结束，正在等待报告通过发布流程后出现在公开索引。运行成功不等于已公开。"
+          : `研究工作流未成功完成（${String(run.conclusion || "unknown")}）。已发布报告不会被清空；可查看任务日志。`);
+        else setProgress(run.status === "in_progress" ? "研究正在执行；完成后将自动核对报告并展示。" : "任务已排队，等待研究运行资源；不需要到 GitHub 手动操作。");
+      } catch (reason) { if (active) setProgress(reason instanceof Error ? reason.message : "任务状态读取失败。"); }
+      finally { reading = false; }
     };
-  }, []);
+    void read();
+    const interval = window.setInterval(() => void read(), 60_000);
+    return () => { active = false; controller.abort(); window.clearInterval(interval); };
+  }, [eventId, requestId, runId, result]);
 
-  const result = useMemo(
-    () => payload?.results?.find((row) => row.eventId === eventId) ?? null,
-    [eventId, payload],
-  );
-
-  return (
-    <main className={styles.page}>
-      <header className={styles.topbar}>
-        <Link href={eventId ? `/research-agent/investigate/?event=${encodeURIComponent(eventId)}` : "/research-agent/"}>
-          <ArrowLeft size={14} aria-hidden="true" />
-          返回研究上下文
-        </Link>
-        <b>VCIQ / NATIVE RESEARCH RESULT</b>
-      </header>
-
-      <section className={styles.hero}>
-        <small>EVENT-SPECIFIC · EVIDENCE-BOUND</small>
-        <h1>研究结果</h1>
-        <p>这里只展示已经由公开 Research Agent 产物绑定到该事件的 evidence / change；没有直接证据时会明确显示未形成专属结果。</p>
+  const valid = validResearchEventId(eventId) && (!requestId || validResearchRequestId(requestId));
+  return <main className={styles.page}>
+    <header className={styles.topbar}><Link href={valid ? `/research-agent/investigate/?event=${encodeURIComponent(eventId)}` : "/research-agent/"}>← 返回研究上下文</Link><Link href="/research-agent/#native-reports">专题深研报告</Link></header>
+    <section className={styles.hero}><small>EVENT-SPECIFIC · REQUEST-CORRELATED</small><h1>专题深研报告</h1><p>每份结果与事件 ID、请求 ID 和运行回执关联。报告是自动草稿，来源陈述、推断与待验证项分开展示。</p></section>
+    {!valid ? <section className={styles.state}>研究链接参数无效；未加载任意任务或替换事件。</section> : null}
+    {error ? <section className={styles.state} role="alert">{error} {reports ? "保留最近可用索引。" : "读取失败不能视为没有报告。"}</section> : null}
+    {valid && !result ? <section className={styles.state} role="status" aria-live="polite"><div>
+      <b>{requestId ? progress : "尚无该事件的专题报告"}</b>
+      <p>{requestId ? "无需反复点击提交；此页每20秒检查公开报告，任务状态每分钟核对，最多20分钟。" : "从“深研此条”提交后，回执对应的结果将自动出现在这里。"}</p>
+      {runId > 0 && Number.isSafeInteger(runId) ? <a href={`https://github.com/VCIQ/VCIQ.github.io/actions/runs/${runId}`} target="_blank" rel="noreferrer">查看任务日志（可选）</a> : null}
+      <p>最近成功读取：{checkedAt ? new Date(checkedAt).toLocaleTimeString("zh-CN") : "尚未读到索引"}</p>
+    </div></section> : null}
+    {valid && result ? <>
+      <section className={styles.resultCard}>
+        <div className={styles.statusRow}><span>{result.status === "completed-draft" ? "自动草稿已生成 · 未人工复核" : "NO EVENT-SPECIFIC EVIDENCE / 尚未形成可读报告"}</span></div>
+        <h2>{result.title}</h2><p>{result.note}</p><p>{result.methodology}</p>
+        <dl><div><dt>Event ID</dt><dd>{result.eventId}</dd></div><div><dt>Request ID</dt><dd>{result.requestId}</dd></div><div><dt>生成时间</dt><dd>{result.completedAt}</dd></div></dl>
+        <button type="button" onClick={() => exportReport(result)}>导出当前报告 Markdown</button>
+        {result.sourceUrl ? <a href={result.sourceUrl} target="_blank" rel="noreferrer">原始事件来源</a> : null}
       </section>
-
-      {error ? <section className={styles.state}><FileSearch size={18} /><p>{error}</p></section> : null}
-      {!error && !payload ? <section className={styles.state}><FileSearch size={18} /><p>正在读取结果索引…</p></section> : null}
-
-      {payload && !result ? (
-        <section className={styles.state}>
-          <FileSearch size={18} />
-          <div>
-            <b>尚无该事件的 Native Research 记录</b>
-            <p>提交深研后，Research Agent workflow 完成并发布结果索引，这里才会出现事件级结果。</p>
-          </div>
-        </section>
-      ) : null}
-
-      {result ? (
-        <>
-          <section className={styles.resultCard}>
-            <div className={styles.statusRow}>
-              <span className={result.status === "evidence-linked" ? styles.ready : styles.pending}>
-                {result.status === "evidence-linked" ? "EVIDENCE LINKED" : "NO EVENT-SPECIFIC EVIDENCE"}
-              </span>
-              <span>{result.runStatus}</span>
-            </div>
-            <h2>{result.title || result.eventId}</h2>
-            <p>{result.note}</p>
-            <dl>
-              <div><dt>Event ID</dt><dd>{result.eventId}</dd></div>
-              <div><dt>Requested</dt><dd>{result.requestedAt || "—"}</dd></div>
-              <div><dt>Completed</dt><dd>{result.completedAt || "—"}</dd></div>
-            </dl>
-            {result.sourceUrl ? (
-              <a href={result.sourceUrl} target="_blank" rel="noreferrer">
-                原始事件来源 <ExternalLink size={13} aria-hidden="true" />
-              </a>
-            ) : null}
-          </section>
-
-          {result.executiveSummary ? (
-            <section className={styles.section}>
-              <small>EXECUTIVE SUMMARY</small>
-              <h2>研究摘要</h2>
-              <p>{result.executiveSummary}</p>
-            </section>
-          ) : null}
-
-          <section className={styles.section}>
-            <small>EVIDENCE</small>
-            <h2>直接绑定证据</h2>
-            {result.evidence.length ? (
-              <div className={styles.grid}>
-                {result.evidence.map((row, index) => (
-                  <article key={text(row.id) || String(index)}>
-                    <ShieldCheck size={15} aria-hidden="true" />
-                    <b>{text(row.title) || text(row.claim) || text(row.id)}</b>
-                    <p>{text(row.claim)}</p>
-                    <span>{text(row.sourceName)} · {text(row.evidenceGrade)}</span>
-                    {text(row.url) ? (
-                      <a href={text(row.url)} target="_blank" rel="noreferrer">打开证据 <ExternalLink size={12} /></a>
-                    ) : null}
-                  </article>
-                ))}
-              </div>
-            ) : <p className={styles.empty}>本轮没有与该事件直接绑定的公开 evidence。</p>}
-          </section>
-
-          <section className={styles.section}>
-            <small>CHANGES</small>
-            <h2>事件相关变化</h2>
-            {result.changes.length ? (
-              <div className={styles.grid}>
-                {result.changes.map((row, index) => (
-                  <article key={text(row.id) || String(index)}>
-                    <b>{text(row.entityName) || text(row.id)}</b>
-                    <p>{text(row.summary)}</p>
-                    <span>Importance {String(row.importance ?? "—")}</span>
-                  </article>
-                ))}
-              </div>
-            ) : <p className={styles.empty}>本轮没有形成该事件的结构化 change；不会用通用日报替代。</p>}
-          </section>
-        </>
-      ) : null}
-    </main>
-  );
+      {result.analysis ? <>
+        <section className={styles.section}><h2>事件研究摘要</h2><EvidenceRefs claim={result.analysis.executiveSummary} /></section>
+        {(Object.keys(RESEARCH_SECTIONS) as Array<keyof typeof RESEARCH_SECTIONS>).map((section) => <section className={styles.section} key={section}><h2>{RESEARCH_SECTIONS[section]}</h2><div className={styles.grid}>{result.analysis?.sections[section].map((row, index) => <article key={index}><EvidenceRefs claim={row} /></article>)}</div></section>)}
+      </> : <section className={styles.section}>本次没有形成有效的事件级分析；不会用通用日报替代，也不会把失败当作完成。</section>}
+      <section className={styles.section}><h2>直接关联材料</h2><p>引用关系经过结构校验；不代表已打开全文或完成独立交叉核验。</p><div className={styles.grid}>{result.evidence.map((row) => <article id={`evidence-${row.id}`} key={row.id}><b>[{row.id}] {row.title}</b><p>{row.excerpt}</p><span>{row.sourceName} · {row.publishedAt}</span><a href={row.url} target="_blank" rel="noreferrer">查看来源材料</a></article>)}</div></section>
+    </> : null}
+  </main>;
 }
