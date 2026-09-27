@@ -13,12 +13,13 @@ import { buildHomepageFavoriteAffinityProfile, homepageFavoriteId, isHomepageSec
 import { mergeRankedIntelligenceIntoArticlePayload, parseRankedIntelligenceProjection } from "@/lib/ranked-intelligence";
 import { buildNativeResearchMarkdown, buildNativeResearchResultHref, buildResearchContextUrl, buildResearchWorkspaceLaunchUrl, buildResearchWorkspacePrompt, type ResearchWorkspaceHandoff } from "@/lib/research-workspace-handoff";
 import { parseArticlePayload, type ArticlePayload, type LiveIntelligenceEvent } from "@/lib/use-articles";
+import { archivedResearchEvent, type ResearchEventWithArchive } from "@/lib/native-research-event-archive";
 import NativeResearchSubmission from "./native-research-submission";
 import styles from "./research-investigation.module.css";
 
 const researchWorkspaceUrl = process.env.NEXT_PUBLIC_QM_WORKSPACE_URL?.trim() || "";
 type LoadState = "loading" | "ready" | "missing" | "error";
-type LoadResult = { eventId: string; state: Exclude<LoadState, "loading">; item: LiveIntelligenceEvent | null };
+type LoadResult = { eventId: string; state: Exclude<LoadState, "loading">; item: ResearchEventWithArchive | null };
 type CopyState = "idle" | "copied" | "failed";
 type PersonDirectoryArchivePayload = { channels?: { people?: { items?: HomepagePersonDirectoryItem[] } } };
 type PeoplePayload = { people?: HomepagePersonProfile[] };
@@ -81,6 +82,9 @@ async function loadResearchEvent(eventId: string) {
     } catch { /* Optional person-directory enrichment must not break canonical events. */ }
     return canonicalEvent;
   }
+  // Only exact retained IDs may fall back; never substitute a newer same-company story.
+  const archived = archivedResearchEvent(eventId);
+  if (archived) return archived;
   if (!eventId.startsWith("person-directory:")) return null;
   return loadPersonDirectoryResearchEvent(eventId);
 }
@@ -112,7 +116,11 @@ export default function ResearchInvestigationClient() {
   const handoff = useMemo<ResearchWorkspaceHandoff | null>(() => {
     if (!item) return null;
     return {
-      eventId: item.id, title: item.title, url: item.source.url, summary: homepageEventSummary(item), sector: item.sector, company: item.company,
+      eventId: item.id, title: item.title, url: item.source.url,
+      summary: item.archiveProvenance
+        ? `【历史公开快照，未重新核验】${homepageEventSummary(item)}；归档出处：${item.archiveProvenance.sourceCommit}/${item.archiveProvenance.sourcePath}`
+        : homepageEventSummary(item),
+      sector: item.sector, company: item.company,
       people: unique([...(item.mentionedPeople ?? []), ...(item.authors ?? [])]), companies: unique(item.mentionedCompanies ?? []),
       relatedSources: homepageSourceEvidence(item).additionalLinks.map((source) => ({ name: source.name, url: source.url, level: source.level, title: source.title, publishedAt: source.publishedAt })),
       importance: item.importance, publishedAt: item.publishedAt, sourceName: item.source.name, sourceLevel: item.source.level,
@@ -151,9 +159,10 @@ export default function ResearchInvestigationClient() {
       <p>整理当前情报与来源，提交事件级研究。QM 不是前置依赖；来源陈述、模型推断与待验证事项不混为已核实事实。</p>
     </header>
     {state === "loading" ? <section className={styles.statePanel} role="status"><FileSearch size={20} /><div><strong>正在读取当前情报与关联来源</strong><p>仅在主动进入深研时读取公开情报快照。</p></div></section> : null}
-    {state === "missing" ? <section className={styles.statePanel}><FileSearch size={20} /><div><strong>{eventId ? "没有找到这条情报" : "缺少事件参数"}</strong><p>请从首页具体情报的“深研此条”进入；旧事件 ID 可能已不在当前快照。</p></div></section> : null}
+    {state === "missing" ? <section className={styles.statePanel}><FileSearch size={20} /><div><strong>{eventId ? "没有找到这条情报" : "缺少事件参数"}</strong><p>请从首页具体情报的“深研此条”进入；旧事件 ID 可能已不在当前快照或保留档案。</p></div></section> : null}
     {state === "error" ? <section className={styles.statePanel}><FileSearch size={20} /><div><strong>暂时无法读取公开情报快照</strong><p>读取失败时不会伪造研究上下文。</p></div></section> : null}
     {state === "ready" && item && handoff ? <>
+      {item.archiveProvenance ? <section className={styles.statePanel} role="status"><FileSearch size={20} /><div><strong>历史事件研究 · 不在当前滚动资讯窗口</strong><p>使用保留的原事件和来源，不替换为同公司的其他消息；未重新访问原文或独立核验。</p><a href={`https://github.com/VCIQ/VCIQ.github.io/blob/${item.archiveProvenance.sourceCommit}/${item.archiveProvenance.sourcePath}`} target="_blank" rel="noreferrer">查看归档公开快照（{item.archiveProvenance.sourceCommit.slice(0, 8)}）</a></div></section> : null}
       <section className={styles.eventCard} aria-labelledby="investigation-title">
         <div className={styles.tagRow}><span>{item.type}</span><span>{item.region}</span><span>{item.sector}</span><span>重要度 {item.importance}</span></div>
         <h2 id="investigation-title">{item.title}</h2><p className={styles.summary}>{eventSummary}</p>
