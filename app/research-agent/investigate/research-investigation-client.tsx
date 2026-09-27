@@ -42,7 +42,6 @@ import {
 import {
   buildNativeResearchMarkdown,
   buildNativeResearchResultHref,
-  buildNativeResearchWorkflowCommand,
   buildResearchContextUrl,
   buildResearchWorkspaceLaunchUrl,
   buildResearchWorkspacePrompt,
@@ -299,7 +298,7 @@ export default function ResearchInvestigationClient() {
 
   async function submitNativeResearch() {
     if (!handoff) return;
-    const copied = await copyText(buildNativeResearchWorkflowCommand(handoff.eventId));
+    const copied = await copyText(handoff.eventId);
     setSubmitState(copied ? "ready" : "failed");
     if (copied) {
       window.open(NATIVE_RESEARCH_WORKFLOW_URL, "_blank", "noopener,noreferrer");
@@ -446,13 +445,13 @@ export default function ResearchInvestigationClient() {
             <div className={styles.nativeCopy}>
               <strong>VCIQ Native Research Flow</strong>
               <p>
-                不依赖 QM。先导出可复核研究包；需要执行深研时，提交按钮会复制带 event_id 的 GitHub Actions 命令并打开 Research Agent workflow。结果页只展示已经进入公开 Research Agent 产物的证据，不会伪造“已完成”。
+                不依赖 QM。静态站不保存 GitHub 写凭据；“提交深研”会复制 event ID 并打开受 GitHub 身份保护的 Research Agent workflow，你只需把 event ID 粘贴到 event_id 输入框并运行。结果页只展示已经进入公开 Research Agent 产物的证据，不会伪造“已完成”。
               </p>
             </div>
             <div className={styles.nativeActions}>
               <button type="button" onClick={() => void submitNativeResearch()}>
                 <Play size={14} aria-hidden="true" />
-                {submitState === "ready" ? "命令已复制 · 打开 Actions" : submitState === "failed" ? "复制失败" : "提交深研"}
+                {submitState === "ready" ? "事件 ID 已复制 · 打开 Actions" : submitState === "failed" ? "复制失败" : "提交深研"}
               </button>
               <button type="button" onClick={exportResearchPackage}>
                 <Download size={14} aria-hidden="true" />
