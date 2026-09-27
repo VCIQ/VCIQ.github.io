@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-26T15:28:00+00:00",
+  "updatedAt": "2026-09-27T00:37:34+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -2684,7 +2684,7 @@
         "investors",
         "power purchase agreements"
       ],
-      "state": "review",
+      "state": "active",
       "resolutionSource": "source-context",
       "resolutionStatus": "resolved",
       "createdAt": "2026-08-15T01:53:00+00:00",
@@ -7963,7 +7963,7 @@
       "keywords": [
         "完美世界"
       ],
-      "state": "review",
+      "state": "active",
       "resolutionSource": "source-context",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-01T06:53:56+00:00",
@@ -8047,7 +8047,7 @@
       "keywords": [
         "三七互娱"
       ],
-      "state": "review",
+      "state": "active",
       "resolutionSource": "source-context",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-01T06:53:56+00:00",
@@ -31617,9 +31617,9 @@
       "trackId": "track:fusion",
       "entityId": "company-4d4f0f7a97c8f4035952",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
-      "confidence": "medium",
+      "confidence": "low",
       "origins": [
         {
           "id": "origin-7181aaf0dbebd86e72c8",
@@ -31631,8 +31631,44 @@
             "个人研究兴趣"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-fe6569bd16f0f003a131",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-27T00:37:34+00:00",
+          "evidenceUrl": "https://www.eni.com/en-IT/actions/energy-sources/magnetic-confinement-fusion.html",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:Eni directly participates in magnetic-confinement fusion R&D, is a strategic CFS partner and has launched a fusion-industrialization joint venture with UKAEA."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-fff64c7f5157620199bd04b9",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-27T00:37:34+00:00",
+        "trackId": "track:fusion",
+        "entityId": "company-4d4f0f7a97c8f4035952",
+        "requestedName": "Eni",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Eni",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "eni",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-7528fcbbb23997bafc91",
@@ -51748,9 +51784,9 @@
       "trackId": "track:ai",
       "entityId": "company-87a49224c5149a3347d4",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
-      "confidence": "medium",
+      "confidence": "low",
       "origins": [
         {
           "id": "origin-7edb894175eaa343514d",
@@ -51765,8 +51801,44 @@
             "融资机会"
           ],
           "note": "人工补充公司对象;来源文章:VAST完成约30亿元B和B+轮融资,经纬创投领投,同步发布Tripo P2.0"
+        },
+        {
+          "id": "origin-2852bf8a78a1c42d5403",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-27T00:37:34+00:00",
+          "evidenceUrl": "https://www.pwrd.com/cn/news/press/p2026/20260428/88831.shtml",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:Perfect World directly operates an AIGC platform and an in-house large-model agent platform embedded across its game-production pipeline."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-ed3a42850defb3c62005229c",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-27T00:37:34+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-87a49224c5149a3347d4",
+        "requestedName": "完美世界",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "完美世界",
+        "targetId": "",
+        "confidence": "low",
+        "source": "source-context",
+        "reason": "原文邻近语境更像技术、项目或工具，不能直接作为公司写入。",
+        "decisionKey": "完美世界",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-a747929c34a4451c2a9c",
@@ -52258,9 +52330,9 @@
       "trackId": "track:ai",
       "entityId": "company-187d534a2b5deed574f9",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
-      "confidence": "medium",
+      "confidence": "low",
       "origins": [
         {
           "id": "origin-03893ce4c3a6d066d21b",
@@ -52275,8 +52347,44 @@
             "融资机会"
           ],
           "note": "人工补充公司对象;来源文章:VAST完成约30亿元B和B+轮融资,经纬创投领投,同步发布Tripo P2.0"
+        },
+        {
+          "id": "origin-26dba847e30282793724",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-27T00:37:34+00:00",
+          "evidenceUrl": "https://zhaopin.37.com/37wannet/introduction.html",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:37 Interactive Entertainment directly develops and commercializes in-house AI products, including its filed XiaoQi large model and AI production pipeline."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-87758ae36763d6f5139ec653",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-27T00:37:34+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-187d534a2b5deed574f9",
+        "requestedName": "三七互娱",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "三七互娱",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "三七互娱",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-96ab471d214248368a4a",
@@ -66166,9 +66274,9 @@
       "trackId": "track:ai",
       "entityId": "company-397473f7f19e4fb26a44",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
-      "confidence": "medium",
+      "confidence": "low",
       "origins": [
         {
           "id": "origin-f5c130b175d0b729ea1c",
@@ -66180,8 +66288,44 @@
             "个人研究兴趣"
           ],
           "note": "人工补充公司对象;来源文章:太空算力突然开始密集融资,资本到底在押什么?"
+        },
+        {
+          "id": "origin-ee41efaf1bf43032cebb",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-27T00:37:34+00:00",
+          "evidenceUrl": "https://www.mivsys.com/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:中科密位 directly develops intelligent-computing architectures, intelligent satellites, model-inference systems and autonomous recognition workloads for space computing."
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-0d88d3011c5e07b28565070e",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-27T00:37:34+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-397473f7f19e4fb26a44",
+        "requestedName": "中科密位",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "中科密位",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "中科密位",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-c964d47a8399b1ea4bde",
