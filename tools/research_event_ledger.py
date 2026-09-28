@@ -58,6 +58,13 @@ def public_url(value: Any) -> str:
         return ""
 
 
+def safe_int(value: Any, default: int) -> int:
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return default
+
+
 def safe_list(value: Any, limit: int = 16) -> list[str]:
     result: list[str] = []
     seen: set[str] = set()
@@ -120,7 +127,7 @@ def normalize_article_event(raw: dict[str, Any]) -> dict[str, Any] | None:
         "company": clean(raw.get("company"), 180),
         "sourceId": clean(raw.get("sourceId"), 180),
         "publishedAt": clean(raw.get("publishedAt"), 80),
-        "importance": max(0, min(100, int(raw.get("importance") or 0))),
+        "importance": max(0, min(100, safe_int(raw.get("importance"), 0))),
         "source": {
             "name": clean(source.get("name"), 180),
             "url": url,
@@ -132,7 +139,7 @@ def normalize_article_event(raw: dict[str, Any]) -> dict[str, Any] | None:
         "mentionedPeople": safe_list(raw.get("mentionedPeople")),
         "matchedTrackingTerms": safe_list(raw.get("matchedTrackingTerms"), 24),
         "eventClusterId": clean(raw.get("eventClusterId"), 220),
-        "duplicateCount": max(1, int(raw.get("duplicateCount") or 1)),
+        "duplicateCount": max(1, safe_int(raw.get("duplicateCount"), 1)),
         "relatedSources": safe_related(raw.get("relatedSources")),
     }
     for key in ("qualityStatus", "verificationStatus", "reviewStatus", "publicationTier", "sourceRole"):
@@ -180,7 +187,7 @@ def normalize_ranked_event(raw: dict[str, Any]) -> dict[str, Any] | None:
         "company": companies[0] if companies else "",
         "sourceId": "ranked-intelligence",
         "publishedAt": clean(raw.get("publishedAt"), 80),
-        "importance": max(0, min(100, int(raw.get("score") or 0))),
+        "importance": max(0, min(100, safe_int(raw.get("score"), 0))),
         "source": {
             "name": clean(raw.get("source"), 180),
             "url": url,
@@ -192,7 +199,7 @@ def normalize_ranked_event(raw: dict[str, Any]) -> dict[str, Any] | None:
         "mentionedPeople": people,
         "matchedTrackingTerms": safe_list(technologies + tracks, 24),
         "eventClusterId": clean(raw.get("eventClusterId"), 220),
-        "duplicateCount": max(1, int(raw.get("duplicateCount") or 1)),
+        "duplicateCount": max(1, safe_int(raw.get("duplicateCount"), 1)),
         "relatedSources": [
             {
                 "name": clean(row.get("source"), 180),
