@@ -23,7 +23,7 @@ test("Research Event Ledger never substitutes another event ID", () => {
 });
 
 test("rejected records fail closed", () => {
-  const clone = structuredClone(ledger) as typeof ledger;
+  const clone = structuredClone(ledger) as unknown as { events: Record<string, { status: string }> };
   clone.events[rankedId].status = "rejected";
   assert.equal(parseResearchLedgerEvent(clone, rankedId), null);
 });
