@@ -19,11 +19,13 @@ from urllib.parse import urlsplit, urlunsplit
 
 try:
     from .native_event_research_archive import archived_event
+    from .research_event_ledger import normalize_ranked_event, retained_event
 except ImportError:
     from native_event_research_archive import archived_event
+    from research_event_ledger import normalize_ranked_event, retained_event
 
 SECTIONS = ("facts", "history", "relationships", "industryImpact", "bullCase", "bearCase", "unknowns", "nextEvidence")
-EVENT_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:/-]{0,179}$")
+EVENT_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:/-]{0,319}$")
 REQUEST_RE = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$")
 MAX_EVIDENCE = 16
 MAX_INDEX_BYTES = 2_000_000
@@ -89,9 +91,20 @@ def valid_material(row: dict[str, Any]) -> bool:
 
 def resolve_event(root: Path, event_id: str) -> dict[str, Any]:
     articles = rows(record(load(root / "public/data/articles.json", {})).get("articles"))
-    ranked = rows(record(load(root / "public/data/ranked-intelligence.json", {})).get("items"))
-    event = next((row for row in articles + ranked if row.get("id") == event_id), None)
+    current_article = next((row for row in articles if row.get("id") == event_id), None)
     # A current rejection must never be bypassed by historical material.
+    if current_article is not None:
+        if not valid_material(current_article) or not source_of(current_article)["url"]:
+            raise ValueError("current event is ineligible")
+        return current_article
+
+    ranked_rows = rows(record(load(root / "public/data/ranked-intelligence.json", {})).get("items"))
+    ranked_events = [value for value in (normalize_ranked_event(row) for row in ranked_rows) if value]
+    current_ranked = next((row for row in ranked_events if row.get("id") == event_id), None)
+    if current_ranked is not None:
+        return current_ranked
+
+    event = retained_event(root, event_id)
     if event is None:
         event = archived_event(root, event_id)
     if not event or not valid_material(event) or not source_of(event)["url"]:
@@ -152,9 +165,10 @@ def build_prompt(event: dict[str, Any], evidence: list[dict[str, Any]]) -> str:
             "历史30/90天、独立来源或商业验证不足时明确写入 unknowns 和 nextEvidence，不虚构研究完整性。",
             "同一来源转载/链接数量不等于独立交叉验证；不提供买卖建议、目标价或收益承诺。",
             "每段最多4条，每条 text 不超过800字符；executiveSummary 为对象，不是字符串。",
-            "archiveProvenance 非空时，这是历史保留事件；保留原始事件日期，不得称为今日新消息或已重新核验。",
+            "researchLedgerProvenance 或 archiveProvenance 非空时，这是历史保留事件；保留原始事件日期，不得称为今日新消息或已重新核验。",
         ],
         "event": {"eventId": event.get("id"), "title": event.get("title"), "url": source_of(event)["url"],
+                  "researchLedgerProvenance": record(event.get("researchLedgerProvenance")),
                   "archiveProvenance": record(event.get("archiveProvenance"))},
         "evidence": evidence,
         "requiredOutput": {
@@ -214,8 +228,18 @@ def generate(root: Path, event_id: str, request_id: str, model_call=None) -> dic
     except ValueError:
         return {**base, "status": "event-unavailable", "note": "发布数据中未找到此事件或其来源不符合要求；未调用模型。"}
     base.update({"title": clean(event.get("title"), 300), "sourceUrl": source_of(event)["url"], "sector": clean(event.get("sector"), 120)})
+    ledger_provenance = record(event.get("researchLedgerProvenance"))
     provenance = record(event.get("archiveProvenance"))
-    if provenance:
+    if ledger_provenance:
+        base["researchLedgerProvenance"] = ledger_provenance
+        commit = str(ledger_provenance.get("sourceCommit") or "")
+        dataset = str(ledger_provenance.get("sourceDataset") or "")
+        suffix = f" 捕获快照：https://github.com/VCIQ/VCIQ.github.io/blob/{commit}/{dataset}" if commit and dataset else ""
+        base["methodology"] = (
+            "本事件已退出当前滚动资讯窗口，使用 Research Event Ledger 的 exact-ID 历史记录；"
+            "未重新访问原文或独立事实核验。" + suffix
+        )
+    elif provenance:
         base["archiveProvenance"] = provenance
         base["methodology"] = (
             "本事件已退出当前滚动资讯窗口，使用历史公开快照保留记录；未重新访问原文或独立事实核验。"
