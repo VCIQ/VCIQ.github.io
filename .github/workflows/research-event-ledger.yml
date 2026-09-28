@@ -14,6 +14,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: vciq-repository-writer-${{ github.ref }}
@@ -36,6 +37,7 @@ jobs:
           python -m py_compile tools/research_event_ledger.py
           python -m unittest tests.test_research_event_ledger
       - name: Capture triggering and current public events
+        id: publish
         env:
           CAPTURE_REF: ${{ github.sha }}
         shell: bash
@@ -54,14 +56,22 @@ jobs:
             git add public/data/research_event_ledger.json
             if git diff --cached --quiet; then
               echo "Research Event Ledger already covers the triggering and current snapshots."
+              echo "changed=false" >> "$GITHUB_OUTPUT"
               exit 0
             fi
             git commit -m "data: retain public events for research links"
 
             if git push origin HEAD:main; then
+              echo "changed=true" >> "$GITHUB_OUTPUT"
               exit 0
             fi
             echo "main advanced while retaining events; rebuilding from latest ledger and the original trigger."
           done
           echo "Research Event Ledger could not publish after three serialized attempts."
           exit 1
+
+      - name: Publish the retained ledger through the existing Pages workflow
+        if: steps.publish.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
