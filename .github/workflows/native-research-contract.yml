@@ -23,12 +23,18 @@ on:
     branches: [main]
     paths:
       - 'tools/native_event_research*.py'
+      - 'tools/research_event_ledger.py'
       - 'tools/validate_native_research_reports.py'
       - 'tests/test_native_event_research*.py'
+      - 'tests/test_research_event_ledger.py'
       - 'tests/native-research*.test.ts'
+      - 'tests/research-event-ledger.test.ts'
       - 'lib/native-research*.ts'
+      - 'lib/research-event-ledger.ts'
       - '.github/workflows/native*.yml'
+      - '.github/workflows/research-event-ledger.yml'
       - 'config/native_research_event_archives.json'
+      - 'public/data/research_event_ledger.json'
 permissions:
   contents: read
 jobs:
