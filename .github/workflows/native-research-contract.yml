@@ -3,26 +3,38 @@ on:
   pull_request:
     paths:
       - 'tools/native_event_research*.py'
+      - 'tools/research_event_ledger.py'
       - 'tools/validate_native_research_reports.py'
       - 'tests/test_native_event_research*.py'
+      - 'tests/test_research_event_ledger.py'
       - 'tests/native-research*.test.ts'
+      - 'tests/research-event-ledger.test.ts'
       - 'lib/native-research*.ts'
+      - 'lib/research-event-ledger.ts'
       - 'lib/research-workspace-handoff.ts'
       - 'app/research-agent/**'
       - 'components/use-native-research-reports.ts'
       - '.github/workflows/native*.yml'
       - 'config/automation_jobs.json'
       - 'config/native_research_event_archives.json'
+      - 'public/data/research_event_ledger.json'
+      - '.github/workflows/research-event-ledger.yml'
   push:
     branches: [main]
     paths:
       - 'tools/native_event_research*.py'
+      - 'tools/research_event_ledger.py'
       - 'tools/validate_native_research_reports.py'
       - 'tests/test_native_event_research*.py'
+      - 'tests/test_research_event_ledger.py'
       - 'tests/native-research*.test.ts'
+      - 'tests/research-event-ledger.test.ts'
       - 'lib/native-research*.ts'
+      - 'lib/research-event-ledger.ts'
       - '.github/workflows/native*.yml'
+      - '.github/workflows/research-event-ledger.yml'
       - 'config/native_research_event_archives.json'
+      - 'public/data/research_event_ledger.json'
 permissions:
   contents: read
 jobs:
@@ -42,7 +54,9 @@ jobs:
           node-version: 22
       - run: npm ci
       - run: python -m unittest discover -s tests -p 'test_native_event_research*.py'
-      - run: node --import tsx --test tests/native-research-flow.test.ts tests/native-research-event-archive.test.ts tests/research-workspace-handoff.test.ts tests/research-investigation-event-consistency.test.ts
+      - run: python -m unittest tests.test_research_event_ledger
+      - run: python tools/research_event_ledger.py --check
+      - run: node --import tsx --test tests/native-research-flow.test.ts tests/native-research-event-archive.test.ts tests/research-event-ledger.test.ts tests/research-workspace-handoff.test.ts tests/research-investigation-event-consistency.test.ts
       - run: python tools/validate_native_research_reports.py
       - name: Build auditable control-plane bootstrap (no model execution)
         run: |

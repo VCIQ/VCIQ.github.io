@@ -1,0 +1,67 @@
+name: Refresh persistent research event ledger
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - public/data/articles.json
+      - public/data/ranked-intelligence.json
+      - tools/research_event_ledger.py
+      - lib/research-event-ledger.ts
+      - .github/workflows/research-event-ledger.yml
+      - config/native_research_event_archives.json
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vciq-repository-writer-${{ github.ref }}
+  queue: max
+
+jobs:
+  refresh-ledger:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate bounded exact-ID ledger
+        run: |
+          python -m py_compile tools/research_event_ledger.py
+          python -m unittest tests.test_research_event_ledger
+      - name: Capture triggering and current public events
+        env:
+          CAPTURE_REF: ${{ github.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+
+            python tools/research_event_ledger.py --capture-ref "$CAPTURE_REF" --write               | tee /tmp/research-event-ledger.json
+            python tools/research_event_ledger.py --check
+
+            git add public/data/research_event_ledger.json
+            if git diff --cached --quiet; then
+              echo "Research Event Ledger already covers the triggering and current snapshots."
+              exit 0
+            fi
+            git commit -m "data: retain public events for research links"
+
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "main advanced while retaining events; rebuilding from latest ledger and the original trigger."
+          done
+          echo "Research Event Ledger could not publish after three serialized attempts."
+          exit 1
