@@ -396,7 +396,10 @@ def atomic_write(path: Path, value: Any) -> None:
 
 
 def retained_event(root: Path, event_id: str) -> dict[str, Any] | None:
-    payload = read_json(root / LEDGER_PATH, {})
+    path = root / LEDGER_PATH
+    if not path.exists():
+        return None
+    payload = read_json(path, {})
     validate_ledger(payload)
     row = record(record(payload.get("events")).get(event_id))
     event = record(row.get("event"))
