@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
-import { parseNativeResearchReports, researchLaunchUrl, researchResultHref, RESEARCH_SECTIONS, safeResearchUrl } from "../lib/native-research-contract";
+import { parseNativeResearchReports, researchLaunchUrl, researchResultHref, RESEARCH_SECTIONS, safeResearchUrl, validResearchEventId } from "../lib/native-research-contract";
 import { buildNativeResearchWorkflowCommand } from "../lib/research-workspace-handoff";
 
 const requestId = "00000000-0000-4000-8000-000000000001";
@@ -17,6 +17,13 @@ function fixture() {
     analysis: { executiveSummary: { text: "Event-specific summary", kind: "inference", evidenceIds: ["N001"] }, sections: Object.fromEntries(Object.keys(RESEARCH_SECTIONS).map((key) => [key, [{ text: "Statement within the evidence scope", kind: key === "facts" ? "source_statement" : "unknown", evidenceIds: ["N001"] }]])) },
   }] };
 }
+
+test("normalized ranked-intelligence event IDs remain accepted up to the published ID budget", () => {
+  const longRanked = `ranked-intelligence:${"a".repeat(240)}`;
+  assert.equal(validResearchEventId(longRanked), true);
+  assert.doesNotThrow(() => researchLaunchUrl(longRanked, requestId, nonce));
+  assert.equal(validResearchEventId("a".repeat(321)), false);
+});
 
 test("research launch carries only event/request identity with a nonce in the fragment", () => {
   const url = new URL(researchLaunchUrl(eventId, requestId, nonce));
