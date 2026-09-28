@@ -40,3 +40,16 @@ test("investigate lookup order is current snapshot, ledger, explicit archive", a
   assert.match(source, /Research Event Ledger · 历史事件研究/u);
   assert.match(source, /exact event ID 保留 180 天/u);
 });
+
+
+test("ledger writer explicitly dispatches Pages after a bot-authored data commit", async () => {
+  const workflow = await readFile(
+    new URL("../.github/workflows/research-event-ledger.yml", import.meta.url),
+    "utf8",
+  );
+  assert.match(workflow, /actions: write/u);
+  assert.match(workflow, /id: publish/u);
+  assert.match(workflow, /changed=true/u);
+  assert.match(workflow, /if: steps\.publish\.outputs\.changed == 'true'/u);
+  assert.match(workflow, /gh workflow run pages\.yml --ref main/u);
+});
