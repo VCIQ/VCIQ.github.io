@@ -1,0 +1,42 @@
+name: Native research production smoke
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/native-research-production-smoke.yml
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  dispatch:
+    if: github.repository == 'VCIQ/VCIQ.github.io'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Dispatch one idempotent production research request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_ID: ranked-intelligence:intel-event-35084a5f95caa665
+          REQUEST_ID: 11111111-1111-4111-8111-111111111111
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected="VCIQ native $REQUEST_ID $EVENT_ID"
+          existing="$(gh run list             --repo VCIQ/VCIQ.github.io             --workflow native-event-research.yml             --limit 100             --json displayTitle             --jq '.[] | select(.displayTitle == env.expected) | .displayTitle'             2>/dev/null || true)"
+          if [ -n "$existing" ]; then
+            echo "Matching Native Research run already exists; smoke dispatch is idempotent."
+            exit 0
+          fi
+          gh workflow run native-event-research.yml             --repo VCIQ/VCIQ.github.io             --ref main             -f event_id="$EVENT_ID"             -f request_id="$REQUEST_ID"
+          {
+            echo "## Native Research production smoke"
+            echo
+            echo "Dispatched exact retained event: `$EVENT_ID`"
+            echo "Request: `$REQUEST_ID`"
+            echo
+            echo "This smoke tests the production Native Event Research workflow and publication path."
+            echo "Browser Cloudflare Access / tracking-admin submission remains a separate authenticated UI acceptance."
+          } >> "$GITHUB_STEP_SUMMARY"
