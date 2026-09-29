@@ -1,0 +1,75 @@
+name: Refresh priority publisher feed
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/priority-intelligence-refresh.yml
+      - tools/priority_intelligence.py
+      - config/intelligence_sources.json
+  schedule:
+    - cron: "3-58/5 * * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: vciq-priority-publisher-main
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    if: github.repository == 'VCIQ/VCIQ.github.io' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify priority source and publication boundaries
+        run: python -m unittest tests.test_priority_source_publication tests.test_priority_intelligence
+      - name: Collect public publisher increment
+        run: python -m tools.priority_intelligence collect --file /tmp/priority-scan.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: public-priority-scan
+          path: /tmp/priority-scan.json
+          retention-days: 1
+          if-no-files-found: error
+  publish:
+    needs: collect
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@v4
+        with:
+          name: public-priority-scan
+          path: /tmp/priority-scan
+      - name: Validate and publish data-only branch with a receipt
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python -m tools.priority_intelligence publish --file /tmp/priority-scan/priority-scan.json | tee /tmp/priority-receipt.json
+          {
+            echo '## Priority public feed receipt'
+            echo '```json'
+            cat /tmp/priority-receipt.json
+            echo '```'
+            echo 'The homepage reads this data separately. No Pages rebuild is required per update.'
+            echo 'Scheduled execution is best-effort; this receipt is not a browser freshness guarantee.'
+          } >> "$GITHUB_STEP_SUMMARY"
