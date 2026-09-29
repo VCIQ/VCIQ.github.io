@@ -1444,6 +1444,56 @@ def parse_sina_items(body: str, spec: dict[str, Any]) -> list[dict[str, Any]]:
     return accepted
 
 
+def parse_mittrchina_items(body: str, spec: dict[str, Any]) -> list[dict[str, Any]]:
+    """Read the same public news list used by the publisher's browser frontend.
+
+    The HTML entry point is a JavaScript shell, not an RSS feed. Never treat an
+    API error or a changed response schema as a successful empty collection.
+    Article links are built from validated publisher IDs, not supplied URLs.
+    """
+    payload = json.loads(body)
+    if not isinstance(payload, dict) or payload.get("code") != 10000:
+        raise ValueError("mittrchina public news API did not return success")
+    data = payload.get("data")
+    if not isinstance(data, dict) or not isinstance(data.get("items"), list):
+        raise ValueError("mittrchina public news list schema changed")
+    limit = max(0, min(int(spec.get("maxItems", 12)), 20))
+    if limit == 0:
+        return []
+    accepted: list[dict[str, Any]] = []
+    seen: set[int] = set()
+    for row in data["items"][:100]:
+        if not isinstance(row, dict):
+            continue
+        article_id = row.get("id")
+        if type(article_id) is not int or not 0 < article_id < 1_000_000_000 or article_id in seen:
+            continue
+        raw_title = row.get("name")
+        raw_summary = row.get("summary")
+        timestamp = row.get("start_time")
+        if not isinstance(raw_title, str) or type(timestamp) not in (int, float) or timestamp <= 0:
+            continue
+        title = clean_title(raw_title)
+        summary = strip_html(raw_summary) if isinstance(raw_summary, str) else ""
+        published_at = normalize_date(timestamp)
+        if not title or not published_at:
+            continue
+        if not _matches_keywords(title, summary, spec.get("keywords", []),
+                                 title_only=bool(spec.get("strictTitleKeywords"))):
+            continue
+        accepted.append(_external_article(
+            spec, title=title, summary=summary,
+            url=f"https://www.mittrchina.com/news/detail/{article_id}",
+            published_at=published_at,
+            source_name=spec.get("name", "麻省理工科技评论中文网"),
+            source_level="媒体报道", platform="专业媒体",
+        ))
+        seen.add(article_id)
+        if len(accepted) >= limit:
+            break
+    return accepted
+
+
 def _crawl_config_source(
     spec: dict[str, Any], user_agent: str
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
@@ -1451,6 +1501,8 @@ def _crawl_config_source(
     body = fetch_text(spec["url"], user_agent)
     if spec.get("adapter") == "sina_json":
         articles = parse_sina_items(body, spec)
+    elif spec.get("adapter") == "mittrchina_json":
+        articles = parse_mittrchina_items(body, spec)
     else:
         articles = parse_feed_items(body, spec)
     elapsed = time.monotonic() - started

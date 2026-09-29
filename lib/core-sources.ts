@@ -402,7 +402,7 @@ function buildFeedSources(): CoreSource[] {
       keywords: strings(feed.keywords, 28),
       companies: strings(feed.trackedCompanies, 18),
       people: strings(feed.trackedPeople, 18),
-      url: safeHttpUrl(feed.url),
+      url: safeHttpUrl(feed.sourceUrl) || safeHttpUrl(feed.url),
       lifecycle: "tracked",
       healthStatus: overallPublisherStatus(endpoints),
       healthUpdatedAt: healthContext.generatedAt,
