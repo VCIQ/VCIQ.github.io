@@ -2,6 +2,33 @@
   "schemaVersion": 1,
   "feeds": [
     {
+      "id": "mittrchina-public-news",
+      "name": "麻省理工科技评论中文网",
+      "url": "https://apii.web.mittrchina.com/information/index?page=1&limit=20",
+      "sourceUrl": "https://www.mittrchina.com/",
+      "adapter": "mittrchina_json",
+      "platform": "专业媒体",
+      "sourceLevel": "媒体报道",
+      "region": "中国",
+      "maxItems": 12,
+      "allowedHosts": ["www.mittrchina.com"],
+      "keywords": ["AI", "人工智能", "AMD", "World Labs", "李飞飞", "世界模型", "机器人", "芯片", "量子", "生物", "能源", "材料", "太空", "航天"]
+    },
+    {
+      "id": "amd-newsroom",
+      "name": "AMD Newsroom",
+      "url": "https://newsroom.amd.com/rss.xml",
+      "adapter": "rss",
+      "platform": "官方网站",
+      "sourceLevel": "官方披露",
+      "region": "美国",
+      "sector": "半导体",
+      "company": "AMD",
+      "maxItems": 16,
+      "allowedHosts": ["newsroom.amd.com"],
+      "keywords": ["AI", "artificial intelligence", "World Labs", "Fei-Fei", "robot", "Instinct", "acquir", "acquisition", "ROCm"]
+    },
+    {
       "id": "techcrunch-venture",
       "name": "TechCrunch Venture",
       "url": "https://techcrunch.com/category/venture/feed/",

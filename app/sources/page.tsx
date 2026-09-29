@@ -8,6 +8,7 @@ import {
   sourceNeedsEvidence,
 } from "@/lib/source-decision-dashboard";
 import { sourceCoreEligible } from "@/lib/source-governance";
+import { loadSourceCollectionAudit } from "@/lib/source-collection-audit-loader";
 import SourceOperationsClient from "./source-operations-client";
 import SourceQaQueue from "./source-qa-queue";
 import styles from "./page.module.css";
@@ -25,6 +26,7 @@ export default function SourcesPage() {
     (source) => sourceCoreEligible(source) && source.promotion?.state === "review_pending",
   ).length;
   const snapshotAt = new Date().toISOString();
+  const collectionAudit = loadSourceCollectionAudit(sourceDirectory);
 
   return (
     <main className="page-shell subpage">
@@ -32,7 +34,7 @@ export default function SourcesPage() {
         <p className="eyebrow">05 / SOURCE GOVERNANCE</p>
         <h1>重点信源</h1>
         <div className="hero-chips">
-          <span>{sourceDirectoryStats.total} 个 Source Entity</span>
+          <span>{sourceDirectoryStats.total} 个 Source Entity（当前治理目录）</span>
           <span>{sourceDirectoryStats.primary} 个 Primary Source</span>
           <span>{sourceDirectoryStats.papers} 个原始研究源</span>
           <span>{sourceDirectoryStats.xProfiles} 个 X Discovery Source</span>
@@ -44,6 +46,28 @@ export default function SourcesPage() {
           <span>{coreReady} 个 Core Ready</span>
         </div>
       </header>
+
+      <section className={styles.group} aria-label="采集通道覆盖审计">
+        <div className={styles.groupHeader}><div>
+          <span>COLLECTION COVERAGE AUDIT</span><h2>治理目录不等于全部采集通道</h2>
+        </div></div>
+        {collectionAudit.available ? <>
+          <p>采集健康数据时间：{collectionAudit.observedAt || "未提供"}。此时间来自采集快照，不是网页构建时间。</p>
+          <div className="hero-chips">
+            <span>{collectionAudit.currentRuntimeChannels} 个本轮记录通道</span>
+            <span>{collectionAudit.representedRuntimeChannels} 个已关联当前目录</span>
+            <span>{collectionAudit.unrepresentedRuntimeChannels} 个尚未关联当前目录</span>
+            <span>{collectionAudit.historicalRuntimeChannels} 个仅保留历史记录</span>
+          </div>
+          <p>通道状态：成功 {collectionAudit.statuses.ok}；部分成功 {collectionAudit.statuses.partial}；错误 {collectionAudit.statuses.error}；空结果 {collectionAudit.statuses.empty}；禁用 {collectionAudit.statuses.disabled}；未知 {collectionAudit.statuses.unknown}。</p>
+          <p>空结果不等于网络故障；抓取成功不保证文章进入首页。当前文章快照中有 {collectionAudit.acceptedWithoutPublication} 个通道接受了记录但最终发布数为零，可能涉及去重、筛选或暂缓，需要结合逐项诊断判断。</p>
+          {collectionAudit.examples.length > 0 ? <details>
+            <summary>尚未关联治理目录的通道示例（最多 12 条，不是完整列表）</summary>
+            <ul>{collectionAudit.examples.map((row) => <li key={row.id}>{row.name} · {row.status} · <code>{row.id}</code></li>)}</ul>
+          </details> : null}
+        </> : <p>采集健康快照不可读取；不能据此认定没有信源或全部健康。</p>}
+        <p>Source Entity 是媒体、机构或账号；运行通道是独立采集入口，两者不能直接相加或互相替代。私有 Google Alerts RSS 地址不在此公开。</p>
+      </section>
 
       <SourceOperationsClient sources={sourceDirectory} snapshotAt={snapshotAt} />
       <SourceQaQueue sources={sourceDirectory} />

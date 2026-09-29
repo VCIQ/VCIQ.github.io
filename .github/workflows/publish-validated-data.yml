@@ -10,6 +10,9 @@ on:
       - Refresh institution rankings
       - Refresh STAR Market investors
       - Monthly source performance review
+      # GITHUB_TOKEN commits from this writer cannot trigger the push-based
+      # Pages workflow. Reuse the validated publication handoff explicitly.
+      - Publish ranked intelligence homepage projection
     types: [completed]
   workflow_dispatch:
 
