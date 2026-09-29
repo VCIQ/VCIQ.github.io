@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-28T03:12:24+00:00",
+  "updatedAt": "2026-09-29T10:13:16+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -20609,6 +20609,20 @@
       "resolutionSource": "authenticated-manual-intent",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-28T03:12:24+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "company-fc7e64adf91ec2017f3a",
+      "kind": "company",
+      "name": "厦门钨业",
+      "aliases": [],
+      "keywords": [
+        "厦门钨业"
+      ],
+      "state": "active",
+      "resolutionSource": "source-context",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-09-29T10:13:16+00:00",
       "createdBy": "VCIQ"
     }
   ],
@@ -114398,6 +114412,100 @@
         "source": "tracking-taxonomy",
         "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "亿美元债券",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-a6dd2fbfed631d2f9d37",
+      "trackId": "track:robotics",
+      "entityId": "company-fc7e64adf91ec2017f3a",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "medium",
+      "origins": [
+        {
+          "id": "origin-9328641427594b8671c0",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-29T10:13:16+00:00",
+          "evidenceUrl": "https://bank.stockstar.com/IG2026092900014685.shtml",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "人工补充公司对象;来源文章:厦门钨业公开一种绳驱 灵巧手 拇指的运动机构、 灵巧手 和机器人专利"
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-8ccf9b9299ceb2ae947fe430",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-29T10:13:16+00:00",
+        "trackId": "track:robotics",
+        "entityId": "company-fc7e64adf91ec2017f3a",
+        "requestedName": "厦门钨业",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "厦门钨业",
+        "targetId": "company-candidate:厦门钨业",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "厦门钨业",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-6488c086fd50eb624da1",
+      "trackId": "track:materials",
+      "entityId": "company-fc7e64adf91ec2017f3a",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "medium",
+      "origins": [
+        {
+          "id": "origin-9328641427594b8671c0",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-29T10:13:16+00:00",
+          "evidenceUrl": "https://bank.stockstar.com/IG2026092900014685.shtml",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "人工补充公司对象;来源文章:厦门钨业公开一种绳驱 灵巧手 拇指的运动机构、 灵巧手 和机器人专利"
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-825855e15aa05846568835af",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-29T10:13:16+00:00",
+        "trackId": "track:materials",
+        "entityId": "company-fc7e64adf91ec2017f3a",
+        "requestedName": "厦门钨业",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "厦门钨业",
+        "targetId": "company-candidate:厦门钨业",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "厦门钨业",
         "reclassified": false
       },
       "executionState": "applied"
