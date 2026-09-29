@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-29T10:22:55+00:00",
+  "updatedAt": "2026-09-29T10:24:05+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -20688,6 +20688,54 @@
       "sourceType": "listing-search",
       "sourceCategory": "media",
       "region": "全球"
+    },
+    {
+      "id": "technology-7e7177150f75a52c5838",
+      "kind": "technology",
+      "name": "触觉传感器",
+      "aliases": [],
+      "keywords": [
+        "指尖集成",
+        "感知"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-09-29T10:24:05+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "company-578d66fc861f0722b337",
+      "kind": "company",
+      "name": "灵巧手",
+      "aliases": [],
+      "keywords": [
+        "灵巧手",
+        "触觉阵列",
+        "上游延伸"
+      ],
+      "state": "active",
+      "resolutionSource": "tracking-taxonomy",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-09-29T10:24:05+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "company-9436d97b7ca9410ac179",
+      "kind": "company",
+      "name": "曦诺未来",
+      "aliases": [],
+      "keywords": [
+        "触觉传感器",
+        "整机融合",
+        "灵巧手",
+        "独角兽"
+      ],
+      "state": "active",
+      "resolutionSource": "unresolved",
+      "resolutionStatus": "review",
+      "createdAt": "2026-09-29T10:24:05+00:00",
+      "createdBy": "VCIQ"
     }
   ],
   "memberships": [
@@ -115044,6 +115092,153 @@
         "source": "authenticated-manual-intent",
         "reason": "由 allowlist 内的管理员显式提交。",
         "decisionKey": "新京报",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-f7affe7ce5b90ada5272",
+      "trackId": "track:robotics",
+      "entityId": "technology-7e7177150f75a52c5838",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-7e3e7acb6b11e0d0d077",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-29T10:24:05+00:00",
+          "evidenceUrl": "https://robot.ofweek.com/2026-09/ART-8321206-8420-30705131.html",
+          "reasons": [
+            "个人研究兴趣",
+            "技术突破",
+            "融资机会"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-6d3ba8c75497801d78f30345",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-29T10:24:05+00:00",
+        "trackId": "track:robotics",
+        "entityId": "technology-7e7177150f75a52c5838",
+        "requestedName": "触觉传感器",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "触觉传感器",
+        "targetId": "topic:触觉传感器",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "触觉传感器",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-bb0e22715a55242e34f4",
+      "trackId": "track:robotics",
+      "entityId": "company-578d66fc861f0722b337",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-4be87a2f400611e536be",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-29T10:24:05+00:00",
+          "evidenceUrl": "https://robot.ofweek.com/2026-09/ART-8321206-8420-30705131.html",
+          "reasons": [
+            "个人研究兴趣",
+            "技术突破",
+            "融资机会"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-17881086959bbf9d5941afb6",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-29T10:24:05+00:00",
+        "trackId": "track:robotics",
+        "entityId": "company-578d66fc861f0722b337",
+        "requestedName": "灵巧手",
+        "kind": "company"
+      },
+      "identityState": "conflict",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "灵巧手",
+        "targetId": "topic:灵巧手",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "灵巧手",
+        "reclassified": true
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-c82a6a6b28c81d966420",
+      "trackId": "track:robotics",
+      "entityId": "company-9436d97b7ca9410ac179",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "low",
+      "origins": [
+        {
+          "id": "origin-b839e600228164f5361b",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-29T10:24:05+00:00",
+          "evidenceUrl": "https://robot.ofweek.com/2026-09/ART-8321206-8420-30705131.html",
+          "reasons": [
+            "个人研究兴趣",
+            "技术突破",
+            "融资机会"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-47e3ba53059f8bb64e7b0743",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-29T10:24:05+00:00",
+        "trackId": "track:robotics",
+        "entityId": "company-9436d97b7ca9410ac179",
+        "requestedName": "曦诺未来",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "曦诺未来",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "曦诺未来",
         "reclassified": false
       },
       "executionState": "applied"
