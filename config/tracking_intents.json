@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-29T10:13:16+00:00",
+  "updatedAt": "2026-09-29T10:18:33+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -20623,6 +20623,40 @@
       "resolutionSource": "source-context",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-29T10:13:16+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "company-a5d108a14720537f7db9",
+      "kind": "company",
+      "name": "光羽芯辰",
+      "aliases": [],
+      "keywords": [
+        "SRAM 存算一体",
+        "3D DRAM",
+        "1200 GB/s",
+        "周强"
+      ],
+      "state": "active",
+      "resolutionSource": "unresolved",
+      "resolutionStatus": "review",
+      "createdAt": "2026-09-29T10:18:33+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-d5abdc2b2f8dafb3723e",
+      "kind": "technology",
+      "name": "SRAM 存算一体",
+      "aliases": [],
+      "keywords": [
+        "光羽芯辰",
+        "5% 算力",
+        "1200 GB/s",
+        "3D DRAM 近存算"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-09-29T10:18:33+00:00",
       "createdBy": "VCIQ"
     }
   ],
@@ -114506,6 +114540,198 @@
         "source": "source-context",
         "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
         "decisionKey": "厦门钨业",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-750974fac4845c4a5f04",
+      "trackId": "track:semiconductor",
+      "entityId": "company-a5d108a14720537f7db9",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "low",
+      "origins": [
+        {
+          "id": "origin-2717f3cdbc149e525a4d",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-29T10:18:33+00:00",
+          "evidenceUrl": "https://app.myzaker.com/news/article.php?pk=6abb2e9e8e9f097c65261a30",
+          "reasons": [
+            "个人研究兴趣",
+            "技术突破"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-90561daf25f8d34782d52680",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-29T10:18:33+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "company-a5d108a14720537f7db9",
+        "requestedName": "光羽芯辰",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "光羽芯辰",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "光羽芯辰",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-99b65cad45fc4a3a0b32",
+      "trackId": "track:ai",
+      "entityId": "company-a5d108a14720537f7db9",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "low",
+      "origins": [
+        {
+          "id": "origin-2717f3cdbc149e525a4d",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-29T10:18:33+00:00",
+          "evidenceUrl": "https://app.myzaker.com/news/article.php?pk=6abb2e9e8e9f097c65261a30",
+          "reasons": [
+            "个人研究兴趣",
+            "技术突破"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-ab00c3c6409a92eea5dede4e",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-29T10:18:33+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-a5d108a14720537f7db9",
+        "requestedName": "光羽芯辰",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "光羽芯辰",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "光羽芯辰",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-885c9fc22911e01bd5ff",
+      "trackId": "track:semiconductor",
+      "entityId": "technology-d5abdc2b2f8dafb3723e",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-dee318ebc4d1bf8cf1d1",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-29T10:18:33+00:00",
+          "evidenceUrl": "https://app.myzaker.com/news/article.php?pk=6abb2e9e8e9f097c65261a30",
+          "reasons": [
+            "个人研究兴趣",
+            "技术突破"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-1bb57fddacc50f2fd5095e16",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-29T10:18:33+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "technology-d5abdc2b2f8dafb3723e",
+        "requestedName": "SRAM 存算一体",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "SRAM 存算一体",
+        "targetId": "topic:sram存算一体",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "sram存算一体",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-b11fb3de07e0ec0850f8",
+      "trackId": "track:ai",
+      "entityId": "technology-d5abdc2b2f8dafb3723e",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-dee318ebc4d1bf8cf1d1",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-29T10:18:33+00:00",
+          "evidenceUrl": "https://app.myzaker.com/news/article.php?pk=6abb2e9e8e9f097c65261a30",
+          "reasons": [
+            "个人研究兴趣",
+            "技术突破"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-ee5a84ac456fb757011b652d",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-29T10:18:33+00:00",
+        "trackId": "track:ai",
+        "entityId": "technology-d5abdc2b2f8dafb3723e",
+        "requestedName": "SRAM 存算一体",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "SRAM 存算一体",
+        "targetId": "topic:sram存算一体",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "sram存算一体",
         "reclassified": false
       },
       "executionState": "applied"
