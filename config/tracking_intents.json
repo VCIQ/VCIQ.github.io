@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-29T10:24:05+00:00",
+  "updatedAt": "2026-09-29T21:33:46+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -20735,6 +20735,21 @@
       "resolutionSource": "unresolved",
       "resolutionStatus": "review",
       "createdAt": "2026-09-29T10:24:05+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-1aa2826e159ef0317dda",
+      "kind": "technology",
+      "name": "TPU",
+      "aliases": [],
+      "keywords": [
+        "AI 数据中心",
+        "谷歌"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-09-29T21:33:46+00:00",
       "createdBy": "VCIQ"
     }
   ],
@@ -115239,6 +115254,100 @@
         "source": "unresolved",
         "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
         "decisionKey": "曦诺未来",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-ebd61597647b92ad8233",
+      "trackId": "track:robotics",
+      "entityId": "technology-1aa2826e159ef0317dda",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-a39d673c61e1599c395c",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-29T21:33:46+00:00",
+          "evidenceUrl": "https://www.xueqiu.com/2796961268/410858159",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-2ff0f2895b91676efa3df96f",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-29T21:33:46+00:00",
+        "trackId": "track:robotics",
+        "entityId": "technology-1aa2826e159ef0317dda",
+        "requestedName": "TPU",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "TPU",
+        "targetId": "topic:tpu",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "tpu",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-42b5c869b1f3dcb621f6",
+      "trackId": "track:materials",
+      "entityId": "technology-1aa2826e159ef0317dda",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-a39d673c61e1599c395c",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-29T21:33:46+00:00",
+          "evidenceUrl": "https://www.xueqiu.com/2796961268/410858159",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-86c32b985abfef6e8f23fe75",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-29T21:33:46+00:00",
+        "trackId": "track:materials",
+        "entityId": "technology-1aa2826e159ef0317dda",
+        "requestedName": "TPU",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "TPU",
+        "targetId": "topic:tpu",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "tpu",
         "reclassified": false
       },
       "executionState": "applied"
