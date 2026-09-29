@@ -71,6 +71,7 @@ jobs:
     timeout-minutes: 10
     permissions:
       contents: write
+      actions: write
     env:
       PROJECTION_BASE64: ${{ inputs.projection_base64 }}
       GH_TOKEN: ${{ github.token }}
@@ -138,6 +139,13 @@ jobs:
 
           echo "main kept advancing; projection will retry on the next Inbox refresh"
           exit 1
+
+      - name: Dispatch Pages after a changed projection
+        if: steps.publish.outputs.changed == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh workflow run pages.yml --ref main --repo "$GITHUB_REPOSITORY"
 
       - name: Summarize projection publication
         if: always()
