@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { readFileSync } from "node:fs";
-import { buildHomepageFocusSelection } from "../lib/homepage-focus";
+import { buildHomepageFocusSelection, HOMEPAGE_FOCUS_POLICY } from "../lib/homepage-focus";
 import type { FavoriteItem } from "../lib/favorites";
 import type { HotnessItem } from "../lib/hotness";
 import type { HomepagePreferenceState } from "../lib/homepage-preferences";
@@ -60,4 +60,56 @@ test("focus tab is between follow and recommend, and fresh-only research does no
   assert.match(source, /channel === "focus" \? buildHomepageFocusSelection/u);
   assert.match(source, /canonicalResearchReady/u);
   assert.match(source, /增量待归档后可深研/u);
+  assert.match(source, /按发布时间倒序/u);
+});
+
+test("focus displays newer favorites before older tracking without changing admission signals", () => {
+  const older = event({ id: "older-tracked", publishedAt: "2026-09-28T18:00:00Z", matchedTrackingTerms: ["AMD"], importance: 100 });
+  const newer = event({ id: "newer-favorite", publishedAt: "2026-09-29T10:00:00Z", importance: 80,
+    source: { ...event().source, url: "https://newsroom.amd.com/news/new-release/" } });
+  const inputs = [older, newer];
+  const before = JSON.stringify(inputs);
+  const result = buildHomepageFocusSelection(inputs, preferences, [favorite], [], now);
+  assert.equal(result.decisions.get(older.id)?.signal, "tracking");
+  assert.equal(result.decisions.get(newer.id)?.signal, "favorite");
+  assert.deepEqual(result.items.map((item) => item.id), [newer.id, older.id]);
+  assert.equal(JSON.stringify(inputs), before);
+  assert.equal(HOMEPAGE_FOCUS_POLICY.sortOrder, "published-desc");
+});
+
+test("focus applies chronological order before its unchanged item cap", () => {
+  const old = Array.from({ length: HOMEPAGE_FOCUS_POLICY.maxItems }, (_, index) => event({
+    id: `old-${index}`, publishedAt: "2026-09-28", importance: 100, matchedTrackingTerms: ["AMD"],
+    source: { ...event().source, url: `https://newsroom.amd.com/news/old-${index}/` },
+  }));
+  const latest = event({ id: "latest-favorite", publishedAt: "2026-09-29T11:00:00Z", importance: 80 });
+  const result = buildHomepageFocusSelection([...old, latest], preferences, [favorite], [], now);
+  assert.equal(result.items.length, HOMEPAGE_FOCUS_POLICY.maxItems);
+  assert.equal(result.items[0].id, latest.id);
+  assert.equal(result.decisions.get(latest.id)?.signal, "favorite");
+});
+
+test("focus compares actual timestamp instants across time zones, not text order", () => {
+  const earlier = event({ id: "earlier-local", publishedAt: "2026-09-29T12:00:00+08:00", matchedTrackingTerms: ["AMD"] });
+  const later = event({ id: "later-utc", publishedAt: "2026-09-29T05:00:00Z", matchedTrackingTerms: ["AMD"],
+    source: { ...event().source, url: "https://newsroom.amd.com/news/later/" } });
+  assert.deepEqual(buildHomepageFocusSelection([earlier, later], preferences, [], [], now).items.map((item) => item.id), [later.id, earlier.id]);
+});
+
+test("equal publication dates retain deterministic ties and never gain invented time precision", () => {
+  const a = event({ id: "a", publishedAt: "2026-09-29", matchedTrackingTerms: ["AMD"] });
+  const b = event({ id: "b", publishedAt: "2026-09-29", matchedTrackingTerms: ["AMD"],
+    source: { ...event().source, url: "https://newsroom.amd.com/news/another/" } });
+  const one = buildHomepageFocusSelection([b, a], preferences, [], [], now).items;
+  const two = buildHomepageFocusSelection([a, b], preferences, [], [], now).items;
+  assert.deepEqual(one.map((item) => item.id), ["a", "b"]);
+  assert.deepEqual(one, two);
+  assert.ok(one.every((item) => item.publishedAt === "2026-09-29"));
+});
+
+test("invalid publication dates stay excluded instead of falling back to collection time", () => {
+  const invalid = event({ id: "undated", publishedAt: "unknown", matchedTrackingTerms: ["AMD"] });
+  const result = buildHomepageFocusSelection([invalid], preferences, [favorite], [share], now);
+  assert.equal(result.items.length, 0);
+  assert.equal(result.decisions.get(invalid.id)?.exclusion, "stale");
 });

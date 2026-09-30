@@ -29,6 +29,20 @@ Each focus card exposes its admission reasons. An empty profile or an empty
 qualified set remains empty; unrelated high-scoring stories are not substituted.
 Source multiplicity is not asserted to be independent fact verification.
 
+### Chronological display (personal-focus-v2-chronological)
+
+Interest evidence still determines admission with the existing quality, age and
+explicit-dismissal gates. After admission, order by the original `publishedAt`
+instant descending, before exact-material deduplication and the existing 24-item
+cap. Tracking/share/favorite tier, importance, reads and stable ID only break
+equal-time ties; older tracking hits must not precede newer eligible favorites.
+Missing dates remain ineligible. Date-only publisher inputs retain day precision:
+neither collection time, data-branch commit time nor a page-read timestamp is
+substituted for a missing publication time. Same-day items with no time-of-day
+therefore have a deterministic tie order, not a claimed minute-level chronology.
+The public feed source budget, admission thresholds and behavior stores are
+unchanged by this display-order update.
+
 ## Independent update lane
 
 The existing source configuration supplies two initially verified publishers:
