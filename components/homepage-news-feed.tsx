@@ -326,11 +326,11 @@ export function HomepageNewsFeed({
   const [dismissedNotice, setDismissedNotice] = useState<DismissedNotice | null>(null);
   const priorityFeed = usePriorityIntelligence(channel === "focus");
   const focusSelection = useMemo(
-    () => buildHomepageFocusSelection(
+    () => channel === "focus" ? buildHomepageFocusSelection(
       mergePriorityCandidates(articles, priorityFeed.snapshot?.items ?? []),
       preferences, favorites, hotnessItems, clockMs ?? 0,
-    ),
-    [articles, priorityFeed.snapshot, preferences, favorites, hotnessItems, clockMs],
+    ) : null,
+    [channel, articles, priorityFeed.snapshot, preferences, favorites, hotnessItems, clockMs],
   );
 
   useEffect(() => {
@@ -392,7 +392,7 @@ export function HomepageNewsFeed({
   const visibleArticles = useMemo(() => {
     if (channel === "focus") {
       // The focus policy already applies quality, time and explicit veto gates.
-      return focusSelection.items
+      return (focusSelection?.items ?? [])
         .filter((item) => region === "全部" || item.region === region)
         .filter((item) => !normalizedQuery || itemSearchText(item).includes(normalizedQuery));
     }
@@ -639,6 +639,9 @@ export function HomepageNewsFeed({
             ? `增量采集快照：${formatPublishedAt(priorityFeed.snapshot.generatedAt, clockMs)}`
             : "增量通道尚未读到有效快照；先使用已有资料"}</span>
           {priorityFeed.snapshot ? <span>数据版本 {priorityFeed.snapshot.contentHash.slice(0, 8)}</span> : null}
+          {priorityFeed.snapshot && clockMs !== null && clockMs - Date.parse(priorityFeed.snapshot.generatedAt) > 15 * MINUTE_MS
+            ? <span>增量快照已超过15分钟；暂无更近采集证据</span> : null}
+          {priorityFeed.checkedAt ? <span>最近核对 {formatPublishedAt(new Date(priorityFeed.checkedAt).toISOString(), clockMs)}</span> : null}
           {priorityFeed.snapshot?.sourceState === "degraded" ? <span>部分来源异常，保留其最近有效资料</span> : null}
           {priorityFeed.error ? <span>{priorityFeed.error}</span> : null}
         </div>
@@ -791,7 +794,7 @@ export function HomepageNewsFeed({
                         <div className={preferenceStyles.reasonPanel}>
                           <strong>{channel === "focus" ? "这条内容进入重点，因为：" : "这条内容出现在推荐流，因为："}</strong>
                           <ul>
-                            {(channel === "focus" ? focusSelection.decisions.get(item.id)?.reasons ?? [] : homepageRecommendationReasons(item, preferences, favoriteProfile)).map((reason) => (
+                            {(channel === "focus" ? focusSelection?.decisions.get(item.id)?.reasons ?? [] : homepageRecommendationReasons(item, preferences, favoriteProfile)).map((reason) => (
                               <li key={reason}>{reason}</li>
                             ))}
                           </ul>

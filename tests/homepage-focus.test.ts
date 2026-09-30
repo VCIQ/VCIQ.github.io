@@ -57,6 +57,7 @@ test("focus tab is between follow and recommend, and fresh-only research does no
   const source = readFileSync(new URL("../components/homepage-news-feed.tsx", import.meta.url), "utf8");
   assert.match(source, /\{ id: "follow", label: "关注流" \},\s*\{ id: "focus", label: "重点" \},\s*\{ id: "recommend", label: "推荐" \}/u);
   assert.match(source, /usePriorityIntelligence\(channel === "focus"\)/u);
+  assert.match(source, /channel === "focus" \? buildHomepageFocusSelection/u);
   assert.match(source, /canonicalResearchReady/u);
   assert.match(source, /增量待归档后可深研/u);
 });

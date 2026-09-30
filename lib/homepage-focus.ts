@@ -10,6 +10,7 @@ export const HOMEPAGE_FOCUS_POLICY = Object.freeze({
   maxItems: 24,
   freshnessDays: 7,
   behaviorWindowDays: 90,
+  behaviorAnchorLimit: 256,
   minimumImportance: 75,
   broadTrackMinimumImportance: 85,
 });
@@ -119,7 +120,7 @@ export function buildHomepageFocusSelection(
     const item = byUrl.get(key);
     const text = normalized(`${row.title} ${row.summary}`);
     for (const anchor of item ? evidenceAnchors(item) : universe.filter((x) => contains(text, x))) {
-      sharedAnchors.add(anchor);
+      if (sharedAnchors.size < HOMEPAGE_FOCUS_POLICY.behaviorAnchorLimit) sharedAnchors.add(anchor);
     }
   }
   const favoriteUrls = new Set<string>();
@@ -130,7 +131,7 @@ export function buildHomepageFocusSelection(
     const url = homepageMaterialUrl(row.href);
     if (url) favoriteUrls.add(url);
     for (const term of [row.company, ...row.keywords]) {
-      if (typeof term === "string" && meaningful(term)) favoriteAnchors.add(normalized(term));
+      if (typeof term === "string" && meaningful(term) && favoriteAnchors.size < HOMEPAGE_FOCUS_POLICY.behaviorAnchorLimit) favoriteAnchors.add(normalized(term));
     }
   }
   const followed = new Set(preferences.followedSectors.map(normalized));
