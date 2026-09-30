@@ -17,6 +17,9 @@ import { EventQualityIndicator } from "@/components/event-quality-indicator";
 import { useFavorites } from "@/components/use-favorites";
 import { useHomepagePreferences } from "@/components/use-homepage-preferences";
 import { useHotness } from "@/components/use-hotness";
+import { usePriorityIntelligence } from "@/components/use-priority-intelligence";
+import { buildHomepageFocusSelection } from "@/lib/homepage-focus";
+import { mergePriorityCandidates } from "@/lib/priority-intelligence";
 import { toggleFavorite } from "@/lib/favorites";
 import {
   interleaveHomepageCompanyDisclosureEvents,
@@ -76,6 +79,7 @@ import preferenceStyles from "./homepage-preference-controls.module.css";
 
 type ChannelId =
   | "follow"
+  | "focus"
   | "recommend"
   | "latest"
   | "innovation"
@@ -98,13 +102,15 @@ type DismissedNotice = {
 };
 
 // Homepage channels answer “what topic/object do I want to read?”. Priority (P0/P1/P2)
-// stays orthogonal as ranking/filter metadata and must not become a top-level channel.
+// stays orthogonal as ranking/filter metadata. Focus is a personal-interest view,
+// not an alias for P0/P1 or an unpersonalized high-score channel.
 const CHANNELS: ReadonlyArray<{
   id: ChannelId;
   label: string;
   keywords?: readonly string[];
 }> = [
   { id: "follow", label: "关注流" },
+  { id: "focus", label: "重点" },
   { id: "recommend", label: "推荐" },
   { id: "latest", label: "快讯" },
   { id: "innovation", label: "科创" },
@@ -318,6 +324,14 @@ export function HomepageNewsFeed({
   const [clockMs, setClockMs] = useState<number | null>(null);
   const [expandedReasonKey, setExpandedReasonKey] = useState<string | null>(null);
   const [dismissedNotice, setDismissedNotice] = useState<DismissedNotice | null>(null);
+  const priorityFeed = usePriorityIntelligence(channel === "focus");
+  const focusSelection = useMemo(
+    () => channel === "focus" ? buildHomepageFocusSelection(
+      mergePriorityCandidates(articles, priorityFeed.snapshot?.items ?? []),
+      preferences, favorites, hotnessItems, clockMs ?? 0,
+    ) : null,
+    [channel, articles, priorityFeed.snapshot, preferences, favorites, hotnessItems, clockMs],
+  );
 
   useEffect(() => {
     const updateClock = () => setClockMs(Date.now());
@@ -376,6 +390,12 @@ export function HomepageNewsFeed({
   const normalizedQuery = query.trim().toLowerCase();
 
   const visibleArticles = useMemo(() => {
+    if (channel === "focus") {
+      // The focus policy already applies quality, time and explicit veto gates.
+      return (focusSelection?.items ?? [])
+        .filter((item) => region === "全部" || item.region === region)
+        .filter((item) => !normalizedQuery || itemSearchText(item).includes(normalizedQuery));
+    }
     const articleBase = qualityScope === "trusted" ? trustedArticles : activeArticles;
     const base = channel === "people"
       ? mergeHomepagePersonChannelEvents(
@@ -437,6 +457,7 @@ export function HomepageNewsFeed({
     companyChannelEvents,
     entityChannels,
     favoriteProfile,
+    focusSelection,
     innovationCapital,
     normalizedQuery,
     peopleChannelEvents,
@@ -508,6 +529,8 @@ export function HomepageNewsFeed({
     CHANNELS.find((candidate) => candidate.id === channel)?.label ?? "推荐";
   const currentChannelDescription = channel === "recommend"
     ? "推荐频道按个性化优先排序；先看最值得知道的变化，再决定是否查看来源、进入追踪、分享或深研此条。"
+    : channel === "focus"
+      ? "重点：追踪优先，其次分享，再次收藏／稍后读；只展示近期实质更新。偏好使用本浏览器已有记录与站点追踪命中，不读取其他网站浏览历史；无足够信号时不伪造个性化结果。"
     : channel === "innovation"
       ? "科创频道由重点券商项目、上市生命周期、硬科技投资机构和成熟期候选的精确对象关系驱动；按最新事件优先，未核验证据不会自动推断辅导券商或上市板块。"
     : channel === "people"
@@ -567,7 +590,7 @@ export function HomepageNewsFeed({
         <span>高优先级 {highPriorityCount}</span>
         <span>滚动情报库 {activeArticleCount}</span>
         <span className={styles.statusFreshness}>
-          {isLive ? "实时快照" : "页面快照"} · 最新{" "}
+          {isLive ? "已加载快照" : "页面快照"} · 最新文章{" "}
           {latestPublishedAt ? (
             <time dateTime={latestPublishedAt}>{formatPublishedAt(latestPublishedAt, clockMs)}</time>
           ) : (
@@ -609,6 +632,21 @@ export function HomepageNewsFeed({
         </div>
       </div>
 
+      {channel === "focus" ? (
+        <div className={styles.statusStrip} role="status" aria-live="polite">
+          <span>重点专门更新 · 本页可见时每分钟核对</span>
+          <span>{priorityFeed.snapshot
+            ? `增量采集快照：${formatPublishedAt(priorityFeed.snapshot.generatedAt, clockMs)}`
+            : "增量通道尚未读到有效快照；先使用已有资料"}</span>
+          {priorityFeed.snapshot ? <span>数据版本 {priorityFeed.snapshot.contentHash.slice(0, 8)}</span> : null}
+          {priorityFeed.snapshot && clockMs !== null && clockMs - Date.parse(priorityFeed.snapshot.generatedAt) > 15 * MINUTE_MS
+            ? <span>增量快照已超过15分钟；暂无更近采集证据</span> : null}
+          {priorityFeed.checkedAt ? <span>最近核对 {formatPublishedAt(new Date(priorityFeed.checkedAt).toISOString(), clockMs)}</span> : null}
+          {priorityFeed.snapshot?.sourceState === "degraded" ? <span>部分来源异常，保留其最近有效资料</span> : null}
+          {priorityFeed.error ? <span>{priorityFeed.error}</span> : null}
+        </div>
+      ) : null}
+
       <div className={styles.contentGrid}>
         <main className={styles.feedColumn}>
           <div className={styles.feedHeading}>
@@ -630,7 +668,7 @@ export function HomepageNewsFeed({
             {displayedArticles.length ? (
               displayedArticles.map((item, index) => {
                 const score = personalizedHomepageRecommendationScore(item, preferences, favoriteProfile);
-                const hero = index === 0 && !normalizedQuery && channel === "recommend";
+                const hero = index === 0 && !normalizedQuery && (channel === "recommend" || channel === "focus");
                 const major = !hero && (item.importance >= 90 || score >= 88);
                 const prominenceClass = hero
                   ? styles.heroCard
@@ -642,6 +680,7 @@ export function HomepageNewsFeed({
                 const saved = favoriteProfile.favoriteIds.has(homepageFavoriteId(item));
                 const followed = isHomepageSectorFollowed(item, preferences);
                 const reasonOpen = expandedReasonKey === eventKey;
+                const canonicalResearchReady = channel !== "focus" || articles.some((row) => row.id === item.id);
                 const innovationAnnotation = channel === "innovation"
                   ? homepageInnovationCapitalAnnotation(item, innovationCapital)
                   : null;
@@ -747,15 +786,15 @@ export function HomepageNewsFeed({
                           aria-expanded={reasonOpen}
                         >
                           <Info size={12} aria-hidden="true" />
-                          为什么推荐
+                          {channel === "focus" ? "为什么是重点" : "为什么推荐"}
                         </button>
                       </div>
 
                       {reasonOpen ? (
                         <div className={preferenceStyles.reasonPanel}>
-                          <strong>这条内容出现在推荐流，因为：</strong>
+                          <strong>{channel === "focus" ? "这条内容进入重点，因为：" : "这条内容出现在推荐流，因为："}</strong>
                           <ul>
-                            {homepageRecommendationReasons(item, preferences, favoriteProfile).map((reason) => (
+                            {(channel === "focus" ? focusSelection?.decisions.get(item.id)?.reasons ?? [] : homepageRecommendationReasons(item, preferences, favoriteProfile)).map((reason) => (
                               <li key={reason}>{reason}</li>
                             ))}
                           </ul>
@@ -780,13 +819,13 @@ export function HomepageNewsFeed({
                           <Share2 size={13} aria-hidden="true" />
                           分享
                         </button>
-                        <Link
+                        {canonicalResearchReady ? <Link
                           href={buildResearchInvestigationHref(item.id)}
                           title="把当前情报与关联来源带入深度研究上下文"
                         >
                           <Bot size={13} aria-hidden="true" />
                           深研此条
-                        </Link>
+                        </Link> : <span title="这条增量尚未进入常规事件归档；可先查看原文、追踪、分享或收藏。">增量待归档后可深研</span>}
                       </div>
                     </div>
 
@@ -802,8 +841,8 @@ export function HomepageNewsFeed({
               })
             ) : (
               <div className={styles.emptyState}>
-                <strong>当前频道没有匹配情报</strong>
-                <p>可以切换频道、地区，或清空搜索条件。</p>
+                <strong>{channel === "focus" ? "暂未发现符合你重点信号的近期更新" : "当前频道没有匹配情报"}</strong>
+                <p>{channel === "focus" ? "沿用本浏览器的追踪、分享、收藏／稍后读记录。可先关注赛道或保存相关文章；不会用随机高分新闻填充重点。" : "可以切换频道、地区，或清空搜索条件。"}</p>
               </div>
             )}
           </div>
