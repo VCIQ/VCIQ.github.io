@@ -7,6 +7,9 @@ on:
     paths:
       - .github/workflows/priority-intelligence-refresh.yml
       - tools/priority_intelligence.py
+      - tools/priority_incremental.py
+      - tools/priority_entity_linking.py
+      - config/priority_entity_aliases.json
       - config/intelligence_sources.json
   schedule:
     - cron: "3-58/5 * * * *"
@@ -32,7 +35,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Verify priority source and publication boundaries
-        run: python -m unittest tests.test_priority_source_publication tests.test_priority_intelligence
+        run: python -m unittest tests.test_priority_source_publication tests.test_priority_intelligence tests.test_priority_incremental
       - name: Collect public publisher increment
         run: python -m tools.priority_intelligence collect --file /tmp/priority-scan.json
       - uses: actions/upload-artifact@v4

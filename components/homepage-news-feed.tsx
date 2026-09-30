@@ -18,7 +18,9 @@ import { useFavorites } from "@/components/use-favorites";
 import { useHomepagePreferences } from "@/components/use-homepage-preferences";
 import { useHotness } from "@/components/use-hotness";
 import { usePriorityIntelligence } from "@/components/use-priority-intelligence";
-import { buildHomepageFocusSelection } from "@/lib/homepage-focus";
+import { buildHomepageFocusSelection, HOMEPAGE_FOCUS_POLICY } from "@/lib/homepage-focus";
+import { FocusDiagnostics } from "@/components/focus-diagnostics";
+import { focusPreferenceIdentity } from "@/lib/focus-event-groups";
 import { mergePriorityCandidates } from "@/lib/priority-intelligence";
 import { toggleFavorite } from "@/lib/favorites";
 import {
@@ -467,7 +469,8 @@ export function HomepageNewsFeed({
     trustedArticles,
   ]);
 
-  const displayedArticles = visibleArticles.slice(0, feedLimit);
+  const displayedArticles = visibleArticles.slice(0, channel === "focus"
+    ? Math.max(HOMEPAGE_FOCUS_POLICY.pageSize, feedLimit) : feedLimit);
   const latestDate = latestPublishedAt.slice(0, 10);
   const latestDayArticles = trustedArticles.filter(
     (item) =>
@@ -650,6 +653,8 @@ export function HomepageNewsFeed({
 
       <div className={styles.contentGrid}>
         <main className={styles.feedColumn}>
+          {channel === "focus" && focusSelection ? <FocusDiagnostics selection={focusSelection}
+            filtered={visibleArticles} rendered={displayedArticles} snapshot={priorityFeed.snapshot} now={clockMs ?? 0} /> : null}
           <div className={styles.feedHeading}>
             <div>
               <span>{currentChannelLabel}</span>
@@ -676,7 +681,7 @@ export function HomepageNewsFeed({
                   : major
                     ? styles.majorCard
                     : styles.standardCard;
-                const eventKey = homepageEventKey(item);
+                const eventKey = channel === "focus" ? focusPreferenceIdentity(item) : homepageEventKey(item);
                 const favorite = homepageFeedFavoriteInput(item);
                 const saved = favoriteProfile.favoriteIds.has(homepageFavoriteId(item));
                 const followed = isHomepageSectorFollowed(item, preferences);
@@ -869,9 +874,10 @@ export function HomepageNewsFeed({
             <button
               type="button"
               className={styles.loadMore}
-              onClick={() => setFeedLimit((current) => current + FEED_BATCH)}
+              onClick={() => setFeedLimit((current) => channel === "focus"
+                ? Math.max(current, HOMEPAGE_FOCUS_POLICY.pageSize) + HOMEPAGE_FOCUS_POLICY.pageSize : current + FEED_BATCH)}
             >
-              继续加载下一批情报
+              {channel === "focus" ? "加载更多重点（每批 24 个事件）" : "继续加载下一批情报"}
             </button>
           ) : null}
         </main>

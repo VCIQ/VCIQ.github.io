@@ -73,6 +73,54 @@ An increment-only event can immediately be read, tracked, shared and saved, but
 Native Research remains gated until that event is in the canonical article
 archive. The UI says `增量待归档后可深研` rather than opening a broken event link.
 
+## Entity, diagnostics and pagination revision
+
+Focus v3 retains all eligible event groups from the bounded candidate window.
+24 is the first page and subsequent page size, not an admission cap. Admission
+remains separate from reverse publication-time order. Exact reviewed material
+links and existing cluster IDs group reports; a common company name, a topic or
+a background reference alone never establishes event equivalence. A new approval
+or closing is not automatically grouped with an earlier agreement announcement.
+Reviewed event dismissals use one stable identity in the existing preference
+store; no duplicate share samples, feedback ledger or private public projection
+is created.
+
+The publisher derives company/person mentions from existing public registries
+and an explicitly sourced supplementary alias list. Each mention records the
+actual matching alias and title/summary field. Ambiguous aliases stay ambiguous.
+This is mention attribution, not automatic company-profile approval, employment
+verification or permission to create companySlug/personSlug. Generic company
+placeholders are replaced in new feed records, while reviewed archive attribution
+is preserved and only missing mention evidence is supplemented.
+
+The browser's diagnostic view separates admission failures, event grouping,
+current search/region filters, and not-yet-rendered pages. Absent records are
+reported as outside the current candidate window, not falsely as never collected.
+The public trace covers only observed bounded source responses and the retained
+window; it has a 120-row cap, explicit truncation and aggregate counters. No
+private browsing or feedback payload is sent with a diagnostic query. Recall and
+irrelevance metrics require an explicitly judged sample; without one they remain
+unavailable. Render elapsed time is not called first exposure or reading time.
+
+MITTR collection now always checks page 1 and at most two catch-up pages, with a
+frozen previous-window checkpoint and a resumed page overlap. Incomplete/failed
+pages never falsely advance the completed checkpoint. RSS uses its available
+feed window and reports unbridgeable history gaps; it does not invent a next-page
+URL. Each source remains bounded to 60 observed candidates per run; the public
+snapshot still holds at most 72 recent records and 300,000 bytes. Records withheld
+by this safety window are diagnosed separately from the 24-event display page.
+The snapshot is not an unlimited historical archive. Source API timestamps are
+retained with their precision; feed midnight/date-only values remain day precision.
+Only actual instrumented observations become firstSeenAt; this does not recover
+unknown history before instrumentation.
+
+Read-only integration probe during this revision: 89 response rows inspected,
+23 final recent records, MITTR pages 1/2/3, AMD feed page 1. Article 17028 retained
+2026-09-29T01:30:54Z and identified AMD, World Labs, 李飞飞; the AMD original retained
+its date-only timestamp and identified AMD and World Labs. No production data was
+written by that probe. New candidate publishers remain disabled pending owner
+selection and source-specific verification.
+
 ## Acceptance and remaining boundaries
 
 Tests cover channel order, behavior signal hierarchy, cold start, exact vetoes,

@@ -1,14 +1,15 @@
 import type { FavoriteItem } from "@/lib/favorites";
 import type { HomepagePreferenceState } from "@/lib/homepage-preferences";
-import { homepageEventIdentityKeys, homepageMaterialUrl } from "@/lib/homepage-event-identity";
+import { homepageMaterialUrl } from "@/lib/homepage-event-identity";
+import { focusIdentityKeys, groupFocusReports } from "@/lib/focus-event-groups";
 import type { HotnessItem } from "@/lib/hotness";
 import type { LiveIntelligenceEvent } from "@/lib/use-articles";
 
 /** A versioned editorial rule, not a learned/calibrated prediction of interest. */
 export const HOMEPAGE_FOCUS_POLICY = Object.freeze({
-  version: "personal-focus-v2-chronological",
+  version: "personal-focus-v3-diagnostics",
   sortOrder: "published-desc",
-  maxItems: 24,
+  pageSize: 24,
   freshnessDays: 7,
   behaviorWindowDays: 90,
   behaviorAnchorLimit: 256,
@@ -56,7 +57,7 @@ function recent(value: string | undefined, now: number, days: number): boolean {
 function identityKeys(item: LiveIntelligenceEvent): string[] {
   // Background references are not proof of identical events. A later closing
   // announcement may cite an earlier agreement without inheriting its veto.
-  return homepageEventIdentityKeys(item);
+  return focusIdentityKeys(item);
 }
 
 export type HomepageFocusDecision = {
@@ -65,7 +66,9 @@ export type HomepageFocusDecision = {
   signalTier: number;
   readTieBreak: number;
   reasons: string[];
-  exclusion?: "dismissed" | "low-quality" | "stale" | "low-impact" | "no-personal-signal";
+  entityState?: "matched" | "ambiguous" | "unresolved";
+  groupedInto?: string;
+  exclusion?: "dismissed" | "low-quality" | "stale" | "invalid-date" | "low-impact" | "entity-unresolved" | "no-personal-signal";
 };
 export type HomepageFocusSelection = {
   items: LiveIntelligenceEvent[];
@@ -73,6 +76,8 @@ export type HomepageFocusSelection = {
   profileScope: "this-browser";
   policyVersion: string;
   distinctSharedTargets: number;
+  candidates: readonly LiveIntelligenceEvent[];
+  counts: { candidateReports: number; admittedReports: number; eventGroups: number; groupedReports: number };
 };
 
 export function buildHomepageFocusSelection(
@@ -93,7 +98,7 @@ export function buildHomepageFocusSelection(
   }));
   const blocked = new Set<number>(); const queue: number[] = [];
   candidates.forEach((item, index) => {
-    if (dismissed.has(item.id) || dismissed.has(item.eventClusterId ?? "")) {
+    if (dismissed.has(item.id) || dismissed.has(item.eventClusterId ?? "") || identityKeys(item).some((key) => dismissed.has(key))) {
       blocked.add(index); queue.push(index);
     }
   });
@@ -138,13 +143,17 @@ export function buildHomepageFocusSelection(
   const followed = new Set(preferences.followedSectors.map(normalized));
   const decisions = new Map<string, HomepageFocusDecision>();
   for (const item of candidates) {
-    const result: HomepageFocusDecision = { eligible: false, signal: "none", signalTier: 0, readTieBreak: 0, reasons: [] };
+    const result: HomepageFocusDecision = { eligible: false, signal: "none", signalTier: 0, readTieBreak: 0, reasons: [],
+      entityState: item.entityResolutionStatus ?? (evidenceAnchors(item).length ? "matched" : "unresolved") };
     decisions.set(item.id, result);
     if (dismissed.has(item.id) || dismissed.has(item.eventClusterId ?? "") || identityKeys(item).some((key) => vetoKeys.has(key))) {
       result.exclusion = "dismissed"; continue;
     }
     if (item.qualityStatus === "低可信" || (typeof item.qualityScore === "number" && item.qualityScore < 50)) {
       result.exclusion = "low-quality"; continue;
+    }
+    if (!Number.isFinite(Date.parse(item.publishedAt))) {
+      result.exclusion = "invalid-date"; continue;
     }
     if (!recent(item.publishedAt, now, HOMEPAGE_FOCUS_POLICY.freshnessDays)) {
       result.exclusion = "stale"; continue;
@@ -170,7 +179,7 @@ export function buildHomepageFocusSelection(
       result.signal = "favorite"; result.signalTier = 1;
       result.reasons.push(favoriteUrls.has(url) ? "这条信息在你的收藏／稍后读中" : `与你收藏内容中的「${favoriteAnchor}」有关`);
     } else {
-      result.exclusion = "no-personal-signal"; continue;
+      result.exclusion = result.entityState === "unresolved" ? "entity-unresolved" : "no-personal-signal"; continue;
     }
     result.eligible = true;
     result.readTieBreak = readUrls.has(url) ? 1 : 0;
@@ -180,17 +189,14 @@ export function buildHomepageFocusSelection(
   const sorted = candidates.filter((item) => decisions.get(item.id)?.eligible).sort((left, right) => {
     const a = decisions.get(left.id)!; const b = decisions.get(right.id)!;
     // Interest decides admission, not whether an older item precedes new news.
-    // Sort before the display cap so recent eligible items cannot be crowded out
-    // by an older, stronger interest signal. Date-only inputs retain day precision;
+    // Sort the complete eligible window before pagination. Date-only inputs retain day precision;
     // do not invent an intra-day time from collection, publication or read clocks.
     return Date.parse(right.publishedAt) - Date.parse(left.publishedAt) || b.signalTier - a.signalTier ||
       right.importance - left.importance || b.readTieBreak - a.readTieBreak || left.id.localeCompare(right.id);
   });
-  const seen = new Set<string>();
-  const items = sorted.filter((item) => {
-    const keys = identityKeys(item);
-    if (keys.some((key) => seen.has(key))) return false;
-    keys.forEach((key) => seen.add(key)); return true;
-  }).slice(0, HOMEPAGE_FOCUS_POLICY.maxItems);
-  return { items, decisions, profileScope: "this-browser", policyVersion: HOMEPAGE_FOCUS_POLICY.version, distinctSharedTargets: sharedUrls.size };
+  const { items, groupedInto } = groupFocusReports(sorted);
+  groupedInto.forEach((representative, id) => { const decision = decisions.get(id); if (decision) decision.groupedInto = representative; });
+  return { items, decisions, candidates, counts: { candidateReports: candidates.length,
+    admittedReports: sorted.length, eventGroups: items.length, groupedReports: groupedInto.size },
+    profileScope: "this-browser", policyVersion: HOMEPAGE_FOCUS_POLICY.version, distinctSharedTargets: sharedUrls.size };
 }
