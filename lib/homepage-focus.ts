@@ -2,6 +2,7 @@ import type { FavoriteItem } from "@/lib/favorites";
 import type { HomepagePreferenceState } from "@/lib/homepage-preferences";
 import { homepageMaterialUrl } from "@/lib/homepage-event-identity";
 import { focusIdentityKeys, groupFocusReports } from "@/lib/focus-event-groups";
+import { focusDirectMediaMatch } from "@/lib/focus-direct-media";
 import type { HotnessItem } from "@/lib/hotness";
 import type { LiveIntelligenceEvent } from "@/lib/use-articles";
 
@@ -62,7 +63,7 @@ function identityKeys(item: LiveIntelligenceEvent): string[] {
 
 export type HomepageFocusDecision = {
   eligible: boolean;
-  signal: "tracking" | "share" | "favorite" | "none";
+  signal: "approved-media" | "tracking" | "share" | "favorite" | "none";
   signalTier: number;
   readTieBreak: number;
   reasons: string[];
@@ -149,7 +150,8 @@ export function buildHomepageFocusSelection(
     if (dismissed.has(item.id) || dismissed.has(item.eventClusterId ?? "") || identityKeys(item).some((key) => vetoKeys.has(key))) {
       result.exclusion = "dismissed"; continue;
     }
-    if (item.qualityStatus === "低可信" || (typeof item.qualityScore === "number" && item.qualityScore < 50)) {
+    const directMedia = focusDirectMediaMatch(item);
+    if (!directMedia && (item.qualityStatus === "低可信" || (typeof item.qualityScore === "number" && item.qualityScore < 50))) {
       result.exclusion = "low-quality"; continue;
     }
     if (!Number.isFinite(Date.parse(item.publishedAt))) {
@@ -169,7 +171,13 @@ export function buildHomepageFocusSelection(
     const followedTrack = followed.has(normalized(item.sector)) && item.importance >= HOMEPAGE_FOCUS_POLICY.broadTrackMinimumImportance;
     const shareAnchor = [...sharedAnchors].find((key) => contains(text, key));
     const favoriteAnchor = [...favoriteAnchors].find((key) => contains(text, key));
-    if (exactTracking || followedTrack) {
+    if (directMedia) {
+      result.signal = "approved-media"; result.signalTier = 4;
+      result.reasons.push(`已批准科创媒体直达：${directMedia.publisherName}`);
+      result.reasons.push(directMedia.attribution === "rss-publisher-label"
+        ? "RSS / Google News 标注原始媒体；作为快速线索展示，重大事实仍需回到原始披露核验"
+        : "直接命中已批准媒体域名；媒体陈述仍不等于事实已核实");
+    } else if (exactTracking || followedTrack) {
       result.signal = "tracking"; result.signalTier = 3;
       result.reasons.push(exactTracking ? `命中站点追踪词：${trackedTerms.slice(0, 2).join("、")}` : `你关注的「${item.sector}」出现重要更新`);
     } else if (sharedUrls.has(url) || shareAnchor) {

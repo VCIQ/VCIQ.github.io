@@ -76,6 +76,15 @@ An increment-only event can immediately be read, tracked, shared and saved, but
 Native Research remains gated until that event is in the canonical article
 archive. The UI says `增量待归档后可深研` rather than opening a broken event link.
 
+Six owner-approved innovation/capital publishers — 财联社/科创板日报相关栏目、
+证券时报、上海证券报/中国证券网、投资界、投中网、21世纪经济报道 — can
+also admit material capital/industrial RSS discoveries directly to Focus. Direct
+host attribution is preferred; a Google News/Alerts discovery is accepted only
+when the title carries an exact publisher suffix. Mere prose mention is not
+publisher attribution. This direct lane still respects explicit dismissals,
+freshness, material-event and importance gates. Discovery-level items remain
+visibly unverified and do not become Core or verified facts.
+
 ## Entity, diagnostics and pagination revision
 
 Focus v3 retains all eligible event groups from the bounded candidate window.

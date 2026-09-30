@@ -80,6 +80,7 @@ export type LiveIntelligenceEvent = IntelligenceEvent & {
   mentionedCompanies?: string[];
   mentionedPeople?: string[];
   matchedTrackingTerms?: string[];
+  trackSlugs?: string[];
 };
 
 export type ArticleSourceStatus = {

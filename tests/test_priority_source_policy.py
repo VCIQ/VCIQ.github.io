@@ -54,12 +54,14 @@ class ApprovedPrioritySourceTests(unittest.TestCase):
 
     def test_candidates_are_not_rss_observations_or_runtime_approvals(self):
         data = json.loads((ROOT / "config/priority_media_candidates.json").read_text())
-        self.assertFalse(data["runtimeEnabled"])
+        self.assertTrue(data["runtimeEnabled"])
         self.assertTrue(data["approvalRequiredForPriorityPolling"])
         self.assertFalse(data["autoPromoteCore"])
         self.assertEqual(len(data["observationScope"]["topicFamilies"]), 10)
         self.assertEqual(len({r["id"] for r in data["candidates"]}), len(data["candidates"]))
-        self.assertTrue(all(r["status"] == "candidate" for r in data["candidates"]))
+        self.assertEqual(len(data["candidates"]), 6)
+        self.assertTrue(all(r["status"] == "approved-direct-focus" for r in data["candidates"]))
+        self.assertEqual({r["id"] for r in data["deferredByOwner"]}, {"eet-china", "c114", "xhby"})
         self.assertTrue(set(r["id"] for r in data["candidates"]).isdisjoint(SOURCES))
         raw = json.dumps(data).lower()
         for private_value in ("google.com/alerts/feeds", "gmail.com", "access_client_secret", "authorization", "google.com/url"):
