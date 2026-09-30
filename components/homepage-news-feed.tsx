@@ -329,10 +329,13 @@ export function HomepageNewsFeed({
   const priorityFeed = usePriorityIntelligence(channel === "focus");
   const focusSelection = useMemo(
     () => channel === "focus" ? buildHomepageFocusSelection(
-      mergePriorityCandidates(articles, priorityFeed.snapshot?.items ?? []),
+      mergePriorityCandidates(
+        articles,
+        [...(priorityFeed.snapshot?.items ?? []), ...(priorityFeed.batch6Snapshot?.items ?? [])],
+      ),
       preferences, favorites, hotnessItems, clockMs ?? 0,
     ) : null,
-    [channel, articles, priorityFeed.snapshot, preferences, favorites, hotnessItems, clockMs],
+    [channel, articles, priorityFeed.snapshot, priorityFeed.batch6Snapshot, preferences, favorites, hotnessItems, clockMs],
   );
 
   useEffect(() => {
@@ -643,6 +646,9 @@ export function HomepageNewsFeed({
           <span>{priorityFeed.snapshot
             ? `增量采集快照：${formatPublishedAt(priorityFeed.snapshot.generatedAt, clockMs)}`
             : "增量通道尚未读到有效快照；先使用已有资料"}</span>
+          {priorityFeed.batch6Snapshot ? <span>
+            科创 RSS 快照：{formatPublishedAt(priorityFeed.batch6Snapshot.generatedAt, clockMs)}
+          </span> : null}
           {priorityFeed.snapshot ? <span>数据版本 {priorityFeed.snapshot.contentHash.slice(0, 8)}</span> : null}
           {priorityFeed.snapshot && clockMs !== null && clockMs - Date.parse(priorityFeed.snapshot.generatedAt) > 15 * MINUTE_MS
             ? <span>增量快照已超过15分钟；暂无更近采集证据</span> : null}
