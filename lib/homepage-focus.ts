@@ -6,7 +6,8 @@ import type { LiveIntelligenceEvent } from "@/lib/use-articles";
 
 /** A versioned editorial rule, not a learned/calibrated prediction of interest. */
 export const HOMEPAGE_FOCUS_POLICY = Object.freeze({
-  version: "personal-focus-v1",
+  version: "personal-focus-v2-chronological",
+  sortOrder: "published-desc",
   maxItems: 24,
   freshnessDays: 7,
   behaviorWindowDays: 90,
@@ -178,7 +179,11 @@ export function buildHomepageFocusSelection(
   }
   const sorted = candidates.filter((item) => decisions.get(item.id)?.eligible).sort((left, right) => {
     const a = decisions.get(left.id)!; const b = decisions.get(right.id)!;
-    return b.signalTier - a.signalTier || Date.parse(right.publishedAt) - Date.parse(left.publishedAt) ||
+    // Interest decides admission, not whether an older item precedes new news.
+    // Sort before the display cap so recent eligible items cannot be crowded out
+    // by an older, stronger interest signal. Date-only inputs retain day precision;
+    // do not invent an intra-day time from collection, publication or read clocks.
+    return Date.parse(right.publishedAt) - Date.parse(left.publishedAt) || b.signalTier - a.signalTier ||
       right.importance - left.importance || b.readTieBreak - a.readTieBreak || left.id.localeCompare(right.id);
   });
   const seen = new Set<string>();

@@ -530,7 +530,7 @@ export function HomepageNewsFeed({
   const currentChannelDescription = channel === "recommend"
     ? "推荐频道按个性化优先排序；先看最值得知道的变化，再决定是否查看来源、进入追踪、分享或深研此条。"
     : channel === "focus"
-      ? "重点：追踪优先，其次分享，再次收藏／稍后读；只展示近期实质更新。偏好使用本浏览器已有记录与站点追踪命中，不读取其他网站浏览历史；无足够信号时不伪造个性化结果。"
+      ? "重点按发布时间倒序：追踪、分享、收藏／稍后读决定是否入选，不让旧闻因偏好分高而排在新消息前面；仅日期的来源按日排序，不虚构具体时分。偏好使用本浏览器已有记录与站点追踪命中，不读取其他网站浏览历史。"
     : channel === "innovation"
       ? "科创频道由重点券商项目、上市生命周期、硬科技投资机构和成熟期候选的精确对象关系驱动；按最新事件优先，未核验证据不会自动推断辅导券商或上市板块。"
     : channel === "people"
@@ -635,6 +635,7 @@ export function HomepageNewsFeed({
       {channel === "focus" ? (
         <div className={styles.statusStrip} role="status" aria-live="polite">
           <span>重点专门更新 · 本页可见时每分钟核对</span>
+          <span>按发布时间倒序</span>
           <span>{priorityFeed.snapshot
             ? `增量采集快照：${formatPublishedAt(priorityFeed.snapshot.generatedAt, clockMs)}`
             : "增量通道尚未读到有效快照；先使用已有资料"}</span>
