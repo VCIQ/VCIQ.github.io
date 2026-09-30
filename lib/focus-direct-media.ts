@@ -40,7 +40,7 @@ export function focusDirectMediaMatch(item: LiveIntelligenceEvent): FocusDirectM
   const discovery = item.source.level === "待交叉验证" || /google news|google alerts/iu.test(`${item.source.platform ?? ""} ${item.source.name}`);
   if (!discovery) return null;
   for (const publisher of policy.publishers) {
-    if (publisher.labels.some((label) => publisherSuffix(item.title, label))) {
+    if (publisher.labels.some((label) => clean(item.source.name) === clean(label) || publisherSuffix(item.title, label))) {
       return { publisherId: publisher.id, publisherName: publisher.name, attribution: "rss-publisher-label" };
     }
   }

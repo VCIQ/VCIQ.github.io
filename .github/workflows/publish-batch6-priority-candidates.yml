@@ -1,0 +1,64 @@
+name: Publish Batch-6 priority candidates
+
+on:
+  workflow_dispatch:
+    inputs:
+      payload_b64:
+        description: Base64-encoded sanitized public Batch-6 candidate payload
+        required: true
+        type: string
+      scheduled_at:
+        description: Cloudflare scheduled timestamp used for the dispatch receipt
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vciq-batch6-priority-data-main
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Decode bounded public payload
+        env:
+          PAYLOAD_B64: ${{ inputs.payload_b64 }}
+        run: |
+          python - <<'PY'
+          import base64, os
+          raw = os.environ["PAYLOAD_B64"]
+          if len(raw) > 70_000:
+              raise SystemExit("encoded Batch-6 payload exceeds dispatch budget")
+          data = base64.b64decode(raw, validate=True)
+          if len(data) > 180_000:
+              raise SystemExit("decoded Batch-6 payload exceeds public budget")
+          open("/tmp/batch6-priority.json", "wb").write(data)
+          PY
+      - name: Validate Batch-6 publication contract
+        run: |
+          python -m unittest tests.test_batch6_priority_candidates
+          python -m tools.batch6_priority_candidates validate --file /tmp/batch6-priority.json
+      - name: Publish data-only branch with receipt
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python -m tools.batch6_priority_candidates publish --file /tmp/batch6-priority.json | tee /tmp/batch6-receipt.json
+          {
+            echo '## Batch-6 fast-lane receipt'
+            echo "- Cloudflare scheduled dispatch: ${{ inputs.scheduled_at }}"
+            echo '"""json'
+            cat /tmp/batch6-receipt.json
+            echo '"""'
+          } >> "$GITHUB_STEP_SUMMARY"
