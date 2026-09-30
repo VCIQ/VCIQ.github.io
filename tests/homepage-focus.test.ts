@@ -77,14 +77,14 @@ test("focus displays newer favorites before older tracking without changing admi
   assert.equal(HOMEPAGE_FOCUS_POLICY.sortOrder, "published-desc");
 });
 
-test("focus applies chronological order before its unchanged item cap", () => {
-  const old = Array.from({ length: HOMEPAGE_FOCUS_POLICY.maxItems }, (_, index) => event({
+test("focus preserves eligible events beyond the 24-item first page", () => {
+  const old = Array.from({ length: HOMEPAGE_FOCUS_POLICY.pageSize + 7 }, (_, index) => event({
     id: `old-${index}`, publishedAt: "2026-09-28", importance: 100, matchedTrackingTerms: ["AMD"],
     source: { ...event().source, url: `https://newsroom.amd.com/news/old-${index}/` },
   }));
   const latest = event({ id: "latest-favorite", publishedAt: "2026-09-29T11:00:00Z", importance: 80 });
   const result = buildHomepageFocusSelection([...old, latest], preferences, [favorite], [], now);
-  assert.equal(result.items.length, HOMEPAGE_FOCUS_POLICY.maxItems);
+  assert.equal(result.items.length, HOMEPAGE_FOCUS_POLICY.pageSize + 8);
   assert.equal(result.items[0].id, latest.id);
   assert.equal(result.decisions.get(latest.id)?.signal, "favorite");
 });
@@ -111,5 +111,5 @@ test("invalid publication dates stay excluded instead of falling back to collect
   const invalid = event({ id: "undated", publishedAt: "unknown", matchedTrackingTerms: ["AMD"] });
   const result = buildHomepageFocusSelection([invalid], preferences, [favorite], [share], now);
   assert.equal(result.items.length, 0);
-  assert.equal(result.decisions.get(invalid.id)?.exclusion, "stale");
+  assert.equal(result.decisions.get(invalid.id)?.exclusion, "invalid-date");
 });

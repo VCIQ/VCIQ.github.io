@@ -66,6 +66,10 @@ export type RelatedArticleSource = {
 };
 
 export type LiveIntelligenceEvent = IntelligenceEvent & {
+  firstSeenAt?: string;
+  publicationTimePrecision?: "day" | "second";
+  entityResolutionStatus?: "matched" | "ambiguous" | "unresolved";
+  entityMentions?: Array<{ id: string; kind: "company" | "person"; name: string; alias: string; field: "title" | "summary" }>;
   qualityScore?: number;
   qualityStatus?: "高可信" | "可用" | "低可信";
   qualitySignals?: string[];
@@ -76,6 +80,7 @@ export type LiveIntelligenceEvent = IntelligenceEvent & {
   mentionedCompanies?: string[];
   mentionedPeople?: string[];
   matchedTrackingTerms?: string[];
+  trackSlugs?: string[];
 };
 
 export type ArticleSourceStatus = {
