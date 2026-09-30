@@ -52,10 +52,9 @@ function recent(value: string | undefined, now: number, days: number): boolean {
   return Number.isFinite(date) && date <= now + DAY && now - date <= days * DAY;
 }
 function identityKeys(item: LiveIntelligenceEvent): string[] {
-  return [...homepageEventIdentityKeys(item), ...(item.relatedSources ?? []).flatMap((source) => {
-    const key = homepageMaterialUrl(source.url);
-    return key ? [`url:${key}`] : [];
-  })];
+  // Background references are not proof of identical events. A later closing
+  // announcement may cite an earlier agreement without inheriting its veto.
+  return homepageEventIdentityKeys(item);
 }
 
 export type HomepageFocusDecision = {

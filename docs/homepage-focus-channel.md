@@ -20,7 +20,9 @@ positive signal. Signal classes are ordered tracking > share > favorite. Opens
 are only a weak tie-breaker and cannot create admission. Repeated shares of one
 URL count once, a removed Favorite stops contributing, generic country/type/source
 host matches are insufficient, and exact event dismissals propagate through
-material and cluster identities. These are versioned bootstrap rules, **not**\+learned weights or a claim that Share calibration has passed the existing replay
+material and cluster identities. Background references do not make two events
+identical. These are versioned bootstrap rules, **not** learned weights or a
+claim that Share calibration has passed the existing replay
 protocol. No private samples or browsing records are invented or published.
 
 Each focus card exposes its admission reasons. An empty profile or an empty

@@ -33,6 +33,12 @@ test("stale or low-quality updates are not promoted by repeated sharing", () => 
   const rows = [event({ id: "old", publishedAt: "2026-08-01" }), event({ id: "bad", qualityStatus: "低可信" })];
   assert.equal(buildHomepageFocusSelection(rows, { ...preferences, followedSectors: ["半导体"] }, [favorite], [share], now).items.length, 0);
 });
+test("a new material update does not inherit a dismissal from a background reference", () => {
+  const old = event({ id: "earlier-agreement" });
+  const update = event({ id: "later-approval", title: "AMD acquisition approval update", source: { ...old.source, url: "https://newsroom.amd.com/news/approval/" }, relatedSources: [{ ...old.source, platform: "官方网站", title: old.title, publishedAt: old.publishedAt }] });
+  const selected = buildHomepageFocusSelection([old, update], { ...preferences, followedSectors: ["半导体"], dismissedEventIds: [old.id] }, [], [], now);
+  assert.deepEqual(selected.items.map((item) => item.id), [update.id]);
+});
 test("generic event-type, region and source-host affinity cannot admit unrelated stories", () => {
   const unrelated = event({ company: "OtherCo", title: "OtherCo AI acquisition", summary: "OtherCo buys a company" });
   const generic = { ...favorite, company: "科技产业", keywords: ["并购", "美国", "AI"], sources: [{ name: "AMD Newsroom", url: unrelated.source.url }] };
