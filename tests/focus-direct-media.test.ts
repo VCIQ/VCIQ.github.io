@@ -28,6 +28,19 @@ test("owner-approved Google RSS publisher label directly admits a material innov
   assert.match(result.decisions.get(item.id)?.reasons.join(" ") ?? "", /重大事实仍需回到原始披露核验/u);
 });
 
+test("sanitized Batch-6 source name is accepted as exact publisher attribution", () => {
+  const item = base({
+    id: "batch6-stcn",
+    title: "某企业完成科创板辅导备案",
+    type: "IPO",
+    source: { name: "证券时报", url: "https://news.example.invalid/article",
+      level: "待交叉验证", platform: "Google Alerts RSS" },
+  });
+  assert.deepEqual(focusDirectMediaMatch(item), {
+    publisherId: "stcn", publisherName: "证券时报", attribution: "rss-publisher-label",
+  });
+});
+
 test("direct publisher host admits only material innovation/capital updates", () => {
   const material = base({ id: "pedaily", title: "硬科技企业完成战略融资", source: {
     name: "投资界", url: "https://news.pedaily.cn/202609/example.shtml", level: "媒体报道", platform: "投资界",
