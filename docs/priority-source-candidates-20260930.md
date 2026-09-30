@@ -1,10 +1,57 @@
-# Priority publisher candidates — approval required
+# Priority publisher approvals and innovation-capital candidates
 
-These recommendations are drawn from existing source registrations, not a claim
-that all named publishers are already on the five-minute lane. No new publisher
-is activated in this revision. AMD and MITTR China remain the only two active
-priority collectors. Five minutes is a requested GitHub schedule, not a guaranteed
-end-to-end deadline; source polling, queueing and browser delivery are independent.
+The owner confirmed six additions: Google DeepMind, Google AI, OpenAI, 雷峰网,
+钛媒体 and TechCrunch Venture. Together with AMD and MITTR China, the reviewed
+policy now defines eight collectors in `config/priority_source_policy.json`.
+The producer and browser reader consume the same host/evidence-role policy.
+Approval/configuration is not proof of deployed, continuously scheduled service.
+Five minutes remains a requested GitHub schedule, not a guaranteed deadline.
+
+Google AI's old feed responds with a 301 to
+`https://blog.google/innovation-and-ai/technology/ai/rss/`; the source config now
+uses that canonical endpoint, rather than weakening redirect protections.
+Long RSS archive tails outside the seven-day window are not misreported as a
+recent collection gap. A truncated recent/undated tail or a missing checkpoint
+still produces a gap. Malformed XML is isolated instead of aborting other sources.
+The private-to-workflow scan artifact has a separate 1,000,000-byte cap; it is not
+the public feed. Publisher responses remain capped at 1,000,000 bytes each and the
+browser-facing snapshot remains capped at 300,000 bytes / 72 records / seven days.
+
+## 科创频道 / Batch-6 候选范围
+
+`config/priority_media_candidates.json` records a separate, non-runtime shortlist.
+Scope follows the existing public tracking-admin coverage contract: 科创板辅导备案,
+创业板辅导备案, A+H上市, Pre-IPO融资, AI安全, AI眼镜, CXL, UCIe, 太空算力, 6G NTN.
+These are ten topic families, not ten certified healthy RSS responses.
+
+| Candidate | Priority review area | Evidence status |
+|---|---|---|
+| 财联社 / 科创板日报相关栏目 | 硬科技资本、IPO、融资 | Relevant public example; brand/byline and exact Batch-6 RSS attribution pending |
+| 证券时报 | 辅导备案、A+H、注册问询 | Editorial candidate; new-subscription sample pending |
+| 上海证券报 / 中国证券网 | 上市进程、科创政策 | Editorial candidate; new-subscription sample pending |
+| 投资界 | 硬科技融资、成熟项目 | Public financing example; do not mislabel A-round news as Pre-IPO |
+| 投中网 | PE/VC、Pre-IPO | Editorial candidate; incremental event evidence pending |
+| 21世纪经济报道 | 跨市场上市、产业资本 | Editorial candidate; sample and entry validation pending |
+| 电子工程专辑 | CXL/UCIe、半导体融资 | Public example under /mp/; contributor identity must be checked |
+| C114通信网 | 6G NTN、空天地网络 | Editorial candidate; exact sample/entry validation pending |
+| 新华报业网 | 科创项目、光互联融资 | Public Pre-A4 example; not evidence of Pre-IPO stage |
+
+No candidate above is automatically added to the five-minute lane or promoted
+to Core. Financial/IPO facts must be traced back to the relevant regulator,
+exchange, company or broker disclosure. Google URLs, portals and syndication
+must not be mistaken for original publishers or independent corroboration.
+
+Current evidence limits: the public article/ranked projection does not retain a
+complete query-to-article trace for this cohort. Related Google Alerts email
+samples can suggest publishers, but are not RSS receipt/coverage evidence for
+the ten newly added queries. Exact cohort attribution therefore stays pending.
+Only public article URLs/titles are retained here; no mailbox identifiers, private
+RSS addresses, credentials, preference payloads or tracking query histories.
+
+Future review should retain public source/author, article URL, public topic family,
+observed receipt channel, dates, deduplication and test results separately; a
+missing value stays unavailable. Anthropic, Sina and VentureBeat holds below
+remain unchanged until individually verified and approved.
 
 ## Read-only transport probes
 

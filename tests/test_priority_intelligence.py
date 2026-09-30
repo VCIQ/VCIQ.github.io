@@ -1,18 +1,18 @@
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 import unittest
-from tools.priority_intelligence import source_specs, config_hash, finalize, wire_item
+from tools.priority_intelligence import source_specs, config_hash, finalize, wire_item, SOURCES
 
 NOW = datetime(2026, 9, 29, 12, tzinfo=timezone.utc)
 
 
 def item(source="amd-newsroom"):
-    amd = source == "amd-newsroom"
+    host, level = SOURCES[source][1:]
     return {"id": source + "-example", "sourceId": source, "title": "AMD acquisition agreement",
             "summary": "Completion is subject to approvals", "publishedAt": "2026-09-28", "type": "并购", "region": "美国",
             "sector": "半导体", "company": "AMD", "importance": 90,
-            "source": {"name": "AMD" if amd else "MITTR China", "level": "官方披露" if amd else "媒体报道",
-                       "platform": "官方网站" if amd else "媒体", "url": "https://newsroom.amd.com/news/test" if amd else "https://www.mittrchina.com/news/detail/17028"}}
+            "source": {"name": source, "level": level,
+                       "platform": "官方网站" if level == "官方披露" else "媒体", "url": "https://" + host + "/news/test"}}
 
 
 def scan(specs):
@@ -23,14 +23,14 @@ def scan(specs):
 class PriorityIntelligenceTests(unittest.TestCase):
     def test_complete_scan_produces_bounded_public_snapshot(self):
         specs = source_specs(); result = finalize({}, scan(specs), specs, NOW)
-        self.assertEqual(len(result["items"]), 2); self.assertEqual(result["sourceState"], "healthy")
+        self.assertEqual(len(result["items"]), len(SOURCES)); self.assertEqual(result["sourceState"], "healthy")
         self.assertEqual(len(result["contentHash"]), 64)
 
     def test_partial_failures_retain_last_good_source_not_false_healthy(self):
         specs = source_specs(); previous = finalize({}, scan(specs), specs, NOW); failed = scan(specs)
         failed["sources"][0].update(status="error", items=[])
         result = finalize(previous, failed, specs, NOW)
-        self.assertEqual(len(result["items"]), 2); self.assertEqual(result["sourceState"], "degraded")
+        self.assertEqual(len(result["items"]), len(SOURCES)); self.assertEqual(result["sourceState"], "degraded")
 
     def test_all_failed_does_not_advance_last_good(self):
         specs = source_specs(); value = scan(specs)

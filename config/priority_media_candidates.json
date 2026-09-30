@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "purpose": "innovation-capital-and-batch6-source-review",
+  "runtimeEnabled": false,
+  "autoPromoteCore": false,
+  "approvalRequiredForPriorityPolling": true,
+  "observationScope": {
+    "contractSource": "VCIQ/tracking-admin/lib/google-alert-track-coverage-policy.ts",
+    "cohort": "candidate-batch-6",
+    "topicFamilies": ["科创板辅导备案", "创业板辅导备案", "A+H上市", "Pre-IPO融资", "AI安全", "AI眼镜", "CXL", "UCIe", "太空算力", "6G NTN"],
+    "rssCoverage": "pending-exact-source-and-query-observations",
+    "note": "Public examples establish relevance only, not observation by a particular private RSS subscription. No feed URLs, email IDs, recipients, or private preference data are included."
+  },
+  "candidates": [
+    {"id":"cls","name":"财联社／科创板日报相关栏目","host":"cls.cn","topics":["IPO进程","成熟融资","AI安全","硬科技"],"status":"candidate","evidence":"public-example","sampleUrl":"https://www.cls.cn/detail/2495417","sampleTitle":"英伟达欲拉保险公司入场为AI芯片融资风险兜底","originalPublisherVerified":false,"nextCheck":"核验具体栏目标识与署名；不能将所有财联社文章等同于科创板日报"},
+    {"id":"stcn","name":"证券时报","host":"stcn.com","topics":["辅导备案","A+H上市","注册问询"],"status":"candidate","evidence":"editorial-proposal","nextCheck":"获取新增订阅的精确文章样本，核验公告引用及增量入口"},
+    {"id":"cnstock","name":"上海证券报／中国证券网","host":"cnstock.com","topics":["辅导备案","上市进程","科创政策"],"status":"candidate","evidence":"editorial-proposal","nextCheck":"获取新增订阅精确样本，核验文章时间、原文署名及授权"},
+    {"id":"pedaily","name":"投资界","host":"pedaily.cn","topics":["Pre-IPO融资","硬科技融资","投资机构"],"status":"candidate","evidence":"public-example","sampleUrl":"https://news.pedaily.cn/202609/569772.shtml","sampleTitle":"吾拾微电子完成亿元A轮融资，加码先进封装与光芯片键合装备国产化","originalPublisherVerified":false,"nextCheck":"区分早期融资与Pre-IPO；核验稿源、转载及独立入口"},
+    {"id":"chinaventure","name":"投中网","host":"chinaventure.com.cn","topics":["Pre-IPO融资","PE/VC","成熟硬科技项目"],"status":"candidate","evidence":"editorial-proposal","nextCheck":"补精确RSS样本与独立URL证据，检验边际事件增量"},
+    {"id":"21jingji","name":"21世纪经济报道","host":"21jingji.com","topics":["A+H上市","IPO进程","产业资本"],"status":"candidate","evidence":"editorial-proposal","nextCheck":"验证栏目、正文可访问性与样本归属"},
+    {"id":"eet-china","name":"电子工程专辑","host":"eet-china.com","topics":["CXL","UCIe","半导体融资","芯片互连"],"status":"candidate","evidence":"public-example","sampleUrl":"https://www.eet-china.com/mp/a528257.html","sampleTitle":"近20亿元！4家碳化硅企业获得新融资/补贴","originalPublisherVerified":false,"nextCheck":"/mp/可能为入驻账号内容，须核验原始发布者，不自动认定平台原创"},
+    {"id":"c114","name":"C114通信网","host":"c114.com.cn","topics":["6G NTN","太空算力","网络通信"],"status":"candidate","evidence":"editorial-proposal","nextCheck":"验证精确订阅样本、栏目RSS或可增量网页"},
+    {"id":"xhby","name":"新华报业网","host":"xhby.net","topics":["科创项目","近眼显示","光互联融资"],"status":"candidate","evidence":"public-example","sampleUrl":"https://www.xhby.net/content/s6aba5743e4b04ba60ca52c28.html","sampleTitle":"创投观察站｜镭昱半导体完成近亿元Pre-A4轮融资，加速推进近眼显示与光互联产业化","originalPublisherVerified":false,"nextCheck":"区分Pre-A与Pre-IPO，不能由标题前缀推断上市阶段"}
+  ],
+  "existingHolds": [
+    {"id":"anthropic","reason":"需要HTML适配与独立增量验证"},
+    {"id":"sina-finance","reason":"需栏目收窄、原始稿源识别与有限翻页"},
+    {"id":"venturebeat-ai","reason":"此前429，保持退避，不自动高频"},
+    {"id":"huxiu","reason":"入口、授权、增量可用性待验证"},
+    {"id":"caixin","reason":"访问与授权待验证，不绕过付费限制"}
+  ]
+}

@@ -87,7 +87,14 @@ def collect_source(spec, now, fetcher, previous_cursor=None):
                 root = ET.fromstring(body)
                 nodes = [x for x in root.iter() if x.tag.split("}")[-1] in ("item", "entry")]
                 entries = []
-                gap = len(nodes) > MAX_SOURCE_ITEMS
+                # A long archive tail is not a missed recent window. Do not
+                # claim completeness if skipped dates are absent or recent.
+                cutoff = (now - timedelta(days=7)).date().isoformat()
+                def skipped_is_recent(node):
+                    dates = [x.text for x in node if x.tag.split("}")[-1].lower() in ("pubdate", "published", "updated", "date")]
+                    normalized = normalize_date(dates[0]) if dates else None
+                    return normalized is None or normalized >= cutoff
+                gap = any(skipped_is_recent(node) for node in nodes[MAX_SOURCE_ITEMS:])
                 for node in nodes[:MAX_SOURCE_ITEMS]:
                     values = {x.tag.split("}")[-1].lower(): x.text or x.attrib.get("href", "") for x in node}
                     url = values.get("link", ""); identity = hashlib.sha256(url.encode()).hexdigest()[:24]
@@ -106,7 +113,7 @@ def collect_source(spec, now, fetcher, previous_cursor=None):
                     items[row["id"]] = link_priority_entities(row)
                     identity = row["id"]
                 trace.append({"id": identity, "sourceId": source_id, "title": str(title)[:240],
-                              "url": url if urlsplit(url).hostname in ("www.mittrchina.com", "newsroom.amd.com") else "",
+                              "url": url if urlsplit(url).hostname in spec.get("allowedHosts", []) else "",
                               "reason": reason})
             hit_anchor = bool(set(x[0] for x in entries) & set(cursor["anchorIds"]))
             old_window = bool(entries) and all((normalize_date(x[2]) or "9999") < (now - timedelta(days=7)).date().isoformat() for x in entries)

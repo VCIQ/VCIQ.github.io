@@ -11,6 +11,7 @@ on:
       - tools/priority_entity_linking.py
       - config/priority_entity_aliases.json
       - config/intelligence_sources.json
+      - config/priority_source_policy.json
   schedule:
     - cron: "3-58/5 * * * *"
 
@@ -35,7 +36,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Verify priority source and publication boundaries
-        run: python -m unittest tests.test_priority_source_publication tests.test_priority_intelligence tests.test_priority_incremental
+        run: python -m unittest tests.test_priority_source_publication tests.test_priority_intelligence tests.test_priority_incremental tests.test_priority_source_policy
       - name: Collect public publisher increment
         run: python -m tools.priority_intelligence collect --file /tmp/priority-scan.json
       - uses: actions/upload-artifact@v4

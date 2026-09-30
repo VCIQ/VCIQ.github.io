@@ -469,8 +469,9 @@ export function HomepageNewsFeed({
     trustedArticles,
   ]);
 
-  const displayedArticles = visibleArticles.slice(0, channel === "focus"
-    ? Math.max(HOMEPAGE_FOCUS_POLICY.pageSize, feedLimit) : feedLimit);
+  const displayedArticles = channel === "focus"
+    ? visibleArticles.slice(0, Math.max(HOMEPAGE_FOCUS_POLICY.pageSize, feedLimit))
+    : visibleArticles.slice(0, feedLimit);
   const latestDate = latestPublishedAt.slice(0, 10);
   const latestDayArticles = trustedArticles.filter(
     (item) =>

@@ -92,8 +92,9 @@ class PriorityIncrementTests(unittest.TestCase):
         scan = {"schemaVersion": 1, "policyVersion": "priority-publisher-v1", "configHash": config_hash(specs), "checkedAt": NOW.isoformat(), "sources": sources}
         result = finalize({}, scan, specs, NOW)
         self.assertEqual(len(result["items"]), 72)
-        self.assertEqual(result["collectionSummary"]["capacityHeld"], 28)
-        self.assertEqual(sum(x["reason"] == "snapshot-capacity" for x in result["collectionTrace"]), 28)
+        withheld = len(specs) * 50 - 72
+        self.assertEqual(result["collectionSummary"]["capacityHeld"], withheld)
+        self.assertEqual(sum(x["reason"] == "snapshot-capacity" for x in result["collectionTrace"]), min(withheld, 120))
         sources[0]["status"] = "error"
         with self.assertRaises(ValueError): finalize({}, scan, specs, NOW)
 

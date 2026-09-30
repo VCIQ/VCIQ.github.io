@@ -11,6 +11,7 @@ import hashlib
 import json
 from pathlib import Path
 import subprocess
+import xml.etree.ElementTree as ET
 from urllib.error import HTTPError
 from urllib.parse import urlsplit
 from urllib.request import Request, build_opener, HTTPRedirectHandler
@@ -25,10 +26,15 @@ REPO = "VCIQ/VCIQ.github.io"
 BRANCH = "intelligence-live"
 DATA_PATH = "public/data/priority_intelligence.json"
 LIMIT = 300_000
-SOURCES = {
-    "amd-newsroom": ("newsroom.amd.com", "newsroom.amd.com", "官方披露"),
-    "mittrchina-public-news": ("apii.web.mittrchina.com", "www.mittrchina.com", "媒体报道"),
-}
+# Internal workflow artifact, never served to the homepage. Eight bounded
+# source scans can exceed the smaller final public projection before retention.
+SCAN_ARTIFACT_LIMIT = 1_000_000
+SOURCE_POLICY = json.loads((ROOT / "config/priority_source_policy.json").read_text())
+SOURCES = {row["id"]: (row["fetchHost"], row["articleHost"], row["level"])
+           for row in SOURCE_POLICY["sources"]}
+SOURCE_ADAPTERS = {row["id"]: row["adapter"] for row in SOURCE_POLICY["sources"]}
+if SOURCE_POLICY.get("schemaVersion") != 1 or len(SOURCES) != len(SOURCE_POLICY["sources"]):
+    raise ValueError("invalid priority publisher policy")
 TYPES = {"融资", "产业投资", "产品发布", "技术突破", "商业进展", "公司动态", "并购", "财报", "政策", "监管文件", "IPO", "论文", "人物观点"}
 
 
@@ -42,14 +48,15 @@ def compact(value) -> str:
 
 def source_specs(root: Path = ROOT) -> list[dict]:
     config = json.loads((root / "config/intelligence_sources.json").read_text())
-    specs = [x for x in config["feeds"] if x.get("id") in SOURCES and x.get("enabled", True)]
+    specs = [{**x, "allowedHosts": [SOURCES[x["id"]][1]]} for x in config["feeds"]
+             if x.get("id") in SOURCES and x.get("enabled", True)]
     if len(specs) != len(SOURCES) or {x["id"] for x in specs} != set(SOURCES):
         raise ValueError("priority source config is incomplete; do not fabricate coverage")
     for spec in specs:
         url = urlsplit(spec["url"])
         if url.scheme != "https" or url.hostname != SOURCES[spec["id"]][0] or url.username or url.password:
             raise ValueError("unexpected priority source endpoint")
-        if spec.get("adapter") not in {"rss", "mittrchina_json"}:
+        if spec.get("adapter") != SOURCE_ADAPTERS[spec["id"]] or spec.get("sourceLevel") != SOURCES[spec["id"]][2]:
             raise ValueError("unexpected priority source adapter")
     return specs
 
@@ -130,7 +137,7 @@ def collect(specs: list[dict], now: datetime, fetcher=fetch_public, previous=Non
             row = collect_source(spec, now, fetcher, cursor)
             row["items"] = [wire_item(x, source_id) for x in row["items"]]
             rows.append(row)
-        except (HTTPError, OSError, ValueError, KeyError, TypeError) as error:
+        except (HTTPError, OSError, ValueError, KeyError, TypeError, ET.ParseError) as error:
             rows.append({"sourceId": source_id, "status": "error", "errorType": type(error).__name__, "items": []})
     return {"schemaVersion": 1, "policyVersion": POLICY, "configHash": config_hash(specs),
             "checkedAt": timestamp(now), "sources": rows}
@@ -249,10 +256,13 @@ def main():
         data = collect(specs, now, previous=previous)
         if all(row["status"] == "error" for row in data["sources"]):
             raise SystemExit("All priority publishers failed; no new successful snapshot")
-        args.file.write_text(compact(data) + "\n", encoding="utf-8")
+        serialized = compact(data) + "\n"
+        if len(serialized.encode()) > SCAN_ARTIFACT_LIMIT:
+            raise SystemExit("Priority internal scan exceeds its bounded artifact budget")
+        args.file.write_text(serialized, encoding="utf-8")
         print(compact({"checkedAt": data["checkedAt"], "sources": [{"id": x["sourceId"], "status": x["status"], "items": len(x["items"])} for x in data["sources"]]}))
     else:
-        if args.file.stat().st_size > LIMIT: raise SystemExit("Priority scan artifact exceeds budget")
+        if args.file.stat().st_size > SCAN_ARTIFACT_LIMIT: raise SystemExit("Priority scan artifact exceeds budget")
         print(compact(publish(json.loads(args.file.read_text()), specs, now)))
 
 

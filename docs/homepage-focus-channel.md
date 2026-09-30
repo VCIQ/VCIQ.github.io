@@ -45,8 +45,11 @@ unchanged by this display-order update.
 
 ## Independent update lane
 
-The existing source configuration supplies two initially verified publishers:
-AMD Newsroom RSS and MIT Technology Review China's public JSON news list.
+The initial source configuration supplied AMD Newsroom RSS and MIT Technology
+Review China's public JSON news list. The owner has now approved six additions:
+DeepMind, Google AI, OpenAI, 雷峰网, 钛媒体 and TechCrunch Venture. The producer
+and browser share the eight-source `config/priority_source_policy.json` contract.
+This approval changes collection scope, not Core status or private preferences.
 `priority-intelligence-refresh.yml` requests a five-minute schedule, while the
 active, visible Focus tab checks the bounded public snapshot once per minute.
 GitHub scheduling/queues/network/cache are best-effort: neither interval is an
@@ -118,8 +121,10 @@ Read-only integration probe during this revision: 89 response rows inspected,
 23 final recent records, MITTR pages 1/2/3, AMD feed page 1. Article 17028 retained
 2026-09-29T01:30:54Z and identified AMD, World Labs, 李飞飞; the AMD original retained
 its date-only timestamp and identified AMD and World Labs. No production data was
-written by that probe. New candidate publishers remain disabled pending owner
-selection and source-specific verification.
+written by that probe. The later approved six-source expansion is separate from
+the innovation-capital shortlist in `config/priority_media_candidates.json`:
+those additional candidates remain disabled pending samples, verification and
+explicit selection. RSS and email observations must never be conflated.
 
 ## Acceptance and remaining boundaries
 

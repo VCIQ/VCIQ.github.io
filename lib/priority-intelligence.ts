@@ -1,12 +1,15 @@
 import { homepageEventIdentityKeys, homepageMaterialUrl } from "@/lib/homepage-event-identity";
+import prioritySourcePolicy from "@/config/priority_source_policy.json";
 import type { LiveIntelligenceEvent } from "@/lib/use-articles";
 
 export const PRIORITY_FEED_URL = "https://raw.githubusercontent.com/VCIQ/VCIQ.github.io/intelligence-live/public/data/priority_intelligence.json";
 export const PRIORITY_FEED_MAX_BYTES = 300_000;
-export const PRIORITY_FEED_SOURCE_HOSTS: Readonly<Record<string, string>> = Object.freeze({
-  "amd-newsroom": "newsroom.amd.com",
-  "mittrchina-public-news": "www.mittrchina.com",
-});
+export const PRIORITY_FEED_SOURCE_HOSTS: Readonly<Record<string, string>> = Object.freeze(
+  Object.fromEntries(prioritySourcePolicy.sources.map((row) => [row.id, row.articleHost])),
+);
+const PRIORITY_FEED_SOURCE_LEVELS: Readonly<Record<string, string>> = Object.freeze(
+  Object.fromEntries(prioritySourcePolicy.sources.map((row) => [row.id, row.level])),
+);
 export type PriorityIntelligenceSnapshot = {
   schemaVersion: 1;
   policyVersion: "priority-publisher-v1";
@@ -49,7 +52,7 @@ export function parsePriorityIntelligence(value: unknown, now = Date.now()): Pri
     if (!title.trim() || !Number.isFinite(Date.parse(publishedAt)) || Date.parse(publishedAt) > now + 86_400_000) throw new Error("Invalid priority event");
     if (!EVENT_TYPES.has(String(row.type)) || !["中国", "美国", "全球"].includes(String(row.region)) ||
       typeof row.importance !== "number" || !Number.isFinite(row.importance) || row.importance < 0 || row.importance > 100) throw new Error("Invalid priority event classification");
-    const level = sourceId === "amd-newsroom" ? "官方披露" : "媒体报道";
+    const level = PRIORITY_FEED_SOURCE_LEVELS[sourceId] as "官方披露" | "媒体报道";
     if (source.level !== level) throw new Error("Invalid priority evidence role");
     const entityState = row.entityResolutionStatus;
     if (entityState !== undefined && !["matched", "ambiguous", "unresolved"].includes(String(entityState))) throw new Error("Invalid entity status");
