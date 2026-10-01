@@ -1,4 +1,4 @@
-import approvedListedUniverse from "@/config/listed_innovation_companies.json";
+import approvedListedUniverse from "@/config/listed_innovation_routing.json";
 
 type JsonRecord = Record<string, unknown>;
 

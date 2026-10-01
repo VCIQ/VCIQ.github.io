@@ -99,3 +99,22 @@ Production acceptance additionally requires a successful PR build, merged code,
 the matching Pages deployment, and public/browser checks of the company library,
 listed innovation filters, affected company profiles and homepage routing. A local
 test pass, collection receipt or branch push does not satisfy production acceptance.
+
+## Publication prerequisites found by CI
+
+The first PR build compiled all company routes, passed public artifact/link checks,
+but exceeded the existing 1,000,000-byte homepage script budget by 7,316 bytes.
+The homepage now imports a generated 7 KB routing/search projection instead of the
+full issuer-evidence registry. The feed builder regenerates it deterministically;
+tests compare it to the approval source. The performance budget is unchanged.
+
+The inherited Next.js 16.3.4 dependency failed GHSA-vcvr-r3jv-pc5j. Next and its
+ESLint configuration are patched to official 16.3.8, with a regenerated lockfile.
+The production audit then reported no high or critical findings. No security
+exceptions or workflow permissions were expanded.
+
+An existing live Seed check exposed an upstream migration from `/zh/blog` to
+`/zh/research`. The adapter reads that page's `feedList` (blogs), not its separate
+`article_list` (papers), retains official blog detail URLs and uses the source's
+China-calendar publication date rather than the previous UTC day. The original
+live acceptance requirement remains in place.

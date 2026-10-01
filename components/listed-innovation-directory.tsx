@@ -20,7 +20,7 @@ export function ListedInnovationDirectory({ rows, approvedAt }: {
     (market === "全部" || row.securities.some((security) => security.market === market))
     && (role === "全部" || row.role === role)
     && (!needle || [row.name, row.issuerName, row.companySlug, row.sector, row.researchFocus,
-      ...row.securities.map((security) => security.ticker)].join(" ").toLocaleLowerCase("zh-CN").includes(needle)));
+      ...row.securities.map((security) => `${security.ticker}${security.exchange === "HKEX" ? ".HK" : security.exchange === "SSE" ? ".SH" : security.exchange === "SZSE" ? ".SZ" : ""}`)].join(" ").toLocaleLowerCase("zh-CN").includes(needle)));
   return (
     <section className={styles.section} id="listed-innovation" aria-labelledby="listed-innovation-heading">
       <header className={styles.header}>

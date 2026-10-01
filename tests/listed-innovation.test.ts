@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { readFileSync } from "node:fs";
 import approved from "../config/listed_innovation_companies.json";
+import routing from "../config/listed_innovation_routing.json";
+import { buildListedInnovationRouting } from "../lib/listed-innovation-routing";
 import pending from "../config/listed_innovation_candidates.json";
 import registry from "../config/company_registry.json";
 import sources from "../config/official_company_sources.json";
@@ -13,6 +15,10 @@ import { groupDisclosurePlanAttachments, projectHomepageCompanyDisclosureEvents 
 import type { LiveIntelligenceEvent } from "../lib/use-articles";
 
 const emptyIndex = buildHomepageInnovationCapitalIndex({ items: [] });
+test("client routing is an exact generated projection, without full issuer proof payload", () => {
+  assert.deepEqual(routing, buildListedInnovationRouting(approved));
+  assert.doesNotMatch(JSON.stringify(routing), /evidenceUrl|identityNote|researchFocus/u);
+});
 function event(overrides: Partial<LiveIntelligenceEvent> = {}): LiveIntelligenceEvent {
   return { id: "p1-test", title: "AMD announces an AI acquisition", summary: "AMD signed an agreement. Closing is pending.",
     company: "AMD", sector: "半导体", type: "并购", region: "美国", importance: 89,

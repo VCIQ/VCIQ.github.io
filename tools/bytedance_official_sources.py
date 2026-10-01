@@ -10,7 +10,7 @@ first-party payloads avoids search-engine wrappers and preserves original links.
 from __future__ import annotations
 
 import json
-from datetime import UTC, date, datetime, timedelta
+from datetime import UTC, date, datetime, timedelta, timezone
 from typing import Any, Callable, Sequence
 from urllib.parse import quote
 
@@ -23,7 +23,7 @@ SUPPORTED_SLUGS = {BYTEDANCE_SLUG, DOUBAO_SLUG, VOLCENGINE_SLUG}
 BYTEDANCE_ARTICLES_URL = (
     "https://www.bytedance.com/api/articles?language=1&limit=18&offset=0"
 )
-DOUBAO_SEED_BLOG_URL = "https://seed.bytedance.com/zh/blog"
+DOUBAO_SEED_BLOG_URL = "https://seed.bytedance.com/zh/research"
 VOLCENGINE_NEWS_URL = "https://www.volcengine.com/news"
 
 
@@ -171,16 +171,43 @@ def _seed_forced_type(record: dict[str, Any]) -> str | None:
     return None
 
 
-def parse_doubao_seed_page(
-    body: str, spec: Any, official: Any
-) -> list[dict[str, Any]]:
+def _seed_blog_records(body: str) -> tuple[list[dict[str, Any]], bool]:
+    """Read the legacy blog or the verified replacement research-page blog feed.
+
+    The new article_list contains papers, not blogs. Never synthesize blog URLs
+    from that list; only feedList is the observed blog collection on this page.
+    """
     router_data = extract_router_data(body)
     loader_data = router_data.get("loaderData")
     loader_data = loader_data if isinstance(loader_data, dict) else {}
+    research = loader_data.get("(locale$)/research/page")
+    if isinstance(research, dict) and isinstance(research.get("feedList"), list):
+        return [row for row in research["feedList"] if isinstance(row, dict)
+                and isinstance(row.get("ArticleMeta"), dict)
+                and row["ArticleMeta"].get("ArticleType") == 2], True
     page = loader_data.get("(locale$)/blog/page")
     page = page if isinstance(page, dict) else {}
     records = page.get("article_list")
-    records = records if isinstance(records, list) else []
+    return [row for row in records if isinstance(row, dict)] if isinstance(records, list) else [], False
+
+
+def _seed_publication_date(value: Any) -> Any:
+    # Seed's observed CMS timestamps encode midnight China time (e.g. the
+    # 2026-08-05 blog is 1785859200000), not the preceding UTC calendar date.
+    # Only the source's PublishDate is used; UpdateTime is never substituted.
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        try:
+            seconds = value / 1000 if value > 100_000_000_000 else value
+            return datetime.fromtimestamp(seconds, timezone(timedelta(hours=8))).date().isoformat()
+        except (OverflowError, OSError, ValueError):
+            return None
+    return value
+
+
+def parse_doubao_seed_page(
+    body: str, spec: Any, official: Any
+) -> list[dict[str, Any]]:
+    records, canonical_english_slug = _seed_blog_records(body)
     articles: list[dict[str, Any]] = []
     for record in records:
         if not isinstance(record, dict):
@@ -192,6 +219,10 @@ def parse_doubao_seed_page(
             content = record.get("ArticleSubContentEn")
         content = content if isinstance(content, dict) else {}
         title_key = _clean(official, content.get("TitleKey"), 320)
+        if canonical_english_slug:
+            english = record.get("ArticleSubContentEn")
+            english = english if isinstance(english, dict) else {}
+            title_key = _clean(official, english.get("TitleKey"), 320) or title_key
         if not title_key:
             continue
         article = _build_article(
@@ -199,7 +230,7 @@ def parse_doubao_seed_page(
             spec,
             title=content.get("Title"),
             summary=content.get("Abstract"),
-            published=metadata.get("PublishDate"),
+            published=_seed_publication_date(metadata.get("PublishDate")),
             url=(
                 "https://seed.bytedance.com/zh/blog/"
                 f"{quote(title_key, safe='-._~')}"
@@ -298,14 +329,7 @@ def _structured_record_count(slug: str, body: str) -> int:
         records = container.get("data", []) if isinstance(container, dict) else []
         return sum(1 for record in records if isinstance(record, dict))
     if slug == DOUBAO_SLUG:
-        router_data = extract_router_data(body)
-        loader_data = router_data.get("loaderData")
-        loader_data = loader_data if isinstance(loader_data, dict) else {}
-        page = loader_data.get("(locale$)/blog/page")
-        page = page if isinstance(page, dict) else {}
-        records = page.get("article_list")
-        records = records if isinstance(records, list) else []
-        return sum(1 for record in records if isinstance(record, dict))
+        return len(_seed_blog_records(body)[0])
     if slug == VOLCENGINE_SLUG:
         page = _volcengine_page(body)
         banners = page.get("banner")
