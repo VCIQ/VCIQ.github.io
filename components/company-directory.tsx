@@ -1,5 +1,6 @@
 import { buildCompanyResearchSnapshot } from "@/lib/company-research";
 import { companies } from "@/lib/catalog-data";
+import { listedInnovationCompany } from "@/lib/listed-innovation-companies";
 import { projectHomepageCompanyDisclosureEvents } from "@/lib/homepage-company-disclosure-events";
 import { snapshotDate } from "@/lib/intelligence-data";
 import { getCompanyResearchRelations } from "@/lib/research-relations";
@@ -26,6 +27,7 @@ for (const event of projectHomepageCompanyDisclosureEvents(120)) {
 export function CompanyDirectory({ pageSize = 12 }: { pageSize?: number }) {
   const records: CompanyDirectoryRecord[] = companies.map((company) => {
     const research = buildCompanyResearchSnapshot(company);
+    const listedIdentity = listedInnovationCompany(company.slug);
     const disclosure = latestDisclosureByCompany.get(company.slug);
     const disclosureChange = disclosure
       ? {
@@ -81,6 +83,8 @@ export function CompanyDirectory({ pageSize = 12 }: { pageSize?: number }) {
       searchIndex: [
         company.name,
         company.englishName,
+        listedIdentity?.issuerName,
+        ...(listedIdentity?.securities.map((security) => `${security.market} ${security.ticker}`) ?? []),
         company.summary.slice(0, 160),
         company.product.slice(0, 160),
         company.region,

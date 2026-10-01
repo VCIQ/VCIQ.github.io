@@ -1,3 +1,5 @@
+import approvedListedUniverse from "@/config/listed_innovation_companies.json";
+
 type JsonRecord = Record<string, unknown>;
 
 export type InnovationCapitalObjectType =
@@ -6,6 +8,8 @@ export type InnovationCapitalObjectType =
   | "broker"
   | "institution"
   | "mature-candidate"
+  | "listed-company"
+  | "listed-ecosystem"
   | "discovered-company";
 
 export type InnovationCapitalMatchedObject = {
@@ -41,6 +45,7 @@ export type HomepageInnovationEvent = {
   type?: string;
   sector?: string;
   company?: string;
+  companySlug?: string;
   sourceId?: string;
   publishedAt?: string;
   importance?: number;
@@ -91,6 +96,10 @@ const REASON_LABELS: Record<string, string> = {
   CAPITAL_INSTITUTION: "硬科技投资机构",
   MATURE_CANDIDATE: "成熟期潜在项目",
   DISCOVERED_COMPANY: "科创发现候选",
+  LISTED_COMPANY: "已批准上市科创标杆",
+  LISTED_ECOSYSTEM: "已批准产业生态主体",
+  LISTED_TECHNOLOGY_EVENT: "明确技术 / 商业化进展",
+  LISTED_CAPITAL_EVENT: "明确资本 / 上市事件",
   LISTING_EVENT: "辅导 / 上市事件",
   FUNDING_EVENT: "融资 / 投资事件",
   TECHNOLOGY_EVENT: "技术 / 商业化事件",
@@ -171,6 +180,7 @@ function buildUniverse(input: {
   lifecyclePayload: unknown;
   maturePayload: unknown;
   trackingSeedsPayload: unknown;
+  listedCompaniesPayload?: unknown;
 }): UniverseObject[] {
   const watchlist = record(input.watchlistPayload);
   const lifecycle = record(input.lifecyclePayload);
@@ -186,6 +196,18 @@ function buildUniverse(input: {
       aliases: unique([value.name, ...value.aliases], 30),
     });
   };
+
+  // Approval grants research coverage, not a personal follow or an IPO-pool row.
+  const listed = record(input.listedCompaniesPayload ?? approvedListedUniverse);
+  for (const raw of list(listed.companies)) {
+    const row = record(raw);
+    const name = text(list(row.aliases)[0], 240) || text(row.issuerName, 240);
+    if (!name || !text(row.companySlug, 120) || !list(row.securities).length) continue;
+    add({ type: row.role === "ecosystem" ? "listed-ecosystem" : "listed-company", name,
+      stage: "已上市",
+      aliases: unique([name, text(row.issuerName, 240), text(row.companySlug, 120),
+        ...list(row.aliases).map((value) => text(value, 240))]) });
+  }
 
   for (const raw of list(watchlist.projects)) {
     const row = record(raw);
@@ -276,6 +298,11 @@ function aliasMatches(
   if (!key) return false;
   if (structured.some((value) => normalize(value) === key)) return true;
   if (key.length < 2) return false;
+  if (/^[a-z0-9 ._-]+$/iu.test(alias)) {
+    // AMD is a valid short name; it must not match substrings of another word.
+    const escaped = alias.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&");
+    return new RegExp(`(^|[^a-z0-9])${escaped}($|[^a-z0-9])`, "iu").test(haystack);
+  }
   const normalizedHaystack = normalize(haystack);
   if (!normalizedHaystack.includes(key)) return false;
   if (/^[a-z0-9]+$/u.test(key) && key.length < 4) return false;
@@ -298,7 +325,11 @@ function matchedObjectsForEvent(
 
   const matched = new Map<string, InnovationCapitalMatchedObject>();
   for (const object of universe) {
-    if (!object.aliases.some((alias) => aliasMatches(alias, structured, haystack))) continue;
+    const listed = object.type === "listed-company" || object.type === "listed-ecosystem";
+    // A background summary mention alone does not establish the event's subject.
+    if (!object.aliases.some((alias) => aliasMatches(alias,
+      listed ? [event.company ?? "", event.companySlug ?? ""] : structured,
+      listed ? event.title : haystack))) continue;
     const compact: InnovationCapitalMatchedObject = {
       type: object.type,
       name: object.name,
@@ -363,6 +394,11 @@ function reasonCodes(
   if (matched.some((item) => item.type === "institution")) result.push("CAPITAL_INSTITUTION");
   if (matched.some((item) => item.type === "mature-candidate")) result.push("MATURE_CANDIDATE");
   if (matched.some((item) => item.type === "discovered-company")) result.push("DISCOVERED_COMPANY");
+  if (matched.some((item) => item.type === "listed-company")) result.push("LISTED_COMPANY");
+  if (matched.some((item) => item.type === "listed-ecosystem")) result.push("LISTED_ECOSYSTEM");
+  const listedSignal = listedMaterialSignal(event, matched);
+  if (listedSignal.technology) result.push("LISTED_TECHNOLOGY_EVENT");
+  if (listedSignal.capital) result.push("LISTED_CAPITAL_EVENT");
   if (LISTING_RE.test(haystack)) result.push("LISTING_EVENT");
   if (FUNDING_RE.test(haystack)) result.push("FUNDING_EVENT");
   if (TECHNOLOGY_RE.test(haystack)) result.push("TECHNOLOGY_EVENT");
@@ -381,6 +417,24 @@ function reasonCodes(
   return unique(result, 16);
 }
 
+function listedMaterialSignal(event: HomepageInnovationEvent, matched: InnovationCapitalMatchedObject[]) {
+  const benchmark = matched.some((row) => row.type === "listed-company");
+  const ecosystem = matched.some((row) => row.type === "listed-ecosystem");
+  if ((!benchmark && !ecosystem) || event.source.level === "低可信") return { technology: false, capital: false };
+  // Sector tags, negated claims and routine governance are not event evidence.
+  const text = `${event.title} ${event.summary}`
+    .replace(/(?:没有|并无|未发生|不存在|尚无|并未|尚未)[^。；;！？!?]{0,100}(?:[。；;！？!?]|$)/giu, " ")
+    .replace(/\b(?:no|not|never|has not|did not)\b[^.;!?]{0,120}(?:[.;!?]|$)/giu, " ");
+  const routine = /股东大会|董事会会议|员工持股|股权激励|分红|派息|回购|月报表|促销|优惠券|招聘|股价|涨停|跌停|研报|研究观点|\b(?:dividend|buyback|share repurchase|annual general meeting|monthly return|coupon|discount|stock price|share price)\b/iu;
+  if (routine.test(event.title)) return { technology: false, capital: false };
+  const technologyObject = /芯片|算力|模型|机器人|半导体|光刻|量子|航天|火箭|卫星|电池|储能|测序|手术|新药|临床|工业|伺服|通信|端侧|智能驾驶|\b(?:AI|GPU|CPU|HBM|DRAM|NAND|chip|chips|model|models|robot|robots|robotics|quantum|semiconductor|lithography|satellite|rocket|battery|batteries|clinical|surgical|sequencing|cloud|5G|6G)\b/iu.test(text);
+  const action = /发布|推出|量产|交付|获批|批准|完成|突破|部署|商业化|投产|验证|签约|订单|\b(?:launch\w*|unveil\w*|introduc\w*|ship\w*|deliver\w*|approv\w*|deploy\w*|demonstrat\w*|achiev\w*|releas\w*|orders?|contracts?)\b/iu.test(text);
+  const listing = /挂牌上市|上市交易|上市申请|招股|首次公开发行|\b(?:IPO|initial public offering|begins? trading)\b/iu.test(text);
+  const capital = /收购|并购|融资|增资|领投|跟投|战略投资|\b(?:acquir\w*|acquisition|merger|funding|financing|investment|invests?|offering)\b/iu.test(text);
+  return { technology: technologyObject && action,
+    capital: listing || (capital && (benchmark || technologyObject)) };
+}
+
 function qualifies(
   event: HomepageInnovationEvent,
   matched: InnovationCapitalMatchedObject[],
@@ -395,6 +449,7 @@ function qualifies(
   const technology = reasons.includes("TECHNOLOGY_EVENT");
   const policy = reasons.includes("POLICY_EVENT");
   const discoverySource = reasons.includes("INNOVATION_DISCOVERY_SOURCE");
+  if (reasons.includes("LISTED_TECHNOLOGY_EVENT") || reasons.includes("LISTED_CAPITAL_EVENT")) return true;
   if (directProject && (listing || funding || technology || policy || discoverySource)) return true;
   if (institution && (listing || funding)) return true;
   if (broker && (listing || funding)) return true;
@@ -420,6 +475,9 @@ function innovationPriority(
   if (reasons.includes("PRIMARY_EVIDENCE")) score += 15;
   else if (reasons.includes("TRUSTED_EVIDENCE")) score += 7;
   if (reasons.includes("INNOVATION_DISCOVERY_SOURCE")) score += 8;
+  if (reasons.includes("LISTED_COMPANY") || reasons.includes("LISTED_ECOSYSTEM")) score += 20;
+  if (reasons.includes("LISTED_TECHNOLOGY_EVENT")) score += 12;
+  if (reasons.includes("LISTED_CAPITAL_EVENT")) score += 20;
   score += Math.min(5, Math.max(0, Math.floor(Number(event.importance ?? 0) / 20)));
   score += Math.min(5, matched.length);
   return Math.min(100, score);
@@ -436,6 +494,7 @@ function articleEvents(payload: unknown): HomepageInnovationEvent[] {
       type: text(row.type, 120),
       sector: text(row.sector, 160),
       company: text(row.company, 240),
+      companySlug: text(row.companySlug, 120),
       sourceId: text(row.sourceId, 240),
       publishedAt: text(row.publishedAt, 80),
       importance: Number(row.importance) || 0,
@@ -504,6 +563,7 @@ export function buildInnovationCapitalFeedProjection(input: {
   lifecyclePayload: unknown;
   maturePayload: unknown;
   trackingSeedsPayload: unknown;
+  listedCompaniesPayload?: unknown;
 }): InnovationCapitalFeedProjection {
   const universe = buildUniverse(input);
   const events = [
@@ -560,7 +620,8 @@ export function buildInnovationCapitalFeedProjection(input: {
   return {
     schemaVersion: 1,
     generatedAt: generatedAt(input),
-    universeAsOf: text(record(input.watchlistPayload).asOf, 40),
+    universeAsOf: [text(record(input.watchlistPayload).asOf, 40),
+      text(record(input.listedCompaniesPayload ?? approvedListedUniverse).approvedAt, 40)].filter(Boolean).sort().at(-1) ?? "",
     eventCount: output.length,
     items: output,
   };
@@ -587,6 +648,8 @@ export function parseInnovationCapitalFeedProjection(
           "broker",
           "institution",
           "mature-candidate",
+          "listed-company",
+          "listed-ecosystem",
           "discovered-company",
         ].includes(type)
       ) return [];
@@ -647,7 +710,20 @@ export function homepageInnovationCapitalAnnotation(
   return index.byId.get(event.id)
     ?? index.byUrl.get(urlKey(event.source.url))
     ?? (event.eventClusterId ? index.byCluster.get(event.eventClusterId) : undefined)
-    ?? null;
+    ?? liveListedAnnotation(event);
+}
+
+const liveListedUniverse = buildUniverse({ watchlistPayload: {}, lifecyclePayload: {},
+  maturePayload: {}, trackingSeedsPayload: {}, listedCompaniesPayload: approvedListedUniverse });
+
+function liveListedAnnotation(event: HomepageInnovationEvent): InnovationCapitalFeedItem | null {
+  if (!event.publishedAt || !Number.isFinite(Date.parse(event.publishedAt))) return null;
+  const matched = matchedObjectsForEvent(event, liveListedUniverse);
+  const reasons = reasonCodes(event, matched);
+  if (!reasons.includes("LISTED_TECHNOLOGY_EVENT") && !reasons.includes("LISTED_CAPITAL_EVENT")) return null;
+  return { eventId: event.id, sourceUrl: event.source.url, publishedAt: event.publishedAt,
+    eventClusterId: event.eventClusterId ?? "", matchedObjects: matched, reasonCodes: reasons,
+    evidenceTier: evidenceTier(event), innovationPriority: innovationPriority(event, matched, reasons) };
 }
 
 export function matchesHomepageInnovationCapitalChannel(

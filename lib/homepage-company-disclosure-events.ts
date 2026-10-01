@@ -43,6 +43,9 @@ function normalizedRegion(event: ListedDisclosureEvent): Region {
 }
 
 function materialRule(event: ListedDisclosureEvent) {
+  // An English redirect notice does not establish financing or another material
+  // event. Keep the original evidence in the archive, not in the homepage feed.
+  if (/an announcement has just been published by the issuer in the Chinese section/iu.test(event.title)) return null;
   const rule = MATERIAL_RULES[event.documentType];
   if (!rule) return null;
   if (event.source.level !== "监管文件" || event.fallback) return null;
@@ -155,9 +158,35 @@ export function projectHomepageCompanyDisclosureEvents(
     if (!key || seenUrls.has(key)) continue;
     seenUrls.add(key);
     result.push(event);
-    if (result.length >= limit) break;
   }
-  return result;
+  return groupDisclosurePlanAttachments(result).slice(0, limit);
+}
+
+export function groupDisclosurePlanAttachments(events: readonly LiveIntelligenceEvent[]): LiveIntelligenceEvent[] {
+  const output: LiveIntelligenceEvent[] = [];
+  const groups = new Map<string, LiveIntelligenceEvent>();
+  for (const event of events) {
+    // Only the same named plan, issuer and original calendar date may group.
+    // Later approvals/closings and different plans remain separate events.
+    const plan = event.title.match(/20\d{2}年(?:A股|H股)?(?:第[一二三四五六七八九十\d]+期)?员工持股计划/u)?.[0];
+    const attachment = /草案|摘要|管理办法|法律意见|核查意见|合规性说明/u.test(event.title);
+    const milestone = /获批|审议通过|批准|交割|实施完成|购买完成|终止实施/u.test(event.title);
+    if (!plan || !attachment || milestone || !event.companySlug || !/^\d{4}-\d{2}-\d{2}/u.test(event.publishedAt)) {
+      output.push(event); continue;
+    }
+    const key = `disclosure-plan:${event.companySlug}:${event.publishedAt.slice(0, 10)}:${plan}`;
+    const existing = groups.get(key);
+    if (!existing) {
+      const first = { ...event, eventClusterId: key, relatedSources: [...(event.relatedSources ?? [])] };
+      groups.set(key, first); output.push(first); continue;
+    }
+    const urls = new Set([existing.source.url, ...(existing.relatedSources ?? []).map((source) => source.url)]);
+    if (!urls.has(event.source.url)) {
+      existing.relatedSources!.push({ ...event.source, platform: "监管披露", title: event.title, publishedAt: event.publishedAt });
+      existing.duplicateCount = 1 + existing.relatedSources!.length;
+    }
+  }
+  return output;
 }
 
 function normalizedTitle(value: string) {

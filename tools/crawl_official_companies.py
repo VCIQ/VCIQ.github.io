@@ -15,6 +15,7 @@ the article's primary company.
 
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import re
@@ -80,6 +81,8 @@ except ImportError:  # Executed directly with ``python tools/...``.
 REGISTRY_PATH = ROOT / "config" / "official_company_sources.json"
 CATALOG_PATH = ROOT / "lib" / "catalog-data.ts"
 COMPANY_REGISTRY_PATH = ROOT / "config" / "company_registry.json"
+LISTED_INNOVATION_PATH = ROOT / "config" / "listed_innovation_companies.json"
+LISTED_SOURCE_HEALTH_PATH = ROOT / "public" / "data" / "listed_innovation_source_health.json"
 NEWS_PATH_HINTS = (
     "/news",
     "/newsroom",
@@ -599,6 +602,11 @@ def _article_from_page(
                 flags=re.IGNORECASE,
             )
         candidate_title = clean_text(candidate_title)
+        # Reviewed CMS boilerplate can be repeated on every detail URL. A dated
+        # page with a corporate slogan/media-library heading is not a news item;
+        # continue to its actual H1 rather than publishing the boilerplate.
+        if re.search(r"Inspiring AGI to Benefit Humanity|智绘全球|晶泰\s*媒体资料库", candidate_title, re.IGNORECASE):
+            continue
         if (
             len(candidate_title) >= 8
             and not _is_index_page(spec, canonical_url, candidate_title)
@@ -634,7 +642,7 @@ def _article_from_page(
         "title": title[:220],
         "summary": summary[:500].rstrip(),
         "type": event_type,
-        "region": spec.region,
+        "region": spec.region if spec.region in {"中国", "美国", "全球"} else "全球",
         "sector": spec.sector,
         "company": spec.name,
         "companySlug": spec.slug,
@@ -876,6 +884,8 @@ def crawl_company(
     )
     articles = articles[: spec.max_items]
     status = "ok" if articles and failures == 0 else "partial" if articles else "empty"
+    if not articles and failures and not scanned_indexes and not scanned_sitemaps:
+        status = "error"
     elapsed = time.monotonic() - started
     print(
         f"official={spec.slug} status={status} accepted={len(articles)} "
@@ -977,16 +987,70 @@ def replace_official_source_batches(
     return merge_articles(preserved, incoming)
 
 
-def main() -> int:
+def listed_source_receipt(
+    statuses: Sequence[dict[str, Any]], approved_slugs: set[str], *,
+    generated_at: str, snapshot_published: bool,
+) -> dict[str, Any]:
+    """A collection receipt, not evidence that all official filings are covered."""
+    observed = sorted(
+        [row for row in statuses if row.get("companySlug") in approved_slugs],
+        key=lambda row: str(row.get("companySlug", "")),
+    )
+    return {
+        "schemaVersion": 1,
+        "generatedAt": generated_at,
+        "scope": "owner-approved-listed-p1",
+        "receiptType": "targeted-collection-receipt",
+        "approvedCompanyCount": len(approved_slugs),
+        "attemptedCompanyCount": len(observed),
+        "companiesWithNewArticles": sum(int(row.get("accepted", 0)) > 0 for row in observed),
+        "snapshotPublished": snapshot_published,
+        "note": "官方新闻采集实测；不等同于完整监管披露覆盖。空结果、失败和原始发布日期分别保留。",
+        "sources": observed,
+    }
+
+
+def all_sources_failed(statuses: Sequence[dict[str, Any]]) -> bool:
+    return bool(statuses) and all(
+        row.get("status") == "error"
+        or (int(row.get("accepted", 0)) == 0 and int(row.get("failed", 0)) > 0 and int(row.get("scanned", 0)) == 0)
+        for row in statuses
+    )
+
+
+def main(argv: Sequence[str] = ()) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--approved-listed", action="store_true", help="Collect only the owner-approved P1 companies, without creating private follows.")
+    args = parser.parse_args(argv)
     specs = load_registry()
+    approved = json.loads(LISTED_INNOVATION_PATH.read_text(encoding="utf-8"))
+    approved_slugs = {str(row["companySlug"]) for row in approved["companies"]}
+    if args.approved_listed:
+        specs = [spec for spec in specs if spec.slug in approved_slugs]
+        if {spec.slug for spec in specs} != approved_slugs:
+            raise ValueError("approved listed companies do not have complete official-source configuration")
     user_agent = os.environ.get("SEC_USER_AGENT", "").strip() or DEFAULT_USER_AGENT
     payload = load_existing_payload()
     incoming, statuses = crawl_all_companies(specs, user_agent)
+    completed_at = datetime.now(UTC).replace(microsecond=0).isoformat()
+    for status in statuses:
+        status["lastAttemptAt"] = completed_at
     merged = replace_official_source_batches(
         payload.get("articles", []), incoming, statuses
     )
     source_status = merge_source_status(payload.get("sourceStatus", []), statuses)
     quality = evaluate_quality(merged, source_status, load_config().get("qualityGate", {}))
+    receipt = listed_source_receipt(statuses, approved_slugs,
+        generated_at=completed_at,
+        snapshot_published=False)
+    # Normal scheduled refreshes publish the existing sourceStatus ledger only.
+    # A one-off receipt is emitted solely for an explicit targeted acceptance run.
+    if args.approved_listed:
+        LISTED_SOURCE_HEALTH_PATH.parent.mkdir(parents=True, exist_ok=True)
+        LISTED_SOURCE_HEALTH_PATH.write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    if all_sources_failed(statuses):
+        print("All official sources failed; retained the last-good article snapshot. See the failed collection receipt.", file=sys.stderr)
+        return 1
     result = {
         "registeredCompanies": len(specs),
         "attemptedCompanies": len(statuses),
@@ -1009,6 +1073,9 @@ def main() -> int:
         source_status=source_status,
         quality_gate=quality,
     )
+    if args.approved_listed:
+        receipt["snapshotPublished"] = True
+        LISTED_SOURCE_HEALTH_PATH.write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(result, ensure_ascii=False))
     existing_official = any(
         str(item.get("sourceId", "")).startswith("official-")
@@ -1020,4 +1087,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(main(sys.argv[1:]))
