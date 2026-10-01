@@ -43,6 +43,22 @@ def router_page(loader_data: dict) -> str:
 
 
 class ByteDanceOfficialSourcesTests(unittest.TestCase):
+    def test_replacement_research_page_uses_blogs_not_papers(self) -> None:
+        blog = {
+            "ArticleMeta": {"ArticleType": 2, "PublishDate": 1785859200000},
+            "ArticleSubContentZh": {"Title": "SeedRealtime 大模型发布", "Abstract": "音视频交互模型。", "TitleKey": "中文路径"},
+            "ArticleSubContentEn": {"TitleKey": "seedrealtime-released"},
+        }
+        paper = {**blog, "ArticleMeta": {"ArticleType": 1, "PublishDate": 1785859200000}}
+        body = router_page({"(locale$)/research/page": {"article_list": [paper], "feedList": [blog, paper]}})
+        rows = target.parse_doubao_seed_page(body, spec("doubao", "豆包"), official)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["source"]["url"], "https://seed.bytedance.com/zh/blog/seedrealtime-released")
+        self.assertEqual(rows[0]["publishedAt"], "2026-08-05")
+        self.assertEqual(target._structured_record_count("doubao", body), 1)
+        no_blog = router_page({"(locale$)/research/page": {"article_list": [paper], "feedList": []}})
+        self.assertEqual(target.parse_doubao_seed_page(no_blog, spec("doubao", "豆包"), official), [])
+
     def test_parse_bytedance_public_article_api(self) -> None:
         body = json.dumps(
             {

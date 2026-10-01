@@ -7,11 +7,13 @@ import { buildInnovationCapitalResearchModel } from "@/lib/innovation-capital-re
 import { InnovationDirectory } from "./innovation-directory";
 import { InnovationListingLifecycle } from "./innovation-listing-lifecycle";
 import { InnovationOpportunityPool } from "./innovation-opportunity-pool";
+import { ListedInnovationDirectory } from "@/components/listed-innovation-directory";
+import { listedInnovationCompanies, listedInnovationApprovedAt } from "@/lib/listed-innovation-companies";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "科创频道",
-  description: "跟踪六家重点券商科创板、创业板、A+H及十五五硬科技拟上市项目储备与上市政策。",
+  description: "连接拟上市项目储备、上市生命周期、上市科创标杆与产业生态；共用公司主档与可追溯证券证据。",
 };
 
 export default function InnovationCapitalPage() {
@@ -46,9 +48,18 @@ export default function InnovationCapitalPage() {
         </div>
       </header>
 
-      <InnovationDirectory />
+      <nav className="hero-chips" aria-label="科创研究视图">
+        <a href="#project-reserves">拟上市项目储备</a>
+        <a href="#listing-lifecycle-view">上市生命周期</a>
+        <a href="#listed-innovation">上市科创标杆与产业生态（{listedInnovationCompanies.length}）</a>
+        <a href="#research-patterns">资本与研究关系</a>
+      </nav>
 
-      <InnovationListingLifecycle />
+      <ListedInnovationDirectory rows={listedInnovationCompanies} approvedAt={listedInnovationApprovedAt} />
+
+      <div id="project-reserves"><InnovationDirectory /></div>
+
+      <div id="listing-lifecycle-view"><InnovationListingLifecycle /></div>
 
       <InnovationOpportunityPool opportunities={opportunities} />
 

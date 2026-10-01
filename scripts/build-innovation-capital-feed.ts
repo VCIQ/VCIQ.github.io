@@ -2,6 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildInnovationCapitalFeedProjection } from "../lib/homepage-innovation-capital-channel";
+import { buildListedInnovationRouting } from "../lib/listed-innovation-routing";
+import approvedListed from "../config/listed_innovation_companies.json";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, "..");
@@ -10,7 +12,11 @@ function readJson(relativePath: string): unknown {
   return JSON.parse(fs.readFileSync(path.join(root, relativePath), "utf8"));
 }
 
+const routing = buildListedInnovationRouting(approvedListed);
+fs.writeFileSync(path.join(root, "config/listed_innovation_routing.json"), `${JSON.stringify(routing)}\n`, "utf8");
+
 const projection = buildInnovationCapitalFeedProjection({
+  listedCompaniesPayload: routing,
   articlesPayload: readJson("public/data/articles.json"),
   rankedPayload: readJson("public/data/ranked-intelligence.json"),
   watchlistPayload: readJson("config/innovation_listing_watchlist.json"),

@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { CompanyEquityEvidence } from "@/components/company-equity-evidence";
 import { ExternalDatabaseLinks } from "@/components/external-database-links";
 import { FavoriteButton } from "@/components/favorite-button";
+import { ListedInnovationSecurities } from "@/components/listed-innovation-securities";
+import { listedInnovationCompany } from "@/lib/listed-innovation-companies";
 import { companies, institutionCatalog, reports } from "@/lib/catalog-data";
 import {
   companyDatabaseLinks,
@@ -65,6 +67,10 @@ export default async function CompanyDetail({
   const capitalSummary = venture?.capitalSummary;
   const capitalMarkets = venture?.capitalMarkets ?? [];
   const exitPerformance = venture?.exitPerformance;
+  const listedIdentity = listedInnovationCompany(slug);
+  const conflictingExitSummary = Boolean(listedIdentity && exitPerformance &&
+    /未发现.{0,20}上市|未上市|未识别.{0,20}上市|no.{0,15}listing evidence/iu.test(
+      `${exitPerformance.status} ${exitPerformance.latestEvent} ${exitPerformance.summary}`));
   const events = intelligenceEvents
     .filter((item) => item.companySlug === slug)
     .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
@@ -321,7 +327,8 @@ export default async function CompanyDetail({
           </Section>
 
           <Section id="上市与退出表现" title="上市、并购与退出表现">
-            {exitPerformance && (
+            <ListedInnovationSecurities slug={slug} />
+            {exitPerformance && !conflictingExitSummary && (
               <div className="source-card">
                 <span>{exitPerformance.status}</span>
                 <strong>{exitPerformance.latestEvent || "资本市场结论"}</strong>
@@ -336,7 +343,9 @@ export default async function CompanyDetail({
             <CapitalTimeline
               items={capitalMarkets}
               emptyText={
-                company.status === "已上市"
+                listedIdentity
+                  ? "证券身份与来源见上方。事件时间线尚待补充；不将本次档案补录作为新的上市事件。"
+                  : company.status === "已上市"
                   ? "目录显示公司已上市，但本轮尚未识别到更细的上市、并购或退出证据；后续将连接交易所和监管披露补齐。"
                   : "当前未发现公司上市、并购退出或明确退出安排的可核对公开证据。"
               }

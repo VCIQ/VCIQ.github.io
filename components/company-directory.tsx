@@ -1,5 +1,7 @@
 import { buildCompanyResearchSnapshot } from "@/lib/company-research";
 import { companies } from "@/lib/catalog-data";
+import listedRouting from "@/config/listed_innovation_routing.json";
+import type { ListedRoutingPayload } from "@/lib/listed-innovation-routing";
 import { projectHomepageCompanyDisclosureEvents } from "@/lib/homepage-company-disclosure-events";
 import { snapshotDate } from "@/lib/intelligence-data";
 import { getCompanyResearchRelations } from "@/lib/research-relations";
@@ -26,6 +28,7 @@ for (const event of projectHomepageCompanyDisclosureEvents(120)) {
 export function CompanyDirectory({ pageSize = 12 }: { pageSize?: number }) {
   const records: CompanyDirectoryRecord[] = companies.map((company) => {
     const research = buildCompanyResearchSnapshot(company);
+    const listedIdentity = (listedRouting as ListedRoutingPayload).companies.find((row) => row.companySlug === company.slug);
     const disclosure = latestDisclosureByCompany.get(company.slug);
     const disclosureChange = disclosure
       ? {
@@ -81,6 +84,8 @@ export function CompanyDirectory({ pageSize = 12 }: { pageSize?: number }) {
       searchIndex: [
         company.name,
         company.englishName,
+        ...(listedIdentity?.aliases ?? []),
+        ...(listedIdentity?.securities ?? []),
         company.summary.slice(0, 160),
         company.product.slice(0, 160),
         company.region,

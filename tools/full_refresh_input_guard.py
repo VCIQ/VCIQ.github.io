@@ -42,6 +42,7 @@ LIVE_REFRESH_INPUTS: tuple[str, ...] = (
     "tools/manual_tracking_batch_entrypoint.py",
     "config/automation_jobs.json",
     "config/company_registry.json",
+    "config/listed_innovation_companies.json",
     "config/intelligence_sources.json",
     "config/user_tracking.json",
     "config/listed_company_disclosure_sources.json",

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Building2 } from "lucide-react";
 import { ChannelSplitLayout } from "@/components/channel-split-layout";
 import { CompanyDirectory } from "@/components/company-directory";
+import { listedInnovationCompanies } from "@/lib/listed-innovation-companies";
 import starVcWatchlist from "@/config/star_vc_watchlist.json";
 import { companies } from "@/lib/catalog-data";
 import { projectHomepageCompanyDisclosureEvents } from "@/lib/homepage-company-disclosure-events";
@@ -27,6 +28,7 @@ export default function CompaniesPage() {
         <h1>公司库</h1>
         <div className="hero-chips">
           <span>{companies.length} 家已发布公司</span>
+          <Link href="/innovation-capital/#listed-innovation">{listedInnovationCompanies.length} 家已批准上市科创主体 · 按市场与证券查看 →</Link>
           <span>{listedDisclosureStats.companyCount} 家上市公司有监管披露</span>
           <span>CNINFO {listedDisclosureStats.cninfoAcceptedEventCount} 条结构化公告</span>
           <span>{researchSynergySummary.trackCount} 个核心赛道</span>
@@ -53,6 +55,7 @@ export default function CompaniesPage() {
             <p>
               公司库保留完整监管证据；首页“公司”频道只投射高价值变化。两处共用同一份
               CNINFO、交易所与 SEC 官方披露数据，不重复维护第二套事实。
+              已批准上市科创主体数、证券身份来源与实际已采集公告覆盖数分别统计；新增配置不计为采集成功。
             </p>
           </div>
           <dl className={styles.disclosureStats}>
@@ -79,6 +82,7 @@ export default function CompaniesPage() {
               <p>{event.summary}</p>
               <footer>
                 <span>{event.source.name} · {event.source.level}</span>
+                {event.eventClusterId?.startsWith("disclosure-plan:") && <span>同一计划 {1 + (event.relatedSources?.length ?? 0)} 份配套文件</span>}
                 <Link href={`/companies/${event.companySlug}`}>进入公司档案 →</Link>
               </footer>
             </article>
