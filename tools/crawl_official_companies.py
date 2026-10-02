@@ -183,6 +183,7 @@ class CompanySpec:
     max_candidate_links: int
     max_age_days: int
     request_timeout: int
+    title_suffixes: tuple[str, ...] = ()
 
     @property
     def source_id(self) -> str:
@@ -383,6 +384,7 @@ def load_registry(
             request_timeout=int(
                 raw.get("requestTimeout", defaults.get("requestTimeout", 10))
             ),
+            title_suffixes=tuple(str(value) for value in raw.get("titleSuffixes", []) if value),
         )
         missing = [
             field
@@ -441,7 +443,10 @@ def load_registry(
 
 
 def _host_allowed(url: str, allowed_hosts: Sequence[str]) -> bool:
-    host = (urlsplit(url).hostname or "").lower()
+    parts = urlsplit(url)
+    if parts.scheme not in {"https", "http"} or parts.username or parts.password:
+        return False
+    host = (parts.hostname or "").lower()
     if host.startswith("www."):
         host = host[4:]
     return any(host == allowed or host.endswith(f".{allowed}") for allowed in allowed_hosts)
@@ -469,9 +474,17 @@ def _candidate_score(
     parts = urlsplit(url)
     path = parts.path.casefold()
     text = anchor_text.casefold()
-    if not path or path == "/":
+    if parts.scheme not in {"http", "https"} or parts.username or parts.password:
         return -100
-    if any(hint in path for hint in SKIP_PATH_HINTS):
+    if not path or path == "/" or re.search(r"\.(?:pdf|mp4|mp3|zip|jpg|jpeg|png|svg|webp)$", path):
+        return -100
+    explicit_detail = any(
+        pattern.startswith("^https://") and pattern.endswith("$")
+        and re.fullmatch(pattern, url, flags=re.IGNORECASE)
+        for pattern in article_url_patterns
+    )
+    # Only reviewed exact article paths may override /about; never attachments.
+    if any(hint in path and not (explicit_detail and hint == "/about") for hint in SKIP_PATH_HINTS):
         return -100
     score = 0
     if any(
@@ -527,6 +540,77 @@ def discover_candidate_urls(
     return candidates, feeds
 
 
+def _publication_title_key(value: str) -> str:
+    return re.sub(r"[^a-z0-9\u3400-\u9fff]", "", clean_title(value).casefold())
+
+
+def _index_publication_evidence(
+    index_url: str, body: str, spec: CompanySpec,
+) -> dict[str, list[dict[str, str]]]:
+    """Bind publication dates to one exact linked record and its detail title.
+
+    Never use feed updated, copyright or collection timestamps. Conflicting
+    publication dates stay conflicting rather than selecting the newest date.
+    """
+    result: dict[str, list[dict[str, str]]] = {}
+
+    def add(href: str, title: str, raw_date: str, method: str) -> None:
+        url = normalize_url(urljoin(index_url, href))
+        published = normalize_date(raw_date)
+        if (
+            not published or len(_publication_title_key(title)) < 8
+            or not _host_allowed(url, spec.allowed_hosts)
+            or _candidate_score(url, title, spec.article_url_patterns) < 4
+            or (url not in result and len(result) >= spec.max_candidate_links)
+        ):
+            return
+        result.setdefault(url, []).append({
+            "title": clean_title(title), "publishedAt": published,
+            "sourceUrl": normalize_url(index_url), "method": method,
+        })
+
+    try:
+        root = ET.fromstring(body)
+    except ET.ParseError:
+        root = None
+    if root is not None and root.tag.rsplit("}", 1)[-1].lower() in {"rss", "feed", "rdf"}:
+        for node in list(root.iter())[:2000]:
+            if node.tag.rsplit("}", 1)[-1].lower() not in {"item", "entry"}:
+                continue
+            fields: dict[str, str] = {}
+            for child in node:
+                key = child.tag.rsplit("}", 1)[-1].lower()
+                if key == "link":
+                    if child.attrib.get("rel", "alternate") == "alternate":
+                        fields.setdefault("link", child.attrib.get("href", "") or clean_text(child.text or ""))
+                elif key in {"title", "pubdate", "published"}:
+                    fields[key] = clean_text("".join(child.itertext()))
+            if fields.get("link"):
+                add(fields["link"], fields.get("title", ""),
+                    fields.get("pubdate", "") or fields.get("published", ""), "official-feed")
+        return result
+
+    parser = OfficialIndexParser()
+    parser.feed(body)
+    for href, text in parser.anchors[:2000]:
+        dates = list(re.finditer(r"(?<!\d)20\d{2}[-/.]\d{1,2}[-/.]\d{1,2}(?!\d)", text))
+        if len(dates) != 1:
+            continue
+        match = dates[0]
+        before, after = text[:match.start()].strip(), text[match.end():].strip()
+        title = before if before else after
+        add(href, title, match.group(0), "official-index-link")
+    return result
+
+
+def _matched_publication_evidence(
+    title: str, rows: Sequence[dict[str, str]],
+) -> dict[str, str] | None:
+    matching = [row for row in rows if _publication_title_key(row["title"]) == _publication_title_key(title)]
+    dates = {row["publishedAt"] for row in matching}
+    return matching[0] if len(dates) == 1 else None
+
+
 def _contains_entity_alias(text: str, alias: str) -> bool:
     folded_text = text.casefold()
     folded_alias = clean_text(alias).casefold()
@@ -573,6 +657,7 @@ def _is_index_page(spec: CompanySpec, url: str, title: str) -> bool:
 def _article_from_page(
     spec: CompanySpec, url: str, body: str,
     rejection_counts: dict[str, int] | None = None,
+    index_evidence: Sequence[dict[str, str]] = (),
 ) -> dict[str, Any] | None:
     def reject(reason: str) -> None:
         if rejection_counts is not None:
@@ -600,6 +685,9 @@ def _article_from_page(
         *parser.texts("h1"),
     ):
         candidate_title = clean_title(raw_title)
+        for suffix in spec.title_suffixes:
+            if candidate_title.endswith(suffix):
+                candidate_title = candidate_title[:-len(suffix)].strip()
         for suffix in (spec.name, *spec.aliases):
             candidate_title = re.sub(
                 rf"\s*(?:\||—|–|-)\s*{re.escape(suffix)}\s*$",
@@ -631,9 +719,29 @@ def _article_from_page(
         for alias in spec.entity_aliases
     ):
         return reject("entity-not-in-title-or-summary")
-    published_at = normalize_date(_published_value(parser, body)) or _path_date(
-        canonical_url
-    )
+    # An invalid/future explicit detail date cannot be replaced by an older
+    # feed/index date. Disagreeing explicit publication metadata also fails shut.
+    explicit_dates = [value for value in (
+        parser.meta.get("article:published_time"), parser.meta.get("date"),
+        parser.meta.get("datepublished"), parser.meta.get("publishdate"),
+        *parser.time_values, *parser.date_values,
+    ) if value]
+    for field in ("datePublished", "dateCreated", "publishDate"):
+        explicit_dates.extend(re.findall(
+            rf'"{field}"\s*:\s*"([^"]+)"', body, flags=re.IGNORECASE,
+        ))
+    normalized_explicit = {normalize_date(value) for value in explicit_dates}
+    if None in normalized_explicit or len(normalized_explicit) > 1:
+        return reject("conflicting-or-invalid-detail-publication-date")
+    path_date = _path_date(canonical_url)
+    if path_date and not normalize_date(path_date):
+        return reject("conflicting-or-invalid-detail-publication-date")
+    published_at = normalize_date(_published_value(parser, body)) or normalize_date(path_date)
+    publication_evidence = None
+    if not published_at:
+        publication_evidence = _matched_publication_evidence(title, index_evidence)
+        if publication_evidence:
+            published_at = publication_evidence["publishedAt"]
     if not published_at:
         return reject("missing-or-invalid-publication-date")
     published_date = date.fromisoformat(published_at)
@@ -653,6 +761,7 @@ def _article_from_page(
         "company": spec.name,
         "companySlug": spec.slug,
         "publishedAt": published_at,
+        **({"publicationDateEvidence": publication_evidence} if publication_evidence else {}),
         "importance": max(importance, 80),
         "source": _source(spec.name, canonical_url, "官方披露", "官方网站"),
     }
@@ -790,6 +899,13 @@ def crawl_company(
     rejection_counts: dict[str, int] = {}
     failure_samples: list[dict[str, Any]] = []
     successful_indexes: list[str] = []
+    index_evidence: dict[str, list[dict[str, str]]] = {}
+
+    def remember_index(url: str, body: str) -> None:
+        for candidate, rows in _index_publication_evidence(url, body, spec).items():
+            index_evidence.setdefault(candidate, []).extend(rows)
+            if candidate not in candidate_urls:
+                candidate_urls.append(candidate)
 
     def record_failure(stage: str, url: str, exc: Exception) -> None:
         if len(failure_samples) >= 12:
@@ -816,6 +932,12 @@ def crawl_company(
             )
             scanned_indexes += 1
             successful_indexes.append(index_url)
+            remember_index(index_url, body)
+            # A configured RSS endpoint is itself a feed, not a webpage that
+            # must first expose a rel=alternate link. Still fetch each detail.
+            for candidate in _candidate_urls_from_feed(index_url, body, spec.allowed_hosts, spec.max_candidate_links):
+                if _candidate_score(candidate, "news", spec.article_url_patterns) >= 4 and candidate not in candidate_urls:
+                    candidate_urls.append(candidate)
             candidates, feeds = discover_candidate_urls(
                 index_url,
                 body,
@@ -841,6 +963,7 @@ def crawl_company(
                 timeout=spec.request_timeout,
                 attempts=2,
             )
+            remember_index(feed_url, body)
             for candidate in _candidate_urls_from_feed(
                 feed_url,
                 body,
@@ -874,7 +997,7 @@ def crawl_company(
                     timeout=spec.request_timeout,
                     attempts=2,
                 )
-                article = _article_from_page(spec, candidate, body, rejection_counts)
+                article = _article_from_page(spec, candidate, body, rejection_counts, index_evidence.get(candidate, ()))
                 if article and article["source"]["url"] not in seen_urls:
                     articles.append(article)
                     seen_urls.add(article["source"]["url"])
