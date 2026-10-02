@@ -1,4 +1,6 @@
-import rawReviews from "@/config/article_metadata_reviews.json";
+// Deterministic projection of the authoritative full review manifest; audited
+// prose is kept in the source manifest, not every browser startup payload.
+import rawReviews from "@/config/article_metadata_runtime.json";
 import { homepageMaterialUrl } from "./homepage-event-identity";
 import type { ArticlePayload } from "@/lib/use-articles";
 

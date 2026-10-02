@@ -16,6 +16,7 @@ except ImportError:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--only-empty", action="store_true", help="Observe zero-yield companies in the previous dated receipt")
+    parser.add_argument("--company", action="append", default=[], help="Observe an approved company slug only; repeat to select several")
     args = parser.parse_args()
     approved = json.loads((ROOT / "config/listed_innovation_companies.json").read_text())
     rows = approved.get("companies", [])
@@ -26,6 +27,13 @@ def main() -> int:
     if args.only_empty:
         previous = json.loads((ROOT / "public/data/listed_innovation_source_health.json").read_text())
         selected = allowed & {row["companySlug"] for row in previous["sources"] if not row.get("accepted")}
+    if args.company:
+        requested = set(args.company)
+        if requested - allowed:
+            raise ValueError("Only owner-approved P1 company slugs may be selected")
+        selected = selected & requested
+    if not selected:
+        raise ValueError("No approved companies match the requested audit scope")
     started = datetime.now(UTC).isoformat()
     articles, statuses = crawl_all_companies([spec for spec in load_registry() if spec.slug in selected], DEFAULT_USER_AGENT)
     receipt = {
@@ -35,6 +43,7 @@ def main() -> int:
         "completedAt": datetime.now(UTC).isoformat(),
         "approvedCompanyCount": len(allowed),
         "attemptedCompanyCount": len(statuses),
+        "selectedCompanySlugs": sorted(selected),
         "companiesWithAcceptedArticles": sum(bool(row.get("accepted")) for row in statuses),
         "acceptedCandidateCount": len(articles),
         "snapshotPublished": False,
