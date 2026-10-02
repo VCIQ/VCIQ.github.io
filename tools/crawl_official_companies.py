@@ -29,6 +29,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any, Iterable, Sequence
 from urllib.parse import quote_plus, urljoin, urlsplit
+from urllib.request import Request, urlopen
 
 try:  # Imported by tests as tools.crawl_official_companies.
     from .crawl_articles import (
@@ -164,6 +165,7 @@ GENERIC_INDEX_SEGMENTS = {
     "press-releases",
     "updates",
 }
+EPOCH_PLACEHOLDER_DATES = {"1969-12-31", "1970-01-01"}
 
 
 @dataclass(frozen=True)
@@ -611,6 +613,21 @@ def _matched_publication_evidence(
     return matching[0] if len(dates) == 1 else None
 
 
+def _classify_explicit_publication_date(value: Any) -> tuple[str, str | None]:
+    """Ignore obvious non-publication placeholders but fail closed otherwise."""
+    raw = clean_text(str(value or ""))
+    if not raw:
+        return "ignore", None
+    if re.fullmatch(r"20\d{2}", raw):
+        return "ignore", None
+    normalized = normalize_date(raw)
+    if normalized in EPOCH_PLACEHOLDER_DATES:
+        return "epoch-placeholder", normalized
+    if normalized is None:
+        return "invalid", None
+    return "valid", normalized
+
+
 def _contains_entity_alias(text: str, alias: str) -> bool:
     folded_text = text.casefold()
     folded_alias = clean_text(alias).casefold()
@@ -730,8 +747,22 @@ def _article_from_page(
         explicit_dates.extend(re.findall(
             rf'"{field}"\s*:\s*"([^"]+)"', body, flags=re.IGNORECASE,
         ))
-    normalized_explicit = {normalize_date(value) for value in explicit_dates}
-    if None in normalized_explicit or len(normalized_explicit) > 1:
+    classified_explicit = [
+        _classify_explicit_publication_date(value) for value in explicit_dates
+    ]
+    if any(state == "invalid" for state, _ in classified_explicit):
+        return reject("conflicting-or-invalid-detail-publication-date")
+    normalized_explicit = {
+        normalized
+        for state, normalized in classified_explicit
+        if state == "valid" and normalized
+    }
+    if (
+        any(state == "epoch-placeholder" for state, _ in classified_explicit)
+        and not normalized_explicit
+    ):
+        return reject("conflicting-or-invalid-detail-publication-date")
+    if len(normalized_explicit) > 1:
         return reject("conflicting-or-invalid-detail-publication-date")
     path_date = _path_date(canonical_url)
     if path_date and not normalize_date(path_date):
@@ -765,6 +796,98 @@ def _article_from_page(
         "importance": max(importance, 80),
         "source": _source(spec.name, canonical_url, "官方披露", "官方网站"),
     }
+
+
+def _unitree_article_from_payload(
+    spec: CompanySpec,
+    url: str,
+    payload: dict[str, Any],
+    rejection_counts: dict[str, int] | None = None,
+) -> dict[str, Any] | None:
+    def reject(reason: str) -> None:
+        if rejection_counts is not None:
+            rejection_counts[reason] = rejection_counts.get(reason, 0) + 1
+        return None
+
+    normalized_url = normalize_url(url)
+    match = re.fullmatch(
+        r"https://(?:www\.)?unitree\.com/(?:cn/)?news/(\d+)", normalized_url
+    )
+    if spec.slug != "unitree" or not match:
+        return reject("unitree-api-url-mismatch")
+    if payload.get("code") != 100:
+        return reject("unitree-api-status")
+    data = payload.get("data") if isinstance(payload, dict) else None
+    article = data.get("article") if isinstance(data, dict) else None
+    if not isinstance(article, dict) or str(data.get("id", "")) != match.group(1):
+        return reject("unitree-api-id-mismatch")
+    title = clean_title(str(article.get("title", "")))
+    summary = strip_html(
+        str(article.get("description", "") or article.get("content", ""))
+    )
+    if len(title) < 8:
+        return reject("index-or-missing-title")
+    if spec.require_entity_match and not any(
+        _contains_entity_alias(f"{title} {summary}", alias)
+        for alias in spec.entity_aliases
+    ):
+        return reject("entity-not-in-title-or-summary")
+    published_at = normalize_date(article.get("publishTime"))
+    if not published_at:
+        return reject("missing-or-invalid-publication-date")
+    if date.fromisoformat(published_at) < datetime.now(UTC).date() - timedelta(days=spec.max_age_days):
+        return reject("outside-age-window")
+    if not summary:
+        summary = f"{spec.name} 发布“{title}”；完整事实、数据与附件见官方原文。"
+    event_type, importance = infer_event_type(title, summary)
+    api_url = f"https://api.unitree.com/website/news/info?id={match.group(1)}"
+    return {
+        "id": article_id(spec.source_id, normalized_url),
+        "sourceId": spec.source_id,
+        "title": title[:220],
+        "summary": summary[:500].rstrip(),
+        "type": event_type,
+        "region": spec.region if spec.region in {"中国", "美国", "全球"} else "全球",
+        "sector": spec.sector,
+        "company": spec.name,
+        "companySlug": spec.slug,
+        "publishedAt": published_at,
+        "publicationDateEvidence": {
+            "title": title,
+            "publishedAt": published_at,
+            "sourceUrl": api_url,
+            "method": "official-api",
+        },
+        "importance": max(importance, 80),
+        "source": _source(spec.name, normalized_url, "官方披露", "官方网站"),
+    }
+
+
+def _fetch_unitree_article(
+    spec: CompanySpec,
+    url: str,
+    user_agent: str,
+    rejection_counts: dict[str, int] | None = None,
+) -> dict[str, Any] | None:
+    normalized_url = normalize_url(url)
+    match = re.fullmatch(
+        r"https://(?:www\.)?unitree\.com/(?:cn/)?news/(\d+)", normalized_url
+    )
+    if spec.slug != "unitree" or not match:
+        return None
+    api_url = f"https://api.unitree.com/website/news/info?id={match.group(1)}"
+    request = Request(
+        api_url,
+        headers={
+            "User-Agent": user_agent,
+            "Accept": "application/json",
+            "Origin": "https://www.unitree.com",
+            "Referer": "https://www.unitree.com/",
+        },
+    )
+    with urlopen(request, timeout=spec.request_timeout) as response:
+        payload = json.loads(response.read().decode("utf-8", errors="replace"))
+    return _unitree_article_from_payload(spec, normalized_url, payload, rejection_counts)
 
 
 def _candidate_urls_from_feed(
@@ -991,13 +1114,23 @@ def crawl_company(
                 continue
             attempted_urls.add(candidate)
             try:
-                body = fetch_text(
-                    candidate,
-                    user_agent,
-                    timeout=spec.request_timeout,
-                    attempts=2,
+                article = _fetch_unitree_article(
+                    spec, candidate, user_agent, rejection_counts
                 )
-                article = _article_from_page(spec, candidate, body, rejection_counts, index_evidence.get(candidate, ()))
+                if article is None:
+                    body = fetch_text(
+                        candidate,
+                        user_agent,
+                        timeout=spec.request_timeout,
+                        attempts=2,
+                    )
+                    article = _article_from_page(
+                        spec,
+                        candidate,
+                        body,
+                        rejection_counts,
+                        index_evidence.get(candidate, ()),
+                    )
                 if article and article["source"]["url"] not in seen_urls:
                     articles.append(article)
                     seen_urls.add(article["source"]["url"])
