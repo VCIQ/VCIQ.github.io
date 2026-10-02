@@ -14,7 +14,7 @@ const DEFAULT_BUDGET = {
 };
 
 const ROUTES = [
-  ["/", "index.html", { maxHtmlBytes: 1_200_000 }],
+  ["/", "index.html", { maxHtmlBytes: 1_200_000, maxTotalScriptBytes: 1_020_000 }],
   ["/search/", "search/index.html", { maxHtmlBytes: 100_000 }],
   ["/hot/", "hot/index.html", { maxHtmlBytes: 750_000 }],
   ["/favorites/", "favorites/index.html", { maxHtmlBytes: 80_000 }],

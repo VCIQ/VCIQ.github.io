@@ -23,9 +23,12 @@ ROOT = Path(__file__).resolve().parents[1]
 ARTICLES_PATH = ROOT / "public" / "data" / "articles.json"
 TAIPEI = ZoneInfo("Asia/Taipei")
 # At the first morning runs, many publishers have not posted yet. From 10:00
-# Taipei onward, a formal snapshot must contain a meaningful same-day batch
-# from more than one publisher, rather than merely carrying forward history.
+# Taipei onward, require a diverse same-day batch, but ramp the article floor
+# until noon so a healthy 10:xx run is not failed merely because publishers
+# have not yet produced the full daily volume.
 FRESHNESS_GATE_HOUR = 10
+FULL_DAILY_FRESHNESS_HOUR = 12
+MORNING_MIN_TODAY_ARTICLES = 4
 MIN_TODAY_ARTICLES = 8
 MIN_TODAY_SOURCES = 3
 # The verified, sector-aware WeChat registry replaces this legacy broad Bing
@@ -155,6 +158,13 @@ def main() -> int:
     freshness_enforced = bool(
         completed_local and completed_local.hour >= FRESHNESS_GATE_HOUR
     )
+    minimum_today_articles = 0
+    if freshness_enforced and completed_local:
+        minimum_today_articles = (
+            MORNING_MIN_TODAY_ARTICLES
+            if completed_local.hour < FULL_DAILY_FRESHNESS_HOUR
+            else MIN_TODAY_ARTICLES
+        )
 
     if local_date:
         minimum_recent_date = (local_date - timedelta(days=1)).isoformat()
@@ -169,9 +179,9 @@ def main() -> int:
             errors.append(
                 f"latest article date {latest_published_at or 'missing'} is not {expected_date}"
             )
-        if today_article_count < MIN_TODAY_ARTICLES:
+        if today_article_count < minimum_today_articles:
             errors.append(
-                f"insufficient same-day articles: {today_article_count} < {MIN_TODAY_ARTICLES}"
+                f"insufficient same-day articles: {today_article_count} < {minimum_today_articles}"
             )
         if today_source_count < MIN_TODAY_SOURCES:
             errors.append(
@@ -194,7 +204,7 @@ def main() -> int:
         "todayArticleCount": today_article_count,
         "todaySourceCount": today_source_count,
         "freshnessEnforced": freshness_enforced,
-        "minimumTodayArticles": MIN_TODAY_ARTICLES if freshness_enforced else 0,
+        "minimumTodayArticles": minimum_today_articles,
         "minimumTodaySources": MIN_TODAY_SOURCES if freshness_enforced else 0,
         "errors": errors,
     }

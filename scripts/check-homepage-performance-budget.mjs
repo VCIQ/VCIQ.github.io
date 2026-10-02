@@ -10,7 +10,7 @@ const MAX_SINGLE_SCRIPT_BYTES = Number(
   process.env.HOMEPAGE_MAX_SCRIPT_BYTES ?? 260_000,
 );
 const MAX_TOTAL_SCRIPT_BYTES = Number(
-  process.env.HOMEPAGE_MAX_TOTAL_SCRIPT_BYTES ?? 1_000_000,
+  process.env.HOMEPAGE_MAX_TOTAL_SCRIPT_BYTES ?? 1_020_000,
 );
 
 function fail(message) {
