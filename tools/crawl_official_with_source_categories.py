@@ -188,8 +188,8 @@ def install_public_region_adapter() -> None:
     original_article_from_page = official._article_from_page
     if not getattr(original_article_from_page, "_public_region_adapter", False):
 
-        def article_from_page(spec, url: str, body: str):
-            article = original_article_from_page(spec, url, body)
+        def article_from_page(spec, url: str, body: str, *args: Any, **kwargs: Any):
+            article = original_article_from_page(spec, url, body, *args, **kwargs)
             if article is not None:
                 article["region"] = _public_article_region(article.get("region"))
             return article

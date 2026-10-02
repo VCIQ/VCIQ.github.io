@@ -395,9 +395,12 @@ def install_overrides(
         return [*base_specs, *user_specs]
 
     def article_from_page(
-        spec: official.CompanySpec, candidate_url: str, body: str
+        spec: official.CompanySpec, candidate_url: str, body: str,
+        *args: Any, **kwargs: Any,
     ) -> dict[str, Any] | None:
-        article = original_article_from_page(spec, candidate_url, body)
+        # Preserve rejection counters and exact-link publication evidence through
+        # the production wrapper; keep legacy three-argument calls compatible.
+        article = original_article_from_page(spec, candidate_url, body, *args, **kwargs)
         if not article or not spec.source_id.startswith(USER_OFFICIAL_PREFIX):
             return article
         if _is_probable_non_article(article):
