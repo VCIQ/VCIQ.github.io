@@ -29,8 +29,14 @@ def metadata_reviews() -> list[dict[str, Any]]:
             or not _url_key(review.get("sourceUrl", ""))
         ):
             raise ValueError("Review requires article, source, URL and title identity")
-        if not review.get("fields") or set(review["fields"]) - {"sector", "type"}:
-            raise ValueError("Review can only correct sector/type")
+        if not review.get("fields") or set(review["fields"]) - {"sector", "type", "company"}:
+            raise ValueError("Review can only correct sector/type/company")
+        if "company" in review["fields"] and (
+            not review.get("expectedSummaryContains")
+            or not review.get("evidenceUrl")
+            or not isinstance(review.get("removeCompanySlugs"), list)
+        ):
+            raise ValueError("Company review requires summary evidence and explicit removal scope")
     return payload["reviews"]
 
 
@@ -70,6 +76,10 @@ def apply_article_metadata_review(article: dict[str, Any]) -> dict[str, Any]:
             or article.get("sourceId") != review["sourceId"]
             or _title_key(str(article.get("title", ""))) != _title_key(review["expectedTitle"])
             or url_key != _url_key(review["sourceUrl"])
+            or (
+                review.get("expectedSummaryContains")
+                and review["expectedSummaryContains"] not in str(article.get("summary", ""))
+            )
         ):
             continue
         fields = review["fields"]
@@ -99,5 +109,31 @@ def apply_article_metadata_review(article: dict[str, Any]) -> dict[str, Any]:
             )
             if tracks != next_tracks:
                 updates["trackSlugs"] = next_tracks
-        return {**article, **updates} if updates else article
+        result = {**article, **updates}
+        if "company" in fields:
+            removed = set(review.get("removeCompanySlugs", []))
+            for key in ("companySlugs", "companyCandidateSlugs"):
+                if isinstance(result.get(key), list):
+                    remaining = [slug for slug in result[key] if slug not in removed]
+                    if remaining:
+                        result[key] = remaining
+                    else:
+                        result.pop(key, None)
+            if result.get("companySlug") in removed:
+                result.pop("companySlug", None)
+            if isinstance(result.get("companyMatch"), dict) and result["companyMatch"].get("slug") in removed:
+                result.pop("companyMatch", None)
+            if isinstance(result.get("companyMatches"), list):
+                remaining = [row for row in result["companyMatches"] if not isinstance(row, dict) or row.get("slug") not in removed]
+                if remaining:
+                    result["companyMatches"] = remaining
+                else:
+                    result.pop("companyMatches", None)
+            if isinstance(result.get("mentionedCompanies"), list):
+                removed_names = set(review.get("removeMentionedCompanies", []))
+                result["mentionedCompanies"] = list(dict.fromkeys(
+                    [name for name in result["mentionedCompanies"] if name not in removed_names]
+                    + [fields["company"]["to"]]
+                ))
+        return result if result != article else article
     return article

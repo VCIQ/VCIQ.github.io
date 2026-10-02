@@ -9,14 +9,14 @@ class ArticleMetadataReviewTests(unittest.TestCase):
     def article(self, review):
         return {
             "id": review["articleId"], "sourceId": review["sourceId"], "title": review["expectedTitle"],
-            "summary": "archived summary", "sector": "AI / AGI", "type": "公司动态", "importance": 80,
+            "summary": review.get("expectedSummaryContains", "archived summary"), "sector": "AI / AGI", "type": "公司动态", "importance": 80,
             "publishedAt": "2026-09-07", "company": "company", "qualityStatus": "可用",
             "source": {"url": review["sourceUrl"], "level": "媒体报道", "sourceRole": "corroboration"},
             "trackSlugs": [*review["removeTrackSlugs"], "unrelated-track"],
             **{key: change["from"] for key, change in review["fields"].items()},
         }
 
-    def test_five_bounded_reviews_and_idempotence(self):
+    def test_all_bounded_reviews_and_idempotence(self):
         for review in metadata_reviews():
             with self.subTest(review=review["id"]):
                 original = self.article(review)
@@ -54,15 +54,17 @@ class ArticleMetadataReviewTests(unittest.TestCase):
     def test_tracking_suffix_does_not_change_material_identity(self):
         for review in metadata_reviews():
             original = self.article(review)
-            original["source"]["url"] += "?utm_source=test&fbclid=tracking#top"
+            delimiter = "&" if "?" in original["source"]["url"] else "?"
+            original["source"]["url"] += delimiter + "utm_source=test&fbclid=tracking#top"
             corrected = apply_article_metadata_review(original)
             for key, change in review["fields"].items():
                 self.assertEqual(corrected[key], change["to"])
 
     def test_newer_different_metadata_is_not_overwritten(self):
-        review = metadata_reviews()[0]
-        row = {**self.article(review), "sector": "新材料"}
-        self.assertIs(apply_article_metadata_review(row), row)
+        for review in metadata_reviews():
+            for field in review["fields"]:
+                row = {**self.article(review), field: "newer independently reviewed value"}
+                self.assertIs(apply_article_metadata_review(row), row)
 
     def test_real_publication_gate_applies_reviews(self):
         original = [self.article(review) for review in metadata_reviews()]

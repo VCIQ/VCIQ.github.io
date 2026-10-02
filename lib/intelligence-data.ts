@@ -1,4 +1,5 @@
 import publicArticleData from "../public/data/articles.json";
+import { applyArticleMetadataReview } from "./article-metadata-reviews";
 
 export type Region = "中国" | "美国" | "全球";
 export type EventType =
@@ -44,6 +45,8 @@ export type IntelligenceEvent = {
   institutions?: string[];
   publishedAt: string;
   importance: number;
+  qualityScore?: number;
+  qualityStatus?: string;
   source: Source;
   curated?: boolean;
 };
@@ -108,7 +111,7 @@ export const snapshotDate =
 export const intelligenceEvents: IntelligenceEvent[] = Array.isArray(
   snapshot.articles,
 )
-  ? snapshot.articles
+  ? snapshot.articles.map(applyArticleMetadataReview)
   : [];
 
 export const companyFacts: Record<string, CompanyFactProfile> =
