@@ -671,6 +671,71 @@ def _is_index_page(spec: CompanySpec, url: str, title: str) -> bool:
     )
 
 
+class _SmicPublicationDateParser(HTMLParser):
+    """Read only the reviewed SMIC detail field, not dates in article prose.
+
+    The observed markup is div.date.clearfix > div > p. In particular, a
+    fiscal period in div.content, a visit count or a footer year is not a
+    publication date. Callers restrict this adapter to exact SMIC news URLs.
+    """
+
+    _VOID_TAGS = frozenset({
+        "area", "base", "br", "col", "embed", "hr", "img", "input",
+        "link", "meta", "param", "source", "track", "wbr",
+    })
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.values: list[str] = []
+        self._stack: list[tuple[str, set[str]]] = []
+        self._capture_depth: int | None = None
+        self._parts: list[str] = []
+
+    def handle_starttag(self, tag, attrs) -> None:
+        classes = set((dict(attrs).get("class") or "").split())
+        if (
+            tag == "p" and self._capture_depth is None
+            and len(self._stack) >= 2
+            and self._stack[-1][0] == "div"
+            and self._stack[-2][0] == "div"
+            and {"date", "clearfix"} <= self._stack[-2][1]
+            and not any(t in {"footer", "nav", "aside"} for t, _ in self._stack)
+        ):
+            self._capture_depth = len(self._stack) + 1
+            self._parts = []
+        if tag not in self._VOID_TAGS:
+            self._stack.append((tag, classes))
+
+    def handle_endtag(self, tag) -> None:
+        for index in range(len(self._stack) - 1, -1, -1):
+            if self._stack[index][0] != tag:
+                continue
+            if self._capture_depth is not None and index < self._capture_depth:
+                # Publish only a complete paragraph; malformed fields fail
+                # closed instead of borrowing dates from adjacent content.
+                self.values.append(
+                    clean_text(" ".join(self._parts)) if tag == "p" else ""
+                )
+                self._capture_depth = None
+                self._parts = []
+            del self._stack[index:]
+            break
+
+    def handle_data(self, data) -> None:
+        if self._capture_depth is not None:
+            self._parts.append(data)
+
+
+def _smic_publication_dates(spec: CompanySpec, url: str, body: str) -> list[str]:
+    if spec.slug != "smic" or not re.fullmatch(
+        r"https://www\.smics\.com/site/news_read/\d+", normalize_url(url)
+    ):
+        return []
+    parser = _SmicPublicationDateParser()
+    parser.feed(body)
+    return parser.values
+
+
 def _article_from_page(
     spec: CompanySpec, url: str, body: str,
     rejection_counts: dict[str, int] | None = None,
@@ -736,12 +801,18 @@ def _article_from_page(
         for alias in spec.entity_aliases
     ):
         return reject("entity-not-in-title-or-summary")
+    reviewed_dates = _smic_publication_dates(spec, requested_url, body)
+    if reviewed_dates and canonical_url != requested_url:
+        return reject("canonical-detail-mismatch")
+    if any(not re.fullmatch(r"20\d{2}[-/.]\d{1,2}[-/.]\d{1,2}", value)
+           for value in reviewed_dates):
+        return reject("conflicting-or-invalid-detail-publication-date")
     # An invalid/future explicit detail date cannot be replaced by an older
     # feed/index date. Disagreeing explicit publication metadata also fails shut.
     explicit_dates = [value for value in (
         parser.meta.get("article:published_time"), parser.meta.get("date"),
         parser.meta.get("datepublished"), parser.meta.get("publishdate"),
-        *parser.time_values, *parser.date_values,
+        *parser.time_values, *parser.date_values, *reviewed_dates,
     ) if value]
     for field in ("datePublished", "dateCreated", "publishDate"):
         explicit_dates.extend(re.findall(
@@ -767,8 +838,20 @@ def _article_from_page(
     path_date = _path_date(canonical_url)
     if path_date and not normalize_date(path_date):
         return reject("conflicting-or-invalid-detail-publication-date")
-    published_at = normalize_date(_published_value(parser, body)) or normalize_date(path_date)
-    publication_evidence = None
+    # A reviewed on-page publication field is stronger than dates mentioned
+    # in quarterly results or other prose. It still participated in all the
+    # real-date conflict checks above, so this never overrides a conflict.
+    published_at = (
+        normalize_date(reviewed_dates[0]) if reviewed_dates else
+        normalize_date(_published_value(parser, body)) or normalize_date(path_date)
+    )
+    publication_evidence = ({
+        "title": title,
+        "publishedAt": published_at,
+        "sourceUrl": requested_url,
+        "method": "official-detail-field",
+        "field": "div.date.clearfix > div > p",
+    } if reviewed_dates else None)
     if not published_at:
         publication_evidence = _matched_publication_evidence(title, index_evidence)
         if publication_evidence:
