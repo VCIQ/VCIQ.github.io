@@ -247,6 +247,7 @@ class VenturePublicationFixedPointTests(unittest.TestCase):
     def test_context_without_transaction_action_is_not_a_capital_event(self) -> None:
         align_capital_event_patterns()
         false_positives = (
+            "Anthropic leadership team expands talent acquisition and workplace experience",
             "ByteDance restructures AI business, merging Doubao and Feishu product teams",
             "IonQ (NYSE: IONQ) will release its Q2 2026 financial results after market close",
             "Recursion (Nasdaq: RXRX) to participate in upcoming investor conferences",
@@ -260,6 +261,18 @@ class VenturePublicationFixedPointTests(unittest.TestCase):
                 )
                 self.assertIsNone(structural_finalization.CAPITAL_EVIDENCE_RE.search(text))
                 self.assertIsNone(entity_semantics.CAPITAL_ACTION_RE.search(text))
+
+    def test_real_acquisition_remains_a_capital_event_after_alignment(self) -> None:
+        align_capital_event_patterns()
+        title = "Example completes acquisition of Example Labs"
+        for pattern in (
+            research_evidence.CAPITAL_MARKET_RE,
+            base_normalization.CAPITAL_MARKET_ACTION_PATTERN,
+            low_level_sanitization.CAPITAL_ACTION_RE,
+            structural_finalization.CAPITAL_EVIDENCE_RE,
+            entity_semantics.CAPITAL_ACTION_RE,
+        ):
+            self.assertIsNotNone(pattern.search(title))
 
     def test_production_snapshot_reaches_all_publication_gates_together(self) -> None:
         catalog_text = CATALOG_PATH.read_text(encoding="utf-8")
