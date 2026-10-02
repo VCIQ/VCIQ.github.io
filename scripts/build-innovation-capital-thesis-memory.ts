@@ -18,7 +18,15 @@ if (fs.existsSync(output)) {
 }
 
 const model = buildInnovationCapitalResearchModel();
-const memory = buildInnovationCapitalThesisMemory(previous, model, new Date().toISOString());
+const generatedAt = new Date().toISOString();
+// `asOf` tracks the evidence horizon. `generatedAt` tracks the most recent
+// successful rebuild/validation, even when the thesis content is unchanged.
+// Keeping those clocks separate prevents a healthy daily rebuild from being
+// reported as stale merely because no material thesis revision occurred.
+const memory = {
+  ...buildInnovationCapitalThesisMemory(previous, model, generatedAt),
+  generatedAt,
+};
 const serialized = `${JSON.stringify(memory, null, 2)}\n`;
 const before = fs.existsSync(output) ? fs.readFileSync(output, "utf8") : "";
 
