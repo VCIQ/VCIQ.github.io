@@ -40,6 +40,8 @@ export function isActionableCompanySignal({
   undated = false,
   sourceGrade,
   sourceLevel,
+  qualityScore,
+  qualityStatus,
 }: {
   title: string;
   summary: string;
@@ -47,7 +49,10 @@ export function isActionableCompanySignal({
   undated?: boolean;
   sourceGrade?: SourceEvidenceGrade;
   sourceLevel?: string;
+  qualityScore?: number;
+  qualityStatus?: string;
 }) {
+  if (qualityStatus === "低可信" || (typeof qualityScore === "number" && qualityScore < 50)) return false;
   if (sourceGrade === "D" || sourceLevel === "待交叉验证" || undated) return false;
   const text = `${label} ${title} ${summary}`;
   if (EVERGREEN_RE.test(text)) return false;

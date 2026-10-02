@@ -83,6 +83,8 @@ export function buildCompanyResearchSnapshot(
         summary: event.summary,
         label: event.type,
         sourceLevel: event.source.level,
+        qualityScore: event.qualityScore,
+        qualityStatus: event.qualityStatus,
       }),
     )
     .sort(

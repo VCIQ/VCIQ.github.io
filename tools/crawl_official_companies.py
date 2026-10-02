@@ -571,8 +571,14 @@ def _is_index_page(spec: CompanySpec, url: str, title: str) -> bool:
 
 
 def _article_from_page(
-    spec: CompanySpec, url: str, body: str
+    spec: CompanySpec, url: str, body: str,
+    rejection_counts: dict[str, int] | None = None,
 ) -> dict[str, Any] | None:
+    def reject(reason: str) -> None:
+        if rejection_counts is not None:
+            rejection_counts[reason] = rejection_counts.get(reason, 0) + 1
+        return None
+
     parser = ArticleHTMLParser()
     parser.feed(body)
     requested_url = normalize_url(url)
@@ -586,7 +592,7 @@ def _article_from_page(
     if canonical_url in configured_indexes and requested_url not in configured_indexes:
         canonical_url = requested_url
     if not _host_allowed(canonical_url, spec.allowed_hosts):
-        return None
+        return reject("canonical-host-mismatch")
     title = ""
     for raw_title in (
         parser.meta.get("og:title", ""),
@@ -614,7 +620,7 @@ def _article_from_page(
             title = candidate_title
             break
     if not title:
-        return None
+        return reject("index-or-missing-title")
     summary = strip_html(
         parser.meta.get("description", "")
         or parser.meta.get("og:description", "")
@@ -624,15 +630,15 @@ def _article_from_page(
         _contains_entity_alias(f"{title} {summary}", alias)
         for alias in spec.entity_aliases
     ):
-        return None
+        return reject("entity-not-in-title-or-summary")
     published_at = normalize_date(_published_value(parser, body)) or _path_date(
         canonical_url
     )
     if not published_at:
-        return None
+        return reject("missing-or-invalid-publication-date")
     published_date = date.fromisoformat(published_at)
     if published_date < datetime.now(UTC).date() - timedelta(days=spec.max_age_days):
-        return None
+        return reject("outside-age-window")
     if not summary:
         summary = f"{spec.name} 发布“{title}”；完整事实、数据与附件见官方原文。"
     event_type, importance = infer_event_type(title, summary)
@@ -781,6 +787,23 @@ def crawl_company(
     candidate_urls: list[str] = []
     feed_urls: list[str] = []
     failures = 0
+    rejection_counts: dict[str, int] = {}
+    failure_samples: list[dict[str, Any]] = []
+    successful_indexes: list[str] = []
+
+    def record_failure(stage: str, url: str, exc: Exception) -> None:
+        if len(failure_samples) >= 12:
+            return
+        parts = urlsplit(url)
+        sample: dict[str, Any] = {
+            "stage": stage,
+            "url": f"{parts.scheme}://{parts.netloc}{parts.path}",
+            "errorType": type(exc).__name__,
+        }
+        if isinstance(getattr(exc, "code", None), int):
+            sample["httpStatus"] = exc.code
+        failure_samples.append(sample)
+
     scanned_indexes = 0
     scanned_sitemaps = 0
     for index_url in index_urls:
@@ -792,6 +815,7 @@ def crawl_company(
                 attempts=2,
             )
             scanned_indexes += 1
+            successful_indexes.append(index_url)
             candidates, feeds = discover_candidate_urls(
                 index_url,
                 body,
@@ -805,8 +829,9 @@ def crawl_company(
             for feed in feeds:
                 if feed not in feed_urls:
                     feed_urls.append(feed)
-        except Exception:
+        except Exception as exc:
             failures += 1
+            record_failure("index", index_url, exc)
 
     for feed_url in feed_urls[:3]:
         try:
@@ -824,8 +849,9 @@ def crawl_company(
             ):
                 if candidate not in candidate_urls:
                     candidate_urls.append(candidate)
-        except Exception:
+        except Exception as exc:
             failures += 1
+            record_failure("feed", feed_url, exc)
 
     articles: list[dict[str, Any]] = []
     seen_urls: set[str] = set()
@@ -848,12 +874,13 @@ def crawl_company(
                     timeout=spec.request_timeout,
                     attempts=2,
                 )
-                article = _article_from_page(spec, candidate, body)
+                article = _article_from_page(spec, candidate, body, rejection_counts)
                 if article and article["source"]["url"] not in seen_urls:
                     articles.append(article)
                     seen_urls.add(article["source"]["url"])
-            except Exception:
+            except Exception as exc:
                 failures += 1
+                record_failure("article", candidate, exc)
 
     parse_candidates(candidate_urls, spec.max_candidate_links)
 
@@ -907,6 +934,10 @@ def crawl_company(
         "accepted": len(articles),
         "failed": failures,
         "platform": "官方网站",
+        "successfulIndexes": successful_indexes,
+        "rejectedByReason": rejection_counts,
+        "failureSamples": failure_samples,
+        "acceptedArticleUrls": [article["source"]["url"] for article in articles],
     }
     if not articles and failures:
         result["error"] = "official indexes returned no dated article pages"
