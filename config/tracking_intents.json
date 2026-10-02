@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-01T02:45:10+00:00",
+  "updatedAt": "2026-10-02T00:32:35+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -226,18 +226,22 @@
       "region": "全球"
     },
     {
-      "id": "company-60094bcf5292c4909fad",
+      "id": "company:nvidia",
       "kind": "company",
       "name": "英伟达",
-      "aliases": [],
+      "aliases": [
+        "NVIDIA"
+      ],
       "keywords": [
         "英伟达",
         "NVIDIA",
-        "NIM"
+        "NIM",
+        "NVIDIA accelerated computing",
+        "NVIDIA Cloud Partner"
       ],
-      "state": "review",
-      "resolutionSource": "unresolved",
-      "resolutionStatus": "review",
+      "state": "active",
+      "resolutionSource": "company-registry",
+      "resolutionStatus": "resolved",
       "createdAt": "2026-08-12T04:59:57+00:00",
       "createdBy": "VCIQ"
     },
@@ -8342,22 +8346,6 @@
       "resolutionSource": "authenticated-manual-intent",
       "resolutionStatus": "resolved",
       "createdAt": "2026-09-01T14:43:38+00:00",
-      "createdBy": "VCIQ"
-    },
-    {
-      "id": "company-8d4321d9363208023863",
-      "kind": "company",
-      "name": "NVIDIA",
-      "aliases": [],
-      "keywords": [
-        "NVIDIA",
-        "NVIDIA accelerated computing",
-        "NVIDIA Cloud Partner"
-      ],
-      "state": "active",
-      "resolutionSource": "tracking-taxonomy",
-      "resolutionStatus": "resolved",
-      "createdAt": "2026-09-01T15:04:09+00:00",
       "createdBy": "VCIQ"
     },
     {
@@ -22048,14 +22036,48 @@
       ]
     },
     {
-      "id": "membership-ef799f22aaf98ff6dd0e",
+      "id": "membership-5852d4a9134e4de5ae47",
       "trackId": "track:semiconductor",
-      "entityId": "company-60094bcf5292c4909fad",
+      "entityId": "company:nvidia",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
-      "confidence": "low",
+      "confidence": "high",
       "origins": [
+        {
+          "id": "origin-c0e5f9aa87162c96880b",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-01T15:04:09+00:00",
+          "evidenceUrl": "https://groq.com/newsroom/groq-closes-usd350-million-series-a-building-the-world-s-leading-ai-inference-cloud",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        },
+        {
+          "id": "origin-be3717d5e8c657bda35d",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-09T09:25:07+00:00",
+          "evidenceUrl": "https://x.com/ilyasut",
+          "reasons": [
+            "个人研究兴趣",
+            "技术突破"
+          ],
+          "note": ""
+        },
+        {
+          "id": "origin-8abf976ffa372459c5a9",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T10:22:51+00:00",
+          "evidenceUrl": "https://x.com/ilyasut",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "关系审核确认:NVIDIA is directly a semiconductor and accelerated-computing company."
+        },
         {
           "id": "origin-a115a306ed2981bbd15c",
           "origin": "manual",
@@ -22068,17 +22090,76 @@
           ],
           "note": ""
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-e1b76176030eab7476042b9c",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T10:22:51+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "company:nvidia",
+        "requestedName": "NVIDIA",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "英伟达",
+        "targetId": "company:nvidia",
+        "confidence": "verified",
+        "source": "company-registry",
+        "reason": "名称唯一命中正式公司注册表。",
+        "decisionKey": "nvidia",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
-      "id": "membership-7c7890ea1a8dbb92886b",
+      "id": "membership-71573168ec25f5d30032",
       "trackId": "track:ai",
-      "entityId": "company-60094bcf5292c4909fad",
+      "entityId": "company:nvidia",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
-      "confidence": "low",
+      "confidence": "high",
       "origins": [
+        {
+          "id": "origin-c0e5f9aa87162c96880b",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-01T15:04:09+00:00",
+          "evidenceUrl": "https://groq.com/newsroom/groq-closes-usd350-million-series-a-building-the-world-s-leading-ai-inference-cloud",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        },
+        {
+          "id": "origin-be3717d5e8c657bda35d",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-09T09:25:07+00:00",
+          "evidenceUrl": "https://x.com/ilyasut",
+          "reasons": [
+            "个人研究兴趣",
+            "技术突破"
+          ],
+          "note": ""
+        },
+        {
+          "id": "origin-992c7a647461b2fe5358",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T10:22:51+00:00",
+          "evidenceUrl": "https://x.com/ilyasut",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "关系审核确认:NVIDIA directly develops and supplies core AI computing platforms and software, supporting the AI/AGI relation."
+        },
         {
           "id": "origin-a115a306ed2981bbd15c",
           "origin": "manual",
@@ -22091,17 +22172,65 @@
           ],
           "note": ""
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-ad4e0cd7ef67dd2ea69c5fe1",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T10:22:51+00:00",
+        "trackId": "track:ai",
+        "entityId": "company:nvidia",
+        "requestedName": "NVIDIA",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "英伟达",
+        "targetId": "company:nvidia",
+        "confidence": "verified",
+        "source": "company-registry",
+        "reason": "名称唯一命中正式公司注册表。",
+        "decisionKey": "nvidia",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
-      "id": "membership-22005c0d49c7e3fab99b",
+      "id": "membership-c6b3361c313013730913",
       "trackId": "track:robotics",
-      "entityId": "company-60094bcf5292c4909fad",
+      "entityId": "company:nvidia",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
-      "confidence": "low",
+      "confidence": "high",
       "origins": [
+        {
+          "id": "origin-be3717d5e8c657bda35d",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-09T09:25:07+00:00",
+          "evidenceUrl": "https://x.com/ilyasut",
+          "reasons": [
+            "个人研究兴趣",
+            "技术突破"
+          ],
+          "note": ""
+        },
+        {
+          "id": "origin-634b3d7079d01b930edc",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T11:50:07+00:00",
+          "evidenceUrl": "https://www.nvidia.com/en-us/industries/robotics/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:NVIDIA's official robotics platform directly provides models, simulation frameworks, libraries and deployment systems for robotics."
+        },
         {
           "id": "origin-a115a306ed2981bbd15c",
           "origin": "manual",
@@ -22114,12 +22243,37 @@
           ],
           "note": ""
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-e52e3181de1848d4afea4829",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T11:50:07+00:00",
+        "trackId": "track:robotics",
+        "entityId": "company:nvidia",
+        "requestedName": "NVIDIA",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "英伟达",
+        "targetId": "company:nvidia",
+        "confidence": "verified",
+        "source": "company-registry",
+        "reason": "名称唯一命中正式公司注册表。",
+        "decisionKey": "nvidia",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
-      "id": "membership-ad9bedbe5dad0700d1c3",
+      "id": "membership-4fa55472a666cd7102ad",
       "trackId": "track:biotech",
-      "entityId": "company-60094bcf5292c4909fad",
+      "entityId": "company:nvidia",
       "role": "actor",
       "state": "review",
       "pinned": true,
@@ -22140,14 +22294,37 @@
       ]
     },
     {
-      "id": "membership-ae30d3735280f987c69a",
+      "id": "membership-4dad4dd95584c8e3445f",
       "trackId": "track:ai-3",
-      "entityId": "company-60094bcf5292c4909fad",
+      "entityId": "company:nvidia",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
-      "confidence": "low",
+      "confidence": "high",
       "origins": [
+        {
+          "id": "origin-be3717d5e8c657bda35d",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-09T09:25:07+00:00",
+          "evidenceUrl": "https://x.com/ilyasut",
+          "reasons": [
+            "个人研究兴趣",
+            "技术突破"
+          ],
+          "note": ""
+        },
+        {
+          "id": "origin-95bc3ecf2cc93f44f5bb",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-09-26T11:50:07+00:00",
+          "evidenceUrl": "https://developer.nvidia.com/embedded-computing/",
+          "reasons": [
+            "技术突破"
+          ],
+          "note": "关系审核确认:NVIDIA's official Jetson platform is a compact embedded edge-AI computing platform used to build and deploy intelligent autonomous devices."
+        },
         {
           "id": "origin-a115a306ed2981bbd15c",
           "origin": "manual",
@@ -22160,7 +22337,32 @@
           ],
           "note": ""
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-fe9e6eac98084b22b4c2a2cc",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-09-26T11:50:07+00:00",
+        "trackId": "track:ai-3",
+        "entityId": "company:nvidia",
+        "requestedName": "NVIDIA",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "英伟达",
+        "targetId": "company:nvidia",
+        "confidence": "verified",
+        "source": "company-registry",
+        "reason": "名称唯一命中正式公司注册表。",
+        "decisionKey": "nvidia",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-a9da3cf98b4f83316402",
@@ -54471,146 +54673,6 @@
       ]
     },
     {
-      "id": "membership-944cc16966fd9a1478d7",
-      "trackId": "track:semiconductor",
-      "entityId": "company-8d4321d9363208023863",
-      "role": "actor",
-      "state": "active",
-      "pinned": true,
-      "confidence": "high",
-      "origins": [
-        {
-          "id": "origin-c0e5f9aa87162c96880b",
-          "origin": "manual",
-          "actor": "VCIQ",
-          "at": "2026-09-01T15:04:09+00:00",
-          "evidenceUrl": "https://groq.com/newsroom/groq-closes-usd350-million-series-a-building-the-world-s-leading-ai-inference-cloud",
-          "reasons": [
-            "个人研究兴趣"
-          ],
-          "note": ""
-        },
-        {
-          "id": "origin-be3717d5e8c657bda35d",
-          "origin": "manual",
-          "actor": "VCIQ",
-          "at": "2026-09-09T09:25:07+00:00",
-          "evidenceUrl": "https://x.com/ilyasut",
-          "reasons": [
-            "个人研究兴趣",
-            "技术突破"
-          ],
-          "note": ""
-        },
-        {
-          "id": "origin-8abf976ffa372459c5a9",
-          "origin": "manual",
-          "actor": "VCIQ",
-          "at": "2026-09-26T10:22:51+00:00",
-          "evidenceUrl": "https://x.com/ilyasut",
-          "reasons": [
-            "个人研究兴趣"
-          ],
-          "note": "关系审核确认:NVIDIA is directly a semiconductor and accelerated-computing company."
-        }
-      ],
-      "manualDecision": {
-        "version": 1,
-        "id": "follow-e1b76176030eab7476042b9c",
-        "status": "approved",
-        "actor": "VCIQ",
-        "at": "2026-09-26T10:22:51+00:00",
-        "trackId": "track:semiconductor",
-        "entityId": "company-8d4321d9363208023863",
-        "requestedName": "NVIDIA",
-        "kind": "company"
-      },
-      "identityState": "conflict",
-      "identityResolution": {
-        "status": "resolved",
-        "requestedType": "company",
-        "entityType": "topic",
-        "canonicalName": "Nvidia",
-        "targetId": "topic:nvidia",
-        "confidence": "high",
-        "source": "tracking-taxonomy",
-        "reason": "名称唯一命中已审核追踪赛道或关键词。",
-        "decisionKey": "nvidia",
-        "reclassified": true
-      },
-      "executionState": "applied"
-    },
-    {
-      "id": "membership-f70c161013546cca7e1e",
-      "trackId": "track:ai",
-      "entityId": "company-8d4321d9363208023863",
-      "role": "actor",
-      "state": "active",
-      "pinned": true,
-      "confidence": "high",
-      "origins": [
-        {
-          "id": "origin-c0e5f9aa87162c96880b",
-          "origin": "manual",
-          "actor": "VCIQ",
-          "at": "2026-09-01T15:04:09+00:00",
-          "evidenceUrl": "https://groq.com/newsroom/groq-closes-usd350-million-series-a-building-the-world-s-leading-ai-inference-cloud",
-          "reasons": [
-            "个人研究兴趣"
-          ],
-          "note": ""
-        },
-        {
-          "id": "origin-be3717d5e8c657bda35d",
-          "origin": "manual",
-          "actor": "VCIQ",
-          "at": "2026-09-09T09:25:07+00:00",
-          "evidenceUrl": "https://x.com/ilyasut",
-          "reasons": [
-            "个人研究兴趣",
-            "技术突破"
-          ],
-          "note": ""
-        },
-        {
-          "id": "origin-992c7a647461b2fe5358",
-          "origin": "manual",
-          "actor": "VCIQ",
-          "at": "2026-09-26T10:22:51+00:00",
-          "evidenceUrl": "https://x.com/ilyasut",
-          "reasons": [
-            "个人研究兴趣"
-          ],
-          "note": "关系审核确认:NVIDIA directly develops and supplies core AI computing platforms and software, supporting the AI/AGI relation."
-        }
-      ],
-      "manualDecision": {
-        "version": 1,
-        "id": "follow-ad4e0cd7ef67dd2ea69c5fe1",
-        "status": "approved",
-        "actor": "VCIQ",
-        "at": "2026-09-26T10:22:51+00:00",
-        "trackId": "track:ai",
-        "entityId": "company-8d4321d9363208023863",
-        "requestedName": "NVIDIA",
-        "kind": "company"
-      },
-      "identityState": "conflict",
-      "identityResolution": {
-        "status": "resolved",
-        "requestedType": "company",
-        "entityType": "topic",
-        "canonicalName": "Nvidia",
-        "targetId": "topic:nvidia",
-        "confidence": "high",
-        "source": "tracking-taxonomy",
-        "reason": "名称唯一命中已审核追踪赛道或关键词。",
-        "decisionKey": "nvidia",
-        "reclassified": true
-      },
-      "executionState": "applied"
-    },
-    {
       "id": "membership-8761d7ed8a7501581810",
       "trackId": "track:track-1ccjq49",
       "entityId": "company-48ac20a572dc183f6ab9",
@@ -73942,9 +74004,9 @@
       ]
     },
     {
-      "id": "membership-ccc18e636f21a46630d8",
+      "id": "membership-6d0c25574733e9a1b038",
       "trackId": "track:track-1ccjq49",
-      "entityId": "company-8d4321d9363208023863",
+      "entityId": "company:nvidia",
       "role": "actor",
       "state": "rejected",
       "pinned": true,
@@ -73974,124 +74036,6 @@
           "decision": "remove-fixed-watch"
         }
       ]
-    },
-    {
-      "id": "membership-ad9841176d56ddeaa5cb",
-      "trackId": "track:robotics",
-      "entityId": "company-8d4321d9363208023863",
-      "role": "actor",
-      "state": "active",
-      "pinned": true,
-      "confidence": "high",
-      "origins": [
-        {
-          "id": "origin-be3717d5e8c657bda35d",
-          "origin": "manual",
-          "actor": "VCIQ",
-          "at": "2026-09-09T09:25:07+00:00",
-          "evidenceUrl": "https://x.com/ilyasut",
-          "reasons": [
-            "个人研究兴趣",
-            "技术突破"
-          ],
-          "note": ""
-        },
-        {
-          "id": "origin-634b3d7079d01b930edc",
-          "origin": "manual",
-          "actor": "VCIQ",
-          "at": "2026-09-26T11:50:07+00:00",
-          "evidenceUrl": "https://www.nvidia.com/en-us/industries/robotics/",
-          "reasons": [
-            "技术突破"
-          ],
-          "note": "关系审核确认:NVIDIA's official robotics platform directly provides models, simulation frameworks, libraries and deployment systems for robotics."
-        }
-      ],
-      "manualDecision": {
-        "version": 1,
-        "id": "follow-e52e3181de1848d4afea4829",
-        "status": "approved",
-        "actor": "VCIQ",
-        "at": "2026-09-26T11:50:07+00:00",
-        "trackId": "track:robotics",
-        "entityId": "company-8d4321d9363208023863",
-        "requestedName": "NVIDIA",
-        "kind": "company"
-      },
-      "identityState": "conflict",
-      "identityResolution": {
-        "status": "resolved",
-        "requestedType": "company",
-        "entityType": "topic",
-        "canonicalName": "Nvidia",
-        "targetId": "topic:nvidia",
-        "confidence": "high",
-        "source": "tracking-taxonomy",
-        "reason": "名称唯一命中已审核追踪赛道或关键词。",
-        "decisionKey": "nvidia",
-        "reclassified": true
-      },
-      "executionState": "applied"
-    },
-    {
-      "id": "membership-ebfab71487347d34943f",
-      "trackId": "track:ai-3",
-      "entityId": "company-8d4321d9363208023863",
-      "role": "actor",
-      "state": "active",
-      "pinned": true,
-      "confidence": "high",
-      "origins": [
-        {
-          "id": "origin-be3717d5e8c657bda35d",
-          "origin": "manual",
-          "actor": "VCIQ",
-          "at": "2026-09-09T09:25:07+00:00",
-          "evidenceUrl": "https://x.com/ilyasut",
-          "reasons": [
-            "个人研究兴趣",
-            "技术突破"
-          ],
-          "note": ""
-        },
-        {
-          "id": "origin-95bc3ecf2cc93f44f5bb",
-          "origin": "manual",
-          "actor": "VCIQ",
-          "at": "2026-09-26T11:50:07+00:00",
-          "evidenceUrl": "https://developer.nvidia.com/embedded-computing/",
-          "reasons": [
-            "技术突破"
-          ],
-          "note": "关系审核确认:NVIDIA's official Jetson platform is a compact embedded edge-AI computing platform used to build and deploy intelligent autonomous devices."
-        }
-      ],
-      "manualDecision": {
-        "version": 1,
-        "id": "follow-fe9e6eac98084b22b4c2a2cc",
-        "status": "approved",
-        "actor": "VCIQ",
-        "at": "2026-09-26T11:50:07+00:00",
-        "trackId": "track:ai-3",
-        "entityId": "company-8d4321d9363208023863",
-        "requestedName": "NVIDIA",
-        "kind": "company"
-      },
-      "identityState": "conflict",
-      "identityResolution": {
-        "status": "resolved",
-        "requestedType": "company",
-        "entityType": "topic",
-        "canonicalName": "Nvidia",
-        "targetId": "topic:nvidia",
-        "confidence": "high",
-        "source": "tracking-taxonomy",
-        "reason": "名称唯一命中已审核追踪赛道或关键词。",
-        "decisionKey": "nvidia",
-        "reclassified": true
-      },
-      "executionState": "applied"
     },
     {
       "id": "membership-3d1f4d36a388ff057ec6",
