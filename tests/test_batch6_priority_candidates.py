@@ -78,6 +78,31 @@ class Batch6PriorityCandidatesTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_incoming(stale, NOW)
 
+    def test_previous_pool_reapplies_current_relevance_gate(self):
+        valid = item(1)
+        valid["radarQuery"] = "A+H 上市"
+        valid["title"] = "某公司实现A+H两地上市"
+        valid["summary"] = "公司H股在港交所挂牌上市。"
+
+        car_noise = item(2)
+        car_noise["radarQuery"] = "A+H 上市"
+        car_noise["title"] = "全新领克20正式上市"
+        car_noise["summary"] = "新车型售价公布。"
+
+        compute_noise = item(3)
+        compute_noise["radarQuery"] = "太空算力"
+        compute_noise["title"] = "算力租赁概念震荡反弹"
+        compute_noise["summary"] = "盘中算力板块上涨。"
+
+        previous = finalize({}, payload([valid, car_noise, compute_noise]), NOW)
+        self.assertEqual(len(previous["items"]), 3)
+
+        later = payload([])
+        later["generatedAt"] = (NOW + timedelta(minutes=5)).isoformat().replace("+00:00", "Z")
+        cleaned = finalize(previous, later, NOW + timedelta(minutes=5))
+
+        self.assertEqual([row["title"] for row in cleaned["items"]], ["某公司实现A+H两地上市"])
+
     def test_public_contract_contains_no_private_rss_metadata(self):
         raw = str(finalize({}, payload(), NOW)).lower()
         for forbidden in ("feedurl", "google.com/alerts/feeds", "authorization", "gmail.com"):
