@@ -154,7 +154,9 @@ export default async function CompanyDetail({
             <span>{company.stage}</span>
             <span>{company.headquarters}</span>
             <span>资料更新 {updateDate}</span>
-            {venture && <span>证据完整度 {venture.evidenceScore ?? 0}%</span>}
+            {venture && <span>{venture.evidenceReviewRequired
+              ? "技术资料及完整度评分待复核"
+              : `证据完整度 ${venture.evidenceScore ?? 0}%`}</span>}
           </div>
         </div>
         <div className="entity-monogram">{company.name.slice(0, 2).toUpperCase()}</div>
