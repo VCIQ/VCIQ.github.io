@@ -20,6 +20,9 @@ class ApprovedPrioritySourceTests(unittest.TestCase):
         self.assertEqual(SOURCE_POLICY["requestedIntervalMinutes"], 5)
         self.assertEqual(LIMIT, 300_000)
         self.assertEqual(SCAN_ARTIFACT_LIMIT, 1_000_000)
+        workflow = (ROOT / ".github/workflows/priority-intelligence-refresh.yml").read_text()
+        self.assertIn('cron: "*/5 * * * *"', workflow)
+        self.assertNotIn('cron: "3-58/5 * * * *"', workflow)
 
     def test_source_types_and_canonical_google_endpoint_remain_explicit(self):
         specs = {s["id"]: s for s in source_specs()}

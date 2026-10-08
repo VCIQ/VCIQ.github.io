@@ -55,7 +55,7 @@ class PriorityIntelligenceTests(unittest.TestCase):
         self.assertIn("persist-credentials: false", workflow)
         self.assertNotIn("workflow_run", workflow)
         self.assertNotIn("gh workflow run pages", workflow)
-        self.assertIn('cron: "3-58/5 * * * *"', workflow)
+        self.assertIn('cron: "*/5 * * * *"', workflow)
 
 
 if __name__ == "__main__": unittest.main()
