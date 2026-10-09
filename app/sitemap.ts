@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/technologies",
     "/innovation-capital",
+    "/innovation-capital/investors",
     "/people",
     "/companies",
     "/sources",
