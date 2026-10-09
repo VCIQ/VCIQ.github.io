@@ -77,7 +77,7 @@ test("new project evidence retains official dates, deal roles and authorship lim
   assert.equal(pref.investorAmount, null);
   const jennifer = investorEvidenceRecords.find((row) => row.id === "a16z-preference-model-thesis-2026")!;
   assert.equal(jennifer.speakers[0]?.name, "Jennifer Li");
-  assert.match(jennifer.speakers[0]?.projectResponsibility ?? "", /不能单凭署名/);
+  assert.match(jennifer.speakers[0]?.projectResponsibility ?? "", /不单凭署名/);
   const ricursive = investorEvidenceRecords.find((row) => row.id === "lightspeed-ricursive-series-a-2026")!;
   assert.equal(ricursive.participation, "lead");
   assert.equal(ricursive.round, "Series A");
