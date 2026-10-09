@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+from datetime import UTC, datetime, timedelta
 from types import SimpleNamespace
 from unittest.mock import patch
 
@@ -498,18 +499,20 @@ class WeChatPublicIndexTitleFallbackTests(unittest.TestCase):
                     return [{
                         "url": "https://example.com/stale",
                         "title": "英伟达Rubin GPU芯片正式发布3360亿晶体管",
-                        "publishedAt": "2026-03-17",
+                        "publishedAt": (datetime.now(UTC).date() - timedelta(days=90)).isoformat(),
                     }]
                 return [{
                     "url": "https://example.com/fresh",
                     "title": "WAIC 2026释放强烈信号 HDD迎来第二春",
-                    "publishedAt": "2026-08-24",
+                    "publishedAt": (datetime.now(UTC).date() - timedelta(days=2)).isoformat(),
                 }]
 
             @staticmethod
             def resolve_script_url(_body: str) -> str:
                 return "https://mp.weixin.qq.com/s/resolved-fresh"
 
+        # Keep freshness test fixtures relative to the UTC clock: historical fixed
+        # dates can silently age out of the 45-day acceptance window in CI.
         index = StaleThenFreshIndex()
         bridge = SimpleNamespace(_resolve_detail_row=lambda *_args: [])
         fallback.install(bridge, index)
