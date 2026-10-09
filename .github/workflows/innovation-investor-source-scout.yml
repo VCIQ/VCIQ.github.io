@@ -1,0 +1,44 @@
+name: Innovation investor official-source scout
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "43 5 * * *"
+  pull_request:
+    paths:
+      - "config/innovation_global_investors.json"
+      - "tools/innovation_investor_source_scout.py"
+      - "tests/test_innovation_investor_source_scout.py"
+      - ".github/workflows/innovation-investor-source-scout.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: innovation-investor-source-scout-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  scout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run offline safety and evidence-boundary tests
+        run: python -m unittest -v tests.test_innovation_investor_source_scout
+      - name: Discover bounded official-page candidates
+        if: github.event_name != 'pull_request'
+        run: python tools/innovation_investor_source_scout.py --output /tmp/innovation-investor-source-scout.json
+      - name: Retain private-to-repository review artifact
+        if: github.event_name != 'pull_request' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: innovation-investor-source-scout-${{ github.run_id }}
+          path: /tmp/innovation-investor-source-scout.json
+          if-no-files-found: warn
+          retention-days: 14

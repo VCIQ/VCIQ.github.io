@@ -1,7 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { applyArticleMetadataReviews } from "@/lib/article-metadata-reviews";
+import { admitHomepageEvents } from "@/lib/homepage-publication-quality";
 import {
   mergeRankedIntelligenceIntoArticlePayload,
   parseRankedIntelligenceProjection,
@@ -310,11 +311,17 @@ export function useArticles(
     }
   }, []);
 
+  // Apply the same small admission rules to cached, bootstrap and refreshed
+  // data. The archived payload remains unchanged for audit and provenance.
+  const publicPayload = useMemo(() => {
+    const articles = admitHomepageEvents(payload.articles);
+    return { ...payload, articles, articleCount: articles.length };
+  }, [payload]);
   const isLive = Boolean(enabled && cachedPayload && payload === cachedPayload);
-  const hasData = payload.articles.length > 0 || Boolean(payload.generatedAt);
+  const hasData = publicPayload.articles.length > 0 || Boolean(payload.generatedAt);
 
   return {
-    data: payload,
+    data: publicPayload,
     error,
     status: error ? "error" as const : hasData ? "success" as const : "pending" as const,
     fetchStatus: isFetching ? "fetching" as const : "idle" as const,
@@ -325,7 +332,7 @@ export function useArticles(
     isError: Boolean(error),
     isPlaceholderData: !isLive,
     refetch,
-    articles: payload.articles,
+    articles: publicPayload.articles,
     generatedAt: payload.generatedAt,
     sourceStatus: payload.sourceStatus ?? [],
     qualityGate: payload.qualityGate,

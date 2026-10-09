@@ -7,14 +7,14 @@ test("person channel bootstrap is canonicalized before first browser interaction
 
   assert.match(
     homepage,
-    /const projectedPeopleChannelEvents = projectHomepagePersonDirectoryEvents\([\s\S]*?const peopleChannelEvents = mergeHomepagePersonChannelEvents\(\s*\[\],\s*projectedPeopleChannelEvents,\s*activeArticles,?\s*\);/u,
+    /const projectedPeopleChannelEvents = projectHomepagePersonDirectoryEvents\([\s\S]*?const peopleChannelEvents = admitHomepageEvents\(\s*mergeHomepagePersonChannelEvents\(\s*\[\],\s*projectedPeopleChannelEvents,\s*activeArticles,?\s*\)\s*\);/u,
   );
   assert.doesNotMatch(
     homepage,
     /const peopleChannelEvents = projectHomepagePersonDirectoryEvents\(/u,
   );
 
-  const canonicalization = homepage.indexOf("const peopleChannelEvents = mergeHomepagePersonChannelEvents(");
+  const canonicalization = homepage.indexOf("const peopleChannelEvents = admitHomepageEvents(mergeHomepagePersonChannelEvents(");
   const initialPayloadSlice = homepage.indexOf("const initialArticles:");
   assert.ok(canonicalization >= 0);
   assert.ok(initialPayloadSlice > canonicalization);
