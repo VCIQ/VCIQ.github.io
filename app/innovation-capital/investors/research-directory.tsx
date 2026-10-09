@@ -6,6 +6,11 @@ import styles from "./research.module.css";
 
 const labels: Record<string, string> = { investment:"投资披露", viewpoint:"观点转述", outcome:"结果节点", "portfolio-relationship":"组合关系", "fund-announcement":"基金/主题公告" };
 const money = (value: {value:number;currency:string} | null) => value ? `${value.currency} ${value.value.toLocaleString("en-US")}` : "未披露 / 未核验";
+const outcomeDescription = (status: string | null) => status === "company-reported-commercial-update"
+  ? "公司披露的商业化进展（尚无独立财务或工程验收）"
+  : status === "acquired"
+    ? "公司披露的收购节点（不代表该投资机构获得现金回报）"
+    : (status ?? "尚无结果结论");
 
 export function InvestorResearchDirectory({institutions, records}: {institutions: InnovationInvestor[]; records: InvestorEvidenceRecord[]}) {
   const [query, setQuery] = useState("");
@@ -55,7 +60,7 @@ export function InvestorResearchDirectory({institutions, records}: {institutions
           <dl><div><dt>项目</dt><dd>{item.project ?? "主题/基金层面，非具体项目融资"}</dd></div><div><dt>轮次/参与角色</dt><dd>{item.round ?? "未披露 / 不适用"} · {item.participation ?? "不据此认定出资角色"}</dd></div><div><dt>本轮融资总额</dt><dd>{money(item.roundAmount)}</dd></div><div><dt>本机构投资额</dt><dd>{money(item.investorAmount)}</dd></div></dl>
           {item.linkedPerson ? <p><b>项目关联人：</b>{item.linkedPerson.name}；{item.linkedPerson.relationship}</p> : null}
           {item.speakers.map((speaker) => <p key={speaker.name}><b>发言/署名：</b>{speaker.name} · {speaker.roleAtPublication}。{speaker.projectResponsibility}。</p>)}
-          {item.kind === "outcome" ? <p className={styles.boundary}>结果：{item.resultStatus}；实际回报未知。没有完整投入、持股变化、退出分配与现金流日期，不计算收益。</p> : null}
+          {item.kind === "outcome" ? <p className={styles.boundary}>结果：{outcomeDescription(item.resultStatus)}；基金实际回报未知。没有完整投入、持股变化、退出分配与现金流日期，不计算收益。</p> : null}
           <p className={styles.next}><b>下一验证：</b>{item.nextCheck}</p>
           <details><summary>证据位置与披露边界</summary><p>{item.source.publisher} · 原文发布日期 {item.source.publishedAt ?? "未标注"}</p><p>{item.source.locator}</p><p>来源类型：{item.source.kind}。机构官网属于关联方一手披露，不等于独立第三方验证。</p><a href={item.source.url} target="_blank" rel="noreferrer">打开具体原文 ↗</a></details>
         </article>)}
