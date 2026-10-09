@@ -20,7 +20,7 @@ from urllib import error, parse, request, robotparser
 
 ROOT = Path(__file__).resolve().parents[1]
 AGENT = "VCIQ-Research-Scout/1.0 (+https://vciq.github.io/)"
-MAX_BYTES = 750_000
+MAX_BYTES = 1_048_576  # bounded 1 MiB for reviewed official news/portfolio listings
 MAX_ROBOTS_BYTES = 200_000
 TIMEOUT = 8
 MAX_REDIRECTS = 2
@@ -173,10 +173,14 @@ def extract_candidates(html: str, source_url: str, institution_id: str) -> list[
 def scout(institution: dict) -> dict:
     started = datetime.now(timezone.utc).isoformat()
     identity = institution["id"]
-    url = institution["officialUrl"]
+    official_url = institution["officialUrl"]
+    url = institution.get("discoveryUrl") or official_url
     result = {"institutionId":identity, "sourceUrl":url, "checkedAt":started, "status":"unavailable", "candidates":[]}
     try:
-        final_url, html, digest = fetch_page(url, parse.urlsplit(url).hostname or "")
+        # Alternate entry points must remain on the reviewed official domain.
+        allowed_host = parse.urlsplit(official_url).hostname or ""
+        validate_url(url, allowed_host, resolve_dns=False)
+        final_url, html, digest = fetch_page(url, allowed_host)
         candidates = extract_candidates(html, final_url, identity)
         result.update(status="candidates-found" if candidates else "no-candidates-adapter-review", candidates=candidates, contentSha256=digest, finalUrl=final_url)
     except error.HTTPError as exc:
