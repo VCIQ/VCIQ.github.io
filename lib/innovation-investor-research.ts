@@ -54,6 +54,13 @@ export function validateInvestorResearch(
     if (item.kind !== "outcome" && item.resultStatus !== null) {
       errors.push(`non-outcome has result status: ${item.id}`);
     }
+    // Investor-hosted company disclosures are evidence of what the company said,
+    // not independent proof of revenue, customer traction, or investor liquidity.
+    if (item.kind === "outcome" && item.resultStatus === "company-reported-commercial-update" &&
+        item.source.kind !== "investor-hosted-company-release" &&
+        item.source.kind !== "company-official") {
+      errors.push(`company-reported outcome lacks company disclosure source: ${item.id}`);
+    }
     for (const speaker of item.speakers) {
       if (!speaker.name.trim() || !speaker.roleAtPublication.trim() || !speaker.projectResponsibility.trim() || speaker.attribution !== "paraphrase") {
         errors.push(`unverified speaker attribution: ${item.id}`);

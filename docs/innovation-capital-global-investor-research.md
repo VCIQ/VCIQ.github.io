@@ -149,3 +149,20 @@
 - Graphcore保留2017年投资披露及2024年被SoftBank收购的两个独立时间节点；没有Sequoia持股稀释、现金收回和基金分配数据，**实际收益仍未知**。
 - 项目时间线只代表已记录证据，缺少结果节点表示**本批未取得证据**，不是项目失败或停滞。投资人与公司创始人需要分开关联：文章署名不能推出个人独家投资责任。
 - 证据入库复核关注点仍见[Issue #593](https://github.com/VCIQ/VCIQ.github.io/issues/593)；后续新项目必须沿用原文定位、角色边界和人工核验流程，而不是直接把自动审核队列发布到公开站点。
+
+## 2026-10-09：十家机构项目级样例覆盖（第四批）
+
+### 范围与数据口径
+
+在原有6家、14条来源证据的基础上，新增**Lux Capital、DCVC、Eclipse、IQ Capital**四家机构共11条原始来源可追溯的研究记录，累计**10/30家至少一条项目证据样例、25条记录**。这是最小样例覆盖而不是每家完整投资组合、逐项目主要投资人或现金回报覆盖。
+
+- **Lux × Physical Intelligence**：[组合项目页](https://www.luxcapital.com/companies/physical-intelligence)将「Lux investment」标为2024年（**年精度**）；[Lux Q1 2024 Report](https://www.luxcapital.com/news/lux-q1-2024-report-2)由Josh Wolfe在2024-05-19署名，说明机构对机器人物理智能的投资与技术观点。未披露具体轮次、投资额或个人单独交易责任。
+- **DCVC × Quantum Motion**：[DCVC原文](https://www.dcvc.com/news-insights/how-the-quantum-race-will-be-won-on-the-factory-floor/)于2026-05-07披露**1.6亿美元Series C整轮融资**，DCVC参与领投；署名人Prineha Narang为机构Operating Partner。硅基架构与量产性能数字属于机构投资论点，不能视为独立硬件测评。
+- **Eclipse × Foxglove**：[2022年Series A](https://eclipse.capital/blog/powering-the-robotics-revolution-our-series-a-in-foxglove)明确Eclipse领投**1,500万美元整轮**；[2025年Series B](https://eclipse.capital/blog/The-Robotics-Accelerator)明确Eclipse参与**4,000万美元整轮**，另有Seth Winterroth的机器人开发基础设施观点。客户数量为原文自述而非独立财务审计；两次不同轮次计为**2条投资披露**，不把其个人文章署名推断为独家决策。
+- **IQ Capital × Nyobolt**：[2025年公告](https://www.iqcapital.vc/news/nyobolt-raises-30-million-as-demand-for-high-power-energy-solutions-surge-with-ai-growth)确认IQ Capital与Latitude领投**3,000万美元融资**，Max Bautin作为Co-Founder/Managing Partner发表观点；[2026年公告](https://www.iqcapital.vc/news/nyobolt-closes-series-c-round-at-1b-valuation-to-power-the-rise-of-autonomous-machines-physical-ai-applications-and-ai-data-centres)确认IQ Capital参与Symbotic领投的**6,000万美元Series C**。同篇公司披露的收入增长与仓储机器人商业化单列为`company-reported-commercial-update`，尚无独立财务/工程验收，**10亿美元标题估值不等于机构退出现金收益**。
+
+### 后续核验闭环
+
+正式页面按机构×项目读取这些证据，投资、观点、后续融资和商业化主张分别显示，单篇文章重复服务多个证据类型时按**轮次及日期去重投资事件**。公告日期与实际资金到账日期不混用；所有单家出资额和基金回款仍为空。
+
+继续按优先机构清单拓展**ARCH Venture Partners、中科创星**等机构，其中中科创星官网访问异常与Atomico限流仍跟踪在Issue #591。剩余来源需要获取公司公告、独立技术测评、负责人职责及长期结果；不以此10家样例覆盖声称已经完成30家投资组合的持续追踪。下一步建议先验证项目披露是否可重复采集，再完成3—5个样本项目/机构的长期跟踪档案。
