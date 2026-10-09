@@ -194,6 +194,10 @@ test("IQ Capital Nyobolt includes follow-on investment and only company-reported
   assert.equal(outcome.source.kind, "investor-hosted-company-release");
   assert.match(outcome.summary, /尚非独立财务审计/);
   assert.equal(outcome.realizedProceeds, null);
+  const tampered = {...outcome, source: {...outcome.source, kind:"investor-official"}} as InvestorEvidenceRecord;
+  assert.ok(validateInvestorResearch(globalInnovationInvestors, [tampered]).some((error) =>
+    error.includes("company-reported outcome lacks company disclosure source"),
+  ));
   const speaker = g.entries.find((x) => x.kind === "viewpoint")!.speakers[0];
   assert.equal(speaker.name, "Max Bautin");
   assert.match(speaker.roleAtPublication, /Managing Partner/);
@@ -221,6 +225,7 @@ test("institution research remains a nested evidence view and projects precede l
   assert.match(client, /import type/);
   assert.doesNotMatch(client, /fetch\(|setInterval\(|tracking-admin\/v1/);
   assert.match(client, /无记录/);
+  assert.match(client, /公司披露的商业化进展（尚无独立财务或工程验收）/);
   const chronology = source("app/innovation-capital/investors/project-evidence-timelines.tsx");
   assert.match(chronology, /不从日期推定交易交割/);
   assert.match(chronology, /基金现金收益仍未知/);
