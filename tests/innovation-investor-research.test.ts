@@ -3,7 +3,8 @@ import fs from "node:fs";
 import test from "node:test";
 import {
   globalInnovationInvestors, investorEvidenceRecords, investorEvidenceSummary,
-  validateInvestorResearch, investorReturnLabel, type InvestorEvidenceRecord,
+  validateInvestorResearch, investorReturnLabel, investorProjectEvidenceTimelines,
+  type InvestorEvidenceRecord,
 } from "../lib/innovation-investor-research";
 
 const source = (path: string) => fs.readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
@@ -20,12 +21,12 @@ test("30 curated institutions have unique identities and validated primary-sourc
   assert.match(globalInnovationInvestors.find((row) => row.id === "vertex-sea-india")!.officialUrl, /vertexventures\.sg/);
 });
 
-test("coverage reports four sampled institutions, not complete coverage of thirty", () => {
+test("coverage reports six source-backed institutions, not complete coverage of thirty", () => {
   const summary = investorEvidenceSummary();
   assert.equal(summary.registeredInstitutions, 30);
-  assert.equal(summary.evidenceCoveredInstitutions, 4);
-  assert.equal(summary.reviewedRecords, 8);
-  assert.equal(summary.disclosedInvestmentEvents, 3);
+  assert.equal(summary.evidenceCoveredInstitutions, 6);
+  assert.equal(summary.reviewedRecords, 14);
+  assert.equal(summary.disclosedInvestmentEvents, 5);
   assert.equal(summary.outcomeMilestones, 1);
   assert.equal(summary.returnStatus, "unknown");
 });
@@ -67,6 +68,71 @@ test("invalid records fail closed instead of promoting statements into investmen
   assert.ok(validateInvestorResearch(globalInnovationInvestors, [inventedReturn]).some((error) => error.includes("unsupported realized")));
 });
 
+test("new project evidence retains official dates, deal roles and authorship limits", () => {
+  const pref = investorEvidenceRecords.find((row) => row.id === "a16z-preference-model-investment-2026")!;
+  assert.equal(pref.date, "2026-10-07");
+  assert.equal(pref.kind, "investment");
+  assert.equal(pref.round, null);
+  assert.equal(pref.participation, "disclosed-investor");
+  assert.equal(pref.investorAmount, null);
+  const jennifer = investorEvidenceRecords.find((row) => row.id === "a16z-preference-model-thesis-2026")!;
+  assert.equal(jennifer.speakers[0]?.name, "Jennifer Li");
+  assert.match(jennifer.speakers[0]?.projectResponsibility ?? "", /不能单凭署名/);
+  const ricursive = investorEvidenceRecords.find((row) => row.id === "lightspeed-ricursive-series-a-2026")!;
+  assert.equal(ricursive.participation, "lead");
+  assert.equal(ricursive.round, "Series A");
+  assert.equal(ricursive.roundAmount, null);
+  assert.equal(ricursive.investorAmount, null);
+  const thesis = investorEvidenceRecords.find((row) => row.id === "lightspeed-ricursive-ai-chip-thesis-2026")!;
+  assert.deepEqual(thesis.speakers.map((row) => row.name), ["Guru Chahal", "Ravi Mhatre", "Jonah Cader"]);
+  assert.ok(thesis.speakers.every((row) => row.attribution === "paraphrase"));
+  const oris = investorEvidenceRecords.find((row) => row.id === "earlybird-oris-portfolio-relation-2026")!;
+  assert.equal(oris.kind, "portfolio-relationship");
+  assert.equal(oris.participation, null);
+  assert.equal(oris.investorAmount, null);
+  const orisView = investorEvidenceRecords.find((row) => row.id === "earlybird-oris-space-energy-thesis-2026")!;
+  assert.deepEqual(orisView.speakers, []);
+  assert.ok(investorEvidenceRecords.every((row) => row.realizedProceeds === null));
+});
+
+test("one publication can support a deal and a viewpoint, without counting two investments", () => {
+  const projects = investorProjectEvidenceTimelines();
+  assert.equal(projects.length, 8);
+  const pref = projects.find((row) => row.project === "Preference Model")!;
+  assert.equal(pref.investmentDisclosures, 1);
+  assert.equal(pref.viewpointDisclosures, 1);
+  assert.equal(pref.sourceCount, 1);
+  assert.equal(pref.returnStatus, "unknown");
+  const lightspeed = projects.find((row) => row.project === "Ricursive Intelligence")!;
+  assert.equal(lightspeed.investmentDisclosures, 1);
+  assert.equal(lightspeed.sourceCount, 1);
+  const oris = projects.find((row) => row.project === "ORiS")!;
+  assert.equal(oris.investmentDisclosures, 0);
+  assert.equal(oris.portfolioRelationships, 1);
+  assert.equal(oris.outcomeMilestones, 0);
+  assert.equal(oris.returnStatus, "unknown");
+  assert.ok(projects.every((row) => row.project !== "The Machine Age Fund"));
+});
+
+test("Graphcore chronology sorts the old investment before the 2024 acquisition, without return inference", () => {
+  const graphcore = investorProjectEvidenceTimelines().find((row) => row.project === "Graphcore")!;
+  assert.equal(graphcore.earliestEvidenceDate, "2017-11-13");
+  assert.equal(graphcore.latestEvidenceDate, "2024-07-11");
+  assert.equal(graphcore.sourceCount, 2);
+  assert.equal(graphcore.investmentDisclosures, 1);
+  assert.equal(graphcore.outcomeMilestones, 1);
+  assert.equal(graphcore.entries.at(-1)?.kind, "outcome");
+  assert.equal(graphcore.returnStatus, "unknown");
+});
+
+test("duplicate investment rows fail closed, but a same-day authored viewpoint may coexist", () => {
+  const ricursive = investorEvidenceRecords.find((row) => row.id === "lightspeed-ricursive-series-a-2026")!;
+  const viewpoint = investorEvidenceRecords.find((row) => row.id === "lightspeed-ricursive-ai-chip-thesis-2026")!;
+  assert.deepEqual(validateInvestorResearch(globalInnovationInvestors, [ricursive, viewpoint]), []);
+  const duplicate = {...ricursive, id:"copied-investment"} as InvestorEvidenceRecord;
+  assert.ok(validateInvestorResearch(globalInnovationInvestors, [ricursive, duplicate]).some((error) => error.includes("duplicate investment disclosure")));
+});
+
 test("institution research remains a nested evidence view and projects precede listed benchmarks", () => {
   const page = source("app/innovation-capital/page.tsx");
   assert.ok(page.indexOf("<InnovationDirectory") < page.indexOf("<ListedInnovationDirectory"));
@@ -77,4 +143,8 @@ test("institution research remains a nested evidence view and projects precede l
   assert.match(client, /import type/);
   assert.doesNotMatch(client, /fetch\(|setInterval\(|tracking-admin\/v1/);
   assert.match(client, /无记录/);
+  const chronology = source("app/innovation-capital/investors/project-evidence-timelines.tsx");
+  assert.match(chronology, /不从日期推定交易交割/);
+  assert.match(chronology, /基金现金收益仍未知/);
+  assert.match(source("app/innovation-capital/investors/page.tsx"), /<ProjectEvidenceTimelines/);
 });
