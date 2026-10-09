@@ -1,5 +1,6 @@
 import unittest
-from tools.innovation_investor_source_scout import ScoutError, extract_candidates, validate_url
+from unittest.mock import patch
+from tools.innovation_investor_source_scout import MAX_BYTES, ScoutError, extract_candidates, scout, validate_url
 
 
 class InvestorSourceScoutTests(unittest.TestCase):
@@ -30,6 +31,39 @@ class InvestorSourceScoutTests(unittest.TestCase):
         self.assertEqual(len(rows), 1)
         self.assertNotIn("token", str(rows))
 
+
+
+    def test_same_domain_official_news_entry_point(self):
+        firm = {
+            "id": "firm",
+            "officialUrl": "https://www.example.com/",
+            "discoveryUrl": "https://www.example.com/news",
+        }
+        html = '<a href="/news/robotics-investment">Robotics investment</a>'
+        with patch("tools.innovation_investor_source_scout.fetch_page") as mocked:
+            mocked.return_value = ("https://www.example.com/news", html, "digest")
+            result = scout(firm)
+        mocked.assert_called_once_with("https://www.example.com/news", "www.example.com")
+        self.assertEqual(result["status"], "candidates-found")
+        self.assertEqual(result["sourceUrl"], firm["discoveryUrl"])
+        self.assertEqual(result["candidates"][0]["claimStatus"], "unreviewed-navigation-candidate")
+        self.assertFalse(result["candidates"][0]["investmentRelationConfirmed"])
+
+    def test_cross_domain_news_entry_is_rejected_before_network(self):
+        firm = {
+            "id": "firm",
+            "officialUrl": "https://www.example.com/",
+            "discoveryUrl": "https://not-official.example.org/news",
+        }
+        with patch("tools.innovation_investor_source_scout.fetch_page") as mocked:
+            result = scout(firm)
+        mocked.assert_not_called()
+        self.assertEqual(result["status"], "unavailable")
+        self.assertEqual(result["reason"], "off-domain")
+
+    def test_official_html_limit_is_still_strictly_bounded(self):
+        self.assertGreaterEqual(MAX_BYTES, 900_000)
+        self.assertLessEqual(MAX_BYTES, 1_048_576)
 
 if __name__ == "__main__":
     unittest.main()
