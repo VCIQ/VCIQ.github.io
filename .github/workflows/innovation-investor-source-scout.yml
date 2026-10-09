@@ -1,6 +1,16 @@
 name: Innovation investor official-source scout
 
 on:
+  # Seed a real first scan after a reviewed change lands on main.
+  push:
+    branches: [main]
+    paths:
+      - "config/innovation_global_investors.json"
+      - "tools/innovation_investor_source_scout.py"
+      - "tools/innovation_investor_coverage.py"
+      - "tests/test_innovation_investor_source_scout.py"
+      - "tests/test_innovation_investor_coverage.py"
+      - ".github/workflows/innovation-investor-source-scout.yml"
   workflow_dispatch:
   schedule:
     - cron: "43 5 * * *"
@@ -9,6 +19,8 @@ on:
       - "config/innovation_global_investors.json"
       - "tools/innovation_investor_source_scout.py"
       - "tests/test_innovation_investor_source_scout.py"
+      - "tools/innovation_investor_coverage.py"
+      - "tests/test_innovation_investor_coverage.py"
       - ".github/workflows/innovation-investor-source-scout.yml"
 
 permissions:
@@ -30,15 +42,23 @@ jobs:
         with:
           python-version: "3.12"
       - name: Run offline safety and evidence-boundary tests
-        run: python -m unittest -v tests.test_innovation_investor_source_scout
+        run: python -m unittest -v tests.test_innovation_investor_source_scout tests.test_innovation_investor_coverage
       - name: Discover bounded official-page candidates
         if: github.event_name != 'pull_request'
         run: python tools/innovation_investor_source_scout.py --output /tmp/innovation-investor-source-scout.json
+      - name: Audit 30-firm source reachability and navigation-only coverage
+        if: github.event_name != 'pull_request'
+        run: |
+          python tools/innovation_investor_coverage.py \
+            --input /tmp/innovation-investor-source-scout.json \
+            --output /tmp/innovation-investor-coverage.json
       - name: Retain private-to-repository review artifact
         if: github.event_name != 'pull_request' && always()
         uses: actions/upload-artifact@v4
         with:
           name: innovation-investor-source-scout-${{ github.run_id }}
-          path: /tmp/innovation-investor-source-scout.json
+          path: |
+            /tmp/innovation-investor-source-scout.json
+            /tmp/innovation-investor-coverage.json
           if-no-files-found: warn
           retention-days: 14
