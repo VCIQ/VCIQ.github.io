@@ -10,6 +10,9 @@ on:
       - "tools/innovation_investor_coverage.py"
       - "tests/test_innovation_investor_source_scout.py"
       - "tests/test_innovation_investor_coverage.py"
+      - "tools/innovation_investor_review_queue.py"
+      - "tests/test_innovation_investor_review_queue.py"
+      - "config/innovation_investor_evidence.json"
       - ".github/workflows/innovation-investor-source-scout.yml"
   workflow_dispatch:
   schedule:
@@ -21,6 +24,9 @@ on:
       - "tests/test_innovation_investor_source_scout.py"
       - "tools/innovation_investor_coverage.py"
       - "tests/test_innovation_investor_coverage.py"
+      - "tools/innovation_investor_review_queue.py"
+      - "tests/test_innovation_investor_review_queue.py"
+      - "config/innovation_investor_evidence.json"
       - ".github/workflows/innovation-investor-source-scout.yml"
 
 permissions:
@@ -42,7 +48,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Run offline safety and evidence-boundary tests
-        run: python -m unittest -v tests.test_innovation_investor_source_scout tests.test_innovation_investor_coverage
+        run: python -m unittest -v tests.test_innovation_investor_source_scout tests.test_innovation_investor_coverage tests.test_innovation_investor_review_queue
       - name: Discover bounded official-page candidates
         if: github.event_name != 'pull_request'
         run: python tools/innovation_investor_source_scout.py --output /tmp/innovation-investor-source-scout.json
@@ -52,6 +58,15 @@ jobs:
           python tools/innovation_investor_coverage.py \
             --input /tmp/innovation-investor-source-scout.json \
             --output /tmp/innovation-investor-coverage.json
+      - name: Prepare human-only investment and investor-statement evidence queue
+        if: github.event_name != 'pull_request'
+        run: |
+          python tools/innovation_investor_review_queue.py \
+            --scout /tmp/innovation-investor-source-scout.json \
+            --roster config/innovation_global_investors.json \
+            --evidence config/innovation_investor_evidence.json \
+            --output /tmp/innovation-investor-review-queue.json \
+            --markdown /tmp/innovation-investor-review-queue.md
       - name: Retain private-to-repository review artifact
         if: github.event_name != 'pull_request' && always()
         uses: actions/upload-artifact@v4
@@ -60,5 +75,7 @@ jobs:
           path: |
             /tmp/innovation-investor-source-scout.json
             /tmp/innovation-investor-coverage.json
+            /tmp/innovation-investor-review-queue.json
+            /tmp/innovation-investor-review-queue.md
           if-no-files-found: warn
           retention-days: 14
