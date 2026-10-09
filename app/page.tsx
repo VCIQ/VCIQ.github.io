@@ -7,6 +7,7 @@ import { HomepageTopicBriefs } from "@/components/homepage-topic-briefs";
 import { HomepageTrackingActions } from "@/components/homepage-tracking-actions";
 import unifiedStyles from "@/components/homepage-unified-inbox.module.css";
 import { applyArticleMetadataReviews } from "@/lib/article-metadata-reviews";
+import { admitHomepageEvents } from "@/lib/homepage-publication-quality";
 import { companies } from "@/lib/catalog-data";
 import { getChannelUpdateDirectory } from "@/lib/channel-updates";
 import { companyEntities } from "@/lib/company-entity-registry";
@@ -53,7 +54,9 @@ const trackedSectorAliases = [
 ];
 const trackedSectorNames = new Set(trackedSectorAliases);
 const innovationCapitalIndex = buildHomepageInnovationCapitalIndex(rawInnovationCapitalFeed);
-const activeArticles = snapshot.articles.filter(
+// Preserve the raw evidence archive. Only the public display projection is
+// admitted and narrowly reclassified before ranking and first-paint rendering.
+const activeArticles = admitHomepageEvents(snapshot.articles).filter(
   (item) =>
     item.curated
     || trackedSectorNames.has(item.sector)
@@ -90,12 +93,12 @@ const projectedPeopleChannelEvents = projectHomepagePersonDirectoryEvents(
 // Use the complete server-side canonical article pool before the browser's first
 // interaction. Otherwise a same-URL directory projection can briefly expose its
 // fallback importance/sector until useArticles finishes loading the full archive.
-const peopleChannelEvents = mergeHomepagePersonChannelEvents(
+const peopleChannelEvents = admitHomepageEvents(mergeHomepagePersonChannelEvents(
   [],
   projectedPeopleChannelEvents,
   activeArticles,
-);
-const companyChannelEvents = projectHomepageCompanyDisclosureEvents(36);
+));
+const companyChannelEvents = admitHomepageEvents(projectHomepageCompanyDisclosureEvents(36));
 
 function compactHomepageArticle(item: LiveIntelligenceEvent): LiveIntelligenceEvent {
   return {
@@ -154,7 +157,7 @@ function topSector(market: "中国" | "美国") {
 const initialPayload: ArticlePayload = {
   schemaVersion: snapshot.schemaVersion,
   generatedAt: snapshot.generatedAt,
-  articleCount: snapshot.articleCount,
+  articleCount: activeArticles.length,
   articles: initialArticles,
   sourceStatus: snapshot.sourceStatus,
   qualityGate: snapshot.qualityGate,
