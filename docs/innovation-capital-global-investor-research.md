@@ -65,7 +65,7 @@
 
 项目结果分层：技术/临床验证 → 试点/付费客户/订单 → 收入与商业化 → 下一轮融资及估值条款 → 上市/并购/二级出售/清算 → 基金实际收到的现金流。
 
-“被收购”“已上市”“估值上升”分别是不同事件，均不自动证明某机构已兑现收益。需要基金身份、投入金额和日期、持股及稀释、优先权、退出分配、费用、币种及估值口径才能计算可比IRR、MOIC、DPI、TVPI。当前8条样例没有完整现金流，因此统一显示实际回报未知。
+“被收购”“已上市”“估值上升”分别是不同事件，均不自动证明某机构已兑现收益。需要基金身份、投入金额和日期、持股及稀释、优先权、退出分配、费用、币种及估值口径才能计算可比IRR、MOIC、DPI、TVPI。目前纳入研究台账的项目样例尚无完整可归属基金的现金流，因此统一显示实际回报未知。
 
 行为结果对比必须控制投资年份、阶段、赛道和观察期；说明未退出样本仍在观察、早期历史缺失，以及成功公告更易公开的幸存者偏差。不能从披露过的成功退出样本计算整家机构成功率。
 
@@ -90,7 +90,7 @@
 官方发现 → 待审核证据 → 规范实体匹配 → 人工/规则核验 → 项目/人物/机构关系账本 → 构建期研究投影 → 只读公开页面。
 
 - 浏览器只读小型投影；不在Cloudflare请求时计算30家完整组合、关系图或跨期回报。
-- 定时抓取在GitHub Actions运行。当前scout单轮最多30家、并发3、单响应750KB、单次超时8秒、重定向最多2次，先检查robots；拒绝非官方域名、凭据URL和非公开网络地址。
+- 定时抓取在GitHub Actions运行。当前scout单轮最多30家、并发3、单响应1MiB、单次超时8秒、重定向最多2次，先检查robots；拒绝非官方域名、凭据URL和非公开网络地址。
 - blocked、robots unavailable、adapter review、no new item、success分别记录。来源失败保留上一版，但必须标明资料年龄。
 - 当前scout仅从官网首页发现站内导航链接；无日期时保留null，无交易事实不建立关系。输出artifact供后续适配和审核，不直接修改投资台账或公开目录。
 - 每日UTC05:43是计划时间，不是准点承诺。后续生产监控应读取实际完成及公开版本，而非只检查cron配置。
@@ -129,3 +129,23 @@
 - 已核验的8条样例仍由 config/innovation_investor_evidence.json 管理；候选只在私有到仓库的Actions artifact内流转，不自动写入该文件、上市状态、跟踪主档或公开前端。正式入库仍通过既有人工审核流程。
 
 **审核使用方式：** 在 GitHub Actions 中查看 Innovation investor official-source scout 的最近成功生产运行，下载 innovation-investor-source-scout-<run_id> artifact，先看 innovation-investor-review-queue.md 里的精选链接，再按 JSON 中 requiredEvidenceChecks 查原文、做身份匹配、补足证据，最后才将审核通过的条目写入既有规范证据档案。源站导航文字不等于事实披露，日期仍待核验。
+
+## 2026-10-09 第三阶段首批：三项项目原文核验与时间线
+
+### 可确认的最小事实
+
+| 项目与机构 | 正式原文证据 | 发言/署名 | 不得推断的字段 |
+| --- | --- | --- | --- |
+| Preference Model × a16z | [Investing in Preference Model](https://a16z.com/announcement/investing-in-preference-model/)，2026-10-07；官网披露投资支持团队 | Jennifer Li，a16z General Partner，署名文章并论述强化学习环境与Karotte框架 | 具体轮次、支票、领投、基金实体与个人独家交易决策均未披露 |
+| Ricursive Intelligence × Lightspeed | [Series A领投官方文章](https://lsvp.com/stories/investing-in-ricursive-intelligence-ai-for-chip-design-and-chip-design-for-ai/)，2026-01-26；原文明确表示领投Series A | Guru Chahal、Ravi Mhatre、Jonah Cader联合署名；以原文观点转述而非具体签约责任 | 单家出资额及具体基金未知；创始人此前AlphaChip业绩不等于Ricursive产品已商用验证 |
+| ORiS × Earlybird | [Why We're Backing ORiS](https://earlybird.com/perspectives/rethinking-energy-in-space-why-we-re-backing-oris)，2026-07-21；Portfolio News确认公开项目支持/关联 | 机构论述卫星激光能源网络与LOONA，无个人作者署名 | 具体股权交易、轮次、投资金额、领投身份和主要负责人均未知 |
+
+同一文章来源支持“投资披露”与“署名观点”两类事实，**不算两次投资**；如果原文仅表示“backing”，且无股权轮次/条款，则保留“portfolio-relationship”，不创建可量化融资交易。所有观点均是机构或作者当时主张，不自动升级为独立技术验证；公司未来成就不回填为当时已实现的结果。
+
+### 增量交付与数据边界
+
+- 在原有规范证据结构中新增6条原文对应的证据示例，总计14条，覆盖6家机构；这既不是全球30家完整研究，也不是收益排名。
+- 新增按**机构 + 项目**分组的服务端时间线：单独显示投资披露、观点、项目关联、结果。计算原始URL去重后的来源数，基金公告若无具体项目不混入项目投资。按原文披露日期排序，不把文章发布日期当成资金实际交割日。
+- Graphcore保留2017年投资披露及2024年被SoftBank收购的两个独立时间节点；没有Sequoia持股稀释、现金收回和基金分配数据，**实际收益仍未知**。
+- 项目时间线只代表已记录证据，缺少结果节点表示**本批未取得证据**，不是项目失败或停滞。投资人与公司创始人需要分开关联：文章署名不能推出个人独家投资责任。
+- 证据入库复核关注点仍见[Issue #593](https://github.com/VCIQ/VCIQ.github.io/issues/593)；后续新项目必须沿用原文定位、角色边界和人工核验流程，而不是直接把自动审核队列发布到公开站点。
