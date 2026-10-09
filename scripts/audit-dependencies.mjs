@@ -4,12 +4,16 @@ import { readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 
 const BRACE_EXPANSION_ADVISORY = "GHSA-MH99-V99M-4GVG";
+// GHSA-VFJ7-8CJW-P6XM has no upstream patched npm release as of 2026-10-09.
+// Bound the exception to the exact, dev-only micromatch -> braces path below.
+const BRACES_DEV_ADVISORY = "GHSA-VFJ7-8CJW-P6XM";
 const IMAGE_SIZE_DEV_ADVISORIES = new Set([
   "GHSA-W3RX-R6R6-PGPR",
   "GHSA-5P2G-FCMC-QVQQ",
 ]);
 const ALLOWED_DEV_ADVISORIES = new Set([
   BRACE_EXPANSION_ADVISORY,
+  BRACES_DEV_ADVISORY,
   ...IMAGE_SIZE_DEV_ADVISORIES,
 ]);
 const SAFE_BRACE_EXPANSION_BACKPORTS = new Set([
@@ -155,6 +159,44 @@ function validateImageSizeDevIsolation(lock = loadLock()) {
   );
 }
 
+function validateBracesDevIsolation(lock = loadLock()) {
+  const packages = lock.packages || {};
+  const installations = Object.entries(packages).filter(
+    ([path]) => path === "node_modules/braces" || path.endsWith("/node_modules/braces"),
+  );
+  if (
+    installations.length !== 1 ||
+    installations[0][0] !== "node_modules/braces" ||
+    installations[0][1].version !== "3.0.3" ||
+    installations[0][1].dev !== true
+  ) {
+    throw new Error("braces advisory can only be accepted for the pinned dev-only 3.0.3 installation");
+  }
+
+  const consumers = Object.entries(packages).filter(
+    ([, entry]) => entry?.dependencies?.braces || entry?.optionalDependencies?.braces,
+  );
+  if (
+    consumers.length !== 1 ||
+    consumers[0][0] !== "node_modules/micromatch" ||
+    consumers[0][1].dev !== true ||
+    consumers[0][1].version !== "4.0.8" ||
+    consumers[0][1].dependencies?.braces !== "^3.0.3"
+  ) {
+    throw new Error("braces advisory escaped the approved dev-only micromatch dependency path");
+  }
+
+  const manifest = JSON.parse(readFileSync("package.json", "utf8"));
+  if (manifest.dependencies?.braces || manifest.devDependencies?.braces) {
+    throw new Error("braces must remain transitive, not a direct dependency");
+  }
+
+  console.log(
+    "Validated unpatched braces 3.0.3 is restricted to dev-only micromatch 4.0.8; " +
+      "production audit remains clean. Recheck when upstream publishes a fix.",
+  );
+}
+
 const production = runAudit(["--omit=dev", "--audit-level=high"]);
 if (production.result.status !== 0) {
   console.error(JSON.stringify(production.payload, null, 2));
@@ -187,6 +229,9 @@ const presentIds = new Set(advisories.map(({ id }) => id));
 const lock = loadLock();
 if (presentIds.has(BRACE_EXPANSION_ADVISORY)) {
   validateBraceExpansionBackports(lock);
+}
+if (presentIds.has(BRACES_DEV_ADVISORY)) {
+  validateBracesDevIsolation(lock);
 }
 if ([...IMAGE_SIZE_DEV_ADVISORIES].some((id) => presentIds.has(id))) {
   validateImageSizeDevIsolation(lock);
