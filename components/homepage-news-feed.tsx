@@ -769,9 +769,9 @@ export function HomepageNewsFeed({
                               {" · "}科创优先度 {innovationAnnotation.innovationPriority}
                             </small>
                           </div>
-                          <Link href={investorOriginalSource ? "/innovation-capital/investors/" : "/innovation-capital/"}>
-                            {investorOriginalSource ? "查看全球投资机构研究 →" : "查看科创项目 →"}
-                          </Link>
+                          {investorOriginalSource
+                            ? <Link href="/innovation-capital/investors/">查看全球投资机构研究 →</Link>
+                            : <Link href="/innovation-capital/">查看科创项目 →</Link>}
                         </div>
                       ) : null}
 
