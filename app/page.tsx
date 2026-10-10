@@ -33,6 +33,11 @@ import {
   RANKED_INTELLIGENCE_FALLBACK_SECTOR,
 } from "@/lib/ranked-intelligence";
 import { formatTaipeiDate } from "@/lib/snapshot-freshness";
+import {
+  projectReviewedInvestorHomepageEvents,
+  withReviewedInvestorInnovationProjection,
+} from "@/lib/homepage-investor-reviewed-events";
+import { mergeReviewedInvestorHomepageEvents } from "@/lib/homepage-reviewed-investor-merge";
 import { trackedSectors } from "@/lib/tracked-sectors";
 import type { ArticlePayload, LiveIntelligenceEvent } from "@/lib/use-articles";
 import rawArticles from "@/public/data/articles.json";
@@ -53,10 +58,19 @@ const trackedSectorAliases = [
   ]),
 ];
 const trackedSectorNames = new Set(trackedSectorAliases);
-const innovationCapitalIndex = buildHomepageInnovationCapitalIndex(rawInnovationCapitalFeed);
+// Only formal, source-dated investor research enters homepage publication.
+ // The unverified daily navigation review queue does not feed this projection.
+const reviewedInvestorEvents = projectReviewedInvestorHomepageEvents();
+const reviewedInnovationFeed = withReviewedInvestorInnovationProjection(
+  rawInnovationCapitalFeed as unknown as HomepageFeedBootstrap["innovationCapitalFeed"],
+  reviewedInvestorEvents,
+);
+const innovationCapitalIndex = buildHomepageInnovationCapitalIndex(reviewedInnovationFeed);
 // Preserve the raw evidence archive. Only the public display projection is
 // admitted and narrowly reclassified before ranking and first-paint rendering.
-const activeArticles = admitHomepageEvents(snapshot.articles).filter(
+const activeArticles = admitHomepageEvents(
+  mergeReviewedInvestorHomepageEvents(snapshot.articles, reviewedInvestorEvents),
+).filter(
   (item) =>
     item.curated
     || trackedSectorNames.has(item.sector)
@@ -190,8 +204,7 @@ const bootstrap: HomepageFeedBootstrap = {
   },
   researchObjectStats: coreResearchObjectStats,
   entityChannelIndex: homepageEntityChannelIndex,
-  innovationCapitalFeed:
-    rawInnovationCapitalFeed as unknown as HomepageFeedBootstrap["innovationCapitalFeed"],
+  innovationCapitalFeed: reviewedInnovationFeed,
 };
 
 export default function Home() {
@@ -201,6 +214,7 @@ export default function Home() {
         <HomepageNewsFeed
           bootstrap={bootstrap}
           initialPayload={initialPayload}
+          reviewedInvestorEvents={reviewedInvestorEvents}
           peopleChannelEvents={peopleChannelEvents}
           companyChannelEvents={companyChannelEvents}
         />
