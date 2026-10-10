@@ -22,6 +22,7 @@ import { buildHomepageFocusSelection, HOMEPAGE_FOCUS_POLICY } from "@/lib/homepa
 import { FocusDiagnostics } from "@/components/focus-diagnostics";
 import { focusPreferenceIdentity } from "@/lib/focus-event-groups";
 import { mergePriorityCandidates } from "@/lib/priority-intelligence";
+import { mergeInvestorHomepageEvents } from "@/lib/homepage-investor-publication";
 import { toggleFavorite } from "@/lib/favorites";
 import {
   interleaveHomepageCompanyDisclosureEvents,
@@ -306,15 +307,23 @@ function shareHomepageItem(item: LiveIntelligenceEvent) {
 export function HomepageNewsFeed({
   initialPayload,
   bootstrap,
+  investorHomepageEvents,
   peopleChannelEvents,
   companyChannelEvents,
 }: {
   initialPayload: ArticlePayload;
   bootstrap: HomepageFeedBootstrap;
+  investorHomepageEvents: LiveIntelligenceEvent[];
   peopleChannelEvents: LiveIntelligenceEvent[];
   companyChannelEvents: LiveIntelligenceEvent[];
 }) {
-  const { articles, refreshAudit, isLive } = useArticles(initialPayload);
+  const { articles: fetchedArticles, refreshAudit, isLive } = useArticles(initialPayload);
+  // The reviewed editorial overlay survives hydration and the first full archive refresh.
+  // The crawler still owns articles.json; same-original-URL duplicates are removed.
+  const articles = useMemo(
+    () => mergeInvestorHomepageEvents(fetchedArticles, investorHomepageEvents),
+    [fetchedArticles, investorHomepageEvents],
+  );
   const favorites = useFavorites();
   const hotnessItems = useHotness();
   const preferences = useHomepagePreferences();
