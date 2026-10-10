@@ -88,7 +88,7 @@ export function projectReviewedInvestorHomepageEvents(
       "人物观点";
     const importance = lead.kind === "investment" ? (
       ["lead", "co-lead", "sole-investor"].includes(lead.participation ?? "") ? 92 : 86
-    ) : lead.kind === "outcome" ? 90 : 79;
+    ) : lead.kind === "outcome" ? 90 : 85;
     result.push({
       id: "reviewed-investor:" + lead.id,
       title,
