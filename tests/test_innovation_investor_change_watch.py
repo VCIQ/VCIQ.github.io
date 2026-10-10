@@ -132,5 +132,17 @@ class ChangeWatchTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 compare(edited, previous, roster)
 
+    def test_ci_only_compares_production_artifacts_with_read_only_permission(self):
+        from pathlib import Path
+        workflow = (Path(__file__).resolve().parents[1] / ".github/workflows/innovation-investor-source-scout.yml").read_text(encoding="utf-8")
+        self.assertIn("actions: read", workflow)
+        self.assertIn("gh run download", workflow)
+        self.assertIn("select(.event != \"pull_request\")", workflow)
+        self.assertIn("innovation-investor-change-report.json", workflow)
+        self.assertIn("innovation-investor-change-report.md", workflow)
+        self.assertIn("retention-days: 14", workflow)
+        self.assertNotIn("gh issue create", workflow)
+        self.assertNotIn("git push", workflow)
+
 if __name__ == "__main__":
     unittest.main()
