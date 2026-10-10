@@ -137,6 +137,8 @@ class ChangeWatchTests(unittest.TestCase):
         workflow = (Path(__file__).resolve().parents[1] / ".github/workflows/innovation-investor-source-scout.yml").read_text(encoding="utf-8")
         self.assertIn("actions: read", workflow)
         self.assertIn("gh run download", workflow)
+        self.assertIn("python -m tools.innovation_investor_change_watch", workflow)
+        self.assertNotIn("python tools/innovation_investor_change_watch.py", workflow)
         self.assertIn("select(.event != \"pull_request\")", workflow)
         self.assertIn("innovation-investor-change-report.json", workflow)
         self.assertIn("innovation-investor-change-report.md", workflow)
