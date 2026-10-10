@@ -114,7 +114,7 @@ jobs:
           if test -s /tmp/innovation-investor-previous/innovation-investor-source-scout.json; then
             historical+=(--previous /tmp/innovation-investor-previous/innovation-investor-source-scout.json)
           fi
-          python tools/innovation_investor_change_watch.py \
+          python -m tools.innovation_investor_change_watch \
             --current /tmp/innovation-investor-source-scout.json \
             --roster config/innovation_global_investors.json \
             --evidence config/innovation_investor_evidence.json \
