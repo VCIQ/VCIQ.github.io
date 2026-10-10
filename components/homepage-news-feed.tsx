@@ -37,6 +37,7 @@ import {
 import {
   excludeDisplayedHomepageEvents,
   homepageEventSummary,
+  homepageMaterialUrl,
 } from "@/lib/homepage-event-identity";
 import {
   buildHomepageInnovationCapitalIndex,
