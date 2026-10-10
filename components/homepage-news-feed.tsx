@@ -308,13 +308,21 @@ export function HomepageNewsFeed({
   bootstrap,
   peopleChannelEvents,
   companyChannelEvents,
+  investorChannelEvents,
 }: {
   initialPayload: ArticlePayload;
   bootstrap: HomepageFeedBootstrap;
   peopleChannelEvents: LiveIntelligenceEvent[];
   companyChannelEvents: LiveIntelligenceEvent[];
+  investorChannelEvents: LiveIntelligenceEvent[];
 }) {
-  const { articles, refreshAudit, isLive } = useArticles(initialPayload);
+  const { articles: archiveArticles, refreshAudit, isLive } = useArticles(initialPayload);
+  // Preserve the same committed official-source evidence when /data/articles.json
+  // is reloaded after interaction. Do not override an existing canonical item.
+  const articles = useMemo(
+    () => mergePriorityCandidates(archiveArticles, investorChannelEvents),
+    [archiveArticles, investorChannelEvents],
+  );
   const favorites = useFavorites();
   const hotnessItems = useHotness();
   const preferences = useHomepagePreferences();
@@ -759,7 +767,9 @@ export function HomepageNewsFeed({
                               {" · "}科创优先度 {innovationAnnotation.innovationPriority}
                             </small>
                           </div>
-                          <Link href="/innovation-capital/">查看科创项目 →</Link>
+                          {innovationAnnotation.reasonCodes.includes("INVESTOR_SOURCE_RESEARCH")
+                            ? <Link href="/innovation-capital/investors/">查看投资机构研究档案 →</Link>
+                            : <Link href="/innovation-capital/">查看科创项目 →</Link>}
                         </div>
                       ) : null}
 
