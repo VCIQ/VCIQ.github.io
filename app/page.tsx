@@ -12,6 +12,7 @@ import { companies } from "@/lib/catalog-data";
 import { getChannelUpdateDirectory } from "@/lib/channel-updates";
 import { companyEntities } from "@/lib/company-entity-registry";
 import { coreResearchObjectStats } from "@/lib/core-research-objects";
+import { buildInvestorHomepagePublication } from "@/lib/homepage-investor-publication";
 import { projectHomepageCompanyDisclosureEvents } from "@/lib/homepage-company-disclosure-events";
 import {
   uniqueHomepageEntityKeys,
@@ -21,6 +22,7 @@ import {
 import {
   buildHomepageInnovationCapitalIndex,
   matchesHomepageInnovationCapitalChannel,
+  type InnovationCapitalFeedProjection,
 } from "@/lib/homepage-innovation-capital-channel";
 import {
   mergeHomepagePersonChannelEvents,
@@ -33,6 +35,12 @@ import {
   RANKED_INTELLIGENCE_FALLBACK_SECTOR,
 } from "@/lib/ranked-intelligence";
 import { formatTaipeiDate } from "@/lib/snapshot-freshness";
+import {
+  globalInnovationInvestors,
+  investorEvidenceRecords,
+} from "@/lib/innovation-investor-research";
+import { homepageMaterialUrl } from "@/lib/homepage-event-identity";
+import { mergePriorityCandidates } from "@/lib/priority-intelligence";
 import { trackedSectors } from "@/lib/tracked-sectors";
 import type { ArticlePayload, LiveIntelligenceEvent } from "@/lib/use-articles";
 import rawArticles from "@/public/data/articles.json";
@@ -53,14 +61,30 @@ const trackedSectorAliases = [
   ]),
 ];
 const trackedSectorNames = new Set(trackedSectorAliases);
-const innovationCapitalIndex = buildHomepageInnovationCapitalIndex(rawInnovationCapitalFeed);
+const reviewedInvestorPublication = buildInvestorHomepagePublication(
+  investorEvidenceRecords,
+  globalInnovationInvestors,
+  Date.now(),
+);
+const investorEvents = reviewedInvestorPublication.events;
+// Compose into the existing homepage channel, without creating a second news writer.
+const investorFeedProjection = rawInnovationCapitalFeed as unknown as InnovationCapitalFeedProjection;
+const innovationCapitalFeed: InnovationCapitalFeedProjection = {
+  ...investorFeedProjection,
+  items: [...investorFeedProjection.items, ...reviewedInvestorPublication.innovationItems],
+  eventCount: investorFeedProjection.items.length + reviewedInvestorPublication.innovationItems.length,
+};
+const innovationCapitalIndex = buildHomepageInnovationCapitalIndex(innovationCapitalFeed);
 // Preserve the raw evidence archive. Only the public display projection is
 // admitted and narrowly reclassified before ranking and first-paint rendering.
-const activeArticles = admitHomepageEvents(snapshot.articles).filter(
-  (item) =>
-    item.curated
-    || trackedSectorNames.has(item.sector)
-    || matchesHomepageInnovationCapitalChannel(item, innovationCapitalIndex),
+const activeArticles = mergePriorityCandidates(
+  admitHomepageEvents(snapshot.articles).filter(
+    (item) =>
+      item.curated
+      || trackedSectorNames.has(item.sector)
+      || matchesHomepageInnovationCapitalChannel(item, innovationCapitalIndex),
+  ),
+  investorEvents,
 );
 
 const formalCompanySlugs = new Set(companies.map((company) => company.slug));
@@ -128,15 +152,24 @@ function compactHomepageArticle(item: LiveIntelligenceEvent): LiveIntelligenceEv
   };
 }
 
-const initialArticles: LiveIntelligenceEvent[] = activeArticles
+const rankedFirstPaint = [...activeArticles]
   .filter((item) => item.qualityStatus !== "低可信")
   .sort(
     (left, right) =>
       right.importance - left.importance ||
       right.publishedAt.localeCompare(left.publishedAt),
   )
-  .slice(0, INITIAL_KEY_EVENTS_LIMIT)
-  .map(compactHomepageArticle);
+  .slice(0, INITIAL_KEY_EVENTS_LIMIT);
+const investorMaterialUrls = new Set(investorEvents.map((item) => homepageMaterialUrl(item.source.url)));
+// Keep source-backed investor items available on first paint, before the full
+// archive is loaded; prefer existing canonical article metadata on URL collisions.
+const investorFirstPaint = activeArticles.filter((item) =>
+  investorMaterialUrls.has(homepageMaterialUrl(item.source.url)),
+);
+const initialArticles: LiveIntelligenceEvent[] = mergePriorityCandidates(
+  rankedFirstPaint,
+  investorFirstPaint,
+).map(compactHomepageArticle);
 
 function marketSourceCount(market: "中国" | "美国") {
   return new Set(
@@ -190,8 +223,7 @@ const bootstrap: HomepageFeedBootstrap = {
   },
   researchObjectStats: coreResearchObjectStats,
   entityChannelIndex: homepageEntityChannelIndex,
-  innovationCapitalFeed:
-    rawInnovationCapitalFeed as unknown as HomepageFeedBootstrap["innovationCapitalFeed"],
+  innovationCapitalFeed,
 };
 
 export default function Home() {
@@ -201,6 +233,7 @@ export default function Home() {
         <HomepageNewsFeed
           bootstrap={bootstrap}
           initialPayload={initialPayload}
+          investorChannelEvents={investorEvents}
           peopleChannelEvents={peopleChannelEvents}
           companyChannelEvents={companyChannelEvents}
         />

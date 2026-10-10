@@ -37,6 +37,7 @@ import {
 import {
   excludeDisplayedHomepageEvents,
   homepageEventSummary,
+  homepageMaterialUrl,
 } from "@/lib/homepage-event-identity";
 import {
   buildHomepageInnovationCapitalIndex,
@@ -308,13 +309,21 @@ export function HomepageNewsFeed({
   bootstrap,
   peopleChannelEvents,
   companyChannelEvents,
+  investorChannelEvents,
 }: {
   initialPayload: ArticlePayload;
   bootstrap: HomepageFeedBootstrap;
   peopleChannelEvents: LiveIntelligenceEvent[];
   companyChannelEvents: LiveIntelligenceEvent[];
+  investorChannelEvents: LiveIntelligenceEvent[];
 }) {
-  const { articles, refreshAudit, isLive } = useArticles(initialPayload);
+  const { articles: archiveArticles, refreshAudit, isLive } = useArticles(initialPayload);
+  // Preserve the same committed official-source evidence when /data/articles.json
+  // is reloaded after interaction. Do not override an existing canonical item.
+  const articles = useMemo(
+    () => mergePriorityCandidates(archiveArticles, investorChannelEvents),
+    [archiveArticles, investorChannelEvents],
+  );
   const favorites = useFavorites();
   const hotnessItems = useHotness();
   const preferences = useHomepagePreferences();
@@ -349,6 +358,10 @@ export function HomepageNewsFeed({
     void flushPendingSharePreferences();
   }, []);
 
+  const investorSourceUrls = useMemo(
+    () => new Set(investorChannelEvents.map((item) => homepageMaterialUrl(item.source.url))),
+    [investorChannelEvents],
+  );
   const entityChannels = useMemo(
     () => buildHomepageEntityChannelSets(bootstrap.entityChannelIndex),
     [bootstrap.entityChannelIndex],
@@ -759,7 +772,9 @@ export function HomepageNewsFeed({
                               {" · "}科创优先度 {innovationAnnotation.innovationPriority}
                             </small>
                           </div>
-                          <Link href="/innovation-capital/">查看科创项目 →</Link>
+                          {investorSourceUrls.has(homepageMaterialUrl(item.source.url))
+                            ? <Link href="/innovation-capital/investors/">查看投资机构研究档案 →</Link>
+                            : <Link href="/innovation-capital/">查看科创项目 →</Link>}
                         </div>
                       ) : null}
 
