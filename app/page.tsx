@@ -8,6 +8,7 @@ import { HomepageTrackingActions } from "@/components/homepage-tracking-actions"
 import unifiedStyles from "@/components/homepage-unified-inbox.module.css";
 import { applyArticleMetadataReviews } from "@/lib/article-metadata-reviews";
 import { admitHomepageEvents } from "@/lib/homepage-publication-quality";
+import { projectReviewedInvestorHomepageEvents } from "@/lib/homepage-investor-reviewed-events";
 import { companies } from "@/lib/catalog-data";
 import { getChannelUpdateDirectory } from "@/lib/channel-updates";
 import { companyEntities } from "@/lib/company-entity-registry";
@@ -53,7 +54,22 @@ const trackedSectorAliases = [
   ]),
 ];
 const trackedSectorNames = new Set(trackedSectorAliases);
-const innovationCapitalIndex = buildHomepageInnovationCapitalIndex(rawInnovationCapitalFeed);
+const investorHomepageEvents = projectReviewedInvestorHomepageEvents();
+const reviewedInvestorFeedItems = investorHomepageEvents.map((event) => ({
+  eventId: event.id, sourceUrl: event.source.url, publishedAt: event.publishedAt,
+  eventClusterId: "",
+  matchedObjects: [{type: "institution" as const, name: event.source.name}],
+  reasonCodes: ["CAPITAL_INSTITUTION", "PRIMARY_EVIDENCE",
+    event.type === "产业投资" ? "FUNDING_EVENT" : event.type === "公司动态" ? "TECHNOLOGY_EVENT" : "INVESTOR_VIEWPOINT"],
+  evidenceTier: "primary" as const,
+  innovationPriority: event.type === "产业投资" ? 95 : 76,
+}));
+const investorEnrichedInnovationFeed = {
+  ...rawInnovationCapitalFeed,
+  items: [...reviewedInvestorFeedItems, ...rawInnovationCapitalFeed.items],
+  eventCount: reviewedInvestorFeedItems.length + rawInnovationCapitalFeed.items.length,
+};
+const innovationCapitalIndex = buildHomepageInnovationCapitalIndex(investorEnrichedInnovationFeed);
 // Preserve the raw evidence archive. Only the public display projection is
 // admitted and narrowly reclassified before ranking and first-paint rendering.
 const activeArticles = admitHomepageEvents(snapshot.articles).filter(
@@ -191,7 +207,7 @@ const bootstrap: HomepageFeedBootstrap = {
   researchObjectStats: coreResearchObjectStats,
   entityChannelIndex: homepageEntityChannelIndex,
   innovationCapitalFeed:
-    rawInnovationCapitalFeed as unknown as HomepageFeedBootstrap["innovationCapitalFeed"],
+    investorEnrichedInnovationFeed as HomepageFeedBootstrap["innovationCapitalFeed"],
 };
 
 export default function Home() {
@@ -203,6 +219,7 @@ export default function Home() {
           initialPayload={initialPayload}
           peopleChannelEvents={peopleChannelEvents}
           companyChannelEvents={companyChannelEvents}
+          investorEvents={investorHomepageEvents}
         />
         <HomepageTopicBriefs />
         <DailyBriefQuickActions

@@ -15,6 +15,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { EventQualityIndicator } from "@/components/event-quality-indicator";
 import { useFavorites } from "@/components/use-favorites";
+import { mergeReviewedInvestorHomepageEvents } from "@/lib/homepage-investor-reviewed-events";
 import { useHomepagePreferences } from "@/components/use-homepage-preferences";
 import { useHotness } from "@/components/use-hotness";
 import { usePriorityIntelligence } from "@/components/use-priority-intelligence";
@@ -308,13 +309,16 @@ export function HomepageNewsFeed({
   bootstrap,
   peopleChannelEvents,
   companyChannelEvents,
+  investorEvents,
 }: {
   initialPayload: ArticlePayload;
   bootstrap: HomepageFeedBootstrap;
   peopleChannelEvents: LiveIntelligenceEvent[];
   companyChannelEvents: LiveIntelligenceEvent[];
+  investorEvents: LiveIntelligenceEvent[];
 }) {
   const { articles, refreshAudit, isLive } = useArticles(initialPayload);
+  const allArticles = useMemo(() => mergeReviewedInvestorHomepageEvents(articles, investorEvents), [articles, investorEvents]);
   const favorites = useFavorites();
   const hotnessItems = useHotness();
   const preferences = useHomepagePreferences();
@@ -330,12 +334,12 @@ export function HomepageNewsFeed({
   const focusSelection = useMemo(
     () => channel === "focus" ? buildHomepageFocusSelection(
       mergePriorityCandidates(
-        articles,
+        allArticles,
         [...(priorityFeed.snapshot?.items ?? []), ...(priorityFeed.batch6Snapshot?.items ?? [])],
       ),
       preferences, favorites, hotnessItems, clockMs ?? 0,
     ) : null,
-    [channel, articles, priorityFeed.snapshot, priorityFeed.batch6Snapshot, preferences, favorites, hotnessItems, clockMs],
+    [channel, allArticles, priorityFeed.snapshot, priorityFeed.batch6Snapshot, preferences, favorites, hotnessItems, clockMs],
   );
 
   useEffect(() => {
@@ -370,12 +374,12 @@ export function HomepageNewsFeed({
     [bootstrap.trackedSectorAliases],
   );
   const activeArticles = useMemo(
-    () => articles.filter(
+    () => allArticles.filter(
       (item) =>
         enabledSectorNames.has(item.sector)
         || matchesHomepageInnovationCapitalChannel(item, innovationCapital),
     ),
-    [articles, enabledSectorNames, innovationCapital],
+    [allArticles, enabledSectorNames, innovationCapital],
   );
   const trustedArticles = useMemo(
     () => activeArticles.filter((item) => item.qualityStatus !== "低可信"),
