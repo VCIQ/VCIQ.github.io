@@ -703,7 +703,8 @@ export function HomepageNewsFeed({
                 const followed = isHomepageSectorFollowed(item, preferences);
                 const reasonOpen = expandedReasonKey === eventKey;
                 const canonicalResearchReady = channel !== "focus" || articles.some((row) => row.id === item.id);
-                const innovationAnnotation = channel === "innovation"
+                const investorOriginalSource = item.sourceId === "innovation-investor-original-reviewed";
+                const innovationAnnotation = channel === "innovation" || investorOriginalSource
                   ? homepageInnovationCapitalAnnotation(item, innovationCapital)
                   : null;
 
@@ -768,7 +769,9 @@ export function HomepageNewsFeed({
                               {" · "}科创优先度 {innovationAnnotation.innovationPriority}
                             </small>
                           </div>
-                          <Link href="/innovation-capital/">查看科创项目 →</Link>
+                          <Link href={investorOriginalSource ? "/innovation-capital/investors/" : "/innovation-capital/"}>
+                            {investorOriginalSource ? "查看全球投资机构研究 →" : "查看科创项目 →"}
+                          </Link>
                         </div>
                       ) : null}
 
