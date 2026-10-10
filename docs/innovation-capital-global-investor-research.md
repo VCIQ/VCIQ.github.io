@@ -186,3 +186,36 @@
 ### 下一步
 
 将这一显式ID数据与existing公司主档的稳定ID做有证据的逐项匹配，先对Physical Intelligence等已跨机构重复出现的对象走审核；随后按照[#596](https://github.com/VCIQ/VCIQ.github.io/issues/596)给首10家各补3–5个不同项目及负责投资人来源，并将公司披露、机构自述、独立核验结果保持分开。
+
+## 2026-10-10：首十家各三个项目的可回溯证据样例
+
+### 工程验收与研究口径
+
+- 本次从25条证据增加26条带出处与核验缺口的记录，总计51条。首十家机构每家至少拥有**3个不同规范公司**的官方样例，覆盖**29个独立项目、30组机构—项目关系**；Physical Intelligence同时出现在Sequoia与Lux的独立证据中，不能推断它们投资了同一轮或共同领投。其余20家尚无已复核项目样例。这是**最小证据覆盖**，不是持续完整投资组合或尽调签批。
+- 26条新材料由**18组新机构—项目关联**、6条署名/机构投资论点、1条既有梅卡曼德的2019年A+轮历史投资披露和1条2026年港股上市节点构成。投资人与机构事实仅依据对应官网披露，未核验的基金实体、单家出资和实际基金现金回报一律保留null。
+
+### 新增项目与直接原文
+
+| 机构 | 新增独立项目 | 披露强度与事实边界 |
+| --- | --- | --- |
+| a16z | [Mind Robotics](https://a16z.com/announcement/investing-in-mind-robotics/)、[Westmag](https://a16z.com/announcement/investing-in-westmag/) | Mind Robotics只明确官方合作/投资文章，不造轮次；Westmag明确领投2026年Seed，金额未知 |
+| Sequoia | [Ineffable Intelligence](https://sequoiacap.com/article/partnering-with-ineffable-intelligence-a-superlearner-for-the-era-of-experience) | 2026-04-27 Sonya Huang与Alfred Lin文章明示共同领投首轮，但未披露是Seed或A轮 |
+| Lux | [Cognition](https://www.luxcapital.com/companies/cognition)、[Cognichip](https://www.luxcapital.com/companies/cognichip) | 官网Milestones均记录Lux Investment: 2024，只有年份精度，非确切交易日或轮次 |
+| Earlybird | [Neuracore](https://earlybird.com/perspectives/backing-neuracore-reinventing-data-infrastructure-for-robotics)、[Bayshore](https://earlybird.com/perspectives/making-compliance-executable-why-we-backed-bayshore) | 分别披露领投Pre-seed和800万美元Seed，Bayshore金额为整轮融资额 |
+| UTEC | [Eureka Robotics](https://www.ut-ec.co.jp/english/about_us/news/utec20th/)、[TriOrb](https://www.ut-ec.co.jp/english/about_us/news/utec20th/) | 2024-05-31官方周年报道列为机构组合展示公司；这是**截至该日报道时点的组合关系**，不能将2024-05-31记录为投资发生日或推断领投轮次 |
+| Lightspeed | [Reactor](https://lsvp.com/stories/the-developer-platform-for-world-models-our-series-a-in-reactor/)、[Harvey](https://lsvp.com/stories/helping-legal-teams-own-their-intelligence-our-series-h-investment-in-harvey/) | 领投Reactor Series A（文章5,900万美元是Seed+A累计，未写成本轮规模）；共同领投Harvey Series H（未披露单家金额） |
+| DCVC | [Emerald AI](https://www.dcvc.com/news-insights/dcvc-co-leads-emerald-ais-150-million-series-a-round-to-transform-data-centers-into-intelligent-grid-responsive-assets/)、[Callosum](https://www.dcvc.com/news-insights/dcvc-joins-100-million-seed-round-to-power-callosum-builder-of-a-new-orchestration-layer-for-heterogeneous-ai/) | 共同领投Emerald AI 1.5亿美元Series A；参与Callosum 1亿美元Seed；均为全轮规模，能源演示与推理降本数据不作独立性能验证 |
+| Eclipse | [ForSight Robotics](https://eclipse.capital/blog/transforming-surgical-eye-care-with-robotics-our-series-b-investment-in-forsight/)、[Simbe Robotics](https://eclipse.capital/blog/transforming-retail-operations-through-ai-and-automation-our-investment-in-simbe/) | 前者领投1.25亿美元Series B；后者披露2,800万美元Series B投资关系但不擅自宣称独家领投 |
+| IQ Capital | [Nu Quantum](https://www.nu-quantum.com/news/nu-quantum-raises-60m-series-a-in-largest-financing-round-for-quantum-computer-networking)、[Synthesized](https://www.iqcapital.vc/news/synthesized-raises-20m-in-series-a-funding) | 公司公告明确IQ Capital继续参与6,000万美元Series A；Synthesized 2,000万美元Series A参与依据为IQ官网转载报道，独立公司原文仍待补 |
+| 启明创投 | [芯光界](https://www.qimingvc.com/cn/news/启明星-芯光界完成亿元天使轮融资，启明创投独家投资) | 2026-08-25官网披露独家投资天使轮；‘亿元’不是可安全拆解的精确机构支票，金额均暂留null |
+
+### 既有项目的跨期证据补强
+
+- **梅卡曼德**：启明创投2026-09-01官网回溯披露2019年初独家投资A+轮，投资事件只记录`2019`年份精度；同日官网确认09615.HK上市，并有香港交易所股权披露可交叉检查。**上市不是启明已经退出并得到回款**，本网站不据IPO市值或IPO前持股百分比计算已实现IRR、MOIC。
+- 人物归属：Sarah Wang、Erin Price-Wright、Oliver Hsu、Sonya Huang、Alfred Lin、Laura Waldenstrom、Alessandra Mazzilli、Jason Pontin及Harvey文章联合署名作者只记录**官方署名观点**，不因共同撰文或致谢就推断具体交易负责人、法律签署、基金出资或绩效。作者当时职务无法独立核实时明确标注。
+- 所有正式记录保留`source.locator`和`source.publishedAt`，`date`可能表示投资年份、融资公告日期、组合关联**报道观察日**或上市披露日，必须根据`kind`与summary解读；禁止把文章发表日一律当资金交割日。
+
+### 后续与未完成
+
+- 首十家当前每家至少3个规范项目的**样本数量门槛已覆盖**，但项目长期经营结果、真实合同与独立实验、合伙人实际交易责任、失败/停滞反例和基金现金收益仍未完整核验；不能把这次样本数量目标标记为30家全面自动项目采集。
+- 下一步按`#596`对30组关系建立连续更新、失败/终止/清算等负面证据监测；中科创星、Atomico、真格基金来源健康按`#591`分类，严格遵守robots和受限网站访问政策。
