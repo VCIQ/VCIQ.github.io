@@ -123,6 +123,8 @@ test("home route merges editorial events into first paint and retains them after
   assert.match(feed, /useArticles\(initialPayload\)/);
   assert.match(feed, /mergeInvestorHomepageEvents\(fetchedArticles, investorHomepageEvents\)/);
   assert.match(feed, /channel === "focus" \? buildHomepageFocusSelection/);
+  assert.match(feed, /"\/innovation-capital\/investors\/"/);
+  assert.match(feed, /investorOriginalSource/);
   assert.match(feed, /matchesHomepageInnovationCapitalChannel\(item, innovationCapital\)/);
   const manifestString = fs.readFileSync(new URL("../config/innovation_investor_homepage_publications.json", import.meta.url), "utf8");
   assert.doesNotMatch(manifestString, /unreviewed-navigation-candidate/);
