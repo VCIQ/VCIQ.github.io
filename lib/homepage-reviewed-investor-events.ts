@@ -4,7 +4,7 @@ import type { LiveIntelligenceEvent } from "@/lib/use-articles";
 
 type InvestorEvidence = (typeof evidence.records)[number];
 type InvestorRecord = Pick<InvestorEvidence, "id" | "institutionId" | "project" | "kind" | "date" |
-  "datePrecision" | "title" | "summary" | "participation" | "source" | "investorAmount" | "roundAmount">;
+  "datePrecision" | "title" | "summary" | "participation" | "round" | "source" | "investorAmount" | "roundAmount">;
 
 export const REVIEWED_INVESTOR_EVENT_PREFIX = "reviewed-investor-investment:";
 
