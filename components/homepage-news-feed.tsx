@@ -22,6 +22,7 @@ import { buildHomepageFocusSelection, HOMEPAGE_FOCUS_POLICY } from "@/lib/homepa
 import { FocusDiagnostics } from "@/components/focus-diagnostics";
 import { focusPreferenceIdentity } from "@/lib/focus-event-groups";
 import { mergePriorityCandidates } from "@/lib/priority-intelligence";
+import { mergeInvestorHomepageEvents } from "@/lib/homepage-investor-publication";
 import { toggleFavorite } from "@/lib/favorites";
 import {
   interleaveHomepageCompanyDisclosureEvents,
@@ -306,15 +307,23 @@ function shareHomepageItem(item: LiveIntelligenceEvent) {
 export function HomepageNewsFeed({
   initialPayload,
   bootstrap,
+  investorHomepageEvents,
   peopleChannelEvents,
   companyChannelEvents,
 }: {
   initialPayload: ArticlePayload;
   bootstrap: HomepageFeedBootstrap;
+  investorHomepageEvents: LiveIntelligenceEvent[];
   peopleChannelEvents: LiveIntelligenceEvent[];
   companyChannelEvents: LiveIntelligenceEvent[];
 }) {
-  const { articles, refreshAudit, isLive } = useArticles(initialPayload);
+  const { articles: fetchedArticles, refreshAudit, isLive } = useArticles(initialPayload);
+  // The reviewed editorial overlay survives hydration and the first full archive refresh.
+  // The crawler still owns articles.json; same-original-URL duplicates are removed.
+  const articles = useMemo(
+    () => mergeInvestorHomepageEvents(fetchedArticles, investorHomepageEvents),
+    [fetchedArticles, investorHomepageEvents],
+  );
   const favorites = useFavorites();
   const hotnessItems = useHotness();
   const preferences = useHomepagePreferences();
@@ -694,7 +703,8 @@ export function HomepageNewsFeed({
                 const followed = isHomepageSectorFollowed(item, preferences);
                 const reasonOpen = expandedReasonKey === eventKey;
                 const canonicalResearchReady = channel !== "focus" || articles.some((row) => row.id === item.id);
-                const innovationAnnotation = channel === "innovation"
+                const investorOriginalSource = item.sourceId === "innovation-investor-original-reviewed";
+                const innovationAnnotation = channel === "innovation" || investorOriginalSource
                   ? homepageInnovationCapitalAnnotation(item, innovationCapital)
                   : null;
 
@@ -759,7 +769,9 @@ export function HomepageNewsFeed({
                               {" · "}科创优先度 {innovationAnnotation.innovationPriority}
                             </small>
                           </div>
-                          <Link href="/innovation-capital/">查看科创项目 →</Link>
+                          {investorOriginalSource
+                            ? <Link href="/innovation-capital/investors/">查看全球投资机构研究 →</Link>
+                            : <Link href="/innovation-capital/">查看科创项目 →</Link>}
                         </div>
                       ) : null}
 
