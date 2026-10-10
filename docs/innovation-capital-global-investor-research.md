@@ -171,7 +171,7 @@
 
 ### 本次新增的能力
 
-- 新增 `config/innovation_investor_project_identities.json`：对**已经有正式证据**的11个项目采用显式、审核过的规范ID和原始URL，不通过字符串相似度或新闻关键词自动合并。新增项目必须先明确身份，映射缺失时静态构建拒绝发布。
+- 新增 `config/innovation_investor_project_identities.json`：对**已经有官网原文证据**的11个项目采用显式、可复核的研究层ID和原始URL（不是新的公司主档，也不代表独立人工签批），不通过字符串相似度或新闻关键词自动合并。新增项目必须先明确身份，映射缺失时静态构建拒绝发布。
 - 同时存在12组机构—项目样例关系，因为Physical Intelligence被Sequoia和Lux分别披露，但只有一个规范项目。Sequoia的官网项目页列`Partnered 2024`和Partner Alfred Lin；Lux官网项目页列`Lux investment: 2024`。它们是**不同机构的一手关联证据**，没有哪条原文能据此推出两家共同领投同一轮、同日交易或统一基金主体。
 - 新增只读 `lib/innovation-investor-project-graph.ts` 及页面`InvestorProjectEvidenceNetwork`：为每个项目列出机构分开的投资披露、组合关系、作者/项目合伙人和结果声明；并给出**30家机构全样本分母**、目前有项目样例的10家及没有样例的20家。没有样例不等于没有投资。
 - 人物关联分为`article-attributed-viewpoint`与`portfolio-listed-partner`两类，每个名字都能回溯官网URL；两者均不自动标记`confirmedTransactionOwner`。要证明实际项目交易负责人，需公告明确签约/投资责任的独立证据。
