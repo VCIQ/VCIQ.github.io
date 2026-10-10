@@ -28,7 +28,7 @@ export function InvestorProjectEvidenceNetwork() {
   return <section className={styles.section} id="investor-project-network">
     <header>
       <h2>项目身份与投资机构关联证据</h2>
-      <p>对已收录证据进行人工确认的项目身份映射，而不是按名称相似度自动合并公司。研究数据只描述已观察到的材料，不构成机构持仓清单或投资收益分析。</p>
+      <p>依据可追溯官网来源显式登记的研究层项目身份映射，仍需与正式公司主档逐项核对；不按名称相似度自动合并，也不构成机构完整持仓或投资收益分析。</p>
     </header>
     <div className={styles.stats} aria-label="当前项目研究样本分母">
       <article><strong>{projects.length}</strong><span>不同的规范项目</span></article>
