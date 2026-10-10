@@ -1,0 +1,208 @@
+name: Propose reviewed investor evidence release
+
+# Human review is mandatory. The daily scout has READ ONLY permissions and
+# never writes canonical evidence or the homepage. This workflow proposes a
+# transparent data PR; it does not merge or deploy that PR.
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: "Validate a reviewer packet or propose a reviewed-evidence PR"
+        required: true
+        default: validate
+        type: choice
+        options: [validate, propose]
+      scout_run_id:
+        description: "Successful main-branch official-source scout run ID (last 14 days)"
+        required: true
+        type: string
+      decisions_json:
+        description: "PUBLIC reviewer-approved records matching scout candidate IDs; do not enter secrets"
+        required: true
+        type: string
+
+permissions: {}
+
+concurrency:
+  group: innovation-investor-reviewed-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  review:
+    name: Validate reviewer evidence and prepare PR
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment: tracking-admin
+    permissions:
+      contents: write
+      actions: read
+      pull-requests: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REVIEW_OPERATION: ${{ inputs.operation }}
+      SCOUT_RUN_ID: ${{ inputs.scout_run_id }}
+      DECISIONS_JSON: ${{ inputs.decisions_json }}
+      REVIEW_ACTOR: ${{ github.actor }}
+      RETRY_ACTOR: ${{ github.triggering_actor }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Authorize human reviewer and verify a successful production scout
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          import re
+          from pathlib import Path
+
+          assert os.environ["GITHUB_REPOSITORY"] == "VCIQ/VCIQ.github.io"
+          assert os.environ["GITHUB_REF"] == "refs/heads/main"
+          assert os.environ["GITHUB_EVENT_NAME"] == "workflow_dispatch"
+          allowed = {x.casefold() for x in json.loads(
+              Path("config/tracking_admins.json").read_text(encoding="utf-8")
+          )["actors"]}
+          for actor in (os.environ["REVIEW_ACTOR"], os.environ["RETRY_ACTOR"]):
+              if actor.casefold() not in allowed:
+                  raise SystemExit("Investor release reviewer is not allowlisted")
+          if not re.fullmatch(r"[0-9]{5,20}", os.environ["SCOUT_RUN_ID"]):
+              raise SystemExit("Invalid scout run identifier")
+          if len(os.environ["DECISIONS_JSON"]) > 60000:
+              raise SystemExit("Review packet exceeds the public workflow input limit")
+          PY
+          gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/innovation-investor-source-scout.yml" \
+            --jq '.id' > /tmp/expected-investor-scout-workflow-id
+          gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${SCOUT_RUN_ID}" \
+            > /tmp/investor-scout-run.json
+          python - <<'PY'
+          from datetime import datetime, timezone
+          import json
+          from pathlib import Path
+
+          run = json.loads(Path("/tmp/investor-scout-run.json").read_text())
+          expected = int(Path("/tmp/expected-investor-scout-workflow-id").read_text())
+          if (run.get("workflow_id") != expected
+              or run.get("head_branch") != "main"
+              or run.get("conclusion") != "success"
+              or run.get("event") == "pull_request"):
+              raise SystemExit("Not a successful main production investor scout")
+          finished = datetime.fromisoformat(run["updated_at"].replace("Z", "+00:00"))
+          age = datetime.now(timezone.utc) - finished
+          if not 0 <= age.total_seconds() <= 14 * 86400:
+              raise SystemExit("The scout artifact is outside the 14-day review window")
+          print("Verified prior successful main-branch source-scout artifact")
+          PY
+      - name: Download exactly this reviewed scout run's navigation queue
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/investor-source-review
+          gh run download "$SCOUT_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+            --name "innovation-investor-source-scout-$SCOUT_RUN_ID" \
+            --dir /tmp/investor-source-review
+          test -s /tmp/investor-source-review/innovation-investor-review-queue.json
+      - name: Offline validate approved article facts and project identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest -v tests.test_innovation_investor_reviewed_release \
+            tests.test_innovation_investor_review_queue \
+            tests.test_innovation_investor_change_watch
+          python tools/innovation_investor_reviewed_release.py \
+            --mode validate \
+            --review-queue /tmp/investor-source-review/innovation-investor-review-queue.json \
+            --batch-json "$DECISIONS_JSON" \
+            --actor "$REVIEW_ACTOR" | tee /tmp/innovation-investor-release-report.json
+          {
+            echo '## Reviewer packet validation'
+            echo
+            echo 'No official-source scout candidate has been auto-published.'
+            echo
+            echo '~~~json'
+            cat /tmp/innovation-investor-release-report.json
+            echo '~~~'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Apply verified packet only to a PR workspace
+        if: inputs.operation == 'propose'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/innovation_investor_reviewed_release.py \
+            --mode apply \
+            --review-queue /tmp/investor-source-review/innovation-investor-review-queue.json \
+            --batch-json "$DECISIONS_JSON" \
+            --actor "$REVIEW_ACTOR"
+          python -m unittest -v tests.test_innovation_investor_reviewed_release
+          git diff --check
+      - name: Verify frontend, canonical research graph and Pages build before PR
+        if: inputs.operation == 'propose'
+        timeout-minutes: 30
+        run: |
+          set -euo pipefail
+          npm ci
+          node --import tsx --test \
+            tests/homepage-investor-publication.test.ts \
+            tests/innovation-investor-research.test.ts \
+            tests/innovation-investor-project-graph.test.ts \
+            tests/homepage-innovation-capital-channel.test.ts
+          npm run build:pages
+      - name: Open draft PR; never commit reviewer data directly to main
+        if: inputs.operation == 'propose'
+        shell: bash
+        run: |
+          set -euo pipefail
+          branch="review/innovation-investor-${GITHUB_RUN_ID}"
+          # Fail safely if main advanced while an expensive validation ran.
+          base="$(git rev-parse HEAD)"
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "$base" || {
+            echo "::error title=Stale reviewer baseline::Main advanced; revalidate the packet against the new ledger."
+            exit 1
+          }
+          git switch -c "$branch"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- config/innovation_investor_evidence.json \
+            config/innovation_investor_project_identities.json
+          if git diff --cached --quiet; then
+            echo "No new approved records; not creating an empty PR."
+            exit 0
+          fi
+          git diff --cached --check
+          git commit -m "data: propose reviewed official investor evidence"
+          gh auth setup-git
+          git push origin "HEAD:refs/heads/$branch"
+          cat > /tmp/investor-release-pr-body.md <<EOF
+          ## Reviewed investment institution evidence
+
+          - Human operator: ${REVIEW_ACTOR}
+          - Source-scout run: ${SCOUT_RUN_ID} (successful main-branch Actions artifact)
+          - Only original official articles with day-level dates enter the recent homepage projection
+          - Records, canonical project identities, transaction role and source locators require review
+          - No automated relationship, investor return or personal-follow inference
+
+          ## Preflight
+
+          Reviewer packet validation, offline unit tests, investor homepage regression,
+          investor project graph regression and Pages build completed before this PR.
+
+          This is a **draft** and must be reviewed before merge. A PR created with
+          GITHUB_TOKEN might not automatically trigger pull_request CI; the workflow
+          preflight is recorded on its own Actions run.
+          EOF
+          gh pr create --repo "$GITHUB_REPOSITORY" --base main --head "$branch" \
+            --draft --title "data: reviewed official investor evidence from scout $SCOUT_RUN_ID" \
+            --body-file /tmp/investor-release-pr-body.md
+          {
+            echo '## Proposed review branch'
+            echo
+            echo "Branch: $branch"
+            echo 'Human review and PR merge are required for publication.'
+          } >> "$GITHUB_STEP_SUMMARY"
