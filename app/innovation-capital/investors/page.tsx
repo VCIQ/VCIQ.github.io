@@ -7,6 +7,8 @@ import {
 } from "@/lib/innovation-investor-research";
 import { InvestorResearchDirectory } from "./research-directory";
 import { ProjectEvidenceTimelines } from "./project-evidence-timelines";
+import { InvestorProjectEvidenceNetwork } from "./project-evidence-network";
+import { validateInvestorProjectIdentities } from "@/lib/innovation-investor-project-graph";
 import styles from "./research.module.css";
 
 export const metadata: Metadata = {
@@ -15,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 export default function InnovationInvestorsPage() {
-  const errors = validateInvestorResearch();
+  const errors = [...validateInvestorResearch(), ...validateInvestorProjectIdentities()];
   if (errors.length) throw new Error(`Investor evidence contract: ${errors.join("; ")}`);
   const summary = investorEvidenceSummary();
   return <main className="page-shell subpage">
@@ -34,6 +36,7 @@ export default function InnovationInvestorsPage() {
     </section>
     <aside className={styles.boundary}><strong>覆盖范围 ≠ 投资业绩</strong><p>{investorMonitoringPolicy}</p><p>{investorEvidenceScope}</p></aside>
     <InvestorResearchDirectory institutions={globalInnovationInvestors} records={investorEvidenceRecords} />
+    <InvestorProjectEvidenceNetwork />
     <ProjectEvidenceTimelines />
     <section className={styles.method} id="methodology">
       <h2>投资行为与结果：先统一分母，再讨论差异</h2>
