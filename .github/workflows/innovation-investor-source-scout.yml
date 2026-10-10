@@ -12,6 +12,9 @@ on:
       - "tests/test_innovation_investor_coverage.py"
       - "tools/innovation_investor_review_queue.py"
       - "tests/test_innovation_investor_review_queue.py"
+      - "tools/innovation_investor_change_watch.py"
+      - "tests/test_innovation_investor_change_watch.py"
+      - "config/innovation_investor_project_identities.json"
       - "config/innovation_investor_evidence.json"
       - ".github/workflows/innovation-investor-source-scout.yml"
   workflow_dispatch:
@@ -26,11 +29,15 @@ on:
       - "tests/test_innovation_investor_coverage.py"
       - "tools/innovation_investor_review_queue.py"
       - "tests/test_innovation_investor_review_queue.py"
+      - "tools/innovation_investor_change_watch.py"
+      - "tests/test_innovation_investor_change_watch.py"
+      - "config/innovation_investor_project_identities.json"
       - "config/innovation_investor_evidence.json"
       - ".github/workflows/innovation-investor-source-scout.yml"
 
 permissions:
   contents: read
+  actions: read # read-only access to the prior successful 14-day scout artifact
 
 concurrency:
   group: innovation-investor-source-scout-${{ github.ref }}
@@ -48,7 +55,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Run offline safety and evidence-boundary tests
-        run: python -m unittest -v tests.test_innovation_investor_source_scout tests.test_innovation_investor_coverage tests.test_innovation_investor_review_queue
+        run: python -m unittest -v tests.test_innovation_investor_source_scout tests.test_innovation_investor_coverage tests.test_innovation_investor_review_queue tests.test_innovation_investor_change_watch
       - name: Discover bounded official-page candidates
         if: github.event_name != 'pull_request'
         run: python tools/innovation_investor_source_scout.py --output /tmp/innovation-investor-source-scout.json
@@ -67,6 +74,54 @@ jobs:
             --evidence config/innovation_investor_evidence.json \
             --output /tmp/innovation-investor-review-queue.json \
             --markdown /tmp/innovation-investor-review-queue.md
+      - name: Retrieve prior successful production source snapshot (optional)
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/innovation-investor-previous
+          previous_ids=/tmp/innovation-investor-previous-ids.txt
+          # Successful offline PR tests are NOT eligible previous observations.
+          if ! gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/innovation-investor-source-scout.yml/runs?status=success&per_page=35" \
+            --jq '.workflow_runs[] | select(.event != "pull_request") | .id' > "$previous_ids"; then
+            echo "::warning title=Investor baseline::Unable to fetch historical run list; change count will remain unknown"
+            exit 0
+          fi
+          while IFS= read -r prior; do
+            [[ "$prior" =~ ^[0-9]+$ ]] || continue
+            [[ "$prior" = "${GITHUB_RUN_ID}" ]] && continue
+            rm -f /tmp/innovation-investor-previous/innovation-investor-source-scout.json
+            if gh run download "$prior" --repo "${GITHUB_REPOSITORY}" \
+              --name "innovation-investor-source-scout-$prior" \
+              --dir /tmp/innovation-investor-previous >/dev/null 2>&1 \
+              && test -s /tmp/innovation-investor-previous/innovation-investor-source-scout.json; then
+              echo "Previous comparable scout run: $prior"
+              echo "$prior" > /tmp/innovation-investor-previous-run-id.txt
+              break
+            fi
+          done < <(head -n 12 "$previous_ids")
+          if ! test -s /tmp/innovation-investor-previous/innovation-investor-source-scout.json; then
+            echo "::warning title=Investor baseline::No previous successful, retained production snapshot; do not interpret baseline as zero changes"
+          fi
+      - name: Compare source windows and route possible project or negative-event changes
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          set -euo pipefail
+          historical=()
+          if test -s /tmp/innovation-investor-previous/innovation-investor-source-scout.json; then
+            historical+=(--previous /tmp/innovation-investor-previous/innovation-investor-source-scout.json)
+          fi
+          python tools/innovation_investor_change_watch.py \
+            --current /tmp/innovation-investor-source-scout.json \
+            --roster config/innovation_global_investors.json \
+            --evidence config/innovation_investor_evidence.json \
+            --identities config/innovation_investor_project_identities.json \
+            --output /tmp/innovation-investor-change-report.json \
+            --markdown /tmp/innovation-investor-change-report.md \
+            "${historical[@]}"
       - name: Retain private-to-repository review artifact
         if: github.event_name != 'pull_request' && always()
         uses: actions/upload-artifact@v4
@@ -77,5 +132,8 @@ jobs:
             /tmp/innovation-investor-coverage.json
             /tmp/innovation-investor-review-queue.json
             /tmp/innovation-investor-review-queue.md
+            /tmp/innovation-investor-change-report.json
+            /tmp/innovation-investor-change-report.md
+            /tmp/innovation-investor-previous-run-id.txt
           if-no-files-found: warn
           retention-days: 14
