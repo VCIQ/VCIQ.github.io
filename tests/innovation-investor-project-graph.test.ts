@@ -13,17 +13,17 @@ import { investorEvidenceRecords, type InvestorEvidenceRecord } from "../lib/inn
 const read = (path: string) => fs.readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 
 test("every current project observation has one explicit, source-backed canonical identity", () => {
-  assert.equal(identities.projects.length, 31);
+  assert.equal(identities.projects.length, 32);
   assert.deepEqual(validateInvestorProjectIdentities(), []);
   const names = investorEvidenceRecords.filter((row) => row.project).map((row) => row.project);
-  assert.equal(new Set(names).size, 31);
+  assert.equal(new Set(names).size, 32);
   assert.deepEqual(new Set(identities.projects.flatMap((row) => row.observedNames)), new Set(names));
 });
 
-test("31 projects are 32 institution links, preserving cross-firm isolation", () => {
+test("32 projects are 33 institution links, preserving cross-firm isolation", () => {
   const graph = buildCanonicalInvestorProjectGraph();
-  assert.equal(graph.length, 31);
-  assert.equal(graph.reduce((n, project) => n + project.institutions.length, 0), 32);
+  assert.equal(graph.length, 32);
+  assert.equal(graph.reduce((n, project) => n + project.institutions.length, 0), 33);
   const shared = graph.filter((p) => p.institutions.length > 1);
   assert.deepEqual(shared.map((p) => p.projectId), ["physical-intelligence"]);
   const pi = shared[0];
@@ -52,10 +52,10 @@ test("30-firm matrix separates missing reviewed samples from real-world zero act
   assert.equal(matrix.filter((r) => r.state === "partial-project-samples").length, 0);
   assert.equal(matrix.filter((r) => r.state === "no-project-evidence").length, 20);
   assert.equal(matrix.filter((r) => r.state === "sample-count-target-met").length, 10);
-  assert.equal(matrix.reduce((n, r) => n + r.reviewedProjectCount, 0), 32);
-  assert.equal(matrix.reduce((n, r) => n + r.disclosedInvestmentEvents, 0), 30);
+  assert.equal(matrix.reduce((n, r) => n + r.reviewedProjectCount, 0), 33);
+  assert.equal(matrix.reduce((n, r) => n + r.disclosedInvestmentEvents, 0), 31);
   assert.equal(matrix.reduce((n, r) => n + r.observedOutcomeRecords, 0), 3);
-  assert.equal(matrix.reduce((n, r) => n + r.evidenceRecordCount, 0), 54);
+  assert.equal(matrix.reduce((n, r) => n + r.evidenceRecordCount, 0), 56);
   assert.equal(matrix.filter((r) => r.reviewedProjectCount === 2).length, 0);
   assert.equal(matrix.filter((r) => r.reviewedProjectCount === 1).length, 0);
   assert.equal(matrix.filter((r) => r.reviewedProjectCount === 0).every((r) =>
@@ -69,7 +69,7 @@ test("each of the first ten firms has at least three evidenced companies, not th
   const withSamples = matrix.filter((row) => row.reviewedProjectCount > 0);
   assert.equal(withSamples.length, 10);
   assert.ok(withSamples.every((row) => row.reviewedProjectCount >= 3 && row.gapToThreeProjects === 0));
-  assert.equal(withSamples.filter((row) => row.reviewedProjectCount === 4).length, 2);
+  assert.equal(withSamples.filter((row) => row.reviewedProjectCount === 4).length, 3);
   assert.equal(matrix.filter((row) => row.state === "no-project-evidence").length, 20);
   const utec = matrix.find((row) => row.institutionId === "utec")!;
   assert.equal(utec.reviewedProjectCount, 3);
@@ -200,4 +200,20 @@ test("static research page exposes identity graph and full sample denominator, n
   assert.match(view, /30家机构的项目证据覆盖与缺口/);
   assert.match(view, /不能据此确认独家交易责任/);
   assert.doesNotMatch(view, /fetch\(|setInterval\(|tracking-admin\/v1/);
+});
+
+test("Catalyst graph keeps Sequoia's seed disclosure separate from George Robson's viewpoint", () => {
+  const catalyst = buildCanonicalInvestorProjectGraph().find((item) => item.projectId === "catalyst-ai-investing");
+  assert.ok(catalyst);
+  assert.equal(catalyst.name, "Catalyst");
+  assert.equal(catalyst.institutions.length, 1);
+  const sequoia = catalyst.institutions[0];
+  assert.equal(sequoia.institutionId, "sequoia");
+  assert.equal(sequoia.investmentDisclosures.length, 1);
+  assert.equal(sequoia.investmentDisclosures[0].round, "Seed");
+  assert.equal(sequoia.investmentDisclosures[0].investorAmount, null);
+  assert.equal(sequoia.viewpointRecordCount, 1);
+  assert.equal(sequoia.personAttributions[0]?.name, "George Robson");
+  assert.equal(sequoia.confirmedTransactionOwner, false);
+  assert.equal(sequoia.realizedFundReturn, "unknown");
 });

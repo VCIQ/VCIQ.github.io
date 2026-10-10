@@ -30,12 +30,13 @@ test("official recent originals, not old case studies, become the limited homepa
   assert.equal(INVESTOR_HOMEPAGE_LOOKBACK_DAYS, 14);
   assert.ok(INVESTOR_HOMEPAGE_MAX_ARTICLES <= 12);
   const output = build();
-  assert.equal(output.events.length, 3);
-  assert.equal(output.innovationItems.length, 3);
+  assert.equal(output.events.length, 4);
+  assert.equal(output.innovationItems.length, 4);
   assert.deepEqual(new Set(output.events.map((item) => item.source.url)), new Set([
     "https://a16z.com/announcement/investing-in-preference-model/",
     "https://a16z.com/announcement/investing-in-typesafe-ai/",
     "https://eclipse.capital/blog/built-for-the-compute-ownership-era",
+    "https://sequoiacap.com/article/partnering-with-catalyst-turning-ideas-into-trades",
   ]));
   assert.ok(output.events.every((item) =>
     item.source.level === "官方披露" &&
@@ -89,7 +90,7 @@ test("reviewed event merges with existing canonical archive without taking over 
     importance: 88, qualityStatus: "高可信",
   };
   const merged = mergePriorityCandidates([canonical], events);
-  assert.equal(merged.length, 3);
+  assert.equal(merged.length, events.length);
   const sameSource = merged.filter((item) => item.source.url === original.source.url);
   assert.equal(sameSource.length, 1);
   assert.equal(sameSource[0].id, "archive-first");
@@ -136,4 +137,16 @@ test("server first paint and client rehydration use one unified flow and a direc
   assert.match(client, /\/innovation-capital\/investors\//);
   assert.match(client, /buildHomepageFocusSelection/);
   assert.doesNotMatch(server, /fetch\(["']https:/);
+});
+
+test("Catalyst official seed investment and thesis share exactly one 科创 homepage card", () => {
+  const {events} = build();
+  const event = events.find((item) => item.company === "Catalyst");
+  assert.ok(event);
+  assert.equal(event.type, "产业投资");
+  assert.equal(event.publishedAt, "2026-10-08");
+  assert.match(event.title, /领投/);
+  assert.deepEqual(event.mentionedPeople, ["George Robson"]);
+  assert.equal(event.source.url, "https://sequoiacap.com/article/partnering-with-catalyst-turning-ideas-into-trades");
+  assert.equal(events.filter((item) => item.company === "Catalyst").length, 1);
 });

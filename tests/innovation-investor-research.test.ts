@@ -25,8 +25,8 @@ test("evidence samples now span ten institutions, without implying complete port
   const summary = investorEvidenceSummary();
   assert.equal(summary.registeredInstitutions, 30);
   assert.equal(summary.evidenceCoveredInstitutions, 10);
-  assert.equal(summary.reviewedRecords, 55);
-  assert.equal(summary.disclosedInvestmentEvents, 30);
+  assert.equal(summary.reviewedRecords, 57);
+  assert.equal(summary.disclosedInvestmentEvents, 31);
   assert.equal(summary.outcomeMilestones, 3);
   assert.equal(summary.returnStatus, "unknown");
 });
@@ -97,7 +97,7 @@ test("new project evidence retains official dates, deal roles and authorship lim
 
 test("one publication can support a deal and a viewpoint, without counting two investments", () => {
   const projects = investorProjectEvidenceTimelines();
-  assert.equal(projects.length, 32);
+  assert.equal(projects.length, 33);
   const pref = projects.find((row) => row.project === "Preference Model")!;
   assert.equal(pref.investmentDisclosures, 1);
   assert.equal(pref.viewpointDisclosures, 1);
@@ -215,11 +215,11 @@ test("new observed company updates cannot be interpreted as audited investment p
   assert.deepEqual(validateInvestorResearch(), []);
 });
 
-test("new sample contains thirty distinct firm-project links without promoting investment performance", () => {
+test("new sample contains thirty-three distinct firm-project links without promoting investment performance", () => {
   const projects = investorProjectEvidenceTimelines();
-  assert.equal(projects.length, 32);
+  assert.equal(projects.length, 33);
   const totalInvestments = projects.reduce((n, r) => n + r.investmentDisclosures, 0);
-  assert.equal(totalInvestments, 30);
+  assert.equal(totalInvestments, 31);
   assert.ok(investorEvidenceRecords.every((r) => r.realizedProceeds === null));
   assert.equal(investorEvidenceRecords.filter((r) => r.investorAmount !== null).length, 1); // Historical Sequoia disclosure only
 });
@@ -281,4 +281,19 @@ test("institution research remains a nested evidence view and projects precede l
   assert.match(chronology, /不从日期推定交易交割/);
   assert.match(chronology, /基金现金收益仍未知/);
   assert.match(source("app/innovation-capital/investors/page.tsx"), /<ProjectEvidenceTimelines/);
+});
+
+test("Catalyst original supports a seed disclosure and distinct source-attributed viewpoint", () => {
+  const investment = investorEvidenceRecords.find((r) => r.id === "sequoia-catalyst-seed-20261008")!;
+  const thesis = investorEvidenceRecords.find((r) => r.id === "sequoia-catalyst-thesis-20261008")!;
+  assert.ok(investment && thesis);
+  assert.equal(investment.round, "Seed");
+  assert.equal(investment.participation, "lead");
+  assert.equal(investment.roundAmount, null);
+  assert.equal(investment.investorAmount, null);
+  assert.equal(investment.source.url, thesis.source.url);
+  assert.equal(thesis.speakers[0]?.name, "George Robson");
+  assert.equal(thesis.speakers[0]?.attribution, "paraphrase");
+  assert.equal(thesis.linkedPerson, null);
+  assert.ok(investorEvidenceRecords.every((r) => r.realizedProceeds === null));
 });
