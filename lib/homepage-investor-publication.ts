@@ -45,6 +45,15 @@ export function investorMaterialUrl(value: string): string {
   return "https://" + parsed.hostname.toLowerCase().replace(/^www\./u, "") + (parsed.pathname.replace(/\/+$/u, "") || "/");
 }
 
+/** Browser article links may carry UTM tags. Match only the same HTTPS host/path. */
+function comparableArticleUrl(value: string): string | null {
+  try {
+    const parsed = new URL(value);
+    if (parsed.protocol !== "https:" || !parsed.hostname || parsed.username || parsed.password) return null;
+    return "https://" + parsed.hostname.toLowerCase().replace(/^www\./u, "") + (parsed.pathname.replace(/\/+$/u, "") || "/");
+  } catch { return null; }
+}
+
 function sourceHost(value: string): string {
   return new URL(investorMaterialUrl(value)).hostname;
 }
@@ -160,8 +169,8 @@ export function mergeInvestorHomepageEvents(
     ...published,
     ...archive.filter((item) => {
       if (officialIds.has(item.id)) return false;
-      try { return !officialUrls.has(investorMaterialUrl(item.source.url)); }
-      catch { return true; }
+      const key = comparableArticleUrl(item.source.url);
+      return !key || !officialUrls.has(key);
     }),
   ];
 }
@@ -175,8 +184,8 @@ export function withInvestorHomepageInnovationProjection(
   const sourceUrls = new Set(published.map((item) => investorMaterialUrl(item.source.url)));
   const retained = current.items.filter((item) => {
     if (eventIds.has(item.eventId)) return false;
-    try { return !sourceUrls.has(investorMaterialUrl(item.sourceUrl)); }
-    catch { return true; }
+    const key = comparableArticleUrl(item.sourceUrl);
+    return !key || !sourceUrls.has(key);
   });
   const appended: InnovationCapitalFeedProjection["items"] = published.map((item) => ({
     eventId: item.id, sourceUrl: item.source.url, publishedAt: item.publishedAt,
