@@ -34,7 +34,7 @@ test("publication requires two explicit first-party investments and exact origin
   assert.ok(published.every((x) => x.source.url.startsWith("https://")));
   assert.ok(published.every((x) => x.source.url !== "https://vciq.github.io/"));
   const oxide = published.find((x) => x.company === "Oxide")!;
-  assert.match(oxide.summary, /4\.45亿美元.*整轮融资额/);
+  assert.match(oxide.summary, /4\.45亿美元.*本轮全部融资额/);
   assert.match(oxide.summary, /单家出资额|Eclipse独家出资额/);
   assert.equal(oxide.mentionedPeople?.[0], "Seth Winterroth");
   const typesafe = published.find((x) => x.company === "TypeSafe AI")!;
