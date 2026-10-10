@@ -32,6 +32,15 @@ import {
   mergeRankedIntelligenceIntoArticlePayload,
   RANKED_INTELLIGENCE_FALLBACK_SECTOR,
 } from "@/lib/ranked-intelligence";
+import {
+  buildInvestorHomepageEvents,
+  mergeInvestorHomepageEvents,
+  withInvestorHomepageInnovationProjection,
+} from "@/lib/homepage-investor-publication";
+import investorPublicationPolicy from "@/config/innovation_investor_homepage_publications.json";
+import investorEvidence from "@/config/innovation_investor_evidence.json";
+import investorRoster from "@/config/innovation_global_investors.json";
+import investorIdentities from "@/config/innovation_investor_project_identities.json";
 import { formatTaipeiDate } from "@/lib/snapshot-freshness";
 import { trackedSectors } from "@/lib/tracked-sectors";
 import type { ArticlePayload, LiveIntelligenceEvent } from "@/lib/use-articles";
@@ -53,10 +62,23 @@ const trackedSectorAliases = [
   ]),
 ];
 const trackedSectorNames = new Set(trackedSectorAliases);
-const innovationCapitalIndex = buildHomepageInnovationCapitalIndex(rawInnovationCapitalFeed);
+const investorHomepageEvents = buildInvestorHomepageEvents(
+  investorPublicationPolicy,
+  investorEvidence.records,
+  investorRoster.institutions,
+  investorIdentities.projects,
+);
+const publishedInnovationProjection = withInvestorHomepageInnovationProjection(
+  rawInnovationCapitalFeed as unknown as HomepageFeedBootstrap["innovationCapitalFeed"],
+  investorHomepageEvents,
+);
+const innovationCapitalIndex = buildHomepageInnovationCapitalIndex(publishedInnovationProjection);
 // Preserve the raw evidence archive. Only the public display projection is
 // admitted and narrowly reclassified before ranking and first-paint rendering.
-const activeArticles = admitHomepageEvents(snapshot.articles).filter(
+const activeArticles = mergeInvestorHomepageEvents(
+  admitHomepageEvents(snapshot.articles),
+  investorHomepageEvents,
+).filter(
   (item) =>
     item.curated
     || trackedSectorNames.has(item.sector)
@@ -128,15 +150,15 @@ function compactHomepageArticle(item: LiveIntelligenceEvent): LiveIntelligenceEv
   };
 }
 
-const initialArticles: LiveIntelligenceEvent[] = activeArticles
-  .filter((item) => item.qualityStatus !== "低可信")
-  .sort(
-    (left, right) =>
+const initialArticles: LiveIntelligenceEvent[] = mergeInvestorHomepageEvents(
+  activeArticles
+    .filter((item) => item.qualityStatus !== "低可信")
+    .sort((left, right) =>
       right.importance - left.importance ||
-      right.publishedAt.localeCompare(left.publishedAt),
-  )
-  .slice(0, INITIAL_KEY_EVENTS_LIMIT)
-  .map(compactHomepageArticle);
+      right.publishedAt.localeCompare(left.publishedAt))
+    .slice(0, INITIAL_KEY_EVENTS_LIMIT),
+  investorHomepageEvents,
+).slice(0, INITIAL_KEY_EVENTS_LIMIT).map(compactHomepageArticle);
 
 function marketSourceCount(market: "中国" | "美国") {
   return new Set(
@@ -190,8 +212,7 @@ const bootstrap: HomepageFeedBootstrap = {
   },
   researchObjectStats: coreResearchObjectStats,
   entityChannelIndex: homepageEntityChannelIndex,
-  innovationCapitalFeed:
-    rawInnovationCapitalFeed as unknown as HomepageFeedBootstrap["innovationCapitalFeed"],
+  innovationCapitalFeed: publishedInnovationProjection,
 };
 
 export default function Home() {
@@ -201,6 +222,7 @@ export default function Home() {
         <HomepageNewsFeed
           bootstrap={bootstrap}
           initialPayload={initialPayload}
+          investorHomepageEvents={investorHomepageEvents}
           peopleChannelEvents={peopleChannelEvents}
           companyChannelEvents={companyChannelEvents}
         />
