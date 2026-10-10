@@ -13,17 +13,17 @@ import { investorEvidenceRecords, type InvestorEvidenceRecord } from "../lib/inn
 const read = (path: string) => fs.readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 
 test("every current project observation has one explicit, source-backed canonical identity", () => {
-  assert.equal(identities.projects.length, 29);
+  assert.equal(identities.projects.length, 31);
   assert.deepEqual(validateInvestorProjectIdentities(), []);
   const names = investorEvidenceRecords.filter((row) => row.project).map((row) => row.project);
-  assert.equal(new Set(names).size, 29);
+  assert.equal(new Set(names).size, 31);
   assert.deepEqual(new Set(identities.projects.flatMap((row) => row.observedNames)), new Set(names));
 });
 
-test("29 projects are 30 institution links, preserving cross-firm isolation", () => {
+test("31 projects are 32 institution links, preserving cross-firm isolation", () => {
   const graph = buildCanonicalInvestorProjectGraph();
-  assert.equal(graph.length, 29);
-  assert.equal(graph.reduce((n, project) => n + project.institutions.length, 0), 30);
+  assert.equal(graph.length, 31);
+  assert.equal(graph.reduce((n, project) => n + project.institutions.length, 0), 32);
   const shared = graph.filter((p) => p.institutions.length > 1);
   assert.deepEqual(shared.map((p) => p.projectId), ["physical-intelligence"]);
   const pi = shared[0];
@@ -52,23 +52,24 @@ test("30-firm matrix separates missing reviewed samples from real-world zero act
   assert.equal(matrix.filter((r) => r.state === "partial-project-samples").length, 0);
   assert.equal(matrix.filter((r) => r.state === "no-project-evidence").length, 20);
   assert.equal(matrix.filter((r) => r.state === "sample-count-target-met").length, 10);
-  assert.equal(matrix.reduce((n, r) => n + r.reviewedProjectCount, 0), 30);
-  assert.equal(matrix.reduce((n, r) => n + r.disclosedInvestmentEvents, 0), 28);
+  assert.equal(matrix.reduce((n, r) => n + r.reviewedProjectCount, 0), 32);
+  assert.equal(matrix.reduce((n, r) => n + r.disclosedInvestmentEvents, 0), 30);
   assert.equal(matrix.reduce((n, r) => n + r.observedOutcomeRecords, 0), 3);
-  assert.equal(matrix.reduce((n, r) => n + r.evidenceRecordCount, 0), 50);
+  assert.equal(matrix.reduce((n, r) => n + r.evidenceRecordCount, 0), 54);
   assert.equal(matrix.filter((r) => r.reviewedProjectCount === 2).length, 0);
   assert.equal(matrix.filter((r) => r.reviewedProjectCount === 1).length, 0);
   assert.equal(matrix.filter((r) => r.reviewedProjectCount === 0).every((r) =>
     r.gapToThreeProjects === 3 && r.disclosedInvestmentEvents === 0), true);
-  assert.equal(matrix.find((r) => r.institutionId === "a16z")?.evidenceRecordCount, 6);
+  assert.equal(matrix.find((r) => r.institutionId === "a16z")?.evidenceRecordCount, 8);
   // The a16z Machine Age Fund is a fund/thematic announcement, not a project.
 });
 
-test("each of the first ten firms has exactly three evidenced companies, not three disclosed investments", () => {
+test("each of the first ten firms has at least three evidenced companies, not three disclosed investments", () => {
   const matrix = investorProjectCoverageMatrix();
   const withSamples = matrix.filter((row) => row.reviewedProjectCount > 0);
   assert.equal(withSamples.length, 10);
-  assert.ok(withSamples.every((row) => row.reviewedProjectCount === 3 && row.gapToThreeProjects === 0));
+  assert.ok(withSamples.every((row) => row.reviewedProjectCount >= 3 && row.gapToThreeProjects === 0));
+  assert.equal(withSamples.filter((row) => row.reviewedProjectCount === 4).length, 2);
   assert.equal(matrix.filter((row) => row.state === "no-project-evidence").length, 20);
   const utec = matrix.find((row) => row.institutionId === "utec")!;
   assert.equal(utec.reviewedProjectCount, 3);
@@ -123,6 +124,25 @@ test("same project rounds and a listing milestone remain distinct from realized 
   const orig = investorEvidenceRecords.find((r) => r.id === "qiming-mechmind-a-plus-investment-2019")!;
   assert.equal(orig.source.publishedAt, "2026-09-01");
   assert.equal(orig.date, "2019");
+});
+
+test("new daily official articles are separate projects and Oxide has only one dated new Series D", () => {
+  const graph = buildCanonicalInvestorProjectGraph();
+  const a = graph.find((p) => p.projectId === "typesafe-ai")!;
+  const ox = graph.find((p) => p.projectId === "oxide-computer")!;
+  assert.equal(a.name, "TypeSafe AI");
+  assert.equal(a.institutions[0].institutionId, "a16z");
+  assert.equal(a.institutions[0].investmentDisclosures[0].round, null);
+  assert.equal(a.institutions[0].investmentDisclosures[0].participation, "lead");
+  assert.equal(a.institutions[0].personAttributions.length, 5);
+  assert.equal(ox.name, "Oxide");
+  assert.equal(ox.institutions[0].institutionId, "eclipse");
+  assert.equal(ox.institutions[0].investmentDisclosures.length, 1);
+  assert.equal(ox.institutions[0].investmentDisclosures[0].round, "Series D");
+  assert.equal(ox.institutions[0].investmentDisclosures[0].roundAmount?.value, 445_000_000);
+  assert.equal(ox.institutions[0].investmentDisclosures[0].investorAmount, null);
+  assert.equal(ox.institutions[0].confirmedTransactionOwner, false);
+  assert.equal(ox.institutions[0].realizedFundReturn, "unknown");
 });
 
 test("project people distinguish authored viewpoints from portfolio partner labels, without invented deal leadership", () => {
