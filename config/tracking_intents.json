@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-09T06:37:35+00:00",
+  "updatedAt": "2026-10-10T01:35:47+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -20947,6 +20947,36 @@
       "resolutionSource": "institution-directory",
       "resolutionStatus": "resolved",
       "createdAt": "2026-10-09T06:37:35+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "company-7d38fa02209a5b5fd835",
+      "kind": "company",
+      "name": "奇安信",
+      "aliases": [],
+      "keywords": [
+        "奇安信人工智能公司",
+        "奇安信消息"
+      ],
+      "state": "active",
+      "resolutionSource": "unresolved",
+      "resolutionStatus": "review",
+      "createdAt": "2026-10-10T01:35:47+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-e16bb4d7f98bfe56c6e6",
+      "kind": "technology",
+      "name": "SafeSkill",
+      "aliases": [],
+      "keywords": [
+        "智能体技能安全监测与托管平台",
+        "AI安全新品"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-10T01:35:47+00:00",
       "createdBy": "VCIQ"
     }
   ],
@@ -117171,6 +117201,241 @@
         "source": "institution-directory",
         "reason": "名称唯一命中已核验投资机构目录；仅解析机构身份，不代表公司档案发布。",
         "decisionKey": "蚂蚁集团",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-47e9eb4b887ae21d8d05",
+      "trackId": "track:ai-2",
+      "entityId": "company-7d38fa02209a5b5fd835",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "low",
+      "origins": [
+        {
+          "id": "origin-cbc994d5616cc4d9260a",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-10T01:35:47+00:00",
+          "evidenceUrl": "https://m.sohu.com/a/1085652999_122014422?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-a635d83ef14d44725903db82",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-10T01:35:47+00:00",
+        "trackId": "track:ai-2",
+        "entityId": "company-7d38fa02209a5b5fd835",
+        "requestedName": "奇安信",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "奇安信",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "奇安信",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-b9eb8e360c60617a6c24",
+      "trackId": "track:ai-2",
+      "entityId": "technology-e16bb4d7f98bfe56c6e6",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-8a8fd34663b3452762b6",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-10T01:35:47+00:00",
+          "evidenceUrl": "https://m.sohu.com/a/1085652999_122014422?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-05d78a3d8cf5ea845e4a76a8",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-10T01:35:47+00:00",
+        "trackId": "track:ai-2",
+        "entityId": "technology-e16bb4d7f98bfe56c6e6",
+        "requestedName": "SafeSkill",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "SafeSkill",
+        "targetId": "topic:safeskill",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "safeskill",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-a8dd35f611952ef04336",
+      "trackId": "track:ai-2",
+      "entityId": "source-273bf27089629fa2ccf3",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-c4daca2dbe4800e89a57",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-10T01:35:47+00:00",
+          "evidenceUrl": "https://m.sohu.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-a0eec234533f7016d40b2459",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-10T01:35:47+00:00",
+        "trackId": "track:ai-2",
+        "entityId": "source-273bf27089629fa2ccf3",
+        "requestedName": "待交叉验证 · 搜狐",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "待交叉验证 · 搜狐",
+        "targetId": "source-273bf27089629fa2ccf3",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "待交叉验证搜狐",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-ed7218ba4c7170cfaca4",
+      "trackId": "track:innovation-capital",
+      "entityId": "source-273bf27089629fa2ccf3",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-c4daca2dbe4800e89a57",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-10T01:35:47+00:00",
+          "evidenceUrl": "https://m.sohu.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-4ec5ff3f24287ed97fb4bf5c",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-10T01:35:47+00:00",
+        "trackId": "track:innovation-capital",
+        "entityId": "source-273bf27089629fa2ccf3",
+        "requestedName": "待交叉验证 · 搜狐",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "待交叉验证 · 搜狐",
+        "targetId": "source-273bf27089629fa2ccf3",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "待交叉验证搜狐",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-19f1e3d2600694433152",
+      "trackId": "track:track-1ccjq49",
+      "entityId": "source-273bf27089629fa2ccf3",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-c4daca2dbe4800e89a57",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-10T01:35:47+00:00",
+          "evidenceUrl": "https://m.sohu.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-f982620bf59e209906e913fd",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-10T01:35:47+00:00",
+        "trackId": "track:track-1ccjq49",
+        "entityId": "source-273bf27089629fa2ccf3",
+        "requestedName": "待交叉验证 · 搜狐",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "待交叉验证 · 搜狐",
+        "targetId": "source-273bf27089629fa2ccf3",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "待交叉验证搜狐",
         "reclassified": false
       },
       "executionState": "applied"
