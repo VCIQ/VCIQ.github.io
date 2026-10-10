@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-10T01:35:47+00:00",
+  "updatedAt": "2026-10-10T01:37:16+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -20977,6 +20977,52 @@
       "resolutionSource": "authenticated-manual-intent",
       "resolutionStatus": "resolved",
       "createdAt": "2026-10-10T01:35:47+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "company-4fb73fd4a920dee7fb15",
+      "kind": "company",
+      "name": "比特幻境",
+      "aliases": [],
+      "keywords": [
+        "AI眼镜企业",
+        "总部位于厦门",
+        "完成数亿元融资"
+      ],
+      "state": "active",
+      "resolutionSource": "unresolved",
+      "resolutionStatus": "review",
+      "createdAt": "2026-10-10T01:37:16+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "institution:博华资本",
+      "kind": "company",
+      "name": "博华资本",
+      "aliases": [],
+      "keywords": [
+        "投资方",
+        "天使轮"
+      ],
+      "state": "active",
+      "resolutionSource": "human-decision",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-10T01:37:16+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "company-candidate:戈壁创投",
+      "kind": "company",
+      "name": "戈壁创投",
+      "aliases": [],
+      "keywords": [
+        "投资方",
+        "天使轮"
+      ],
+      "state": "active",
+      "resolutionSource": "human-decision",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-10T01:37:16+00:00",
       "createdBy": "VCIQ"
     }
   ],
@@ -117436,6 +117482,246 @@
         "source": "authenticated-manual-intent",
         "reason": "由 allowlist 内的管理员显式提交。",
         "decisionKey": "待交叉验证搜狐",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-8c257899e0bcf2db1c26",
+      "trackId": "track:ai-3",
+      "entityId": "company-4fb73fd4a920dee7fb15",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "low",
+      "origins": [
+        {
+          "id": "origin-17e85f2d4cdef2022db1",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-10T01:37:16+00:00",
+          "evidenceUrl": "https://news.xmnn.cn/xmxw/202610/t20261010_454993.html",
+          "reasons": [
+            "个人研究兴趣",
+            "融资机会"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-72a13416af8c13134c384a60",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-10T01:37:16+00:00",
+        "trackId": "track:ai-3",
+        "entityId": "company-4fb73fd4a920dee7fb15",
+        "requestedName": "比特幻境",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "比特幻境",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "比特幻境",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-0467c7a36b66078e8a4b",
+      "trackId": "track:track-1ccjq49",
+      "entityId": "institution:博华资本",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-388d2c88566d0affa5c2",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-10T01:37:16+00:00",
+          "evidenceUrl": "https://news.xmnn.cn/xmxw/202610/t20261010_454993.html",
+          "reasons": [
+            "个人研究兴趣",
+            "融资机会"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-3b5cd119e4de35f50d7c5149",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-10T01:37:16+00:00",
+        "trackId": "track:track-1ccjq49",
+        "entityId": "institution:博华资本",
+        "requestedName": "博华资本",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "博华资本",
+        "targetId": "institution:博华资本",
+        "confidence": "verified",
+        "source": "institution-directory",
+        "reason": "名称唯一命中已核验投资机构目录；仅解析机构身份，不代表公司档案发布。",
+        "decisionKey": "博华资本",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-a4c181e316d8236f9653",
+      "trackId": "track:ai-3",
+      "entityId": "institution:博华资本",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-388d2c88566d0affa5c2",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-10T01:37:16+00:00",
+          "evidenceUrl": "https://news.xmnn.cn/xmxw/202610/t20261010_454993.html",
+          "reasons": [
+            "个人研究兴趣",
+            "融资机会"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-70a281adcfd9bd430e191eea",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-10T01:37:16+00:00",
+        "trackId": "track:ai-3",
+        "entityId": "institution:博华资本",
+        "requestedName": "博华资本",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "博华资本",
+        "targetId": "institution:博华资本",
+        "confidence": "verified",
+        "source": "institution-directory",
+        "reason": "名称唯一命中已核验投资机构目录；仅解析机构身份，不代表公司档案发布。",
+        "decisionKey": "博华资本",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-f6c03569d56b0a3a566a",
+      "trackId": "track:track-1ccjq49",
+      "entityId": "company-candidate:戈壁创投",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "medium",
+      "origins": [
+        {
+          "id": "origin-5bbd835bb7551c02e368",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-10T01:37:16+00:00",
+          "evidenceUrl": "https://news.xmnn.cn/xmxw/202610/t20261010_454993.html",
+          "reasons": [
+            "个人研究兴趣",
+            "融资机会"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-5e0c056b567c283d71b4e0b4",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-10T01:37:16+00:00",
+        "trackId": "track:track-1ccjq49",
+        "entityId": "company-candidate:戈壁创投",
+        "requestedName": "戈壁创投",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "戈壁创投",
+        "targetId": "company-candidate:戈壁创投",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "戈壁创投",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-3ff41530201af2f0d669",
+      "trackId": "track:ai-3",
+      "entityId": "company-candidate:戈壁创投",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "medium",
+      "origins": [
+        {
+          "id": "origin-5bbd835bb7551c02e368",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-10T01:37:16+00:00",
+          "evidenceUrl": "https://news.xmnn.cn/xmxw/202610/t20261010_454993.html",
+          "reasons": [
+            "个人研究兴趣",
+            "融资机会"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-8de67f3cd5915c78b793962a",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-10T01:37:16+00:00",
+        "trackId": "track:ai-3",
+        "entityId": "company-candidate:戈壁创投",
+        "requestedName": "戈壁创投",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "戈壁创投",
+        "targetId": "company-candidate:戈壁创投",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "戈壁创投",
         "reclassified": false
       },
       "executionState": "applied"
