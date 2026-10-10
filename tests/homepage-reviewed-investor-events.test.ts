@@ -51,5 +51,5 @@ test("homepage switches visibility by channel without relaxing focus admission r
   assert.match(page, /reviewedInvestorEvents=\{reviewedInvestorEvents\}/);
   assert.match(feed, /item.id.startsWith\(REVIEWED_INVESTOR_EVENT_PREFIX\)/);
   assert.match(feed, /buildHomepageFocusSelection/);
-  assert.doesNotMatch(feed, /priorityFeed.*reviewedInvestorEvents|matchedTrackingTerms:\s*\[/s);
+  assert.doesNotMatch(feed, /priorityFeed.*reviewedInvestorEvents|matchedTrackingTerms:\s*\[/);
 });
