@@ -23,7 +23,7 @@ const GENERIC = new Set([
   "科技公司", "公司", "中国", "美国", "全球", "未知", "未明确", "未分类", "并购",
   "融资", "产业投资", "公司动态", "产品发布", "技术突破", "风险投资", "商业进展",
 ]);
-const MATERIAL_EVENT = /收购|并购|签署|融资|量产|订单|发布|突破|获批|监管|上市|IPO|acquir|acquisition|merger|funding|launch|release|breakthrough|approval|world model|世界模型/iu;
+const MATERIAL_EVENT = /收购|并购|签署|融资|领投|参投|投资|量产|订单|发布|突破|获批|监管|上市|IPO|acquir|acquisition|merger|funding|invest(?:ment|ing)?|launch|release|breakthrough|approval|world model|世界模型/iu;
 
 function normalized(value: string | undefined): string {
   return (value ?? "").normalize("NFKC").replace(/\s+/gu, " ").trim().toLowerCase();
