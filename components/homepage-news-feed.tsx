@@ -22,6 +22,10 @@ import { buildHomepageFocusSelection, HOMEPAGE_FOCUS_POLICY } from "@/lib/homepa
 import { FocusDiagnostics } from "@/components/focus-diagnostics";
 import { focusPreferenceIdentity } from "@/lib/focus-event-groups";
 import { mergePriorityCandidates } from "@/lib/priority-intelligence";
+import {
+  mergeReviewedInvestorHomepageEvents,
+  REVIEWED_INVESTOR_SOURCE_ID,
+} from "@/lib/homepage-reviewed-investor-merge";
 import { toggleFavorite } from "@/lib/favorites";
 import {
   interleaveHomepageCompanyDisclosureEvents,
@@ -308,13 +312,21 @@ export function HomepageNewsFeed({
   bootstrap,
   peopleChannelEvents,
   companyChannelEvents,
+  reviewedInvestorEvents,
 }: {
   initialPayload: ArticlePayload;
+  reviewedInvestorEvents: LiveIntelligenceEvent[];
   bootstrap: HomepageFeedBootstrap;
   peopleChannelEvents: LiveIntelligenceEvent[];
   companyChannelEvents: LiveIntelligenceEvent[];
 }) {
   const { articles, refreshAudit, isLive } = useArticles(initialPayload);
+  // Browsers refresh /data/articles.json every 30 minutes. Keep the approved
+  // investor research projection available even if it isn't archived there.
+  const combinedArticles = useMemo(
+    () => mergeReviewedInvestorHomepageEvents(articles, reviewedInvestorEvents),
+    [articles, reviewedInvestorEvents],
+  );
   const favorites = useFavorites();
   const hotnessItems = useHotness();
   const preferences = useHomepagePreferences();
@@ -330,12 +342,12 @@ export function HomepageNewsFeed({
   const focusSelection = useMemo(
     () => channel === "focus" ? buildHomepageFocusSelection(
       mergePriorityCandidates(
-        articles,
+        combinedArticles,
         [...(priorityFeed.snapshot?.items ?? []), ...(priorityFeed.batch6Snapshot?.items ?? [])],
       ),
       preferences, favorites, hotnessItems, clockMs ?? 0,
     ) : null,
-    [channel, articles, priorityFeed.snapshot, priorityFeed.batch6Snapshot, preferences, favorites, hotnessItems, clockMs],
+    [channel, combinedArticles, priorityFeed.snapshot, priorityFeed.batch6Snapshot, preferences, favorites, hotnessItems, clockMs],
   );
 
   useEffect(() => {
@@ -370,12 +382,12 @@ export function HomepageNewsFeed({
     [bootstrap.trackedSectorAliases],
   );
   const activeArticles = useMemo(
-    () => articles.filter(
+    () => combinedArticles.filter(
       (item) =>
         enabledSectorNames.has(item.sector)
         || matchesHomepageInnovationCapitalChannel(item, innovationCapital),
     ),
-    [articles, enabledSectorNames, innovationCapital],
+    [combinedArticles, enabledSectorNames, innovationCapital],
   );
   const trustedArticles = useMemo(
     () => activeArticles.filter((item) => item.qualityStatus !== "低可信"),
@@ -539,7 +551,7 @@ export function HomepageNewsFeed({
     : channel === "focus"
       ? "重点按发布时间倒序：追踪、分享、收藏／稍后读决定是否入选，不让旧闻因偏好分高而排在新消息前面；仅日期的来源按日排序，不虚构具体时分。偏好使用本浏览器已有记录与站点追踪命中，不读取其他网站浏览历史。"
     : channel === "innovation"
-      ? "科创频道由重点券商项目、上市生命周期、硬科技投资机构和成熟期候选的精确对象关系驱动；按最新事件优先，未核验证据不会自动推断辅导券商或上市板块。"
+      ? "科创频道按最新事件展示重点券商项目、上市生命周期及硬科技投资机构的正式公开披露；投资机构的署名观点按来源标注，未经核验的每日官网导航候选不自动发布。"
     : channel === "people"
       ? "人物频道合并已发布人物库材料与正式实体关联事件；仅正式 personSlug 或人物库别名精确匹配可入流，泛化人名识别不会直接触发。"
       : channel === "companies"
@@ -693,7 +705,10 @@ export function HomepageNewsFeed({
                 const saved = favoriteProfile.favoriteIds.has(homepageFavoriteId(item));
                 const followed = isHomepageSectorFollowed(item, preferences);
                 const reasonOpen = expandedReasonKey === eventKey;
-                const canonicalResearchReady = channel !== "focus" || articles.some((row) => row.id === item.id);
+                // A reviewed investor projection has a verified original URL,
+                // but no separate canonical Research Agent event ID in articles.json.
+                const canonicalResearchReady = item.sourceId !== REVIEWED_INVESTOR_SOURCE_ID &&
+                  (channel !== "focus" || articles.some((row) => row.id === item.id));
                 const innovationAnnotation = channel === "innovation"
                   ? homepageInnovationCapitalAnnotation(item, innovationCapital)
                   : null;
@@ -759,7 +774,11 @@ export function HomepageNewsFeed({
                               {" · "}科创优先度 {innovationAnnotation.innovationPriority}
                             </small>
                           </div>
-                          <Link href="/innovation-capital/">查看科创项目 →</Link>
+                          <Link href={item.sourceId === REVIEWED_INVESTOR_SOURCE_ID
+                            ? "/innovation-capital/investors/" : "/innovation-capital/"}>
+                            {item.sourceId === REVIEWED_INVESTOR_SOURCE_ID
+                              ? "查看投资机构研究档案 →" : "查看科创项目 →"}
+                          </Link>
                         </div>
                       ) : null}
 
@@ -818,6 +837,8 @@ export function HomepageNewsFeed({
                         <a href={item.source.url} target="_blank" rel="noreferrer">
                           查看来源 <ArrowUpRight size={13} aria-hidden="true" />
                         </a>
+                        {item.sourceId === REVIEWED_INVESTOR_SOURCE_ID ?
+                          <Link href="/innovation-capital/investors/">机构研究档案 →</Link> : null}
                         <a href={trackingHref(item)} target="_blank" rel="noreferrer">
                           <BookmarkPlus size={13} aria-hidden="true" />
                           追踪
