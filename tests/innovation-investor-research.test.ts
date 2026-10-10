@@ -25,9 +25,9 @@ test("evidence samples now span ten institutions, without implying complete port
   const summary = investorEvidenceSummary();
   assert.equal(summary.registeredInstitutions, 30);
   assert.equal(summary.evidenceCoveredInstitutions, 10);
-  assert.equal(summary.reviewedRecords, 25);
-  assert.equal(summary.disclosedInvestmentEvents, 11);
-  assert.equal(summary.outcomeMilestones, 2);
+  assert.equal(summary.reviewedRecords, 51);
+  assert.equal(summary.disclosedInvestmentEvents, 28);
+  assert.equal(summary.outcomeMilestones, 3);
   assert.equal(summary.returnStatus, "unknown");
 });
 
@@ -97,7 +97,7 @@ test("new project evidence retains official dates, deal roles and authorship lim
 
 test("one publication can support a deal and a viewpoint, without counting two investments", () => {
   const projects = investorProjectEvidenceTimelines();
-  assert.equal(projects.length, 12);
+  assert.equal(projects.length, 30);
   const pref = projects.find((row) => row.project === "Preference Model")!;
   assert.equal(pref.investmentDisclosures, 1);
   assert.equal(pref.viewpointDisclosures, 1);
@@ -213,6 +213,28 @@ test("new observed company updates cannot be interpreted as audited investment p
   );
   assert.equal(noUnsignedSpeaker, true);
   assert.deepEqual(validateInvestorResearch(), []);
+});
+
+test("new sample contains thirty distinct firm-project links without promoting investment performance", () => {
+  const projects = investorProjectEvidenceTimelines();
+  assert.equal(projects.length, 30);
+  const totalInvestments = projects.reduce((n, r) => n + r.investmentDisclosures, 0);
+  assert.equal(totalInvestments, 28);
+  assert.ok(investorEvidenceRecords.every((r) => r.realizedProceeds === null));
+  assert.equal(investorEvidenceRecords.filter((r) => r.investorAmount !== null).length, 1); // Historical Sequoia disclosure only
+});
+
+test("UTEC 2024 anniversary review records do not invent the investment transaction date", () => {
+  for (const name of ["Eureka Robotics", "TriOrb"]) {
+    const record = investorEvidenceRecords.find((r) => r.institutionId === "utec" && r.project === name)!;
+    assert.equal(record.kind, "portfolio-relationship");
+    assert.equal(record.date, "2024-05-31");
+    assert.equal(record.source.publishedAt, "2024-05-31");
+    assert.equal(record.round, null);
+    assert.equal(record.participation, null);
+    assert.equal(record.investorAmount, null);
+    assert.match(record.summary, /不.*投.*日|投资.*不.*日|不能推断投资于当天发生/);
+  }
 });
 
 test("institution research remains a nested evidence view and projects precede listed benchmarks", () => {
