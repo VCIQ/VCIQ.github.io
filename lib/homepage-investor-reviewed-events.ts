@@ -1,4 +1,5 @@
 import { homepageMaterialUrl } from "@/lib/homepage-event-identity";
+import { REVIEWED_INVESTOR_SOURCE_ID } from "@/lib/homepage-reviewed-investor-merge";
 import type { InnovationCapitalFeedProjection } from "@/lib/homepage-innovation-capital-channel";
 import {
   globalInnovationInvestors,
@@ -8,7 +9,7 @@ import {
 } from "@/lib/innovation-investor-research";
 import type { LiveIntelligenceEvent } from "@/lib/use-articles";
 
-export const REVIEWED_INVESTOR_SOURCE_ID = "reviewed-investor-official";
+
 export const REVIEWED_INVESTOR_WINDOW_DAYS = 45;
 const DAY_MS = 86_400_000;
 const MAX_HOMEPAGE_INVESTOR_EVENTS = 24;
@@ -127,28 +128,6 @@ export function projectReviewedInvestorHomepageEvents(
     b.publishedAt.localeCompare(a.publishedAt) ||
     b.importance - a.importance || a.id.localeCompare(b.id),
   ).slice(0, MAX_HOMEPAGE_INVESTOR_EVENTS);
-}
-
-/**
- * Keep the canonical public news archive authoritative for articles already
- * present at the same original URL. Also run this merge AFTER useArticles
- * refresh, otherwise the investor rail disappears once the browser fetches
- * the canonical /data/articles.json snapshot.
- */
-export function mergeReviewedInvestorHomepageEvents(
-  canonical: readonly LiveIntelligenceEvent[],
-  reviewed: readonly LiveIntelligenceEvent[],
-): LiveIntelligenceEvent[] {
-  const seen = new Set(canonical.map((row) => homepageMaterialUrl(row.source.url)).filter(Boolean));
-  const result = [...canonical];
-  for (const row of reviewed) {
-    if (row.sourceId !== REVIEWED_INVESTOR_SOURCE_ID) continue;
-    const url = homepageMaterialUrl(row.source.url);
-    if (!url || seen.has(url)) continue;
-    seen.add(url);
-    result.push(row);
-  }
-  return result;
 }
 
 /**
