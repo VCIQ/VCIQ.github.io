@@ -358,6 +358,10 @@ export function HomepageNewsFeed({
     void flushPendingSharePreferences();
   }, []);
 
+  const investorSourceUrls = useMemo(
+    () => new Set(investorChannelEvents.map((item) => homepageMaterialUrl(item.source.url))),
+    [investorChannelEvents],
+  );
   const entityChannels = useMemo(
     () => buildHomepageEntityChannelSets(bootstrap.entityChannelIndex),
     [bootstrap.entityChannelIndex],
