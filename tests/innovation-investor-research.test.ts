@@ -206,7 +206,7 @@ test("IQ Capital Nyobolt includes follow-on investment and only company-reported
 
 test("new observed company updates cannot be interpreted as audited investment profits", () => {
   const sampled = investorEvidenceRecords.filter((r) => ["lux", "dcvc", "eclipse", "iq-capital"].includes(r.institutionId));
-  assert.equal(sampled.length, 11);
+  assert.equal(sampled.length, 20); // Four firms, including newly verified project-level disclosures
   assert.ok(sampled.every((r) => r.investorAmount === null && r.realizedProceeds === null));
   const noUnsignedSpeaker = sampled.filter((r) => r.speakers.length).every((r) =>
     r.speakers.every((person) => person.attribution === "paraphrase" && person.projectResponsibility.length > 15),
