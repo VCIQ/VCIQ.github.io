@@ -107,6 +107,8 @@ const REASON_LABELS: Record<string, string> = {
   PRIMARY_EVIDENCE: "一级公开证据",
   TRUSTED_EVIDENCE: "可信公开来源",
   INNOVATION_DISCOVERY_SOURCE: "科创专用发现源",
+  REVIEWED_INVESTOR_EVIDENCE: "机构官方来源已纳入研究证据",
+  REVIEWED_INVESTOR_VIEWPOINT: "项目相关署名观点（非交易责任确认）",
 };
 
 function record(value: unknown): JsonRecord {

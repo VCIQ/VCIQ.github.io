@@ -34,3 +34,11 @@ The intended explicit-behavior hierarchy is:
 `Manual Tracking > Share > Favorite / Later > Read > Open`
 
 `Ignore` remains a strong negative signal. This document defines product semantics only; exact numeric weights should be calibrated from replay / holdout evidence instead of being selected in this UI change.
+
+## Official global investor evidence: 科创 / 重点 separation
+
+The investor research archive contributes an additional **display-only, source-dated** set of homepage stories, not an automatic feed of all 30 institutions' navigation links. The selected events come from the canonical reviewed research evidence, restricted to official investor sources, explicit day publication dates and a 45-day window. Each original article appears at most once; an official article may include both funding disclosure and attributable investment theses without creating duplicate stories.
+
+The 科创 topic accepts those known reviewed source events via the existing static projection annotation. Its ranking remains recency-first and its linked destination is the full investor research dossier. The 重点 tab uses the existing 7-day/material/personal-signal gates and does **not** treat a mentioned investor or project as an explicit tracking hit. A user must have an actual followed sector, saved/shared item or other existing approved personal signal; merely appearing on the 30-investor watch list does not auto-admit a story.
+
+The daily source scout's candidate URLs, outage states, unverified negative titles and limited-window changes are **not** published as verified investment news. The canonical `articles.json` item wins by original URL when already present, and the display-only investor projection remains available after live article refresh without altering archive-writer ownership.
