@@ -205,7 +205,7 @@ def markdown(report: dict) -> str:
             f"- 不再出现于有限窗口：{report['noLongerInCappedNavigationWindow']}条（**不等于删除或退出**）",
             f"- 新链接中的负面词汇线索：{report['newLinkNegativeTitleSignals']}条（**尚无已核验负面事件**）",
             f"- 新链接与既有规范项目标题/路径相符：{report['newLinksMatchingExistingProjectName']}条（尚待核实）",
-            f"- 新链接已被独立人工证据台账覆盖：{report['newLinksAlreadyUsingReviewedSource']}条",
+            f"- 新链接原文URL已列入研究证据台账：{report['newLinksAlreadyUsingReviewedSource']}条（不代表独立人工签批）",
         ]
     s.extend(["", "| 机构 | 变化 | 说明 |", "| --- | --- | --- |"])
     for x in report["institutions"]:
