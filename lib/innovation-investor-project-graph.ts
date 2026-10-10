@@ -87,7 +87,7 @@ const sourceUrlOkay = (raw: string) => {
   try {
     const u = new URL(raw);
     return u.protocol === "https:" && !u.username && !u.password && (!u.port || u.port === "443") &&
-      !!u.hostname && !/^(localhost|127\\.|10\\.|192\\.168\\.|0\\.)/.test(u.hostname) &&
+      !!u.hostname && !/^(localhost|127\.|10\.|192\.168\.|0\.)/.test(u.hostname) &&
       !u.hostname.endsWith(".local") && !u.hostname.endsWith(".internal");
   } catch {
     return false;
