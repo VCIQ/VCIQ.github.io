@@ -79,7 +79,7 @@ export function projectReviewedInvestorHomepageEvents(
     const additionalContext = relatedPointOfView && speakers.length
       ? " 同篇原文还包含署名观点：" + speakers.join("、") + "；署名不能证明个人交易签约责任。"
       : "";
-    const title = lead.title.trim();
+    const title = lead.kind === "viewpoint" ? "投资人观点｜" + lead.title.trim() : lead.title.trim();
     const summary = (lead.summary.trim() + additionalContext +
       " 来源为机构官方披露，不代表独立尽调或基金现金回报。").slice(0, 780);
     const type: LiveIntelligenceEvent["type"] =
