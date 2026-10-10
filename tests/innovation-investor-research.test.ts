@@ -25,8 +25,8 @@ test("evidence samples now span ten institutions, without implying complete port
   const summary = investorEvidenceSummary();
   assert.equal(summary.registeredInstitutions, 30);
   assert.equal(summary.evidenceCoveredInstitutions, 10);
-  assert.equal(summary.reviewedRecords, 51);
-  assert.equal(summary.disclosedInvestmentEvents, 28);
+  assert.equal(summary.reviewedRecords, 55);
+  assert.equal(summary.disclosedInvestmentEvents, 30);
   assert.equal(summary.outcomeMilestones, 3);
   assert.equal(summary.returnStatus, "unknown");
 });
@@ -97,7 +97,7 @@ test("new project evidence retains official dates, deal roles and authorship lim
 
 test("one publication can support a deal and a viewpoint, without counting two investments", () => {
   const projects = investorProjectEvidenceTimelines();
-  assert.equal(projects.length, 30);
+  assert.equal(projects.length, 32);
   const pref = projects.find((row) => row.project === "Preference Model")!;
   assert.equal(pref.investmentDisclosures, 1);
   assert.equal(pref.viewpointDisclosures, 1);
@@ -206,7 +206,7 @@ test("IQ Capital Nyobolt includes follow-on investment and only company-reported
 
 test("new observed company updates cannot be interpreted as audited investment profits", () => {
   const sampled = investorEvidenceRecords.filter((r) => ["lux", "dcvc", "eclipse", "iq-capital"].includes(r.institutionId));
-  assert.equal(sampled.length, 20); // Four firms, including newly verified project-level disclosures
+  assert.equal(sampled.length, 22); // Eclipse added the source-backed Oxide investment and viewpoint
   assert.ok(sampled.every((r) => r.investorAmount === null && r.realizedProceeds === null));
   const noUnsignedSpeaker = sampled.filter((r) => r.speakers.length).every((r) =>
     r.speakers.every((person) => person.attribution === "paraphrase" && person.projectResponsibility.length > 15),
@@ -217,9 +217,9 @@ test("new observed company updates cannot be interpreted as audited investment p
 
 test("new sample contains thirty distinct firm-project links without promoting investment performance", () => {
   const projects = investorProjectEvidenceTimelines();
-  assert.equal(projects.length, 30);
+  assert.equal(projects.length, 32);
   const totalInvestments = projects.reduce((n, r) => n + r.investmentDisclosures, 0);
-  assert.equal(totalInvestments, 28);
+  assert.equal(totalInvestments, 30);
   assert.ok(investorEvidenceRecords.every((r) => r.realizedProceeds === null));
   assert.equal(investorEvidenceRecords.filter((r) => r.investorAmount !== null).length, 1); // Historical Sequoia disclosure only
 });
@@ -235,6 +235,35 @@ test("UTEC 2024 anniversary review records do not invent the investment transact
     assert.equal(record.investorAmount, null);
     assert.match(record.summary, /不能推断投资于当天发生|未披露交易日期/);
   }
+});
+
+test("Oct 9 new official investment sources do not invent rounds or a fund's realized returns", () => {
+  const a = investorEvidenceRecords.find((x) => x.id === "a16z-typesafe-ai-investment-2026")!;
+  assert.equal(a.project, "TypeSafe AI");
+  assert.equal(a.date, "2026-10-09");
+  assert.equal(a.participation, "lead");
+  assert.equal(a.round, null);
+  assert.equal(a.roundAmount, null);
+  assert.equal(a.investorAmount, null);
+  assert.match(a.source.url, /a16z.com\/announcement\/investing-in-typesafe-ai/);
+  const av = investorEvidenceRecords.find((x) => x.id === "a16z-typesafe-ai-investment-thesis-2026")!;
+  assert.deepEqual(av.speakers.map((p) => p.name), [
+    "Jennifer Li", "Sarah Wang", "Martin Casado", "Marc Andreessen", "Ben Horowitz",
+  ]);
+  assert.ok(av.speakers.every((p) => p.attribution === "paraphrase" && p.projectResponsibility.includes("不能")));
+  const e = investorEvidenceRecords.find((x) => x.id === "eclipse-oxide-series-d-2026")!;
+  assert.equal(e.date, "2026-10-09");
+  assert.equal(e.participation, "lead");
+  assert.equal(e.round, "Series D");
+  assert.equal(e.roundAmount?.value, 445_000_000);
+  assert.equal(e.investorAmount, null);
+  assert.equal(e.realizedProceeds, null);
+  const ox = investorProjectEvidenceTimelines().find((x) => x.project === "Oxide")!;
+  assert.equal(ox.investmentDisclosures, 1); // Old Seed and Series A are retrospective text only.
+  assert.equal(ox.viewpointDisclosures, 1);
+  assert.equal(ox.sourceCount, 1);
+  assert.equal(ox.returnStatus, "unknown");
+  assert.ok(investorEvidenceRecords.every((x) => x.realizedProceeds === null));
 });
 
 test("institution research remains a nested evidence view and projects precede listed benchmarks", () => {
