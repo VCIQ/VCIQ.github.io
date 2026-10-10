@@ -233,7 +233,7 @@ test("UTEC 2024 anniversary review records do not invent the investment transact
     assert.equal(record.round, null);
     assert.equal(record.participation, null);
     assert.equal(record.investorAmount, null);
-    assert.match(record.summary, /不.*投.*日|投资.*不.*日|不能推断投资于当天发生/);
+    assert.match(record.summary, /不能推断投资于当天发生|未披露交易日期/);
   }
 });
 
