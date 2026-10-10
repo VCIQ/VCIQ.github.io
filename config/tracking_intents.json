@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-10T01:37:16+00:00",
+  "updatedAt": "2026-10-10T01:49:36+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -21024,6 +21024,53 @@
       "resolutionStatus": "resolved",
       "createdAt": "2026-10-10T01:37:16+00:00",
       "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-881137129556241646a1",
+      "kind": "technology",
+      "name": "Legato Frames",
+      "aliases": [],
+      "keywords": [
+        "AI助听眼镜",
+        "专利AI技术",
+        "人声与背景噪音区分"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-10T01:49:36+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "company-1dfcfd98725a39ea9674",
+      "kind": "company",
+      "name": "Legato",
+      "aliases": [],
+      "keywords": [
+        "听力科技初创公司",
+        "AI助听眼镜"
+      ],
+      "state": "active",
+      "resolutionSource": "unresolved",
+      "resolutionStatus": "review",
+      "createdAt": "2026-10-10T01:49:36+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "source-af3b259d2541b47f825e",
+      "kind": "source",
+      "name": "待交叉验证 · 至顶网",
+      "aliases": [],
+      "keywords": [],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-10T01:49:36+00:00",
+      "createdBy": "VCIQ",
+      "url": "https://www.zhiding.cn/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球"
     }
   ],
   "memberships": [
@@ -117722,6 +117769,194 @@
         "source": "source-context",
         "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
         "decisionKey": "戈壁创投",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-92c39c5599998312e926",
+      "trackId": "track:ai-3",
+      "entityId": "technology-881137129556241646a1",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-1bc601639b65f2bd1532",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-10T01:49:36+00:00",
+          "evidenceUrl": "https://www.zhiding.cn/edge-ai/2026/1010/3201525.shtml",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-6b8fef7f838ae5105e8dcbe3",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-10T01:49:36+00:00",
+        "trackId": "track:ai-3",
+        "entityId": "technology-881137129556241646a1",
+        "requestedName": "Legato Frames",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "Legato Frames",
+        "targetId": "topic:legatoframes",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "legatoframes",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-ee25f990eff93f6855fb",
+      "trackId": "track:ai-3",
+      "entityId": "company-1dfcfd98725a39ea9674",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "low",
+      "origins": [
+        {
+          "id": "origin-679a7f7b929fc2ffd5a4",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-10T01:49:36+00:00",
+          "evidenceUrl": "https://www.zhiding.cn/edge-ai/2026/1010/3201525.shtml",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-1a4e29fe10c09d93e02745b1",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-10T01:49:36+00:00",
+        "trackId": "track:ai-3",
+        "entityId": "company-1dfcfd98725a39ea9674",
+        "requestedName": "Legato",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Legato",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "legato",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-194dd68b904d5aa42ba4",
+      "trackId": "track:ai-3",
+      "entityId": "source-af3b259d2541b47f825e",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-a4e3912a3a9468adebc7",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-10T01:49:36+00:00",
+          "evidenceUrl": "https://www.zhiding.cn/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-99a11f53a456fc91e4b2c8ee",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-10T01:49:36+00:00",
+        "trackId": "track:ai-3",
+        "entityId": "source-af3b259d2541b47f825e",
+        "requestedName": "待交叉验证 · 至顶网",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "待交叉验证 · 至顶网",
+        "targetId": "source-af3b259d2541b47f825e",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "待交叉验证至顶网",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-5872222f68075520386f",
+      "trackId": "track:semiconductor",
+      "entityId": "source-af3b259d2541b47f825e",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-a4e3912a3a9468adebc7",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-10T01:49:36+00:00",
+          "evidenceUrl": "https://www.zhiding.cn/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-b279d1e311c400799146850e",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-10T01:49:36+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "source-af3b259d2541b47f825e",
+        "requestedName": "待交叉验证 · 至顶网",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "待交叉验证 · 至顶网",
+        "targetId": "source-af3b259d2541b47f825e",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "待交叉验证至顶网",
         "reclassified": false
       },
       "executionState": "applied"
