@@ -19,6 +19,7 @@ import { useHomepagePreferences } from "@/components/use-homepage-preferences";
 import { useHotness } from "@/components/use-hotness";
 import { usePriorityIntelligence } from "@/components/use-priority-intelligence";
 import { buildHomepageFocusSelection, HOMEPAGE_FOCUS_POLICY } from "@/lib/homepage-focus";
+import { REVIEWED_INVESTOR_EVENT_PREFIX } from "@/lib/homepage-reviewed-investor-events";
 import { FocusDiagnostics } from "@/components/focus-diagnostics";
 import { focusPreferenceIdentity } from "@/lib/focus-event-groups";
 import { mergePriorityCandidates } from "@/lib/priority-intelligence";
@@ -208,7 +209,8 @@ function matchesChannel(
     return matchesHomepageFollowChannel(item, preferences);
   }
   if (channelId === "innovation") {
-    return matchesHomepageInnovationCapitalChannel(item, innovationCapital);
+    return item.id.startsWith(REVIEWED_INVESTOR_EVENT_PREFIX)
+      || matchesHomepageInnovationCapitalChannel(item, innovationCapital);
   }
 
   // Entity channels are gated by the published entity libraries. Raw NER-like
@@ -308,13 +310,24 @@ export function HomepageNewsFeed({
   bootstrap,
   peopleChannelEvents,
   companyChannelEvents,
+  reviewedInvestorEvents,
 }: {
   initialPayload: ArticlePayload;
   bootstrap: HomepageFeedBootstrap;
   peopleChannelEvents: LiveIntelligenceEvent[];
   companyChannelEvents: LiveIntelligenceEvent[];
+  reviewedInvestorEvents: LiveIntelligenceEvent[];
 }) {
   const { articles, refreshAudit, isLive } = useArticles(initialPayload);
+  // A source URL already represented by a reviewed official investment is not
+  // displayed twice when the canonical live archive has the same material.
+  const feedArticles = useMemo(() => {
+    const reviewedUrls = new Set(reviewedInvestorEvents.map((item) => item.source.url.replace(/\/$/, "")));
+    return [
+      ...articles.filter((item) => !reviewedUrls.has(item.source.url.replace(/\/$/, ""))),
+      ...reviewedInvestorEvents,
+    ];
+  }, [articles, reviewedInvestorEvents]);
   const favorites = useFavorites();
   const hotnessItems = useHotness();
   const preferences = useHomepagePreferences();
@@ -330,12 +343,12 @@ export function HomepageNewsFeed({
   const focusSelection = useMemo(
     () => channel === "focus" ? buildHomepageFocusSelection(
       mergePriorityCandidates(
-        articles,
+        feedArticles,
         [...(priorityFeed.snapshot?.items ?? []), ...(priorityFeed.batch6Snapshot?.items ?? [])],
       ),
       preferences, favorites, hotnessItems, clockMs ?? 0,
     ) : null,
-    [channel, articles, priorityFeed.snapshot, priorityFeed.batch6Snapshot, preferences, favorites, hotnessItems, clockMs],
+    [channel, feedArticles, priorityFeed.snapshot, priorityFeed.batch6Snapshot, preferences, favorites, hotnessItems, clockMs],
   );
 
   useEffect(() => {
@@ -370,12 +383,13 @@ export function HomepageNewsFeed({
     [bootstrap.trackedSectorAliases],
   );
   const activeArticles = useMemo(
-    () => articles.filter(
+    () => feedArticles.filter(
       (item) =>
-        enabledSectorNames.has(item.sector)
+        item.id.startsWith(REVIEWED_INVESTOR_EVENT_PREFIX)
+        || enabledSectorNames.has(item.sector)
         || matchesHomepageInnovationCapitalChannel(item, innovationCapital),
     ),
-    [articles, enabledSectorNames, innovationCapital],
+    [feedArticles, enabledSectorNames, innovationCapital],
   );
   const trustedArticles = useMemo(
     () => activeArticles.filter((item) => item.qualityStatus !== "低可信"),

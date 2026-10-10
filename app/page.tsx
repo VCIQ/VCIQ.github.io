@@ -36,6 +36,7 @@ import { formatTaipeiDate } from "@/lib/snapshot-freshness";
 import { trackedSectors } from "@/lib/tracked-sectors";
 import type { ArticlePayload, LiveIntelligenceEvent } from "@/lib/use-articles";
 import rawArticles from "@/public/data/articles.json";
+import { projectReviewedInvestorHomepageEvents } from "@/lib/homepage-reviewed-investor-events";
 import rawInnovationCapitalFeed from "@/public/data/innovation-capital-feed.json";
 import rawRankedIntelligence from "@/public/data/ranked-intelligence.json";
 
@@ -165,6 +166,8 @@ const initialPayload: ArticlePayload = {
 };
 
 const taipeiToday = formatTaipeiDate(new Date());
+const reviewedInvestorEvents = projectReviewedInvestorHomepageEvents();
+
 const bootstrap: HomepageFeedBootstrap = {
   trackedSectorAliases,
   todayArticleCount: activeArticles.filter((item) => item.publishedAt.slice(0, 10) === taipeiToday).length,
@@ -203,6 +206,7 @@ export default function Home() {
           initialPayload={initialPayload}
           peopleChannelEvents={peopleChannelEvents}
           companyChannelEvents={companyChannelEvents}
+          reviewedInvestorEvents={reviewedInvestorEvents}
         />
         <HomepageTopicBriefs />
         <DailyBriefQuickActions
