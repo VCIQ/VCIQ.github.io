@@ -201,3 +201,19 @@ test("static research page exposes identity graph and full sample denominator, n
   assert.match(view, /不能据此确认独家交易责任/);
   assert.doesNotMatch(view, /fetch\(|setInterval\(|tracking-admin\/v1/);
 });
+
+test("Catalyst graph keeps Sequoia's seed disclosure separate from George Robson's viewpoint", () => {
+  const catalyst = buildCanonicalInvestorProjectGraph().find((item) => item.projectId === "catalyst-ai-investing");
+  assert.ok(catalyst);
+  assert.equal(catalyst.name, "Catalyst");
+  assert.equal(catalyst.institutions.length, 1);
+  const sequoia = catalyst.institutions[0];
+  assert.equal(sequoia.institutionId, "sequoia");
+  assert.equal(sequoia.investmentDisclosures.length, 1);
+  assert.equal(sequoia.investmentDisclosures[0].round, "Seed");
+  assert.equal(sequoia.investmentDisclosures[0].investorAmount, null);
+  assert.equal(sequoia.viewpointRecordCount, 1);
+  assert.equal(sequoia.personAttributions[0]?.name, "George Robson");
+  assert.equal(sequoia.confirmedTransactionOwner, false);
+  assert.equal(sequoia.realizedFundReturn, "unknown");
+});
