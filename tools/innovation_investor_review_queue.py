@@ -34,7 +34,7 @@ BIO = {"team", "our-team", "our_team", "team-members", "people", "person"}
 PORTFOLIO = {"company", "companies", "portfolio", "investments", "investment"}
 
 INVESTMENT = re.compile(
-    r"\b(investing in|investment in|our investment|we invested|backing|we're backing|"
+    r"\b(investing in|investment in|our investment|we invested|backing|we're backing|partnering with|"
     r"co-led|co-lead|led the (?:series|round)|funding round|series [a-f]\b|"
     r"portfolio announcement)\b|领投|共同领投|投资于|宣布投资|参投|完成.{0,20}融资",
     re.I,

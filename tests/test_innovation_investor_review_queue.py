@@ -50,11 +50,25 @@ class InvestorReviewQueueTests(unittest.TestCase):
         self.assertEqual(classify_link("Investment Policy", "https://a.test/investment_policy"), "navigation")
         self.assertEqual(classify_link("Portfolio", "https://a.test/portfolio"), "navigation")
         self.assertEqual(classify_link("Investing in ChipCo", "https://a.test/announcement/investing-in-chipco"), "investment-lead")
+        self.assertEqual(classify_link("Partnering with Catalyst: Turning Ideas into Trades", "https://a.test/article/partnering-with-catalyst"), "investment-lead")
+        self.assertEqual(classify_link("Commercial partnership with cloud vendor", "https://a.test/news/cloud-partnership"), "article-lead")
         self.assertEqual(classify_link("AI chips acquired", "https://a.test/news/chipco-acquired"), "outcome-lead")
         self.assertEqual(classify_link("AI thesis podcast", "https://a.test/podcast/talk"), "viewpoint-lead")
         self.assertEqual(classify_link("Sam Investor", "https://a.test/team/sam"), "person-lead")
         self.assertEqual(classify_link("ChipCo", "https://a.test/companies/chipco"), "portfolio-lead")
         self.assertEqual(classify_link("Read more", "https://a.test/perspectives/chips"), "article-lead")
+
+    def test_partnering_with_funding_signal_is_prioritized_but_not_auto_published(self):
+        registry, scout = fixture()
+        row = candidate("firm-0", 101, "Partnering with Catalyst: Turning Ideas into Trades",
+                        "/article/partnering-with-catalyst")
+        add(scout, 0, row)
+        queue = build_review_queue(scout, registry, {"records": []})
+        self.assertEqual(queue["reviewLeads"][0]["type"], "investment-lead")
+        self.assertIn(row["id"], queue["priorityReviewCandidateIds"])
+        self.assertFalse(queue["reviewLeads"][0]["publicationAllowed"])
+        self.assertIsNone(queue["reviewLeads"][0]["publishedAt"])
+        self.assertFalse(queue["reviewLeads"][0]["investmentRelationConfirmed"])
 
     def test_queue_has_no_automatically_verified_fact(self):
         registry, scout = fixture()
