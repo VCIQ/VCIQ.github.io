@@ -41,7 +41,7 @@ test("official recent originals, not old case studies, become the limited homepa
     item.source.level === "官方披露" &&
     item.qualityStatus === "可用" &&
     item.publicationTimePrecision === "day" &&
-    item.realizedProceeds === undefined &&
+    !("realizedProceeds" in item) &&
     item.matchedTrackingTerms?.length === 0,
   ));
   assert.ok(output.events.every((item) => !("curated" in item)));
