@@ -772,7 +772,7 @@ export function HomepageNewsFeed({
                               {" · "}科创优先度 {innovationAnnotation.innovationPriority}
                             </small>
                           </div>
-                          {innovationAnnotation.reasonCodes.includes("INVESTOR_SOURCE_RESEARCH")
+                          {investorSourceUrls.has(homepageMaterialUrl(item.source.url))
                             ? <Link href="/innovation-capital/investors/">查看投资机构研究档案 →</Link>
                             : <Link href="/innovation-capital/">查看科创项目 →</Link>}
                         </div>
