@@ -159,6 +159,15 @@ def extract_candidates(html: str, source_url: str, institution_id: str) -> list[
         parts = parse.urlsplit(url)
         if parts.query or parts.path == "/" or SKIP.search(parts.path) or not TOPIC.search(title + " " + parts.path):
             continue
+        # Index's official News listing includes a carousel of old generic
+        # "Read more" links BEFORE its actual article directory. With a
+        # 12-link cap those historic links displaced every new disclosure.
+        # Only consider explicitly titled article anchors on this entry point;
+        # never infer article dates or investment facts from the listing.
+        if institution_id == "index" and parse.urlsplit(source_url).path.rstrip("/") == "/perspectives/news":
+            if not parts.path.startswith("/perspectives/") or "This link opens the post" not in title:
+                continue
+            title = title.split(" This link opens the post", 1)[0].strip()
         key = hashlib.sha256(f"{institution_id}:{url}".encode()).hexdigest()[:24]
         candidates[url] = {
             "id":key, "institutionId":institution_id, "title":title, "url":url,
