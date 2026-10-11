@@ -8,6 +8,11 @@ import {
 } from "../lib/innovation-investor-research";
 
 const source = (path: string) => fs.readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
+const observedInstitutionProjectPairs = () => new Set(
+  investorEvidenceRecords.filter((row) => row.project).map((row) =>
+    JSON.stringify([row.institutionId, row.project]),
+  ),
+);
 
 test("30 curated institutions have unique identities and validated primary-source entry points", () => {
   assert.equal(globalInnovationInvestors.length, 30);
@@ -24,10 +29,17 @@ test("30 curated institutions have unique identities and validated primary-sourc
 test("evidence samples now span ten institutions, without implying complete portfolio coverage", () => {
   const summary = investorEvidenceSummary();
   assert.equal(summary.registeredInstitutions, 30);
-  assert.equal(summary.evidenceCoveredInstitutions, 10);
-  assert.equal(summary.reviewedRecords, 57);
-  assert.equal(summary.disclosedInvestmentEvents, 31);
-  assert.equal(summary.outcomeMilestones, 3);
+  const coveredInstitutions = new Set(investorEvidenceRecords.map((row) => row.institutionId));
+  const investmentKeys = new Set(investorEvidenceRecords.filter((row) => row.kind === "investment").map((row) =>
+    JSON.stringify([row.institutionId, row.project, row.round ?? row.id, row.date]),
+  ));
+  assert.ok(coveredInstitutions.size >= 10, "initial reviewed institutional coverage must not disappear");
+  assert.ok(investorEvidenceRecords.length >= 57, "the signed evidence baseline must not shrink");
+  assert.ok(investmentKeys.size >= 31, "the known source-backed investment disclosures must remain");
+  assert.equal(summary.evidenceCoveredInstitutions, coveredInstitutions.size);
+  assert.equal(summary.reviewedRecords, investorEvidenceRecords.length);
+  assert.equal(summary.disclosedInvestmentEvents, investmentKeys.size);
+  assert.equal(summary.outcomeMilestones, investorEvidenceRecords.filter((row) => row.kind === "outcome").length);
   assert.equal(summary.returnStatus, "unknown");
 });
 
@@ -97,7 +109,7 @@ test("new project evidence retains official dates, deal roles and authorship lim
 
 test("one publication can support a deal and a viewpoint, without counting two investments", () => {
   const projects = investorProjectEvidenceTimelines();
-  assert.equal(projects.length, 33);
+  assert.equal(projects.length, observedInstitutionProjectPairs().size);
   const pref = projects.find((row) => row.project === "Preference Model")!;
   assert.equal(pref.investmentDisclosures, 1);
   assert.equal(pref.viewpointDisclosures, 1);
@@ -206,7 +218,7 @@ test("IQ Capital Nyobolt includes follow-on investment and only company-reported
 
 test("new observed company updates cannot be interpreted as audited investment profits", () => {
   const sampled = investorEvidenceRecords.filter((r) => ["lux", "dcvc", "eclipse", "iq-capital"].includes(r.institutionId));
-  assert.equal(sampled.length, 22); // Eclipse added the source-backed Oxide investment and viewpoint
+  assert.ok(sampled.length >= 22, "existing reviewed source-backed case studies must remain");
   assert.ok(sampled.every((r) => r.investorAmount === null && r.realizedProceeds === null));
   const noUnsignedSpeaker = sampled.filter((r) => r.speakers.length).every((r) =>
     r.speakers.every((person) => person.attribution === "paraphrase" && person.projectResponsibility.length > 15),
@@ -215,13 +227,18 @@ test("new observed company updates cannot be interpreted as audited investment p
   assert.deepEqual(validateInvestorResearch(), []);
 });
 
-test("new sample contains thirty-three distinct firm-project links without promoting investment performance", () => {
+test("institution-project timelines follow the growing reviewed ledger without inferred investor returns", () => {
   const projects = investorProjectEvidenceTimelines();
-  assert.equal(projects.length, 33);
+  assert.equal(projects.length, observedInstitutionProjectPairs().size);
   const totalInvestments = projects.reduce((n, r) => n + r.investmentDisclosures, 0);
-  assert.equal(totalInvestments, 31);
+  assert.equal(totalInvestments, investorEvidenceRecords.filter((r) => r.kind === "investment").length);
+  assert.ok(totalInvestments >= 31);
   assert.ok(investorEvidenceRecords.every((r) => r.realizedProceeds === null));
-  assert.equal(investorEvidenceRecords.filter((r) => r.investorAmount !== null).length, 1); // Historical Sequoia disclosure only
+  const graphcore = investorEvidenceRecords.find((r) => r.id === "sequoia-graphcore-investment-2017")!;
+  assert.deepEqual(graphcore.investorAmount, {value: 50_000_000, currency: "USD"});
+  assert.ok(investorEvidenceRecords.filter((r) => r.investorAmount !== null).every((r) =>
+    r.kind === "investment" && Boolean(r.source.locator) && (r.investorAmount?.value ?? 0) > 0,
+  ), "source-backed investor cheque must not be inferred from round totals");
 });
 
 test("UTEC 2024 anniversary review records do not invent the investment transaction date", () => {
