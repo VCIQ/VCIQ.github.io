@@ -30,14 +30,27 @@ test("official recent originals, not old case studies, become the limited homepa
   assert.equal(INVESTOR_HOMEPAGE_LOOKBACK_DAYS, 14);
   assert.ok(INVESTOR_HOMEPAGE_MAX_ARTICLES <= 12);
   const output = build();
-  assert.equal(output.events.length, 4);
-  assert.equal(output.innovationItems.length, 4);
-  assert.deepEqual(new Set(output.events.map((item) => item.source.url)), new Set([
+  assert.ok(output.events.length >= 4, "retain the four independently reviewed recent sources");
+  assert.ok(output.events.length <= INVESTOR_HOMEPAGE_MAX_ARTICLES);
+  assert.equal(output.events.length, output.innovationItems.length);
+  assert.equal(new Set(output.events.map((item) => item.source.url)).size, output.events.length,
+    "each original source should yield only one homepage article");
+  assert.deepEqual(new Set(output.events.map((item) => item.id)),
+    new Set(output.innovationItems.map((item) => item.eventId)));
+  // Verify durable original articles in isolation: they must remain publishable
+  // even after newer approved stories displace them from the 12-card window.
+  const originalSources = [
     "https://a16z.com/announcement/investing-in-preference-model/",
     "https://a16z.com/announcement/investing-in-typesafe-ai/",
     "https://eclipse.capital/blog/built-for-the-compute-ownership-era",
     "https://sequoiacap.com/article/partnering-with-catalyst-turning-ideas-into-trades",
-  ]));
+  ];
+  const originalRecords = investorEvidenceRecords.filter((item) => originalSources.includes(item.source.url));
+  for (const url of originalSources) {
+    const isolated = build(originalRecords.filter((item) => item.source.url === url));
+    assert.equal(isolated.events.length, 1, `one article for known original: ${url}`);
+    assert.equal(isolated.events[0].source.url, url);
+  }
   assert.ok(output.events.every((item) =>
     item.source.level === "官方披露" &&
     item.qualityStatus === "可用" &&
@@ -46,11 +59,19 @@ test("official recent originals, not old case studies, become the limited homepa
     item.matchedTrackingTerms?.length === 0,
   ));
   assert.ok(output.events.every((item) => !("curated" in item)));
-  assert.equal(build(undefined, Date.parse("2026-11-01T12:00:00Z")).events.length, 0);
+  assert.equal(build(investorEvidenceRecords.filter((item) => [
+    "https://a16z.com/announcement/investing-in-preference-model/",
+    "https://a16z.com/announcement/investing-in-typesafe-ai/",
+    "https://eclipse.capital/blog/built-for-the-compute-ownership-era",
+    "https://sequoiacap.com/article/partnering-with-catalyst-turning-ideas-into-trades",
+  ].includes(item.source.url)), Date.parse("2026-11-01T12:00:00Z")).events.length, 0,
+    "expired originals must not be relabelled as new publications");
 });
 
 test("multiple descriptions of the same source yield one news card, but preserve speaker attribution", () => {
-  const {events} = build();
+  const {events} = build(investorEvidenceRecords.filter((row) =>
+    row.source.url.includes("investing-in-typesafe-ai") ||
+    row.source.url.includes("built-for-the-compute-ownership-era")));
   const typesafe = events.find((item) => item.company === "TypeSafe AI")!;
   const oxide = events.find((item) => item.company === "Oxide")!;
   assert.equal(typesafe.type, "产业投资");
@@ -109,7 +130,7 @@ test("重点 retains explicit preference admission and exclusions; official inve
   );
   assert.ok(follow.items.length >= 2);
   assert.ok(follow.items.every((item) => item.type === "产业投资"));
-  const id = events.find((item) => item.company === "Oxide")!.id;
+  const id = follow.items[0].id;
   const hidden = buildHomepageFocusSelection(
     events, {...preferences, followedSectors: ["产业投资"], dismissedEventIds: [id]}, [], [], now,
   );
@@ -140,7 +161,8 @@ test("server first paint and client rehydration use one unified flow and a direc
 });
 
 test("Catalyst official seed investment and thesis share exactly one 科创 homepage card", () => {
-  const {events} = build();
+  const {events} = build(investorEvidenceRecords.filter((row) =>
+    row.source.url === "https://sequoiacap.com/article/partnering-with-catalyst-turning-ideas-into-trades"));
   const event = events.find((item) => item.company === "Catalyst");
   assert.ok(event);
   assert.equal(event.type, "产业投资");
