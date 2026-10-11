@@ -16,7 +16,8 @@ test("every current project observation has one explicit, source-backed canonica
   assert.ok(identities.projects.length >= 32, "keep the signed project identity baseline");
   assert.equal(new Set(identities.projects.map((row) => row.id)).size, identities.projects.length);
   assert.deepEqual(validateInvestorProjectIdentities(), []);
-  const evidencedNames = new Set(investorEvidenceRecords.filter((row) => row.project).map((row) => row.project));
+  const evidencedNames = new Set(investorEvidenceRecords.map((row) => row.project)
+    .filter((name): name is string => typeof name === "string" && name.length > 0));
   const approvedAliases = new Set(identities.projects.flatMap((row) => row.observedNames));
   assert.ok([...evidencedNames].every((name) => approvedAliases.has(name)),
     "each evidence project must resolve to an explicitly reviewed identity");
