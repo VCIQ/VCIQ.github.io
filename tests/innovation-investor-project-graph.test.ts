@@ -8,25 +8,36 @@ import {
   validateInvestorProjectIdentities,
   type ProjectIdentity,
 } from "../lib/innovation-investor-project-graph";
-import { investorEvidenceRecords, type InvestorEvidenceRecord } from "../lib/innovation-investor-research";
+import { globalInnovationInvestors, investorEvidenceRecords, type InvestorEvidenceRecord } from "../lib/innovation-investor-research";
 
 const read = (path: string) => fs.readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 
 test("every current project observation has one explicit, source-backed canonical identity", () => {
-  assert.equal(identities.projects.length, 32);
+  assert.ok(identities.projects.length >= 32, "keep the signed project identity baseline");
+  assert.equal(new Set(identities.projects.map((row) => row.id)).size, identities.projects.length);
   assert.deepEqual(validateInvestorProjectIdentities(), []);
-  const names = investorEvidenceRecords.filter((row) => row.project).map((row) => row.project);
-  assert.equal(new Set(names).size, 32);
-  assert.deepEqual(new Set(identities.projects.flatMap((row) => row.observedNames)), new Set(names));
+  const evidencedNames = new Set(investorEvidenceRecords.map((row) => row.project)
+    .filter((name): name is string => typeof name === "string" && name.length > 0));
+  const approvedAliases = new Set(identities.projects.flatMap((row) => row.observedNames));
+  assert.ok([...evidencedNames].every((name) => approvedAliases.has(name)),
+    "each evidence project must resolve to an explicitly reviewed identity");
 });
 
-test("32 projects are 33 institution links, preserving cross-firm isolation", () => {
+test("canonical project graph grows without conflating multi-firm relationships", () => {
   const graph = buildCanonicalInvestorProjectGraph();
-  assert.equal(graph.length, 32);
-  assert.equal(graph.reduce((n, project) => n + project.institutions.length, 0), 33);
-  const shared = graph.filter((p) => p.institutions.length > 1);
-  assert.deepEqual(shared.map((p) => p.projectId), ["physical-intelligence"]);
-  const pi = shared[0];
+  const byAlias = new Map(identities.projects.flatMap((project) => project.observedNames.map((name) =>
+    [name.trim().toLocaleLowerCase("en-US"), project.id] as const,
+  )));
+  const sourceRelations = new Set(investorEvidenceRecords.filter((row) => row.project).map((row) =>
+    JSON.stringify([row.institutionId, byAlias.get(row.project!.trim().toLocaleLowerCase("en-US"))]),
+  ));
+  assert.equal(graph.length, identities.projects.length);
+  assert.equal(graph.reduce((n, project) => n + project.institutions.length, 0), sourceRelations.size);
+  assert.ok(graph.every((project) =>
+    new Set(project.institutions.map((row) => row.institutionId)).size === project.institutions.length),
+  "one institution must not appear twice for the same canonical project");
+  const pi = graph.find((project) => project.projectId === "physical-intelligence")!;
+  assert.ok(pi && pi.institutions.length > 1, "known cross-firm company identity must remain shared");
   assert.equal(pi.distinctSourceCount, 3);
   assert.equal(pi.coInvestmentRound, "not-assessed");
   assert.equal(pi.identityEvidenceUrls.length, 2);
@@ -48,29 +59,50 @@ test("32 projects are 33 institution links, preserving cross-firm isolation", ()
 
 test("30-firm matrix separates missing reviewed samples from real-world zero activity", () => {
   const matrix = investorProjectCoverageMatrix();
-  assert.equal(matrix.length, 30);
-  assert.equal(matrix.filter((r) => r.state === "partial-project-samples").length, 0);
-  assert.equal(matrix.filter((r) => r.state === "no-project-evidence").length, 20);
-  assert.equal(matrix.filter((r) => r.state === "sample-count-target-met").length, 10);
-  assert.equal(matrix.reduce((n, r) => n + r.reviewedProjectCount, 0), 33);
-  assert.equal(matrix.reduce((n, r) => n + r.disclosedInvestmentEvents, 0), 31);
-  assert.equal(matrix.reduce((n, r) => n + r.observedOutcomeRecords, 0), 3);
-  assert.equal(matrix.reduce((n, r) => n + r.evidenceRecordCount, 0), 56);
-  assert.equal(matrix.filter((r) => r.reviewedProjectCount === 2).length, 0);
-  assert.equal(matrix.filter((r) => r.reviewedProjectCount === 1).length, 0);
+  const graph = buildCanonicalInvestorProjectGraph();
+  const representedFirms = new Set(investorEvidenceRecords.filter((r) => r.project).map((r) => r.institutionId));
+  assert.equal(matrix.length, globalInnovationInvestors.length);
+  assert.equal(matrix.filter((r) => r.state === "no-project-evidence").length,
+    globalInnovationInvestors.length - representedFirms.size);
+  assert.equal(matrix.filter((r) => r.state === "partial-project-samples").length,
+    matrix.filter((r) => r.reviewedProjectCount > 0 && r.reviewedProjectCount < 3).length);
+  assert.equal(matrix.filter((r) => r.state === "sample-count-target-met").length,
+    matrix.filter((r) => r.reviewedProjectCount >= 3).length);
+  assert.equal(matrix.reduce((n, r) => n + r.reviewedProjectCount, 0),
+    graph.reduce((n, project) => n + project.institutions.length, 0));
+  assert.equal(matrix.reduce((n, r) => n + r.disclosedInvestmentEvents, 0),
+    investorEvidenceRecords.filter((r) => r.kind === "investment").length);
+  assert.equal(matrix.reduce((n, r) => n + r.observedOutcomeRecords, 0),
+    investorEvidenceRecords.filter((r) => r.kind === "outcome" && r.project).length);
+  assert.equal(matrix.reduce((n, r) => n + r.evidenceRecordCount, 0),
+    investorEvidenceRecords.filter((r) => r.project).length);
+  assert.ok(matrix.every((r) => r.gapToThreeProjects === Math.max(0, 3 - r.reviewedProjectCount)));
+  assert.ok(matrix.every((r) => r.state === (r.reviewedProjectCount === 0 ? "no-project-evidence"
+    : r.reviewedProjectCount < 3 ? "partial-project-samples" : "sample-count-target-met")));
   assert.equal(matrix.filter((r) => r.reviewedProjectCount === 0).every((r) =>
     r.gapToThreeProjects === 3 && r.disclosedInvestmentEvents === 0), true);
   assert.equal(matrix.find((r) => r.institutionId === "a16z")?.evidenceRecordCount, 8);
   // The a16z Machine Age Fund is a fund/thematic announcement, not a project.
 });
 
-test("each of the first ten firms has at least three evidenced companies, not three disclosed investments", () => {
+test("initial firms retain three reviewed projects while newly covered firms may grow incrementally", () => {
   const matrix = investorProjectCoverageMatrix();
   const withSamples = matrix.filter((row) => row.reviewedProjectCount > 0);
-  assert.equal(withSamples.length, 10);
-  assert.ok(withSamples.every((row) => row.reviewedProjectCount >= 3 && row.gapToThreeProjects === 0));
-  assert.equal(withSamples.filter((row) => row.reviewedProjectCount === 4).length, 3);
-  assert.equal(matrix.filter((row) => row.state === "no-project-evidence").length, 20);
+  const representedFirms = new Set(investorEvidenceRecords.filter((row) => row.project).map((row) => row.institutionId));
+  assert.equal(withSamples.length, representedFirms.size);
+  // Preserve the original ten-firm, three-project coverage milestone while
+  // allowing newly admitted institutions to start with just one reviewed project.
+  const initialCohort = ["sequoia", "a16z", "lightspeed", "lux", "dcvc",
+    "eclipse", "qiming", "earlybird", "iq-capital", "utec"];
+  for (const id of initialCohort) {
+    const firm = matrix.find((row) => row.institutionId === id);
+    assert.ok(firm && firm.reviewedProjectCount >= 3 && firm.gapToThreeProjects === 0, id);
+  }
+  for (const id of ["sequoia", "a16z", "eclipse"]) {
+    assert.ok(matrix.find((row) => row.institutionId === id)!.reviewedProjectCount >= 4, id);
+  }
+  assert.equal(matrix.filter((row) => row.state === "no-project-evidence").length,
+    matrix.length - withSamples.length);
   const utec = matrix.find((row) => row.institutionId === "utec")!;
   assert.equal(utec.reviewedProjectCount, 3);
   assert.equal(utec.disclosedInvestmentEvents, 1);
