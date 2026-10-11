@@ -49,6 +49,46 @@ class InvestorSourceScoutTests(unittest.TestCase):
         self.assertEqual(result["candidates"][0]["claimStatus"], "unreviewed-navigation-candidate")
         self.assertFalse(result["candidates"][0]["investmentRelationConfirmed"])
 
+    def test_index_news_late_article_links_are_not_displaced_by_old_carousel(self):
+        # On the actual Index news page, old generic Read-more carousel links
+        # precede the current dated article listing in the HTML.
+        old = "".join(f'<a href="/perspectives/old-{i}/">Read more</a>' for i in range(18))
+        recent = (
+            '<a href="/perspectives/making-quantum-computing-real-our-investment-in-oratomic/">'
+            'Making Quantum Computing Real: Our Investment in Oratomic by Martin Mignot '
+            'This link opens the post, "Making Quantum Computing Real"</a>'
+            '<a href="/perspectives/ai-that-owns-business-outcomes-our-investment-in-hone/">'
+            'AI That Owns Business Outcomes: Our Investment in Hone by Shardul Shah, Mark Xu '
+            'This link opens the post, "AI That Owns Business Outcomes"</a>'
+            '<a href="https://untrusted.example.org/perspectives/investing-in-fake/">'
+            'Fake source This link opens the post</a>'
+        )
+        url = "https://www.indexventures.com/perspectives/news/"
+        rows = extract_candidates(old + recent, url, "index")
+        self.assertEqual(len(rows), 2)
+        self.assertTrue(all("This link opens the post" not in row["title"] for row in rows))
+        self.assertTrue(any("oratomic" in row["url"] for row in rows))
+        self.assertTrue(any("hone" in row["url"] for row in rows))
+        self.assertTrue(all(row["publishedAt"] is None for row in rows))
+        self.assertTrue(all(row["claimStatus"] == "unreviewed-navigation-candidate"
+                            and row["investmentRelationConfirmed"] is False for row in rows))
+        self.assertEqual([row["id"] for row in rows],
+                         [row["id"] for row in extract_candidates(old + recent, url, "index")])
+
+    def test_index_news_entry_remains_on_registered_official_domain(self):
+        index = {"id": "index", "officialUrl": "https://www.indexventures.com/",
+                 "discoveryUrl": "https://www.indexventures.com/perspectives/news/"}
+        html = ('<a href="/perspectives/making-quantum-computing-real-our-investment-in-oratomic/">'
+                'Our Investment in Oratomic This link opens the post</a>')
+        with patch("tools.innovation_investor_source_scout.fetch_page") as fetch:
+            fetch.return_value = (index["discoveryUrl"], html, "digest")
+            result = scout(index)
+        fetch.assert_called_once_with(index["discoveryUrl"], "www.indexventures.com")
+        self.assertEqual(result["status"], "candidates-found")
+        self.assertEqual(len(result["candidates"]), 1)
+        self.assertEqual(result["sourceUrl"], index["discoveryUrl"])
+        self.assertFalse(result["candidates"][0]["investmentRelationConfirmed"])
+
     def test_cross_domain_news_entry_is_rejected_before_network(self):
         firm = {
             "id": "firm",
