@@ -96,9 +96,10 @@ export function InvestorCoverageDirectory({rows}: {rows: readonly InvestorCovera
               </p>
               <p><b>最近成功采集：</b>尚未建立跨机构可比的运行基线</p>
             </div>
-            <p className={styles.anchor}><a href={`/innovation-capital/investors/#institution-${row.id}`}>
-              {row.cohorts.includes("global-core") ? "查看原全球机构研究档案 →" : "中国机构研究档案待接入 →"}
-            </a></p>
+            <p className={styles.anchor}>{row.cohorts.includes("global-core")
+              ? <a href={`/innovation-capital/investors/#institution-${row.id}`}>查看原全球机构研究档案 →</a>
+              : <span>中国机构深度研究档案待接入；当前仅展示已核实来源与覆盖基线</span>}
+            </p>
           </article>
         ))}
         {!filtered.length && <p className={styles.empty}>没有符合筛选条件的机构，请调整范围或关键词。</p>}
