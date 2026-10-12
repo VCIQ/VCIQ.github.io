@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 1,
+  "status": "identity-migration-proposal",
+  "generatedAt": "2026-10-11",
+  "sourceEvidence": [
+    "config/innovation_global_investors.json",
+    "public/data/institution_entities.json",
+    "config/institution_entity_aliases.json"
+  ],
+  "originalGlobalCount": 30,
+  "originalGlobalChinaCount": 8,
+  "previousProposedChinaCount": 12,
+  "proposedOverlap": 7,
+  "additionalCanonicalEntities": 5,
+  "unifiedCanonicalCount": 35,
+  "chinaFocusCount": 13,
+  "warning": "此前按30+12=42未去重，且引用了不属于现有全球30家的机构。此版以GitHub生产注册表和中国目录为准。",
+  "decisions": [
+    {
+      "canonicalId": "hongshan",
+      "decision": "reuse-existing",
+      "legacyProductionId": "hongshan",
+      "evidenceMove": false,
+      "reason": "现有全球30家已包含该中国机构，不新增重复记录"
+    },
+    {
+      "canonicalId": "qiming",
+      "decision": "reuse-existing",
+      "legacyProductionId": "qiming",
+      "evidenceMove": false,
+      "reason": "现有全球30家已包含该中国机构，不新增重复记录"
+    },
+    {
+      "canonicalId": "idg-capital",
+      "decision": "reuse-existing",
+      "legacyProductionId": "idg-capital",
+      "evidenceMove": false,
+      "reason": "现有全球30家已包含该中国机构，不新增重复记录"
+    },
+    {
+      "canonicalId": "legend-capital",
+      "decision": "reuse-existing",
+      "legacyProductionId": "legend-capital",
+      "evidenceMove": false,
+      "reason": "现有全球30家已包含该中国机构，不新增重复记录"
+    },
+    {
+      "canonicalId": "source-code",
+      "decision": "reuse-existing",
+      "legacyProductionId": "source-code",
+      "evidenceMove": false,
+      "reason": "现有全球30家已包含该中国机构，不新增重复记录"
+    },
+    {
+      "canonicalId": "zhenfund",
+      "decision": "reuse-existing",
+      "legacyProductionId": "zhenfund",
+      "evidenceMove": false,
+      "reason": "现有全球30家已包含该中国机构，不新增重复记录"
+    },
+    {
+      "canonicalId": "sinovation",
+      "decision": "reuse-existing",
+      "legacyProductionId": "sinovation",
+      "evidenceMove": false,
+      "reason": "现有全球30家已包含该中国机构，不新增重复记录"
+    },
+    {
+      "canonicalId": "matrix-china",
+      "decision": "add-to-parallel-registry",
+      "sourceVerification": "existing-profile-homepage",
+      "evidenceMove": false,
+      "reason": "中国重点机构档案已存在；保持待审来源与投资事实隔离"
+    },
+    {
+      "canonicalId": "gaorong",
+      "decision": "add-to-parallel-registry",
+      "sourceVerification": "existing-profile-homepage",
+      "evidenceMove": false,
+      "reason": "中国重点机构档案已存在；保持待审来源与投资事实隔离"
+    },
+    {
+      "canonicalId": "northern-light",
+      "decision": "add-to-parallel-registry",
+      "sourceVerification": "pending-official-source",
+      "evidenceMove": false,
+      "reason": "中国重点机构档案已存在；保持待审来源与投资事实隔离"
+    },
+    {
+      "canonicalId": "shunwei",
+      "decision": "add-to-parallel-registry",
+      "sourceVerification": "pending-official-source",
+      "evidenceMove": false,
+      "reason": "中国重点机构档案已存在；保持待审来源与投资事实隔离"
+    },
+    {
+      "canonicalId": "five-years",
+      "decision": "add-to-parallel-registry",
+      "sourceVerification": "pending-official-source",
+      "evidenceMove": false,
+      "reason": "中国重点机构档案已存在；保持待审来源与投资事实隔离"
+    },
+    {
+      "canonicalId": "casstar",
+      "decision": "keep-existing-china",
+      "legacyProductionId": "casstar",
+      "evidenceMove": false,
+      "reason": "原全球30家中另一家中国机构中科创星继续保留，不能在China-focus统计中遗漏"
+    },
+    {
+      "canonicalId": "sequoia",
+      "relatedCanonicalId": "hongshan",
+      "decision": "keep-separate-historical-lineage",
+      "evidenceMove": false,
+      "reason": "Sequoia Capital与HongShan不是同一当前规范机构；历史同源关系不授权合并投资关系"
+    }
+  ],
+  "highRisk": [
+    {
+      "pair": [
+        "sequoia",
+        "hongshan"
+      ],
+      "severity": "high",
+      "policy": "keep-separate",
+      "noAliasMerge": true,
+      "condition": "按原始投资事件的时间、基金及主体进行归属，不根据品牌沿革跨ID移动记录"
+    },
+    {
+      "entities": [
+        "northern-light",
+        "shunwei",
+        "five-years"
+      ],
+      "severity": "medium",
+      "policy": "source-onboarding",
+      "condition": "未核实官方首页/新闻/portfolio以前不得视为采集已覆盖"
+    }
+  ]
+}
