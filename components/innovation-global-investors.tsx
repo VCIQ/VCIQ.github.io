@@ -11,5 +11,6 @@ export function InnovationGlobalInvestors() {
     <div className={styles.methodGrid}>{groups.map((group) => <article key={group}><strong>{group}</strong><p>{globalInnovationInvestors.filter((item) => item.regionGroup === group).map((item) => item.name).join("、")}</p></article>)}</div>
     <p className={styles.scopeNote}>{summary.coverageLabel}。没有样例不代表没有投资；官方入口核验不等于已完整接入组合、人物和动态采集。</p>
     <Link className={styles.researchLink} href="/innovation-capital/investors/">打开机构、项目、投资人发言与结果研究 →</Link>
+    <Link className={styles.researchLink} href="/innovation-capital/coverage/">查看全球与中国科创机构覆盖质量 →</Link>
   </section>;
 }
