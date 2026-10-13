@@ -42,6 +42,7 @@ const lifecycle = JSON.parse(
     broker: string;
     route: string;
     lifecycleStatus: string;
+    latestEventDate: string;
     stage: string;
     stockCode: string;
     sources: Array<{ url: string; level: string }>;
