@@ -10,6 +10,10 @@ on:
       - "app/institutions/page.tsx"
       - "app/reports/page.tsx"
       - "app/people/page.tsx"
+      - "app/innovation-capital/people/**"
+      - "lib/innovation-people-network.ts"
+      - "config/innovation_people_network.json"
+      - "tests/innovation-people-network.test.ts"
       - "components/homepage-channel-updates.tsx"
       - "components/channel-update-directory.tsx"
       - "components/channel-update-directory-client.tsx"
@@ -63,6 +67,10 @@ on:
       - "app/institutions/page.tsx"
       - "app/reports/page.tsx"
       - "app/people/page.tsx"
+      - "app/innovation-capital/people/**"
+      - "lib/innovation-people-network.ts"
+      - "config/innovation_people_network.json"
+      - "tests/innovation-people-network.test.ts"
       - "components/homepage-channel-updates.tsx"
       - "components/channel-update-directory.tsx"
       - "components/channel-update-directory-client.tsx"
@@ -126,6 +134,7 @@ jobs:
         run: >-
           node --import tsx --test
           --test-skip-pattern="^(technology publication preserves observed tracks and applies reviewed analysis corrections|technology publication repairs incomplete metadata for verified events|technology track filters use reviewed public tracks without erasing provenance|technology directory excludes known identity-only and unrelated source collisions)$"
+          tests/innovation-people-network.test.ts
           tests/channel-updates.test.ts
           tests/channel-track-filter-stability.test.ts
           tests/technology-rolling-regressions.test.ts
@@ -155,3 +164,4 @@ jobs:
         run: npm run audit:track-semantic-rescue
       - name: Audit source-track relevance
         run: npm run audit:source-track-relevance
+

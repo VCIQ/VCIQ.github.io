@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import type { InnovationInvestor, InvestorEvidenceRecord } from "@/lib/innovation-investor-research";
 import styles from "./research.module.css";
 
@@ -12,7 +13,7 @@ const outcomeDescription = (status: string | null) => status === "company-report
     ? "公司披露的收购节点（不代表该投资机构获得现金回报）"
     : (status ?? "尚无结果结论");
 
-export function InvestorResearchDirectory({institutions, records}: {institutions: InnovationInvestor[]; records: InvestorEvidenceRecord[]}) {
+export function InvestorResearchDirectory({institutions, records, people}: {institutions: InnovationInvestor[]; records: InvestorEvidenceRecord[]; people: {id: string; name: string; institutionId: string | null}[]}) {
   const [query, setQuery] = useState("");
   const [region, setRegion] = useState("全部");
   const [topic, setTopic] = useState("全部");
@@ -43,6 +44,7 @@ export function InvestorResearchDirectory({institutions, records}: {institutions
             <span className={styles.tag}>{item.regionGroup} · {item.style}</span>
             <h3>{item.name}</h3><p>{item.researchTopics.join(" · ")}</p>
             <p className={styles.note}>{item.identityNote}</p>
+            <div className={styles.links}>{people.filter(p => p.institutionId === item.id).map(p => <Link key={p.id} href={`/innovation-capital/people/#${p.id}`}>核心人物：{p.name} →</Link>)}</div>
             <div className={styles.links}><a href={item.officialUrl} target="_blank" rel="noreferrer">官方入口 ↗</a><a href={item.evidenceUrl} target="_blank" rel="noreferrer">身份/范围依据 ↗</a></div>
             <a className={styles.action} href="#evidence" onClick={() => setSelected(item.id)}>{count ? `查看 ${count} 条核验样例` : "查看覆盖说明（尚无核验事件）"}</a>
           </article>;
@@ -68,3 +70,4 @@ export function InvestorResearchDirectory({institutions, records}: {institutions
     </section>
   </>;
 }
+

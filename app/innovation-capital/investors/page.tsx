@@ -10,6 +10,7 @@ import { ProjectEvidenceTimelines } from "./project-evidence-timelines";
 import { InvestorProjectEvidenceNetwork } from "./project-evidence-network";
 import { validateInvestorProjectIdentities } from "@/lib/innovation-investor-project-graph";
 import styles from "./research.module.css";
+import { peopleNetworkSeed } from "@/lib/innovation-people-network";
 
 export const metadata: Metadata = {
   title: "全球重点科创投资机构研究",
@@ -28,6 +29,7 @@ export default function InnovationInvestorsPage() {
       <p className={styles.note}>目录及样例核验记录：{investorResearchReviewedAt}（UTC）。不代表全部项目的最新状态。</p>
       <Link href="/innovation-capital/">← 返回科创频道</Link>
       <p><Link href="/innovation-capital/investors/intelligence/">查看机构投资情报 →</Link></p>
+      <p><Link href="/innovation-capital/people/">核心人物与投资关系 · LinkedIn 入口 →</Link></p>
     </header>
     <section className={styles.metrics} aria-label="证据覆盖范围">
       <article><strong>{summary.registeredInstitutions}</strong><span>全球核心研究样本</span></article>
@@ -36,7 +38,7 @@ export default function InnovationInvestorsPage() {
       <article><strong>未知</strong><span>基金实际回报，不推算</span></article>
     </section>
     <aside className={styles.boundary}><strong>覆盖范围 ≠ 投资业绩</strong><p>{investorMonitoringPolicy}</p><p>{investorEvidenceScope}</p></aside>
-    <InvestorResearchDirectory institutions={globalInnovationInvestors} records={investorEvidenceRecords} />
+    <InvestorResearchDirectory institutions={globalInnovationInvestors} records={investorEvidenceRecords} people={peopleNetworkSeed.map(({id, name, institutionId}) => ({id, name, institutionId}))} />
     <InvestorProjectEvidenceNetwork />
     <ProjectEvidenceTimelines />
     <section className={styles.method} id="methodology">
@@ -51,4 +53,5 @@ export default function InnovationInvestorsPage() {
     </section>
   </main>;
 }
+
 
