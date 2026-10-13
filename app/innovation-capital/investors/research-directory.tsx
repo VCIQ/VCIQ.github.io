@@ -1,4 +1,5 @@
 "use client";
+import { investorEvidenceDateLabel } from "@/lib/investor-evidence-format";
 
 import { useMemo, useState } from "react";
 import type { InnovationInvestor, InvestorEvidenceRecord } from "@/lib/innovation-investor-research";
@@ -55,7 +56,7 @@ export function InvestorResearchDirectory({institutions, records}: {institutions
       {!evidence.length ? <div className={styles.boundary}><strong>尚无经过核验的事件样例</strong><p>该机构已进入研究目录，但没有足够已核验证据。不能把“无记录”写成“没有投资”，也不会用新闻提及自动补造投资关系。</p></div> : null}
       <div className={styles.evidence}>
         {evidence.map((item) => <article key={item.id}>
-          <div className={styles.links}><span className={styles.tag}>{labels[item.kind]}</span><span>{byId.get(item.institutionId)?.name}</span><time>{item.date}（{item.datePrecision === "day" ? "日" : item.datePrecision === "month" ? "月" : "年"}粒度）</time></div>
+          <div className={styles.links}><span className={styles.tag}>{labels[item.kind]}</span><span>{byId.get(item.institutionId)?.name}</span><time>{investorEvidenceDateLabel(item.date,item.datePrecision)}</time></div>
           <h3>{item.title}</h3><p>{item.summary}</p>
           <dl><div><dt>项目</dt><dd>{item.project ?? "主题/基金层面，非具体项目融资"}</dd></div><div><dt>轮次/参与角色</dt><dd>{item.round ?? "未披露 / 不适用"} · {item.participation ?? "不据此认定出资角色"}</dd></div><div><dt>本轮融资总额</dt><dd>{money(item.roundAmount)}</dd></div><div><dt>本机构投资额</dt><dd>{money(item.investorAmount)}</dd></div></dl>
           {item.linkedPerson ? <p><b>项目关联人：</b>{item.linkedPerson.name}；{item.linkedPerson.relationship}</p> : null}

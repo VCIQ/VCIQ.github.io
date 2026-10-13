@@ -36,7 +36,7 @@ export default function InnovationInvestorsPage() {
       <article><strong>未知</strong><span>基金实际回报，不推算</span></article>
     </section>
     <aside className={styles.boundary}><strong>覆盖范围 ≠ 投资业绩</strong><p>{investorMonitoringPolicy}</p><p>{investorEvidenceScope}</p></aside>
-    <InvestorResearchDirectory institutions={globalInnovationInvestors} records={investorEvidenceRecords} />
+    <InvestorResearchDirectory institutions={globalInnovationInvestors} records={investorEvidenceRecords.filter(row => globalInnovationInvestors.some(firm => firm.id === row.institutionId))} />
     <InvestorProjectEvidenceNetwork />
     <ProjectEvidenceTimelines />
     <section className={styles.method} id="methodology">

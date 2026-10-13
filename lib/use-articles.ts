@@ -67,6 +67,8 @@ export type RelatedArticleSource = {
 };
 
 export type LiveIntelligenceEvent = IntelligenceEvent & {
+  /** Inbox relevance; kept separate from public event importance and credibility. */
+  relevanceScore?: number;
   firstSeenAt?: string;
   publicationTimePrecision?: "day" | "second";
   entityResolutionStatus?: "matched" | "ambiguous" | "unresolved";

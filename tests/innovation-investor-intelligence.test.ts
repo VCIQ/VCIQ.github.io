@@ -85,3 +85,13 @@ test("task 5 timeline is deterministic and preserves per-record attribution", ()
   assert.equal(summary.status, "reviewed-sample-only");
 });
 
+
+test('coverage expansion preserves undated relationships as non-transactions',()=>{
+  const additions=investorEvidenceRecords.filter(row=>row.id.endsWith('-review-20261013'));
+  assert.equal(new Set(additions.map(row=>row.institutionId)).size,24);
+  const undated=additions.filter(row=>row.datePrecision==='unknown');
+  assert.ok(undated.length>0);
+  assert.ok(undated.every(row=>row.date==='' && row.kind==='portfolio-relationship' && row.participation===null));
+  assert.equal(investorEvidenceDateLabel('','unknown'),'原文未标事件日期');
+  assert.equal(investorIntelligenceCoverage().evidenceCoveredInstitutions,35);
+});

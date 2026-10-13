@@ -8,7 +8,7 @@ import registry from "../config/innovation_investor_registry_v2.json";
 
 test("coverage snapshot reconciles all 35 unique rows with signed evidence counts", () => {
   assert.equal(snapshot.schemaVersion, 1);
-  assert.equal(snapshot.status, "initial-observed-evidence-baseline");
+  assert.equal(snapshot.status, "reviewed-evidence-snapshot");
   assert.equal(snapshot.institutions.length, registry.institutionCount);
   assert.equal(snapshot.summary.institutions, registry.institutionCount);
   assert.equal(snapshot.summary.globalCore, roster.institutions.length);
@@ -45,10 +45,10 @@ test("a sparse or unscanned institution must not be labelled poor-quality or ina
   assert.ok(snapshot.institutions.every((row) => row.scoreStatus === "pending-source-health-baseline"));
   const noHomepage = snapshot.institutions.filter((row) => !row.registeredOfficialHomepage);
   assert.deepEqual(noHomepage.map((row) => row.institutionId).sort(),
-    ["five-years", "northern-light", "shunwei"]);
+    []);
   assert.ok(noHomepage.every((row) => row.sourceStatus === "pending-official-source"));
-  assert.ok(snapshot.institutions.some((row) => row.reviewedEvidenceCount === 0 &&
-    row.coverageScore === null));
+  assert.ok(snapshot.institutions.every((row) => row.reviewedEvidenceCount > 0 &&
+    row.coverageScore === null), "a reviewed sample does not establish source completeness");
 });
 
 test("verified source presence is not confused with scanned source completeness", () => {

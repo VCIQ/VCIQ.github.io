@@ -36,7 +36,7 @@ test("Index Oratomic and Sequoia TypeSafe/Catalyst map to unchanged source-backe
   assert.equal(byId.get("hongshan")?.id, "hongshan");
   for (const id of ["five-years", "northern-light", "shunwei"]) {
     const row = byId.get(id)!;
-    assert.equal(row.officialHomepage, null);
+    assert.ok(row.officialHomepage?.startsWith("https://"));
     assert.equal(row.lastScoutAt, null);
     assert.equal(row.coverageScore, null);
   }

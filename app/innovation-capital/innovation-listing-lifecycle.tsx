@@ -1,4 +1,5 @@
 import { ExternalLink } from "lucide-react";
+import checks from "@/config/innovation_project_checks.json";
 import lifecycle from "@/config/innovation_listing_lifecycle.json";
 import styles from "./page.module.css";
 
@@ -55,7 +56,8 @@ export function InnovationListingLifecycle() {
 
             <dl className={styles.metaGrid}>
               <div><dt>首次辅导</dt><dd>{project.firstGuidanceDate}</dd></div>
-              <div><dt>最新核验</dt><dd>{project.latestEventDate}</dd></div>
+              <div><dt>已记录事件日期</dt><dd>{project.latestEventDate}</dd></div>
+              <div><dt>本轮节点核查</dt><dd>{checks.checks.find(row => row.projectId === project.id)?.checkedAt ?? "尚未复核"}</dd></div>
               <div><dt>辅导/保荐机构</dt><dd>{project.broker}</dd></div>
               <div><dt>资本路径</dt><dd>{project.capitalMarketPath}</dd></div>
             </dl>

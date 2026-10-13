@@ -1,3 +1,4 @@
+import registry from "@/config/innovation_investor_registry_v2.json";
 import identityRegistry from "@/config/innovation_investor_project_identities.json";
 import {
   globalInnovationInvestors,
@@ -140,7 +141,7 @@ export function validateInvestorProjectIdentities(
 }
 
 function minMaxDates(rows: readonly InvestorEvidenceRecord[]) {
-  const dates = rows.map((row) => row.date).sort((a, b) => a.localeCompare(b));
+  const dates = rows.map((row) => row.date).filter(Boolean).sort((a, b) => a.localeCompare(b));
   return {earliest: dates[0] ?? "", latest: dates[dates.length - 1] ?? ""};
 }
 
@@ -188,7 +189,7 @@ export function buildCanonicalInvestorProjectGraph(
   const byName = new Map(identities.flatMap((project) =>
     project.observedNames.map((name): [string, string] => [keyOf(name), project.id]),
   ));
-  const firmNames = new Map(globalInnovationInvestors.map((firm) => [firm.id, firm.name]));
+  const firmNames = new Map(registry.institutions.map((firm) => [firm.id, firm.canonicalName]));
   return identities.map((identity) => {
     const rows = records.filter((row) => row.project && byName.get(keyOf(row.project)) === identity.id);
     const byInstitution = new Map<string, InvestorEvidenceRecord[]>();

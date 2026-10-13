@@ -26,20 +26,21 @@ test("30 curated institutions have unique identities and validated primary-sourc
   assert.match(globalInnovationInvestors.find((row) => row.id === "vertex-sea-india")!.officialUrl, /vertexventures\.sg/);
 });
 
-test("evidence samples now span ten institutions, without implying complete portfolio coverage", () => {
+test("global summary keeps its thirty-firm denominator separate from China-only additions", () => {
   const summary = investorEvidenceSummary();
+  const globalRecords = investorEvidenceRecords.filter(row => globalInnovationInvestors.some(firm => firm.id === row.institutionId));
   assert.equal(summary.registeredInstitutions, 30);
-  const coveredInstitutions = new Set(investorEvidenceRecords.map((row) => row.institutionId));
-  const investmentKeys = new Set(investorEvidenceRecords.filter((row) => row.kind === "investment").map((row) =>
+  const coveredInstitutions = new Set(globalRecords.map((row) => row.institutionId));
+  const investmentKeys = new Set(globalRecords.filter((row) => row.kind === "investment").map((row) =>
     JSON.stringify([row.institutionId, row.project, row.round ?? row.id, row.date]),
   ));
   assert.ok(coveredInstitutions.size >= 10, "initial reviewed institutional coverage must not disappear");
   assert.ok(investorEvidenceRecords.length >= 57, "the signed evidence baseline must not shrink");
   assert.ok(investmentKeys.size >= 31, "the known source-backed investment disclosures must remain");
   assert.equal(summary.evidenceCoveredInstitutions, coveredInstitutions.size);
-  assert.equal(summary.reviewedRecords, investorEvidenceRecords.length);
+  assert.equal(summary.reviewedRecords, globalRecords.length);
   assert.equal(summary.disclosedInvestmentEvents, investmentKeys.size);
-  assert.equal(summary.outcomeMilestones, investorEvidenceRecords.filter((row) => row.kind === "outcome").length);
+  assert.equal(summary.outcomeMilestones, globalRecords.filter((row) => row.kind === "outcome").length);
   assert.equal(summary.returnStatus, "unknown");
 });
 

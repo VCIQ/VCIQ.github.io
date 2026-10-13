@@ -42,6 +42,7 @@ const lifecycle = JSON.parse(
     broker: string;
     route: string;
     lifecycleStatus: string;
+    latestEventDate: string;
     stage: string;
     stockCode: string;
     sources: Array<{ url: string; level: string }>;
@@ -167,7 +168,9 @@ test("listing lifecycle migrates accepted or listed hard-tech projects without l
   assert.equal(metax.broker, "华泰联合");
   assert.equal(metax.stockCode, "688802");
   assert.equal(enflame.broker, "中信证券");
-  assert.equal(enflame.lifecycleStatus, "registration-review");
+  assert.equal(enflame.lifecycleStatus, "listed");
+  assert.equal(enflame.stockCode, "688801");
+  assert.equal(enflame.latestEventDate, "2026-09-11");
   for (const project of lifecycle.projects) {
     assert.ok(["中信证券", "中信建投", "中金公司", "国泰海通", "华泰联合", "广发证券"].includes(project.broker));
     assert.ok(project.sources.some((source) => source.level === "regulatory"));

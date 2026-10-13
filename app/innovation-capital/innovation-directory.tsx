@@ -133,7 +133,7 @@ export function InnovationDirectory() {
 
             <dl className={styles.metaGrid}>
               <div><dt>首次辅导</dt><dd>{project.firstGuidanceDate}</dd></div>
-              <div><dt>最新核验</dt><dd>{project.latestEventDate}</dd></div>
+              <div><dt>已记录事件日期</dt><dd>{project.latestEventDate}</dd></div>
               <div><dt>资本路径</dt><dd>{project.capitalMarketPath}</dd></div>
               <div><dt>港股状态</dt><dd>{project.hkStatus === "none" ? "—" : project.hkStatus}</dd></div>
             </dl>

@@ -1,3 +1,5 @@
+import { applyArticleContentReview } from "./article-content-reviews";
+
 /** Small, shared public-surface admission rules. Never import the full archive here. */
 export type HomepagePublicationCandidate = { title: string; summary: string; type: string; source: {url: string}; qualityStatus?: string; };
 export type HomepageAdmission = { admitted: boolean; reason: string | null; correctedType: string | null; };
@@ -55,7 +57,7 @@ export function admitHomepageEvents<T extends HomepagePublicationCandidate>(item
   return items.flatMap((item) => {
     const decision = assessHomepagePublication(item);
     if (!decision.admitted) return [];
-    return [{...item, title:normalizeHomepageText(item.title), summary:normalizeHomepageText(item.summary), type:decision.correctedType ?? item.type}];
+    return [applyArticleContentReview({...item, title:normalizeHomepageText(item.title), summary:normalizeHomepageText(item.summary), type:decision.correctedType ?? item.type})];
   });
 }
 

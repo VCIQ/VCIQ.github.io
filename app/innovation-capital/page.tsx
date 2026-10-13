@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Building2, Landmark, Radar, Route, ShieldCheck } from "lucide-react";
 import watchlist from "@/config/innovation_listing_watchlist.json";
+import checks from "@/config/innovation_project_checks.json";
 import lifecycle from "@/config/innovation_listing_lifecycle.json";
 import { buildInnovationOpportunityPool } from "@/lib/innovation-capital-opportunity";
 import { buildInnovationCapitalResearchModel } from "@/lib/innovation-capital-research";
@@ -63,7 +64,7 @@ export default function InnovationCapitalPage() {
           <div><Building2 size={18} /><strong>{refileCount}</strong><span>二次申报项目</span></div>
         </div>
         <div className={styles.asOf}>
-          储备目录资料时点 {watchlist.asOf} · 生命周期资料时点 {lifecycle.asOf}。
+          储备目录资料时点 {watchlist.asOf} · 生命周期基线 {lifecycle.asOf}。本轮 {checks.reviewBatchDate} 更新 {checks.checks.length}/{lifecycle.projects.length} 个生命周期项目节点；其余 {lifecycle.projects.length - checks.checks.length} 个及 {watchlist.projects.length} 条储备记录仍待本轮复核。
           这是资料版本，不是今天的采集成功时间；页面重新部署不会自动刷新底层项目事实。
         </div>
       </header>
@@ -74,6 +75,7 @@ export default function InnovationCapitalPage() {
         <a href="#listing-lifecycle-view">上市生命周期</a>
         <a href="#global-investors">全球重点投资机构</a>
         <Link href="/innovation-capital/investors/intelligence/">机构投资情报</Link>
+        <Link href="/innovation-capital/new-managers/">投中新登记35家样本</Link>
         <Link href="/innovation-capital/coverage/">采集覆盖与缺口</Link>
         <a href="#research-patterns">资本与研究关系</a>
         <a href="#listed-innovation">上市科创标杆与产业生态（{listedInnovationCompanies.length}）</a>
@@ -91,7 +93,7 @@ export default function InnovationCapitalPage() {
             <a href={item.sourceUrl} target="_blank" rel="noreferrer">{item.sourceTitle} ↗</a>
           </article>)}
         </div>
-        <p className={styles.scopeNote}>节点来源沿用现有审核目录；本次界面调整未重新核验全部项目，也没有改写其上市状态。状态变化需要监管、交易所或明确机构原文支持。</p>
+        <p className={styles.scopeNote}>本轮依据公告更新燧原科技、景旺电子及欢创科技的上市节点；其余项目保留原资料时点。状态变化需要监管、交易所或明确机构原文支持。</p>
       </section>
 
       <div id="project-reserves"><InnovationDirectory /></div>

@@ -216,7 +216,7 @@ export function parseRankedIntelligenceProjection(value: unknown): RankedIntelli
   };
 }
 
-function mappedEventType(eventTypes: string[]): EventType {
+export function mappedEventType(eventTypes: string[]): EventType {
   for (const raw of eventTypes) {
     switch (raw.trim().toLowerCase()) {
       case "funding":
@@ -275,6 +275,16 @@ function projectedRelatedSource(source: RankedIntelligenceRelatedSource): Relate
   };
 }
 
+/** Same event baselines as crawl_articles.infer_event_type; no query/recency bonus. */
+export function publicEventImportance(type: EventType): number {
+  const baselines: Record<EventType, number> = {
+    融资: 91, 并购: 89, IPO: 90, 财报: 84, 商业进展: 84,
+    产品发布: 82, 政策: 86, 产业投资: 84, 技术突破: 85,
+    公司动态: 76, 论文: 84, 监管文件: 81, 人物观点: 76,
+  };
+  return baselines[type];
+}
+
 export function rankedIntelligenceItemToArticle(
   item: RankedIntelligenceProjectionItem,
 ): LiveIntelligenceEvent {
@@ -298,7 +308,11 @@ export function rankedIntelligenceItemToArticle(
     company: companies[0] ?? "",
     sourceId: RANKED_INTELLIGENCE_SOURCE,
     publishedAt: item.publishedAt,
-    importance: item.score,
+    // Inbox relevance includes private query priority and user affinity. It is
+    // not event importance. Use the public crawler's event-type baseline; never
+    // turn a saturated relevance score into a claim of exceptional importance.
+    importance: publicEventImportance(mappedEventType(item.eventTypes)),
+    relevanceScore: item.score,
     source: {
       name: item.source,
       url: item.href,
@@ -536,7 +550,8 @@ function mergeEventArticle(
   const visibleSourceCount = 1 + (relatedSources?.length ?? 0);
   return {
     ...primary,
-    importance: Math.max(existing.importance, projected.importance),
+    importance: primary.importance,
+    relevanceScore: projected.relevanceScore ?? existing.relevanceScore,
     curated: true,
     eventClusterId: promoteProjected
       ? (projected.eventClusterId || existing.eventClusterId)
