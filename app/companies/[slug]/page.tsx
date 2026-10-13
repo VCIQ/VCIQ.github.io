@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { peopleNetworkSeed } from "@/lib/innovation-people-network";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CompanyEquityEvidence } from "@/components/company-equity-evidence";
@@ -159,6 +160,9 @@ export default async function CompanyDetail({
         </div>
         <div className="entity-monogram">{company.name.slice(0, 2).toUpperCase()}</div>
       </header>
+      {peopleNetworkSeed.some(p => p.companySlug === slug) && <nav className="hero-chips" aria-label="公司核心人物关系">
+        {peopleNetworkSeed.filter(p => p.companySlug === slug).map(p => <Link key={p.id} href={`/innovation-capital/people/#${p.id}`}>{p.name} · 职业关系与 LinkedIn →</Link>)}
+      </nav>}
 
       <div className="detail-layout">
         <aside className="toc">
@@ -577,3 +581,4 @@ function Section({
     </section>
   );
 }
+

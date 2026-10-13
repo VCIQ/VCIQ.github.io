@@ -77,6 +77,7 @@ export default function InnovationCapitalPage() {
         <Link href="/innovation-capital/investors/intelligence/">机构投资情报</Link>
         <Link href="/innovation-capital/new-managers/">投中新登记35家样本</Link>
         <Link href="/innovation-capital/coverage/">采集覆盖与缺口</Link>
+        <Link href="/innovation-capital/people/">科创人物与投资关系 · LinkedIn</Link>
         <a href="#research-patterns">资本与研究关系</a>
         <a href="#listed-innovation">上市科创标杆与产业生态（{listedInnovationCompanies.length}）</a>
       </nav>

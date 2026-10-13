@@ -74,6 +74,7 @@ export default function PeoplePage() {
           <span>资料更新 {peopleGeneratedAt.slice(0, 10)}</span>
           <span>人物事件新闻统一进入首页“人物”频道</span>
         </div>
+        <p><Link href="/innovation-capital/people/">科创人物与投资关系 · LinkedIn 入口 →</Link></p>
       </header>
 
       <ChannelSplitLayout
@@ -186,3 +187,4 @@ export default function PeoplePage() {
     </main>
   );
 }
+
