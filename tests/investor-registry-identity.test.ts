@@ -57,7 +57,7 @@ test("partial registry rejects collisions, broken lineage, and invented source U
     : row);
   assert.ok(investorRegistryV2Errors(broken).some((error) => error.includes("invalid investor relationship")));
   const fake = sourceRows.map((row) => row.id === "five-years"
-    ? {...row, officialSources: {...row.officialSources, homepage: "https://guessed.example.com/"}}
+    ? {...row, sourceStatus: "pending-official-source", officialSources: {...row.officialSources, homepage: "https://guessed.example.com/"}}
     : row);
   assert.ok(investorRegistryV2Errors(fake).some((error) => error.includes("pending official source")));
 });
