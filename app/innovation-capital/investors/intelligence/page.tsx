@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 };
 const dimensions = [["registration", "管理人资格"], ["fundraising", "基金募集"], ["investment", "项目投资"], ["exit", "退出回款"]] as const;
 const outcomeLabels: Record<string, string> = {acquired:"项目被收购", listed:"项目上市", "company-reported-commercial-update":"公司自述商业进展"};
+const participationLabels: Record<string, string> = {"disclosed-investor":"披露为投资方", "co-lead":"共同领投", lead:"领投", participant:"参与投资", "sole-investor":"独家投资"};
 
 export default function InvestorIntelligencePage() {
   const rows = buildInvestorIntelligence();
@@ -64,7 +65,7 @@ export default function InvestorIntelligencePage() {
             <p className={styles.note}>{investorEvidenceDateLabel(event.date,event.datePrecision)} · {investorEvidenceKindLabels[event.kind] ?? event.kind}</p>
             <h3>{event.headline}</h3><p>{event.summary}</p>
             {event.projectName && <p>关联项目：{event.projectName}</p>}
-            {event.kind === "investment" && <p>披露参与角色：{event.participation ?? "未披露"}；轮次：{event.round ?? "未披露"}。轮次总额：{formatDisclosedMoney(event.roundAmount)}；机构出资额：{formatDisclosedMoney(event.investorAmount)}。</p>}
+            {event.kind === "investment" && <p>披露参与角色：{event.participation ? participationLabels[event.participation] ?? event.participation : "未披露"}；轮次：{event.round ?? "未披露"}。轮次总额：{formatDisclosedMoney(event.roundAmount)}；机构出资额：{formatDisclosedMoney(event.investorAmount)}。</p>}
             {event.viewpoints.map((speaker, i) => <p key={i}>署名 / 发言人：{speaker.name}（{speaker.roleAtPublication}）。责任范围：{speaker.projectResponsibility}。观点采用转述，不作为逐字引语。</p>)}
             {event.outcomeStatus && <p>项目节点：{outcomeLabels[event.outcomeStatus] ?? event.outcomeStatus}；机构退出回款与基金实际回报仍未核验。</p>}
             <p><a href={event.sourceUrl} target="_blank" rel="noopener noreferrer">{event.sourceTitle} ↗</a></p>

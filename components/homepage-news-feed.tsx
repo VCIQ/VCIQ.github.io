@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { admitHomepageEvents } from "@/lib/homepage-publication-quality";
 import { EventQualityIndicator } from "@/components/event-quality-indicator";
 import { useFavorites } from "@/components/use-favorites";
 import { useHomepagePreferences } from "@/components/use-homepage-preferences";
@@ -338,10 +339,10 @@ export function HomepageNewsFeed({
   const priorityFeed = usePriorityIntelligence(channel === "focus");
   const focusSelection = useMemo(
     () => channel === "focus" ? buildHomepageFocusSelection(
-      mergePriorityCandidates(
+      admitHomepageEvents(mergePriorityCandidates(
         articles,
         [...(priorityFeed.snapshot?.items ?? []), ...(priorityFeed.batch6Snapshot?.items ?? [])],
-      ),
+      )),
       preferences, favorites, hotnessItems, clockMs ?? 0,
     ) : null,
     [channel, articles, priorityFeed.snapshot, priorityFeed.batch6Snapshot, preferences, favorites, hotnessItems, clockMs],
