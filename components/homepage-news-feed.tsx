@@ -860,7 +860,7 @@ export function HomepageNewsFeed({
                     {hero ? (
                       <div className={styles.signalVisual} aria-hidden="true">
                         <span>{item.sector}</span>
-                        <strong>{item.importance}</strong>
+                        <strong>情报</strong>
                         <small>INTELLIGENCE</small>
                       </div>
                     ) : null}
@@ -956,7 +956,7 @@ export function HomepageNewsFeed({
             <dl>
               <div><dt>事件</dt><dd>{todayArticleCount}</dd></div>
               <div><dt>新收录</dt><dd>{newArticleCount}</dd></div>
-              <div><dt>来源</dt><dd>{bootstrap.sourceCount}</dd></div>
+              <div><dt>原文链接</dt><dd>{bootstrap.sourceCount}</dd></div>
               <div><dt>平台</dt><dd>{bootstrap.platformCount}</dd></div>
             </dl>
           </section>
@@ -1003,3 +1003,4 @@ export function HomepageNewsFeed({
     </section>
   );
 }
+

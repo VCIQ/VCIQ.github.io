@@ -1,9 +1,31 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import test from "node:test";
-import { assessHomepagePublication, admitHomepageEvents } from "../lib/homepage-publication-quality";
+import { assessHomepagePublication, admitHomepageEvents, normalizeHomepageText } from "../lib/homepage-publication-quality";
 
 const item = (title: string, extra = {}) => ({title, summary:"对应文章的有效摘要。", type:"技术突破", source:{url:"https://example.com/article"}, ...extra});
+
+test("routine trading and an observed report sales page do not occupy the research feed", () => {
+  for (const title of ["蓝箭电子(301348)10月9日主力资金净卖出795.25万元", "港股收评:恒指涨0.25%", "科创芯片ETF获资金持续加码"]) {
+    assert.equal(assessHomepagePublication(item(title)).reason, "routine-market-trading");
+  }
+  assert.equal(assessHomepagePublication(item("半导体特种气体市场规模、份额、增长,2034年", {source:{url:"https://straitsresearch.com/zh/report/semiconductor-specialty-gas-market"}})).admitted, false);
+  for (const title of ["半导体公司完成数亿元A轮融资", "机器人企业收购芯片研发团队", "交易所发布首只科技ETF上市公告", "半导体气体企业获得客户订单"]) {
+    assert.equal(assessHomepagePublication(item(title)).admitted, true, title);
+  }
+});
+
+test("HTML entities are decoded as plain text without changing source archive or metadata", () => {
+  const original = {...item("芯片&amp;机器人", {summary:"量产&nbsp;进展 &quot;已披露&quot; &#xB7; &#20013;文"}), id:"stable-id", importance:100};
+  const [projected] = admitHomepageEvents([original]);
+  assert.equal(projected.title, "芯片&机器人");
+  assert.equal(projected.summary, '量产 进展 "已披露" · 中文');
+  assert.equal(original.title, "芯片&amp;机器人");
+  assert.equal(projected.id, original.id);
+  assert.equal(projected.importance, original.importance);
+  assert.equal(normalizeHomepageText("&#x110000; &#xD800; &unknown;"), "&#x110000; &#xD800; &unknown;");
+  assert.equal(normalizeHomepageText("&amp;nbsp;实际进展"), "实际进展");
+});
 
 test("unrelated horoscope titles are rejected even with technology metadata", () => {
   const bad = item("水瓶座最容易显得笨", {sector:"新能源",importance:100,qualityStatus:"高可信"});
@@ -39,3 +61,4 @@ test("bootstrap and refreshed public article views share the data-free admission
   assert.match(source("lib/use-articles.ts"), /admitHomepageEvents\(payload\.articles\)/);
   assert.doesNotMatch(source("lib/homepage-publication-quality.ts"), /public\/data|catalog-data|content-relevance/);
 });
+

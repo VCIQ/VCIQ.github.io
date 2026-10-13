@@ -20,8 +20,13 @@ export type InvestorIntelligenceEvent = {
   date: string;
   datePrecision: InvestorEvidenceRecord["datePrecision"];
   headline: string;
+  summary: string;
   sourceUrl: string;
   sourceKind: string;
+  sourceTitle: string;
+  sourcePublisher: string;
+  sourcePublishedAt: string | null;
+  sourceLocator: string;
   participation: string | null;
   round: string | null;
   roundAmount: {value: number; currency: string} | null;
@@ -30,6 +35,27 @@ export type InvestorIntelligenceEvent = {
   viewpoints: {name: string; roleAtPublication: string; projectResponsibility: string}[];
   followUp: string;
 };
+
+export type ActivityEvidence = {
+  status: "observed" | "unknown";
+  evidenceIds: string[];
+  explanation: string;
+};
+
+/** Independent evidence dimensions, not a regulatory status or a maturity score. */
+export function investorActivityEvidence(events: readonly InvestorIntelligenceEvent[]) {
+  const investments = events.filter(event => event.kind === "investment");
+  return {
+    registration: {status: "unknown", evidenceIds: [], explanation: "尚未逐项核验法律主体、适用登记制度及当前管理人档案；研究目录收录不代表取得管理人资格。"},
+    fundraising: {status: "unknown", evidenceIds: [], explanation: "基金或主题公告不证明完成募集、产品备案或实缴；这些事项需要各自的基金级证据。"},
+    investment: {status: investments.length ? "observed" : "unknown", evidenceIds: investments.map(event => event.evidenceId), explanation: investments.length ? "存在已审查投资披露；仅说明公开披露样本，不代表完整投资组合或出资现金流已审计。" : "暂无已审查投资披露；不代表现实中没有投资。"},
+    exit: {status: "unknown", evidenceIds: [], explanation: "项目上市或被收购不证明该机构已出售持股、收到回款或完成基金分配。"},
+  } satisfies Record<string, ActivityEvidence>;
+}
+
+export function investorEvidenceDateLabel(date: string, precision: string): string {
+  return `${date}（${precision === "year" ? "仅年份" : precision === "month" ? "仅月份" : "日级日期"}）`;
+}
 
 export type InstitutionIntelligence = {
   institutionId: string;
@@ -41,6 +67,8 @@ export type InstitutionIntelligence = {
   reviewedInvestmentCount: number;
   reviewedViewpointCount: number;
   reviewedOutcomeCount: number;
+  fundAnnouncementCount: number;
+  activityEvidence: ReturnType<typeof investorActivityEvidence>;
   latestEvidenceDate: string | null;
   events: InvestorIntelligenceEvent[];
   /** No realized fund performance can be inferred from the reviewed sources. */
@@ -71,8 +99,13 @@ function toEvent(record: InvestorEvidenceRecord): InvestorIntelligenceEvent {
     date: record.date,
     datePrecision: record.datePrecision,
     headline: record.title,
+    summary: record.summary,
     sourceUrl: record.source.url,
     sourceKind: record.source.kind,
+    sourceTitle: record.source.title,
+    sourcePublisher: record.source.publisher,
+    sourcePublishedAt: record.source.publishedAt,
+    sourceLocator: record.source.locator,
     participation: record.participation,
     round: record.round,
     roundAmount: record.roundAmount,
@@ -92,7 +125,10 @@ export function buildInvestorIntelligence(
 ): InstitutionIntelligence[] {
   const institutions = registry.institutions;
   const known = new Set(institutions.map(i => i.id));
+  const seen = new Set<string>();
   for (const record of records) {
+    if (seen.has(record.id)) throw new Error(`Task 5: duplicate evidence ID: ${record.id}`);
+    seen.add(record.id);
     if (!known.has(record.institutionId)) {
       throw new Error(`Task 5: evidence refers to unregistered institution: ${record.id}`);
     }
@@ -112,6 +148,8 @@ export function buildInvestorIntelligence(
       reviewedInvestmentCount: events.filter(event => event.kind === "investment").length,
       reviewedViewpointCount: events.filter(event => event.kind === "viewpoint").length,
       reviewedOutcomeCount: events.filter(event => event.kind === "outcome").length,
+      fundAnnouncementCount: events.filter(event => event.kind === "fund-announcement").length,
+      activityEvidence: investorActivityEvidence(events),
       latestEvidenceDate: events[0]?.date ?? null,
       events,
       realizedReturn: "unknown" as const,
@@ -135,3 +173,4 @@ export function investorIntelligenceCoverage(
     status: "reviewed-sample-only" as const,
   };
 }
+
