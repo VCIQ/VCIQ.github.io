@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { admitHomepageEvents } from "@/lib/homepage-publication-quality";
 import { EventQualityIndicator } from "@/components/event-quality-indicator";
 import { useFavorites } from "@/components/use-favorites";
 import { useHomepagePreferences } from "@/components/use-homepage-preferences";
@@ -338,10 +339,10 @@ export function HomepageNewsFeed({
   const priorityFeed = usePriorityIntelligence(channel === "focus");
   const focusSelection = useMemo(
     () => channel === "focus" ? buildHomepageFocusSelection(
-      mergePriorityCandidates(
+      admitHomepageEvents(mergePriorityCandidates(
         articles,
         [...(priorityFeed.snapshot?.items ?? []), ...(priorityFeed.batch6Snapshot?.items ?? [])],
-      ),
+      )),
       preferences, favorites, hotnessItems, clockMs ?? 0,
     ) : null,
     [channel, articles, priorityFeed.snapshot, priorityFeed.batch6Snapshot, preferences, favorites, hotnessItems, clockMs],
@@ -860,7 +861,7 @@ export function HomepageNewsFeed({
                     {hero ? (
                       <div className={styles.signalVisual} aria-hidden="true">
                         <span>{item.sector}</span>
-                        <strong>{item.importance}</strong>
+                        <strong>情报</strong>
                         <small>INTELLIGENCE</small>
                       </div>
                     ) : null}
@@ -956,7 +957,7 @@ export function HomepageNewsFeed({
             <dl>
               <div><dt>事件</dt><dd>{todayArticleCount}</dd></div>
               <div><dt>新收录</dt><dd>{newArticleCount}</dd></div>
-              <div><dt>来源</dt><dd>{bootstrap.sourceCount}</dd></div>
+              <div><dt>原文链接</dt><dd>{bootstrap.sourceCount}</dd></div>
               <div><dt>平台</dt><dd>{bootstrap.platformCount}</dd></div>
             </dl>
           </section>
@@ -1003,3 +1004,4 @@ export function HomepageNewsFeed({
     </section>
   );
 }
+

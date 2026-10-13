@@ -27,9 +27,10 @@ export default function InnovationInvestorsPage() {
       <p className={styles.intro}>{investorResearchScope}</p>
       <p className={styles.note}>目录及样例核验记录：{investorResearchReviewedAt}（UTC）。不代表全部项目的最新状态。</p>
       <Link href="/innovation-capital/">← 返回科创频道</Link>
+      <p><Link href="/innovation-capital/investors/intelligence/">查看机构投资情报 →</Link></p>
     </header>
     <section className={styles.metrics} aria-label="证据覆盖范围">
-      <article><strong>{summary.registeredInstitutions}</strong><span>登记研究样本</span></article>
+      <article><strong>{summary.registeredInstitutions}</strong><span>全球核心研究样本</span></article>
       <article><strong>{summary.evidenceCoveredInstitutions}</strong><span>具备核验事件样例</span></article>
       <article><strong>{summary.reviewedRecords}</strong><span>来源可追溯的证据条目</span></article>
       <article><strong>未知</strong><span>基金实际回报，不推算</span></article>
@@ -50,3 +51,4 @@ export default function InnovationInvestorsPage() {
     </section>
   </main>;
 }
+
