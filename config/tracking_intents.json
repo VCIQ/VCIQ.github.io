@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-13T03:26:18+00:00",
+  "updatedAt": "2026-10-13T03:27:45+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -21113,6 +21113,38 @@
       "resolutionStatus": "resolved",
       "createdAt": "2026-10-13T03:26:18+00:00",
       "createdBy": "VCIQ"
+    },
+    {
+      "id": "company-670e6f33835f0f45f7f9",
+      "kind": "company",
+      "name": "无问芯穹",
+      "aliases": [],
+      "keywords": [
+        "无问芯穹",
+        "AI Infra",
+        "清华AI Infra独角兽"
+      ],
+      "state": "active",
+      "resolutionSource": "unresolved",
+      "resolutionStatus": "review",
+      "createdAt": "2026-10-13T03:27:45+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "source-c62052601dde69fefba2",
+      "kind": "source",
+      "name": "凤凰网",
+      "aliases": [],
+      "keywords": [],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-13T03:27:45+00:00",
+      "createdBy": "VCIQ",
+      "url": "https://tech.ifeng.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球"
     }
   ],
   "memberships": [
@@ -118281,6 +118313,382 @@
         "source": "source-context",
         "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
         "decisionKey": "重眸科技",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-ff05e2e2052186859903",
+      "trackId": "track:robotics",
+      "entityId": "company-670e6f33835f0f45f7f9",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "low",
+      "origins": [
+        {
+          "id": "origin-7a84185f657fb7428c25",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-13T03:27:45+00:00",
+          "evidenceUrl": "https://tech.ifeng.com/c/8x9t7CZc7SC",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-6e6fac1e44aa3654bee6f155",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-13T03:27:45+00:00",
+        "trackId": "track:robotics",
+        "entityId": "company-670e6f33835f0f45f7f9",
+        "requestedName": "无问芯穹",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "无问芯穹",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "无问芯穹",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-9333e07ec2351e224df5",
+      "trackId": "track:semiconductor",
+      "entityId": "company-670e6f33835f0f45f7f9",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "low",
+      "origins": [
+        {
+          "id": "origin-7a84185f657fb7428c25",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-13T03:27:45+00:00",
+          "evidenceUrl": "https://tech.ifeng.com/c/8x9t7CZc7SC",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-0cccd3d89429a6bd32ec10ef",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-13T03:27:45+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "company-670e6f33835f0f45f7f9",
+        "requestedName": "无问芯穹",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "无问芯穹",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "无问芯穹",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-bc84b11efcb888bc15d7",
+      "trackId": "track:robotics",
+      "entityId": "source-c62052601dde69fefba2",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-3f40bb0a6c76ba199c40",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-13T03:27:45+00:00",
+          "evidenceUrl": "https://tech.ifeng.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-1b295c3b2f28f477317c8ec6",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-13T03:27:45+00:00",
+        "trackId": "track:robotics",
+        "entityId": "source-c62052601dde69fefba2",
+        "requestedName": "凤凰网",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "凤凰网",
+        "targetId": "source-c62052601dde69fefba2",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "凤凰网",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-25e21d5f04c73711cbea",
+      "trackId": "track:track-1ccjq49",
+      "entityId": "source-c62052601dde69fefba2",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-3f40bb0a6c76ba199c40",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-13T03:27:45+00:00",
+          "evidenceUrl": "https://tech.ifeng.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-e88323b71bac3265d6b09ddf",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-13T03:27:45+00:00",
+        "trackId": "track:track-1ccjq49",
+        "entityId": "source-c62052601dde69fefba2",
+        "requestedName": "凤凰网",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "凤凰网",
+        "targetId": "source-c62052601dde69fefba2",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "凤凰网",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-6c276c1cfe41c4855d74",
+      "trackId": "track:semiconductor",
+      "entityId": "source-c62052601dde69fefba2",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-3f40bb0a6c76ba199c40",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-13T03:27:45+00:00",
+          "evidenceUrl": "https://tech.ifeng.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-28576af87cc8fd6359cf5f3a",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-13T03:27:45+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "source-c62052601dde69fefba2",
+        "requestedName": "凤凰网",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "凤凰网",
+        "targetId": "source-c62052601dde69fefba2",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "凤凰网",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-d402c5bee72d9adcc8b7",
+      "trackId": "track:space",
+      "entityId": "source-c62052601dde69fefba2",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-3f40bb0a6c76ba199c40",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-13T03:27:45+00:00",
+          "evidenceUrl": "https://tech.ifeng.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-f563c55921956c0b755da2df",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-13T03:27:45+00:00",
+        "trackId": "track:space",
+        "entityId": "source-c62052601dde69fefba2",
+        "requestedName": "凤凰网",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "凤凰网",
+        "targetId": "source-c62052601dde69fefba2",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "凤凰网",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-0108ae7b62a58bbe8741",
+      "trackId": "track:ai-2",
+      "entityId": "source-c62052601dde69fefba2",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-3f40bb0a6c76ba199c40",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-13T03:27:45+00:00",
+          "evidenceUrl": "https://tech.ifeng.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-067a16bd2bc577a77789c6fe",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-13T03:27:45+00:00",
+        "trackId": "track:ai-2",
+        "entityId": "source-c62052601dde69fefba2",
+        "requestedName": "凤凰网",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "凤凰网",
+        "targetId": "source-c62052601dde69fefba2",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "凤凰网",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-89d3b9eeec1d54bd7e73",
+      "trackId": "track:innovation-capital",
+      "entityId": "source-c62052601dde69fefba2",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-3f40bb0a6c76ba199c40",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-13T03:27:45+00:00",
+          "evidenceUrl": "https://tech.ifeng.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-4e7acad6d84ec9ff382466d5",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-13T03:27:45+00:00",
+        "trackId": "track:innovation-capital",
+        "entityId": "source-c62052601dde69fefba2",
+        "requestedName": "凤凰网",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "凤凰网",
+        "targetId": "source-c62052601dde69fefba2",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "凤凰网",
         "reclassified": false
       },
       "executionState": "applied"
