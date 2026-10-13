@@ -162,7 +162,7 @@ export default async function CompanyDetail({
       </header>
       {peopleNetworkSeed.some(p => p.companySlug === slug) && <nav className="hero-chips" aria-label="公司核心人物关系">
         {peopleNetworkSeed.filter(p => p.companySlug === slug).map(p => <Link key={p.id} href={`/innovation-capital/people/#${p.id}`}>{p.name} · 职业关系与 LinkedIn →</Link>)}
-      </nav>
+      </nav>}
 
       <div className="detail-layout">
         <aside className="toc">
