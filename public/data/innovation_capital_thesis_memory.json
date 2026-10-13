@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-13T03:37:45.769Z",
+  "generatedAt": "2026-10-13T04:22:24.813Z",
   "asOf": "2026-09-24",
   "currentObservationIds": [
     "innovation-thesis:broker-sector-specialization:r2",
     "innovation-thesis:state-jump-over-duration:r1",
     "innovation-thesis:cross-market:r2",
     "innovation-thesis:route-migration:r1",
-    "innovation-thesis:hard-tech-lifecycle:r2",
+    "innovation-thesis:hard-tech-lifecycle:r3",
     "innovation-thesis:capital-repeat:r1",
     "innovation-thesis:late-stage-to-guidance:r1"
   ],
-  "observationCount": 10,
+  "observationCount": 11,
   "observations": [
     {
       "id": "innovation-thesis:broker-sector-specialization:r1",
@@ -325,6 +325,38 @@
       "observationCount": 1,
       "lastTransition": "revised",
       "supersedesId": "innovation-thesis:hard-tech-lifecycle:r1"
+    },
+    {
+      "id": "innovation-thesis:hard-tech-lifecycle:r3",
+      "hypothesisId": "hard-tech-lifecycle",
+      "title": "当前进入后续生命周期的样本呈科创板集中现象",
+      "status": "watch",
+      "evidence": "生命周期池 11 个项目，其中科创板 6 个、已上市 7 个。",
+      "nextCheck": "这是当前样本现象，不外推总体概率；随创业板/港股样本增加继续验证。",
+      "metrics": {
+        "sampleUnit": "project",
+        "universeCount": 11,
+        "supportCount": 6,
+        "contrastCount": 5,
+        "neutralCount": 0,
+        "evidenceCoveredCount": 11,
+        "evidenceCoveragePct": 100,
+        "supportSharePct": 54.5,
+        "supportDefinition": "后续生命周期池中公开路线为科创板的项目",
+        "contrastDefinition": "后续生命周期池中公开路线不是科创板的项目"
+      },
+      "metricDelta": {
+        "supportDelta": 0,
+        "contrastDelta": 0,
+        "universeDelta": 0,
+        "evidenceCoverageDeltaPct": 0,
+        "supportShareDeltaPct": 0
+      },
+      "firstSeenAt": "2026-09-24",
+      "lastSeenAt": "2026-09-24",
+      "observationCount": 1,
+      "lastTransition": "revised",
+      "supersedesId": "innovation-thesis:hard-tech-lifecycle:r2"
     }
   ]
 }
