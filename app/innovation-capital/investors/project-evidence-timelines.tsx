@@ -36,7 +36,7 @@ export function ProjectEvidenceTimelines() {
         <ol className={styles.timeline}>
           {group.entries.map((item) => <li key={item.id}>
             <div className={styles.eventHeading}>
-              <time dateTime={item.datePrecision === "day" ? item.date : undefined}>{item.date}</time>
+              <time dateTime={item.datePrecision === "day" ? item.date : undefined}>{item.date || "原文未标事件日期"}</time>
               <span className={styles.kind}>{investorEvidenceKindLabels[item.kind] ?? item.kind}</span>
             </div>
             <h3>{item.title}</h3>

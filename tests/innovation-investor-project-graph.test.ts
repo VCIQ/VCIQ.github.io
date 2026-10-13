@@ -60,7 +60,7 @@ test("canonical project graph grows without conflating multi-firm relationships"
 test("30-firm matrix separates missing reviewed samples from real-world zero activity", () => {
   const matrix = investorProjectCoverageMatrix();
   const graph = buildCanonicalInvestorProjectGraph();
-  const representedFirms = new Set(investorEvidenceRecords.filter((r) => r.project).map((r) => r.institutionId));
+  const representedFirms = new Set(investorEvidenceRecords.filter((r) => r.project && globalInnovationInvestors.some(firm => firm.id === r.institutionId)).map((r) => r.institutionId));
   assert.equal(matrix.length, globalInnovationInvestors.length);
   assert.equal(matrix.filter((r) => r.state === "no-project-evidence").length,
     globalInnovationInvestors.length - representedFirms.size);
@@ -69,13 +69,13 @@ test("30-firm matrix separates missing reviewed samples from real-world zero act
   assert.equal(matrix.filter((r) => r.state === "sample-count-target-met").length,
     matrix.filter((r) => r.reviewedProjectCount >= 3).length);
   assert.equal(matrix.reduce((n, r) => n + r.reviewedProjectCount, 0),
-    graph.reduce((n, project) => n + project.institutions.length, 0));
+    graph.reduce((n, project) => n + project.institutions.filter(row => globalInnovationInvestors.some(firm => firm.id === row.institutionId)).length, 0));
   assert.equal(matrix.reduce((n, r) => n + r.disclosedInvestmentEvents, 0),
-    investorEvidenceRecords.filter((r) => r.kind === "investment").length);
+    investorEvidenceRecords.filter((r) => r.kind === "investment" && globalInnovationInvestors.some(firm => firm.id === r.institutionId)).length);
   assert.equal(matrix.reduce((n, r) => n + r.observedOutcomeRecords, 0),
     investorEvidenceRecords.filter((r) => r.kind === "outcome" && r.project).length);
   assert.equal(matrix.reduce((n, r) => n + r.evidenceRecordCount, 0),
-    investorEvidenceRecords.filter((r) => r.project).length);
+    investorEvidenceRecords.filter((r) => r.project && globalInnovationInvestors.some(firm => firm.id === r.institutionId)).length);
   assert.ok(matrix.every((r) => r.gapToThreeProjects === Math.max(0, 3 - r.reviewedProjectCount)));
   assert.ok(matrix.every((r) => r.state === (r.reviewedProjectCount === 0 ? "no-project-evidence"
     : r.reviewedProjectCount < 3 ? "partial-project-samples" : "sample-count-target-met")));
@@ -88,7 +88,7 @@ test("30-firm matrix separates missing reviewed samples from real-world zero act
 test("initial firms retain three reviewed projects while newly covered firms may grow incrementally", () => {
   const matrix = investorProjectCoverageMatrix();
   const withSamples = matrix.filter((row) => row.reviewedProjectCount > 0);
-  const representedFirms = new Set(investorEvidenceRecords.filter((row) => row.project).map((row) => row.institutionId));
+  const representedFirms = new Set(investorEvidenceRecords.filter((row) => row.project && globalInnovationInvestors.some(firm => firm.id === row.institutionId)).map((row) => row.institutionId));
   assert.equal(withSamples.length, representedFirms.size);
   // Preserve the original ten-firm, three-project coverage milestone while
   // allowing newly admitted institutions to start with just one reviewed project.
@@ -144,15 +144,17 @@ test("published funding totals never become a firm's individual investment amoun
 test("same project rounds and a listing milestone remain distinct from realized fund cash", () => {
   const graph = buildCanonicalInvestorProjectGraph();
   const robot = graph.find((p) => p.projectId === "mech-mind")!;
-  assert.equal(robot.institutions.length, 1);
-  assert.equal(robot.institutions[0].investmentDisclosures.length, 1);
-  assert.equal(robot.institutions[0].investmentDisclosures[0].announcedDate, "2019");
-  assert.equal(robot.institutions[0].investmentDisclosures[0].datePrecision, "year");
-  assert.equal(robot.institutions[0].investmentDisclosures[0].round, "A+");
-  assert.equal(robot.institutions[0].outcomes.length, 1);
-  assert.equal(robot.institutions[0].outcomes[0].status, "listed");
-  assert.equal(robot.institutions[0].outcomes[0].date, "2026-09-01");
-  assert.equal(robot.institutions[0].realizedFundReturn, "unknown");
+  assert.equal(robot.institutions.length, 2);
+  const qiming = robot.institutions.find(row => row.institutionId === "qiming")!;
+  assert.equal(robot.institutions.find(row => row.institutionId === "hongshan")!.investmentDisclosures.length, 0);
+  assert.equal(qiming.investmentDisclosures.length, 1);
+  assert.equal(qiming.investmentDisclosures[0].announcedDate, "2019");
+  assert.equal(qiming.investmentDisclosures[0].datePrecision, "year");
+  assert.equal(qiming.investmentDisclosures[0].round, "A+");
+  assert.equal(qiming.outcomes.length, 1);
+  assert.equal(qiming.outcomes[0].status, "listed");
+  assert.equal(qiming.outcomes[0].date, "2026-09-01");
+  assert.equal(qiming.realizedFundReturn, "unknown");
   const orig = investorEvidenceRecords.find((r) => r.id === "qiming-mechmind-a-plus-investment-2019")!;
   assert.equal(orig.source.publishedAt, "2026-09-01");
   assert.equal(orig.date, "2019");

@@ -1,3 +1,4 @@
+import { mappedEventType, publicEventImportance } from "./ranked-intelligence";
 import approvedListedUniverse from "@/config/listed_innovation_routing.json";
 
 type JsonRecord = Record<string, unknown>;
@@ -535,7 +536,7 @@ function rankedEvents(payload: unknown): HomepageInnovationEvent[] {
       company: companies[0] ?? "",
       sourceId: "ranked-intelligence",
       publishedAt: text(row.publishedAt, 80),
-      importance: Number(row.score) || 0,
+      importance: publicEventImportance(mappedEventType(list(row.eventTypes).map(value => text(value, 80)))),
       eventClusterId: text(row.eventClusterId, 240),
       mentionedCompanies: companies,
       mentionedPeople: people,

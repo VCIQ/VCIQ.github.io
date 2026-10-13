@@ -54,7 +54,7 @@ test("maps ranked intelligence to homepage article semantics", () => {
   assert.equal(article.type, "产品发布");
   assert.equal(article.company, "OpenAI");
   assert.equal(article.sector, "AI / AGI");
-  assert.equal(article.importance, 96);
+  assert.equal(article.importance, 82);
   assert.equal(article.curated, true);
   assert.equal(article.source.platform, "Google Alerts RSS");
   assert.deepEqual(article.matchedTrackingTerms, ["ChatGPT", "AI / AGI"]);
@@ -68,7 +68,7 @@ test("adds a new ranked intelligence article without mutating canonical payload"
   assert.equal(merged.articles[0].title, "OpenAI 发布新产品");
 });
 
-test("dedupes by canonical publisher URL and boosts an existing event", () => {
+test("dedupes by canonical publisher URL without conflating relevance and importance", () => {
   const base = basePayload();
   base.articleCount = 1;
   base.articles = [{
@@ -93,7 +93,7 @@ test("dedupes by canonical publisher URL and boosts an existing event", () => {
   const merged = mergeRankedIntelligenceIntoArticlePayload(base, projection);
   assert.equal(merged.articleCount, 1);
   assert.equal(merged.articles[0].id, "canonical-1");
-  assert.equal(merged.articles[0].importance, 96);
+  assert.equal(merged.articles[0].importance, 70);
   assert.equal(merged.articles[0].curated, true);
   assert.deepEqual(merged.articles[0].matchedTrackingTerms, ["OpenAI", "ChatGPT", "AI / AGI"]);
 });
@@ -102,4 +102,13 @@ test("malformed optional projection fails open to canonical article data", () =>
   const base = basePayload();
   const merged = mergeRankedIntelligenceIntoArticlePayload(base, { schemaVersion: 2 });
   assert.equal(merged, base);
+});
+
+test("saturated private scores preserve relevance without saturating public event importance", () => {
+  const base = parseRankedIntelligenceProjection(projection).items[0];
+  const articles = ["Product", "Funding", "IPO", "Policy"].map((kind) =>
+    rankedIntelligenceItemToArticle({...base, score: 100, eventTypes: [kind]}));
+  assert.ok(articles.every((item) => item.relevanceScore === 100));
+  assert.ok(articles.every((item) => item.importance < 100));
+  assert.ok(new Set(articles.map((item) => item.importance)).size >= 3);
 });

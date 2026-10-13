@@ -9,6 +9,11 @@ from html.parser import HTMLParser
 from typing import Any, Iterable, Sequence
 from urllib.parse import quote_plus, urljoin, urlsplit
 
+try:
+    from .article_body_summary import article_body_summary
+except ImportError:
+    from article_body_summary import article_body_summary
+
 LANGUAGES = {"zh-Hans", "zh-Hant", "en", "multi"}
 PUBLIC_SUFFIXES = {
     "com.cn",
@@ -441,13 +446,7 @@ def parse_article(
         or parser.text("h1")
         or parser.text("title")
     )
-    summary = clean(
-        page.meta.get("og:description")
-        or page.meta.get("twitter:description")
-        or page.meta.get("description")
-        or " ".join(page.paragraphs[:3]),
-        700,
-    )
+    summary = article_body_summary(body, 700)
     published = crawler.normalize_date(crawler._published_value(parser, body))
     if (
         not title

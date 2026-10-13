@@ -62,3 +62,15 @@ test("bootstrap and refreshed public article views share the data-free admission
   assert.doesNotMatch(source("lib/homepage-publication-quality.ts"), /public\/data|catalog-data|content-relevance/);
 });
 
+
+test("reviewed sidebar corrections require exact source and matching contaminated content", () => {
+  const original = item('哈伊高铁投用“机器人医生”', {summary:'等离子体参数测试方法', sector:'新能源', source:{url:'https://www.cinie.net/article/67028.html'}});
+  const [corrected] = admitHomepageEvents([original]);
+  assert.match(corrected.summary, /空心车轴/);
+  assert.equal(corrected.type, '商业进展');
+  assert.equal(original.summary, '等离子体参数测试方法');
+  const clean = {...original, summary:'上游已重新提取的正文'};
+  assert.equal(admitHomepageEvents([clean])[0].summary, clean.summary);
+  const other = {...original, source:{url:'https://example.com/another'}};
+  assert.equal(admitHomepageEvents([other])[0].summary, original.summary);
+});

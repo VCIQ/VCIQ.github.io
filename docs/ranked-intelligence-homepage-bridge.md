@@ -30,7 +30,7 @@ The validator rejects extra keys. In particular, Google Alert query text, privat
 
 ## Homepage behavior
 
-The projection is merged with `articles.json` by publisher URL. If the crawler already has the same article, no duplicate card is created; the personalized score can raise its importance and resolver terms are merged. New projected items use `Google Alerts RSS` as the platform and `待交叉验证` as source level.
+The projection is merged with `articles.json` by publisher URL. If the crawler already has the same article, no duplicate card is created; canonical article importance is retained and resolver terms are merged. Personalized relevance is stored separately as `relevanceScore`; it never replaces or raises the public importance score. New projected items use the same event-type importance baselines as the crawler (76–91), so a saturated private relevance score cannot turn every homepage card into 100 points. These baselines express editorial event priority, not a statistical probability or investment-quality rating. New projected items use `Google Alerts RSS` as the platform and `待交叉验证` as source level.
 
 Projected items are eligible for the primary ranked event stream and the homepage Daily Brief. Items without a resolved track use the display-only fallback sector `跨赛道精选`. This keeps them visible without creating a new tracking taxonomy entry.
 

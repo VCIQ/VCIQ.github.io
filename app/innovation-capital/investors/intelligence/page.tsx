@@ -27,6 +27,7 @@ export default function InvestorIntelligencePage() {
         <Link href="/innovation-capital/">科创频道</Link>
         <Link href="/innovation-capital/investors/">机构与项目档案</Link>
         <Link href="/innovation-capital/coverage/">采集覆盖与缺口</Link>
+        <Link href="/innovation-capital/new-managers/">投中新登记35家样本</Link>
         <a href="#activity-evidence">四项证据口径</a>
       </nav>
     </header>

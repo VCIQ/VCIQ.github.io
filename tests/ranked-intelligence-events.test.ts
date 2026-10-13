@@ -168,7 +168,7 @@ test("semantic merge keeps one canonical event card and folds all publisher evid
   assert.equal(merged.articleCount, 1);
   const event = merged.articles[0];
   assert.equal(event.id, "canonical-teen");
-  assert.equal(event.importance, 100);
+  assert.equal(event.importance, 88);
   assert.equal(event.eventClusterId, "crawler-event-teen");
   assert.equal(event.duplicateCount, 4);
   assert.deepEqual(

@@ -53,9 +53,7 @@ export function investorActivityEvidence(events: readonly InvestorIntelligenceEv
   } satisfies Record<string, ActivityEvidence>;
 }
 
-export function investorEvidenceDateLabel(date: string, precision: string): string {
-  return `${date}（${precision === "year" ? "仅年份" : precision === "month" ? "仅月份" : "日级日期"}）`;
-}
+export { investorEvidenceDateLabel } from "./investor-evidence-format";
 
 export type InstitutionIntelligence = {
   institutionId: string;

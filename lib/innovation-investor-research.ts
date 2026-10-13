@@ -1,3 +1,4 @@
+import registry from "@/config/innovation_investor_registry_v2.json";
 import roster from "@/config/innovation_global_investors.json";
 import evidence from "@/config/innovation_investor_evidence.json";
 
@@ -32,6 +33,9 @@ export function validateInvestorResearch(
       errors.push(`invalid official source: ${institution.id}`);
     }
   }
+  // The shared evidence catalog may reference the reviewed China-focus cohort.
+  // Explicit test/custom institution sets remain strict.
+  if (institutions === globalInnovationInvestors) registry.institutions.forEach(row => ids.add(row.id));
   const recordIds = new Set<string>();
   const disclosedDealKeys = new Set<string>();
   for (const item of records) {
@@ -41,7 +45,7 @@ export function validateInvestorResearch(
     if (!publicHttps(item.source.url) || !item.source.locator) errors.push(`missing evidence: ${item.id}`);
     const datePattern = item.datePrecision === "day" ? /^\d{4}-\d{2}-\d{2}$/ :
       item.datePrecision === "month" ? /^\d{4}-\d{2}$/ : /^\d{4}$/;
-    if (!datePattern.test(item.date)) errors.push(`invalid date precision: ${item.id}`);
+    if (item.datePrecision === "unknown" ? (item.date !== "" || item.kind !== "portfolio-relationship") : !datePattern.test(item.date)) errors.push(`invalid date precision: ${item.id}`);
     if (item.kind === "investment" && (!item.project || !item.participation)) {
       errors.push(`investment lacks project or role: ${item.id}`);
     }
@@ -82,6 +86,7 @@ export function validateInvestorResearch(
 }
 
 export function investorEvidenceSummary(records: readonly InvestorEvidenceRecord[] = investorEvidenceRecords) {
+  records = records.filter(row => globalInnovationInvestors.some(firm => firm.id === row.institutionId));
   const covered = new Set(records.map((item) => item.institutionId));
   const investments = new Set(records.filter((item) => item.kind === "investment").map(
     (item) => `${item.institutionId}:${item.project}:${item.round ?? item.id}:${item.date}`,
@@ -132,7 +137,7 @@ export function investorProjectEvidenceTimelines(
       institutionId: group.institutionId,
       project: group.project,
       entries,
-      earliestEvidenceDate: entries[0].date,
+      earliestEvidenceDate: entries.find(row => row.date)?.date ?? "",
       latestEvidenceDate: entries[entries.length - 1].date,
       sourceCount: new Set(entries.map((row) => row.source.url)).size,
       investmentDisclosures: new Set(entries.filter((row) => row.kind === "investment").map(
