@@ -110,6 +110,7 @@ export type CompanyVentureProfile = {
   sources: VentureSource[];
   warnings?: string[];
   evidenceScore?: number;
+  evidenceReviewRequired?: boolean;
 };
 
 export type InstitutionVentureProfile = {
@@ -600,7 +601,44 @@ function normalizeRecentYearSummary(value: unknown): VentureRecentYearSummary | 
   };
 }
 
+export function applyCompanyTechnologyEvidenceReview(raw: CompanyVentureProfile): CompanyVentureProfile {
+  // A known SMIC document-distribution login was extracted as technology.
+  // Scope the review to the exact company and retained portal evidence. Do not
+  // globally blacklist document-management products from other companies.
+  const isPortal = (url: unknown) => /^https?:\/\/service\.smics\.com\/ddplatform\/?(?:[?#].*)?$/iu.test(clean(url, 1000));
+  const sources = Array.isArray(raw.sources) ? raw.sources : [];
+  if (raw.slug !== "smic" || !sources.some((source) => source && isPortal(source.url))) return raw;
+  const portalText = /SMIC\s+DOCUMENT\s+DISTRIBUTION\s+PLATFORM|Documents\s+and\s+Downloads\s+Login|文件下载登[陆录]|SMIC文件外发平台/iu;
+  const portalProduct = /^(?:SMIC\s+Document\s+Distribution\s+Platform(?:\s*SMIC文件外发平台)?|文档分发平台|供应商(?:线上)?平台)$/iu;
+  const originalProducts = Array.isArray(raw.products) ? raw.products : [];
+  const originalTechnologyProducts = Array.isArray(raw.technologyProducts) ? raw.technologyProducts : [];
+  const separatelySourcedNames = new Set(originalTechnologyProducts.filter((product) =>
+    product && validUrl(product.sourceUrl) && !isPortal(product.sourceUrl)).map((product) => clean(product.name)));
+  const products = originalProducts.filter((name) => !portalProduct.test(clean(name)) || separatelySourcedNames.has(clean(name)));
+  const technologyProducts = originalTechnologyProducts.filter((product) =>
+    product && !isPortal(product.sourceUrl) && !(portalProduct.test(clean(product.name)) && !validUrl(product.sourceUrl)));
+  const badTechnology = portalText.test(raw.technology ?? "");
+  const badResearch = portalText.test(raw.researchTechnology ?? "");
+  if (!badTechnology && !badResearch && products.length === originalProducts.length
+      && technologyProducts.length === originalTechnologyProducts.length) return raw;
+  const pending = "已排除文档下载及供应商入口内容，核心技术说明待补充可核验资料。";
+  return {
+    ...raw,
+    technology: badTechnology ? pending : raw.technology,
+    researchTechnology: badResearch ? pending : raw.researchTechnology,
+    products,
+    technologyProducts,
+    sources: sources.map((source) => source && isPortal(source.url)
+      ? { ...source, section: "网站服务入口（非技术证据）" } : source),
+    status: raw.status === "ok" ? "partial" : raw.status,
+    evidenceScore: undefined,
+    evidenceReviewRequired: true,
+    warnings: [...new Set([...(raw.warnings ?? []), "文档下载门户不是核心技术证据，原证据完整度评分待复核。"])],
+  };
+}
+
 function normalizeCompanyProfile(raw: CompanyVentureProfile): CompanyVentureProfile {
+  raw = applyCompanyTechnologyEvidenceReview(raw);
   const fallbackBackground = sanitizeVentureNarrative(raw.background, 900);
   const projectBackground =
     normalizeProjectBackground(raw.projectBackground) ??
@@ -622,6 +660,7 @@ function normalizeCompanyProfile(raw: CompanyVentureProfile): CompanyVentureProf
     researchTechnology: sanitizeVentureNarrative(raw.researchTechnology, 900) || undefined,
     products: sanitizeVentureProducts(raw.products),
     technologyProducts: normalizeTechnologyProducts(raw.technologyProducts),
+    evidenceReviewRequired: raw.evidenceReviewRequired || undefined,
     team: normalizeTeam(raw.team, [raw.name, raw.slug]),
     financing: normalizeCapitalEvents(raw.financing),
     capitalSummary: normalizeCapitalSummary(raw.capitalSummary),
