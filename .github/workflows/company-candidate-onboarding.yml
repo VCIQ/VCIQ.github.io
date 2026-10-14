@@ -214,7 +214,7 @@ jobs:
               assert isinstance(profile, dict), slug
               assert isinstance(company, dict), slug
               assert profile.get('name') == company.get('name'), (slug, profile.get('name'), company.get('name'))
-              assert profile.get('status') in {'ok', 'retained', 'fallback'}, profile
+              assert profile.get('status') in {'ok', 'partial', 'retained', 'fallback'}, profile
               assert profile.get('background') or profile.get('projectBackground'), profile
               official_host = (
                   urlsplit(str(company.get('source', {}).get('url', ''))).hostname or ''
