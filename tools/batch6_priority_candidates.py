@@ -7,6 +7,7 @@ from datetime import datetime, timezone, timedelta
 import hashlib
 import ipaddress
 import json
+import re
 from pathlib import Path
 import subprocess
 from urllib.parse import urlsplit
@@ -55,6 +56,49 @@ def iso(value) -> str:
     if parsed.tzinfo is None:
         raise ValueError("timestamp requires timezone")
     return parsed.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
+
+
+def relevant_for_query(query: str, title: str, summary: str) -> bool:
+    value = f"{title} {summary}"
+    if query == "科创板 辅导备案":
+        return "科创板" in value and any(token in value for token in ("辅导", "备案", "IPO", "上市"))
+    if query == "创业板 辅导备案":
+        return "创业板" in value and any(token in value for token in ("辅导", "备案", "IPO", "上市"))
+    if query == "A+H 上市":
+        return bool(
+            re.search(r"A\s*\+\s*H", value, re.IGNORECASE)
+            or (
+                re.search(r"(?:H\s*股|港股|港交所)", value, re.IGNORECASE)
+                and re.search(r"上市|IPO|挂牌|递表|备案|发行", value, re.IGNORECASE)
+            )
+        )
+    if query == "Pre-IPO 融资":
+        return bool(
+            re.search(r"Pre[-\s]?IPO|上市前", value, re.IGNORECASE)
+            and re.search(r"融资|募资|投资|增资|轮", value, re.IGNORECASE)
+        )
+    if query == "AI 安全":
+        return bool(
+            re.search(r"AI|人工智能|大模型|Agent", value, re.IGNORECASE)
+            and re.search(r"安全|失控|攻击|漏洞|风险|治理|沙箱|越狱", value, re.IGNORECASE)
+        )
+    if query == "AI 眼镜":
+        return bool(re.search(r"AI.{0,5}眼镜|智能眼镜|AR.{0,3}眼镜|XR.{0,3}眼镜", value, re.IGNORECASE))
+    if query == "CXL":
+        return bool(re.search(r"(?:^|[^a-z0-9])CXL(?:$|[^a-z0-9])", value, re.IGNORECASE))
+    if query == "UCIe":
+        return bool(re.search(r"(?:^|[^a-z0-9])UCIe(?:$|[^a-z0-9])", value, re.IGNORECASE))
+    if query == "太空算力":
+        return bool(
+            re.search(r"太空|空间|轨道|在轨|卫星", value, re.IGNORECASE)
+            and re.search(r"算力|计算|数据中心|云", value, re.IGNORECASE)
+        )
+    if query == "6G NTN":
+        return bool(
+            re.search(r"6G", value, re.IGNORECASE)
+            and re.search(r"NTN|非地面|卫星|空天地", value, re.IGNORECASE)
+        )
+    return False
 
 
 def validate_item(raw: dict) -> dict:
@@ -135,6 +179,8 @@ def finalize(previous: dict, incoming: dict, now: datetime) -> dict:
     if isinstance(previous, dict) and previous.get("policyVersion") == POLICY:
         for row in previous.get("items", []):
             item = validate_item(row)
+            if not relevant_for_query(item["radarQuery"], item["title"], item["summary"]):
+                continue
             item["firstSeenAt"] = iso(row.get("firstSeenAt", previous.get("generatedAt")))
             by_id[item["id"]] = item
     for item in validated["items"]:
