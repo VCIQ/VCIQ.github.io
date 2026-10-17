@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { coreSources, coreSourceStats } from "../lib/core-sources";
+import { channelLabel, coreSources, coreSourceStats } from "../lib/core-sources";
 
 test("source directory exposes configured publishers without duplicate identities", () => {
   assert.ok(coreSources.length > 0);
@@ -127,4 +127,15 @@ test("publisher-owned copies keep their real endpoint labels", () => {
     // Unsuccessful crawls retain their actual health and counters; this
     // contract does not invent a successful observation to satisfy the test.
   }
+});
+
+test("failed publisher probes retain unknown provenance instead of claiming WeChat", () => {
+  const legacyId = "user-track-wechat-chipmaster-semiconductor";
+  assert.equal(channelLabel(legacyId, "媒体官方端点"), "媒体端点（本轮未核验）");
+  assert.equal(channelLabel(legacyId, "官方网站"), "官网文章");
+  assert.equal(channelLabel(legacyId, "微信"), "微信公开索引");
+  assert.equal(
+    channelLabel("user-track-wechat-icsmart-semiconductor", "搜狐号"),
+    "官方同步稿 · 搜狐号",
+  );
 });
