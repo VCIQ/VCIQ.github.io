@@ -211,7 +211,7 @@ function newestTimestamp(values: string[]): string | undefined {
   return values.filter(Boolean).sort((left, right) => right.localeCompare(left))[0];
 }
 
-function channelLabel(sourceId: string, platform: string): string {
+export function channelLabel(sourceId: string, platform: string): string {
   const id = sourceId.toLocaleLowerCase("en-US");
   // A media entity can retain its historical `user-track-wechat-*` runtime
   // id while the accepted article comes from a verified publisher-owned
@@ -219,6 +219,10 @@ function channelLabel(sourceId: string, platform: string): string {
   // must win over the legacy id prefix in the source directory.
   if (platform === "官方网站") return "官网文章";
   if (platform === "搜狐号") return "官方同步稿 · 搜狐号";
+  // A failed fallback probe uses this generic platform when neither the
+  // original WeChat article nor an official website could be verified.
+  // The legacy `user-track-wechat-*` id is not evidence of a WeChat hit.
+  if (platform === "媒体官方端点") return "媒体端点（本轮未核验）";
   if (id.includes("sohu")) return "搜狐公开页";
   if (id.includes("wechat") || platform === "微信") return "微信公开索引";
   if (id.includes("sec") || platform.includes("SEC")) return "监管披露";
