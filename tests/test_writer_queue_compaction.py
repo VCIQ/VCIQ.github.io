@@ -118,6 +118,9 @@ class WriterQueueCompactionTests(unittest.TestCase):
         self.assertIn(WRITER_GROUP, publish.split("steps:", 1)[0])
         self.assertIn("queue: max", publish.split("steps:", 1)[0])
         self.assertIn("git push origin HEAD:main", publish)
+        self.assertIn("actions: write", publish.split("steps:", 1)[0])
+        self.assertIn("if: steps.publish.outputs.changed == 'true'", publish)
+        self.assertIn('gh workflow run pages.yml --ref main --repo "$GITHUB_REPOSITORY"', publish)
 
     def test_manual_writes_remain_fifo_and_are_never_coalesced(self) -> None:
         for workflow in (MANUAL, MANUAL_BATCH):
