@@ -63,6 +63,23 @@ class VentureProfilePostprocessTests(unittest.TestCase):
                     "sourceUrl": source_url,
                 },
                 {
+                    "date": "",
+                    "type": "并购/退出",
+                    "title": "Leadership at Anthropic",
+                    "summary": (
+                        "The Chief People Officer leads talent acquisition, "
+                        "organizational development, and workplace experience."
+                    ),
+                    "sourceUrl": "https://www.anthropic.com/company/leadership",
+                },
+                {
+                    "date": "2026-01-15",
+                    "type": "并购/退出",
+                    "title": "Company completes acquisition of Example Labs",
+                    "summary": "The company acquired Example Labs in a strategic transaction.",
+                    "sourceUrl": source_url,
+                },
+                {
                     "date": "2026-02-01",
                     "type": "上市",
                     "title": "Company lists on Nasdaq",
@@ -72,8 +89,12 @@ class VentureProfilePostprocessTests(unittest.TestCase):
             ],
             capital_market=True,
         )
-        self.assertEqual(len(capital_markets), 1)
-        self.assertEqual(capital_markets[0]["type"], "上市")
+        self.assertEqual(len(capital_markets), 2)
+        self.assertEqual(
+            [item["type"] for item in capital_markets],
+            ["并购/退出", "上市"],
+        )
+        self.assertFalse(any("Leadership" in item["title"] for item in capital_markets))
 
     def test_company_profile_reapplies_team_and_event_filters(self) -> None:
         profile = {

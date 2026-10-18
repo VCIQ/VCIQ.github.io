@@ -102,6 +102,13 @@ CAPITAL_ACTION_RE = re.compile(
     re.IGNORECASE,
 )
 
+NON_TRANSACTION_ACQUISITION_RE = re.compile(
+    r"\b(?:talent|customer|user|client)\s+acquisition\b|"
+    r"\bacquisition\s+(?:marketing|costs?|channels?|strategy|team)\b|"
+    r"(?:人才|客户|用户)(?:获取|招募|招聘)",
+    re.IGNORECASE,
+)
+
 DATE_LIKE_RE = re.compile(
     r"(?:\b20\d{2}[-/.]\d{1,2}(?:[-/.]\d{1,2})?\b|"
     r"\b(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+\d{1,2},?\s+20\d{2}\b)",
@@ -228,6 +235,15 @@ def sanitize_capital_events(
             continue
         if capital_market:
             if not action_re.search(haystack):
+                continue
+            # "Acquisition" is also ordinary operating language (for example,
+            # "talent acquisition"). Do not publish those phrases as M&A/exit
+            # events unless another explicit capital-market action is present.
+            without_non_transaction = NON_TRANSACTION_ACQUISITION_RE.sub("", haystack)
+            if (
+                NON_TRANSACTION_ACQUISITION_RE.search(haystack)
+                and not action_re.search(without_non_transaction)
+            ):
                 continue
         elif not (amount or round_name or action_re.search(haystack)):
             continue

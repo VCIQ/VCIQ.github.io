@@ -57,7 +57,7 @@ FINANCING_ACTION_RE = re.compile(
 )
 CAPITAL_ACTION_RE = re.compile(
     r"\b(?:ipo|initial public offering|went public|listed on|listing on|"
-    r"acquired by|acquisition|merger|delisted)\b|"
+    r"acquired by|acquisition of|acquisition by|merger|delisted)\b|"
     r"(?:完成上市|正式上市|申请上市|挂牌|并购|收购|完成退出|退市|公开市场)",
     re.IGNORECASE,
 )
