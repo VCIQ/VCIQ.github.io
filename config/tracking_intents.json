@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-19T03:02:45+00:00",
+  "updatedAt": "2026-10-19T03:09:48+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -21303,6 +21303,46 @@
       "sourceType": "listing-search",
       "sourceCategory": "media",
       "region": "全球"
+    },
+    {
+      "id": "company:amec",
+      "kind": "company",
+      "name": "中微公司",
+      "aliases": [],
+      "keywords": [],
+      "state": "active",
+      "resolutionSource": "human-decision",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-19T03:09:48+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "source-14be0640e44eb12481ae",
+      "kind": "source",
+      "name": "待交叉验证 · 电子工程专辑",
+      "aliases": [],
+      "keywords": [],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-19T03:09:48+00:00",
+      "createdBy": "VCIQ",
+      "url": "https://www.eet-china.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球"
+    },
+    {
+      "id": "company:cxmt",
+      "kind": "company",
+      "name": "长鑫科技",
+      "aliases": [],
+      "keywords": [],
+      "state": "active",
+      "resolutionSource": "human-decision",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-19T03:09:48+00:00",
+      "createdBy": "VCIQ"
     }
   ],
   "memberships": [
@@ -119928,6 +119968,194 @@
         "source": "authenticated-manual-intent",
         "reason": "由 allowlist 内的管理员显式提交。",
         "decisionKey": "待交叉验证科技行者",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-35d547f95b69a34c56ec",
+      "trackId": "track:semiconductor",
+      "entityId": "company:amec",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-4dea0c071ec7ded97191",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-19T03:09:48+00:00",
+          "evidenceUrl": "https://www.eet-china.com/mp/a531936.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-37931de7321efef7c824451a",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-19T03:09:48+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "company:amec",
+        "requestedName": "中微公司",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "中微公司",
+        "targetId": "company:amec",
+        "confidence": "verified",
+        "source": "company-registry",
+        "reason": "名称唯一命中正式公司注册表。",
+        "decisionKey": "中微公司",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-ff797938b4680fc98e11",
+      "trackId": "track:semiconductor",
+      "entityId": "source-14be0640e44eb12481ae",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-8b8cb7b915db3b1a242b",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-19T03:09:48+00:00",
+          "evidenceUrl": "https://www.eet-china.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-c5bab73a503f21df0034624f",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-19T03:09:48+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "source-14be0640e44eb12481ae",
+        "requestedName": "待交叉验证 · 电子工程专辑",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "待交叉验证 · 电子工程专辑",
+        "targetId": "source-14be0640e44eb12481ae",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "待交叉验证电子工程专辑",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-f696b0819b12a02c7bd6",
+      "trackId": "track:track-1ccjq49",
+      "entityId": "source-14be0640e44eb12481ae",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-8b8cb7b915db3b1a242b",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-19T03:09:48+00:00",
+          "evidenceUrl": "https://www.eet-china.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-42546255e51116399393cd2f",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-19T03:09:48+00:00",
+        "trackId": "track:track-1ccjq49",
+        "entityId": "source-14be0640e44eb12481ae",
+        "requestedName": "待交叉验证 · 电子工程专辑",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "待交叉验证 · 电子工程专辑",
+        "targetId": "source-14be0640e44eb12481ae",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "待交叉验证电子工程专辑",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-7090edf3fb44ffc6b877",
+      "trackId": "track:semiconductor",
+      "entityId": "company:cxmt",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-cd79155bb6f086618094",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-19T03:09:48+00:00",
+          "evidenceUrl": "https://www.eet-china.com/mp/a531936.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-8c2c2e69f87f5f524a8e658e",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-19T03:09:48+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "company:cxmt",
+        "requestedName": "长鑫科技",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "长鑫科技",
+        "targetId": "company:cxmt",
+        "confidence": "verified",
+        "source": "company-registry",
+        "reason": "名称唯一命中正式公司注册表。",
+        "decisionKey": "长鑫科技",
         "reclassified": false
       },
       "executionState": "applied"
