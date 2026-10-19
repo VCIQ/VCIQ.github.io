@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-19T03:09:48+00:00",
+  "updatedAt": "2026-10-19T03:11:13+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -21342,6 +21342,22 @@
       "resolutionSource": "human-decision",
       "resolutionStatus": "resolved",
       "createdAt": "2026-10-19T03:09:48+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-6f4fb103bf2fc885198e",
+      "kind": "technology",
+      "name": "自主湿实验室",
+      "aliases": [],
+      "keywords": [
+        "自主湿实验室",
+        "智能体",
+        "闭环"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-19T03:11:13+00:00",
       "createdBy": "VCIQ"
     }
   ],
@@ -120156,6 +120172,100 @@
         "source": "company-registry",
         "reason": "名称唯一命中正式公司注册表。",
         "decisionKey": "长鑫科技",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-a0661f5fab8d188e2e6e",
+      "trackId": "track:robotics",
+      "entityId": "technology-6f4fb103bf2fc885198e",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-df0f5bbdf7c82bf6cd29",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-19T03:11:13+00:00",
+          "evidenceUrl": "https://www.mittrchina.com/news/detail/17112",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-010722ef19b4631e05929718",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-19T03:11:13+00:00",
+        "trackId": "track:robotics",
+        "entityId": "technology-6f4fb103bf2fc885198e",
+        "requestedName": "自主湿实验室",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "自主湿实验室",
+        "targetId": "topic:自主湿实验室",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "自主湿实验室",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-7e9033c166c12fa588dc",
+      "trackId": "track:biotech",
+      "entityId": "technology-6f4fb103bf2fc885198e",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-df0f5bbdf7c82bf6cd29",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-19T03:11:13+00:00",
+          "evidenceUrl": "https://www.mittrchina.com/news/detail/17112",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-d78ff8f06258beed95692860",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-19T03:11:13+00:00",
+        "trackId": "track:biotech",
+        "entityId": "technology-6f4fb103bf2fc885198e",
+        "requestedName": "自主湿实验室",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "自主湿实验室",
+        "targetId": "topic:自主湿实验室",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "自主湿实验室",
         "reclassified": false
       },
       "executionState": "applied"
