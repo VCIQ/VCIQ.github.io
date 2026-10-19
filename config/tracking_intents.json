@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-13T05:30:44+00:00",
+  "updatedAt": "2026-10-19T03:02:45+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -21273,6 +21273,36 @@
       "resolutionStatus": "review",
       "createdAt": "2026-10-13T05:30:44+00:00",
       "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-5a8d55ff3a195fe8a77c",
+      "kind": "technology",
+      "name": "PIR",
+      "aliases": [],
+      "keywords": [
+        "PIR"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-19T03:02:45+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "source-676b6beaaffd6b7b88e7",
+      "kind": "source",
+      "name": "待交叉验证 · 科技行者",
+      "aliases": [],
+      "keywords": [],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-19T03:02:45+00:00",
+      "createdBy": "VCIQ",
+      "url": "https://www.techwalker.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球"
     }
   ],
   "memberships": [
@@ -119710,6 +119740,194 @@
         "source": "unresolved",
         "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
         "decisionKey": "蔚蓝支点",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-7cdd02ffb47334dd93da",
+      "trackId": "track:ai-2",
+      "entityId": "technology-5a8d55ff3a195fe8a77c",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-785485a85a0317e659d4",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-19T03:02:45+00:00",
+          "evidenceUrl": "https://www.techwalker.com/2026/1019/3202597.shtml",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "人工补充技术对象;来源文章:给 AI 做一次测谎实验:当模型嘴上说不知道,脑子里其实门儿清"
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-5dee5869f66c58596bc16927",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-19T03:02:45+00:00",
+        "trackId": "track:ai-2",
+        "entityId": "technology-5a8d55ff3a195fe8a77c",
+        "requestedName": "PIR",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "PIR",
+        "targetId": "topic:pir",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "pir",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-875ffe57ef7162b201f0",
+      "trackId": "track:robotics",
+      "entityId": "source-676b6beaaffd6b7b88e7",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-7a39cac9b8ce70555bbc",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-19T03:02:45+00:00",
+          "evidenceUrl": "https://www.techwalker.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-fffde870de9a49ada5a203d9",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-19T03:02:45+00:00",
+        "trackId": "track:robotics",
+        "entityId": "source-676b6beaaffd6b7b88e7",
+        "requestedName": "待交叉验证 · 科技行者",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "待交叉验证 · 科技行者",
+        "targetId": "source-676b6beaaffd6b7b88e7",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "待交叉验证科技行者",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-fcc2abb1a020009df176",
+      "trackId": "track:ai-2",
+      "entityId": "source-676b6beaaffd6b7b88e7",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-7a39cac9b8ce70555bbc",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-19T03:02:45+00:00",
+          "evidenceUrl": "https://www.techwalker.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-534f583dcbebb2f920568cd6",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-19T03:02:45+00:00",
+        "trackId": "track:ai-2",
+        "entityId": "source-676b6beaaffd6b7b88e7",
+        "requestedName": "待交叉验证 · 科技行者",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "待交叉验证 · 科技行者",
+        "targetId": "source-676b6beaaffd6b7b88e7",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "待交叉验证科技行者",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-30cafb641dc7c0e57880",
+      "trackId": "track:ai",
+      "entityId": "source-676b6beaaffd6b7b88e7",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-7a39cac9b8ce70555bbc",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-19T03:02:45+00:00",
+          "evidenceUrl": "https://www.techwalker.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-d1021e8f64426c9c1fb5494f",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-19T03:02:45+00:00",
+        "trackId": "track:ai",
+        "entityId": "source-676b6beaaffd6b7b88e7",
+        "requestedName": "待交叉验证 · 科技行者",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "待交叉验证 · 科技行者",
+        "targetId": "source-676b6beaaffd6b7b88e7",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "待交叉验证科技行者",
         "reclassified": false
       },
       "executionState": "applied"
