@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-20T04:11:16+00:00",
+  "updatedAt": "2026-10-20T09:14:45+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -21386,6 +21386,76 @@
       "resolutionSource": "source-context",
       "resolutionStatus": "review",
       "createdAt": "2026-10-20T04:11:16+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "company-a481563f60e004154fbf",
+      "kind": "company",
+      "name": "Graphcore",
+      "aliases": [],
+      "keywords": [
+        "Graphcore"
+      ],
+      "state": "active",
+      "resolutionSource": "source-context",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-20T09:14:45+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-4db0c1c5591f8e4a7533",
+      "kind": "technology",
+      "name": "RRAM",
+      "aliases": [],
+      "keywords": [
+        "RRAM"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-20T09:14:45+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "person-27b4f3f91b1e75068cdd",
+      "kind": "person",
+      "name": "刘明",
+      "aliases": [],
+      "keywords": [
+        "刘明"
+      ],
+      "state": "active",
+      "resolutionSource": "explicit-type",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-20T09:14:45+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "person-5182dc0cb078344bef92",
+      "kind": "person",
+      "name": "卢涛",
+      "aliases": [],
+      "keywords": [
+        "卢涛"
+      ],
+      "state": "active",
+      "resolutionSource": "explicit-type",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-20T09:14:45+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "company-544a5f04a8bcce072d90",
+      "kind": "company",
+      "name": "铭芯启睿",
+      "aliases": [],
+      "keywords": [
+        "铭芯启睿"
+      ],
+      "state": "active",
+      "resolutionSource": "source-context",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-20T09:14:45+00:00",
       "createdBy": "VCIQ"
     }
   ],
@@ -120490,6 +120560,241 @@
         "source": "source-context",
         "reason": "原文邻近语境更像人物，不能直接作为公司写入。",
         "decisionKey": "胡瀚",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-08cb8ed00cf71c1c536e",
+      "trackId": "track:semiconductor",
+      "entityId": "company-a481563f60e004154fbf",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "medium",
+      "origins": [
+        {
+          "id": "origin-1fd4951f3c78d75fa723",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:14:45+00:00",
+          "evidenceUrl": "https://mp.weixin.qq.com/mp/wappoc_appmsgcaptcha?poc_token=HN4v12qj01TEpjhB2kUhc8gL2-i1BhvqGWviNLyV&target_url=https%3A%2F%2Fmp.weixin.qq.com%2Fs%2FwfxWEi5kSc6iRisMogHIbQ",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "人工补充公司对象;来源文章:深度|铭芯启睿:A轮超4亿,内存墙的答案不是HBM【华芯半导体】"
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-c34af8795dcf4cb796cd7d07",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:14:45+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "company-a481563f60e004154fbf",
+        "requestedName": "Graphcore",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Graphcore",
+        "targetId": "company-candidate:graphcore",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "graphcore",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-6f38f759d0f19b83d88b",
+      "trackId": "track:semiconductor",
+      "entityId": "technology-4db0c1c5591f8e4a7533",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-5b035667539135ad6907",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:14:45+00:00",
+          "evidenceUrl": "https://mp.weixin.qq.com/mp/wappoc_appmsgcaptcha?poc_token=HN4v12qj01TEpjhB2kUhc8gL2-i1BhvqGWviNLyV&target_url=https%3A%2F%2Fmp.weixin.qq.com%2Fs%2FwfxWEi5kSc6iRisMogHIbQ",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "人工补充技术对象;来源文章:深度|铭芯启睿:A轮超4亿,内存墙的答案不是HBM【华芯半导体】"
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-9daf5c6f89358466eecb38f9",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:14:45+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "technology-4db0c1c5591f8e4a7533",
+        "requestedName": "RRAM",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "RRAM",
+        "targetId": "topic:rram",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "rram",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-69ccf6548b8b4d5569e3",
+      "trackId": "track:semiconductor",
+      "entityId": "person-27b4f3f91b1e75068cdd",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "medium",
+      "origins": [
+        {
+          "id": "origin-7ef74fd4ad72f680280a",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:14:45+00:00",
+          "evidenceUrl": "https://mp.weixin.qq.com/mp/wappoc_appmsgcaptcha?poc_token=HN4v12qj01TEpjhB2kUhc8gL2-i1BhvqGWviNLyV&target_url=https%3A%2F%2Fmp.weixin.qq.com%2Fs%2FwfxWEi5kSc6iRisMogHIbQ",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "人工补充人物对象;来源文章:深度|铭芯启睿:A轮超4亿,内存墙的答案不是HBM【华芯半导体】"
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-c264ef044701be924d698f5b",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:14:45+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "person-27b4f3f91b1e75068cdd",
+        "requestedName": "刘明",
+        "kind": "person"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "person",
+        "entityType": "person",
+        "canonicalName": "刘明",
+        "targetId": "person:刘明",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“人物”，且未与正式目录冲突。",
+        "decisionKey": "刘明",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-2d845464f4a2242bcc1d",
+      "trackId": "track:semiconductor",
+      "entityId": "person-5182dc0cb078344bef92",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "medium",
+      "origins": [
+        {
+          "id": "origin-bcd86f2700cadc2eb7ed",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:14:45+00:00",
+          "evidenceUrl": "https://mp.weixin.qq.com/mp/wappoc_appmsgcaptcha?poc_token=HN4v12qj01TEpjhB2kUhc8gL2-i1BhvqGWviNLyV&target_url=https%3A%2F%2Fmp.weixin.qq.com%2Fs%2FwfxWEi5kSc6iRisMogHIbQ",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "人工补充人物对象;来源文章:深度|铭芯启睿:A轮超4亿,内存墙的答案不是HBM【华芯半导体】"
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-e9af6882751931fd85d7374c",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:14:45+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "person-5182dc0cb078344bef92",
+        "requestedName": "卢涛",
+        "kind": "person"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "person",
+        "entityType": "person",
+        "canonicalName": "卢涛",
+        "targetId": "person:卢涛",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“人物”，且未与正式目录冲突。",
+        "decisionKey": "卢涛",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-a89b019c5bad5d45ca44",
+      "trackId": "track:semiconductor",
+      "entityId": "company-544a5f04a8bcce072d90",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "medium",
+      "origins": [
+        {
+          "id": "origin-6828c47ed3cb589a0a96",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:14:45+00:00",
+          "evidenceUrl": "https://mp.weixin.qq.com/mp/wappoc_appmsgcaptcha?poc_token=HN4v12qj01TEpjhB2kUhc8gL2-i1BhvqGWviNLyV&target_url=https%3A%2F%2Fmp.weixin.qq.com%2Fs%2FwfxWEi5kSc6iRisMogHIbQ",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": "人工补充公司对象;来源文章:深度|铭芯启睿:A轮超4亿,内存墙的答案不是HBM【华芯半导体】"
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-5d1318e4218a5b4cc04f1cee",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:14:45+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "company-544a5f04a8bcce072d90",
+        "requestedName": "铭芯启睿",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "铭芯启睿",
+        "targetId": "company-candidate:铭芯启睿",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "铭芯启睿",
         "reclassified": false
       },
       "executionState": "applied"
