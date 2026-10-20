@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-20T09:41:58+00:00",
+  "updatedAt": "2026-10-20T11:31:29+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -12019,7 +12019,7 @@
       "createdBy": "VCIQ"
     },
     {
-      "id": "company-139d1ac44069eaf68fc1",
+      "id": "company:upstage",
       "kind": "company",
       "name": "Upstage",
       "aliases": [],
@@ -12027,11 +12027,14 @@
         "韩国AI初创企业",
         "IPO前融资",
         "C轮融资",
-        "国家级基础大模型竞赛参赛方"
+        "国家级基础大模型竞赛参赛方",
+        "Upstage",
+        "AI 公司",
+        "IPO"
       ],
-      "state": "review",
-      "resolutionSource": "unresolved",
-      "resolutionStatus": "review",
+      "state": "active",
+      "resolutionSource": "human-decision",
+      "resolutionStatus": "resolved",
       "createdAt": "2026-09-10T06:20:21+00:00",
       "createdBy": "VCIQ"
     },
@@ -21791,6 +21794,39 @@
       "resolutionSource": "source-context",
       "resolutionStatus": "resolved",
       "createdAt": "2026-10-20T09:41:58+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "person-61dde6abfb60f5492000",
+      "kind": "person",
+      "name": "Hwalsuk Lee",
+      "aliases": [],
+      "keywords": [
+        "Hwalsuk Lee",
+        "联合创始人",
+        "CTO"
+      ],
+      "state": "active",
+      "resolutionSource": "explicit-type",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-20T11:31:29+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "company-candidate:jb金融集团",
+      "kind": "company",
+      "name": "JB 金融集团",
+      "aliases": [],
+      "keywords": [
+        "JB 金融集团",
+        "全北银行",
+        "光州银行",
+        "JB Woori Capital"
+      ],
+      "state": "active",
+      "resolutionSource": "human-decision",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-20T11:31:29+00:00",
       "createdBy": "VCIQ"
     }
   ],
@@ -78995,9 +79031,9 @@
       ]
     },
     {
-      "id": "membership-e1fb2243946a0c0aac7a",
+      "id": "membership-a1795d1f18e940cb6acb",
       "trackId": "track:robotics",
-      "entityId": "company-139d1ac44069eaf68fc1",
+      "entityId": "company:upstage",
       "role": "actor",
       "state": "review",
       "pinned": true,
@@ -79017,13 +79053,13 @@
       ]
     },
     {
-      "id": "membership-fe6e72105b177ba325a4",
+      "id": "membership-bdadf7308dbbdd4fdc88",
       "trackId": "track:track-1ccjq49",
-      "entityId": "company-139d1ac44069eaf68fc1",
+      "entityId": "company:upstage",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
-      "confidence": "low",
+      "confidence": "verified",
       "origins": [
         {
           "id": "origin-9f6a5c392f992bcaca26",
@@ -79035,17 +79071,53 @@
             "个人研究兴趣"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-fe15f4387ee4fe02ecec",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T11:31:29+00:00",
+          "evidenceUrl": "https://www.chaincatcher.com/article/2297497",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-7634deab3835fd71d20ba4d4",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T11:31:29+00:00",
+        "trackId": "track:track-1ccjq49",
+        "entityId": "company:upstage",
+        "requestedName": "Upstage",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Upstage",
+        "targetId": "company:upstage",
+        "confidence": "verified",
+        "source": "company-registry",
+        "reason": "名称唯一命中正式公司注册表。",
+        "decisionKey": "upstage",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
-      "id": "membership-e0cacf41a94b2268f5f3",
+      "id": "membership-a50c70baea4aad6ba7a5",
       "trackId": "track:ai",
-      "entityId": "company-139d1ac44069eaf68fc1",
+      "entityId": "company:upstage",
       "role": "actor",
-      "state": "review",
+      "state": "active",
       "pinned": true,
-      "confidence": "low",
+      "confidence": "verified",
       "origins": [
         {
           "id": "origin-9f6a5c392f992bcaca26",
@@ -79057,8 +79129,44 @@
             "个人研究兴趣"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-fe15f4387ee4fe02ecec",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T11:31:29+00:00",
+          "evidenceUrl": "https://www.chaincatcher.com/article/2297497",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-526a9425ba2c3810ed8e55fd",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T11:31:29+00:00",
+        "trackId": "track:ai",
+        "entityId": "company:upstage",
+        "requestedName": "Upstage",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Upstage",
+        "targetId": "company:upstage",
+        "confidence": "verified",
+        "source": "company-registry",
+        "reason": "名称唯一命中正式公司注册表。",
+        "decisionKey": "upstage",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-88832ce65df23554dd2b",
@@ -123256,6 +123364,241 @@
         "source": "source-context",
         "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
         "decisionKey": "优尼法布瑞克斯",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-32e73530d6fadd83c76d",
+      "trackId": "track:track-1ccjq49",
+      "entityId": "person-61dde6abfb60f5492000",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "medium",
+      "origins": [
+        {
+          "id": "origin-afb0d743e54cdee11b08",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T11:31:29+00:00",
+          "evidenceUrl": "https://www.chaincatcher.com/article/2297497",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-41753e2f40c117b3b885789b",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T11:31:29+00:00",
+        "trackId": "track:track-1ccjq49",
+        "entityId": "person-61dde6abfb60f5492000",
+        "requestedName": "Hwalsuk Lee",
+        "kind": "person"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "person",
+        "entityType": "person",
+        "canonicalName": "Hwalsuk Lee",
+        "targetId": "person:hwalsuklee",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“人物”，且未与正式目录冲突。",
+        "decisionKey": "hwalsuklee",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-25ea91bf556f8cd13f84",
+      "trackId": "track:semiconductor",
+      "entityId": "person-61dde6abfb60f5492000",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "medium",
+      "origins": [
+        {
+          "id": "origin-afb0d743e54cdee11b08",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T11:31:29+00:00",
+          "evidenceUrl": "https://www.chaincatcher.com/article/2297497",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-07a7a7f7c8d5c29ba8627d85",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T11:31:29+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "person-61dde6abfb60f5492000",
+        "requestedName": "Hwalsuk Lee",
+        "kind": "person"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "person",
+        "entityType": "person",
+        "canonicalName": "Hwalsuk Lee",
+        "targetId": "person:hwalsuklee",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“人物”，且未与正式目录冲突。",
+        "decisionKey": "hwalsuklee",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-f65d9eb019d247ea6f21",
+      "trackId": "track:track-1ccjq49",
+      "entityId": "company-candidate:jb金融集团",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "medium",
+      "origins": [
+        {
+          "id": "origin-945af14de56fc0cb671e",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T11:31:29+00:00",
+          "evidenceUrl": "https://www.chaincatcher.com/article/2297497",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-b58a42d289d1f989fa7be756",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T11:31:29+00:00",
+        "trackId": "track:track-1ccjq49",
+        "entityId": "company-candidate:jb金融集团",
+        "requestedName": "JB 金融集团",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "JB 金融集团",
+        "targetId": "company-candidate:jb金融集团",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "jb金融集团",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-e3107edfea9726a5a638",
+      "trackId": "track:semiconductor",
+      "entityId": "company-candidate:jb金融集团",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "medium",
+      "origins": [
+        {
+          "id": "origin-945af14de56fc0cb671e",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T11:31:29+00:00",
+          "evidenceUrl": "https://www.chaincatcher.com/article/2297497",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-d2743b19262a8f9c7aa02105",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T11:31:29+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "company-candidate:jb金融集团",
+        "requestedName": "JB 金融集团",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "JB 金融集团",
+        "targetId": "company-candidate:jb金融集团",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "jb金融集团",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-5a7122dad8a6e766ae7d",
+      "trackId": "track:semiconductor",
+      "entityId": "company:upstage",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-fe15f4387ee4fe02ecec",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T11:31:29+00:00",
+          "evidenceUrl": "https://www.chaincatcher.com/article/2297497",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-29f28ecad4563c8aa5b13785",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T11:31:29+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "company:upstage",
+        "requestedName": "Upstage",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Upstage",
+        "targetId": "company:upstage",
+        "confidence": "verified",
+        "source": "company-registry",
+        "reason": "名称唯一命中正式公司注册表。",
+        "decisionKey": "upstage",
         "reclassified": false
       },
       "executionState": "applied"
