@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-20T09:32:22+00:00",
+  "updatedAt": "2026-10-20T09:33:50+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -21628,6 +21628,82 @@
       "resolutionSource": "authenticated-manual-intent",
       "resolutionStatus": "resolved",
       "createdAt": "2026-10-20T09:32:22+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "company-candidate:冷辰科技",
+      "kind": "company",
+      "name": "冷辰科技",
+      "aliases": [],
+      "keywords": [
+        "上海冷辰科技有限公司",
+        "Watlaser",
+        "Pre-A轮"
+      ],
+      "state": "active",
+      "resolutionSource": "human-decision",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-20T09:33:50+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-5172b7362643edbc352b",
+      "kind": "technology",
+      "name": "数控系统",
+      "aliases": [],
+      "keywords": [
+        "数控系统",
+        "底层代码",
+        "多轴运动逻辑"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-20T09:33:50+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-364c64ba039c7b3d5c51",
+      "kind": "technology",
+      "name": "水导激光",
+      "aliases": [],
+      "keywords": [
+        "水导激光",
+        "水导激光设备",
+        "高压微水束"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-20T09:33:50+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "source-25a878bbc3fe9722335f",
+      "kind": "source",
+      "name": "待交叉验证 · 网易",
+      "aliases": [],
+      "keywords": [],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-20T09:33:50+00:00",
+      "createdBy": "VCIQ",
+      "url": "https://www.163.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球"
+    },
+    {
+      "id": "company:doubao",
+      "kind": "company",
+      "name": "豆包",
+      "aliases": [],
+      "keywords": [],
+      "state": "active",
+      "resolutionSource": "human-decision",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-20T09:33:50+00:00",
       "createdBy": "VCIQ"
     }
   ],
@@ -121918,6 +121994,570 @@
         "source": "explicit-type",
         "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
         "decisionKey": "欧盟人工智能法案",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-58d2dc6e167e0deca822",
+      "trackId": "track:robotics",
+      "entityId": "company-candidate:冷辰科技",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "medium",
+      "origins": [
+        {
+          "id": "origin-d155767db340dac1401b",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:33:50+00:00",
+          "evidenceUrl": "https://www.163.com/dy/article/L9M9FBAP05198R3E.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-14a7e98fa6114e3188126ca2",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:33:50+00:00",
+        "trackId": "track:robotics",
+        "entityId": "company-candidate:冷辰科技",
+        "requestedName": "冷辰科技",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "冷辰科技",
+        "targetId": "company-candidate:冷辰科技",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "冷辰科技",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-06484fdba0f41203f26c",
+      "trackId": "track:track-1ccjq49",
+      "entityId": "company-candidate:冷辰科技",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "medium",
+      "origins": [
+        {
+          "id": "origin-d155767db340dac1401b",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:33:50+00:00",
+          "evidenceUrl": "https://www.163.com/dy/article/L9M9FBAP05198R3E.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-d96e70a6bb46440adde60495",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:33:50+00:00",
+        "trackId": "track:track-1ccjq49",
+        "entityId": "company-candidate:冷辰科技",
+        "requestedName": "冷辰科技",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "冷辰科技",
+        "targetId": "company-candidate:冷辰科技",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "冷辰科技",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-4db056c06398c4ecbca1",
+      "trackId": "track:robotics",
+      "entityId": "technology-5172b7362643edbc352b",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-bfa6f353546fb34244c2",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:33:50+00:00",
+          "evidenceUrl": "https://www.163.com/dy/article/L9M9FBAP05198R3E.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-8f4f642dd4e9bf731bf40965",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:33:50+00:00",
+        "trackId": "track:robotics",
+        "entityId": "technology-5172b7362643edbc352b",
+        "requestedName": "数控系统",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "数控系统",
+        "targetId": "topic:数控系统",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "数控系统",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-69f4812a4af114fcf5f2",
+      "trackId": "track:track-1ccjq49",
+      "entityId": "technology-5172b7362643edbc352b",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-bfa6f353546fb34244c2",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:33:50+00:00",
+          "evidenceUrl": "https://www.163.com/dy/article/L9M9FBAP05198R3E.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-e2542e55937b439bf81c5283",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:33:50+00:00",
+        "trackId": "track:track-1ccjq49",
+        "entityId": "technology-5172b7362643edbc352b",
+        "requestedName": "数控系统",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "数控系统",
+        "targetId": "topic:数控系统",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "数控系统",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-2ac5c426f9590de5b2df",
+      "trackId": "track:robotics",
+      "entityId": "technology-364c64ba039c7b3d5c51",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-02e211dc48db315eff2b",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:33:50+00:00",
+          "evidenceUrl": "https://www.163.com/dy/article/L9M9FBAP05198R3E.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-f9b1cef783f3c1ee54a03bec",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:33:50+00:00",
+        "trackId": "track:robotics",
+        "entityId": "technology-364c64ba039c7b3d5c51",
+        "requestedName": "水导激光",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "水导激光",
+        "targetId": "topic:水导激光",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "水导激光",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-9528dc9eb396929cca54",
+      "trackId": "track:track-1ccjq49",
+      "entityId": "technology-364c64ba039c7b3d5c51",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-02e211dc48db315eff2b",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:33:50+00:00",
+          "evidenceUrl": "https://www.163.com/dy/article/L9M9FBAP05198R3E.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-41cd414ff8aa8c5743bd1eb4",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:33:50+00:00",
+        "trackId": "track:track-1ccjq49",
+        "entityId": "technology-364c64ba039c7b3d5c51",
+        "requestedName": "水导激光",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "水导激光",
+        "targetId": "topic:水导激光",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "水导激光",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-2e1870250dceee4a594e",
+      "trackId": "track:robotics",
+      "entityId": "source-25a878bbc3fe9722335f",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-dde8e5ef0b7d8798f75f",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:33:50+00:00",
+          "evidenceUrl": "https://www.163.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-5f6f5702a974dad10c433fd5",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:33:50+00:00",
+        "trackId": "track:robotics",
+        "entityId": "source-25a878bbc3fe9722335f",
+        "requestedName": "待交叉验证 · 网易",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "待交叉验证 · 网易",
+        "targetId": "source-25a878bbc3fe9722335f",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "待交叉验证网易",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-e903f047353801b97280",
+      "trackId": "track:track-1ccjq49",
+      "entityId": "source-25a878bbc3fe9722335f",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-dde8e5ef0b7d8798f75f",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:33:50+00:00",
+          "evidenceUrl": "https://www.163.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-b1bac35d4679866b6f3c39bd",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:33:50+00:00",
+        "trackId": "track:track-1ccjq49",
+        "entityId": "source-25a878bbc3fe9722335f",
+        "requestedName": "待交叉验证 · 网易",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "待交叉验证 · 网易",
+        "targetId": "source-25a878bbc3fe9722335f",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "待交叉验证网易",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-cb64d15a6f149ad082d3",
+      "trackId": "track:semiconductor",
+      "entityId": "source-25a878bbc3fe9722335f",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-dde8e5ef0b7d8798f75f",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:33:50+00:00",
+          "evidenceUrl": "https://www.163.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-997887e7687da2e24e8f710c",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:33:50+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "source-25a878bbc3fe9722335f",
+        "requestedName": "待交叉验证 · 网易",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "待交叉验证 · 网易",
+        "targetId": "source-25a878bbc3fe9722335f",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "待交叉验证网易",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-470a0e353d6179eb15b0",
+      "trackId": "track:ai-3",
+      "entityId": "source-25a878bbc3fe9722335f",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-dde8e5ef0b7d8798f75f",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:33:50+00:00",
+          "evidenceUrl": "https://www.163.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-61ddb94c33f4277fb47e7220",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:33:50+00:00",
+        "trackId": "track:ai-3",
+        "entityId": "source-25a878bbc3fe9722335f",
+        "requestedName": "待交叉验证 · 网易",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "待交叉验证 · 网易",
+        "targetId": "source-25a878bbc3fe9722335f",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "待交叉验证网易",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-d4e6f122b8e574ab4151",
+      "trackId": "track:innovation-capital",
+      "entityId": "source-25a878bbc3fe9722335f",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-dde8e5ef0b7d8798f75f",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:33:50+00:00",
+          "evidenceUrl": "https://www.163.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-a86356d0d6406a9ca35fd304",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:33:50+00:00",
+        "trackId": "track:innovation-capital",
+        "entityId": "source-25a878bbc3fe9722335f",
+        "requestedName": "待交叉验证 · 网易",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "待交叉验证 · 网易",
+        "targetId": "source-25a878bbc3fe9722335f",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "待交叉验证网易",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-5ed6cdc5f2c5ff80ca13",
+      "trackId": "track:ai",
+      "entityId": "company:doubao",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-1eb1b025464acaaa0858",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:33:50+00:00",
+          "evidenceUrl": "https://www.163.com/dy/article/L9M9FBAP05198R3E.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-d973ac1c58f69175623a7a1f",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:33:50+00:00",
+        "trackId": "track:ai",
+        "entityId": "company:doubao",
+        "requestedName": "豆包",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "豆包",
+        "targetId": "company:doubao",
+        "confidence": "verified",
+        "source": "company-registry",
+        "reason": "名称唯一命中正式公司注册表。",
+        "decisionKey": "豆包",
         "reclassified": false
       },
       "executionState": "applied"
