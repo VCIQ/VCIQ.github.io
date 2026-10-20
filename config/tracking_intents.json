@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-20T09:25:40+00:00",
+  "updatedAt": "2026-10-20T09:27:03+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -21473,6 +21473,55 @@
       "sourceType": "listing-search",
       "sourceCategory": "media",
       "region": "全球"
+    },
+    {
+      "id": "technology-018e879f52dc81964464",
+      "kind": "technology",
+      "name": "AIFW",
+      "aliases": [],
+      "keywords": [
+        "AI防火墙",
+        "人工智能防火墙",
+        "AIFW标准"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-20T09:27:03+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-42677edb255a32d6b114",
+      "kind": "technology",
+      "name": "GPU机密计算",
+      "aliases": [],
+      "keywords": [
+        "GPU机密计算",
+        "密钥管理",
+        "环境验证"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-20T09:27:03+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-ed0e630a4219c63c4a09",
+      "kind": "technology",
+      "name": "三层围栏",
+      "aliases": [],
+      "keywords": [
+        "星河AI三层安全围栏",
+        "网络围栏",
+        "Agent围栏",
+        "主机围栏"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-20T09:27:03+00:00",
+      "createdBy": "VCIQ"
     }
   ],
   "memberships": [
@@ -120905,6 +120954,335 @@
         "source": "authenticated-manual-intent",
         "reason": "由 allowlist 内的管理员显式提交。",
         "decisionKey": "metaera",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-c5977a645386ae622252",
+      "trackId": "track:semiconductor",
+      "entityId": "technology-018e879f52dc81964464",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-a4f66c96a2015fa699e4",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:27:03+00:00",
+          "evidenceUrl": "https://m.sohu.com/a/1090196390_128075?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-1f6909dcb7eacbb323797439",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:27:03+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "technology-018e879f52dc81964464",
+        "requestedName": "AIFW",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "AIFW",
+        "targetId": "topic:aifw",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "aifw",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-d86fed25b36d3386c99c",
+      "trackId": "track:ai-2",
+      "entityId": "technology-018e879f52dc81964464",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-a4f66c96a2015fa699e4",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:27:03+00:00",
+          "evidenceUrl": "https://m.sohu.com/a/1090196390_128075?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-ade5013f71eb4cd5e8b01d92",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:27:03+00:00",
+        "trackId": "track:ai-2",
+        "entityId": "technology-018e879f52dc81964464",
+        "requestedName": "AIFW",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "AIFW",
+        "targetId": "topic:aifw",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "aifw",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-9fbcfccada0b5f39fc97",
+      "trackId": "track:semiconductor",
+      "entityId": "technology-42677edb255a32d6b114",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-d803134c39ac6f159e33",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:27:03+00:00",
+          "evidenceUrl": "https://m.sohu.com/a/1090196390_128075?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-7227b977a89bbc7c35d39495",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:27:03+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "technology-42677edb255a32d6b114",
+        "requestedName": "GPU机密计算",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "GPU机密计算",
+        "targetId": "topic:gpu机密计算",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "gpu机密计算",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-123ad45eb95b0285caae",
+      "trackId": "track:robotics",
+      "entityId": "technology-42677edb255a32d6b114",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-d803134c39ac6f159e33",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:27:03+00:00",
+          "evidenceUrl": "https://m.sohu.com/a/1090196390_128075?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-68187d2a39a59b39a47678ee",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:27:03+00:00",
+        "trackId": "track:robotics",
+        "entityId": "technology-42677edb255a32d6b114",
+        "requestedName": "GPU机密计算",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "GPU机密计算",
+        "targetId": "topic:gpu机密计算",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "gpu机密计算",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-c46d505d5f8c91912960",
+      "trackId": "track:ai-2",
+      "entityId": "technology-42677edb255a32d6b114",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-d803134c39ac6f159e33",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:27:03+00:00",
+          "evidenceUrl": "https://m.sohu.com/a/1090196390_128075?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-1a62f4f7b2b99a3401a7e870",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:27:03+00:00",
+        "trackId": "track:ai-2",
+        "entityId": "technology-42677edb255a32d6b114",
+        "requestedName": "GPU机密计算",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "GPU机密计算",
+        "targetId": "topic:gpu机密计算",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "gpu机密计算",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-4a77dc1a3e690f1e1b46",
+      "trackId": "track:ai",
+      "entityId": "technology-ed0e630a4219c63c4a09",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-20dfa2edb111f8ad4cf6",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:27:03+00:00",
+          "evidenceUrl": "https://m.sohu.com/a/1090196390_128075?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-b6eee06cd86e036846cd088e",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:27:03+00:00",
+        "trackId": "track:ai",
+        "entityId": "technology-ed0e630a4219c63c4a09",
+        "requestedName": "三层围栏",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "三层围栏",
+        "targetId": "topic:三层围栏",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "三层围栏",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-172fca3d17460ebbf700",
+      "trackId": "track:ai-2",
+      "entityId": "technology-ed0e630a4219c63c4a09",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-20dfa2edb111f8ad4cf6",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:27:03+00:00",
+          "evidenceUrl": "https://m.sohu.com/a/1090196390_128075?scm=10001.325_13-325_13.0.0-0-0-0-0.5_1334",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-8b1123406ab628b878bef9af",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:27:03+00:00",
+        "trackId": "track:ai-2",
+        "entityId": "technology-ed0e630a4219c63c4a09",
+        "requestedName": "三层围栏",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "三层围栏",
+        "targetId": "topic:三层围栏",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "三层围栏",
         "reclassified": false
       },
       "executionState": "applied"
