@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-20T09:14:45+00:00",
+  "updatedAt": "2026-10-20T09:25:40+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -21457,6 +21457,22 @@
       "resolutionStatus": "resolved",
       "createdAt": "2026-10-20T09:14:45+00:00",
       "createdBy": "VCIQ"
+    },
+    {
+      "id": "source-dfd31c0a96bb11481ea3",
+      "kind": "source",
+      "name": "MetaEra",
+      "aliases": [],
+      "keywords": [],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-20T09:25:40+00:00",
+      "createdBy": "VCIQ",
+      "url": "https://www.me.news/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球"
     }
   ],
   "memberships": [
@@ -120795,6 +120811,100 @@
         "source": "source-context",
         "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
         "decisionKey": "铭芯启睿",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-4f937206b599ee8c1f02",
+      "trackId": "track:ai-2",
+      "entityId": "source-dfd31c0a96bb11481ea3",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-02a4f821beb481936c77",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:25:40+00:00",
+          "evidenceUrl": "https://www.me.news/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-7dd10178251af8c5be5afa59",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:25:40+00:00",
+        "trackId": "track:ai-2",
+        "entityId": "source-dfd31c0a96bb11481ea3",
+        "requestedName": "MetaEra",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "MetaEra",
+        "targetId": "source-dfd31c0a96bb11481ea3",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "metaera",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-27564b472ad683dbb133",
+      "trackId": "track:semiconductor",
+      "entityId": "source-dfd31c0a96bb11481ea3",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-02a4f821beb481936c77",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-20T09:25:40+00:00",
+          "evidenceUrl": "https://www.me.news/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-00942ff98e84617d967e28dd",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-20T09:25:40+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "source-dfd31c0a96bb11481ea3",
+        "requestedName": "MetaEra",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "MetaEra",
+        "targetId": "source-dfd31c0a96bb11481ea3",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "metaera",
         "reclassified": false
       },
       "executionState": "applied"
