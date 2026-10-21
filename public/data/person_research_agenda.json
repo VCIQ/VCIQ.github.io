@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T01:24:27+00:00",
-  "personCount": 163,
-  "taskCount": 375,
-  "openTaskCount": 374,
+  "generatedAt": "2026-10-21T01:05:41+00:00",
+  "personCount": 165,
+  "taskCount": 383,
+  "openTaskCount": 382,
   "people": {
     "ali-ghodsi": {
       "personName": "Ali Ghodsi",
@@ -2145,38 +2145,6 @@
         }
       ],
       "openCount": 3
-    },
-    "wang-xingxing": {
-      "personName": "王兴兴",
-      "tasks": [
-        {
-          "id": "person-research-16aca5501288",
-          "taskType": "execution_verification",
-          "priority": "P1",
-          "target": "宇树科技 · 机器人",
-          "question": "王兴兴 的最新公开事件涉及“机器人”后，宇树科技 是否出现独立的产品、技术、组织或商业执行证据？",
-          "objective": "把“人物表达”与“组织执行”分开验证；人物观点本身不自动等同于公司战略或产品落地。",
-          "preferredEvidence": [
-            "公司官方公告/博客",
-            "产品或技术官方发布",
-            "监管文件",
-            "公司官方开发者/研究页面"
-          ],
-          "searchQueries": [],
-          "successCriteria": "至少存在 1 条独立于人物表述、且 URL 不与人物证据重合的一手/官方组织来源，同时直接命中组织与目标技术/产品；第三方报道或同一来源复用只能形成 candidate_found。",
-          "evidenceBasis": [
-            {
-              "title": "王兴兴低估了AI，梁文锋开始重估机器人",
-              "url": "https://www.tmtpost.com/8166052.html",
-              "source": "钛媒体",
-              "date": "2026-10-13"
-            }
-          ],
-          "candidateEvidence": [],
-          "status": "open"
-        }
-      ],
-      "openCount": 1
     },
     "person-601616b045": {
       "personName": "丁禹阳",
@@ -5592,6 +5560,80 @@
       ],
       "openCount": 3
     },
+    "hwalsuk-lee": {
+      "personName": "Hwalsuk Lee",
+      "tasks": [
+        {
+          "id": "person-research-ecefa0ceeaf0",
+          "taskType": "first_party_evidence",
+          "priority": "P0",
+          "target": "半导体",
+          "question": "能否找到 Hwalsuk Lee 围绕“半导体”的本人演讲、访谈、论文、公开发文或官方文件？",
+          "objective": "增加可归因于人物本人的一手材料，避免人物研究长期依赖第三方报道。",
+          "preferredEvidence": [
+            "本人论文/著作",
+            "个人或机构官方主页",
+            "官方 YouTube/视频号",
+            "公开演讲/问答原始视频"
+          ],
+          "searchQueries": [
+            "Hwalsuk Lee 半导体",
+            "Hwalsuk Lee 半导体 演讲",
+            "Hwalsuk Lee 半导体 访谈"
+          ],
+          "successCriteria": "人物档案至少补齐到 2 条可直接归因于本人的独立公开材料；若用于观点演进，仍需形成跨时间的同主题证据点。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        },
+        {
+          "id": "person-research-0096bec89b74",
+          "taskType": "identity_verification",
+          "priority": "P0",
+          "target": "身份与任职",
+          "question": "Hwalsuk Lee 当前公开身份、任职机构和角色能否由本人、机构官网或监管/学术档案独立核验？",
+          "objective": "补齐人物身份与任职证据；在验证完成前，不把网页标题、媒体称谓或自动抽取角色当作正式任职。",
+          "preferredEvidence": [
+            "机构官方人物页",
+            "个人学术主页",
+            "监管文件",
+            "官方任命/团队页面"
+          ],
+          "searchQueries": [
+            "Hwalsuk Lee official profile",
+            "Hwalsuk Lee 个人主页",
+            "Hwalsuk Lee 任职 官方"
+          ],
+          "successCriteria": "至少取得 1 条可直接归因于本人或任职机构的公开来源，同时明确姓名与当前角色。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        },
+        {
+          "id": "person-research-ff12eb66cd9f",
+          "taskType": "freshness_update",
+          "priority": "P2",
+          "target": "半导体",
+          "question": "Hwalsuk Lee 最近 180 天是否有新的本人公开表达、论文、产品/项目动作或任职变化？",
+          "objective": "补齐近期时间窗口，避免用多年以前的材料代表人物当前判断。",
+          "preferredEvidence": [
+            "本人/机构官方更新",
+            "近期演讲或采访",
+            "近期论文/公开文件"
+          ],
+          "searchQueries": [
+            "Hwalsuk Lee 半导体",
+            "Hwalsuk Lee 半导体 2026",
+            "Hwalsuk Lee 最新演讲 访谈"
+          ],
+          "successCriteria": "找到至少 1 条最近 180 天的一手或机构官方材料；否则保持 open 并明确近期证据空窗。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        }
+      ],
+      "openCount": 3
+    },
     "inc-mustafa-furniturewala-svp": {
       "personName": "Inc Mustafa Furniturewala SVP",
       "tasks": [
@@ -6032,6 +6074,154 @@
             "余凯博士出 半导体",
             "余凯博士出 半导体 2026",
             "余凯博士出 最新演讲 访谈"
+          ],
+          "successCriteria": "找到至少 1 条最近 180 天的一手或机构官方材料；否则保持 open 并明确近期证据空窗。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        }
+      ],
+      "openCount": 3
+    },
+    "person-0d0b1c0e40": {
+      "personName": "刘明",
+      "tasks": [
+        {
+          "id": "person-research-b05af0a213cc",
+          "taskType": "first_party_evidence",
+          "priority": "P0",
+          "target": "半导体",
+          "question": "能否找到 刘明 围绕“半导体”的本人演讲、访谈、论文、公开发文或官方文件？",
+          "objective": "增加可归因于人物本人的一手材料，避免人物研究长期依赖第三方报道。",
+          "preferredEvidence": [
+            "本人论文/著作",
+            "个人或机构官方主页",
+            "官方 YouTube/视频号",
+            "公开演讲/问答原始视频"
+          ],
+          "searchQueries": [
+            "刘明 半导体",
+            "刘明 半导体 演讲",
+            "刘明 半导体 访谈"
+          ],
+          "successCriteria": "人物档案至少补齐到 2 条可直接归因于本人的独立公开材料；若用于观点演进，仍需形成跨时间的同主题证据点。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        },
+        {
+          "id": "person-research-e8c03bc11c30",
+          "taskType": "identity_verification",
+          "priority": "P0",
+          "target": "身份与任职",
+          "question": "刘明 当前公开身份、任职机构和角色能否由本人、机构官网或监管/学术档案独立核验？",
+          "objective": "补齐人物身份与任职证据；在验证完成前，不把网页标题、媒体称谓或自动抽取角色当作正式任职。",
+          "preferredEvidence": [
+            "机构官方人物页",
+            "个人学术主页",
+            "监管文件",
+            "官方任命/团队页面"
+          ],
+          "searchQueries": [
+            "刘明 official profile",
+            "刘明 个人主页",
+            "刘明 任职 官方"
+          ],
+          "successCriteria": "至少取得 1 条可直接归因于本人或任职机构的公开来源，同时明确姓名与当前角色。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        },
+        {
+          "id": "person-research-0e765266b282",
+          "taskType": "freshness_update",
+          "priority": "P2",
+          "target": "半导体",
+          "question": "刘明 最近 180 天是否有新的本人公开表达、论文、产品/项目动作或任职变化？",
+          "objective": "补齐近期时间窗口，避免用多年以前的材料代表人物当前判断。",
+          "preferredEvidence": [
+            "本人/机构官方更新",
+            "近期演讲或采访",
+            "近期论文/公开文件"
+          ],
+          "searchQueries": [
+            "刘明 半导体",
+            "刘明 半导体 2026",
+            "刘明 最新演讲 访谈"
+          ],
+          "successCriteria": "找到至少 1 条最近 180 天的一手或机构官方材料；否则保持 open 并明确近期证据空窗。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        }
+      ],
+      "openCount": 3
+    },
+    "person-c1dcc071fa": {
+      "personName": "卢涛",
+      "tasks": [
+        {
+          "id": "person-research-be85e7333d20",
+          "taskType": "first_party_evidence",
+          "priority": "P0",
+          "target": "半导体",
+          "question": "能否找到 卢涛 围绕“半导体”的本人演讲、访谈、论文、公开发文或官方文件？",
+          "objective": "增加可归因于人物本人的一手材料，避免人物研究长期依赖第三方报道。",
+          "preferredEvidence": [
+            "本人论文/著作",
+            "个人或机构官方主页",
+            "官方 YouTube/视频号",
+            "公开演讲/问答原始视频"
+          ],
+          "searchQueries": [
+            "卢涛 半导体",
+            "卢涛 半导体 演讲",
+            "卢涛 半导体 访谈"
+          ],
+          "successCriteria": "人物档案至少补齐到 2 条可直接归因于本人的独立公开材料；若用于观点演进，仍需形成跨时间的同主题证据点。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        },
+        {
+          "id": "person-research-0866384d5c2d",
+          "taskType": "identity_verification",
+          "priority": "P0",
+          "target": "身份与任职",
+          "question": "卢涛 当前公开身份、任职机构和角色能否由本人、机构官网或监管/学术档案独立核验？",
+          "objective": "补齐人物身份与任职证据；在验证完成前，不把网页标题、媒体称谓或自动抽取角色当作正式任职。",
+          "preferredEvidence": [
+            "机构官方人物页",
+            "个人学术主页",
+            "监管文件",
+            "官方任命/团队页面"
+          ],
+          "searchQueries": [
+            "卢涛 official profile",
+            "卢涛 个人主页",
+            "卢涛 任职 官方"
+          ],
+          "successCriteria": "至少取得 1 条可直接归因于本人或任职机构的公开来源，同时明确姓名与当前角色。",
+          "evidenceBasis": [],
+          "candidateEvidence": [],
+          "status": "open"
+        },
+        {
+          "id": "person-research-ac90385abc24",
+          "taskType": "freshness_update",
+          "priority": "P2",
+          "target": "半导体",
+          "question": "卢涛 最近 180 天是否有新的本人公开表达、论文、产品/项目动作或任职变化？",
+          "objective": "补齐近期时间窗口，避免用多年以前的材料代表人物当前判断。",
+          "preferredEvidence": [
+            "本人/机构官方更新",
+            "近期演讲或采访",
+            "近期论文/公开文件"
+          ],
+          "searchQueries": [
+            "卢涛 半导体",
+            "卢涛 半导体 2026",
+            "卢涛 最新演讲 访谈"
           ],
           "successCriteria": "找到至少 1 条最近 180 天的一手或机构官方材料；否则保持 open 并明确近期证据空窗。",
           "evidenceBasis": [],
