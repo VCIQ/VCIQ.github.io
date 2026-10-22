@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-22T01:14:52+00:00",
+  "updatedAt": "2026-10-22T02:41:14+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -8770,7 +8770,8 @@
       "keywords": [
         "本地响应",
         "离线运行",
-        "隐私保护"
+        "隐私保护",
+        "端侧 AI"
       ],
       "state": "active",
       "resolutionSource": "authenticated-manual-intent",
@@ -22127,6 +22128,55 @@
       "resolutionSource": "human-decision",
       "resolutionStatus": "resolved",
       "createdAt": "2026-10-22T01:14:52+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-47707bc5f81f80631649",
+      "kind": "technology",
+      "name": "Astra SR200",
+      "aliases": [],
+      "keywords": [
+        "Astra SR200",
+        "SR210",
+        "SR230",
+        "SR250"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-22T02:41:14+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-e1e6dd79f5d6802011b7",
+      "kind": "technology",
+      "name": "Coral NPU",
+      "aliases": [],
+      "keywords": [
+        "Coral NPU",
+        "Coralboard",
+        "Torq AI"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-22T02:41:14+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "company-d2906944de4b6acc6413",
+      "kind": "company",
+      "name": "Synaptics",
+      "aliases": [],
+      "keywords": [
+        "Synaptics",
+        "Astra SR200",
+        "Coral NPU"
+      ],
+      "state": "active",
+      "resolutionSource": "unresolved",
+      "resolutionStatus": "review",
+      "createdAt": "2026-10-22T02:41:14+00:00",
       "createdBy": "VCIQ"
     }
   ],
@@ -58096,8 +58146,44 @@
             "技术突破"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-e3c7b143137fb9bbee42",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-22T02:41:14+00:00",
+          "evidenceUrl": "https://www.vrtuoluo.cn/546228.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-ef87338c12434d53b6cd9550",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-22T02:41:14+00:00",
+        "trackId": "track:robotics",
+        "entityId": "technology-a474ac5d7fe475aa628f",
+        "requestedName": "端侧 AI",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "端侧 AI",
+        "targetId": "topic:端侧ai",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "端侧ai",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-24bee6f32e3142046735",
@@ -58144,8 +58230,44 @@
             "技术突破"
           ],
           "note": ""
+        },
+        {
+          "id": "origin-e3c7b143137fb9bbee42",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-22T02:41:14+00:00",
+          "evidenceUrl": "https://www.vrtuoluo.cn/546228.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-5c08f57d78d3b8341754d134",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-22T02:41:14+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "technology-a474ac5d7fe475aa628f",
+        "requestedName": "端侧 AI",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "端侧 AI",
+        "targetId": "topic:端侧ai",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "端侧ai",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-8def05781a124db65269",
@@ -125938,6 +126060,429 @@
         "source": "company-registry",
         "reason": "名称唯一命中正式公司注册表。",
         "decisionKey": "华大智造",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-1f8238c53a5d785069c2",
+      "trackId": "track:semiconductor",
+      "entityId": "technology-47707bc5f81f80631649",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-0570cedd4f6a5c2abb03",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-22T02:41:14+00:00",
+          "evidenceUrl": "https://www.vrtuoluo.cn/546228.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-96ce8925f4cba117b8e3c474",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-22T02:41:14+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "technology-47707bc5f81f80631649",
+        "requestedName": "Astra SR200",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "Astra SR200",
+        "targetId": "topic:astrasr200",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "astrasr200",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-7080290dfac1c2c6bd2a",
+      "trackId": "track:robotics",
+      "entityId": "technology-47707bc5f81f80631649",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-0570cedd4f6a5c2abb03",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-22T02:41:14+00:00",
+          "evidenceUrl": "https://www.vrtuoluo.cn/546228.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-7ed7d5bd66c905376b8f7100",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-22T02:41:14+00:00",
+        "trackId": "track:robotics",
+        "entityId": "technology-47707bc5f81f80631649",
+        "requestedName": "Astra SR200",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "Astra SR200",
+        "targetId": "topic:astrasr200",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "astrasr200",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-055102942de4d04f2826",
+      "trackId": "track:semiconductor",
+      "entityId": "technology-e1e6dd79f5d6802011b7",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-6025e39483e759c355f0",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-22T02:41:14+00:00",
+          "evidenceUrl": "https://www.vrtuoluo.cn/546228.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-e9d51b4b8e4fa157b0c836ef",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-22T02:41:14+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "technology-e1e6dd79f5d6802011b7",
+        "requestedName": "Coral NPU",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "Coral NPU",
+        "targetId": "topic:coralnpu",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "coralnpu",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-6dcc6a6281980f881ed0",
+      "trackId": "track:robotics",
+      "entityId": "technology-e1e6dd79f5d6802011b7",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-6025e39483e759c355f0",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-22T02:41:14+00:00",
+          "evidenceUrl": "https://www.vrtuoluo.cn/546228.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-f7d9e5429b5d46a701e8265c",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-22T02:41:14+00:00",
+        "trackId": "track:robotics",
+        "entityId": "technology-e1e6dd79f5d6802011b7",
+        "requestedName": "Coral NPU",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "Coral NPU",
+        "targetId": "topic:coralnpu",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "coralnpu",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-0238ae7a8c47a5133d73",
+      "trackId": "track:semiconductor",
+      "entityId": "company-d2906944de4b6acc6413",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "low",
+      "origins": [
+        {
+          "id": "origin-09e60f7628b41dc5ac59",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-22T02:41:14+00:00",
+          "evidenceUrl": "https://www.vrtuoluo.cn/546228.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-c2e75cf74980f74b3bdd175e",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-22T02:41:14+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "company-d2906944de4b6acc6413",
+        "requestedName": "Synaptics",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Synaptics",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "synaptics",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-6a15255fa38744167c0b",
+      "trackId": "track:robotics",
+      "entityId": "company-d2906944de4b6acc6413",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "low",
+      "origins": [
+        {
+          "id": "origin-09e60f7628b41dc5ac59",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-22T02:41:14+00:00",
+          "evidenceUrl": "https://www.vrtuoluo.cn/546228.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-7e4df9a67e0466f2865ad283",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-22T02:41:14+00:00",
+        "trackId": "track:robotics",
+        "entityId": "company-d2906944de4b6acc6413",
+        "requestedName": "Synaptics",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Synaptics",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "synaptics",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-1551916b2fbb927c7c0c",
+      "trackId": "track:ai",
+      "entityId": "company-d2906944de4b6acc6413",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "low",
+      "origins": [
+        {
+          "id": "origin-09e60f7628b41dc5ac59",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-22T02:41:14+00:00",
+          "evidenceUrl": "https://www.vrtuoluo.cn/546228.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-434cd905ecb9a0334a9aa046",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-22T02:41:14+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-d2906944de4b6acc6413",
+        "requestedName": "Synaptics",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Synaptics",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "synaptics",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-263aae9df7c4a0704966",
+      "trackId": "track:ai-3",
+      "entityId": "technology-a474ac5d7fe475aa628f",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-e3c7b143137fb9bbee42",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-22T02:41:14+00:00",
+          "evidenceUrl": "https://www.vrtuoluo.cn/546228.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-166df48a61c88542a92cd133",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-22T02:41:14+00:00",
+        "trackId": "track:ai-3",
+        "entityId": "technology-a474ac5d7fe475aa628f",
+        "requestedName": "端侧 AI",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "端侧 AI",
+        "targetId": "topic:端侧ai",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "端侧ai",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-138defaf54eed953635b",
+      "trackId": "track:ai-2",
+      "entityId": "technology-a474ac5d7fe475aa628f",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-e3c7b143137fb9bbee42",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-22T02:41:14+00:00",
+          "evidenceUrl": "https://www.vrtuoluo.cn/546228.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-9f4e91559acdecfc5f2e597e",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-22T02:41:14+00:00",
+        "trackId": "track:ai-2",
+        "entityId": "technology-a474ac5d7fe475aa628f",
+        "requestedName": "端侧 AI",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "端侧 AI",
+        "targetId": "topic:端侧ai",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "端侧ai",
         "reclassified": false
       },
       "executionState": "applied"
