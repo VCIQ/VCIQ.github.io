@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-23T08:56:10+00:00",
+  "updatedAt": "2026-10-23T13:44:52+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -22466,6 +22466,36 @@
       "resolutionStatus": "review",
       "createdAt": "2026-10-23T08:56:10+00:00",
       "createdBy": "VCIQ"
+    },
+    {
+      "id": "company-bf3b0b9c3016225f6a4d",
+      "kind": "company",
+      "name": "观复芯",
+      "aliases": [],
+      "keywords": [
+        "观复芯"
+      ],
+      "state": "active",
+      "resolutionSource": "source-context",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-23T13:44:52+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "source-6bb95426f719e6a7eb61",
+      "kind": "source",
+      "name": "同花顺财经",
+      "aliases": [],
+      "keywords": [],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-10-23T13:44:52+00:00",
+      "createdBy": "VCIQ",
+      "url": "https://news.10jqka.com.cn/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球"
     }
   ],
   "memberships": [
@@ -129017,6 +129047,349 @@
         "source": "unresolved",
         "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
         "decisionKey": "沁恒微",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-226028eb0db61d53ea94",
+      "trackId": "track:ai",
+      "entityId": "company-bf3b0b9c3016225f6a4d",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "medium",
+      "origins": [
+        {
+          "id": "origin-7d9f0860f8e114a719bb",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-23T13:44:52+00:00",
+          "evidenceUrl": "https://news.10jqka.com.cn/20261022/c680977616.shtml",
+          "reasons": [
+            "个人研究兴趣",
+            "融资机会",
+            "IPO可能"
+          ],
+          "note": "人工补充公司对象;来源文章:观复芯完成种子轮融资,高瓴创投、力合算芯联合领投"
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-c60c4d72f8e7683137fb46d4",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-23T13:44:52+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-bf3b0b9c3016225f6a4d",
+        "requestedName": "观复芯",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "观复芯",
+        "targetId": "company-candidate:观复芯",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "观复芯",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-2e217b958e2a687c0c39",
+      "trackId": "track:semiconductor",
+      "entityId": "source-6bb95426f719e6a7eb61",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-6ec7be800b88fd9769f5",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-23T13:44:52+00:00",
+          "evidenceUrl": "https://news.10jqka.com.cn/",
+          "reasons": [
+            "个人研究兴趣",
+            "融资机会",
+            "IPO可能"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-f42a870e2d9cc880d0b4fd04",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-23T13:44:52+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "source-6bb95426f719e6a7eb61",
+        "requestedName": "同花顺财经",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "同花顺财经",
+        "targetId": "source-6bb95426f719e6a7eb61",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "同花顺财经",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-aaa2bdf4bd0d4498490e",
+      "trackId": "track:robotics",
+      "entityId": "source-6bb95426f719e6a7eb61",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-6ec7be800b88fd9769f5",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-23T13:44:52+00:00",
+          "evidenceUrl": "https://news.10jqka.com.cn/",
+          "reasons": [
+            "个人研究兴趣",
+            "融资机会",
+            "IPO可能"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-5b5a989d0344153aa1efad12",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-23T13:44:52+00:00",
+        "trackId": "track:robotics",
+        "entityId": "source-6bb95426f719e6a7eb61",
+        "requestedName": "同花顺财经",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "同花顺财经",
+        "targetId": "source-6bb95426f719e6a7eb61",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "同花顺财经",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-1d54679997b75e632f24",
+      "trackId": "track:manufacturing",
+      "entityId": "source-6bb95426f719e6a7eb61",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-6ec7be800b88fd9769f5",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-23T13:44:52+00:00",
+          "evidenceUrl": "https://news.10jqka.com.cn/",
+          "reasons": [
+            "个人研究兴趣",
+            "融资机会",
+            "IPO可能"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-727e26d8fa67b2e0859b8c3a",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-23T13:44:52+00:00",
+        "trackId": "track:manufacturing",
+        "entityId": "source-6bb95426f719e6a7eb61",
+        "requestedName": "同花顺财经",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "同花顺财经",
+        "targetId": "source-6bb95426f719e6a7eb61",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "同花顺财经",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-c61f3c11195cb9f49ec4",
+      "trackId": "track:innovation-capital",
+      "entityId": "source-6bb95426f719e6a7eb61",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-6ec7be800b88fd9769f5",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-23T13:44:52+00:00",
+          "evidenceUrl": "https://news.10jqka.com.cn/",
+          "reasons": [
+            "个人研究兴趣",
+            "融资机会",
+            "IPO可能"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-4df52a99fd7d29d257f8b663",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-23T13:44:52+00:00",
+        "trackId": "track:innovation-capital",
+        "entityId": "source-6bb95426f719e6a7eb61",
+        "requestedName": "同花顺财经",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "同花顺财经",
+        "targetId": "source-6bb95426f719e6a7eb61",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "同花顺财经",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-e92a16b6234fb00b1886",
+      "trackId": "track:ai",
+      "entityId": "source-6bb95426f719e6a7eb61",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-6ec7be800b88fd9769f5",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-23T13:44:52+00:00",
+          "evidenceUrl": "https://news.10jqka.com.cn/",
+          "reasons": [
+            "个人研究兴趣",
+            "融资机会",
+            "IPO可能"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-ebbe73c6c37c18461e176178",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-23T13:44:52+00:00",
+        "trackId": "track:ai",
+        "entityId": "source-6bb95426f719e6a7eb61",
+        "requestedName": "同花顺财经",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "同花顺财经",
+        "targetId": "source-6bb95426f719e6a7eb61",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "同花顺财经",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-aee7c1cf8f735773a7aa",
+      "trackId": "track:track-1ccjq49",
+      "entityId": "source-6bb95426f719e6a7eb61",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-6ec7be800b88fd9769f5",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-10-23T13:44:52+00:00",
+          "evidenceUrl": "https://news.10jqka.com.cn/",
+          "reasons": [
+            "个人研究兴趣",
+            "融资机会",
+            "IPO可能"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-fafbc37bf514093be7ceadf3",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-10-23T13:44:52+00:00",
+        "trackId": "track:track-1ccjq49",
+        "entityId": "source-6bb95426f719e6a7eb61",
+        "requestedName": "同花顺财经",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "同花顺财经",
+        "targetId": "source-6bb95426f719e6a7eb61",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "同花顺财经",
         "reclassified": false
       },
       "executionState": "applied"
