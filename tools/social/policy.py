@@ -1,4 +1,4 @@
-"""Explicit local activation, with no collectors implemented in PR-01."""
+"""Explicit local activation. Only WeChat collection is implemented in PR-02."""
 from __future__ import annotations
 
 from pathlib import Path
@@ -7,7 +7,7 @@ from typing import Any
 from .contracts import PLATFORMS, validate, load_json
 
 DEFAULT_POLICY = Path(__file__).resolve().parents[2] / "config/social_discovery.json"
-IMPLEMENTED_PLATFORMS: frozenset[str] = frozenset()
+IMPLEMENTED_PLATFORMS: frozenset[str] = frozenset({"wechat"})
 
 
 def load_policy(path: Path | str = DEFAULT_POLICY) -> dict[str, Any]:

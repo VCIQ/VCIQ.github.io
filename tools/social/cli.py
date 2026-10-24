@@ -1,4 +1,4 @@
-"""Read-only PR-01 CLI: validate and doctor --offline; no collection commands."""
+"""Shadow CLI: offline validation/planning and explicitly gated WeChat execution."""
 from __future__ import annotations
 
 import argparse
@@ -9,7 +9,7 @@ from typing import Any
 
 from .contracts import ContractError, MAX_DOCUMENT_BYTES, load_json, validate, load_schema
 from .guard import GuardError, runtime_paths, state_path
-from .policy import DEFAULT_POLICY, activation, load_policy
+from .policy import DEFAULT_POLICY, IMPLEMENTED_PLATFORMS, activation, load_policy
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
@@ -64,6 +64,10 @@ def validate_fixtures(directory: Path) -> dict[str, Any]:
 
 
 def main(argv: list[str] | None = None) -> int:
+    arguments = list(sys.argv[1:] if argv is None else argv)
+    if arguments and arguments[0] in {"plan", "coverage", "run-wechat", "resume-wechat"}:
+        from .planning_cli import main as planning_main
+        return planning_main(arguments)
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
     check = sub.add_parser("validate", help="Validate one contract or the synthetic corpus, without writing")
@@ -75,7 +79,7 @@ def main(argv: list[str] | None = None) -> int:
     doctor.add_argument("--policy", type=Path, default=DEFAULT_POLICY)
     doctor.add_argument("--runtime", type=Path)
     doctor.add_argument("--state-dir", type=Path)
-    args = parser.parse_args(argv)
+    args = parser.parse_args(arguments)
     try:
         if args.command == "validate":
             if args.fixtures:
@@ -93,7 +97,7 @@ def main(argv: list[str] | None = None) -> int:
                     raise GuardError("state_directory_mismatch")
             elif args.state_dir is not None:
                 state_path(args.state_dir, repo_roots=[REPO_ROOT])
-            result = {"ok": True, "status": "disabled" if runtime is None or not runtime["enabled"] else "offline_only", "mode": "shadow", "publish": False, "platforms": activation(policy, runtime), "implementedPlatforms": [], "liveExecuted": False, "writesPerformed": False, "pathChecks": "checked" if runtime is not None or args.state_dir is not None else "not_requested"}
+            result = {"ok": True, "status": "disabled" if runtime is None or not runtime["enabled"] else "offline_only", "mode": "shadow", "publish": False, "platforms": activation(policy, runtime), "implementedPlatforms": sorted(IMPLEMENTED_PLATFORMS), "liveExecuted": False, "writesPerformed": False, "pathChecks": "checked" if runtime is not None or args.state_dir is not None else "not_requested"}
         print(json.dumps(result, ensure_ascii=False, sort_keys=True))
         return 0
     except (ContractError, GuardError) as exc:

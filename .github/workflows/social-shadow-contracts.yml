@@ -1,0 +1,61 @@
+name: Social shadow offline contracts
+
+on:
+  pull_request:
+    paths:
+      - 'tools/social/**'
+      - 'schemas/social/**'
+      - 'config/social_discovery.json'
+      - 'tests/test_social_*.py'
+      - 'tests/fixtures/social/**'
+      - 'workers/mediacrawler/upstream.lock.json'
+      - '.github/workflows/social-shadow-contracts.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: social-shadow-contracts-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run social regression tests with network denied
+        run: |
+          python - <<'PY'
+          import sys
+          import unittest
+          from unittest.mock import patch
+
+          def deny(*args, **kwargs):
+              raise AssertionError('network forbidden in social shadow offline tests')
+
+          modules = (
+              'tests.test_social_contracts',
+              'tests.test_social_guard',
+              'tests.test_social_scheduler',
+              'tests.test_social_wechat',
+              'tests.test_social_execution_guards',
+          )
+          with patch('socket.create_connection', deny), patch('socket.getaddrinfo', deny), patch('urllib.request.urlopen', deny):
+              suite = unittest.defaultTestLoader.loadTestsFromNames(modules)
+              result = unittest.TextTestRunner(verbosity=2).run(suite)
+          sys.exit(0 if result.wasSuccessful() else 1)
+          PY
+      - name: Check fixtures and disabled doctor
+        run: |
+          python -m tools.social.cli validate --fixtures tests/fixtures/social/contracts
+          python -m tools.social.cli doctor --offline
+      - name: Verify no tracked files changed
+        run: git diff --exit-code
