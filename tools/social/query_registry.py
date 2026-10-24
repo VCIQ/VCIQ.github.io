@@ -61,9 +61,9 @@ def build_query_registry(tracking: dict, policy: dict, *, platforms: tuple[str, 
             assert_safe(normalized)
         except ContractError:
             reason = "sensitive_term"
-        if not normalized:
+        if not normalized and reason is None:
             reason = "empty_term"
-        if len(normalized) > 500:
+        if len(normalized) > 500 and reason is None:
             reason = "term_too_long"
         text = "[redacted]" if reason == "sensitive_term" else normalized
         item = catalog.setdefault(term_ref, {"termRef": term_ref, "kind": kind, "text": text,

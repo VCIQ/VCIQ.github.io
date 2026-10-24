@@ -97,7 +97,14 @@ class PublicTransport:
                     location = response.getheader("Location", "")
                     if not location or redirect == 3:
                         raise FetchError("schema_error", "REDIRECT_LIMIT")
-                    url = checked_url(urljoin(url, decode_url(location)))
+                    target = checked_url(urljoin(url, decode_url(location)))
+                    target_host = urlsplit(target).hostname
+                    allowed_hosts = {parts.hostname}
+                    if parts.hostname == "weixin.sogou.com" and parts.path == "/link":
+                        allowed_hosts.add("mp.weixin.qq.com")
+                    if target_host not in allowed_hosts:
+                        raise FetchError("schema_error", "CROSS_PROVIDER_REDIRECT")
+                    url = target
                     continue
                 if response.status == 429:
                     raw = response.getheader("Retry-After", "")

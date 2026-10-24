@@ -42,6 +42,8 @@ def identity(url: str) -> tuple[str, str]:
 
 def _blocked(body: str) -> None:
     from tools.wechat_public_sources import BLOCK_PAGE_MARKERS
+    if any(marker in body for marker in ("该内容已被发布者删除", "此内容因违规无法查看")):
+        raise FetchError("network_error", "ORIGINAL_UNAVAILABLE")
     if any(marker in body for marker in BLOCK_PAGE_MARKERS) or re.search(r"antispider|VerifyCode|请输入验证码|正常行为不是自动程序", body, re.I):
         raise FetchError("verification_required", "VERIFICATION_REQUIRED")
     if re.search(r'<(?:form|input)[^>]+(?:login|password)', body, re.I):
