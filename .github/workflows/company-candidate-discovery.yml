@@ -116,6 +116,9 @@ jobs:
           # Automatic quality tombstones are authoritative against stale writer
           # snapshots. Enforce them after every resolver pass that may touch tracking.
           python tools/tracking_seed_governance.py
+          # Expiry checkpoints can invalidate old automatic captures. Reconcile
+          # again before claiming the terminal fixed point.
+          python tools/reconcile_entity_resolution.py
           python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
           python tools/apply_manual_company_trust.py --candidates "$CANDIDATE_QUEUE"
           python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
@@ -164,6 +167,7 @@ jobs:
             # A concurrent writer may have replayed a stale automatic person after
             # this run started. Re-apply sticky quality tombstones after the rebase.
             python tools/tracking_seed_governance.py
+            python tools/reconcile_entity_resolution.py
             python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
             python tools/apply_manual_company_trust.py --candidates "$CANDIDATE_QUEUE"
             python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
