@@ -62,13 +62,13 @@ CAPITAL_ACTION_RE = re.compile(
     re.IGNORECASE,
 )
 IPO_APPLICATION_RE = re.compile(
-    r"\\b(?:s-1|registration statement|filed?|filing|proposed|"
-    r"seeks? to list|plans? to list|intends? to list)\\b|"
+    r"\b(?:s-1|registration statement|filed?|filing|proposed|"
+    r"seeks? to list|plans? to list|intends? to list)\b|"
     r"(?:拟上市|申请上市|上市申请|递交上市申请|计划上市|IPO申报)",
     re.IGNORECASE,
 )
 IPO_CONTEXT_RE = re.compile(
-    r"\\b(?:s-1|ipo|initial public offering|listing|list on)\\b|上市|挂牌",
+    r"\b(?:s-1|ipo|initial public offering|listing|list on)\b|上市|挂牌",
     re.IGNORECASE,
 )
 
