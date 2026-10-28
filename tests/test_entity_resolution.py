@@ -201,6 +201,84 @@ class EntityResolutionTests(unittest.TestCase):
         self.assertEqual(fixed_config, next_config)
         self.assertEqual(fixed_inbox, next_inbox)
 
+    def test_expired_auto_capture_stabilizes_without_replay_and_allows_fresh_evidence(self) -> None:
+        name = "Retired Topic"
+        config = {
+            "schemaVersion": 1,
+            "tracks": [{
+                "slug": "ai", "name": "AI", "enabled": True, "custom": False,
+                "keywords": [], "people": [], "sampleCompanies": [],
+            }],
+            "listedCompanies": [], "sources": [],
+        }
+        record = {
+            "id": "capture-retired-topic",
+            "entityType": "topic",
+            "rawSelection": name,
+            "canonicalName": name,
+            "aliases": [],
+            "trackSlugs": ["ai"],
+            "trackNames": ["AI"],
+            "source": {"title": "Historical automatic topic"},
+            "capturedBy": "automatic-discovery",
+            "capturedAt": "2026-07-01T00:00:00Z",
+            "status": "applied",
+            "appliedTo": ["ai:keywords"],
+        }
+        inbox = {"schemaVersion": 1, "generatedAt": "", "records": [record]}
+        decisions = {"decisions": {
+            "retired topic": {
+                "status": "resolved", "requestedType": "topic",
+                "entityType": "topic", "canonicalName": name,
+                "targetId": "topic:retired-topic", "confidence": "verified",
+                "aliases": [],
+            }
+        }}
+        ledger = {
+            "schemaVersion": 1, "added": [], "removed": [],
+            "expired": [{
+                "track": "ai", "kind": "keywords", "value": name,
+                "expiredAt": "2026-10-28T00:00:00+00:00",
+            }],
+        }
+
+        def run(proposed_inbox, proposed_ledger=ledger):
+            return stabilize_payloads(
+                config, proposed_inbox, decisions_payload=decisions,
+                company_registry_payload={"companies": []},
+                people_payload={"people": []},
+                auto_discovery_payload=proposed_ledger,
+            )
+
+        cleaned, resolved_inbox, _ = run(inbox)
+        self.assertEqual(cleaned["tracks"][0]["keywords"], [])
+        self.assertEqual(resolved_inbox["records"][0]["appliedTo"], [])
+        self.assertEqual(resolved_inbox["records"][0]["status"], "dismissed")
+        fixed, fixed_inbox, stats = stabilize_payloads(
+            cleaned, resolved_inbox, decisions_payload=decisions,
+            company_registry_payload={"companies": []},
+            people_payload={"people": []}, auto_discovery_payload=ledger,
+        )
+        self.assertEqual(stats["rounds"], 0)
+        self.assertEqual(fixed, cleaned)
+        self.assertEqual(fixed_inbox, resolved_inbox)
+
+        fresh_capture = {"records": [{**record, "capturedAt": "2026-10-29T00:00:00Z"}]}
+        fresh, fresh_inbox, _ = run(fresh_capture)
+        self.assertEqual(fresh["tracks"][0]["keywords"], [name])
+        self.assertEqual(fresh_inbox["records"][0]["status"], "applied")
+
+        owner_capture = {"records": [{**record, "capturedBy": "VCIQ"}]}
+        owner, _, _ = run(owner_capture)
+        self.assertEqual(owner["tracks"][0]["keywords"], [name])
+
+        readded = {**ledger, "added": [{
+            "track": "ai", "kind": "keywords", "value": name,
+            "addedAt": "2026-10-29T00:00:00Z",
+        }]}
+        refreshed, _, _ = run(inbox, readded)
+        self.assertEqual(refreshed["tracks"][0]["keywords"], [name])
+
     def test_reconciliation_does_not_replay_seed_governance_tombstones(self) -> None:
         bad_name = "Massachusetts Governo Chris Ballance"
         decisions = {
