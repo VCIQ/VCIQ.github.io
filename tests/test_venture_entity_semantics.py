@@ -231,15 +231,42 @@ class VentureEntitySemanticTests(unittest.TestCase):
             "网友直呼疯狂",
             cleaned["companies"]["anthropic"].get("researchTechnology", ""),
         )
-        self.assertEqual(cleaned["companies"]["anthropic"]["capitalMarkets"], [])
-        self.assertEqual(
-            cleaned["companies"]["anthropic"]["exitPerformance"]["status"],
-            "暂无公开退出信息",
-        )
         self.assertNotIn(
             "工艺革新",
             cleaned["companies"]["galactic-energy"].get("technology", ""),
         )
+
+    def test_verified_s1_filing_is_not_a_completed_listing(self) -> None:
+        payload = {
+            "companies": {
+                "anthropic": {
+                    "slug": "anthropic",
+                    "name": "Anthropic",
+                    "background": "Anthropic builds reliable AI systems.",
+                    "technology": "Anthropic develops Claude Platform.",
+                    "products": ["Claude Platform"],
+                    "team": [],
+                    "financing": [],
+                    "capitalMarkets": [{
+                        "date": "2026-10-26",
+                        "type": "上市",
+                        "title": "Anthropic files S-1 with the SEC for proposed initial public offering",
+                        "summary": "Anthropic filed a registration statement; the offering is proposed.",
+                        "sourceUrl": "https://www.anthropic.com/news/s1-sec",
+                    }],
+                    "technologyProducts": [],
+                    "sources": [],
+                }
+            },
+            "institutions": {},
+            "qualityGate": {"passed": True, "checks": {}},
+        }
+        cleaned, diagnostics = semantics.enforce_snapshot(payload, CATALOG)
+        company = cleaned["companies"]["anthropic"]
+        self.assertEqual(len(company["capitalMarkets"]), 1)
+        self.assertEqual(company["capitalMarkets"][0]["type"], "上市申请")
+        self.assertEqual(company["exitPerformance"]["status"], "上市申请中")
+        self.assertEqual(diagnostics["removedCapitalMarkets"], 0)
 
     def test_rejects_personnel_acquisition_as_capital_event(self) -> None:
         payload = {
