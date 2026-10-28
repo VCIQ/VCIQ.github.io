@@ -126,6 +126,70 @@ def quality_tombstones(payload: dict[str, Any] | None) -> set[tuple[str, str, st
     return result
 
 
+def _parse_utc_time(value: Any) -> datetime | None:
+    raw = clean(value, 80)
+    if not raw:
+        return None
+    try:
+        parsed = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+        return parsed.replace(tzinfo=UTC) if parsed.tzinfo is None else parsed.astimezone(UTC)
+    except ValueError:
+        return None
+
+
+def expired_seed_cutoffs(payload: dict[str, Any] | None) -> dict[tuple[str, str, str], datetime]:
+    """Block old automatic captures after expiry, not new evidence or owner follows."""
+
+    if not isinstance(payload, dict):
+        return {}
+    cutoffs: dict[tuple[str, str, str], datetime] = {}
+    for row in payload.get("expired", []):
+        if not isinstance(row, dict):
+            continue
+        key = (
+            clean(row.get("track"), 120),
+            clean(row.get("kind"), 40),
+            normalize_identity(row.get("value")),
+        )
+        cutoff = _parse_utc_time(row.get("expiredAt"))
+        if key[0] and key[1] in FIELDS and key[2] and cutoff:
+            cutoffs[key] = max(cutoffs.get(key, cutoff), cutoff)
+    # A later discovery with fresh evidence supersedes an earlier expiry marker.
+    for row in payload.get("added", []):
+        if not isinstance(row, dict):
+            continue
+        key = (
+            clean(row.get("track"), 120),
+            clean(row.get("kind"), 40),
+            normalize_identity(row.get("value")),
+        )
+        if key in cutoffs:
+            added_at = _parse_utc_time(row.get("addedAt"))
+            if added_at and added_at > cutoffs[key]:
+                del cutoffs[key]
+    return cutoffs
+
+
+def stale_expired_capture(
+    record: dict[str, Any],
+    slug: str,
+    field: str,
+    value: str,
+    cutoffs: dict[tuple[str, str, str], datetime],
+) -> bool:
+    cutoff = cutoffs.get((slug, field, normalize_identity(value)))
+    if cutoff is None:
+        return False
+    actor = clean(record.get("capturedBy"), 120).casefold()
+    if actor and not any(
+        marker in actor
+        for marker in ("automatic", "bot", "crawler", "github-actions", "system")
+    ):
+        return False
+    captured_at = _parse_utc_time(record.get("capturedAt"))
+    return captured_at is None or captured_at <= cutoff
+
+
 def prune_quality_tombstones(
     config: dict[str, Any], tombstones: set[tuple[str, str, str]]
 ) -> None:
@@ -158,6 +222,7 @@ def reconcile_payloads(
     tracks = track_map(config)
     follow_states = follow_policy.scoped_follow_states(intents_payload or {}, admins_payload or {})
     tombstones = quality_tombstones(auto_discovery_payload)
+    expired_cutoffs = expired_seed_cutoffs(auto_discovery_payload)
     records = inbox.get("records", []) if isinstance(inbox.get("records"), list) else []
 
     # Remove only values whose original capture explicitly recorded that placement.
@@ -218,7 +283,9 @@ def reconcile_payloads(
             30,
         ):
             track = resolution_tracks.get(slug)
-            if track:
+            if track and not stale_expired_capture(
+                record, slug, "keywords", seed_name, expired_cutoffs
+            ):
                 track["keywords"] = append_name(track.get("keywords"), seed_name)
 
     stats = {"resolved": 0, "review": 0, "rejected": 0, "reclassified": 0}
@@ -292,6 +359,10 @@ def reconcile_payloads(
             # machine-vs-owner preference decision. Historical approvals created
             # before the person guard existed cannot resurrect the malformed value.
             if (slug, field, normalize_identity(value)) in tombstones:
+                continue
+            if slug not in approved_tracks and stale_expired_capture(
+                record, slug, field, value, expired_cutoffs
+            ):
                 continue
             track[field] = append_name(track.get(field), value)
             applied_to.append(f"{slug}:{field}")

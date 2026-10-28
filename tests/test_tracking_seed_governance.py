@@ -268,6 +268,14 @@ class TrackingSeedGovernanceTests(unittest.TestCase):
         self.assertEqual(ledger["added"], [])
         self.assertEqual(ledger["removed"], [])
         self.assertEqual(len(report["expiredRemoved"]), 1)
+        self.assertEqual(report["expiryMarkersRecorded"], 1)
+        self.assertEqual(len(ledger["expired"]), 1)
+        self.assertEqual(ledger["expired"][0]["value"], "agentic ai")
+        self.assertEqual(ledger["expired"][0]["expiredAt"], "2026-08-08T00:00:00+00:00")
+        second = governance.govern(
+            config, ledger, now=datetime(2026, 8, 8, tzinfo=timezone.utc)
+        )
+        self.assertFalse(second["changed"])
 
 
 if __name__ == "__main__":

@@ -241,6 +241,24 @@ def _tombstone(
     return True
 
 
+def _record_expiry(
+    ledger: dict[str, Any], *, track: str, kind: str, value: str, now: datetime
+) -> bool:
+    """Remember the cutoff for stale captures, without blocking fresh discovery."""
+
+    rows = ledger.setdefault("expired", [])
+    key = (track, kind, _normalize(value))
+    stamp = _iso(now)
+    for row in rows:
+        if isinstance(row, dict) and _removed_key(row) == key:
+            if row.get("expiredAt") == stamp:
+                return False
+            row["expiredAt"] = stamp
+            return True
+    rows.append({"track": track, "kind": kind, "value": value, "expiredAt": stamp})
+    return True
+
+
 def govern(
     config: dict[str, Any],
     ledger: dict[str, Any],
@@ -259,6 +277,7 @@ def govern(
         "blockedPeopleRemoved": [],
         "invalidAutomaticPeopleRemoved": [],
         "expiredRemoved": [],
+        "expiryMarkersRecorded": 0,
         "tombstonesAdded": 0,
     }
 
@@ -370,7 +389,10 @@ def govern(
                 report["expiredRemoved"].append(
                     {"track": slug, "kind": kind, "value": value}
                 )
-            # Expiry is intentionally not a tombstone. Fresh evidence may revive it.
+            if _record_expiry(ledger, track=slug, kind=kind, value=value, now=now):
+                report["expiryMarkersRecorded"] += 1
+            # An expiry checkpoint blocks stale capture replay, but new evidence
+            # after this timestamp is allowed to rediscover the seed.
             continue
         next_added.append(row)
 
@@ -383,6 +405,7 @@ def govern(
             "blockedPeopleRemoved",
             "invalidAutomaticPeopleRemoved",
             "expiredRemoved",
+            "expiryMarkersRecorded",
             "tombstonesAdded",
         )
     ):
@@ -393,6 +416,7 @@ def govern(
         or report["blockedPeopleRemoved"]
         or report["invalidAutomaticPeopleRemoved"]
         or report["expiredRemoved"]
+        or report["expiryMarkersRecorded"]
         or report["tombstonesAdded"]
     )
     return report
