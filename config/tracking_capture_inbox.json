@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T05:02:30+00:00",
+  "generatedAt": "2026-10-28T11:15:29+00:00",
   "records": [
     {
       "id": "capture-985a82ca9a04cdb7",
@@ -48,7 +48,9 @@
         "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
         "decisionKey": "法国电信",
         "reclassified": false
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "needs_enrichment"
     },
     {
       "id": "capture-98b90d035f6e7e36",
@@ -96,7 +98,9 @@
         "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
         "decisionKey": "德国电信",
         "reclassified": false
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "needs_enrichment"
     },
     {
       "id": "capture-5548b2f7385b519b",
@@ -140,107 +144,13 @@
         "canonicalName": "今控科技",
         "targetId": "company-candidate:今控科技",
         "confidence": "medium",
-        "source": "human-decision",
-        "reason": "管理员已在自动候选列表显式确认该公司为持续关注对象。 原解析:原文邻近语境存在公司、企业或平台表述,可进入候选审核。",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
         "decisionKey": "今控科技",
         "reclassified": false
-      }
-    },
-    {
-      "id": "capture-9ce5e50ee8e9f76b",
-      "entityType": "company",
-      "canonicalName": "Coinbase",
-      "rawSelection": "Coinbase",
-      "aliases": [],
-      "trackSlugs": [
-        "track-1ccjq49",
-        "semiconductor"
-      ],
-      "trackNames": [
-        "风险投资",
-        "半导体"
-      ],
-      "source": {
-        "articleId": "",
-        "title": "Coinbase",
-        "url": "https://www.chaincatcher.com/article/2299109",
-        "summary": "",
-        "sourceName": "GitHub Actions · 内部手动追踪",
-        "channel": "manual-tracking",
-        "channelLabel": "内部管理",
-        "eventType": "人工追踪"
       },
-      "capturedAt": "2026-10-27T04:03:00+00:00",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "track-1ccjq49:sampleCompanies",
-        "semiconductor:sampleCompanies"
-      ],
-      "reasons": [
-        "个人研究兴趣"
-      ],
-      "note": "",
-      "resolution": {
-        "status": "review",
-        "requestedType": "company",
-        "entityType": "company",
-        "canonicalName": "Coinbase",
-        "targetId": "",
-        "confidence": "low",
-        "source": "unresolved",
-        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
-        "decisionKey": "coinbase",
-        "reclassified": false
-      }
-    },
-    {
-      "id": "capture-fdf85cee9baed95f",
-      "entityType": "company",
-      "canonicalName": "Circle",
-      "rawSelection": "Circle",
-      "aliases": [],
-      "trackSlugs": [
-        "track-1ccjq49",
-        "semiconductor"
-      ],
-      "trackNames": [
-        "风险投资",
-        "半导体"
-      ],
-      "source": {
-        "articleId": "",
-        "title": "Circle",
-        "url": "https://www.chaincatcher.com/article/2299109",
-        "summary": "",
-        "sourceName": "GitHub Actions · 内部手动追踪",
-        "channel": "manual-tracking",
-        "channelLabel": "内部管理",
-        "eventType": "人工追踪"
-      },
-      "capturedAt": "2026-10-27T04:03:00+00:00",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "track-1ccjq49:sampleCompanies",
-        "semiconductor:sampleCompanies"
-      ],
-      "reasons": [
-        "个人研究兴趣"
-      ],
-      "note": "",
-      "resolution": {
-        "status": "review",
-        "requestedType": "company",
-        "entityType": "company",
-        "canonicalName": "Circle",
-        "targetId": "",
-        "confidence": "low",
-        "source": "unresolved",
-        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
-        "decisionKey": "circle",
-        "reclassified": false
-      }
+      "manualDecisionStatus": "approved",
+      "identityState": "needs_enrichment"
     },
     {
       "id": "capture-936372be14806708",
@@ -288,195 +198,109 @@
         "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
         "decisionKey": "redotpay",
         "reclassified": false
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "needs_enrichment"
     },
     {
-      "id": "capture-efcaffff6f69885f",
+      "id": "capture-9ce5e50ee8e9f76b",
       "entityType": "company",
-      "canonicalName": "汇融基金",
-      "rawSelection": "汇融基金",
+      "canonicalName": "Coinbase",
+      "rawSelection": "Coinbase",
       "aliases": [],
       "trackSlugs": [
-        "robotics"
+        "track-1ccjq49",
+        "semiconductor"
       ],
       "trackNames": [
-        "机器人"
+        "风险投资",
+        "半导体"
       ],
       "source": {
         "articleId": "",
-        "title": "汇融基金",
-        "url": "https://m.rccaijing.com/news-7520330012290643817.html",
+        "title": "Coinbase",
+        "url": "https://www.chaincatcher.com/article/2299109",
         "summary": "",
         "sourceName": "GitHub Actions · 内部手动追踪",
         "channel": "manual-tracking",
         "channelLabel": "内部管理",
         "eventType": "人工追踪"
       },
-      "capturedAt": "2026-10-27T03:25:15+00:00",
+      "capturedAt": "2026-10-27T04:03:00+00:00",
       "capturedBy": "VCIQ",
       "status": "applied",
       "appliedTo": [
-        "robotics:sampleCompanies"
+        "track-1ccjq49:sampleCompanies",
+        "semiconductor:sampleCompanies"
       ],
       "reasons": [
-        "个人研究兴趣",
-        "融资机会",
-        "技术突破"
+        "个人研究兴趣"
       ],
       "note": "",
       "resolution": {
-        "status": "resolved",
+        "status": "review",
         "requestedType": "company",
         "entityType": "company",
-        "canonicalName": "汇融基金",
-        "targetId": "company-candidate:汇融基金",
-        "confidence": "medium",
-        "source": "human-decision",
-        "reason": "管理员已在自动候选列表显式确认该公司为持续关注对象。 原解析:原文邻近语境存在公司、企业或平台表述,可进入候选审核。",
-        "decisionKey": "汇融基金",
+        "canonicalName": "Coinbase",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "coinbase",
         "reclassified": false
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "needs_enrichment"
     },
     {
-      "id": "capture-1822cc9c0fa06a1e",
-      "entityType": "topic",
-      "canonicalName": "ITW+",
-      "rawSelection": "ITW+",
+      "id": "capture-fdf85cee9baed95f",
+      "entityType": "company",
+      "canonicalName": "Circle",
+      "rawSelection": "Circle",
       "aliases": [],
       "trackSlugs": [
-        "robotics"
+        "track-1ccjq49",
+        "semiconductor"
       ],
       "trackNames": [
-        "机器人"
+        "风险投资",
+        "半导体"
       ],
       "source": {
         "articleId": "",
-        "title": "ITW+",
-        "url": "https://m.rccaijing.com/news-7520330012290643817.html",
+        "title": "Circle",
+        "url": "https://www.chaincatcher.com/article/2299109",
         "summary": "",
         "sourceName": "GitHub Actions · 内部手动追踪",
         "channel": "manual-tracking",
         "channelLabel": "内部管理",
         "eventType": "人工追踪"
       },
-      "capturedAt": "2026-10-27T03:25:15+00:00",
+      "capturedAt": "2026-10-27T04:03:00+00:00",
       "capturedBy": "VCIQ",
       "status": "applied",
       "appliedTo": [
-        "robotics:keywords"
+        "track-1ccjq49:sampleCompanies",
+        "semiconductor:sampleCompanies"
       ],
       "reasons": [
-        "个人研究兴趣",
-        "融资机会",
-        "技术突破"
+        "个人研究兴趣"
       ],
       "note": "",
       "resolution": {
-        "status": "resolved",
-        "requestedType": "topic",
-        "entityType": "topic",
-        "canonicalName": "ITW+",
-        "targetId": "technology-205d87103bec91728436",
-        "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
-        "decisionKey": "itw",
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Circle",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "circle",
         "reclassified": false
-      }
-    },
-    {
-      "id": "capture-2a365e451eb81231",
-      "entityType": "topic",
-      "canonicalName": "MOV",
-      "rawSelection": "MOV",
-      "aliases": [],
-      "trackSlugs": [
-        "robotics"
-      ],
-      "trackNames": [
-        "机器人"
-      ],
-      "source": {
-        "articleId": "",
-        "title": "MOV",
-        "url": "https://m.rccaijing.com/news-7520330012290643817.html",
-        "summary": "",
-        "sourceName": "GitHub Actions · 内部手动追踪",
-        "channel": "manual-tracking",
-        "channelLabel": "内部管理",
-        "eventType": "人工追踪"
       },
-      "capturedAt": "2026-10-27T03:25:15+00:00",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "robotics:keywords"
-      ],
-      "reasons": [
-        "个人研究兴趣",
-        "融资机会",
-        "技术突破"
-      ],
-      "note": "",
-      "resolution": {
-        "status": "resolved",
-        "requestedType": "topic",
-        "entityType": "topic",
-        "canonicalName": "MOV",
-        "targetId": "technology-30597b45d9f61353da91",
-        "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
-        "decisionKey": "mov",
-        "reclassified": false
-      }
-    },
-    {
-      "id": "capture-609f5b7173d5067a",
-      "entityType": "topic",
-      "canonicalName": "OM",
-      "rawSelection": "OM",
-      "aliases": [],
-      "trackSlugs": [
-        "robotics"
-      ],
-      "trackNames": [
-        "机器人"
-      ],
-      "source": {
-        "articleId": "",
-        "title": "OM",
-        "url": "https://m.rccaijing.com/news-7520330012290643817.html",
-        "summary": "",
-        "sourceName": "GitHub Actions · 内部手动追踪",
-        "channel": "manual-tracking",
-        "channelLabel": "内部管理",
-        "eventType": "人工追踪"
-      },
-      "capturedAt": "2026-10-27T03:25:15+00:00",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "robotics:keywords"
-      ],
-      "reasons": [
-        "个人研究兴趣",
-        "融资机会",
-        "技术突破"
-      ],
-      "note": "",
-      "resolution": {
-        "status": "resolved",
-        "requestedType": "topic",
-        "entityType": "topic",
-        "canonicalName": "OM",
-        "targetId": "technology-2e23f8b81d15612b4207",
-        "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
-        "decisionKey": "om",
-        "reclassified": false
-      }
+      "manualDecisionStatus": "approved",
+      "identityState": "needs_enrichment"
     },
     {
       "id": "capture-5451e59fc0852d49",
@@ -523,7 +347,205 @@
         "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
         "decisionKey": "诺亦腾机器人",
         "reclassified": false
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "needs_enrichment"
+    },
+    {
+      "id": "capture-efcaffff6f69885f",
+      "entityType": "company",
+      "canonicalName": "汇融基金",
+      "rawSelection": "汇融基金",
+      "aliases": [],
+      "trackSlugs": [
+        "robotics"
+      ],
+      "trackNames": [
+        "机器人"
+      ],
+      "source": {
+        "articleId": "",
+        "title": "汇融基金",
+        "url": "https://m.rccaijing.com/news-7520330012290643817.html",
+        "summary": "",
+        "sourceName": "GitHub Actions · 内部手动追踪",
+        "channel": "manual-tracking",
+        "channelLabel": "内部管理",
+        "eventType": "人工追踪"
+      },
+      "capturedAt": "2026-10-27T03:25:15+00:00",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "robotics:sampleCompanies"
+      ],
+      "reasons": [
+        "个人研究兴趣",
+        "融资机会",
+        "技术突破"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "汇融基金",
+        "targetId": "company-candidate:汇融基金",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "汇融基金",
+        "reclassified": false
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "needs_enrichment"
+    },
+    {
+      "id": "capture-609f5b7173d5067a",
+      "entityType": "topic",
+      "canonicalName": "OM",
+      "rawSelection": "OM",
+      "aliases": [],
+      "trackSlugs": [
+        "robotics"
+      ],
+      "trackNames": [
+        "机器人"
+      ],
+      "source": {
+        "articleId": "",
+        "title": "OM",
+        "url": "https://m.rccaijing.com/news-7520330012290643817.html",
+        "summary": "",
+        "sourceName": "GitHub Actions · 内部手动追踪",
+        "channel": "manual-tracking",
+        "channelLabel": "内部管理",
+        "eventType": "人工追踪"
+      },
+      "capturedAt": "2026-10-27T03:25:15+00:00",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "robotics:keywords"
+      ],
+      "reasons": [
+        "个人研究兴趣",
+        "融资机会",
+        "技术突破"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "OM",
+        "targetId": "topic:om",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "om",
+        "reclassified": false
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "complete"
+    },
+    {
+      "id": "capture-2a365e451eb81231",
+      "entityType": "topic",
+      "canonicalName": "MOV",
+      "rawSelection": "MOV",
+      "aliases": [],
+      "trackSlugs": [
+        "robotics"
+      ],
+      "trackNames": [
+        "机器人"
+      ],
+      "source": {
+        "articleId": "",
+        "title": "MOV",
+        "url": "https://m.rccaijing.com/news-7520330012290643817.html",
+        "summary": "",
+        "sourceName": "GitHub Actions · 内部手动追踪",
+        "channel": "manual-tracking",
+        "channelLabel": "内部管理",
+        "eventType": "人工追踪"
+      },
+      "capturedAt": "2026-10-27T03:25:15+00:00",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "robotics:keywords"
+      ],
+      "reasons": [
+        "个人研究兴趣",
+        "融资机会",
+        "技术突破"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "MOV",
+        "targetId": "topic:mov",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "mov",
+        "reclassified": false
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "complete"
+    },
+    {
+      "id": "capture-1822cc9c0fa06a1e",
+      "entityType": "topic",
+      "canonicalName": "ITW+",
+      "rawSelection": "ITW+",
+      "aliases": [],
+      "trackSlugs": [
+        "robotics"
+      ],
+      "trackNames": [
+        "机器人"
+      ],
+      "source": {
+        "articleId": "",
+        "title": "ITW+",
+        "url": "https://m.rccaijing.com/news-7520330012290643817.html",
+        "summary": "",
+        "sourceName": "GitHub Actions · 内部手动追踪",
+        "channel": "manual-tracking",
+        "channelLabel": "内部管理",
+        "eventType": "人工追踪"
+      },
+      "capturedAt": "2026-10-27T03:25:15+00:00",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "robotics:keywords"
+      ],
+      "reasons": [
+        "个人研究兴趣",
+        "融资机会",
+        "技术突破"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "ITW+",
+        "targetId": "topic:itw",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "itw",
+        "reclassified": false
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "complete"
     },
     {
       "id": "capture-69aee7feeafa6f6a",
