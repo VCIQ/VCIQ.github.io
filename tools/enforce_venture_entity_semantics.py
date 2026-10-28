@@ -61,6 +61,17 @@ CAPITAL_ACTION_RE = re.compile(
     r"(?:完成上市|正式上市|申请上市|挂牌|并购|收购|完成退出|退市|公开市场)",
     re.IGNORECASE,
 )
+IPO_APPLICATION_RE = re.compile(
+    r"\b(?:s-1|registration statement|filed?|filing|proposed|"
+    r"seeks? to list|plans? to list|intends? to list)\b|"
+    r"(?:拟上市|申请上市|上市申请|递交上市申请|计划上市|IPO申报)",
+    re.IGNORECASE,
+)
+IPO_CONTEXT_RE = re.compile(
+    r"\b(?:s-1|ipo|initial public offering|listing|list on)\b|上市|挂牌",
+    re.IGNORECASE,
+)
+
 PERSONNEL_CAPITAL_FALSE_POSITIVE_RE = re.compile(
     r"\b(?:leadership|chief people officer|talent acquisition|"
     r"organizational development|workplace experience|human resources?)\b",
@@ -407,6 +418,16 @@ def _subject_evidence(
     # evidence, only an explicit first-person disclosure is accepted.
     return bool(source_is_official and FIRST_PERSON_FINANCING_RE.search(evidence))
 
+def _is_ipo_application(row: dict[str, Any]) -> bool:
+    """A proposed/listing filing is not evidence of a completed public listing."""
+
+    evidence = " ".join(
+        clean_text(row.get(key), 500)
+        for key in ("title", "summary")
+    )
+    return bool(IPO_APPLICATION_RE.search(evidence) and IPO_CONTEXT_RE.search(evidence))
+
+
 def _sanitize_events(
     values: Any,
     aliases: Sequence[str],
@@ -423,6 +444,8 @@ def _sanitize_events(
         row = copy.deepcopy(raw)
         if not _subject_evidence(row, aliases, official_domain, action_re):
             continue
+        if action_re is CAPITAL_ACTION_RE and _is_ipo_application(row):
+            row["type"] = "上市申请"
         key = _compact(f"{row.get('date', '')}|{row.get('title', '')}|{row.get('summary', '')}")
         if not key or key in seen:
             continue
@@ -584,12 +607,18 @@ def _exit_performance(
         title = clean_text(latest.get("title"), 180)
         date = clean_text(latest.get("date"), 20)
         event_type = clean_text(latest.get("type"), 80)
-        is_listing = listed or any(
-            term in f"{event_type} {title}".casefold()
-            for term in ("ipo", "listed", "listing", "上市", "挂牌")
+        is_application = _is_ipo_application(latest)
+        is_listing = listed or (
+            not is_application
+            and any(term in f"{event_type} {title}".casefold()
+                    for term in ("ipo", "listed", "listing", "上市", "挂牌"))
         )
         return {
-            "status": "已上市" if is_listing else "已发生并购或退出事件",
+            "status": (
+                "已上市" if is_listing
+                else "上市申请中" if is_application
+                else "已发生并购或退出事件"
+            ),
             "latestDate": date,
             "latestEvent": title,
             "summary": (
