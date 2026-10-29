@@ -43,6 +43,12 @@ class WriterQueueCompactionTests(unittest.TestCase):
         self.assertIn("-f post_onboarding_handoff=refresh", text)
         self.assertIn("-f post_onboarding_handoff=publish-with-research", text)
 
+    def test_onboarding_gate_changes_trigger_a_real_publication_run(self) -> None:
+        text = ONBOARDING.read_text(encoding="utf-8")
+        trigger = text.split("\npermissions:\n", 1)[0]
+        self.assertIn("- tools/ensure_venture_profile_coverage.py", trigger)
+        self.assertIn("- .github/workflows/company-candidate-onboarding.yml", trigger)
+
     def test_candidate_onboarding_keeps_each_handoff_in_a_distinct_coalescing_key(self) -> None:
         text = ONBOARDING.read_text(encoding="utf-8")
         top = text.split("\njobs:\n", 1)[0]
