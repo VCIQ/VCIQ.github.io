@@ -17,6 +17,77 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, Sequence
 
+from urllib.parse import urlsplit
+
+
+def validate_onboarded_company_profile(
+    company: dict[str, Any],
+    profile: dict[str, Any] | None,
+    snapshot: dict[str, Any],
+) -> list[str]:
+    """Validate a first formal profile without mislabeling sourced partial crawls.
+
+    Partial profiles are supported by the crawler and global quality gate, but
+    publication requires stronger first-party provenance than a bare fallback.
+    """
+    slug = str(company.get("slug") or "")
+    errors: list[str] = []
+    if not isinstance(profile, dict):
+        return [f"{slug}: missing first formal profile"]
+    if profile.get("slug") != slug or profile.get("name") != company.get("name"):
+        errors.append(f"{slug}: canonical profile identity mismatch")
+    status = profile.get("status")
+    if status not in {"ok", "partial", "retained", "fallback"}:
+        errors.append(f"{slug}: unsupported profile status {status!r}")
+    if not (profile.get("background") or profile.get("projectBackground")):
+        errors.append(f"{slug}: no company background")
+    if not snapshot.get("qualityGate", {}).get("passed"):
+        errors.append(f"{slug}: global venture profile quality gate failed")
+
+    source_rows = profile.get("sources")
+    sources = [row for row in source_rows if isinstance(row, dict)] if isinstance(source_rows, list) else []
+    official_host = (urlsplit(str(company.get("source", {}).get("url") or "")).hostname or "").lower()
+    source_hosts = {
+        (urlsplit(str(row.get("url") or "")).hostname or "").lower()
+        for row in sources
+    }
+    if not official_host or not any(
+        host == official_host
+        or host.endswith("." + official_host)
+        or official_host.endswith("." + host)
+        for host in source_hosts if host
+    ):
+        errors.append(f"{slug}: no matching official-source host")
+
+    if status == "partial":
+        # A truthful partial label is acceptable only with multiple official
+        # pages, at least four supported sections, and substantial evidence.
+        # One-page/thin/errored crawls remain blocked.
+        statuses = snapshot.get("sourceStatus")
+        row = next(
+            (item for item in statuses
+             if isinstance(item, dict)
+             and item.get("kind") == "company"
+             and item.get("slug") == slug),
+            None,
+        ) if isinstance(statuses, list) else None
+        if not row or row.get("status") != "partial":
+            errors.append(f"{slug}: no matching partial crawl status")
+        else:
+            if int(row.get("fetchedPages") or 0) < 2:
+                errors.append(f"{slug}: partial crawl has fewer than two pages")
+            if int(row.get("acceptedSections") or 0) < 4:
+                errors.append(f"{slug}: partial crawl has fewer than four sections")
+        if int(profile.get("evidenceScore") or 0) < 70:
+            errors.append(f"{slug}: partial crawl evidence score below 70")
+        if len(sources) < 2:
+            errors.append(f"{slug}: partial crawl has fewer than two official sources")
+        if profile.get("warnings"):
+            errors.append(f"{slug}: partial crawl contains warnings")
+        if not all(profile.get(field) for field in ("background", "technology", "products")):
+            errors.append(f"{slug}: partial crawl lacks core company sections")
+    return errors
+
 try:
     from .crawl_venture_profiles import (
         CATALOG_PATH,
