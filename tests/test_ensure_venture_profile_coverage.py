@@ -22,6 +22,7 @@ from tools.ensure_venture_profile_coverage import (
     ensure_catalog_coverage,
     main,
     repair_snapshot,
+    validate_onboarded_company_profile,
 )
 from tools.venture_profile_extraction import parse_catalog
 
@@ -248,6 +249,70 @@ export type IpoCompany = {};
                 json.loads(snapshot_path.read_text(encoding="utf-8")),
                 persisted,
             )
+
+    def test_official_evidence_backed_partial_profile_can_publish(self) -> None:
+        company = {
+            "slug": "sangfor-technologies-inc",
+            "name": "深信服科技股份有限公司",
+            "source": {"url": "https://www.sangfor.com.cn/"},
+        }
+        profile = {
+            "slug": company["slug"],
+            "name": company["name"],
+            "status": "partial",
+            "background": "深信服提供网络安全和云计算产品。",
+            "technology": "安全大模型与超融合基础设施。",
+            "products": ["下一代防火墙", "云计算平台"],
+            "sources": [
+                {"url": f"https://www.sangfor.com.cn/official/{i}"}
+                for i in range(6)
+            ],
+            "evidenceScore": 74,
+            "warnings": [],
+        }
+        snapshot = {
+            "qualityGate": {"passed": True},
+            "sourceStatus": [{
+                "kind": "company", "slug": company["slug"],
+                "status": "partial", "fetchedPages": 6, "acceptedSections": 4,
+            }],
+        }
+        self.assertEqual(
+            validate_onboarded_company_profile(company, profile, snapshot), []
+        )
+
+        snapshot["sourceStatus"][0]["acceptedSections"] = 2
+        self.assertTrue(any(
+            "four sections" in issue for issue in
+            validate_onboarded_company_profile(company, profile, snapshot)
+        ))
+        snapshot["sourceStatus"][0]["acceptedSections"] = 4
+        profile["sources"] = [{"url": "https://lookalike.example/"}]
+        self.assertTrue(any(
+            "official-source" in issue for issue in
+            validate_onboarded_company_profile(company, profile, snapshot)
+        ))
+        profile["sources"] = [
+            {"url": "https://www.sangfor.com.cn/official/1"},
+            {"url": "https://www.sangfor.com.cn/official/2"},
+        ]
+        profile["evidenceScore"] = 45
+        self.assertTrue(any(
+            "below 70" in issue for issue in
+            validate_onboarded_company_profile(company, profile, snapshot)
+        ))
+        profile["evidenceScore"] = 74
+        profile["warnings"] = ["homepage timeout"]
+        self.assertTrue(any(
+            "contains warnings" in issue for issue in
+            validate_onboarded_company_profile(company, profile, snapshot)
+        ))
+        profile["warnings"] = []
+        snapshot["qualityGate"]["passed"] = False
+        self.assertTrue(any(
+            "quality gate failed" in issue for issue in
+            validate_onboarded_company_profile(company, profile, snapshot)
+        ))
 
     def test_production_snapshot_repairs_to_complete_catalog_coverage(self) -> None:
         companies, institutions = parse_catalog(CATALOG_PATH.read_text(encoding="utf-8"))
