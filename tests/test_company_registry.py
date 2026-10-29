@@ -40,6 +40,14 @@ export type Institution = {
         errors = company_registry.validate_registry(payload)
         self.assertTrue(any("duplicate slug" in error for error in errors))
 
+    def test_committed_registry_passes_onboarding_preflight(self):
+        """Catch invalid shipped company profiles before the publish workflow."""
+        registry = company_registry.load_json(company_registry.REGISTRY_PATH, {})
+        self.assertGreater(len(registry.get("companies", [])), 0)
+        payload = company_registry.normalize_registry(registry)
+        errors = company_registry.validate_registry(payload)
+        self.assertEqual(errors, [], f"Invalid committed company registry: {errors}")
+
     def test_migration_replaces_only_company_block(self):
         catalog = '''import type { Source } from "./intelligence-data";
 export type Company = {
