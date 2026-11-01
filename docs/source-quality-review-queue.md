@@ -1,8 +1,8 @@
 # 信源人工质量抽样队列
 
-周期：`2026-10`；信源健康快照：`2026-10-01T06:10:45+00:00`。
+周期：`2026-11`；信源健康快照：`2026-11-01T04:51:00+00:00`。
 
-目标为每个来源累计 **20** 条人工审查记录。当前有 **3** 个来源已具备足量候选，**913** 个来源仍缺少可审记录。
+目标为每个来源累计 **20** 条人工审查记录。当前有 **3** 个来源已具备足量候选，**989** 个来源仍缺少可审记录。
 
 ## 审核规则
 
@@ -19,100 +19,100 @@
 | 上海证券交易所 | A | 0/20 | 20 | 1 | 记录不足 | `09e71bb6e39f1bd3` |
 | 深圳证券交易所 | A | 0/20 | 20 | 0 | 记录不足 | `79d81b93ce9ef8d8` |
 | 美国证券交易委员会 SEC | A | 0/20 | 20 | 0 | 记录不足 | `630e8adb9e4fccb2` |
-| Alibaba Group 官方动态 | B | 0/20 | 20 | 1 | 记录不足 | `cc5aadd41e53df4c` |
+| Alibaba Group 官方动态 | B | 0/20 | 20 | 1 | 记录不足 | `c75cbf194df5b40f` |
 | Alibaba Group 官方网站 | B | 0/20 | 20 | 0 | 记录不足 | `f048d2b6eefe7a58` |
 | AliExpress 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `14f3db6314bc0885` |
 | AliExpress 官方网站 | B | 0/20 | 20 | 0 | 记录不足 | `f3032f7216d5ba9c` |
 | Allen Institute 官方动态 | B | 0/20 | 20 | 2 | 记录不足 | `c9634fc6997ceba3` |
-| AMD Newsroom | B | 0/20 | 20 | 16 | 记录不足 | `74aa8b5192a2b77d` |
-| Anduril Industries 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `0cd980f441e6dce6` |
-| Anthropic | B | 0/20 | 20 | 8 | 记录不足 | `19bcd43129eac36a` |
-| Anthropic | B | 0/20 | 20 | 5 | 记录不足 | `08351e371a562a5a` |
-| Anthropic 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `ce48668c9ee5725d` |
-| arXiv · Core AI companies | B | 0/20 | 20 | 8 | 记录不足 | `7b20d28b7534be71` |
+| AMD Newsroom | B | 0/20 | 20 | 16 | 记录不足 | `4b2c8ac44a14dfb4` |
+| AMD 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `f587d2a9cc4ae38d` |
+| Anduril Industries 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `dd4fee2784fb6414` |
+| Anthropic | B | 0/20 | 20 | 6 | 记录不足 | `c2386cb723eda5b2` |
+| Anthropic | B | 0/20 | 20 | 5 | 记录不足 | `a977b6969ade2e1c` |
+| Anthropic 官方动态 | B | 0/20 | 20 | 3 | 记录不足 | `3923e3acf1e4755d` |
+| arXiv · Core AI companies | B | 0/20 | 20 | 8 | 记录不足 | `5015349271074341` |
+| ASML 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `7b2e1d2556763609` |
 | Aurora Innovation 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `cac901da1a9ea146` |
-| Axiom Space 官方动态 | B | 0/20 | 20 | 1 | 记录不足 | `77f90d0d4da65d9a` |
-| Cartesia 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `b1c108fc0a680bf4` |
-| CATL | B | 0/20 | 20 | 9 | 记录不足 | `dde6b3b106691d67` |
+| Axiom Space 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `121a5231de2cee27` |
+| Cartesia 官方动态 | B | 0/20 | 20 | 2 | 记录不足 | `fe986346af06e69b` |
+| CATL | B | 0/20 | 20 | 8 | 记录不足 | `c80b7afb8ef447de` |
 | Cerebras Systems | B | 0/20 | 20 | 0 | 记录不足 | `77b30b8a88051252` |
 | Cerebras Systems · 官方网站 | B | 0/20 | 20 | 0 | 记录不足 | `577856b2048b3f6d` |
 | Cerebras Systems · 官方网站 | B | 0/20 | 20 | 0 | 记录不足 | `7b41847bd48a261e` |
 | Cerebras Systems · 官方网站 | B | 0/20 | 20 | 0 | 记录不足 | `d12a01499bac284c` |
 | Cerebras Systems 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `4eaa13e5dfbed84c` |
 | Commonwealth Fusion Systems 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `22309084a7a95cff` |
-| Coursera 官方动态 | B | 0/20 | 20 | 2 | 记录不足 | `77ecda990ee3a78b` |
-| Databricks 官方动态 | B | 0/20 | 20 | 3 | 记录不足 | `0d2b4df214346605` |
+| Coursera 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `c9e4d735f67257b5` |
+| Databricks 官方动态 | B | 0/20 | 20 | 1 | 记录不足 | `609c3ff8e611bcc3` |
 | DeepSeek | B | 0/20 | 20 | 0 | 记录不足 | `6f7ac1823da81d2e` |
 | DeepSeek 官方动态 | B | 0/20 | 20 | 1 | 记录不足 | `38e8e7527f84ad1e` |
-| Demis Hassabis | B | 0/20 | 20 | 1 | 记录不足 | `941252631a8e708d` |
+| Demis Hassabis | B | 0/20 | 20 | 0 | 记录不足 | `11d0129584e9072e` |
 | Figure AI | B | 0/20 | 20 | 4 | 记录不足 | `8f16e09e213b89d2` |
 | Figure AI 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `093bd0070133b59f` |
-| Form Energy 官方动态 | B | 0/20 | 20 | 2 | 记录不足 | `25f4c2561bb114a9` |
+| Form Energy 官方动态 | B | 0/20 | 20 | 3 | 记录不足 | `d9c4551b498f3333` |
 | Founders Fund · 核心团队页 | B | 0/20 | 20 | 0 | 记录不足 | `72a885255cad56d1` |
 | Glean 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `8955a0c76b81e41a` |
-| Google AI | B | 0/20 | 20 | 10 | 记录不足 | `1ca59dc15cf1ba05` |
-| Google DeepMind | B | 0/20 | 20 | 10 | 记录不足 | `afe4651763557236` |
-| Google DeepMind | B | 0/20 | 20 | 3 | 记录不足 | `225b16586fe4c1e2` |
-| Google DeepMind | B | 0/20 | 20 | 5 | 记录不足 | `aa01262616cf3c6e` |
+| Google AI | B | 0/20 | 20 | 10 | 记录不足 | `9b967beee416de91` |
+| Google DeepMind | B | 0/20 | 20 | 10 | 记录不足 | `fd645dd7032ef172` |
+| Google DeepMind | B | 0/20 | 20 | 3 | 记录不足 | `dd7d2a346ca681fb` |
+| Google DeepMind | B | 0/20 | 20 | 5 | 记录不足 | `f95c2c226130e391` |
 | Google 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `d3ab2de1f60c4c51` |
 | Google 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `7f5249f68ce29d5c` |
 | Google 官方网站 | B | 0/20 | 20 | 0 | 记录不足 | `c72519a0258f039a` |
-| Groq 官方动态 | B | 0/20 | 20 | 1 | 记录不足 | `cbef05ac859f4ca4` |
-| Harvey 官方动态 | B | 0/20 | 20 | 3 | 记录不足 | `a80b4696c671bf5b` |
-| Helion Energy 官方动态 | B | 0/20 | 20 | 3 | 记录不足 | `cc4cb89eec4fa8d7` |
-| Horizon3 官方动态 | B | 0/20 | 20 | 3 | 记录不足 | `76d36c18281d5212` |
-| IonQ | B | 0/20 | 20 | 9 | 记录不足 | `bc2206aac4b1b1e3` |
-| IonQ 官方动态 | B | 0/20 | 20 | 1 | 记录不足 | `ab22051ae4f8afce` |
-| Joby Aviation 官方动态 | B | 0/20 | 20 | 2 | 记录不足 | `d9efe2c802e913e5` |
+| Groq 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `cba6fb32c971d9cb` |
+| Harvey 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `98b2fd767dacd191` |
+| Helion Energy 官方动态 | B | 0/20 | 20 | 3 | 记录不足 | `4b42e30c7a257aec` |
+| Horizon3 官方动态 | B | 0/20 | 20 | 6 | 记录不足 | `d9e66509933081f0` |
+| Intuitive Surgical 官方动态 | B | 0/20 | 20 | 1 | 记录不足 | `cd4a83be056a83fc` |
+| IonQ | B | 0/20 | 20 | 9 | 记录不足 | `b70561b130c8cf65` |
+| IonQ 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `85ba6807c3d6b20b` |
+| Joby Aviation 官方动态 | B | 0/20 | 20 | 3 | 记录不足 | `cbace9f204ffff47` |
 | Kleiner Perkins · 核心团队页 | B | 0/20 | 20 | 0 | 记录不足 | `f7fee307e61af721` |
 | Lazada 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `38e572c3a964fe5b` |
 | Lazada 官方网站 | B | 0/20 | 20 | 0 | 记录不足 | `a6f8710377754f07` |
 | Lightspeed Venture Partners · 核心团队页 | B | 0/20 | 20 | 0 | 记录不足 | `98cff7d33f01cce9` |
 | Manifold Bio 官方动态 | B | 0/20 | 20 | 1 | 记录不足 | `966ef5f3a286c540` |
 | MiniMax | B | 0/20 | 20 | 0 | 记录不足 | `e1517be14d06cdb7` |
-| MiniMax 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `70c1dd24e6287dda` |
+| MiniMax 官方动态 | B | 0/20 | 20 | 2 | 记录不足 | `82b89403d90df10c` |
 | Mobileye 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `7c09e66fc7b197ee` |
-| Modular 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `d780024534df0a83` |
-| OLIX 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `704b8c63d3e81641` |
-| Omilia 官方动态 | B | 0/20 | 20 | 1 | 记录不足 | `de5522fac8d054d9` |
-| OpenAI | B | 0/20 | 20 | 4 | 记录不足 | `b4f6612292e93263` |
-| OpenAI | B | 0/20 | 20 | 5 | 记录不足 | `378feccf53aa3983` |
+| Modular 官方动态 | B | 0/20 | 20 | 6 | 记录不足 | `1d5daf074c545e47` |
+| OLIX 官方动态 | B | 0/20 | 20 | 1 | 记录不足 | `773351a227b7fdc9` |
+| Omilia 官方动态 | B | 0/20 | 20 | 3 | 记录不足 | `efdcfbb249cf6955` |
+| OpenAI | B | 0/20 | 20 | 4 | 记录不足 | `bdfed0456726ca1b` |
+| OpenAI | B | 0/20 | 20 | 5 | 记录不足 | `8a8de2000f0aed42` |
 | OpenAI 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `7f56e95d68fdaff3` |
-| OpenAI 官方新闻 | B | 0/20 | 20 | 16 | 记录不足 | `982b74986340df2b` |
+| OpenAI 官方新闻 | B | 0/20 | 20 | 16 | 记录不足 | `c676957bd4d6c35b` |
 | Perplexity 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `ff22b92ab74ddce8` |
 | Pony.ai Investor Relations | B | 0/20 | 20 | 3 | 记录不足 | `d79c3621badcaa49` |
-| PR Newswire Consumer Technology | B | 0/20 | 20 | 3 | 记录不足 | `99cefcaa5662748d` |
-| PsiQuantum 官方动态 | B | 0/20 | 20 | 3 | 记录不足 | `ba8b19ef3315c0c5` |
-| Reach Capital 官方动态 | B | 0/20 | 20 | 2 | 记录不足 | `7708d7d6f31c24b2` |
+| PR Newswire Consumer Technology | B | 0/20 | 20 | 6 | 记录不足 | `6d1895f3662f0faf` |
+| PsiQuantum 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `96464ede6fd5727a` |
+| Reach Capital 官方动态 | B | 0/20 | 20 | 5 | 记录不足 | `fcb4ee3993598530` |
 | Recursion Pharmaceuticals 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `840715263d0f33f5` |
-| Redwood Materials 官方动态 | B | 0/20 | 20 | 1 | 记录不足 | `1e73012db66f2b5e` |
-| Relativity Space 官方动态 | B | 0/20 | 20 | 1 | 记录不足 | `e006ee40ff9b862e` |
+| Redwood Materials 官方动态 | B | 0/20 | 20 | 3 | 记录不足 | `326188fd424d0d8f` |
+| Relativity Space 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `29c381de752e380f` |
 | Rigetti Computing 官方动态 | B | 0/20 | 20 | 1 | 记录不足 | `822cf84505e8c80a` |
 | Rocket Lab Investor Relations | B | 0/20 | 20 | 8 | 记录不足 | `37e84d65a19d6932` |
 | Rocket Lab 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `77724e934eaa73a4` |
-| SambaNova Systems 官方动态 | B | 0/20 | 20 | 1 | 记录不足 | `b9f6eb1ec92c9f3c` |
-| Scale AI | B | 0/20 | 20 | 4 | 记录不足 | `bdb39dae34072b5b` |
+| SambaNova Systems 官方动态 | B | 0/20 | 20 | 1 | 记录不足 | `16953aa327a5ffe8` |
+| Scale AI | B | 0/20 | 20 | 4 | 记录不足 | `0563ca0e6587836d` |
 | Scale AI 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `2f665fc1199b43e5` |
-| Shield AI 官方动态 | B | 0/20 | 20 | 3 | 记录不足 | `a0579d70c179652c` |
-| Shopify 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `51b883d0bcce0fe1` |
+| Shield AI 官方动态 | B | 0/20 | 20 | 2 | 记录不足 | `3f3c717c9233392b` |
+| Shopify 官方动态 | B | 0/20 | 20 | 4 | 记录不足 | `f2fdedcdb46f85b5` |
 | Shopify 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `c5de1fb0e02dc3a7` |
 | Shopify 官方网站 | B | 0/20 | 20 | 0 | 记录不足 | `2ddbee055a110ae8` |
-| Sierra 官方动态 | B | 0/20 | 20 | 1 | 记录不足 | `556c7f3f7b97b21f` |
+| Sierra 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `d4f3869695b488d4` |
 | SpaceX | B | 0/20 | 20 | 0 | 记录不足 | `e78bdebae031095b` |
-| SpaceX 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `1c04218ff2296233` |
+| SpaceX 官方动态 | B | 0/20 | 20 | 2 | 记录不足 | `2ee599802d278cc1` |
 | Tempus AI 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `a6111d51beea3380` |
-| The Washington Post | B | 0/20 | 20 | 10 | 记录不足 | `db3e0b1cef50d0eb` |
+| The Washington Post | B | 0/20 | 20 | 10 | 记录不足 | `e5f6b95e3e285dd3` |
 | The Washington Post | B | 0/20 | 20 | 0 | 记录不足 | `f7efb455dec04697` |
 | Upstage 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `eaf4eef74aaa21d1` |
 | Varda Space Industries 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `bb603f44803396fe` |
-| WeRide Investor Relations | B | 0/20 | 20 | 4 | 记录不足 | `5ed888688b724260` |
-| xAI | B | 0/20 | 20 | 10 | 记录不足 | `d9e3a51233efd057` |
+| WeRide Investor Relations | B | 0/20 | 20 | 7 | 记录不足 | `7cc15f1a76941679` |
+| xAI | B | 0/20 | 20 | 10 | 记录不足 | `69709675610ace1a` |
 | xAI 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `20a376500412b439` |
-| Y Combinator · 核心团队页 | B | 0/20 | 20 | 1 | 记录不足 | `635e91c29c8778a0` |
+| Y Combinator · 核心团队页 | B | 0/20 | 20 | 4 | 记录不足 | `4bf2ef81f7965993` |
 | 东方财富 · 生物科技信源 | B | 0/20 | 20 | 0 | 记录不足 | `d6eb8c097e4eaf9a` |
-| 傅利叶智能 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `4b138df240df64d3` |
-| 华大基因 官方动态 | B | 0/20 | 20 | 0 | 记录不足 | `04a46e78251de4cf` |
-| 启明创投 · 核心团队页 | B | 0/20 | 20 | 6 | 记录不足 | `48365a107a70c971` |
 
 这里只展示前 100 个来源；完整队列见 JSON 文件。
 
@@ -333,11 +333,11 @@
 
 ## Alibaba Group 官方动态
 
-`sourceId=official-user-alibaba-group` · 还需审核 `20` 条 · `sampleDigest=cc5aadd41e53df4c`
+`sourceId=official-user-alibaba-group` · 还需审核 `20` 条 · `sampleDigest=c75cbf194df5b40f`
 
-1. **Alibaba.com**
-   - `article` · `official-user-alibaba-group-3e395829e89283e7` · 2026-09-29 · Alibaba Group
-   - https://www.alibaba.com/premium/alibaba_login.html
+1. **Precio Bajo Alibaba en Español Tamaño Compacto y Discreto | Alibaba. com**
+   - `article` · `official-user-alibaba-group-f69f60ed1fc75cca` · 2026-10-28 · Alibaba Group
+   - https://spanish.alibaba.com/g/alibaba-in-spanish.html
 
 ## Alibaba Group 官方网站
 
@@ -370,157 +370,193 @@
 
 ## AMD Newsroom
 
-`sourceId=amd-newsroom` · 还需审核 `20` 条 · `sampleDigest=74aa8b5192a2b77d`
+`sourceId=amd-newsroom` · 还需审核 `20` 条 · `sampleDigest=4b2c8ac44a14dfb4`
 
-1. **AMD Brings the Power of Agentic AI to Embedded Design and Development Cycle**
+1. **AMD Expands AI and Cloud Infrastructure Collaboration with Oracle**
+   - `article` · `amd-newsroom-bcccb402c725dc50` · 2026-10-27 · AMD
+   - https://newsroom.amd.com/news/amd-expands-ai-cloud-infrastructure-oracle
+2. **AMD and Intel Collaborate to Simplify AI Development on x86 CPUs with PyTorch**
+   - `article` · `amd-newsroom-e430582d96f8be9b` · 2026-10-20 · AMD
+   - https://newsroom.amd.com/news/amd-intel-collaborate-simplify-ai-development-on-x86-cpus-pytorch
+3. **AMD FSR Upscaling 4.1 Boosts Frames and Image Quality on More Devices**
+   - `article` · `amd-newsroom-0d2e5bb4830f0727` · 2026-10-20 · AMD
+   - https://newsroom.amd.com/news/amd-fsr-upscaling-4-1-boosts-frames-image-quality
+4. **From AI That Answers to AI That Acts**
+   - `article` · `amd-newsroom-2aa248434cf70afa` · 2026-10-19 · AMD
+   - https://newsroom.amd.com/news/ai-that-answers-ai-that-acts
+5. **EE Times Interview: Mark Papermaster on the Future of AI and Semiconductor Innovation (Video)**
+   - `article` · `amd-newsroom-a5f2a0e278e2332d` · 2026-10-15 · AMD
+   - https://newsroom.amd.com/news/ee-times-interview-mark-papermaster-future-a-video
+6. **OCP 2026 Keynote Replay: Building the Next Era of AI Infrastructure**
+   - `article` · `amd-newsroom-6e3224deb8e80a66` · 2026-10-13 · AMD
+   - https://newsroom.amd.com/news/ocp-2026-keynote-replay-next-era-ai-infrastructure
+7. **OCP 2026: AMD CEO Lisa Su Highlights Open Infrastructure for the Future of AI**
+   - `article` · `amd-newsroom-e5d708b337db899b` · 2026-10-12 · AMD
+   - https://newsroom.amd.com/news/ocp-2026-amd-ceo-lisa-su-keynote-takeaways
+8. **Introducing AMD Helion, Agentic AI Compute at Rack Scale**
+   - `article` · `amd-newsroom-81bae7f0839feb3e` · 2026-10-12 · AMD
+   - https://newsroom.amd.com/news/open-rack-blueprint-scale-agentic-ai
+9. **AMD Helios: Designing and Building the Future of AI Infrastructure (Videos)**
+   - `article` · `amd-newsroom-2f58b931d3be5036` · 2026-10-05 · AMD
+   - https://newsroom.amd.com/news/amd-helios-designing-building-future-ai-infrastructure
+10. **AMD Sampling Versal AI Core Adaptive SoC in Enhanced Space-Grade Package for the Most Demanding Missions**
+   - `article` · `amd-newsroom-8a313548ef7c7e89` · 2026-10-01 · AMD
+   - https://newsroom.amd.com/news/amd-sampling-versal-ai-core-adaptive-soc
+11. **AMD Brings the Power of Agentic AI to Embedded Design and Development Cycle**
    - `article` · `amd-newsroom-7ae4d67e7a5a60b8` · 2026-09-30 · AMD
    - https://newsroom.amd.com/news/amd-ross-agentic-ai-embedded-design-development
-2. **Media Alert: AMD CEO Lisa Su to Lead Keynote at 2026 OCP**
+12. **Media Alert: AMD CEO Lisa Su to Lead Keynote at 2026 OCP**
    - `article` · `amd-newsroom-6506c4a273efe728` · 2026-09-29 · AMD
    - https://newsroom.amd.com/news/media-alert-ceo-lisa-su-keynote-2026-ocp
-3. **AMD to Acquire World Labs to Advance the Future of AI Compute**
+13. **AMD to Acquire World Labs to Advance the Future of AI Compute**
    - `article` · `amd-newsroom-effcb19529443682` · 2026-09-28 · AMD
    - https://newsroom.amd.com/news/amd-acquire-world-labs
-4. **With AMD Ryzen AI Max Series Processors, Perplexity Brings Portable Computer to Agentic PCs**
+14. **With AMD Ryzen AI Max Series Processors, Perplexity Brings Portable Computer to Agentic PCs**
    - `article` · `amd-newsroom-f8760c7b2f8a5eb5` · 2026-09-24 · AMD
    - https://newsroom.amd.com/news/amd-perplexity-agentic-pcs
-5. **‘Advanced Insights’: How ‘Zen’ Architecture Evolves for the Agentic AI Era (Video)**
+15. **‘Advanced Insights’: How ‘Zen’ Architecture Evolves for the Agentic AI Era (Video)**
    - `article` · `amd-newsroom-06b3644dd027b1a6` · 2026-09-23 · AMD
    - https://newsroom.amd.com/news/advanced-insights-zen-architecture-agentic-ai-era
-6. **Media Alert: AMD to Showcase Physical AI and Robotics Innovation at ROSCon 2026**
+16. **Media Alert: AMD to Showcase Physical AI and Robotics Innovation at ROSCon 2026**
    - `article` · `amd-newsroom-6f0df152f4b17d5d` · 2026-09-21 · AMD
    - https://newsroom.amd.com/news/media-alert-amd-roscon-2026
-7. **AMD EPYC CPUs Deliver for Every Layer of the Agentic AI Stack**
-   - `article` · `amd-newsroom-5b9f4efd6c94da41` · 2026-09-18 · AMD
-   - https://newsroom.amd.com/news/amd-epyc-cpus-deliver-every-layer-agentic-ai-stack
-8. **Building Infrastructure for an AI World in Motion**
-   - `article` · `amd-newsroom-454e80d356e5e9f5` · 2026-09-17 · AMD
-   - https://newsroom.amd.com/news/building-infrastructure-ai-world
-9. **F-Secure and AMD Silo AI Help Secure Agentic AI Journeys**
-   - `article` · `amd-newsroom-98fa2b8f92de6323` · 2026-09-14 · AMD
-   - https://newsroom.amd.com/news/f-secure-amd-silo-ai-help-secure-agentic-ai-journeys
-10. **From LEAP 2026 to What Comes Next: Advancing AI Across the Middle East**
-   - `article` · `amd-newsroom-a32670cc5c68cba0` · 2026-09-09 · AMD
-   - https://newsroom.amd.com/news/leap-2026-advancing-ai-across-the-middle-east
-11. **‘Advanced Insights’: The Future of AI-Powered Storytelling (Video)**
-   - `article` · `amd-newsroom-6c3257a323d89ed6` · 2026-09-09 · AMD
-   - https://newsroom.amd.com/news/advanced-insights-future-ai-powered-storytelling-video
-12. **AMD and Delhi University Collaborate to Build India’s AI Talent**
-   - `article` · `amd-newsroom-57cb368ec7d2428b` · 2026-09-08 · AMD
-   - https://newsroom.amd.com/news/amd-delhi-university-collaborate-build-india-ai-talent
-13. **AMD Instinct GPUs and EPYC CPUs to Power Europe’s Next-Generation LUMI-AI Supercomputer**
-   - `article` · `amd-newsroom-c9b3ba1144b3cd66` · 2026-08-31 · AMD
-   - https://newsroom.amd.com/news/amd-instinct-gpus-epyc-cpus-power-lumi-ai-supercomputer
-14. **AMD, Saudi Arabia’s Ministry of Communications and Information Technology and Digital Cooperation Organization Launch an Open Developer Ecosystem to Advance AI Innovation**
-   - `article` · `amd-newsroom-c24762fdc2aec609` · 2026-08-31 · AMD
-   - https://newsroom.amd.com/news/amd-saudi-arabia-digital-cooperation-organization-open-developer-ecosystem
-15. **AMD, Cisco and HUMAIN Expand Saudi Arabia’s AI Infrastructure as AMD Instinct Systems Go Live**
-   - `article` · `amd-newsroom-9aaad06d294c7222` · 2026-08-31 · AMD
-   - https://newsroom.amd.com/news/amd-cisco-humain-expand-saudi-arabia-ai-infrastructure
-16. **AMD ROCm 10: Bringing ROCm.AI’s AI-Native Developer Experiences to AMD Platforms**
-   - `article` · `amd-newsroom-bcfd78404c1f0a87` · 2026-08-27 · AMD
-   - https://newsroom.amd.com/news/rocm-10-software-ai-native-developer-experiences
+
+## AMD 官方动态
+
+`sourceId=official-amd` · 还需审核 `20` 条 · `sampleDigest=f587d2a9cc4ae38d`
+
+1. **AMD and Meta Advance Strategic Partnership to Power Meta’s Superintelligence Infrastructure**
+   - `article` · `official-amd-a763319f57e7309e` · 2026-10-27 · AMD
+   - https://ir.amd.com/news-events/press-releases/detail/1302/amd-and-meta-advance-strategic-partnership-to-power-metas-superintelligence-infrastructure
+2. **Introducing AMD Helion, Agentic AI Compute at Rack Scale**
+   - `article` · `official-amd-013238a25b04ff0a` · 2026-10-12 · AMD
+   - https://ir.amd.com/news-events/press-releases/detail/1301/introducing-amd-helion-agentic-ai-compute-at-rack-scale
+3. **AMD to Report Fiscal Third Quarter 2026 Financial Results**
+   - `article` · `official-amd-fcb9e77270940ced` · 2026-10-06 · AMD
+   - https://ir.amd.com/news-events/press-releases/detail/1300/amd-to-report-fiscal-third-quarter-2026-financial-results
+4. **AMD to Acquire World Labs to Advance the Future of AI Compute**
+   - `article` · `official-amd-0453a8f863b62b77` · 2026-09-28 · AMD
+   - https://ir.amd.com/news-events/press-releases/detail/1299/amd-to-acquire-world-labs-to-advance-the-future-of-ai-compute
 
 ## Anduril Industries 官方动态
 
-`sourceId=official-anduril` · 还需审核 `20` 条 · `sampleDigest=0cd980f441e6dce6`
+`sourceId=official-anduril` · 还需审核 `20` 条 · `sampleDigest=dd4fee2784fb6414`
 
-1. **Anduril and Voyager Establish Strategic Partnership Across Advanced Weapons and Propulsion**
-   - `article` · `official-anduril-8bc0a2f162ab897a` · 2026-09-29 · Anduril Industries
-   - https://www.anduril.com/news/anduril-and-voyager-establish-strategic-partnership-across-advanced-weapons-and-propulsion
-2. **Barracuda Becomes First WOSA-Compliant Weapon in Large-Scale Production**
-   - `article` · `official-anduril-e060d00115b66931` · 2026-09-23 · Anduril Industries
-   - https://www.anduril.com/news/barracuda-becomes-first-wosa-compliant-weapon-in-large-scale-production
-3. **Anduril Strengthens Security Partnership with Taiwan through Altius Milestones and Expanded Local Investment**
-   - `article` · `official-anduril-be7a6cb0942f7fa1` · 2026-09-23 · Anduril Industries
-   - https://www.anduril.com/news/anduril-strengthens-security-partnership-with-taiwan-through-altius-milestones-and-expanded-local-investment
-4. **Boeing and Anduril's Midrange Interceptor Advances in U.S. Army Competition**
-   - `article` · `official-anduril-99c77a3aa0088539` · 2026-09-09 · Anduril Industries
-   - https://www.anduril.com/news/boeing-and-anduril-s-midrange-interceptor-advances-in-u-s-army-competition
-
-## Anthropic
-
-`sourceId=anthropic` · 还需审核 `20` 条 · `sampleDigest=19bcd43129eac36a`
-
-1. **Claude discovers a novel enzyme system**
-   - `article` · `anthropic-ef1b3a4772eab837` · 2026-09-23 · Anthropic
-   - https://www.anthropic.com/news/claude-discovers-novel-enzyme-system
-2. **Partnering with Accenture on embedded evaluation**
-   - `article` · `anthropic-5ec4e61a2a5169eb` · 2026-09-18 · Anthropic
-   - https://www.anthropic.com/news/accenture-embedded-evaluation
-3. **Introducing the Life Sciences Verification Program**
-   - `article` · `anthropic-a3c8e138d995ff55` · 2026-09-17 · Anthropic
-   - https://www.anthropic.com/news/life-sciences-verification-program
-4. **Developing Enterprise Frontier Safeguards with our customers**
-   - `article` · `anthropic-b085c7f1762bfee8` · 2026-09-01 · Anthropic
-   - https://www.anthropic.com/news/enterprise-frontier-safeguards
-5. **Improving our alignment and security practices**
-   - `article` · `anthropic-8ed1599eb95bc766` · 2026-08-31 · Anthropic
-   - https://www.anthropic.com/news/improving-alignment-security-efforts
-6. **Previewing the Model Hardware Standard**
-   - `article` · `anthropic-35305757066a6f71` · 2026-08-27 · Anthropic
-   - https://www.anthropic.com/news/model-hardware-standard-research-preview
-7. **Expanding our support for scientists**
-   - `article` · `anthropic-3368e02f484edc23` · 2026-08-27 · Anthropic
-   - https://www.anthropic.com/news/expanding-support-for-scientists
-8. **Funding better evaluations of AI’s impact on wellbeing**
-   - `article` · `anthropic-1e032b3767d6bbcd` · 2026-08-25 · Anthropic
-   - https://www.anthropic.com/news/wellbeing-research-grants
+1. **Anduril and Qualcomm Unveil BlueChip to Rebuild American Computer Manufacturing**
+   - `article` · `official-anduril-2a5ef707ba02836d` · 2026-10-27 · Anduril Industries
+   - https://www.anduril.com/news/anduril-and-qualcomm-unveil-bluechip-to-rebuild-american-computer-manufacturing
+2. **Steelfin**
+   - `article` · `official-anduril-18a41ee8afd95cdf` · 2026-10-12 · Anduril Industries
+   - https://www.anduril.com/news/steelfin
+3. **Anduril, U.S. Navy Invest $6.6 Billion to Expand America's Submarine Industrial Base**
+   - `article` · `official-anduril-6538846abe3a4f0e` · 2026-10-06 · Anduril Industries
+   - https://www.anduril.com/news/anduril-u-s-navy-invest-usd6-6-billion-to-expand-america-s-submarine-industrial-base
+4. **Anduril Continues to Scale Next-Generation Command and Control Across the Army**
+   - `article` · `official-anduril-01616e8817517544` · 2026-10-05 · Anduril Industries
+   - https://www.anduril.com/news/anduril-continues-to-scale-next-generation-command-and-control-across-the-army
 
 ## Anthropic
 
-`sourceId=x-anthropic` · 还需审核 `20` 条 · `sampleDigest=08351e371a562a5a`
+`sourceId=anthropic` · 还需审核 `20` 条 · `sampleDigest=c2386cb723eda5b2`
 
-1. **Anthropic：What do you want from AI? We’re launching a new study with Anthropic Interviewer to learn more about your experiences using AI, what role you want it**
-   - `article` · `x-anthropic-8e7e87b647d0401b` · 2026-09-29 · Anthropic
-   - https://x.com/AnthropicAI/status/2104982629884063840
-2. **Anthropic：Making your interview public is completely optional. Our blog post covers the benefits and possible risks of doing so. Read it here: https://t.co/Gh4v**
-   - `article` · `x-anthropic-7667706671ca602d` · 2026-09-29 · Anthropic
-   - https://x.com/AnthropicAI/status/2104982631037436201
-3. **Anthropic：Claude Sonnet 5.5 is now available:**
-   - `article` · `x-anthropic-3ee14f4f5e2872e6` · 2026-09-28 · Anthropic
-   - https://x.com/AnthropicAI/status/2104633259925630995
-4. **Anthropic：New on the Science Blog: Yes, Claude can do Nine Loops. Theoretical physicists predict how particles behave using formulas called scattering amplitude**
-   - `article` · `x-anthropic-e8a0ab8a7bef0123` · 2026-09-25 · Anthropic
-   - https://x.com/AnthropicAI/status/2103541577083719888
-5. **Anthropic：In the Democratic Republic of the Congo, global health organizations including @CEPIvaccines, @WHOAFRO, and @inrb_kinshasa are using Claude to acceler**
-   - `article` · `x-anthropic-4b05f96cfb578a26` · 2026-09-23 · Anthropic
-   - https://x.com/AnthropicAI/status/2102897863097545197
+1. **AI for Science expands to foundations and institutions**
+   - `article` · `anthropic-e63c44ee253751eb` · 2026-10-28 · Anthropic
+   - https://www.anthropic.com/news/ai-for-science-expands-foundations-research-institutions
+2. **Expanding our partnership with GSA to bring Claude to all levels of government**
+   - `article` · `anthropic-550f4d88633d4245` · 2026-10-27 · Anthropic
+   - https://www.anthropic.com/news/expanding-partnership-gsa
+3. **Anthropic files S-1 with the SEC for proposed initial public offering**
+   - `article` · `anthropic-9a064d95901e645e` · 2026-10-26 · Anthropic
+   - https://www.anthropic.com/news/s1-sec
+4. **Donating Agent Skills to the Agentic AI Foundation**
+   - `article` · `anthropic-bdc7b775ab8d2106` · 2026-10-22 · Anthropic
+   - https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation
+5. **Open call for guest investigators in the life sciences**
+   - `article` · `anthropic-6950f6169e819866` · 2026-10-22 · Anthropic
+   - https://www.anthropic.com/news/open-call-guest-investigators-life-sciences
+6. **Investing in the public benefit**
+   - `article` · `anthropic-a0595c813318ccae` · 2026-10-18 · Anthropic
+   - https://www.anthropic.com/news/public-benefit-fund
+
+## Anthropic
+
+`sourceId=x-anthropic` · 还需审核 `20` 条 · `sampleDigest=a977b6969ade2e1c`
+
+1. **Anthropic：New Anthropic research: Automating subtle emergent misalignment research. Red-teaming is a vital part of model safety testing, but it’s also limited b**
+   - `article` · `x-anthropic-0e255d5f70ebf763` · 2026-10-31 · Anthropic
+   - https://x.com/AnthropicAI/status/2116349211549843666
+2. **Anthropic：We’ve trained Claude to flag potential misuse in conversations, a technique we call self-assessment. Right after it responds, Claude gives a prelimina**
+   - `article` · `x-anthropic-9f0c28e45e9fe785` · 2026-10-29 · Anthropic
+   - https://x.com/AnthropicAI/status/2115871889549865429
+3. **Anthropic：We’ve expanded our AI for Science program beyond individual teams to support some of the world’s leading scientific foundations, institutions, and res**
+   - `article` · `x-anthropic-59b6cea1e9548bf7` · 2026-10-29 · Anthropic
+   - https://x.com/AnthropicAI/status/2115825653539025142
+4. **Anthropic：We're expanding our partnership with @USGSA. Under a new OneGov agreement, we are bringing Claude to federal, state, local, tribal, and territorial go**
+   - `article` · `x-anthropic-cafa8e625a66fffc` · 2026-10-27 · Anthropic
+   - https://x.com/AnthropicAI/status/2115207004293853358
+5. **Anthropic：Over the past few months, Anthropic scientists have engaged in deep research partnerships with six organizations developing new medicines. We've also**
+   - `article` · `x-anthropic-1b49fd3bd1f0f9db` · 2026-10-27 · Anthropic
+   - https://x.com/AnthropicAI/status/2115178675050307942
 
 ## Anthropic 官方动态
 
-`sourceId=official-anthropic` · 还需审核 `20` 条 · `sampleDigest=ce48668c9ee5725d`
+`sourceId=official-anthropic` · 还需审核 `20` 条 · `sampleDigest=3923e3acf1e4755d`
 
-当前没有可追溯的精确匹配记录。
+1. **Anthropic update on independent evaluators**
+   - `article` · `official-anthropic-c3f9aa1e97f35f24` · 2026-10-15 · Anthropic
+   - https://www.anthropic.com/news/an-update-on-independent-evaluators
+2. **Preparing for the 2026 US midterms**
+   - `article` · `official-anthropic-ad577cc4d385593c` · 2026-10-14 · Anthropic
+   - https://www.anthropic.com/news/2026-us-midterms
+3. **2026 Usage Policy update**
+   - `article` · `official-anthropic-4e66a7e453a3193b` · 2026-10-08 · Anthropic
+   - https://www.anthropic.com/news/2026-usage-policy-update
 
 ## arXiv · Core AI companies
 
-`sourceId=arxiv-ai` · 还需审核 `20` 条 · `sampleDigest=7b20d28b7534be71`
+`sourceId=arxiv-ai` · 还需审核 `20` 条 · `sampleDigest=5015349271074341`
 
-1. **Cascadia: A Control-Plane-Free Alternative to Hyperconverged AI Infrastructure**
-   - `article` · `arxiv-ai-c5e3774a4c87d9ff` · 2026-09-30 · 科技产业
-   - https://arxiv.org/abs/2609.38697v1
-2. **The Invisible Language Tax: Token Premiums of French and Regional Languages in 2026 LLM Tokenizers, and a French-Optimized Prototype**
-   - `article` · `arxiv-ai-467d938b4dab9ea9` · 2026-09-30 · 科技产业
-   - https://arxiv.org/abs/2609.39001v1
-3. **SkillSeek: Revisiting Agent Skill Retrieval at Marketplace Scale**
-   - `article` · `arxiv-ai-0e0dd5b6e55f6014` · 2026-09-30 · 科技产业
-   - https://arxiv.org/abs/2609.38822v1
-4. **How People Use ChatGPT: Conversation-Level Evidence from India, Nigeria, Brazil, and Pakistan**
-   - `article` · `arxiv-ai-dd437d808488c7c2` · 2026-09-29 · OpenAI
-   - https://arxiv.org/abs/2609.38279v1
-5. **When Does Randomized Oversight Align AI Agents That Can Conceal?**
-   - `article` · `arxiv-ai-d7833fdaa0054b89` · 2026-09-29 · 科技产业
-   - https://arxiv.org/abs/2609.38262v1
-6. **Evaluating Whether GPT-6 Astra Performs Unsanctioned Supply-Chain Attacks**
-   - `article` · `arxiv-ai-c70b866961de39e3` · 2026-09-29 · 科技产业
-   - https://arxiv.org/abs/2609.38415v1
-7. **Analytic next-to-leading-order helicity cross sections for vector-boson production at finite transverse momentum**
-   - `article` · `arxiv-ai-7c9b24dc8237a74f` · 2026-09-29 · 科技产业
-   - https://arxiv.org/abs/2609.37238v1
-8. **Strong Multilingual Privacy Tagging at Encoder Speed**
-   - `article` · `arxiv-ai-6b0654c6f71a163d` · 2026-09-29 · 科技产业
-   - https://arxiv.org/abs/2609.38630v1
+1. **Evaluating Conversational Explainability in Healthcare: Comparing the Explainability Assistant and a Traditional XAI Dashboard**
+   - `article` · `arxiv-ai-d5a53a480fc86db1` · 2026-10-29 · 科技产业
+   - https://arxiv.org/abs/2610.39634v1
+2. **Decision and System One models in rheumatology: accuracy and calibration on specialty-training examination questions and diagnostic case vignettes**
+   - `article` · `arxiv-ai-a7c0e19db55c82df` · 2026-10-29 · 科技产业
+   - https://arxiv.org/abs/2610.40318v1
+3. **Sparse domination and an extended $L^p$ range for the trilinear Hilbert transform**
+   - `article` · `arxiv-ai-37f182a197143a83` · 2026-10-29 · 科技产业
+   - https://arxiv.org/abs/2610.39096v1
+4. **Aligning Autoresearch: Co-Improvement between Agents and Humans**
+   - `article` · `arxiv-ai-93725a05ce94c011` · 2026-10-28 · 科技产业
+   - https://arxiv.org/abs/2610.38882v1
+5. **A Defense-Aware Explainable AI Framework for Feature-Level Vulnerability Analysis in Optimal Power Flow**
+   - `article` · `arxiv-ai-4da415496460d18b` · 2026-10-28 · 科技产业
+   - https://arxiv.org/abs/2610.38945v1
+6. **On the Sparsity of Direct Preference Optimization: Weight Disentanglement in the NTK Regime**
+   - `article` · `arxiv-ai-c9fd0f558854dc74` · 2026-10-27 · 科技产业
+   - https://arxiv.org/abs/2610.37085v1
+7. **DocXEval: A Systematic Evaluation of Explainability in Multimodal Document Understanding**
+   - `article` · `arxiv-ai-5d2f99ff50b7b401` · 2026-10-27 · 科技产业
+   - https://arxiv.org/abs/2610.36929v1
+8. **Square-root logarithmic bounds for the arithmetic complexity of factorial multiples**
+   - `article` · `arxiv-ai-3da362a4b3fff3f2` · 2026-10-27 · 科技产业
+   - https://arxiv.org/abs/2610.36588v1
+
+## ASML 官方动态
+
+`sourceId=official-asml` · 还需审核 `20` 条 · `sampleDigest=7b2e1d2556763609`
+
+1. **Samsung Electronics and ASML expand strategic collaboration for next-generation semiconductor manufacturing | Tue, 09/08/2026 - 08:05**
+   - `article` · `official-asml-f76d591696ab4c5d` · 2026-09-21 · ASML
+   - https://investor.asml.com/news-releases/news-release-details/samsung-electronics-and-asml-expand-strategic-collaboration-next-generation-semiconductor-manufacturing
+2. **Intel Foundry and ASML Collaborate to Accelerate Industry Readiness for High-NA EUV | Tue, 09/08/2026 - 08:10**
+   - `article` · `official-asml-bebff9d1108d2c20` · 2026-09-21 · ASML
+   - https://investor.asml.com/news-releases/news-release-details/intel-foundry-and-asml-collaborate-accelerate-industry-readiness-high-na-euv
+3. **ASML begins construction of new Eindhoven campus, strengthening its presence in the Brainport region | Tue, 09/08/2026 - 13:20**
+   - `article` · `official-asml-89e63e816e0925b2` · 2026-09-08 · ASML
+   - https://investor.asml.com/news-releases/news-release-details/asml-begins-construction-new-eindhoven-campus-strengthening-its-presence-brainport-region
+4. **ASML and TSMC Announce Initiative to Pioneer Industry Transition to Large-Format Photomasks for High NA EUV | Tue, 09/08/2026 - 08:04**
+   - `article` · `official-asml-16f3a93d0c21e74c` · 2026-09-08 · ASML
+   - https://investor.asml.com/news-releases/news-release-details/asml-and-tsmc-announce-initiative-pioneer-industry-transition-large-format-photomasks-high-na-euv
 
 ## Aurora Innovation 官方动态
 
@@ -530,49 +566,60 @@
 
 ## Axiom Space 官方动态
 
-`sourceId=official-axiom-space` · 还需审核 `20` 条 · `sampleDigest=77f90d0d4da65d9a`
+`sourceId=official-axiom-space` · 还需审核 `20` 条 · `sampleDigest=121a5231de2cee27`
 
-1. **Celebrating National Sewing Month in the Axiom Space Soft Goods Lab**
+1. **Axiom Space, National Stem Cell Foundation, Saudi Space Agency Collaborate to Expand Study of Neurodegenerative Disease in Microgravity**
+   - `article` · `official-axiom-space-ea0217694b23456b` · 2026-10-14 · Axiom Space
+   - https://www.axiomspace.com/news/national-stem-cell-foundation-joins-with-axiom-space-and-the-saudi-space-agency-to-expand-study-of-neurodegenerative-disease-in-microgravity
+2. **Axiom Space is Building the Future of Research in Space**
+   - `article` · `official-axiom-space-efb45dd1e0a3f5d4` · 2026-10-08 · Axiom Space
+   - https://www.axiomspace.com/news/axiom-space-building-the-future-of-research-in-space
+3. **Axiom Space, Exobiosphere Sign Memorandum of Understanding to Advance Drug Discovery in Space**
+   - `article` · `official-axiom-space-5182ba169736e9e2` · 2026-10-07 · Axiom Space
+   - https://www.axiomspace.com/news/mou-exobiosphere
+4. **Celebrating National Sewing Month in the Axiom Space Soft Goods Lab**
    - `article` · `official-axiom-space-723c425176fd3189` · 2026-09-28 · Axiom Space
    - https://www.axiomspace.com/news/celebrating-national-sewing-month-in-the-axiom-space-soft-goods-lab
 
 ## Cartesia 官方动态
 
-`sourceId=official-cartesia` · 还需审核 `20` 条 · `sampleDigest=b1c108fc0a680bf4`
+`sourceId=official-cartesia` · 还需审核 `20` 条 · `sampleDigest=fe986346af06e69b`
 
-当前没有可追溯的精确匹配记录。
+1. **Introducing Managed Agents**
+   - `article` · `official-cartesia-691558dbfed99d57` · 2026-10-29 · Cartesia
+   - https://www.cartesia.ai/blog/managed-agents
+2. **Raise Financial Services x Cartesia: Voice AI for Financial Access in India**
+   - `article` · `official-cartesia-8d1903ec9d7deb39` · 2026-10-12 · Cartesia
+   - https://www.cartesia.ai/blog/raise-financial-services
 
 ## CATL
 
-`sourceId=catl` · 还需审核 `20` 条 · `sampleDigest=dde6b3b106691d67`
+`sourceId=catl` · 还需审核 `20` 条 · `sampleDigest=c80b7afb8ef447de`
 
-1. **CATL Debrecen Kicks Off Trial Operations in its New Cell Building**
+1. **IRENA Releases 'Storage+' Report to Explore Innovative Paths for Energy Storage with Diverse Industries**
+   - `article` · `catl-3f82d9c756f0d4f6` · 2026-10-16 · 宁德时代
+   - https://www.catl.com/en/news/7042.html
+2. **Dr. Robin Zeng: From Rapid Expansion to Long-Term Reliability, Energy Storage as Critical Infrastructure**
+   - `article` · `catl-5111fd59e4115a7e` · 2026-10-15 · 宁德时代
+   - https://www.catl.com/en/news/7041.html
+3. **CATL Becomes First Battery Company to Join All Three GBA Battery Passport Pilot Waves**
+   - `article` · `catl-79fd596b9e692698` · 2026-10-12 · 宁德时代
+   - https://www.catl.com/en/news/7016.html
+4. **CATL and SERES Sign Long-Term Strategic Cooperation Agreement**
+   - `article` · `catl-b402271c22be11cd` · 2026-10-10 · 宁德时代
+   - https://www.catl.com/en/news/7014.html
+5. **Europe’s Largest NING SERVICE Experience Center Opens in Norway**
+   - `article` · `catl-8be22ad3fe35af0c` · 2026-09-24 · 宁德时代
+   - https://www.catl.com/en/news/7013.html
+6. **CATL Debrecen Kicks Off Trial Operations in its New Cell Building**
    - `article` · `catl-f81b4656bae6ac0b` · 2026-09-22 · 宁德时代
    - https://www.catl.com/en/news/7000.html
-2. **Kuehne+Nagel and CATL partner to advance battery logistics and fleet electrification**
+7. **Kuehne+Nagel and CATL partner to advance battery logistics and fleet electrification**
    - `article` · `catl-f3e02afa3fb78fc4` · 2026-09-18 · 宁德时代
    - https://www.catl.com/en/news/7012.html
-3. **CATL Partners with BME to Advance Battery Pack Manufacturing in Egypt Through Technology Licensing**
+8. **CATL Partners with BME to Advance Battery Pack Manufacturing in Egypt Through Technology Licensing**
    - `article` · `catl-d3f6b4d5622ccf82` · 2026-09-16 · 宁德时代
    - https://www.catl.com/en/news/6998.html
-4. **CATL Launches TECTRANS II at IAA Transportation 2026 to Accelerate Global Commercial Vehicle Electrification**
-   - `article` · `catl-973ce00ed571161d` · 2026-09-14 · 宁德时代
-   - https://www.catl.com/en/news/6997.html
-5. **CATL and DHL Group Sign MoU to Jointly Advance Green Freight Corridors Across Europe**
-   - `article` · `catl-0b42845c21419b56` · 2026-09-14 · 宁德时代
-   - https://www.catl.com/en/news/6999.html
-6. **CATL Signs Strategic Cooperation Agreements with Copper Foil Suppliers**
-   - `article` · `catl-52ccefc93237de41` · 2026-09-06 · 宁德时代
-   - https://www.catl.com/en/news/6993.html
-7. **Dr. Robin Zeng on the "CATL Standard": Safety, Reliability, and Longevity at the Core**
-   - `article` · `catl-300fd4926261ce71` · 2026-09-03 · 宁德时代
-   - https://www.catl.com/en/news/6992.html
-8. **CATL Announces Local Partnership, Showcases Full-Chain Storage at The Smarter E South America 2026**
-   - `article` · `catl-70143af7e2c6dc37` · 2026-08-25 · 宁德时代
-   - https://www.catl.com/en/news/6977.html
-9. **CATL Signs Memorandum of Understanding with Schaeffler**
-   - `article` · `catl-eee686edff0f28eb` · 2026-08-24 · 宁德时代
-   - https://www.catl.com/en/news/6978.html
 
 ## Cerebras Systems
 
@@ -612,28 +659,17 @@
 
 ## Coursera 官方动态
 
-`sourceId=official-coursera` · 还需审核 `20` 条 · `sampleDigest=77ecda990ee3a78b`
+`sourceId=official-coursera` · 还需审核 `20` 条 · `sampleDigest=c9e4d735f67257b5`
 
-1. **2025 Micro-Credentials Impact Report**
-   - `article` · `official-coursera-68e2d6c0199ff7c1` · 2026-09-28 · Coursera
-   - https://www.coursera.org/enterprise/resources/ebooks/micro-credentials-report-2025?_gl=1%2Aj62h6z%2A_gcl_aw%2AR0NMLjE3NDk2NTkyOTQuQ2owS0NRancwcVRDQmhDbUFSSXNBQWo4QzRhMktvZ0xhLXBEU3JJc2ZqRmZsV1VueU9ld25GMi1YUDc4S01EY3JJUVlaVUFaalYwTW9JY2FBdXRaRUFMd193Y0I.%2A_gcl_au%2ANzE3NzUxODMyLjE3NDM3MDM1MzAuNDUxODIxODQ5LjE3NDk0OTM0MDQuMTc0OTQ5MzQ5MA..
-2. **Closing the GenAI Gender Gap: Research & Strategies**
-   - `article` · `official-coursera-555e9a50ac23e144` · 2026-09-28 · Coursera
-   - https://www.coursera.org/enterprise/resources/ebook/genai-gender-gap?_gl=1%2Acveatc%2A_gcl_aw%2AR0NMLjE3NDk2NTkyOTQuQ2owS0NRancwcVRDQmhDbUFSSXNBQWo4QzRhMktvZ0xhLXBEU3JJc2ZqRmZsV1VueU9ld25GMi1YUDc4S01EY3JJUVlaVUFaalYwTW9JY2FBdXRaRUFMd193Y0I.%2A_gcl_au%2ANzE3NzUxODMyLjE3NDM3MDM1MzAuNDUxODIxODQ5LjE3NDk0OTM0MDQuMTc0OTQ5MzQ5MA..
+当前没有可追溯的精确匹配记录。
 
 ## Databricks 官方动态
 
-`sourceId=official-databricks` · 还需审核 `20` 条 · `sampleDigest=0d2b4df214346605`
+`sourceId=official-databricks` · 还需审核 `20` 条 · `sampleDigest=609c3ff8e611bcc3`
 
-1. **Introducing ai_decide: make fast decisions on your governed data**
-   - `article` · `official-databricks-0392785bf204a953` · 2026-09-30 · Databricks
-   - https://www.databricks.com/blog/introducing-aidecide-make-fast-decisions-your-governed-data
-2. **Genie One MCP: Give any AI Agent the Right Business Context**
-   - `article` · `official-databricks-cd03132bf549e99c` · 2026-09-22 · Databricks
-   - https://www.databricks.com/blog/genie-one-mcp-give-any-ai-agent-right-business-context
-3. **Object Storage + WAL: Lakebase Postgres for the agentic era**
-   - `article` · `official-databricks-0d7a2bb2bd31060c` · 2026-08-27 · Databricks
-   - https://www.databricks.com/blog/object-storage-wal-lakebase-postgres-agentic-era
+1. **All | Databricks Blog**
+   - `article` · `official-databricks-3e6baf52cce5b5fc` · 2026-10-31 · Databricks
+   - https://www.databricks.com/blog/category/all
 
 ## DeepSeek
 
@@ -651,11 +687,9 @@
 
 ## Demis Hassabis
 
-`sourceId=x-demis` · 还需审核 `20` 条 · `sampleDigest=941252631a8e708d`
+`sourceId=x-demis` · 还需审核 `20` 条 · `sampleDigest=11d0129584e9072e`
 
-1. **Demis Hassabis：For 20+ years @ShaneLegg and I've discussed AGI’s potential impact on the economy, science & society. With the DeepMind Institute, we're expanding int**
-   - `article` · `x-demis-94c82a90bdf4a846` · 2026-09-16 · Demis Hassabis
-   - https://x.com/demishassabis/status/2100230524383981702
+当前没有可追溯的精确匹配记录。
 
 ## Figure AI
 
@@ -682,7 +716,7 @@
 
 ## Form Energy 官方动态
 
-`sourceId=official-form-energy` · 还需审核 `20` 条 · `sampleDigest=25f4c2561bb114a9`
+`sourceId=official-form-energy` · 还需审核 `20` 条 · `sampleDigest=d9c4551b498f3333`
 
 1. **Form Energy Announces Closing of $270M Credit Facility**
    - `article` · `official-form-energy-199103653ab491e0` · 2026-09-21 · Form Energy
@@ -690,6 +724,9 @@
 2. **Form Energy Launches Technician Hiring Sprint In Weirton, WV**
    - `article` · `official-form-energy-7f5377b6174512b9` · 2026-09-09 · Form Energy
    - https://formenergy.com/form-energy-launches-technician-hiring-sprint-in-weirton-wv
+3. **Form Energy Secures $750M in Series G Financing to Scale Iron-Air Battery Manufacturing and Accelerate Commercial Deployments**
+   - `article` · `official-form-energy-e4f632a601abe7eb` · 2026-08-12 · Form Energy
+   - https://formenergy.com/form-energy-secures-750m-in-series-g-financing
 
 ## Founders Fund · 核心团队页
 
@@ -705,107 +742,107 @@
 
 ## Google AI
 
-`sourceId=google-ai-blog` · 还需审核 `20` 条 · `sampleDigest=1ca59dc15cf1ba05`
+`sourceId=google-ai-blog` · 还需审核 `20` 条 · `sampleDigest=9b967beee416de91`
 
-1. **New experts join Google’s AI & Economy team**
+1. **Our newest AI Quest: Mapping the human brain**
+   - `article` · `google-ai-blog-9a15b40232fdbf82` · 2026-10-26 · Google
+   - https://blog.google/products-and-platforms/products/education/ai-quests-polar-peaks
+2. **Introducing Playground: Create and play custom games**
+   - `article` · `google-ai-blog-e04d1da693503b0f` · 2026-10-07 · Google
+   - https://blog.google/innovation-and-ai/technology/ai/playground-experimental-gaming-platform
+3. **The latest AI news we announced in September 2026**
+   - `article` · `google-ai-blog-aacb8ca8a4a96bc0` · 2026-10-02 · Google
+   - https://blog.google/innovation-and-ai/technology/ai/google-ai-updates-september-2026
+4. **New experts join Google’s AI & Economy team**
    - `article` · `google-ai-blog-2ad49dd9b65fe3ae` · 2026-09-18 · Google
    - https://blog.google/innovation-and-ai/technology/ai/expanding-ai-economy-research-bench
-2. **AI for Societal Impact**
+5. **AI for Societal Impact**
    - `article` · `google-ai-blog-dfe2f7f06070ffbc` · 2026-09-15 · Google
    - https://blog.google/innovation-and-ai/technology/ai/ai-for-societal-impact
-3. **AI for everyone in every language**
+6. **AI for everyone in every language**
    - `article` · `google-ai-blog-7a00acf92df0c96e` · 2026-09-15 · Google
    - https://blog.google/innovation-and-ai/technology/ai/ai-for-every-language
-4. **New insights from Google’s AI & Economy ATLAS**
+7. **New insights from Google’s AI & Economy ATLAS**
    - `article` · `google-ai-blog-64730bcdfc3a3522` · 2026-09-15 · Google
    - https://blog.google/innovation-and-ai/technology/ai/ai-economy-atlas-september-2026
-5. **Building AI to accelerate science and improve lives**
+8. **Building AI to accelerate science and improve lives**
    - `article` · `google-ai-blog-419a0d7bd8653188` · 2026-09-15 · Google
    - https://blog.google/innovation-and-ai/technology/ai/ai-applications-science-people
-6. **3 ways to prep for your next big race with Search**
-   - `article` · `google-ai-blog-338a77b082d6e9b8` · 2026-09-10 · Google
-   - https://blog.google/products-and-platforms/products/search/running-race-training-tips
-7. **Get ready for the game with new football features in Search**
+9. **Get ready for the game with new football features in Search**
    - `article` · `google-ai-blog-77adb66885449411` · 2026-09-09 · Google
    - https://blog.google/products-and-platforms/products/search/football-features-google-search
-8. **Proactive cyber defense for governments and enterprises**
+10. **Proactive cyber defense for governments and enterprises**
    - `article` · `google-ai-blog-445c9f3e3d31d266` · 2026-09-02 · Google
    - https://blog.google/innovation-and-ai/technology/safety-security/fairwind-program
-9. **The latest AI news we announced in August 2026**
-   - `article` · `google-ai-blog-e6646933ca959a5f` · 2026-09-01 · Google
-   - https://blog.google/innovation-and-ai/technology/google-ai-updates-august-2026
-10. **3 new ways to plan and book travel in Search**
-   - `article` · `google-ai-blog-a7db6e12c1ae453b` · 2026-08-27 · Google
-   - https://blog.google/products-and-platforms/products/search/book-travel-ai-mode
 
 ## Google DeepMind
 
-`sourceId=deepmind-blog` · 还需审核 `20` 条 · `sampleDigest=afe4651763557236`
+`sourceId=deepmind-blog` · 还需审核 `20` 条 · `sampleDigest=fd645dd7032ef172`
 
-1. **Introducing SynthID Bio**
+1. **Google DeepMind and Singapore Government collaborate to build fine-tuned AI model for scam detection**
+   - `article` · `google-deepmind-b76b11a1199f73b7` · 2026-10-14 · Google
+   - https://deepmind.google/blog/on-device-ai-scam-detection-mddi
+2. **Introducing SynthID Bio**
    - `article` · `google-deepmind-08aa8115cb5d9c89` · 2026-09-30 · Google
    - https://deepmind.google/blog/introducing-synthid-bio
-2. **Gemini 4 Argon: our next era of frontier intelligence**
-   - `article` · `deepmind-blog-b49099cde7e97e60` · 2026-09-30 · Google
-   - https://deepmind.google/blog/gemini-4-argon-our-next-era-of-frontier-intelligence
 3. **Introducing Gemini 3.8 Live with Live Avatar**
    - `article` · `deepmind-blog-6add3dd62456569f` · 2026-09-24 · Google
    - https://deepmind.google/blog/introducing-gemini-38-live-with-live-avatar
 4. **Advancing Private AI Compute with secure, server-side memory**
    - `article` · `google-deepmind-1043d9fe80283e6f` · 2026-09-23 · Google
    - https://deepmind.google/blog/advancing-private-ai-compute-with-secure-server-side-memory
-5. **Gemini 3.8 text-to-speech says hello**
-   - `article` · `deepmind-blog-721de6922a1a6b9f` · 2026-09-23 · Google
-   - https://deepmind.google/blog/say-hello-to-gemini-38-text-to-speech
-6. **Introducing Gemini 3.8 Live and 3.8 Live Extended Thinking**
+5. **Introducing Gemini 3.8 Live and 3.8 Live Extended Thinking**
    - `article` · `deepmind-blog-6aae488b1bb65e59` · 2026-09-15 · Google
    - https://deepmind.google/blog/introducing-gemini-3-8-live-and-3-8-live-extended-thinking
-7. **Introducing WeatherNext 3, our most advanced and accurate global weather AI model**
+6. **Introducing WeatherNext 3, our most advanced and accurate global weather AI model**
    - `article` · `deepmind-blog-d5ea4bcadd66b1af` · 2026-09-03 · Google
    - https://deepmind.google/blog/introducing-weathernext-3-our-most-advanced-and-accurate-global-weather-ai-model
-8. **Introducing Gemini 3.8 Flash and 3.8 Flash Cyber**
+7. **Introducing Gemini 3.8 Flash and 3.8 Flash Cyber**
    - `article` · `deepmind-blog-355be2cf6d2d139c` · 2026-09-02 · Google
    - https://deepmind.google/blog/introducing-gemini-3-8-flash-and-38-flash-cyber
-9. **Introducing agentic video understanding with Gemini**
+8. **Introducing agentic video understanding with Gemini**
    - `article` · `deepmind-blog-6bf5b05134dd23a6` · 2026-09-01 · Google
    - https://deepmind.google/blog/introducing-agentic-video-in-gemini
-10. **Gemini Omni 1.1 Flash lets you build with more control**
-   - `article` · `deepmind-blog-90ba20dc32b53edf` · 2026-08-27 · Google
-   - https://deepmind.google/blog/gemini-omni-1-1-flash-lets-you-build-with-more-control
-
-## Google DeepMind
-
-`sourceId=google-deepmind` · 还需审核 `20` 条 · `sampleDigest=225b16586fe4c1e2`
-
-1. **AlphaGenome Atlas: Molecular predictions for 9 Billion human DNA variants**
-   - `article` · `google-deepmind-825546b9e9e150a7` · 2026-09-08 · Google
-   - https://deepmind.google/blog/alphagenome-atlas-a-predictive-map-of-every-possible-dna-letter-change-in-the-human-genome
-2. **Piloting the world's first double-blind AI evaluations**
-   - `article` · `google-deepmind-f0dc85dcc6d3444f` · 2026-08-27 · Google
+9. **Piloting the world's first double-blind AI evaluations**
+   - `article` · `deepmind-blog-f0dc85dcc6d3444f` · 2026-08-27 · Google
    - https://deepmind.google/blog/piloting-the-worlds-first-double-blind-ai-evaluations
-3. **Exploring new frontiers of AI and games research**
-   - `article` · `google-deepmind-76900827bd8bbfff` · 2026-08-21 · Google
+10. **From Atari to EVE Online: Building on 15 Years of AI Research in Games**
+   - `article` · `deepmind-blog-76900827bd8bbfff` · 2026-08-21 · Google
    - https://deepmind.google/blog/from-atari-to-eve-online-building-on-15-years-of-ai-research-in-games
 
 ## Google DeepMind
 
-`sourceId=user-x-googledeepmind` · 还需审核 `20` 条 · `sampleDigest=aa01262616cf3c6e`
+`sourceId=google-deepmind` · 还需审核 `20` 条 · `sampleDigest=dd7d2a346ca681fb`
 
-1. **Google DeepMind：RT @GoogleCloudTech: Power your agents: Gemini 3.8 Live with Live Avatar is now generally available in Gemini Enterprise. Key capabilities…**
-   - `article` · `user-x-googledeepmind-d794b01d76329d3d` · 2026-09-24 · 科技产业
-   - https://x.com/GoogleDeepMind/status/2103176711479402748
-2. **Google DeepMind：Fine-tune the delivery line by line, shaping pacing, emotion, and cues like laughs or pauses. All generated audio is watermarked with SynthID so it ca**
-   - `article` · `user-x-googledeepmind-b11a0ee0d2d39597` · 2026-09-23 · 科技产业
-   - https://x.com/GoogleDeepMind/status/2102781533274734801
-3. **Google DeepMind：Create and deploy custom audio with our new text-to-speech models: 🔵 Gemini 3.8 Flash TTS: Design unique voices with distinct accents and characterist**
-   - `article` · `user-x-googledeepmind-7cb26034cdf5dbce` · 2026-09-23 · 科技产业
-   - https://x.com/GoogleDeepMind/status/2102781530867126505
-4. **Google DeepMind：Every second, millions of genome switches dictate how our cells function and adapt. 🧬 Working with @ScienceStowers, Atlas mapped 2,500+ regulatory pat**
-   - `article` · `user-x-googledeepmind-9aff44ea2009516a` · 2026-09-17 · 科技产业
-   - https://x.com/GoogleDeepMind/status/2100586768248562157
-5. **Google DeepMind：These discoveries are just the beginning. AlphaGenome Atlas is freely accessible to empower researchers everywhere to decode the genetic causes of dis**
-   - `article` · `user-x-googledeepmind-2d95318fc27b1796` · 2026-09-17 · 科技产业
-   - https://x.com/GoogleDeepMind/status/2100586770572177551
+1. **Genie 4: A new generation of world simulation**
+   - `article` · `google-deepmind-e960e8891f7d7ad8` · 2026-10-27 · Google
+   - https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation
+2. **Google Antigravity: Accelerating Antimicrobial Peptide Search**
+   - `article` · `official-google-3b88e63140868036` · 2026-10-15 · Google
+   - https://deepmind.google/blog/accelerating-antimicrobial-discovery
+3. **AlphaGenome Atlas: Molecular predictions for 9 Billion human DNA variants**
+   - `article` · `google-deepmind-825546b9e9e150a7` · 2026-09-08 · Google
+   - https://deepmind.google/blog/alphagenome-atlas-a-predictive-map-of-every-possible-dna-letter-change-in-the-human-genome
+
+## Google DeepMind
+
+`sourceId=user-x-googledeepmind` · 还需审核 `20` 条 · `sampleDigest=f95c2c226130e391`
+
+1. **Google DeepMind：RT @a_ron_saunders: While most jack-o-lanterns just sit on porches, the @GoogleDeepMind team decided to let AI agents design, simulate, and…**
+   - `article` · `user-x-googledeepmind-b4052d368f6a8fb3` · 2026-10-31 · 科技产业
+   - https://x.com/GoogleDeepMind/status/2116567624310251711
+2. **Google DeepMind：We built PlanAssist to help UK Government planning officers speed up building and renovations across the country. Built with Gemini, it has shown it c**
+   - `article` · `user-x-googledeepmind-ad7958d08cba14d6` · 2026-10-31 · 科技产业
+   - https://x.com/GoogleDeepMind/status/2116524000977285321
+3. **Google DeepMind：Carbon can work through complex tasks for days without getting stuck or taking shortcuts – delivering high-quality, reliable code. Feedback from an in**
+   - `article` · `user-x-googledeepmind-ff8f9c488d9ea68e` · 2026-10-28 · 科技产业
+   - https://x.com/GoogleDeepMind/status/2115489359415890211
+4. **Google DeepMind：Gemini 4 Carbon is our next frontier model. It’s state-of-the-art across cybersecurity and long-horizon capabilities. https://t.co/o7lmCE1ggD**
+   - `article` · `user-x-googledeepmind-03975e8c91dee7f1` · 2026-10-28 · 科技产业
+   - https://x.com/GoogleDeepMind/status/2115489356437651654
+5. **Google DeepMind：This is Genie 4, our most realistic and interactive world model yet. 🌐 Explore dynamic environments in real time to see how the scene responds, sounds**
+   - `article` · `user-x-googledeepmind-efd8020db3f5babf` · 2026-10-27 · 科技产业
+   - https://x.com/GoogleDeepMind/status/2115114028338962672
 
 ## Google 官方动态
 
@@ -827,104 +864,134 @@
 
 ## Groq 官方动态
 
-`sourceId=official-groq` · 还需审核 `20` 条 · `sampleDigest=cbef05ac859f4ca4`
+`sourceId=official-groq` · 还需审核 `20` 条 · `sampleDigest=cba6fb32c971d9cb`
 
-1. **Groq Among the First to Bring NVIDIA Groq 3 LPX and Vera Rubin NVL72 to Market**
+1. **Meta's Muse Spark open-weight release Is Now in Limited Preview on GroqCloud**
+   - `article` · `official-groq-28190cbcfc36a505` · 2026-10-15 · Groq
+   - https://groq.com/blog/meta-s-muse-spark-open-release-is-now-in-limited-preview-on-groqcloud
+2. **Groq Among the First to Bring NVIDIA Groq 3 LPX and Vera Rubin NVL72 to Market**
    - `article` · `official-groq-cac40f498bb1fa5b` · 2026-08-24 · Groq
    - https://groq.com/blog/groq-among-the-first-to-bring-nvidia-groq-3-lpx-and-vera-rubin-nvl72-to-market
+3. **Groq Closes $350 million Series A, Building the World's Leading AI Inference Cloud**
+   - `article` · `official-groq-c02f2ac04f9320df` · 2026-08-17 · Groq
+   - https://groq.com/newsroom/groq-closes-usd350-million-series-a-building-the-world-s-leading-ai-inference-cloud
+4. **Groq Becomes an NVIDIA Cloud Partner**
+   - `article` · `official-groq-93d89086e538e1ab` · 2026-08-12 · Groq
+   - https://groq.com/newsroom/groq-becomes-an-nvidia-cloud-partner
 
 ## Harvey 官方动态
 
-`sourceId=official-harvey` · 还需审核 `20` 条 · `sampleDigest=a80b4696c671bf5b`
+`sourceId=official-harvey` · 还需审核 `20` 条 · `sampleDigest=98b2fd767dacd191`
 
-1. **Build and Update Review Tables With the Harvey Agent**
+1. **How We Made Review Tables Faster and More Reliable**
+   - `article` · `official-harvey-36491c3e4d001313` · 2026-10-22 · Harvey
+   - https://www.harvey.ai/blog/making-review-tables-faster-and-more-reliable
+2. **How Harvey is Building a Frontier Marketing Org**
+   - `article` · `official-harvey-0ef82b75eba5c875` · 2026-10-21 · Harvey
+   - https://www.harvey.ai/blog/how-harvey-is-building-a-frontier-marketing-org
+3. **Build and Update Review Tables With the Harvey Agent**
    - `article` · `official-harvey-85a463c96347c227` · 2026-09-17 · Harvey
    - https://www.harvey.ai/blog/review-table-agent-actions
-2. **Rebuilding Playbook Review as a Multi-Agent System**
-   - `article` · `official-harvey-6a5cbf1e095b2dc5` · 2026-09-02 · Harvey
-   - https://www.harvey.ai/blog/rebuilding-playbook-review-as-a-multi-agent-system
-3. **Harvey Tenet Research Preview**
+4. **Harvey Tenet Research Preview**
    - `article` · `official-harvey-4e6bdb0d82198725` · 2026-08-20 · Harvey
    - https://www.harvey.ai/blog/post-training-update-harvey-tenet
 
 ## Helion Energy 官方动态
 
-`sourceId=official-helion` · 还需审核 `20` 条 · `sampleDigest=cc4cb89eec4fa8d7`
+`sourceId=official-helion` · 还需审核 `20` 条 · `sampleDigest=4b42e30c7a257aec`
 
-1. **Building the foundations for fusion at scale**
+1. **Inside Helion's capacitor manufacturing line**
+   - `article` · `official-helion-b84aeea40930fae1` · 2026-10-16 · Helion Energy
+   - https://www.helionenergy.com/blog/inside-helions-capacitor-manufacturing-line
+2. **Building the foundations for fusion at scale**
    - `article` · `official-helion-0a139255a7eb88ec` · 2026-09-29 · Helion Energy
    - https://www.helionenergy.com/blog/building-the-foundations-for-fusion-at-scale
-2. **Does fusion produce radiation?**
+3. **Does fusion produce radiation?**
    - `article` · `official-helion-df2f06440fad1829` · 2026-09-04 · Helion Energy
    - https://www.helionenergy.com/blog/does-fusion-produce-radiation
-3. **Why is fusion plasma pink?**
-   - `article` · `official-helion-4e3895267fef4680` · 2026-09-02 · Helion Energy
-   - https://www.helionenergy.com/blog/why-is-fusion-plasma-pink
 
 ## Horizon3 官方动态
 
-`sourceId=official-horizon3` · 还需审核 `20` 条 · `sampleDigest=76d36c18281d5212`
+`sourceId=official-horizon3` · 还需审核 `20` 条 · `sampleDigest=d9e66509933081f0`
 
-1. **Horizon3 Earns Cyber Essentials Certification**
-   - `article` · `official-horizon3-59e94609bbaf81c7` · 2026-09-28 · Horizon3
-   - https://horizon3.ai/news/press-release/horizon3-earns-cyber-essentials-certification-covering-nodezero-eu-network
-2. **Horizon3 Integrates with CrowdStrike Falcon Next-Gen SIEM**
-   - `article` · `official-horizon3-ac1d964f5917a650` · 2026-09-15 · Horizon3
-   - https://horizon3.ai/news/press-release/crowdstrike-falcon-next-gen-siem-integration
-3. **Horizon3 Names Chad Keefer VP of Federal Sales**
-   - `article` · `official-horizon3-58e662d3040ed793` · 2026-08-25 · Horizon3
-   - https://horizon3.ai/news/press-release/chad-keefer-vp-federal-sales
+1. **NodeZero Integration With Cortex XSOAR**
+   - `article` · `official-horizon3-0d1d143ca8c58acd` · 2026-10-27 · Horizon3
+   - https://horizon3.ai/news/press-release/nodezero-integration-palo-alto-networks-cortex-xsoar
+2. **Horizon3 Surpasses $100 Million ARR with 120%+ Growth**
+   - `article` · `official-horizon3-e24e96eef01d2a65` · 2026-10-20 · Horizon3
+   - https://horizon3.ai/news/press-release/horizon3-surpasses-100-million-arr
+3. **Horizon3 Expands in Singapore with EDBI and SG Growth Capital**
+   - `article` · `official-horizon3-9f7b039a6bdc331b` · 2026-10-20 · Horizon3
+   - https://horizon3.ai/news/press-release/horizon3-singapore-expansion-asean-headquarters
+4. **Horizon3 and Pax8 Bring NodeZero to MSPs Across Europe**
+   - `article` · `official-horizon3-e1020e7fe3f1121e` · 2026-10-16 · Horizon3
+   - https://horizon3.ai/news/press-release/horizon3-pax8-partnership-expansion-europe
+5. **Horizon3 Promotes Keith Poyser to General Manager, EMEA**
+   - `article` · `official-horizon3-59ee07cd75732725` · 2026-10-15 · Horizon3
+   - https://horizon3.ai/news/press-release/keith-poyser-general-manager-emea-horizon3
+6. **Horizon3 Promotes Ellen Sundra to Chief Customer Officer**
+   - `article` · `official-horizon3-3df04739f8badd8f` · 2026-10-15 · Horizon3
+   - https://horizon3.ai/news/press-release/ellen-sundra-chief-customer-officer-horizon3
+
+## Intuitive Surgical 官方动态
+
+`sourceId=official-intuitive-surgical` · 还需审核 `20` 条 · `sampleDigest=cd4a83be056a83fc`
+
+1. **New meta-analysis shows statistically significant improvements in patient outcomes associated with da Vinci surgery versus laparoscopic and open surgery across 13 common benign conditions**
+   - `article` · `official-intuitive-surgical-f98aca3be43d0c7b` · 2026-09-08 · Intuitive Surgical
+   - https://isrg.intuitive.com/news-releases/news-release-details/new-meta-analysis-shows-statistically-significant-improvements
 
 ## IonQ
 
-`sourceId=ionq` · 还需审核 `20` 条 · `sampleDigest=bc2206aac4b1b1e3`
+`sourceId=ionq` · 还需审核 `20` 条 · `sampleDigest=b70561b130c8cf65`
 
-1. **FIU Secures Florida’s First IonQ Superion Quantum System**
+1. **IonQ Secures $7.5M AFRL Award for Quantum Network Expansion**
+   - `article` · `ionq-8b420aec2ba8afa1` · 2026-10-27 · IonQ
+   - https://ionq.com/news/ionq-awarded-7-5-million-follow-on-funding-from-afrl-to-advance-full-stack-quantum-networking
+2. **IonQ Opens First Quantum Innovation Centre at Cambridge**
+   - `article` · `ionq-f2bb83de4aa4b0c3` · 2026-10-15 · IonQ
+   - https://ionq.com/news/ionq-and-the-university-of-cambridge-open-the-ionq-quantum-innovation-centre-at-cavendish-laboratorys-ray-dolby-centre
+3. **IonQ to Acquire Elisity for $1.3B to Advance Quantum Security**
+   - `article` · `ionq-111cf26e142c6e33` · 2026-10-12 · IonQ
+   - https://ionq.com/news/ionq-to-acquire-elisity-to-accelerate-zero-trust-for-the-quantum-era
+4. **IonQ Achieves Record 1 kHz Quantum Interconnect Speed**
+   - `article` · `ionq-d6a031743c9de9fb` · 2026-10-09 · IonQ
+   - https://ionq.com/news/ionq-demonstrates-world-first-quantum-memory-enhanced-interconnect-for-distributed-quantum-applications
+5. **IonQ Advances to DARPA QBI Stage C in $300M Agreement**
+   - `article` · `ionq-c7f214680abba010` · 2026-10-07 · IonQ
+   - https://ionq.com/news/ionq-advances-to-final-stage-of-darpas-quantum-benchmarking-initiative
+6. **FIU Secures Florida’s First IonQ Superion Quantum System**
    - `article` · `ionq-3ada0a6f08048c2e` · 2026-09-24 · IonQ
    - https://ionq.com/news/ionqs-superion-256-platform-selected-by-florida-international-university-for-flagship-deployment
-2. **IonQ Superion 256 to Power NVIDIA Quantum Research Center**
+7. **IonQ Superion 256 to Power NVIDIA Quantum Research Center**
    - `article` · `ionq-6a80c6850a63732f` · 2026-09-23 · IonQ
    - https://ionq.com/news/ionq-to-advance-quantum-supercomputing-by-bringing-first-qpu-to-nvidia-accelerated-quantum-research-center
-3. **IonQ Breakthrough: CPU-Powered Quantum Error Correction**
+8. **IonQ Breakthrough: CPU-Powered Quantum Error Correction**
    - `article` · `ionq-fa39c641d66b0169` · 2026-09-22 · IonQ
    - https://ionq.com/news/ionq-demonstrates-industrys-first-end-to-end-real-time-quantum-error-decoder
-4. **IonQ and SDT Announce the First Strategic Partnership to Bring Both Advanced Quantum Computing and Quantum Networking to the Asia-Pacific Region**
+9. **IonQ and SDT Announce the First Strategic Partnership to Bring Both Advanced Quantum Computing and Quantum Networking to the Asia-Pacific Region**
    - `article` · `ionq-fc8f4f7211fb881a` · 2026-09-21 · IonQ
    - https://ionq.com/news/ionq-and-sdt-announce-the-first-strategic-partnership-to-bring-both-advanced-quantum-computing-and-quantum-networking-to-the-asia-pacific-region
-5. **Quantum Algorithms Accelerate Engineering Simulations**
-   - `article` · `ionq-9c58c309fdfa05dc` · 2026-09-17 · IonQ
-   - https://ionq.com/news/ionq-demonstrates-computer-aided-engineering-workload-acceleration-by-up-to-14-6-with-quantum-technology
-6. **Generative AI Accelerates Quantum Optimization | IonQ & NVIDIA**
-   - `article` · `ionq-f09ca82ec5e4b507` · 2026-09-16 · IonQ
-   - https://ionq.com/news/ionq-ornl-nvidia-and-the-university-of-tennessee-knoxville-show-ai-method-reduces-quantum-optimization-trade-off
-7. **IonQ Earns Four Best Paper Awards at IEEE Quantum Week 2026**
-   - `article` · `ionq-b4b7df5822c90f18` · 2026-09-15 · IonQ
-   - https://ionq.com/news/ionq-earns-four-best-paper-awards-ahead-of-ieee-quantum-week-2026-for-breakthroughs-in-ai-hybrid-computing-and-life-sciences
-8. **Company research leaders will deliver a keynote address, lead a tutorial, and contribute to workshops and panels throughout the QCE26 program**
-   - `article` · `ionq-628a9574d34c9616` · 2026-09-14 · IonQ
-   - https://ionq.com/news/ionq-to-present-nine-peer-reviewed-papers-and-take-part-in-seven-events-at-2026-ieee-quantum-week
-9. **IonQ & Congruity360 Ink $8.18M Quantum Security Agreement**
-   - `article` · `ionq-1da51d345a714bbd` · 2026-09-08 · IonQ
-   - https://ionq.com/news/ionq-and-congruity360-partner-to-enhance-quantum-safe-protection
 
 ## IonQ 官方动态
 
-`sourceId=official-ionq` · 还需审核 `20` 条 · `sampleDigest=ab22051ae4f8afce`
+`sourceId=official-ionq` · 还需审核 `20` 条 · `sampleDigest=85ba6807c3d6b20b`
 
-1. **IonQ Demonstrates Quantum Generative Modeling for High Resolution Radar Change Detection**
-   - `article` · `official-ionq-f37e472428fd4d39` · 2026-09-24 · IonQ
-   - https://ionq.com/news/ionq-demonstrates-quantum-generative-modeling-for-high-resolution-radar-change-detection
+当前没有可追溯的精确匹配记录。
 
 ## Joby Aviation 官方动态
 
-`sourceId=official-joby` · 还需审核 `20` 条 · `sampleDigest=d9efe2c802e913e5`
+`sourceId=official-joby` · 还需审核 `20` 条 · `sampleDigest=cbace9f204ffff47`
 
-1. **Joby Autonomous Aircraft Begins Cross-Country Tour**
-   - `article` · `official-joby-e4f6b1433fa5a48f` · 2026-09-10 · Joby Aviation
-   - https://www.jobyaviation.com/news/joby-autonomous-aircraft-begins-cross-country-tour
-2. **Joby Launches eIPP Flights in Texas**
-   - `article` · `official-joby-188dfae0b57ed656` · 2026-09-10 · Joby Aviation
-   - https://www.jobyaviation.com/news/joby-launches-eipp-flights-in-texas
+1. **Joby Aviation to Report Third Quarter 2026 Financial Results**
+   - `article` · `official-joby-506250a8381776a5` · 2026-10-15 · Joby Aviation
+   - https://www.jobyaviation.com/news/joby-aviation-to-report-third-quarter-2026-financial-results
+2. **Blade’s BLADEone Enhanced Jet Service Returns with Flights between the New York City area and South Florida, in Partnership with Aero**
+   - `article` · `official-joby-98c280fed73b7b1d` · 2026-10-02 · Joby Aviation
+   - https://www.jobyaviation.com/news/blades-bladeone-enhanced-jet-service-returns-with-flights-between-the-new-york-city-area-and-south-florida-in-partnership-with-aero
+3. **Joby Completes First-Ever Fully Autonomous Flight Across the United States**
+   - `article` · `official-joby-408a225b57323ad3` · 2026-09-18 · Joby Aviation
+   - https://www.jobyaviation.com/news/joby-completes-first-ever-fully-autonomous-flight-across-the-united-states
 
 ## Kleiner Perkins · 核心团队页
 
@@ -966,9 +1033,14 @@
 
 ## MiniMax 官方动态
 
-`sourceId=official-minimax` · 还需审核 `20` 条 · `sampleDigest=70c1dd24e6287dda`
+`sourceId=official-minimax` · 还需审核 `20` 条 · `sampleDigest=82b89403d90df10c`
 
-当前没有可追溯的精确匹配记录。
+1. **MiniMax M3.1 Flash：重新定义 Agent 的性能与成本 - MiniMax Research**
+   - `article` · `official-minimax-52a6db02c82060ba` · 2026-10-19 · MiniMax
+   - https://www.minimax.cn/blog/minimax-m31f
+2. **MiniMax Music 3.0：新一代开放权重、生产级全能音乐模型 - MiniMax Research**
+   - `article` · `official-minimax-31f1c996080f5d7c` · 2026-08-13 · MiniMax
+   - https://www.minimax.cn/blog/minimax-music-3-0-cn
 
 ## Mobileye 官方动态
 
@@ -978,60 +1050,85 @@
 
 ## Modular 官方动态
 
-`sourceId=official-modular` · 还需审核 `20` 条 · `sampleDigest=d780024534df0a83`
+`sourceId=official-modular` · 还需审核 `20` 条 · `sampleDigest=1d5daf074c545e47`
 
-当前没有可追溯的精确匹配记录。
+1. **Modular: MAX is now source available and open to everyone**
+   - `article` · `official-modular-b723b45de297f4ab` · 2026-10-22 · Modular
+   - https://www.modular.com/blog/max-license
+2. **Modular: Modular 26.7: Opening up MAX**
+   - `article` · `official-modular-78416e55b7ddb987` · 2026-10-22 · Modular
+   - https://www.modular.com/blog/26-7
+3. **Modular: Nurturing the Modular ecosystem: the Modular Community Grant Program**
+   - `article` · `official-modular-831bf35072658226` · 2026-10-21 · Modular
+   - https://www.modular.com/blog/nurturing-the-modular-ecosystem-the-modular-community-grant-program
+4. **Modular: Modular and Qualcomm: Same code, new silicon**
+   - `article` · `official-modular-b1a3e876e3a08fda` · 2026-08-18 · Modular
+   - https://modular.com/blog/modcon-qualcomm
+5. **Modular: Mojo🔥 is now open source!**
+   - `article` · `official-modular-2d0194a0df57864b` · 2026-08-18 · Modular
+   - https://modular.com/blog/mojo-open-source
+6. **Modular: Modular 26.5: Mojo 1.0 is here!**
+   - `article` · `official-modular-d90b2d52a09c655a` · 2026-08-11 · Modular
+   - https://www.modular.com/blog/modular-26-5-mojo-1-0-is-here
 
 ## OLIX 官方动态
 
-`sourceId=official-olix` · 还需审核 `20` 条 · `sampleDigest=704b8c63d3e81641`
+`sourceId=official-olix` · 还需审核 `20` 条 · `sampleDigest=773351a227b7fdc9`
 
-当前没有可追溯的精确匹配记录。
+1. **Scaling, Shortage, Salvation: Why AI Must Go Optical**
+   - `article` · `official-olix-29ea083acd96d054` · 2026-08-20 · OLIX
+   - https://olix.com/blog/scaling-shortage-salvation-why-ai-must-go-optical
 
 ## Omilia 官方动态
 
-`sourceId=official-omilia` · 还需审核 `20` 条 · `sampleDigest=de5522fac8d054d9`
+`sourceId=official-omilia` · 还需审核 `20` 条 · `sampleDigest=efdcfbb249cf6955`
 
-1. **IDC MarketScape 2026 | Vendor Assessment Report**
+1. **From Know-Your-Customer to Know-Their-Agent**
+   - `article` · `official-omilia-c3690b41d4e286da` · 2026-10-15 · Omilia
+   - https://omilia.com/resources/blog/from-know-your-customer-to-know-their-agent
+2. **Omilia Appoints David Stone as Head of Asia-Pacific**
+   - `article` · `official-omilia-4faedbaf4371f1aa` · 2026-09-28 · Omilia
+   - https://omilia.com/resources/news/omilia-appoints-david-stone-as-head-of-asia-pacific
+3. **IDC MarketScape 2026 | Vendor Assessment Report**
    - `article` · `official-omilia-ee16b1d3c30bc5c2` · 2026-09-25 · Omilia
    - https://omilia.com/resources/analyst-reports/leader-in-idc-marketscape-worldwide-conversational-intelligence-analytics-software-2026
 
 ## OpenAI
 
-`sourceId=openai` · 还需审核 `20` 条 · `sampleDigest=b4f6612292e93263`
+`sourceId=openai` · 还需审核 `20` 条 · `sampleDigest=bdfed0456726ca1b`
 
-1. **Better prompt caching for GPT-6**
-   - `article` · `openai-f9027d80e820682e` · 2026-09-23 · OpenAI
-   - https://openai.com/index/better-prompt-caching-for-gpt-6
-2. **Expanding OpenAI Academy with new learning paths**
-   - `article` · `openai-2f8d9b98fc157bb3` · 2026-09-23 · OpenAI
-   - https://openai.com/index/expanding-openai-academy-with-new-learning-paths
-3. **Airbnb widens access to GPT-6 Astra and OpenAI frontier models**
-   - `article` · `openai-0765deb144589280` · 2026-09-23 · OpenAI
-   - https://openai.com/index/airbnb-gpt-6-astra
-4. **ChatGPT Ads expands to Southeast Asia and Taiwan**
-   - `article` · `openai-bb71e409dd7f29f7` · 2026-09-22 · OpenAI
-   - https://openai.com/index/chatgpt-ads-expands-southeast-asia-taiwan
+1. **Our approach to EU text provenance rules**
+   - `article` · `openai-d2b5b29b4c815525` · 2026-10-08 · OpenAI
+   - https://openai.com/index/eu-text-provenance
+2. **A model guide for the GPT-6 family**
+   - `article` · `openai-c38af6e5cae43e23` · 2026-10-07 · OpenAI
+   - https://openai.com/index/practical-guide-building-gpt-6
+3. **GPT-6 and Intelligent UI for everyone**
+   - `article` · `openai-a097ef0d441a7216` · 2026-10-07 · OpenAI
+   - https://openai.com/index/gpt-6-for-everyone
+4. **Atlassian and OpenAI expand partnership to turn enterprise knowledge into action**
+   - `article` · `openai-2896758265cec81d` · 2026-10-01 · OpenAI
+   - https://openai.com/index/atlassian-partnership
 
 ## OpenAI
 
-`sourceId=x-openai` · 还需审核 `20` 条 · `sampleDigest=378feccf53aa3983`
+`sourceId=x-openai` · 还需审核 `20` 条 · `sampleDigest=8a8de2000f0aed42`
 
-1. **OpenAI：Introducing dots, powered by GPT-6 Astra. Remarkably capable, always-on agents built to handle everything. https://t.co/inY5BZj3Kz**
-   - `article` · `x-openai-c6b21166191d4ea4` · 2026-09-29 · OpenAI
-   - https://x.com/OpenAI/status/2104984504133918973
-2. **OpenAI：Codex Security Cloud is getting a major upgrade, with access to cyber-capable models through Daybreak Blue included by default. It scans entire GitHub**
-   - `article` · `x-openai-b07c7f96f57275c2` · 2026-09-29 · OpenAI
-   - https://x.com/OpenAI/status/2104987422308335828
-3. **OpenAI：Ultrafast is available today for GPT-6 Astra in Codex, ChatGPT Work, and the API, with GPT-6.1 Sol coming soon. To access it in Codex and ChatGPT Work**
-   - `article` · `x-openai-9c2e751f480158fc` · 2026-09-29 · OpenAI
-   - https://x.com/OpenAI/status/2104993967985381673
-4. **OpenAI：This is Ultrafast. Our premium speed tier, Ultrafast offers up to 8x faster token generation (300 tokens per second) in Codex and up to 6x in the API.**
-   - `article` · `x-openai-27d08b7fd1e78307` · 2026-09-29 · OpenAI
-   - https://x.com/OpenAI/status/2104993966043320759
-5. **OpenAI：We’re also reopening Pro 200 subscriptions, with continued access to frontier models like Astra, including our new GPT-6.1 Sol model which brings near**
-   - `article` · `x-openai-112e285b367229e7` · 2026-09-29 · OpenAI
-   - https://x.com/OpenAI/status/2104993969486930015
+1. **OpenAI：There are many futures. Which do you want to build? https://t.co/19NY7tgPHM**
+   - `article` · `x-openai-e2871d1f7fe5cda0` · 2026-10-30 · OpenAI
+   - https://x.com/OpenAI/status/2116253388883345623
+2. **OpenAI：Privacy should advance as fast as intelligence. OpenAI Private Intelligence gives businesses stronger controls over their data while using our most ca**
+   - `article` · `x-openai-26a5526074ab2ec4` · 2026-10-30 · OpenAI
+   - https://x.com/OpenAI/status/2116186509384815084
+3. **OpenAI：Today, we’re sharing a look at our expanded system for monitoring frontier models at OpenAI, which in September helped us catch a model’s attempt to a**
+   - `article` · `x-openai-da646989d5ab7cbe` · 2026-10-29 · OpenAI
+   - https://x.com/OpenAI/status/2115896329645723836
+4. **OpenAI：RT @thsottiaux: Day 25/ We are doubling all usage limits for all Pro 100/200/500 tiers and Business Premium, effective today. We heard yo…**
+   - `article` · `x-openai-2e9fb4871b47d5c9` · 2026-10-29 · OpenAI
+   - https://x.com/OpenAI/status/2115854368566321594
+5. **OpenAI：GPT-6.1 Terra: delivering fast and capable computer use at a lower price. GPT-6.1 Terra understands what’s on screen, takes action across apps, writes**
+   - `article` · `x-openai-eb8b42b95c851c43` · 2026-10-26 · OpenAI
+   - https://x.com/OpenAI/status/2114780711664398349
 
 ## OpenAI 官方动态
 
@@ -1052,56 +1149,56 @@
 
 ## OpenAI 官方新闻
 
-`sourceId=openai-newsroom` · 还需审核 `20` 条 · `sampleDigest=982b74986340df2b`
+`sourceId=openai-newsroom` · 还需审核 `20` 条 · `sampleDigest=c676957bd4d6c35b`
 
-1. **Helping small businesses put AI to work**
-   - `article` · `openai-newsroom-061338e668ed6974` · 2026-09-30 · OpenAI
-   - https://openai.com/index/helping-small-businesses-put-ai-to-work
-2. **Introducing dots**
-   - `article` · `openai-newsroom-dec620cb7225d243` · 2026-09-29 · OpenAI
-   - https://openai.com/index/introducing-dots
-3. **Introducing GPT-6.1 Sol**
-   - `article` · `openai-newsroom-d6b9f5e651b1891e` · 2026-09-29 · OpenAI
-   - https://openai.com/index/introducing-gpt-6-1-sol
-4. **Basis completes a tax workbook 2x faster with GPT-6 Astra**
-   - `article` · `openai-newsroom-eb674100bb687fff` · 2026-09-28 · OpenAI
-   - https://openai.com/index/basis-tax-workbook-with-astra
-5. **Towards safety cases for frontier AI training**
-   - `article` · `openai-newsroom-2fc54b690d7b20a2` · 2026-09-28 · OpenAI
-   - https://openai.com/index/towards-safety-cases-for-frontier-ai-training
-6. **The Lenfest Institute grows landmark program with expanded OpenAI support**
-   - `article` · `openai-newsroom-0adf5bb2a473897d` · 2026-09-28 · OpenAI
-   - https://openai.com/index/lenfest-ai-collaborative-expansion
-7. **Grab and OpenAI bring practical AI skills to Southeast Asia**
-   - `article` · `openai-newsroom-5ab590850491008e` · 2026-09-23 · OpenAI
-   - https://openai.com/index/grab-openai-ai-skills-southeast-asia
-8. **Two years of OpenAI Academy**
-   - `article` · `openai-newsroom-52e46e8371e1f699` · 2026-09-23 · OpenAI
-   - https://openai.com/index/two-years-of-openai-academy
-9. **Harvey turns legal context into stronger drafts with GPT-6 Astra**
-   - `article` · `openai-newsroom-52b80abd4e046c04` · 2026-09-23 · OpenAI
-   - https://openai.com/index/harvey-from-context-to-confidence-with-astra
-10. **Ringg’s AI agents resolve up to 65% of customer calls with OpenAI**
-   - `article` · `openai-newsroom-4e56c7312349a760` · 2026-09-23 · OpenAI
-   - https://openai.com/index/ringg
-11. **Introducing MentalHealthBench**
-   - `article` · `openai-newsroom-3d7b9aab56c8f4fe` · 2026-09-23 · OpenAI
-   - https://openai.com/index/introducing-mentalhealthbench
-12. **Sam Altman’s remarks at the United Nations Security Council**
-   - `article` · `openai-newsroom-347b65ce144a221e` · 2026-09-23 · OpenAI
-   - https://openai.com/index/sam-altman-un-security-council-remarks
-13. **Introducing GPT-6 Sol and Luna**
-   - `article` · `openai-newsroom-73461b3e97af0d93` · 2026-09-22 · OpenAI
-   - https://openai.com/index/introducing-gpt-6-sol-and-luna
-14. **Priorities and principles for effective third party assessments**
-   - `article` · `openai-newsroom-60efaf744a4d6c2c` · 2026-09-22 · OpenAI
-   - https://openai.com/index/priorities-principles-third-party-assessments
-15. **Parallel cut research time and cost in half with GPT‑6 Astra**
-   - `article` · `openai-newsroom-3fcefd9c665fb2c2` · 2026-09-22 · OpenAI
-   - https://openai.com/index/parallel-cuts-time-and-cost-with-astra
-16. **Higgsfield AI ships new video features in a day with GPT-6 Astra**
-   - `article` · `openai-newsroom-8fe4474fdbb9c4c4` · 2026-09-21 · OpenAI
-   - https://openai.com/index/higgsfield-from-prompt-to-production-with-astra
+1. **Making it easier for websites to express AI training preferences**
+   - `article` · `openai-newsroom-84abd1857de5dfd9` · 2026-10-30 · OpenAI
+   - https://openai.com/index/helping-websites-express-ai-training-preferences
+2. **Fair use benefits everyone**
+   - `article` · `openai-newsroom-574dbaf7fc8731e4` · 2026-10-30 · OpenAI
+   - https://openai.com/index/fair-use-benefits-everyone
+3. **How Ropes & Gray is developing AI for transactional diligence**
+   - `article` · `openai-newsroom-d948735545c20cf3` · 2026-10-29 · OpenAI
+   - https://openai.com/index/ropes-gray-ai-diligence
+4. **An updated Model Spec for more capable and beneficial AI**
+   - `article` · `openai-newsroom-9349f418e7bc7ab4` · 2026-10-29 · OpenAI
+   - https://openai.com/index/updated-model-spec
+5. **How we detect frontier model misalignment**
+   - `article` · `openai-newsroom-0f01adb2acab0a67` · 2026-10-29 · OpenAI
+   - https://openai.com/index/how-we-detect-frontier-model-misalignment
+6. **The future of the firm**
+   - `article` · `openai-newsroom-e2ed7680c50ae3f0` · 2026-10-28 · OpenAI
+   - https://openai.com/index/the-future-of-the-firm
+7. **OpenAI and ServiceNow expand partnership across enterprise workflows**
+   - `article` · `openai-newsroom-a395c7da350b5086` · 2026-10-28 · OpenAI
+   - https://openai.com/index/openai-servicenow-partnership-expansion
+8. **OpenAI expands partnership with Oracle to bring its apps to ChatGPT**
+   - `article` · `openai-newsroom-c417f8e3d39d0b89` · 2026-10-27 · OpenAI
+   - https://openai.com/index/oracle-apps-in-chatgpt
+9. **Retell uses OpenAI models to help power 100M monthly calls**
+   - `article` · `openai-newsroom-1e3ebf94e41ebe19` · 2026-10-27 · OpenAI
+   - https://openai.com/index/retell-ai
+10. **GPT-6.1 Sol helps CodeRabbit strengthen security across complex codebases**
+   - `article` · `openai-newsroom-7d972df501d01ba1` · 2026-10-26 · OpenAI
+   - https://openai.com/index/gpt-6-1-sol-coderabbit-code-security
+11. **Introducing GPT-6.1 Terra**
+   - `article` · `openai-newsroom-35e334c198740f74` · 2026-10-26 · OpenAI
+   - https://openai.com/index/introducing-gpt-6-1-terra
+12. **OpenAI and Poland’s NASK partner to advance AI safety and security**
+   - `article` · `openai-newsroom-1a543055a02f9816` · 2026-10-23 · OpenAI
+   - https://openai.com/index/openai-nask-ai-safety-security-partnership
+13. **Build more responsive apps with the Decisions API**
+   - `article` · `openai-newsroom-891b7e0bbf66f86d` · 2026-10-22 · OpenAI
+   - https://openai.com/index/decisions-api
+14. **Democratic governance of frontier AI, part II: Empowering cyber defenders**
+   - `article` · `openai-newsroom-e270f5ba4688033d` · 2026-10-21 · OpenAI
+   - https://openai.com/index/empowering-cyber-defenders
+15. **Patch the Planet: global response coordination as agents uncover critical vulnerabilities**
+   - `article` · `openai-newsroom-de9db6f384cbc788` · 2026-10-21 · OpenAI
+   - https://openai.com/index/coordinated-disclosure-of-critical-vulnerabilities
+16. **Using thousands of AI agents to uncover new leads in biological data**
+   - `article` · `openai-newsroom-64ddfb139fec8a1c` · 2026-10-21 · OpenAI
+   - https://openai.com/index/scaling-ai-research-for-complex-biological-data
 
 ## Perplexity 官方动态
 
@@ -1125,40 +1222,61 @@
 
 ## PR Newswire Consumer Technology
 
-`sourceId=prnewswire-tech` · 还需审核 `20` 条 · `sampleDigest=99cefcaa5662748d`
+`sourceId=prnewswire-tech` · 还需审核 `20` 条 · `sampleDigest=6d1895f3662f0faf`
 
-1. **IBM Introduces Self-Hosted Deployment for IBM Bob to Help Enterprises Advance AI Sovereignty and Governance**
-   - `article` · `prnewswire-tech-5be31de593332e68` · 2026-10-01 · 科技产业
-   - https://www.prnewswire.com/news-releases/ibm-introduces-self-hosted-deployment-for-ibm-bob-to-help-enterprises-advance-ai-sovereignty-and-governance-302893486.html
-2. **SEMIFIVE Signs Turnkey Contract with Mobilint to Develop Robotics AI Chip Under 'K-On-Device AI Semiconductor' Program**
-   - `article` · `prnewswire-tech-4f2224f32633d457` · 2026-10-01 · 科技产业
-   - https://www.prnewswire.com/news-releases/semifive-signs-turnkey-contract-with-mobilint-to-develop-robotics-ai-chip-under-k-on-device-ai-semiconductor-program-302895266.html
-3. **Kyndryl Report: As AI Broadens Modernization Agenda, Leaders Prioritize Business Outcomes Over Replacing Legacy Systems**
-   - `article` · `prnewswire-tech-235487cf4f862c74` · 2026-10-01 · 科技产业
-   - https://www.prnewswire.com/news-releases/kyndryl-report-as-ai-broadens-modernization-agenda-leaders-prioritize-business-outcomes-over-replacing-legacy-systems-302895199.html
+1. **Cognizant zet meer dan 25.000 professionals in voor de implementatie van OpenAI-oplossingen nu ondernemingen geavanceerde AI in productie nemen**
+   - `article` · `prnewswire-tech-cd652bf418a1a784` · 2026-11-01 · OpenAI
+   - https://www.prnewswire.com/news-releases/cognizant-zet-meer-dan-25-000-professionals-in-voor-de-implementatie-van-openai-oplossingen-nu-ondernemingen-geavanceerde-ai-in-productie-nemen-302925664.html
+2. **Context Labs AI Distillery™ Lets Enterprises Run Sovereign AI on Data They Own**
+   - `article` · `prnewswire-tech-bfafdb44e1584fcd` · 2026-11-01 · 科技产业
+   - https://www.prnewswire.com/news-releases/context-labs-ai-distillery-lets-enterprises-run-sovereign-ai-on-data-they-own-302925650.html
+3. **A new way to explore Japan with AI: Naviu AR Travel Companion for Japan Launches November 1 2026**
+   - `article` · `prnewswire-tech-82fb9c00f58920a4` · 2026-11-01 · 科技产业
+   - https://www.prnewswire.com/news-releases/a-new-way-to-explore-japan-with-ai-naviu-ar-travel-companion-for-japan-launches-november-1-2026-302925556.html
+4. **ScienceOra Demonstrates AI-Assisted Hydrogen-Production Catalyst Design Workflow at Tencent Global Digital Ecosystem Summit**
+   - `article` · `prnewswire-tech-afd938da1a05aad2` · 2026-10-31 · 科技产业
+   - https://www.prnewswire.com/news-releases/scienceora-demonstrates-ai-assisted-hydrogen-production-catalyst-design-workflow-at-tencent-global-digital-ecosystem-summit-302925517.html
+5. **White Paper Outlining Strategies to Address Rural AI Skills Gaps and Support Workforce Retention Published by the University of Phoenix College of Doctoral Studies**
+   - `article` · `prnewswire-tech-a5f43758a0b42c66` · 2026-10-31 · 科技产业
+   - https://www.prnewswire.com/news-releases/white-paper-outlining-strategies-to-address-rural-ai-skills-gaps-and-support-workforce-retention-published-by-the-university-of-phoenix-college-of-doctoral-studies-302924623.html
+6. **ModelBest and OpenBMB Open-Source MiniCPM-OCR Series, Delivering High-Performance Document Parsing and AI-Powered Quality Control**
+   - `article` · `prnewswire-tech-9bcfb13f35c29651` · 2026-10-31 · 科技产业
+   - https://www.prnewswire.com/news-releases/modelbest-and-openbmb-open-source-minicpm-ocr-series-delivering-high-performance-document-parsing-and-ai-powered-quality-control-302925594.html
 
 ## PsiQuantum 官方动态
 
-`sourceId=official-psiquantum` · 还需审核 `20` 条 · `sampleDigest=ba8b19ef3315c0c5`
+`sourceId=official-psiquantum` · 还需审核 `20` 条 · `sampleDigest=96464ede6fd5727a`
 
-1. **PsiQuantum at IEEE Quantum Week 2026**
+1. **PsiQuantum Unveils Optical Circuit Switch Technology Built on Advanced, Low-Loss Silicon Photonics Platform**
+   - `article` · `official-psiquantum-1858db31aa988490` · 2026-10-28 · PsiQuantum
+   - https://www.psiquantum.com/news-import/psiquantum-unveils-optical-circuit-switch-technology-built-on-advanced-low-loss-silicon-photonics-platform
+2. **PsiQuantum Receives Conditional $150 Million Loan Commitment from the U.S. Department of War to Advance Domestic Quantum Computing**
+   - `article` · `official-psiquantum-5c37624fec866b1d` · 2026-10-08 · PsiQuantum
+   - https://www.psiquantum.com/news-import/psiquantum-receives-conditional-150-million-loan-commitment-from-the-us-department-of-war
+3. **PsiQuantum at IEEE Quantum Week 2026**
    - `article` · `official-psiquantum-47acda46da768caa` · 2026-09-09 · PsiQuantum
    - https://www.psiquantum.com/news-import/psiquantum-at-ieee-quantum-week-2026
-2. **PsiQuantum Finalizes $100 Million Award with the U.S. Department of Commerce**
+4. **PsiQuantum Finalizes $100 Million Award with the U.S. Department of Commerce**
    - `article` · `official-psiquantum-cb11d91d6241ac46` · 2026-09-08 · PsiQuantum
    - https://www.psiquantum.com/news-import/psiquantum-finalizes-100-million-award-with-the-us-department-of-commerce
-3. **PsiQuantum, Brookhaven Lab Partner to Accelerate Quantum Application Development Using Construct Software Tool**
-   - `article` · `official-psiquantum-110ba345e51fe8ea` · 2026-09-02 · PsiQuantum
-   - https://www.psiquantum.com/news-import/psiquantum-brookhaven-lab-partner-to-accelerate-quantum-application-development-using-construct-software-tool
 
 ## Reach Capital 官方动态
 
-`sourceId=official-reach-capital` · 还需审核 `20` 条 · `sampleDigest=7708d7d6f31c24b2`
+`sourceId=official-reach-capital` · 还需审核 `20` 条 · `sampleDigest=fcb4ee3993598530`
 
-1. **Metabolic Health and Allergy: 2 Routes to Family-Based Pediatric Care**
+1. **Help That Knows Your Home: Why We Invested in Rosie**
+   - `article` · `official-reach-capital-cf6fd4f6d91d1e22` · 2026-10-20 · Reach Capital
+   - https://www.reachcapital.com/resources/news/rosie-childcare-ai
+2. **Announcing Rich Yang as Reach’s Newest Venture Partner**
+   - `article` · `official-reach-capital-3e8a62376265cebe` · 2026-10-20 · Reach Capital
+   - https://www.reachcapital.com/resources/news/rich-yang-venture-partner
+3. **Investing in the Machinery of Human Judgment**
+   - `article` · `official-reach-capital-a66c8835086ab07a` · 2026-10-14 · Reach Capital
+   - https://www.reachcapital.com/resources/thought-leadership/human-judgment-work-ai
+4. **Metabolic Health and Allergy: 2 Routes to Family-Based Pediatric Care**
    - `article` · `official-reach-capital-9ea890c7f6f03b46` · 2026-09-03 · Reach Capital
    - https://www.reachcapital.com/resources/thought-leadership/metabolic-health-allergy-family-based-pediatric-care
-2. **The Family as Patient: Investing in the Next Wave of Pediatric Health**
+5. **The Family as Patient: Investing in the Next Wave of Pediatric Health**
    - `article` · `official-reach-capital-c8af80ec9148b725` · 2026-08-31 · Reach Capital
    - https://www.reachcapital.com/resources/thought-leadership/family-pediatric-health
 
@@ -1170,19 +1288,23 @@
 
 ## Redwood Materials 官方动态
 
-`sourceId=official-redwood-materials` · 还需审核 `20` 条 · `sampleDigest=1e73012db66f2b5e`
+`sourceId=official-redwood-materials` · 还需审核 `20` 条 · `sampleDigest=326188fd424d0d8f`
 
-1. **Cal Lankton named Chief Operating Officer at Redwood Materials**
+1. **How Redwood is delivering energy faster and cheaper**
+   - `article` · `official-redwood-materials-dfee1b4edd6f4684` · 2026-10-23 · Redwood Materials
+   - https://www.redwoodmaterials.com/news/how-redwood-is-delivering-energy-faster-and-cheaper
+2. **The Redwood Energy Ecosystem**
+   - `article` · `official-redwood-materials-18b125d82cea6c9f` · 2026-10-14 · Redwood Materials
+   - https://www.redwoodmaterials.com/news/the-redwood-energy-ecosystem
+3. **Cal Lankton named Chief Operating Officer at Redwood Materials**
    - `article` · `official-redwood-materials-e50c66af8e485bb5` · 2026-09-21 · Redwood Materials
    - https://www.redwoodmaterials.com/news/cal-lankton-named-chief-operating-officer-at-redwood-materials
 
 ## Relativity Space 官方动态
 
-`sourceId=official-relativity-space` · 还需审核 `20` 条 · `sampleDigest=e006ee40ff9b862e`
+`sourceId=official-relativity-space` · 还需审核 `20` 条 · `sampleDigest=29c381de752e380f`
 
-1. **August 2026 Company Update**
-   - `article` · `official-relativity-space-2250b1b4454f8011` · 2026-09-11 · Relativity Space
-   - https://www.relativityspace.com/press-release/2026/9/10/august-2026-company-update
+当前没有可追溯的精确匹配记录。
 
 ## Rigetti Computing 官方动态
 
@@ -1229,28 +1351,28 @@
 
 ## SambaNova Systems 官方动态
 
-`sourceId=official-sambanova` · 还需审核 `20` 条 · `sampleDigest=b9f6eb1ec92c9f3c`
+`sourceId=official-sambanova` · 还需审核 `20` 条 · `sampleDigest=16953aa327a5ffe8`
 
-1. **Sovereign AI: Own Your Infrastructure, Models & Inference**
-   - `article` · `official-sambanova-1c4cab4d36f321b1` · 2026-09-28 · SambaNova Systems
-   - https://sambanova.ai/blog/sovereign-ai
+1. **MiniMax M3.1 Flash Now Available on SambaCloud**
+   - `article` · `official-sambanova-f742df6a4c5f9066` · 2026-10-24 · SambaNova Systems
+   - https://sambanova.ai/blog/minimax-m3.1-flash-now-available-on-sambacloud
 
 ## Scale AI
 
-`sourceId=scale-ai` · 还需审核 `20` 条 · `sampleDigest=bdb39dae34072b5b`
+`sourceId=scale-ai` · 还需审核 `20` 条 · `sampleDigest=0563ca0e6587836d`
 
-1. **To Steer the AI Frontier, Washington Must Build Its Testing Power**
-   - `article` · `scale-ai-b10eb381e6fd015d` · 2026-09-25 · Scale AI
-   - https://scale.com/blog/steer-the-ai-frontier-washington-must-build-its-testing-power
-2. **Deploying Enterprise AI Agents with Scale and Google Cloud**
-   - `article` · `scale-ai-ac287aeabc889d77` · 2026-09-22 · Scale AI
-   - https://scale.com/blog/deploying-enterprise-ai-agents-with-scale-and-google-cloud
-3. **Why You Need to Red Team Your Enterprise AI**
-   - `article` · `scale-ai-821d1c79cab2b368` · 2026-09-16 · Scale AI
-   - https://scale.com/blog/why-you-need-to-red-team-your-enterprise-ai
-4. **In An Agentic World Where Automation Gets Cheap, Which Work Is Worth Routing to a Human?**
-   - `article` · `scale-ai-f52309ebc2b9adca` · 2026-09-15 · Scale AI
-   - https://scale.com/blog/hitl-routing
+1. **Developed with UMSL and Lindbergh Schools, the new program advances Scale's White House commitment to help train 1,000 teachers and equip 500,000 students with AI skills by 2029.**
+   - `article` · `scale-ai-2f6624d28db9fe00` · 2026-10-30 · Scale AI
+   - https://scale.com/blog/ai-literacy-microcredential-launch
+2. **DualChem: Evaluating AI Safety in Dual-Use Chemistry**
+   - `article` · `scale-ai-abc825f73a91a01a` · 2026-10-28 · Scale AI
+   - https://scale.com/blog/dualchem-evaluating-ai-models-dual-use-chemistry-risks
+3. **Scale Expands in Qatar With a Long-Term Home at The Pearl**
+   - `article` · `scale-ai-65a4224ed91e84d8` · 2026-10-28 · Scale AI
+   - https://scale.com/blog/scales-long-term-investment-in-qatar
+4. **Scale Is Open for Business in the UAE**
+   - `article` · `scale-ai-cec2751441069dcb` · 2026-10-26 · Scale AI
+   - https://scale.com/blog/scale-in-uae
 
 ## Scale AI 官方动态
 
@@ -1260,23 +1382,31 @@
 
 ## Shield AI 官方动态
 
-`sourceId=official-shield-ai` · 还需审核 `20` 条 · `sampleDigest=a0579d70c179652c`
+`sourceId=official-shield-ai` · 还需审核 `20` 条 · `sampleDigest=3f3c717c9233392b`
 
-1. **Shield AI names Kansas and Washington the flight test and production homes of X-BAT**
-   - `article` · `official-shield-ai-7bda32cedafa7982` · 2026-09-30 · Shield AI
-   - https://shield.ai/shield-ai-names-kansas-and-washington-the-flight-test-and-production-homes-of-x-bat
-2. **Shield AI and Kraken Technology Group demonstrate Hivemind-enabled autonomous maritime teaming**
-   - `article` · `official-shield-ai-661368f71d54faed` · 2026-09-28 · Shield AI
-   - https://shield.ai/shield-ai-and-kraken-technology-group-demonstrate-hivemind-enabled-autonomous-maritime-teaming
-3. **A New Tempo for Defense Software**
-   - `article` · `official-shield-ai-3d017845e7806c86` · 2026-09-24 · Shield AI
-   - https://shield.ai/a-new-tempo-for-defense-software
+1. **X-BAT for Europe: A Conversation with Former RAF Typhoon Pilot Andrew “Geeky” Hawkes**
+   - `article` · `official-shield-ai-b87f179fb39211af` · 2026-10-29 · Shield AI
+   - https://shield.ai/x-bat-for-europe-a-conversation-with-former-raf-typhoon-pilot-andrew-geeky-hawkes
+2. **Shield AI and Rheinmetall Barzan Advanced Technologies to advance autonomy for ISR on Qatari Unmanned Surface Vessels (USVs)**
+   - `article` · `official-shield-ai-f8251f0ea8df8da0` · 2026-10-28 · Shield AI
+   - https://shield.ai/shield-ai-and-rheinmetall-barzan-advanced-technologies-to-advance-autonomy-for-isr-on-qatari-unmanned-surface-vessels-usvs
 
 ## Shopify 官方动态
 
-`sourceId=official-shopify` · 还需审核 `20` 条 · `sampleDigest=51b883d0bcce0fe1`
+`sourceId=official-shopify` · 还需审核 `20` 条 · `sampleDigest=f2fdedcdb46f85b5`
 
-当前没有可追溯的精确匹配记录。
+1. **What makes Shopify more than software: Fall '26 Edition**
+   - `article` · `official-shopify-709109ffa23517f1` · 2026-10-29 · Shopify
+   - https://www.shopify.com/news/fall-26-edition-feature
+2. **Exponential: Shopify's Fall '26 Edition**
+   - `article` · `official-shopify-5dd8eebbfb3bc639` · 2026-10-28 · Shopify
+   - https://www.shopify.com/news/fall-26-edition-merchant
+3. **Bringing shopping into the future: The Fall '26 Edition for developers**
+   - `article` · `official-shopify-181904615f66410a` · 2026-10-28 · Shopify
+   - https://www.shopify.com/news/fall-26-edition-developer
+4. **Introducing Canvas: Opening the aperture on online store design**
+   - `article` · `official-shopify-a88fdd5e12e85060` · 2026-10-01 · Shopify
+   - https://www.shopify.com/news/introducing-canvas
 
 ## Shopify 官方动态
 
@@ -1292,11 +1422,9 @@
 
 ## Sierra 官方动态
 
-`sourceId=official-sierra` · 还需审核 `20` 条 · `sampleDigest=556c7f3f7b97b21f`
+`sourceId=official-sierra` · 还需审核 `20` 条 · `sampleDigest=d4f3869695b488d4`
 
-1. **Ghostwriter: When AI goes from tool to teammate**
-   - `article` · `official-sierra-aaad91451343c5e9` · 2026-09-28 · Sierra
-   - https://sierra.ai/blog/ghostwriter-ai-tool-to-teammate
+当前没有可追溯的精确匹配记录。
 
 ## SpaceX
 
@@ -1306,9 +1434,14 @@
 
 ## SpaceX 官方动态
 
-`sourceId=official-spacex` · 还需审核 `20` 条 · `sampleDigest=1c04218ff2296233`
+`sourceId=official-spacex` · 还需审核 `20` 条 · `sampleDigest=2ee599802d278cc1`
 
-当前没有可追溯的精确匹配记录。
+1. **SpaceX - Investor Relations**
+   - `article` · `official-spacex-f0595d205f836407` · 2026-10-20 · SpaceX
+   - https://ir.spacex.com/investors/default.aspx
+2. **SpaceX - Stock Information**
+   - `article` · `official-spacex-588b60530c989fb8` · 2026-10-20 · SpaceX
+   - https://ir.spacex.com/stock-information/default.aspx
 
 ## Tempus AI 官方动态
 
@@ -1318,38 +1451,38 @@
 
 ## The Washington Post
 
-`sourceId=user-source-source-the-washington-post` · 还需审核 `20` 条 · `sampleDigest=db3e0b1cef50d0eb`
+`sourceId=user-source-source-the-washington-post` · 还需审核 `20` 条 · `sampleDigest=e5f6b95e3e285dd3`
 
-1. **The Washington Post：The votes are in, and a new fat bear champion has been crowned in Alaska: 89 “Backpack.” He earned his nickname by climbing on his mother’s back as a**
-   - `article` · `user-source-source-the-washington-post-fe399b81b54d71de` · 2026-09-30 · 科技产业
-   - https://x.com/washingtonpost/status/2105258888836587719
-2. **The Washington Post：With grocery prices going up, every extra day of freshness counts. Take our quiz to find out whether your storage habits are helping your food last or**
-   - `article` · `user-source-source-the-washington-post-bade560259d87687` · 2026-09-30 · 科技产业
-   - https://x.com/washingtonpost/status/2105266486050689414
-3. **The Washington Post：Fatima Zahra El Mansouri was named Morocco’s first female prime minister after her party swept parliamentary elections last week. https://t.co/jePXeQg**
-   - `article` · `user-source-source-the-washington-post-7deca56b9a50d7b6` · 2026-09-30 · 科技产业
-   - https://x.com/washingtonpost/status/2105175836579996149
-4. **The Washington Post：U.S. forces are set to depart from bases in Iraq following two decades of American involvement that resulted in the deaths of hundreds of thousands of**
-   - `article` · `user-source-source-the-washington-post-7d213c395772fb07` · 2026-09-30 · 科技产业
-   - https://x.com/washingtonpost/status/2105221141958717716
-5. **The Washington Post：The remnants of Hurricane Polo are racing across the panhandles of Texas and Oklahoma early Wednesday, following days of flooding in the Southwest. ht**
-   - `article` · `user-source-source-the-washington-post-71e71f670065f446` · 2026-09-30 · 科技产业
-   - https://x.com/washingtonpost/status/2105273992311349619
-6. **The Washington Post：$1.5 billion has been spent on advertising for Senate and House races overall, an increase of $317 million from last week, according to a Post analysi**
-   - `article` · `user-source-source-the-washington-post-46357b7b3f51ecfb` · 2026-09-30 · 科技产业
-   - https://x.com/washingtonpost/status/2105206051800834300
-7. **The Washington Post：In February, the Kansas state legislature passed a law that required all driver’s licenses to reflect sex at birth. Roughly 1,700 intersex and transge**
-   - `article` · `user-source-source-the-washington-post-3c7f4e1dabdfcb7c` · 2026-09-30 · 科技产业
-   - https://x.com/washingtonpost/status/2105251392780718201
-8. **The Washington Post：Analysis: In an unpredictable election, with an unpopular president, anything could happen. We just ranked the Senate races most likely to flip party**
-   - `article` · `user-source-source-the-washington-post-37f1a07907104065` · 2026-09-30 · 科技产业
-   - https://x.com/washingtonpost/status/2105236259920609615
-9. **The Washington Post：For over a decade, the question has haunted Mexico: What happened to the 43 rural college students who were taken into police custody in 2014 — and th**
-   - `article` · `user-source-source-the-washington-post-23109efe83212706` · 2026-09-30 · 科技产业
-   - https://x.com/washingtonpost/status/2105190954533540122
-10. **The Washington Post：Breaking news: A flight carrying about 180 passengers to Tel Aviv from Dubai was diverted to Saudi Arabia after a midair altercation prompted a hijack**
-   - `article` · `user-source-source-the-washington-post-0f6331693a34e430` · 2026-09-30 · 科技产业
-   - https://x.com/washingtonpost/status/2105263287432544393
+1. **The Washington Post：Ukrainian President Volodymyr Zelensky welcomed a U.S. deal for Kyiv to purchase $2.1 billion in Patriot missiles but pressed Washington to allow soon**
+   - `article` · `user-source-source-the-washington-post-f7bc04ceac87b416` · 2026-10-31 · 科技产业
+   - https://x.com/washingtonpost/status/2116647707422949519
+2. **The Washington Post：Democratic nominee Troy Jackson and Republican Sen. Susan Collins. are locked in one of the year’s tightest and most expensive races. Read more: https**
+   - `article` · `user-source-source-the-washington-post-ed4ed8ac04d2fdcf` · 2026-10-31 · 科技产业
+   - https://x.com/washingtonpost/status/2116666621150335481
+3. **The Washington Post：New York Judge Jennifer L. Rochon blocked the Trump administration from airing three ads that a lawsuit alleged violated restrictions on using taxpaye**
+   - `article` · `user-source-source-the-washington-post-e5118fb7ada82a3c` · 2026-10-31 · 科技产业
+   - https://x.com/washingtonpost/status/2116643886315474992
+4. **The Washington Post：Frustrations with President Trump are spreading in deeply red territories home to agriculture. Oklahoma has emerged as one of the most surprising late**
+   - `article` · `user-source-source-the-washington-post-aeb97b95c7e3e883` · 2026-10-31 · 科技产业
+   - https://x.com/washingtonpost/status/2116636367853699394
+5. **The Washington Post：As any spooky history tour guide will tell you, D.C. is no stranger to the supernatural. The only problem? Not all of the stories are true. We researc**
+   - `article` · `user-source-source-the-washington-post-ac6e1b71f2bfe051` · 2026-10-31 · 科技产业
+   - https://x.com/washingtonpost/status/2116674091734184122
+6. **The Washington Post：President Trump agreed to grant a visa to the mother of a 15-year-old boy who was fatally shot on his way to school, allowing her to travel to New Yor**
+   - `article` · `user-source-source-the-washington-post-4b082f87b47e6ad9` · 2026-10-31 · 科技产业
+   - https://x.com/washingtonpost/status/2116655205877989377
+7. **The Washington Post：A Florida sheriff’s office is investigating after several swastikas were found painted on trees near an early-voting site in Orlando. The swastikas ha**
+   - `article` · `user-source-source-the-washington-post-2466101f9bc3f1ba` · 2026-10-31 · 科技产业
+   - https://x.com/washingtonpost/status/2116658991702876250
+8. **The Washington Post：On Nov. 1, Dave Obelkevich, 83, will be running his 50th New York City Marathon. He holds the record for the longest streak and the most finishes in t**
+   - `article` · `user-source-source-the-washington-post-22bbdbb524b9f012` · 2026-10-31 · 科技产业
+   - https://x.com/washingtonpost/status/2116651445067841566
+9. **The Washington Post：Kennedy Center leaders jeopardized the institution’s operations by tying millions in funding to keeping President Trump’s name on its building, a Demo**
+   - `article` · `user-source-source-the-washington-post-0dca2334c31faeab` · 2026-10-31 · 科技产业
+   - https://x.com/washingtonpost/status/2116640109936173383
+10. **The Washington Post：Former vice president Kamala Harris spent the closing stretch of her midterms campaign blitz urging Georgia Democrats to turn out so many voters that**
+   - `article` · `user-source-source-the-washington-post-00db9e0c90464415` · 2026-10-31 · 科技产业
+   - https://x.com/washingtonpost/status/2116628799211143260
 
 ## The Washington Post
 
@@ -1371,55 +1504,64 @@
 
 ## WeRide Investor Relations
 
-`sourceId=weride` · 还需审核 `20` 条 · `sampleDigest=5ed888688b724260`
+`sourceId=weride` · 还需审核 `20` 条 · `sampleDigest=7cc15f1a76941679`
 
-1. **WeRide Recognized on Fortune's 2026 Change the World List as the Only Autonomous Driving Company Honored**
+1. **WeRide Unveils Global Insurance Partnership Program to Scale Autonomous Vehicles Worldwide**
+   - `article` · `weride-645d6fcd3f237ec4` · 2026-10-27 · 文远知行
+   - https://ir.weride.ai/news-releases/news-release-details/weride-unveils-global-insurance-partnership-program-scale
+2. **From Physical AI to Scaled Deployment: WeRide Named Among WICV 2026's Top 10 Automotive AI Application Cases**
+   - `article` · `weride-307675065ceb10b6` · 2026-10-23 · 文远知行
+   - https://ir.weride.ai/news-releases/news-release-details/physical-ai-scaled-deployment-weride-named-among-wicv-2026s-top
+3. **WeRide Recognized on Fortune's 2026 Change the World List as the Only Autonomous Driving Company Honored**
    - `article` · `weride-2d8c053724b5f015` · 2026-09-24 · 文远知行
    - https://ir.weride.ai/news-releases/news-release-details/weride-recognized-fortunes-2026-change-world-list-only
-2. **WRD 3.0 Powers the AION i60 with Championship-Winning Technology Available from Delivery**
+4. **WRD 3.0 Powers the AION i60 with Championship-Winning Technology Available from Delivery**
    - `article` · `weride-80a91d205374a9e2` · 2026-09-15 · 文远知行
    - https://ir.weride.ai/news-releases/news-release-details/wrd-30-powers-aion-i60-championship-winning-technology-available
-3. **WeRide, Uber, and AVOMO receive Spain’s First National Operating Permit for Level 4 Autonomous Passenger Vehicles**
+5. **WeRide, Uber, and AVOMO receive Spain’s First National Operating Permit for Level 4 Autonomous Passenger Vehicles**
    - `article` · `weride-63722d0eac892015` · 2026-09-10 · 文远知行
    - https://ir.weride.ai/news-releases/news-release-details/weride-uber-and-avomo-receive-spains-first-national-operating
-4. **WeRide Included in HKEX Tech 100 Index Following September 2026 Quarterly Review**
+6. **WeRide Included in HKEX Tech 100 Index Following September 2026 Quarterly Review**
    - `article` · `weride-f15807f8d1b64ad7` · 2026-08-31 · 文远知行
    - https://ir.weride.ai/news-releases/news-release-details/weride-included-hkex-tech-100-index-following-september-2026
+7. **Accelerating European Expansion Through Proven Asset-Light Model, Driving Rapid Overseas Revenue Growth; 2Q2026 Total Revenue Reached RMB231.7 Million, Up 82.2% Year over Year**
+   - `article` · `weride-a38062677ff8081f` · 2026-08-12 · 文远知行
+   - https://ir.weride.ai/news-releases/news-release-details/accelerating-european-expansion-through-proven-asset-light-model
 
 ## xAI
 
-`sourceId=xai` · 还需审核 `20` 条 · `sampleDigest=d9e3a51233efd057`
+`sourceId=xai` · 还需审核 `20` 条 · `sampleDigest=69709675610ace1a`
 
-1. **Team Bots: AI coworkers that learn from your team**
+1. **Your next sales teammate should be a Grok Bot**
+   - `article` · `xai-2cf69418651c9e4a` · 2026-10-27 · xAI
+   - https://x.ai/news/grok-bot-sales
+2. **Introducing the SpaceX Super Intelligence Partner Network**
+   - `article` · `xai-da5fa7cddb0bb321` · 2026-10-22 · xAI
+   - https://x.ai/news/partnernetworkannouncement
+3. **Using Grok Bot to detect and respond to incidents**
+   - `article` · `xai-0de9428d3548b15f` · 2026-10-20 · xAI
+   - https://x.ai/news/incident-sweep
+4. **Introducing Grok Voice 3.0**
+   - `article` · `xai-12251940b3b4d223` · 2026-10-14 · xAI
+   - https://x.ai/news/grok-voice-3
+5. **Introducing The X Subscription**
+   - `article` · `xai-ec0714e7c8ff9438` · 2026-10-12 · xAI
+   - https://x.ai/news/x-subscription
+6. **Team Bots: shared AI teammates that learn as they work**
    - `article` · `xai-52b14ec01b86fb13` · 2026-09-28 · xAI
    - https://x.ai/news/team-bots
-2. **How SpaceXAI is using Grok Bot to scale customer support**
+7. **How SpaceXSI is using Grok Bot to scale customer support**
    - `article` · `xai-03d2992c5a1bb0eb` · 2026-09-22 · xAI
    - https://x.ai/news/grok-bot-customer-support
-3. **Introducing Grok 4.7**
+8. **Introducing Grok 4.7**
    - `article` · `xai-39b901174b543376` · 2026-09-21 · xAI
    - https://x.ai/news/grok-4-7
-4. **Introducing Grok Voice Transcribe 2.0**
+9. **Introducing Grok Voice Transcribe 2.0**
    - `article` · `xai-ce5508c16c0a4e20` · 2026-09-18 · xAI
    - https://x.ai/news/grok-voice-transcribe-2
-5. **Memory in Grok Build**
+10. **Memory in Grok Build**
    - `article` · `xai-e3779e8809a662a0` · 2026-09-16 · xAI
    - https://x.ai/news/grok-build-memory
-6. **Setting Grok Bot loose on procurement**
-   - `article` · `xai-b0f85a5b072300fb` · 2026-09-04 · xAI
-   - https://x.ai/news/grok-bot-procurement
-7. **Grok Bot for Enterprise**
-   - `article` · `xai-eef9c9e362bd416f` · 2026-09-03 · xAI
-   - https://x.ai/news/grok-bot-for-enterprise
-8. **Designing Grok Bot for a world of persistent agents**
-   - `article` · `xai-c3a0d443767e88bd` · 2026-09-03 · xAI
-   - https://x.ai/news/designing-grok-bot
-9. **Biosecurity at the frontier**
-   - `article` · `xai-d4276b2db9013a3c` · 2026-09-01 · xAI
-   - https://x.ai/news/biosafety-at-the-frontier
-10. **Grok Bot now works with X**
-   - `article` · `xai-a39ebb9cbdf1604d` · 2026-08-29 · xAI
-   - https://x.ai/news/grok-bot-and-x
 
 ## xAI 官方动态
 
@@ -1429,49 +1571,23 @@
 
 ## Y Combinator · 核心团队页
 
-`sourceId=user-source-source-auto-institution-team-y-combinator` · 还需审核 `20` 条 · `sampleDigest=635e91c29c8778a0`
+`sourceId=user-source-source-auto-institution-team-y-combinator` · 还需审核 `20` 条 · `sampleDigest=4bf2ef81f7965993`
 
-1. **Y Combinator**
-   - `article` · `user-source-source-auto-institution-team-y-combinator-1a75fc63d5c987c4` · 2026-09-28 · 科技产业
+1. **How Yair Alon went from building Portrait Mode at Google to founding researcher at Poetiq**
+   - `article` · `user-source-source-auto-institution-team-y-combinator-7f2ac422b8825a59` · 2026-10-30 · 科技产业
+   - https://www.ycombinator.com/blog/how-yair-alon-went-from-building-portrait-mode-at-google-to-founding-researcher-at-poetiq
+2. **Y Combinator**
+   - `article` · `user-source-source-auto-institution-team-y-combinator-1a75fc63d5c987c4` · 2026-10-22 · 科技产业
    - https://www.ycombinator.com/events
+3. **Vivian Midha Shen and Raphael Schaad Join YC as General Partners**
+   - `article` · `user-source-source-auto-institution-team-y-combinator-6971eb1254dd814e` · 2026-10-01 · 科技产业
+   - https://www.ycombinator.com/blog/welcome-vivian-and-raphael
+4. **Vivian Midha Shen: YC Partner | Y Combinator**
+   - `article` · `user-source-source-auto-institution-team-y-combinator-bcfb26ff8de7a453` · 2026-09-03 · 科技产业
+   - https://www.ycombinator.com/people/vivian-midha%20shen
 
 ## 东方财富 · 生物科技信源
 
 `sourceId=user-source-source-auto-item-ddee68df` · 还需审核 `20` 条 · `sampleDigest=d6eb8c097e4eaf9a`
 
 当前没有可追溯的精确匹配记录。
-
-## 傅利叶智能 官方动态
-
-`sourceId=official-fourier-intelligence` · 还需审核 `20` 条 · `sampleDigest=4b138df240df64d3`
-
-当前没有可追溯的精确匹配记录。
-
-## 华大基因 官方动态
-
-`sourceId=official-bgi-genomics` · 还需审核 `20` 条 · `sampleDigest=04a46e78251de4cf`
-
-当前没有可追溯的精确匹配记录。
-
-## 启明创投 · 核心团队页
-
-`sourceId=user-source-source-auto-institution-team-131095855545` · 还需审核 `20` 条 · `sampleDigest=48365a107a70c971`
-
-1. **启明创投 | 以智启众 以勤得明**
-   - `article` · `user-source-source-auto-institution-team-131095855545-360d355e488723e7` · 2026-09-16 · 科技产业
-   - https://www.qimingvc.com/cn
-2. **启明星 | Robochallenge全球化进展与生态共建发布| WAIC 2026 | 启明创投**
-   - `article` · `user-source-source-auto-institution-team-131095855545-4b1561ba3cfdd04e` · 2026-09-14 · 科技产业
-   - https://www.qimingvc.com/cn/news/%E5%90%AF%E6%98%8E%E6%98%9F-robochallenge%E5%85%A8%E7%90%83%E5%8C%96%E8%BF%9B%E5%B1%95%E4%B8%8E%E7%94%9F%E6%80%81%E5%85%B1%E5%BB%BA%E5%8F%91%E5%B8%83-waic-2026
-3. **启明星 | 佳量脑科学连续完成C轮及D轮两轮融资，启明创投领投C轮 | 启明创投**
-   - `article` · `user-source-source-auto-institution-team-131095855545-0fc87012f374b083` · 2026-09-08 · 科技产业
-   - https://www.qimingvc.com/cn/news/%E5%90%AF%E6%98%8E%E6%98%9F-%E4%BD%B3%E9%87%8F%E8%84%91%E7%A7%91%E5%AD%A6%E8%BF%9E%E7%BB%AD%E5%AE%8C%E6%88%90c%E8%BD%AE%E5%8F%8Ad%E8%BD%AE%E4%B8%A4%E8%BD%AE%E8%9E%8D%E8%B5%84%EF%BC%8C%E5%90%AF%E6%98%8E%E5%88%9B%E6%8A%95%E9%A2%86%E6%8A%95c%E8%BD%AE
-4. **启明ESG | 启明创投捐赠驰援西藏吉隆泥石流灾区 助力抢险救灾与灾后重建 | 启明创投**
-   - `article` · `user-source-source-auto-institution-team-131095855545-b88926d6ae83b8ac` · 2026-09-04 · 科技产业
-   - https://www.qimingvc.com/cn/news/%E5%90%AF%E6%98%8Eesg-%E5%90%AF%E6%98%8E%E5%88%9B%E6%8A%95%E6%8D%90%E8%B5%A0%E9%A9%B0%E6%8F%B4%E8%A5%BF%E8%97%8F%E5%90%89%E9%9A%86%E6%B3%A5%E7%9F%B3%E6%B5%81%E7%81%BE%E5%8C%BA-%E5%8A%A9%E5%8A%9B%E6%8A%A2%E9%99%A9%E6%95%91%E7%81%BE%E4%B8%8E%E7%81%BE%E5%90%8E%E9%87%8D%E5%BB%BA
-5. **启明星 | 阶跃星辰朱亦博：进入Agent时代，AI基础设施要实现智能、速度与成本的综合最优 | WAIC 2026 | 启明创投**
-   - `article` · `user-source-source-auto-institution-team-131095855545-9591c82e9cd8e74e` · 2026-08-31 · 科技产业
-   - https://www.qimingvc.com/cn/news/%E5%90%AF%E6%98%8E%E6%98%9F-%E9%98%B6%E8%B7%83%E6%98%9F%E8%BE%B0%E6%9C%B1%E4%BA%A6%E5%8D%9A%EF%BC%9A%E8%BF%9B%E5%85%A5agent%E6%97%B6%E4%BB%A3%EF%BC%8Cai%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%E8%A6%81%E5%AE%9E%E7%8E%B0%E6%99%BA%E8%83%BD%E3%80%81%E9%80%9F%E5%BA%A6%E4%B8%8E%E6%88%90%E6%9C%AC%E7%9A%84%E7%BB%BC%E5%90%88%E6%9C%80%E4%BC%98-waic-2026
-6. **启明星 | 芯光界完成亿元天使轮融资，启明创投独家投资 | 启明创投**
-   - `article` · `user-source-source-auto-institution-team-131095855545-7b5da7a1fb11c00b` · 2026-08-25 · 科技产业
-   - https://www.qimingvc.com/cn/news/%E5%90%AF%E6%98%8E%E6%98%9F-%E8%8A%AF%E5%85%89%E7%95%8C%E5%AE%8C%E6%88%90%E4%BA%BF%E5%85%83%E5%A4%A9%E4%BD%BF%E8%BD%AE%E8%9E%8D%E8%B5%84%EF%BC%8C%E5%90%AF%E6%98%8E%E5%88%9B%E6%8A%95%E7%8B%AC%E5%AE%B6%E6%8A%95%E8%B5%84
