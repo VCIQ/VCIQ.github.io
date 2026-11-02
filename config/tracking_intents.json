@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-30T14:38:22+00:00",
+  "updatedAt": "2026-11-02T08:41:09+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -23026,6 +23026,36 @@
       "resolutionSource": "authenticated-manual-intent",
       "resolutionStatus": "resolved",
       "createdAt": "2026-10-30T14:38:22+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-9f6dae612089956ace6c",
+      "kind": "technology",
+      "name": "GR00T",
+      "aliases": [],
+      "keywords": [
+        "VLA模型",
+        "全身控制器"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-11-02T08:41:09+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "company-eb9ed70b72fd7f80307e",
+      "kind": "company",
+      "name": "思灵机器人",
+      "aliases": [],
+      "keywords": [
+        "人形机器人",
+        "科研"
+      ],
+      "state": "active",
+      "resolutionSource": "unresolved",
+      "resolutionStatus": "review",
+      "createdAt": "2026-11-02T08:41:09+00:00",
       "createdBy": "VCIQ"
     }
   ],
@@ -133113,6 +133143,202 @@
         "source": "authenticated-manual-intent",
         "reason": "由 allowlist 内的管理员显式提交。",
         "decisionKey": "安全ai联盟",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-65ba8cd7475566ce6636",
+      "trackId": "track:robotics",
+      "entityId": "technology-9f6dae612089956ace6c",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-891df7f95304cf463b86",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-02T08:41:09+00:00",
+          "evidenceUrl": "http://www.jushenhome.com/news/2199",
+          "reasons": [
+            "个人研究兴趣",
+            "融资机会",
+            "技术突破"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-2512e9dd72b8f705b0d428b9",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-02T08:41:09+00:00",
+        "trackId": "track:robotics",
+        "entityId": "technology-9f6dae612089956ace6c",
+        "requestedName": "GR00T",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "GR00T",
+        "targetId": "topic:gr00t",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "gr00t",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-8390b6e83748434b584f",
+      "trackId": "track:ai",
+      "entityId": "technology-9f6dae612089956ace6c",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-891df7f95304cf463b86",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-02T08:41:09+00:00",
+          "evidenceUrl": "http://www.jushenhome.com/news/2199",
+          "reasons": [
+            "个人研究兴趣",
+            "融资机会",
+            "技术突破"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-99a6dcaec8fbad79c2889b1d",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-02T08:41:09+00:00",
+        "trackId": "track:ai",
+        "entityId": "technology-9f6dae612089956ace6c",
+        "requestedName": "GR00T",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "GR00T",
+        "targetId": "topic:gr00t",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "gr00t",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-3ef224e0f414df0e74e9",
+      "trackId": "track:robotics",
+      "entityId": "company-eb9ed70b72fd7f80307e",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "low",
+      "origins": [
+        {
+          "id": "origin-d3f4e262b353e352f10f",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-02T08:41:09+00:00",
+          "evidenceUrl": "http://www.jushenhome.com/news/2199",
+          "reasons": [
+            "个人研究兴趣",
+            "融资机会",
+            "技术突破"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-5ea6e5721ffff6a30c6e7096",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-02T08:41:09+00:00",
+        "trackId": "track:robotics",
+        "entityId": "company-eb9ed70b72fd7f80307e",
+        "requestedName": "思灵机器人",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "思灵机器人",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "思灵机器人",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-c20a7b1ab3b572a9fd76",
+      "trackId": "track:ai",
+      "entityId": "company-eb9ed70b72fd7f80307e",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "low",
+      "origins": [
+        {
+          "id": "origin-d3f4e262b353e352f10f",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-02T08:41:09+00:00",
+          "evidenceUrl": "http://www.jushenhome.com/news/2199",
+          "reasons": [
+            "个人研究兴趣",
+            "融资机会",
+            "技术突破"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-05e8346364884458589449d1",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-02T08:41:09+00:00",
+        "trackId": "track:ai",
+        "entityId": "company-eb9ed70b72fd7f80307e",
+        "requestedName": "思灵机器人",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "思灵机器人",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "思灵机器人",
         "reclassified": false
       },
       "executionState": "applied"
