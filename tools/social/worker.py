@@ -17,9 +17,10 @@ from .wechat_runner import atomic_json
 from .adapters.xhs import error_envelope, finalize
 from .adapters.weibo import finalize as finalize_weibo
 from .adapters.bilibili import finalize as finalize_bilibili
+from .adapters.zhihu import finalize as finalize_zhihu
 
 ROOT = Path(__file__).resolve().parents[2]
-ENTRYPOINTS = {"xhs": "bootstrap.py", "wb": "bootstrap_weibo.py", "bili": "bootstrap_bilibili.py"}
+ENTRYPOINTS = {"xhs": "bootstrap.py", "wb": "bootstrap_weibo.py", "bili": "bootstrap_bilibili.py", "zhihu": "bootstrap_zhihu.py"}
 
 
 def now():
@@ -124,7 +125,7 @@ def execute_job(job, context, *, runtime, policy, runtime_file, live=False,
                 python_executable=None, popen=subprocess.Popen, kill_group=_kill_group):
     validate(job, expected_kind="crawl_job")
     platform = platform_check(job["platform"])
-    convert = {"xhs": finalize, "wb": finalize_weibo, "bili": finalize_bilibili}[platform]
+    convert = {"xhs": finalize, "wb": finalize_weibo, "bili": finalize_bilibili, "zhihu": finalize_zhihu}[platform]
     state, upstream, python, lock = preflight(runtime, policy, live=live,
         runtime_file=runtime_file, python_executable=python_executable, platform=platform)
     if job["upstreamCommit"] != lock["commit"]:
