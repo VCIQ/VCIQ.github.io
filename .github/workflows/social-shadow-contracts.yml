@@ -8,7 +8,7 @@ on:
       - 'config/social_discovery.json'
       - 'tests/test_social_*.py'
       - 'tests/fixtures/social/**'
-      - 'workers/mediacrawler/upstream.lock.json'
+      - 'workers/mediacrawler/**'
       - '.github/workflows/social-shadow-contracts.yml'
 
 permissions:
@@ -36,19 +36,14 @@ jobs:
           python - <<'PY'
           import sys
           import unittest
+          from pathlib import Path
           from unittest.mock import patch
 
           def deny(*args, **kwargs):
               raise AssertionError('network forbidden in social shadow offline tests')
 
-          modules = (
-              'tests.test_social_contracts',
-              'tests.test_social_guard',
-              'tests.test_social_scheduler',
-              'tests.test_social_wechat',
-              'tests.test_social_execution_guards',
-          )
           with patch('socket.create_connection', deny), patch('socket.getaddrinfo', deny), patch('urllib.request.urlopen', deny):
+              modules = ['tests.' + path.stem for path in sorted(Path('tests').glob('test_social_*.py'))]
               suite = unittest.defaultTestLoader.loadTestsFromNames(modules)
               result = unittest.TextTestRunner(verbosity=2).run(suite)
           sys.exit(0 if result.wasSuccessful() else 1)
@@ -57,5 +52,6 @@ jobs:
         run: |
           python -m tools.social.cli validate --fixtures tests/fixtures/social/contracts
           python -m tools.social.cli doctor --offline
+          python -m tools.social.mediacrawler_cli --help
       - name: Verify no tracked files changed
         run: git diff --exit-code
