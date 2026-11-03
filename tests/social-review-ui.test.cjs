@@ -1,7 +1,15 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const {makeDecision, safeLink} = require('../tools/social/review_ui/app.js');
+const fs = require('node:fs');
+const path = require('node:path');
+const vm = require('node:vm');
+// The parent repository is type=module, while app.js is a browser classic
+// script. Evaluate the unchanged asset in an isolated test context rather than
+// relying on Node's package-dependent require(.js) behavior.
+const sandbox = {module: {exports: {}}, URL};
+vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../tools/social/review_ui/app.js'), 'utf8'), sandbox, {filename: 'review-app.js'});
+const {makeDecision, safeLink} = sandbox.module.exports;
 const VERSION = 'a'.repeat(64), ID = '00000000-0000-4000-8000-000000000099';
 function row() { return {active:true,item:{status:'pending',queueVersion:VERSION,candidateKey:'shadow-social:synthetic:revision',candidateFingerprint:'b'.repeat(64)}}; }
 function decide(value = row(), action = 'accepted', actor = 'local-reviewer', note = '仅审核线索') { return makeDecision(value, action, actor, note, ID, VERSION); }
