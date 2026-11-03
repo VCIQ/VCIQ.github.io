@@ -65,10 +65,10 @@ test("focus tab is between follow and recommend, and fresh-only research does no
 
 test("homepage defaults to focus while keeping recommendation selectable", () => {
   const source = readFileSync(new URL("../components/homepage-news-feed.tsx", import.meta.url), "utf8");
-  assert.match(source, /const \\[channel, setChannel\\] = useState<ChannelId>\\("focus"\\)/u);
-  assert.match(source, /\\{ id: "recommend", label: "推荐" \\}/u);
-  assert.match(source, /onClick=\\{\\(\\) => changeChannel\\(item\\.id\\)\\}/u);
-  assert.match(source, /aria-pressed=\\{channel === item\\.id\\}/u);
+  assert.match(source, /const \[channel, setChannel\] = useState<ChannelId>\("focus"\)/u);
+  assert.match(source, /\{ id: "recommend", label: "推荐" \}/u);
+  assert.match(source, /onClick=\{\(\) => changeChannel\(item\.id\)\}/u);
+  assert.match(source, /aria-pressed=\{channel === item\.id\}/u);
 });
 
 test("focus displays newer favorites before older tracking without changing admission signals", () => {
