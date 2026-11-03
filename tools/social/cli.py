@@ -1,4 +1,4 @@
-"""Shadow CLI: offline validation/planning and explicitly gated WeChat execution."""
+"""Shadow CLI: offline validation/planning and explicitly gated collection."""
 from __future__ import annotations
 
 import argparse
@@ -20,7 +20,6 @@ def _rows(path: Path) -> list[dict[str, Any]]:
     try:
         if path.stat().st_size > MAX_DOCUMENT_BYTES:
             raise ContractError("document_too_large")
-        # Reuse duplicate-key/non-finite parsing through a small pure loader below.
         with path.open(encoding="utf-8") as stream:
             lines = stream.readlines()
         if not lines or any(not line.endswith("\n") for line in lines):
@@ -43,7 +42,6 @@ def _rows(path: Path) -> list[dict[str, Any]]:
 
 
 def validate_fixtures(directory: Path) -> dict[str, Any]:
-    """Positive records and explicit negative cases, never live evidence."""
     if directory.is_symlink() or not directory.is_dir():
         raise ContractError("invalid_fixture_directory")
     good = _rows(directory / "valid.jsonl")
@@ -68,9 +66,12 @@ def main(argv: list[str] | None = None) -> int:
     if arguments and arguments[0] in {"plan", "coverage", "run-wechat", "resume-wechat"}:
         from .planning_cli import main as planning_main
         return planning_main(arguments)
+    if arguments and arguments[0] in {"run", "bootstrap-session", "worker-doctor", "resume-platform"}:
+        from .mc_cli import main as worker_main
+        return worker_main(arguments)
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
-    check = sub.add_parser("validate", help="Validate one contract or the synthetic corpus, without writing")
+    check = sub.add_parser("validate", help="Validate contracts without writing")
     group = check.add_mutually_exclusive_group(required=True)
     group.add_argument("--file", type=Path)
     group.add_argument("--fixtures", type=Path)
@@ -97,14 +98,17 @@ def main(argv: list[str] | None = None) -> int:
                     raise GuardError("state_directory_mismatch")
             elif args.state_dir is not None:
                 state_path(args.state_dir, repo_roots=[REPO_ROOT])
-            result = {"ok": True, "status": "disabled" if runtime is None or not runtime["enabled"] else "offline_only", "mode": "shadow", "publish": False, "platforms": activation(policy, runtime), "implementedPlatforms": sorted(IMPLEMENTED_PLATFORMS), "liveExecuted": False, "writesPerformed": False, "pathChecks": "checked" if runtime is not None or args.state_dir is not None else "not_requested"}
+            from .worker import ADAPTERS
+            result = {"ok": True, "status": "disabled" if runtime is None or not runtime["enabled"] else "offline_only", "mode": "shadow", "publish": False,
+                "platforms": activation(policy, runtime), "implementedPlatforms": sorted(set(IMPLEMENTED_PLATFORMS) | set(ADAPTERS)),
+                "workerSessionChecks": "not_requested", "liveExecuted": False, "writesPerformed": False,
+                "pathChecks": "checked" if runtime is not None or args.state_dir is not None else "not_requested"}
         print(json.dumps(result, ensure_ascii=False, sort_keys=True))
         return 0
     except (ContractError, GuardError) as exc:
         print(json.dumps({"ok": False, "error": exc.code, "path": getattr(exc, "path", "$"), "liveExecuted": False}, sort_keys=True), file=sys.stderr)
         return 2
     except (OSError, RuntimeError, ValueError):
-        # No input paths, credentials or raw exception strings in CLI logs.
         print(json.dumps({"ok": False, "error": "input_error", "liveExecuted": False}), file=sys.stderr)
         return 2
 
