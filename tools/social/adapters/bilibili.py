@@ -103,7 +103,7 @@ def finalize(job, captured, context, *, patchset_hash):
     status, reason, code = captured["status"], captured["stopReason"], captured["errorCode"]
     if status not in {*REASONS, "ok", "empty"}: raise ContractError("bili_envelope_status")
     start, end = instant(captured["startedAt"]), instant(captured["completedAt"])
-    observations, seen, aliases, rejected, duplicates, invalid = [], set(), {}, 0, 0, False
+    observations, seen, aliases, aid_aliases, rejected, duplicates, invalid = [], set(), {}, {}, 0, 0, False
     for entry in rows:
         try:
             if not isinstance(entry, dict) or set(entry) != {"record", "originalTitle", "observedAt"} or type(entry["originalTitle"]) is not bool:
@@ -112,7 +112,9 @@ def finalize(job, captured, context, *, patchset_hash):
             doc = normalize_record(entry["record"], job, context, observed_at=entry["observedAt"], original_title=entry["originalTitle"])
             for alias in doc["nativeAliases"]:
                 if alias in aliases and aliases[alias] != doc["signalId"]: raise ContractError("bili_alias_conflict")
+                if doc["nativeId"] in aid_aliases and aid_aliases[doc["nativeId"]] != alias: raise ContractError("bili_alias_conflict")
                 aliases[alias] = doc["signalId"]
+                aid_aliases[doc["nativeId"]] = alias
         except (ContractError, ValueError, TypeError, KeyError):
             rejected += 1
             invalid = True

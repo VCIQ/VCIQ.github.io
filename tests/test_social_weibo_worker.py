@@ -140,7 +140,9 @@ class WeiboWorkerTests(unittest.TestCase):
             self.assertFalse((state / "profiles/xhs").exists())
 
     def test_unknown_platform_rejected_before_subprocess(self):
-        for platform in ("../../bad", "bili", "zhihu"):
+        # PR-05 implements bili. Keep rejection coverage for truly unknown input.
+        self.assertEqual(worker.platform_check("bili"), "bili")
+        for platform in ("../../bad", "__unsupported_platform__", "zhihu"):
             with patch("subprocess.Popen", side_effect=AssertionError("spawned")):
                 with self.assertRaisesRegex(ContractError, "not_implemented"):
                     worker.platform_check(platform)
