@@ -36,13 +36,15 @@ jobs:
           python - <<'PY'
           import sys
           import unittest
+          from pathlib import Path
           from unittest.mock import patch
 
           def deny(*args, **kwargs):
               raise AssertionError('network forbidden in social shadow offline tests')
 
           with patch('socket.create_connection', deny), patch('socket.getaddrinfo', deny), patch('urllib.request.urlopen', deny):
-              suite = unittest.defaultTestLoader.discover('tests', pattern='test_social_*.py', top_level_dir='.')
+              modules = ['tests.' + path.stem for path in sorted(Path('tests').glob('test_social_*.py'))]
+              suite = unittest.defaultTestLoader.loadTestsFromNames(modules)
               result = unittest.TextTestRunner(verbosity=2).run(suite)
           sys.exit(0 if result.wasSuccessful() else 1)
           PY
