@@ -40,6 +40,10 @@ def compile_query(platform: str, provider: str, term: str, *, account: str | Non
         # a literal term silently introduce a second inner query parameter.
         if platform == "wb" and any(char in term for char in "&=#?"):
             raise ContractError("weibo_query_requires_manual_delimiter")
+        # The pinned WBI signer removes these characters from every value.
+        # Exclude explicitly rather than execute a different literal keyword.
+        if platform == "bili" and any(char in term for char in "!'()*"):
+            raise ContractError("bilibili_query_requires_manual_signature_chars")
         text = term
     if len(text) > 512:
         raise ContractError("query_too_long")
