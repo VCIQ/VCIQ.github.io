@@ -1,8 +1,4 @@
-"""Standalone subprocess bridge. Do NOT add the VCIQ root to sys.path.
-
-The pinned upstream supplies platform clients and store mappings. We supply the
-bounded search loop, dedicated browser context, and structured observation log.
-"""
+"""Standalone subprocess bridge. VCIQ's root never enters the import path."""
 from __future__ import annotations
 
 import asyncio
@@ -17,23 +13,27 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 
-def load_observer():
-    path = Path(__file__).with_name("observer.py")
-    spec = importlib.util.spec_from_file_location("vciq_shadow_observer", path)
+def load_local(name):
+    if name not in {"observer", "capabilities", "runtime_xhs", "runtime_weibo", "runtime_bilibili", "runtime_zhihu"}:
+        raise RuntimeError("BRIDGE_MODULE_DENIED")
+    path = Path(__file__).with_name(name + ".py")
+    spec = importlib.util.spec_from_file_location("vciq_shadow_" + name, path)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
 
 
+def load_observer():
+    return load_local("observer")
+
+
 def import_isolated(upstream):
-    """This must run in a fresh interpreter, not inside the VCIQ parent."""
     upstream = Path(upstream).resolve(strict=True)
     for name in ("config", "tools"):
         if name in sys.modules:
             raise RuntimeError("UPSTREAM_NAMESPACE_ALREADY_LOADED")
     sys.path.insert(0, str(upstream))
-    config = importlib.import_module("config")
-    tools = importlib.import_module("tools")
+    config, tools = importlib.import_module("config"), importlib.import_module("tools")
     for module in (config, tools):
         if not module.__file__ or not Path(module.__file__).resolve().is_relative_to(upstream):
             raise RuntimeError("UPSTREAM_IMPORT_ORIGIN")
@@ -67,20 +67,15 @@ def classify_exception(exc):
 
 
 def allowed_host(host, platform):
-    domains = {"xhs": ("xiaohongshu.com", "xhscdn.com", "xhscdn.net")}
-    return bool(host) and any(host == domain or host.endswith("." + domain) for domain in domains.get(platform, ()))
+    return bool(host) and any(host == domain or host.endswith("." + domain) for domain in load_local("capabilities").HOSTS.get(platform, ()))
 
 
 async def run(envelope, observer_module):
     job = envelope["job"]
     observer = observer_module.Observer(job)
-    Halt = observer_module.Halt
-    interactive = envelope["interactive"]
-    context = None
+    Halt, interactive, context = observer_module.Halt, envelope["interactive"], None
     try:
         config = import_isolated(envelope["upstream"])
-        # Supported native options are parsed first. The safety overrides below
-        # are deliberately last, so the CLI cannot restore unsafe defaults.
         from cmd_arg import parse_cmd
         await parse_cmd(["--platform", job["platform"], "--type", "search", "--keywords", job["query"]["text"],
                          "--get_comment", "false", "--get_sub_comment", "false", "--get_media", "false",
@@ -110,10 +105,9 @@ async def run(envelope, observer_module):
             await asyncio.sleep(max(0, 2 - (time.monotonic() - last_request)))
             last_request = time.monotonic()
             observer.request_count += 1
+            kwargs["follow_redirects"] = False
             response = await original_send(client, request, *args, **kwargs)
             if response.is_redirect:
-                # No unvalidated Location following, even when the upstream
-                # happens to turn automatic redirects on in a future version.
                 raise Halt("unsupported", "HTTP_REDIRECT_DENIED")
             mapping = {401: ("auth_required", "HTTP_AUTH"), 403: ("verification_required", "HTTP_ACCESS_DENIED"),
                        429: ("rate_limited", "HTTP_RATE_LIMIT"), 461: ("verification_required", "HTTP_VERIFICATION"),
@@ -129,14 +123,17 @@ async def run(envelope, observer_module):
             return response
 
         httpx.AsyncClient.send = checked_send
+        names = load_local("capabilities").CANDIDATES
+        if job["platform"] not in names:
+            raise Halt("unsupported", "PLATFORM_NOT_IMPLEMENTED")
+        platform_runtime = load_local("runtime_" + names[job["platform"]])
         async with async_playwright() as playwright:
-            context = await playwright.chromium.launch_persistent_context(
-                user_data_dir=envelope["profile"], headless=not interactive, accept_downloads=False,
-                service_workers="block", viewport={"width": 1365, "height": 900})
+            context = await playwright.chromium.launch_persistent_context(user_data_dir=envelope["profile"],
+                headless=not interactive, accept_downloads=False, service_workers="block", viewport={"width": 1365, "height": 900})
             async def route_request(route):
                 parts = urlsplit(route.request.url)
                 observer.browser_requests += 1
-                if observer.browser_requests > 250 or parts.scheme != "https" or not allowed_host(parts.hostname, job["platform"]):
+                if observer.browser_requests > 250 or parts.scheme != "https" or parts.port not in (None, 443) or parts.username or not allowed_host(parts.hostname, job["platform"]):
                     await route.abort()
                 elif not interactive and route.request.resource_type in {"image", "media", "font"}:
                     await route.abort()
@@ -144,15 +141,8 @@ async def run(envelope, observer_module):
                     await route.continue_()
             await context.route("**/*", route_request)
             context.set_default_timeout(15000)
-            if job["platform"] != "xhs":
-                raise Halt("unsupported", "PLATFORM_NOT_IMPLEMENTED")
-            from media_platform.xhs.core import XiaoHongShuCrawler
-            from store import xhs as store
-            crawler = XiaoHongShuCrawler()
-            crawler.browser_context = context
-            crawler.context_page = await context.new_page()
-            await crawler.context_page.goto("https://www.xiaohongshu.com", wait_until="domcontentloaded", timeout=30000)
-            client = await crawler.create_xhs_client(None)
+            page = await context.new_page()
+            client, cookie_urls = await platform_runtime.setup(context, page)
             if hasattr(type(client).request, "__wrapped__"):
                 import types
                 client.request = types.MethodType(type(client).request.__wrapped__, client)
@@ -160,7 +150,10 @@ async def run(envelope, observer_module):
                 ready = False
                 deadline = time.monotonic() + max(1, job["limits"]["maxWallSeconds"] - 20)
                 while time.monotonic() < deadline:
-                    await client.update_cookies(context, urls=crawler.cookie_urls)
+                    if hasattr(platform_runtime, "refresh"):
+                        await platform_runtime.refresh(client, context, cookie_urls)
+                    else:
+                        await client.update_cookies(context, urls=cookie_urls)
                     ready = await client.pong()
                     if ready:
                         break
@@ -170,9 +163,7 @@ async def run(envelope, observer_module):
                 if observer.error:
                     raise Halt(observer.error["status"], observer.error["code"])
                 raise Halt("auth_required", "SESSION_NOT_READY")
-            capture = observer_module.CaptureStore(observer)
-            store.XhsStoreFactory.create_store = staticmethod(lambda: capture)
-            await observer_module.xhs_search(client, store, observer)
+            await platform_runtime.collect(client, observer_module, observer)
     except Halt as exc:
         observer.fail(exc.status, exc.code)
     except Exception as exc:
@@ -201,9 +192,8 @@ def main():
         return 2
     if Path(envelope["output"]) != input_path.parent / "worker.json" or Path.cwd().resolve() != Path(envelope["upstream"]).resolve():
         return 2
-    observer_module = load_observer()
     logging.disable(logging.CRITICAL)
-    result = asyncio.run(run(envelope, observer_module))
+    result = asyncio.run(run(envelope, load_observer()))
     private_write(envelope["output"], result)
     return 0
 
@@ -212,5 +202,4 @@ if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except Exception:
-        # Never serialize raw exception text (it can contain a URL or cookie).
         raise SystemExit(2) from None
