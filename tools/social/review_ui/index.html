@@ -1,0 +1,7 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VCIQ 科创影子线索审核</title><link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script></head><body>
+<header><h1>VCIQ 科创线索 · 影子审核</h1><p>全部为待交叉验证线索。接受只表示继续核验，不会发布或进入正式项目池。</p></header>
+<section class="toolbar"><label>审核人标签（非邮箱）<input id="actor" maxlength="160" autocomplete="off"></label><label>类型<select id="type"><option value="">全部</option><option value="company_discovery">公司发现</option><option value="funding">融资</option><option value="product">产品</option><option value="technology">技术</option><option value="listing">上市</option></select></label><label>状态<select id="status"><option value="">全部</option><option value="pending">待审核</option><option value="accepted">接受待核验</option><option value="rejected">已拒绝</option></select></label><button id="refresh">刷新队列</button></section>
+<p id="summary" role="status"></p><main id="queue"></main>
+<footer>此工作台只读。导出决定 JSON 后，在本机执行 <code>python -m tools.social.review_cli review --state-dir "$STATE_DIR" --decision /绝对路径/决定.json</code>，再刷新。网页不会向任何远端提交决定。</footer>
+</body></html>
