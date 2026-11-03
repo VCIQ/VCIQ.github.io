@@ -1,0 +1,39 @@
+name: Social review loopback
+
+on:
+  pull_request:
+    paths:
+      - 'tools/social/**'
+      - 'tests/*social*review*'
+      - 'tests/test_social_lead_builder.py'
+      - '.github/workflows/social-review-loopback.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: social-review-loopback-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  local-http:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify browser decision contracts without remote resources
+        run: node --test tests/social-review-ui.test.cjs
+      - name: Exercise actual loopback HTTP with synthetic evidence
+        run: python -m tests.social_review_loopback_smoke
+      - name: Verify no tracked files changed
+        run: git diff --exit-code
