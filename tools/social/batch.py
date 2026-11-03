@@ -143,6 +143,12 @@ def cross_validate(manifest, jobs, receipts, observations):
         job, receipt = attempts[attempt], receipt_map[attempt]
         if any(observation[key] != job[key] for key in ("jobId", "queryId", "runId", "platform")) or observation["trackRefs"] != job["trackRefs"]:
             raise BatchError("batch_observation_job_mismatch")
+        if not set(observation["matchedTerms"]).issubset(observation["queryTerms"]):
+            raise BatchError("batch_matched_terms")
+        window = job["window"]
+        day = observation["publishedAt"][:10] if observation["publishedAt"] else None
+        if window["filterMode"] == "post_filter" and (not day or window["from"] and day < window["from"] or window["to"] and day > window["to"]):
+            raise BatchError("batch_publication_window")
         identity = (attempt, observation["signalId"])
         if identity in seen:
             raise BatchError("batch_duplicate_observation")
@@ -207,12 +213,19 @@ def verify_payloads(manifest_raw, payloads):
 def build_batch(jobs, receipts, observations, *, created_at=None):
     if not isinstance(jobs, list) or not jobs or len(jobs) > MAX_JOBS or not isinstance(receipts, list) or not isinstance(observations, list) or len(receipts) > MAX_JOBS or len(observations) > MAX_ROWS:
         raise BatchError("batch_record_limit")
-    payloads = {}
+    payloads, total = {}, 0
     for name, rows in (("jobs.jsonl", jobs), ("query_receipts.jsonl", receipts), ("observations.jsonl", observations)):
-        encoded = [canonical_bytes(validate(row, expected_kind=FILES[name])) for row in rows]
-        if any(len(line) > MAX_LINE for line in encoded):
-            raise BatchError("batch_jsonl_line")
+        encoded, size = [], 0
+        for row in rows:
+            line = canonical_bytes(validate(row, expected_kind=FILES[name]))
+            if len(line) > MAX_LINE:
+                raise BatchError("batch_jsonl_line")
+            size += len(line) + 1
+            if size > MAX_FILE or total + size > MAX_TOTAL:
+                raise BatchError("batch_file_too_large")
+            encoded.append(line)
         payloads[name] = b"".join(line + b"\n" for line in sorted(encoded))
+        total += size
     manifest = {"schemaVersion": 1, "kind": "run_manifest", "runId": jobs[0]["runId"],
         "mode": "shadow", "sealed": True, "createdAt": created_at or datetime.now(UTC).isoformat(timespec="seconds"),
         "files": [{"path": name, "sha256": hashlib.sha256(raw).hexdigest(), "bytes": len(raw),
@@ -233,7 +246,10 @@ def read_batch(state_dir, relative, *, repo_roots=(ROOT,)):
     if {p.name for p in directory.iterdir()} != set(FILES) | {"manifest.json"}:
         raise BatchError("batch_file_set")
     raw = read_private(root, relative + "/manifest.json", repo_roots, maximum=MAX_LINE)
-    payloads = {name: read_private(root, relative + "/" + name, repo_roots) for name in FILES}
+    payloads, total = {}, 0
+    for name in FILES:
+        payloads[name] = read_private(root, relative + "/" + name, repo_roots, maximum=min(MAX_FILE, MAX_TOTAL - total))
+        total += len(payloads[name])
     return verify_payloads(raw, payloads)
 
 

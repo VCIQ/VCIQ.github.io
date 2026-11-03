@@ -17,7 +17,7 @@ def import_from_path(state_dir, relative, *, repo_roots=(ROOT,)):
     """
     root = private_root(state_dir, repo_roots)
     try:
-        if ".staging-" in relative.split("/")[-1]:
+        if any(".staging-" in part for part in relative.split("/")):
             raise ContractError("batch_unsealed_staging")
         checked = read_batch(root, relative, repo_roots=repo_roots)
         with SignalStore(root, repo_roots=repo_roots) as store:
