@@ -64,6 +64,7 @@ async def bind_and_collect(request, context, observer, *, client_module=None, ut
     if job["platform"] != "bili" or any(c in job["query"]["text"] for c in ",!'()*"):
         raise observer.CollectorError("unsupported", "BILI_QUERY_FILTER_UNSUPPORTED")
     gate = gate_class(observer, job["query"]["text"], job["limits"]["maxSearchPages"], job["limits"]["maxRecords"])
+    gate.before_request = lambda: sibling("request_control").check(observer, platform="bili")
     client_module.make_async_client = gate.factory
     cookie_string, cookie_dict = await utils.convert_browser_context_cookies(context, urls=["https://www.bilibili.com"])
     page = await context.new_page()
@@ -89,6 +90,7 @@ async def bind_and_collect(request, context, observer, *, client_module=None, ut
 
 
 async def execute(request, observer):
+    if request["action"] == "run": sibling("request_control").check(observer, platform="bili")
     upstream = Path(request["upstream"])
     sys.path.insert(0, str(upstream))
     import config

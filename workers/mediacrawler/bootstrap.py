@@ -35,6 +35,7 @@ def safe_settings(config):
 
 
 async def execute(request, observer):
+    if request["action"] == "run": sibling("request_control").check(observer, platform="xhs")
     upstream = Path(request["upstream"])
     # -I ignores PYTHONPATH; only the pinned upstream is added. VCIQ itself is
     # not added, so its same-named tools/config cannot shadow MediaCrawler.
@@ -86,6 +87,7 @@ async def execute(request, observer):
                     if requests >= max_requests:
                         raise observer.CollectorError("cancelled", "API_REQUEST_BUDGET")
                     await asyncio.sleep(max(0, next_request - time.monotonic()))
+                    sibling("request_control").check(observer, platform="xhs")
                     next_request = time.monotonic() + 2
                     requests += 1
                     kwargs.pop("timeout", None)

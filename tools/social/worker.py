@@ -91,10 +91,13 @@ def _kill_group(pid, sig):
     os.killpg(pid, sig)
 
 
-def run_child(python, request_path, *, state, timeout, popen=subprocess.Popen, kill_group=_kill_group, platform="xhs"):
+def run_child(python, request_path, *, state, timeout, popen=subprocess.Popen, kill_group=_kill_group, platform="xhs", runtime_file=None):
     platform_check(platform)
     command = [str(python), "-I", "-B", str(ROOT / "workers/mediacrawler" / ENTRYPOINTS[platform]), str(request_path)]
-    process = popen(command, cwd=state, env=child_environment(state), stdin=subprocess.DEVNULL,
+    environment = child_environment(state)
+    environment["VCIQ_SHADOW_STATE"] = str(state)
+    if runtime_file is not None: environment["VCIQ_SHADOW_RUNTIME"] = str(runtime_file)
+    process = popen(command, cwd=state, env=environment, stdin=subprocess.DEVNULL,
         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=False, start_new_session=True)
     timed_out = False
     try:
@@ -153,7 +156,7 @@ def execute_job(job, context, *, runtime, policy, runtime_file, live=False,
         atomic_json(state, attempt + "/request.json", request, roots=roots)
         try:
             timed_out, code = run_child(python, request_path, state=state, platform=platform,
-                timeout=job["limits"]["maxWallSeconds"], popen=popen, kill_group=kill_group)
+                timeout=job["limits"]["maxWallSeconds"], popen=popen, kill_group=kill_group, runtime_file=runtime_file)
             if timed_out:
                 return failure("timeout", "WORKER_DEADLINE")
             if code != 0 or not target.is_file():

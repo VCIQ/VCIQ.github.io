@@ -107,6 +107,7 @@ class WeiboGate:
                 if gate.requests >= 1 + gate.pages:
                     raise gate.observer.CollectorError("cancelled", "API_REQUEST_BUDGET")
                 await gate.sleep(max(0, gate.next_request - gate.monotonic()))
+                if hasattr(gate, "before_request"): gate.before_request()
                 gate.next_request = gate.monotonic() + 2
                 gate.requests += 1
                 try:
