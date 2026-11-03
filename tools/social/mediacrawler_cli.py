@@ -1,4 +1,4 @@
-"""Explicit XHS shadow execution and manual session setup, never production writes."""
+"""Explicit XHS/Weibo shadow execution and manual sessions, never production writes."""
 from __future__ import annotations
 
 import argparse
@@ -12,7 +12,7 @@ from .guard import GuardError, assert_unchanged, output_path, protected_snapshot
 from .planning_cli import ROOT, _add_inputs, _inputs, revision
 from .policy import activation, load_policy
 from .scheduler_state import SchedulerStore
-from .worker import execute_job, bootstrap_session, preflight
+from .worker import ENTRYPOINTS, execute_job, bootstrap_session, preflight
 from workers.mediacrawler.upstream import UpstreamError
 
 
@@ -30,16 +30,17 @@ def main(argv=None):
     _add_inputs(resume)
     resume.add_argument("--confirmed", action="store_true", required=True)
     for item in (run, setup, resume):
-        item.add_argument("--platform", choices=["xhs"], default="xhs")
+        item.add_argument("--platform", choices=sorted(ENTRYPOINTS), default="xhs")
         item.add_argument("--runtime-config", type=Path, required=True)
         item.add_argument("--python", type=Path)
         item.add_argument("--live", action="store_true")
     args = parser.parse_args(argv)
     before, started = None, False
+    platform = args.platform
     try:
         policy = load_policy(args.policy)
         runtime = validate(load_json(args.runtime_config), expected_kind="runtime_config")
-        if activation(policy, runtime, live=args.live, implemented=frozenset({"xhs"}))["xhs"] != "eligible":
+        if activation(policy, runtime, live=args.live, implemented=frozenset(ENTRYPOINTS))[platform] != "eligible":
             raise ContractError("live_activation_required")
         root = runtime_paths(runtime, repo_root=ROOT, runtime_file=args.runtime_config)
         if root != args.state_dir.absolute():
@@ -48,21 +49,21 @@ def main(argv=None):
         if args.command == "bootstrap-session":
             started = True
             result = bootstrap_session(runtime=runtime, policy=policy, runtime_file=args.runtime_config,
-                live=args.live, interactive=args.interactive, python_executable=args.python)
+                live=args.live, interactive=args.interactive, python_executable=args.python, platform=platform)
         else:
             state, upstream, _, lock = preflight(runtime, policy, runtime_file=args.runtime_config,
-                live=args.live, python_executable=args.python)
+                live=args.live, python_executable=args.python, platform=platform)
             roots = (ROOT, upstream)
             if args.command == "resume-platform":
                 with SchedulerStore(state, repo_roots=roots) as store:
-                    store.resume("xhs", datetime.now(UTC))
+                    store.resume(platform, datetime.now(UTC))
                 result = {"ok": True, "resumeRequested": True, "liveExecuted": False}
             else:
                 relative = args.plan.resolve(strict=True).relative_to(state).as_posix()
                 if output_path(state, relative, repo_roots=roots) != args.plan.absolute():
                     raise GuardError("unsafe_input_path")
                 plan = validate(load_json(args.plan), expected_kind="job_plan")
-                policy, registry, config_hash = _inputs(args, ("xhs",), ("sogou-weixin",))
+                policy, registry, config_hash = _inputs(args, (platform,), ("sogou-weixin",))
                 commit = args.vciq_commit or revision(ROOT)
                 if plan["configHash"] != config_hash or plan["vciqCommit"] != commit:
                     raise ContractError("stale_plan")
@@ -71,7 +72,7 @@ def main(argv=None):
                 contexts = registry.by_id()
                 for job in plan["jobs"]:
                     entry = contexts.get(job["queryId"])
-                    if job["platform"] != "xhs" or not entry or entry["excludedReason"] or entry["query"] != job["query"] or entry["trackRefs"] != job["trackRefs"]:
+                    if job["platform"] != platform or not entry or entry["excludedReason"] or entry["query"] != job["query"] or entry["trackRefs"] != job["trackRefs"]:
                         raise ContractError("stale_query_plan")
                     budget = policy["budget"]
                     if job["limits"] != {"maxSearchPages": budget["pagesPerJob"], "maxRecords": budget["recordsPerJob"], "maxWallSeconds": budget["wallSecondsPerJob"]}:
@@ -93,7 +94,7 @@ def main(argv=None):
                 result = {"ok": all(item["status"] in {"ok", "empty", "not_started"} for item in summaries),
                     "jobs": summaries, "liveExecuted": started, "batchIntegrityChecked": False}
         assert_unchanged(before, repo_root=ROOT)
-        print(json.dumps({"mode": "shadow", "publish": False, **result}, ensure_ascii=False, sort_keys=True))
+        print(json.dumps({"platform": platform, "mode": "shadow", "publish": False, **result}, ensure_ascii=False, sort_keys=True))
         return 0 if result.get("ok") else 1
     except (ContractError, GuardError) as exc:
         code = exc.code

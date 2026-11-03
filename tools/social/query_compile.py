@@ -36,6 +36,10 @@ def compile_query(platform: str, provider: str, term: str, *, account: str | Non
             raise ContractError("provider_scope_mismatch")
         if "," in term:
             raise ContractError("query_requires_manual_comma")
+        # The pinned Weibo client embeds a query inside containerid. Do not let
+        # a literal term silently introduce a second inner query parameter.
+        if platform == "wb" and any(char in term for char in "&=#?"):
+            raise ContractError("weibo_query_requires_manual_delimiter")
         text = term
     if len(text) > 512:
         raise ContractError("query_too_long")
@@ -49,7 +53,6 @@ def search_url(job: dict, page: int) -> str:
     if job["provider"] == "sogou-weixin":
         if len(text) > 38:
             raise ContractError("sogou_query_too_long")
-        # Explicit query is essential: the production default otherwise chooses a prefix term.
         from tools.wechat_sogou_index import build_search_url
         return build_search_url({}, page=page, query=text)
     if job["provider"] == "bing-rss":
