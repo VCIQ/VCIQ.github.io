@@ -63,6 +63,7 @@ async def bind_and_collect(request, context, observer, *, client_module=None, ut
     gate_class = gate_class or sibling("zhihu_transport").ZhihuGate
     job = request["job"]
     gate = gate_class(observer, job["query"]["text"], job["limits"]["maxSearchPages"])
+    gate.before_request = lambda: sibling("request_control").check(observer, platform="zhihu")
     client_module.make_async_client = gate.factory
     cookie_string, cookie_dict = await utils.convert_browser_context_cookies(context, urls=["https://www.zhihu.com"])
     if not isinstance(cookie_dict.get("d_c0"), str) or not cookie_dict["d_c0"]:
@@ -96,6 +97,7 @@ async def bind_and_collect(request, context, observer, *, client_module=None, ut
 
 
 async def execute(request, observer):
+    if request["action"] == "run": sibling("request_control").check(observer, platform="zhihu")
     upstream = Path(request["upstream"])
     sys.path.insert(0, str(upstream))
     import config

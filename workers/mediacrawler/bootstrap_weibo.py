@@ -50,6 +50,7 @@ async def bind_and_collect(request, context, observer, *, client_module=None, ut
     gate_class = gate_class or sibling("weibo_transport").WeiboGate
     job = request["job"]
     gate = gate_class(observer, job["query"]["text"], job["limits"]["maxSearchPages"])
+    gate.before_request = lambda: sibling("request_control").check(observer, platform="wb")
     client_module.make_async_client = gate.factory
     cookie_string, cookie_dict = await utils.convert_browser_context_cookies(context, urls=["https://m.weibo.cn"])
     page = await context.new_page()
@@ -72,6 +73,7 @@ async def bind_and_collect(request, context, observer, *, client_module=None, ut
 
 
 async def execute(request, observer):
+    if request["action"] == "run": sibling("request_control").check(observer, platform="wb")
     upstream = Path(request["upstream"])
     sys.path.insert(0, str(upstream))
     import config

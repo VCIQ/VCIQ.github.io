@@ -35,9 +35,10 @@ def atomic_json(state_dir: Path, relative: str, payload: dict, *, roots: tuple[P
     return destination
 
 
-def _child(job: dict, context: dict, state_dir: str, roots: tuple[str, ...], grant: dict, relative: str) -> None:
+def _child(job: dict, context: dict, state_dir: str, roots: tuple[str, ...], grant: dict, relative: str, runtime_file=None) -> None:
     from .adapters.wechat import run_job, error_result
     from .adapters.wechat_transport import PublicTransport, FetchError
+    from workers.mediacrawler import observer, request_control
     clock = lambda: datetime.now(UTC)
     started = clock()
     deadline = time.monotonic() + job["limits"]["maxWallSeconds"]
@@ -49,7 +50,10 @@ def _child(job: dict, context: dict, state_dir: str, roots: tuple[str, ...], gra
                 if time.monotonic() + wait >= deadline:
                     raise FetchError("timeout", "JOB_DEADLINE")
                 time.sleep(wait)
+                request_control.check(observer, platform="wechat", state_dir=state_dir, runtime_file=runtime_file)
                 store.consume_request(grant, job["attemptId"], clock())
+            except observer.CollectorError as exc:
+                raise FetchError("cancelled", exc.code) from None
             except ContractError as exc:
                 raise FetchError("cancelled", exc.code.upper()) from None
         transport = PublicTransport(before_request=before_request, deadline=deadline)
@@ -61,7 +65,7 @@ def _child(job: dict, context: dict, state_dir: str, roots: tuple[str, ...], gra
     atomic_json(Path(state_dir), relative, result, roots=repo_roots)
 
 
-def execute_job(job: dict, context: dict, *, state_dir: Path, roots: tuple[Path, ...], grant: dict) -> dict:
+def execute_job(job: dict, context: dict, *, state_dir: Path, roots: tuple[Path, ...], grant: dict, runtime_file=None) -> dict:
     from .adapters.wechat import error_result
     started = datetime.now(UTC)
     relative = "pending/" + job["attemptId"] + ".json"
@@ -69,7 +73,7 @@ def execute_job(job: dict, context: dict, *, state_dir: Path, roots: tuple[Path,
     if target.exists():
         raise ContractError("attempt_output_exists")
     child = multiprocessing.get_context("spawn").Process(target=_child,
-        args=(job, context, str(state_dir), tuple(str(root) for root in roots), grant, relative))
+        args=(job, context, str(state_dir), tuple(str(root) for root in roots), grant, relative, str(runtime_file) if runtime_file else None))
     child.start()
     try:
         child.join(job["limits"]["maxWallSeconds"])

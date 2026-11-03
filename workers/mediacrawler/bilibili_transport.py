@@ -106,6 +106,7 @@ class BilibiliGate:
                 if set(options) - {"headers"}: raise gate.observer.CollectorError("unsupported", "HTTP_OPTIONS_NOT_ALLOWED")
                 if gate.requests >= 1 + gate.pages + gate.records: raise gate.observer.CollectorError("cancelled", "API_REQUEST_BUDGET")
                 await gate.sleep(max(0, gate.next_request - gate.monotonic()))
+                if hasattr(gate, "before_request"): gate.before_request()
                 gate.next_request = gate.monotonic() + 2
                 gate.requests += 1
                 try:
