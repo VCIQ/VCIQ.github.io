@@ -8,7 +8,7 @@ on:
       - 'config/social_discovery.json'
       - 'tests/test_social_*.py'
       - 'tests/fixtures/social/**'
-      - 'workers/mediacrawler/upstream.lock.json'
+      - 'workers/mediacrawler/**'
       - '.github/workflows/social-shadow-contracts.yml'
 
 permissions:
@@ -25,10 +25,10 @@ jobs:
     env:
       PYTHONDONTWRITEBYTECODE: '1'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           persist-credentials: false
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: '3.12'
       - name: Run social regression tests with network denied
@@ -37,19 +37,10 @@ jobs:
           import sys
           import unittest
           from unittest.mock import patch
-
           def deny(*args, **kwargs):
               raise AssertionError('network forbidden in social shadow offline tests')
-
-          modules = (
-              'tests.test_social_contracts',
-              'tests.test_social_guard',
-              'tests.test_social_scheduler',
-              'tests.test_social_wechat',
-              'tests.test_social_execution_guards',
-          )
           with patch('socket.create_connection', deny), patch('socket.getaddrinfo', deny), patch('urllib.request.urlopen', deny):
-              suite = unittest.defaultTestLoader.loadTestsFromNames(modules)
+              suite = unittest.defaultTestLoader.discover('tests', pattern='test_social_*.py', top_level_dir='.')
               result = unittest.TextTestRunner(verbosity=2).run(suite)
           sys.exit(0 if result.wasSuccessful() else 1)
           PY
