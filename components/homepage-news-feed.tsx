@@ -328,7 +328,7 @@ export function HomepageNewsFeed({
   const favorites = useFavorites();
   const hotnessItems = useHotness();
   const preferences = useHomepagePreferences();
-  const [channel, setChannel] = useState<ChannelId>("recommend");
+  const [channel, setChannel] = useState<ChannelId>("focus");
   const [region, setRegion] = useState<RegionFilter>("全部");
   const [qualityScope, setQualityScope] = useState<QualityScope>("trusted");
   const [query, setQuery] = useState("");
