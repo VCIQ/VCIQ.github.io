@@ -13,10 +13,11 @@ from pathlib import Path
 from .contracts import ContractError, assert_safe, digest, load_json, validate
 from .guard import GuardError, output_path, runtime_paths
 from .wechat_runner import atomic_json
+from workers.mediacrawler.capabilities import available
 
 ROOT = Path(__file__).resolve().parents[2]
 BRIDGE = ROOT / "workers/mediacrawler"
-ADAPTERS = {"xhs": "xhs"}
+ADAPTERS = available(ROOT)
 REASONS = {"auth_required": "auth", "verification_required": "verification", "rate_limited": "rate_limit",
            "network_error": "network", "timeout": "timeout", "schema_error": "schema", "unsupported": "unsupported", "cancelled": "cancelled"}
 
@@ -28,6 +29,7 @@ def stamp():
 def child_environment(state_dir, *, source=None):
     source = os.environ if source is None else source
     env = {key: source[key] for key in ("PATH", "SystemRoot", "WINDIR", "LANG", "LC_ALL", "PLAYWRIGHT_BROWSERS_PATH") if key in source}
+    env.setdefault("PLAYWRIGHT_BROWSERS_PATH", str(Path(state_dir) / "browser-binaries"))
     env.update(PYTHONDONTWRITEBYTECODE="1", PYTHONUNBUFFERED="1", PYTHONUTF8="1", TZ="UTC",
                HOME=str(Path(state_dir) / "worker-home"), USERPROFILE=str(Path(state_dir) / "worker-home"),
                GIT_TERMINAL_PROMPT="0", GIT_CONFIG_NOSYSTEM="1", GIT_CONFIG_GLOBAL=os.devnull, GIT_OPTIONAL_LOCKS="0")
@@ -104,7 +106,6 @@ def profile_lock(state_dir, platform, *, roots):
             os.lseek(fd, 0, os.SEEK_SET)
             msvcrt.locking(fd, msvcrt.LK_UNLCK, 1)
         os.close(fd)
-        # Keep the lock inode; unlinking it creates a race with another opener.
 
 
 def stop_process_tree(process):
@@ -118,11 +119,13 @@ def stop_process_tree(process):
         try:
             process.wait(timeout=3)
         except subprocess.TimeoutExpired:
-            try:
-                os.killpg(process.pid, signal.SIGKILL)
-            except ProcessLookupError:
-                pass
-            process.wait(timeout=3)
+            pass
+        # A browser grandchild may outlive its parent after SIGTERM.
+        try:
+            os.killpg(process.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+        process.wait(timeout=3)
     elif os.name == "nt":
         executable = Path(os.environ["SystemRoot"]) / "System32/taskkill.exe"
         subprocess.run([str(executable), "/PID", str(process.pid), "/T", "/F"],
@@ -240,6 +243,10 @@ def execute_job(job, runtime, *, live=False, interactive=False, runner=None, ups
     input_path = output_path(root, relative + "/input.json", repo_roots=roots)
     if report_path.exists() or input_path.exists():
         raise ContractError("attempt_output_exists")
+    # Validate prospective children before mkdir: a symlinked platform directory
+    # must never redirect Chromium into an unrelated daily browser profile.
+    output_path(root, f"profiles/{platform}/.profile-check", repo_roots=roots)
+    output_path(root, "worker-home/.home-check", repo_roots=roots)
     profile = root / "profiles" / platform
     profile.mkdir(mode=0o700, parents=True, exist_ok=True)
     (root / "worker-home").mkdir(mode=0o700, exist_ok=True)
@@ -268,7 +275,6 @@ def execute_job(job, runtime, *, live=False, interactive=False, runner=None, ups
             output_path(root, relative + "/worker.json", repo_roots=roots)
             report = load_json(report_path)
             if interactive:
-                # A login operation is not a search and does not advance coverage.
                 if set(report) != {"sessionStatus", "platform"} or report["platform"] != platform or report["sessionStatus"] not in {"ready", "auth_required", "verification_required", "rate_limited", "timeout", "error"}:
                     raise ContractError("session_report_shape")
                 assert_safe(report)
