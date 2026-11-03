@@ -1,0 +1,53 @@
+name: Social shadow integration
+
+on:
+  pull_request:
+    paths:
+      - 'tools/social/**'
+      - 'workers/mediacrawler/**'
+      - 'tests/test_social_*.py'
+      - 'tests/social_orchestration_fixtures.py'
+      - '.github/workflows/social-shadow-integration.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: social-shadow-integration-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  mac-offline:
+    runs-on: macos-latest
+    timeout-minutes: 10
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run full social regressions offline with canonical Mac temporary paths
+        run: |
+          python - <<'PY'
+          import sys, tempfile, unittest
+          from pathlib import Path
+          from unittest.mock import patch
+          tempfile.tempdir = str(Path(tempfile.gettempdir()).resolve())
+          def deny(*a, **kw):
+              raise AssertionError('network forbidden in social integration')
+          with patch('socket.create_connection', deny), patch('socket.getaddrinfo', deny), patch('urllib.request.urlopen', deny):
+              modules = ['tests.' + p.stem for p in sorted(Path('tests').glob('test_social_*.py'))]
+              result = unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromNames(modules))
+          sys.exit(0 if result.wasSuccessful() else 1)
+          PY
+      - name: Verify defaults and tracked files
+        run: |
+          python -m tools.social.shadow_run --help
+          python -m tools.social.cli doctor --offline
+          git diff --exit-code
