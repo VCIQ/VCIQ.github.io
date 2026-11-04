@@ -140,6 +140,12 @@ class PublicTransport:
                 return Response(url, bytes(body).decode("utf-8", errors="replace"))
             except (TimeoutError, socket.timeout):
                 raise FetchError("timeout", "REQUEST_TIMEOUT") from None
+            except ssl.SSLCertVerificationError:
+                # Preserve certificate verification; expose only a fixed code,
+                # never the remote certificate, URL or raw OpenSSL exception.
+                raise FetchError("network_error", "TLS_CERTIFICATE_VERIFY_FAILED") from None
+            except ssl.SSLError:
+                raise FetchError("network_error", "TLS_HANDSHAKE_FAILED") from None
             except (OSError, http.client.HTTPException):
                 raise FetchError("network_error", "NETWORK_ERROR") from None
             finally:
