@@ -197,13 +197,17 @@ def run_job(job: dict, context: dict, transport, *, now=lambda: datetime.now(UTC
             rows, more = _search_page(job["provider"], response.body, response.url)
             page_receipt.update(schemaValid=True, contentItems=len(rows), hasMore=more)
             counts["searchItems"] += len(rows)
-            for row in rows:
+            for row_index, row in enumerate(rows):
                 if monotonic() >= deadline:
                     raise FetchError("timeout", "JOB_DEADLINE")
+                # The batch contract caps attempted raw records, not successful
+                # observations. Rejected details also consume this hard budget.
+                # Search cards left untouched are not normalizer budgetSkipped
+                # rows; retain their count separately without inventing results.
+                if counts["rawRows"] >= job["limits"]["maxRecords"]:
+                    result["diagnostics"]["detailsNotRequested"] = len(rows) - row_index
+                    break
                 counts["rawRows"] += 1
-                if len(observations) >= job["limits"]["maxRecords"]:
-                    counts["budgetSkipped"] += 1
-                    continue
                 direct = ""
                 try:
                     direct = _resolve(row["url"], transport)
@@ -237,7 +241,7 @@ def run_job(job: dict, context: dict, transport, *, now=lambda: datetime.now(UTC
                     if isinstance(exc, FetchError) and exc.status in {"auth_required", "verification_required", "rate_limited", "timeout", "cancelled"}:
                         raise
             page_receipt["processed"] = True
-            if len(observations) >= job["limits"]["maxRecords"]:
+            if counts["rawRows"] >= job["limits"]["maxRecords"]:
                 stop = "item_limit"
                 break
             if more is False:
