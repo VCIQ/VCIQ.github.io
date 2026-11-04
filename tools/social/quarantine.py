@@ -16,7 +16,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from .batch import ROOT, MAX_LINE, decode, private_root, read_private
-from .contracts import ContractError, assert_safe, digest, validate
+from .contracts import ContractError, assert_safe, canonical_bytes, digest, validate
 from .guard import assert_unchanged, output_path, protected_snapshot, runtime_paths
 from .scheduler import instant, utc
 from .scheduler_state import read_state
@@ -77,12 +77,14 @@ def _inspect(root, run_id, roots, now, decision=None):
     def exists(relative):
         return output_path(root, relative, repo_roots=roots).exists()
 
-    def read(relative):
+    def account(raw):
         nonlocal used
-        raw = read_private(root, relative, roots, maximum=4 * 1024 * 1024 + MAX_LINE)
         used += len(raw)
         _require(used <= MAX_EVIDENCE_BYTES, "quarantine_evidence_limit")
         return raw
+
+    def read(relative):
+        return account(read_private(root, relative, roots, maximum=4 * 1024 * 1024 + MAX_LINE))
 
     def sha(raw):
         return hashlib.sha256(raw).hexdigest()
@@ -104,11 +106,11 @@ def _inspect(root, run_id, roots, now, decision=None):
         raw_report = read(prefix + "/report.json")
     else:
         _require(isinstance(decision["originalReportRaw"], str), "quarantine_decision_invalid")
-        raw_report = decision["originalReportRaw"].encode("utf-8")
+        raw_report = account(decision["originalReportRaw"].encode("utf-8"))
         if not exists(prefix + "/closure.json"):
             _require(read(prefix + "/report.json") == raw_report, "quarantine_original_report_changed")
         else:
-            _require(load(root, prefix + "/closure.json", roots) == decision["closure"], "quarantine_closure_changed")
+            _require(_unwrap(read(prefix + "/closure.json")) == decision["closure"], "quarantine_closure_changed")
     report = _unwrap(raw_report)
     _require(isinstance(report, dict) and report.get("runId") == run_id and report.get("status") == "blocked"
         and report.get("pipelineComplete") is False and report.get("stage") == "collect-results"
@@ -120,12 +122,15 @@ def _inspect(root, run_id, roots, now, decision=None):
         with SignalStore(root, repo_roots=roots, readonly=True) as store:
             _require(store.db.execute("SELECT 1 FROM batches WHERE run_id=?", (run_id,)).fetchone() is None,
                 "quarantine_run_already_imported")
+    _require(exists("state.sqlite3"), "quarantine_scheduler_missing")
     state = read_state(root, repo_roots=roots)
+    _require("wechat" in state["platforms"], "quarantine_scheduler_incomplete")
     for job in plan["jobs"]:
-        for lease in (state["queries"].get(job["queryId"], {}), state["platforms"].get("wechat", {})):
+        _require(job["queryId"] in state["queries"], "quarantine_scheduler_incomplete")
+        for lease in (state["queries"][job["queryId"]], state["platforms"]["wechat"]):
             _require(not lease.get("leaseUntil") or instant(lease["leaseUntil"]) <= now,
                 "quarantine_active_lease")
-        pause = state["platforms"].get("wechat", {})
+        pause = state["platforms"]["wechat"]
         _require(not pause.get("pauseReason"), "quarantine_platform_pause")
 
     sources, statuses, completed, valid_results, rejected = {}, [], [], {}, []
@@ -139,12 +144,12 @@ def _inspect(root, run_id, roots, now, decision=None):
         saved = _unwrap(raw_saved) if raw_saved is not None else None
         pending = decode(raw_pending) if raw_pending is not None else None
         checkpoint = None
-        if exists("state.sqlite3"):
-            try:
-                checkpoint = checkpoint_results(root, [job], roots)[0]
-            except ContractError as exc:
-                if exc.code != "checkpoint_result_missing":
-                    raise
+        try:
+            checkpoint = checkpoint_results(root, [job], roots)[0]
+            account(canonical_bytes(checkpoint))
+        except ContractError as exc:
+            if exc.code != "checkpoint_result_missing":
+                raise
         values = [v for v in (saved, pending, checkpoint) if v is not None]
         _require(len({digest(v) for v in values}) <= 1, "quarantine_result_conflict")
         result = values[0] if values else None
