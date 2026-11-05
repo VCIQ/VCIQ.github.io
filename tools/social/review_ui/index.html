@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>VCIQ · 科创线索影子审核</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header><p class="eyebrow">VCIQ / SOCIAL DISCOVERY</p><h1>科创线索 · 影子审核</h1><p>本机只读工作台 · 不触发采集 · 不向正式项目池发布</p></header>
+  <main>
+    <aside class="notice"><strong>接受线索 ≠ 确认事实</strong><p>这些材料尚未交叉验证。公司名称仅为候选提示，分类来自字面关键词，必须查看原文中的否定、猜测和引用语境。接受后仍需一手证据。</p></aside>
+    <section class="toolbar" aria-label="队列操作">
+      <label>查看范围<select id="scope"><option value="current">当前候选</option><option value="history">旧证据版本（只读）</option></select></label>
+      <button id="refresh" type="button">刷新队列</button><span id="summary" role="status" aria-live="polite">正在读取…</span>
+    </section>
+    <p id="message" role="alert"></p>
+    <section id="items" aria-label="线索列表"></section>
+    <nav class="pagination" aria-label="队列分页"><button id="previous" type="button">上一页</button><span id="page"></span><button id="next" type="button">下一页</button></nav>
+    <section class="instructions"><h2>如何记录审核</h2><p>查看证据后选择接受或拒绝，导出决定 JSON。将文件放入私有 STATE 目录，再使用 review_cli decide 校验并以 --apply 应用。网页本身没有写入接口。刷新后可看到已记录状态。</p><p>若证据或队列已更新，旧请求会被拒绝，请重新同步和审核；不要修改指纹强行提交。</p></section>
+  </main>
+  <dialog id="decision-dialog" aria-labelledby="dialog-title">
+    <h2 id="dialog-title">导出审核决定</h2><p id="decision-label"></p>
+    <label>审核者标记（不是邮箱）<input id="reviewer" maxlength="160" autocomplete="off" placeholder="例如 local-reviewer"></label>
+    <label>审核备注<textarea id="note" maxlength="600" rows="4">仅记录线索审核，不确认事实、主体身份或正式入池。</textarea></label>
+    <label class="check"><input id="ack" type="checkbox">我理解这不是事实确认或发布操作。</label>
+    <p id="dialog-error" role="alert"></p>
+    <div class="actions"><button id="cancel" type="button">取消</button><button id="export" type="button">下载决定 JSON</button></div>
+  </dialog>
+  <footer>discovery-only / 本地证据快照 / 无远程资源与统计脚本</footer>
+</body>
+</html>

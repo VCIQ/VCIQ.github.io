@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "kind": "discovery_policy",
+  "enabled": false,
+  "mode": "shadow",
+  "publish": false,
+  "platforms": {
+    "wechat": {
+      "enabled": false
+    },
+    "xhs": {
+      "enabled": false
+    },
+    "wb": {
+      "enabled": false
+    },
+    "bili": {
+      "enabled": false
+    },
+    "zhihu": {
+      "enabled": false
+    }
+  },
+  "budget": {
+    "jobsPerPlatformPerRun": 5,
+    "pagesPerJob": 1,
+    "recordsPerJob": 20,
+    "wallSecondsPerJob": 180
+  },
+  "cadenceHours": {
+    "priority": 6,
+    "core": 24,
+    "longTail": 168
+  },
+  "policyVersion": "shadow-v1"
+}
