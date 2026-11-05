@@ -12,6 +12,7 @@ from email.utils import parsedate_to_datetime
 from urllib.parse import urljoin, urlsplit, urlunsplit
 
 MAX_RESPONSE_BYTES = 2 * 1024 * 1024
+BING_SEARCH_HOSTS = frozenset({"www.bing.com", "cn.bing.com"})
 
 
 class FetchError(RuntimeError):
@@ -39,12 +40,30 @@ def checked_url(value: str) -> str:
             raise ValueError
         rules = {"mp.weixin.qq.com": r"/s(?:/[A-Za-z0-9_-]+)?",
                  "weixin.sogou.com": r"/(?:weixin|link)?",
-                 "www.bing.com": r"/search"}
+                 **{host: r"/search" for host in BING_SEARCH_HOSTS}}
         if parts.hostname not in rules or not re.fullmatch(rules[parts.hostname], parts.path):
             raise ValueError
         return value
     except ValueError:
         raise FetchError("schema_error", "UNSAFE_DESTINATION") from None
+
+
+def _verification_redirect(source: str, target: str) -> bool:
+    """Recognize the observed Sogou challenge without requesting its destination.
+
+    An HTTP challenge redirect remains unfollowed: this classifier is not an
+    exception to HTTPS, destination validation, or the request budget.
+    """
+    try:
+        origin, destination = urlsplit(source), urlsplit(target)
+        return (origin.hostname == "weixin.sogou.com"
+            and destination.hostname == "weixin.sogou.com"
+            and destination.scheme in {"https", "http"}
+            and destination.path in {"/antispider", "/antispider/"}
+            and destination.username is None and destination.port is None
+            and not destination.fragment and not re.search(r"[\s\\\x00-\x1f]", target))
+    except ValueError:
+        return False
 
 
 class _PinnedConnection(http.client.HTTPSConnection):
@@ -95,11 +114,18 @@ class PublicTransport:
                 response = connection.getresponse()
                 if response.status in {301, 302, 303, 307, 308}:
                     location = response.getheader("Location", "")
-                    if not location or redirect == 3:
+                    if not location:
                         raise FetchError("schema_error", "REDIRECT_LIMIT")
-                    target = checked_url(urljoin(url, decode_url(location)))
+                    destination = urljoin(url, decode_url(location))
+                    if _verification_redirect(url, destination):
+                        raise FetchError("verification_required", "SEARCH_VERIFICATION_REDIRECT")
+                    if redirect == 3:
+                        raise FetchError("schema_error", "REDIRECT_LIMIT")
+                    target = checked_url(destination)
                     target_host = urlsplit(target).hostname
                     allowed_hosts = {parts.hostname}
+                    if parts.hostname in BING_SEARCH_HOSTS and parts.path == "/search":
+                        allowed_hosts.update(BING_SEARCH_HOSTS)
                     if parts.hostname == "weixin.sogou.com" and parts.path == "/link":
                         allowed_hosts.add("mp.weixin.qq.com")
                     if target_host not in allowed_hosts:
