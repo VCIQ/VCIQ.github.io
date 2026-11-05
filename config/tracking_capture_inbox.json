@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-05T04:18:19+00:00",
+  "generatedAt": "2026-11-05T04:19:58+00:00",
   "records": [
     {
       "id": "capture-e6dc299edec77946",
@@ -53,13 +53,15 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "辅导备案",
-        "targetId": "technology-54ca975b6c2338f34622",
+        "targetId": "topic:辅导备案",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "辅导备案",
         "reclassified": false
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "complete"
     },
     {
       "id": "capture-ff43bfda737b2bd8",
@@ -109,13 +111,15 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "脑机接口",
-        "targetId": "technology-1846176c488bf8bd33e4",
+        "targetId": "topic:脑机接口",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "脑机接口",
         "reclassified": false
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "complete"
     },
     {
       "id": "capture-19fb65356d5c793f",
@@ -165,7 +169,9 @@
         "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
         "decisionKey": "术理创新",
         "reclassified": false
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "needs_enrichment"
     },
     {
       "id": "capture-339cb010301be988",
@@ -3351,19 +3357,19 @@
       ],
       "note": "",
       "resolution": {
-        "status": "review",
+        "status": "resolved",
         "requestedType": "company",
-        "entityType": "company",
+        "entityType": "topic",
         "canonicalName": "宇算星河",
-        "targetId": "",
-        "confidence": "low",
-        "source": "unresolved",
-        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "targetId": "topic:宇算星河",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "宇算星河",
-        "reclassified": false
+        "reclassified": true
       },
       "manualDecisionStatus": "approved",
-      "identityState": "needs_enrichment"
+      "identityState": "conflict"
     },
     {
       "id": "capture-228c204a1897def2",
@@ -11215,19 +11221,19 @@
       ],
       "note": "关系审核确认:The source directly concerns orbital/space computing and supports an aerospace-information relation.",
       "resolution": {
-        "status": "review",
+        "status": "resolved",
         "requestedType": "company",
-        "entityType": "company",
+        "entityType": "topic",
         "canonicalName": "一苇宇航",
-        "targetId": "",
-        "confidence": "low",
-        "source": "unresolved",
-        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "targetId": "topic:一苇宇航",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "一苇宇航",
-        "reclassified": false
+        "reclassified": true
       },
       "manualDecisionStatus": "approved",
-      "identityState": "needs_enrichment"
+      "identityState": "conflict"
     },
     {
       "id": "capture-3e0ec2e269355443",
@@ -11264,17 +11270,17 @@
       "resolution": {
         "status": "resolved",
         "requestedType": "company",
-        "entityType": "company",
+        "entityType": "topic",
         "canonicalName": "一苇宇航",
-        "targetId": "company-candidate:一苇宇航",
-        "confidence": "medium",
-        "source": "source-context",
-        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "targetId": "topic:一苇宇航",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "一苇宇航",
-        "reclassified": false
+        "reclassified": true
       },
       "manualDecisionStatus": "approved",
-      "identityState": "needs_enrichment"
+      "identityState": "conflict"
     },
     {
       "id": "capture-358bbe62ad97a56c",
@@ -31403,7 +31409,6 @@
         "space"
       ],
       "trackNames": [
-        "AI / AGI",
         "空天信息",
         "商业航天"
       ],
@@ -31421,7 +31426,6 @@
       "capturedBy": "VCIQ",
       "status": "applied",
       "appliedTo": [
-        "ai:sampleCompanies",
         "track-mcbl4:sampleCompanies",
         "space:sampleCompanies"
       ],
@@ -31432,17 +31436,17 @@
       "resolution": {
         "status": "resolved",
         "requestedType": "company",
-        "entityType": "company",
+        "entityType": "topic",
         "canonicalName": "一苇宇航",
-        "targetId": "company-candidate:一苇宇航",
-        "confidence": "medium",
-        "source": "source-context",
-        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "targetId": "topic:一苇宇航",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "一苇宇航",
-        "reclassified": false
+        "reclassified": true
       },
       "manualDecisionStatus": "approved",
-      "identityState": "needs_enrichment"
+      "identityState": "conflict"
     },
     {
       "id": "capture-9893e5d21288df03",
