@@ -50,7 +50,10 @@ async def execute(request, observer):
     async with async_playwright() as playwright:
         context = await playwright.chromium.launch_persistent_context(
             str(profile), headless=request["action"] != "session", accept_downloads=False,
-            service_workers="block", timeout=30000)
+            # Use Playwright's bundled full Chromium for both session and headless
+            # collection. The separate headless-shell process failed to start on
+            # the acceptance Mac; never switch to a daily browser or retry login.
+            channel="chromium", service_workers="block", timeout=30000)
         try:
             if request["action"] == "session":
                 page = await context.new_page()
