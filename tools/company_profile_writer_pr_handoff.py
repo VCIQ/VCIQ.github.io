@@ -361,7 +361,25 @@ def submit(workspace, github, *, run_id: str, attempt: int,
             "ciChecksVerified": False, "merged": False, "published": False,
             "remoteWritesAttempted": True,
         }
-    except (GateError, HandoffError, OSError, UnicodeError, ValueError, TypeError, RecursionError):
+    except GateError as exc:
+        code = str(exc) if re.fullmatch(r"[A-Z0-9_]{1,80}", str(exc)) else "WRITER_GATE_REJECTED"
+        return {
+            "decision": "blocked", "stage": stage,
+            "errorCode": code,
+            "remoteWritesAttempted": mutation_attempted,
+            "manualTriageRequired": mutation_attempted,
+            "merged": False, "published": False,
+        }
+    except HandoffError as exc:
+        code = str(exc) if re.fullmatch(r"[A-Z0-9_]{1,80}", str(exc)) else "HANDOFF_FAILED_CLOSED"
+        return {
+            "decision": "blocked", "stage": stage,
+            "errorCode": code,
+            "remoteWritesAttempted": mutation_attempted,
+            "manualTriageRequired": mutation_attempted,
+            "merged": False, "published": False,
+        }
+    except (OSError, UnicodeError, ValueError, TypeError, RecursionError):
         return {
             "decision": "blocked", "stage": stage,
             "errorCode": "HANDOFF_FAILED_CLOSED",
