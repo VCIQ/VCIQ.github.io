@@ -61,6 +61,7 @@ def private_root(state_dir, repo_roots):
 
 
 def read_private(root, relative, roots, *, maximum=MAX_FILE):
+    root = private_root(root, roots)
     path = output_path(root, relative, repo_roots=roots)
     try:
         fd = os.open(path, os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0))
@@ -84,6 +85,7 @@ def read_private(root, relative, roots, *, maximum=MAX_FILE):
 
 
 def write_private(root, relative, raw, roots):
+    root = private_root(root, roots)
     path = output_path(root, relative, repo_roots=roots)
     path.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
     output_path(root, relative, repo_roots=roots)

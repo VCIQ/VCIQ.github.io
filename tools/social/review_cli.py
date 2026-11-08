@@ -9,7 +9,7 @@ from pathlib import Path
 from .batch import ROOT, MAX_LINE, private_root
 from .contracts import ContractError, load_json, validate
 from .guard import GuardError, assert_unchanged, output_path, protected_snapshot, runtime_paths
-from .lead_builder import company_index, proposal_hash, select_leads
+from .lead_builder import company_index, proposal_hash, select_leads, triage_report
 from .review import ReviewStore, read_transaction
 from .signal_store import SignalStore
 from .storage_cli import input_json
@@ -47,6 +47,7 @@ def main(argv=None):
     commands = parser.add_subparsers(dest="command", required=True)
     sync = commands.add_parser("sync", help="Preview leads; --apply pins evidence and publishes a private queue")
     sync.add_argument("--apply", action="store_true")
+    triage = commands.add_parser("triage", help="Read-only background/queue selection counts; never changes reviews")
     show = commands.add_parser("list", help="Read a page without creating or modifying databases")
     show.add_argument("--offset", type=int, default=0)
     show.add_argument("--limit", type=int, default=50)
@@ -54,10 +55,10 @@ def main(argv=None):
     decision = commands.add_parser("decide", help="Validate a decision file; --apply records it once")
     decision.add_argument("--request", required=True)
     decision.add_argument("--apply", action="store_true")
-    for command in (sync, show, decision):
+    for command in (sync, show, decision, triage):
         command.add_argument("--state-dir", type=Path, required=True)
         command.add_argument("--runtime-config", type=Path, required=True)
-    for command in (sync, decision):
+    for command in (sync, decision, triage):
         command.add_argument("--companies", help="Optional registry snapshot under private state")
     args = parser.parse_args(argv)
     before = None
@@ -74,8 +75,10 @@ def main(argv=None):
             if args.command == "decide":
                 request = validate(input_json(root, args.request, roots, maximum=MAX_LINE), expected_kind="decision_request")
                 require_database(root, roots, "reviews.sqlite3")
-            with SignalStore(root, repo_roots=roots, readonly=not args.apply) as source:
-                if args.command == "sync" and not args.apply:
+            with SignalStore(root, repo_roots=roots, readonly=not getattr(args, "apply", False)) as source:
+                if args.command == "triage":
+                    with read_transaction(source.db): result = triage_report(source, index)
+                elif args.command == "sync" and not args.apply:
                     with read_transaction(source.db): proposals = select_leads(source, index)
                     result = {"ok": True, "candidateCount": len(proposals), "proposalHash": proposal_hash(proposals),
                               "applied": False, "evidencePinned": False, "writesPerformed": False}

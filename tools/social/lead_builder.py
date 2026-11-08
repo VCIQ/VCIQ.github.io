@@ -7,6 +7,7 @@ import re
 import unicodedata
 
 from .contracts import ContractError, assert_safe, digest, validate
+from .lead_triage import classify_material
 
 VERSION = "social-review-v1"
 MAX_SIGNALS = 5000
@@ -74,6 +75,8 @@ def build_leads(document, registry):
     if len(suggestions) > 50: raise ContractError("review_entity_suggestions_limit")
     if not text or not (suggestions or any(mentioned(term, text) for term in doc["matchedTerms"])):
         return []
+    if classify_material(doc["title"], doc["excerpt"])["disposition"] == "background":
+        return []
     # A unique textual mention is still not an attribution of the claim to that company.
     subject = {"companyId": None, "companyName": suggestions[0]["companyName"] if len(suggestions) == 1 else None,
                "resolution": "ambiguous" if len(suggestions) > 1 else "unresolved"}
@@ -111,3 +114,33 @@ def select_leads(source, registry):
 def proposal_hash(proposals):
     # Observation time, engagement and unrelated registry additions do not cause re-review.
     return digest([(row["item"]["candidateKey"], row["item"]["candidateFingerprint"]) for row in proposals])
+
+
+def triage_report(source, registry):
+    """Read-only aggregate audit; no article text, account data or decisions."""
+    from .lead_triage import VERSION as TRIAGE_VERSION
+    if source.db.execute("SELECT COUNT(*) FROM signals").fetchone()[0] > MAX_SIGNALS:
+        raise ContractError("review_signal_limit")
+    result = {"policyVersion": TRIAGE_VERSION, "totalSignals": 0, "reviewableSignals": 0,
+              "backgroundSignals": 0, "unrelatedSignals": 0, "candidateCount": 0,
+              "reasonCounts": {}, "writesPerformed": False}
+    for row in source.db.execute("SELECT latest_json FROM signals ORDER BY signal_id"):
+        doc = validate(json.loads(row[0]), expected_kind="signal_observation")
+        result["totalSignals"] += 1
+        proposals = build_leads(doc, registry)
+        if proposals:
+            result["reviewableSignals"] += 1
+            result["candidateCount"] += len(proposals)
+            if result["candidateCount"] > MAX_CANDIDATES: raise ContractError("review_candidate_limit")
+        else:
+            text = (doc["title"] + " " + doc["excerpt"]).strip()
+            relevant = any(mentioned(term, text) for term in doc["matchedTerms"]) or any(
+                mentioned(alias, text) for company in registry for alias in company["aliases"])
+            classification = classify_material(doc["title"], doc["excerpt"])
+            if relevant and classification["disposition"] == "background":
+                result["backgroundSignals"] += 1
+                reason = classification["reason"]
+                result["reasonCounts"][reason] = result["reasonCounts"].get(reason, 0) + 1
+            else:
+                result["unrelatedSignals"] += 1
+    return {"ok": True, **result}
