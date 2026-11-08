@@ -157,6 +157,13 @@ class HandoffOrchestrationTests(unittest.TestCase):
         self.assertEqual(result["decision"], "blocked_stale_main")
         self.assertFalse(result["remoteWritesAttempted"])
 
+    def test_preflight_error_exposes_only_fixed_safe_error_code(self):
+        gh = FakeGithub(fail_at="base")
+        result = run(gh)
+        self.assertEqual(result["stage"], "preflight")
+        self.assertEqual(result["errorCode"], "SYNTHETIC_UPSTREAM_FAILURE")
+        self.assertFalse(result["remoteWritesAttempted"])
+
     def test_no_data_changes_is_noop_without_github_io(self):
         gh = FakeGithub()
         result = submit(SimpleNamespace(snapshot=lambda: None), gh,
