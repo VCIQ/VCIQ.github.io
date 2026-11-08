@@ -101,6 +101,13 @@ class CompanyProfileWriterPrGateTests(unittest.TestCase):
             ):
                 decide(payload(**update))
 
+    def test_sandbox_base_has_separate_candidate_namespace(self):
+        result = decide(payload(baseBranch="codex/writer-token-smoke-base-20261108"))
+        self.assertEqual(result["decision"], "would_prepare_draft_pr")
+        self.assertEqual(result["baseBranch"], "codex/writer-token-smoke-base-20261108")
+        self.assertTrue(result["candidateBranch"].startswith(
+            "automation/company-profile-refresh-smoke/"))
+
     def test_no_unverified_sha_or_fake_run_id(self):
         for update in ({"sourceHeadSha": "main"}, {"observedMainSha": "B" * 40},
                        {"runId": "12/3"}, {"runAttempt": True}, {"runAttempt": 21}):
