@@ -35,7 +35,9 @@ Pages. Replacing only the push command is unsafe:
    `public/data/venture_profiles.json` changed, and compare the latest main
    HEAD to the recorded SHA. On drift, **abort without `-X theirs`**.
 4. Obtain an atomic *one-use* reservation under the fixed branch
-   `automation/company-profile-refresh/reservation`. If it already exists,
+   `automation/company-profile-refresh/reservation` (or the separately
+   namespaced smoke reservation for the explicitly allowlisted sandbox base).
+   If it already exists,
    or any prior candidate branch or open proposal exists, fail closed. After
    acquiring it, refresh main/PR/branch inventories; on concurrent change,
    abort and **keep the reservation for operator triage**.
@@ -92,7 +94,16 @@ suppressed stderr, not `shell=True`. It only creates new refs, Git objects and
 Draft PRs. It does not execute the existing crawler, rebase, merge, write
 `main`, deploy Pages or manage tokens.
 
-**No live acceptance has occurred.** All GitHub operations in
+For the token smoke only, the adapter supports the exact sandbox base branch
+`codex/writer-token-smoke-base-20261108` and a **separate** namespace
+`automation/company-profile-refresh-smoke/`. It cannot select an arbitrary
+base branch; smoke reservations cannot collide with production reservations.
+This allowlist exists solely to prove the real adapter's API behavior without
+opening a synthetic data PR against `main`.
+
+**No live adapter acceptance has occurred.** The separate GitHub Token
+permission smoke is recorded in Issue #664; it did not invoke this adapter.
+All GitHub operations in
 `tests/test_company_profile_writer_pr_handoff.py` use injected synthetic
 GitHub behavior; real `git` tests use only a disposable temporary repository
 with a synthetically configured remote URL and never contact that remote.
