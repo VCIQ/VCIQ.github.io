@@ -112,7 +112,7 @@ async def execute(request, observer):
     async with async_playwright() as playwright:
         context = await playwright.chromium.launch_persistent_context(
             request["profile"], headless=request["action"] != "session", accept_downloads=False,
-            service_workers="block", timeout=30000)
+            channel="chromium", service_workers="block", timeout=30000)
         try:
             if request["action"] == "session":
                 page = await context.new_page()
