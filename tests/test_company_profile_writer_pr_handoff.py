@@ -13,6 +13,8 @@ from unittest.mock import patch
 from tools.company_profile_writer_pr_handoff import (
     RESERVATION, DetachedWorkspace, GitHubCli, HandoffError, Snapshot, submit,
 )
+from tools.company_profile_writer_pr_handoff import SMOKE_RESERVATION
+from tools.company_profile_writer_pr_gate import SMOKE_BASE_BRANCH, SMOKE_BRANCH_PREFIX
 
 BASE = "a" * 40
 OTHER = "b" * 40
@@ -34,7 +36,11 @@ class Prepared:
 class FakeGithub:
     token_kind = "GITHUB_TOKEN"
 
-    def __init__(self, *, main_shas=(), open_second=(), open_after=2, fail_at=""):
+    def __init__(self, *, base_branch="main", main_shas=(), open_second=(), open_after=2, fail_at=""):
+        self.base_branch = base_branch
+        self.branch_prefix = ("automation/company-profile-refresh/" if base_branch == "main"
+                              else SMOKE_BRANCH_PREFIX)
+        self.reservation_ref = RESERVATION if base_branch == "main" else SMOKE_RESERVATION
         self.main_shas = list(main_shas) or [BASE] * 5
         self.open_second = list(open_second)
         self.open_after = open_after
@@ -50,8 +56,8 @@ class FakeGithub:
         if name == self.fail_at:
             raise HandoffError("SYNTHETIC_UPSTREAM_FAILURE")
 
-    def main_sha(self):
-        self._step("main")
+    def base_sha(self):
+        self._step("base")
         index = min(self.main_reads, len(self.main_shas) - 1)
         self.main_reads += 1
         return self.main_shas[index]
@@ -79,12 +85,14 @@ class FakeGithub:
 
     def create_draft_pr(self, branch, commit, run_id):
         self._step("pr")
-        self.pr = {"branch": branch, "sha": commit, "run_id": run_id, "draft": True}
+        self.pr = {"branch": branch, "sha": commit, "run_id": run_id,
+                   "draft": True, "base": self.base_branch}
         return 6650
 
     def verify_pr(self, number, branch, commit):
         self._step("verify")
-        if (number, branch, commit) != (6650, BRANCH, COMMIT):
+        expected = self.branch_prefix + "run-12345-attempt-1"
+        if (number, branch, commit) != (6650, expected, COMMIT):
             raise AssertionError("wrong PR")
 
 
@@ -124,6 +132,16 @@ class HandoffOrchestrationTests(unittest.TestCase):
         self.assertFalse(result["published"])
         self.assertEqual(gh.calls.count("commit"), 1)
         self.assertEqual(gh.calls.count("pr"), 1)
+
+    def test_sandbox_base_creates_only_sandbox_namespaced_refs_and_pr(self):
+        gh = FakeGithub(base_branch=SMOKE_BASE_BRANCH)
+        result = run(gh)
+        self.assertEqual(result["decision"], "draft_pr_opened")
+        self.assertEqual(result["baseBranch"], SMOKE_BASE_BRANCH)
+        self.assertEqual(result["candidateBranch"],
+                         SMOKE_BRANCH_PREFIX + "run-12345-attempt-1")
+        self.assertEqual(gh.branches, [SMOKE_RESERVATION,
+                         SMOKE_BRANCH_PREFIX + "run-12345-attempt-1"])
 
     def test_prior_reservation_prevents_duplicate_run_before_writes(self):
         gh = FakeGithub()
@@ -241,6 +259,7 @@ class GithubAdapterContractTests(unittest.TestCase):
 
     def test_incomplete_pagination_fails_closed(self):
         gh = object.__new__(GitHubCli)
+        gh.branch_prefix = "automation/company-profile-refresh/"
         gh._api = lambda path, payload=None: [{"name": "main"}] * 100
         with patch("tools.company_profile_writer_pr_handoff.MAX_PAGE", 2):
             with self.assertRaisesRegex(HandoffError, "INCOMPLETE"):
@@ -270,12 +289,13 @@ class GithubAdapterContractTests(unittest.TestCase):
                 returncode=1, stdout="PRIVATE-RESPONSE", stderr="PRIVATE-ERROR",
             )):
                 with self.assertRaises(HandoffError) as caught:
-                    gh.main_sha()
+                    gh.base_sha()
         self.assertNotIn("PRIVATE", str(caught.exception))
         self.assertNotIn("SYNTHETIC-SECRET", str(caught.exception))
 
     def test_pr_requires_draft_correct_branch_and_exact_commit(self):
         gh = object.__new__(GitHubCli)
+        gh.base_branch = "main"
         good = {"draft": True, "state": "open", "merged_at": None,
                 "head": {"ref": BRANCH, "sha": COMMIT,
                          "repo": {"full_name": "VCIQ/VCIQ.github.io"}},
