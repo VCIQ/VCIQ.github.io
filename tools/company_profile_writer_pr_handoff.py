@@ -329,6 +329,12 @@ def submit(workspace, github, *, run_id: str, attempt: int,
             raise HandoffError("HANDOFF_MAIN_ADVANCED")
         stage = "candidate"
         github.create_ref(branch, commit)
+        # Close the window between candidate ref creation and PR creation.
+        # A concurrent proposal or new candidate remains a manual-triage case.
+        stage = "preproposal"
+        if (github.main_sha() != first_main or github.open_proposals()
+            or github.candidate_branches() != sorted([RESERVATION, branch])):
+            raise HandoffError("HANDOFF_RACE_DETECTED")
         stage = "proposal"
         number = github.create_draft_pr(branch, commit, run_id)
         stage = "verify"
