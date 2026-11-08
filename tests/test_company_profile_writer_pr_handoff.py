@@ -94,6 +94,13 @@ def run(gh, prepared=None, *, authorized=True):
 
 
 class HandoffOrchestrationTests(unittest.TestCase):
+    def test_root_owned_connector_cannot_run_live_adapter(self):
+        with patch.dict(os.environ, {"GH_TOKEN": "SYNTHETIC-SECRET"}, clear=False):
+            adapter = GitHubCli()
+            with patch("tools.company_profile_writer_pr_handoff.os.geteuid", return_value=0):
+                with self.assertRaisesRegex(HandoffError, "UNPRIVILEGED_OPERATOR_REQUIRED"):
+                    run(adapter)
+
     def test_default_requires_explicit_operator_approval(self):
         gh, prepared = FakeGithub(), Prepared()
         with self.assertRaisesRegex(HandoffError, "EXPLICIT_APPROVAL_REQUIRED"):
