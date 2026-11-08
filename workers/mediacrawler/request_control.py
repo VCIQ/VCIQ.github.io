@@ -16,7 +16,10 @@ from pathlib import Path
 
 def check(observer, *, platform, state_dir=None, runtime_file=None):
     state_value = state_dir or os.environ.get("VCIQ_SHADOW_STATE")
-    if state_value is None: return
+    if state_value is None:
+        if runtime_file is not None or os.environ.get("VCIQ_SHADOW_RUNTIME") is not None:
+            raise observer.CollectorError("cancelled", "SHADOW_CONTROL_UNAVAILABLE")
+        return
     def fail(code): raise observer.CollectorError("cancelled", code)
     try:
         root = Path(state_value)
@@ -32,7 +35,7 @@ def check(observer, *, platform, state_dir=None, runtime_file=None):
         # lexists intentionally treats dangling links/directories as a stop.
         if os.path.lexists(root / "shadow.stop"): fail("SHADOW_STOP_REQUESTED")
         selected = runtime_file or os.environ.get("VCIQ_SHADOW_RUNTIME")
-        if selected is None: return
+        if selected is None: fail("SHADOW_CONTROL_UNAVAILABLE")
         path = Path(selected)
         if (not path.is_absolute() or ".." in path.parts or not path.is_relative_to(root)
                 or any(p.is_symlink() for p in (path, *path.parents))):
