@@ -1,7 +1,8 @@
-# Company-profile writer migration: offline PR-handoff gate (proposal only)
+# Company-profile writer migration: isolated PR-handoff implementation
 
-**Status: design and pure synthetic gate; not deployed, authorized, or wired to
-any scheduled workflow.** Parent governance item: GitHub Issue #664.
+**Status: callable implementation and synthetic tests; NOT deployed,
+authorized to run against GitHub, or wired to any scheduled workflow.**
+Parent governance item: GitHub Issue #664.
 This must remain independent of social-shadow Draft PR #662.
 
 ## Existing workflow risk
@@ -33,12 +34,24 @@ Pages. Replacing only the push command is unsafe:
    `public/data/company_profile_refresh_queue.json` and
    `public/data/venture_profiles.json` changed, and compare the latest main
    HEAD to the recorded SHA. On drift, **abort without `-X theirs`**.
-4. For a new, unclaimed `automation/company-profile-refresh/run-<id>-attempt-<n>`
-   branch, stage a bounded commit and propose a **Draft** PR targeting `main`.
-   No automatic merge and no direct push to `main`. Any existing candidate
-   branch, even from a prior run, requires operator triage / confirmed cleanup
-   rather than creating another proposal or force-overwriting that branch.
-5. On the resulting PR, prove actual required checks for the exact head,
+4. Obtain an atomic *one-use* reservation under the fixed branch
+   `automation/company-profile-refresh/reservation`. If it already exists,
+   or any prior candidate branch or open proposal exists, fail closed. After
+   acquiring it, refresh main/PR/branch inventories; on concurrent change,
+   abort and **keep the reservation for operator triage**.
+5. Create the candidate as an immutable Git tree/commit based on the recorded
+   main SHA, changing *only* the two allowlisted public JSON files. Atomically
+   create a new `automation/company-profile-refresh/run-<id>-attempt-<n>` ref
+   from that commit. GitHub ref creation rejects an existing branch; no
+   `git push --force`, rebase or `HEAD:main` are used.
+6. Open a **Draft** PR targeting `main`, then re-read its metadata to verify
+   the exact candidate SHA, same repository, Draft state and base branch.
+   Failed or ambiguous creation/verification is **not retried**; preserve
+   reservation/candidate refs until a maintainer reconciles GitHub state.
+7. Never delete the reservation automatically, including after successful PR
+   creation. A separate reviewed recovery procedure must determine whether
+   to close, merge, or abandon the proposal and when to remove both refs.
+8. On the resulting PR, prove actual required checks for the exact head,
    independent reviewer approval, fresh main/queue consistency, and explicit
    post-merge publication handoff before completing migration.
 
@@ -60,6 +73,28 @@ Its branch and idempotency rules are exercised in
 The `simulatedOnly`, `handoffExecuted` and `approvalGateVerified`
 fields intentionally prevent conflating this stage with a live end-to-end
 acceptance.
+
+`tools/company_profile_writer_pr_handoff.py` adds **callable**
+`DetachedWorkspace`, `GitHubCli` and `submit`. This is *not* a public
+`--apply` command and it is deliberately **not referenced by the existing
+scheduled job**. `submit` rejects calls lacking an explicit
+`authorized=True`. The adapter requires an isolated detached Git checkout,
+origin pointing to this repository, strictly allowlisted unstaged JSON
+changes, a `GH_TOKEN` set by an approved operator, and a complete paginated
+GitHub inventory. It uses `gh api` with bounded subprocess execution and
+suppressed stderr, not `shell=True`. It only creates new refs, Git objects and
+Draft PRs. It does not execute the existing crawler, rebase, merge, write
+`main`, deploy Pages or manage tokens.
+
+**No live acceptance has occurred.** All GitHub operations in
+`tests/test_company_profile_writer_pr_handoff.py` use injected synthetic
+GitHub behavior; real `git` tests use only a disposable temporary repository
+with a synthetically configured remote URL and never contact that remote.
+The CI workflow runs both the pure gate and handoff tests without credentials.
+An approved follow-on pilot must independently attest token scope, effects
+of GitHub push-triggered workflows on newly created refs, reservation cleanup,
+complete PR/branch pagination, CI approval behavior for `GITHUB_TOKEN`,
+publication handoff and recovery of ambiguous API failures.
 
 ## Acceptance still required
 
