@@ -92,7 +92,8 @@ class ZhihuObserverTests(unittest.IsolatedAsyncioTestCase):
         self.assertNotIn("PRIVATE", repr(result))
 
     async def test_malformed_untrusted_card_type_is_never_ignored(self):
-        for category in (None, 2, True, "", "PRIVATE<script>", "回答", "a" * 49):
+        for category in (None, 2, True, [], {}, ["PRIVATE"], {"PRIVATE": "SECRET"},
+                         "", "PRIVATE<script>", "回答", "a" * 49):
             with self.subTest(category=type(category).__name__):
                 data = page([obj()], True)
                 data["data"].insert(0, {"type": category, "PRIVATE": "SECRET"})
@@ -100,6 +101,16 @@ class ZhihuObserverTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(result["status"], "schema_error")
                 self.assertEqual(result["errorCode"], "ZHIHU_SEARCH_CARD_TYPE_INVALID")
                 self.assertNotIn("SECRET", repr(result))
+
+    async def test_malformed_nested_content_type_is_fixed_schema_error(self):
+        for category in (None, 2, True, [], {}, ["PRIVATE"], {"PRIVATE": "SECRET"}):
+            with self.subTest(category=type(category).__name__):
+                data = page([{"type": category, "id": "101", "title": "PRIVATE"}])
+                result = await self.run_case([data])
+                self.assertEqual(result["status"], "schema_error")
+                self.assertEqual(result["errorCode"], "ZHIHU_CONTENT_TYPE")
+                self.assertEqual(len(result["records"]), 0)
+                self.assertNotIn("PRIVATE", repr(result))
 
     async def test_unknown_content_type_is_not_silently_ignored(self):
         self.assertEqual((await self.run_case([page([obj("new-type")])]))["status"], "schema_error")
