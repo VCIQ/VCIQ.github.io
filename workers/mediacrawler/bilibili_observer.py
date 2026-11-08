@@ -10,6 +10,7 @@ KNOWN_VALIDATION_ERRORS = frozenset({
     "BILI_SEARCH_PAGE_TOO_LARGE", "BILI_SEARCH_PAGE_MISMATCH",
     "BILI_SEARCH_PAGE_COUNT", "BILI_SEARCH_PAGE_CONTRADICTION",
     "BILI_EMPTY_PAGE_CONTRADICTION", "BILI_VIDEO_ITEM_REQUIRED",
+    "BILI_SEARCH_ITEM_TYPE_INVALID", "BILI_SEARCH_NO_VIDEO_COVERAGE",
     "BILI_SEARCH_ID_CONFLICT", "BILI_DETAIL_ID_MISMATCH",
     "BILI_DETAIL_ALIAS_MISMATCH", "BILI_ALIAS_CONFLICT",
     "BILI_PROJECTED_ID_MISMATCH", "BILI_STORE_RECORD",
@@ -61,13 +62,27 @@ def search_items(response, page_no):
         raise ValueError("BILI_SEARCH_PAGE_CONTRADICTION")
     if not items and pages is not None and pages > page_no:
         raise ValueError("BILI_EMPTY_PAGE_CONTRADICTION")
+    video_items = []
     for item in items:
-        if not isinstance(item, dict) or item.get("type", "video") != "video":
+        if not isinstance(item, dict):
             raise ValueError("BILI_VIDEO_ITEM_REQUIRED")
+        # Search responses may contain non-video presentation cards. Never
+        # coerce them into videos or follow their links. A malformed type is
+        # still schema drift. Keep the raw 100-item page limit above.
+        kind = item.get("type", "video")
+        if not isinstance(kind, str) or not re.fullmatch(r"[a-z][a-z0-9_]{0,31}", kind):
+            raise ValueError("BILI_SEARCH_ITEM_TYPE_INVALID")
+        if kind != "video":
+            continue
         aid(item.get("aid"))
         bvid(item.get("bvid"))
+        video_items.append(item)
+    if items and not video_items:
+        # A page containing only unrelated cards is not proof that the video
+        # search is empty or exhausted.
+        raise ValueError("BILI_SEARCH_NO_VIDEO_COVERAGE")
     more = False if not items else page_no < pages if pages is not None else None
-    return items, more
+    return video_items, more
 
 
 def select_record(raw):
