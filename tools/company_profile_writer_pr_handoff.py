@@ -16,11 +16,13 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from .company_profile_writer_pr_gate import (
-    ALLOWED_FILES, BRANCH_PREFIX, GateError, SHA, decide,
+    ALLOWED_FILES, BRANCH_PREFIX, SMOKE_BASE_BRANCH, SMOKE_BRANCH_PREFIX,
+    GateError, SHA, decide,
 )
 
 REPOSITORY = "VCIQ/VCIQ.github.io"
 RESERVATION = BRANCH_PREFIX + "reservation"
+SMOKE_RESERVATION = SMOKE_BRANCH_PREFIX + "reservation"
 MAX_DATA_BYTES = 8 * 1024 * 1024
 MAX_API_BYTES = 24 * 1024 * 1024
 MAX_PAGE = 20
@@ -36,8 +38,8 @@ def _sha(value: object) -> str:
     return value
 
 
-def _ref(value: object) -> str:
-    if (not isinstance(value, str) or not value.startswith(BRANCH_PREFIX)
+def _ref(value: object, prefix: str = BRANCH_PREFIX) -> str:
+    if (not isinstance(value, str) or not value.startswith(prefix)
         or len(value) > 160 or not re.fullmatch(r"[a-z0-9/_-]+", value)):
         raise HandoffError("HANDOFF_REF_INVALID")
     return value
@@ -148,12 +150,17 @@ class DetachedWorkspace:
 class GitHubCli:
     """GitHub REST through gh; bounded, redacted, no shell or auto-retries."""
 
-    def __init__(self, token_kind: str = "GITHUB_TOKEN"):
+    def __init__(self, token_kind: str = "GITHUB_TOKEN", base_branch: str = "main"):
         if token_kind not in ("GITHUB_TOKEN", "GITHUB_APP"):
             raise HandoffError("HANDOFF_TOKEN_KIND_INVALID")
+        if base_branch not in ("main", SMOKE_BASE_BRANCH):
+            raise HandoffError("HANDOFF_BASE_BRANCH_INVALID")
         if not os.environ.get("GH_TOKEN"):
             raise HandoffError("HANDOFF_TOKEN_UNAVAILABLE")
         self.token_kind = token_kind
+        self.base_branch = base_branch
+        self.branch_prefix = BRANCH_PREFIX if base_branch == "main" else SMOKE_BRANCH_PREFIX
+        self.reservation_ref = RESERVATION if base_branch == "main" else SMOKE_RESERVATION
 
     def _api(self, endpoint: str, payload: dict | None = None):
         if not endpoint.startswith("repos/VCIQ/VCIQ.github.io/"):
@@ -177,10 +184,10 @@ class GitHubCli:
         except (ValueError, RecursionError):
             raise HandoffError("HANDOFF_GITHUB_RESPONSE_INVALID") from None
 
-    def main_sha(self) -> str:
-        data = self._api(f"repos/{REPOSITORY}/branches/main")
-        if not isinstance(data, dict) or data.get("name") != "main":
-            raise HandoffError("HANDOFF_MAIN_RESPONSE_INVALID")
+    def base_sha(self) -> str:
+        data = self._api(f"repos/{REPOSITORY}/branches/{self.base_branch}")
+        if not isinstance(data, dict) or data.get("name") != self.base_branch:
+            raise HandoffError("HANDOFF_BASE_RESPONSE_INVALID")
         commit = data.get("commit")
         return _sha(commit.get("sha") if isinstance(commit, dict) else None)
 
@@ -205,8 +212,8 @@ class GitHubCli:
             head = item.get("head")
             if not isinstance(head, dict) or not isinstance(head.get("ref"), str):
                 raise HandoffError("HANDOFF_INVENTORY_INVALID")
-            if head["ref"].startswith(BRANCH_PREFIX):
-                result.append(_ref(head["ref"]))
+            if head["ref"].startswith(self.branch_prefix):
+                result.append(_ref(head["ref"], self.branch_prefix))
         return sorted(set(result))
 
     def candidate_branches(self) -> list[str]:
@@ -216,12 +223,12 @@ class GitHubCli:
             value = item.get("name")
             if not isinstance(value, str):
                 raise HandoffError("HANDOFF_INVENTORY_INVALID")
-            if value.startswith(BRANCH_PREFIX):
-                result.append(_ref(value))
+            if value.startswith(self.branch_prefix):
+                result.append(_ref(value, self.branch_prefix))
         return sorted(set(result))
 
     def create_ref(self, branch: str, sha: str) -> None:
-        branch = _ref(branch)
+        branch = _ref(branch, self.branch_prefix)
         sha = _sha(sha)
         expected = "refs/heads/" + branch
         record = self._api(f"repos/{REPOSITORY}/git/refs", {"ref": expected, "sha": sha})
@@ -250,10 +257,10 @@ class GitHubCli:
         return _sha(commit.get("sha") if isinstance(commit, dict) else None)
 
     def create_draft_pr(self, branch: str, commit: str, run_id: str) -> int:
-        branch, commit = _ref(branch), _sha(commit)
+        branch, commit = _ref(branch, self.branch_prefix), _sha(commit)
         data = self._api(f"repos/{REPOSITORY}/pulls", {
             "title": f"data: review company-profile refresh run {run_id}",
-            "head": branch, "base": "main", "draft": True,
+            "head": branch, "base": self.base_branch, "draft": True,
             "maintainer_can_modify": False,
             "body": "Automated candidate; human review required. No merge, publication or Pages dispatch authorized. Related: #664.",
         })
@@ -263,15 +270,14 @@ class GitHubCli:
             raise HandoffError("HANDOFF_PR_UNCONFIRMED")
         return number
 
-    @staticmethod
-    def _assert_pr(value: object, branch: str, sha: str) -> None:
+    def _assert_pr(self, value: object, branch: str, sha: str) -> None:
         head = value.get("head") if isinstance(value, dict) else None
         base = value.get("base") if isinstance(value, dict) else None
         if (not isinstance(value, dict) or value.get("draft") is not True
             or value.get("state") != "open" or value.get("merged_at") is not None
             or not isinstance(head, dict) or not isinstance(base, dict)
             or head.get("ref") != branch or head.get("sha") != sha
-            or base.get("ref") != "main"
+            or base.get("ref") != self.base_branch
             or not isinstance(head.get("repo"), dict)
             or not isinstance(base.get("repo"), dict)
             or head["repo"].get("full_name") != REPOSITORY
@@ -304,11 +310,12 @@ def submit(workspace, github, *, run_id: str, attempt: int,
         prepared = workspace.snapshot()
         if prepared is None:
             return {"decision": "no_changes", "remoteWritesAttempted": False}
-        first_main = github.main_sha()
+        base_branch = github.base_branch
+        first_main = github.base_sha()
         open_heads = github.open_proposals()
         remote_branches = github.candidate_branches()
         plan = decide({
-            "schemaVersion": 1, "repository": REPOSITORY, "baseBranch": "main",
+            "schemaVersion": 1, "repository": REPOSITORY, "baseBranch": base_branch,
             "sourceHeadSha": prepared.base_sha, "observedMainSha": first_main,
             "runId": run_id, "runAttempt": attempt,
             "changedPaths": sorted(prepared.files), "openProposalHeads": open_heads,
@@ -317,37 +324,39 @@ def submit(workspace, github, *, run_id: str, attempt: int,
         })
         if plan["decision"] != "would_prepare_draft_pr":
             return {"decision": plan["decision"], "remoteWritesAttempted": False}
-        branch = _ref(plan["candidateBranch"])
+        branch = _ref(plan["candidateBranch"], github.branch_prefix)
+        reservation = github.reservation_ref
         # Atomic reservation: create_ref must refuse an already-existing ref.
         # Keep this ref until a separate reviewer triages/cleans it up.
         stage = "reserve"
         mutation_attempted = True
-        github.create_ref(RESERVATION, first_main)
+        github.create_ref(reservation, first_main)
         stage = "recheck"
-        if github.main_sha() != first_main or github.open_proposals() or github.candidate_branches() != [RESERVATION]:
+        if github.base_sha() != first_main or github.open_proposals() or github.candidate_branches() != [reservation]:
             raise HandoffError("HANDOFF_RACE_DETECTED")
         stage = "commit"
         commit = _sha(github.create_commit(first_main, prepared.files, run_id, attempt))
         if commit == first_main:
             raise HandoffError("HANDOFF_EMPTY_COMMIT")
-        if github.main_sha() != first_main:
-            raise HandoffError("HANDOFF_MAIN_ADVANCED")
+        if github.base_sha() != first_main:
+            raise HandoffError("HANDOFF_BASE_ADVANCED")
         stage = "candidate"
         github.create_ref(branch, commit)
         # Close the window between candidate ref creation and PR creation.
         # A concurrent proposal or new candidate remains a manual-triage case.
         stage = "preproposal"
-        if (github.main_sha() != first_main or github.open_proposals()
-            or github.candidate_branches() != sorted([RESERVATION, branch])):
+        if (github.base_sha() != first_main or github.open_proposals()
+            or github.candidate_branches() != sorted([reservation, branch])):
             raise HandoffError("HANDOFF_RACE_DETECTED")
         stage = "proposal"
         number = github.create_draft_pr(branch, commit, run_id)
         stage = "verify"
         github.verify_pr(number, branch, commit)
-        fresh = github.main_sha() == first_main
+        fresh = github.base_sha() == first_main
         return {
             "decision": "draft_pr_opened" if fresh else "draft_pr_opened_main_advanced",
             "prNumber": number, "candidateBranch": branch, "candidateSha": commit,
+            "baseBranch": base_branch,
             "reservationCleanupRequiresHuman": True, "humanReviewRequired": True,
             "ciChecksVerified": False, "merged": False, "published": False,
             "remoteWritesAttempted": True,
