@@ -48,6 +48,8 @@ Pages. Replacing only the push command is unsafe:
    the exact candidate SHA, same repository, Draft state and base branch.
    Failed or ambiguous creation/verification is **not retried**; preserve
    reservation/candidate refs until a maintainer reconciles GitHub state.
+   Before attempting the PR, recheck main and the full PR/branch inventories
+   again to detect a new competing proposal after candidate creation.
 7. Never delete the reservation automatically, including after successful PR
    creation. A separate reviewed recovery procedure must determine whether
    to close, merge, or abandon the proposal and when to remove both refs.
@@ -61,6 +63,10 @@ Using a narrowly scoped GitHub App token can change this but requires separate
 security review; do not assume approval happened or use a broad bypass token.
 Path-filtered jobs cannot be universal required checks without a stable
 always-triggered gate.
+The repository must also permit Actions to create pull requests under
+Settings → Actions → General; its actual setting has **not** been verified.
+See https://docs.github.com/en/actions/concepts/security/github_token and
+https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository .
 
 ## Prototype entrypoint and its limits
 
