@@ -23,14 +23,17 @@ def identifier(value, observer, *, optional=False):
 
 
 def content_identity(obj, observer):
-    if not isinstance(obj, dict) or obj.get("type") not in TYPES:
+    if not isinstance(obj, dict):
+        raise observer.CollectorError("schema_error", "ZHIHU_CONTENT_TYPE")
+    content_type = obj.get("type")
+    if not isinstance(content_type, str) or content_type not in TYPES:
         raise observer.CollectorError("schema_error", "ZHIHU_CONTENT_TYPE")
     native = identifier(obj.get("id"), observer)
     question = obj.get("question")
     if question is not None and not isinstance(question, dict):
         raise observer.CollectorError("schema_error", "ZHIHU_QUESTION_SHAPE")
-    parent = identifier((question or {}).get("id"), observer, optional=True) if obj["type"] == "answer" else None
-    return obj["type"], native, parent
+    parent = identifier((question or {}).get("id"), observer, optional=True) if content_type == "answer" else None
+    return content_type, native, parent
 
 
 def cursor_path_diagnostic(path):
@@ -133,16 +136,29 @@ def page_contents(response, job, page_number, observer):
                 raise
     items, excluded = [], 0
     for wrapper in response["data"]:
-        if not isinstance(wrapper, dict) or wrapper.get("type") not in {"search_result", "zvideo"}:
+        if not isinstance(wrapper, dict):
             raise error("schema_error", "ZHIHU_SEARCH_CARD_UNKNOWN")
+        card_type = wrapper.get("type")
+        if not isinstance(card_type, str):
+            raise error("schema_error", "ZHIHU_SEARCH_CARD_TYPE_INVALID")
+        if card_type not in {"search_result", "zvideo"}:
+            # An observed search page contains mixed presentation cards.
+            # Never treat an unfamiliar wrapper as an article/answer/video
+            # or follow its links. Ignore only bounded, syntactically safe
+            # category labels; a page containing no accepted target remains
+            # unproven rather than an "empty" success.
+            if re.fullmatch(r"[a-z][a-z0-9_-]{0,47}", card_type) is None:
+                raise error("schema_error", "ZHIHU_SEARCH_CARD_TYPE_INVALID")
+            excluded += 1
+            continue
         obj = wrapper.get("object")
         if not isinstance(obj, dict):
             raise error("schema_error", "ZHIHU_SEARCH_OBJECT_REQUIRED")
-        if obj.get("type") in NON_TARGETS and wrapper["type"] == "search_result":
+        if isinstance(obj.get("type"), str) and obj["type"] in NON_TARGETS and card_type == "search_result":
             excluded += 1
             continue
         identity = content_identity(obj, observer)
-        if wrapper["type"] == "zvideo" and identity[0] != "zvideo":
+        if card_type == "zvideo" and identity[0] != "zvideo":
             raise error("schema_error", "ZHIHU_WRAPPER_TYPE_CONFLICT")
         items.append((obj, identity))
     return items, (None if untrusted_next_hint else

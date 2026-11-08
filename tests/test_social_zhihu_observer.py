@@ -68,6 +68,50 @@ class ZhihuObserverTests(unittest.IsolatedAsyncioTestCase):
         for data in ({}, {"data": [], "paging": []}, page(end=1), {"error": {}, **page()}, {"data": [{"type": "unknown"}], "paging": {"is_end": True}}):
             self.assertEqual((await self.run_case([data]))["status"], "schema_error")
 
+    async def test_mixed_noncontent_cards_do_not_block_valid_answer(self):
+        data = page([obj()], end=True)
+        data["data"].insert(0, {"type": "search_suggestion", "url": "PRIVATE", "object": {"type": "answer", "id": "999"}})
+        data["data"].append({"type": "ad-card", "payload": {"secret": "PRIVATE"}})
+        result = await self.run_case([data], records=2)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["excludedItems"], 2)
+        self.assertEqual(len(result["records"]), 1)
+        self.assertEqual(result["pages"][0]["contentItems"], 1)
+        self.assertEqual(len(self.calls), 1)
+        self.assertNotIn("PRIVATE", repr(result))
+
+    async def test_all_presentation_cards_never_attest_empty_coverage(self):
+        data = {"data": [{"type": "search_suggestion", "title": "PRIVATE"},
+                         {"type": "ad-card", "object": {"type": "answer", "id": "999"}}],
+                "paging": {"is_end": True}}
+        result = await self.run_case([data])
+        self.assertEqual(result["status"], "schema_error")
+        self.assertEqual(result["errorCode"], "ZHIHU_EMPTY_COVERAGE_UNPROVEN")
+        self.assertEqual(result["excludedItems"], 2)
+        self.assertEqual(len(result["records"]), 0)
+        self.assertNotIn("PRIVATE", repr(result))
+
+    async def test_malformed_untrusted_card_type_is_never_ignored(self):
+        for category in (None, 2, True, [], {}, ["PRIVATE"], {"PRIVATE": "SECRET"},
+                         "", "PRIVATE<script>", "回答", "a" * 49):
+            with self.subTest(category=type(category).__name__):
+                data = page([obj()], True)
+                data["data"].insert(0, {"type": category, "PRIVATE": "SECRET"})
+                result = await self.run_case([data])
+                self.assertEqual(result["status"], "schema_error")
+                self.assertEqual(result["errorCode"], "ZHIHU_SEARCH_CARD_TYPE_INVALID")
+                self.assertNotIn("SECRET", repr(result))
+
+    async def test_malformed_nested_content_type_is_fixed_schema_error(self):
+        for category in (None, 2, True, [], {}, ["PRIVATE"], {"PRIVATE": "SECRET"}):
+            with self.subTest(category=type(category).__name__):
+                data = page([{"type": category, "id": "101", "title": "PRIVATE"}])
+                result = await self.run_case([data])
+                self.assertEqual(result["status"], "schema_error")
+                self.assertEqual(result["errorCode"], "ZHIHU_CONTENT_TYPE")
+                self.assertEqual(len(result["records"]), 0)
+                self.assertNotIn("PRIVATE", repr(result))
+
     async def test_unknown_content_type_is_not_silently_ignored(self):
         self.assertEqual((await self.run_case([page([obj("new-type")])]))["status"], "schema_error")
 
