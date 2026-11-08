@@ -49,11 +49,15 @@ class XhsNormalizerTests(unittest.TestCase):
             row["time"] = value
             with self.assertRaises(ContractError): self.normalize(row)
 
-    def test_update_cannot_precede_publication(self):
-        _, _, row = inputs()
+    def test_source_chronology_conflict_is_preserved_and_flagged(self):
+        job, context, row = inputs()
         row.update(time=1792670400000, last_update_time=1792584000000)
-        with self.assertRaisesRegex(ContractError, "xhs_update_before_publication"):
-            self.normalize(row)
+        value = self.normalize(row)
+        self.assertEqual(value["publishedAt"], "2026-10-22T12:00:00+00:00")
+        self.assertEqual(value["updatedAt"], "2026-10-21T12:00:00+00:00")
+        result = finalize(job, captured(job, row), context, patchset_hash=PATCHES)
+        self.assertEqual(result["diagnostics"]["metadataConflicts"][0]["code"], "SOURCE_UPDATE_BEFORE_PUBLICATION")
+        self.assertEqual(result["observations"][0]["evidence"]["verification"], "unverified")
 
     def test_title_provenance_is_not_invented(self):
         self.assertEqual(self.normalize(title=False)["titleOrigin"], "derived")

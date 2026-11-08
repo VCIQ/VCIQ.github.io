@@ -10,7 +10,7 @@
   // Evaluate the unchanged classic browser asset independently of package mode.
   const sandbox = {module: {exports: {}}, URL};
   vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../tools/social/review_ui/app.js'), 'utf8'), sandbox, {filename: 'review-app.js'});
-  const {makeDecision, safeLink} = sandbox.module.exports;
+  const {makeDecision, safeLink, timestampWarning} = sandbox.module.exports;
   const VERSION = 'a'.repeat(64), ID = '00000000-0000-4000-8000-000000000099';
   function row() { return {active:true,item:{status:'pending',queueVersion:VERSION,candidateKey:'shadow-social:synthetic:revision',candidateFingerprint:'b'.repeat(64)}}; }
   function decide(value = row(), action = 'accepted', actor = 'local-reviewer', note = '仅审核线索') { return makeDecision(value, action, actor, note, ID, VERSION); }
@@ -48,4 +48,17 @@
   });
   test('unknown and missing URLs remain unavailable', () => { for(const value of [null,undefined,{},'','https://unknown.invalid/x']) assert.equal(safeLink(value),null); });
   test('BVID case is preserved', () => { assert.equal(safeLink('https://www.bilibili.com/video/BV1abcDEF234'),'https://www.bilibili.com/video/BV1abcDEF234'); });
+  test('XHS source chronology conflict is explicit without changing evidence', () => {
+    const doc = {platform:'xhs',publishedPrecision:'second',publishedAt:'2026-10-22T12:00:00+00:00',updatedAt:'2026-10-21T12:00:00+00:00'};
+    const before = structuredClone(doc);
+    assert.match(timestampWarning(doc), /来源时间矛盾/);
+    assert.deepEqual(doc,before);
+  });
+  test('unknown, day precision and other platforms do not invent a conflict', () => {
+    for (const doc of [null, {}, {platform:'wb'}, {platform:'xhs',publishedPrecision:'day',publishedAt:'2026-10-22',updatedAt:'2026-10-21'}]) assert.equal(timestampWarning(doc),null);
+  });
+  test('equal or later update and invalid timestamps have no chronology warning', () => {
+    const doc = {platform:'xhs',publishedPrecision:'second',publishedAt:'2026-10-22T12:00:00+00:00'};
+    for (const updatedAt of [null,'invalid','2026-10-22T12:00:00+00:00','2026-10-23T12:00:00+00:00']) assert.equal(timestampWarning({...doc,updatedAt}),null);
+  });
 })().catch(error => { console.error(error); process.exitCode = 1; });

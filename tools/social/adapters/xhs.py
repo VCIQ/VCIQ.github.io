@@ -9,7 +9,7 @@ from decimal import Decimal, InvalidOperation
 from ..contracts import ContractError, assert_safe, content_hash, validate
 from ..scheduler import instant
 
-VERSION = "xhs-shadow-v1"
+VERSION = "xhs-shadow-v2"
 REASONS = {"auth_required": "auth", "verification_required": "verification",
     "rate_limited": "rate_limit", "network_error": "network", "timeout": "timeout",
     "schema_error": "schema", "unsupported": "unsupported", "cancelled": "cancelled"}
@@ -86,8 +86,10 @@ def normalize_record(row: dict, job: dict, context: dict, *, observed_at: str, o
         creator = None
     published = milliseconds(row.get("time"), observed)
     updated = milliseconds(row.get("last_update_time"), observed)
-    if published and updated and instant(updated) < instant(published):
-        raise ContractError("xhs_update_before_publication")
+    # Independently validate both source timestamps, without inventing chronology.
+    # Live pinned-source output can report an update before publication. Preserve
+    # both claims; finalize and the review UI explicitly flag that inconsistency.
+    # Invalid units, future values, secrets and identities still fail validation.
     doc = {"schemaVersion": 1, "kind": "signal_observation", "signalId": f"xhs:note:{native}",
         "platform": "xhs", "nativeId": native, "contentType": "note", "nativeAliases": [],
         "canonicalUrl": f"https://www.xiaohongshu.com/explore/{native}", "accessStatus": "unverified",
@@ -131,6 +133,7 @@ def finalize(job: dict, captured: dict, context: dict, *, patchset_hash: str) ->
     if status not in {*REASONS, "ok", "empty"}:
         raise ContractError("xhs_envelope_status")
     observations, seen, rejected, duplicates, invalid = [], set(), 0, 0, False
+    metadata_conflicts = []
     start, end = instant(captured["startedAt"]), instant(captured["completedAt"])
     for entry in records:
         try:
@@ -153,6 +156,10 @@ def finalize(job: dict, captured: dict, context: dict, *, patchset_hash: str) ->
             continue
         seen.add(doc["signalId"])
         observations.append(doc)
+        if doc["publishedAt"] and doc["updatedAt"] and instant(doc["updatedAt"]) < instant(doc["publishedAt"]):
+            metadata_conflicts.append({"signalId": doc["signalId"],
+                "code": "SOURCE_UPDATE_BEFORE_PUBLICATION", "publishedAt": doc["publishedAt"],
+                "updatedAt": doc["updatedAt"], "resolution": "source_values_preserved_unverified"})
     reason, code = captured["stopReason"], captured["errorCode"]
     if invalid and status in {"ok", "empty"}:
         status, reason, code = "schema_error", "schema", "NORMALIZATION_REJECTED"
@@ -171,6 +178,6 @@ def finalize(job: dict, captured: dict, context: dict, *, patchset_hash: str) ->
     result = {"receipt": receipt, "observations": observations, "hints": [],
               "diagnostics": {"searchDuplicates": captured["searchDuplicates"],
                 "detailsNotRequested": captured["detailsNotRequested"], "retryAfterSeconds": captured["retryAfter"],
-                "batchIntegrityChecked": False}}
+                "batchIntegrityChecked": False, "metadataConflicts": metadata_conflicts}}
     assert_safe(result)
     return result
