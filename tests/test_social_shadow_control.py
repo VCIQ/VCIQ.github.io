@@ -61,6 +61,18 @@ class ShadowControlTests(unittest.TestCase):
         with self.assertRaisesRegex(observer.CollectorError, "CONTROL_UNAVAILABLE") as caught: self.check()
         self.assertNotIn(str(self.root), str(caught.exception))
 
+    def test_configured_child_missing_runtime_binding_fails_closed(self):
+        with patch.dict(os.environ, {}, clear=True):
+            with self.assertRaisesRegex(observer.CollectorError, "CONTROL_UNAVAILABLE") as caught:
+                request_control.check(observer, platform="wb", state_dir=str(self.root))
+        self.assertNotIn(str(self.root), str(caught.exception))
+
+    def test_configured_child_missing_state_binding_fails_closed(self):
+        with patch.dict(os.environ, {"VCIQ_SHADOW_RUNTIME": str(self.path)}, clear=True):
+            with self.assertRaisesRegex(observer.CollectorError, "CONTROL_UNAVAILABLE") as caught:
+                request_control.check(observer, platform="wb")
+        self.assertNotIn(str(self.path), str(caught.exception))
+
     def test_corrupt_duplicate_keys_and_non_object_refused(self):
         for content in ('{"enabled":true,"enabled":false}', '[1]', 'garbage'):
             self.path.write_text(content)
