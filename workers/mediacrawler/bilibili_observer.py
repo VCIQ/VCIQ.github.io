@@ -5,6 +5,29 @@ import re
 
 FIELDS = frozenset({"video_id", "bvid", "title", "desc", "create_time", "creator_hash",
     "nickname", "liked_count", "video_comment", "video_share_count", "video_play_count"})
+KNOWN_VALIDATION_ERRORS = frozenset({
+    "BILI_AID_INVALID", "BILI_BVID_INVALID", "BILI_SEARCH_SCHEMA",
+    "BILI_SEARCH_PAGE_TOO_LARGE", "BILI_SEARCH_PAGE_MISMATCH",
+    "BILI_SEARCH_PAGE_COUNT", "BILI_SEARCH_PAGE_CONTRADICTION",
+    "BILI_EMPTY_PAGE_CONTRADICTION", "BILI_VIDEO_ITEM_REQUIRED",
+    "BILI_SEARCH_ID_CONFLICT", "BILI_DETAIL_ID_MISMATCH",
+    "BILI_DETAIL_ALIAS_MISMATCH", "BILI_ALIAS_CONFLICT",
+    "BILI_PROJECTED_ID_MISMATCH", "BILI_STORE_RECORD",
+    "BILI_STORE_FIELD_TYPE", "BILI_STORE_FIELD_LENGTH", "BILI_LIMITS",
+})
+STAGES = frozenset({"PRECHECK", "SEARCH_CALL", "SEARCH_RESPONSE",
+    "DETAIL_CALL", "DETAIL_RESPONSE", "PROJECT"})
+
+
+def classify_bilibili(exc, observer, stage):
+    """Fixed error code + stage only. Never export raw platform text or URLs."""
+    if isinstance(exc, ValueError) and str(exc) in KNOWN_VALIDATION_ERRORS:
+        return observer.CollectorError("schema_error", str(exc))
+    classified = observer.classify(exc)
+    if classified.code == "UNEXPECTED_WORKER_ERROR":
+        return observer.CollectorError("schema_error",
+            "BILI_" + stage + "_UNEXPECTED" if stage in STAGES else "BILI_UNKNOWN_UNEXPECTED")
+    return classified
 
 
 def aid(value):
@@ -65,6 +88,7 @@ async def collect_bilibili(job, search, detail, project, *, observer, clock=None
     result = observer.envelope(job, clock)
     seen, search_pairs, verified_pairs = set(), {}, {}
     attempts = 0
+    stage = "PRECHECK"
     try:
         if job["platform"] != "bili" or job["operation"] != "search":
             raise observer.CollectorError("unsupported", "BILI_SEARCH_ONLY")
@@ -77,7 +101,10 @@ async def collect_bilibili(job, search, detail, project, *, observer, clock=None
         if not all(type(limits[k]) is int and limits[k] > 0 for k in ("maxSearchPages", "maxRecords", "maxWallSeconds")):
             raise ValueError("BILI_LIMITS")
         for number in range(1, limits["maxSearchPages"] + 1):
-            items, more = search_items(await search(query["text"], number), number)
+            stage = "SEARCH_CALL"
+            response = await search(query["text"], number)
+            stage = "SEARCH_RESPONSE"
+            items, more = search_items(response, number)
             page = {"pageIndex": number, "schemaValid": True, "contentItems": len(items), "processed": False, "hasMore": more}
             result["pages"].append(page)
             for index, item in enumerate(items):
@@ -95,7 +122,9 @@ async def collect_bilibili(job, search, detail, project, *, observer, clock=None
                 seen.add(native)
                 attempts += 1
                 try:
+                    stage = "DETAIL_CALL"
                     raw = await detail(native)
+                    stage = "DETAIL_RESPONSE"
                     view = raw.get("View") if isinstance(raw, dict) else None
                     if not isinstance(view, dict) or aid(view.get("aid")) != native:
                         raise ValueError("BILI_DETAIL_ID_MISMATCH")
@@ -105,6 +134,7 @@ async def collect_bilibili(job, search, detail, project, *, observer, clock=None
                     if detail_bv and detail_bv in verified_pairs and verified_pairs[detail_bv] != native:
                         raise ValueError("BILI_ALIAS_CONFLICT")
                     observed = clock()
+                    stage = "PROJECT"
                     projected = select_record(await project(raw))
                     if projected["video_id"] != native or projected["bvid"] != detail_bv:
                         raise ValueError("BILI_PROJECTED_ID_MISMATCH")
@@ -112,7 +142,7 @@ async def collect_bilibili(job, search, detail, project, *, observer, clock=None
                         verified_pairs[detail_bv] = native
                     result["records"].append({"record": projected, "originalTitle": bool(view.get("title")), "observedAt": observed})
                 except Exception as exc:
-                    error = observer.classify(exc)
+                    error = classify_bilibili(exc, observer, stage)
                     result["detailFailures"] += 1
                     observer.fail(result, error)
                     if error.status != "network_error":
@@ -137,6 +167,6 @@ async def collect_bilibili(job, search, detail, project, *, observer, clock=None
             else:
                 raise observer.CollectorError("schema_error", "EMPTY_COVERAGE_UNPROVEN")
     except Exception as exc:
-        observer.fail(result, observer.classify(exc))
+        observer.fail(result, classify_bilibili(exc, observer, stage))
     result["completedAt"] = clock()
     return result

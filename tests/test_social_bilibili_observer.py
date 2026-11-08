@@ -55,6 +55,7 @@ class BilibiliObserverTests(unittest.IsolatedAsyncioTestCase):
         for response in ({}, {"result": None}, {"result": {}}, {"message": "login"}):
             result, _ = await self.run_case([response])
             self.assertEqual(result["status"], "schema_error")
+            self.assertEqual(result["errorCode"], "BILI_SEARCH_SCHEMA")
 
     async def test_duplicate_aid_not_refetched(self):
         result, calls = await self.run_case([{"result": [hit(), hit()]}, {"result": []}])
@@ -83,6 +84,7 @@ class BilibiliObserverTests(unittest.IsolatedAsyncioTestCase):
     async def test_detail_identity_must_match_search(self):
         result, _ = await self.run_case([{"result": [hit()]}], details={"123": detail_doc("124")})
         self.assertEqual(result["status"], "schema_error")
+        self.assertEqual(result["errorCode"], "BILI_DETAIL_ID_MISMATCH")
         self.assertEqual(result["records"], [])
 
     async def test_bvid_conflict_not_guessed(self):
@@ -121,6 +123,29 @@ class BilibiliObserverTests(unittest.IsolatedAsyncioTestCase):
         error = RuntimeError("Cookie: PRIVATE")
         result, _ = await self.run_case([error])
         self.assertNotIn("PRIVATE", str(result))
+        self.assertEqual(result["errorCode"], "BILI_SEARCH_CALL_UNEXPECTED")
+
+    async def test_untrusted_value_error_never_becomes_raw_error_code(self):
+        result, calls = await self.run_case([ValueError("PRIVATE token in response")])
+        self.assertEqual(result["status"], "schema_error")
+        self.assertEqual(result["errorCode"], "BILI_SEARCH_CALL_UNEXPECTED")
+        self.assertNotIn("PRIVATE", repr(result))
+        self.assertEqual(calls[0][0], "search")
+
+    async def test_detail_unknown_error_preserves_stage_without_raw_text(self):
+        result, _ = await self.run_case(
+            [{"result": [hit()]}],
+            details={"123": TypeError("PRIVATE signer input")})
+        self.assertEqual(result["status"], "schema_error")
+        self.assertEqual(result["errorCode"], "BILI_DETAIL_CALL_UNEXPECTED")
+        self.assertNotIn("PRIVATE", repr(result))
+
+    async def test_existing_network_and_rate_classification_unchanged(self):
+        for failure in (common.CollectorError("network_error", "REQUEST_FAILED"),
+                        common.CollectorError("rate_limited", "HTTP_RATE_LIMIT")):
+            result, _ = await self.run_case([failure])
+            self.assertEqual(result["status"], failure.status)
+            self.assertEqual(result["errorCode"], failure.code)
 
 
 if __name__ == "__main__": unittest.main()
