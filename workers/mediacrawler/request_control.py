@@ -23,6 +23,12 @@ def check(observer, *, platform, state_dir=None, runtime_file=None):
         if (not root.is_absolute() or ".." in root.parts or not root.is_dir()
                 or any(p.is_symlink() for p in (root, *root.parents))):
             fail("SHADOW_CONTROL_PATH")
+        # Recheck the outer privacy boundary before every API dispatch. A file
+        # may still be 0600 even when a sync/other process loosens its directory.
+        meta = root.lstat()
+        if (os.name == "posix" and (meta.st_uid != os.geteuid()
+                or meta.st_mode & (0o077 | stat.S_ISUID | stat.S_ISGID | stat.S_ISVTX))):
+            fail("SHADOW_CONTROL_PERMISSIONS")
         # lexists intentionally treats dangling links/directories as a stop.
         if os.path.lexists(root / "shadow.stop"): fail("SHADOW_STOP_REQUESTED")
         selected = runtime_file or os.environ.get("VCIQ_SHADOW_RUNTIME")

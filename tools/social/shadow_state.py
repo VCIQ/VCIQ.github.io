@@ -8,7 +8,7 @@ from uuid import UUID, uuid4
 
 from .batch import MAX_LINE, decode, private_root, read_private, write_private
 from .contracts import ContractError, assert_safe, canonical_bytes, digest
-from .guard import GuardError, output_path
+from .guard import GuardError, output_path, state_path
 from .wechat_runner import atomic_json
 
 STOP_FILE = "shadow.stop"
@@ -72,13 +72,43 @@ def stopped(root, roots):
 
 
 def request_stop(root, roots):
-    private_root(root, roots)
-    if stopped(root, roots): return False
+    """Write a one-way, non-secret stop latch even after read-mode drift.
+
+    This is NOT permission repair and grants no permission to read, collect,
+    resume or write private records. Only the current owner's existing directory
+    is accepted, and group/other write access remains forbidden. An open directory
+    descriptor pins the destination; existing markers are never followed/replaced.
+    """
+    root = state_path(root, repo_roots=roots)
+    if os.name != "posix": raise ContractError("shadow_posix_required")
+    flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+    directory = os.open(root, flags)
     try:
-        write_private(root, STOP_FILE, b"{\"stop\":true}\n", roots)
-    except FileExistsError:
-        return False
-    return True
+        meta = os.fstat(directory)
+        if (not stat.S_ISDIR(meta.st_mode) or meta.st_uid != os.geteuid()
+                or meta.st_mode & (0o022 | stat.S_ISUID | stat.S_ISGID | stat.S_ISVTX)):
+            raise GuardError("shadow_stop_directory_permissions")
+        def same_directory():
+            current = root.lstat()
+            if (not stat.S_ISDIR(current.st_mode)
+                    or (current.st_dev, current.st_ino) != (meta.st_dev, meta.st_ino)):
+                raise GuardError("shadow_stop_directory_changed")
+        same_directory()
+        try:
+            fd = os.open(STOP_FILE, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
+                         0o600, dir_fd=directory)
+        except FileExistsError:
+            same_directory()
+            return False
+        with os.fdopen(fd, "wb") as stream:
+            stream.write(b"{\"stop\":true}\n")
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.fsync(directory)
+        same_directory()
+        return True
+    finally:
+        os.close(directory)
 
 
 def clear_stop(root, roots):
