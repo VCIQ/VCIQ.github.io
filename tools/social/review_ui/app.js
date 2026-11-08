@@ -39,7 +39,15 @@
       candidateFingerprint: item.candidateFingerprint, decision: action, reviewedBy: actor,
       note, seenQueueVersion: queueVersion};
   }
-  const api = {safeLink, makeDecision};
+  function timestampWarning(doc) {
+    if (!doc || doc.platform !== 'xhs' || doc.publishedPrecision !== 'second' ||
+        typeof doc.publishedAt !== 'string' || typeof doc.updatedAt !== 'string') return null;
+    const published = Date.parse(doc.publishedAt), updated = Date.parse(doc.updatedAt);
+    return Number.isFinite(published) && Number.isFinite(updated) && updated < published
+      ? '来源时间矛盾：记录的更新时间早于发布时间。两者按原值保留，不能据此确认事件发生时间。'
+      : null;
+  }
+  const api = {safeLink, makeDecision, timestampWarning};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (typeof document === 'undefined') return;
   global.VCIQReview = api;
@@ -65,10 +73,13 @@
     const top = node('div', undefined, 'card-top');
     top.append(node('span', TYPES[item.leadType] || item.leadType, 'badge'), node('span', STATES[item.status] || item.status, 'status'));
     card.append(top, node('h2', doc.title || '无标题材料'));
+    const warning = timestampWarning(doc);
+    if (warning) { const p = node('p'); p.append(node('strong', warning)); card.append(p); }
     const claim = node('blockquote'); item.claims.forEach(text => claim.append(node('p', text))); card.append(claim);
     const details = node('details'); details.append(node('summary', '查看固定证据与来源'));
     field(details, '平台 / 内容类型', doc.platform + ' / ' + doc.contentType);
     field(details, '发表时间', doc.publishedAt); field(details, '证据观察时间', doc.observedAt);
+    field(details, '来源更新时间', doc.updatedAt);
     field(details, '文本范围', doc.textScope); field(details, '摘录', doc.excerpt);
     field(details, '主体消歧', item.subject.resolution === 'ambiguous' ? '存在同名或多个候选，未绑定' : '未确认主体身份');
     const suggestions = row.snapshot.companySuggestions || [];
