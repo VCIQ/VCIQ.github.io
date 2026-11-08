@@ -26,6 +26,9 @@ jobs:
         with:
           python-version: '3.12'
       - name: Run isolated PR handoff policy tests
-        run: python -B -m unittest tests.test_company_profile_writer_pr_gate -v
+        run: |
+          python -B -m unittest \
+            tests.test_company_profile_writer_pr_gate \
+            tests.test_company_profile_writer_pr_handoff -v
       - name: Verify no tracked files were modified
         run: git diff --exit-code
