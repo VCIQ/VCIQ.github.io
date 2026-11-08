@@ -57,6 +57,42 @@ class BilibiliObserverTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(result["status"], "schema_error")
             self.assertEqual(result["errorCode"], "BILI_SEARCH_SCHEMA")
 
+    async def test_nonvideo_search_card_is_skipped_without_detail_request(self):
+        result, calls = await self.run_case([{
+            "result": [{"type": "media_bangumi", "title": "PRIVATE unrelated"},
+                       hit("123")],
+            "numPages": 1,
+        }], max_pages=1, max_records=1)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(len(result["records"]), 1)
+        self.assertEqual(result["pages"][0]["contentItems"], 1)
+        self.assertEqual(sum(x[0] == "detail" for x in calls), 1)
+        self.assertNotIn("PRIVATE", repr(result))
+
+    async def test_only_nonvideo_cards_never_becomes_empty_success(self):
+        for unrelated in ("live", "media_bangumi", "article", "game"):
+            result, calls = await self.run_case([{
+                "result": [{"type": unrelated, "title": "PRIVATE unrelated"}],
+                "numPages": 1,
+            }], max_pages=1)
+            self.assertEqual(result["status"], "schema_error")
+            self.assertEqual(result["errorCode"], "BILI_SEARCH_NO_VIDEO_COVERAGE")
+            self.assertEqual(sum(x[0] == "detail" for x in calls), 0)
+            self.assertNotIn("PRIVATE", repr(result))
+
+    async def test_malformed_search_card_still_fails_closed(self):
+        for item, expected in (
+            (None, "BILI_VIDEO_ITEM_REQUIRED"),
+            ({"type": 2}, "BILI_SEARCH_ITEM_TYPE_INVALID"),
+            ({"type": "video"}, "BILI_AID_INVALID"),
+            ({"type": "video<script>"}, "BILI_SEARCH_ITEM_TYPE_INVALID"),
+        ):
+            result, calls = await self.run_case([{"result": [item], "numPages": 1}],
+                                                max_pages=1)
+            self.assertEqual(result["status"], "schema_error")
+            self.assertEqual(result["errorCode"], expected)
+            self.assertEqual(sum(x[0] == "detail" for x in calls), 0)
+
     async def test_duplicate_aid_not_refetched(self):
         result, calls = await self.run_case([{"result": [hit(), hit()]}, {"result": []}])
         self.assertEqual(sum(c[0] == "detail" for c in calls), 1)
