@@ -1,0 +1,32 @@
+name: Isolated writer token PR approval check
+
+# Sandbox-only: neither main nor production workflows are targeted.
+on:
+  pull_request:
+    branches:
+      - codex/writer-token-smoke-base-20261108
+    paths:
+      - docs/writer-token-smoke-20261108.md
+      - .github/workflows/writer-token-smoke-approval-check.yml
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-pull-request:
+    if: >-
+      github.repository == 'VCIQ/VCIQ.github.io' &&
+      github.event.pull_request.head.repo.full_name == 'VCIQ/VCIQ.github.io' &&
+      github.event.pull_request.head.ref == 'codex/writer-token-smoke-candidate-20261108'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Confirm isolated test data only
+        run: |
+          set -euo pipefail
+          test -f docs/writer-token-smoke-20261108.md
+          grep -Fxq 'VCIQ synthetic PR token smoke. No production data.' docs/writer-token-smoke-20261108.md
+          echo "SYNTHETIC_PR_CHECK_SUCCESS"
