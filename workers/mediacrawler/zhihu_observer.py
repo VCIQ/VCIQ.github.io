@@ -113,8 +113,24 @@ def page_contents(response, job, page_number, observer):
     # Never follow a server-supplied URL. Validate a supplied next cursor, then
     # let the pinned client build the next page's offset from its page number.
     next_url = paging.get("next")
+    untrusted_next_hint = False
     if next_url not in (None, "") and end is not True:
-        validate_next_cursor(next_url, job, page_number, observer)
+        try:
+            validate_next_cursor(next_url, job, page_number, observer)
+        except error as exc:
+            # Observed on the real first-page search: Zhihu sometimes
+            # supplies a web-search-shaped paging.next instead of its API
+            # endpoint. For a one-page-only bounded task, that link cannot
+            # cause a second request. Accept no pagination claim from it:
+            # retain first-page records, but never call it or mark exhausted.
+            # Keep every other mismatch and all multi-page tasks fail-closed.
+            if (exc.code == "ZHIHU_CURSOR_PATH_OTHER_WEB_SEARCH"
+                and page_number == 1
+                and job["limits"]["maxSearchPages"] == 1
+                and bool(response["data"])):
+                untrusted_next_hint = True
+            else:
+                raise
     items, excluded = [], 0
     for wrapper in response["data"]:
         if not isinstance(wrapper, dict) or wrapper.get("type") not in {"search_result", "zvideo"}:
@@ -129,7 +145,8 @@ def page_contents(response, job, page_number, observer):
         if wrapper["type"] == "zvideo" and identity[0] != "zvideo":
             raise error("schema_error", "ZHIHU_WRAPPER_TYPE_CONFLICT")
         items.append((obj, identity))
-    return items, (not end if end is not None else None), excluded
+    return items, (None if untrusted_next_hint else
+                   not end if end is not None else None), excluded
 
 
 def select_record(row, observer):

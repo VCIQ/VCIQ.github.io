@@ -148,9 +148,52 @@ class ZhihuObserverTests(unittest.IsolatedAsyncioTestCase):
                     path if not path.startswith("/") else "https://www.zhihu.com" + path
                 ) + "?offset=20"
                 result = await self.run_case([data])
-                self.assertEqual(result["status"], "schema_error")
-                self.assertEqual(result["errorCode"], expected)
+                if expected == "ZHIHU_CURSOR_PATH_OTHER_WEB_SEARCH":
+                    # The one-page-only exception treats this as an ignored
+                    # hint, not a trusted pagination cursor.
+                    self.assertEqual(result["status"], "ok")
+                    self.assertIsNone(result["pages"][0]["hasMore"])
+                    self.assertEqual(result["stopReason"], "page_limit")
+                else:
+                    self.assertEqual(result["status"], "schema_error")
+                    self.assertEqual(result["errorCode"], expected)
                 self.assertNotIn("PRIVATE", repr(result))
+
+    async def test_observed_web_search_cursor_is_metadata_only_for_one_page(self):
+        for url in (
+            "https://www.zhihu.com/search/type?offset=20&q=PRIVATE",
+            "https://api.zhihu.com/search/something?offset=20",
+            "/search/unrecognized?offset=20",
+        ):
+            data = page([obj()], False)
+            data["paging"]["next"] = url
+            result = await self.run_case([data], records=2)
+            self.assertEqual(result["status"], "ok")
+            self.assertEqual(result["stopReason"], "page_limit")
+            self.assertIsNone(result["pages"][0]["hasMore"])
+            self.assertEqual(len(result["records"]), 1)
+            self.assertEqual(len(self.calls), 1)
+            self.assertNotIn("PRIVATE", repr(result))
+
+    async def test_web_search_cursor_not_trusted_for_multi_page_or_empty(self):
+        data = page([obj()], False)
+        data["paging"]["next"] = "/search/unrecognized?offset=20"
+        next_page = page([obj(native="102")], True)
+        result = await self.run_case([data, next_page])
+        self.assertEqual(result["errorCode"], "ZHIHU_CURSOR_PATH_OTHER_WEB_SEARCH")
+        self.assertEqual(result["status"], "schema_error")
+        self.assertEqual(len(self.calls), 1)
+        no_data = page([], False)
+        no_data["paging"]["next"] = "/search/unrecognized?offset=20"
+        result = await self.run_case([no_data])
+        self.assertEqual(result["status"], "schema_error")
+        self.assertEqual(result["errorCode"], "ZHIHU_CURSOR_PATH_OTHER_WEB_SEARCH")
+
+    async def test_official_source_constraint_not_relaxed_for_metadata_hint(self):
+        data = page([obj()], False)
+        data["paging"]["next"] = "https://evil.example/search/unrecognized?offset=20"
+        result = await self.run_case([data])
+        self.assertEqual(result["errorCode"], "ZHIHU_PAGING_CURSOR_AUTHORITY")
 
     async def test_duplicate_across_pages_not_projected_twice(self):
         result = await self.run_case([page([obj()], False), page([obj()])])
