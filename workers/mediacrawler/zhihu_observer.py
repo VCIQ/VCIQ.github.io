@@ -33,6 +33,40 @@ def content_identity(obj, observer):
     return obj["type"], native, parent
 
 
+def cursor_path_diagnostic(path):
+    """Only a fixed, non-reversible route class; never return source path.
+
+    This is intentionally classification, not permission to follow a URL.
+    No request is ever generated from this path.
+    """
+    exact_aliases = {
+        "/api/v4/search_v3/": "ZHIHU_CURSOR_PATH_TRAILING_SLASH",
+        "api/v4/search_v3": "ZHIHU_CURSOR_PATH_RELATIVE_NO_SLASH",
+        "api/v4/search_v3/": "ZHIHU_CURSOR_PATH_RELATIVE_TRAILING_SLASH",
+        "/api/v4/search_v2": "ZHIHU_CURSOR_PATH_SEARCH_V2",
+        "/api/v4/search": "ZHIHU_CURSOR_PATH_SEARCH_LEGACY",
+        "/search": "ZHIHU_CURSOR_PATH_WEB_SEARCH",
+        "/search/": "ZHIHU_CURSOR_PATH_WEB_SEARCH",
+        "/": "ZHIHU_CURSOR_PATH_ROOT",
+        "": "ZHIHU_CURSOR_PATH_ROOT",
+    }
+    if path in exact_aliases:
+        return exact_aliases[path]
+    if path.startswith("/api/v4/search_v3/"):
+        return "ZHIHU_CURSOR_PATH_V3_NESTED"
+    if path.startswith("/api/v4/search"):
+        return "ZHIHU_CURSOR_PATH_SEARCH_FAMILY"
+    if path.startswith("/api/v4/"):
+        return "ZHIHU_CURSOR_PATH_OTHER_V4"
+    if path.startswith("/api/"):
+        return "ZHIHU_CURSOR_PATH_OTHER_API"
+    if path.startswith("/search"):
+        return "ZHIHU_CURSOR_PATH_OTHER_WEB_SEARCH"
+    if path.startswith("api/"):
+        return "ZHIHU_CURSOR_PATH_RELATIVE_API"
+    return "ZHIHU_CURSOR_PATH_UNKNOWN"
+
+
 def validate_next_cursor(next_url, job, page_number, observer):
     """Diagnose a returned cursor without following or exporting its URL."""
     error = observer.CollectorError
@@ -51,7 +85,7 @@ def validate_next_cursor(next_url, job, page_number, observer):
             or parts.username is not None or parts.fragment):
             raise error("schema_error", "ZHIHU_PAGING_CURSOR_AUTHORITY")
         if parts.path != "/api/v4/search_v3":
-            raise error("schema_error", "ZHIHU_PAGING_CURSOR_PATH")
+            raise error("schema_error", cursor_path_diagnostic(parts.path))
         pairs = parse_qsl(parts.query, keep_blank_values=True, strict_parsing=True)
         params = dict(pairs)
         if len(params) != len(pairs):

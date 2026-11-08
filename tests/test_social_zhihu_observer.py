@@ -94,7 +94,7 @@ class ZhihuObserverTests(unittest.IsolatedAsyncioTestCase):
             ("https://api.zhihu.com.evil.invalid/api/v4/search_v3?offset=20",
              "ZHIHU_PAGING_CURSOR_AUTHORITY"),
             ("https://www.zhihu.com/api/v4/other?offset=20",
-             "ZHIHU_PAGING_CURSOR_PATH"),
+             "ZHIHU_CURSOR_PATH_OTHER_V4"),
             ("https://www.zhihu.com/api/v4/search_v3?offset=10",
              "ZHIHU_PAGING_CURSOR_OFFSET"),
             ("https://www.zhihu.com/api/v4/search_v3?offset=20&q=PRIVATE",
@@ -126,6 +126,31 @@ class ZhihuObserverTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(result["status"], "ok")
                 self.assertEqual(len(result["records"]), 1)
                 self.assertEqual(len(self.calls), 1)
+
+    async def test_cursor_diagnostic_classes_never_echo_untrusted_paths(self):
+        cases = (
+            ("/api/v4/search_v3/", "ZHIHU_CURSOR_PATH_TRAILING_SLASH"),
+            ("api/v4/search_v3", "ZHIHU_CURSOR_PATH_RELATIVE_NO_SLASH"),
+            ("/api/v4/search_v2", "ZHIHU_CURSOR_PATH_SEARCH_V2"),
+            ("/api/v4/search", "ZHIHU_CURSOR_PATH_SEARCH_LEGACY"),
+            ("/api/v4/search_v3/next", "ZHIHU_CURSOR_PATH_V3_NESTED"),
+            ("/api/v4/search_post", "ZHIHU_CURSOR_PATH_SEARCH_FAMILY"),
+            ("/api/v4/PRIVATE", "ZHIHU_CURSOR_PATH_OTHER_V4"),
+            ("/api/PRIVATE", "ZHIHU_CURSOR_PATH_OTHER_API"),
+            ("/search", "ZHIHU_CURSOR_PATH_WEB_SEARCH"),
+            ("/search/PRIVATE", "ZHIHU_CURSOR_PATH_OTHER_WEB_SEARCH"),
+            ("/PRIVATE-account-path", "ZHIHU_CURSOR_PATH_UNKNOWN"),
+        )
+        for path, expected in cases:
+            with self.subTest(expected=expected):
+                data = page([obj()], False)
+                data["paging"]["next"] = (
+                    path if not path.startswith("/") else "https://www.zhihu.com" + path
+                ) + "?offset=20"
+                result = await self.run_case([data])
+                self.assertEqual(result["status"], "schema_error")
+                self.assertEqual(result["errorCode"], expected)
+                self.assertNotIn("PRIVATE", repr(result))
 
     async def test_duplicate_across_pages_not_projected_twice(self):
         result = await self.run_case([page([obj()], False), page([obj()])])
