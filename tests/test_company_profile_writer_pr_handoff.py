@@ -34,9 +34,10 @@ class Prepared:
 class FakeGithub:
     token_kind = "GITHUB_TOKEN"
 
-    def __init__(self, *, main_shas=(), open_second=(), fail_at=""):
-        self.main_shas = list(main_shas) or [BASE] * 4
+    def __init__(self, *, main_shas=(), open_second=(), open_after=2, fail_at=""):
+        self.main_shas = list(main_shas) or [BASE] * 5
         self.open_second = list(open_second)
+        self.open_after = open_after
         self.fail_at = fail_at
         self.calls = []
         self.branches = []
@@ -58,7 +59,7 @@ class FakeGithub:
     def open_proposals(self):
         self._step("open")
         self.open_reads += 1
-        return list(self.open_second) if self.open_reads > 1 else []
+        return list(self.open_second) if self.open_reads >= self.open_after else []
 
     def candidate_branches(self):
         self._step("branches")
@@ -187,10 +188,24 @@ class HandoffOrchestrationTests(unittest.TestCase):
         self.assertNotEqual(result.get("prNumber"), 6650)
 
     def test_main_advances_after_draft_creation_requires_reconciliation(self):
-        gh = FakeGithub(main_shas=[BASE, BASE, BASE, OTHER])
+        gh = FakeGithub(main_shas=[BASE, BASE, BASE, BASE, OTHER])
         result = run(gh)
         self.assertEqual(result["decision"], "draft_pr_opened_main_advanced")
         self.assertFalse(result["ciChecksVerified"])
+
+    def test_main_advances_before_proposal_no_pr_is_created(self):
+        gh = FakeGithub(main_shas=[BASE, BASE, BASE, OTHER])
+        result = run(gh)
+        self.assertEqual(result["stage"], "preproposal")
+        self.assertTrue(result["manualTriageRequired"])
+        self.assertNotIn("pr", gh.calls)
+
+    def test_concurrent_pr_appears_after_candidate_creation(self):
+        gh = FakeGithub(open_second=[BRANCH], open_after=3)
+        result = run(gh)
+        self.assertEqual(result["stage"], "preproposal")
+        self.assertTrue(result["manualTriageRequired"])
+        self.assertNotIn("pr", gh.calls)
 
     def test_duplicate_json_key_is_rejected_before_remote_write(self):
         with self.assertRaisesRegex(HandoffError, "DUPLICATE_JSON_KEYS"):
