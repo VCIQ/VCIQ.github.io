@@ -13,6 +13,12 @@ import re
 import sys
 
 BRANCH_PREFIX = "automation/company-profile-refresh/"
+SMOKE_BASE_BRANCH = "codex/writer-token-smoke-base-20261108"
+SMOKE_BRANCH_PREFIX = "automation/company-profile-refresh-smoke/"
+BASE_BRANCH_PREFIXES = {
+    "main": BRANCH_PREFIX,
+    SMOKE_BASE_BRANCH: SMOKE_BRANCH_PREFIX,
+}
 ALLOWED_FILES = frozenset({
     "public/data/company_profile_refresh_queue.json",
     "public/data/venture_profiles.json",
@@ -46,8 +52,11 @@ def decide(payload: object) -> dict:
         or type(payload.get("schemaVersion")) is not int
         or payload["schemaVersion"] != 1):
         raise GateError("WRITER_GATE_INPUT_INVALID")
-    if payload["repository"] != "VCIQ/VCIQ.github.io" or payload["baseBranch"] != "main":
+    base_branch = payload["baseBranch"]
+    if (payload["repository"] != "VCIQ/VCIQ.github.io"
+        or base_branch not in BASE_BRANCH_PREFIXES):
         raise GateError("WRITER_GATE_REPOSITORY_INVALID")
+    branch_prefix = BASE_BRANCH_PREFIXES[base_branch]
     if (not isinstance(payload["sourceHeadSha"], str)
         or not SHA.fullmatch(payload["sourceHeadSha"])
         or not isinstance(payload["observedMainSha"], str)
@@ -67,12 +76,12 @@ def decide(payload: object) -> dict:
         raise GateError("WRITER_GATE_UNEXPECTED_FILES")
     proposed = _names(payload["openProposalHeads"], "WRITER_GATE_OPEN_PRS_INVALID")
     branches = _names(payload["knownRemoteBranches"], "WRITER_GATE_BRANCHES_INVALID")
-    if any(not name.startswith(BRANCH_PREFIX) for name in proposed):
+    if any(not name.startswith(branch_prefix) for name in proposed):
         raise GateError("WRITER_GATE_OPEN_PRS_INVALID")
-    if any(not name.startswith(BRANCH_PREFIX) for name in branches):
+    if any(not name.startswith(branch_prefix) for name in branches):
         raise GateError("WRITER_GATE_BRANCHES_INVALID")
 
-    branch = (BRANCH_PREFIX + "run-" + payload["runId"] +
+    branch = (branch_prefix + "run-" + payload["runId"] +
               "-attempt-" + str(payload["runAttempt"]))
     common = {
         "schemaVersion": 1,
@@ -96,7 +105,7 @@ def decide(payload: object) -> dict:
         **common,
         "decision": "would_prepare_draft_pr",
         "candidateBranch": branch,
-        "baseBranch": "main",
+        "baseBranch": base_branch,
         "baseSha": payload["sourceHeadSha"],
         "allowlistedPaths": sorted(changed),
         "ciWorkflowApproval": (
