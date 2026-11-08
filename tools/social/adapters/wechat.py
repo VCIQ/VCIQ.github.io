@@ -11,7 +11,7 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 from ..contracts import ContractError, assert_safe, content_hash, digest, validate
 from ..query_compile import search_url
 from ..scheduler import utc
-from .wechat_transport import FetchError, checked_url, decode_url
+from .wechat_transport import FetchError, checked_url, decode_url, destination_failure_class
 
 REASONS = {"auth_required": "auth", "verification_required": "verification", "rate_limited": "rate_limit",
            "network_error": "network", "timeout": "timeout", "schema_error": "schema",
@@ -92,6 +92,23 @@ def _resolve(row_url: str, transport) -> str:
     if not target:
         raise FetchError("schema_error", "ORIGINAL_LINK_UNRESOLVED")
     return checked_url(target)
+
+
+def _safe_result_resolution_error(exc: FetchError, original_result_url: str) -> FetchError:
+    """Classify, but never output, rejected search-card URLs or redirects.
+
+    These fixed, non-reversible codes are observational diagnostics, not
+    exceptions to the transport's HTTPS/host/path or DNS/TLS restrictions.
+    The original search-result link must never be persisted in a receipt.
+    """
+    if exc.code != "UNSAFE_DESTINATION":
+        return exc
+    reason = destination_failure_class(original_result_url)
+    if reason == "ALLOWED":
+        code = "WECHAT_RESULT_REDIRECT_UNSAFE"
+    else:
+        code = "WECHAT_RESULT_URL_" + reason
+    return FetchError("schema_error", code)
 
 
 def _date_value(value) -> str | None:
@@ -220,6 +237,8 @@ def run_job(job: dict, context: dict, transport, *, now=lambda: datetime.now(UTC
                         observations.append(record)
                         counts["emittedRows"] += 1
                 except (FetchError, ContractError) as exc:
+                    if isinstance(exc, FetchError):
+                        exc = _safe_result_resolution_error(exc, row.get("url", ""))
                     counts["rejectedRows"] += 1
                     code = exc.code.upper()
                     content_reject = code in {"ACCOUNT_MISMATCH", "IRRELEVANT_ORIGINAL", "ARTICLE_TOO_OLD", "OUTSIDE_POST_FILTER_WINDOW"}
@@ -250,7 +269,11 @@ def run_job(job: dict, context: dict, transport, *, now=lambda: datetime.now(UTC
             if more is None or job["provider"] == "bing-rss":
                 break
         except (FetchError, ContractError) as exc:
-            failure = exc if isinstance(exc, FetchError) else FetchError("schema_error", "INVALID_SEARCH_CONTRACT")
+            if isinstance(exc, FetchError):
+                failure = (FetchError("schema_error", "WECHAT_SEARCH_DESTINATION_UNSAFE")
+                           if exc.code == "UNSAFE_DESTINATION" else exc)
+            else:
+                failure = FetchError("schema_error", "INVALID_SEARCH_CONTRACT")
             break
     if failure:
         receipt.update(status="partial" if observations else failure.status, completeness="incomplete",
