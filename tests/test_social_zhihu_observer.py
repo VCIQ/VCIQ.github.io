@@ -85,6 +85,48 @@ class ZhihuObserverTests(unittest.IsolatedAsyncioTestCase):
         data["paging"]["next"] = "https://www.zhihu.com/api/v4/search_v3?" + urlencode({"offset": 20, "q": job["query"]["text"]})
         self.assertEqual((await self.run_case([data]))["status"], "ok")
 
+    async def test_cursor_failure_cause_is_fixed_without_leaking_url(self):
+        cases = [
+            ("https://evil.example/api/v4/search_v3?offset=20",
+             "ZHIHU_PAGING_CURSOR_AUTHORITY"),
+            ("http://www.zhihu.com/api/v4/search_v3?offset=20",
+             "ZHIHU_PAGING_CURSOR_AUTHORITY"),
+            ("https://api.zhihu.com.evil.invalid/api/v4/search_v3?offset=20",
+             "ZHIHU_PAGING_CURSOR_AUTHORITY"),
+            ("https://www.zhihu.com/api/v4/other?offset=20",
+             "ZHIHU_PAGING_CURSOR_PATH"),
+            ("https://www.zhihu.com/api/v4/search_v3?offset=10",
+             "ZHIHU_PAGING_CURSOR_OFFSET"),
+            ("https://www.zhihu.com/api/v4/search_v3?offset=20&q=PRIVATE",
+             "ZHIHU_PAGING_CURSOR_KEYWORD"),
+            ("https://www.zhihu.com/api/v4/search_v3?offset=20&offset=20",
+             "ZHIHU_PAGING_CURSOR_QUERY"),
+            ("https://www.zhihu.com/api/v4/search_v3?offset=%XX",
+             "ZHIHU_PAGING_CURSOR_OFFSET"),
+        ]
+        for url, code in cases:
+            with self.subTest(code=code):
+                data = page([obj()], False)
+                data["paging"]["next"] = url
+                result = await self.run_case([data])
+                self.assertEqual(result["status"], "schema_error")
+                self.assertEqual(result["errorCode"], code)
+                self.assertNotIn("PRIVATE", repr(result))
+
+    async def test_bounded_official_or_relative_next_cursor_is_metadata_only(self):
+        for url in (
+            "/api/v4/search_v3?offset=20",
+            "https://api.zhihu.com/api/v4/search_v3?offset=20",
+            "https://www.zhihu.com/api/v4/search_v3?offset=20",
+        ):
+            with self.subTest(authority=url.split("/api/v4/")[0]):
+                data = page([obj()], False)
+                data["paging"]["next"] = url
+                result = await self.run_case([data])
+                self.assertEqual(result["status"], "ok")
+                self.assertEqual(len(result["records"]), 1)
+                self.assertEqual(len(self.calls), 1)
+
     async def test_duplicate_across_pages_not_projected_twice(self):
         result = await self.run_case([page([obj()], False), page([obj()])])
         self.assertEqual(result["searchDuplicates"], 1)
