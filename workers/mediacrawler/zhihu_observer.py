@@ -33,6 +33,39 @@ def content_identity(obj, observer):
     return obj["type"], native, parent
 
 
+def validate_next_cursor(next_url, job, page_number, observer):
+    """Diagnose a returned cursor without following or exporting its URL."""
+    error = observer.CollectorError
+    if not isinstance(next_url, str) or len(next_url) > 4096 or "\\" in next_url:
+        raise error("schema_error", "ZHIHU_PAGING_CURSOR_FORMAT")
+    try:
+        parts = urlsplit(next_url)
+        # The server's paging.next is metadata only. We *never follow it*;
+        # the pinned, exact-allowlisted client constructs any later request.
+        # Accept a path-only cursor or one of two fixed Zhihu API hosts.
+        # Never accept arbitrary subdomains, cross-domain or HTTP redirects.
+        relative = not parts.scheme and not parts.netloc
+        official = (parts.scheme == "https" and
+                    parts.hostname in {"www.zhihu.com", "api.zhihu.com"})
+        if ((not relative and not official) or parts.port is not None
+            or parts.username is not None or parts.fragment):
+            raise error("schema_error", "ZHIHU_PAGING_CURSOR_AUTHORITY")
+        if parts.path != "/api/v4/search_v3":
+            raise error("schema_error", "ZHIHU_PAGING_CURSOR_PATH")
+        pairs = parse_qsl(parts.query, keep_blank_values=True, strict_parsing=True)
+        params = dict(pairs)
+        if len(params) != len(pairs):
+            raise error("schema_error", "ZHIHU_PAGING_CURSOR_QUERY")
+        if params.get("offset") != str(page_number * 20):
+            raise error("schema_error", "ZHIHU_PAGING_CURSOR_OFFSET")
+        if "q" in params and params["q"] != job["query"]["text"]:
+            raise error("schema_error", "ZHIHU_PAGING_CURSOR_KEYWORD")
+    except error:
+        raise
+    except (ValueError, TypeError):
+        raise error("schema_error", "ZHIHU_PAGING_CURSOR_FORMAT") from None
+
+
 def page_contents(response, job, page_number, observer):
     error = observer.CollectorError
     if not isinstance(response, dict) or "error" in response or not isinstance(response.get("data"), list):
@@ -47,20 +80,7 @@ def page_contents(response, job, page_number, observer):
     # let the pinned client build the next page's offset from its page number.
     next_url = paging.get("next")
     if next_url not in (None, "") and end is not True:
-        try:
-            if not isinstance(next_url, str) or len(next_url) > 4096:
-                raise ValueError
-            parts = urlsplit(next_url)
-            pairs = parse_qsl(parts.query, keep_blank_values=True, strict_parsing=True)
-            params = dict(pairs)
-            if (parts.scheme != "https" or parts.hostname != "www.zhihu.com" or parts.port is not None
-                or parts.username is not None or parts.fragment or "\\" in next_url
-                or parts.path != "/api/v4/search_v3" or len(params) != len(pairs)
-                or params.get("offset") != str(page_number * 20)
-                or "q" in params and params["q"] != job["query"]["text"]):
-                raise ValueError
-        except (ValueError, TypeError):
-            raise error("schema_error", "ZHIHU_PAGING_CURSOR_CONFLICT") from None
+        validate_next_cursor(next_url, job, page_number, observer)
     items, excluded = [], 0
     for wrapper in response["data"]:
         if not isinstance(wrapper, dict) or wrapper.get("type") not in {"search_result", "zvideo"}:
