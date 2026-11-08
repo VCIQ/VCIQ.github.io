@@ -133,16 +133,28 @@ def page_contents(response, job, page_number, observer):
                 raise
     items, excluded = [], 0
     for wrapper in response["data"]:
-        if not isinstance(wrapper, dict) or wrapper.get("type") not in {"search_result", "zvideo"}:
+        if not isinstance(wrapper, dict):
             raise error("schema_error", "ZHIHU_SEARCH_CARD_UNKNOWN")
+        card_type = wrapper.get("type")
+        if card_type not in {"search_result", "zvideo"}:
+            # An observed search page contains mixed presentation cards.
+            # Never treat an unfamiliar wrapper as an article/answer/video
+            # or follow its links. Ignore only bounded, syntactically safe
+            # category labels; a page containing no accepted target remains
+            # unproven rather than an "empty" success.
+            if (not isinstance(card_type, str) or
+                re.fullmatch(r"[a-z][a-z0-9_-]{0,47}", card_type) is None):
+                raise error("schema_error", "ZHIHU_SEARCH_CARD_TYPE_INVALID")
+            excluded += 1
+            continue
         obj = wrapper.get("object")
         if not isinstance(obj, dict):
             raise error("schema_error", "ZHIHU_SEARCH_OBJECT_REQUIRED")
-        if obj.get("type") in NON_TARGETS and wrapper["type"] == "search_result":
+        if obj.get("type") in NON_TARGETS and card_type == "search_result":
             excluded += 1
             continue
         identity = content_identity(obj, observer)
-        if wrapper["type"] == "zvideo" and identity[0] != "zvideo":
+        if card_type == "zvideo" and identity[0] != "zvideo":
             raise error("schema_error", "ZHIHU_WRAPPER_TYPE_CONFLICT")
         items.append((obj, identity))
     return items, (None if untrusted_next_hint else
