@@ -48,6 +48,36 @@ def checked_url(value: str) -> str:
         raise FetchError("schema_error", "UNSAFE_DESTINATION") from None
 
 
+def destination_failure_class(value: str) -> str:
+    """Classify a link into a fixed safety category without exporting it.
+
+    No result of this function authorizes a network request; checked_url and
+    PublicTransport remain the sole destination and request allowlists.
+    """
+    if not isinstance(value, str) or len(value) > 4096:
+        return "FORMAT"
+    try:
+        value = decode_url(value)
+        if re.search(r"[\s\\\x00-\x1f]", value):
+            return "FORMAT"
+        parts = urlsplit(value)
+        if parts.scheme != "https":
+            return "SCHEME"
+        if parts.username is not None or parts.port is not None or parts.fragment:
+            return "AUTHORITY"
+        known_paths = {"mp.weixin.qq.com": r"/s(?:/[A-Za-z0-9_-]+)?",
+                       "weixin.sogou.com": r"/(?:weixin|link)?",
+                       **{host: r"/search" for host in BING_SEARCH_HOSTS}}
+        rule = known_paths.get(parts.hostname)
+        if rule is None:
+            return "HOST"
+        if re.fullmatch(rule, parts.path) is None:
+            return "PATH"
+        return "ALLOWED"
+    except (ValueError, TypeError):
+        return "FORMAT"
+
+
 def _verification_redirect(source: str, target: str) -> bool:
     """Recognize the observed Sogou challenge without requesting its destination.
 
