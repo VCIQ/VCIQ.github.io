@@ -293,6 +293,11 @@ def submit(workspace, github, *, run_id: str, attempt: int,
     """
     if authorized is not True:
         raise HandoffError("HANDOFF_EXPLICIT_APPROVAL_REQUIRED")
+    # GitHub credentials must not be used from the privileged MCP service.
+    # Its HOME/auth store differs from the ordinary Mac desktop operator.
+    if (isinstance(github, GitHubCli) and os.name == "posix"
+        and os.geteuid() == 0):
+        raise HandoffError("HANDOFF_UNPRIVILEGED_OPERATOR_REQUIRED")
     stage = "preflight"
     mutation_attempted = False
     try:
