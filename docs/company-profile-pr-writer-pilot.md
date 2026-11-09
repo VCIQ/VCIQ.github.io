@@ -155,13 +155,33 @@ underlying articles snapshot `generatedAt` may legitimately be older.
 This prevents replaying an old selection while retaining support for stale
 but valid source snapshots.
 
-The bridge intentionally refuses all additional coverage-only company
-mutations. The real workflow currently runs coverage reconciliation before
-selection; a separate pre-crawl coverage provenance/attestation contract is
-needed before the bridge could be used in production. The bridge does **not**
-attest the truth of source articles, that a crawler request succeeded, that
-coverage changes are authorized, or that all downstream publication validators
-ran. Those are independent, outstanding gates.
+### Company registry and coverage provenance
+
+Current production `lib/catalog-data.ts` **re-exports** `companies` from
+`./company-registry`, which imports `config/company_registry.json`. The
+original parser may silently fall back to an ambient on-disk registry if no
+inline companies are found. That is not acceptable for a pinned Git review.
+The bridge now reads `lib/company-registry.ts` and
+`config/company_registry.json` at the **same verified Git SHA**, checks both
+TS import/re-export links and resolves companies from the pinned JSON only.
+Inline catalog fixtures remain supported for synthetic tests. This behavior
+has a read-only compatibility test against the checked-in 100-company,
+20-institution catalog and rejects absent, malformed or duplicate entries.
+
+The optional `coverage_snapshot`, `coverage_report`, and
+`coverage_updated_at` inputs must be supplied *together*. The bridge
+recalculates the repository's existing `ensure_catalog_coverage` outcome
+using the pinned catalog and pre-repair base, rejects report mismatch,
+unauthorized modifications and missing institution coverage, and accepts only
+bounded newly missing-company fallback profiles. A passing coverage check
+is not proof of real external crawling or permission to publish; it is a
+deterministic pre-crawl repair attestation.
+
+The bridge remains fail-closed for coverage changes without the full attested
+snapshot and report. It does **not** attest the truth of source articles,
+that a crawler request succeeded, that institution onboarding changes are
+safe, or that all downstream publication validators ran. Those are
+independent, outstanding gates.
 
 The `EvidenceBoundWorkspace` API has no CLI, does not handle credentials,
 and is not referenced by any scheduled job. Real-Git tests use a temporary
