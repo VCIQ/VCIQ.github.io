@@ -14,19 +14,27 @@ import json
 from dataclasses import dataclass
 
 from .company_profile_refresh_queue import build_queue
+from .company_profile_writer_coverage_attestation import (
+    CoverageError, attest_coverage,
+)
+from .company_profile_writer_pinned_catalog import (
+    PinnedCatalogError, pinned_catalog,
+)
 from .company_profile_writer_pr_gate import ALLOWED_FILES
 from .company_profile_writer_pr_handoff import HandoffError, Snapshot, _sha
 from .company_profile_writer_transition_gate import (
     MAX_RUN_DURATION, TransitionError, _stamp, check_transition,
 )
 from .venture_profile_extraction import (
-    _catalog_lines, _field, _source, parse_catalog,
+    parse_catalog,
 )
 
 QUEUE = "public/data/company_profile_refresh_queue.json"
 PROFILES = "public/data/venture_profiles.json"
 ARTICLES = "public/data/articles.json"
 CATALOG = "lib/catalog-data.ts"
+REGISTRY_TS = "lib/company-registry.ts"
+REGISTRY_JSON = "config/company_registry.json"
 MAX_RECORD_BYTES = 8 * 1024 * 1024
 
 
@@ -73,6 +81,9 @@ class EvidenceBoundWorkspace:
     pre_crawl_selection: dict
     run_started_at: str
     run_completed_at: str
+    coverage_snapshot: dict | None = None
+    coverage_report: dict | None = None
+    coverage_updated_at: str | None = None
 
     def __post_init__(self):
         if not isinstance(self.pre_crawl_selection, dict):
@@ -84,9 +95,23 @@ class EvidenceBoundWorkspace:
         except (TypeError, ValueError, RecursionError):
             raise EvidenceError("EVIDENCE_SELECTION_INVALID") from None
         object.__setattr__(self, "pre_crawl_selection", _parse(raw))
+        supplied = (self.coverage_snapshot is not None,
+                    self.coverage_report is not None,
+                    self.coverage_updated_at is not None)
+        if any(supplied) and not all(supplied):
+            raise EvidenceError("EVIDENCE_COVERAGE_INCOMPLETE")
+        for name in ("coverage_snapshot", "coverage_report"):
+            value = getattr(self, name)
+            if value is not None:
+                try:
+                    frozen = json.dumps(value, ensure_ascii=False,
+                                        sort_keys=True, allow_nan=False).encode("utf-8")
+                except (TypeError, ValueError, RecursionError):
+                    raise EvidenceError("EVIDENCE_COVERAGE_INVALID") from None
+                object.__setattr__(self, name, _parse(frozen))
 
     def _tracked_bytes(self, name: str, base_sha: str) -> bytes:
-        if name not in ALLOWED_FILES | {ARTICLES, CATALOG}:
+        if name not in ALLOWED_FILES | {ARTICLES, CATALOG, REGISTRY_TS, REGISTRY_JSON}:
             raise EvidenceError("EVIDENCE_PATH_INVALID")
         _sha(base_sha)
         # Ensure the base is a tracked regular Git blob, not a symbolic link.
@@ -103,8 +128,8 @@ class EvidenceBoundWorkspace:
     def _base_json(self, name: str, base_sha: str) -> dict:
         return _parse(self._tracked_bytes(name, base_sha))
 
-    def _verify_selection_source(self, baseline: dict, base_sha: str) -> None:
-        """Rebuild selection from the actual pinned article/catalog Git blobs."""
+    def _verify_selection_source(self, baseline: dict, base_sha: str) -> dict:
+        """Rebuild selection from pinned sources and verified coverage state."""
         # The *selection* is generated during this run, even if the underlying
         # article snapshot is several days old. Never replay an old selection.
         try:
@@ -122,20 +147,37 @@ class EvidenceBoundWorkspace:
             catalog = self._tracked_bytes(CATALOG, base_sha).decode("utf-8")
         except UnicodeError:
             raise EvidenceError("EVIDENCE_CATALOG_INVALID") from None
-        # parse_catalog falls back to an on-disk registry if no company rows
-        # parse. Verify a real source row exists *inside the pinned Git blob*
-        # first, so no ambient registry can make a malformed catalog pass.
-        rows = _catalog_lines(catalog, "export const companies",
-                              "export type Institution")
-        if not any(_field(row, "slug") and _field(row, "name")
-                   and _source(row)[1] for row in rows):
-            raise EvidenceError("EVIDENCE_CATALOG_INVALID")
+        is_reexport = 'export { companies } from "./company-registry"' in catalog
+        registry_ts, registry = None, None
+        if is_reexport:
+            try:
+                registry_ts = self._tracked_bytes(REGISTRY_TS, base_sha).decode("utf-8")
+            except UnicodeError:
+                raise EvidenceError("EVIDENCE_CATALOG_INVALID") from None
+            registry = self._base_json(REGISTRY_JSON, base_sha)
         try:
-            companies, _ = parse_catalog(catalog)
-        except (ValueError, TypeError, RecursionError):
+            companies, _ = pinned_catalog(catalog, registry_ts, registry)
+        except (PinnedCatalogError, ValueError, TypeError, RecursionError):
             raise EvidenceError("EVIDENCE_CATALOG_INVALID") from None
         if not companies or len({item.slug for item in companies}) != len(companies):
             raise EvidenceError("EVIDENCE_CATALOG_INVALID")
+        selection_profiles = baseline[PROFILES]
+        if self.coverage_snapshot is not None:
+            try:
+                attest_coverage(
+                    baseline[PROFILES], self.coverage_snapshot, catalog,
+                    self.coverage_report, updated_at=self.coverage_updated_at,
+                    run_started_at=self.run_started_at,
+                    run_completed_at=self.run_completed_at,
+                    registry_ts=registry_ts, registry=registry,
+                )
+            except CoverageError as exc:
+                msg = str(exc)
+                if (not msg.startswith("COVERAGE_")
+                    or not msg.replace("_", "").isalnum() or len(msg) > 90):
+                    msg = "EVIDENCE_COVERAGE_REJECTED"
+                raise EvidenceError(msg) from None
+            selection_profiles = self.coverage_snapshot
         lookback = self.pre_crawl_selection.get("lookbackDays")
         limit = self.pre_crawl_selection.get("selectionLimit")
         if (type(lookback) is not int or not 1 <= lookback <= 90
@@ -143,7 +185,7 @@ class EvidenceBoundWorkspace:
             raise EvidenceError("EVIDENCE_SELECTION_PARAMETERS_INVALID")
         try:
             expected = build_queue(
-                article, baseline[PROFILES],
+                article, selection_profiles,
                 {item.slug: item.name for item in companies},
                 baseline[QUEUE],
                 now=selected_at,
@@ -153,6 +195,7 @@ class EvidenceBoundWorkspace:
             raise EvidenceError("EVIDENCE_SELECTION_SOURCE_INVALID") from None
         if expected != self.pre_crawl_selection:
             raise EvidenceError("EVIDENCE_SELECTION_SOURCE_MISMATCH")
+        return selection_profiles
 
     def snapshot(self) -> Snapshot | None:
         prepared = self.workspace.snapshot()
@@ -162,7 +205,7 @@ class EvidenceBoundWorkspace:
         if self.workspace._git("rev-parse", "HEAD").decode("ascii").strip() != base_sha:
             raise EvidenceError("EVIDENCE_BASE_MOVED")
         baseline = {path: self._base_json(path, base_sha) for path in (QUEUE, PROFILES)}
-        self._verify_selection_source(baseline, base_sha)
+        selection_profiles = self._verify_selection_source(baseline, base_sha)
         if self.workspace._git("rev-parse", "HEAD").decode("ascii").strip() != base_sha:
             raise EvidenceError("EVIDENCE_BASE_MOVED")
         candidate = {}
@@ -178,7 +221,7 @@ class EvidenceBoundWorkspace:
         try:
             check_transition(
                 baseline[QUEUE], copy.deepcopy(self.pre_crawl_selection),
-                candidate[QUEUE], baseline[PROFILES], candidate[PROFILES],
+                candidate[QUEUE], selection_profiles, candidate[PROFILES],
                 run_started_at=self.run_started_at,
                 run_completed_at=self.run_completed_at,
                 coverage_slugs=[],
