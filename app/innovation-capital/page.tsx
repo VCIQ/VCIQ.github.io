@@ -21,6 +21,8 @@ export const metadata: Metadata = {
 
 export default function InnovationCapitalPage() {
   const projects = watchlist.projects;
+  const reviewedCount = new Set(checks.checks.map(row => row.projectId)).size;
+  const batchCount = checks.checks.filter(row => row.checkedAt === checks.reviewBatchDate).length;
   const opportunities = buildInnovationOpportunityPool();
   const research = buildInnovationCapitalResearchModel();
   const coreCount = projects.filter((item) => item.pool === "core").length;
@@ -64,7 +66,7 @@ export default function InnovationCapitalPage() {
           <div><Building2 size={18} /><strong>{refileCount}</strong><span>二次申报项目</span></div>
         </div>
         <div className={styles.asOf}>
-          储备目录资料时点 {watchlist.asOf} · 生命周期基线 {lifecycle.asOf}。本轮 {checks.reviewBatchDate} 更新 {checks.checks.length}/{lifecycle.projects.length} 个生命周期项目节点；其余 {lifecycle.projects.length - checks.checks.length} 个及 {watchlist.projects.length} 条储备记录仍待本轮复核。
+          储备目录资料时点 {watchlist.asOf} · 生命周期基线 {lifecycle.asOf}。最近核查批次 {checks.reviewBatchDate} 回读 {batchCount} 个节点；累计 {reviewedCount}/{lifecycle.projects.length} 个项目有具体节点核查记录。另 {lifecycle.projects.length - reviewedCount} 个待复核，{watchlist.projects.length} 条储备记录未完成本轮复核。历史节点确认不等于当前状态全面核验。
           这是资料版本，不是今天的采集成功时间；页面重新部署不会自动刷新底层项目事实。
         </div>
       </header>
@@ -94,7 +96,7 @@ export default function InnovationCapitalPage() {
             <a href={item.sourceUrl} target="_blank" rel="noreferrer">{item.sourceTitle} ↗</a>
           </article>)}
         </div>
-        <p className={styles.scopeNote}>本轮依据公告更新燧原科技、景旺电子及欢创科技的上市节点；其余项目保留原资料时点。状态变化需要监管、交易所或明确机构原文支持。</p>
+        <p className={styles.scopeNote}>本轮依据证监会批复将朗高科技更新为同意注册，并回读宇树科技、摩尔线程、沐曦股份的历史上市公告。蓝箭航天、中科宇航、超颖电子及纳真科技仍待补充原件或当前审核字段；检索进展与读取限制在项目卡片单列。</p>
       </section>
 
       <div id="project-reserves"><InnovationDirectory /></div>

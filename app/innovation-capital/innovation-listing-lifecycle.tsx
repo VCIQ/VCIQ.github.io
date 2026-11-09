@@ -19,6 +19,8 @@ const statusLabels: Record<string, string> = {
 };
 
 export function InnovationListingLifecycle() {
+  const reviews = new Map(checks.checks.map(row => [row.projectId, row]));
+  const pending = new Map(checks.pendingChecks.map(row => [row.projectId, row]));
   return (
     <section className={styles.lifecycleSection} id="listing-lifecycle">
       <div className={styles.sectionHeader}>
@@ -57,10 +59,14 @@ export function InnovationListingLifecycle() {
             <dl className={styles.metaGrid}>
               <div><dt>首次辅导</dt><dd>{project.firstGuidanceDate}</dd></div>
               <div><dt>已记录事件日期</dt><dd>{project.latestEventDate}</dd></div>
-              <div><dt>本轮节点核查</dt><dd>{checks.checks.find(row => row.projectId === project.id)?.checkedAt ?? "尚未复核"}</dd></div>
+              <div><dt>最近具体节点核查</dt><dd>{reviews.get(project.id)?.checkedAt ?? "待复核"}</dd></div>
               <div><dt>辅导/保荐机构</dt><dd>{project.broker}</dd></div>
               <div><dt>资本路径</dt><dd>{project.capitalMarketPath}</dd></div>
             </dl>
+
+            <p className={styles.scopeNote}>
+              {reviews.get(project.id)?.note ?? pending.get(project.id)?.note ?? "尚未完成本轮节点核查。"}
+            </p>
 
             <div className={styles.themeRow}>
               {project.fifteenthTags.map((tag) => <span key={tag}>{tag}</span>)}
