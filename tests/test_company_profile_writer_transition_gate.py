@@ -6,7 +6,9 @@ from datetime import UTC, datetime, timedelta
 import unittest
 
 from tools.company_profile_refresh_queue import build_queue, mark_processed_events
-from tools.company_profile_writer_transition_gate import TransitionError, check_transition
+from tools.company_profile_writer_transition_gate import (
+    TransitionError, _selection, check_transition,
+)
 from tests.test_company_profile_refresh_queue import article
 
 
@@ -154,6 +156,28 @@ class CompanyProfileTransitionTests(unittest.TestCase):
         intent["pendingCount"] = 0
         with self.assertRaisesRegex(TransitionError, "SELECTION_INVALID"):
             check_transition(base, intent, final, before, after)
+
+    def test_pending_count_cannot_hide_missing_entries(self):
+        base, intent, final, before, after = sample()
+        intent["pendingCount"] = 101
+        with self.assertRaisesRegex(TransitionError, "SELECTION_INVALID"):
+            check_transition(base, intent, final, before, after)
+
+    def test_entries_must_follow_builder_priority_order(self):
+        payload = build_queue({
+            "generatedAt": NOW.isoformat(),
+            "articles": [
+                article("synthetic-product", "openai", "产品发布",
+                        published_at="2026-11-08", importance=95),
+                article("synthetic-ipo", "anthropic", "IPO",
+                        published_at="2026-11-08", importance=95),
+            ],
+        }, profiles(), NAMES, now=NOW, select_limit=2)
+        _selection(payload)
+        payload["entries"].reverse()
+        payload["selectedSlugs"].reverse()
+        with self.assertRaisesRegex(TransitionError, "SELECTION_INVALID"):
+            _selection(payload)
 
     def test_candidate_generation_must_not_predate_selection(self):
         base, intent, final, before, after = sample()
