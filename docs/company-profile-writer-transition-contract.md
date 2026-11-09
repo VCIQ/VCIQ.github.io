@@ -22,7 +22,18 @@ The future PR writer must hold **three separate immutable snapshots**:
 3. **Candidate:** the final queue and profile snapshots after the existing
    publication and cross-field validation gates complete.
 
-Pass those JSON objects to
+It must also preserve a separately attested **runtime window**
+(`run_started_at` / `run_completed_at`, UTC, maximum 90 minutes) from the
+actual job execution. The queue's `generatedAt` reflects the underlying
+**article snapshot timestamp**, not necessarily the wall-clock time at which
+`--mark-processed` executes. A real run may therefore have
+`processedAt` later than `generatedAt`; rejecting it for that reason is
+incorrect. Event timestamps and the 90-day retention cutoff are evaluated
+against the explicit runtime window, while the article snapshot chronology
+is checked separately. Missing, reversed or implausibly long runtime
+windows cause the validator to fail closed.
+
+Pass those JSON objects and the attested runtime window to
 `tools.company_profile_writer_transition_gate.check_transition(...)`.
 Any additional coverage-only company slugs must come from a separately
 authenticated, bounded pre-crawl coverage report; they are **not inferred**
