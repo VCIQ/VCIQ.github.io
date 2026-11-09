@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from datetime import UTC, datetime, timedelta
 from typing import Any
+import re
 
 RETENTION_DAYS = 90
 MAX_SELECTED = 10
@@ -64,10 +65,41 @@ def _profiles(value: object) -> dict[str, Any]:
 def _slugs(values: object, *, limit: int = MAX_SELECTED) -> list[str]:
     if (not isinstance(values, list) or len(values) > limit
         or any(not isinstance(s, str) or not s or len(s) > 100
-               or ":" in s or "/" in s for s in values)
+               or not re.fullmatch(r"[a-z0-9][a-z0-9_-]*", s) for s in values)
         or len(set(values)) != len(values)):
         raise TransitionError("WRITER_TRANSITION_SLUGS_INVALID")
     return values
+
+
+def _selection(payload: dict[str, Any]) -> tuple[list[str], dict[str, Any]]:
+    """Check the selection invariant of build_queue, including pending rows."""
+    selected = _slugs(payload["selectedSlugs"])
+    limit = payload.get("selectionLimit")
+    count = payload.get("selectedCount")
+    pending = payload.get("pendingCount")
+    if (type(limit) is not int or not 0 <= limit <= MAX_SELECTED
+        or type(count) is not int or count != len(selected)
+        or type(pending) is not int or pending < len(payload["entries"])
+        or count != min(limit, pending)):
+        raise TransitionError("WRITER_TRANSITION_SELECTION_INVALID")
+    entries = {}
+    order = []
+    for item in payload["entries"]:
+        if not isinstance(item, dict):
+            raise TransitionError("WRITER_TRANSITION_SELECTION_INVALID")
+        slug = item.get("companySlug")
+        if not isinstance(slug, str) or slug in entries:
+            raise TransitionError("WRITER_TRANSITION_SELECTION_INVALID")
+        _slugs([slug], limit=1)
+        entries[slug] = item
+        order.append(slug)
+    if selected != order[:len(selected)]:
+        raise TransitionError("WRITER_TRANSITION_SELECTION_INVALID")
+    for idx, slug in enumerate(order):
+        expected_status = "selected" if idx < len(selected) else "pending"
+        if entries[slug].get("status") != expected_status:
+            raise TransitionError("WRITER_TRANSITION_SELECTION_INVALID")
+    return selected, entries
 
 
 def check_transition(
@@ -90,29 +122,14 @@ def check_transition(
     profile_before = _profiles(base_profiles)
     profile_after = _profiles(candidate_profiles)
 
-    selected = _slugs(intent["selectedSlugs"])
+    _selection(before)
+    selected, entries = _selection(intent)
+    _selection(after)
     additional = _slugs([] if coverage_slugs is None else coverage_slugs, limit=100)
-    if (type(intent.get("selectedCount")) is not int
-        or intent["selectedCount"] != len(selected)
-        or type(after.get("selectedCount")) is not int
-        or not 0 <= after["selectedCount"] <= MAX_SELECTED
-        or type(intent.get("selectionLimit")) is not int
-        or not 0 <= intent["selectionLimit"] <= MAX_SELECTED):
-        raise TransitionError("WRITER_TRANSITION_SELECTION_INVALID")
-    if not selected and not additional:
-        # A metadata-only refresh may still change generatedAt.
-        pass
-    entries = {}
-    for item in intent["entries"]:
-        if not isinstance(item, dict):
-            raise TransitionError("WRITER_TRANSITION_SELECTION_INVALID")
-        slug = item.get("companySlug")
-        if not isinstance(slug, str) or slug in entries:
-            raise TransitionError("WRITER_TRANSITION_SELECTION_INVALID")
-        entries[slug] = item
+    if not (_stamp(before["generatedAt"]) <= _stamp(intent["generatedAt"])
+            <= _stamp(after["generatedAt"])):
+        raise TransitionError("WRITER_TRANSITION_CHRONOLOGY_INVALID")
     selected_set = set(selected)
-    if not selected_set.issubset(entries):
-        raise TransitionError("WRITER_TRANSITION_SELECTION_INVALID")
 
     expected = {}
     for slug in selected:
