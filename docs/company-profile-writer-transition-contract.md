@@ -35,6 +35,9 @@ from candidate changes or automatically trusted.
   be precisely the first `min(selectionLimit, pendingCount)` queue entries;
   `selected`/`pending` statuses must match the ordered selection. The final
   queue must also have internally consistent counts, selection and status.
+  Truncated queue entries must use exactly `min(pendingCount, 100)` rows,
+  and their ordering must follow the existing deterministic priority sorter
+  (descending priority, then publishedAt and companySlug).
 - No article marked processed before its crawl; exactly the selected event
   fingerprints become newly processed.
 - No rewriting of prior processed-event records, and no recent history lost.
