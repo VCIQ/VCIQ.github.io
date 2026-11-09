@@ -149,6 +149,11 @@ A supplied selection record that differs from that canonical computation
 is rejected before any remote writes. Catalog parsing cannot fall back to
 ambient local registry data: a valid company source row must be present
 inside the pinned catalog blob itself.
+The selection's own `generatedAt` must fall within the independently
+recorded job execution window (at most 90 minutes). By contrast, the
+underlying articles snapshot `generatedAt` may legitimately be older.
+This prevents replaying an old selection while retaining support for stale
+but valid source snapshots.
 
 The bridge intentionally refuses all additional coverage-only company
 mutations. The real workflow currently runs coverage reconciliation before
