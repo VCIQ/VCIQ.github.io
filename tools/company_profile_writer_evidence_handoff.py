@@ -13,14 +13,20 @@ import copy
 import json
 from dataclasses import dataclass
 
+from .company_profile_refresh_queue import build_queue
 from .company_profile_writer_pr_gate import ALLOWED_FILES
 from .company_profile_writer_pr_handoff import HandoffError, Snapshot, _sha
 from .company_profile_writer_transition_gate import (
-    TransitionError, check_transition,
+    TransitionError, _stamp, check_transition,
+)
+from .venture_profile_extraction import (
+    _catalog_lines, _field, _source, parse_catalog,
 )
 
 QUEUE = "public/data/company_profile_refresh_queue.json"
 PROFILES = "public/data/venture_profiles.json"
+ARTICLES = "public/data/articles.json"
+CATALOG = "lib/catalog-data.ts"
 MAX_RECORD_BYTES = 8 * 1024 * 1024
 
 
@@ -79,8 +85,8 @@ class EvidenceBoundWorkspace:
             raise EvidenceError("EVIDENCE_SELECTION_INVALID") from None
         object.__setattr__(self, "pre_crawl_selection", _parse(raw))
 
-    def _base_json(self, name: str, base_sha: str) -> dict:
-        if name not in ALLOWED_FILES:
+    def _tracked_bytes(self, name: str, base_sha: str) -> bytes:
+        if name not in ALLOWED_FILES | {ARTICLES, CATALOG}:
             raise EvidenceError("EVIDENCE_PATH_INVALID")
         _sha(base_sha)
         # Ensure the base is a tracked regular Git blob, not a symbolic link.
@@ -89,7 +95,52 @@ class EvidenceBoundWorkspace:
             or not entry.endswith(b"\t" + name.encode("utf-8") + b"\0")
             or entry.count(b"\0") != 1):
             raise EvidenceError("EVIDENCE_BASE_BLOB_INVALID")
-        return _parse(self.workspace._git("show", base_sha + ":" + name))
+        raw = self.workspace._git("show", base_sha + ":" + name)
+        if not isinstance(raw, bytes) or len(raw) > MAX_RECORD_BYTES:
+            raise EvidenceError("EVIDENCE_SIZE_INVALID")
+        return raw
+
+    def _base_json(self, name: str, base_sha: str) -> dict:
+        return _parse(self._tracked_bytes(name, base_sha))
+
+    def _verify_selection_source(self, baseline: dict, base_sha: str) -> None:
+        """Rebuild selection from the actual pinned article/catalog Git blobs."""
+        article = self._base_json(ARTICLES, base_sha)
+        try:
+            catalog = self._tracked_bytes(CATALOG, base_sha).decode("utf-8")
+        except UnicodeError:
+            raise EvidenceError("EVIDENCE_CATALOG_INVALID") from None
+        # parse_catalog falls back to an on-disk registry if no company rows
+        # parse. Verify a real source row exists *inside the pinned Git blob*
+        # first, so no ambient registry can make a malformed catalog pass.
+        rows = _catalog_lines(catalog, "export const companies",
+                              "export type Institution")
+        if not any(_field(row, "slug") and _field(row, "name")
+                   and _source(row)[1] for row in rows):
+            raise EvidenceError("EVIDENCE_CATALOG_INVALID")
+        try:
+            companies, _ = parse_catalog(catalog)
+        except (ValueError, TypeError, RecursionError):
+            raise EvidenceError("EVIDENCE_CATALOG_INVALID") from None
+        if not companies or len({item.slug for item in companies}) != len(companies):
+            raise EvidenceError("EVIDENCE_CATALOG_INVALID")
+        lookback = self.pre_crawl_selection.get("lookbackDays")
+        limit = self.pre_crawl_selection.get("selectionLimit")
+        if (type(lookback) is not int or not 1 <= lookback <= 90
+            or type(limit) is not int or not 0 <= limit <= 10):
+            raise EvidenceError("EVIDENCE_SELECTION_PARAMETERS_INVALID")
+        try:
+            expected = build_queue(
+                article, baseline[PROFILES],
+                {item.slug: item.name for item in companies},
+                baseline[QUEUE],
+                now=_stamp(self.pre_crawl_selection.get("generatedAt")),
+                lookback_days=lookback, select_limit=limit,
+            )
+        except (ValueError, TypeError, RecursionError, OverflowError, KeyError):
+            raise EvidenceError("EVIDENCE_SELECTION_SOURCE_INVALID") from None
+        if expected != self.pre_crawl_selection:
+            raise EvidenceError("EVIDENCE_SELECTION_SOURCE_MISMATCH")
 
     def snapshot(self) -> Snapshot | None:
         prepared = self.workspace.snapshot()
@@ -99,6 +150,7 @@ class EvidenceBoundWorkspace:
         if self.workspace._git("rev-parse", "HEAD").decode("ascii").strip() != base_sha:
             raise EvidenceError("EVIDENCE_BASE_MOVED")
         baseline = {path: self._base_json(path, base_sha) for path in (QUEUE, PROFILES)}
+        self._verify_selection_source(baseline, base_sha)
         if self.workspace._git("rev-parse", "HEAD").decode("ascii").strip() != base_sha:
             raise EvidenceError("EVIDENCE_BASE_MOVED")
         candidate = {}
