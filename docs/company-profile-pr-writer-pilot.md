@@ -142,13 +142,21 @@ isolated checkout. The immutable pre-crawl selection is checked against the
 actual base queue and the final candidate by
 `check_transition(..., coverage_slugs=[])` **before any GitHub ref write**.
 
+The bridge also pins `public/data/articles.json` and `lib/catalog-data.ts`
+to the exact same Git SHA and uses the repository's own `build_queue` and
+`parse_catalog` logic to independently reconstruct pre-crawl selection.
+A supplied selection record that differs from that canonical computation
+is rejected before any remote writes. Catalog parsing cannot fall back to
+ambient local registry data: a valid company source row must be present
+inside the pinned catalog blob itself.
+
 The bridge intentionally refuses all additional coverage-only company
 mutations. The real workflow currently runs coverage reconciliation before
 selection; a separate pre-crawl coverage provenance/attestation contract is
-needed before the bridge could be used in production. The bridge also does
-**not** attest that the selection actually came from the article source
-snapshot, that a crawler request succeeded, or that all downstream
-publication validators ran. Those are independent, outstanding gates.
+needed before the bridge could be used in production. The bridge does **not**
+attest the truth of source articles, that a crawler request succeeded, that
+coverage changes are authorized, or that all downstream publication validators
+ran. Those are independent, outstanding gates.
 
 The `EvidenceBoundWorkspace` API has no CLI, does not handle credentials,
 and is not referenced by any scheduled job. Real-Git tests use a temporary
