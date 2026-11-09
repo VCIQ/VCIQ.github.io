@@ -1,0 +1,56 @@
+# Company profile refresh: offline transition contract
+
+**Status: isolated proposal, not activated.** Related: Issue #664 and
+Draft PR #665. This contract does not modify the active
+`company-profile-incremental-refresh.yml` workflow.
+
+## Why this check is needed
+
+The current writer selects up to 10 companies, crawls them, marks article
+fingerprints processed, reconciles profiles, validates, and directly commits
+two JSON files to `main`. When the queue is rebuilt after
+`--mark-processed`, the originally selected entries may disappear. Therefore
+a proposal based only on the final queue cannot demonstrate that each
+processed fingerprint belonged to the original permitted selection.
+
+The future PR writer must hold **three separate immutable snapshots**:
+
+1. **Base:** `company_profile_refresh_queue.json` and
+   `venture_profiles.json` from the identical recorded `main` commit.
+2. **Pre-crawl selection:** the queue immediately after high-signal event
+   selection and *before* crawler execution or `--mark-processed`.
+3. **Candidate:** the final queue and profile snapshots after the existing
+   publication and cross-field validation gates complete.
+
+Pass those JSON objects to
+`tools.company_profile_writer_transition_gate.check_transition(...)`.
+Any additional coverage-only company slugs must come from a separately
+authenticated, bounded pre-crawl coverage report; they are **not inferred**
+from candidate changes or automatically trusted.
+
+## What is checked
+
+- Input schema, fingerprint structure, unique selected companies and the
+  maximum selection limit.
+- No article marked processed before its crawl; exactly the selected event
+  fingerprints become newly processed.
+- No rewriting of prior processed-event records, and no recent history lost.
+  Removal of records older than the queue's retention period is permitted.
+- No unexpected deletion or mutation of company records. Changed companies
+  must belong to the pre-crawl selection or separately attested coverage set.
+- Bounded profile root metadata; unexpected schema/identity changes are
+  rejected instead of silently reconciled.
+
+## What this does *not* prove
+
+A passing synthetic check cannot certify successful fetching, sufficient
+official-source evidence, correct financial facts, fresh authentication, or
+real company change quality. It also cannot establish that `main` has not
+advanced. The future writer must compare the actual current GitHub main SHA
+with the candidate base SHA at every commit/PR boundary, and rerun existing
+coverage, publication and cross-field guards before review.
+
+**No merge, publication or Pages dispatch is authorized by this checker.**
+There is no CLI apply path or production workflow call. It requires human
+review and a separate, explicitly approved integration PR before use in any
+scheduled company refresh job.
