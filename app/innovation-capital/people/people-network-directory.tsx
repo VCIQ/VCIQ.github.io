@@ -34,10 +34,13 @@ export function PeopleNetworkDirectory({people}: {people: NetworkPersonView[]}) 
       <p className={styles.note}>{person.topics.join(" · ")} · 来源日期 {person.officialSource.publishedAt ?? "未注明"} · 核验 {person.officialSource.checkedAt}</p>
       <div className={styles.links}>
         <a href={person.officialSource.url} target="_blank" rel="noreferrer">官网身份依据 ↗</a>
-        {person.linkedin && <a href={person.linkedin.url} target="_blank" rel="noreferrer" aria-label={`${person.name} 的 LinkedIn 候选档案`}>LinkedIn 候选档案 ↗</a>}
+        {person.linkedin && <a href={person.linkedin.url} target="_blank" rel="noreferrer" aria-label={`${person.name} 的 LinkedIn ${person.linkedin.status === "matched" ? "公开档案" : "候选档案"}`}>{person.linkedin.status === "matched" ? "LinkedIn 公开档案 · 身份已核对 ↗" : "LinkedIn 候选档案 · 待核验 ↗"}</a>}
         {person.personSlug && <Link href={`/people/${person.personSlug}/`}>站内人物档案 →</Link>}
       </div>
-      {person.linkedin && <p className={styles.note}>LinkedIn 检索日期 {person.linkedin.checkedAt}；链接匹配待复核。</p>}
+      {person.linkedin ? <p className={styles.note}>LinkedIn 核验日期 {person.linkedin.checkedAt}；
+        {person.linkedin.status === "matched" ? person.linkedin.matchReason : "链接匹配待复核。"}
+        {person.linkedin.profileEvidenceUrl && <> <a href={person.linkedin.profileEvidenceUrl} target="_blank" rel="noreferrer">档案匹配依据 ↗</a></>}
+      </p> : <p className={styles.note}>官网人物身份已映射；尚未找到可交叉核对的 LinkedIn 档案。</p>}
       <div className={styles.relations}>
         <h3>关联项目与公开判断</h3>
         {person.relations.length ? person.relations.map(relation => <section className={styles.relation} key={relation.id}>

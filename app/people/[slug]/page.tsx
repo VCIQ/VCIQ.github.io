@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ExternalDatabaseLinks } from "@/components/external-database-links";
+import { ProfessionalIdentityPanel } from "@/components/professional-identity-panel";
 import { FavoriteButton } from "@/components/favorite-button";
 import {
   hanghangchaResearchLink,
@@ -76,6 +77,7 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
       : []),
   ].filter((link): link is NonNullable<typeof link> => Boolean(link));
   const sections = [
+    "职业身份与LinkedIn",
     "研究摘要",
     "主动研究计划",
     "影响映射",
@@ -141,6 +143,9 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
         </aside>
 
         <article className="detail-article">
+          <Section id="职业身份与LinkedIn" title="职业身份与 LinkedIn">
+            <ProfessionalIdentityPanel slug={person.slug} name={person.name} />
+          </Section>
           <Section id="研究摘要" title="人物研究摘要">
             <div className={styles.snapshotGrid}>
               <div className={styles.snapshotCard}>

@@ -1,3 +1,5 @@
+import { normalizeLinkedInProfile, safePublicUrl } from "./public-profile-url";
+export { normalizeLinkedInProfile, safePublicUrl } from "./public-profile-url";
 import seed from "../config/innovation_people_network.json";
 import roster from "../config/innovation_global_investors.json";
 import evidence from "../config/innovation_investor_evidence.json";
@@ -8,7 +10,7 @@ export type NetworkPerson = {
   institutionId: string | null; companySlug: string | null; companyName: string | null;
   personSlug: string | null; profileRole: string; topics: string[]; evidenceNames: string[];
   officialSource: { url: string; title: string; publishedAt: string | null; checkedAt: string };
-  linkedin: { url: string; status: "candidate"; checkedAt: string;
+  linkedin: { url: string; status: "candidate" | "matched"; checkedAt: string; matchReason?: string; profileEvidenceUrl?: string;
     query: { firstName?: string; lastName?: string; company?: string } } | null;
 };
 export type PersonEvidence = {
@@ -22,25 +24,17 @@ export type NetworkPersonView = NetworkPerson & {
 export const peopleNetworkReviewedAt = seed.reviewedAt;
 export const peopleNetworkSeed = seed.people as NetworkPerson[];
 
-export function safePublicUrl(value: string): boolean {
-  try {
-    const u = new URL(value);
-    return u.protocol === "https:" && !u.username && !u.password && (!u.port || u.port === "443") &&
-      /\.[a-z]{2,}$/i.test(u.hostname) && !/\.(local|internal|localhost)$/i.test(u.hostname);
-  } catch { return false; }
+export type ReviewedAttributionGroup = {
+  institutionId: string; name: string; sourceUrl: string; personIds: string[]; checkedAt: string; reason: string;
+};
+export const reviewedAttributionGroups = seed.reviewedAttributionGroups as ReviewedAttributionGroup[];
+function matchesAttribution(person: NetworkPerson, name: string, sourceUrl: string, groups: readonly ReviewedAttributionGroup[]) {
+  return person.evidenceNames.includes(name) || groups.some(group =>
+    group.institutionId === person.institutionId && group.name === name &&
+    group.sourceUrl === sourceUrl && group.personIds.includes(person.id));
 }
 
-/** Retain only a LinkedIn profile URL. Search results never imply an employment or deal edge. */
-export function normalizeLinkedInProfile(value: string): string | null {
-  try {
-    const u = new URL(value);
-    if (!safePublicUrl(value) || !/^(?:[a-z]{2,3}\.)?linkedin\.com$/i.test(u.hostname) ||
-        !/^\/in\/[^/]+\/?$/.test(u.pathname) || /%2f|%5c/i.test(u.pathname)) return null;
-    return `https://www.linkedin.com${u.pathname.replace(/\/$/, "")}`;
-  } catch { return null; }
-}
-
-export function validatePeopleNetwork(people: readonly NetworkPerson[] = peopleNetworkSeed): string[] {
+export function validatePeopleNetwork(people: readonly NetworkPerson[] = peopleNetworkSeed, groups: readonly ReviewedAttributionGroup[] = reviewedAttributionGroups): string[] {
   const errors: string[] = [];
   const ids = new Set<string>();
   const profiles = new Set<string>();
@@ -67,23 +61,39 @@ export function validatePeopleNetwork(people: readonly NetworkPerson[] = peopleN
       const url = normalizeLinkedInProfile(person.linkedin.url);
       if (!url || profiles.has(url)) errors.push(`invalid or duplicate LinkedIn profile: ${person.id}`);
       if (url) profiles.add(url);
-      if (person.linkedin.status !== "candidate" || !dateOkay(person.linkedin.checkedAt) ||
+      if (!["candidate", "matched"].includes(person.linkedin.status) || !dateOkay(person.linkedin.checkedAt) ||
           !(person.linkedin.query.firstName || person.linkedin.query.lastName)) errors.push(`unsupported LinkedIn assertion: ${person.id}`);
+      if (person.linkedin.status === "matched" && (!person.linkedin.matchReason?.trim() ||
+          !person.linkedin.profileEvidenceUrl || !safePublicUrl(person.linkedin.profileEvidenceUrl) ||
+          !/^(?:[a-z]{2,3}\.)?linkedin\.com$/i.test(new URL(person.linkedin.profileEvidenceUrl).hostname)))
+        errors.push(`missing LinkedIn identity evidence: ${person.id}`);
     }
+  }
+  const groupKeys = new Set<string>();
+  for (const group of groups) {
+    const key = `${group.institutionId}:${group.name}:${group.sourceUrl}`;
+    if (groupKeys.has(key) || !group.reason.trim() || !dateOkay(group.checkedAt) ||
+        !safePublicUrl(group.sourceUrl) || group.personIds.length < 2 ||
+        new Set(group.personIds).size !== group.personIds.length ||
+        !evidence.records.some(r => r.institutionId === group.institutionId && r.source.url === group.sourceUrl &&
+          r.speakers.some(s => s.name === group.name)) ||
+        group.personIds.some(id => !people.some(p => p.id === id && p.institutionId === group.institutionId)))
+      errors.push(`invalid reviewed attribution group: ${key}`);
+    groupKeys.add(key);
   }
   return errors;
 }
 
-export function buildPeopleNetwork(people: readonly NetworkPerson[] = peopleNetworkSeed): NetworkPersonView[] {
-  const errors = validatePeopleNetwork(people);
+export function buildPeopleNetwork(people: readonly NetworkPerson[] = peopleNetworkSeed, groups: readonly ReviewedAttributionGroup[] = reviewedAttributionGroups): NetworkPersonView[] {
+  const errors = validatePeopleNetwork(people, groups);
   if (errors.length) throw new Error(errors.join("; "));
   return people.map(person => {
     const institution = roster.institutions.find(x => x.id === person.institutionId);
     const relations: PersonEvidence[] = [];
-    // Exact reviewed name + institution, never fuzzy matching or splitting a co-author string.
+    // Exact name + institution; multi-author attribution needs an explicit source-scoped review.
     for (const row of evidence.records.filter(r => r.institutionId === person.institutionId)) {
-      const speaker = row.speakers.find(s => person.evidenceNames.includes(s.name));
-      const partner = row.linkedPerson && person.evidenceNames.includes(row.linkedPerson.name);
+      const speaker = row.speakers.find(s => matchesAttribution(person, s.name, row.source.url, groups));
+      const partner = row.linkedPerson && matchesAttribution(person, row.linkedPerson.name, row.source.url, groups);
       if (!speaker && !partner) continue;
       const project = identities.projects.find(p => p.observedNames.some(n => n === row.project));
       relations.push({id: row.id, type: speaker ? "viewpoint" : "portfolio-partner",
@@ -101,15 +111,17 @@ export function peopleForInstitution(id: string) {
   return buildPeopleNetwork().filter(person => person.institutionId === id);
 }
 
-/** A queue of exact, unsplit attributions still missing a reviewed person mapping. */
+/** Missing exact attributions; a reviewed group covers only its original source. */
 export function peopleNetworkCoverage() {
-  const mapped = new Set(peopleNetworkSeed.flatMap(p => p.evidenceNames.map(n => `${p.institutionId}:${n}`)));
+
   const missing = new Map<string, {name: string; institutionId: string; sourceUrl: string}>();
   for (const r of evidence.records) for (const name of [
     ...r.speakers.map(s => s.name), ...(r.linkedPerson ? [r.linkedPerson.name] : []),
   ]) {
     const key = `${r.institutionId}:${name}`;
-    if (!mapped.has(key)) missing.set(key, {name, institutionId:r.institutionId, sourceUrl:r.source.url});
+    const mapped = peopleNetworkSeed.some(p => p.institutionId === r.institutionId &&
+      matchesAttribution(p, name, r.source.url, reviewedAttributionGroups));
+    if (!mapped) missing.set(`${key}:${r.source.url}`, {name, institutionId:r.institutionId, sourceUrl:r.source.url});
   }
   return {mappedPeople: peopleNetworkSeed.length, pendingAttributions: [...missing.values()]};
 }

@@ -26,12 +26,12 @@ export default function InnovationPeoplePage() {
       </nav>
     </header>
     <section className={styles.metrics} aria-label="人物关系覆盖">
-      <article><strong>{people.length}</strong><span>首批人物</span></article>
+      <article><strong>{people.length}</strong><span>已映射人物</span></article>
       <article><strong>{institutions.size}</strong><span>关联投资机构</span></article>
       <article><strong>{relations.length}</strong><span>项目与观点证据</span></article>
-      <article><strong>{people.filter(p => p.linkedin).length}</strong><span>LinkedIn 候选入口</span></article>
+      <article><strong>{people.filter(p => p.linkedin?.status === "matched").length}</strong><span>LinkedIn 身份已核对</span></article>
     </section>
-    <p className={styles.note}>资料核验：{peopleNetworkReviewedAt}（UTC）。LinkedIn 链接来自人物检索，身份绑定仍待复核；任职和项目关系依据下方官网材料。当前没有开启 LinkedIn 动态自动同步。</p>
+    <p className={styles.note}>资料核验：{peopleNetworkReviewedAt}（UTC）。LinkedIn 档案按公开职业证据交叉核对，未确认的链接明确标为候选。任职和项目关系依据下方原文及其日期；没有开启动态或好友网络自动同步。</p>
     <PeopleNetworkDirectory people={people} />
     <section className={styles.method} aria-label="项目与人物关系路径">
       <h2>沿项目查看人物与机构</h2>
@@ -45,7 +45,7 @@ export default function InnovationPeoplePage() {
       </table></div>
     </section>
     <details className={styles.method}>
-      <summary>关系口径与后续覆盖（{coverage.pendingAttributions.length} 条人物署名待映射）</summary>
+      <summary>关系口径与待核验署名（{coverage.pendingAttributions.length} 条人物署名待映射）</summary>
       <p>相同项目下出现两位人物，只表示各自存在公开证据，不表示二人互为好友、直接合作或共同领投。历史职务按来源日期保留，访问日期不作为任职起始日期。</p>
       <p>公司公告、机构组合页和人物发言分别记录。LinkedIn 检索未命中表示本次没有结果，不等于这个人没有账号。</p>
       <ul>{coverage.pendingAttributions.map(item => <li key={`${item.institutionId}:${item.name}`}>
