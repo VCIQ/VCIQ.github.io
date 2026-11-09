@@ -5,6 +5,7 @@ import Script from "next/script";
 import { ChannelSplitLayout } from "@/components/channel-split-layout";
 import { isPersonDirectoryChangeRecent } from "@/lib/person-directory-filter";
 import { peopleGeneratedAt, researchPeople } from "@/lib/people-data";
+import { getProfessionalProfile, professionalProfileCoverage, professionalProfileLabels, professionalProfilesReviewedAt } from "@/lib/professional-profiles";
 import { getPersonResearchSnapshot } from "@/lib/people-research";
 import styles from "./page.module.css";
 
@@ -37,6 +38,7 @@ function directoryPreview(value: string, limit: number): string {
 }
 
 export default function PeoplePage() {
+  const profileCoverage = professionalProfileCoverage(researchPeople.map(person => person.slug));
   const trackedCount = researchPeople.filter((person) => person.tracked).length;
   const watchCount = researchPeople.length - trackedCount;
   const sectors = Array.from(new Set(researchPeople.flatMap((person) => person.sectors)))
@@ -74,7 +76,14 @@ export default function PeoplePage() {
           <span>资料更新 {peopleGeneratedAt.slice(0, 10)}</span>
           <span>人物事件新闻统一进入首页“人物”频道</span>
         </div>
-        <p><Link href="/innovation-capital/people/">科创人物与投资关系 · LinkedIn 入口 →</Link></p>
+        <p><Link href="/innovation-capital/people/">科创人物与投资关系 →</Link></p>
+        <p className={styles.professionalCoverage}>
+          LinkedIn 核验 {professionalProfilesReviewedAt}：{profileCoverage.matched} 条身份已交叉核对，
+          {profileCoverage.unresolved} 条同名候选待核验，{profileCoverage.no_result} 条本轮未找到匹配档案，
+          {profileCoverage.needs_identity} 条名称待修正。
+          {profileCoverage.not_reviewed + profileCoverage.search_error > 0 ? `另有 ${profileCoverage.not_reviewed + profileCoverage.search_error} 条待检索。` : ""}
+          每个人物页均可查看核验依据与具体缺口。
+        </p>
       </header>
 
       <ChannelSplitLayout
@@ -166,6 +175,7 @@ export default function PeoplePage() {
 
               <small className={styles.personMeta}>
                 {research.priority.level} · 完整度 {research.coverage.score}% · {statusLabels[person.status]}
+                <br />{professionalProfileLabels[getProfessionalProfile(person.slug)?.status ?? "not_reviewed"]}
               </small>
             </Link>
           ))}
