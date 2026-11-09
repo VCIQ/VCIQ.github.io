@@ -226,3 +226,40 @@ modify `--mark-processed`, bypass the existing quality gates, run a live
 crawler, open a production data PR, merge or deploy. Future production
 integration requires a separate approved pipeline change and direct
 verification of exact-head CI and reviewer status.
+
+## Observed crawl subprocess capture (Draft-only, not deployed)
+
+`tools/company_profile_writer_crawl_observer.py` is a callable **opt-in**
+observer that takes the job's pinned selection, pinned official URLs,
+base SHA, run ID, a bounded clock, and an **externally supplied** command
+runner. It has no CLI, no scheduled trigger, no GitHub client and no
+default executable runner. The caller must explicitly set
+`authorized=True`; simply importing this module does nothing.
+
+On explicit invocation, the observer sends the runner a fixed, shell-free
+argument tuple for each selected company's existing crawler command. It
+checks the returned `subprocess.CompletedProcess` against that tuple,
+reads the current `venture_profiles.json` after **each** result,
+and captures the status/profile SHA-256 pair. A zero exit code with
+unchanged profile, malformed/duplicate-key JSON, a symlinked snapshot,
+missing selected-company status, stale run time or unexpected process result
+fails closed. After the last selected company, it calls the existing
+`check_selected_crawl_receipts` gate against the *final* snapshot,
+so an intervening change to an earlier company's profile is detected.
+
+The observer returns `markProcessedAuthorized=false`,
+`mergeAuthorized=false` and `publicationAuthorized=false` even when all
+checks pass. The capture results and hashes **do not prove** a real HTTP
+fetch, trustworthy subprocess execution, GitHub runner identity, or
+truthfulness of supplied selection/catalog evidence. Future production
+integration requires an independently reviewed runner/orchestrator that
+pins the checkout and source catalog to one `main` SHA, captures real
+process-level evidence, retains immutable run receipts, isolates secrets,
+enforces queuing/recovery, and performs separate exact-head CI, reviewer,
+merge and publication checks.
+
+`tests/test_company_profile_writer_crawl_observer.py` uses only synthetic
+subprocess results and disposable snapshots. The read-only PR check runs it
+alongside the prior receipt, transition and PR-handoff suites. No existing
+`company-profile-incremental-refresh.yml` schedule, `--mark-processed`
+invocation, direct-main writer or social collection switch was modified.
