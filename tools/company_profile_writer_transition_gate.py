@@ -15,6 +15,7 @@ RETENTION_DAYS = 90
 MAX_SELECTED = 10
 MAX_FINGERPRINTS = 2000
 MAX_COMPANIES = 10000
+MAX_RUN_DURATION = timedelta(minutes=90)
 QUEUE_KEYS = frozenset({
     "schemaVersion", "generatedAt", "lookbackDays", "selectionLimit",
     "pendingCount", "selectedCount", "selectedSlugs", "lastProcessedAt",
@@ -120,13 +121,24 @@ def check_transition(
     base_profiles: object,
     candidate_profiles: object,
     *,
+    run_started_at: str | None = None,
+    run_completed_at: str | None = None,
     coverage_slugs: list[str] | None = None,
 ) -> dict[str, int | bool]:
     """Verify selection intent, processed history and bounded company changes.
 
+    run_* timestamps must come from a separately preserved execution record,
+    not the article snapshot: generatedAt represents the source snapshot date
+    and may be older than the actual mark-processed time.
     The caller must separately check the *actual* HEAD SHA of main against
     the candidate's base SHA. A successful result never authorizes a merge.
     """
+    if run_started_at is None or run_completed_at is None:
+        raise TransitionError("WRITER_TRANSITION_RUN_WINDOW_REQUIRED")
+    started = _stamp(run_started_at)
+    finished = _stamp(run_completed_at)
+    if finished < started or finished - started > MAX_RUN_DURATION:
+        raise TransitionError("WRITER_TRANSITION_RUN_WINDOW_INVALID")
     before = _queue(base_queue)
     intent = _queue(pre_crawl_selection)
     after = _queue(candidate_queue)
@@ -175,8 +187,8 @@ def check_transition(
     new = set(after_history) - set(history)
     if new != set(expected):
         raise TransitionError("WRITER_TRANSITION_PROCESSED_MISMATCH")
-    # Respect existing 90-day retention, but never silently drop a recent event.
-    cutoff = _stamp(after["generatedAt"]) - timedelta(days=RETENTION_DAYS)
+    # Retention uses the actual processing clock, not articles.generatedAt.
+    cutoff = finished - timedelta(days=RETENTION_DAYS)
     for key, value in history.items():
         if key in after_history:
             if value != after_history[key]:
@@ -187,8 +199,10 @@ def check_transition(
         value = after_history.get(key)
         if (not isinstance(value, dict)
             or value.get("companySlug") != slug
-            or not isinstance(value.get("articleId"), str)
-            or _stamp(value.get("processedAt")) > _stamp(after["generatedAt"])):
+            or not isinstance(value.get("articleId"), str)):
+            raise TransitionError("WRITER_TRANSITION_NEW_EVENT_INVALID")
+        processed_at = _stamp(value.get("processedAt"))
+        if not started <= processed_at <= finished:
             raise TransitionError("WRITER_TRANSITION_NEW_EVENT_INVALID")
 
     old_companies = profile_before["companies"]
