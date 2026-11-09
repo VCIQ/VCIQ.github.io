@@ -1,0 +1,187 @@
+"""Pure pre-PR reconciliation of an event-driven company profile refresh.
+
+This only checks public in-memory JSON objects. It never loads production
+files, contacts GitHub, starts a collector, updates queues or creates PRs.
+The caller must preserve the *pre-crawl* selection snapshot separately:
+after --mark-processed, selectedSlugs can already have become empty.
+"""
+from __future__ import annotations
+
+from datetime import UTC, datetime, timedelta
+from typing import Any
+
+RETENTION_DAYS = 90
+MAX_SELECTED = 10
+MAX_FINGERPRINTS = 2000
+MAX_COMPANIES = 10000
+QUEUE_KEYS = frozenset({
+    "schemaVersion", "generatedAt", "lookbackDays", "selectionLimit",
+    "pendingCount", "selectedCount", "selectedSlugs", "lastProcessedAt",
+    "entries", "processedEvents",
+})
+PROFILE_METADATA = frozenset({"generatedAt", "sourceStatus", "qualityGate"})
+
+
+class TransitionError(ValueError):
+    """Error strings are fixed codes; do not echo public articles or profiles."""
+
+
+def _stamp(value: object) -> datetime:
+    if not isinstance(value, str) or len(value) > 60:
+        raise TransitionError("WRITER_TRANSITION_TIME_INVALID")
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        raise TransitionError("WRITER_TRANSITION_TIME_INVALID") from None
+    if parsed.tzinfo is None:
+        raise TransitionError("WRITER_TRANSITION_TIME_INVALID")
+    return parsed.astimezone(UTC)
+
+
+def _queue(value: object) -> dict[str, Any]:
+    if (not isinstance(value, dict) or set(value) != QUEUE_KEYS
+        or type(value.get("schemaVersion")) is not int
+        or value["schemaVersion"] != 1
+        or not isinstance(value.get("entries"), list)
+        or len(value["entries"]) > 100
+        or not isinstance(value.get("processedEvents"), dict)
+        or len(value["processedEvents"]) > MAX_FINGERPRINTS
+        or not isinstance(value.get("selectedSlugs"), list)):
+        raise TransitionError("WRITER_TRANSITION_QUEUE_INVALID")
+    _stamp(value["generatedAt"])
+    return value
+
+
+def _profiles(value: object) -> dict[str, Any]:
+    if (not isinstance(value, dict) or value.get("schemaVersion") != 2
+        or type(value.get("schemaVersion")) is not int
+        or not isinstance(value.get("companies"), dict)
+        or len(value["companies"]) > MAX_COMPANIES):
+        raise TransitionError("WRITER_TRANSITION_PROFILES_INVALID")
+    return value
+
+
+def _slugs(values: object, *, limit: int = MAX_SELECTED) -> list[str]:
+    if (not isinstance(values, list) or len(values) > limit
+        or any(not isinstance(s, str) or not s or len(s) > 100
+               or ":" in s or "/" in s for s in values)
+        or len(set(values)) != len(values)):
+        raise TransitionError("WRITER_TRANSITION_SLUGS_INVALID")
+    return values
+
+
+def check_transition(
+    base_queue: object,
+    pre_crawl_selection: object,
+    candidate_queue: object,
+    base_profiles: object,
+    candidate_profiles: object,
+    *,
+    coverage_slugs: list[str] | None = None,
+) -> dict[str, int | bool]:
+    """Verify selection intent, processed history and bounded company changes.
+
+    The caller must separately check the *actual* HEAD SHA of main against
+    the candidate's base SHA. A successful result never authorizes a merge.
+    """
+    before = _queue(base_queue)
+    intent = _queue(pre_crawl_selection)
+    after = _queue(candidate_queue)
+    profile_before = _profiles(base_profiles)
+    profile_after = _profiles(candidate_profiles)
+
+    selected = _slugs(intent["selectedSlugs"])
+    additional = _slugs([] if coverage_slugs is None else coverage_slugs, limit=100)
+    if (type(intent.get("selectedCount")) is not int
+        or intent["selectedCount"] != len(selected)
+        or type(after.get("selectedCount")) is not int
+        or not 0 <= after["selectedCount"] <= MAX_SELECTED
+        or type(intent.get("selectionLimit")) is not int
+        or not 0 <= intent["selectionLimit"] <= MAX_SELECTED):
+        raise TransitionError("WRITER_TRANSITION_SELECTION_INVALID")
+    if not selected and not additional:
+        # A metadata-only refresh may still change generatedAt.
+        pass
+    entries = {}
+    for item in intent["entries"]:
+        if not isinstance(item, dict):
+            raise TransitionError("WRITER_TRANSITION_SELECTION_INVALID")
+        slug = item.get("companySlug")
+        if not isinstance(slug, str) or slug in entries:
+            raise TransitionError("WRITER_TRANSITION_SELECTION_INVALID")
+        entries[slug] = item
+    selected_set = set(selected)
+    if not selected_set.issubset(entries):
+        raise TransitionError("WRITER_TRANSITION_SELECTION_INVALID")
+
+    expected = {}
+    for slug in selected:
+        row = entries[slug]
+        fingerprints = row.get("eventFingerprints")
+        if (row.get("status") != "selected"
+            or not isinstance(fingerprints, list)
+            or not fingerprints or len(fingerprints) > MAX_FINGERPRINTS):
+            raise TransitionError("WRITER_TRANSITION_INTENT_INVALID")
+        for key in fingerprints:
+            if (not isinstance(key, str) or len(key) != len(slug) + 41
+                or not key.startswith(slug + ":")
+                or not all(ch in "0123456789abcdef" for ch in key[len(slug) + 1:])
+                or key in expected):
+                raise TransitionError("WRITER_TRANSITION_INTENT_INVALID")
+            expected[key] = slug
+
+    history = before["processedEvents"]
+    after_history = after["processedEvents"]
+    intent_history = intent["processedEvents"]
+    if not all(isinstance(r, dict) for r in history.values()):
+        raise TransitionError("WRITER_TRANSITION_HISTORY_INVALID")
+    # Selection must not mark an event before the crawl succeeds.
+    if set(intent_history) - set(history):
+        raise TransitionError("WRITER_TRANSITION_INTENT_INVALID")
+    for key, value in intent_history.items():
+        if key not in history or value != history[key]:
+            raise TransitionError("WRITER_TRANSITION_INTENT_INVALID")
+    if set(expected).intersection(history):
+        raise TransitionError("WRITER_TRANSITION_DUPLICATE_EVENT")
+
+    new = set(after_history) - set(history)
+    if new != set(expected):
+        raise TransitionError("WRITER_TRANSITION_PROCESSED_MISMATCH")
+    # Respect existing 90-day retention, but never silently drop a recent event.
+    cutoff = _stamp(after["generatedAt"]) - timedelta(days=RETENTION_DAYS)
+    for key, value in history.items():
+        if key in after_history:
+            if value != after_history[key]:
+                raise TransitionError("WRITER_TRANSITION_HISTORY_REWRITTEN")
+        elif _stamp(value.get("processedAt")) >= cutoff:
+            raise TransitionError("WRITER_TRANSITION_RECENT_HISTORY_LOST")
+    for key, slug in expected.items():
+        value = after_history.get(key)
+        if (not isinstance(value, dict)
+            or value.get("companySlug") != slug
+            or not isinstance(value.get("articleId"), str)
+            or _stamp(value.get("processedAt")) > _stamp(after["generatedAt"])):
+            raise TransitionError("WRITER_TRANSITION_NEW_EVENT_INVALID")
+
+    old_companies = profile_before["companies"]
+    new_companies = profile_after["companies"]
+    if set(old_companies) - set(new_companies):
+        raise TransitionError("WRITER_TRANSITION_COMPANY_DELETED")
+    changed = {slug for slug in set(old_companies) | set(new_companies)
+               if old_companies.get(slug) != new_companies.get(slug)}
+    if not changed.issubset(selected_set | set(additional)):
+        raise TransitionError("WRITER_TRANSITION_UNRELATED_COMPANY_CHANGED")
+    if set(profile_before) != set(profile_after):
+        raise TransitionError("WRITER_TRANSITION_PROFILE_SHAPE_CHANGED")
+    if any(profile_before[key] != profile_after[key]
+           for key in profile_before if key not in PROFILE_METADATA | {"companies"}):
+        raise TransitionError("WRITER_TRANSITION_PROFILE_METADATA_UNEXPECTED")
+    return {
+        "ok": True,
+        "selectedCompanies": len(selected),
+        "coverageCompanies": len(additional),
+        "newProcessedEvents": len(new),
+        "changedCompanies": len(changed),
+        "mergeAuthorized": False,
+        "publicationAuthorized": False,
+    }
