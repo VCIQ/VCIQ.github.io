@@ -237,6 +237,17 @@ class EvidenceHandoffTests(unittest.TestCase):
         self.assertEqual(result["errorCode"], "EVIDENCE_SELECTION_SOURCE_MISMATCH")
         self.assertEqual(github.calls, [])
 
+    def test_replayed_selection_timestamp_outside_run_is_rejected(self):
+        checkout = StubCheckout()
+        with self.assertRaisesRegex(EvidenceError, "SELECTION_OUTSIDE_RUN"):
+            bound(checkout, started="2026-11-08T11:00:00+00:00",
+                  completed="2026-11-08T11:05:00+00:00").snapshot()
+
+    def test_stale_article_snapshot_does_not_reject_new_selection(self):
+        checkout = StubCheckout()
+        checkout.sources[ARTICLES]["generatedAt"] = "2026-11-03T10:00:00+00:00"
+        self.assertEqual(bound(checkout).snapshot().base_sha, SHA)
+
     def test_unapproved_catalog_change_is_rejected_before_remote_access(self):
         checkout = StubCheckout()
         checkout.sources[CATALOG] = "export const companies: Company[] = [];\n"
