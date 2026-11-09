@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "reviewBatchDate": "2026-10-13",
+  "reviewBatchDate": "2026-11-09",
   "baselineAsOf": "2026-09-24",
-  "scopeNote": "本次只更新有可回读公告支持的项目节点；未核项目不因全站同步成功而刷新资料时点。",
+  "scopeNote": "核查日期与事件日期分开记录。累计仅核对有可回读公告支持的具体上市或注册节点；历史上市公告回读不等于核验当前交易状态。搜索索引、媒体状态和失效链接单列待复核，不计入已核对数。储备目录仍保留原资料时点。",
   "checks": [
     {
       "projectId": "citic-enflame-lifecycle",
@@ -45,6 +45,71 @@
         "stockCode": "06802"
       },
       "note": "核对本次上市节点，不表示已核查所有后续经营、股权或交易状态。"
+    },
+    {
+      "projectId": "huatai-langgau-lifecycle",
+      "checkedAt": "2026-11-09",
+      "result": "updated-from-disclosure",
+      "sourceUrl": "https://www.csrc.gov.cn/csrc/c105917/c7665060/content.shtml",
+      "previous": {
+        "lifecycleStatus": "registration-review",
+        "stage": "提交注册",
+        "latestEventDate": "2026-09-23",
+        "latestEvent": "创业板首发审核状态变更为提交注册；保荐机构为华泰联合证券。",
+        "stockCode": ""
+      },
+      "note": "回读证监会批复全文，核对同意注册节点；不据此推断后续发行、上市或当前交易状态。"
+    },
+    {
+      "projectId": "citic-unitree-lifecycle",
+      "checkedAt": "2026-11-09",
+      "result": "historical-milestone-confirmed",
+      "sourceUrl": "https://www.sse.com.cn/disclosure/announcement/listing/ipo/c/c_20260818_10829204.shtml",
+      "note": "回读上交所上市交易公告，确认已记录的上市日期和证券代码。事件日期不改写为核查日期；未全面复核后续交易、经营或股权状态。"
+    },
+    {
+      "projectId": "citic-mthreads-lifecycle",
+      "checkedAt": "2026-11-09",
+      "result": "historical-milestone-confirmed",
+      "sourceUrl": "https://www.sse.com.cn/disclosure/announcement/listing/ipo/c/c_20251204_10800678.shtml",
+      "note": "回读上交所上市交易公告，确认已记录的上市日期和证券代码。事件日期不改写为核查日期；未全面复核后续交易、经营或股权状态。"
+    },
+    {
+      "projectId": "huatai-metax-lifecycle",
+      "checkedAt": "2026-11-09",
+      "result": "historical-milestone-confirmed",
+      "sourceUrl": "https://www.sse.com.cn/disclosure/announcement/listing/ipo/c/c_20251216_10801769.shtml",
+      "note": "回读上交所上市交易公告，确认已记录的上市日期和证券代码。事件日期不改写为核查日期；未全面复核后续交易、经营或股权状态。"
+    }
+  ],
+  "pendingChecks": [
+    {
+      "projectId": "cicc-landspace-lifecycle",
+      "attemptedAt": "2026-11-09",
+      "result": "index-only",
+      "sourceUrl": "https://www.sse.com.cn/listing/renewal/ipo/index_listing_detail.shtml?auditId=2174",
+      "note": "官方页面搜索索引显示2026-09-30因财报更新中止；本次直接回读仅返回动态页面框架，尚未取得实时审核字段。保留原已核节点，待回读后更新当前状态。"
+    },
+    {
+      "projectId": "gtht-cas-space-lifecycle",
+      "attemptedAt": "2026-11-09",
+      "result": "secondary-source-only",
+      "sourceUrl": "https://www.stcn.com/ipo/detail/3638.html",
+      "note": "证券时报项目页显示2026-09-30中止（财报更新），官方审核详情页未返回可核字段；媒体进展不覆盖原监管事实，待官方复核。"
+    },
+    {
+      "projectId": "cicc-chaoying-h-lifecycle",
+      "attemptedAt": "2026-11-09",
+      "result": "index-only",
+      "sourceUrl": "https://www.sse.com.cn/assortment/stock/list/info/announcement/index.shtml?productId=603175",
+      "note": "检索结果仍显示2026-09-22递交H股申请公告，尚未回读该公告全文及最新港交所申请档案。未找到新公告不代表状态未变；不刷新已核查日期。"
+    },
+    {
+      "projectId": "citic-ligent-h-lifecycle",
+      "attemptedAt": "2026-11-09",
+      "result": "source-unavailable",
+      "sourceUrl": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0914/2026091400017_c.htm",
+      "note": "原全球发售链接本次返回404，尚未获得替代原件及实际挂牌公告。保留已有记录并标记待复核，不把预计上市日升级为已实时核验。"
     }
   ]
 }
