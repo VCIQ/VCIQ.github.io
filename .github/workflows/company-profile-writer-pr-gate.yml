@@ -35,6 +35,7 @@ jobs:
             tests.test_company_profile_writer_coverage_attestation \
             tests.test_company_profile_writer_pinned_catalog \
             tests.test_company_profile_writer_crawl_receipt \
+            tests.test_company_profile_writer_crawl_observer \
             tests.test_company_profile_refresh_queue -v
       - name: Verify no tracked files were modified
         run: git diff --exit-code
