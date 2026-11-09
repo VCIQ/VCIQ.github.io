@@ -7,7 +7,7 @@ import unittest
 
 from tools.company_profile_refresh_queue import build_queue, mark_processed_events
 from tools.company_profile_writer_transition_gate import (
-    TransitionError, _selection, check_transition,
+    TransitionError, _selection, check_transition as validate_transition,
 )
 from tests.test_company_profile_refresh_queue import article
 
@@ -17,6 +17,12 @@ NAMES = {"openai": "OpenAI", "anthropic": "Anthropic"}
 QUEUE_ARTICLE = article("synthetic-funding", "openai", "融资",
                         published_at="2026-11-08", importance=95)
 ARTICLES = {"generatedAt": NOW.isoformat(), "articles": [QUEUE_ARTICLE]}
+
+def check_transition(*args, **kwargs):
+    """Use a separately attested, synthetic runtime window for all cases."""
+    kwargs.setdefault("run_started_at", (NOW - timedelta(minutes=1)).isoformat())
+    kwargs.setdefault("run_completed_at", (NOW + timedelta(minutes=3)).isoformat())
+    return validate_transition(*args, **kwargs)
 
 
 def profiles(*, openai_at="2026-11-07T10:00:00Z", anthropic_at="2026-11-07T10:00:00Z"):
@@ -49,6 +55,40 @@ def sample():
 
 
 class CompanyProfileTransitionTests(unittest.TestCase):
+    def test_run_window_must_be_explicit_and_bounded(self):
+        base, intent, final, before, after = sample()
+        with self.assertRaisesRegex(TransitionError, "RUN_WINDOW_REQUIRED"):
+            validate_transition(base, intent, final, before, after)
+        with self.assertRaisesRegex(TransitionError, "RUN_WINDOW_INVALID"):
+            validate_transition(
+                base, intent, final, before, after,
+                run_started_at=NOW.isoformat(),
+                run_completed_at=(NOW + timedelta(hours=3)).isoformat(),
+            )
+
+    def test_stale_source_snapshot_does_not_invalidate_real_processing_time(self):
+        source_time = NOW - timedelta(days=5)
+        original = profiles()
+        original["companies"]["openai"]["updatedAt"] = (
+            source_time - timedelta(days=1)).isoformat()
+        base = build_queue({"generatedAt": source_time.isoformat(), "articles": []},
+                           original, NAMES, now=source_time)
+        article_payload = {
+            "generatedAt": source_time.isoformat(),
+            "articles": [article("synthetic-old-source", "openai", "融资",
+                                 published_at=source_time.date().isoformat())],
+        }
+        intent = build_queue(article_payload, original, NAMES, base, now=source_time)
+        processed = mark_processed_events(intent, ["openai"], now=NOW)
+        updated = deepcopy(original)
+        updated["companies"]["openai"]["updatedAt"] = NOW.isoformat()
+        final = build_queue(article_payload, updated, NAMES, intent,
+                            now=source_time, processed_events=processed)
+        self.assertLess(final["generatedAt"], next(
+            iter(final["processedEvents"].values()))["processedAt"])
+        self.assertEqual(check_transition(
+            base, intent, final, original, updated)["newProcessedEvents"], 1)
+
     def test_real_queue_build_and_mark_processed_flow_passes(self):
         base, intent, final, before, after = sample()
         self.assertEqual(intent["selectedSlugs"], ["openai"])
