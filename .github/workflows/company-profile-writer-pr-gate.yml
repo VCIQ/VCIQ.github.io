@@ -1,0 +1,40 @@
+name: Company profile PR writer pilot offline
+
+# CI-only: this does not enable a scheduled writer or create any branches.
+# An unfiltered PR check can be required later without paths-related Pending.
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: company-profile-pr-gate-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  writer-pr-pilot-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run isolated PR handoff, transition and evidence-binding tests
+        run: |
+          python -B -m unittest \
+            tests.test_company_profile_writer_pr_gate \
+            tests.test_company_profile_writer_pr_handoff \
+            tests.test_company_profile_writer_evidence_handoff \
+            tests.test_company_profile_writer_transition_gate \
+            tests.test_company_profile_writer_coverage_attestation \
+            tests.test_company_profile_writer_pinned_catalog \
+            tests.test_company_profile_writer_crawl_receipt \
+            tests.test_company_profile_refresh_queue -v
+      - name: Verify no tracked files were modified
+        run: git diff --exit-code
