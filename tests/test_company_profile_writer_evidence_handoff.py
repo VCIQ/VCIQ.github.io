@@ -9,16 +9,22 @@ import unittest
 from pathlib import Path
 
 from tools.company_profile_writer_evidence_handoff import (
-    EvidenceBoundWorkspace, EvidenceError, PROFILES, QUEUE,
+    ARTICLES, CATALOG, EvidenceBoundWorkspace, EvidenceError, PROFILES, QUEUE,
 )
 from tools.company_profile_writer_pr_handoff import (
     DetachedWorkspace, Snapshot, submit,
 )
-from tests.test_company_profile_writer_transition_gate import NOW, sample
+from tests.test_company_profile_writer_transition_gate import NOW, ARTICLES as ARTICLE_FIXTURE, sample
 
 
 SHA = "a" * 40
 NEW_SHA = "b" * 40
+CATALOG_FIXTURE = """export const companies: Company[] = [
+  { slug:"openai", name:"OpenAI", source:official("OpenAI","https://example.org/openai") },
+  { slug:"anthropic", name:"Anthropic", source:official("Anthropic","https://example.org/anthropic") },
+];
+export type Institution = {
+"""
 
 
 def encoded(value):
@@ -32,6 +38,10 @@ class StubCheckout:
         self.base = {
             QUEUE: original if baseline is None else baseline,
             PROFILES: profiles_old if profile_before is None else profile_before,
+        }
+        self.sources = {
+            ARTICLES: copy.deepcopy(ARTICLE_FIXTURE),
+            CATALOG: CATALOG_FIXTURE,
         }
         self.selection = intent if selected is None else selected
         self.after = {
@@ -51,7 +61,14 @@ class StubCheckout:
             path = args[-1]
             return self.mode + b" blob " + b"0" * 40 + b"\t" + path.encode() + b"\0"
         if args[0] == "show" and ":" in args[1]:
-            return encoded(self.base[args[1].split(":", 1)[1]]).encode()
+            name = args[1].split(":", 1)[1]
+            if name in self.base:
+                return encoded(self.base[name]).encode()
+            if name == ARTICLES:
+                return encoded(self.sources[ARTICLES]).encode()
+            if name == CATALOG:
+                return self.sources[CATALOG].encode()
+            raise AssertionError("unexpected base source")
         raise AssertionError("unexpected Git operation")
 
     def snapshot(self):
@@ -121,7 +138,7 @@ class EvidenceHandoffTests(unittest.TestCase):
         snapshot = bound(checkout).snapshot()
         self.assertEqual(snapshot.base_sha, SHA)
         self.assertEqual(set(snapshot.files), {QUEUE, PROFILES})
-        self.assertEqual(sum(x[0] == "show" for x in checkout.calls), 2)
+        self.assertEqual(sum(x[0] == "show" for x in checkout.calls), 4)
 
     def test_combination_can_open_only_a_draft_using_injected_api(self):
         github = FakeGitHub()
@@ -172,6 +189,7 @@ class EvidenceHandoffTests(unittest.TestCase):
     def test_no_selection_no_change_is_no_op(self):
         checkout = StubCheckout(changed=[])
         checkout.selection = copy.deepcopy(checkout.base[QUEUE])
+        checkout.sources[ARTICLES]["articles"] = []
         self.assertIsNone(bound(checkout).snapshot())
         github = FakeGitHub()
         result = submit(bound(checkout), github, run_id="12345",
@@ -207,6 +225,33 @@ class EvidenceHandoffTests(unittest.TestCase):
         bound(checkout).snapshot()
         self.assertIn(("ls-tree", "-z", SHA, "--", QUEUE), checkout.calls)
         self.assertIn(("show", SHA + ":" + PROFILES), checkout.calls)
+        self.assertIn(("show", SHA + ":" + ARTICLES), checkout.calls)
+        self.assertIn(("show", SHA + ":" + CATALOG), checkout.calls)
+
+    def test_forged_pre_crawl_selection_not_derived_from_articles_is_rejected(self):
+        checkout = StubCheckout()
+        checkout.sources[ARTICLES]["articles"] = []
+        github = FakeGitHub()
+        result = submit(bound(checkout), github, run_id="12345",
+                        attempt=1, authorized=True)
+        self.assertEqual(result["errorCode"], "EVIDENCE_SELECTION_SOURCE_MISMATCH")
+        self.assertEqual(github.calls, [])
+
+    def test_unapproved_catalog_change_is_rejected_before_remote_access(self):
+        checkout = StubCheckout()
+        checkout.sources[CATALOG] = "export const companies: Company[] = [];\n"
+        with self.assertRaisesRegex(EvidenceError, "CATALOG_INVALID"):
+            bound(checkout).snapshot()
+
+    def test_malformed_catalog_does_not_fall_back_to_ambient_registry(self):
+        checkout = StubCheckout()
+        checkout.sources[CATALOG] = (
+            'export const companies: Company[] = [\n'
+            '  { slug:"openai", name:"OpenAI", source:official("OpenAI","ftp://unsafe") },\n'
+            '];\nexport type Institution = {\n'
+        )
+        with self.assertRaisesRegex(EvidenceError, "CATALOG_INVALID"):
+            bound(checkout).snapshot()
 
     def test_bad_evidence_window_rejected(self):
         checkout = StubCheckout()
@@ -233,11 +278,17 @@ class EvidenceHandoffTests(unittest.TestCase):
             git("config", "user.name", "Synthetic Test")
             git("remote", "add", "origin", "https://github.com/VCIQ/VCIQ.github.io.git")
             checkout = StubCheckout()
-            for name in (QUEUE, PROFILES):
+            for name in (QUEUE, PROFILES, ARTICLES, CATALOG):
                 path = root / name
                 path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_text(encoded(checkout.base[name]), encoding="utf-8")
-            git("add", "--", QUEUE, PROFILES)
+                if name in checkout.base:
+                    payload = encoded(checkout.base[name])
+                elif name == ARTICLES:
+                    payload = encoded(checkout.sources[name])
+                else:
+                    payload = checkout.sources[name]
+                path.write_text(payload, encoding="utf-8")
+            git("add", "--", QUEUE, PROFILES, ARTICLES, CATALOG)
             git("commit", "-qm", "synthetic base")
             git("checkout", "--detach", "HEAD")
             for name in (QUEUE, PROFILES):
