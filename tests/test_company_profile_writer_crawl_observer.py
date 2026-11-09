@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import copy
 import json
+import os
 import subprocess
 import tempfile
 import unittest
@@ -16,8 +17,10 @@ from tools.company_profile_writer_crawl_observer import (
 START = "2026-11-08T13:00:00+00:00"
 TIMES = (
     "2026-11-08T13:01:00+00:00",
+    "2026-11-08T13:02:00+00:00",
     "2026-11-08T13:04:00+00:00",
-    "2026-11-08T13:05:00+00:00",
+    "2026-11-08T13:04:30+00:00",
+    "2026-11-08T13:05:30+00:00",
     "2026-11-08T13:06:00+00:00",
 )
 SHA = "a" * 40
@@ -80,7 +83,7 @@ class Fixture:
         self.commands = []
         self.returncode = 0
         self.mutate = None
-        self.ticks = [TIMES[0], TIMES[1], TIMES[3]]
+        self.ticks = [TIMES[0], TIMES[1], TIMES[2], TIMES[-1]]
 
     def close(self):
         self.temp.cleanup()
@@ -95,7 +98,9 @@ class Fixture:
         self.commands.append((tuple(command), cwd, timeout))
         slug = command[command.index("--slug") + 1]
         if self.returncode == 0:
-            profile, status = company(slug)
+            updated = ("2026-11-08T13:03:00+00:00" if len(self.commands) == 1
+                       else "2026-11-08T13:05:00+00:00")
+            profile, status = company(slug, updated=updated)
             self.snapshot["companies"][slug] = profile
             self.snapshot["sourceStatus"] = [
                 row for row in self.snapshot["sourceStatus"]
@@ -271,6 +276,79 @@ class ObservedCompanyCrawlTests(unittest.TestCase):
             with self.subTest(kwargs=kwargs):
                 with self.assertRaisesRegex(ObservedCrawlError, "IDENTITY_INVALID"):
                     self.f.observe(**kwargs)
+        self.assertEqual(self.f.commands, [])
+
+
+class ObserverHardeningTests(unittest.TestCase):
+    def setUp(self):
+        self.f = Fixture()
+
+    def tearDown(self):
+        self.f.close()
+
+    def test_first_failed_receipt_stops_before_second_company(self):
+        self.f.close()
+        self.f = Fixture(("alpha", "beta"))
+        self.f.ticks = list(TIMES)
+        def retained(snapshot, slug):
+            snapshot["companies"][slug]["status"] = "retained"
+            snapshot["sourceStatus"][-1]["retainedPrevious"] = True
+        self.f.mutate = retained
+        with self.assertRaisesRegex(ObservedCrawlError, "NOT_FRESH"):
+            self.f.observe()
+        self.assertEqual(len(self.f.commands), 1)
+
+    def test_selection_and_sources_are_frozen_before_callback(self):
+        def mutate(snapshot, slug):
+            self.f.selection["selectedSlugs"].append("unexpected")
+            self.f.urls["alpha"] = "https://unexpected.example/"
+        self.f.mutate = mutate
+        result = self.f.observe()
+        self.assertEqual(result["verifiedCompanyCount"], 1)
+        self.assertEqual(len(result["selectionSha256"]), 64)
+        self.assertEqual(len(self.f.commands), 1)
+
+    def test_receipt_must_be_fresh_for_this_command_not_just_job(self):
+        def stale(snapshot, slug):
+            snapshot["companies"][slug]["updatedAt"] = TIMES[0]
+        self.f.mutate = stale
+        with self.assertRaisesRegex(ObservedCrawlError, "PROFILE_TIME_INVALID"):
+            self.f.observe()
+
+    def test_clock_reversal_after_command_is_rejected(self):
+        self.f.ticks = [TIMES[0], TIMES[1], TIMES[0]]
+        with self.assertRaisesRegex(ObservedCrawlError, "RUN_WINDOW_INVALID"):
+            self.f.observe()
+
+    def test_job_window_rechecked_before_next_command(self):
+        self.f.close()
+        self.f = Fixture(("alpha", "beta"))
+        self.f.ticks = [*TIMES[:3], "2026-11-08T14:31:00+00:00"]
+        with self.assertRaisesRegex(ObservedCrawlError, "RUN_WINDOW_INVALID"):
+            self.f.observe()
+        self.assertEqual(len(self.f.commands), 1)
+
+    def test_timeout_is_capped_to_remaining_job_window(self):
+        self.f.ticks = [TIMES[0], "2026-11-08T14:29:00+00:00",
+                        "2026-11-08T14:29:30+00:00", "2026-11-08T14:29:45+00:00"]
+        def fresh(snapshot, slug):
+            snapshot["companies"][slug]["updatedAt"] = "2026-11-08T14:29:15+00:00"
+        self.f.mutate = fresh
+        self.f.observe()
+        self.assertEqual(self.f.commands[0][2], 60)
+
+    def test_none_command_args_are_rejected_without_unredacted_typeerror(self):
+        def broken(command, **kwargs):
+            return subprocess.CompletedProcess(None, 0)
+        with self.assertRaisesRegex(ObservedCrawlError, "PROCESS_FAILED"):
+            self.f.observe(run_command=broken)
+
+    @unittest.skipUnless(hasattr(os, "mkfifo"), "POSIX FIFO regression")
+    def test_fifo_snapshot_fails_without_waiting_for_writer(self):
+        self.f.path.unlink()
+        os.mkfifo(self.f.path)
+        with self.assertRaisesRegex(ObservedCrawlError, "NOT_REGULAR_FILE"):
+            self.f.observe()
         self.assertEqual(self.f.commands, [])
 
 

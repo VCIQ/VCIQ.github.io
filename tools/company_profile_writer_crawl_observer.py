@@ -62,14 +62,16 @@ def _snapshot(root: Path) -> dict:
         root, root / "public", root / "public/data", target
     )):
         raise ObservedCrawlError("CRAWL_OBSERVER_SYMLINK_SNAPSHOT")
-    # O_NOFOLLOW and fstat reject a final-component substitution or FIFO.
-    flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0)
+    # Nonblocking open is necessary: opening a FIFO can block before fstat.
+    flags = os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK
     try:
         fd = os.open(target, flags)
         with os.fdopen(fd, "rb") as stream:
             if not stat.S_ISREG(os.fstat(stream.fileno()).st_mode):
                 raise ObservedCrawlError("CRAWL_OBSERVER_NOT_REGULAR_FILE")
             raw = stream.read(MAX_SNAPSHOT_BYTES + 1)
+    except ObservedCrawlError:
+        raise
     except (OSError, ValueError):
         raise ObservedCrawlError("CRAWL_OBSERVER_SNAPSHOT_UNREADABLE") from None
     if len(raw) > MAX_SNAPSHOT_BYTES:
@@ -114,6 +116,28 @@ def _timestamp(clock) -> str:
         raise ObservedCrawlError("CRAWL_OBSERVER_CLOCK_INVALID") from None
 
 
+def crawl_argv(slug: str) -> tuple[str, ...]:
+    """One fixed executable/module; ignore Python env and user site packages."""
+    if type(slug) is not str or not SLUG.fullmatch(slug):
+        raise ObservedCrawlError("CRAWL_OBSERVER_SELECTION_INVALID")
+    return (sys.executable, "-E", "-s", "-B", "-m", "tools.crawl_venture_profiles",
+            "--kind", "company", "--slug", slug,
+            "--workers", "1", "--max-pages", "6")
+
+
+def _verify_receipts(selected, urls, snapshot, receipts, started, ended):
+    try:
+        return check_selected_crawl_receipts(
+            list(selected), urls, snapshot, receipts,
+            run_started_at=started, run_completed_at=ended,
+        )
+    except CrawlReceiptError as exc:
+        code = str(exc)
+        if not re.fullmatch(r"CRAWL_RECEIPT_[A-Z_]{1,80}", code):
+            code = "CRAWL_OBSERVER_RECEIPT_INVALID"
+        raise ObservedCrawlError(code) from None
+
+
 def observe_selected_company_crawls(
     *,
     checkout_root: Path,
@@ -139,6 +163,15 @@ def observe_selected_company_crawls(
         raise ObservedCrawlError("CRAWL_OBSERVER_IDENTITY_INVALID")
     if not isinstance(pre_crawl_selection, dict):
         raise ObservedCrawlError("CRAWL_OBSERVER_SELECTION_INVALID")
+    # Do not let an injected runner or another caller mutate the selection
+    # or official-source mapping while the observer is iterating over it.
+    try:
+        raw = json.dumps([pre_crawl_selection, pinned_official_urls], allow_nan=False)
+        if len(raw.encode("utf-8")) > MAX_SNAPSHOT_BYTES:
+            raise ValueError()
+        pre_crawl_selection, pinned_official_urls = json.loads(raw)
+    except (TypeError, ValueError, RecursionError):
+        raise ObservedCrawlError("CRAWL_OBSERVER_SELECTION_INVALID") from None
     selected = pre_crawl_selection.get("selectedSlugs")
     if (not isinstance(selected, list) or not 1 <= len(selected) <= MAX_SELECTED
         or len(set(map(str, selected))) != len(selected)
@@ -176,19 +209,22 @@ def observe_selected_company_crawls(
 
     receipts = []
     for slug in selected:
+        command_started_at = _timestamp(clock)
+        command_started = _time(command_started_at)
+        remaining = (started + MAX_RUN_DURATION - command_started).total_seconds()
+        if command_started < current or remaining < 1:
+            raise ObservedCrawlError("CRAWL_OBSERVER_RUN_WINDOW_INVALID")
         before = _snapshot(root)
         before_profile = before["companies"].get(slug)
         before_digest = stable_sha256(before_profile) if isinstance(before_profile, dict) else None
-        command = (
-            sys.executable, "-m", "tools.crawl_venture_profiles",
-            "--kind", "company", "--slug", slug,
-            "--workers", "1", "--max-pages", "6",
-        )
+        command = crawl_argv(slug)
         try:
-            process = run_command(command, cwd=root, timeout=MAX_COMMAND_SECONDS)
+            process = run_command(command, cwd=root,
+                                  timeout=min(MAX_COMMAND_SECONDS, int(remaining)))
         except Exception:
             raise ObservedCrawlError("CRAWL_OBSERVER_PROCESS_FAILED") from None
         if (not isinstance(process, subprocess.CompletedProcess)
+            or not isinstance(process.args, (list, tuple))
             or tuple(process.args) != command
             or type(process.returncode) is not int
             or process.returncode != 0):
@@ -202,30 +238,38 @@ def observe_selected_company_crawls(
         if digest == before_digest:
             raise ObservedCrawlError("CRAWL_OBSERVER_UNCHANGED_PROFILE")
         captured_at = _timestamp(clock)
-        receipts.append({
+        captured = _time(captured_at)
+        if captured < command_started or captured - started > MAX_RUN_DURATION:
+            raise ObservedCrawlError("CRAWL_OBSERVER_RUN_WINDOW_INVALID")
+        receipt = {
             "slug": slug,
             "exitCode": process.returncode,
             "capturedAt": captured_at,
             "statusSha256": stable_sha256(status),
             "profileSha256": digest,
-        })
+        }
+        # Check this company before any later command, using its command
+        # window rather than merely the much wider whole-job window.
+        _verify_receipts([slug], {slug: pinned_official_urls[slug]}, after,
+                         [receipt], command_started_at, captured_at)
+        receipts.append(receipt)
+        _verify_receipts(selected[:len(receipts)],
+                         {s: pinned_official_urls[s] for s in selected[:len(receipts)]},
+                         after, receipts, run_started_at, captured_at)
+        current = captured
 
     final_snapshot = _snapshot(root)
     completed = _timestamp(clock)
-    try:
-        verification = check_selected_crawl_receipts(
-            list(selected), pinned_official_urls, final_snapshot, receipts,
-            run_started_at=run_started_at, run_completed_at=completed,
-        )
-    except CrawlReceiptError as exc:
-        code = str(exc)
-        if not code.startswith("CRAWL_RECEIPT_"):
-            code = "CRAWL_OBSERVER_RECEIPT_INVALID"
-        raise ObservedCrawlError(code) from None
+    if _time(completed) < current:
+        raise ObservedCrawlError("CRAWL_OBSERVER_RUN_WINDOW_INVALID")
+    verification = _verify_receipts(selected, pinned_official_urls, final_snapshot,
+                                     receipts, run_started_at, completed)
     return {
         "ok": True,
         "runId": run_id,
         "baseSha": base_sha,
+        "selectionSha256": stable_sha256(pre_crawl_selection),
+        "officialUrlsSha256": stable_sha256(pinned_official_urls),
         "runStartedAt": started.isoformat(timespec="seconds"),
         "runCompletedAt": completed,
         "receipts": receipts,
