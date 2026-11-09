@@ -189,3 +189,40 @@ detached repository and a synthetic remote URL. Other tests inject fake
 GitHub API objects; no actual GitHub candidate PR is created in this stage.
 Even a successful synthetic submission reports `ciChecksVerified=false`,
 `merged=false`, and `published=false`.
+
+
+## Selected-company crawl receipt contract (pre-production only)
+
+The currently deployed company-refresh workflow runs
+`crawl_venture_profiles.py --kind company --slug ...`, then marks every
+selected event processed when the command exits with status 0. Its global
+quality gate can also pass while historical profiles are retained, or
+fallback profiles are kept after failed page retrieval. **Zero subprocess
+exit status alone is therefore not enough to mark events processed.**
+
+`tools/company_profile_writer_crawl_receipt.py` defines a **pure, offline**
+`check_selected_crawl_receipts(...)` contract for the *immediate post-crawl*
+snapshot. For each selected company, a future reviewed orchestrator must
+capture the command exit code, capture timestamp, status/profile JSON SHA-256,
+the observed status row and immediate post-crawl profile. The validator
+requires fresh `ok` or sufficiently evidenced `partial` status, at least
+two new fetched pages, appropriate accepted-section counts, a new
+`updatedAt` within the run window, no retained/fallback/error/warning state,
+and a matching official-domain evidence source from the **pinned catalog**.
+A strong partial crawl must additionally have an evidence score of at least
+70, two distinct official URLs and core technical/product sections.
+
+The status/profile digests prevent accidental mismatch between supplied
+capture records and the claimed snapshot, but **do not cryptographically
+authenticate an actual HTTP fetch, GitHub runner identity or process exit
+code**. Those facts require the separate orchestrator to produce and
+preserve trusted execution receipts, with provenance anchored to the same
+run ID and selected-slug set. This checker intentionally returns
+`markProcessedAuthorized=false`, `mergeAuthorized=false` and
+`publicationAuthorized=false` even on success.
+
+No scheduled job invokes this module today. It is **not** permission to
+modify `--mark-processed`, bypass the existing quality gates, run a live
+crawler, open a production data PR, merge or deploy. Future production
+integration requires a separate approved pipeline change and direct
+verification of exact-head CI and reviewer status.
