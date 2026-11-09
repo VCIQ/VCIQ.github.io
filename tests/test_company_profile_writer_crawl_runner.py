@@ -21,6 +21,9 @@ from tools.company_profile_writer_crawl_observer import (
 from tools.company_profile_writer_crawl_runner import (
     BoundedCrawlRunner, CrawlRunnerError,
 )
+from tools.company_profile_writer_receipt_journal import (
+    RunReceiptJournal, inspect_run,
+)
 
 FIXTURE_PROGRAM = '''from datetime import UTC, datetime
 import json, os
@@ -126,6 +129,29 @@ class BoundedCrawlRunnerTests(unittest.TestCase):
         self.assertFalse(result["markProcessedAuthorized"])
         self.assertFalse(result["publicationAuthorized"])
         self.assertFalse(result["sourceFetchCryptographicallyAttested"])
+
+    def test_offline_subprocess_observer_and_private_journal_integrate(self):
+        # The subprocess is an offline fixture, and the journal is outside
+        # the isolated Git checkout so it cannot become an untracked import.
+        with tempfile.TemporaryDirectory(prefix="receipt-journal-fixture-") as private:
+            started = (datetime.now(UTC) - timedelta(seconds=1)).isoformat(timespec="seconds")
+            journal = RunReceiptJournal(Path(private), authorized=True)
+            result = observe_selected_company_crawls(
+                checkout_root=self.repo.root,
+                pre_crawl_selection={"generatedAt": started, "selectedCount": 1,
+                                     "selectedSlugs": ["alpha"]},
+                pinned_official_urls={"alpha": "https://alpha.example/"},
+                base_sha=self.repo.sha, run_id="offline-journal-integration",
+                run_started_at=started, run_command=self.repo.runner(),
+                clock=lambda: datetime.now(UTC), authorized=True,
+                journal=journal,
+            )
+            self.assertTrue(result["localJournalRecorded"])
+            audit = inspect_run(Path(private), "offline-journal-integration")
+            self.assertEqual(audit["state"], "recorded")
+            self.assertEqual(audit["recordedCompanies"], 1)
+            self.assertFalse(audit["automaticResumeAuthorized"])
+            self.assertFalse(audit["externalIntegrityAttested"])
 
     def test_secrets_proxy_and_pythonpath_are_not_inherited(self):
         with patch.dict(os.environ, {"GH_TOKEN":"synthetic-secret",

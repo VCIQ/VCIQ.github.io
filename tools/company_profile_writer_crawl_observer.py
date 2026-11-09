@@ -31,6 +31,7 @@ from .company_profile_writer_crawl_receipt import (
     check_selected_crawl_receipts,
     stable_sha256,
 )
+from .company_profile_writer_receipt_journal import JournalError, RunReceiptJournal
 
 PROFILE_PATH = Path("public/data/venture_profiles.json")
 MAX_SNAPSHOT_BYTES = 16 * 1024 * 1024
@@ -149,6 +150,7 @@ def observe_selected_company_crawls(
     run_command,
     clock,
     authorized: bool = False,
+    journal: RunReceiptJournal | None = None,
 ) -> dict:
     """Capture exact subprocess exit status and immediate post-crawl digests.
 
@@ -207,6 +209,22 @@ def observe_selected_company_crawls(
     if not started <= selection_at <= current or current - started > MAX_RUN_DURATION:
         raise ObservedCrawlError("CRAWL_OBSERVER_RUN_WINDOW_INVALID")
 
+    if journal is not None:
+        if not isinstance(journal, RunReceiptJournal):
+            raise ObservedCrawlError("CRAWL_OBSERVER_JOURNAL_INVALID")
+        # Persist the reservation BEFORE executing the first company. After
+        # a crash or ambiguous result, a second run with the same ID cannot
+        # silently start again: manual triage is required.
+        try:
+            journal.begin(
+                run_id=run_id, base_sha=base_sha, selected_slugs=selected,
+                selection_sha256=stable_sha256(pre_crawl_selection),
+                official_urls_sha256=stable_sha256(pinned_official_urls),
+                run_started_at=run_started_at,
+            )
+        except JournalError:
+            raise ObservedCrawlError("CRAWL_OBSERVER_JOURNAL_FAILED") from None
+
     receipts = []
     for slug in selected:
         command_started_at = _timestamp(clock)
@@ -256,6 +274,11 @@ def observe_selected_company_crawls(
         _verify_receipts(selected[:len(receipts)],
                          {s: pinned_official_urls[s] for s in selected[:len(receipts)]},
                          after, receipts, run_started_at, captured_at)
+        if journal is not None:
+            try:
+                journal.record(receipt)
+            except JournalError:
+                raise ObservedCrawlError("CRAWL_OBSERVER_JOURNAL_FAILED") from None
         current = captured
 
     final_snapshot = _snapshot(root)
@@ -264,6 +287,14 @@ def observe_selected_company_crawls(
         raise ObservedCrawlError("CRAWL_OBSERVER_RUN_WINDOW_INVALID")
     verification = _verify_receipts(selected, pinned_official_urls, final_snapshot,
                                      receipts, run_started_at, completed)
+    if journal is not None:
+        try:
+            journal.complete(
+                final_snapshot_sha256=stable_sha256(final_snapshot),
+                completed_at=completed,
+            )
+        except JournalError:
+            raise ObservedCrawlError("CRAWL_OBSERVER_JOURNAL_FAILED") from None
     return {
         "ok": True,
         "runId": run_id,
@@ -274,6 +305,7 @@ def observe_selected_company_crawls(
         "runCompletedAt": completed,
         "receipts": receipts,
         "verifiedCompanyCount": verification["verifiedCompanyCount"],
+        "localJournalRecorded": journal is not None,
         "markProcessedAuthorized": False,
         "mergeAuthorized": False,
         "publicationAuthorized": False,
