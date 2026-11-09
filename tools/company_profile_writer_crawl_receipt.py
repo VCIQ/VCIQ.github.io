@@ -20,8 +20,8 @@ MAX_RUN_DURATION = timedelta(minutes=90)
 MAX_SELECTED = 10
 MAX_PAGES = 10
 MAX_RECEIPT_SECONDS = 3900
-SHA256 = re.compile(r"[0-9a-f]{64}\\Z")
-SLUG = re.compile(r"[a-z0-9][a-z0-9_-]{0,99}\\Z")
+SHA256 = re.compile(r"[0-9a-f]{64}\Z")
+SLUG = re.compile(r"[a-z0-9][a-z0-9_-]{0,99}\Z")
 
 
 class CrawlReceiptError(ValueError):
