@@ -30,8 +30,11 @@ from candidate changes or automatically trusted.
 
 ## What is checked
 
-- Input schema, fingerprint structure, unique selected companies and the
-  maximum selection limit.
+- Input schema and timestamp chronology, fingerprint structure, unique
+  selected companies and the maximum selection limit. The chosen slugs must
+  be precisely the first `min(selectionLimit, pendingCount)` queue entries;
+  `selected`/`pending` statuses must match the ordered selection. The final
+  queue must also have internally consistent counts, selection and status.
 - No article marked processed before its crawl; exactly the selected event
   fingerprints become newly processed.
 - No rewriting of prior processed-event records, and no recent history lost.
@@ -40,6 +43,10 @@ from candidate changes or automatically trusted.
   must belong to the pre-crawl selection or separately attested coverage set.
 - Bounded profile root metadata; unexpected schema/identity changes are
   rejected instead of silently reconciled.
+
+The existing public queue/profile snapshot was additionally checked against
+these structural invariants without modifying it. That check is a single
+read-only compatibility inspection, not real collection acceptance.
 
 ## What this does *not* prove
 
