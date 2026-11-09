@@ -131,6 +131,43 @@ class CompanyProfileTransitionTests(unittest.TestCase):
         with self.assertRaisesRegex(TransitionError, "SELECTION_INVALID"):
             check_transition(base, intent, final, before, after)
 
+    def test_selection_must_match_ordered_first_entries(self):
+        base, intent, final, before, after = sample()
+        intent["selectedSlugs"] = ["anthropic"]
+        with self.assertRaisesRegex(TransitionError, "SELECTION_INVALID"):
+            check_transition(base, intent, final, before, after)
+
+    def test_unselected_entry_cannot_claim_selected_status(self):
+        base, intent, final, before, after = sample()
+        intent["entries"][0]["status"] = "pending"
+        with self.assertRaisesRegex(TransitionError, "SELECTION_INVALID"):
+            check_transition(base, intent, final, before, after)
+
+    def test_final_queue_selected_count_must_match_slugs(self):
+        base, intent, final, before, after = sample()
+        final["selectedCount"] = 1
+        with self.assertRaisesRegex(TransitionError, "SELECTION_INVALID"):
+            check_transition(base, intent, final, before, after)
+
+    def test_pending_count_cannot_undershoot_entries(self):
+        base, intent, final, before, after = sample()
+        intent["pendingCount"] = 0
+        with self.assertRaisesRegex(TransitionError, "SELECTION_INVALID"):
+            check_transition(base, intent, final, before, after)
+
+    def test_candidate_generation_must_not_predate_selection(self):
+        base, intent, final, before, after = sample()
+        final["generatedAt"] = (NOW - timedelta(minutes=1)).isoformat()
+        with self.assertRaisesRegex(TransitionError, "CHRONOLOGY_INVALID"):
+            check_transition(base, intent, final, before, after)
+
+    def test_candidate_selected_slug_rejects_non_catalog_style(self):
+        base, intent, final, before, after = sample()
+        final["selectedSlugs"] = ["../../unexpected"]
+        final["selectedCount"] = 1
+        with self.assertRaisesRegex(TransitionError, "SLUGS_INVALID"):
+            check_transition(base, intent, final, before, after)
+
     def test_recent_history_cannot_disappear(self):
         base, intent, final, before, after = sample()
         old_key = "anthropic:" + "a" * 40
