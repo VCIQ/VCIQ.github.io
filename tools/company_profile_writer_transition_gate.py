@@ -80,6 +80,7 @@ def _selection(payload: dict[str, Any]) -> tuple[list[str], dict[str, Any]]:
     if (type(limit) is not int or not 0 <= limit <= MAX_SELECTED
         or type(count) is not int or count != len(selected)
         or type(pending) is not int or pending < len(payload["entries"])
+        or len(payload["entries"]) != min(pending, 100)
         or count != min(limit, pending)):
         raise TransitionError("WRITER_TRANSITION_SELECTION_INVALID")
     entries = {}
@@ -91,8 +92,18 @@ def _selection(payload: dict[str, Any]) -> tuple[list[str], dict[str, Any]]:
         if not isinstance(slug, str) or slug in entries:
             raise TransitionError("WRITER_TRANSITION_SELECTION_INVALID")
         _slugs([slug], limit=1)
+        priority = item.get("priority")
+        newest = item.get("newestPublishedAt")
+        if (type(priority) is not int or not 1 <= priority <= 180
+            or not isinstance(newest, str) or not newest or len(newest) > 60):
+            raise TransitionError("WRITER_TRANSITION_SELECTION_INVALID")
         entries[slug] = item
         order.append(slug)
+    canonical_order = sorted(order, key=lambda slug: (
+        -entries[slug]["priority"], entries[slug]["newestPublishedAt"], slug,
+    ))
+    if order != canonical_order:
+        raise TransitionError("WRITER_TRANSITION_SELECTION_INVALID")
     if selected != order[:len(selected)]:
         raise TransitionError("WRITER_TRANSITION_SELECTION_INVALID")
     for idx, slug in enumerate(order):
