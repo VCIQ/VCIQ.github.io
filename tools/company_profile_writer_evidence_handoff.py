@@ -17,7 +17,7 @@ from .company_profile_refresh_queue import build_queue
 from .company_profile_writer_pr_gate import ALLOWED_FILES
 from .company_profile_writer_pr_handoff import HandoffError, Snapshot, _sha
 from .company_profile_writer_transition_gate import (
-    TransitionError, _stamp, check_transition,
+    MAX_RUN_DURATION, TransitionError, _stamp, check_transition,
 )
 from .venture_profile_extraction import (
     _catalog_lines, _field, _source, parse_catalog,
@@ -105,6 +105,18 @@ class EvidenceBoundWorkspace:
 
     def _verify_selection_source(self, baseline: dict, base_sha: str) -> None:
         """Rebuild selection from the actual pinned article/catalog Git blobs."""
+        # The *selection* is generated during this run, even if the underlying
+        # article snapshot is several days old. Never replay an old selection.
+        try:
+            started_at = _stamp(self.run_started_at)
+            completed_at = _stamp(self.run_completed_at)
+            selected_at = _stamp(self.pre_crawl_selection.get("generatedAt"))
+        except TransitionError:
+            raise EvidenceError("EVIDENCE_RUN_WINDOW_INVALID") from None
+        if completed_at < started_at or completed_at - started_at > MAX_RUN_DURATION:
+            raise EvidenceError("EVIDENCE_RUN_WINDOW_INVALID")
+        if not started_at <= selected_at <= completed_at:
+            raise EvidenceError("EVIDENCE_SELECTION_OUTSIDE_RUN")
         article = self._base_json(ARTICLES, base_sha)
         try:
             catalog = self._tracked_bytes(CATALOG, base_sha).decode("utf-8")
@@ -134,7 +146,7 @@ class EvidenceBoundWorkspace:
                 article, baseline[PROFILES],
                 {item.slug: item.name for item in companies},
                 baseline[QUEUE],
-                now=_stamp(self.pre_crawl_selection.get("generatedAt")),
+                now=selected_at,
                 lookback_days=lookback, select_limit=limit,
             )
         except (ValueError, TypeError, RecursionError, OverflowError, KeyError):
