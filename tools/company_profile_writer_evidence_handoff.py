@@ -1,0 +1,128 @@
+"""Bind #668's queue transition validation to #665's Draft-PR adapter.
+
+Review-only composition: no CLI, scheduler hook, account access, network I/O,
+token handling or import-time work. The underlying handoff can mutate remote
+refs only after a separate, explicit submit(..., authorized=True) call.
+
+No coverage-only changes are accepted here. Those require independent
+pre-crawl provenance and a future separately reviewed contract.
+"""
+from __future__ import annotations
+
+import copy
+import json
+from dataclasses import dataclass
+
+from .company_profile_writer_pr_gate import ALLOWED_FILES
+from .company_profile_writer_pr_handoff import HandoffError, Snapshot, _sha
+from .company_profile_writer_transition_gate import (
+    TransitionError, check_transition,
+)
+
+QUEUE = "public/data/company_profile_refresh_queue.json"
+PROFILES = "public/data/venture_profiles.json"
+MAX_RECORD_BYTES = 8 * 1024 * 1024
+
+
+class EvidenceError(HandoffError):
+    """A fixed error code, without file content or identity in its message."""
+
+
+def _parse(data: bytes | str) -> dict:
+    if not isinstance(data, (bytes, str)):
+        raise EvidenceError("EVIDENCE_FORMAT_INVALID")
+    if len(data if isinstance(data, bytes) else data.encode("utf-8")) > MAX_RECORD_BYTES:
+        raise EvidenceError("EVIDENCE_SIZE_INVALID")
+    def no_duplicates(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise EvidenceError("EVIDENCE_DUPLICATE_KEY")
+            result[key] = value
+        return result
+    def no_nonfinite(_):
+        raise EvidenceError("EVIDENCE_NONFINITE_NUMBER")
+    try:
+        result = json.loads(data, object_pairs_hook=no_duplicates,
+                            parse_constant=no_nonfinite)
+    except EvidenceError:
+        raise
+    except (UnicodeError, ValueError, RecursionError):
+        raise EvidenceError("EVIDENCE_JSON_INVALID") from None
+    if not isinstance(result, dict):
+        raise EvidenceError("EVIDENCE_OBJECT_REQUIRED")
+    return result
+
+
+@dataclass(frozen=True)
+class EvidenceBoundWorkspace:
+    """Read from one isolated detached checkout, never from an operator path.
+
+    `pre_crawl_selection` must be captured from the exact queued selection
+    before any crawl or mark-processed operation. Its provenance is still
+    unverified by this module, and must be supplied by the future workflow.
+    """
+
+    workspace: object
+    pre_crawl_selection: dict
+    run_started_at: str
+    run_completed_at: str
+
+    def __post_init__(self):
+        if not isinstance(self.pre_crawl_selection, dict):
+            raise EvidenceError("EVIDENCE_SELECTION_REQUIRED")
+        # Freeze the mutable input without calling untrusted hooks.
+        try:
+            raw = json.dumps(self.pre_crawl_selection, ensure_ascii=False,
+                             sort_keys=True, allow_nan=False).encode("utf-8")
+        except (TypeError, ValueError, RecursionError):
+            raise EvidenceError("EVIDENCE_SELECTION_INVALID") from None
+        object.__setattr__(self, "pre_crawl_selection", _parse(raw))
+
+    def _base_json(self, name: str, base_sha: str) -> dict:
+        if name not in ALLOWED_FILES:
+            raise EvidenceError("EVIDENCE_PATH_INVALID")
+        _sha(base_sha)
+        # Ensure the base is a tracked regular Git blob, not a symbolic link.
+        entry = self.workspace._git("ls-tree", "-z", base_sha, "--", name)
+        if (not entry.startswith(b"100644 blob ")
+            or not entry.endswith(b"\t" + name.encode("utf-8") + b"\0")
+            or entry.count(b"\0") != 1):
+            raise EvidenceError("EVIDENCE_BASE_BLOB_INVALID")
+        return _parse(self.workspace._git("show", base_sha + ":" + name))
+
+    def snapshot(self) -> Snapshot | None:
+        prepared = self.workspace.snapshot()
+        base_sha = (prepared.base_sha if prepared is not None
+                    else self.workspace._git("rev-parse", "HEAD").decode("ascii").strip())
+        _sha(base_sha)
+        if self.workspace._git("rev-parse", "HEAD").decode("ascii").strip() != base_sha:
+            raise EvidenceError("EVIDENCE_BASE_MOVED")
+        baseline = {path: self._base_json(path, base_sha) for path in (QUEUE, PROFILES)}
+        if self.workspace._git("rev-parse", "HEAD").decode("ascii").strip() != base_sha:
+            raise EvidenceError("EVIDENCE_BASE_MOVED")
+        candidate = {}
+        for path in (QUEUE, PROFILES):
+            if prepared is not None and path in prepared.files:
+                candidate[path] = _parse(prepared.files[path])
+            else:
+                candidate[path] = baseline[path]
+        if prepared is not None and set(prepared.files) - ALLOWED_FILES:
+            raise EvidenceError("EVIDENCE_UNEXPECTED_FILE")
+        # The checker knows the real build_queue/mark_processed semantics,
+        # including chronology and unmodified processed history.
+        try:
+            check_transition(
+                baseline[QUEUE], copy.deepcopy(self.pre_crawl_selection),
+                candidate[QUEUE], baseline[PROFILES], candidate[PROFILES],
+                run_started_at=self.run_started_at,
+                run_completed_at=self.run_completed_at,
+                coverage_slugs=[],
+            )
+        except TransitionError as exc:
+            code = str(exc)
+            if (not code.startswith("WRITER_TRANSITION_")
+                or not code.replace("_", "").isalnum() or len(code) > 90):
+                code = "EVIDENCE_TRANSITION_REJECTED"
+            raise EvidenceError(code) from None
+        return prepared
