@@ -130,7 +130,8 @@ def _date_value(value) -> str | None:
         return None
 
 
-def _normalize_original(job: dict, context: dict, url: str, body: str, observed: datetime) -> dict:
+def _normalize_original(job: dict, context: dict, url: str, body: str, observed: datetime, *,
+                        access_status: str = "verified_public") -> dict:
     from tools import crawl_articles as crawler
     from tools import wechat_public_sources as original
     from tools.wechat_source_registry import account_matches
@@ -170,7 +171,7 @@ def _normalize_original(job: dict, context: dict, url: str, body: str, observed:
         raise FetchError("schema_error", "OUTSIDE_POST_FILTER_WINDOW")
     observation = {"schemaVersion": 1, "kind": "signal_observation", "signalId": f"wechat:article:{native}",
         "platform": "wechat", "nativeId": native, "contentType": "article", "nativeAliases": [],
-        "canonicalUrl": canonical, "accessStatus": "verified_public", "title": title[:220], "titleOrigin": "upstream",
+        "canonicalUrl": canonical, "accessStatus": access_status, "title": title[:220], "titleOrigin": "upstream",
         "excerpt": text[:500], "textScope": "article_excerpt", "publishedAt": published, "publishedPrecision": "day",
         "updatedAt": None, "observedAt": utc(observed),
         "author": {"displayName": account or None, "maskStatus": "unknown", "creatorKey": None},

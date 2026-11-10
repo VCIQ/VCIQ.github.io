@@ -30,6 +30,7 @@ KINDS = {
     "job_plan": "JobPlan",
 }
 PLATFORMS = ("wechat", "xhs", "wb", "bili", "zhihu")
+OPERATOR_HTML = "operator-html"
 SCHEMA_KEYS = frozenset({
     "$schema", "$defs", "$ref", "title", "description", "type", "properties",
     "required", "additionalProperties", "const", "enum", "not", "allOf",
@@ -304,7 +305,10 @@ def _semantics(doc: dict[str, Any]) -> None:
             raise ContractError("window_order", "$.window")
         if window["filterMode"] == "none" and (window["from"] or window["to"]):
             raise ContractError("window_filter", "$.window")
-        if doc["queryId"] != query_id(doc) or doc["jobId"] != digest({"queryId": doc["queryId"], "operation": "search"}):
+        expected_operation = "import-html" if doc["provider"] == OPERATOR_HTML else "search"
+        if doc["operation"] != expected_operation:
+            raise ContractError("provider_operation", "$.operation")
+        if doc["queryId"] != query_id(doc) or doc["jobId"] != digest({"queryId": doc["queryId"], "operation": doc["operation"]}):
             raise ContractError("identity_hash", "$.jobId")
     elif kind == "signal_observation":
         if not doc["nativeId"].strip() or doc["nativeId"].strip().casefold() in {"none", "null", "undefined"}:
@@ -343,7 +347,12 @@ def _semantics(doc: dict[str, Any]) -> None:
         if len({p["pageIndex"] for p in pages}) != len(pages):
             raise ContractError("duplicate_page", "$.pageReceipts")
         healthy_pages = bool(pages) and all(p["schemaValid"] and p["processed"] for p in pages)
-        if status in {"ok", "empty"}:
+        if doc["provider"] == OPERATOR_HTML:
+            if (status != "ok" or doc["stopReason"] != "item_limit" or doc["completeness"] != "bounded"
+                    or pages or counts["rawRows"] != 1 or counts["emittedRows"] != 1
+                    or counts["detailFailures"] or doc["errorCode"] is not None):
+                raise ContractError("operator_html_receipt", "$.status")
+        elif status in {"ok", "empty"}:
             if not healthy_pages or counts["detailFailures"] or doc["errorCode"] is not None:
                 raise ContractError("success_evidence", "$.status")
             if doc["stopReason"] not in {"exhausted", "item_limit", "page_limit"} or doc["completeness"] != ("exhausted" if doc["stopReason"] == "exhausted" else "bounded"):
@@ -384,6 +393,8 @@ def _semantics(doc: dict[str, Any]) -> None:
         if len({j["attemptId"] for j in doc["jobs"]}) != len(doc["jobs"]):
             raise ContractError("duplicate_attempt", "$.jobs")
         for job in doc["jobs"]:
+            if job["operation"] != "search":
+                raise ContractError("plan_requires_search", "$.jobs")
             _semantics(job)
         if doc["planId"] != digest({k: v for k, v in doc.items() if k not in {"planId", "generatedAt"}}):
             raise ContractError("plan_hash", "$.planId")
