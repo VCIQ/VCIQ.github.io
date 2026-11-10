@@ -16,8 +16,12 @@ MARKERS = {
     "funding": ("融资", "投资", "funding", "financing"),
     "product": ("发布", "新产品", "量产", "launch"),
     "technology": ("技术", "论文", "专利", "开源", "research"),
-    "listing": ("上市", "招股", "ipo", "辅导备案"),
+    "listing": ("招股", "ipo", "辅导备案"),
 }
+PRODUCT_LAUNCH_TIMING = re.compile(
+    r"((?:产品|机型|型号|设备|机器人|软件|车型)[^。！？.!?\n]{0,36}"
+    r"正式(?:推出|发布)[^。！？.!?\n]{0,24})上市(?=时间|日期)"
+)
 
 
 def normalized(value):
@@ -80,7 +84,12 @@ def build_leads(document, registry):
     # A unique textual mention is still not an attribution of the claim to that company.
     subject = {"companyId": None, "companyName": suggestions[0]["companyName"] if len(suggestions) == 1 else None,
                "resolution": "ambiguous" if len(suggestions) > 1 else "unresolved"}
-    kinds = [kind for kind, words in MARKERS.items() if any(mentioned(word, text) for word in words)] or ["company_discovery"]
+    kinds = [kind for kind, words in MARKERS.items() if any(mentioned(word, text) for word in words)]
+    listing_text = PRODUCT_LAUNCH_TIMING.sub(r"\1", doc["title"] + "\n" + doc["excerpt"])
+    if "listing" not in kinds and mentioned("上市", listing_text):
+        kinds.append("listing")
+    if not kinds:
+        kinds.append("company_discovery")
     evidence = [{"signalId": doc["signalId"], "contentHash": doc["contentHash"], "canonicalUrl": doc["canonicalUrl"],
                  "publishedAt": doc["publishedAt"], "level": "待交叉验证"}]
     claims = ["原始材料摘录（真实性及主体归属未核验）：" + text[:350]]

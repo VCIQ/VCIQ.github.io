@@ -20,6 +20,22 @@ class LeadBuilderTests(unittest.TestCase):
     def test_not_every_technology_item_is_listing(self):
         self.assertEqual([p["item"]["leadType"] for p in self.build(title="机器人 技术论文")], ["technology"])
 
+    def test_product_launch_timing_is_not_a_listing(self):
+        leads = self.build(title="合成机器人技术进展", excerpt="新机型预计年底正式推出，尚未公布上市日期。")
+        self.assertEqual([p["item"]["leadType"] for p in leads], ["technology"])
+
+    def test_product_launch_timing_does_not_hide_separate_listing(self):
+        leads = self.build(title="机器人公司计划在交易所上市", excerpt="新机型预计正式推出，暂未确定上市时间。")
+        self.assertIn("listing", [p["item"]["leadType"] for p in leads])
+
+    def test_product_launch_timing_does_not_hide_an_explicit_ipo_cue(self):
+        leads = self.build(title="机器人公司递交 IPO 申请", excerpt="新机型预计正式推出，暂未确定上市时间。")
+        self.assertIn("listing", [p["item"]["leadType"] for p in leads])
+
+    def test_non_product_announcement_preserves_listing_timing(self):
+        leads = self.build(title="机器人公司动态", excerpt="公司正式发布经营数据，同时确认上市时间。")
+        self.assertIn("listing", [p["item"]["leadType"] for p in leads])
+
     def test_denial_remains_quoted_not_confirmed(self):
         lead = self.build(title="机器人公司否认融资")[0]
         self.assertIn("否认融资", lead["item"]["claims"][0])
