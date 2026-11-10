@@ -102,6 +102,29 @@ References:
 [Object Lock](https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html),
 [Git references](https://docs.github.com/en/rest/git/refs).
 
+## Continue to a Draft proposal
+
+In the same reviewed, approved process, the pilot can pass its finished
+`RunReceiptJournal` and an `EvidenceBoundWorkspace` to
+`submit(..., journal=journal, authorized=True)`. This path independently
+checks the archived chain, run identity, pinned base and selection,
+then checks the existing GitHub reservation before remote mutations.
+The candidate must pass the queue transition verifier and contain the
+exact archived profile snapshot (comparison uses canonical JSON).
+
+The writer conditionally creates a single `handoff.json` containing the
+reservation anchor and hashes of both candidate files before creating
+the candidate ref and Draft PR. This claim covers the run across attempt
+numbers. A conflicting or ambiguous claim blocks any repeat. The recovery
+reader exposes the claim for manual reconciliation with GitHub; it does
+not recreate a lost job's journal or start another handoff. Neither the
+proposal nor the S3 claim releases the original reservation.
+
+If enrichment or a publication guard changes the crawled profile
+snapshot, the current pilot rejects it. Production needs a separately
+verified post-processing path that binds the changed snapshot to the
+observed one and proves the final queue transition.
+
 ## Recovery after job loss
 
 Stop the old worker before inspection. Preserve the GitHub ref and compare
@@ -133,13 +156,8 @@ symlinks and failed disk writes. No real company crawling occurs.
 The archive suite runs independent simulated jobs with shared fake GitHub
 and S3 APIs, plus one real offline fixture subprocess. The hosted
 reservation, cloud IAM/retention and interrupted-job drill still require an
-isolated live pilot. The current post-crawl `submit` obtains its own
-reservation and will block on an existing pre-crawl reservation. A future
-reviewed handoff must prove reservation ownership, rebuild the selection and
-processed history from the exact remote SHA, and carry the same reservation
-through queue verification and PR reconciliation. Global exclusion covers
-participants using the fixed ref. The legacy direct writer does not
-participate; it must be handled explicitly during cutover.
+isolated live pilot. Global exclusion covers participants using the fixed ref.
+The legacy direct writer does not participate and must be handled during cutover.
 
 Independent review, an OS-isolated runner, exact-head CI and an explicit
 publication handoff remain production prerequisites.

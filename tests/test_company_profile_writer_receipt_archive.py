@@ -14,11 +14,14 @@ from unittest.mock import patch
 
 from tests.test_company_profile_writer_crawl_observer import Fixture, SHA, TIMES
 from tests.test_company_profile_writer_crawl_runner import OfflineRepo
+from tests.test_company_profile_writer_evidence_handoff import FakeGitHub, StubCheckout, bound
+from tools.company_profile_writer_crawl_receipt import stable_sha256
 from tools.company_profile_writer_crawl_observer import (
     ObservedCrawlError, observe_selected_company_crawls,
 )
+from tools.company_profile_writer_evidence_handoff import PROFILES
 from tools.company_profile_writer_pr_gate import SMOKE_BASE_BRANCH
-from tools.company_profile_writer_pr_handoff import GitHubCli, RESERVATION, SMOKE_RESERVATION
+from tools.company_profile_writer_pr_handoff import GitHubCli, RESERVATION, SMOKE_RESERVATION, submit
 from tools.company_profile_writer_receipt_archive import (
     CrossJobReceiptArchive, S3ReceiptStore, inspect_archived_run,
 )
@@ -110,6 +113,23 @@ class SharedGitHub:
             self.anchor = sha
         if self.lose_ack:
             raise TimeoutError("synthetic ref created but response lost")
+
+    def reservation_sha(self):
+        return self.anchor
+
+
+class ProposalGitHub(FakeGitHub):
+    def __init__(self):
+        super().__init__()
+        self.anchor = None
+
+    def create_reservation_commit(self, base, manifest_digest):
+        return hashlib.sha1(f"{base}:{manifest_digest}".encode()).hexdigest()
+
+    def create_ref(self, branch, sha):
+        super().create_ref(branch, sha)
+        if branch == self.reservation_ref:
+            self.anchor = sha
 
     def reservation_sha(self):
         return self.anchor
@@ -351,6 +371,117 @@ class ReceiptArchiveTests(unittest.TestCase):
             )
         self.assertTrue(result["externalArchiveRecorded"])
         self.assertEqual(self.inspect()["companies"], {"alpha": "verified_receipt"})
+
+    def proposal_fixture(self, *, finish=True, selection_digest=None):
+        checkout = StubCheckout()
+        evidence = bound(checkout)
+        github = ProposalGitHub()
+        folder = tempfile.TemporaryDirectory()
+        self.addCleanup(folder.cleanup)
+        journal = self.journal(folder.name, github)
+        journal.begin(
+            run_id="12345", base_sha=SHA, selected_slugs=checkout.selection["selectedSlugs"],
+            selection_sha256=selection_digest or stable_sha256(checkout.selection),
+            official_urls_sha256="d" * 64, run_started_at=evidence.run_started_at,
+        )
+        for slug in checkout.selection["selectedSlugs"]:
+            journal.before_command(slug, evidence.run_started_at)
+            journal.record({
+                "slug": slug, "exitCode": 0, "capturedAt": evidence.run_started_at,
+                "statusSha256": "b" * 64, "profileSha256": "c" * 64,
+            })
+        if finish:
+            journal.complete(
+                final_snapshot_sha256=stable_sha256(checkout.after[PROFILES]),
+                completed_at=evidence.run_completed_at,
+            )
+        return evidence, github, journal
+
+    def proposal(self, evidence, github, journal, *, attempt=1, run_id="12345"):
+        return submit(evidence, github, run_id=run_id, attempt=attempt,
+                      authorized=True, journal=journal)
+
+    def test_archived_handoff_keeps_original_reservation_and_creates_only_draft(self):
+        evidence, github, journal = self.proposal_fixture()
+        anchor = github.anchor
+        result = self.proposal(evidence, github, journal)
+        self.assertEqual(result["decision"], "draft_pr_opened")
+        self.assertEqual(github.anchor, anchor)
+        self.assertEqual(github.calls.count("create_ref"), 2)
+        self.assertFalse(result["merged"])
+        self.assertFalse(result["published"])
+        claim = self.inspect("12345")["handoff"]
+        self.assertEqual(claim["anchorSha"], anchor)
+        self.assertEqual(claim["candidateFilesSha256"], {
+            path: hashlib.sha256(value.encode()).hexdigest()
+            for path, value in evidence.snapshot().files.items()
+        })
+
+    def test_claim_ack_loss_blocks_all_attempts_without_opening_pr(self):
+        evidence, github, journal = self.proposal_fixture()
+        self.s3.lose_ack = "handoff.json"
+        result = self.proposal(evidence, github, journal)
+        self.assertEqual(result["errorCode"], "HANDOFF_ARCHIVE_CLAIM_UNCONFIRMED")
+        self.assertTrue(result["manualTriageRequired"])
+        self.assertEqual(self.inspect("12345")["handoff"]["attempt"], 1)
+        retry = self.proposal(evidence, github, journal, attempt=2)
+        self.assertEqual(retry["errorCode"], "HANDOFF_ARCHIVE_ALREADY_CLAIMED")
+        self.assertEqual(github.calls.count("create_ref"), 1)
+        self.assertNotIn("create_commit", github.calls)
+
+    def test_competing_handoffs_write_only_one_candidate(self):
+        evidence, github, journal = self.proposal_fixture()
+        barrier = threading.Barrier(2)
+        put = self.s3.put_object
+
+        def racing_put(**request):
+            if request["Key"].endswith("/handoff.json"):
+                barrier.wait(timeout=5)
+            return put(**request)
+
+        with patch.object(self.s3, "put_object", side_effect=racing_put):
+            with ThreadPoolExecutor(max_workers=2) as pool:
+                results = list(pool.map(
+                    lambda _: self.proposal(evidence, github, journal), range(2),
+                ))
+        self.assertCountEqual([result["decision"] for result in results], [
+            "draft_pr_opened", "blocked",
+        ])
+        self.assertEqual(github.calls.count("create_ref"), 2)
+        self.assertEqual(github.calls.count("create_draft_pr"), 1)
+
+    def test_incomplete_journal_or_wrong_run_blocks_before_claim(self):
+        for finish, run_id in ((False, "12345"), (True, "12346")):
+            with self.subTest(finish=finish):
+                self.s3.objects.clear()
+                evidence, github, journal = self.proposal_fixture(finish=finish)
+                result = self.proposal(evidence, github, journal, run_id=run_id)
+                self.assertEqual(result["errorCode"], "HANDOFF_ARCHIVE_CONTEXT_INVALID")
+                self.assertFalse(result["remoteWritesAttempted"])
+                self.assertIsNone(self.inspect("12345")["handoff"])
+
+    def test_handoff_rejects_different_selection_and_profile_data(self):
+        evidence, github, journal = self.proposal_fixture(selection_digest="a" * 64)
+        result = self.proposal(evidence, github, journal)
+        self.assertEqual(result["errorCode"], "HANDOFF_ARCHIVE_EVIDENCE_MISMATCH")
+        self.s3.objects.clear()
+        evidence, github, journal = self.proposal_fixture()
+        evidence.workspace.after[PROFILES]["companies"]["openai"]["name"] = "Changed"
+        result = self.proposal(evidence, github, journal)
+        self.assertEqual(result["errorCode"], "HANDOFF_ARCHIVE_EVIDENCE_MISMATCH")
+        self.assertEqual(github.calls.count("create_ref"), 1)
+        self.assertIsNone(self.inspect("12345")["handoff"])
+
+    def test_handoff_rechecks_reservation_after_the_claim(self):
+        evidence, github, journal = self.proposal_fixture()
+        def replace_anchor(name):
+            if name == "handoff.json":
+                github.anchor = "b" * 40
+        self.s3.on_put = replace_anchor
+        result = self.proposal(evidence, github, journal)
+        self.assertEqual(result["errorCode"], "HANDOFF_RACE_DETECTED")
+        self.assertNotIn("create_commit", github.calls)
+        self.assertTrue(result["manualTriageRequired"])
 
     def unexpected_command(self, *args, **kwargs):
         self.fail("the company command must not run")

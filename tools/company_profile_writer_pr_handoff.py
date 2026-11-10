@@ -7,6 +7,7 @@ main, pushes with force, merges, publishes, or starts a crawler.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import re
@@ -312,9 +313,10 @@ class GitHubCli:
 
 
 def submit(workspace, github, *, run_id: str, attempt: int,
-           authorized: bool = False) -> dict:
+           authorized: bool = False, journal=None) -> dict:
     """Create only a new reservation ref, a new candidate ref, and a Draft PR.
 
+    An optional finished cross-job journal can transfer its existing reservation.
     Ambiguous failures are not retried. Once reservation creation is attempted,
     the reservation and candidate state require human triage (including after
     a successful Draft PR); this prevents silent repeated scheduled crawls.
@@ -328,14 +330,26 @@ def submit(workspace, github, *, run_id: str, attempt: int,
         raise HandoffError("HANDOFF_UNPRIVILEGED_OPERATOR_REQUIRED")
     stage = "preflight"
     mutation_attempted = False
+    archive = None
+    anchor = None
     try:
         prepared = workspace.snapshot()
         if prepared is None:
-            return {"decision": "no_changes", "remoteWritesAttempted": False}
+            result = {"decision": "no_changes", "remoteWritesAttempted": False}
+            if journal is not None:
+                result["manualTriageRequired"] = True
+            return result
         base_branch = github.base_branch
         first_main = github.base_sha()
         open_heads = github.open_proposals()
         remote_branches = github.candidate_branches()
+        reservation = github.reservation_ref
+        if journal is not None:
+            stage = "archive"
+            archive, anchor = _verified_archive(workspace, prepared, github, journal, run_id)
+            if remote_branches != [reservation] or github.reservation_sha() != anchor:
+                raise HandoffError("HANDOFF_ARCHIVE_RESERVATION_CHANGED")
+            remote_branches = []
         plan = decide({
             "schemaVersion": 1, "repository": REPOSITORY, "baseBranch": base_branch,
             "sourceHeadSha": prepared.base_sha, "observedMainSha": first_main,
@@ -345,16 +359,29 @@ def submit(workspace, github, *, run_id: str, attempt: int,
             "tokenKind": github.token_kind,
         })
         if plan["decision"] != "would_prepare_draft_pr":
-            return {"decision": plan["decision"], "remoteWritesAttempted": False}
+            result = {"decision": plan["decision"], "remoteWritesAttempted": False}
+            if archive is not None:
+                result["manualTriageRequired"] = True
+            return result
         branch = _ref(plan["candidateBranch"], github.branch_prefix)
-        reservation = github.reservation_ref
-        # Atomic reservation: create_ref must refuse an already-existing ref.
-        # Keep this ref until a separate reviewer triages/cleans it up.
-        stage = "reserve"
+        stage = "claim" if archive is not None else "reserve"
         mutation_attempted = True
-        github.create_ref(reservation, first_main)
+        if archive is None:
+            # A separate reviewer triages or clears the atomic ref.
+            github.create_ref(reservation, first_main)
+        else:
+            from .company_profile_writer_receipt_journal import JournalError
+            try:
+                archive.claim_handoff(attempt=attempt, candidate_sha256={
+                    path: hashlib.sha256(value.encode("utf-8")).hexdigest()
+                    for path, value in prepared.files.items()
+                })
+            except JournalError:
+                raise HandoffError("HANDOFF_ARCHIVE_CLAIM_UNCONFIRMED") from None
         stage = "recheck"
-        if github.base_sha() != first_main or github.open_proposals() or github.candidate_branches() != [reservation]:
+        if (github.base_sha() != first_main or github.open_proposals()
+            or github.candidate_branches() != [reservation]
+            or anchor is not None and github.reservation_sha() != anchor):
             raise HandoffError("HANDOFF_RACE_DETECTED")
         stage = "commit"
         commit = _sha(github.create_commit(first_main, prepared.files, run_id, attempt))
@@ -362,19 +389,24 @@ def submit(workspace, github, *, run_id: str, attempt: int,
             raise HandoffError("HANDOFF_EMPTY_COMMIT")
         if github.base_sha() != first_main:
             raise HandoffError("HANDOFF_BASE_ADVANCED")
+        if anchor is not None and github.reservation_sha() != anchor:
+            raise HandoffError("HANDOFF_ARCHIVE_RESERVATION_CHANGED")
         stage = "candidate"
         github.create_ref(branch, commit)
         # Close the window between candidate ref creation and PR creation.
         # A concurrent proposal or new candidate remains a manual-triage case.
         stage = "preproposal"
         if (github.base_sha() != first_main or github.open_proposals()
-            or github.candidate_branches() != sorted([reservation, branch])):
+            or github.candidate_branches() != sorted([reservation, branch])
+            or anchor is not None and github.reservation_sha() != anchor):
             raise HandoffError("HANDOFF_RACE_DETECTED")
         stage = "proposal"
         number = github.create_draft_pr(branch, commit, run_id)
         stage = "verify"
         github.verify_pr(number, branch, commit)
         fresh = github.base_sha() == first_main
+        if anchor is not None and github.reservation_sha() != anchor:
+            raise HandoffError("HANDOFF_ARCHIVE_RESERVATION_CHANGED")
         return {
             "decision": "draft_pr_opened" if fresh else "draft_pr_opened_main_advanced",
             "prNumber": number, "candidateBranch": branch, "candidateSha": commit,
@@ -389,7 +421,7 @@ def submit(workspace, github, *, run_id: str, attempt: int,
             "decision": "blocked", "stage": stage,
             "errorCode": code,
             "remoteWritesAttempted": mutation_attempted,
-            "manualTriageRequired": mutation_attempted,
+            "manualTriageRequired": mutation_attempted or journal is not None,
             "merged": False, "published": False,
         }
     except HandoffError as exc:
@@ -398,7 +430,7 @@ def submit(workspace, github, *, run_id: str, attempt: int,
             "decision": "blocked", "stage": stage,
             "errorCode": code,
             "remoteWritesAttempted": mutation_attempted,
-            "manualTriageRequired": mutation_attempted,
+            "manualTriageRequired": mutation_attempted or journal is not None,
             "merged": False, "published": False,
         }
     except (OSError, UnicodeError, ValueError, TypeError, RecursionError):
@@ -406,6 +438,36 @@ def submit(workspace, github, *, run_id: str, attempt: int,
             "decision": "blocked", "stage": stage,
             "errorCode": "HANDOFF_FAILED_CLOSED",
             "remoteWritesAttempted": mutation_attempted,
-            "manualTriageRequired": mutation_attempted,
+            "manualTriageRequired": mutation_attempted or journal is not None,
             "merged": False, "published": False,
         }
+
+
+def _verified_archive(workspace, prepared, github, journal, run_id):
+    from .company_profile_writer_crawl_receipt import _time, stable_sha256
+    from .company_profile_writer_evidence_handoff import EvidenceBoundWorkspace, PROFILES, _parse
+    from .company_profile_writer_receipt_archive import inspect_archived_run
+    from .company_profile_writer_receipt_journal import JournalError, RunReceiptJournal
+
+    if (not isinstance(workspace, EvidenceBoundWorkspace)
+        or not isinstance(journal, RunReceiptJournal) or not journal.finished
+        or journal.archive is None or journal.archive.github is not github
+        or journal.archive.run_id != run_id or set(prepared.files) != ALLOWED_FILES):
+        raise HandoffError("HANDOFF_ARCHIVE_CONTEXT_INVALID")
+    archive = journal.archive
+    try:
+        receipt = inspect_archived_run(archive.store, scope=archive.scope, run_id=run_id)
+    except JournalError:
+        raise HandoffError("HANDOFF_ARCHIVE_READ_UNCONFIRMED") from None
+    if (receipt["state"] != "recorded" or not receipt["reservation"]
+        or receipt["reservation"]["anchorSha"] != archive.anchor_sha
+        or receipt["reservation"]["ref"] != github.reservation_ref
+        or receipt["baseSha"] != prepared.base_sha
+        or receipt["selectionSha256"] != stable_sha256(workspace.pre_crawl_selection)
+        or _time(receipt["runStartedAt"]) != _time(workspace.run_started_at)
+        or _time(receipt["runCompletedAt"]) > _time(workspace.run_completed_at)
+        or receipt["finalSnapshotSha256"] != stable_sha256(_parse(prepared.files[PROFILES]))):
+        raise HandoffError("HANDOFF_ARCHIVE_EVIDENCE_MISMATCH")
+    if receipt["handoff"] is not None:
+        raise HandoffError("HANDOFF_ARCHIVE_ALREADY_CLAIMED")
+    return archive, archive.anchor_sha

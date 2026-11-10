@@ -9,7 +9,7 @@ from contextlib import closing
 from datetime import UTC, datetime, timedelta
 
 from .company_profile_writer_crawl_receipt import MAX_SELECTED
-from .company_profile_writer_pr_gate import SMOKE_BASE_BRANCH
+from .company_profile_writer_pr_gate import ALLOWED_FILES, SMOKE_BASE_BRANCH
 from .company_profile_writer_pr_handoff import GitHubCli, RESERVATION, SMOKE_RESERVATION
 from .company_profile_writer_receipt_journal import (
     JournalError, _MAX_DOC, _decode, _encode, _inspect_records, _stamp,
@@ -20,7 +20,7 @@ _SCOPES = {
     "main": ("production", RESERVATION),
     SMOKE_BASE_BRANCH: ("smoke", SMOKE_RESERVATION),
 }
-_RECORD_NAME = re.compile(r"(?:manifest|reservation|complete|start-[0-9]{2}|receipt-[0-9]{2})\.json")
+_RECORD_NAME = re.compile(r"(?:manifest|reservation|complete|handoff|start-[0-9]{2}|receipt-[0-9]{2})\.json")
 _RETENTION = timedelta(days=365)
 
 
@@ -177,6 +177,14 @@ class CrossJobReceiptArchive:
         self._check_remote(reserved=True)
         self._put("complete.json", final)
 
+    def claim_handoff(self, *, attempt, candidate_sha256):
+        self._check_remote(reserved=True)
+        self._put("handoff.json", {
+            "anchorSha": self.anchor_sha,
+            "attempt": attempt,
+            "candidateFilesSha256": candidate_sha256,
+        })
+
 
 def inspect_archived_run(store: S3ReceiptStore, *, scope: str, run_id: str) -> dict:
     """Read-only triage after job loss. Stop the old worker before inspecting."""
@@ -200,12 +208,13 @@ def inspect_archived_run(store: S3ReceiptStore, *, scope: str, run_id: str) -> d
     selected = _validate_slugs(manifest.get("selectedSlugs"))
     read_optional("reservation.json")
     read_optional("complete.json")
+    read_optional("handoff.json")
     for index in range(MAX_SELECTED):
         read_optional(f"start-{index:02d}.json")
         read_optional(f"receipt-{index:02d}.json")
     journal_names = set(records) - {
         f"start-{index:02d}.json" for index in range(len(selected))
-    } - {"reservation.json"}
+    } - {"reservation.json", "handoff.json"}
     state = _inspect_records(run_id, journal_names, records.__getitem__)
     reservation = records.get("reservation.json")
     if reservation is not None:
@@ -216,6 +225,17 @@ def inspect_archived_run(store: S3ReceiptStore, *, scope: str, run_id: str) -> d
             or reservation["manifestSha256"] != hashlib.sha256(_encode(manifest)).hexdigest()):
             raise JournalError("ARCHIVE_RESERVATION_RECORD_INVALID")
         _validate_sha(reservation["anchorSha"], commit=True)
+    handoff = records.get("handoff.json")
+    if handoff is not None:
+        if (state["state"] != "recorded" or reservation is None
+            or set(handoff) != {"anchorSha", "attempt", "candidateFilesSha256"}
+            or handoff["anchorSha"] != reservation["anchorSha"]
+            or type(handoff["attempt"]) is not int or not 1 <= handoff["attempt"] <= 20
+            or not isinstance(handoff["candidateFilesSha256"], dict)
+            or set(handoff["candidateFilesSha256"]) != ALLOWED_FILES):
+            raise JournalError("ARCHIVE_HANDOFF_RECORD_INVALID")
+        for digest in handoff["candidateFilesSha256"].values():
+            _validate_sha(digest)
     companies = {}
     last_time = _stamp(manifest["runStartedAt"])
     blocked = False
@@ -245,9 +265,13 @@ def inspect_archived_run(store: S3ReceiptStore, *, scope: str, run_id: str) -> d
     state.update({
         "baseSha": manifest["baseSha"],
         "selectionSha256": manifest["selectionSha256"],
+        "runStartedAt": manifest["runStartedAt"],
         "reservation": reservation,
+        "handoff": handoff,
         "companies": companies,
         "archiveVersions": versions,
         "manualTriageRequired": True,
     })
+    if state["state"] == "recorded":
+        state["runCompletedAt"] = records["complete.json"]["completedAt"]
     return state
