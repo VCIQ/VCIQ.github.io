@@ -58,7 +58,7 @@ def _encode(obj) -> bytes:
                          separators=(",", ":"), allow_nan=False).encode("utf-8")
     except (TypeError, ValueError, OverflowError, RecursionError):
         raise JournalError("JOURNAL_SERIALIZATION_INVALID") from None
-    if len(raw) > _MAX_DOC:
+    if len(raw) + 1 > _MAX_DOC:
         raise JournalError("JOURNAL_RECORD_OVERSIZED")
     return raw + b"\n"
 
@@ -178,7 +178,7 @@ def _stamp(value):
 class RunReceiptJournal:
     """One-shot journal. Any failure is final; use inspect for human triage."""
 
-    def __init__(self, private_parent: Path, *, authorized: bool = False):
+    def __init__(self, private_parent: Path, *, authorized: bool = False, archive=None):
         if authorized is not True:
             raise JournalError("JOURNAL_EXPLICIT_APPROVAL_REQUIRED")
         try:
@@ -186,10 +186,16 @@ class RunReceiptJournal:
         except (ValueError, TypeError):
             raise JournalError("JOURNAL_DIRECTORY_INVALID") from None
         _strict_dir(parent)
+        if archive is not None:
+            from .company_profile_writer_receipt_archive import CrossJobReceiptArchive
+            if not isinstance(archive, CrossJobReceiptArchive):
+                raise JournalError("JOURNAL_ARCHIVE_INVALID")
         self.parent = parent.resolve(strict=True)
+        self.archive = archive
         self.directory: Path | None = None
         self.slugs: tuple[str, ...] = ()
         self.next_index = 0
+        self.command_intent_recorded = False
         self.previous_digest = _EMPTY
         self.failed = False
         self.finished = False
@@ -230,11 +236,25 @@ class RunReceiptJournal:
             "publicationAuthorized": False,
         }
         _write_new(path / "manifest.json", manifest)
+        if self.archive is not None:
+            self.archive.begin(manifest)
         self.slugs = selected
         self.failed = False
 
+    def before_command(self, slug: str, started_at: str):
+        if self.archive is None:
+            return
+        if (self.failed or self.finished or self.directory is None or self.command_intent_recorded
+            or self.next_index >= len(self.slugs) or self.slugs[self.next_index] != slug):
+            raise JournalError("JOURNAL_COMMAND_INVALID")
+        self.failed = True
+        self.archive.start_company(self.next_index, slug, started_at)
+        self.command_intent_recorded = True
+        self.failed = False
+
     def record(self, receipt: dict):
-        if self.failed or self.finished or self.directory is None:
+        if (self.failed or self.finished or self.directory is None
+            or self.archive is not None and not self.command_intent_recorded):
             raise JournalError("JOURNAL_NOT_RECORDABLE")
         self.failed = True
         if (not isinstance(receipt, dict)
@@ -256,8 +276,11 @@ class RunReceiptJournal:
         entry = {"payload": payload, "digest": _digest(payload)}
         path = self.directory / f"receipt-{self.next_index:02d}.json"
         _write_new(path, entry)
+        if self.archive is not None:
+            self.archive.record_company(path.name, entry)
         self.previous_digest = entry["digest"]
         self.next_index += 1
+        self.command_intent_recorded = False
         self.failed = False
         return entry["digest"]
 
@@ -283,6 +306,8 @@ class RunReceiptJournal:
             "mergeAuthorized": False,
             "publicationAuthorized": False,
         }
+        if self.archive is not None:
+            self.archive.complete(final)
         _write_new(self.directory / "complete.json", final)
         self.finished = True
         return self.previous_digest
@@ -295,7 +320,15 @@ def inspect_run(private_parent: Path, run_id: str) -> dict:
     _strict_dir(path)
     directory = path.resolve(strict=True) / ("run-" + run_id)
     _strict_dir(directory)
-    manifest = _read_file(directory / "manifest.json")
+    try:
+        names = {entry.name for entry in directory.iterdir()}
+    except OSError:
+        raise JournalError("JOURNAL_READ_FAILED") from None
+    return _inspect_records(run_id, names, lambda name: _read_file(directory / name))
+
+
+def _inspect_records(run_id, names, read):
+    manifest = read("manifest.json")
     selected = _validate_slugs(manifest.get("selectedSlugs"))
     if (manifest.get("schemaVersion") != 1 or manifest.get("runId") != run_id
         or manifest.get("automaticResumeAuthorized") is not False
@@ -307,11 +340,6 @@ def inspect_run(private_parent: Path, run_id: str) -> dict:
     _validate_sha(manifest.get("selectionSha256"))
     _validate_sha(manifest.get("officialUrlsSha256"))
     start = _stamp(manifest.get("runStartedAt"))
-    names = []
-    try:
-        names = [entry.name for entry in directory.iterdir()]
-    except OSError:
-        raise JournalError("JOURNAL_READ_FAILED") from None
     allowed = {"manifest.json", "complete.json"} | {
         f"receipt-{index:02d}.json" for index in range(len(selected))}
     if any(name not in allowed for name in names):
@@ -324,7 +352,7 @@ def inspect_run(private_parent: Path, run_id: str) -> dict:
             if any(f"receipt-{i:02d}.json" in names for i in range(index + 1, len(selected))):
                 raise JournalError("JOURNAL_RECEIPT_GAP")
             break
-        entry = _read_file(directory / f"receipt-{index:02d}.json")
+        entry = read(f"receipt-{index:02d}.json")
         payload = entry.get("payload")
         if (not isinstance(payload, dict)
             or set(entry) != {"payload", "digest"}
@@ -354,7 +382,7 @@ def inspect_run(private_parent: Path, run_id: str) -> dict:
             "requiredCompanies": len(selected), "manualTriageRequired": True,
             "automaticResumeAuthorized": False, "mergeAuthorized": False,
         }
-    completed = _read_file(directory / "complete.json")
+    completed = read("complete.json")
     if (count != len(selected) or completed.get("schemaVersion") != 1
         or completed.get("runId") != run_id or completed.get("entryCount") != count
         or completed.get("headDigest") != head

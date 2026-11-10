@@ -18,6 +18,7 @@ import re
 import stat
 import subprocess
 import sys
+from time import monotonic
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -227,6 +228,7 @@ def observe_selected_company_crawls(
 
     receipts = []
     for slug in selected:
+        dispatch_tick = monotonic()
         command_started_at = _timestamp(clock)
         command_started = _time(command_started_at)
         remaining = (started + MAX_RUN_DURATION - command_started).total_seconds()
@@ -236,6 +238,18 @@ def observe_selected_company_crawls(
         before_profile = before["companies"].get(slug)
         before_digest = stable_sha256(before_profile) if isinstance(before_profile, dict) else None
         command = crawl_argv(slug)
+        if journal is not None and journal.archive is not None:
+            try:
+                journal.before_command(slug, command_started_at)
+            except JournalError:
+                raise ObservedCrawlError("CRAWL_OBSERVER_JOURNAL_FAILED") from None
+            launch_at = _timestamp(clock)
+            launch = _time(launch_at)
+            remaining = min(remaining - (monotonic() - dispatch_tick),
+                            (started + MAX_RUN_DURATION - launch).total_seconds())
+            if launch < command_started or remaining < 1:
+                raise ObservedCrawlError("CRAWL_OBSERVER_RUN_WINDOW_INVALID")
+            command_started_at, command_started = launch_at, launch
         try:
             process = run_command(command, cwd=root,
                                   timeout=min(MAX_COMMAND_SECONDS, int(remaining)))
@@ -306,6 +320,7 @@ def observe_selected_company_crawls(
         "receipts": receipts,
         "verifiedCompanyCount": verification["verifiedCompanyCount"],
         "localJournalRecorded": journal is not None,
+        "externalArchiveRecorded": journal is not None and journal.archive is not None,
         "markProcessedAuthorized": False,
         "mergeAuthorized": False,
         "publicationAuthorized": False,

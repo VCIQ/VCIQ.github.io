@@ -237,24 +237,46 @@ class GitHubCli:
             or record["object"].get("sha") != sha):
             raise HandoffError("HANDOFF_REF_CREATE_UNCONFIRMED")
 
-    def create_commit(self, base: str, files: dict[str, str], run_id: str, attempt: int) -> str:
+    def reservation_sha(self) -> str:
+        branch = _ref(self.reservation_ref, self.branch_prefix)
+        record = self._api(f"repos/{REPOSITORY}/git/ref/heads/{branch}")
+        if (not isinstance(record, dict) or record.get("ref") != "refs/heads/" + branch
+            or not isinstance(record.get("object"), dict)
+            or record["object"].get("type") != "commit"):
+            raise HandoffError("HANDOFF_REF_READ_UNCONFIRMED")
+        return _sha(record["object"].get("sha"))
+
+    def _base_tree(self, base: str) -> str:
         base = _sha(base)
         source = self._api(f"repos/{REPOSITORY}/git/commits/{base}")
         if not isinstance(source, dict) or source.get("sha") != base:
             raise HandoffError("HANDOFF_BASE_COMMIT_INVALID")
         original_tree = source.get("tree")
-        base_tree = _sha(original_tree.get("sha") if isinstance(original_tree, dict) else None)
+        return _sha(original_tree.get("sha") if isinstance(original_tree, dict) else None)
+
+    def _create_commit(self, base: str, tree: str, message: str) -> str:
+        commit = self._api(f"repos/{REPOSITORY}/git/commits", {
+            "message": message, "tree": tree, "parents": [base],
+        })
+        return _sha(commit.get("sha") if isinstance(commit, dict) else None)
+
+    def create_reservation_commit(self, base: str, manifest_digest: str) -> str:
+        if type(manifest_digest) is not str or not re.fullmatch(r"[0-9a-f]{64}", manifest_digest):
+            raise HandoffError("HANDOFF_RESERVATION_DIGEST_INVALID")
+        return self._create_commit(
+            base, self._base_tree(base), f"writer reservation manifest sha256 {manifest_digest}",
+        )
+
+    def create_commit(self, base: str, files: dict[str, str], run_id: str, attempt: int) -> str:
         result = self._api(f"repos/{REPOSITORY}/git/trees", {
-            "base_tree": base_tree,
+            "base_tree": self._base_tree(base),
             "tree": [{"path": name, "mode": "100644", "type": "blob", "content": files[name]}
                      for name in sorted(files)],
         })
         tree = _sha(result.get("sha") if isinstance(result, dict) else None)
-        commit = self._api(f"repos/{REPOSITORY}/git/commits", {
-            "message": f"data: propose company profile refresh run {run_id} attempt {attempt}",
-            "tree": tree, "parents": [base],
-        })
-        return _sha(commit.get("sha") if isinstance(commit, dict) else None)
+        return self._create_commit(
+            base, tree, f"data: propose company profile refresh run {run_id} attempt {attempt}",
+        )
 
     def create_draft_pr(self, branch: str, commit: str, run_id: str) -> int:
         branch, commit = _ref(branch, self.branch_prefix), _sha(commit)
