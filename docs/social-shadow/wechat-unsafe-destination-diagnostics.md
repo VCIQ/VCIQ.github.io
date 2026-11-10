@@ -40,3 +40,31 @@ article extraction. Real WeChat request budgets and historical quotas are
 retained; there is no automatic retry or production switch. A genuine
 source-specific follow-up must be separately budgeted and may not bypass the
 existing quota, captcha, publisher rights or URL gate.
+
+## Bounded WeChat-first acceptance
+
+When an allowed Sogou HTTP redirect already returned an original article,
+the adapter now reuses that response instead of debiting a second request
+for the same original. A literal Sogou redirect must target an allowlisted
+WeChat original. DNS lookup failures use the fixed `DNS_LOOKUP_FAILED`
+receipt code. TLS, DNS destination checks and per-hop debits stay enforced.
+
+The offline regression uses the real transport implementation with
+synthetic HTTP responses. Search, the Sogou link, and the original consume
+three debits. The verified original seals, imports, and reaches the private
+review queue as discovery-only evidence, without exporting signed fetch
+parameters.
+
+For the first separately authorized Mac trial, use one tracking keyword,
+one job, one search page and at most one original attempt. Preview the
+exact plan under the private policy and confirm a new, nonoverlapping grant
+with the operator. A proposed allowance is up to six shadow requests total,
+including redirect hops. Account for the existing VCIQ WeChat writer before
+allocating the window. Preserve old receipts and restore the stop latch
+after the run. If blocked by login, verification or a request limit, record
+the fixed receipt and stop for operator review.
+
+Record whether an original was actually parsed and sealed, whether it
+produced a review candidate, and whether production data was untouched.
+A search card, a successful request without a usable original, and a
+discovery-only candidate each have different acceptance meanings.

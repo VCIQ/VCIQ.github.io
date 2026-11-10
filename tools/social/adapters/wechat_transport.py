@@ -202,6 +202,8 @@ class PublicTransport:
                 raise FetchError("network_error", "TLS_CERTIFICATE_VERIFY_FAILED") from None
             except ssl.SSLError:
                 raise FetchError("network_error", "TLS_HANDSHAKE_FAILED") from None
+            except socket.gaierror:
+                raise FetchError("network_error", "DNS_LOOKUP_FAILED") from None
             except (OSError, http.client.HTTPException):
                 raise FetchError("network_error", "NETWORK_ERROR") from None
             finally:

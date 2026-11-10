@@ -1,4 +1,5 @@
 """Offline reproductions of failures found by the first bounded Mac smoke run."""
+import socket
 import ssl
 import unittest
 from unittest.mock import patch
@@ -88,6 +89,9 @@ class WechatTLSTests(unittest.TestCase):
 
     def test_ordinary_network_failure_stays_distinct(self):
         self.assertEqual(self.failure(OSError("PRIVATE connection")).code, "NETWORK_ERROR")
+
+    def test_dns_failure_has_specific_fixed_error_code(self):
+        self.assertEqual(self.failure(socket.gaierror("PRIVATE DNS")).code, "DNS_LOOKUP_FAILED")
 
     def test_timeout_stays_distinct(self):
         self.assertEqual(self.failure(TimeoutError("PRIVATE timeout")).status, "timeout")

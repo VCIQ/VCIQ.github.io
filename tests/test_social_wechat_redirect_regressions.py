@@ -5,16 +5,62 @@ import unittest
 from pathlib import Path
 
 from tests.test_social_execution_guards import Connection, HttpResponse, transport
-from tests.test_social_wechat import NOW, make_job
+from tests.test_social_wechat import NOW, ORIGINAL, fixture, make_job
 from tools.social.adapters.wechat import run_job
 from tools.social.adapters.wechat_transport import FetchError, PublicTransport, checked_url
 from tools.social.batch import ROOT, build_batch
 from tools.social.policy import load_policy
 from tools.social.query_registry import build_query_registry
+from tools.social.review import ReviewStore
 from tools.social.scheduler_state import SchedulerStore, read_state
+from tools.social.signal_store import SignalStore
 
 
 class WechatRedirectRegressionTests(unittest.TestCase):
+    def test_sogou_http_redirect_reads_original_once_and_reaches_private_review(self):
+        job, context = make_job()
+        index_url = "https://weixin.sogou.com/link?url=SYNTHETIC"
+        search = fixture("sogou.html").replace(ORIGINAL, index_url).encode()
+        signed_url = ORIGINAL + "?timestamp=123&signature=SYNTHETIC_SIGNATURE"
+        debits = []
+        client = transport([
+            HttpResponse(body=search),
+            HttpResponse(302, {"Location": signed_url}),
+            HttpResponse(body=fixture("article.html").encode()),
+        ], debits)
+        result = run_job(job, context, client, now=lambda: NOW)
+        self.assertEqual(result["receipt"]["status"], "ok")
+        self.assertEqual(len(debits), 3)
+        self.assertEqual(result["diagnostics"]["requests"], 3)
+        self.assertEqual(result["observations"][0]["canonicalUrl"], ORIGINAL)
+        self.assertNotIn("SYNTHETIC_SIGNATURE", repr(result))
+
+        batch = build_batch([job], [result["receipt"]], result["observations"],
+                            created_at=NOW.isoformat())
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            with SignalStore(root) as source, ReviewStore(root) as review:
+                source.import_batch(batch)
+                review.materialize(source, [])
+                items = review.view()["items"]
+                self.assertTrue(items)
+                self.assertTrue(all(row["item"]["status"] == "pending" for row in items))
+                self.assertTrue(all(row["item"]["evidenceClass"] == "discovery-only" for row in items))
+
+    def test_sogou_literal_redirect_must_point_to_an_original(self):
+        job, context = make_job()
+        index_url = "https://weixin.sogou.com/link?url=SYNTHETIC"
+        search = fixture("sogou.html").replace(ORIGINAL, index_url).encode()
+        debits = []
+        client = transport([
+            HttpResponse(body=search),
+            HttpResponse(body=b"<script>url += 'https://cn.bing.com/search?q=SYNTHETIC';</script>"),
+        ], debits)
+        result = run_job(job, context, client, now=lambda: NOW)
+        self.assertEqual(result["receipt"]["errorCode"], "ORIGINAL_LINK_UNRESOLVED")
+        self.assertEqual(len(debits), 2)
+        self.assertEqual(result["observations"], [])
+
     def test_cn_search_is_allowed_but_other_paths_and_hosts_are_not(self):
         self.assertEqual(checked_url("https://cn.bing.com/search?q=synthetic"),
             "https://cn.bing.com/search?q=synthetic")

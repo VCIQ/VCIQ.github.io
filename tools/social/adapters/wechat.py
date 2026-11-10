@@ -11,7 +11,7 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 from ..contracts import ContractError, assert_safe, content_hash, digest, validate
 from ..query_compile import search_url
 from ..scheduler import utc
-from .wechat_transport import FetchError, checked_url, decode_url, destination_failure_class
+from .wechat_transport import FetchError, Response, checked_url, decode_url, destination_failure_class
 
 REASONS = {"auth_required": "auth", "verification_required": "verification", "rate_limited": "rate_limit",
            "network_error": "network", "timeout": "timeout", "schema_error": "schema",
@@ -72,15 +72,17 @@ def _search_page(provider: str, body: str, url: str) -> tuple[list[dict], bool |
     return rows, more
 
 
-def _resolve(row_url: str, transport) -> str:
+def _resolve(row_url: str, transport) -> tuple[str, Response | None]:
     url = checked_url(row_url)
     if urlsplit(url).hostname == "mp.weixin.qq.com":
-        return url
+        return url, None
     if urlsplit(url).hostname != "weixin.sogou.com" or urlsplit(url).path != "/link":
         raise FetchError("schema_error", "UNSUPPORTED_RESULT_LINK")
     response = transport.get(url)
     if urlsplit(response.url).hostname == "mp.weixin.qq.com":
-        return checked_url(response.url)
+        # The transport followed an allowed HTTP redirect and already read
+        # the original. Reuse that body instead of spending another debit.
+        return checked_url(response.url), response
     _blocked(response.body)
     # Only concatenate literal redirect strings. Never evaluate the site's JavaScript.
     chunks = re.findall(r'''(?:var\s+)?(?:url|jump_url)\s*\+=\s*['"](.*?)['"]\s*;?''', response.body, re.I | re.S)
@@ -91,7 +93,10 @@ def _resolve(row_url: str, transport) -> str:
         target = decode_url(match.group()) if match else ""
     if not target:
         raise FetchError("schema_error", "ORIGINAL_LINK_UNRESOLVED")
-    return checked_url(target)
+    target = checked_url(target)
+    if urlsplit(target).hostname != "mp.weixin.qq.com":
+        raise FetchError("schema_error", "ORIGINAL_LINK_UNRESOLVED")
+    return target, None
 
 
 def _safe_result_resolution_error(exc: FetchError, original_result_url: str) -> FetchError:
@@ -227,8 +232,9 @@ def run_job(job: dict, context: dict, transport, *, now=lambda: datetime.now(UTC
                 counts["rawRows"] += 1
                 direct = ""
                 try:
-                    direct = _resolve(row["url"], transport)
-                    body_response = transport.get(direct)
+                    direct, body_response = _resolve(row["url"], transport)
+                    if body_response is None:
+                        body_response = transport.get(direct)
                     record = _normalize_original(job, context, body_response.url, body_response.body, now())
                     if record["signalId"] in seen:
                         counts["duplicateRows"] += 1
