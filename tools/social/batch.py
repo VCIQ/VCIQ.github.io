@@ -15,7 +15,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from uuid import uuid4
 
-from .contracts import ContractError, canonical_bytes, digest, validate
+from .contracts import OPERATOR_HTML, ContractError, canonical_bytes, digest, validate
 from .guard import GuardError, output_path, state_path
 from .scheduler import instant
 
@@ -147,6 +147,8 @@ def cross_validate(manifest, jobs, receipts, observations):
             raise BatchError("batch_observation_job_mismatch")
         if not set(observation["matchedTerms"]).issubset(observation["queryTerms"]):
             raise BatchError("batch_matched_terms")
+        if job["provider"] == OPERATOR_HTML and observation["accessStatus"] != "unverified":
+            raise BatchError("operator_html_access_status")
         window = job["window"]
         day = observation["publishedAt"][:10] if observation["publishedAt"] else None
         if window["filterMode"] == "post_filter" and (not day or window["from"] and day < window["from"] or window["to"] and day > window["to"]):
