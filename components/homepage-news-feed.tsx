@@ -306,6 +306,35 @@ function shareHomepageItem(item: LiveIntelligenceEvent) {
   );
 }
 
+function ReviewedWechatSection({ rows, query }: {
+  rows: ReturnType<typeof parseInnovationWechatMedia>;
+  query: string;
+}) {
+  const term = query.trim().toLowerCase();
+  const visible = rows.filter(({ title, publisher }) =>
+    `${title} ${publisher}`.toLowerCase().includes(term)).slice(0, 5);
+  if (!visible.length) return null;
+
+  return (
+    <section className={styles.feedList} aria-label="微信公众号线索">
+      <div className={styles.feedHeading}>
+        <div><strong>微信公众号线索</strong></div>
+        <Link href="/innovation-capital/#wechat-media">查看全部</Link>
+      </div>
+      {visible.map((item) => (
+        <article className={`${styles.feedCard} ${styles.standardCard}`} key={item.url}>
+          <div className={styles.cardBody}>
+            <p className={styles.cardMeta}>
+              <time dateTime={item.publishedAt}>{item.publishedAt}</time> · {item.publisher}
+            </p>
+            <h2><a href={item.url} target="_blank" rel="noopener noreferrer">{item.title} ↗</a></h2>
+          </div>
+        </article>
+      ))}
+    </section>
+  );
+}
+
 export function HomepageNewsFeed({
   initialPayload,
   bootstrap,
@@ -410,10 +439,6 @@ export function HomepageNewsFeed({
     ? liveLatestPublishedAt
     : bootstrap.latestPublishedAt || liveLatestPublishedAt;
   const normalizedQuery = query.trim().toLowerCase();
-  const visibleWechatMedia = channel === "innovation" && region !== "美国"
-    ? reviewedWechatMedia.filter(({ title, publisher }) =>
-      `${title} ${publisher}`.toLowerCase().includes(normalizedQuery)).slice(0, 5)
-    : [];
 
   const visibleArticles = useMemo(() => {
     if (channel === "focus") {
@@ -698,23 +723,8 @@ export function HomepageNewsFeed({
             </p>
           </div>
 
-          {visibleWechatMedia.length ? (
-            <section className={styles.feedList} aria-label="微信公众号线索">
-              <div className={styles.feedHeading}>
-                <div><strong>微信公众号线索</strong></div>
-                <Link href="/innovation-capital/#wechat-media">查看全部</Link>
-              </div>
-              {visibleWechatMedia.map((item) => (
-                <article className={`${styles.feedCard} ${styles.standardCard}`} key={item.url}>
-                  <div className={styles.cardBody}>
-                    <p className={styles.cardMeta}>
-                      <time dateTime={item.publishedAt}>{item.publishedAt}</time> · {item.publisher}
-                    </p>
-                    <h2><a href={item.url} target="_blank" rel="noopener noreferrer">{item.title} ↗</a></h2>
-                  </div>
-                </article>
-              ))}
-            </section>
+          {channel === "innovation" && region !== "美国" ? (
+            <ReviewedWechatSection rows={reviewedWechatMedia} query={query} />
           ) : null}
 
           <div className={styles.feedList}>
