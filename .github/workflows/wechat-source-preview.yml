@@ -1,0 +1,48 @@
+name: WeChat source preview
+run-name: WeChat source preview (${{ inputs.mode || 'publisher' }})
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/wechat-source-preview.yml'
+      - 'tools/wechat_collection_preview.py'
+  schedule:
+    - cron: '31 2 * * *'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Collect publisher candidates or verify one approved original'
+        type: choice
+        options: [publisher, verify-original]
+        default: publisher
+
+permissions:
+  contents: read
+
+concurrency:
+  group: wechat-source-preview
+  cancel-in-progress: false
+
+jobs:
+  preview:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check source and collect review metadata
+        env:
+          PREVIEW_MODE: ${{ inputs.mode || 'publisher' }}
+        run: python -m tools.wechat_collection_preview "$PREVIEW_MODE" "$RUNNER_TEMP/wechat-source-preview.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: wechat-source-preview
+          path: ${{ runner.temp }}/wechat-source-preview.json
+          retention-days: 7

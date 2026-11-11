@@ -5,9 +5,11 @@ import {
 } from "@/components/homepage-news-feed";
 import { HomepageTopicBriefs } from "@/components/homepage-topic-briefs";
 import { HomepageTrackingActions } from "@/components/homepage-tracking-actions";
+import rawWechatMedia from "@/config/innovation_wechat_media.json";
 import unifiedStyles from "@/components/homepage-unified-inbox.module.css";
 import { applyArticleMetadataReviews } from "@/lib/article-metadata-reviews";
 import { admitHomepageEvents } from "@/lib/homepage-publication-quality";
+import { parseInnovationWechatMedia } from "@/lib/innovation-wechat-media";
 import { companies } from "@/lib/catalog-data";
 import { getChannelUpdateDirectory } from "@/lib/channel-updates";
 import { companyEntities } from "@/lib/company-entity-registry";
@@ -48,6 +50,7 @@ import rawInnovationCapitalFeed from "@/public/data/innovation-capital-feed.json
 import rawRankedIntelligence from "@/public/data/ranked-intelligence.json";
 
 const INITIAL_KEY_EVENTS_LIMIT = 36;
+const reviewedWechatMedia = parseInnovationWechatMedia(rawWechatMedia);
 const snapshot = applyArticleMetadataReviews(
   mergeRankedIntelligenceIntoArticlePayload(
     rawArticles as unknown as ArticlePayload,
@@ -236,6 +239,7 @@ export default function Home() {
           investorChannelEvents={investorEvents}
           peopleChannelEvents={peopleChannelEvents}
           companyChannelEvents={companyChannelEvents}
+          reviewedWechatMedia={reviewedWechatMedia}
         />
         <HomepageTopicBriefs />
         <DailyBriefQuickActions

@@ -14,6 +14,7 @@ import {
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { admitHomepageEvents } from "@/lib/homepage-publication-quality";
+import type { parseInnovationWechatMedia } from "@/lib/innovation-wechat-media";
 import { EventQualityIndicator } from "@/components/event-quality-indicator";
 import { useFavorites } from "@/components/use-favorites";
 import { useHomepagePreferences } from "@/components/use-homepage-preferences";
@@ -311,12 +312,14 @@ export function HomepageNewsFeed({
   peopleChannelEvents,
   companyChannelEvents,
   investorChannelEvents,
+  reviewedWechatMedia,
 }: {
   initialPayload: ArticlePayload;
   bootstrap: HomepageFeedBootstrap;
   peopleChannelEvents: LiveIntelligenceEvent[];
   companyChannelEvents: LiveIntelligenceEvent[];
   investorChannelEvents: LiveIntelligenceEvent[];
+  reviewedWechatMedia: ReturnType<typeof parseInnovationWechatMedia>;
 }) {
   const { articles: archiveArticles, refreshAudit, isLive } = useArticles(initialPayload);
   // Preserve the same committed official-source evidence when /data/articles.json
@@ -407,6 +410,10 @@ export function HomepageNewsFeed({
     ? liveLatestPublishedAt
     : bootstrap.latestPublishedAt || liveLatestPublishedAt;
   const normalizedQuery = query.trim().toLowerCase();
+  const visibleWechatMedia = channel === "innovation" && region !== "美国"
+    ? reviewedWechatMedia.filter(({ title, publisher }) =>
+      `${title} ${publisher}`.toLowerCase().includes(normalizedQuery)).slice(0, 5)
+    : [];
 
   const visibleArticles = useMemo(() => {
     if (channel === "focus") {
@@ -690,6 +697,25 @@ export function HomepageNewsFeed({
               ) : null}
             </p>
           </div>
+
+          {visibleWechatMedia.length ? (
+            <section className={styles.feedList} aria-label="微信公众号线索">
+              <div className={styles.feedHeading}>
+                <div><strong>微信公众号线索</strong></div>
+                <Link href="/innovation-capital/#wechat-media">查看全部</Link>
+              </div>
+              {visibleWechatMedia.map((item) => (
+                <article className={`${styles.feedCard} ${styles.standardCard}`} key={item.url}>
+                  <div className={styles.cardBody}>
+                    <p className={styles.cardMeta}>
+                      <time dateTime={item.publishedAt}>{item.publishedAt}</time> · {item.publisher}
+                    </p>
+                    <h2><a href={item.url} target="_blank" rel="noopener noreferrer">{item.title} ↗</a></h2>
+                  </div>
+                </article>
+              ))}
+            </section>
+          ) : null}
 
           <div className={styles.feedList}>
             {displayedArticles.length ? (
