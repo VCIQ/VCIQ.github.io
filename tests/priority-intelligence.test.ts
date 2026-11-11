@@ -25,3 +25,18 @@ test("priority contract rejects replayed future clocks, duplicate IDs and oversi
   raw = fixture(); raw.items.push(raw.items[0]); assert.throws(() => parsePriorityIntelligence(raw, now));
   raw = fixture(); raw.items = Array(73).fill(raw.items[0]); assert.throws(() => parsePriorityIntelligence(raw, now));
 });
+
+test("priority evidence is preserved on an exact archived material and restricted to reviewed sibling URLs", () => {
+  const raw = fixture();
+  raw.items[0].source.url = "https://newsroom.amd.com/news/amd-acquire-world-labs/";
+  const evidence = { sourceId: "mittrchina-public-news", url: "https://www.mittrchina.com/news/detail/17028",
+    level: "媒体报道", name: "MIT Technology Review China", platform: "媒体", title: "AMD news", publishedAt: "2026-09-29" };
+  Object.assign(raw.items[0], { relatedSources: [evidence, { ...evidence, url: "https://www.mittrchina.com/news/detail/other" }] });
+  const items = parsePriorityIntelligence(raw, now).items;
+  assert.deepEqual(items[0].relatedSources?.map(({ url }) => url), [evidence.url]);
+  const archive = { ...items[0], id: "canonical", relatedSources: undefined, title: "Reviewed title", curated: true };
+  assert.equal(mergePriorityCandidates([archive], items, true)[0].title, archive.title);
+  assert.equal(mergePriorityCandidates([archive], items, true)[0].relatedSources?.[0].url, evidence.url);
+  Object.assign(raw.items[0], { relatedSources: [{ ...evidence, url: "https://example.com/article" }] });
+  assert.throws(() => parsePriorityIntelligence(raw, now));
+});
