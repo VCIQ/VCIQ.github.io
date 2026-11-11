@@ -4,8 +4,10 @@ import { Building2, Landmark, Radar, Route, ShieldCheck } from "lucide-react";
 import watchlist from "@/config/innovation_listing_watchlist.json";
 import checks from "@/config/innovation_project_checks.json";
 import lifecycle from "@/config/innovation_listing_lifecycle.json";
+import wechatMediaSnapshot from "@/config/innovation_wechat_media.json";
 import { buildInnovationOpportunityPool } from "@/lib/innovation-capital-opportunity";
 import { buildInnovationCapitalResearchModel } from "@/lib/innovation-capital-research";
+import { parseInnovationWechatMedia } from "@/lib/innovation-wechat-media";
 import { InnovationDirectory } from "./innovation-directory";
 import { InnovationListingLifecycle } from "./innovation-listing-lifecycle";
 import { InnovationOpportunityPool } from "./innovation-opportunity-pool";
@@ -18,6 +20,8 @@ export const metadata: Metadata = {
   title: "科创频道",
   description: "以项目变化与可核验证据为核心，连接六家券商拟上市储备、全球重点科创投资机构、投资人观点与项目结果研究。",
 };
+
+const wechatMedia = parseInnovationWechatMedia(wechatMediaSnapshot);
 
 export default function InnovationCapitalPage() {
   const projects = watchlist.projects;
@@ -73,6 +77,7 @@ export default function InnovationCapitalPage() {
 
       <nav className="hero-chips" aria-label="科创研究视图">
         <a href="#recorded-changes">最近记录的项目节点</a>
+        <a href="#wechat-media">微信公众号线索</a>
         <a href="#project-reserves">拟上市项目储备</a>
         <a href="#listing-lifecycle-view">上市生命周期</a>
         <a href="#global-investors">全球重点投资机构</a>
@@ -97,6 +102,20 @@ export default function InnovationCapitalPage() {
           </article>)}
         </div>
         <p className={styles.scopeNote}>本轮依据证监会批复将朗高科技更新为同意注册，并回读宇树科技、摩尔线程、沐曦股份的历史上市公告。蓝箭航天、中科宇航、超颖电子及纳真科技仍待补充原件或当前审核字段；检索进展与读取限制在项目卡片单列。</p>
+      </section>
+
+      <section className={styles.researchSection} id="wechat-media" aria-labelledby="wechat-media-heading">
+        <div className={styles.sectionHeader}>
+          <div><span>WECHAT MEDIA</span><h2 id="wechat-media-heading">微信公众号线索</h2></div>
+          <p>这里展示已人工核对原文的公开报道，供跟进研究。报道所述事件仍需独立证据核实。</p>
+        </div>
+        {wechatMedia.length ? <div className={styles.methodGrid}>
+          {wechatMedia.map((item) => <article key={item.url}>
+            <small><time dateTime={item.publishedAt}>{item.publishedAt}</time> · {item.publisher}</small>
+            <h3>{item.title}</h3>
+            <a href={item.url} target="_blank" rel="noopener noreferrer">查看微信原文 ↗</a>
+          </article>)}
+        </div> : <p className={styles.scopeNote}>暂无已发布的微信线索。</p>}
       </section>
 
       <div id="project-reserves"><InnovationDirectory /></div>
