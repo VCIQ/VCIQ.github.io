@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-11T02:26:52+00:00",
-  "personCount": 174,
-  "taskCount": 408,
-  "openTaskCount": 408,
+  "generatedAt": "2026-11-12T03:38:37+00:00",
+  "personCount": 175,
+  "taskCount": 410,
+  "openTaskCount": 409,
   "people": {
     "ali-ghodsi": {
       "personName": "Ali Ghodsi",
@@ -651,6 +651,103 @@
       ],
       "openCount": 2
     },
+    "demis-hassabis": {
+      "personName": "Demis Hassabis",
+      "tasks": [
+        {
+          "id": "person-research-1f74fc390c59",
+          "taskType": "viewpoint_verification",
+          "priority": "P0",
+          "target": "Gemini",
+          "question": "Demis Hassabis 在“Gemini”上的观点反转是否真实存在，还是标题措辞/上下文截取造成的表面变化？",
+          "objective": "回到原始视频、全文、论文或本人发文核验前后语境；任务关闭前不把候选变化升级为确定结论。",
+          "preferredEvidence": [
+            "原始演讲/访谈视频",
+            "完整文字稿",
+            "本人论文/发文",
+            "机构发布的完整问答"
+          ],
+          "searchQueries": [
+            "Demis Hassabis Gemini",
+            "Demis Hassabis Gemini 完整访谈",
+            "Demis Hassabis Gemini full interview"
+          ],
+          "successCriteria": "必须取得包含相关表述上下文的一手材料，并能与较早同主题一手材料直接比较；仅有媒体标题不得标记 supported。",
+          "evidenceBasis": [
+            {
+              "title": "Demis Hassabis：Our latest frontier model Gemini 4 Carbon is rolling out today! Amazing progress from Gemini 3 → Gemini 4 in less than a year… Carbon reverse engineer",
+              "url": "https://x.com/demishassabis/status/2120210297948696997",
+              "source": "Demis Hassabis on X",
+              "date": "2026-11-10"
+            },
+            {
+              "title": "Demis Hassabis：Very excited to announce Gemini 4 Argon, our new Frontier AI model, and a huge step forward across key capabilities. We’re focused on rolling it out r",
+              "url": "https://x.com/demishassabis/status/2105417239432200636",
+              "source": "Demis Hassabis on X",
+              "date": "2026-09-30"
+            }
+          ],
+          "candidateEvidence": [],
+          "status": "open"
+        },
+        {
+          "id": "person-research-665a6c0048b2",
+          "taskType": "execution_verification",
+          "priority": "P1",
+          "target": "Google DeepMind · Gemini",
+          "question": "Demis Hassabis 的最新公开事件涉及“Gemini”后，Google DeepMind 是否出现独立的产品、技术、组织或商业执行证据？",
+          "objective": "把“人物表达”与“组织执行”分开验证；人物观点本身不自动等同于公司战略或产品落地。",
+          "preferredEvidence": [
+            "公司官方公告/博客",
+            "产品或技术官方发布",
+            "监管文件",
+            "公司官方开发者/研究页面"
+          ],
+          "searchQueries": [],
+          "successCriteria": "至少存在 1 条独立于人物表述、且 URL 不与人物证据重合的一手/官方组织来源，同时直接命中组织与目标技术/产品；第三方报道或同一来源复用只能形成 candidate_found。",
+          "evidenceBasis": [
+            {
+              "title": "Demis Hassabis：Our latest frontier model Gemini 4 Carbon is rolling out today! Amazing progress from Gemini 3 → Gemini 4 in less than a year… Carbon reverse engineer",
+              "url": "https://x.com/demishassabis/status/2120210297948696997",
+              "source": "Demis Hassabis on X",
+              "date": "2026-11-10"
+            }
+          ],
+          "candidateEvidence": [
+            {
+              "title": "Google DeepMind：Gemini Robotics 2.5 is here. 🤖 Our latest physical AI is able to learn hundreds of everyday skills - from folding laundry and serving pastries to auto",
+              "url": "https://x.com/GoogleDeepMind/status/2120169787896525104",
+              "source": "Google DeepMind on X",
+              "sourceLevel": "原始材料",
+              "date": "2026-11-10"
+            },
+            {
+              "title": "Introducing Gemini 3.8 Live with Live Avatar",
+              "url": "https://deepmind.google/blog/introducing-gemini-38-live-with-live-avatar",
+              "source": "Google DeepMind",
+              "sourceLevel": "媒体报道",
+              "date": "2026-09-24"
+            },
+            {
+              "title": "Introducing Gemini 3.8 Live and 3.8 Live Extended Thinking",
+              "url": "https://deepmind.google/blog/introducing-gemini-3-8-live-and-3-8-live-extended-thinking",
+              "source": "Google DeepMind",
+              "sourceLevel": "媒体报道",
+              "date": "2026-09-15"
+            },
+            {
+              "title": "Introducing Gemini 3.8 Flash and 3.8 Flash Cyber",
+              "url": "https://deepmind.google/blog/introducing-gemini-3-8-flash-and-38-flash-cyber",
+              "source": "Google DeepMind",
+              "sourceLevel": "媒体报道",
+              "date": "2026-09-02"
+            }
+          ],
+          "status": "supported"
+        }
+      ],
+      "openCount": 1
+    },
     "dominic-madori-davis": {
       "personName": "Dominic-Madori Davis",
       "tasks": [
@@ -723,13 +820,20 @@
           "successCriteria": "至少存在 1 条独立于人物表述、且 URL 不与人物证据重合的一手/官方组织来源，同时直接命中组织与目标技术/产品；第三方报道或同一来源复用只能形成 candidate_found。",
           "evidenceBasis": [
             {
-              "title": "Elon Musk praises Chinese automakers as Tesla competes in China",
-              "url": "https://technode.com/2026/11/09/elon-musk-praises-chinese-automakers-as-tesla-competes-in-china",
-              "source": "TechNode",
-              "date": "2026-11-09"
+              "title": "埃隆·马斯克：Tesla Megapacks are designed to ensure grid stability, so that you never have a blackout",
+              "url": "https://x.com/elonmusk/status/2120589832963711162",
+              "source": "埃隆·马斯克 on X",
+              "date": "2026-11-11"
             }
           ],
           "candidateEvidence": [
+            {
+              "title": "埃隆·马斯克：Tesla Megapacks are designed to ensure grid stability, so that you never have a blackout",
+              "url": "https://x.com/elonmusk/status/2120589832963711162",
+              "source": "埃隆·马斯克 on X",
+              "sourceLevel": "原始材料",
+              "date": "2026-11-11"
+            },
             {
               "title": "【产业观察】人形机器人必学英文词汇：从 Humanoid Robot 到 Embodied AI，一文看懂机器人行业核心术语",
               "url": "https://mp.weixin.qq.com/s?src=11&timestamp=1793153103&ver=7053&signature=ujyRFkSM3HQL4hCvO6MS3DBisA5Osp6Rl0ggs94SlD5Ex9X2XZCUbhshH4BRCoF0J%2AK%2A4fdXjFb7fMUukL5I-GQQCbNcP0S19CpX9NIXheXol0jG34e%2AeFvONgJnkU4P&new=1",
@@ -743,13 +847,6 @@
               "source": "Notebookcheck",
               "sourceLevel": "媒体报道",
               "date": "2026-08-26"
-            },
-            {
-              "title": "Elon Musk praises Chinese automakers as Tesla competes in China",
-              "url": "https://technode.com/2026/11/09/elon-musk-praises-chinese-automakers-as-tesla-competes-in-china",
-              "source": "TechNode",
-              "sourceLevel": "媒体报道",
-              "date": "2026-11-09"
             }
           ],
           "status": "candidate_found"
