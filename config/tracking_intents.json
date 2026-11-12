@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-12T03:42:21+00:00",
+  "updatedAt": "2026-11-12T03:43:49+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -23320,6 +23320,36 @@
       "resolutionStatus": "resolved",
       "createdAt": "2026-11-12T03:42:21+00:00",
       "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-0277c5c60d8c2e61b677",
+      "kind": "technology",
+      "name": "Nighthawk r3",
+      "aliases": [],
+      "keywords": [
+        "量子处理器"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-11-12T03:43:49+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "source-3ceb251fb9f8808fc62c",
+      "kind": "source",
+      "name": "待交叉验证 · cnbeta.com.tw",
+      "aliases": [],
+      "keywords": [],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-11-12T03:43:49+00:00",
+      "createdBy": "VCIQ",
+      "url": "https://www.msn.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球"
     }
   ],
   "memberships": [
@@ -135791,6 +135821,100 @@
         "source": "source-context",
         "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
         "decisionKey": "长江存储",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-e83d6ca7f8607eb1b9c4",
+      "trackId": "track:quantum",
+      "entityId": "technology-0277c5c60d8c2e61b677",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-56301a279b00976a3d80",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-12T03:43:49+00:00",
+          "evidenceUrl": "https://www.msn.com/zh-cn/channel/source/cnBeta.COM/sr-vid-yigrey3aqwvu8msgcwqkicf3gvj43va4rtcwf4wgrgici2gi2eps",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-d1c0223f60dc2b3e4f3d19ed",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-12T03:43:49+00:00",
+        "trackId": "track:quantum",
+        "entityId": "technology-0277c5c60d8c2e61b677",
+        "requestedName": "Nighthawk r3",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "Nighthawk r3",
+        "targetId": "topic:nighthawkr3",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "nighthawkr3",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-7d171d6730b509648d81",
+      "trackId": "track:quantum",
+      "entityId": "source-3ceb251fb9f8808fc62c",
+      "role": "source-anchor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-e45f19bc56b734c5fa33",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-12T03:43:49+00:00",
+          "evidenceUrl": "https://www.msn.com/",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-6e57d69488e8e2646d2b26b1",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-12T03:43:49+00:00",
+        "trackId": "track:quantum",
+        "entityId": "source-3ceb251fb9f8808fc62c",
+        "requestedName": "待交叉验证 · cnbeta.com.tw",
+        "kind": "source"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "source",
+        "entityType": "source",
+        "canonicalName": "待交叉验证 · cnbeta.com.tw",
+        "targetId": "source-3ceb251fb9f8808fc62c",
+        "confidence": "verified",
+        "source": "authenticated-manual-intent",
+        "reason": "由 allowlist 内的管理员显式提交。",
+        "decisionKey": "待交叉验证cnbetacomtw",
         "reclassified": false
       },
       "executionState": "applied"
