@@ -5,6 +5,7 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 from tools import toutiao_public_feed as feed
+from tools import update_source_health
 
 
 class ToutiaoPublicFeedTests(unittest.TestCase):
@@ -78,6 +79,65 @@ class ToutiaoPublicFeedTests(unittest.TestCase):
             "https://www.toutiao.com/group/1234567890/",
         )
         self.assertEqual(articles[0]["source"]["platform"], "今日头条")
+
+    def test_successful_empty_and_keyword_miss_are_not_transport_errors(self) -> None:
+        spec = {
+            "id": "track-ai-toutiao", "name": "AI · 今日头条",
+            "categories": ["news_tech"], "maxItems": 4,
+            "keywords": ["unmatched"],
+        }
+        valid_but_unmatched = {
+            "item_id": "1234567890", "title": "国产大模型发布最新推理能力",
+            "behot_time": 1720000000,
+        }
+        for rows in ([], [valid_but_unmatched]):
+            with self.subTest(scanned=len(rows)):
+                crawler = self._crawler()
+                crawler._matches_keywords = lambda *_args, **_kwargs: False
+                with patch.object(feed, "_fetch_category", return_value=rows):
+                    articles, status = feed.crawl_toutiao_source(spec, "unused", crawler)
+                self.assertEqual(articles, [])
+                self.assertEqual(status["scanned"], len(rows))
+                self.assertEqual(status["status"], "empty")
+                self.assertEqual(status["failed"], 0)
+                self.assertIsNone(status["error"])
+                unhealthy, reason = update_source_health._classification(
+                    {**status, "platform": "今日头条"},
+                    update_source_health.DEFAULT_POLICY,
+                )
+                self.assertFalse(unhealthy, reason)
+
+    def test_failed_category_without_matches_remains_an_error(self) -> None:
+        spec = {
+            "id": "track-ai-toutiao", "name": "AI · 今日头条",
+            "categories": ["news_tech", "__all__"], "maxItems": 4,
+            "keywords": [],
+        }
+        with patch.object(feed, "_fetch_category", side_effect=[OSError("offline"), []]):
+            articles, status = feed.crawl_toutiao_source(spec, "unused", self._crawler())
+        self.assertEqual(articles, [])
+        self.assertEqual(status["status"], "error")
+        self.assertEqual(status["failed"], 1)
+        self.assertEqual(status["scanned"], 0)
+        self.assertIn("OSError", status["error"])
+
+    def test_partial_response_preserves_actual_request_failure(self) -> None:
+        spec = {
+            "id": "track-ai-toutiao", "name": "AI · 今日头条",
+            "categories": ["news_tech", "__all__"], "maxItems": 4,
+            "keywords": [],
+        }
+        row = {
+            "item_id": "1234567890", "title": "国产大模型发布最新推理能力",
+            "behot_time": 1720000000,
+        }
+        with patch.object(feed, "_fetch_category", side_effect=[OSError("offline"), [row]]):
+            articles, status = feed.crawl_toutiao_source(spec, "unused", self._crawler())
+        self.assertEqual(len(articles), 1)
+        self.assertEqual(status["status"], "partial")
+        self.assertEqual(status["failed"], 1)
+        self.assertEqual(status["scanned"], 1)
+        self.assertIn("OSError", status["error"])
 
 
 if __name__ == "__main__":
