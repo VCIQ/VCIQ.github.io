@@ -6,6 +6,7 @@ test("shareable short and complete long WeChat article forms remain usable", () 
   for (const url of [
     "https://mp.weixin.qq.com/s/hNvk76l8FzVEhglIQqebJg",
     "https://mp.weixin.qq.com/s?__biz=Mzk0&mid=2247496030&idx=1&sn=abc&chksm=xyz",
+    "https://mp.weixin.qq.com/s?__biz=Mzk0&mid=2247496030&idx=1",
     "https://mp.weixin.qq.com/s/hNvk76l8FzVEhglIQqebJg?scene=1",
   ]) {
     assert.equal(classifyWeChatArticleUrl(url), "durable");
@@ -18,6 +19,7 @@ test("search-index signed and malformed WeChat links are not presented as live s
     "https://mp.weixin.qq.com/s?new=1&signature=abc%2Adef&src=11&timestamp=1794138303&ver=7076",
     "https://mp.weixin.qq.com/s?__biz=Mzk0&mid=2247496030&idx=1&sn=abc&signature=s",
     "https://mp.weixin.qq.com/s?__biz=Mzk0&mid=2247496030",
+    "https://mp.weixin.qq.com/s?__biz=Mzk0&mid=2247496030&idx=1&sn=",
     "http://mp.weixin.qq.com/s/hNvk76l8FzVEhglIQqebJg",
   ]) {
     assert.equal(isNonDurableWeChatArticleUrl(url), true);

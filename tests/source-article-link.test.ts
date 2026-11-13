@@ -37,3 +37,16 @@ test("block link fallback preserves valid flow content", () => {
   assert.match(html, /<div>事件摘要<\/div>/u);
   assert.doesNotMatch(html, /<a /u);
 });
+
+test("channel source fallback preserves existing inspection data attributes", () => {
+  const html = renderToStaticMarkup(createElement(SourceArticleLink, {
+    href: "https://mp.weixin.qq.com/s?new=1&signature=abc&timestamp=1794138303",
+    fallbackAs: "div",
+    "data-intelligence-item": "true",
+    "data-intelligence-title": "保留原文元数据",
+  }, createElement("h2", null, "待复核")));
+  assert.match(html, /^<div /u);
+  assert.match(html, /data-intelligence-item="true"/u);
+  assert.match(html, /data-intelligence-title="保留原文元数据"/u);
+  assert.doesNotMatch(html, /<a /u);
+});

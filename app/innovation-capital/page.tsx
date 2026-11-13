@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SourceArticleLink } from "@/components/source-article-link";
 import { Building2, Landmark, Radar, Route, ShieldCheck } from "lucide-react";
 import watchlist from "@/config/innovation_listing_watchlist.json";
 import checks from "@/config/innovation_project_checks.json";
@@ -113,7 +114,7 @@ export default function InnovationCapitalPage() {
           {wechatMedia.map((item) => <article key={item.url}>
             <small><time dateTime={item.publishedAt}>{item.publishedAt}</time> · {item.publisher}</small>
             <h3>{item.title}</h3>
-            <a href={item.url} target="_blank" rel="noopener noreferrer">查看微信原文 ↗</a>
+            <SourceArticleLink href={item.url}>查看微信原文 ↗</SourceArticleLink>
           </article>)}
         </div> : <p className={styles.scopeNote}>暂无已发布的微信线索。</p>}
       </section>

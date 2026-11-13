@@ -329,7 +329,7 @@ function ReviewedWechatSection({ rows, query }: {
             <p className={styles.cardMeta}>
               <time dateTime={item.publishedAt}>{item.publishedAt}</time> · {item.publisher}
             </p>
-            <h2><a href={item.url} target="_blank" rel="noopener noreferrer">{item.title} ↗</a></h2>
+            <h2><SourceArticleLink href={item.url}>{item.title} ↗</SourceArticleLink></h2>
           </div>
         </article>
       ))}

@@ -26,11 +26,15 @@ export function classifyWeChatArticleUrl(input: string): WeChatLinkKind {
       ["src", "ver", "new"].every((key) => keys.includes(key))) return "temporary";
   if (SHORT_CODE.test(url.pathname)) return "durable";
   if (url.pathname !== "/s") return "unverified";
-  const identity = ["__biz", "mid", "idx", "sn"];
+  // A publisher-reviewed long-form link can have __biz/mid/idx without sn.
+  // This is only a *structural* URL classification, not access verification.
+  const identity = ["__biz", "mid", "idx"];
   if (!identity.every((key) => url.searchParams.getAll(key).length === 1 &&
       Boolean(url.searchParams.get(key)))) return "unverified";
   if (!/^\d+$/u.test(url.searchParams.get("mid") ?? "") ||
       !/^\d+$/u.test(url.searchParams.get("idx") ?? "")) return "unverified";
+  if (url.searchParams.has("sn") && (url.searchParams.getAll("sn").length !== 1 ||
+      !url.searchParams.get("sn"))) return "unverified";
   return "durable";
 }
 

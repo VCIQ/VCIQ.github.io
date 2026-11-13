@@ -11,7 +11,9 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { SourceArticleLink } from "@/components/source-article-link";
+import { isNonDurableWeChatArticleUrl } from "@/lib/wechat-link-policy";
 import {
   HomepageSortToggle,
   type HomepageSortMode,
@@ -155,11 +157,10 @@ function IntelligenceFavoriteCard({
 
   return (
     <article className="favorite-intelligence-card">
-      <a
+      <SourceArticleLink
         className="favorite-intelligence-link"
         href={item.href}
-        target="_blank"
-        rel="noreferrer"
+        fallbackAs="div"
         aria-label={`打开原始情报：${item.title}`}
       >
         <div className="event-date">
@@ -195,11 +196,23 @@ function IntelligenceFavoriteCard({
             <span>原始情报 ↗</span>
           )}
         </div>
-      </a>
+      </SourceArticleLink>
 
       <FavoriteCardActions item={item} onRemove={onRemove} />
     </article>
   );
+}
+
+function SafeFavoriteCardLink({ item, children }: { item: FavoriteItem; children: ReactNode }) {
+  if (isNonDurableWeChatArticleUrl(item.href)) {
+    return (
+      <SourceArticleLink href={item.href} className="favorite-card-main" fallbackAs="div">
+        {children}
+      </SourceArticleLink>
+    );
+  }
+  // Preserve normal internal routing and existing valid external link behavior.
+  return <Link href={item.href} className="favorite-card-main">{children}</Link>;
 }
 
 export function FavoritesPage() {
@@ -402,7 +415,7 @@ export function FavoritesPage() {
                   <span className="favorite-card-index">
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  <Link href={item.href} className="favorite-card-main">
+                  <SafeFavoriteCardLink item={item}>
                     <div className="favorite-card-meta">
                       <span>{item.channelLabel}</span>
                       <time>{new Date(item.savedAt).toLocaleDateString("zh-CN")}</time>
@@ -419,7 +432,7 @@ export function FavoritesPage() {
                         <span>{item.sources.length} 个参考信源</span>
                       ) : null}
                     </div>
-                  </Link>
+                  </SafeFavoriteCardLink>
                   <FavoriteCardActions item={item} onRemove={handleRemove} />
                 </article>
               ),

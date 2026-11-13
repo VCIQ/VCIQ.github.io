@@ -37,6 +37,40 @@ class CrawlWithWechatRegistryIntegrationTests(unittest.TestCase):
             "source": {"platform": "新闻", "url": temporary},
         }))
 
+
+    def test_historical_signed_url_requires_exact_prior_snapshot_identity(self) -> None:
+        historical = {
+            "id": "legacy-1",
+            "sourceId": "user-track-wechat-qbitai-ai",
+            "title": "旧版文章",
+            "wechatContentMode": "original-page",
+            "source": {
+                "platform": "微信",
+                "url": "https://mp.weixin.qq.com/s?new=1&signature=old&src=11&timestamp=1794138303&ver=7076",
+            },
+        }
+        incoming = {
+            **historical,
+            "id": "new-unauthorized",
+            "title": "新发现",
+        }
+        durable = {
+            **historical,
+            "id": "durable-1",
+            "source": {"platform": "微信", "url": "https://mp.weixin.qq.com/s/shareable"},
+        }
+        self.assertFalse(target._publishable_article(historical))
+        kept, count = target._retain_preexisting_signed_wechat(
+            [historical, incoming, durable], [durable], [historical]
+        )
+        self.assertEqual([row["id"] for row in kept], ["durable-1", "legacy-1"])
+        self.assertEqual(count, 1)
+        no_prior, count = target._retain_preexisting_signed_wechat(
+            [historical, incoming], [], []
+        )
+        self.assertEqual(no_prior, [])
+        self.assertEqual(count, 0)
+
     def test_main_installs_wechat_and_toutiao_routes_before_base_crawl(self) -> None:
         with ExitStack() as stack:
             search_redirects = stack.enter_context(

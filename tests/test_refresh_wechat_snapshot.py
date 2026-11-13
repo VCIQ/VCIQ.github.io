@@ -8,7 +8,7 @@ from tools import refresh_wechat_snapshot as refresh
 
 
 class RefreshWeChatSnapshotTest(unittest.TestCase):
-    def test_legacy_signed_wechat_link_is_not_retained_on_failed_refresh(self) -> None:
+    def test_legacy_signed_wechat_link_is_preserved_on_failed_refresh(self) -> None:
         transient = self._article(
             "expiring", "user-track-wechat-icbank-semiconductor",
             "https://mp.weixin.qq.com/s?new=1&signature=abc&src=11&timestamp=1794138303&ver=7076",
@@ -25,8 +25,32 @@ class RefreshWeChatSnapshotTest(unittest.TestCase):
                 "retainedPrevious": True, "platform": "微信",
             }],
         )
-        self.assertEqual([a["id"] for a in next_payload["articles"]], ["stable"])
-        self.assertEqual(next_payload["wechatIngestion"]["removedProxyRecords"], 1)
+        self.assertEqual(
+            {a["id"] for a in next_payload["articles"]}, {"stable", "expiring"}
+        )
+        self.assertEqual(next_payload["wechatIngestion"]["removedProxyRecords"], 0)
+        self.assertEqual(
+            next_payload["wechatIngestion"]["historicalSignedWeChatPreserved"], 1
+        )
+
+
+    def test_incoming_signed_url_is_rejected_but_existing_history_is_kept(self) -> None:
+        signed = self._article(
+            "new-signed", "user-track-wechat-icbank-semiconductor",
+            "https://mp.weixin.qq.com/s?new=1&signature=temp&src=11&timestamp=1794138303&ver=7076",
+        )
+        existing = self._article(
+            "old-signed", "user-track-wechat-icbank-semiconductor",
+            "https://mp.weixin.qq.com/s?new=1&signature=old&src=11&timestamp=1794138303&ver=7076",
+        )
+        next_payload = refresh.merge_wechat_snapshot(
+            {"schemaVersion": 3, "articles": [existing], "sourceStatus": []},
+            [signed],
+            [{"id": signed["sourceId"], "status": "ok", "accepted": 1, "failed": 0}],
+        )
+        self.assertEqual([a["id"] for a in next_payload["articles"]], ["old-signed"])
+        self.assertEqual(next_payload["wechatIngestion"]["acceptedArticles"], 0)
+        self.assertEqual(next_payload["wechatIngestion"]["historicalSignedWeChatPreserved"], 1)
 
     def test_pipeline_installs_title_fallback_after_redirect_compat(self) -> None:
         events: list[str] = []

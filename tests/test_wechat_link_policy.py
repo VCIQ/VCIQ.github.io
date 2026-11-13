@@ -14,7 +14,8 @@ SIGNED = (
 
 class WeChatLinkPolicyTests(unittest.TestCase):
     def test_shareable_short_and_complete_long_forms(self) -> None:
-        for url in (SHORT, LONG, SHORT + "?scene=2"):
+        for url in (SHORT, LONG, SHORT + "?scene=2",
+                    "https://mp.weixin.qq.com/s?__biz=Mzk0&mid=2247496030&idx=1"):
             with self.subTest(url=url):
                 self.assertEqual(policy.classify_wechat_article_url(url), "durable")
                 self.assertTrue(policy.is_durable_wechat_article_url(url))
@@ -33,7 +34,8 @@ class WeChatLinkPolicyTests(unittest.TestCase):
     def test_incomplete_and_invalid_identity_is_not_durable(self) -> None:
         for url in (
             "https://mp.weixin.qq.com/s?src=11&ver=7076",
-            "https://mp.weixin.qq.com/s?__biz=xyz&mid=1&idx=1",
+            "https://mp.weixin.qq.com/s?__biz=xyz&mid=1",
+            "https://mp.weixin.qq.com/s?__biz=xyz&mid=1&idx=1&sn=",
             "https://mp.weixin.qq.com/s?__biz=xyz&mid=abc&idx=1&sn=123",
             "http://mp.weixin.qq.com/s/shortcode",
             "https://mp.weixin.qq.com/s/",

@@ -4,6 +4,8 @@ import { Copy, ExternalLink, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { QRCodeSVG } from "qrcode.react";
+import { SourceArticleLink } from "@/components/source-article-link";
+import { isNonDurableWeChatArticleUrl } from "@/lib/wechat-link-policy";
 
 type ShareTarget = {
   title: string;
@@ -95,6 +97,10 @@ export function WechatShareCompat() {
     const openQrShare = (item: ShareTarget) => {
       const normalized = { ...item, url: absoluteUrl(item.url) };
       setTarget(normalized);
+      if (isNonDurableWeChatArticleUrl(normalized.url)) {
+        setNotice("原文链接待更新，暂不生成二维码或复制失效来源。");
+        return;
+      }
 
       const platform = desktopPlatform();
       if (platform) {
@@ -153,9 +159,14 @@ export function WechatShareCompat() {
 
   if (!target || typeof document === "undefined") return null;
 
+  const sourceUnavailable = isNonDurableWeChatArticleUrl(target.url);
   const platform = desktopPlatform();
 
   const copyOriginalLink = async () => {
+    if (sourceUnavailable) {
+      setNotice("原文链接待更新，暂不复制失效链接。");
+      return;
+    }
     const copied = await copyText(target.url);
     setNotice(copied ? "原始链接已复制。" : "复制失败，请点击“打开原始链接”后手动复制。");
   };
@@ -195,28 +206,34 @@ export function WechatShareCompat() {
           </div>
 
           <div className="wechat-share-qr">
-            <div>
-              <QRCodeSVG
-                value={target.url}
-                size={212}
-                level="M"
-                includeMargin
-                title={`微信扫码打开：${target.title}`}
-              />
-            </div>
-            <strong>手机微信扫码</strong>
-            <p>扫码后直接打开原始情报，再通过微信右上角菜单发送给朋友或分享到朋友圈。</p>
+            {sourceUnavailable ? (
+              <p role="status">原文链接待更新；当前没有可验证的微信二维码分享目标。</p>
+            ) : (
+              <>
+                <div>
+                  <QRCodeSVG
+                    value={target.url}
+                    size={212}
+                    level="M"
+                    includeMargin
+                    title={`微信扫码打开：${target.title}`}
+                  />
+                </div>
+                <strong>手机微信扫码</strong>
+                <p>扫码后直接打开原始情报，再通过微信右上角菜单发送给朋友或分享到朋友圈。</p>
+              </>
+            )}
           </div>
 
           <div className="wechat-share-actions">
-            <button type="button" onClick={() => void copyOriginalLink()}>
+            <button type="button" disabled={sourceUnavailable} onClick={() => void copyOriginalLink()}>
               <Copy size={15} />
               复制原始链接
             </button>
-            <a href={target.url} target="_blank" rel="noreferrer">
+            <SourceArticleLink href={target.url} unavailableText="原文链接待更新">
               <ExternalLink size={15} />
               打开原始链接
-            </a>
+            </SourceArticleLink>
           </div>
 
           {notice ? (
