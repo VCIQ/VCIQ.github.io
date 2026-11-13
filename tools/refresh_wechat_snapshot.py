@@ -17,6 +17,7 @@ try:  # Imported by tests as tools.refresh_wechat_snapshot.
     from . import wechat_fetch_compat
     from . import wechat_index_context_guard
     from . import wechat_index_record_fallback
+    from . import wechat_link_policy
     from . import wechat_original_redirect_bridge
     from . import wechat_public_aggregator
     from . import wechat_public_index_title_fallback
@@ -33,6 +34,7 @@ except ImportError:  # Executed directly with python tools/...
     import wechat_fetch_compat
     import wechat_index_context_guard
     import wechat_index_record_fallback
+    import wechat_link_policy
     import wechat_original_redirect_bridge
     import wechat_public_aggregator
     import wechat_public_index_title_fallback
@@ -100,10 +102,14 @@ def _is_wechat_record(article: dict[str, Any]) -> bool:
 
 
 def _publishable_article(article: dict[str, Any]) -> bool:
-    if not _is_wechat_record(article):
-        return True
     source = article.get("source")
     source = source if isinstance(source, dict) else {}
+    if wechat_link_policy.is_non_durable_wechat_article_url(
+        str(source.get("url", ""))
+    ):
+        return False
+    if not _is_wechat_record(article):
+        return True
     source_kind = str(
         article.get("sourceKind") or source.get("sourceKind") or ""
     )

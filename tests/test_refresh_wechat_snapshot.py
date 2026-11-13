@@ -8,6 +8,26 @@ from tools import refresh_wechat_snapshot as refresh
 
 
 class RefreshWeChatSnapshotTest(unittest.TestCase):
+    def test_legacy_signed_wechat_link_is_not_retained_on_failed_refresh(self) -> None:
+        transient = self._article(
+            "expiring", "user-track-wechat-icbank-semiconductor",
+            "https://mp.weixin.qq.com/s?new=1&signature=abc&src=11&timestamp=1794138303&ver=7076",
+        )
+        stable = self._article(
+            "stable", "user-track-wechat-icbank-semiconductor",
+            "https://mp.weixin.qq.com/s/stable-token",
+        )
+        payload = {"schemaVersion": 3, "articles": [transient, stable], "sourceStatus": []}
+        next_payload = refresh.merge_wechat_snapshot(
+            payload, [], [{
+                "id": "user-track-wechat-icbank-semiconductor",
+                "status": "error", "accepted": 0, "failed": 1,
+                "retainedPrevious": True, "platform": "微信",
+            }],
+        )
+        self.assertEqual([a["id"] for a in next_payload["articles"]], ["stable"])
+        self.assertEqual(next_payload["wechatIngestion"]["removedProxyRecords"], 1)
+
     def test_pipeline_installs_title_fallback_after_redirect_compat(self) -> None:
         events: list[str] = []
 

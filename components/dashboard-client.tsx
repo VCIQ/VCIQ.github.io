@@ -4,6 +4,7 @@ import { ArrowUpRight, Search } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState, type ReactNode } from "react";
 import { EventQualityIndicator } from "@/components/event-quality-indicator";
+import { SourceArticleLink } from "@/components/source-article-link";
 import {
   HomepageSortToggle,
   type HomepageSortMode,
@@ -510,9 +511,9 @@ export function DashboardClient({
 
 function EventTitle({ item }: { item: IntelligenceEvent }) {
   return (
-    <a href={item.source.url} target="_blank" rel="noreferrer">
+    <SourceArticleLink href={item.source.url}>
       {item.title}
-    </a>
+    </SourceArticleLink>
   );
 }
 

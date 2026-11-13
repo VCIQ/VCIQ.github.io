@@ -1,4 +1,5 @@
 import type { LiveIntelligenceEvent, RelatedArticleSource } from "@/lib/use-articles";
+import { isNonDurableWeChatArticleUrl } from "@/lib/wechat-link-policy";
 
 const NON_IDENTITY_QUERY_KEYS = new Set([
   "gclid",
@@ -56,10 +57,12 @@ export function homepageSourceEvidence(item: LiveIntelligenceEvent): {
   totalLinks: number;
   additionalLinks: RelatedArticleSource[];
 } {
-  const primary = homepageMaterialUrl(item.source.url);
+  const primary = isNonDurableWeChatArticleUrl(item.source.url)
+    ? "" : homepageMaterialUrl(item.source.url);
   const seen = new Set(primary ? [primary] : []);
   const additionalLinks: RelatedArticleSource[] = [];
   for (const source of item.relatedSources ?? []) {
+    if (isNonDurableWeChatArticleUrl(source.url)) continue;
     const key = homepageMaterialUrl(source.url);
     if (!key || seen.has(key)) continue;
     seen.add(key);

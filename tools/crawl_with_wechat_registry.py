@@ -21,6 +21,7 @@ try:  # Imported by tests as tools.crawl_with_wechat_registry.
     from . import wechat_fetch_compat
     from . import wechat_index_context_guard
     from . import wechat_index_record_fallback
+    from . import wechat_link_policy
     from . import wechat_original_redirect_bridge
     from . import wechat_public_aggregator
     from . import wechat_public_index_title_fallback
@@ -47,6 +48,7 @@ except ImportError:  # Executed directly with python tools/...
     import wechat_fetch_compat
     import wechat_index_context_guard
     import wechat_index_record_fallback
+    import wechat_link_policy
     import wechat_original_redirect_bridge
     import wechat_public_aggregator
     import wechat_public_index_title_fallback
@@ -63,6 +65,9 @@ def _publishable_article(article) -> bool:
     source = article.get("source") if isinstance(article, dict) else None
     source = source if isinstance(source, dict) else {}
     platform = str(source.get("platform", ""))
+    url = str(source.get("url", ""))
+    if wechat_link_policy.is_non_durable_wechat_article_url(url):
+        return False
     source_id = str(article.get("sourceId", "")) if isinstance(article, dict) else ""
     is_wechat = (
         source_id.startswith("user-track-wechat-")
@@ -75,7 +80,7 @@ def _publishable_article(article) -> bool:
         platform == "微信"
         and article.get("wechatContentMode") != "index-only"
         and wechat_original_redirect_bridge.is_direct_wechat_url(
-            str(source.get("url", ""))
+            url
         )
     )
 

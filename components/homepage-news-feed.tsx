@@ -13,9 +13,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { admitHomepageEvents } from "@/lib/homepage-publication-quality";
-import type { parseInnovationWechatMedia } from "@/lib/innovation-wechat-media";
 import { EventQualityIndicator } from "@/components/event-quality-indicator";
+import { SourceArticleLink } from "@/components/source-article-link";
 import { useFavorites } from "@/components/use-favorites";
 import { useHomepagePreferences } from "@/components/use-homepage-preferences";
 import { useHotness } from "@/components/use-hotness";
@@ -39,7 +38,6 @@ import {
 import {
   excludeDisplayedHomepageEvents,
   homepageEventSummary,
-  homepageMaterialUrl,
 } from "@/lib/homepage-event-identity";
 import {
   buildHomepageInnovationCapitalIndex,
@@ -69,6 +67,7 @@ import {
 } from "@/lib/homepage-recommendation";
 import { canonicalHotnessKey, metricsByHref, recordArticleShare } from "@/lib/hotness";
 import { buildResearchInvestigationHref } from "@/lib/research-workspace-handoff";
+import { isNonDurableWeChatArticleUrl } from "@/lib/wechat-link-policy";
 import { flushPendingSharePreferences, syncSharePreference } from "@/lib/share-preference-sync";
 import { buildTrackingCaptureLink } from "@/lib/tracking-admin-link";
 import {
@@ -306,61 +305,22 @@ function shareHomepageItem(item: LiveIntelligenceEvent) {
   );
 }
 
-function ReviewedWechatSection({ rows, query }: {
-  rows: ReturnType<typeof parseInnovationWechatMedia>;
-  query: string;
-}) {
-  const term = query.trim().toLowerCase();
-  const visible = rows.filter(({ title, publisher }) =>
-    `${title} ${publisher}`.toLowerCase().includes(term)).slice(0, 5);
-  if (!visible.length) return null;
-
-  return (
-    <section className={styles.feedList} aria-label="微信公众号线索">
-      <div className={styles.feedHeading}>
-        <div><strong>微信公众号线索</strong></div>
-        <Link href="/innovation-capital/#wechat-media">查看全部</Link>
-      </div>
-      {visible.map((item) => (
-        <article className={`${styles.feedCard} ${styles.standardCard}`} key={item.url}>
-          <div className={styles.cardBody}>
-            <p className={styles.cardMeta}>
-              <time dateTime={item.publishedAt}>{item.publishedAt}</time> · {item.publisher}
-            </p>
-            <h2><a href={item.url} target="_blank" rel="noopener noreferrer">{item.title} ↗</a></h2>
-          </div>
-        </article>
-      ))}
-    </section>
-  );
-}
-
 export function HomepageNewsFeed({
   initialPayload,
   bootstrap,
   peopleChannelEvents,
   companyChannelEvents,
-  investorChannelEvents,
-  reviewedWechatMedia,
 }: {
   initialPayload: ArticlePayload;
   bootstrap: HomepageFeedBootstrap;
   peopleChannelEvents: LiveIntelligenceEvent[];
   companyChannelEvents: LiveIntelligenceEvent[];
-  investorChannelEvents: LiveIntelligenceEvent[];
-  reviewedWechatMedia: ReturnType<typeof parseInnovationWechatMedia>;
 }) {
-  const { articles: archiveArticles, refreshAudit, isLive } = useArticles(initialPayload);
-  // Preserve the same committed official-source evidence when /data/articles.json
-  // is reloaded after interaction. Do not override an existing canonical item.
-  const articles = useMemo(
-    () => mergePriorityCandidates(archiveArticles, investorChannelEvents),
-    [archiveArticles, investorChannelEvents],
-  );
+  const { articles, refreshAudit, isLive } = useArticles(initialPayload);
   const favorites = useFavorites();
   const hotnessItems = useHotness();
   const preferences = useHomepagePreferences();
-  const [channel, setChannel] = useState<ChannelId>("focus");
+  const [channel, setChannel] = useState<ChannelId>("recommend");
   const [region, setRegion] = useState<RegionFilter>("全部");
   const [qualityScope, setQualityScope] = useState<QualityScope>("trusted");
   const [query, setQuery] = useState("");
@@ -371,10 +331,10 @@ export function HomepageNewsFeed({
   const priorityFeed = usePriorityIntelligence(channel === "focus");
   const focusSelection = useMemo(
     () => channel === "focus" ? buildHomepageFocusSelection(
-      admitHomepageEvents(mergePriorityCandidates(
+      mergePriorityCandidates(
         articles,
         [...(priorityFeed.snapshot?.items ?? []), ...(priorityFeed.batch6Snapshot?.items ?? [])],
-      )),
+      ),
       preferences, favorites, hotnessItems, clockMs ?? 0,
     ) : null,
     [channel, articles, priorityFeed.snapshot, priorityFeed.batch6Snapshot, preferences, favorites, hotnessItems, clockMs],
@@ -391,10 +351,6 @@ export function HomepageNewsFeed({
     void flushPendingSharePreferences();
   }, []);
 
-  const investorSourceUrls = useMemo(
-    () => new Set(investorChannelEvents.map((item) => homepageMaterialUrl(item.source.url))),
-    [investorChannelEvents],
-  );
   const entityChannels = useMemo(
     () => buildHomepageEntityChannelSets(bootstrap.entityChannelIndex),
     [bootstrap.entityChannelIndex],
@@ -723,10 +679,6 @@ export function HomepageNewsFeed({
             </p>
           </div>
 
-          {channel === "innovation" && region !== "美国" ? (
-            <ReviewedWechatSection rows={reviewedWechatMedia} query={query} />
-          ) : null}
-
           <div className={styles.feedList}>
             {displayedArticles.length ? (
               displayedArticles.map((item, index) => {
@@ -744,6 +696,7 @@ export function HomepageNewsFeed({
                 const followed = isHomepageSectorFollowed(item, preferences);
                 const reasonOpen = expandedReasonKey === eventKey;
                 const canonicalResearchReady = channel !== "focus" || articles.some((row) => row.id === item.id);
+                const sourceLinkUnavailable = isNonDurableWeChatArticleUrl(item.source.url);
                 const innovationAnnotation = channel === "innovation"
                   ? homepageInnovationCapitalAnnotation(item, innovationCapital)
                   : null;
@@ -774,9 +727,9 @@ export function HomepageNewsFeed({
                       </div>
 
                       <h2>
-                        <a href={item.source.url} target="_blank" rel="noreferrer">
+                        <SourceArticleLink href={item.source.url}>
                           {item.title}
-                        </a>
+                        </SourceArticleLink>
                       </h2>
 
                       <p className={styles.cardSummary}>
@@ -809,9 +762,7 @@ export function HomepageNewsFeed({
                               {" · "}科创优先度 {innovationAnnotation.innovationPriority}
                             </small>
                           </div>
-                          {investorSourceUrls.has(homepageMaterialUrl(item.source.url))
-                            ? <Link href="/innovation-capital/investors/">查看投资机构研究档案 →</Link>
-                            : <Link href="/innovation-capital/">查看科创项目 →</Link>}
+                          <Link href="/innovation-capital/">查看科创项目 →</Link>
                         </div>
                       ) : null}
 
@@ -867,19 +818,22 @@ export function HomepageNewsFeed({
                       ) : null}
 
                       <div className={`${styles.cardActions} ${polishStyles.mobileActions}`}>
-                        <a href={item.source.url} target="_blank" rel="noreferrer">
+                        <SourceArticleLink href={item.source.url} unavailableText="原文链接待更新">
                           查看来源 <ArrowUpRight size={13} aria-hidden="true" />
-                        </a>
-                        <a href={trackingHref(item)} target="_blank" rel="noreferrer">
-                          <BookmarkPlus size={13} aria-hidden="true" />
-                          追踪
-                        </a>
+                        </SourceArticleLink>
+                        {sourceLinkUnavailable
+                          ? <span title="原文链接待核验，暂不能作为可用来源提交追踪。">来源待核验</span>
+                          : <a href={trackingHref(item)} target="_blank" rel="noreferrer">
+                              <BookmarkPlus size={13} aria-hidden="true" />
+                              追踪
+                            </a>}
                         <button
                           type="button"
                           className={actionStyles.shareButton}
                           onClick={() => shareHomepageItem(item)}
                           aria-label={`分享：${item.title}`}
-                          title="分享这条情报"
+                          title={sourceLinkUnavailable ? "原文链接待更新，暂不能分享该失效来源" : "分享这条情报"}
+                          disabled={sourceLinkUnavailable}
                         >
                           <Share2 size={13} aria-hidden="true" />
                           分享
@@ -897,7 +851,7 @@ export function HomepageNewsFeed({
                     {hero ? (
                       <div className={styles.signalVisual} aria-hidden="true">
                         <span>{item.sector}</span>
-                        <strong>情报</strong>
+                        <strong>{item.importance}</strong>
                         <small>INTELLIGENCE</small>
                       </div>
                     ) : null}
@@ -952,9 +906,9 @@ export function HomepageNewsFeed({
                 <li key={item.id}>
                   <span>{String(index + 1).padStart(2, "0")}</span>
                   <div>
-                    <a href={item.source.url} target="_blank" rel="noreferrer">
+                    <SourceArticleLink href={item.source.url}>
                       {item.title}
-                    </a>
+                    </SourceArticleLink>
                     <small>{item.sector} · 重要度 {item.importance}</small>
                   </div>
                 </li>
@@ -993,7 +947,7 @@ export function HomepageNewsFeed({
             <dl>
               <div><dt>事件</dt><dd>{todayArticleCount}</dd></div>
               <div><dt>新收录</dt><dd>{newArticleCount}</dd></div>
-              <div><dt>原文链接</dt><dd>{bootstrap.sourceCount}</dd></div>
+              <div><dt>来源</dt><dd>{bootstrap.sourceCount}</dd></div>
               <div><dt>平台</dt><dd>{bootstrap.platformCount}</dd></div>
             </dl>
           </section>
@@ -1040,4 +994,3 @@ export function HomepageNewsFeed({
     </section>
   );
 }
-

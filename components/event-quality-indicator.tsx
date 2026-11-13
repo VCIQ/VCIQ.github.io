@@ -1,5 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import { homepageSourceEvidence } from "@/lib/homepage-event-identity";
+import { SourceArticleLink } from "@/components/source-article-link";
 import type { LiveIntelligenceEvent } from "@/lib/use-articles";
 import styles from "./dashboard-quality.module.css";
 
@@ -43,11 +44,9 @@ export function EventQualityIndicator({ item }: { item: LiveIntelligenceEvent })
           <summary>其他来源 {additionalLinks.length} 个</summary>
           <div className={styles.evidenceList}>
             {additionalLinks.map((source, index) => (
-              <a
+              <SourceArticleLink
                 href={source.url}
                 key={`${source.url}-${index}`}
-                target="_blank"
-                rel="noreferrer"
                 title={source.title}
               >
                 <strong>{source.title || source.name}</strong>
@@ -55,7 +54,7 @@ export function EventQualityIndicator({ item }: { item: LiveIntelligenceEvent })
                   {source.level || source.platform || source.name}
                   <ArrowUpRight size={11} />
                 </span>
-              </a>
+              </SourceArticleLink>
             ))}
           </div>
         </details>
