@@ -2,6 +2,7 @@
 
 import { Search } from "lucide-react";
 import Link from "next/link";
+import { SourceArticleLink } from "@/components/source-article-link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { ArticleSearchIndexPayload, SearchRecord } from "@/lib/search-index";
 import { normalizeSearchText, searchTextIncludesQuery } from "@/lib/search-normalization";
@@ -54,9 +55,9 @@ function ResultLink({ record }: { record: SearchRecord }) {
 
   if (/^https?:\/\//i.test(record.href)) {
     return (
-      <a href={record.href} target="_blank" rel="noreferrer">
+      <SourceArticleLink href={record.href}>
         {content}
-      </a>
+      </SourceArticleLink>
     );
   }
 

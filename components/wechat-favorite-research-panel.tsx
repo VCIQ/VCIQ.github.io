@@ -8,6 +8,8 @@ import {
 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useFavorites } from "@/components/use-favorites";
+import { SourceArticleLink } from "@/components/source-article-link";
+import { isNonDurableWeChatArticleUrl } from "@/lib/wechat-link-policy";
 import {
   isExternalFavorite,
   isWeChatArticleUrl,
@@ -96,16 +98,14 @@ export function WeChatFavoriteResearchPanel() {
                       >
                         <FlaskConical size={14} />粘贴正文并分析
                       </a>
-                      <a
-                        href={researchLeadHrefForFavorite(item)}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        自动尝试解析
-                      </a>
-                      <a href={item.href} target="_blank" rel="noreferrer" aria-label={`打开原文：${item.title}`}>
+                      {isNonDurableWeChatArticleUrl(item.href)
+                        ? <span title="原文链接待更新，暂不能自动解析">原文待核验</span>
+                        : <a href={researchLeadHrefForFavorite(item)} target="_blank" rel="noreferrer">
+                            自动尝试解析
+                          </a>}
+                      <SourceArticleLink href={item.href} aria-label={`打开原文：${item.title}`}>
                         <ExternalLink size={14} />打开原文
-                      </a>
+                      </SourceArticleLink>
                     </div>
                   </article>
                 );
