@@ -3,7 +3,7 @@ import { isNonDurableWeChatArticleUrl } from "@/lib/wechat-link-policy";
 
 type SourceArticleLinkProps = {
   href: string;
-  children: ReactNode;
+  children?: ReactNode;
   className?: string;
   title?: string;
   "aria-label"?: string;
