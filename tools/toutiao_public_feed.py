@@ -211,17 +211,22 @@ def crawl_toutiao_source(
         if len(accepted) >= int(spec.get("maxItems", 8)):
             break
 
-    status = "ok" if accepted and failures == 0 else "partial" if accepted else "error"
+    status = (
+        "partial" if accepted and failures
+        else "ok" if accepted
+        else "error" if failures
+        else "empty"
+    )
     return accepted, crawler._status(
         spec["id"],
         spec["name"],
         status,
         scanned,
         len(accepted),
-        failed=failures if accepted else max(1, failures),
+        failed=failures,
         platform="今日头条",
         error=("; ".join(errors)[:240] if errors else None)
-        or (None if accepted else "No matching original Toutiao feed articles"),
+        or (None if status in {"ok", "empty"} else "Toutiao feed request failed"),
     )
 
 
