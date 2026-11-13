@@ -3,6 +3,7 @@ import unittest
 
 from tools.article_metadata_reviews import apply_article_metadata_review, metadata_reviews
 from tools.article_publication_gate import filter_publishable_articles
+from tools.wechat_link_policy import is_non_durable_wechat_article_url
 
 
 class ArticleMetadataReviewTests(unittest.TestCase):
@@ -70,9 +71,21 @@ class ArticleMetadataReviewTests(unittest.TestCase):
         original = [self.article(review) for review in metadata_reviews()]
         frozen = copy.deepcopy(original)
         published, report = filter_publishable_articles(original)
-        self.assertEqual(len(published), len(original))
-        self.assertEqual(report["corroboration"], len(original))
-        for row, review in zip(published, metadata_reviews()):
+        eligible_reviews = [
+            review for review in metadata_reviews()
+            if not is_non_durable_wechat_article_url(review["sourceUrl"])
+        ]
+        self.assertEqual(len(published), len(eligible_reviews))
+        self.assertEqual(report["corroboration"], len(eligible_reviews))
+        self.assertEqual(
+            report["temporaryWeChatHeld"],
+            len(original) - len(eligible_reviews),
+        )
+        self.assertEqual(
+            [row["id"] for row in published],
+            [review["articleId"] for review in eligible_reviews],
+        )
+        for row, review in zip(published, eligible_reviews):
             for key, change in review["fields"].items():
                 self.assertEqual(row[key], change["to"])
         self.assertEqual(original, frozen)
