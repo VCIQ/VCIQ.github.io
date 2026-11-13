@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-13T02:41:07+00:00",
+  "updatedAt": "2026-11-13T02:43:32+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -23579,6 +23579,67 @@
       "resolutionSource": "human-decision",
       "resolutionStatus": "resolved",
       "createdAt": "2026-11-13T02:41:07+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "company-ee0733000f047becd3b1",
+      "kind": "company",
+      "name": "中科星云",
+      "aliases": [],
+      "keywords": [
+        "中科星云太空智能科技(合肥)有限公司",
+        "星云星座"
+      ],
+      "state": "active",
+      "resolutionSource": "unresolved",
+      "resolutionStatus": "review",
+      "createdAt": "2026-11-13T02:43:32+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "person-299ddfdad412462f94c6",
+      "kind": "person",
+      "name": "邵宗有",
+      "aliases": [],
+      "keywords": [
+        "中科星云董事长",
+        "邵宗有"
+      ],
+      "state": "active",
+      "resolutionSource": "explicit-type",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-11-13T02:43:32+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-73f750b6202fbdded64e",
+      "kind": "technology",
+      "name": "太空云",
+      "aliases": [],
+      "keywords": [
+        "太空云",
+        "智能天基信息服务系统",
+        "太空云生态"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-11-13T02:43:32+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "company:hygon",
+      "kind": "company",
+      "name": "海光信息",
+      "aliases": [],
+      "keywords": [
+        "海光信息",
+        "海光生态"
+      ],
+      "state": "active",
+      "resolutionSource": "human-decision",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-11-13T02:43:32+00:00",
       "createdBy": "VCIQ"
     }
   ],
@@ -137893,6 +137954,570 @@
         "source": "institution-directory",
         "reason": "名称唯一命中已核验投资机构目录；仅解析机构身份，不代表公司档案发布。",
         "decisionKey": "美团",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-b66bc43ae6dc0789a4e2",
+      "trackId": "track:track-mcbl4",
+      "entityId": "company-ee0733000f047becd3b1",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "low",
+      "origins": [
+        {
+          "id": "origin-9ada14205712e3fbcdd3",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-13T02:43:32+00:00",
+          "evidenceUrl": "https://www.cs.com.cn/ssgs/01/2026/11/13/detail_2026111310051902.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-e80170cca3f445bd734afed6",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-13T02:43:32+00:00",
+        "trackId": "track:track-mcbl4",
+        "entityId": "company-ee0733000f047becd3b1",
+        "requestedName": "中科星云",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "中科星云",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "中科星云",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-fcfceee94a188a52d9dd",
+      "trackId": "track:space",
+      "entityId": "company-ee0733000f047becd3b1",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "low",
+      "origins": [
+        {
+          "id": "origin-9ada14205712e3fbcdd3",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-13T02:43:32+00:00",
+          "evidenceUrl": "https://www.cs.com.cn/ssgs/01/2026/11/13/detail_2026111310051902.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-d029ca9a73e4ef62652fc0ec",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-13T02:43:32+00:00",
+        "trackId": "track:space",
+        "entityId": "company-ee0733000f047becd3b1",
+        "requestedName": "中科星云",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "中科星云",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "中科星云",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-a538c923c543a56e28a4",
+      "trackId": "track:track-mcbl4",
+      "entityId": "person-299ddfdad412462f94c6",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "medium",
+      "origins": [
+        {
+          "id": "origin-22a8e519da3e41384100",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-13T02:43:32+00:00",
+          "evidenceUrl": "https://www.cs.com.cn/ssgs/01/2026/11/13/detail_2026111310051902.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-728a81f09ce8203def741c82",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-13T02:43:32+00:00",
+        "trackId": "track:track-mcbl4",
+        "entityId": "person-299ddfdad412462f94c6",
+        "requestedName": "邵宗有",
+        "kind": "person"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "person",
+        "entityType": "person",
+        "canonicalName": "邵宗有",
+        "targetId": "person:邵宗有",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“人物”，且未与正式目录冲突。",
+        "decisionKey": "邵宗有",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-aca017275a90726be2bc",
+      "trackId": "track:robotics",
+      "entityId": "person-299ddfdad412462f94c6",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "medium",
+      "origins": [
+        {
+          "id": "origin-22a8e519da3e41384100",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-13T02:43:32+00:00",
+          "evidenceUrl": "https://www.cs.com.cn/ssgs/01/2026/11/13/detail_2026111310051902.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-59e3048532aa9aab4dfe27c1",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-13T02:43:32+00:00",
+        "trackId": "track:robotics",
+        "entityId": "person-299ddfdad412462f94c6",
+        "requestedName": "邵宗有",
+        "kind": "person"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "person",
+        "entityType": "person",
+        "canonicalName": "邵宗有",
+        "targetId": "person:邵宗有",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“人物”，且未与正式目录冲突。",
+        "decisionKey": "邵宗有",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-b5067ee9574bd2d1ec44",
+      "trackId": "track:space",
+      "entityId": "person-299ddfdad412462f94c6",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "medium",
+      "origins": [
+        {
+          "id": "origin-22a8e519da3e41384100",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-13T02:43:32+00:00",
+          "evidenceUrl": "https://www.cs.com.cn/ssgs/01/2026/11/13/detail_2026111310051902.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-afa0ae76dd2f6124ee9b9427",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-13T02:43:32+00:00",
+        "trackId": "track:space",
+        "entityId": "person-299ddfdad412462f94c6",
+        "requestedName": "邵宗有",
+        "kind": "person"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "person",
+        "entityType": "person",
+        "canonicalName": "邵宗有",
+        "targetId": "person:邵宗有",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“人物”，且未与正式目录冲突。",
+        "decisionKey": "邵宗有",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-4fedae7ad0470521f1aa",
+      "trackId": "track:track-mcbl4",
+      "entityId": "technology-73f750b6202fbdded64e",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-6a9e7dbd11975483917a",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-13T02:43:32+00:00",
+          "evidenceUrl": "https://www.cs.com.cn/ssgs/01/2026/11/13/detail_2026111310051902.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-ebb68e08aa34adbfc47fc41a",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-13T02:43:32+00:00",
+        "trackId": "track:track-mcbl4",
+        "entityId": "technology-73f750b6202fbdded64e",
+        "requestedName": "太空云",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "太空云",
+        "targetId": "topic:太空云",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "太空云",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-e8321c12ad3a073514f8",
+      "trackId": "track:robotics",
+      "entityId": "technology-73f750b6202fbdded64e",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-6a9e7dbd11975483917a",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-13T02:43:32+00:00",
+          "evidenceUrl": "https://www.cs.com.cn/ssgs/01/2026/11/13/detail_2026111310051902.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-a3eb6a9206786ff25c65ee0c",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-13T02:43:32+00:00",
+        "trackId": "track:robotics",
+        "entityId": "technology-73f750b6202fbdded64e",
+        "requestedName": "太空云",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "太空云",
+        "targetId": "topic:太空云",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "太空云",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-fd5693e8ef1ffd1f2899",
+      "trackId": "track:space",
+      "entityId": "technology-73f750b6202fbdded64e",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-6a9e7dbd11975483917a",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-13T02:43:32+00:00",
+          "evidenceUrl": "https://www.cs.com.cn/ssgs/01/2026/11/13/detail_2026111310051902.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-4bdd01d7880fa816d649d651",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-13T02:43:32+00:00",
+        "trackId": "track:space",
+        "entityId": "technology-73f750b6202fbdded64e",
+        "requestedName": "太空云",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "太空云",
+        "targetId": "topic:太空云",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "太空云",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-052678cd6d6d81c1607a",
+      "trackId": "track:semiconductor",
+      "entityId": "company:hygon",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-733c669ea4cf6c62e2fe",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-13T02:43:32+00:00",
+          "evidenceUrl": "https://www.cs.com.cn/ssgs/01/2026/11/13/detail_2026111310051902.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-56aa03a90b046653ef80599a",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-13T02:43:32+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "company:hygon",
+        "requestedName": "海光信息",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "海光信息",
+        "targetId": "company:hygon",
+        "confidence": "verified",
+        "source": "company-registry",
+        "reason": "名称唯一命中正式公司注册表。",
+        "decisionKey": "海光信息",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-5666b78643d8c2ba868a",
+      "trackId": "track:robotics",
+      "entityId": "company:hygon",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-733c669ea4cf6c62e2fe",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-13T02:43:32+00:00",
+          "evidenceUrl": "https://www.cs.com.cn/ssgs/01/2026/11/13/detail_2026111310051902.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-e61d0a199f8c9e952cc94265",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-13T02:43:32+00:00",
+        "trackId": "track:robotics",
+        "entityId": "company:hygon",
+        "requestedName": "海光信息",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "海光信息",
+        "targetId": "company:hygon",
+        "confidence": "verified",
+        "source": "company-registry",
+        "reason": "名称唯一命中正式公司注册表。",
+        "decisionKey": "海光信息",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-b8b426ded0971ef8e610",
+      "trackId": "track:ai",
+      "entityId": "company:hygon",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-733c669ea4cf6c62e2fe",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-13T02:43:32+00:00",
+          "evidenceUrl": "https://www.cs.com.cn/ssgs/01/2026/11/13/detail_2026111310051902.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-cb5aa12f60f81b48f64854d0",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-13T02:43:32+00:00",
+        "trackId": "track:ai",
+        "entityId": "company:hygon",
+        "requestedName": "海光信息",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "海光信息",
+        "targetId": "company:hygon",
+        "confidence": "verified",
+        "source": "company-registry",
+        "reason": "名称唯一命中正式公司注册表。",
+        "decisionKey": "海光信息",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-511943044cc40daf3584",
+      "trackId": "track:track-mcbl4",
+      "entityId": "company:hygon",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-733c669ea4cf6c62e2fe",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-13T02:43:32+00:00",
+          "evidenceUrl": "https://www.cs.com.cn/ssgs/01/2026/11/13/detail_2026111310051902.html",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-2df63d98b570f8e5f26609be",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-13T02:43:32+00:00",
+        "trackId": "track:track-mcbl4",
+        "entityId": "company:hygon",
+        "requestedName": "海光信息",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "海光信息",
+        "targetId": "company:hygon",
+        "confidence": "verified",
+        "source": "company-registry",
+        "reason": "名称唯一命中正式公司注册表。",
+        "decisionKey": "海光信息",
         "reclassified": false
       },
       "executionState": "applied"
