@@ -13,6 +13,8 @@ import { useMemo, useState } from "react";
 import institutionStyles from "@/components/hot-institution-ranking.module.css";
 import styles from "@/components/hot-page.module.css";
 import { useFavorites } from "@/components/use-favorites";
+import { SourceArticleLink } from "@/components/source-article-link";
+import { isNonDurableWeChatArticleUrl } from "@/lib/wechat-link-policy";
 import { useHotness } from "@/components/use-hotness";
 import { toggleFavorite, type FavoriteInput } from "@/lib/favorites";
 import {
@@ -327,11 +329,10 @@ export function HotPage({ initialPayload }: { initialPayload: ArticlePayload }) 
                   <Flame size={15} aria-hidden="true" />
                 </div>
 
-                <a
+                <SourceArticleLink
                   className={styles.main}
                   href={article.source.url}
-                  target="_blank"
-                  rel="noreferrer"
+                  fallbackAs="div"
                   onClick={() => recordArticleOpen(hotnessInput(article))}
                 >
                   <div className={styles.meta}>
@@ -343,7 +344,7 @@ export function HotPage({ initialPayload }: { initialPayload: ArticlePayload }) 
                   <h2>{article.title}</h2>
                   <p>{article.summary}</p>
                   <small>{article.source.level} · {article.source.name} ↗</small>
-                </a>
+                </SourceArticleLink>
 
                 <div className={styles.signals} aria-label={`热点分 ${score}`}>
                   <strong>{score}</strong>
@@ -368,6 +369,8 @@ export function HotPage({ initialPayload }: { initialPayload: ArticlePayload }) 
                     <button
                       type="button"
                       onClick={() => shareArticle(article)}
+                      disabled={isNonDurableWeChatArticleUrl(article.source.url)}
+                      title={isNonDurableWeChatArticleUrl(article.source.url) ? "原文链接待更新，暂不能分享该来源" : "分享文章"}
                       aria-label={`分享：${article.title}`}
                     >
                       <Share2 size={14} />

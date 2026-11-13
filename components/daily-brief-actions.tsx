@@ -5,6 +5,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import styles from "@/components/daily-brief-actions.module.css";
 import { useFavorite } from "@/components/use-favorites";
+import { SourceArticleLink } from "@/components/source-article-link";
+import { isNonDurableWeChatArticleUrl } from "@/lib/wechat-link-policy";
 import {
   dailyBriefEventKey,
   dailyBriefFavoriteInput,
@@ -59,7 +61,7 @@ export function DailyBriefActions({ item }: { item: LiveIntelligenceEvent }) {
       >
         <Bookmark size={14} fill={saved ? "currentColor" : "none"} />
       </button>
-      <a
+      {!isNonDurableWeChatArticleUrl(item.source.url) ? <a
         href={dailyBriefTrackingHref(item)}
         target="_blank"
         rel="noreferrer"
@@ -67,7 +69,7 @@ export function DailyBriefActions({ item }: { item: LiveIntelligenceEvent }) {
         title="把事件及关联对象加入追踪"
       >
         <BookmarkPlus size={14} />
-      </a>
+      </a> : <span title="原文链接待更新，不能作为有效来源追踪">来源待核验</span>}
       <button
         type="button"
         aria-label={`分享事件：${item.title}`}
@@ -76,15 +78,14 @@ export function DailyBriefActions({ item }: { item: LiveIntelligenceEvent }) {
       >
         <Share2 size={14} />
       </button>
-      <a
+      <SourceArticleLink
         href={item.source.url}
-        target="_blank"
-        rel="noreferrer"
+        unavailableText="原文链接待更新"
         aria-label={`打开原始信源：${item.title}`}
         title={`打开原始信源 · ${item.source.name}`}
       >
         <ArrowUpRight size={14} />
-      </a>
+      </SourceArticleLink>
     </div>
   );
 }

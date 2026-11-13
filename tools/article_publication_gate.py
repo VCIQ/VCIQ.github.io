@@ -15,8 +15,10 @@ from urllib.parse import urlsplit
 
 try:
     from .article_metadata_reviews import apply_article_metadata_review
+    from . import wechat_link_policy
 except ImportError:
     from article_metadata_reviews import apply_article_metadata_review
+    import wechat_link_policy
 
 
 VALID_SOURCE_ROLES = {"primary", "corroboration", "discovery"}
@@ -265,7 +267,13 @@ def _corroborated(
 def filter_publishable_articles(
     articles: list[dict[str, Any]],
 ) -> tuple[list[dict[str, Any]], dict[str, int]]:
-    stronger = [article for article in articles if _role(article) != "discovery"]
+    eligible = [
+        article for article in articles
+        if not wechat_link_policy.is_non_durable_wechat_article_url(
+            str(_source(article).get("url", ""))
+        )
+    ]
+    stronger = [article for article in eligible if _role(article) != "discovery"]
     published: list[dict[str, Any]] = []
     report = {
         "total": len(articles),
@@ -274,9 +282,10 @@ def filter_publishable_articles(
         "discoverySeen": 0,
         "discoveryPublished": 0,
         "discoveryHeld": 0,
+        "temporaryWeChatHeld": len(articles) - len(eligible),
     }
 
-    for article in articles:
+    for article in eligible:
         role = _role(article)
         if role == "primary":
             report["primary"] += 1

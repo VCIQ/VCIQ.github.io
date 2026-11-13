@@ -13,7 +13,7 @@ const source: TrackingCaptureSource = {
   articleId: "article-polymarket",
   title: "预测市场平台 Polymarket 洽谈新一轮融资",
   url: "https://finance.example/polymarket",
-  summary: "Polymarket 与 Kalshi 是预测市场的重要创业公司。",
+  summary: "合成测试摘要：Polymarket 与 OpenAI 分别作为公司实体出现。",
   sourceName: "财经媒体",
   channel: "institutions",
   channelLabel: "投资机构",
@@ -45,7 +45,7 @@ test("article capture applies companies, people and topics to selected tracks", 
     inbox: normalizeTrackingCaptureInbox({}),
     entities: [
       { entityType: "company", name: "Polymarket 公司" },
-      { entityType: "company", name: "Kalshi" },
+      { entityType: "company", name: "OpenAI" },
       { entityType: "person", name: "Shayne Coplan" },
       { entityType: "topic", name: "预测市场" },
     ],
@@ -60,7 +60,7 @@ test("article capture applies companies, people and topics to selected tracks", 
 
   const predictionTrack = result.config.tracks.find((track) => track.name === "预测市场");
   assert.ok(predictionTrack);
-  assert.deepEqual(predictionTrack.sampleCompanies, ["Polymarket", "Kalshi"]);
+  assert.deepEqual(predictionTrack.sampleCompanies, ["Polymarket", "OpenAI"]);
   assert.deepEqual(predictionTrack.people, ["Shayne Coplan"]);
   assert.deepEqual(predictionTrack.keywords, ["预测市场"]);
   assert.equal(result.records.length, 4);

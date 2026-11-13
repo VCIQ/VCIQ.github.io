@@ -16,6 +16,7 @@ import { useEffect, useMemo, useState } from "react";
 import { admitHomepageEvents } from "@/lib/homepage-publication-quality";
 import type { parseInnovationWechatMedia } from "@/lib/innovation-wechat-media";
 import { EventQualityIndicator } from "@/components/event-quality-indicator";
+import { SourceArticleLink } from "@/components/source-article-link";
 import { useFavorites } from "@/components/use-favorites";
 import { useHomepagePreferences } from "@/components/use-homepage-preferences";
 import { useHotness } from "@/components/use-hotness";
@@ -69,6 +70,7 @@ import {
 } from "@/lib/homepage-recommendation";
 import { canonicalHotnessKey, metricsByHref, recordArticleShare } from "@/lib/hotness";
 import { buildResearchInvestigationHref } from "@/lib/research-workspace-handoff";
+import { isNonDurableWeChatArticleUrl } from "@/lib/wechat-link-policy";
 import { flushPendingSharePreferences, syncSharePreference } from "@/lib/share-preference-sync";
 import { buildTrackingCaptureLink } from "@/lib/tracking-admin-link";
 import {
@@ -327,7 +329,7 @@ function ReviewedWechatSection({ rows, query }: {
             <p className={styles.cardMeta}>
               <time dateTime={item.publishedAt}>{item.publishedAt}</time> · {item.publisher}
             </p>
-            <h2><a href={item.url} target="_blank" rel="noopener noreferrer">{item.title} ↗</a></h2>
+            <h2><SourceArticleLink href={item.url}>{item.title} ↗</SourceArticleLink></h2>
           </div>
         </article>
       ))}
@@ -744,6 +746,7 @@ export function HomepageNewsFeed({
                 const followed = isHomepageSectorFollowed(item, preferences);
                 const reasonOpen = expandedReasonKey === eventKey;
                 const canonicalResearchReady = channel !== "focus" || articles.some((row) => row.id === item.id);
+                const sourceLinkUnavailable = isNonDurableWeChatArticleUrl(item.source.url);
                 const innovationAnnotation = channel === "innovation"
                   ? homepageInnovationCapitalAnnotation(item, innovationCapital)
                   : null;
@@ -774,9 +777,9 @@ export function HomepageNewsFeed({
                       </div>
 
                       <h2>
-                        <a href={item.source.url} target="_blank" rel="noreferrer">
+                        <SourceArticleLink href={item.source.url}>
                           {item.title}
-                        </a>
+                        </SourceArticleLink>
                       </h2>
 
                       <p className={styles.cardSummary}>
@@ -867,19 +870,22 @@ export function HomepageNewsFeed({
                       ) : null}
 
                       <div className={`${styles.cardActions} ${polishStyles.mobileActions}`}>
-                        <a href={item.source.url} target="_blank" rel="noreferrer">
+                        <SourceArticleLink href={item.source.url} unavailableText="原文链接待更新">
                           查看来源 <ArrowUpRight size={13} aria-hidden="true" />
-                        </a>
-                        <a href={trackingHref(item)} target="_blank" rel="noreferrer">
-                          <BookmarkPlus size={13} aria-hidden="true" />
-                          追踪
-                        </a>
+                        </SourceArticleLink>
+                        {sourceLinkUnavailable
+                          ? <span title="原文链接待核验，暂不能作为可用来源提交追踪。">来源待核验</span>
+                          : <a href={trackingHref(item)} target="_blank" rel="noreferrer">
+                              <BookmarkPlus size={13} aria-hidden="true" />
+                              追踪
+                            </a>}
                         <button
                           type="button"
                           className={actionStyles.shareButton}
                           onClick={() => shareHomepageItem(item)}
                           aria-label={`分享：${item.title}`}
-                          title="分享这条情报"
+                          title={sourceLinkUnavailable ? "原文链接待更新，暂不能分享该失效来源" : "分享这条情报"}
+                          disabled={sourceLinkUnavailable}
                         >
                           <Share2 size={13} aria-hidden="true" />
                           分享
@@ -952,9 +958,9 @@ export function HomepageNewsFeed({
                 <li key={item.id}>
                   <span>{String(index + 1).padStart(2, "0")}</span>
                   <div>
-                    <a href={item.source.url} target="_blank" rel="noreferrer">
+                    <SourceArticleLink href={item.source.url}>
                       {item.title}
-                    </a>
+                    </SourceArticleLink>
                     <small>{item.sector} · 重要度 {item.importance}</small>
                   </div>
                 </li>

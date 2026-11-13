@@ -17,6 +17,60 @@ PUBLIC_INDEX_PATH = ROOT / "config" / "wechat_public_indexes.json"
 
 
 class CrawlWithWechatRegistryIntegrationTests(unittest.TestCase):
+    def test_publication_rejects_temporary_wechat_navigation_links(self) -> None:
+        def article(url: str, platform: str = "微信") -> dict:
+            return {
+                "sourceId": "user-track-wechat-test",
+                "wechatContentMode": "original-page",
+                "source": {"platform": platform, "url": url},
+            }
+
+        temporary = "https://mp.weixin.qq.com/s?src=11&timestamp=1794138303&ver=7076&signature=abc&new=1"
+        durable = "https://mp.weixin.qq.com/s/hNvk76l8FzVEhglIQqebJg"
+        long_share = "https://mp.weixin.qq.com/s?__biz=abc&mid=123&idx=1&sn=ab12"
+        self.assertFalse(target._publishable_article(article(temporary)))
+        self.assertTrue(target._publishable_article(article(durable)))
+        self.assertTrue(target._publishable_article(article(long_share)))
+        # A news-labeled row must not bypass the link safety check.
+        self.assertFalse(target._publishable_article({
+            "sourceId": "other",
+            "source": {"platform": "新闻", "url": temporary},
+        }))
+
+
+    def test_historical_signed_url_requires_exact_prior_snapshot_identity(self) -> None:
+        historical = {
+            "id": "legacy-1",
+            "sourceId": "user-track-wechat-qbitai-ai",
+            "title": "旧版文章",
+            "wechatContentMode": "original-page",
+            "source": {
+                "platform": "微信",
+                "url": "https://mp.weixin.qq.com/s?new=1&signature=old&src=11&timestamp=1794138303&ver=7076",
+            },
+        }
+        incoming = {
+            **historical,
+            "id": "new-unauthorized",
+            "title": "新发现",
+        }
+        durable = {
+            **historical,
+            "id": "durable-1",
+            "source": {"platform": "微信", "url": "https://mp.weixin.qq.com/s/shareable"},
+        }
+        self.assertFalse(target._publishable_article(historical))
+        kept, count = target._retain_preexisting_signed_wechat(
+            [historical, incoming, durable], [durable], [historical]
+        )
+        self.assertEqual([row["id"] for row in kept], ["durable-1", "legacy-1"])
+        self.assertEqual(count, 1)
+        no_prior, count = target._retain_preexisting_signed_wechat(
+            [historical, incoming], [], []
+        )
+        self.assertEqual(no_prior, [])
+        self.assertEqual(count, 0)
+
     def test_main_installs_wechat_and_toutiao_routes_before_base_crawl(self) -> None:
         with ExitStack() as stack:
             search_redirects = stack.enter_context(

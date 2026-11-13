@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { parseInnovationWechatMedia } from "../lib/innovation-wechat-media";
+import { classifyWeChatArticleUrl } from "../lib/wechat-link-policy";
 
 const article = {
   url: "https://mp.weixin.qq.com/s/SYNTHETIC_ARTICLE",
@@ -16,6 +17,7 @@ test("public WeChat media supports both canonical article links and orders by or
   const other = { ...article, url: longUrl, publishedAt: "2026-10-23" };
   assert.deepEqual(parseInnovationWechatMedia([]), []);
   assert.deepEqual(parseInnovationWechatMedia([article, other]), [other, article]);
+  assert.equal(classifyWeChatArticleUrl(longUrl), "durable");
 });
 
 test("public WeChat media preserves original signatures and deduplicates the same long-form article", () => {

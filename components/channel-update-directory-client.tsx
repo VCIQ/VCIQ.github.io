@@ -31,6 +31,8 @@ import type {
   ChannelUpdateKey,
 } from "@/lib/channel-updates";
 import { buildTrackingCaptureLink } from "@/lib/tracking-admin-link";
+import { SourceArticleLink } from "@/components/source-article-link";
+import { isNonDurableWeChatArticleUrl } from "@/lib/wechat-link-policy";
 import styles from "./channel-update-directory.module.css";
 
 const channelLabels: Record<ChannelUpdateKey, string> = {
@@ -451,13 +453,12 @@ export function ChannelUpdateDirectoryClient({
                 );
                 return (
                   <div className={styles.itemWrap} key={item.id}>
-                    <a
+                    <SourceArticleLink
+                      fallbackAs="div"
                       className={`${styles.item} ${
                         visibleSources.length > 1 ? styles.itemWithSources : ""
                       }`}
                       href={item.href}
-                      rel="noreferrer"
-                      target="_blank"
                       data-intelligence-item="true"
                       data-intelligence-title={item.title}
                       data-intelligence-summary={item.summary}
@@ -509,20 +510,18 @@ export function ChannelUpdateDirectoryClient({
                         </small>
                       </div>
                       <ArrowUpRight className={styles.arrow} size={18} aria-hidden="true" />
-                    </a>
+                    </SourceArticleLink>
                     {visibleSources.length > 1 ? (
                       <div className={styles.sourceRow} aria-label="关联公开信源">
                         <span>信源</span>
                         {visibleSources.map((source) => (
-                          <a
+                          <SourceArticleLink
                             href={source.href}
                             key={source.href}
-                            rel="noreferrer"
-                            target="_blank"
                             title={source.title}
                           >
                             {source.name}
-                          </a>
+                          </SourceArticleLink>
                         ))}
                         {hiddenSourceCount > 0 ? <small>+{hiddenSourceCount}</small> : null}
                       </div>
@@ -531,7 +530,10 @@ export function ChannelUpdateDirectoryClient({
                       type="button"
                       className={styles.trackingLink}
                       onClick={() => openTrackingCapture(item)}
-                      title="在受保护的 Tracking Admin 中提取并加入研究对象"
+                      disabled={isNonDurableWeChatArticleUrl(item.href)}
+                      title={isNonDurableWeChatArticleUrl(item.href)
+                        ? "微信原文链接待核验，不能以该失效 URL 创建追踪"
+                        : "在受保护的 Tracking Admin 中提取并加入研究对象"}
                     >
                       <BookmarkPlus size={13} aria-hidden="true" />
                       加入追踪

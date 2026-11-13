@@ -21,6 +21,7 @@ try:  # Imported by tests as tools.crawl_with_wechat_registry.
     from . import wechat_fetch_compat
     from . import wechat_index_context_guard
     from . import wechat_index_record_fallback
+    from . import wechat_link_policy
     from . import wechat_original_redirect_bridge
     from . import wechat_public_aggregator
     from . import wechat_public_index_title_fallback
@@ -47,6 +48,7 @@ except ImportError:  # Executed directly with python tools/...
     import wechat_fetch_compat
     import wechat_index_context_guard
     import wechat_index_record_fallback
+    import wechat_link_policy
     import wechat_original_redirect_bridge
     import wechat_public_aggregator
     import wechat_public_index_title_fallback
@@ -63,6 +65,9 @@ def _publishable_article(article) -> bool:
     source = article.get("source") if isinstance(article, dict) else None
     source = source if isinstance(source, dict) else {}
     platform = str(source.get("platform", ""))
+    url = str(source.get("url", ""))
+    if wechat_link_policy.is_non_durable_wechat_article_url(url):
+        return False
     source_id = str(article.get("sourceId", "")) if isinstance(article, dict) else ""
     is_wechat = (
         source_id.startswith("user-track-wechat-")
@@ -75,7 +80,7 @@ def _publishable_article(article) -> bool:
         platform == "微信"
         and article.get("wechatContentMode") != "index-only"
         and wechat_original_redirect_bridge.is_direct_wechat_url(
-            str(source.get("url", ""))
+            url
         )
     )
 
@@ -86,7 +91,11 @@ def _install_snapshot_quality() -> None:
         return
 
     def replace_source_batches(existing, incoming, statuses):
-        clean_existing = [article for article in existing if _publishable_article(article)]
+        clean_existing = [
+            article for article in existing
+            if _publishable_article(article)
+            or wechat_link_policy.historical_signed_wechat_key(article) is not None
+        ]
         clean_incoming = [article for article in incoming if _publishable_article(article)]
         wechat_rows = [
             article
@@ -138,6 +147,33 @@ def _install_professional_media() -> None:
         base.tracking.USER_SOURCE_PREFIXES = (*prefixes, "professional-media-")
 
 
+
+def _retain_preexisting_signed_wechat(articles, publishable, previous_articles):
+    """Keep only exact signed originals already present before this crawl.
+
+    The ordinary publication gate runs first, so these historical rows cannot
+    corroborate or authorize new publications. No incoming signed URL can be
+    resurrected by this function without a matching preexisting (id, source,
+    URL) triple.
+    """
+    previous_keys = {
+        key for row in previous_articles
+        if (key := wechat_link_policy.historical_signed_wechat_key(row)) is not None
+    }
+    already = {
+        (str(row.get("id") or ""), str(row.get("sourceId") or ""),
+         str(row.get("source", {}).get("url") or ""))
+        for row in publishable
+    }
+    retained = []
+    for row in articles:
+        key = wechat_link_policy.historical_signed_wechat_key(row)
+        if key is not None and key in previous_keys and key not in already:
+            retained.append(row)
+            already.add(key)
+    return [*publishable, *retained], len(retained)
+
+
 def _install_source_governance() -> None:
     crawler = base.tracking.crawler
     if getattr(crawler, "_source_governance_installed", False):
@@ -168,6 +204,17 @@ def _install_source_governance() -> None:
                 enriched = source_evidence.enrich_article_sources(scored)
                 publishable, report = article_publication_gate.filter_publishable_articles(
                     enriched
+                )
+                try:
+                    previous = crawler.load_existing_payload().get("articles", [])
+                except (OSError, ValueError, TypeError):
+                    previous = []
+                publishable, preserved_count = _retain_preexisting_signed_wechat(
+                    enriched, publishable, previous
+                )
+                report["historicalSignedWeChatPreserved"] = preserved_count
+                report["temporaryWeChatHeld"] = max(
+                    0, report["temporaryWeChatHeld"] - preserved_count
                 )
                 print(
                     "Article publication gate: "

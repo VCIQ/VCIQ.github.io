@@ -6,6 +6,31 @@ from tools import article_publication_gate as gate
 
 
 class ArticlePublicationGateTests(unittest.TestCase):
+    def test_signed_wechat_link_cannot_be_primary_or_corroboration(self) -> None:
+        signed = "https://mp.weixin.qq.com/s?new=1&signature=abc&src=11&timestamp=1794138303&ver=7076"
+        rows = [
+            self.article(
+                id="signed-primary",
+                source={"url": signed, "sourceRole": "primary"},
+            ),
+            self.article(
+                id="signed-media",
+                source={"url": signed, "sourceRole": "corroboration"},
+            ),
+            self.article(
+                id="durable-original",
+                source={
+                    "url": "https://mp.weixin.qq.com/s/hNvk76l8FzVEhglIQqebJg",
+                    "sourceRole": "primary",
+                },
+            ),
+        ]
+        published, report = gate.filter_publishable_articles(rows)
+        self.assertEqual([row["id"] for row in published], ["durable-original"])
+        self.assertEqual(report["temporaryWeChatHeld"], 2)
+        self.assertEqual(report["primary"], 1)
+        self.assertEqual(report["corroboration"], 0)
+
     @staticmethod
     def article(**overrides) -> dict:
         row = {

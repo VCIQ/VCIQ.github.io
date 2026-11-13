@@ -11,6 +11,8 @@ import {
 import Link from "next/link";
 import { useMemo, useState, type ReactNode } from "react";
 import { EventQualityIndicator } from "@/components/event-quality-indicator";
+import { SourceArticleLink } from "@/components/source-article-link";
+import { isNonDurableWeChatArticleUrl } from "@/lib/wechat-link-policy";
 import {
   HomepageSortToggle,
   type HomepageSortMode,
@@ -513,15 +515,10 @@ export function DashboardV2Client({
                   <h3><EventTitle item={item} /></h3>
                   <p className={styles.inboxSummary}>{compactSummary(item.summary)}</p>
                   <div className={styles.eventUtilityRow}>
-                    <a
-                      className="source-link"
-                      href={item.source.url}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
+                    <SourceArticleLink className="source-link" href={item.source.url}>
                       {item.source.level} · {item.source.platform ? `${item.source.platform} · ` : ""}{item.source.name}
                       <ArrowUpRight size={14} />
-                    </a>
+                    </SourceArticleLink>
                     <button
                       type="button"
                       className={`${styles.inspectButton} ${selectedEvent?.id === item.id ? styles.inspectButtonActive : ""}`}
@@ -629,12 +626,14 @@ export function DashboardV2Client({
               </div>
 
               <div className={styles.analysisActions}>
-                <a href={selectedEvent.source.url} target="_blank" rel="noreferrer">
+                <SourceArticleLink href={selectedEvent.source.url}>
                   原始信源 <ArrowUpRight size={13} />
-                </a>
-                <a href={selectedTrackingHref} target="_blank" rel="noreferrer">
-                  加入追踪 <BookmarkPlus size={13} />
-                </a>
+                </SourceArticleLink>
+                {isNonDurableWeChatArticleUrl(selectedEvent.source.url)
+                  ? <span title="原文链接待更新，暂不能作为有效来源加入追踪">来源待核验</span>
+                  : <a href={selectedTrackingHref} target="_blank" rel="noreferrer">
+                      加入追踪 <BookmarkPlus size={13} />
+                    </a>}
                 <Link href="/research-agent">
                   深度研究 <Bot size={13} />
                 </Link>
@@ -714,8 +713,8 @@ export function DashboardV2Client({
 
 function EventTitle({ item }: { item: LiveIntelligenceEvent }) {
   return (
-    <a href={item.source.url} target="_blank" rel="noreferrer">
+    <SourceArticleLink href={item.source.url}>
       {item.title}
-    </a>
+    </SourceArticleLink>
   );
 }

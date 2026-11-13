@@ -4,6 +4,7 @@ import { ArrowUpRight, Search } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState, type ReactNode } from "react";
 import { EventQualityIndicator } from "@/components/event-quality-indicator";
+import { SourceArticleLink } from "@/components/source-article-link";
 import {
   HomepageSortToggle,
   type HomepageSortMode,
@@ -372,15 +373,10 @@ export function DashboardClient({
                   </div>
                   <h3><EventTitle item={item} /></h3>
                   <p>{item.summary}</p>
-                  <a
-                    className="source-link"
-                    href={item.source.url}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <SourceArticleLink className="source-link" href={item.source.url}>
                     {item.source.level} · {item.source.platform ? `${item.source.platform} · ` : ""}{item.source.name}
                     <ArrowUpRight size={14} />
-                  </a>
+                  </SourceArticleLink>
                   <EventQualityIndicator item={item} />
                 </div>
                 <div className="importance" title="按事件规模、信源等级与产业影响计算">
@@ -510,9 +506,9 @@ export function DashboardClient({
 
 function EventTitle({ item }: { item: IntelligenceEvent }) {
   return (
-    <a href={item.source.url} target="_blank" rel="noreferrer">
+    <SourceArticleLink href={item.source.url}>
       {item.title}
-    </a>
+    </SourceArticleLink>
   );
 }
 

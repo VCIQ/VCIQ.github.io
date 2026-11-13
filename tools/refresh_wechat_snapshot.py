@@ -17,6 +17,7 @@ try:  # Imported by tests as tools.refresh_wechat_snapshot.
     from . import wechat_fetch_compat
     from . import wechat_index_context_guard
     from . import wechat_index_record_fallback
+    from . import wechat_link_policy
     from . import wechat_original_redirect_bridge
     from . import wechat_public_aggregator
     from . import wechat_public_index_title_fallback
@@ -33,6 +34,7 @@ except ImportError:  # Executed directly with python tools/...
     import wechat_fetch_compat
     import wechat_index_context_guard
     import wechat_index_record_fallback
+    import wechat_link_policy
     import wechat_original_redirect_bridge
     import wechat_public_aggregator
     import wechat_public_index_title_fallback
@@ -100,10 +102,14 @@ def _is_wechat_record(article: dict[str, Any]) -> bool:
 
 
 def _publishable_article(article: dict[str, Any]) -> bool:
-    if not _is_wechat_record(article):
-        return True
     source = article.get("source")
     source = source if isinstance(source, dict) else {}
+    if wechat_link_policy.is_non_durable_wechat_article_url(
+        str(source.get("url", ""))
+    ):
+        return False
+    if not _is_wechat_record(article):
+        return True
     source_kind = str(
         article.get("sourceKind") or source.get("sourceKind") or ""
     )
@@ -196,8 +202,18 @@ def merge_wechat_snapshot(
     raw_existing = [
         article for article in payload.get("articles", []) if isinstance(article, dict)
     ]
-    existing_articles = [article for article in raw_existing if _publishable_article(article)]
+    # Preserve the already-published signed originals as historical records on
+    # failed refresh; reject the same URL if it arrives as a new publication.
+    existing_articles = [
+        article for article in raw_existing
+        if _publishable_article(article)
+        or wechat_link_policy.historical_signed_wechat_key(article) is not None
+    ]
     removed_proxy_records = len(raw_existing) - len(existing_articles)
+    legacy_signed_retained = sum(
+        wechat_link_policy.historical_signed_wechat_key(article) is not None
+        for article in existing_articles
+    )
     raw_incoming = [article for article in incoming if isinstance(article, dict)]
     incoming = [article for article in raw_incoming if _publishable_article(article)]
     rejected_incoming = len(raw_incoming) - len(incoming)
@@ -242,6 +258,7 @@ def merge_wechat_snapshot(
                 "fullTextArticles": len(incoming),
                 "indexOnlyArticles": 0,
                 "removedProxyRecords": removed_proxy_records + rejected_incoming,
+                "historicalSignedWeChatPreserved": legacy_signed_retained,
                 "retainedSources": sum(
                     1
                     for status in statuses
