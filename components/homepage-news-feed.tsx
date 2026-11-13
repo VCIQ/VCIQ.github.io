@@ -22,7 +22,7 @@ import { useHotness } from "@/components/use-hotness";
 import { usePriorityIntelligence } from "@/components/use-priority-intelligence";
 import { buildHomepageFocusSelection, HOMEPAGE_FOCUS_POLICY } from "@/lib/homepage-focus";
 import { FocusDiagnostics } from "@/components/focus-diagnostics";
-import { focusPreferenceIdentity } from "@/lib/focus-event-groups";
+import { focusPreferenceIdentity, groupFocusReports } from "@/lib/focus-event-groups";
 import { mergePriorityCandidates } from "@/lib/priority-intelligence";
 import { toggleFavorite } from "@/lib/favorites";
 import {
@@ -38,6 +38,8 @@ import {
 } from "@/lib/homepage-entity-channels";
 import {
   excludeDisplayedHomepageEvents,
+  homepageEarlierMilestones,
+  homepageEventPublishedAt,
   homepageEventSummary,
   homepageMaterialUrl,
 } from "@/lib/homepage-event-identity";
@@ -193,6 +195,7 @@ function itemSearchText(item: LiveIntelligenceEvent) {
     ...(item.mentionedCompanies ?? []),
     ...(item.mentionedPeople ?? []),
     ...(item.matchedTrackingTerms ?? []),
+    ...(item.relatedSources ?? []).flatMap((source) => [source.title, source.name, source.url]),
   ]
     .filter(Boolean)
     .join(" ")
@@ -374,6 +377,7 @@ export function HomepageNewsFeed({
       admitHomepageEvents(mergePriorityCandidates(
         articles,
         [...(priorityFeed.snapshot?.items ?? []), ...(priorityFeed.batch6Snapshot?.items ?? [])],
+        true,
       )),
       preferences, favorites, hotnessItems, clockMs ?? 0,
     ) : null,
@@ -558,9 +562,13 @@ export function HomepageNewsFeed({
         right.importance - left.importance ||
         right.publishedAt.localeCompare(left.publishedAt),
     );
+  const displayedIds = new Set(displayedArticles.map((item) => item.id));
+  const displayedReports = focusSelection?.candidates.filter((item) =>
+    displayedIds.has(focusSelection.decisions.get(item.id)?.groupedInto ?? ""),
+  ) ?? [];
   const discoverySignals = excludeDisplayedHomepageEvents(
-    discoveryCandidates,
-    displayedArticles,
+    groupFocusReports(discoveryCandidates, true).items,
+    [...displayedArticles, ...displayedReports],
   ).slice(0, DISCOVERY_SIGNAL_LIMIT);
 
   const trendSource = latestDayArticles.length >= 5
@@ -744,6 +752,8 @@ export function HomepageNewsFeed({
                 const followed = isHomepageSectorFollowed(item, preferences);
                 const reasonOpen = expandedReasonKey === eventKey;
                 const canonicalResearchReady = channel !== "focus" || articles.some((row) => row.id === item.id);
+                const publishedAt = channel === "focus" ? homepageEventPublishedAt(item) : item.publishedAt;
+                const earlierMilestones = channel === "focus" ? homepageEarlierMilestones(item) : [];
                 const innovationAnnotation = channel === "innovation"
                   ? homepageInnovationCapitalAnnotation(item, innovationCapital)
                   : null;
@@ -784,6 +794,19 @@ export function HomepageNewsFeed({
                       </p>
 
                       <EventQualityIndicator item={item} />
+                      {earlierMilestones.length > 0 && (
+                        <details className={styles.milestones}>
+                          <summary>此前进展</summary>
+                          <ul>
+                            {earlierMilestones.map((stage) => (
+                              <li key={stage.id}>
+                                <time dateTime={stage.publishedAt}>{stage.publishedAt}</time>
+                                <a href={stage.evidenceUrl} target="_blank" rel="noreferrer">{stage.stageLabel}</a>
+                              </li>
+                            ))}
+                          </ul>
+                        </details>
+                      )}
 
                       {innovationAnnotation ? (
                         <div className={styles.innovationContext}>
@@ -817,7 +840,7 @@ export function HomepageNewsFeed({
 
                       <div className={`${styles.cardMeta} ${polishStyles.cardMeta}`}>
                         <span>{item.source.name}</span>
-                        <time dateTime={item.publishedAt}>{formatPublishedAt(item.publishedAt, clockMs)}</time>
+                        <time dateTime={publishedAt}>{formatPublishedAt(publishedAt, clockMs)}</time>
                         <strong>重要度 {item.importance}</strong>
                       </div>
 
