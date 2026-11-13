@@ -55,7 +55,7 @@ function ResultLink({ record }: { record: SearchRecord }) {
 
   if (/^https?:\/\//i.test(record.href)) {
     return (
-      <SourceArticleLink href={record.href}>
+      <SourceArticleLink href={record.href} fallbackAs="div">
         {content}
       </SourceArticleLink>
     );

@@ -9,16 +9,18 @@ type SourceArticleLinkProps = {
   "aria-label"?: string;
   onClick?: MouseEventHandler<HTMLAnchorElement>;
   unavailableText?: string;
+  fallbackAs?: "span" | "div";
 };
 
 /** Never create a clickable public source link to an expiring WeChat search redirect. */
 export function SourceArticleLink({
-  href, children, className, title, onClick, unavailableText,
+  href, children, className, title, onClick, unavailableText, fallbackAs = "span",
   "aria-label": ariaLabel,
 }: SourceArticleLinkProps) {
   if (isNonDurableWeChatArticleUrl(href)) {
+    const Fallback = fallbackAs === "div" ? "div" : "span";
     return (
-      <span
+      <Fallback
         className={className}
         aria-label={ariaLabel}
         data-source-link-status="wechat-unverified"
@@ -26,7 +28,7 @@ export function SourceArticleLink({
       >
         {unavailableText ?? children}
         {!unavailableText && <small> · 原文链接待更新</small>}
-      </span>
+      </Fallback>
     );
   }
   return (

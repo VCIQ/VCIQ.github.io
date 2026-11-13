@@ -26,3 +26,14 @@ test("shareable WeChat and non-WeChat sources remain clickable", () => {
     assert.match(html, /target="_blank"/u);
   }
 });
+
+
+test("block link fallback preserves valid flow content", () => {
+  const html = renderToStaticMarkup(createElement(SourceArticleLink, {
+    href: "https://mp.weixin.qq.com/s?new=1&signature=abc&timestamp=1794138303",
+    fallbackAs: "div",
+  }, createElement("div", null, "事件摘要")));
+  assert.match(html, /^<div /u);
+  assert.match(html, /<div>事件摘要<\/div>/u);
+  assert.doesNotMatch(html, /<a /u);
+});

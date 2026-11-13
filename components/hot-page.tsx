@@ -332,6 +332,7 @@ export function HotPage({ initialPayload }: { initialPayload: ArticlePayload }) 
                 <SourceArticleLink
                   className={styles.main}
                   href={article.source.url}
+                  fallbackAs="div"
                   onClick={() => recordArticleOpen(hotnessInput(article))}
                 >
                   <div className={styles.meta}>
