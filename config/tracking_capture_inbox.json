@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-13T03:01:48+00:00",
+  "generatedAt": "2026-11-13T03:18:55+00:00",
   "records": [
     {
       "id": "capture-df18a9ce883bd74c",
@@ -50,13 +50,15 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "SSD",
-        "targetId": "technology-980144e66414d1b752ed",
+        "targetId": "topic:ssd",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "ssd",
         "reclassified": false
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "complete"
     },
     {
       "id": "capture-e86c13b0182e70fc",
@@ -112,7 +114,9 @@
         "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
         "decisionKey": "innodisk",
         "reclassified": false
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "needs_enrichment"
     },
     {
       "id": "capture-532da92713f7ff34",
@@ -156,70 +160,24 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "Kalshi",
-        "targetId": "technology-b064bbfa28ec04400367",
+        "targetId": "topic:kalshi",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "kalshi",
         "reclassified": false
-      }
-    },
-    {
-      "id": "capture-7fa1cbc14a9161ca",
-      "entityType": "topic",
-      "canonicalName": "Android XR",
-      "rawSelection": "Android XR",
-      "aliases": [],
-      "trackSlugs": [
-        "ai-3",
-        "ai"
-      ],
-      "trackNames": [
-        "AI智能终端",
-        "AI / AGI"
-      ],
-      "source": {
-        "articleId": "",
-        "title": "Android XR",
-        "url": "https://www.cls.cn/detail/2533296",
-        "summary": "",
-        "sourceName": "GitHub Actions · 内部手动追踪",
-        "channel": "manual-tracking",
-        "channelLabel": "内部管理",
-        "eventType": "人工追踪"
       },
-      "capturedAt": "2026-11-13T03:00:27+00:00",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "ai-3:keywords",
-        "ai:keywords"
-      ],
-      "reasons": [
-        "个人研究兴趣",
-        "技术突破",
-        "融资机会"
-      ],
-      "note": "",
-      "resolution": {
-        "status": "resolved",
-        "requestedType": "topic",
-        "entityType": "topic",
-        "canonicalName": "Android XR",
-        "targetId": "technology-2e9c104d7ab61a5eaa45",
-        "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
-        "decisionKey": "androidxr",
-        "reclassified": false
-      }
+      "manualDecisionStatus": "approved",
+      "identityState": "complete"
     },
     {
       "id": "capture-1b83807efeb8177d",
       "entityType": "topic",
       "canonicalName": "Cerebras",
       "rawSelection": "Cerebras",
-      "aliases": [],
+      "aliases": [
+        "Cerebras"
+      ],
       "trackSlugs": [
         "semiconductor",
         "ai-3",
@@ -265,7 +223,119 @@
         "reason": "名称唯一命中正式公司注册表。",
         "decisionKey": "cerebras",
         "reclassified": true
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "conflict"
+    },
+    {
+      "id": "capture-7fa1cbc14a9161ca",
+      "entityType": "topic",
+      "canonicalName": "Android XR",
+      "rawSelection": "Android XR",
+      "aliases": [],
+      "trackSlugs": [
+        "ai-3",
+        "ai"
+      ],
+      "trackNames": [
+        "AI智能终端",
+        "AI / AGI"
+      ],
+      "source": {
+        "articleId": "",
+        "title": "Android XR",
+        "url": "https://www.cls.cn/detail/2533296",
+        "summary": "",
+        "sourceName": "GitHub Actions · 内部手动追踪",
+        "channel": "manual-tracking",
+        "channelLabel": "内部管理",
+        "eventType": "人工追踪"
+      },
+      "capturedAt": "2026-11-13T03:00:27+00:00",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "ai-3:keywords",
+        "ai:keywords"
+      ],
+      "reasons": [
+        "个人研究兴趣",
+        "技术突破",
+        "融资机会"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "Android XR",
+        "targetId": "topic:androidxr",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "androidxr",
+        "reclassified": false
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "complete"
+    },
+    {
+      "id": "capture-9f81806ce40f39bd",
+      "entityType": "topic",
+      "canonicalName": "人工智能驱动的科学研究",
+      "rawSelection": "人工智能驱动的科学研究",
+      "aliases": [],
+      "trackSlugs": [
+        "robotics",
+        "biotech",
+        "ai"
+      ],
+      "trackNames": [
+        "机器人",
+        "生物科技",
+        "AI / AGI"
+      ],
+      "source": {
+        "articleId": "",
+        "title": "人工智能驱动的科学研究",
+        "url": "https://www.stdaily.com/web/gdxw/2026-11/13/content_612509.html",
+        "summary": "",
+        "sourceName": "GitHub Actions · 内部手动追踪",
+        "channel": "manual-tracking",
+        "channelLabel": "内部管理",
+        "eventType": "人工追踪"
+      },
+      "capturedAt": "2026-11-13T02:58:40+00:00",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "robotics:keywords",
+        "biotech:keywords",
+        "ai:keywords"
+      ],
+      "reasons": [
+        "个人研究兴趣",
+        "技术突破",
+        "融资机会",
+        "商业模式创新",
+        "市场竞争",
+        "监管变化"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "人工智能驱动的科学研究",
+        "targetId": "topic:人工智能驱动的科学研究",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "人工智能驱动的科学研究",
+        "reclassified": false
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "complete"
     },
     {
       "id": "capture-e3735d45552c7598",
@@ -318,13 +388,15 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "ORBIT 自动化实验平台",
-        "targetId": "technology-b9ba7446413095b498be",
+        "targetId": "topic:orbit自动化实验平台",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "orbit自动化实验平台",
         "reclassified": false
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "complete"
     },
     {
       "id": "capture-0fac2721b4cc6256",
@@ -374,69 +446,15 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "AI 黑灯实验室",
-        "targetId": "technology-f8817a96d53dcdbca94a",
+        "targetId": "topic:ai黑灯实验室",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "ai黑灯实验室",
         "reclassified": false
-      }
-    },
-    {
-      "id": "capture-9f81806ce40f39bd",
-      "entityType": "topic",
-      "canonicalName": "人工智能驱动的科学研究",
-      "rawSelection": "人工智能驱动的科学研究",
-      "aliases": [],
-      "trackSlugs": [
-        "robotics",
-        "biotech",
-        "ai"
-      ],
-      "trackNames": [
-        "机器人",
-        "生物科技",
-        "AI / AGI"
-      ],
-      "source": {
-        "articleId": "",
-        "title": "人工智能驱动的科学研究",
-        "url": "https://www.stdaily.com/web/gdxw/2026-11/13/content_612509.html",
-        "summary": "",
-        "sourceName": "GitHub Actions · 内部手动追踪",
-        "channel": "manual-tracking",
-        "channelLabel": "内部管理",
-        "eventType": "人工追踪"
       },
-      "capturedAt": "2026-11-13T02:58:40+00:00",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "robotics:keywords",
-        "biotech:keywords",
-        "ai:keywords"
-      ],
-      "reasons": [
-        "个人研究兴趣",
-        "技术突破",
-        "融资机会",
-        "商业模式创新",
-        "市场竞争",
-        "监管变化"
-      ],
-      "note": "",
-      "resolution": {
-        "status": "resolved",
-        "requestedType": "topic",
-        "entityType": "topic",
-        "canonicalName": "人工智能驱动的科学研究",
-        "targetId": "technology-7c597914df9feed0a9f4",
-        "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
-        "decisionKey": "人工智能驱动的科学研究",
-        "reclassified": false
-      }
+      "manualDecisionStatus": "approved",
+      "identityState": "complete"
     },
     {
       "id": "capture-6b7a7a7db42d5feb",
