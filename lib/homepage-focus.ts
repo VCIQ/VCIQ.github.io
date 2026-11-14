@@ -1,7 +1,7 @@
 import type { FavoriteItem } from "@/lib/favorites";
 import type { HomepagePreferenceState } from "@/lib/homepage-preferences";
-import { homepageMaterialUrl } from "@/lib/homepage-event-identity";
-import { focusIdentityKeys, groupFocusReports } from "@/lib/focus-event-groups";
+import { homepageEventIdentityKeys, homepageEventPublishedAt, homepageMaterialUrl, reviewedHomepageEvent } from "@/lib/homepage-event-identity";
+import { groupFocusReports } from "@/lib/focus-event-groups";
 import { focusDirectMediaMatch } from "@/lib/focus-direct-media";
 import type { HotnessItem } from "@/lib/hotness";
 import type { LiveIntelligenceEvent } from "@/lib/use-articles";
@@ -55,12 +55,6 @@ function recent(value: string | undefined, now: number, days: number): boolean {
   const date = Date.parse(value ?? "");
   return Number.isFinite(date) && date <= now + DAY && now - date <= days * DAY;
 }
-function identityKeys(item: LiveIntelligenceEvent): string[] {
-  // Background references are not proof of identical events. A later closing
-  // announcement may cite an earlier agreement without inheriting its veto.
-  return focusIdentityKeys(item);
-}
-
 export type HomepageFocusDecision = {
   eligible: boolean;
   signal: "approved-media" | "tracking" | "share" | "favorite" | "none";
@@ -94,17 +88,17 @@ export function buildHomepageFocusSelection(
   // A second feed or a repost must not resurrect a dismissed event.
   const vetoKeys = new Set<string>();
   const keyOwners = new Map<string, number[]>();
-  candidates.forEach((item, index) => identityKeys(item).forEach((key) => {
+  candidates.forEach((item, index) => homepageEventIdentityKeys(item).forEach((key) => {
     const owners = keyOwners.get(key) ?? []; owners.push(index); keyOwners.set(key, owners);
   }));
   const blocked = new Set<number>(); const queue: number[] = [];
   candidates.forEach((item, index) => {
-    if (dismissed.has(item.id) || dismissed.has(item.eventClusterId ?? "") || identityKeys(item).some((key) => dismissed.has(key))) {
+    if (dismissed.has(item.id) || dismissed.has(item.eventClusterId ?? "") || homepageEventIdentityKeys(item).some((key) => dismissed.has(key))) {
       blocked.add(index); queue.push(index);
     }
   });
   for (let head = 0; head < queue.length; head++) {
-    for (const key of identityKeys(candidates[queue[head]])) {
+    for (const key of homepageEventIdentityKeys(candidates[queue[head]])) {
       if (vetoKeys.has(key)) continue;
       vetoKeys.add(key);
       for (const index of keyOwners.get(key) ?? []) if (!blocked.has(index)) {
@@ -147,7 +141,7 @@ export function buildHomepageFocusSelection(
     const result: HomepageFocusDecision = { eligible: false, signal: "none", signalTier: 0, readTieBreak: 0, reasons: [],
       entityState: item.entityResolutionStatus ?? (evidenceAnchors(item).length ? "matched" : "unresolved") };
     decisions.set(item.id, result);
-    if (dismissed.has(item.id) || dismissed.has(item.eventClusterId ?? "") || identityKeys(item).some((key) => vetoKeys.has(key))) {
+    if (dismissed.has(item.id) || dismissed.has(item.eventClusterId ?? "") || homepageEventIdentityKeys(item).some((key) => vetoKeys.has(key))) {
       result.exclusion = "dismissed"; continue;
     }
     const directMedia = focusDirectMediaMatch(item);
@@ -157,11 +151,11 @@ export function buildHomepageFocusSelection(
     if (!Number.isFinite(Date.parse(item.publishedAt))) {
       result.exclusion = "invalid-date"; continue;
     }
-    if (!recent(item.publishedAt, now, HOMEPAGE_FOCUS_POLICY.freshnessDays)) {
+    if (!recent(homepageEventPublishedAt(item), now, HOMEPAGE_FOCUS_POLICY.freshnessDays)) {
       result.exclusion = "stale"; continue;
     }
     if (!Number.isFinite(item.importance) || item.importance < HOMEPAGE_FOCUS_POLICY.minimumImportance ||
-      !MATERIAL_EVENT.test(`${item.type} ${item.title}`)) {
+      (!reviewedHomepageEvent(item) && !MATERIAL_EVENT.test(`${item.type} ${item.title}`))) {
       result.exclusion = "low-impact"; continue;
     }
     const text = searchable(item);
@@ -194,17 +188,33 @@ export function buildHomepageFocusSelection(
     result.reasons.push(`重要度 ${item.importance} · 最近 ${HOMEPAGE_FOCUS_POLICY.freshnessDays} 天的实质更新`);
     if (item.source.level === "媒体报道" || item.source.level === "待交叉验证") result.reasons.push("媒体陈述不等于事实已核实");
   }
-  const sorted = candidates.filter((item) => decisions.get(item.id)?.eligible).sort((left, right) => {
+  const compare = (left: LiveIntelligenceEvent, right: LiveIntelligenceEvent) => {
     const a = decisions.get(left.id)!; const b = decisions.get(right.id)!;
     // Interest decides admission, not whether an older item precedes new news.
     // Sort the complete eligible window before pagination. Date-only inputs retain day precision;
     // do not invent an intra-day time from collection, publication or read clocks.
-    return Date.parse(right.publishedAt) - Date.parse(left.publishedAt) || b.signalTier - a.signalTier ||
+    return Date.parse(homepageEventPublishedAt(right)) - Date.parse(homepageEventPublishedAt(left)) || b.signalTier - a.signalTier ||
       right.importance - left.importance || b.readTieBreak - a.readTieBreak || left.id.localeCompare(right.id);
+  };
+  const sorted = candidates.filter((item) => decisions.get(item.id)?.eligible).sort(compare);
+  const reviewedAdmissions = new Map<string, HomepageFocusDecision>();
+  for (const item of sorted) {
+    const review = reviewedHomepageEvent(item);
+    if (review && !reviewedAdmissions.has(review.id)) reviewedAdmissions.set(review.id, decisions.get(item.id)!);
+  }
+  const companions = candidates.filter((item) => {
+    const decision = decisions.get(item.id)!;
+    if (decision.exclusion !== "no-personal-signal" && decision.exclusion !== "entity-unresolved") return false;
+    const inherited = reviewedAdmissions.get(reviewedHomepageEvent(item)?.id ?? "");
+    if (!inherited) return false;
+    decisions.set(item.id, { ...inherited, entityState: decision.entityState,
+      reasons: ["同一进展的其他报道符合重点入选规则", ...inherited.reasons] });
+    return true;
   });
-  const { items, groupedInto } = groupFocusReports(sorted);
+  const { items, groupedInto } = groupFocusReports([...sorted, ...companions]);
+  items.sort(compare);
   groupedInto.forEach((representative, id) => { const decision = decisions.get(id); if (decision) decision.groupedInto = representative; });
   return { items, decisions, candidates, counts: { candidateReports: candidates.length,
-    admittedReports: sorted.length, eventGroups: items.length, groupedReports: groupedInto.size },
+    admittedReports: sorted.length + companions.length, eventGroups: items.length, groupedReports: groupedInto.size },
     profileScope: "this-browser", policyVersion: HOMEPAGE_FOCUS_POLICY.version, distinctSharedTargets: sharedUrls.size };
 }
