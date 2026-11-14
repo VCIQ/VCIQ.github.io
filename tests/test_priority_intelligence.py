@@ -32,6 +32,36 @@ class PriorityIntelligenceTests(unittest.TestCase):
         result = finalize(previous, failed, specs, NOW)
         self.assertEqual(len(result["items"]), len(SOURCES)); self.assertEqual(result["sourceState"], "degraded")
 
+    def test_reviewed_sources_are_folded_before_capacity_and_persist_across_scans(self):
+        specs = source_specs()
+        first = scan(specs)
+        by_id = {row["sourceId"]: row for row in first["sources"]}
+        official = item()
+        official["source"]["url"] = "https://newsroom.amd.com/news/amd-acquire-world-labs/"
+        media = item("mittrchina-public-news")
+        media["source"]["url"] = "https://www.mittrchina.com/news/detail/17028"
+        media["publishedAt"] = "2026-09-29"
+        for source_id, reviewed in ((official["sourceId"], official), (media["sourceId"], media)):
+            other = []
+            for index in range(33):
+                row = item(source_id)
+                row["id"] += f"-{index}"
+                row["source"]["url"] += f"-{index}"
+                row["publishedAt"] = "2026-09-27"
+                other.append(row)
+            by_id[source_id]["items"] = [reviewed, *other]
+        result = finalize({}, first, specs, NOW)
+        self.assertEqual(len(result["items"]), 72)
+        self.assertEqual(result["collectionSummary"]["capacityHeld"], 1)
+        self.assertEqual(result["collectionSummary"]["collapsedReports"], 1)
+        primary = next(row for row in result["items"] if row["id"] == official["id"])
+        self.assertEqual(primary["relatedSources"][0]["url"], media["source"]["url"])
+        for row in first["sources"]:
+            row.update(status="empty", items=[])
+        second = finalize(result, first, specs, NOW)
+        primary = next(row for row in second["items"] if row["id"] == official["id"])
+        self.assertEqual(primary["relatedSources"][0]["url"], media["source"]["url"])
+
     def test_all_failed_does_not_advance_last_good(self):
         specs = source_specs(); value = scan(specs)
         for row in value["sources"]: row.update(status="error", items=[])

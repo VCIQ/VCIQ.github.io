@@ -1,24 +1,13 @@
-import links from "@/config/priority_event_links.json";
-import { homepageEventIdentityKeys, homepageMaterialUrl } from "@/lib/homepage-event-identity";
+import { homepageEventIdentityKeys, homepageMaterialUrl, reviewedHomepageEvent } from "@/lib/homepage-event-identity";
 import type { LiveIntelligenceEvent } from "@/lib/use-articles";
-
-const reviewed = new Map(links.events.flatMap((event) => event.materialUrls.map(
-  (url) => [homepageMaterialUrl(url), `reviewed:${event.id}`] as const,
-)));
-
-/** Exact event/material identities only. A shared company/topic is not an event. */
-export function focusIdentityKeys(item: LiveIntelligenceEvent): string[] {
-  const keys = homepageEventIdentityKeys(item);
-  const event = reviewed.get(homepageMaterialUrl(item.source.url));
-  return event ? [...keys, event] : keys;
-}
 
 /** Store one stable event veto in the existing preference store, not N repost actions. */
 export function focusPreferenceIdentity(item: LiveIntelligenceEvent): string {
-  return reviewed.get(homepageMaterialUrl(item.source.url)) ?? item.eventClusterId ?? item.id;
+  const reviewed = reviewedHomepageEvent(item);
+  return reviewed ? `reviewed:${reviewed.id}` : item.eventClusterId ?? item.id;
 }
 
-export function groupFocusReports(sorted: readonly LiveIntelligenceEvent[]) {
+export function groupFocusReports(sorted: readonly LiveIntelligenceEvent[], preserveRanking = false) {
   const parent = sorted.map((_, index) => index);
   const root = (index: number): number => {
     while (parent[index] !== index) { parent[index] = parent[parent[index]]; index = parent[index]; }
@@ -26,7 +15,7 @@ export function groupFocusReports(sorted: readonly LiveIntelligenceEvent[]) {
   };
   const owners = new Map<string, number>();
   sorted.forEach((item, index) => {
-    for (const key of focusIdentityKeys(item)) {
+    for (const key of homepageEventIdentityKeys(item)) {
       const owner = owners.get(key);
       if (owner === undefined) owners.set(key, index);
       else { const a = root(index); const b = root(owner); parent[Math.max(a, b)] = Math.min(a, b); }
@@ -36,10 +25,22 @@ export function groupFocusReports(sorted: readonly LiveIntelligenceEvent[]) {
   sorted.forEach((item, index) => { const key = root(index); grouped.set(key, [...(grouped.get(key) ?? []), item]); });
   const groupedInto = new Map<string, string>();
   const items = [...grouped.values()].map((rows) => {
-    const first = rows[0]; const seen = new Set([homepageMaterialUrl(first.source.url)]);
+    const reviewedOriginal = rows.find((row) => {
+      const event = reviewedHomepageEvent(row);
+      return event && homepageMaterialUrl(event.evidenceUrl) === homepageMaterialUrl(row.source.url);
+    });
+    const reviewedPublisher = rows.find((row) =>
+      reviewedHomepageEvent(row) && ["官方披露", "监管文件"].includes(row.source.level),
+    );
+    const original = preserveRanking ? rows[0] : rows.reduce((earliest, row) =>
+      Date.parse(row.publishedAt) < Date.parse(earliest.publishedAt) ? row : earliest,
+    );
+    const first = reviewedOriginal ?? reviewedPublisher ?? original;
+    const seen = new Set([homepageMaterialUrl(first.source.url)]);
     const relatedSources = [...(first.relatedSources ?? [])];
     relatedSources.forEach((x) => seen.add(homepageMaterialUrl(x.url)));
-    for (const row of rows.slice(1)) {
+    for (const row of rows) {
+      if (row === first) continue;
       groupedInto.set(row.id, first.id);
       for (const source of [{ ...row.source, platform: row.source.platform ?? "", title: row.title, publishedAt: row.publishedAt }, ...(row.relatedSources ?? [])]) {
         const key = homepageMaterialUrl(source.url);

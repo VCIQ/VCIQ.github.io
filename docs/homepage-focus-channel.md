@@ -97,6 +97,24 @@ Reviewed event dismissals use one stable identity in the existing preference
 store; no duplicate share samples, feedback ledger or private public projection
 is created.
 
+### Shared event cards and publication dates
+
+`config/priority_event_links.json` links exact reviewed materials to one
+milestone and records its original publication date and preferred source.
+Focus and the discovery rail use this identity. A reviewed original can
+represent the card when a sibling report supplies the interest signal, provided
+the original passes the other admission gates. The remaining reports are shown
+as source links and can match the homepage search. Distinct reviewed milestones
+can appear in the card's earlier-progress list without sharing an event identity.
+Grouping prefers the reviewed original and does not use a later repost to
+refresh the event's publication date.
+
+The priority publisher folds identical material URLs and reviewed milestones
+before applying the 72-item limit. Exact reviewed sibling links from configured
+publishers can travel with the representative record. Existing version-one
+clients can still read the feed, and the new reader accepts existing snapshots.
+The diagnostic distinguishes folded reports from events held at the capacity limit.
+
 The publisher derives company/person mentions from existing public registries
 and an explicitly sourced supplementary alias list. Each mention records the
 actual matching alias and title/summary field. Ambiguous aliases stay ambiguous.
