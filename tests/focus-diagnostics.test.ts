@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { buildHomepageFocusSelection } from "../lib/homepage-focus";
-import { focusDisplayDecision, focusQualityMetrics, findFocusCandidates, focusObservationLatency } from "../lib/focus-diagnostics";
+import { focusDisplayDecision, focusExclusionSummary, focusQualityMetrics, findFocusCandidates, focusObservationLatency } from "../lib/focus-diagnostics";
 import { groupFocusReports, focusPreferenceIdentity } from "../lib/focus-event-groups";
 import { parsePriorityIntelligence } from "../lib/priority-intelligence";
 import type { HomepagePreferenceState } from "../lib/homepage-preferences";
@@ -74,4 +74,21 @@ test("wire entity evidence is bounded and must occur in actual public text", () 
   const parsed = parsePriorityIntelligence(payload, now);
   assert.deepEqual(parsed.items[0].mentionedCompanies, ["AMD"]);
   assert.throws(() => parsePriorityIntelligence({ ...payload, items: [{ ...row, entityMentions: [{ ...row.entityMentions[0], alias: "not present" }] }] }, now));
+});
+
+test("exclusion diagnostics count first decision reasons without claiming unseen upstream coverage", () => {
+  const candidates = [
+    event("dismissed"),
+    { ...event("low-quality"), qualityStatus: "低可信" as const },
+    { ...event("stale"), publishedAt: "2026-09-01" },
+    { ...event("no-signal"), matchedTrackingTerms: [], sector: "未知" },
+  ];
+  const selection = buildHomepageFocusSelection(candidates, { ...prefs, dismissedEventIds: ["dismissed"], followedSectors: [] }, [], [], now);
+  const rows = focusExclusionSummary(selection);
+  const byCode = Object.fromEntries(rows.map((row) => [row.code, row.count]));
+  assert.equal(byCode.dismissed, 1);
+  assert.equal(byCode["low-quality"], 1);
+  assert.equal(byCode.stale, 1);
+  assert.equal(byCode["no-personal-signal"], 1);
+  assert.equal(rows.reduce((sum, row) => sum + row.count, 0), candidates.length);
 });
