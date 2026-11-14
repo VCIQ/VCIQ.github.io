@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { findFocusCandidates, focusDisplayDecision, focusObservationLatency } from "@/lib/focus-diagnostics";
+import { findFocusCandidates, focusDisplayDecision, focusExclusionSummary, focusObservationLatency } from "@/lib/focus-diagnostics";
 import type { HomepageFocusSelection } from "@/lib/homepage-focus";
 import type { LiveIntelligenceEvent } from "@/lib/use-articles";
 import type { PriorityIntelligenceSnapshot } from "@/lib/priority-intelligence";
@@ -18,6 +18,7 @@ export function FocusDiagnostics({ selection, filtered, rendered, snapshot, now 
 }) {
   const [query, setQuery] = useState("");
   const matches = findFocusCandidates(query, selection);
+  const exclusionSummary = focusExclusionSummary(selection);
   const traces = (snapshot?.collectionTrace ?? []).filter((row) => query.trim() &&
     ((homepageMaterialUrl(query.trim()) && homepageMaterialUrl(row.url) === homepageMaterialUrl(query.trim())) || row.id === query.trim() || row.title.toLowerCase().includes(query.trim().toLowerCase())));
   return <details aria-label="重点未入选原因诊断">
@@ -26,6 +27,11 @@ export function FocusDiagnostics({ selection, filtered, rendered, snapshot, now 
       去重后事件 {selection.counts.eventGroups} · 归组报道 {selection.counts.groupedReports} ·
       当前已渲染 {rendered.length} · 等待加载 {Math.max(0, filtered.length - rendered.length)}</p>
     <p>诊断仅在本浏览器计算，不上传收藏、分享或查询内容。缺少人工标注样本，暂不计算漏推率、无关率；渲染不等于阅读。</p>
+    {exclusionSummary.length > 0 ? <section aria-label="候选排除原因统计">
+      <strong>候选排除原因（当前浏览器候选窗口）</strong>
+      <ul>{exclusionSummary.map((row) => <li key={row.code}>{row.label}：{row.count}</li>)}</ul>
+      <small>各项按每条候选的首个决策原因计数；不代表全站、全部采集源或窗口外新闻的统计。</small>
+    </section> : null}
     <label>按标题、原文链接或事件 ID 查询
       <input value={query} maxLength={1600} onChange={(event) => setQuery(event.target.value)} placeholder="输入未看到的新闻标题或原文链接" />
     </label>
