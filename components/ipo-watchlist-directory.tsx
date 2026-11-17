@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 export type IpoWatchlistCompany = {
   id: string;
@@ -40,18 +40,12 @@ export function IpoWatchlistDirectory({
   const [board, setBoard] = useState("全部");
   const [manuallyCheckedOnly, setManuallyCheckedOnly] = useState(false);
   const eligibleBoards = allowedBoards ?? BOARD_ORDER;
-  const included = useMemo(
-    () => companies.filter((item) => eligibleBoards.includes(item.board)),
-    [companies, eligibleBoards.join("|")],
-  );
-  const visible = useMemo(
-    () => included.filter((item) =>
+  const included = companies.filter((item) => eligibleBoards.includes(item.board));
+  const visible = included.filter((item) =>
       item.name &&
       (board === "全部" || item.board === board) &&
       (!manuallyCheckedOnly || item.ocrQuality === "manual_pdf_verified") &&
       (item.name.includes(query.trim()) || String(item.sourceRow).includes(query.trim())),
-    ),
-    [included, board, manuallyCheckedOnly, query],
   );
   const missing = included.filter((item) => !item.name).length;
   const manuallyChecked = included.filter(
