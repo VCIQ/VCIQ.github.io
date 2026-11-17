@@ -15,6 +15,7 @@ import { InnovationOpportunityPool } from "./innovation-opportunity-pool";
 import { ListedInnovationDirectory } from "@/components/listed-innovation-directory";
 import { InnovationGlobalInvestors } from "@/components/innovation-global-investors";
 import { listedInnovationCompanies, listedInnovationApprovedAt } from "@/lib/listed-innovation-companies";
+import ipoPriorityWatchlist from "@/config/ipo_priority_watchlist_20261115.json";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -86,9 +87,30 @@ export default function InnovationCapitalPage() {
         <Link href="/innovation-capital/new-managers/">投中新登记35家样本</Link>
         <Link href="/innovation-capital/coverage/">采集覆盖与缺口</Link>
         <Link href="/innovation-capital/people/">科创人物与投资关系 · LinkedIn</Link>
+        <Link href="/innovation-capital/ipo-watchlist/">IPO重点跟踪（{ipoPriorityWatchlist.companies.length}）</Link>
+        <Link href="/innovation-capital/ipo-watchlist/non-star/">非科创板IPO独立清单</Link>
         <a href="#research-patterns">资本与研究关系</a>
         <a href="#listed-innovation">上市科创标杆与产业生态（{listedInnovationCompanies.length}）</a>
       </nav>
+
+      <section className={styles.researchSection} id="ipo-priority-watchlist">
+        <div className={styles.sectionHeader}>
+          <div><span>IPO PRIORITY WATCHLIST</span><h2>新增IPO企业重点关注名单</h2></div>
+          <p>来自「最丨投行」2026-11-15 22:00（北京时间）的媒体名单快照。按用户指定纳入重点关注，历史状态不等同实时审核结论。</p>
+        </div>
+        <div className={styles.methodGrid}>
+          <article>
+            <strong>科创板 · 66 家</strong>
+            <p>沿用原表科创板分类，保留来源序号、页面与名称质量标记。</p>
+            <Link href="/innovation-capital/ipo-watchlist/">查看科创板名单 →</Link>
+          </article>
+          <article>
+            <strong>非科创板 · 310 家</strong>
+            <p>沪深主板 35 家、创业板 79 家、北交所 196 家，独立于科创板名单浏览。</p>
+            <Link href="/innovation-capital/ipo-watchlist/non-star/">查看非科创板子频道 →</Link>
+          </article>
+        </div>
+      </section>
 
       <section className={styles.researchSection} id="recorded-changes">
         <div className={styles.sectionHeader}>
@@ -175,4 +197,3 @@ export default function InnovationCapitalPage() {
     </main>
   );
 }
-

@@ -17,10 +17,12 @@ from urllib.parse import quote_plus, urlsplit
 
 try:  # Imported by tests as tools.crawl_with_tracking.
     from . import crawl_articles as crawler
+    from . import ipo_priority_tracking
     from . import tracking_quality
     from . import tracking_taxonomy
 except ImportError:  # Executed directly with ``python tools/...``.
     import crawl_articles as crawler
+    import ipo_priority_tracking
     import tracking_quality
     import tracking_taxonomy
 
@@ -190,6 +192,11 @@ def _enabled_tracks(tracking: dict[str, Any]) -> list[dict[str, Any]]:
                 "sampleCompanies": _unique(raw.get("sampleCompanies", []), 40),
             }
         )
+    # Owner-approved IPO companies are part of the tracking configuration.
+    # Add bounded rotating groups only if slots remain; never evict existing tracks.
+    slots = max(0, 30 - len(result))
+    if slots:
+        result.extend(ipo_priority_tracking.daily_tracks()[:slots])
     return result[:30]
 
 
