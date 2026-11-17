@@ -4,6 +4,7 @@ from datetime import date
 from pathlib import Path
 
 from tools.ipo_priority_tracking import daily_tracks, eligible_companies
+from tools import crawl_with_tracking
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "config" / "ipo_priority_watchlist_20261115.json"
@@ -11,6 +12,34 @@ BOARDS = {"科创板": 66, "沪市主板": 19, "深市主板": 16, "创业板": 
 
 
 class TestIpoPriorityTracking(unittest.TestCase):
+    def test_ipo_groups_only_in_explicit_runtime_merge(self):
+        base = {"feeds": [], "publicDiscovery": [], "papers": []}
+        tracking = {
+            "schemaVersion": 1,
+            "tracks": [{
+                "slug": "topic",
+                "name": "Ordinary Topic",
+                "enabled": True,
+                "keywords": ["sample"],
+                "people": [],
+                "sampleCompanies": [],
+            }],
+            "sources": [],
+        }
+        self.assertEqual(len(crawl_with_tracking._enabled_tracks(tracking)), 1)
+        ordinary, _, _ = crawl_with_tracking.build_merged_config(base, tracking)
+        with_ipo, _, _ = crawl_with_tracking.build_merged_config(
+            base, tracking, include_ipo_priority=True,
+        )
+        self.assertEqual(
+            len([x for x in ordinary["publicDiscovery"]
+                 if x["id"].startswith("user-track-")]), 2,
+        )
+        self.assertEqual(
+            len([x for x in with_ipo["publicDiscovery"]
+                 if x["id"].startswith("user-track-ipo-owner-priority-")]), 6,
+        )
+
     def test_all_source_rows_preserved(self):
         items = json.loads(SOURCE.read_text(encoding="utf-8"))["companies"]
         self.assertEqual(len(items), 376)
