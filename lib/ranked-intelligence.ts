@@ -1,3 +1,4 @@
+import { reviewedHomepageEvent } from "@/lib/homepage-event-identity";
 import type {
   ArticlePayload,
   EventType,
@@ -464,6 +465,10 @@ export function areLikelySameHomepageEvent(
   left: LiveIntelligenceEvent,
   right: LiveIntelligenceEvent,
 ): boolean {
+  const reviewedLeft = reviewedHomepageEvent(left);
+  const reviewedRight = reviewedHomepageEvent(right);
+  // A reviewed milestone takes precedence over a legacy cluster or topic match.
+  if (reviewedLeft || reviewedRight) return reviewedLeft?.id === reviewedRight?.id;
   if (left.eventClusterId && right.eventClusterId && left.eventClusterId === right.eventClusterId) return true;
   if (left.type !== right.type) return false;
   const leftTime = eventTimestamp(left.publishedAt);

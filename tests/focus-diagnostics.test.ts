@@ -32,9 +32,30 @@ test("reviewed agreement sources group, but a subsequent approval is separate", 
   const grouped = groupFocusReports(rows);
   assert.equal(grouped.items.length, 2);
   assert.equal(grouped.items[0].relatedSources.length, 1);
-  assert.equal(grouped.groupedInto.get("official"), "media");
+  assert.equal(grouped.items[0].id, "official");
+  assert.equal(grouped.groupedInto.get("media"), "official");
   const selection = buildHomepageFocusSelection(rows, { ...prefs, dismissedEventIds: ["official"] }, [], [], now);
   assert.deepEqual(selection.items.map((x) => x.id), ["later-approval"]);
+});
+
+test("a tracked repost can select its reviewed original without refreshing an old event", () => {
+  const media = { ...event("media", "https://www.mittrchina.com/news/detail/17028"), matchedTrackingTerms: ["World Labs"] };
+  const official = { ...event("official", "https://newsroom.amd.com/news/amd-acquire-world-labs"), publishedAt: "2026-09-28" };
+  const newer = { ...event("newer"), publishedAt: "2026-09-29", matchedTrackingTerms: ["AMD"] };
+  const selected = buildHomepageFocusSelection([media, official, newer], { ...prefs, followedSectors: [] }, [], [], now);
+  assert.deepEqual(selected.items.map((item) => item.id), ["newer", "official"]);
+  assert.equal(selected.decisions.get("media")?.groupedInto, "official");
+  assert.equal(selected.items[1].relatedSources?.[0].url, media.source.url);
+  assert.match(selected.decisions.get("official")?.reasons[0] ?? "", /同一进展/u);
+  assert.equal(buildHomepageFocusSelection([{ ...media, publishedAt: "2026-10-06" }],
+    prefs, [], [], Date.parse("2026-10-06T12:00:00Z")).items.length, 0);
+});
+
+test("later coverage of an existing cluster does not move it ahead of new events", () => {
+  const original = { ...event("original"), publishedAt: "2026-09-27", eventClusterId: "cluster" };
+  const repost = { ...event("repost"), publishedAt: "2026-09-30", eventClusterId: "cluster" };
+  const selected = buildHomepageFocusSelection([repost, original, event("new")], prefs, [], [], now);
+  assert.deepEqual(selected.items.map((item) => item.id), ["new", "original"]);
 });
 test("equal company names without reviewed event identity never collapse", () => {
   assert.equal(groupFocusReports([event("one"), event("two")]).items.length, 2);

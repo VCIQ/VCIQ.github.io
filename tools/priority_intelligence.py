@@ -16,6 +16,7 @@ from urllib.error import HTTPError
 from urllib.parse import urlsplit
 from urllib.request import Request, build_opener, HTTPRedirectHandler
 
+from tools.article_metadata_reviews import material_url_key
 from tools.crawl_articles import parse_feed_items, parse_mittrchina_items
 from tools.priority_incremental import collect_source, MAX_SOURCE_ITEMS, _cursor
 from tools.priority_entity_linking import link_priority_entities, public_entities
@@ -30,6 +31,8 @@ LIMIT = 300_000
 # source scans can exceed the smaller final public projection before retention.
 SCAN_ARTIFACT_LIMIT = 1_000_000
 SOURCE_POLICY = json.loads((ROOT / "config/priority_source_policy.json").read_text())
+EVENT_LINKS = json.loads((ROOT / "config/priority_event_links.json").read_text())["events"]
+REVIEWED_BY_URL = {material_url_key(url): event for event in EVENT_LINKS for url in event["materialUrls"]}
 SOURCES = {row["id"]: (row["fetchHost"], row["articleHost"], row["level"])
            for row in SOURCE_POLICY["sources"]}
 SOURCE_ADAPTERS = {row["id"]: row["adapter"] for row in SOURCE_POLICY["sources"]}
@@ -64,7 +67,8 @@ def source_specs(root: Path = ROOT) -> list[dict]:
 def config_hash(specs: list[dict]) -> str:
     identity_inputs = sorted(({key: row[key] for key in ("id", "kind", "name", "aliases")}
                               for row in public_entities()), key=lambda row: row["id"])
-    return hashlib.sha256(compact({"specs": specs, "identityInputs": identity_inputs, "collector": "bounded-cursor-v2"}).encode()).hexdigest()
+    return hashlib.sha256(compact({"specs": specs, "identityInputs": identity_inputs, "reviewedEvents": EVENT_LINKS,
+                                   "collector": "bounded-cursor-v2"}).encode()).hexdigest()
 
 
 class NoRedirect(HTTPRedirectHandler):
@@ -143,6 +147,77 @@ def collect(specs: list[dict], now: datetime, fetcher=fetch_public, previous=Non
             "checkedAt": timestamp(now), "sources": rows}
 
 
+def publication_time(value: str) -> datetime:
+    parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    return parsed.replace(tzinfo=timezone.utc) if parsed.tzinfo is None else parsed
+
+
+def event_publication_time(item: dict) -> datetime:
+    review = REVIEWED_BY_URL.get(material_url_key(item["source"]["url"]))
+    published = item["publishedAt"]
+    if review and review["publishedAt"] != published[:10]:
+        published = review["publishedAt"]
+    return publication_time(published)
+
+
+def reviewed_source(raw: dict, review: dict) -> dict | None:
+    """Only attach exact reviewed URLs from an approved publisher."""
+    if not isinstance(raw, dict):
+        return None
+    source_id = raw.get("sourceId")
+    if not isinstance(source_id, str) or source_id not in SOURCES:
+        return None
+    url = raw.get("url")
+    if not isinstance(url, str) or len(url) > 1600 or REVIEWED_BY_URL.get(material_url_key(url)) != review:
+        return None
+    parsed = urlsplit(url)
+    if parsed.scheme != "https" or parsed.hostname != SOURCES[source_id][1] or parsed.username or parsed.password:
+        return None
+    fields = {"name": 120, "platform": 80, "title": 300, "publishedAt": 40}
+    if any(not isinstance(raw.get(key), str) or len(raw[key]) > size for key, size in fields.items()):
+        return None
+    try:
+        publication_time(raw["publishedAt"])
+    except ValueError:
+        return None
+    return {**{key: raw[key] for key in fields}, "url": url, "sourceId": source_id, "level": SOURCES[source_id][2]}
+
+
+def collapse_priority_reports(items: list[dict], previous_sources: dict[str, list[dict]]) -> list[dict]:
+    groups: dict[tuple[str, str], list[dict]] = {}
+    for item in items:
+        url = material_url_key(item["source"]["url"])
+        review = REVIEWED_BY_URL.get(url)
+        key = ("reviewed", review["id"]) if review else ("url", url)
+        groups.setdefault(key, []).append(item)
+
+    result = []
+    for rows in groups.values():
+        review = REVIEWED_BY_URL.get(material_url_key(rows[0]["source"]["url"]))
+        official_url = material_url_key(review["evidenceUrl"]) if review else None
+        rows.sort(key=lambda row: (material_url_key(row["source"]["url"]) != official_url,
+                                   bool(review) and row["source"]["level"] != "官方披露",
+                                   publication_time(row["publishedAt"]), row["id"]))
+        main, *other_reports = rows
+        if review:
+            sources = {}
+            main_url = material_url_key(main["source"]["url"])
+            for row in other_reports:
+                source = {**row["source"], "sourceId": row["sourceId"],
+                          "title": row["title"], "publishedAt": row["publishedAt"]}
+                key = material_url_key(source["url"])
+                if key != main_url:
+                    sources.setdefault(key, source)
+            for source in previous_sources.get(review["id"], []):
+                key = material_url_key(source["url"])
+                if key != main_url:
+                    sources.setdefault(key, source)
+            if sources:
+                main = {**main, "relatedSources": list(sources.values())}
+        result.append(main)
+    return result
+
+
 def finalize(previous: dict, scan: dict, specs: list[dict], now: datetime) -> dict:
     if scan.get("schemaVersion") != 1 or scan.get("policyVersion") != POLICY or scan.get("configHash") != config_hash(specs):
         raise ValueError("priority collection provenance mismatch")
@@ -158,9 +233,15 @@ def finalize(previous: dict, scan: dict, specs: list[dict], now: datetime) -> di
     if previous_date and datetime.fromisoformat(previous_date.replace("Z", "+00:00")) > checked:
         raise ValueError("older priority scan must not replace a newer version")
     items = {}; cursors = dict(previous.get("sourceCursors", {})); traces = []; scanned = filtered = pending = 0
+    previous_sources: dict[str, list[dict]] = {}
     for item in previous.get("items", []):
         verified = wire_item(item, item.get("sourceId", ""))
         items[verified["id"]] = verified
+        review = REVIEWED_BY_URL.get(material_url_key(verified["source"]["url"]))
+        related = item.get("relatedSources")
+        if review and isinstance(related, list):
+            validated = [source for raw in related[:8] if (source := reviewed_source(raw, review))]
+            previous_sources.setdefault(review["id"], []).extend(validated)
     for row in rows:
         if row.get("status") not in {"ok", "empty", "partial", "error"} or not isinstance(row.get("items"), list) or len(row["items"]) > MAX_SOURCE_ITEMS:
             raise ValueError("invalid per-source priority status")
@@ -185,18 +266,20 @@ def finalize(previous: dict, scan: dict, specs: list[dict], now: datetime) -> di
                            "title": str(t.get("title", ""))[:240], "url": url[:1600], "reason": str(t.get("reason", ""))[:80]})
     kept = []
     for item in items.values():
-        day = datetime.fromisoformat(item["publishedAt"].replace("Z", "+00:00"))
-        if day.tzinfo is None: day = day.replace(tzinfo=timezone.utc)
+        day = event_publication_time(item)
         if now - timedelta(days=7) <= day <= now + timedelta(days=1): kept.append(item)
-    expired = len(items) - len(kept)
-    kept.sort(key=lambda x: (datetime.fromisoformat(x["publishedAt"].replace("Z", "+00:00")).replace(tzinfo=timezone.utc)
-                            if len(x["publishedAt"]) == 10 else datetime.fromisoformat(x["publishedAt"].replace("Z", "+00:00")), x["id"]), reverse=True)
-    held = kept[72:]
-    for item in list(items.values()):
-        if item in held or item not in kept:
+        else:
             traces.append({"id": item["id"], "sourceId": item["sourceId"], "title": item["title"][:240],
-                           "url": item["source"]["url"], "reason": "snapshot-capacity" if item in held else "outside-retention"})
-    kept = kept[:72]
+                           "url": item["source"]["url"], "reason": "outside-retention"})
+    expired = len(items) - len(kept)
+    grouped = collapse_priority_reports(kept, previous_sources)
+    collapsed = len(kept) - len(grouped)
+    grouped.sort(key=lambda item: (event_publication_time(item), item["id"]), reverse=True)
+    kept = grouped[:72]
+    held = grouped[72:]
+    for item in held:
+        traces.append({"id": item["id"], "sourceId": item["sourceId"], "title": item["title"][:240],
+                       "url": item["source"]["url"], "reason": "snapshot-capacity"})
     result = {"schemaVersion": 1, "policyVersion": POLICY,
               "generatedAt": scan["checkedAt"], "contentHash": hashlib.sha256(compact(kept).encode()).hexdigest(),
               "sourceState": "degraded" if any(x["status"] in {"error", "partial"} for x in rows) else "healthy",
@@ -204,7 +287,8 @@ def finalize(previous: dict, scan: dict, specs: list[dict], now: datetime) -> di
                                 "pending": bool(x.get("pending")), "historyGap": bool(x.get("historyGap"))} for x in rows],
               "sourceCursors": cursors, "collectionTrace": traces[-120:],
               "collectionSummary": {"scanned": scanned, "filtered": filtered, "expired": expired,
-                                     "capacityHeld": len(held), "pendingSources": pending, "traceTruncated": len(traces) > 120}, "items": kept}
+                                     "capacityHeld": len(held), "collapsedReports": collapsed,
+                                     "pendingSources": pending, "traceTruncated": len(traces) > 120}, "items": kept}
     if len(compact(result).encode()) > LIMIT: raise ValueError("priority snapshot exceeds publication budget")
     return result
 

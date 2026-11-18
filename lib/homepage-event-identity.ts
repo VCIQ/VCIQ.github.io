@@ -1,3 +1,4 @@
+import links from "@/config/priority_event_links.json";
 import type { LiveIntelligenceEvent, RelatedArticleSource } from "@/lib/use-articles";
 import { isNonDurableWeChatArticleUrl } from "@/lib/wechat-link-policy";
 
@@ -29,13 +30,43 @@ export function homepageMaterialUrl(value: string): string {
   }
 }
 
+const reviewedByMaterial = new Map(links.events.flatMap((event) => event.materialUrls.map(
+  (url) => [homepageMaterialUrl(url), event] as const,
+)));
+
+export function reviewedHomepageMaterial(url: string) {
+  return reviewedByMaterial.get(homepageMaterialUrl(url));
+}
+
+export function reviewedHomepageEvent(item: LiveIntelligenceEvent) {
+  return reviewedHomepageMaterial(item.source.url);
+}
+
+export function homepageEventPublishedAt(item: LiveIntelligenceEvent): string {
+  const reviewedDate = reviewedHomepageEvent(item)?.publishedAt;
+  return !reviewedDate || item.publishedAt.slice(0, 10) === reviewedDate
+    ? item.publishedAt
+    : reviewedDate;
+}
+
 export function homepageEventIdentityKeys(item: LiveIntelligenceEvent): string[] {
   const result: string[] = [];
   if (item.id) result.push(`id:${item.id}`);
-  if (item.eventClusterId) result.push(`cluster:${item.eventClusterId}`);
+  const reviewed = reviewedHomepageEvent(item);
+  if (reviewed) result.push(`reviewed:${reviewed.id}`);
+  else if (item.eventClusterId) result.push(`cluster:${item.eventClusterId}`);
   const url = homepageMaterialUrl(item.source.url);
   if (url) result.push(`url:${url}`);
   return result;
+}
+
+export function homepageEarlierMilestones(item: LiveIntelligenceEvent) {
+  const current = reviewedHomepageEvent(item);
+  if (!current?.storyId) return [];
+  return links.events.filter(
+    (event) => event.storyId === current.storyId && event.stageLabel &&
+      event.publishedAt < current.publishedAt,
+  ).sort((left, right) => right.publishedAt.localeCompare(left.publishedAt));
 }
 
 /** Exclude currently displayed events and duplicates within the rail, without changing scores. */

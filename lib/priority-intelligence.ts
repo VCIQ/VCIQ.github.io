@@ -1,6 +1,6 @@
-import { homepageEventIdentityKeys, homepageMaterialUrl } from "@/lib/homepage-event-identity";
+import { homepageMaterialUrl, reviewedHomepageMaterial } from "@/lib/homepage-event-identity";
 import prioritySourcePolicy from "@/config/priority_source_policy.json";
-import type { LiveIntelligenceEvent } from "@/lib/use-articles";
+import type { LiveIntelligenceEvent, RelatedArticleSource } from "@/lib/use-articles";
 
 export const PRIORITY_FEED_URL = "https://raw.githubusercontent.com/VCIQ/VCIQ.github.io/intelligence-live/public/data/priority_intelligence.json";
 export const PRIORITY_FEED_MAX_BYTES = 300_000;
@@ -18,7 +18,7 @@ export type PriorityIntelligenceSnapshot = {
   sourceState: "healthy" | "degraded";
   items: LiveIntelligenceEvent[];
   collectionTrace?: Array<{ id: string; sourceId: string; title: string; url: string; reason: string }>;
-  collectionSummary?: { scanned: number; filtered: number; expired: number; capacityHeld: number; pendingSources: number; traceTruncated: boolean };
+  collectionSummary?: { scanned: number; filtered: number; expired: number; capacityHeld: number; collapsedReports?: number; pendingSources: number; traceTruncated: boolean };
 };
 function object(value: unknown): Record<string, unknown> {
   if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("Invalid priority feed object");
@@ -29,6 +29,31 @@ function text(value: unknown, max: number): string {
   return value;
 }
 const EVENT_TYPES = new Set(["融资", "产业投资", "产品发布", "技术突破", "商业进展", "公司动态", "并购", "财报", "政策", "监管文件", "IPO", "论文", "人物观点"]);
+
+function parseRelatedSources(value: unknown, primaryUrl: string): RelatedArticleSource[] | undefined {
+  if (value === undefined) return undefined;
+  if (!Array.isArray(value) || value.length > 8) throw new Error("Invalid priority related sources");
+  const review = reviewedHomepageMaterial(primaryUrl);
+  if (!review) return undefined;
+  const seen = new Set([homepageMaterialUrl(primaryUrl)]);
+  const sources: RelatedArticleSource[] = [];
+  for (const input of value) {
+    const row = object(input);
+    const url = new URL(text(row.url, 1600));
+    const sourceId = text(row.sourceId, 100);
+    const key = homepageMaterialUrl(url.href);
+    if (url.protocol !== "https:" || url.username || url.password ||
+        url.hostname !== PRIORITY_FEED_SOURCE_HOSTS[sourceId] ||
+        row.level !== PRIORITY_FEED_SOURCE_LEVELS[sourceId]) throw new Error("Invalid priority related publisher");
+    if (seen.has(key) || reviewedHomepageMaterial(url.href)?.id !== review.id) continue;
+    const publishedAt = text(row.publishedAt, 40);
+    if (!Number.isFinite(Date.parse(publishedAt))) throw new Error("Invalid priority related date");
+    sources.push({ url: url.href, name: text(row.name, 120), platform: text(row.platform, 80),
+      title: text(row.title, 300), level: text(row.level, 40), publishedAt });
+    seen.add(key);
+  }
+  return sources.length ? sources : undefined;
+}
 
 /** Separate, bounded, public data only; never accepts profile/feedback payloads. */
 export function parsePriorityIntelligence(value: unknown, now = Date.now()): PriorityIntelligenceSnapshot {
@@ -77,13 +102,16 @@ export function parsePriorityIntelligence(value: unknown, now = Date.now()): Pri
       mentionedCompanies: [...new Set(entityMentions.filter((x) => x.kind === "company").map((x) => x.name))],
       mentionedPeople: [...new Set(entityMentions.filter((x) => x.kind === "person").map((x) => x.name))],
       source: { name: text(source.name, 120), url: url.href, level, platform: text(source.platform ?? "", 80) },
+      relatedSources: parseRelatedSources(row.relatedSources, url.href),
     };
   });
   let collectionSummary: PriorityIntelligenceSnapshot["collectionSummary"];
   if (raw.collectionSummary !== undefined) {
     const value = object(raw.collectionSummary);
     const number = (key: string) => { const n = value[key]; if (typeof n !== "number" || !Number.isSafeInteger(n) || n < 0 || n > 100_000) throw new Error("Invalid collection counter"); return n; };
-    collectionSummary = { scanned: number("scanned"), filtered: number("filtered"), expired: number("expired"), capacityHeld: number("capacityHeld"), pendingSources: number("pendingSources"), traceTruncated: value.traceTruncated === true };
+    collectionSummary = { scanned: number("scanned"), filtered: number("filtered"), expired: number("expired"), capacityHeld: number("capacityHeld"),
+      collapsedReports: value.collapsedReports === undefined ? undefined : number("collapsedReports"),
+      pendingSources: number("pendingSources"), traceTruncated: value.traceTruncated === true };
   }
   const trace = raw.collectionTrace ?? [];
   if (!Array.isArray(trace) || trace.length > 120) throw new Error("Invalid collection trace size");
@@ -97,23 +125,40 @@ export function parsePriorityIntelligence(value: unknown, now = Date.now()): Pri
   return { schemaVersion: 1, policyVersion: "priority-publisher-v1", generatedAt, contentHash, sourceState: raw.sourceState as "healthy" | "degraded", items, collectionTrace, collectionSummary };
 }
 
-export function mergePriorityCandidates(baseline: readonly LiveIntelligenceEvent[], incoming: readonly LiveIntelligenceEvent[]): LiveIntelligenceEvent[] {
+export function mergePriorityCandidates(
+  baseline: readonly LiveIntelligenceEvent[],
+  incoming: readonly LiveIntelligenceEvent[],
+  keepEventReports = false,
+): LiveIntelligenceEvent[] {
   // Keep reviewed canonical metadata when the archive already knows this material.
-  const result = [...baseline]; const seen = new Set(baseline.flatMap(homepageEventIdentityKeys));
+  const identity = (item: LiveIntelligenceEvent) => {
+    const url = homepageMaterialUrl(item.source.url);
+    return [`id:${item.id}`, ...(url ? [`url:${url}`] : []),
+      ...(!keepEventReports && item.eventClusterId ? [`cluster:${item.eventClusterId}`] : [])];
+  };
+  const result = [...baseline]; const seen = new Set(baseline.flatMap(identity));
   for (const item of incoming) {
     const existing = result.findIndex((row) => homepageMaterialUrl(row.source.url) === homepageMaterialUrl(item.source.url));
-    if (existing >= 0 && !result[existing].curated) {
+    if (existing >= 0) {
       const row = result[existing];
       // Supplement missing mention evidence, never replace reviewed attribution,
       // title, publication date, canonical identifiers or explicit veto identity.
-      result[existing] = { ...row,
+      if (!row.curated) result[existing] = { ...row,
         mentionedCompanies: [...new Set([...(row.mentionedCompanies ?? []), ...(item.mentionedCompanies ?? [])])],
         mentionedPeople: [...new Set([...(row.mentionedPeople ?? []), ...(item.mentionedPeople ?? [])])],
         entityResolutionStatus: row.entityResolutionStatus ?? item.entityResolutionStatus,
         entityMentions: row.entityMentions ?? item.entityMentions,
       };
+      if (item.relatedSources?.length) {
+        const sources = new Map((row.relatedSources ?? []).map((source) => [homepageMaterialUrl(source.url), source]));
+        for (const source of item.relatedSources) {
+          const key = homepageMaterialUrl(source.url);
+          if (key && !sources.has(key)) sources.set(key, source);
+        }
+        result[existing] = { ...result[existing], relatedSources: [...sources.values()] };
+      }
     }
-    const keys = homepageEventIdentityKeys(item);
+    const keys = identity(item);
     if (keys.some((key) => seen.has(key))) continue;
     result.push(item); keys.forEach((key) => seen.add(key));
   }

@@ -46,6 +46,7 @@ export function FocusDiagnostics({ selection, filtered, rendered, snapshot, now 
     {traces.length ? <ul>{traces.slice(0, 40).map((row, index) => <li key={`${row.sourceId}:${row.id}:${row.reason}:${index}`}>采集证据：{row.title || row.id} · {COLLECTION_REASONS[row.reason] ?? row.reason} · {row.sourceId}</li>)}</ul> : null}
     {snapshot?.collectionSummary ? <p>快速采集：{snapshot.collectionSummary.scanned} 条观察记录 ·
       解析/过滤未接受 {snapshot.collectionSummary.filtered} · 过期 {snapshot.collectionSummary.expired} ·
+      {snapshot.collectionSummary.collapsedReports !== undefined ? `归并报道 ${snapshot.collectionSummary.collapsedReports} · ` : ""}
       快照安全上限暂缓 {snapshot.collectionSummary.capacityHeld} ·
       待继续补采来源 {snapshot.collectionSummary.pendingSources}。
       诊断只覆盖有记录的本轮及保留窗口，不宣称全网完整覆盖。</p> : null}

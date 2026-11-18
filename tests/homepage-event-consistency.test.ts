@@ -5,11 +5,15 @@ import test from "node:test";
 import { applyArticleMetadataReview } from "../lib/article-metadata-reviews";
 import {
   excludeDisplayedHomepageEvents,
+  homepageEarlierMilestones,
+  homepageEventIdentityKeys,
   homepageEventSummary,
   homepageMaterialUrl,
   homepageSourceEvidence,
 } from "../lib/homepage-event-identity";
+import { groupFocusReports } from "../lib/focus-event-groups";
 import { mergeHomepagePersonChannelEvents } from "../lib/homepage-person-channel-events";
+import { areLikelySameHomepageEvent } from "../lib/ranked-intelligence";
 import type { LiveIntelligenceEvent } from "../lib/use-articles";
 
 function event(overrides: Partial<LiveIntelligenceEvent> = {}): LiveIntelligenceEvent {
@@ -221,6 +225,19 @@ test("profile placeholders are not rendered or propagated as event summaries", (
     homepageEventSummary(event({ summary: "杨红新 · 新电池量产计划正式启动", mentionedPeople: ["杨红新"] })),
     "杨红新 · 新电池量产计划正式启动",
   );
+});
+
+test("focus and the rail share reviewed event identity while each milestone stays separate", () => {
+  const source = event().source;
+  const roadshow = event({ id: "official", eventClusterId: "ipo", source: { ...source, url: "https://www.anthropic.com/news/roadshow-launch" } });
+  const repost = event({ id: "social", source: { ...source, url: "https://x.com/AnthropicAI/status/2120117722230968385" } });
+  const filing = event({ id: "filing", eventClusterId: "ipo", source: { ...source, url: "https://www.anthropic.com/news/s1-sec" } });
+  assert.deepEqual(groupFocusReports([repost, filing, roadshow], true).items.map(({ id }) => id), ["official", "filing"]);
+  assert.deepEqual(excludeDisplayedHomepageEvents([repost, filing], [roadshow]).map(({ id }) => id), ["filing"]);
+  assert.equal(homepageEventIdentityKeys(filing).some((key) => homepageEventIdentityKeys(roadshow).includes(key)), false);
+  assert.equal(areLikelySameHomepageEvent(filing, roadshow), false);
+  assert.equal(areLikelySameHomepageEvent(repost, roadshow), true);
+  assert.deepEqual(homepageEarlierMilestones(roadshow).map((stage) => stage.stage), ["filing"]);
 });
 
 test("source evidence counts distinct links instead of archive duplicateCount", () => {
