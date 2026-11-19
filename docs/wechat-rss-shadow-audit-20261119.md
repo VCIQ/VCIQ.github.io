@@ -50,3 +50,34 @@ echo "day-02 exit=$status"
 已完成一次真实只读预检（2026-11-19 04:12 UTC，三源 RSS 20/10/10，滚动七日窗口 21 条），不是连续七次运行。后续 v2 手动预检中，Feed 内有 1 对同标题及 2 对近似标题候选；仍需人工判断。不同日期/窗口的总数不可直接作覆盖率或丢失率比较。
 
 必须完成独立代码审查、与修复提交对应的 CI、**七次真实定时观察及私有台账连续性确认**、公众号身份/微信原文/跨平台事件的人工核对，并由站长逐源签字，才可讨论后续单独的生产启用变更。本 PR 自身不得启用任何来源。
+
+## 独立私有台账运行器（不更改生产配置）
+
+若每日定时执行环境可以访问**同一持久化目录**，优先使用 \`tools/wechat_rss_shadow_private_run.py\`。它调用原只读审核脚本，并将完整报告以 0600 权限原子写入仓库外的私有目录，目录需为 0700；不能指向仓库、GitHub Pages、公开 CI artifacts 或共享网站路径。目录不存在时，运行器尝试以 0700 创建，但**文件落盘不等于未来的自动任务能读取同一目录**，必须逐次验证执行环境与挂载。
+
+仅用于人工额外验证（自动标记为 \`preflight\`，不可计入七次）：
+
+\`\`\`bash
+python3 tools/wechat_rss_shadow_private_run.py \
+  --kind preflight \
+  --ledger-dir /absolute/private/vciq-shadow-ledgers
+\`\`\`
+
+**仅在真正的自动任务执行过程中**传入该任务提供的计划时间（下列日期只是调用格式示例，不能提前手动调用充数）：
+
+\`\`\`bash
+python3 tools/wechat_rss_shadow_private_run.py \
+  --kind scheduled \
+  --scheduled-for 2026-11-19T09:00:00-05:00 \
+  --ledger-dir /absolute/private/vciq-shadow-ledgers
+\`\`\`
+
+运行器只对计划内的 2026-11-19 至 2026-11-25 美东日期允许 scheduled 模式；拒绝使用 \`--as-of\` 伪造定时观察，不覆盖同一天已有文件。它只从此前的 \`scheduled-YYYY-MM-DD.json\` 读取 \`seenHistory\`，从不把 \`preflight-...\` 文件当作累计基线。上游请求失败、无有效 JSON、前一天缺失或此前连续性中断时，保存故障及尽可能保留历史，\`newSincePrevious\` 继续为 \`null\`。
+
+stdout 仅输出来源状态和文件名等摘要，文章标题、微信原文 URL、完整私有台账仅在受控目录保存。即使标记 scheduled，**也不代表平台真的触发过定时任务**；正式 7 次验收仍必须用自动任务的计划和实际执行记录与私有文件一一核对。若运行器未能获得持续的私有存储、目录权限不正确或进程失败，必须如实记为验收缺口，不能声称已自动持久化。测试命令：
+
+\`\`\`bash
+python3 -m unittest -v \
+  tests.test_wechat_rss_shadow_audit \
+  tests.test_wechat_rss_shadow_private_run
+\`\`\`
