@@ -160,10 +160,23 @@ export function normalizeTrackingResearchIdentity(value: string | undefined) {
   return normalizeIdentity(value ?? "");
 }
 
+// Entity timelines compare the same article text with many tracked names.
+// Cache this pure normalization, with a limit for long-lived SSR processes.
+const normalizedIdentityCache = new Map<string, string>();
+const MAX_NORMALIZED_IDENTITY_CACHE = 16_384;
+
 function normalizeIdentity(value: string) {
-  return text(value, 500)
+  const cached = normalizedIdentityCache.get(value);
+  if (cached !== undefined) return cached;
+  const normalized = text(value, 500)
     .toLocaleLowerCase("zh-CN")
     .replace(/[^a-z0-9\u3400-\u9fff]+/gu, "");
+  if (normalizedIdentityCache.size >= MAX_NORMALIZED_IDENTITY_CACHE) {
+    const oldest = normalizedIdentityCache.keys().next().value;
+    if (oldest !== undefined) normalizedIdentityCache.delete(oldest);
+  }
+  normalizedIdentityCache.set(value, normalized);
+  return normalized;
 }
 
 function canonicalUrl(value: string | undefined) {

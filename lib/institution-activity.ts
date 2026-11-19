@@ -41,6 +41,12 @@ type ExtendedEvent = IntelligenceEvent & {
   mentionedPeople?: string[];
 };
 
+type NormalizedEventEvidence = {
+  explicitInstitutions: string[];
+  searchableText: string;
+  companyTerms: string[];
+};
+
 type PortfolioIdentity = {
   slugs: Set<string>;
   names: Set<string>;
@@ -188,30 +194,35 @@ function aliasCanAppearInText(alias: string): boolean {
   return alias.length >= 2;
 }
 
-function eventText(event: ExtendedEvent): string {
-  return normalizeInstitutionTerm(
-    [
-      event.title,
-      event.summary,
-      event.company,
-      ...(event.institutions ?? []),
-      ...(event.mentionedCompanies ?? []),
-      ...(event.mentionedPeople ?? []),
-    ].join(" "),
-  );
+function normalizedEventEvidence(event: ExtendedEvent): NormalizedEventEvidence {
+  return {
+    explicitInstitutions: (event.institutions ?? [])
+      .map(normalizeInstitutionTerm)
+      .filter(Boolean),
+    searchableText: normalizeInstitutionTerm(
+      [
+        event.title,
+        event.summary,
+        event.company,
+        ...(event.institutions ?? []),
+        ...(event.mentionedCompanies ?? []),
+        ...(event.mentionedPeople ?? []),
+      ].join(" "),
+    ),
+    companyTerms: [event.company, ...(event.mentionedCompanies ?? [])]
+      .map(normalizeInstitutionTerm)
+      .filter(Boolean),
+  };
 }
 
 function directEventMatches(
   entry: InstitutionDirectoryEntry,
-  event: ExtendedEvent,
+  evidence: NormalizedEventEvidence,
 ): boolean {
   const aliases = identityTerms(entry);
-  const explicit = (event.institutions ?? [])
-    .map(normalizeInstitutionTerm)
-    .filter(Boolean);
   if (
     aliases.some((alias) =>
-      explicit.some(
+      evidence.explicitInstitutions.some(
         (value) => value === alias || value.includes(alias) || alias.includes(value),
       ),
     )
@@ -219,23 +230,19 @@ function directEventMatches(
     return true;
   }
 
-  const text = eventText(event);
   return aliases.some(
-    (alias) => aliasCanAppearInText(alias) && text.includes(alias),
+    (alias) => aliasCanAppearInText(alias) && evidence.searchableText.includes(alias),
   );
 }
 
 function portfolioEventMatches(
   entry: InstitutionDirectoryEntry,
   event: ExtendedEvent,
+  evidence: NormalizedEventEvidence,
 ): boolean {
   const portfolio = portfolioIdentities(entry);
   if (event.companySlug && portfolio.slugs.has(event.companySlug)) return true;
-
-  const companyTerms = [event.company, ...(event.mentionedCompanies ?? [])]
-    .map(normalizeInstitutionTerm)
-    .filter(Boolean);
-  return companyTerms.some((company) => portfolio.names.has(company));
+  return evidence.companyTerms.some((company) => portfolio.names.has(company));
 }
 
 function meaningfulTerms(values: string[]): string[] {
@@ -352,15 +359,16 @@ function scoreRelation(
 function buildRelation(
   entry: InstitutionDirectoryEntry,
   events: IntelligenceEvent[],
+  evidenceByEvent: Map<IntelligenceEvent, NormalizedEventEvidence>,
   sector?: InstitutionSectorContext,
 ): InstitutionActivityRelation | null {
   const directEvents = uniqueEvents(
-    events.filter((event) => directEventMatches(entry, event as ExtendedEvent)),
+    events.filter((event) => directEventMatches(entry, evidenceByEvent.get(event)!)),
   );
   const directIds = new Set(directEvents.map((event) => event.id));
   const portfolioEvents = uniqueEvents(
     events
-      .filter((event) => portfolioEventMatches(entry, event as ExtendedEvent))
+      .filter((event) => portfolioEventMatches(entry, event as ExtendedEvent, evidenceByEvent.get(event)!))
       .filter((event) => !directIds.has(event.id)),
   );
   const relatedEvents = uniqueEvents([...directEvents, ...portfolioEvents]);
@@ -404,8 +412,12 @@ export function getSectorInstitutionRelations(
   sector: InstitutionSectorContext,
   events: IntelligenceEvent[],
 ): InstitutionActivityRelation[] {
+  // Normalize each event once per query, not once per institution × event.
+  const evidenceByEvent = new Map(
+    events.map((event) => [event, normalizedEventEvidence(event as ExtendedEvent)]),
+  );
   return institutionDirectory
-    .map((entry) => buildRelation(entry, events, sector))
+    .map((entry) => buildRelation(entry, events, evidenceByEvent, sector))
     .filter((relation): relation is InstitutionActivityRelation => Boolean(relation))
     .sort(sortRelations);
 }
@@ -413,8 +425,11 @@ export function getSectorInstitutionRelations(
 export function getArticleInstitutionRelations(
   events: IntelligenceEvent[],
 ): InstitutionActivityRelation[] {
+  const evidenceByEvent = new Map(
+    events.map((event) => [event, normalizedEventEvidence(event as ExtendedEvent)]),
+  );
   return institutionDirectory
-    .map((entry) => buildRelation(entry, events))
+    .map((entry) => buildRelation(entry, events, evidenceByEvent))
     .filter((relation): relation is InstitutionActivityRelation => Boolean(relation))
     .sort(sortRelations);
 }

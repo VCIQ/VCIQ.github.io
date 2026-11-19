@@ -52,6 +52,28 @@ test("explicit institution metadata activates the matching directory institution
   assert.equal(idg.portfolioEvents.length, 0);
 });
 
+test("relation queries recalculate event text when the event is revised", () => {
+  const item = event({
+    id: "mutable-research-note",
+    title: "某公司公开技术动态",
+    company: "测试公司",
+    institutions: [],
+  });
+  assert.equal(
+    getArticleInstitutionRelations([item]).some(
+      (relation) => relation.institution.name === "IDG资本",
+    ),
+    false,
+  );
+  item.institutions = ["IDG 资本"];
+  const updated = getArticleInstitutionRelations([item]).find(
+    (relation) => relation.institution.name === "IDG资本",
+  );
+  assert.ok(updated);
+  assert.deepEqual(updated.directEvents.map((row) => row.id), [item.id]);
+  assert.equal(updated.portfolioEvents.length, 0);
+});
+
 test("portfolio company activity creates a relation without pretending it is a direct investment", () => {
   const relations = getArticleInstitutionRelations([
     event({
