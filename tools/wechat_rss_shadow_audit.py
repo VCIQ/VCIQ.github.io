@@ -293,7 +293,8 @@ def observe(
                                                 if snapshot_status == "ok" else None),
                           "needsManualReview": len(result_rows),
                           "newSincePrevious": (sum(r["newSincePrevious"] for r in result_rows)
-                                               if previous is not None else None),
+                                               if previous is not None and all(
+                                                   s["status"] == "ok" for s in per_source) else None),
                           **candidate_counts},
               "limitations": ["A feed response is not proof of complete publication history",
                               "No event-level matches are automatically approved",

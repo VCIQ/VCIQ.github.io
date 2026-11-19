@@ -43,7 +43,7 @@ python3 -m json.tool "$LEDGER_DIR/day-02.json.tmp" >/dev/null && mv "$LEDGER_DIR
 echo "day-02 exit=$status"
 ```
 
-**重要：** 运行即使返回退出码 2，也可能输出含来源故障/快照超时的有效 JSON，应私有保留，并在次日作为累计 `seenHistory` 的上一份报告。若上一份 JSON 缺失、校验失败、台账链中断或环境未共享存储，不能用 `newSincePrevious=0` 代替“未知”；须明确标注证据链断裂。每天独立保留 JSON、运行时间（美东/UTC/北京时间）、退出码及摘要。只将**不含文章全文和完整台账**的脱敏摘要记录到 Draft PR 评论。
+**重要：** 运行即使返回退出码 2，也可能输出含来源故障/快照超时的有效 JSON，应私有保留，并在次日作为累计 `seenHistory` 的上一份报告。若当天有任意来源请求失败或标题不匹配，汇总字段 `summary.newSincePrevious` 为 `null`，即本次完整来源新增量未知；成功来源的逐条 `rows[].newSincePrevious` 仍可用于局部复核。若上一份 JSON 缺失、校验失败、台账链中断或环境未共享存储，不能用 `newSincePrevious=0` 代替“未知”；须明确标注证据链断裂。每天独立保留 JSON、运行时间（美东/UTC/北京时间）、退出码及摘要。只将**不含文章全文和完整台账**的脱敏摘要记录到 Draft PR 评论。
 
 ## 验收门槛
 

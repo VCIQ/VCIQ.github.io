@@ -79,6 +79,22 @@ class ShadowAuditRegressionTests(unittest.TestCase):
         self.assertIs(third["rows"][0]["newSincePrevious"], False)
         self.assertEqual(third["summary"]["newSincePrevious"], 0)
 
+    def test_partial_source_failure_makes_global_new_count_unknown(self):
+        from datetime import timedelta
+        specs = [SPEC, {"id": "wechat-rss-deepseek", "name": "DeepSeek"}]
+        q = rss(("已知文章", URL_1.replace("&amp;", "&"), PUB))
+        d = q.replace("<title>量子位</title>".encode(),
+                      b"<title>DeepSeek</title>", 1)
+        day1 = observe(specs, {specs[0]["id"]: q, specs[1]["id"]: d},
+                       {"articles": []}, None, TIME)
+        day2 = observe(specs, {specs[0]["id"]: q}, {"articles": []},
+                       day1, TIME + timedelta(days=1))
+        self.assertEqual(day2["sources"][1]["status"], "fetch-error")
+        self.assertEqual(day2["summary"]["observed"], 1)
+        self.assertIsNone(day2["summary"]["newSincePrevious"])
+        self.assertIs(day2["rows"][0]["newSincePrevious"], False)
+        self.assertEqual(len(day2["seenHistory"]), 2)
+
     def test_repeated_title_and_near_title_inside_feed_are_only_review_leads(self):
         from datetime import timedelta
         t = "MEET2027含金量再加码：AI4S/量子计算/AI Infra…第二批嘉宾强势来袭！"
