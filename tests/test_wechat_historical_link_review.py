@@ -72,6 +72,62 @@ class HistoricalWeChatReviewTests(unittest.TestCase):
         self.assertEqual(report["alternativeCandidates"], 1)
         self.assertEqual(report["verifiedOriginalWechat"], 0)
 
+    def test_full_wechat_candidate_stays_pending(self):
+        s, q = fixture()
+        q["articles"][0]["originalWechatCandidates"] = [{
+            "url": "https://mp.weixin.qq.com/s?__biz=MzA3&mid=2651072888&idx=3&sn=abcd",
+            "accessStatus": "not-verified", "humanReviewStatus": "pending",
+            "publisherIdentityConfirmedFromWeChat": False,
+            "approvedForReplacement": False,
+            "independentEvidenceUrls": [
+                "https://robosignal.ai/items/abc",
+                "https://www.lininn.cn/page/ai-daily"]
+        }]
+        result = validate(s, q)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["originalWechatCandidates"], 1)
+        self.assertEqual(result["verifiedOriginalWechat"], 0)
+        self.assertEqual(result["appliedToProduction"], 0)
+
+    def test_temporary_or_offsite_original_candidate_is_rejected(self):
+        s, q = fixture()
+        q["articles"][0]["originalWechatCandidates"] = [{
+            "url": SIGNED, "accessStatus": "not-verified",
+            "humanReviewStatus": "pending",
+            "publisherIdentityConfirmedFromWeChat": False,
+            "approvedForReplacement": False,
+            "independentEvidenceUrls": [
+                "https://robosignal.ai/items/abc",
+                "https://www.lininn.cn/page/ai-daily"]
+        }]
+        self.assertEqual(validate(s, q)["status"], "invalid")
+
+    def test_original_candidate_cannot_forge_human_approval(self):
+        s, q = fixture()
+        q["articles"][0]["originalWechatCandidates"] = [{
+            "url": "https://mp.weixin.qq.com/s?__biz=MzA3&mid=2651072888&idx=3&sn=abcd",
+            "accessStatus": "verified", "humanReviewStatus": "approved",
+            "publisherIdentityConfirmedFromWeChat": True,
+            "approvedForReplacement": True,
+            "independentEvidenceUrls": [
+                "https://robosignal.ai/items/abc",
+                "https://www.lininn.cn/page/ai-daily"]
+        }]
+        self.assertEqual(validate(s, q)["status"], "invalid")
+
+    def test_original_candidate_needs_two_evidence_hosts(self):
+        s, q = fixture()
+        q["articles"][0]["originalWechatCandidates"] = [{
+            "url": "https://mp.weixin.qq.com/s?__biz=MzA3&mid=2651072888&idx=3&sn=abcd",
+            "accessStatus": "not-verified", "humanReviewStatus": "pending",
+            "publisherIdentityConfirmedFromWeChat": False,
+            "approvedForReplacement": False,
+            "independentEvidenceUrls": [
+                "https://robosignal.ai/items/abc",
+                "https://robosignal.ai/items/def"]
+        }]
+        self.assertEqual(validate(s, q)["status"], "invalid")
+
     def test_source_identity_mismatch_is_rejected(self):
         s, q = fixture()
         q["articles"][0]["sourceId"] = "different"

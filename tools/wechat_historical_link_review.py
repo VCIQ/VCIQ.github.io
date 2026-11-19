@@ -67,6 +67,8 @@ def validate(snapshot: dict, queue: dict) -> dict:
     if len(review_rows) != baseline.get("temporaryWechatArticles"):
         errors.append("declared baseline count differs from review count")
     candidates = 0
+    original_candidates = 0
+    seen_original_urls: set[str] = set()
     for aid, row in by_id.items():
         if aid not in expected:
             continue
@@ -86,6 +88,43 @@ def validate(snapshot: dict, queue: dict) -> dict:
             errors.append(f"unapproved replacement: {aid}")
         if row.get("priority") not in PRIORITIES:
             errors.append(f"invalid priority: {aid}")
+        wechat_candidates = row.get("originalWechatCandidates", [])
+        if not isinstance(wechat_candidates, list) or len(wechat_candidates) > 3:
+            errors.append(f"invalid original-candidate list: {aid}")
+            wechat_candidates = []
+        for candidate in wechat_candidates:
+            original_candidates += 1
+            if not isinstance(candidate, dict):
+                errors.append(f"malformed original candidate: {aid}")
+                continue
+            candidate_url = str(candidate.get("url", "")).strip()
+            if classify_wechat_article_url(candidate_url) != "durable":
+                errors.append(f"invalid/temporary WeChat original candidate: {aid}")
+            if candidate_url in seen_original_urls:
+                errors.append(f"original candidate reused across articles: {aid}")
+            seen_original_urls.add(candidate_url)
+            if (candidate.get("accessStatus") != "not-verified"
+                    or candidate.get("humanReviewStatus") != "pending"
+                    or candidate.get("publisherIdentityConfirmedFromWeChat") is not False
+                    or candidate.get("approvedForReplacement") is not False):
+                errors.append(f"candidate prematurely treated as approved: {aid}")
+            evidence = candidate.get("independentEvidenceUrls")
+            hosts: set[str] = set()
+            if not isinstance(evidence, list):
+                errors.append(f"missing original-candidate provenance: {aid}")
+                continue
+            for eurl in evidence:
+                try:
+                    p = urlsplit(str(eurl))
+                    if (p.scheme != "https" or not p.hostname or p.username
+                            or p.password or p.hostname.casefold() == "mp.weixin.qq.com"):
+                        errors.append(f"unsafe provenance URL: {aid}")
+                    elif p.hostname:
+                        hosts.add(p.hostname.casefold())
+                except ValueError:
+                    errors.append(f"malformed provenance URL: {aid}")
+            if len(hosts) < 2:
+                errors.append(f"needs two separately hosted references: {aid}")
         for candidate in row.get("alternativeCandidates", []):
             candidates += 1
             if not isinstance(candidate, dict):
@@ -117,6 +156,7 @@ def validate(snapshot: dict, queue: dict) -> dict:
         "trackedHistorical": len(expected),
         "reviewRows": len(review_rows),
         "alternativeCandidates": candidates,
+        "originalWechatCandidates": original_candidates,
         "priorityCounts": dict(Counter(row.get("priority") for row in review_rows if isinstance(row, dict))),
         "verifiedOriginalWechat": 0,
         "appliedToProduction": 0,
