@@ -77,5 +77,24 @@ class WechatRssCandidateTests(unittest.TestCase):
         )
 
 
+    def test_same_wechat_broadcast_distinct_idx_are_distinct_articles(self):
+        spec = self.candidates[0]
+        # One WeChat broadcast (same __biz and mid) can contain many articles.
+        xml = (
+            '<rss version="2.0"><channel><title>样例</title>'
+            '<item><title>技术新闻一</title>'
+            '<link>https://mp.weixin.qq.com/s?__biz=abc&amp;mid=123&amp;idx=1</link>'
+            '<pubDate>Wed, 18 Nov 2026 08:00:00 GMT</pubDate></item>'
+            '<item><title>技术新闻二</title>'
+            '<link>https://mp.weixin.qq.com/s?__biz=abc&amp;mid=123&amp;idx=2</link>'
+            '<pubDate>Wed, 18 Nov 2026 08:00:00 GMT</pubDate></item>'
+            '</channel></rss>'
+        )
+        rows = parse_feed_items(xml, spec)
+        self.assertEqual(len(rows), 2)
+        self.assertNotEqual(rows[0]["id"], rows[1]["id"])
+        self.assertNotEqual(rows[0]["source"]["url"], rows[1]["source"]["url"])
+
+
 if __name__ == "__main__":
     unittest.main()
