@@ -1,0 +1,30 @@
+name: Historical WeChat link repair review
+
+on:
+  pull_request:
+    paths:
+      - 'diagnostics/wechat-historical-link-repair-20261119.json'
+      - 'docs/wechat-historical-link-repair-20261119.md'
+      - 'tools/wechat_historical_link_review.py'
+      - 'tests/test_wechat_historical_link_review.py'
+      - '.github/workflows/wechat-historical-link-review.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  review-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile bounded audit
+        run: python -m py_compile tools/wechat_historical_link_review.py tests/test_wechat_historical_link_review.py
+      - name: Run offline review tests
+        run: python -m unittest -v tests.test_wechat_historical_link_review
+      - name: Check frozen 22-row review queue
+        run: python tools/wechat_historical_link_review.py --expected-count 22
