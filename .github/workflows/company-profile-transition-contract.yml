@@ -1,0 +1,30 @@
+name: Company profile transition contract
+
+# CI-only on pull requests. Never scheduled, never runs company crawlers.
+# No token writes, production queues, GitHub refs or Pages handoff.
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  transition-offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate synthetic company queue transition and queue unit tests
+        run: |
+          python -B -m unittest \
+            tests.test_company_profile_writer_transition_gate \
+            tests.test_company_profile_refresh_queue -v
+      - name: Verify working tree remains unchanged
+        run: git diff --exit-code
