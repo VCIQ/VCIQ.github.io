@@ -17,10 +17,12 @@ from urllib.parse import quote_plus, urlsplit
 
 try:  # Imported by tests as tools.crawl_with_tracking.
     from . import crawl_articles as crawler
+    from . import ipo_priority_tracking
     from . import tracking_quality
     from . import tracking_taxonomy
 except ImportError:  # Executed directly with ``python tools/...``.
     import crawl_articles as crawler
+    import ipo_priority_tracking
     import tracking_quality
     import tracking_taxonomy
 
@@ -383,10 +385,17 @@ def _custom_sources(
 
 
 def build_merged_config(
-    base: dict[str, Any], tracking: dict[str, Any]
+    base: dict[str, Any], tracking: dict[str, Any], *,
+    include_ipo_priority: bool = False,
 ) -> tuple[dict[str, Any], dict[str, tuple[str, str, str, str]], set[str]]:
     config = copy.deepcopy(base)
     tracks = _enabled_tracks(tracking)
+    if include_ipo_priority:
+        # Append rotating IPO groups only in the real crawler entrypoint.
+        # Keeping the generic track parser pure preserves custom-track
+        # semantics in callers and unrelated source-routing tests.
+        slots = max(0, 30 - len(tracks))
+        tracks.extend(ipo_priority_tracking.daily_tracks()[:slots])
     global_terms = _unique(
         term for track in tracks for term in _track_terms(track)
     )
@@ -488,7 +497,9 @@ def _install_runtime_overrides(
 def main() -> int:
     base = crawler.load_config()
     tracking = load_tracking()
-    merged, sec_specs, active_ids = build_merged_config(base, tracking)
+    merged, sec_specs, active_ids = build_merged_config(
+        base, tracking, include_ipo_priority=True,
+    )
     _install_runtime_overrides(merged, sec_specs, active_ids)
     return crawler.main()
 
