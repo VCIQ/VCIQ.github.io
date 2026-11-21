@@ -31,8 +31,11 @@ export function focusDisplayDecision(id: string, selection: HomepageFocusSelecti
 export function findFocusCandidates(query: string, selection: HomepageFocusSelection) {
   const value = query.trim(); if (!value) return [];
   const url = homepageMaterialUrl(value);
-  return selection.candidates.filter((item) => url ? homepageMaterialUrl(item.source.url) === url :
-    item.id === value || `${item.title} ${item.company} ${(item.mentionedPeople ?? []).join(" ")}`.toLowerCase().includes(value.toLowerCase()));
+  const title = value.toLowerCase();
+  return selection.candidates.filter((item) => url
+    ? [item.source, ...(item.relatedSources ?? [])].some((source) => homepageMaterialUrl(source.url) === url)
+    : item.id === value || [item.title, item.company, ...(item.mentionedPeople ?? []),
+      ...(item.relatedSources ?? []).map((source) => source.title)].some((part) => part.toLowerCase().includes(title)));
 }
 
 /** No judged set => no recall/irrelevance rate; no inferred labels from clicks. */
