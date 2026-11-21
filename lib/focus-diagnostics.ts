@@ -17,6 +17,26 @@ export const FOCUS_REASON_LABELS: Readonly<Record<string, string>> = Object.free
   "not-observed": "当前候选窗口没有这条记录；无法据此断言从未采到，需查上游采集记录",
 });
 
+/** Counts only the candidate window already available in this browser; never estimates unseen upstream articles. */
+export function focusExclusionSummary(selection: HomepageFocusSelection) {
+  const counts: Record<string, number> = {};
+  for (const decision of selection.decisions.values()) {
+    const reason = decision.exclusion ?? (decision.groupedInto ? "grouped" : decision.eligible ? "eligible" : "unclassified");
+    counts[reason] = (counts[reason] ?? 0) + 1;
+  }
+  return [
+    { code: "dismissed", label: FOCUS_REASON_LABELS.dismissed, count: counts.dismissed ?? 0 },
+    { code: "low-quality", label: FOCUS_REASON_LABELS["low-quality"], count: counts["low-quality"] ?? 0 },
+    { code: "invalid-date", label: FOCUS_REASON_LABELS["invalid-date"], count: counts["invalid-date"] ?? 0 },
+    { code: "stale", label: FOCUS_REASON_LABELS.stale, count: counts.stale ?? 0 },
+    { code: "low-impact", label: FOCUS_REASON_LABELS["low-impact"], count: counts["low-impact"] ?? 0 },
+    { code: "entity-unresolved", label: FOCUS_REASON_LABELS["entity-unresolved"], count: counts["entity-unresolved"] ?? 0 },
+    { code: "no-personal-signal", label: FOCUS_REASON_LABELS["no-personal-signal"], count: counts["no-personal-signal"] ?? 0 },
+    { code: "grouped", label: FOCUS_REASON_LABELS.grouped, count: counts.grouped ?? 0 },
+    { code: "eligible", label: "符合入选条件", count: counts.eligible ?? 0 },
+  ].filter((row) => row.count > 0);
+}
+
 export function focusDisplayDecision(id: string, selection: HomepageFocusSelection,
   filtered: readonly LiveIntelligenceEvent[], rendered: readonly LiveIntelligenceEvent[]) {
   const decision = selection.decisions.get(id);
