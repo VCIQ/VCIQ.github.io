@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
   "pipelineVersion": "automation-control-plane-v1",
-  "generatedAt": "2026-11-23T20:37:11Z",
-  "overallStatus": "healthy",
+  "generatedAt": "2026-11-24T01:08:07Z",
+  "overallStatus": "stale",
   "summary": {
     "jobCount": 10,
-    "healthyJobs": 10,
-    "staleJobs": 0,
+    "healthyJobs": 9,
+    "staleJobs": 1,
     "missingJobs": 0,
     "degradedJobs": 0,
     "unknownJobs": 0,
     "artifactCount": 19,
-    "freshnessWarningJobs": 0,
-    "staleArtifacts": 0
+    "freshnessWarningJobs": 3,
+    "staleArtifacts": 1
   },
   "jobs": [
     {
@@ -27,19 +27,19 @@
       "timeoutMinutes": 45.0,
       "failurePolicy": "retain-last-good",
       "qualityGate": "frequent-refresh-quality",
-      "status": "healthy",
+      "status": "stale",
       "lastCompletedAt": "2026-11-23T20:22:48Z",
       "artifacts": [
         {
           "path": "public/data/articles.json",
-          "status": "healthy",
-          "ageHours": 0.24,
+          "status": "stale",
+          "ageHours": 4.76,
           "dataTimestamp": "2026-11-23T20:22:41Z"
         }
       ],
-      "freshnessStatus": "healthy",
+      "freshnessStatus": "stale",
       "lastSuccessfulRunAt": "2026-11-23T20:22:48Z",
-      "runAgeHours": 0.24
+      "runAgeHours": 4.76
     },
     {
       "jobId": "tracking-entity-discovery",
@@ -59,13 +59,13 @@
         {
           "path": "public/data/source_health.json",
           "status": "healthy",
-          "ageHours": 0.24,
+          "ageHours": 4.76,
           "dataTimestamp": "2026-11-23T20:22:47Z"
         }
       ],
       "freshnessStatus": "healthy",
       "lastSuccessfulRunAt": "2026-11-21T23:47:56Z",
-      "runAgeHours": 44.82
+      "runAgeHours": 49.34
     },
     {
       "jobId": "public-intelligence-full-refresh",
@@ -84,56 +84,56 @@
       "artifacts": [
         {
           "path": "public/data/articles.json",
-          "status": "healthy",
-          "ageHours": 0.24,
+          "status": "stale",
+          "ageHours": 4.76,
           "dataTimestamp": "2026-11-23T20:22:41Z"
         },
         {
           "path": "public/data/listed_company_disclosures.json",
           "status": "healthy",
-          "ageHours": 17.46,
+          "ageHours": 21.97,
           "dataTimestamp": "2026-11-23T03:09:52Z"
         },
         {
           "path": "public/data/market_profiles.json",
           "status": "healthy",
-          "ageHours": 17.33,
+          "ageHours": 21.85,
           "dataTimestamp": "2026-11-23T03:17:14Z"
         },
         {
           "path": "public/data/people.json",
           "status": "healthy",
-          "ageHours": 17.31,
+          "ageHours": 21.83,
           "dataTimestamp": "2026-11-23T03:18:30Z"
         },
         {
           "path": "public/data/person_research_agenda.json",
           "status": "healthy",
-          "ageHours": 17.31,
+          "ageHours": 21.83,
           "dataTimestamp": "2026-11-23T03:18:30Z"
         },
         {
           "path": "public/data/person_research_queue.json",
           "status": "healthy",
-          "ageHours": 17.31,
+          "ageHours": 21.83,
           "dataTimestamp": "2026-11-23T03:18:30Z"
         },
         {
           "path": "public/data/person_research_outcomes.json",
           "status": "healthy",
-          "ageHours": 17.31,
+          "ageHours": 21.83,
           "dataTimestamp": "2026-11-23T03:18:30Z"
         },
         {
           "path": "public/data/source_health.json",
           "status": "healthy",
-          "ageHours": 0.24,
+          "ageHours": 4.76,
           "dataTimestamp": "2026-11-23T20:22:47Z"
         }
       ],
-      "freshnessStatus": "healthy",
+      "freshnessStatus": "stale",
       "lastSuccessfulRunAt": "2026-11-23T03:19:37Z",
-      "runAgeHours": 17.29
+      "runAgeHours": 21.81
     },
     {
       "jobId": "venture-profile-refresh",
@@ -155,13 +155,13 @@
         {
           "path": "public/data/venture_profiles.json",
           "status": "healthy",
-          "ageHours": 4.21,
+          "ageHours": 8.73,
           "dataTimestamp": "2026-11-23T16:24:36Z"
         }
       ],
       "freshnessStatus": "healthy",
       "lastSuccessfulRunAt": "2026-11-23T16:26:07Z",
-      "runAgeHours": 4.18
+      "runAgeHours": 8.7
     },
     {
       "jobId": "institution-data-layers",
@@ -183,25 +183,25 @@
         {
           "path": "public/data/institution_entities.json",
           "status": "healthy",
-          "ageHours": 2684.62,
+          "ageHours": 2689.14,
           "dataTimestamp": "2026-08-04T00:00:00Z"
         },
         {
           "path": "public/data/institution_events.json",
           "status": "healthy",
-          "ageHours": 17.33,
+          "ageHours": 21.85,
           "dataTimestamp": "2026-11-23T03:17:16Z"
         },
         {
           "path": "public/data/institution_equity_relationships.json",
           "status": "healthy",
-          "ageHours": 20.36,
+          "ageHours": 24.88,
           "dataTimestamp": "2026-11-23T00:15:33Z"
         }
       ],
       "freshnessStatus": "healthy",
       "lastSuccessfulRunAt": "2026-11-23T04:00:54Z",
-      "runAgeHours": 16.6
+      "runAgeHours": 21.12
     },
     {
       "jobId": "star-market-investor-refresh",
@@ -221,13 +221,13 @@
         {
           "path": "public/data/star_market_investors.json",
           "status": "healthy",
-          "ageHours": 20.36,
+          "ageHours": 24.88,
           "dataTimestamp": "2026-11-23T00:15:33Z"
         }
       ],
       "freshnessStatus": "healthy",
       "lastSuccessfulRunAt": "2026-11-23T00:32:20Z",
-      "runAgeHours": 20.08
+      "runAgeHours": 24.6
     },
     {
       "jobId": "source-performance-review",
@@ -249,13 +249,13 @@
         {
           "path": "public/data/source_performance_review.json",
           "status": "healthy",
-          "ageHours": 543.77,
+          "ageHours": 548.29,
           "dataTimestamp": "2026-11-01T04:51:00Z"
         }
       ],
       "freshnessStatus": "healthy",
       "lastSuccessfulRunAt": "2026-11-01T06:37:45Z",
-      "runAgeHours": 541.99
+      "runAgeHours": 546.51
     },
     {
       "jobId": "research-agent-daily",
@@ -272,35 +272,35 @@
       "failurePolicy": "retain-last-good",
       "qualityGate": "research-agent-evidence-contract",
       "status": "healthy",
-      "lastCompletedAt": "2026-11-23T20:37:11Z",
+      "lastCompletedAt": "2026-11-24T01:08:07Z",
       "artifacts": [
         {
           "path": "public/data/research_agent_daily.json",
           "status": "healthy",
-          "ageHours": 0.08,
-          "dataTimestamp": "2026-11-23T20:32:16Z"
+          "ageHours": 0.0,
+          "dataTimestamp": "2026-11-24T01:08:06Z"
         },
         {
           "path": "public/data/research_agent_snapshot.json",
           "status": "healthy",
-          "ageHours": 0.08,
-          "dataTimestamp": "2026-11-23T20:32:16Z"
+          "ageHours": 0.0,
+          "dataTimestamp": "2026-11-24T01:08:06Z"
         },
         {
           "path": "public/data/innovation_capital_thesis_memory.json",
           "status": "healthy",
-          "ageHours": 0.08,
-          "dataTimestamp": "2026-11-23T20:32:16Z"
+          "ageHours": 0.0,
+          "dataTimestamp": "2026-11-24T01:08:06Z"
         },
         {
           "path": "public/data/native_research_results.json",
           "status": "healthy",
           "ageHours": 0.0,
-          "dataTimestamp": "2026-11-23T20:37:11Z"
+          "dataTimestamp": "2026-11-24T01:08:07Z"
         }
       ],
       "freshnessStatus": "healthy",
-      "lastSuccessfulRunAt": "2026-11-23T20:37:11Z",
+      "lastSuccessfulRunAt": "2026-11-24T01:08:07Z",
       "runAgeHours": 0.0
     },
     {
@@ -321,13 +321,13 @@
         {
           "path": "public/data/native_research_reports.json",
           "status": "healthy",
-          "ageHours": 1340.51,
+          "ageHours": 1345.02,
           "dataTimestamp": "2026-09-29T00:06:49Z"
         }
       ],
       "freshnessStatus": "healthy",
       "lastSuccessfulRunAt": "2026-09-29T00:06:49Z",
-      "runAgeHours": 1340.51
+      "runAgeHours": 1345.02
     },
     {
       "jobId": "pages-deploy",
@@ -349,9 +349,9 @@
       "healthDerivedFrom": [
         "public-intelligence-full-refresh"
       ],
-      "freshnessStatus": "healthy",
+      "freshnessStatus": "stale",
       "lastSuccessfulRunAt": "2026-11-23T03:19:37Z",
-      "runAgeHours": 17.29
+      "runAgeHours": 21.81
     }
   ]
 }
