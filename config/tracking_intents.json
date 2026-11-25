@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-25T04:16:50+00:00",
+  "updatedAt": "2026-11-25T04:30:36+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -24446,6 +24446,21 @@
       "resolutionSource": "authenticated-manual-intent",
       "resolutionStatus": "resolved",
       "createdAt": "2026-11-25T04:16:50+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-e9403151ce690398f962",
+      "kind": "technology",
+      "name": "微波激光",
+      "aliases": [],
+      "keywords": [
+        "微波激光",
+        "钻石载体"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-11-25T04:30:36+00:00",
       "createdBy": "VCIQ"
     }
   ],
@@ -147483,6 +147498,55 @@
         "source": "explicit-type",
         "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
         "decisionKey": "nvl72",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-bc9536fa03237dd4a5ee",
+      "trackId": "track:quantum",
+      "entityId": "technology-e9403151ce690398f962",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-b272e93f8a4932c47e02",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-25T04:30:36+00:00",
+          "evidenceUrl": "https://www.msn.com/zh-cn/channel/source/cnBeta.COM/sr-vid-yigrey3aqwvu8msgcwqkicf3gvj43va4rtcwf4wgrgici2gi2eps",
+          "reasons": [
+            "个人研究兴趣",
+            "技术突破",
+            "融资机会"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-a98f0b631ca56f8339483801",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-25T04:30:36+00:00",
+        "trackId": "track:quantum",
+        "entityId": "technology-e9403151ce690398f962",
+        "requestedName": "微波激光",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "微波激光",
+        "targetId": "topic:微波激光",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "微波激光",
         "reclassified": false
       },
       "executionState": "applied"
