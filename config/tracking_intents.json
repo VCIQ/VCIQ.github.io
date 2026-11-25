@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-25T13:14:44+00:00",
+  "updatedAt": "2026-11-25T13:33:28+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -24640,6 +24640,51 @@
       "resolutionSource": "unresolved",
       "resolutionStatus": "review",
       "createdAt": "2026-11-25T13:14:44+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "company-candidate:紫微科技",
+      "kind": "company",
+      "name": "紫微科技",
+      "aliases": [],
+      "keywords": [
+        "AZSPACE",
+        "成都紫微空间科技有限公司"
+      ],
+      "state": "active",
+      "resolutionSource": "human-decision",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-11-25T13:33:28+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-77214a8832ec3b18ded0",
+      "kind": "technology",
+      "name": "太空算力 NQI",
+      "aliases": [],
+      "keywords": [
+        "国家质量基础设施",
+        "星载算力"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-11-25T13:33:28+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-d05ab60dfd6359bedeab",
+      "kind": "technology",
+      "name": "太空光伏",
+      "aliases": [],
+      "keywords": [
+        "空间光伏",
+        "在轨中试"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-11-25T13:33:28+00:00",
       "createdBy": "VCIQ"
     }
   ],
@@ -149667,6 +149712,382 @@
         "source": "unresolved",
         "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
         "decisionKey": "oceanbase",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-7ef5ee764fca683b5561",
+      "trackId": "track:robotics",
+      "entityId": "company-candidate:紫微科技",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "medium",
+      "origins": [
+        {
+          "id": "origin-226166a783cc095f7684",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-25T13:33:28+00:00",
+          "evidenceUrl": "https://www.futurephecda.com/news/144204",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-c6637063f72eb81131ab69b9",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-25T13:33:28+00:00",
+        "trackId": "track:robotics",
+        "entityId": "company-candidate:紫微科技",
+        "requestedName": "紫微科技",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "紫微科技",
+        "targetId": "company-candidate:紫微科技",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "紫微科技",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-00ea809cfb0b0580aaa3",
+      "trackId": "track:semiconductor",
+      "entityId": "company-candidate:紫微科技",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "medium",
+      "origins": [
+        {
+          "id": "origin-226166a783cc095f7684",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-25T13:33:28+00:00",
+          "evidenceUrl": "https://www.futurephecda.com/news/144204",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-da2adaba04ef874f6dfe0c8f",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-25T13:33:28+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "company-candidate:紫微科技",
+        "requestedName": "紫微科技",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "紫微科技",
+        "targetId": "company-candidate:紫微科技",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "紫微科技",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-2cb07e2e46b93d9a688e",
+      "trackId": "track:robotics",
+      "entityId": "technology-77214a8832ec3b18ded0",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-58f390ae5d02bc74d5b5",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-25T13:33:28+00:00",
+          "evidenceUrl": "https://www.futurephecda.com/news/144204",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-35acf3fcdef93f2abe571d78",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-25T13:33:28+00:00",
+        "trackId": "track:robotics",
+        "entityId": "technology-77214a8832ec3b18ded0",
+        "requestedName": "太空算力 NQI",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "太空算力 NQI",
+        "targetId": "topic:太空算力nqi",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "太空算力nqi",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-ae6af8b887d790441487",
+      "trackId": "track:semiconductor",
+      "entityId": "technology-77214a8832ec3b18ded0",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-58f390ae5d02bc74d5b5",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-25T13:33:28+00:00",
+          "evidenceUrl": "https://www.futurephecda.com/news/144204",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-ca7436c55d5ab0d486e60d8a",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-25T13:33:28+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "technology-77214a8832ec3b18ded0",
+        "requestedName": "太空算力 NQI",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "太空算力 NQI",
+        "targetId": "topic:太空算力nqi",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "太空算力nqi",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-c8ffec5cef3417309677",
+      "trackId": "track:robotics",
+      "entityId": "technology-d05ab60dfd6359bedeab",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-427cc8f16237e17e7b0b",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-25T13:33:28+00:00",
+          "evidenceUrl": "https://www.futurephecda.com/news/144204",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-97dbbfbe5d357b1ccdb2153c",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-25T13:33:28+00:00",
+        "trackId": "track:robotics",
+        "entityId": "technology-d05ab60dfd6359bedeab",
+        "requestedName": "太空光伏",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "太空光伏",
+        "targetId": "topic:太空光伏",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "太空光伏",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-d33ad450b42b8d259888",
+      "trackId": "track:semiconductor",
+      "entityId": "technology-d05ab60dfd6359bedeab",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-427cc8f16237e17e7b0b",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-25T13:33:28+00:00",
+          "evidenceUrl": "https://www.futurephecda.com/news/144204",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-20aedd808c342ba67d7fb384",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-25T13:33:28+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "technology-d05ab60dfd6359bedeab",
+        "requestedName": "太空光伏",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "太空光伏",
+        "targetId": "topic:太空光伏",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "太空光伏",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-d5f32bac4cd19f22057c",
+      "trackId": "track:space",
+      "entityId": "technology-d05ab60dfd6359bedeab",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-427cc8f16237e17e7b0b",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-25T13:33:28+00:00",
+          "evidenceUrl": "https://www.futurephecda.com/news/144204",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-8f9d1001f72e6b20a1d4dbe1",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-25T13:33:28+00:00",
+        "trackId": "track:space",
+        "entityId": "technology-d05ab60dfd6359bedeab",
+        "requestedName": "太空光伏",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "太空光伏",
+        "targetId": "topic:太空光伏",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "太空光伏",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-fd7511e0fe7b3d5be55e",
+      "trackId": "track:materials",
+      "entityId": "technology-d05ab60dfd6359bedeab",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-427cc8f16237e17e7b0b",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-25T13:33:28+00:00",
+          "evidenceUrl": "https://www.futurephecda.com/news/144204",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-83bb6d5f28014cd358dc6c4e",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-25T13:33:28+00:00",
+        "trackId": "track:materials",
+        "entityId": "technology-d05ab60dfd6359bedeab",
+        "requestedName": "太空光伏",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "太空光伏",
+        "targetId": "topic:太空光伏",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "太空光伏",
         "reclassified": false
       },
       "executionState": "applied"
