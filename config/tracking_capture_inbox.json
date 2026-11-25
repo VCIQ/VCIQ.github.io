@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-25T13:36:44+00:00",
+  "generatedAt": "2026-11-25T13:38:50+00:00",
   "records": [
     {
       "id": "capture-a32167daf9fce663",
@@ -51,7 +51,9 @@
         "reason": "管理员显式选择“人物”，且未与正式目录冲突。",
         "decisionKey": "xinmingtu",
         "reclassified": false
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "complete"
     },
     {
       "id": "capture-6b0f6a407780e386",
@@ -102,7 +104,9 @@
         "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
         "decisionKey": "phylo",
         "reclassified": false
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "needs_enrichment"
     },
     {
       "id": "capture-b34f3aacfaa8684e",
@@ -158,7 +162,9 @@
         "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
         "decisionKey": "原子芯光",
         "reclassified": false
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "needs_enrichment"
     },
     {
       "id": "capture-e4c52b0b852d63dd",
@@ -208,13 +214,115 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "中性原子量子计算",
-        "targetId": "technology-e90a2e299b91331c27f8",
+        "targetId": "topic:中性原子量子计算",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "中性原子量子计算",
         "reclassified": false
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "complete"
+    },
+    {
+      "id": "capture-badaa4ff4ae03ee3",
+      "entityType": "company",
+      "canonicalName": "紫微科技",
+      "rawSelection": "紫微科技",
+      "aliases": [],
+      "trackSlugs": [
+        "robotics",
+        "semiconductor"
+      ],
+      "trackNames": [
+        "机器人",
+        "半导体"
+      ],
+      "source": {
+        "articleId": "",
+        "title": "紫微科技",
+        "url": "https://www.futurephecda.com/news/144204",
+        "summary": "",
+        "sourceName": "GitHub Actions · 内部手动追踪",
+        "channel": "manual-tracking",
+        "channelLabel": "内部管理",
+        "eventType": "人工追踪"
+      },
+      "capturedAt": "2026-11-25T13:33:28+00:00",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "robotics:sampleCompanies",
+        "semiconductor:sampleCompanies"
+      ],
+      "reasons": [
+        "个人研究兴趣"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "紫微科技",
+        "targetId": "company-candidate:紫微科技",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "紫微科技",
+        "reclassified": false
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "needs_enrichment"
+    },
+    {
+      "id": "capture-57af125163302a82",
+      "entityType": "topic",
+      "canonicalName": "太空算力 NQI",
+      "rawSelection": "太空算力 NQI",
+      "aliases": [],
+      "trackSlugs": [
+        "robotics",
+        "semiconductor"
+      ],
+      "trackNames": [
+        "机器人",
+        "半导体"
+      ],
+      "source": {
+        "articleId": "",
+        "title": "太空算力 NQI",
+        "url": "https://www.futurephecda.com/news/144204",
+        "summary": "",
+        "sourceName": "GitHub Actions · 内部手动追踪",
+        "channel": "manual-tracking",
+        "channelLabel": "内部管理",
+        "eventType": "人工追踪"
+      },
+      "capturedAt": "2026-11-25T13:33:28+00:00",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "robotics:keywords",
+        "semiconductor:keywords"
+      ],
+      "reasons": [
+        "个人研究兴趣"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "太空算力 NQI",
+        "targetId": "topic:太空算力nqi",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "太空算力nqi",
+        "reclassified": false
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "complete"
     },
     {
       "id": "capture-f1c42fc03fa1aa14",
@@ -262,109 +370,15 @@
         "requestedType": "topic",
         "entityType": "topic",
         "canonicalName": "太空光伏",
-        "targetId": "technology-d05ab60dfd6359bedeab",
+        "targetId": "topic:太空光伏",
         "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
         "decisionKey": "太空光伏",
         "reclassified": false
-      }
-    },
-    {
-      "id": "capture-57af125163302a82",
-      "entityType": "topic",
-      "canonicalName": "太空算力 NQI",
-      "rawSelection": "太空算力 NQI",
-      "aliases": [],
-      "trackSlugs": [
-        "robotics",
-        "semiconductor"
-      ],
-      "trackNames": [
-        "机器人",
-        "半导体"
-      ],
-      "source": {
-        "articleId": "",
-        "title": "太空算力 NQI",
-        "url": "https://www.futurephecda.com/news/144204",
-        "summary": "",
-        "sourceName": "GitHub Actions · 内部手动追踪",
-        "channel": "manual-tracking",
-        "channelLabel": "内部管理",
-        "eventType": "人工追踪"
       },
-      "capturedAt": "2026-11-25T13:33:28+00:00",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "robotics:keywords",
-        "semiconductor:keywords"
-      ],
-      "reasons": [
-        "个人研究兴趣"
-      ],
-      "note": "",
-      "resolution": {
-        "status": "resolved",
-        "requestedType": "topic",
-        "entityType": "topic",
-        "canonicalName": "太空算力 NQI",
-        "targetId": "technology-77214a8832ec3b18ded0",
-        "confidence": "high",
-        "source": "authenticated-manual-intent",
-        "reason": "管理员显式确认该技术对象，并通过追踪关键字校验。",
-        "decisionKey": "太空算力nqi",
-        "reclassified": false
-      }
-    },
-    {
-      "id": "capture-badaa4ff4ae03ee3",
-      "entityType": "company",
-      "canonicalName": "紫微科技",
-      "rawSelection": "紫微科技",
-      "aliases": [],
-      "trackSlugs": [
-        "robotics",
-        "semiconductor"
-      ],
-      "trackNames": [
-        "机器人",
-        "半导体"
-      ],
-      "source": {
-        "articleId": "",
-        "title": "紫微科技",
-        "url": "https://www.futurephecda.com/news/144204",
-        "summary": "",
-        "sourceName": "GitHub Actions · 内部手动追踪",
-        "channel": "manual-tracking",
-        "channelLabel": "内部管理",
-        "eventType": "人工追踪"
-      },
-      "capturedAt": "2026-11-25T13:33:28+00:00",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "robotics:sampleCompanies",
-        "semiconductor:sampleCompanies"
-      ],
-      "reasons": [
-        "个人研究兴趣"
-      ],
-      "note": "",
-      "resolution": {
-        "status": "resolved",
-        "requestedType": "company",
-        "entityType": "company",
-        "canonicalName": "紫微科技",
-        "targetId": "company-candidate:紫微科技",
-        "confidence": "medium",
-        "source": "human-decision",
-        "reason": "管理员已在自动候选列表显式确认该公司为持续关注对象。 原解析:原文邻近语境存在公司、企业或平台表述,可进入候选审核。",
-        "decisionKey": "紫微科技",
-        "reclassified": false
-      }
+      "manualDecisionStatus": "approved",
+      "identityState": "complete"
     },
     {
       "id": "capture-2c6acb503e32d35f",
