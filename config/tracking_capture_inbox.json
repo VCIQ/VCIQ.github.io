@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-25T04:06:22+00:00",
+  "generatedAt": "2026-11-25T04:09:23+00:00",
   "records": [
     {
       "id": "capture-8b106bbb4fde1101",
@@ -63,7 +63,9 @@
         "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
         "decisionKey": "鼎晖",
         "reclassified": false
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "needs_enrichment"
     },
     {
       "id": "capture-e26dfc840afdb4e9",
@@ -122,11 +124,13 @@
         "canonicalName": "粤科金融集团",
         "targetId": "institution:粤科金融集团",
         "confidence": "verified",
-        "source": "human-decision",
-        "reason": "管理员已在自动候选列表显式确认该公司为持续关注对象。 原解析:名称唯一命中已核验投资机构目录;仅解析机构身份,不代表公司档案发布。",
+        "source": "institution-directory",
+        "reason": "名称唯一命中已核验投资机构目录；仅解析机构身份，不代表公司档案发布。",
         "decisionKey": "粤科金融集团",
         "reclassified": false
-      }
+      },
+      "manualDecisionStatus": "approved",
+      "identityState": "complete"
     },
     {
       "id": "capture-350c5899fb13120e",
