@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-25T04:30:36+00:00",
+  "updatedAt": "2026-11-25T13:09:45+00:00",
   "entities": [
     {
       "id": "source-753cabc04a4147034b27",
@@ -14239,11 +14239,14 @@
       "createdBy": "VCIQ"
     },
     {
-      "id": "company-candidate:毅达资本",
+      "id": "institution:毅达资本",
       "kind": "company",
       "name": "毅达资本",
       "aliases": [],
-      "keywords": [],
+      "keywords": [
+        "毅达资本",
+        "投资机构"
+      ],
       "state": "active",
       "resolutionSource": "human-decision",
       "resolutionStatus": "resolved",
@@ -24461,6 +24464,54 @@
       "resolutionSource": "authenticated-manual-intent",
       "resolutionStatus": "resolved",
       "createdAt": "2026-11-25T04:30:36+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-c385992dfaeec0118205",
+      "kind": "technology",
+      "name": "Micro-LED",
+      "aliases": [],
+      "keywords": [
+        "Micro-LED",
+        "显示技术",
+        "车灯模组"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-11-25T13:09:45+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "technology-5f16e7569ec7796a7969",
+      "kind": "technology",
+      "name": "光互连",
+      "aliases": [],
+      "keywords": [
+        "光互连",
+        "光通道",
+        "并行传输"
+      ],
+      "state": "active",
+      "resolutionSource": "authenticated-manual-intent",
+      "resolutionStatus": "resolved",
+      "createdAt": "2026-11-25T13:09:45+00:00",
+      "createdBy": "VCIQ"
+    },
+    {
+      "id": "company-99e5438b103856bb0fec",
+      "kind": "company",
+      "name": "数字光芯",
+      "aliases": [],
+      "keywords": [
+        "数字光芯",
+        "硅基Micro-LED",
+        "显示驱动芯片"
+      ],
+      "state": "active",
+      "resolutionSource": "unresolved",
+      "resolutionStatus": "review",
+      "createdAt": "2026-11-25T13:09:45+00:00",
       "createdBy": "VCIQ"
     }
   ],
@@ -91870,9 +91921,9 @@
       "executionState": "applied"
     },
     {
-      "id": "membership-16c769447f787c443516",
+      "id": "membership-592bef90e53baf8feeec",
       "trackId": "track:track-1ccjq49",
-      "entityId": "company-candidate:毅达资本",
+      "entityId": "institution:毅达资本",
       "role": "actor",
       "state": "active",
       "pinned": true,
@@ -91899,8 +91950,44 @@
             "个人研究兴趣"
           ],
           "note": "赛道关注对象管理器:批量确认自动扩展为持续关注(风险投资)"
+        },
+        {
+          "id": "origin-a639eea876efe1716e13",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-25T13:09:45+00:00",
+          "evidenceUrl": "https://news.pedaily.cn/202611/572281.shtml",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
         }
-      ]
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-16db88014e2993e74178cf69",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-25T13:09:45+00:00",
+        "trackId": "track:track-1ccjq49",
+        "entityId": "institution:毅达资本",
+        "requestedName": "毅达资本",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "毅达资本",
+        "targetId": "institution:毅达资本",
+        "confidence": "verified",
+        "source": "institution-directory",
+        "reason": "名称唯一命中已核验投资机构目录；仅解析机构身份，不代表公司档案发布。",
+        "decisionKey": "毅达资本",
+        "reclassified": false
+      },
+      "executionState": "applied"
     },
     {
       "id": "membership-fcc5946415660ceeb846",
@@ -147547,6 +147634,570 @@
         "source": "explicit-type",
         "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
         "decisionKey": "微波激光",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-c51a274b37394afe7e12",
+      "trackId": "track:semiconductor",
+      "entityId": "technology-c385992dfaeec0118205",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-ea80c2fba648aa17ed97",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-25T13:09:45+00:00",
+          "evidenceUrl": "https://news.pedaily.cn/202611/572281.shtml",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-7a21303ce1f6d32dc951d49d",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-25T13:09:45+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "technology-c385992dfaeec0118205",
+        "requestedName": "Micro-LED",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "Micro-LED",
+        "targetId": "topic:microled",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "microled",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-96e1a7cdafa8729a9f9a",
+      "trackId": "track:robotics",
+      "entityId": "technology-c385992dfaeec0118205",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-ea80c2fba648aa17ed97",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-25T13:09:45+00:00",
+          "evidenceUrl": "https://news.pedaily.cn/202611/572281.shtml",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-e1e54f9a4909ec4bb8969b58",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-25T13:09:45+00:00",
+        "trackId": "track:robotics",
+        "entityId": "technology-c385992dfaeec0118205",
+        "requestedName": "Micro-LED",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "Micro-LED",
+        "targetId": "topic:microled",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "microled",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-54bc414e9e4fe2d51227",
+      "trackId": "track:semiconductor",
+      "entityId": "technology-5f16e7569ec7796a7969",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-10c605e5932338a90124",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-25T13:09:45+00:00",
+          "evidenceUrl": "https://news.pedaily.cn/202611/572281.shtml",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-2d05071b66dbed836442b778",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-25T13:09:45+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "technology-5f16e7569ec7796a7969",
+        "requestedName": "光互连",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "光互连",
+        "targetId": "topic:光互连",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "光互连",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-cf71bf1b444c8af2cdfa",
+      "trackId": "track:robotics",
+      "entityId": "technology-5f16e7569ec7796a7969",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-10c605e5932338a90124",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-25T13:09:45+00:00",
+          "evidenceUrl": "https://news.pedaily.cn/202611/572281.shtml",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-2ce2a89aae76c0b676258f59",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-25T13:09:45+00:00",
+        "trackId": "track:robotics",
+        "entityId": "technology-5f16e7569ec7796a7969",
+        "requestedName": "光互连",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "光互连",
+        "targetId": "topic:光互连",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "光互连",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-a699276d987bbb49d9d7",
+      "trackId": "track:manufacturing",
+      "entityId": "technology-5f16e7569ec7796a7969",
+      "role": "keyword",
+      "state": "active",
+      "pinned": true,
+      "confidence": "high",
+      "origins": [
+        {
+          "id": "origin-10c605e5932338a90124",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-25T13:09:45+00:00",
+          "evidenceUrl": "https://news.pedaily.cn/202611/572281.shtml",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-ec3fc01033f996c27b3c598b",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-25T13:09:45+00:00",
+        "trackId": "track:manufacturing",
+        "entityId": "technology-5f16e7569ec7796a7969",
+        "requestedName": "光互连",
+        "kind": "technology"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "光互连",
+        "targetId": "topic:光互连",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术／主题”，且未与正式目录冲突。",
+        "decisionKey": "光互连",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-4487f99aecd794970a49",
+      "trackId": "track:semiconductor",
+      "entityId": "company-99e5438b103856bb0fec",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "low",
+      "origins": [
+        {
+          "id": "origin-39548de57b1c00255998",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-25T13:09:45+00:00",
+          "evidenceUrl": "https://news.pedaily.cn/202611/572281.shtml",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-bcbc9a8841376071a28590b1",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-25T13:09:45+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "company-99e5438b103856bb0fec",
+        "requestedName": "数字光芯",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "数字光芯",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "数字光芯",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-dbf58d11d4f6586c2d14",
+      "trackId": "track:robotics",
+      "entityId": "company-99e5438b103856bb0fec",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "low",
+      "origins": [
+        {
+          "id": "origin-39548de57b1c00255998",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-25T13:09:45+00:00",
+          "evidenceUrl": "https://news.pedaily.cn/202611/572281.shtml",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-823a4fe7db81d328fe330998",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-25T13:09:45+00:00",
+        "trackId": "track:robotics",
+        "entityId": "company-99e5438b103856bb0fec",
+        "requestedName": "数字光芯",
+        "kind": "company"
+      },
+      "identityState": "needs_enrichment",
+      "identityResolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "数字光芯",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "数字光芯",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-4792d6b8227d69350199",
+      "trackId": "track:semiconductor",
+      "entityId": "institution:毅达资本",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-a639eea876efe1716e13",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-25T13:09:45+00:00",
+          "evidenceUrl": "https://news.pedaily.cn/202611/572281.shtml",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-bda0a6d765d85fb141aae07b",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-25T13:09:45+00:00",
+        "trackId": "track:semiconductor",
+        "entityId": "institution:毅达资本",
+        "requestedName": "毅达资本",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "毅达资本",
+        "targetId": "institution:毅达资本",
+        "confidence": "verified",
+        "source": "institution-directory",
+        "reason": "名称唯一命中已核验投资机构目录；仅解析机构身份，不代表公司档案发布。",
+        "decisionKey": "毅达资本",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-bb9e25d168839eb13640",
+      "trackId": "track:robotics",
+      "entityId": "institution:毅达资本",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-a639eea876efe1716e13",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-25T13:09:45+00:00",
+          "evidenceUrl": "https://news.pedaily.cn/202611/572281.shtml",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-7d6b01b1a0c751f52c08b8ce",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-25T13:09:45+00:00",
+        "trackId": "track:robotics",
+        "entityId": "institution:毅达资本",
+        "requestedName": "毅达资本",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "毅达资本",
+        "targetId": "institution:毅达资本",
+        "confidence": "verified",
+        "source": "institution-directory",
+        "reason": "名称唯一命中已核验投资机构目录；仅解析机构身份，不代表公司档案发布。",
+        "decisionKey": "毅达资本",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-30dfb387ddf36b2eb0c7",
+      "trackId": "track:ai-2",
+      "entityId": "institution:毅达资本",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-a639eea876efe1716e13",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-25T13:09:45+00:00",
+          "evidenceUrl": "https://news.pedaily.cn/202611/572281.shtml",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-7d7479b3d36c1faeac2049b2",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-25T13:09:45+00:00",
+        "trackId": "track:ai-2",
+        "entityId": "institution:毅达资本",
+        "requestedName": "毅达资本",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "毅达资本",
+        "targetId": "institution:毅达资本",
+        "confidence": "verified",
+        "source": "institution-directory",
+        "reason": "名称唯一命中已核验投资机构目录；仅解析机构身份，不代表公司档案发布。",
+        "decisionKey": "毅达资本",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-c6e11c0e73594574f28e",
+      "trackId": "track:space",
+      "entityId": "institution:毅达资本",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-a639eea876efe1716e13",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-25T13:09:45+00:00",
+          "evidenceUrl": "https://news.pedaily.cn/202611/572281.shtml",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-47d5e71f8a515b347099fa8f",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-25T13:09:45+00:00",
+        "trackId": "track:space",
+        "entityId": "institution:毅达资本",
+        "requestedName": "毅达资本",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "毅达资本",
+        "targetId": "institution:毅达资本",
+        "confidence": "verified",
+        "source": "institution-directory",
+        "reason": "名称唯一命中已核验投资机构目录；仅解析机构身份，不代表公司档案发布。",
+        "decisionKey": "毅达资本",
+        "reclassified": false
+      },
+      "executionState": "applied"
+    },
+    {
+      "id": "membership-4bd0314533bfc6509a2b",
+      "trackId": "track:manufacturing",
+      "entityId": "institution:毅达资本",
+      "role": "actor",
+      "state": "active",
+      "pinned": true,
+      "confidence": "verified",
+      "origins": [
+        {
+          "id": "origin-a639eea876efe1716e13",
+          "origin": "manual",
+          "actor": "VCIQ",
+          "at": "2026-11-25T13:09:45+00:00",
+          "evidenceUrl": "https://news.pedaily.cn/202611/572281.shtml",
+          "reasons": [
+            "个人研究兴趣"
+          ],
+          "note": ""
+        }
+      ],
+      "manualDecision": {
+        "version": 1,
+        "id": "follow-dd1683c45d765dbd99f8125a",
+        "status": "approved",
+        "actor": "VCIQ",
+        "at": "2026-11-25T13:09:45+00:00",
+        "trackId": "track:manufacturing",
+        "entityId": "institution:毅达资本",
+        "requestedName": "毅达资本",
+        "kind": "company"
+      },
+      "identityState": "complete",
+      "identityResolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "毅达资本",
+        "targetId": "institution:毅达资本",
+        "confidence": "verified",
+        "source": "institution-directory",
+        "reason": "名称唯一命中已核验投资机构目录；仅解析机构身份，不代表公司档案发布。",
+        "decisionKey": "毅达资本",
         "reclassified": false
       },
       "executionState": "applied"
