@@ -53,6 +53,17 @@ jobs:
       - name: Run read-only live pre-listing discovery audit
         if: github.event_name == 'pull_request'
         run: python tools/audit_prelisting_discovery.py --output /tmp/prelisting-discovery-audit.json
+      - name: Run per-company targeted pre-listing discovery
+        if: github.event_name == 'pull_request'
+        run: python tools/audit_prelisting_targeted.py --output /tmp/prelisting-targeted-audit.json
+      - name: Upload per-company targeted discovery audit
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: prelisting-targeted-audit
+          path: /tmp/prelisting-targeted-audit.json
+          if-no-files-found: warn
+          retention-days: 7
       - name: Upload pre-listing discovery audit
         if: always() && github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
