@@ -84,8 +84,11 @@ def classify_subject_role(title: str, company: str) -> str:
     name = re.escape(str(company or "").strip())
     if not name or not title:
         return "unknown"
-    # The company is the grammatical object of an investment verb.
+    # Target company is the recipient/investee in "A invests in B".
     if re.search(rf"(?:投资|入股|收购|并购|增资|战略投资).{{0,18}}{name}", title):
+        return "investee"
+    # Target company is the investor in "A invests in B".
+    if re.search(rf"{name}.{{0,12}}(?:投资|入股|收购|并购|增资|战略投资)", title):
         return "investor"
     # The company is the grammatical subject raising capital.
     if re.search(rf"{name}.{{0,18}}(?:完成|获得|获|融资|募资|新一轮|Pre-[A-Z]|[A-F][轮＋+])", title, re.I):
@@ -259,7 +262,7 @@ def main() -> int:
                 candidate["subjectRole"] == role
                 for company in results for candidate in company["candidates"]
             )
-            for role in ("funding_subject", "investor", "partner", "mentioned", "unknown")
+            for role in ("funding_subject", "investor", "investee", "partner", "mentioned", "unknown")
         },
         "entityMatchBasis": "title-or-company-field-only; subjectRole is heuristic, not verified entity resolution",
         "sourceErrors": errors,
