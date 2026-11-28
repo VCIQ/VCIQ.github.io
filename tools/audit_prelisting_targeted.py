@@ -364,6 +364,17 @@ def main() -> int:
             )
             for status in ("fetched", "fetch_error", "skipped_unsafe_url", "skipped_non_html", "skipped_too_large", "not_attempted_unresolved_url", "not_attempted_company_limit")
         },
+        "publisherBodyExtractionMethods": {
+            method: sum(
+                candidate.get("articleEvidence", {}).get("bodyExtractionMethod") == method
+                for company in results for candidate in company["candidates"]
+            )
+            for method in ("jsonld_articleBody", "visible_text_fallback", "metadata_only")
+        },
+        "publisherInvestorRoleMentionCount": sum(
+            len(candidate.get("articleEvidence", {}).get("investorMentionsFromBody", []))
+            for company in results for candidate in company["candidates"]
+        ),
         "publisherArticleCanonicalUrlCount": sum(
             bool(candidate.get("publisherCanonicalUrl"))
             for company in results for candidate in company["candidates"]
