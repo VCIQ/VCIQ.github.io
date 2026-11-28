@@ -295,7 +295,7 @@ def main() -> int:
                 "company": company_row["company"],
                 "title": candidate["title"],
                 "publishedAt": candidate["publishedAt"],
-                "publisherUrl": candidate["publisherUrl"],
+                "publisherUrl": candidate.get("publisherCanonicalUrl") or candidate["publisherUrl"],
                 "googleNewsUrl": candidate["googleNewsUrl"],
                 "publisherDomain": candidate["publisherDomain"],
                 "publisherUrlResolved": candidate["publisherUrlResolved"],
@@ -352,6 +352,10 @@ def main() -> int:
             )
             for status in ("fetched", "fetch_error", "skipped_unsafe_url", "skipped_non_html", "skipped_too_large", "not_attempted_unresolved_url", "not_attempted_company_limit")
         },
+        "publisherArticleCanonicalUrlCount": sum(
+            bool(candidate.get("publisherCanonicalUrl"))
+            for company in results for candidate in company["candidates"]
+        ),
         "publisherBodyInvestorExtractionCount": sum(
             bool(candidate.get("articleEvidence", {}).get("investorsExtractedFromBody"))
             for company in results for candidate in company["candidates"]
