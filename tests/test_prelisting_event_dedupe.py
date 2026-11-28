@@ -28,6 +28,23 @@ class PrelistingEventDedupeTests(unittest.TestCase):
         self.assertNotIn(("还可能通过另类投资子公司参与IPO", "follow"), pairs)
         self.assertTrue(all(item.get("evidenceText") for item in mentions))
 
+    def test_extract_explicit_investor_list_without_splitting_legal_name(self):
+        from tools.prelisting_event_dedupe import extract_investor_mentions
+        text = "本轮融资由亦庄国投屹唐盛和基金、启明创投、朝晖资本联合领投。"
+        mentions = extract_investor_mentions(text)
+        pairs = {(item["name"], item["role"]) for item in mentions}
+        self.assertIn(("亦庄国投屹唐盛和基金", "lead"), pairs)
+        self.assertIn(("启明创投", "lead"), pairs)
+        self.assertIn(("朝晖资本", "lead"), pairs)
+        self.assertNotIn(("基金", "lead"), pairs)
+
+    def test_extract_investor_list_including_plain_investor_field(self):
+        from tools.prelisting_event_dedupe import extract_investor_mentions
+        text = "本轮投资方包括洪泰基金、弘毅投资、中关村科学城、浙创投。"
+        mentions = extract_investor_mentions(text)
+        names = {item["name"] for item in mentions}
+        self.assertEqual(names, {"洪泰基金", "弘毅投资", "中关村科学城", "浙创投"})
+
     def test_extract_investor_roles_from_body(self):
         from tools.prelisting_event_dedupe import extract_investor_mentions
         mentions = extract_investor_mentions("红杉中国领投，深创投跟投，腾讯投资参与投资。")
