@@ -72,6 +72,22 @@ class PrelistingEventDedupeTests(unittest.TestCase):
         self.assertIn(("深创投", "follow"), roles)
         self.assertIn(("腾讯投资", "participant"), roles)
 
+    def test_real_lingchuan_article_lead_investor_snippet(self):
+        from tools.prelisting_event_dedupe import extract_investor_mentions
+        text = "本轮由亦庄国投屹唐盛和基金、启明创投、朝晖资本联合领投，国泰海通开元、华控投资等机构参与。"
+        mentions = extract_investor_mentions(text)
+        lead_names = {item["name"] for item in mentions if item["role"] == "lead"}
+        self.assertEqual(lead_names, {"亦庄国投屹唐盛和基金", "启明创投", "朝晖资本"})
+
+    def test_real_bluepoint_article_investor_list_snippet(self):
+        from tools.prelisting_event_dedupe import extract_investor_mentions
+        text = "本轮投资方包括洪泰基金、弘毅投资、中关村科学城、浙创投、厦门海投集团、厦门海沧产投、奥普特、新未来、秦创投、陕西国晟、江门金控、山证投资、曦晨资本、君安控股。"
+        mentions = extract_investor_mentions(text)
+        names = {item["name"] for item in mentions}
+        self.assertEqual(len(names), 14)
+        self.assertIn("厦门海沧产投", names)
+        self.assertIn("中关村科学城", names)
+
     def test_extract_explicit_lead_investor(self):
         from tools.prelisting_event_dedupe import extract_investors
         self.assertIn("红杉中国", extract_investors("杉数科技完成D轮融资，红杉中国领投"))
