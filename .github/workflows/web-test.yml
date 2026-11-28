@@ -33,6 +33,12 @@ jobs:
             tests.test_pipeline_health_runtime
       - name: Run person identity unit tests
         run: python -m unittest tests.test_jensen_canonical_identity_anchor
+      - name: Run pre-listing subject-role regression tests
+        run: python -m unittest tests.test_prelisting_subject_roles
+      - name: Run pre-listing event dedupe regression tests
+        run: python -m unittest tests.test_prelisting_event_dedupe
+      - name: Run pre-listing article evidence tests
+        run: python -m unittest tests.test_prelisting_article_evidence
       - name: Require a normalized automatic source registry
         run: python tools/tracking_source_governance.py --check
       - run: npm ci
@@ -50,6 +56,28 @@ jobs:
           path: unit-test.log
           retention-days: 3
       - run: npm run test:crawler
+      - name: Run read-only live pre-listing discovery audit
+        if: github.event_name == 'pull_request'
+        run: python tools/audit_prelisting_discovery.py --output /tmp/prelisting-discovery-audit.json
+      - name: Run per-company targeted pre-listing discovery
+        if: github.event_name == 'pull_request'
+        run: python tools/audit_prelisting_targeted.py --output /tmp/prelisting-targeted-audit.json
+      - name: Upload per-company targeted discovery audit
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: prelisting-targeted-audit
+          path: /tmp/prelisting-targeted-audit.json
+          if-no-files-found: warn
+          retention-days: 7
+      - name: Upload pre-listing discovery audit
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: prelisting-discovery-audit
+          path: /tmp/prelisting-discovery-audit.json
+          if-no-files-found: warn
+          retention-days: 7
       - name: Rebuild tracking-derived snapshot for candidate PR config
         if: github.event_name == 'pull_request'
         run: python tools/enrich_tracking_snapshot.py
