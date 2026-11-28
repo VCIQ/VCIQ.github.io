@@ -54,10 +54,10 @@ def extract_investors(title: str) -> list[str]:
     """Extract explicitly labelled investor names; never infer from co-mentions."""
     text = str(title or "")
     patterns = [
-        r"(?:由|获)([\\u4e00-\\u9fffA-Za-z0-9·（）()]{2,24}?)(?:领投|联合领投)",
-        r"([\\u4e00-\\u9fffA-Za-z0-9·（）()]{2,24}?)(?:领投|联合领投)",
-        r"(?:投资方|投资机构)[:：]?([\\u4e00-\\u9fffA-Za-z0-9·（）()]{2,24}?)(?:参与|等|和|及|，|,|。|$)",
-        r"由([\\u4e00-\\u9fffA-Za-z0-9·（）()]{2,24}?)(?:投资|战略投资)",
+        r"(?:由|获)([\u4e00-\u9fffA-Za-z0-9·（）()]{2,24}?)(?:领投|联合领投)",
+        r"([\u4e00-\u9fffA-Za-z0-9·（）()]{2,24}?)(?:领投|联合领投)",
+        r"(?:投资方|投资机构)[:：]?([\u4e00-\u9fffA-Za-z0-9·（）()]{2,24}?)(?:参与|等|和|及|，|,|。|$)",
+        r"由([\u4e00-\u9fffA-Za-z0-9·（）()]{2,24}?)(?:投资|战略投资)",
     ]
     found: list[str] = []
     for pattern in patterns:
