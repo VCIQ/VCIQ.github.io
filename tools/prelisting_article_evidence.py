@@ -32,6 +32,9 @@ def is_safe_public_http_url(url: str) -> bool:
                 if not resolved.is_global:
                     return False
             return True
+        except (OSError, socket.gaierror):
+            # Fail closed when DNS cannot be resolved.
+            return False
     except ValueError:
         return False
 
