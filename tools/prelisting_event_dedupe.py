@@ -70,30 +70,64 @@ def extract_investors(title: str) -> list[str]:
 
 
 def extract_investor_mentions(text: str) -> list[dict[str, str]]:
-    """Extract explicitly role-labelled investor mentions from text."""
+    """Extract conservative role-labelled investor mentions with local evidence."""
     content = str(text or "")
+    generic_names = {
+        "九大券商", "券商", "证券公司", "机构", "投资机构", "产业投资方",
+        "投资方", "多家机构", "相关机构", "投资者", "金融机构",
+    }
     patterns = (
-        ("lead", r"([\u4e00-\u9fffA-Za-z0-9·（）()]{2,30}?)(?:联合领投|领投)"),
-        ("follow", r"([\u4e00-\u9fffA-Za-z0-9·（）()]{2,30}?)(?:跟投)"),
-        ("participant", r"([\u4e00-\u9fffA-Za-z0-9·（）()]{2,30}?)(?:参投|参与投资)"),
-        ("investor_label", r"(?:投资方|投资机构)[:：]([\u4e00-\u9fffA-Za-z0-9·（）()、，,及和]{2,100})"),
+        ("lead", r"^(.{2,30}?)(?:联合领投|领投)$"),
+        ("follow", r"^(.{2,30}?)(?:跟投)$"),
+        ("participant", r"^(.{2,30}?)(?:参投|参与投资)$"),
     )
     found: list[dict[str, str]] = []
     seen: set[tuple[str, str]] = set()
-    for role, pattern in patterns:
-        for match in re.finditer(pattern, content):
-            raw = match.group(1).strip(" ，,。及和、")
-            names = re.split(r"[、，,及和]", raw) if role == "investor_label" else [raw]
+    # Split into short clauses first. This prevents the regex from consuming
+    # unrelated prose before a role verb (e.g. "还可能通过...领投").
+    clauses = re.split(r"[，,。；;！!？?\n]+", content)
+    for clause in clauses:
+        clause = re.sub(r"\s+", " ", clause).strip()
+        if not clause or len(clause) > 160:
+            continue
+        for role, pattern in patterns:
+            match = re.search(pattern, clause)
+            if not match:
+                continue
+            raw = match.group(1).strip(" ：:，,。及和、")
+            raw = re.sub(r"^(?:由|其中|本轮|本次|融资由|投资方[:：]?)", "", raw)
+            names = re.split(r"[、，,及和]", raw)
             for name in names:
-                name = name.strip()
-                if not name or len(name) < 2:
+                name = name.strip(" ：:()（）")
+                if len(name) < 2 or len(name) > 24 or name in generic_names:
+                    continue
+                if any(token in name for token in ("可能通过", "还可能", "证券公司", "九大券商集体")):
                     continue
                 key = (name, role)
                 if key not in seen:
-                    found.append({"name": name, "role": role, "extractionMethod": "explicit_role_pattern"})
+                    found.append({
+                        "name": name,
+                        "role": role,
+                        "extractionMethod": "explicit_role_clause",
+                        "evidenceText": clause[:240],
+                    })
+                    seen.add(key)
+        label = re.search(r"(?:投资方|投资机构)[:：]([^。；;\n]{2,100})", clause)
+        if label:
+            for name in re.split(r"[、，,及和]", label.group(1)):
+                name = name.strip(" ：:()（）")
+                if len(name) < 2 or len(name) > 24 or name in generic_names:
+                    continue
+                key = (name, "investor_label")
+                if key not in seen:
+                    found.append({
+                        "name": name,
+                        "role": "investor_label",
+                        "extractionMethod": "explicit_role_clause",
+                        "evidenceText": clause[:240],
+                    })
                     seen.add(key)
     return found
-
 
 
 def normalize_amount(value: Any) -> str | None:
