@@ -8,6 +8,11 @@ from tools.prelisting_event_dedupe import (
 
 
 class PrelistingEventDedupeTests(unittest.TestCase):
+    def test_equivalent_rmb_amount_units_normalize(self):
+        from tools.prelisting_event_dedupe import normalize_amount
+        self.assertEqual(normalize_amount("20亿元"), normalize_amount("20亿人民币"))
+        self.assertNotEqual(normalize_amount("20亿元"), normalize_amount("20亿美元"))
+
     def test_extract_round_and_amount(self):
         self.assertEqual(extract_round("杉数科技完成D轮融资，金额数亿元"), "D轮")
         self.assertEqual(extract_amount("完成融资，金额3.5亿元"), "3.5亿元")
