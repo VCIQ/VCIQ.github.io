@@ -57,6 +57,17 @@ class PrelistingEventDedupeTests(unittest.TestCase):
         )
         self.assertTrue(all(item["role"] == "investor_label" for item in mentions))
 
+    def test_source_backed_lingchuan_joint_lead_candidate(self):
+        from tools.prelisting_event_dedupe import extract_investor_mentions
+        fixture_path = Path(__file__).parent / "fixtures" / "prelisting_investor_annotation_candidates.json"
+        fixture = json.loads(fixture_path.read_text(encoding="utf-8"))
+        record = next(item for item in fixture["records"] if item["company"] == "凌川科技")
+        mentions = extract_investor_mentions(record["evidenceText"])
+        actual = {item["name"]: item["role"] for item in mentions}
+        self.assertEqual(actual, record["investorRoles"])
+        self.assertEqual(record["annotationStatus"], "pending_human_confirmation")
+        self.assertIsNone(record["eventDate"])
+
     def test_extract_investor_list_including_plain_investor_field(self):
         from tools.prelisting_event_dedupe import extract_investor_mentions
         text = "本轮投资方包括洪泰基金、弘毅投资、中关村科学城、浙创投。"
