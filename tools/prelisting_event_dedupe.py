@@ -68,6 +68,34 @@ def extract_investors(title: str) -> list[str]:
     return found
 
 
+
+def extract_investor_mentions(text: str) -> list[dict[str, str]]:
+    """Extract explicitly role-labelled investor mentions from text."""
+    content = str(text or "")
+    patterns = (
+        ("lead", r"([\\u4e00-\\u9fffA-Za-z0-9·（）()]{2,30}?)(?:联合领投|领投)"),
+        ("follow", r"([\\u4e00-\\u9fffA-Za-z0-9·（）()]{2,30}?)(?:跟投)"),
+        ("participant", r"([\\u4e00-\\u9fffA-Za-z0-9·（）()]{2,30}?)(?:参投|参与投资)"),
+        ("investor_label", r"(?:投资方|投资机构)[:：]([\\u4e00-\\u9fffA-Za-z0-9·（）()、，,及和]{2,100})"),
+    )
+    found: list[dict[str, str]] = []
+    seen: set[tuple[str, str]] = set()
+    for role, pattern in patterns:
+        for match in re.finditer(pattern, content):
+            raw = match.group(1).strip(" ，,。及和、")
+            names = re.split(r"[、，,及和]", raw) if role == "investor_label" else [raw]
+            for name in names:
+                name = name.strip()
+                if not name or len(name) < 2:
+                    continue
+                key = (name, role)
+                if key not in seen:
+                    found.append({"name": name, "role": role, "extractionMethod": "explicit_role_pattern"})
+                    seen.add(key)
+    return found
+
+
+
 def normalize_amount(value: Any) -> str | None:
     """Normalize equivalent Chinese currency unit spellings without FX conversion."""
     raw = str(value or "").replace(" ", "").replace(",", "")
