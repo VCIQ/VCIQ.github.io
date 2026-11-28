@@ -42,6 +42,10 @@ class PrelistingArticleEvidenceTests(unittest.TestCase):
         getaddrinfo.return_value = [(None, None, None, None, ("93.184.216.34", 443))]
         self.assertTrue(is_safe_public_http_url("https://news.example.com/article"))
 
+    @patch("tools.prelisting_article_evidence.socket.getaddrinfo", side_effect=OSError("DNS unavailable"))
+    def test_fails_closed_when_dns_resolution_fails(self, getaddrinfo):
+        self.assertFalse(is_safe_public_http_url("https://unresolvable.example/article"))
+
     def test_rejects_non_http_and_private_urls(self):
         self.assertFalse(is_safe_public_http_url("file:///etc/passwd"))
         self.assertFalse(is_safe_public_http_url("http://127.0.0.1/admin"))
