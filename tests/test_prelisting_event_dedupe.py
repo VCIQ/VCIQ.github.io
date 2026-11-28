@@ -1,4 +1,6 @@
+import json
 import unittest
+from pathlib import Path
 
 from tools.prelisting_event_dedupe import (
     cluster_candidates,
@@ -37,6 +39,19 @@ class PrelistingEventDedupeTests(unittest.TestCase):
         self.assertIn(("启明创投", "lead"), pairs)
         self.assertIn(("朝晖资本", "lead"), pairs)
         self.assertNotIn(("基金", "lead"), pairs)
+
+    def test_source_backed_annotation_candidate_extracts_investor_list(self):
+        from tools.prelisting_event_dedupe import extract_investor_mentions
+        fixture_path = Path(__file__).parent / "fixtures" / "prelisting_investor_annotation_candidates.json"
+        fixture = json.loads(fixture_path.read_text(encoding="utf-8"))
+        record = fixture["records"][0]
+        self.assertEqual(record["annotationStatus"], "pending_human_confirmation")
+        mentions = extract_investor_mentions(record["evidenceText"])
+        self.assertEqual(
+            {item["name"] for item in mentions},
+            set(record["investors"]),
+        )
+        self.assertTrue(all(item["role"] == "investor_label" for item in mentions))
 
     def test_extract_investor_list_including_plain_investor_field(self):
         from tools.prelisting_event_dedupe import extract_investor_mentions
