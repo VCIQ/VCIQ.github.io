@@ -21,6 +21,7 @@ if str(ROOT) not in sys.path:
 from tools import crawl_with_source_categories as base  # noqa: E402
 from tools import crawl_with_wechat_registry as registry  # noqa: E402
 from tools.google_news_url_resolver import resolve_google_news_url  # noqa: E402
+from tools.prelisting_event_dedupe import cluster_candidates  # noqa: E402
 
 TARGETS = ("track-jq5v2n", "track-6l9y0y")
 EVENTS = (
@@ -232,6 +233,21 @@ def main() -> int:
             "candidates": matches[:12],
         })
 
+    event_candidates = []
+    for company_row in results:
+        for candidate in company_row["candidates"]:
+            event_candidates.append({
+                "company": company_row["company"],
+                "title": candidate["title"],
+                "publishedAt": candidate["publishedAt"],
+                "publisherUrl": candidate["publisherUrl"],
+                "googleNewsUrl": candidate["googleNewsUrl"],
+                "publisherDomain": candidate["publisherDomain"],
+                "publisherUrlResolved": candidate["publisherUrlResolved"],
+                "subjectRole": candidate["subjectRole"],
+            })
+    event_groups = cluster_candidates(event_candidates)
+
     report = {
         "schemaVersion": 1,
         "mode": "read-only-per-company-google-news-zh-discovery",
@@ -267,6 +283,10 @@ def main() -> int:
         "entityMatchBasis": "title-or-company-field-only; subjectRole is heuristic, not verified entity resolution",
         "sourceErrors": errors,
         "companies": results,
+        "eventCandidateCount": len(event_candidates),
+        "proposedEventGroupCount": len(event_groups),
+        "eventGroups": event_groups,
+        "eventGroupingPolicy": "conservative heuristic; DISCOVERED only; never official confirmation",
         "discoveryOnly": True,
         "officialDisclosureClaimed": False,
     }
