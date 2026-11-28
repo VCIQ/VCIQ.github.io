@@ -63,6 +63,19 @@ def extract_investors(title: str) -> list[str]:
 
 
 
+def normalize_amount(value: Any) -> str | None:
+    """Normalize equivalent Chinese currency unit spellings without FX conversion."""
+    raw = str(value or "").replace(" ", "").replace(",", "")
+    match = re.fullmatch(r"(\\d+(?:\\.\\d+)?)(亿元|亿人民币|亿美元|万元|万人民币|万美元)", raw)
+    if not match:
+        return raw or None
+    number, unit = match.groups()
+    currency = "USD" if "美元" in unit else "CNY"
+    scale = "100m" if unit.startswith("亿") else "10k"
+    return f"{number}:{currency}:{scale}"
+
+
+
 def parse_date(value: Any) -> date | None:
     raw = str(value or "")
     match = re.search(r"(20\d{2})[-/年](\d{1,2})[-/月](\d{1,2})?", raw)
@@ -117,7 +130,7 @@ def cluster_candidates(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             "mentioned": "mention",
         }.get(role, "unclassified"))
         round_name = row.get("round") or (extract_round(title) if event_type == "financing" else None)
-        amount = row.get("amount") or (extract_amount(title) if event_type in {"financing", "investment", "investment_received"} else None)
+        amount = normalize_amount(row.get("amount") or (extract_amount(title) if event_type in {"financing", "investment", "investment_received"} else None))
         investors = row.get("investors") or extract_investors(title)
         event_date = str(row.get("eventDate") or row.get("publishedAt") or "")
         parsed = parse_date(event_date)
