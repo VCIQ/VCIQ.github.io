@@ -198,6 +198,11 @@ def cluster_candidates(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             "publisherDomain": row.get("publisherDomain"),
             "urlResolved": bool(row.get("publisherUrlResolved")),
             "subjectRole": role,
+            "investorsExtracted": sorted(set(investors)),
+            "investorExtractionMethod": "title_explicit_pattern" if investors else "not_found_in_title",
+            "investorEvidenceStatus": "DISCOVERED" if investors else "MISSING",
+            "eventDate": row.get("eventDate"),
+            "eventDateEvidence": row.get("eventDateEvidence"),
         })
         matched["candidateCount"] += 1
         source_published = row.get("publishedAt")
