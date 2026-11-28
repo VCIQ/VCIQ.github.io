@@ -166,6 +166,8 @@ def cluster_candidates(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 "company": company,
                 "companyKey": normalize_text(company),
                 "eventType": event_type,
+                "eventDate": event_date or None,
+                "publishedAt": None,
                 "round": round_name,
                 "amount": amount,
                 "investors": sorted(set(investors)),
@@ -193,6 +195,9 @@ def cluster_candidates(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             "subjectRole": role,
         })
         matched["candidateCount"] += 1
+        source_published = row.get("publishedAt")
+        if source_published:
+            matched["publishedAt"] = source_published if not matched.get("publishedAt") else matched["publishedAt"]
         if investors:
             matched["investors"] = sorted(set(matched.get("investors", [])) | set(investors))
 
