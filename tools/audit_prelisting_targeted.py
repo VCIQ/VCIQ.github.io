@@ -245,6 +245,14 @@ def main() -> int:
                 "publisherDomain": candidate["publisherDomain"],
                 "publisherUrlResolved": candidate["publisherUrlResolved"],
                 "subjectRole": candidate["subjectRole"],
+                "eventType": {
+                    "funding_subject": "financing",
+                    "investor": "investment",
+                    "investee": "investment_received",
+                    "partner": "partnership",
+                    "mentioned": "mention",
+                }.get(candidate["subjectRole"], "unclassified"),
+                "eventDate": candidate["publishedAt"],
             })
     event_groups = cluster_candidates(event_candidates)
 
