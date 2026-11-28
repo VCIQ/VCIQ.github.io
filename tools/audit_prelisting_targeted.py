@@ -292,6 +292,8 @@ def main() -> int:
         "sourceErrors": errors,
         "companies": results,
         "eventCandidateCount": len(event_candidates),
+        "eventEvidenceCount": sum(group["candidateCount"] for group in event_groups),
+        "duplicateCandidateRowsRemoved": len(event_candidates) - sum(group["candidateCount"] for group in event_groups),
         "proposedEventGroupCount": len(event_groups),
         "eventGroups": event_groups,
         "eventGroupingPolicy": "conservative heuristic; DISCOVERED only; never official confirmation",
