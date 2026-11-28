@@ -82,6 +82,15 @@ class PrelistingEventDedupeTests(unittest.TestCase):
         groups = cluster_candidates(rows)
         self.assertIsNone(groups[0]["amount"])
 
+    def test_published_at_is_not_assumed_to_be_event_date(self):
+        rows = [
+            {"company": "杉数科技", "title": "杉数科技完成D轮融资", "publishedAt": "2026-11-22", "subjectRole": "funding_subject"},
+            {"company": "杉数科技", "title": "杉数科技获D轮融资，多家机构参与", "publishedAt": "2026-11-25", "subjectRole": "funding_subject"},
+        ]
+        groups = cluster_candidates(rows)
+        self.assertEqual(len(groups), 2)
+        self.assertTrue(all(g["dedupeConfidence"] == "singleton-unverified" for g in groups))
+
     def test_undated_items_remain_singletons(self):
         rows = [
             {"company": "企业甲", "title": "企业甲完成A轮融资", "subjectRole": "funding_subject"},
