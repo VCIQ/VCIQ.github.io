@@ -82,7 +82,7 @@ def extract_investor_mentions(text: str) -> list[dict[str, str]]:
 
     def add_names(raw: str, role: str, clause: str) -> None:
         raw = re.sub(
-            r"^(?:由|其中|本轮融资由|本轮由|本轮融资|本轮|本次融资由|本次由|本次|融资由|投资方包括|投资机构包括|投资方为|投资机构为)\s*",
+            r"^(?:以及|并由|由|其中|本轮融资由|本轮由|本轮融资|本轮|本次融资由|本次由|本次|融资由|投资方包括|投资机构包括|投资方为|投资机构为)\s*",
             "", raw.strip(),
         )
         # Only explicit list delimiters split institutions. Do not split on “和”:
