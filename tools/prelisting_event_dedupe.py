@@ -50,6 +50,19 @@ def extract_amount(title: str) -> str | None:
     return f"{match.group(1)}{match.group(2)}"
 
 
+def extract_investors(title: str) -> list[str]:
+    """Extract only explicit investor labels; do not infer investors from co-mentions."""
+    text = str(title or "")
+    names = re.findall(r"(?:投资方|由)([\\u4e00-\\u9fffA-Za-z0-9·（）()]{2,24}?)(?:参与|领投|跟投|投资|联合|完成|获|等|和|及|\\s|，|,|。|$)", text)
+    cleaned = []
+    for name in names:
+        name = name.strip(" ，,。及和")
+        if name and name not in cleaned:
+            cleaned.append(name)
+    return cleaned
+
+
+
 def parse_date(value: Any) -> date | None:
     raw = str(value or "")
     match = re.search(r"(20\d{2})[-/年](\d{1,2})[-/月](\d{1,2})?", raw)
@@ -93,6 +106,7 @@ def cluster_candidates(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         }.get(role, "unclassified"))
         round_name = row.get("round") or (extract_round(title) if event_type == "financing" else None)
         amount = row.get("amount") or (extract_amount(title) if event_type in {"financing", "investment", "investment_received"} else None)
+        investors = row.get("investors") or extract_investors(title)
         event_date = str(row.get("eventDate") or row.get("publishedAt") or "")
         parsed = parse_date(event_date)
         norm_title = normalize_text(title)
@@ -106,6 +120,10 @@ def cluster_candidates(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
                     and group["round"] == round_name
                     and group["eventMonth"] == parsed.strftime("%Y-%m")
                     and amount == group["amount"]
+                    and (
+                        not investors or not group["investors"]
+                        or set(investors) == set(group["investors"])
+                    )
                     and SequenceMatcher(
                         None, norm_title, group["titleKey"]
                     ).ratio() >= 0.42
@@ -125,6 +143,7 @@ def cluster_candidates(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 "eventType": event_type,
                 "round": round_name,
                 "amount": amount,
+                "investors": sorted(set(investors)),
                 "eventMonth": parsed.strftime("%Y-%m") if parsed else None,
                 "titleKey": norm_title,
                 "candidateCount": 0,
@@ -149,6 +168,8 @@ def cluster_candidates(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             "subjectRole": role,
         })
         matched["candidateCount"] += 1
+        if investors:
+            matched["investors"] = sorted(set(matched.get("investors", [])) | set(investors))
 
     # Resolve coarse-key collisions deterministically. Two distinct events can
     # share company/type/round/month when amount is missing or the company raises
