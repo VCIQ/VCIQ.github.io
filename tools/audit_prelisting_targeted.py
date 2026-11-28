@@ -304,6 +304,7 @@ def main() -> int:
                 "publisherUrlResolved": candidate["publisherUrlResolved"],
                 "subjectRole": candidate["subjectRole"],
                 "investors": candidate.get("articleEvidence", {}).get("investorsExtractedFromBody", []),
+                "investorMentions": candidate.get("articleEvidence", {}).get("investorMentionsFromBody", []),
                 "eventType": {
                     "funding_subject": "financing",
                     "investor": "investment",
