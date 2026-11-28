@@ -8,6 +8,14 @@ from tools.prelisting_event_dedupe import (
 
 
 class PrelistingEventDedupeTests(unittest.TestCase):
+    def test_extract_explicit_lead_investor(self):
+        from tools.prelisting_event_dedupe import extract_investors
+        self.assertIn("红杉中国", extract_investors("杉数科技完成D轮融资，红杉中国领投"))
+
+    def test_do_not_infer_investor_from_company_mention(self):
+        from tools.prelisting_event_dedupe import extract_investors
+        self.assertEqual(extract_investors("知乎回应间接投资DeepSeek"), [])
+
     def test_equivalent_rmb_amount_units_normalize(self):
         from tools.prelisting_event_dedupe import normalize_amount
         self.assertEqual(normalize_amount("20亿元"), normalize_amount("20亿人民币"))
