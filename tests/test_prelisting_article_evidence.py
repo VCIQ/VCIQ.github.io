@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 
 from tools.prelisting_article_evidence import (
     extract_article_evidence,
@@ -30,6 +31,16 @@ class PrelistingArticleEvidenceTests(unittest.TestCase):
         result = extract_article_evidence("<html><body><p>公开新闻正文内容</p></body></html>")
         self.assertIn("公开新闻正文内容", result["articleBody"])
         self.assertEqual(result["bodyExtractionMethod"], "visible_text_fallback")
+
+    @patch("tools.prelisting_article_evidence.socket.getaddrinfo")
+    def test_rejects_public_hostname_resolving_to_private_ip(self, getaddrinfo):
+        getaddrinfo.return_value = [(None, None, None, None, ("10.0.0.8", 443))]
+        self.assertFalse(is_safe_public_http_url("https://news.example.com/article"))
+
+    @patch("tools.prelisting_article_evidence.socket.getaddrinfo")
+    def test_accepts_public_hostname_resolving_to_public_ip(self, getaddrinfo):
+        getaddrinfo.return_value = [(None, None, None, None, ("93.184.216.34", 443))]
+        self.assertTrue(is_safe_public_http_url("https://news.example.com/article"))
 
     def test_rejects_non_http_and_private_urls(self):
         self.assertFalse(is_safe_public_http_url("file:///etc/passwd"))
