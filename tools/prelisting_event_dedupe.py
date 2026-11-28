@@ -66,7 +66,7 @@ def extract_investors(title: str) -> list[str]:
 def normalize_amount(value: Any) -> str | None:
     """Normalize equivalent Chinese currency unit spellings without FX conversion."""
     raw = str(value or "").replace(" ", "").replace(",", "")
-    match = re.fullmatch(r"(\\d+(?:\\.\\d+)?)(亿元|亿人民币|亿美元|万元|万人民币|万美元)", raw)
+    match = re.fullmatch(r"(\d+(?:\.\d+)?)(亿元|亿人民币|亿美元|万元|万人民币|万美元)", raw)
     if not match:
         return raw or None
     number, unit = match.groups()
