@@ -91,8 +91,8 @@ def cluster_candidates(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             "partner": "partnership",
             "mentioned": "mention",
         }.get(role, "unclassified"))
-        round_name = row.get("round") or extract_round(title)
-        amount = row.get("amount") or extract_amount(title)
+        round_name = row.get("round") or (extract_round(title) if event_type == "financing" else None)
+        amount = row.get("amount") or (extract_amount(title) if event_type in {"financing", "investment", "investment_received"} else None)
         event_date = str(row.get("eventDate") or row.get("publishedAt") or "")
         parsed = parse_date(event_date)
         norm_title = normalize_text(title)
@@ -149,6 +149,27 @@ def cluster_candidates(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             "subjectRole": role,
         })
         matched["candidateCount"] += 1
+
+    # Resolve coarse-key collisions deterministically. Two distinct events can
+    # share company/type/round/month when amount is missing or the company raises
+    # multiple rounds in one month. Keep the coarse ID for a unique group; when
+    # duplicated, derive a stable suffix from its sorted canonical source URLs.
+    id_buckets: dict[str, list[dict[str, Any]]] = {}
+    for group in groups:
+        id_buckets.setdefault(group["eventId"], []).append(group)
+    for base_id, bucket in id_buckets.items():
+        if len(bucket) > 1:
+            for group in bucket:
+                urls = sorted({
+                    str(source.get("url") or "")
+                    for source in group["sources"]
+                    if source.get("url")
+                })
+                discriminator = urls[0] if urls else "|".join(
+                    sorted(normalize_text(source.get("title")) for source in group["sources"])
+                )
+                suffix = hashlib.sha256(discriminator.encode("utf-8")).hexdigest()[:8]
+                group["eventId"] = f"{base_id}-{suffix}"
 
     for group in groups:
         group.pop("companyKey", None)
