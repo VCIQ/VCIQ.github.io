@@ -35,7 +35,7 @@ class PrelistingEventDedupeTests(unittest.TestCase):
         ]
         groups = cluster_candidates(rows)
         self.assertEqual(len(groups), 1)
-        self.assertEqual(groups[0]["eventType"], "unclassified")
+        self.assertEqual(groups[0]["eventType"], "investment_received")
         self.assertEqual(groups[0]["dedupeConfidence"], "singleton-unverified")
 
     def test_event_id_is_stable_across_headline_variants(self):
