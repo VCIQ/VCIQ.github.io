@@ -50,6 +50,17 @@ jobs:
           path: unit-test.log
           retention-days: 3
       - run: npm run test:crawler
+      - name: Run read-only live pre-listing discovery audit
+        if: github.event_name == 'pull_request'
+        run: python tools/audit_prelisting_discovery.py --output /tmp/prelisting-discovery-audit.json
+      - name: Upload pre-listing discovery audit
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: prelisting-discovery-audit
+          path: /tmp/prelisting-discovery-audit.json
+          if-no-files-found: warn
+          retention-days: 7
       - name: Rebuild tracking-derived snapshot for candidate PR config
         if: github.event_name == 'pull_request'
         run: python tools/enrich_tracking_snapshot.py
