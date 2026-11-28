@@ -24,17 +24,22 @@ def is_safe_public_http_url(url: str) -> bool:
         except ValueError:
             # Resolve DNS names and reject hosts that resolve to any non-public
             # address. This is a preflight guard; redirects are checked again.
-            infos = socket.getaddrinfo(host, parts.port or (443 if parts.scheme == "https" else 80), type=socket.SOCK_STREAM)
-            if not infos:
-                return False
-            for info in infos:
-                resolved = ipaddress.ip_address(info[4][0])
-                if not resolved.is_global:
+            try:
+                infos = socket.getaddrinfo(
+                    host,
+                    parts.port or (443 if parts.scheme == "https" else 80),
+                    type=socket.SOCK_STREAM,
+                )
+                if not infos:
                     return False
-            return True
-        except (OSError, socket.gaierror):
-            # Fail closed when DNS cannot be resolved.
-            return False
+                for info in infos:
+                    resolved = ipaddress.ip_address(info[4][0])
+                    if not resolved.is_global:
+                        return False
+                return True
+            except (OSError, socket.gaierror, ValueError):
+                # Fail closed when DNS cannot be resolved or returns invalid data.
+                return False
     except ValueError:
         return False
 
