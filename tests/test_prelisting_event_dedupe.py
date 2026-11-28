@@ -82,6 +82,14 @@ class PrelistingEventDedupeTests(unittest.TestCase):
         groups = cluster_candidates(rows)
         self.assertIsNone(groups[0]["amount"])
 
+    def test_event_group_keeps_event_date_null_and_publication_date_separate(self):
+        rows = [
+            {"company": "某科技", "title": "某科技完成B轮融资", "publishedAt": "2026-11-25", "subjectRole": "funding_subject"},
+        ]
+        group = cluster_candidates(rows)[0]
+        self.assertIsNone(group["eventDate"])
+        self.assertEqual(group["publishedAt"], "2026-11-25")
+
     def test_published_at_is_not_assumed_to_be_event_date(self):
         rows = [
             {"company": "杉数科技", "title": "杉数科技完成D轮融资", "publishedAt": "2026-11-22", "subjectRole": "funding_subject"},
