@@ -46,6 +46,10 @@ class PrelistingEventDedupeTests(unittest.TestCase):
         fixture = json.loads(fixture_path.read_text(encoding="utf-8"))
         record = fixture["records"][0]
         self.assertEqual(record["annotationStatus"], "pending_human_confirmation")
+        self.assertIsNone(record["eventDate"])
+        self.assertEqual(record["candidatePublishedAt"], "2026-11-17")
+        self.assertEqual(record["bodyDisplayedPublicationTime"], "2026-11-18 22:58")
+        self.assertTrue(record["publicationDateConflict"])
         mentions = extract_investor_mentions(record["evidenceText"])
         self.assertEqual(
             {item["name"] for item in mentions},
