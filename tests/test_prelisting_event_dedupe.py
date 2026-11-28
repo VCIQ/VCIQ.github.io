@@ -56,8 +56,8 @@ class PrelistingEventDedupeTests(unittest.TestCase):
 
     def test_distinct_same_month_events_get_unique_ids(self):
         rows = [
-            {"company": "某科技", "title": "某科技完成B轮融资，投资方甲资本参与", "publishedAt": "2026-11-03", "subjectRole": "funding_subject", "publisherUrl": "https://a.example/news/1"},
-            {"company": "某科技", "title": "某科技B轮融资落地，投资方乙资本参与", "publishedAt": "2026-11-03", "subjectRole": "funding_subject", "publisherUrl": "https://b.example/news/2"},
+            {"company": "某科技", "title": "某科技完成B轮融资", "publishedAt": "2026-11-03", "subjectRole": "funding_subject", "investors": ["甲资本"], "publisherUrl": "https://a.example/news/1"},
+            {"company": "某科技", "title": "某科技B轮融资落地", "publishedAt": "2026-11-03", "subjectRole": "funding_subject", "investors": ["乙资本"], "publisherUrl": "https://b.example/news/2"},
         ]
         groups = cluster_candidates(rows)
         self.assertEqual(len(groups), 2)
