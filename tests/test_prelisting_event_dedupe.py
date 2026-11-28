@@ -8,6 +8,15 @@ from tools.prelisting_event_dedupe import (
 
 
 class PrelistingEventDedupeTests(unittest.TestCase):
+    def test_source_retains_investor_extraction_provenance(self):
+        rows = [
+            {"company": "杉数科技", "title": "杉数科技完成D轮融资，红杉中国领投", "publishedAt": "2026-11-22", "subjectRole": "funding_subject", "publisherUrl": "https://news.example/a"},
+        ]
+        source = cluster_candidates(rows)[0]["sources"][0]
+        self.assertEqual(source["investorsExtracted"], ["红杉中国"])
+        self.assertEqual(source["investorExtractionMethod"], "title_explicit_pattern")
+        self.assertEqual(source["investorEvidenceStatus"], "DISCOVERED")
+
     def test_extract_explicit_lead_investor(self):
         from tools.prelisting_event_dedupe import extract_investors
         self.assertIn("红杉中国", extract_investors("杉数科技完成D轮融资，红杉中国领投"))
