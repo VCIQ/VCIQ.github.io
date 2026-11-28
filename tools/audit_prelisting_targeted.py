@@ -20,6 +20,7 @@ if str(ROOT) not in sys.path:
 
 from tools import crawl_with_source_categories as base  # noqa: E402
 from tools import crawl_with_wechat_registry as registry  # noqa: E402
+from tools.google_news_url_resolver import resolve_google_news_url  # noqa: E402
 
 TARGETS = ("track-jq5v2n", "track-6l9y0y")
 EVENTS = (
@@ -124,6 +125,9 @@ def main() -> int:
     articles, statuses, errors = crawler._crawl_config_group(specs, user_agent)
     status_map = {str(x.get("id")): x for x in statuses}
 
+    # Resolve a bounded sample per company to publisher URLs. Keep the Google
+    # wrapper URL regardless of resolution outcome; resolution is best-effort.
+    resolved_cache = {}
     results = []
     for slug, track_name, company in companies:
         source_id = f"prelisting-targeted-{slug}-{normalize(company)[:36]}"
@@ -131,16 +135,37 @@ def main() -> int:
         key = normalize(company)
         matches = []
         for row in articles:
-            text = normalize(article_text(row))
-            if not key or key not in text:
+            title_key = normalize(row.get("title"))
+            company_key = normalize(row.get("company"))
+            # Avoid false positives caused by a company name appearing only in
+            # a summary, sector label, or publisher name.
+            if not key or (key not in title_key and key not in company_key):
                 continue
             source = row.get("source") if isinstance(row.get("source"), dict) else {}
+            wrapper_url = str(source.get("url") or "")
+            resolution = resolved_cache.get(wrapper_url)
+            if wrapper_url and resolution is None:
+                try:
+                    resolution = resolve_google_news_url(wrapper_url)
+                except Exception as exc:  # resolver is best-effort and audited
+                    resolution = {
+                        "resolved": False,
+                        "url": wrapper_url,
+                        "method": "resolver-error",
+                        "error": f"{type(exc).__name__}: {exc}"[:240],
+                    }
+                resolved_cache[wrapper_url] = resolution
             matches.append({
                 "title": row.get("title"),
                 "publishedAt": row.get("publishedAt"),
-                "url": source.get("url"),
+                "googleNewsUrl": wrapper_url,
+                "publisherUrl": (resolution or {}).get("url", wrapper_url),
+                "publisherUrlResolved": bool((resolution or {}).get("resolved")),
+                "publisherDomain": (resolution or {}).get("publisherDomain"),
+                "urlResolutionMethod": (resolution or {}).get("method", "not-attempted"),
                 "platform": source.get("platform"),
                 "sourceLevel": source.get("sourceLevel"),
+                "entityMatchBasis": "title-or-company-field",
             })
         results.append({
             "track": track_name,
@@ -151,6 +176,8 @@ def main() -> int:
             "accepted": int(status.get("accepted", 0) or 0),
             "error": status.get("error"),
             "candidateCount": len(matches),
+            "exportedCandidateCount": min(len(matches), 12),
+            "truncated": len(matches) > 12,
             "candidates": matches[:12],
         })
 
@@ -163,6 +190,16 @@ def main() -> int:
         "matchedCompanyCount": sum(x["candidateCount"] > 0 for x in results),
         "emptyCompanyCount": sum(x["candidateCount"] == 0 for x in results),
         "routeErrorCount": sum(x["routeStatus"] == "error" for x in results),
+        "publisherUrlResolvedCount": sum(
+            candidate["publisherUrlResolved"]
+            for company in results for candidate in company["candidates"]
+        ),
+        "publisherUrlUnresolvedCount": sum(
+            not candidate["publisherUrlResolved"]
+            for company in results for candidate in company["candidates"]
+        ),
+        "truncatedCompanyCount": sum(x["truncated"] for x in results),
+        "entityMatchBasis": "title-or-company-field-only; not full entity resolution",
         "sourceErrors": errors,
         "companies": results,
         "discoveryOnly": True,
