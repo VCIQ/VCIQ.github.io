@@ -12,7 +12,7 @@ import os
 import sys
 import time
 from datetime import UTC, datetime
-from urllib.request import Request, urlopen
+from urllib.request import HTTPRedirectHandler, Request, build_opener
 from pathlib import Path
 from typing import Any
 
@@ -122,6 +122,13 @@ def classify_date_window(value: Any) -> str:
     return "last_12_months" if age_days <= 365 else "historical"
 
 
+class _SafeRedirectHandler(HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        if not is_safe_public_http_url(newurl):
+            raise ValueError("redirect target is not a public HTTP(S) URL")
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
 def fetch_public_article(url: str) -> dict[str, Any]:
     if not is_safe_public_http_url(url):
         return {"fetchStatus": "skipped_unsafe_url"}
@@ -130,7 +137,8 @@ def fetch_public_article(url: str) -> dict[str, Any]:
         "Accept": "text/html,application/xhtml+xml",
     })
     try:
-        with urlopen(request, timeout=8) as response:
+        opener = build_opener(_SafeRedirectHandler())
+        with opener.open(request, timeout=8) as response:
             final_url = response.geturl()
             if not is_safe_public_http_url(final_url):
                 return {"fetchStatus": "skipped_unsafe_redirect"}
