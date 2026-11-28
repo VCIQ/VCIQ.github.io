@@ -23,7 +23,7 @@ if str(ROOT) not in sys.path:
 from tools import crawl_with_source_categories as base  # noqa: E402
 from tools import crawl_with_wechat_registry as registry  # noqa: E402
 from tools.google_news_url_resolver import resolve_google_news_url  # noqa: E402
-from tools.prelisting_event_dedupe import cluster_candidates, extract_investors  # noqa: E402
+from tools.prelisting_event_dedupe import cluster_candidates, extract_investors, extract_investor_mentions  # noqa: E402
 from tools.prelisting_article_evidence import extract_article_evidence, is_safe_public_http_url  # noqa: E402
 
 TARGETS = ("track-jq5v2n", "track-6l9y0y")
@@ -144,7 +144,10 @@ def fetch_public_article(url: str) -> dict[str, Any]:
             parsed = extract_article_evidence(payload.decode(charset, errors="replace"))
             parsed["fetchStatus"] = "fetched"
             parsed["contentType"] = content_type[:120]
-            parsed["investorsExtractedFromBody"] = extract_investors(parsed.get("articleBody", ""))
+            parsed["investorMentionsFromBody"] = extract_investor_mentions(parsed.get("articleBody", ""))
+            parsed["investorsExtractedFromBody"] = sorted({
+                item["name"] for item in parsed["investorMentionsFromBody"]
+            })
             parsed["investorBodyExtractionMethod"] = parsed.get("bodyExtractionMethod")
             parsed["canonicalUrlSafe"] = (
                 is_safe_public_http_url(parsed["canonicalUrl"])
