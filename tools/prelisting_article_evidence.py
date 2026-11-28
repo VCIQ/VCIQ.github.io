@@ -31,6 +31,7 @@ class _ArticleParser(HTMLParser):
         super().__init__(convert_charrefs=True)
         self.meta: dict[str, str] = {}
         self.jsonld: list[str] = []
+        self.links: dict[str, str] = {}
         self._in_jsonld = False
         self._jsonld_buffer: list[str] = []
         self._in_title = False
@@ -40,12 +41,17 @@ class _ArticleParser(HTMLParser):
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attrs_map = {k.lower(): (v or "") for k, v in attrs}
+        if tag.lower() == "link" and attrs_map.get("rel", "").lower() == "canonical":
+            href = attrs_map.get("href", "").strip()
+            if href:
+                self.links["canonicalUrl"] = href[:2000]
         if tag.lower() == "meta":
             key = (attrs_map.get("property") or attrs_map.get("name") or "").lower()
             value = attrs_map.get("content", "").strip()
             if key and value and key in {
                 "og:title", "og:description", "description",
                 "article:published_time", "article:modified_time",
+                "author", "article:author", "og:site_name",
             }:
                 self.meta[key] = value[:2000]
         if tag.lower() == "script" and "ld+json" in attrs_map.get("type", "").lower():
@@ -80,6 +86,10 @@ class _ArticleParser(HTMLParser):
     def result(self) -> dict[str, Any]:
         title = " ".join(" ".join(self._title_buffer).split())[:500]
         article_bodies: list[str] = []
+        jsonld_published: list[str] = []
+        jsonld_modified: list[str] = []
+        jsonld_authors: list[str] = []
+        jsonld_publishers: list[str] = []
         for raw in self.jsonld:
             try:
                 parsed = json.loads(raw)
@@ -93,13 +103,32 @@ class _ArticleParser(HTMLParser):
                     body = obj.get("articleBody")
                     if isinstance(body, str) and body.strip():
                         article_bodies.append(body.strip()[:12000])
+                    if isinstance(obj.get("datePublished"), str):
+                        jsonld_published.append(obj["datePublished"])
+                    if isinstance(obj.get("dateModified"), str):
+                        jsonld_modified.append(obj["dateModified"])
+                    author = obj.get("author")
+                    for item in author if isinstance(author, list) else [author]:
+                        if isinstance(item, dict) and item.get("name"):
+                            jsonld_authors.append(str(item["name"])[:200])
+                        elif isinstance(item, str):
+                            jsonld_authors.append(item[:200])
+                    publisher = obj.get("publisher")
+                    for item in publisher if isinstance(publisher, list) else [publisher]:
+                        if isinstance(item, dict) and item.get("name"):
+                            jsonld_publishers.append(str(item["name"])[:200])
+                        elif isinstance(item, str):
+                            jsonld_publishers.append(item[:200])
         body = max(article_bodies, key=len) if article_bodies else ""
         visible = " ".join(" ".join(self._text_buffer).split())[:12000]
         return {
             "htmlTitle": title or self.meta.get("og:title"),
             "metaDescription": self.meta.get("og:description") or self.meta.get("description"),
-            "publishedTime": self.meta.get("article:published_time"),
-            "modifiedTime": self.meta.get("article:modified_time"),
+            "canonicalUrl": self.links.get("canonicalUrl"),
+            "publisherName": self.meta.get("og:site_name") or (jsonld_publishers[0] if jsonld_publishers else None),
+            "authorNames": sorted(set(jsonld_authors)) or ([self.meta["author"]] if self.meta.get("author") else []),
+            "publishedTime": self.meta.get("article:published_time") or (jsonld_published[0] if jsonld_published else None),
+            "modifiedTime": self.meta.get("article:modified_time") or (jsonld_modified[0] if jsonld_modified else None),
             "articleBody": body or visible,
             "bodyExtractionMethod": "jsonld_articleBody" if body else ("visible_text_fallback" if visible else "metadata_only"),
         }
