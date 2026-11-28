@@ -252,7 +252,6 @@ def main() -> int:
                     "partner": "partnership",
                     "mentioned": "mention",
                 }.get(candidate["subjectRole"], "unclassified"),
-                "eventDate": candidate["publishedAt"],
             })
     event_groups = cluster_candidates(event_candidates)
 
