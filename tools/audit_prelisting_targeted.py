@@ -77,6 +77,44 @@ def article_text(row: dict[str, Any]) -> str:
     ))
 
 
+def classify_subject_role(title: str, company: str) -> str:
+    """Conservative title-only role heuristic; never upgrades to verified entity."""
+    import re
+    title = str(title or "").strip()
+    name = re.escape(str(company or "").strip())
+    if not name or not title:
+        return "unknown"
+    # The company is the grammatical object of an investment verb.
+    if re.search(rf"(?:投资|入股|收购|并购|增资|战略投资).{{0,18}}{name}", title):
+        return "investor"
+    # The company is the grammatical subject raising capital.
+    if re.search(rf"{name}.{{0,18}}(?:完成|获得|获|融资|募资|新一轮|Pre-[A-Z]|[A-F][轮＋+])", title, re.I):
+        return "funding_subject"
+    # The company is named as a collaborator/partner, not necessarily event owner.
+    if re.search(rf"{name}.{{0,18}}(?:合作|联合|携手|签约|战略伙伴)", title):
+        return "partner"
+    if name in title:
+        return "mentioned"
+    return "unknown"
+
+
+def classify_date_window(value: Any) -> str:
+    from datetime import date
+    import re
+    raw = str(value or "").strip()
+    match = re.search(r"(20\\d{2})[-/年](\\d{1,2})[-/月](\\d{1,2})?", raw)
+    if not match:
+        return "date_missing"
+    try:
+        event_date = date(int(match.group(1)), int(match.group(2)), int(match.group(3) or 1))
+    except ValueError:
+        return "date_missing"
+    age_days = (date.today() - event_date).days
+    if age_days < 0:
+        return "future_or_invalid"
+    return "last_12_months" if age_days <= 365 else "historical"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", default="/tmp/prelisting-targeted-audit.json")
@@ -173,6 +211,9 @@ def main() -> int:
                 "platform": source.get("platform"),
                 "sourceLevel": source.get("sourceLevel"),
                 "entityMatchBasis": "title-or-company-field",
+                "subjectRole": classify_subject_role(str(row.get("title") or ""), company),
+                "dateWindow": classify_date_window(row.get("publishedAt")),
+                "urlResolutionError": (resolution or {}).get("error"),
             })
         results.append({
             "track": track_name,
@@ -206,7 +247,21 @@ def main() -> int:
             for company in results for candidate in company["candidates"]
         ),
         "truncatedCompanyCount": sum(x["truncated"] for x in results),
-        "entityMatchBasis": "title-or-company-field-only; not full entity resolution",
+        "dateWindowCounts": {
+            bucket: sum(
+                candidate["dateWindow"] == bucket
+                for company in results for candidate in company["candidates"]
+            )
+            for bucket in ("last_12_months", "historical", "date_missing", "future_or_invalid")
+        },
+        "subjectRoleCounts": {
+            role: sum(
+                candidate["subjectRole"] == role
+                for company in results for candidate in company["candidates"]
+            )
+            for role in ("funding_subject", "investor", "partner", "mentioned", "unknown")
+        },
+        "entityMatchBasis": "title-or-company-field-only; subjectRole is heuristic, not verified entity resolution",
         "sourceErrors": errors,
         "companies": results,
         "discoveryOnly": True,
