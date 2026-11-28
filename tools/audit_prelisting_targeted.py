@@ -290,6 +290,7 @@ def main() -> int:
                 "publisherDomain": candidate["publisherDomain"],
                 "publisherUrlResolved": candidate["publisherUrlResolved"],
                 "subjectRole": candidate["subjectRole"],
+                "investors": candidate.get("articleEvidence", {}).get("investorsExtractedFromBody", []),
                 "eventType": {
                     "funding_subject": "financing",
                     "investor": "investment",
@@ -334,6 +335,17 @@ def main() -> int:
         },
         "entityMatchBasis": "title-or-company-field-only; subjectRole is heuristic, not verified entity resolution",
         "sourceErrors": errors,
+        "publisherArticleFetchCounts": {
+            status: sum(
+                candidate.get("articleEvidence", {}).get("fetchStatus") == status
+                for company in results for candidate in company["candidates"]
+            )
+            for status in ("fetched", "fetch_error", "skipped_unsafe_url", "skipped_non_html", "skipped_too_large", "not_attempted_unresolved_url", "not_attempted_company_limit")
+        },
+        "publisherBodyInvestorExtractionCount": sum(
+            bool(candidate.get("articleEvidence", {}).get("investorsExtractedFromBody"))
+            for company in results for candidate in company["candidates"]
+        ),
         "companies": results,
         "eventCandidateCount": len(event_candidates),
         "eventEvidenceCount": sum(group["candidateCount"] for group in event_groups),
