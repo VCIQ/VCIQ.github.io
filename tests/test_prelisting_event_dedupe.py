@@ -54,6 +54,22 @@ class PrelistingEventDedupeTests(unittest.TestCase):
     def test_plus_round_is_preserved(self):
         self.assertEqual(extract_round("某科技完成C+轮融资"), "C轮+")
 
+    def test_distinct_same_month_events_get_unique_ids(self):
+        rows = [
+            {"company": "某科技", "title": "某科技完成B轮融资，投资方甲参与", "publishedAt": "2026-11-03", "subjectRole": "funding_subject", "publisherUrl": "https://a.example/news/1"},
+            {"company": "某科技", "title": "某科技B轮融资落地，投资方乙参与", "publishedAt": "2026-11-03", "subjectRole": "funding_subject", "publisherUrl": "https://b.example/news/2"},
+        ]
+        groups = cluster_candidates(rows)
+        self.assertEqual(len(groups), 2)
+        self.assertEqual(len({g["eventId"] for g in groups}), 2)
+
+    def test_mentions_do_not_extract_financing_amount(self):
+        rows = [
+            {"company": "DeepSeek", "title": "95亿元！九大券商集体参投DeepSeek", "publishedAt": "2026-11-27", "subjectRole": "mentioned"},
+        ]
+        groups = cluster_candidates(rows)
+        self.assertIsNone(groups[0]["amount"])
+
     def test_undated_items_remain_singletons(self):
         rows = [
             {"company": "企业甲", "title": "企业甲完成A轮融资", "subjectRole": "funding_subject"},
