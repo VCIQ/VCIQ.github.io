@@ -132,7 +132,7 @@ def cluster_candidates(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         round_name = row.get("round") or (extract_round(title) if event_type == "financing" else None)
         amount = normalize_amount(row.get("amount") or (extract_amount(title) if event_type in {"financing", "investment", "investment_received"} else None))
         investors = row.get("investors") or extract_investors(title)
-        event_date = str(row.get("eventDate") or row.get("publishedAt") or "")
+        event_date = str(row.get("eventDate") or "")
         parsed = parse_date(event_date)
         norm_title = normalize_text(title)
 
