@@ -51,16 +51,21 @@ def extract_amount(title: str) -> str | None:
 
 
 def extract_investors(title: str) -> list[str]:
-    """Extract only explicit investor labels; do not infer investors from co-mentions."""
+    """Extract explicitly labelled investor names; never infer from co-mentions."""
     text = str(title or "")
-    names = re.findall(r"(?:投资方|由)([\\u4e00-\\u9fffA-Za-z0-9·（）()]{2,24}?)(?:参与|领投|跟投|投资|联合|完成|获|等|和|及|\\s|，|,|。|$)", text)
-    cleaned = []
-    for name in names:
-        name = name.strip(" ，,。及和")
-        if name and name not in cleaned:
-            cleaned.append(name)
-    return cleaned
-
+    patterns = [
+        r"(?:由|获)([\\u4e00-\\u9fffA-Za-z0-9·（）()]{2,24}?)(?:领投|联合领投)",
+        r"([\\u4e00-\\u9fffA-Za-z0-9·（）()]{2,24}?)(?:领投|联合领投)",
+        r"(?:投资方|投资机构)[:：]?([\\u4e00-\\u9fffA-Za-z0-9·（）()]{2,24}?)(?:参与|等|和|及|，|,|。|$)",
+        r"由([\\u4e00-\\u9fffA-Za-z0-9·（）()]{2,24}?)(?:投资|战略投资)",
+    ]
+    found: list[str] = []
+    for pattern in patterns:
+        for match in re.finditer(pattern, text):
+            name = match.group(1).strip(" ，,。及和")
+            if name and name not in found:
+                found.append(name)
+    return found
 
 
 def normalize_amount(value: Any) -> str | None:
