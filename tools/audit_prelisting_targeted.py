@@ -144,7 +144,8 @@ def main() -> int:
             source = row.get("source") if isinstance(row.get("source"), dict) else {}
             wrapper_url = str(source.get("url") or "")
             resolution = resolved_cache.get(wrapper_url)
-            if wrapper_url and resolution is None:
+            should_resolve = len(matches) < 12
+            if wrapper_url and resolution is None and should_resolve:
                 try:
                     resolution = resolve_google_news_url(wrapper_url)
                 except Exception as exc:  # resolver is best-effort and audited
@@ -155,6 +156,12 @@ def main() -> int:
                         "error": f"{type(exc).__name__}: {exc}"[:240],
                     }
                 resolved_cache[wrapper_url] = resolution
+            if resolution is None:
+                resolution = {
+                    "resolved": False,
+                    "url": wrapper_url,
+                    "method": "not-attempted-beyond-export-limit",
+                }
             matches.append({
                 "title": row.get("title"),
                 "publishedAt": row.get("publishedAt"),
