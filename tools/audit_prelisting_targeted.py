@@ -146,6 +146,10 @@ def fetch_public_article(url: str) -> dict[str, Any]:
             parsed["contentType"] = content_type[:120]
             parsed["investorsExtractedFromBody"] = extract_investors(parsed.get("articleBody", ""))
             parsed["investorBodyExtractionMethod"] = parsed.get("bodyExtractionMethod")
+            parsed["canonicalUrlSafe"] = (
+                is_safe_public_http_url(parsed["canonicalUrl"])
+                if parsed.get("canonicalUrl") else False
+            )
             return parsed
     except Exception as exc:
         return {"fetchStatus": "fetch_error", "fetchError": f"{type(exc).__name__}: {exc}"[:200]}
@@ -262,6 +266,9 @@ def main() -> int:
                 continue
             if candidate.get("publisherUrlResolved") and publisher_url:
                 candidate["articleEvidence"] = fetch_public_article(publisher_url)
+                canonical = candidate["articleEvidence"].get("canonicalUrl")
+                if canonical and candidate["articleEvidence"].get("canonicalUrlSafe"):
+                    candidate["publisherCanonicalUrl"] = canonical
                 fetched_pages += 1
                 time.sleep(0.2)
             else:
