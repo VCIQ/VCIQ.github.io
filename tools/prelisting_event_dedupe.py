@@ -24,11 +24,12 @@ def extract_round(title: str) -> str | None:
         (r"PRE[- ]?IPO", "PRE-IPO"),
         (r"PRE[- ]?A", "PRE-A"),
         (r"PRE[- ]?B", "PRE-B"),
-        (r"([A-F])\s*(?:轮|ROUND)", None),
-        (r"([A-F])\s*轮", None),
+        (r"天使轮|天使融资", "天使轮"),
+        (r"种子轮|种子融资", "种子轮"),
+        (r"战略融资|战略投资", "战略融资"),
+        (r"([A-F])\s*(?:轮|ROUND)\s*(?:\+|PLUS)?", None),
         (r"([A-F])\s*\+", None),
-        (r"([A-F])\s*1", None),
-        (r"(天使轮|种子轮)", None),
+        (r"([A-F])\s*1\b", None),
     ]
     for pattern, fixed in patterns:
         match = re.search(pattern, text, re.I)
@@ -36,7 +37,8 @@ def extract_round(title: str) -> str | None:
             if fixed:
                 return fixed
             token = match.group(1)
-            return f"{token}轮" if len(token) == 1 and token in "ABCDEF" else token
+            suffix = "+" if "+" in match.group(0) or "PLUS" in match.group(0) else ""
+            return f"{token}轮{suffix}"
     return None
 
 
@@ -60,16 +62,19 @@ def parse_date(value: Any) -> date | None:
 
 
 def event_fingerprint(company: str, event_type: str, round_name: str | None,
-                      amount: str | None, event_date: str | None, title: str) -> str:
+                      amount: str | None, event_date: str | None, title: str,
+                      source_url: str | None = None) -> str:
     day = parse_date(event_date)
-    # Date is retained at month precision in the fingerprint to allow articles
-    # published on adjacent days to point to one announcement.
     month = day.strftime("%Y-%m") if day else "undated"
-    material = "|".join((
+    # Stable business key: title wording is deliberately excluded. For rows
+    # lacking date/round/amount, use URL to keep uncertain candidates singleton.
+    core = "|".join((
         normalize_text(company), event_type, round_name or "unknown-round",
-        amount or "unknown-amount", month, normalize_text(title)[:80]
+        amount or "unknown-amount", month
     ))
-    return hashlib.sha256(material.encode("utf-8")).hexdigest()[:16]
+    if not (round_name and day):
+        core += "|" + str(source_url or normalize_text(title))
+    return hashlib.sha256(core.encode("utf-8")).hexdigest()[:16]
 
 
 def cluster_candidates(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -79,9 +84,13 @@ def cluster_candidates(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         company = str(row.get("company") or "")
         title = str(row.get("title") or "")
         role = str(row.get("subjectRole") or "unknown")
-        event_type = str(row.get("eventType") or (
-            "financing" if role == "funding_subject" else "unclassified"
-        ))
+        event_type = str(row.get("eventType") or {
+            "funding_subject": "financing",
+            "investor": "investment",
+            "investee": "investment_received",
+            "partner": "partnership",
+            "mentioned": "mention",
+        }.get(role, "unclassified"))
         round_name = row.get("round") or extract_round(title)
         amount = row.get("amount") or extract_amount(title)
         event_date = str(row.get("eventDate") or row.get("publishedAt") or "")
@@ -96,9 +105,7 @@ def cluster_candidates(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
                     and group["eventType"] == event_type
                     and group["round"] == round_name
                     and group["eventMonth"] == parsed.strftime("%Y-%m")
-                    and (
-                        not amount or not group["amount"] or amount == group["amount"]
-                    )
+                    and amount == group["amount"]
                     and SequenceMatcher(
                         None, norm_title, group["titleKey"]
                     ).ratio() >= 0.42
@@ -108,7 +115,8 @@ def cluster_candidates(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
         if matched is None:
             fingerprint = event_fingerprint(
-                company, event_type, round_name, amount, event_date, title
+                company, event_type, round_name, amount, event_date, title,
+                str(row.get("publisherUrl") or row.get("googleNewsUrl") or row.get("url") or "")
             )
             matched = {
                 "eventId": f"evt-{fingerprint}",
@@ -122,6 +130,11 @@ def cluster_candidates(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 "candidateCount": 0,
                 "sources": [],
                 "dedupeConfidence": "proposed" if role == "funding_subject" and round_name and parsed else "singleton-unverified",
+                "classificationConfidence": (
+                    "high" if role == "funding_subject" and round_name and parsed
+                    else "medium" if role in {"investor", "investee", "partner"}
+                    else "low"
+                ),
                 "eventStatus": "DISCOVERED",
             }
             groups.append(matched)
