@@ -10,7 +10,9 @@ import argparse
 import json
 import os
 import sys
+import time
 from datetime import UTC, datetime
+from urllib.request import Request, urlopen
 from pathlib import Path
 from typing import Any
 
@@ -21,7 +23,8 @@ if str(ROOT) not in sys.path:
 from tools import crawl_with_source_categories as base  # noqa: E402
 from tools import crawl_with_wechat_registry as registry  # noqa: E402
 from tools.google_news_url_resolver import resolve_google_news_url  # noqa: E402
-from tools.prelisting_event_dedupe import cluster_candidates  # noqa: E402
+from tools.prelisting_event_dedupe import cluster_candidates, extract_investors  # noqa: E402
+from tools.prelisting_article_evidence import extract_article_evidence, is_safe_public_http_url  # noqa: E402
 
 TARGETS = ("track-jq5v2n", "track-6l9y0y")
 EVENTS = (
@@ -117,6 +120,32 @@ def classify_date_window(value: Any) -> str:
     if age_days < 0:
         return "future_or_invalid"
     return "last_12_months" if age_days <= 365 else "historical"
+
+
+def fetch_public_article(url: str) -> dict[str, Any]:
+    if not is_safe_public_http_url(url):
+        return {"fetchStatus": "skipped_unsafe_url"}
+    request = Request(url, headers={
+        "User-Agent": "Mozilla/5.0 (compatible; VCIQResearchAudit/1.0)",
+        "Accept": "text/html,application/xhtml+xml",
+    })
+    try:
+        with urlopen(request, timeout=8) as response:
+            content_type = response.headers.get("Content-Type", "").lower()
+            if "html" not in content_type:
+                return {"fetchStatus": "skipped_non_html", "contentType": content_type[:120]}
+            payload = response.read(1_000_001)
+            if len(payload) > 1_000_000:
+                return {"fetchStatus": "skipped_too_large"}
+            charset = response.headers.get_content_charset() or "utf-8"
+            parsed = extract_article_evidence(payload.decode(charset, errors="replace"))
+            parsed["fetchStatus"] = "fetched"
+            parsed["contentType"] = content_type[:120]
+            parsed["investorsExtractedFromBody"] = extract_investors(parsed.get("articleBody", ""))
+            parsed["investorBodyExtractionMethod"] = parsed.get("bodyExtractionMethod")
+            return parsed
+    except Exception as exc:
+        return {"fetchStatus": "fetch_error", "fetchError": f"{type(exc).__name__}: {exc}"[:200]}
 
 
 def main() -> int:
@@ -219,6 +248,22 @@ def main() -> int:
                 "dateWindow": classify_date_window(row.get("publishedAt")),
                 "urlResolutionError": (resolution or {}).get("error"),
             })
+        # Fetch at most two publisher pages per company. This is best-effort,
+        # bounded, and read-only; RSS discovery remains successful if a publisher
+        # blocks automated access.
+        fetched_pages = 0
+        for candidate in matches:
+            publisher_url = candidate.get("publisherUrl") or ""
+            if fetched_pages >= 2:
+                candidate["articleEvidence"] = {"fetchStatus": "not_attempted_company_limit"}
+                continue
+            if candidate.get("publisherUrlResolved") and publisher_url:
+                candidate["articleEvidence"] = fetch_public_article(publisher_url)
+                fetched_pages += 1
+                time.sleep(0.2)
+            else:
+                candidate["articleEvidence"] = {"fetchStatus": "not_attempted_unresolved_url"}
+
         results.append({
             "track": track_name,
             "slug": slug,
