@@ -50,7 +50,7 @@ class PrelistingArticleEvidenceTests(unittest.TestCase):
         self.assertFalse(is_safe_public_http_url("file:///etc/passwd"))
         self.assertFalse(is_safe_public_http_url("http://127.0.0.1/admin"))
         self.assertFalse(is_safe_public_http_url("http://localhost/"))
-        self.assertTrue(is_safe_public_http_url("https://news.example.com/article"))
+        self.assertTrue(is_safe_public_http_url("https://93.184.216.34/article"))
 
 
 if __name__ == "__main__":
