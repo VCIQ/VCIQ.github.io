@@ -93,7 +93,19 @@ def event_fingerprint(company: str, event_type: str, round_name: str | None,
 def cluster_candidates(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Group only high-confidence same-company/same-round/same-month candidates."""
     groups: list[dict[str, Any]] = []
+    seen_candidates: set[tuple[str, str, str]] = set()
     for row in rows:
+        raw_company = str(row.get("company") or "")
+        raw_title = str(row.get("title") or "")
+        raw_url = str(row.get("publisherUrl") or row.get("googleNewsUrl") or row.get("url") or "")
+        candidate_key = (
+            normalize_text(raw_company),
+            raw_url.strip().rstrip("/").casefold(),
+            normalize_text(raw_title),
+        )
+        if candidate_key in seen_candidates:
+            continue
+        seen_candidates.add(candidate_key)
         company = str(row.get("company") or "")
         title = str(row.get("title") or "")
         role = str(row.get("subjectRole") or "unknown")
@@ -170,6 +182,30 @@ def cluster_candidates(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         matched["candidateCount"] += 1
         if investors:
             matched["investors"] = sorted(set(matched.get("investors", [])) | set(investors))
+
+    # Remove duplicate groups caused by the same article being emitted by
+    # overlapping per-company feed specs. Keep one group and all unique sources.
+    unique_groups: dict[tuple[str, str, str, str], dict[str, Any]] = {}
+    for group in groups:
+        signature = (
+            group["companyKey"], group["eventType"],
+            str(group.get("round") or ""), str(group.get("eventMonth") or ""),
+        )
+        current = unique_groups.get(signature)
+        if current is None:
+            unique_groups[signature] = group
+        else:
+            source_keys = {
+                (str(s.get("url") or ""), str(s.get("title") or ""))
+                for s in current["sources"]
+            }
+            for source in group["sources"]:
+                key = (str(source.get("url") or ""), str(source.get("title") or ""))
+                if key not in source_keys:
+                    current["sources"].append(source)
+                    source_keys.add(key)
+            current["candidateCount"] = len(current["sources"])
+    groups = list(unique_groups.values())
 
     # Resolve coarse-key collisions deterministically. Two distinct events can
     # share company/type/round/month when amount is missing or the company raises
