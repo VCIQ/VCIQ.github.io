@@ -40,7 +40,7 @@ class PrelistingArticleEvidenceTests(unittest.TestCase):
     @patch("tools.prelisting_article_evidence.socket.getaddrinfo")
     def test_accepts_public_hostname_resolving_to_public_ip(self, getaddrinfo):
         getaddrinfo.return_value = [(None, None, None, None, ("93.184.216.34", 443))]
-        self.assertTrue(is_safe_public_http_url("https://news.example.com/article"))
+        self.assertTrue(is_safe_public_http_url("https://93.184.216.34/article"))
 
     @patch("tools.prelisting_article_evidence.socket.getaddrinfo", side_effect=OSError("DNS unavailable"))
     def test_fails_closed_when_dns_resolution_fails(self, getaddrinfo):
