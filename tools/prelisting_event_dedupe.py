@@ -183,30 +183,6 @@ def cluster_candidates(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         if investors:
             matched["investors"] = sorted(set(matched.get("investors", [])) | set(investors))
 
-    # Remove duplicate groups caused by the same article being emitted by
-    # overlapping per-company feed specs. Keep one group and all unique sources.
-    unique_groups: dict[tuple[str, str, str, str], dict[str, Any]] = {}
-    for group in groups:
-        signature = (
-            group["companyKey"], group["eventType"],
-            str(group.get("round") or ""), str(group.get("eventMonth") or ""),
-        )
-        current = unique_groups.get(signature)
-        if current is None:
-            unique_groups[signature] = group
-        else:
-            source_keys = {
-                (str(s.get("url") or ""), str(s.get("title") or ""))
-                for s in current["sources"]
-            }
-            for source in group["sources"]:
-                key = (str(source.get("url") or ""), str(source.get("title") or ""))
-                if key not in source_keys:
-                    current["sources"].append(source)
-                    source_keys.add(key)
-            current["candidateCount"] = len(current["sources"])
-    groups = list(unique_groups.values())
-
     # Resolve coarse-key collisions deterministically. Two distinct events can
     # share company/type/round/month when amount is missing or the company raises
     # multiple rounds in one month. Keep the coarse ID for a unique group; when
