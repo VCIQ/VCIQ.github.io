@@ -131,6 +131,9 @@ def fetch_public_article(url: str) -> dict[str, Any]:
     })
     try:
         with urlopen(request, timeout=8) as response:
+            final_url = response.geturl()
+            if not is_safe_public_http_url(final_url):
+                return {"fetchStatus": "skipped_unsafe_redirect"}
             content_type = response.headers.get("Content-Type", "").lower()
             if "html" not in content_type:
                 return {"fetchStatus": "skipped_non_html", "contentType": content_type[:120]}
