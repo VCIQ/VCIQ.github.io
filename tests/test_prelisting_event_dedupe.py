@@ -17,6 +17,17 @@ class PrelistingEventDedupeTests(unittest.TestCase):
         self.assertEqual(source["investorExtractionMethod"], "title_explicit_pattern")
         self.assertEqual(source["investorEvidenceStatus"], "DISCOVERED")
 
+    def test_investor_role_extraction_rejects_generic_and_unrelated_phrases(self):
+        from tools.prelisting_event_dedupe import extract_investor_mentions
+        text = "九大券商集体参投DeepSeek。还可能通过另类投资子公司参与IPO。红杉中国领投，深创投跟投。"
+        mentions = extract_investor_mentions(text)
+        pairs = {(item["name"], item["role"]) for item in mentions}
+        self.assertIn(("红杉中国", "lead"), pairs)
+        self.assertIn(("深创投", "follow"), pairs)
+        self.assertNotIn(("九大券商集体", "participant"), pairs)
+        self.assertNotIn(("还可能通过另类投资子公司参与IPO", "follow"), pairs)
+        self.assertTrue(all(item.get("evidenceText") for item in mentions))
+
     def test_extract_investor_roles_from_body(self):
         from tools.prelisting_event_dedupe import extract_investor_mentions
         mentions = extract_investor_mentions("红杉中国领投，深创投跟投，腾讯投资参与投资。")
