@@ -70,63 +70,64 @@ def extract_investors(title: str) -> list[str]:
 
 
 def extract_investor_mentions(text: str) -> list[dict[str, str]]:
-    """Extract conservative role-labelled investor mentions with local evidence."""
+    """Extract explicitly labelled investor names and roles, retaining evidence."""
     content = str(text or "")
     generic_names = {
         "九大券商", "券商", "证券公司", "机构", "投资机构", "产业投资方",
         "投资方", "多家机构", "相关机构", "投资者", "金融机构",
+        "知名海外基金", "等产业投资方",
     }
-    patterns = (
-        ("lead", r"^(.{2,30}?)(?:联合领投|领投)$"),
-        ("follow", r"^(.{2,30}?)(?:跟投)$"),
-        ("participant", r"^(.{2,30}?)(?:参投|参与投资)$"),
-    )
     found: list[dict[str, str]] = []
     seen: set[tuple[str, str]] = set()
-    # Split into short clauses first. This prevents the regex from consuming
-    # unrelated prose before a role verb (e.g. "还可能通过...领投").
-    clauses = re.split(r"[，,。；;！!？?\n]+", content)
-    for clause in clauses:
-        clause = re.sub(r"\s+", " ", clause).strip()
-        if not clause or len(clause) > 160:
-            continue
-        for role, pattern in patterns:
-            match = re.search(pattern, clause)
-            if not match:
+
+    def add_names(raw: str, role: str, clause: str) -> None:
+        raw = re.sub(
+            r"^(?:由|其中|本轮融资由|本轮由|本轮融资|本轮|本次融资由|本次由|本次|融资由|投资方包括|投资机构包括|投资方为|投资机构为)\s*",
+            "", raw.strip(),
+        )
+        # Only explicit list delimiters split institutions. Do not split on “和”:
+        # it can be part of a legal institution name (e.g. 屹唐盛和基金).
+        for raw_name in re.split(r"[、，,；;]", raw):
+            name = raw_name.strip(" ：:()（） ")
+            name = re.sub(r"(?:等产业投资方|等)$", "", name).strip()
+            if len(name) < 2 or len(name) > 30 or name in generic_names:
                 continue
-            raw = match.group(1).strip(" ：:，,。及和、")
-            raw = re.sub(r"^(?:由|其中|本轮|本次|融资由|投资方[:：]?)", "", raw)
-            names = re.split(r"[、，,及和]", raw)
-            for name in names:
-                name = name.strip(" ：:()（）")
-                if len(name) < 2 or len(name) > 24 or name in generic_names:
-                    continue
-                if any(token in name for token in ("可能通过", "还可能", "证券公司", "九大券商集体")):
-                    continue
-                key = (name, role)
-                if key not in seen:
-                    found.append({
-                        "name": name,
-                        "role": role,
-                        "extractionMethod": "explicit_role_clause",
-                        "evidenceText": clause[:240],
-                    })
-                    seen.add(key)
-        label = re.search(r"(?:投资方|投资机构)[:：]([^。；;\n]{2,100})", clause)
+            if any(token in name for token in ("可能通过", "还可能", "九大券商集体", "不能简单地")):
+                continue
+            key = (name, role)
+            if key not in seen:
+                found.append({
+                    "name": name,
+                    "role": role,
+                    "extractionMethod": "explicit_role_clause",
+                    "evidenceText": clause[:240],
+                })
+                seen.add(key)
+
+    clauses = re.split(r"[，,。；;！!？?\n]+", content)
+    for raw_clause in clauses:
+        clause = re.sub(r"\s+", " ", raw_clause).strip()
+        if not clause or len(clause) > 240:
+            continue
+
+        # Explicit investor lists, including “本轮投资方包括 A、B、C”.
+        label = re.search(
+            r"(?:(?:本轮|本次)?(?:融资)?投资方|(?:本轮|本次)?投资机构)\s*(?:包括|为|[:：])\s*(.{2,120})$",
+            clause,
+        )
         if label:
-            for name in re.split(r"[、，,及和]", label.group(1)):
-                name = name.strip(" ：:()（）")
-                if len(name) < 2 or len(name) > 24 or name in generic_names:
-                    continue
-                key = (name, "investor_label")
-                if key not in seen:
-                    found.append({
-                        "name": name,
-                        "role": "investor_label",
-                        "extractionMethod": "explicit_role_clause",
-                        "evidenceText": clause[:240],
-                    })
-                    seen.add(key)
+            add_names(label.group(1), "investor_label", clause)
+
+        # Explicit role-bearing clauses. Prefixes are removed in add_names.
+        role_patterns = (
+            ("lead", r"^(.{2,120}?)(?:联合领投|领投)$"),
+            ("follow", r"^(.{2,120}?)(?:跟投)$"),
+            ("participant", r"^(.{2,120}?)(?:参投|参与投资)$"),
+        )
+        for role, pattern in role_patterns:
+            match = re.search(pattern, clause)
+            if match:
+                add_names(match.group(1), role, clause)
     return found
 
 
