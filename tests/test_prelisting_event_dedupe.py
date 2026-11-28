@@ -38,6 +38,22 @@ class PrelistingEventDedupeTests(unittest.TestCase):
         self.assertEqual(groups[0]["eventType"], "unclassified")
         self.assertEqual(groups[0]["dedupeConfidence"], "singleton-unverified")
 
+    def test_event_id_is_stable_across_headline_variants(self):
+        from tools.prelisting_event_dedupe import event_fingerprint
+        first = event_fingerprint("杉数科技", "financing", "D轮", None, "2026-11-22", "杉数科技完成D轮融资")
+        second = event_fingerprint("杉数科技", "financing", "D轮", None, "2026-11-25", "杉数科技获D轮融资，多家机构参与")
+        self.assertEqual(first, second)
+
+    def test_conflicting_amounts_do_not_merge(self):
+        rows = [
+            {"company": "某科技", "title": "某科技完成B轮融资3亿元", "publishedAt": "2026-11-03", "subjectRole": "funding_subject"},
+            {"company": "某科技", "title": "某科技完成B轮融资5亿元", "publishedAt": "2026-11-03", "subjectRole": "funding_subject"},
+        ]
+        self.assertEqual(len(cluster_candidates(rows)), 2)
+
+    def test_plus_round_is_preserved(self):
+        self.assertEqual(extract_round("某科技完成C+轮融资"), "C轮+")
+
     def test_undated_items_remain_singletons(self):
         rows = [
             {"company": "企业甲", "title": "企业甲完成A轮融资", "subjectRole": "funding_subject"},
