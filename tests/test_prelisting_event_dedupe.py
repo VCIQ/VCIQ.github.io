@@ -19,8 +19,8 @@ class PrelistingEventDedupeTests(unittest.TestCase):
 
     def test_same_round_same_month_cluster(self):
         rows = [
-            {"company": "杉数科技", "title": "杉数科技完成D轮融资", "publishedAt": "2026-11-22", "subjectRole": "funding_subject"},
-            {"company": "杉数科技", "title": "杉数科技获D轮融资，多家机构参与", "publishedAt": "2026-11-25", "subjectRole": "funding_subject"},
+            {"company": "杉数科技", "title": "杉数科技完成D轮融资", "publishedAt": "2026-11-22", "eventDate": "2026-11-22", "subjectRole": "funding_subject"},
+            {"company": "杉数科技", "title": "杉数科技获D轮融资，多家机构参与", "publishedAt": "2026-11-25", "eventDate": "2026-11-22", "subjectRole": "funding_subject"},
         ]
         groups = cluster_candidates(rows)
         self.assertEqual(len(groups), 1)
