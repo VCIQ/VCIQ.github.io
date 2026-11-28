@@ -63,6 +63,13 @@ class PrelistingEventDedupeTests(unittest.TestCase):
         self.assertEqual(len(groups), 2)
         self.assertEqual(len({g["eventId"] for g in groups}), 2)
 
+    def test_duplicate_feed_rows_are_deduplicated(self):
+        row = {"company": "开源中国", "title": "超智算科技携手共绩科技、开源中国达成战略合作", "publishedAt": "2026-08-22", "subjectRole": "partner", "publisherUrl": "https://news.example/item/1"}
+        groups = cluster_candidates([row, dict(row)])
+        self.assertEqual(len(groups), 1)
+        self.assertEqual(groups[0]["candidateCount"], 1)
+        self.assertEqual(len(groups[0]["sources"]), 1)
+
     def test_mentions_do_not_extract_financing_amount(self):
         rows = [
             {"company": "DeepSeek", "title": "95亿元！九大券商集体参投DeepSeek", "publishedAt": "2026-11-27", "subjectRole": "mentioned"},
