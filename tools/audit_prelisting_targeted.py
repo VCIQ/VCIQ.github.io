@@ -102,7 +102,7 @@ def classify_date_window(value: Any) -> str:
     from datetime import date
     import re
     raw = str(value or "").strip()
-    match = re.search(r"(20\\d{2})[-/年](\\d{1,2})[-/月](\\d{1,2})?", raw)
+    match = re.search(r"(20\d{2})[-/年](\d{1,2})[-/月](\d{1,2})?", raw)
     if not match:
         return "date_missing"
     try:
